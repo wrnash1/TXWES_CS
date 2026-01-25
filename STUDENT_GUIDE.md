@@ -1,26 +1,31 @@
-# TXWES Student VM Guide
+# TXWES_CS Student VM Guide
 
-Welcome to your Fedora 41 Workstation VM! This VM is pre-configured with all the tools you need for your courses at Texas Wesleyan University.
+Welcome to the Computer Science Workstation VM! This image is configured for:
+- CIS-3321 Network Administration
+- CIS-3325 Operating System Administration
+- CIS-3326 Windows Server Administration
+- CIS-4327 Database Fundamentals
+- CIS-4328 Information Systems Security
 
-## Running the VM from USB
+## Getting Started
 
-1.  **Plug in the USB drive** to your computer.
-2.  **Open VirtualBox** (or VMware Player) from the USB drive.
-3.  **Go to File > Import Appliance** (for .ova) or **Machine > Add** (for .vbox/.qcow2).
-4.  Navigate to the `build/` folder on your USB and select the VM image.
-5.  **Start the VM**.
+1.  **Launch**: Open the VM image from your USB using VirtualBox or VMware Player.
+2.  **Login**:
+    - **User**: `student`
+    - **Password**: `student`
 
-## User Account
-- **Username**: `student`
-- **Password**: `student`
+## Lab Locations
+All your labs and supporting materials are located in `/home/student/Training`.
 
-## Submitting Your Lab Work
-
-To submit your lab progress, open a terminal (Ctrl+Alt+T) and run:
+## Submitting Your Work
+After completing a lab, run the submission script:
 ```bash
 /home/student/Training/txwes-submit.sh
 ```
-Follow the prompts to enter your name and Lab ID. This will log your work and notify Professor Nash.
+Follow the prompts to ensure Professor Nash receives your progress.
 
-## Important Note
-Always **Save State** or **Shut Down** the VM before unplugging your USB drive to avoid data loss.
+## Tools Installed
+- **Automation**: Git, Python3, Vim
+- **Network**: Nmap, Curl, Tracepath
+- **Admin**: PowerShell Core (`pwsh`), SQLite/Postgres clients
+- **Security**: OpenSSL, GPG, Firewalld

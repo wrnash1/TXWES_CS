@@ -29,7 +29,7 @@ source "qemu" "fedora" {
   ssh_username     = "student"
   ssh_password     = "student"
   ssh_timeout      = "20m"
-  vm_name          = "txwes-fedora-41"
+  vm_name          = "txwes-fedora-cs"
   net_device       = "virtio-net"
   disk_interface   = "virtio"
   boot_wait        = "10s"

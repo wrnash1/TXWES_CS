@@ -1,4 +1,4 @@
-# Makefile for TXWES Packer Project
+# Makefile for TXWES_CS Packer Project
 
 PACKER_FILE = txwes-fedora.pkr.hcl
 
