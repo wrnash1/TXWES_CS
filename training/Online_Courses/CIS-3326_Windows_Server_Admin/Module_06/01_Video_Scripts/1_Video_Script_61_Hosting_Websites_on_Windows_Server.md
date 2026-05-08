@@ -1,0 +1,2 @@
+### 1. Video Script 6.1: Hosting Websites on Windows Server
+**Audio:** "While Linux has Apache and Nginx, Windows uses Internet Information Services (IIS). IIS allows you to host multiple websites on a single server using Host Headers. It deeply integrates with Active Directory, allowing you to secure internal intranet sites so that users automatically authenticate using their Windows credentials without typing a password."

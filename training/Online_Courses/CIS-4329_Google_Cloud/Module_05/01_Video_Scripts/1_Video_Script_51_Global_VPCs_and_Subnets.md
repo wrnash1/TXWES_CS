@@ -1,0 +1,3 @@
+### 1. Video Script 5.1: Global VPCs and Subnets
+**Audio:** "Welcome to Module 5. Networking in Google Cloud is fundamentally different than AWS or Azure. In GCP, a Virtual Private Cloud (VPC) is a Global resource. This means a single VPC spans the entire planet. Subnets, however, are Regional. You can have a single VPC with one subnet in Tokyo and another subnet in Dallas, and VMs in those subnets can communicate privately without traversing the public internet."
+**Visual:** Diagram showing a single large VPC box encompassing two smaller Subnet boxes (US-Central and Asia-East), with a private line connecting them.

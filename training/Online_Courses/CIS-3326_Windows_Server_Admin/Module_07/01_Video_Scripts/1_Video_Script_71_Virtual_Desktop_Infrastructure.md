@@ -1,0 +1,2 @@
+### 1. Video Script 7.1: Virtual Desktop Infrastructure
+**Audio:** "During the pandemic, Remote Desktop Services (RDS) became critical. Instead of managing hundreds of laptops, you install applications on a central Windows Server. Users connect via the RDS client, and the applications stream to their screen. You can deploy Session-based desktops (many users sharing one server OS) or VDI (every user gets their own dedicated Windows 10 VM)."

@@ -1,0 +1,2 @@
+**Video Script 9.1: The OWASP Top 10**
+*Audio:* "The Open Worldwide Application Security Project (OWASP) publishes the top 10 web vulnerabilities. Injection attacks—like SQL injection—occur when untrusted user input is executed as code. Cross-Site Scripting (XSS) occurs when malicious JavaScript is injected into a webpage. The mitigation for both is strict input validation and parameterized queries."
