@@ -1,0 +1,2 @@
+**Video Script 12.1: Securing the Internet of Things**
+*Audio:* "Smart thermostats, IP cameras, and smart TVs are all IoT devices. They are notorious for having weak security and hardcoded passwords. They must always be segmented onto their own VLAN, completely isolated from corporate data. If a hacker breaches the smart fish tank thermometer, they shouldn't be able to pivot to the accounting server."

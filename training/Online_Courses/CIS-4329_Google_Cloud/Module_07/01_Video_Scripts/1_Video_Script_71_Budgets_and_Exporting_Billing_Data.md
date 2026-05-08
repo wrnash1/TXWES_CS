@@ -1,0 +1,2 @@
+### 1. Video Script 7.1: Budgets and Exporting Billing Data
+**Audio:** "The easiest way to get fired in the cloud is to leave a cluster of massive N2 servers running over the weekend. Cost management is your responsibility. You must set Budgets and Alerts to notify you when spending hits certain thresholds. For deep analysis, you should export your billing data to BigQuery. This allows you to write SQL queries to figure out exactly which department or project is spending the most money."
