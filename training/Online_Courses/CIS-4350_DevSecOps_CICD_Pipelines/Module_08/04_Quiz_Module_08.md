@@ -17,32 +17,32 @@ What is the primary function of a Software Composition Analysis (SCA) tool?
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **dependency trees**?
-D) The descendant node connected to the left branch of a parent node in a binary tree structure.
+In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **license compliance.**?
+C) The expected yearly cost of a security risk, calculated by multiplying the Single Loss Expectancy by the Annualized Rate of Occurrence (ALE = SLE * ARO).
 A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-B) The final node in a linked list, whose next pointer typically references null (or the head node in a circular list), marking the end of the chain.
-C) A mathematical representation used to describe the asymptotic upper bound of an algorithm's running time or space complexity relative to the input size N. It helps developers predict how an algorithm will scale as data grows.
+B) A reference or memory address stored within a node that points to another node in a linked structure, forming the link between elements.
+D) A complete binary tree where the key of any parent node is less than or equal to the keys of its children, guaranteeing the root is always the minimum element.
 *   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **dependency trees**.
-    * *Why A is correct:* This describes the exact role and function of **dependency trees**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **dependency trees**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **dependency trees**.
+    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **license compliance.**.
+    * *Why A is correct:* This describes the exact role and function of **license compliance.**.
+    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **license compliance.**.
+    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **license compliance.**.
 
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **record staged code modifications into the repository version history**. Which of the following commands is the most appropriate to execute?
-A) git commit -m 'update'
+A systems administrator or developer needs to **run the automated unit testing suite to verify system functionality**. Which of the following commands is the most appropriate to execute?
+D) git commit -m 'update'
 C) python3 -m venv .venv
-D) pytest
+A) pytest
 B) pip install -r requirements.txt
-*   **Correct Answer:** A) git commit -m 'update'
+*   **Correct Answer:** A) pytest
 *   **Distractor Analysis:**
-    * *Why A is correct:* The `git commit -m 'update'` command is directly designed to record staged code modifications into the repository version history.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
     * *Why D is incorrect:* This command handles alternative administrative tasks.
+    * *Why C is incorrect:* This command handles alternative administrative tasks.
+    * *Why A is correct:* The `pytest` command is directly designed to run the automated unit testing suite to verify system functionality.
     * *Why B is incorrect:* This command handles alternative administrative tasks.
 
 
@@ -50,9 +50,9 @@ B) pip install -r requirements.txt
 
 **Question 4**
 While working on **Software Composition Analysis** in a production environment, you encounter a system alert indicating a **TypeError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-B) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
+B) Verify that the index is within the valid range of 0 to len(list)-1.
 D) Reboot the physical machine and wait for services to reload.
-C) Verify that the index is within the valid range of 0 to len(list)-1.
+C) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
 A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
 *   **Correct Answer:** A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
 *   **Distractor Analysis:**
@@ -65,15 +65,15 @@ A) Perform explicit type casting (e.g. str() or int()) before executing operatio
 ---
 
 **Question 5**
-When designing a system for **Software Composition Analysis**, you must mitigate the risk of **Storing user credentials in plain text, making them vulnerable to database breaches.**. Which of the following security configurations or controls represents the best practice to implement?
+When designing a system for **Software Composition Analysis**, you must mitigate the risk of **Allowing attackers to execute arbitrary SQL commands on the backend database via input forms.**. Which of the following security configurations or controls represents the best practice to implement?
+B) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
+A) Implement parameterized queries and prepared statements rather than raw string concatenation.
 C) Enable full disk encryption on all client endpoints.
-B) Implement parameterized queries and prepared statements rather than raw string concatenation.
-A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
 D) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
+*   **Correct Answer:** A) Implement parameterized queries and prepared statements rather than raw string concatenation.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-    * *Why B is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-    * *Why A is correct:* Implementing Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt. mitigates the risk of Storing user credentials in plain text, making them vulnerable to database breaches..
-    * *Why D is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
+    * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
+    * *Why A is correct:* Implementing Implement parameterized queries and prepared statements rather than raw string concatenation. mitigates the risk of Allowing attackers to execute arbitrary SQL commands on the backend database via input forms..
+    * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
+    * *Why D is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
 

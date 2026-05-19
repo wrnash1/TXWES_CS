@@ -17,63 +17,63 @@ Which wireless security standard is vulnerable to offline dictionary attacks on 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **packet capture (airodump-ng)**?
+In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **brute-forcing handshakes (aircrack-ng).**?
+B) A social engineering attack where malicious actors send fraudulent messages designed to trick victims into revealing sensitive information.
+D) The memory block allocated on the system stack for a single function call, storing parameters, local variables, and the return address.
+C) A binary search tree that automatically adjusts its height during insertions and deletions (e.g., AVL, Red-Black) to maintain logarithmic operations.
 A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within security operations.
-B) A complete binary tree where the key of any parent node is less than or equal to the keys of its children, guaranteeing the root is always the minimum element.
-D) The entry point or first node in a linked list, which serves as the reference for traversing the rest of the list structure.
-C) The standard configuration parameters pre-loaded into a software application or system before any custom adjustments are made by an administrator.
 *   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within security operations.
 *   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **packet capture (airodump-ng)**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **packet capture (airodump-ng)**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **packet capture (airodump-ng)**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **packet capture (airodump-ng)**.
+    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **brute-forcing handshakes (aircrack-ng).**.
+    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **brute-forcing handshakes (aircrack-ng).**.
+    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **brute-forcing handshakes (aircrack-ng).**.
+    * *Why A is correct:* This describes the exact role and function of **brute-forcing handshakes (aircrack-ng).**.
 
 
 ---
 
 **Question 3**
 A systems administrator or developer needs to **display the detailed metadata and validation parameters of an SSL/TLS digital certificate**. Which of the following commands is the most appropriate to execute?
-B) wireshark
-D) nmap -sV -p 1-1024 target_ip
-C) hydra -l admin -P passwords.txt ssh://target
+B) hydra -l admin -P passwords.txt ssh://target
 A) openssl x509 -text -noout -in cert.pem
+C) nmap -sV -p 1-1024 target_ip
+D) wireshark
 *   **Correct Answer:** A) openssl x509 -text -noout -in cert.pem
 *   **Distractor Analysis:**
     * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
     * *Why A is correct:* The `openssl x509 -text -noout -in cert.pem` command is directly designed to display the detailed metadata and validation parameters of an SSL/TLS digital certificate.
+    * *Why C is incorrect:* This command handles alternative administrative tasks.
+    * *Why D is incorrect:* This command handles alternative administrative tasks.
 
 
 ---
 
 **Question 4**
-While working on **Wireless Network Assessment** in a production environment, you encounter a system alert indicating a **Certificate Expired Error** error. Which of the following is the most effective troubleshooting action to resolve this issue?
+While working on **Wireless Network Assessment** in a production environment, you encounter a system alert indicating a **IDS False Positives** error. Which of the following is the most effective troubleshooting action to resolve this issue?
 D) Reboot the physical machine and wait for services to reload.
+A) Tune the detection signatures and define exceptions for authorized administrative activities.
 C) Review active security rules and add a permissive firewall rule allowing the specific source IP and destination port.
-B) Tune the detection signatures and define exceptions for authorized administrative activities.
-A) Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA.
-*   **Correct Answer:** A) Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA.
+B) Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA.
+*   **Correct Answer:** A) Tune the detection signatures and define exceptions for authorized administrative activities.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This action does not resolve the root cause of Certificate Expired Error.
-    * *Why C is incorrect:* This action does not resolve the root cause of Certificate Expired Error.
-    * *Why B is incorrect:* This action does not resolve the root cause of Certificate Expired Error.
-    * *Why A is correct:* Because The SSL/TLS digital certificate presented by the server has passed its validity end date, causing clients to block connections. The appropriate fix is to Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA..
+    * *Why D is incorrect:* This action does not resolve the root cause of IDS False Positives.
+    * *Why A is correct:* Because The network security system flags benign administrative scans or regular traffic patterns as malicious exploits. The appropriate fix is to Tune the detection signatures and define exceptions for authorized administrative activities..
+    * *Why C is incorrect:* This action does not resolve the root cause of IDS False Positives.
+    * *Why B is incorrect:* This action does not resolve the root cause of IDS False Positives.
 
 
 ---
 
 **Question 5**
 When designing a system for **Wireless Network Assessment**, you must mitigate the risk of **Attackers cracking weak encryption keys using commodity hardware, compromises confidentiality.**. Which of the following security configurations or controls represents the best practice to implement?
-B) Forward all system logs to a secure, write-once SIEM (Security Information and Event Management) platform.
-A) Enforce RSA keys with a minimum length of 2048/4096 bits or switch to Elliptic Curve Cryptography (ECC).
 D) Enable full disk encryption on all client endpoints.
+A) Enforce RSA keys with a minimum length of 2048/4096 bits or switch to Elliptic Curve Cryptography (ECC).
+B) Forward all system logs to a secure, write-once SIEM (Security Information and Event Management) platform.
 C) Enable full disk encryption on all client endpoints.
 *   **Correct Answer:** A) Enforce RSA keys with a minimum length of 2048/4096 bits or switch to Elliptic Curve Cryptography (ECC).
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This does not address the security vulnerability of Weak Key Strength.
-    * *Why A is correct:* Implementing Enforce RSA keys with a minimum length of 2048/4096 bits or switch to Elliptic Curve Cryptography (ECC). mitigates the risk of Attackers cracking weak encryption keys using commodity hardware, compromises confidentiality..
     * *Why D is incorrect:* This does not address the security vulnerability of Weak Key Strength.
+    * *Why A is correct:* Implementing Enforce RSA keys with a minimum length of 2048/4096 bits or switch to Elliptic Curve Cryptography (ECC). mitigates the risk of Attackers cracking weak encryption keys using commodity hardware, compromises confidentiality..
+    * *Why B is incorrect:* This does not address the security vulnerability of Weak Key Strength.
     * *Why C is incorrect:* This does not address the security vulnerability of Weak Key Strength.
 

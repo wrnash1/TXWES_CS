@@ -18,62 +18,62 @@ Which architecture model distributes application logic across client devices and
 
 **Question 2**
 In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Architecture design**?
+C) The termination condition in a recursive function that stops further recursive calls and begins unwinding the call stack, preventing infinite execution.
+B) A commitment between a service provider and a client regarding the service's quality, availability, and responsibilities.
 A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
-D) The core operations of a queue: 'enqueue' appends an element to the back, and 'dequeue' removes and returns the front element.
-C) The operational principle of a stack, where the element added most recently is the first one to be removed, similar to a stack of trays.
-B) The core security model consisting of Confidentiality (preventing unauthorized access), Integrity (preventing unauthorized modification), and Availability (ensuring systems are accessible when needed).
+D) The absolute maximum time a business process can be disrupted before the organization suffers irreparable damage or failure.
 *   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
 *   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **Architecture design**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Architecture design**.
     * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Architecture design**.
     * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Architecture design**.
+    * *Why A is correct:* This describes the exact role and function of **Architecture design**.
+    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Architecture design**.
 
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **review the last five project commits in a concise single-line format**. Which of the following commands is the most appropriate to execute?
-A) git log --oneline -n 5
-B) docker-compose up -d
-C) systemctl status iot_service
-D) terraform validate
-*   **Correct Answer:** A) git log --oneline -n 5
+A systems administrator or developer needs to **launch all application services in the background using docker-compose configuration**. Which of the following commands is the most appropriate to execute?
+B) terraform validate
+D) systemctl status iot_service
+A) docker-compose up -d
+C) git log --oneline -n 5
+*   **Correct Answer:** A) docker-compose up -d
 *   **Distractor Analysis:**
-    * *Why A is correct:* The `git log --oneline -n 5` command is directly designed to review the last five project commits in a concise single-line format.
     * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
     * *Why D is incorrect:* This command handles alternative administrative tasks.
+    * *Why A is correct:* The `docker-compose up -d` command is directly designed to launch all application services in the background using docker-compose configuration.
+    * *Why C is incorrect:* This command handles alternative administrative tasks.
 
 
 ---
 
 **Question 4**
-While working on **System Architecture & Design** in a production environment, you encounter a system alert indicating a **SLA Breach Alert** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-C) Re-assign resources to critical path tasks and establish clear communication protocols.
+While working on **System Architecture & Design** in a production environment, you encounter a system alert indicating a **Scope Exceeded Budget Limit** error. Which of the following is the most effective troubleshooting action to resolve this issue?
+C) Optimize service resources, implement load balancing, or update failover mechanisms.
 D) Reboot the physical machine and wait for services to reload.
-B) Implement strict change control boards (CCB) and re-baseline the project constraints.
-A) Optimize service resources, implement load balancing, or update failover mechanisms.
-*   **Correct Answer:** A) Optimize service resources, implement load balancing, or update failover mechanisms.
+B) Re-assign resources to critical path tasks and establish clear communication protocols.
+A) Implement strict change control boards (CCB) and re-baseline the project constraints.
+*   **Correct Answer:** A) Implement strict change control boards (CCB) and re-baseline the project constraints.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This action does not resolve the root cause of SLA Breach Alert.
-    * *Why D is incorrect:* This action does not resolve the root cause of SLA Breach Alert.
-    * *Why B is incorrect:* This action does not resolve the root cause of SLA Breach Alert.
-    * *Why A is correct:* Because A system outage or slow response time has exceeded the limits guaranteed in the Service Level Agreement. The appropriate fix is to Optimize service resources, implement load balancing, or update failover mechanisms..
+    * *Why C is incorrect:* This action does not resolve the root cause of Scope Exceeded Budget Limit.
+    * *Why D is incorrect:* This action does not resolve the root cause of Scope Exceeded Budget Limit.
+    * *Why B is incorrect:* This action does not resolve the root cause of Scope Exceeded Budget Limit.
+    * *Why A is correct:* Because The project scope expanded during execution without adjusting budget or schedule allocations. The appropriate fix is to Implement strict change control boards (CCB) and re-baseline the project constraints..
 
 
 ---
 
 **Question 5**
 When designing a system for **System Architecture & Design**, you must mitigate the risk of **Stakeholders requesting changes directly to developers, leading to untracked features and security vulnerabilities.**. Which of the following security configurations or controls represents the best practice to implement?
-C) Enable full disk encryption on all client endpoints.
+A) Establish formal authorization procedures and digital signatures for all project scope modifications.
 D) Enable full disk encryption on all client endpoints.
 B) Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services.
-A) Establish formal authorization procedures and digital signatures for all project scope modifications.
+C) Enable full disk encryption on all client endpoints.
 *   **Correct Answer:** A) Establish formal authorization procedures and digital signatures for all project scope modifications.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This does not address the security vulnerability of Unauthorized Scope Modification.
+    * *Why A is correct:* Implementing Establish formal authorization procedures and digital signatures for all project scope modifications. mitigates the risk of Stakeholders requesting changes directly to developers, leading to untracked features and security vulnerabilities..
     * *Why D is incorrect:* This does not address the security vulnerability of Unauthorized Scope Modification.
     * *Why B is incorrect:* This does not address the security vulnerability of Unauthorized Scope Modification.
-    * *Why A is correct:* Implementing Establish formal authorization procedures and digital signatures for all project scope modifications. mitigates the risk of Stakeholders requesting changes directly to developers, leading to untracked features and security vulnerabilities..
+    * *Why C is incorrect:* This does not address the security vulnerability of Unauthorized Scope Modification.
 

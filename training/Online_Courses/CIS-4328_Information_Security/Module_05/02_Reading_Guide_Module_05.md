@@ -15,6 +15,9 @@ Review these essential definitions carefully. The certification exam expects you
 
 *   **RBAC vs ABAC**: Role-Based Access Control assigns permissions based on job title (e.g., HR Manager). Attribute-Based Access Control grants access based on conditions (e.g., Only allow access if Time=9AM-5PM and Location=US).
 *   **Biometrics**: FAR (False Acceptance Rate - letting a hacker in) is worse than FRR (False Rejection Rate - locking a valid user out). The point where they meet is the CER (Crossover Error Rate).
+*   **Focus Area**: Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
+*   **Scenario Trap**: Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
+*   **Study Resource**: To reinforce these concepts visually, review this targeted search query: [YouTube Exam Study Reference Link](https://www.youtube.com/results?search_query=4328_Information_Security+-+CompTIA+Security%2B+%28SY0-701%29+IAM).
 
 ---
 

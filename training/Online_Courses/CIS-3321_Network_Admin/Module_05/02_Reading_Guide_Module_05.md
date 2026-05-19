@@ -15,6 +15,9 @@ Review these essential definitions carefully. The certification exam expects you
 
 *   **Distance Vector vs. Link-State**: RIP is Distance Vector (counts hops). OSPF is Link-State (builds a map of the entire network).
 *   **STP (Spanning Tree Protocol)**: Prevents Layer 2 loops when switches are connected redundantly.
+*   **Focus Area**: Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
+*   **Scenario Trap**: Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
+*   **Study Resource**: To reinforce these concepts visually, review this targeted search query: [YouTube Exam Study Reference Link](https://www.youtube.com/results?search_query=3321_Network_Admin+-+CompTIA+Network%2B+%28N10-008%29+OSPF%2FBGP).
 
 ---
 

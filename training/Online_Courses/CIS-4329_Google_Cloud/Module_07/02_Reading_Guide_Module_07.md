@@ -15,6 +15,9 @@ Review these essential definitions carefully. The certification exam expects you
 
 *   **Committed Use Discounts**: If you know you will need a certain amount of CPU and RAM for the next 1 or 3 years, you commit to paying for it and receive up to a 70% discount.
 *   **Sustained Use Discounts**: Automatic discounts applied when an instance runs for a significant portion of the billing month.
+*   **Focus Area**: Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
+*   **Scenario Trap**: Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
+*   **Study Resource**: To reinforce these concepts visually, review this targeted search query: [YouTube Exam Study Reference Link](https://www.youtube.com/results?search_query=4329_Google_Cloud+-+Google+Cloud+Associate+Cloud+Engineer+Billing).
 
 ---
 

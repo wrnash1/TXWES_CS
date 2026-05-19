@@ -16,6 +16,9 @@ Review these essential definitions carefully. The certification exam expects you
 *   **Domain Controller Promotion**: Installing the AD DS role is not enough; you must then run the wizard to 'Promote this server to a domain controller'.
 *   **Global Catalog (GC)**: A domain controller that stores a partial, read-only copy of all objects in the entire forest. It's used for forest-wide searches and universal group membership lookups.
 *   **FSMO Roles**: Flexible Single Master Operations roles. There are 5 roles (Schema Master, Domain Naming Master, RID Master, PDC Emulator, Infrastructure Master) that handle specific tasks to prevent database conflicts.
+*   **Focus Area**: Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
+*   **Scenario Trap**: Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
+*   **Study Resource**: To reinforce these concepts visually, review this targeted search query: [YouTube Exam Study Reference Link](https://www.youtube.com/results?search_query=3326_Windows_Server_Admin+-+Microsoft+Windows+Server+Administration+%28Active+Directory%29+AD+DS).
 
 ---
 

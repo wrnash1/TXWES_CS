@@ -18,62 +18,62 @@ What is the primary difference between an incident and a problem in ITIL?
 
 **Question 2**
 In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **known errors**?
-C) Search Engine Optimization; practices designed to improve the visibility and ranking of web pages in search engine results through clean HTML, meta tags, and alt text.
-B) The descendant node connected to the right branch of a parent node in a binary tree structure.
-D) The monetary loss expected from a single occurrence of a specific risk event, calculated as Asset Value multiplied by the Exposure Factor (SLE = AV * EF).
+D) Data about the HTML document (like description, keywords, author, and viewport configurations) that is processed by browsers and search engine crawlers.
+B) The operational principle of a queue, where the first element added is the first one to be removed, mimicking a line at a checkout register.
 A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
+C) The configuration of input data that forces an algorithm to perform the maximum number of operations, providing a guaranteed upper limit on execution time.
 *   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **known errors**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **known errors**.
     * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **known errors**.
+    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **known errors**.
     * *Why A is correct:* This describes the exact role and function of **known errors**.
+    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **known errors**.
 
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **launch all application services in the background using docker-compose configuration**. Which of the following commands is the most appropriate to execute?
-C) terraform validate
-A) docker-compose up -d
-B) git log --oneline -n 5
+A systems administrator or developer needs to **check the configuration files for syntactic and internal consistency correctness**. Which of the following commands is the most appropriate to execute?
+C) docker-compose up -d
+A) terraform validate
 D) systemctl status iot_service
-*   **Correct Answer:** A) docker-compose up -d
+B) git log --oneline -n 5
+*   **Correct Answer:** A) terraform validate
 *   **Distractor Analysis:**
     * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `docker-compose up -d` command is directly designed to launch all application services in the background using docker-compose configuration.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
+    * *Why A is correct:* The `terraform validate` command is directly designed to check the configuration files for syntactic and internal consistency correctness.
     * *Why D is incorrect:* This command handles alternative administrative tasks.
+    * *Why B is incorrect:* This command handles alternative administrative tasks.
 
 
 ---
 
 **Question 4**
 While working on **Practices: Incident & Problem Management** in a production environment, you encounter a system alert indicating a **Dependency Bottleneck** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-A) Re-assign resources to critical path tasks and establish clear communication protocols.
-C) Optimize service resources, implement load balancing, or update failover mechanisms.
 D) Reboot the physical machine and wait for services to reload.
-B) Implement strict change control boards (CCB) and re-baseline the project constraints.
+B) Optimize service resources, implement load balancing, or update failover mechanisms.
+C) Implement strict change control boards (CCB) and re-baseline the project constraints.
+A) Re-assign resources to critical path tasks and establish clear communication protocols.
 *   **Correct Answer:** A) Re-assign resources to critical path tasks and establish clear communication protocols.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Because A critical task is blocked by a delayed prerequisite task, stalling the entire project timeline. The appropriate fix is to Re-assign resources to critical path tasks and establish clear communication protocols..
-    * *Why C is incorrect:* This action does not resolve the root cause of Dependency Bottleneck.
     * *Why D is incorrect:* This action does not resolve the root cause of Dependency Bottleneck.
     * *Why B is incorrect:* This action does not resolve the root cause of Dependency Bottleneck.
+    * *Why C is incorrect:* This action does not resolve the root cause of Dependency Bottleneck.
+    * *Why A is correct:* Because A critical task is blocked by a delayed prerequisite task, stalling the entire project timeline. The appropriate fix is to Re-assign resources to critical path tasks and establish clear communication protocols..
 
 
 ---
 
 **Question 5**
 When designing a system for **Practices: Incident & Problem Management**, you must mitigate the risk of **A disaster or ransomware attack causing prolonged downtime because recovery steps are undocumented.**. Which of the following security configurations or controls represents the best practice to implement?
-B) Establish formal authorization procedures and digital signatures for all project scope modifications.
-C) Enable full disk encryption on all client endpoints.
-D) Enable full disk encryption on all client endpoints.
 A) Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services.
+C) Enable full disk encryption on all client endpoints.
+B) Establish formal authorization procedures and digital signatures for all project scope modifications.
+D) Enable full disk encryption on all client endpoints.
 *   **Correct Answer:** A) Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
-    * *Why C is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
-    * *Why D is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
     * *Why A is correct:* Implementing Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services. mitigates the risk of A disaster or ransomware attack causing prolonged downtime because recovery steps are undocumented..
+    * *Why C is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
+    * *Why B is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
+    * *Why D is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
 

@@ -17,49 +17,49 @@ What function must be invoked at the end of a custom Express middleware handler 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **routing parameters**?
-B) The operational principle of a stack, where the element added most recently is the first one to be removed, similar to a stack of trays.
-C) The standard configuration parameters pre-loaded into a software application or system before any custom adjustments are made by an administrator.
+In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Middleware pipeline**?
+C) The configuration of input data that forces an algorithm to perform the maximum number of operations, providing a guaranteed upper limit on execution time.
 A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-D) A complete binary tree where the key of any parent node is less than or equal to the keys of its children, guaranteeing the root is always the minimum element.
+D) The monetary loss expected from a single occurrence of a specific risk event, calculated as Asset Value multiplied by the Exposure Factor (SLE = AV * EF).
+B) The core operations of a queue: 'enqueue' appends an element to the back, and 'dequeue' removes and returns the front element.
 *   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **routing parameters**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **routing parameters**.
-    * *Why A is correct:* This describes the exact role and function of **routing parameters**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **routing parameters**.
+    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Middleware pipeline**.
+    * *Why A is correct:* This describes the exact role and function of **Middleware pipeline**.
+    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Middleware pipeline**.
+    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Middleware pipeline**.
 
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **install all external project dependencies specified in the requirements manifest**. Which of the following commands is the most appropriate to execute?
-C) pytest
-B) git commit -m 'update'
-A) pip install -r requirements.txt
-D) python3 -m venv .venv
-*   **Correct Answer:** A) pip install -r requirements.txt
+A systems administrator or developer needs to **record staged code modifications into the repository version history**. Which of the following commands is the most appropriate to execute?
+B) pip install -r requirements.txt
+A) git commit -m 'update'
+C) python3 -m venv .venv
+D) pytest
+*   **Correct Answer:** A) git commit -m 'update'
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
     * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `pip install -r requirements.txt` command is directly designed to install all external project dependencies specified in the requirements manifest.
+    * *Why A is correct:* The `git commit -m 'update'` command is directly designed to record staged code modifications into the repository version history.
+    * *Why C is incorrect:* This command handles alternative administrative tasks.
     * *Why D is incorrect:* This command handles alternative administrative tasks.
 
 
 ---
 
 **Question 4**
-While working on **Server-Side Routing & Middleware** in a production environment, you encounter a system alert indicating a **KeyError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-A) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
+While working on **Server-Side Routing & Middleware** in a production environment, you encounter a system alert indicating a **IndexError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
+B) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
+A) Verify that the index is within the valid range of 0 to len(list)-1.
 D) Reboot the physical machine and wait for services to reload.
-C) Verify that the index is within the valid range of 0 to len(list)-1.
-B) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-*   **Correct Answer:** A) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
+C) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
+*   **Correct Answer:** A) Verify that the index is within the valid range of 0 to len(list)-1.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Because The code attempted to access a dictionary key that is not defined in the object. The appropriate fix is to Ensure the requested key exists in the dictionary, or use the .get() method to return a default value..
-    * *Why D is incorrect:* This action does not resolve the root cause of KeyError.
-    * *Why C is incorrect:* This action does not resolve the root cause of KeyError.
-    * *Why B is incorrect:* This action does not resolve the root cause of KeyError.
+    * *Why B is incorrect:* This action does not resolve the root cause of IndexError.
+    * *Why A is correct:* Because The code attempted to access an element of a sequence using an out-of-bounds index. The appropriate fix is to Verify that the index is within the valid range of 0 to len(list)-1..
+    * *Why D is incorrect:* This action does not resolve the root cause of IndexError.
+    * *Why C is incorrect:* This action does not resolve the root cause of IndexError.
 
 
 ---

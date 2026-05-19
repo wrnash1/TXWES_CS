@@ -18,62 +18,62 @@ What standard power connector is used to supply direct auxiliary power to high-e
 
 **Question 2**
 In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **case airflow (intake vs exhaust).**?
-D) The monetary loss expected from a single occurrence of a specific risk event, calculated as Asset Value multiplied by the Exposure Factor (SLE = AV * EF).
-B) Elements placed inside the <head> block of an HTML document that define metadata, links to stylesheets, scripts, character sets, and page titles.
+C) HTML tags that convey the meaning and structure of the enclosed content to both the browser and search engines (e.g., <header>, <article>, <footer>) instead of generic containers.
+D) The entry point or first node in a linked list, which serves as the reference for traversing the rest of the list structure.
+B) The monetary loss expected from a single occurrence of a specific risk event, calculated as Asset Value multiplied by the Exposure Factor (SLE = AV * EF).
 A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within os_admin operations.
-C) A complete binary tree where the key of any parent node is greater than or equal to the keys of its children, guaranteeing the root is always the maximum element.
 *   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within os_admin operations.
 *   **Distractor Analysis:**
+    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **case airflow (intake vs exhaust).**.
     * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **case airflow (intake vs exhaust).**.
     * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **case airflow (intake vs exhaust).**.
     * *Why A is correct:* This describes the exact role and function of **case airflow (intake vs exhaust).**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **case airflow (intake vs exhaust).**.
 
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **instruct the systemd init system to restart a specified background service process**. Which of the following commands is the most appropriate to execute?
-B) ps aux
-C) df -h
-A) systemctl restart service
-D) chmod 600 config.conf
-*   **Correct Answer:** A) systemctl restart service
+A systems administrator or developer needs to **list all currently active processes running on the system with CPU and memory usage statistics**. Which of the following commands is the most appropriate to execute?
+A) ps aux
+B) systemctl restart service
+C) chmod 600 config.conf
+D) df -h
+*   **Correct Answer:** A) ps aux
 *   **Distractor Analysis:**
+    * *Why A is correct:* The `ps aux` command is directly designed to list all currently active processes running on the system with CPU and memory usage statistics.
     * *Why B is incorrect:* This command handles alternative administrative tasks.
     * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `systemctl restart service` command is directly designed to instruct the systemd init system to restart a specified background service process.
     * *Why D is incorrect:* This command handles alternative administrative tasks.
 
 
 ---
 
 **Question 4**
-While working on **Power Supplies and System Cooling** in a production environment, you encounter a system alert indicating a **Disk Space Full** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-B) Prepend the command with 'sudo' to run it with superuser administrative privileges, or adjust the file permissions.
-A) Run log rotations, clean temporary files, or expand the logical volume capacity.
+While working on **Power Supplies and System Cooling** in a production environment, you encounter a system alert indicating a **Permission Denied** error. Which of the following is the most effective troubleshooting action to resolve this issue?
+A) Prepend the command with 'sudo' to run it with superuser administrative privileges, or adjust the file permissions.
 D) Reboot the physical machine and wait for services to reload.
-C) Identify and terminate the process already utilizing the target port, or modify the service configuration to use an open port.
-*   **Correct Answer:** A) Run log rotations, clean temporary files, or expand the logical volume capacity.
+C) Run log rotations, clean temporary files, or expand the logical volume capacity.
+B) Identify and terminate the process already utilizing the target port, or modify the service configuration to use an open port.
+*   **Correct Answer:** A) Prepend the command with 'sudo' to run it with superuser administrative privileges, or adjust the file permissions.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This action does not resolve the root cause of Disk Space Full.
-    * *Why A is correct:* Because The storage volume has run out of space, preventing files from being written and causing system services to fail. The appropriate fix is to Run log rotations, clean temporary files, or expand the logical volume capacity..
-    * *Why D is incorrect:* This action does not resolve the root cause of Disk Space Full.
-    * *Why C is incorrect:* This action does not resolve the root cause of Disk Space Full.
+    * *Why A is correct:* Because The current user account lacks the required read, write, or execute permissions for the target file or system call. The appropriate fix is to Prepend the command with 'sudo' to run it with superuser administrative privileges, or adjust the file permissions..
+    * *Why D is incorrect:* This action does not resolve the root cause of Permission Denied.
+    * *Why C is incorrect:* This action does not resolve the root cause of Permission Denied.
+    * *Why B is incorrect:* This action does not resolve the root cause of Permission Denied.
 
 
 ---
 
 **Question 5**
-When designing a system for **Power Supplies and System Cooling**, you must mitigate the risk of **Administrators logging in routinely as root or Administrator, increasing the blast radius of user errors or malware.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC.
+When designing a system for **Power Supplies and System Cooling**, you must mitigate the risk of **Attackers exploiting vulnerabilities in forgotten background services or using abandoned accounts to gain persistent access.**. Which of the following security configurations or controls represents the best practice to implement?
+A) Disable unused system accounts and run a port scan to disable unnecessary active background services.
 C) Enable full disk encryption on all client endpoints.
+B) Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC.
 D) Enable full disk encryption on all client endpoints.
-B) Disable unused system accounts and run a port scan to disable unnecessary active background services.
-*   **Correct Answer:** A) Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC.
+*   **Correct Answer:** A) Disable unused system accounts and run a port scan to disable unnecessary active background services.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC. mitigates the risk of Administrators logging in routinely as root or Administrator, increasing the blast radius of user errors or malware..
-    * *Why C is incorrect:* This does not address the security vulnerability of Privileged Access Abuse.
-    * *Why D is incorrect:* This does not address the security vulnerability of Privileged Access Abuse.
-    * *Why B is incorrect:* This does not address the security vulnerability of Privileged Access Abuse.
+    * *Why A is correct:* Implementing Disable unused system accounts and run a port scan to disable unnecessary active background services. mitigates the risk of Attackers exploiting vulnerabilities in forgotten background services or using abandoned accounts to gain persistent access..
+    * *Why C is incorrect:* This does not address the security vulnerability of Stale Accounts & Services.
+    * *Why B is incorrect:* This does not address the security vulnerability of Stale Accounts & Services.
+    * *Why D is incorrect:* This does not address the security vulnerability of Stale Accounts & Services.
 

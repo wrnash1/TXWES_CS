@@ -17,63 +17,63 @@ What makes a metric a Key Performance Indicator (KPI)?
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **dashboard design.**?
+In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Key Performance Indicators (KPIs)**?
+D) Search Engine Optimization; practices designed to improve the visibility and ranking of web pages in search engine results through clean HTML, meta tags, and alt text.
+B) The difference in height between the left and right subtrees of a node in an AVL tree, which must be -1, 0, or 1 to remain balanced.
 A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within database operations.
-C) The four properties (Atomicity, Consistency, Isolation, Durability) that guarantee database transactions are processed reliably.
-D) The defining rule of a BST: for any given node, all keys in its left subtree must be less than or equal to its key, and all keys in its right subtree must be greater.
-B) A deployment model that uses two identical production environments (Blue and Green) to minimize downtime and risk; updates are deployed to the idle environment before routing live traffic.
+C) An efficient mapping technique for complete binary trees where parent-child indices can be computed using simple arithmetic (e.g., parent is (i-1)/2).
 *   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within database operations.
 *   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **dashboard design.**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **dashboard design.**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **dashboard design.**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **dashboard design.**.
+    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Key Performance Indicators (KPIs)**.
+    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Key Performance Indicators (KPIs)**.
+    * *Why A is correct:* This describes the exact role and function of **Key Performance Indicators (KPIs)**.
+    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Key Performance Indicators (KPIs)**.
 
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **query and retrieve active user records matching specific conditions from the database table**. Which of the following commands is the most appropriate to execute?
-A) SELECT * FROM users WHERE active = 1;
+A systems administrator or developer needs to **analyze the database execution plan to identify performance bottlenecks and slow scan steps**. Which of the following commands is the most appropriate to execute?
+C) GRANT SELECT ON client_db TO analyst_role;
 D) CREATE INDEX idx_email ON users(email);
-C) EXPLAIN ANALYZE SELECT * FROM logs;
-B) GRANT SELECT ON client_db TO analyst_role;
-*   **Correct Answer:** A) SELECT * FROM users WHERE active = 1;
+A) EXPLAIN ANALYZE SELECT * FROM logs;
+B) SELECT * FROM users WHERE active = 1;
+*   **Correct Answer:** A) EXPLAIN ANALYZE SELECT * FROM logs;
 *   **Distractor Analysis:**
-    * *Why A is correct:* The `SELECT * FROM users WHERE active = 1;` command is directly designed to query and retrieve active user records matching specific conditions from the database table.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
     * *Why C is incorrect:* This command handles alternative administrative tasks.
+    * *Why D is incorrect:* This command handles alternative administrative tasks.
+    * *Why A is correct:* The `EXPLAIN ANALYZE SELECT * FROM logs;` command is directly designed to analyze the database execution plan to identify performance bottlenecks and slow scan steps.
     * *Why B is incorrect:* This command handles alternative administrative tasks.
 
 
 ---
 
 **Question 4**
-While working on **KPIs & Business Metrics** in a production environment, you encounter a system alert indicating a **Connection Timeout** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-C) Optimize application query order, implement retry logic, and keep transaction blocks as brief as possible.
+While working on **KPIs & Business Metrics** in a production environment, you encounter a system alert indicating a **Database Deadlock** error. Which of the following is the most effective troubleshooting action to resolve this issue?
+A) Optimize application query order, implement retry logic, and keep transaction blocks as brief as possible.
 D) Reboot the physical machine and wait for services to reload.
 B) Analyze the query plan and create appropriate indexes on columns frequently used in WHERE and JOIN clauses.
-A) Increase the database connection pool limit, adjust timeout configurations, or scale database resources.
-*   **Correct Answer:** A) Increase the database connection pool limit, adjust timeout configurations, or scale database resources.
+C) Increase the database connection pool limit, adjust timeout configurations, or scale database resources.
+*   **Correct Answer:** A) Optimize application query order, implement retry logic, and keep transaction blocks as brief as possible.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This action does not resolve the root cause of Connection Timeout.
-    * *Why D is incorrect:* This action does not resolve the root cause of Connection Timeout.
-    * *Why B is incorrect:* This action does not resolve the root cause of Connection Timeout.
-    * *Why A is correct:* Because The database server has exhausted its pool of concurrent client connections or is overloaded with work. The appropriate fix is to Increase the database connection pool limit, adjust timeout configurations, or scale database resources..
+    * *Why A is correct:* Because Two or more transactions are waiting for each other to release locks on resources, causing a permanent block. The appropriate fix is to Optimize application query order, implement retry logic, and keep transaction blocks as brief as possible..
+    * *Why D is incorrect:* This action does not resolve the root cause of Database Deadlock.
+    * *Why B is incorrect:* This action does not resolve the root cause of Database Deadlock.
+    * *Why C is incorrect:* This action does not resolve the root cause of Database Deadlock.
 
 
 ---
 
 **Question 5**
-When designing a system for **KPIs & Business Metrics**, you must mitigate the risk of **Attackers injecting malicious SQL strings that bypass authentication and leak entire database contents.**. Which of the following security configurations or controls represents the best practice to implement?
-B) Enable Transparent Data Encryption (TDE) or cloud database storage encryption at rest.
-D) Enable full disk encryption on all client endpoints.
-A) Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs.
+When designing a system for **KPIs & Business Metrics**, you must mitigate the risk of **Unauthorized access to database backup files or physical drives exposing all customer data.**. Which of the following security configurations or controls represents the best practice to implement?
 C) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs.
+B) Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs.
+D) Enable full disk encryption on all client endpoints.
+A) Enable Transparent Data Encryption (TDE) or cloud database storage encryption at rest.
+*   **Correct Answer:** A) Enable Transparent Data Encryption (TDE) or cloud database storage encryption at rest.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Exposure.
-    * *Why D is incorrect:* This does not address the security vulnerability of SQL Injection Exposure.
-    * *Why A is correct:* Implementing Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs. mitigates the risk of Attackers injecting malicious SQL strings that bypass authentication and leak entire database contents..
-    * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Exposure.
+    * *Why C is incorrect:* This does not address the security vulnerability of Unencrypted Storage.
+    * *Why B is incorrect:* This does not address the security vulnerability of Unencrypted Storage.
+    * *Why D is incorrect:* This does not address the security vulnerability of Unencrypted Storage.
+    * *Why A is correct:* Implementing Enable Transparent Data Encryption (TDE) or cloud database storage encryption at rest. mitigates the risk of Unauthorized access to database backup files or physical drives exposing all customer data..
 

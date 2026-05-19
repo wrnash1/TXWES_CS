@@ -13,6 +13,7 @@ BASE_DIR = "/home/wrnash1/Developer/TXWES_CS/training/Online_Courses"
 DOMAINS = {
     "programming": [
         "CIS-1310_Intro_to_Python",
+        "CIS-1320_Intro_to_JavaScript",
         "CIS-2315_Data_Structures_Algorithms",
         "CIS-3340_Full_Stack_Web_Dev",
         "CIS-3350_Software_Engineering_Agile",

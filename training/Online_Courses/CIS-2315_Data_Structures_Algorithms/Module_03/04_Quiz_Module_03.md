@@ -18,62 +18,62 @@ Which data structure follows the LIFO (Last-In-First-Out) principle?
 
 **Question 2**
 In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **push/pop**?
-B) The standard configuration parameters pre-loaded into a software application or system before any custom adjustments are made by an administrator.
-D) An instruction within a function that invokes the function itself, passing modified arguments to solve a smaller subproblem.
-C) A complete binary tree where the key of any parent node is greater than or equal to the keys of its children, guaranteeing the root is always the maximum element.
+D) A node in a tree structure that has no child nodes (its children point to null), representing the termination points of the branches.
+B) The termination condition in a recursive function that stops further recursive calls and begins unwinding the call stack, preventing infinite execution.
 A) The core operations of a stack: 'push' inserts an element onto the top, and 'pop' removes and returns the top element.
+C) Search Engine Optimization; practices designed to improve the visibility and ranking of web pages in search engine results through clean HTML, meta tags, and alt text.
 *   **Correct Answer:** A) The core operations of a stack: 'push' inserts an element onto the top, and 'pop' removes and returns the top element.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **push/pop**.
     * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **push/pop**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **push/pop**.
+    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **push/pop**.
     * *Why A is correct:* This describes the exact role and function of **push/pop**.
+    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **push/pop**.
 
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **install all external project dependencies specified in the requirements manifest**. Which of the following commands is the most appropriate to execute?
+A systems administrator or developer needs to **record staged code modifications into the repository version history**. Which of the following commands is the most appropriate to execute?
 B) python3 -m venv .venv
-D) pytest
-C) git commit -m 'update'
-A) pip install -r requirements.txt
-*   **Correct Answer:** A) pip install -r requirements.txt
+C) pytest
+A) git commit -m 'update'
+D) pip install -r requirements.txt
+*   **Correct Answer:** A) git commit -m 'update'
 *   **Distractor Analysis:**
     * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
     * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `pip install -r requirements.txt` command is directly designed to install all external project dependencies specified in the requirements manifest.
+    * *Why A is correct:* The `git commit -m 'update'` command is directly designed to record staged code modifications into the repository version history.
+    * *Why D is incorrect:* This command handles alternative administrative tasks.
 
 
 ---
 
 **Question 4**
-While working on **Stacks & Queues** in a production environment, you encounter a system alert indicating a **IndexError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-C) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-A) Verify that the index is within the valid range of 0 to len(list)-1.
-B) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
+While working on **Stacks & Queues** in a production environment, you encounter a system alert indicating a **TypeError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
+B) Verify that the index is within the valid range of 0 to len(list)-1.
+A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
+C) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
 D) Reboot the physical machine and wait for services to reload.
-*   **Correct Answer:** A) Verify that the index is within the valid range of 0 to len(list)-1.
+*   **Correct Answer:** A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This action does not resolve the root cause of IndexError.
-    * *Why A is correct:* Because The code attempted to access an element of a sequence using an out-of-bounds index. The appropriate fix is to Verify that the index is within the valid range of 0 to len(list)-1..
-    * *Why B is incorrect:* This action does not resolve the root cause of IndexError.
-    * *Why D is incorrect:* This action does not resolve the root cause of IndexError.
+    * *Why B is incorrect:* This action does not resolve the root cause of TypeError.
+    * *Why A is correct:* Because An operation or function was applied to an object of an inappropriate data type. The appropriate fix is to Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types..
+    * *Why C is incorrect:* This action does not resolve the root cause of TypeError.
+    * *Why D is incorrect:* This action does not resolve the root cause of TypeError.
 
 
 ---
 
 **Question 5**
-When designing a system for **Stacks & Queues**, you must mitigate the risk of **Allowing attackers to execute arbitrary SQL commands on the backend database via input forms.**. Which of the following security configurations or controls represents the best practice to implement?
+When designing a system for **Stacks & Queues**, you must mitigate the risk of **Storing user credentials in plain text, making them vulnerable to database breaches.**. Which of the following security configurations or controls represents the best practice to implement?
+A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
+B) Implement parameterized queries and prepared statements rather than raw string concatenation.
 C) Enable full disk encryption on all client endpoints.
-B) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
 D) Enable full disk encryption on all client endpoints.
-A) Implement parameterized queries and prepared statements rather than raw string concatenation.
-*   **Correct Answer:** A) Implement parameterized queries and prepared statements rather than raw string concatenation.
+*   **Correct Answer:** A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why D is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why A is correct:* Implementing Implement parameterized queries and prepared statements rather than raw string concatenation. mitigates the risk of Allowing attackers to execute arbitrary SQL commands on the backend database via input forms..
+    * *Why A is correct:* Implementing Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt. mitigates the risk of Storing user credentials in plain text, making them vulnerable to database breaches..
+    * *Why B is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
+    * *Why C is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
+    * *Why D is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
 

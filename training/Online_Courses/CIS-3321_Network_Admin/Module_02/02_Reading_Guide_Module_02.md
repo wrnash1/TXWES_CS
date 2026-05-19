@@ -28,6 +28,9 @@ Review these essential definitions carefully. The certification exam expects you
 *   **802.1Q**: The IEEE standard for VLAN trunking (tagging frames with their VLAN ID).
 *   **ARP (Address Resolution Protocol)**: The protocol used to find the MAC address associated with a known IP address.
 *   **PoE (Power over Ethernet)**: Sending electrical power over standard Cat5e/Cat6 ethernet cables to power devices like IP cameras or Access Points (802.3af/at standards).
+*   **Focus Area**: Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
+*   **Scenario Trap**: Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
+*   **Study Resource**: To reinforce these concepts visually, review this targeted search query: [YouTube Exam Study Reference Link](https://www.youtube.com/results?search_query=3321_Network_Admin+-+CompTIA+Network%2B+%28N10-008%29+VLANs).
 
 ---
 

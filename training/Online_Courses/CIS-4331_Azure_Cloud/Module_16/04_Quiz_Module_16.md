@@ -4,65 +4,65 @@
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **System Configuration**?
-C) An algebraic restructuring operation on a binary tree that changes the parent-child relationships to restore balance without violating the search order.
-D) A cloud feature that dynamically adjusts resource capacity (number of VMs) based on active demand or performance metrics.
-B) The defining rule of a BST: for any given node, all keys in its left subtree must be less than or equal to its key, and all keys in its right subtree must be greater.
+In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Core Operations**?
 A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within cloud operations.
+D) An instruction within a function that invokes the function itself, passing modified arguments to solve a smaller subproblem.
+B) The termination condition in a recursive function that stops further recursive calls and begins unwinding the call stack, preventing infinite execution.
+C) The method of evaluating an algorithm's efficiency by analyzing its behavior as the input size approaches infinity, focusing on growth rates rather than specific hardware speeds.
 *   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within cloud operations.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **System Configuration**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **System Configuration**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **System Configuration**.
-    * *Why A is correct:* This describes the exact role and function of **System Configuration**.
+    * *Why A is correct:* This describes the exact role and function of **Core Operations**.
+    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Core Operations**.
+    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Core Operations**.
+    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Core Operations**.
 
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **System Configuration**?
-D) A deployment model that uses two identical production environments (Blue and Green) to minimize downtime and risk; updates are deployed to the idle environment before routing live traffic.
+In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Best Practices**?
+C) Data about the HTML document (like description, keywords, author, and viewport configurations) that is processed by browsers and search engine crawlers.
+D) The termination condition in a recursive function that stops further recursive calls and begins unwinding the call stack, preventing infinite execution.
 A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within cloud operations.
-C) A complete binary tree where the key of any parent node is greater than or equal to the keys of its children, guaranteeing the root is always the maximum element.
-B) A complete binary tree where the key of any parent node is less than or equal to the keys of its children, guaranteeing the root is always the minimum element.
+B) A cloud feature that dynamically adjusts resource capacity (number of VMs) based on active demand or performance metrics.
 *   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within cloud operations.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **System Configuration**.
-    * *Why A is correct:* This describes the exact role and function of **System Configuration**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **System Configuration**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **System Configuration**.
+    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Best Practices**.
+    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Best Practices**.
+    * *Why A is correct:* This describes the exact role and function of **Best Practices**.
+    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Best Practices**.
 
 
 ---
 
 **Question 3**
 A systems administrator or developer needs to **execute the infrastructure plan to provision or modify resources defined in the configuration files**. Which of the following commands is the most appropriate to execute?
+B) aws s3 sync local_dir s3://my-bucket
 C) kubectl get pods -n production
 A) terraform apply
-D) aws s3 sync local_dir s3://my-bucket
-B) gcloud compute instances list
+D) gcloud compute instances list
 *   **Correct Answer:** A) terraform apply
 *   **Distractor Analysis:**
+    * *Why B is incorrect:* This command handles alternative administrative tasks.
     * *Why C is incorrect:* This command handles alternative administrative tasks.
     * *Why A is correct:* The `terraform apply` command is directly designed to execute the infrastructure plan to provision or modify resources defined in the configuration files.
     * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
 
 
 ---
 
 **Question 4**
-While working on **Course Module** in a production environment, you encounter a system alert indicating a **Cloud Billing Spike** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-A) Set up billing alerts, delete unused volumes, and configure auto-scaling scale-down policies.
-C) Review the user's IAM policies and attach the specific policy granting permissions for the resource action.
+While working on **Course Module** in a production environment, you encounter a system alert indicating a **IAM Access Denied** error. Which of the following is the most effective troubleshooting action to resolve this issue?
+A) Review the user's IAM policies and attach the specific policy granting permissions for the resource action.
 B) Check the VPC route table for an Internet Gateway path and verify that the security group allows incoming traffic.
+C) Set up billing alerts, delete unused volumes, and configure auto-scaling scale-down policies.
 D) Reboot the physical machine and wait for services to reload.
-*   **Correct Answer:** A) Set up billing alerts, delete unused volumes, and configure auto-scaling scale-down policies.
+*   **Correct Answer:** A) Review the user's IAM policies and attach the specific policy granting permissions for the resource action.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Because Idle or over-provisioned virtual machine instances and orphan storage volumes are running continuously. The appropriate fix is to Set up billing alerts, delete unused volumes, and configure auto-scaling scale-down policies..
-    * *Why C is incorrect:* This action does not resolve the root cause of Cloud Billing Spike.
-    * *Why B is incorrect:* This action does not resolve the root cause of Cloud Billing Spike.
-    * *Why D is incorrect:* This action does not resolve the root cause of Cloud Billing Spike.
+    * *Why A is correct:* Because The user account or service role lacks the explicit IAM permissions required to execute the API call. The appropriate fix is to Review the user's IAM policies and attach the specific policy granting permissions for the resource action..
+    * *Why B is incorrect:* This action does not resolve the root cause of IAM Access Denied.
+    * *Why C is incorrect:* This action does not resolve the root cause of IAM Access Denied.
+    * *Why D is incorrect:* This action does not resolve the root cause of IAM Access Denied.
 
 
 ---

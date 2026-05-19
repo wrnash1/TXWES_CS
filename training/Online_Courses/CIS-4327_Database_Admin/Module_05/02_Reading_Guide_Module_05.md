@@ -15,6 +15,9 @@ Review these essential definitions carefully. The certification exam expects you
 
 *   **Nodes vs. Processing Units**: You scale Spanner by adding compute capacity. 1 Node = 1000 Processing Units.
 *   **Interleaving Tables**: A physical schema design technique in Spanner where child rows are stored physically adjacent to parent rows on the hard drive, massively speeding up JOIN queries.
+*   **Focus Area**: Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
+*   **Scenario Trap**: Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
+*   **Study Resource**: To reinforce these concepts visually, review this targeted search query: [YouTube Exam Study Reference Link](https://www.youtube.com/results?search_query=4327_Database_Admin+-+Google+Cloud+Associate+Database+Engineer+TrueTime).
 
 ---
 

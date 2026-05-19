@@ -18,62 +18,62 @@ Which S3 storage class offers the lowest retrieval times and cost for archival d
 
 **Question 2**
 In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **storage classes (Standard**?
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within cloud operations.
-B) Data about the HTML document (like description, keywords, author, and viewport configurations) that is processed by browsers and search engine crawlers.
 C) The core operations of a queue: 'enqueue' appends an element to the back, and 'dequeue' removes and returns the front element.
-D) Flexible Box Layout; a one-dimensional CSS layout model that makes it easy to align items and distribute space within a container, handling varying screen sizes dynamically.
+B) The maximum acceptable age of data that must be recovered from backup storage to restore operations, representing the limit of tolerable data loss.
+A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within cloud operations.
+D) The monetary loss expected from a single occurrence of a specific risk event, calculated as Asset Value multiplied by the Exposure Factor (SLE = AV * EF).
 *   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within cloud operations.
 *   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **storage classes (Standard**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **storage classes (Standard**.
     * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **storage classes (Standard**.
+    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **storage classes (Standard**.
+    * *Why A is correct:* This describes the exact role and function of **storage classes (Standard**.
     * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **storage classes (Standard**.
 
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **execute the infrastructure plan to provision or modify resources defined in the configuration files**. Which of the following commands is the most appropriate to execute?
+A systems administrator or developer needs to **synchronize local files directly to a cloud object storage bucket**. Which of the following commands is the most appropriate to execute?
+A) aws s3 sync local_dir s3://my-bucket
 B) kubectl get pods -n production
-C) aws s3 sync local_dir s3://my-bucket
-A) terraform apply
-D) gcloud compute instances list
-*   **Correct Answer:** A) terraform apply
+C) gcloud compute instances list
+D) terraform apply
+*   **Correct Answer:** A) aws s3 sync local_dir s3://my-bucket
 *   **Distractor Analysis:**
+    * *Why A is correct:* The `aws s3 sync local_dir s3://my-bucket` command is directly designed to synchronize local files directly to a cloud object storage bucket.
     * *Why B is incorrect:* This command handles alternative administrative tasks.
     * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `terraform apply` command is directly designed to execute the infrastructure plan to provision or modify resources defined in the configuration files.
     * *Why D is incorrect:* This command handles alternative administrative tasks.
 
 
 ---
 
 **Question 4**
-While working on **Amazon S3 Object Storage** in a production environment, you encounter a system alert indicating a **IAM Access Denied** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-A) Review the user's IAM policies and attach the specific policy granting permissions for the resource action.
-C) Check the VPC route table for an Internet Gateway path and verify that the security group allows incoming traffic.
+While working on **Amazon S3 Object Storage** in a production environment, you encounter a system alert indicating a **Cloud Instance Unreachable** error. Which of the following is the most effective troubleshooting action to resolve this issue?
 B) Set up billing alerts, delete unused volumes, and configure auto-scaling scale-down policies.
+A) Check the VPC route table for an Internet Gateway path and verify that the security group allows incoming traffic.
+C) Review the user's IAM policies and attach the specific policy granting permissions for the resource action.
 D) Reboot the physical machine and wait for services to reload.
-*   **Correct Answer:** A) Review the user's IAM policies and attach the specific policy granting permissions for the resource action.
+*   **Correct Answer:** A) Check the VPC route table for an Internet Gateway path and verify that the security group allows incoming traffic.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Because The user account or service role lacks the explicit IAM permissions required to execute the API call. The appropriate fix is to Review the user's IAM policies and attach the specific policy granting permissions for the resource action..
-    * *Why C is incorrect:* This action does not resolve the root cause of IAM Access Denied.
-    * *Why B is incorrect:* This action does not resolve the root cause of IAM Access Denied.
-    * *Why D is incorrect:* This action does not resolve the root cause of IAM Access Denied.
+    * *Why B is incorrect:* This action does not resolve the root cause of Cloud Instance Unreachable.
+    * *Why A is correct:* Because The virtual machine is inside a private subnet without routing to the internet, or the security group blocks the connection. The appropriate fix is to Check the VPC route table for an Internet Gateway path and verify that the security group allows incoming traffic..
+    * *Why C is incorrect:* This action does not resolve the root cause of Cloud Instance Unreachable.
+    * *Why D is incorrect:* This action does not resolve the root cause of Cloud Instance Unreachable.
 
 
 ---
 
 **Question 5**
-When designing a system for **Amazon S3 Object Storage**, you must mitigate the risk of **Developers committing plain-text cloud access keys to public source code repositories, allowing full account takeover.**. Which of the following security configurations or controls represents the best practice to implement?
+When designing a system for **Amazon S3 Object Storage**, you must mitigate the risk of **Storing sensitive corporate documents in publicly readable cloud buckets, leading to data breaches.**. Which of the following security configurations or controls represents the best practice to implement?
+A) Enable Block Public Access configurations and enforce access control via IAM or signed URLs.
+B) Enforce temporary credentials (STS), rotate keys regularly, and never hardcode API keys in repositories.
 D) Enable full disk encryption on all client endpoints.
 C) Enable full disk encryption on all client endpoints.
-B) Enable Block Public Access configurations and enforce access control via IAM or signed URLs.
-A) Enforce temporary credentials (STS), rotate keys regularly, and never hardcode API keys in repositories.
-*   **Correct Answer:** A) Enforce temporary credentials (STS), rotate keys regularly, and never hardcode API keys in repositories.
+*   **Correct Answer:** A) Enable Block Public Access configurations and enforce access control via IAM or signed URLs.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This does not address the security vulnerability of Compromised Access Keys.
-    * *Why C is incorrect:* This does not address the security vulnerability of Compromised Access Keys.
-    * *Why B is incorrect:* This does not address the security vulnerability of Compromised Access Keys.
-    * *Why A is correct:* Implementing Enforce temporary credentials (STS), rotate keys regularly, and never hardcode API keys in repositories. mitigates the risk of Developers committing plain-text cloud access keys to public source code repositories, allowing full account takeover..
+    * *Why A is correct:* Implementing Enable Block Public Access configurations and enforce access control via IAM or signed URLs. mitigates the risk of Storing sensitive corporate documents in publicly readable cloud buckets, leading to data breaches..
+    * *Why B is incorrect:* This does not address the security vulnerability of Publicly Exposed Storage Buckets.
+    * *Why D is incorrect:* This does not address the security vulnerability of Publicly Exposed Storage Buckets.
+    * *Why C is incorrect:* This does not address the security vulnerability of Publicly Exposed Storage Buckets.
 

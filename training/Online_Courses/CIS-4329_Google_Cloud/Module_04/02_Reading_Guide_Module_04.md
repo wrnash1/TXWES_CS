@@ -16,6 +16,9 @@ Review these essential definitions carefully. The certification exam expects you
 *   **Load Balancing Types**: * *Global HTTP(S) Load Balancer:* Operates at Layer 7. Distributes traffic globally based on the user's geographic location. Requires your backend to be in a MIG.
 *   **Uptime Checks**: Configured in Cloud Monitoring to constantly ping your web server from multiple locations around the world. If the site goes down, it triggers an alert policy.
 *   **Log Sinks**: Cloud Logs are only retained for 30 days by default. To keep them longer for compliance, you must create a Log Sink to export them to a Cloud Storage bucket or BigQuery.
+*   **Focus Area**: Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
+*   **Scenario Trap**: Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
+*   **Study Resource**: To reinforce these concepts visually, review this targeted search query: [YouTube Exam Study Reference Link](https://www.youtube.com/results?search_query=4329_Google_Cloud+-+Google+Cloud+Associate+Cloud+Engineer+Autoscaling).
 
 ---
 

@@ -17,6 +17,8 @@ D) The HA configuration will automatically trigger a Point-in-Time Recovery.
 
 ---
 
+---
+
 **Question 2**
 During a regional Cloud SQL HA failover, what happens to the IP address used by the client application to connect to the database?
 A) The IP address changes, and the application's connection string must be manually updated.
@@ -31,48 +33,50 @@ D) The IP address remains the same, and active transactions are held in memory w
 
 ---
 
+---
+
 **Question 3**
-A systems administrator or developer needs to **query and retrieve active user records matching specific conditions from the database table**. Which of the following commands is the most appropriate to execute?
-D) CREATE INDEX idx_email ON users(email);
-C) EXPLAIN ANALYZE SELECT * FROM logs;
-A) SELECT * FROM users WHERE active = 1;
-B) GRANT SELECT ON client_db TO analyst_role;
-*   **Correct Answer:** A) SELECT * FROM users WHERE active = 1;
+A systems administrator or developer needs to **assign read-only access privileges on the database to a specific security role**. Which of the following commands is the most appropriate to execute?
+C) CREATE INDEX idx_email ON users(email);
+D) EXPLAIN ANALYZE SELECT * FROM logs;
+A) GRANT SELECT ON client_db TO analyst_role;
+B) SELECT * FROM users WHERE active = 1;
+*   **Correct Answer:** A) GRANT SELECT ON client_db TO analyst_role;
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
     * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `SELECT * FROM users WHERE active = 1;` command is directly designed to query and retrieve active user records matching specific conditions from the database table.
+    * *Why D is incorrect:* This command handles alternative administrative tasks.
+    * *Why A is correct:* The `GRANT SELECT ON client_db TO analyst_role;` command is directly designed to assign read-only access privileges on the database to a specific security role.
     * *Why B is incorrect:* This command handles alternative administrative tasks.
 
 
 ---
 
 **Question 4**
-While working on **Spanner** in a production environment, you encounter a system alert indicating a **Connection Timeout** error. Which of the following is the most effective troubleshooting action to resolve this issue?
+While working on **Spanner** in a production environment, you encounter a system alert indicating a **Database Deadlock** error. Which of the following is the most effective troubleshooting action to resolve this issue?
 D) Reboot the physical machine and wait for services to reload.
-C) Optimize application query order, implement retry logic, and keep transaction blocks as brief as possible.
-A) Increase the database connection pool limit, adjust timeout configurations, or scale database resources.
-B) Analyze the query plan and create appropriate indexes on columns frequently used in WHERE and JOIN clauses.
-*   **Correct Answer:** A) Increase the database connection pool limit, adjust timeout configurations, or scale database resources.
+B) Increase the database connection pool limit, adjust timeout configurations, or scale database resources.
+C) Analyze the query plan and create appropriate indexes on columns frequently used in WHERE and JOIN clauses.
+A) Optimize application query order, implement retry logic, and keep transaction blocks as brief as possible.
+*   **Correct Answer:** A) Optimize application query order, implement retry logic, and keep transaction blocks as brief as possible.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This action does not resolve the root cause of Connection Timeout.
-    * *Why C is incorrect:* This action does not resolve the root cause of Connection Timeout.
-    * *Why A is correct:* Because The database server has exhausted its pool of concurrent client connections or is overloaded with work. The appropriate fix is to Increase the database connection pool limit, adjust timeout configurations, or scale database resources..
-    * *Why B is incorrect:* This action does not resolve the root cause of Connection Timeout.
+    * *Why D is incorrect:* This action does not resolve the root cause of Database Deadlock.
+    * *Why B is incorrect:* This action does not resolve the root cause of Database Deadlock.
+    * *Why C is incorrect:* This action does not resolve the root cause of Database Deadlock.
+    * *Why A is correct:* Because Two or more transactions are waiting for each other to release locks on resources, causing a permanent block. The appropriate fix is to Optimize application query order, implement retry logic, and keep transaction blocks as brief as possible..
 
 
 ---
 
 **Question 5**
-When designing a system for **Spanner**, you must mitigate the risk of **Attackers injecting malicious SQL strings that bypass authentication and leak entire database contents.**. Which of the following security configurations or controls represents the best practice to implement?
-B) Enable Transparent Data Encryption (TDE) or cloud database storage encryption at rest.
+When designing a system for **Spanner**, you must mitigate the risk of **Unauthorized access to database backup files or physical drives exposing all customer data.**. Which of the following security configurations or controls represents the best practice to implement?
+A) Enable Transparent Data Encryption (TDE) or cloud database storage encryption at rest.
+B) Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs.
 D) Enable full disk encryption on all client endpoints.
-A) Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs.
 C) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs.
+*   **Correct Answer:** A) Enable Transparent Data Encryption (TDE) or cloud database storage encryption at rest.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Exposure.
-    * *Why D is incorrect:* This does not address the security vulnerability of SQL Injection Exposure.
-    * *Why A is correct:* Implementing Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs. mitigates the risk of Attackers injecting malicious SQL strings that bypass authentication and leak entire database contents..
-    * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Exposure.
+    * *Why A is correct:* Implementing Enable Transparent Data Encryption (TDE) or cloud database storage encryption at rest. mitigates the risk of Unauthorized access to database backup files or physical drives exposing all customer data..
+    * *Why B is incorrect:* This does not address the security vulnerability of Unencrypted Storage.
+    * *Why D is incorrect:* This does not address the security vulnerability of Unencrypted Storage.
+    * *Why C is incorrect:* This does not address the security vulnerability of Unencrypted Storage.
 

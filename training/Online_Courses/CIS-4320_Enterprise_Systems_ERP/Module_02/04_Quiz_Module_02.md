@@ -17,49 +17,49 @@ In BPMN 2.0, what element is used to categorize activities based on which depart
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **gateways**?
-B) The core operations of a stack: 'push' inserts an element onto the top, and 'pop' removes and returns the top element.
-C) The operational principle of a queue, where the first element added is the first one to be removed, mimicking a line at a checkout register.
-D) The scenario where an algorithm requires the absolute minimum number of steps to complete (e.g., searching for an element that happens to be at the very beginning of a list).
+In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **process optimization.**?
+D) Data about the HTML document (like description, keywords, author, and viewport configurations) that is processed by browsers and search engine crawlers.
+C) The descendant node connected to the left branch of a parent node in a binary tree structure.
 A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within database operations.
+B) A two-dimensional CSS layout system that allows developers to design complex grid-based user interfaces with rows and columns, offering precise control over alignment.
 *   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within database operations.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **gateways**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **gateways**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **gateways**.
-    * *Why A is correct:* This describes the exact role and function of **gateways**.
+    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **process optimization.**.
+    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **process optimization.**.
+    * *Why A is correct:* This describes the exact role and function of **process optimization.**.
+    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **process optimization.**.
 
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **assign read-only access privileges on the database to a specific security role**. Which of the following commands is the most appropriate to execute?
-A) GRANT SELECT ON client_db TO analyst_role;
-C) SELECT * FROM users WHERE active = 1;
-B) CREATE INDEX idx_email ON users(email);
-D) EXPLAIN ANALYZE SELECT * FROM logs;
-*   **Correct Answer:** A) GRANT SELECT ON client_db TO analyst_role;
+A systems administrator or developer needs to **create a search index on the email column to speed up lookup queries significantly**. Which of the following commands is the most appropriate to execute?
+D) GRANT SELECT ON client_db TO analyst_role;
+B) SELECT * FROM users WHERE active = 1;
+A) CREATE INDEX idx_email ON users(email);
+C) EXPLAIN ANALYZE SELECT * FROM logs;
+*   **Correct Answer:** A) CREATE INDEX idx_email ON users(email);
 *   **Distractor Analysis:**
-    * *Why A is correct:* The `GRANT SELECT ON client_db TO analyst_role;` command is directly designed to assign read-only access privileges on the database to a specific security role.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
     * *Why D is incorrect:* This command handles alternative administrative tasks.
+    * *Why B is incorrect:* This command handles alternative administrative tasks.
+    * *Why A is correct:* The `CREATE INDEX idx_email ON users(email);` command is directly designed to create a search index on the email column to speed up lookup queries significantly.
+    * *Why C is incorrect:* This command handles alternative administrative tasks.
 
 
 ---
 
 **Question 4**
-While working on **Business Process Management** in a production environment, you encounter a system alert indicating a **Database Deadlock** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-B) Increase the database connection pool limit, adjust timeout configurations, or scale database resources.
+While working on **Business Process Management** in a production environment, you encounter a system alert indicating a **Slow Query Performance** error. Which of the following is the most effective troubleshooting action to resolve this issue?
+B) Optimize application query order, implement retry logic, and keep transaction blocks as brief as possible.
+C) Increase the database connection pool limit, adjust timeout configurations, or scale database resources.
+A) Analyze the query plan and create appropriate indexes on columns frequently used in WHERE and JOIN clauses.
 D) Reboot the physical machine and wait for services to reload.
-A) Optimize application query order, implement retry logic, and keep transaction blocks as brief as possible.
-C) Analyze the query plan and create appropriate indexes on columns frequently used in WHERE and JOIN clauses.
-*   **Correct Answer:** A) Optimize application query order, implement retry logic, and keep transaction blocks as brief as possible.
+*   **Correct Answer:** A) Analyze the query plan and create appropriate indexes on columns frequently used in WHERE and JOIN clauses.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This action does not resolve the root cause of Database Deadlock.
-    * *Why D is incorrect:* This action does not resolve the root cause of Database Deadlock.
-    * *Why A is correct:* Because Two or more transactions are waiting for each other to release locks on resources, causing a permanent block. The appropriate fix is to Optimize application query order, implement retry logic, and keep transaction blocks as brief as possible..
-    * *Why C is incorrect:* This action does not resolve the root cause of Database Deadlock.
+    * *Why B is incorrect:* This action does not resolve the root cause of Slow Query Performance.
+    * *Why C is incorrect:* This action does not resolve the root cause of Slow Query Performance.
+    * *Why A is correct:* Because The database is performing a full table scan on millions of rows due to a missing index or poorly written SQL syntax. The appropriate fix is to Analyze the query plan and create appropriate indexes on columns frequently used in WHERE and JOIN clauses..
+    * *Why D is incorrect:* This action does not resolve the root cause of Slow Query Performance.
 
 
 ---

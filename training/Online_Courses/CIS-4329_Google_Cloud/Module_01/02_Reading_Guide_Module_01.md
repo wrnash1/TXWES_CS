@@ -16,6 +16,9 @@ Review these essential definitions carefully. The certification exam expects you
 *   **Billing Accounts**: Projects consume resources, but Billing Accounts pay for them. A project must be linked to exactly one billing account to use paid services.
 *   **Budgets and Alerts**: You can set budgets to send you an email when you hit 50%, 90%, or 100% of your expected spend. *Note: Budgets DO NOT automatically shut off resources—they only send alerts.*
 *   **gcloud configuration**: Know the command to initialize the SDK locally: `gcloud init`. Know the command to check your current config: `gcloud config list`.
+*   **Focus Area**: Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
+*   **Scenario Trap**: Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
+*   **Study Resource**: To reinforce these concepts visually, review this targeted search query: [YouTube Exam Study Reference Link](https://www.youtube.com/results?search_query=4329_Google_Cloud+-+Google+Cloud+Associate+Cloud+Engineer+Resource+Hierarchy).
 
 ---
 

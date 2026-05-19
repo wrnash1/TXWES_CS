@@ -17,63 +17,63 @@ Which wireless protocol is best suited for low-power, long-range sensor networks
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Zigbee mesh**?
-C) The configuration of input data that forces an algorithm to perform the maximum number of operations, providing a guaranteed upper limit on execution time.
-D) The core operations of a stack: 'push' inserts an element onto the top, and 'pop' removes and returns the top element.
+In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **energy usage.**?
+C) The expected yearly cost of a security risk, calculated by multiplying the Single Loss Expectancy by the Annualized Rate of Occurrence (ALE = SLE * ARO).
 A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
-B) Electrostatic Discharge protection; tools (like wrist straps, grounding mats) used to prevent static electricity from destroying sensitive microchips when handling hardware.
+D) The core CSS layout block consisting of margins, borders, padding, and the actual content area, defining the sizing and spacing of every page element.
+B) Search Engine Optimization; practices designed to improve the visibility and ranking of web pages in search engine results through clean HTML, meta tags, and alt text.
 *   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Zigbee mesh**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Zigbee mesh**.
-    * *Why A is correct:* This describes the exact role and function of **Zigbee mesh**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Zigbee mesh**.
+    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **energy usage.**.
+    * *Why A is correct:* This describes the exact role and function of **energy usage.**.
+    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **energy usage.**.
+    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **energy usage.**.
 
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **check the configuration files for syntactic and internal consistency correctness**. Which of the following commands is the most appropriate to execute?
-B) git log --oneline -n 5
-D) systemctl status iot_service
-A) terraform validate
-C) docker-compose up -d
-*   **Correct Answer:** A) terraform validate
+A systems administrator or developer needs to **review the last five project commits in a concise single-line format**. Which of the following commands is the most appropriate to execute?
+D) terraform validate
+C) systemctl status iot_service
+A) git log --oneline -n 5
+B) docker-compose up -d
+*   **Correct Answer:** A) git log --oneline -n 5
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
     * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `terraform validate` command is directly designed to check the configuration files for syntactic and internal consistency correctness.
     * *Why C is incorrect:* This command handles alternative administrative tasks.
+    * *Why A is correct:* The `git log --oneline -n 5` command is directly designed to review the last five project commits in a concise single-line format.
+    * *Why B is incorrect:* This command handles alternative administrative tasks.
 
 
 ---
 
 **Question 4**
-While working on **Wireless Technologies** in a production environment, you encounter a system alert indicating a **Dependency Bottleneck** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-C) Optimize service resources, implement load balancing, or update failover mechanisms.
-A) Re-assign resources to critical path tasks and establish clear communication protocols.
-B) Implement strict change control boards (CCB) and re-baseline the project constraints.
+While working on **Wireless Technologies** in a production environment, you encounter a system alert indicating a **SLA Breach Alert** error. Which of the following is the most effective troubleshooting action to resolve this issue?
+B) Re-assign resources to critical path tasks and establish clear communication protocols.
+C) Implement strict change control boards (CCB) and re-baseline the project constraints.
+A) Optimize service resources, implement load balancing, or update failover mechanisms.
 D) Reboot the physical machine and wait for services to reload.
-*   **Correct Answer:** A) Re-assign resources to critical path tasks and establish clear communication protocols.
+*   **Correct Answer:** A) Optimize service resources, implement load balancing, or update failover mechanisms.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This action does not resolve the root cause of Dependency Bottleneck.
-    * *Why A is correct:* Because A critical task is blocked by a delayed prerequisite task, stalling the entire project timeline. The appropriate fix is to Re-assign resources to critical path tasks and establish clear communication protocols..
-    * *Why B is incorrect:* This action does not resolve the root cause of Dependency Bottleneck.
-    * *Why D is incorrect:* This action does not resolve the root cause of Dependency Bottleneck.
+    * *Why B is incorrect:* This action does not resolve the root cause of SLA Breach Alert.
+    * *Why C is incorrect:* This action does not resolve the root cause of SLA Breach Alert.
+    * *Why A is correct:* Because A system outage or slow response time has exceeded the limits guaranteed in the Service Level Agreement. The appropriate fix is to Optimize service resources, implement load balancing, or update failover mechanisms..
+    * *Why D is incorrect:* This action does not resolve the root cause of SLA Breach Alert.
 
 
 ---
 
 **Question 5**
-When designing a system for **Wireless Technologies**, you must mitigate the risk of **Stakeholders requesting changes directly to developers, leading to untracked features and security vulnerabilities.**. Which of the following security configurations or controls represents the best practice to implement?
+When designing a system for **Wireless Technologies**, you must mitigate the risk of **A disaster or ransomware attack causing prolonged downtime because recovery steps are undocumented.**. Which of the following security configurations or controls represents the best practice to implement?
 C) Enable full disk encryption on all client endpoints.
-A) Establish formal authorization procedures and digital signatures for all project scope modifications.
-B) Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services.
+A) Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services.
 D) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Establish formal authorization procedures and digital signatures for all project scope modifications.
+B) Establish formal authorization procedures and digital signatures for all project scope modifications.
+*   **Correct Answer:** A) Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This does not address the security vulnerability of Unauthorized Scope Modification.
-    * *Why A is correct:* Implementing Establish formal authorization procedures and digital signatures for all project scope modifications. mitigates the risk of Stakeholders requesting changes directly to developers, leading to untracked features and security vulnerabilities..
-    * *Why B is incorrect:* This does not address the security vulnerability of Unauthorized Scope Modification.
-    * *Why D is incorrect:* This does not address the security vulnerability of Unauthorized Scope Modification.
+    * *Why C is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
+    * *Why A is correct:* Implementing Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services. mitigates the risk of A disaster or ransomware attack causing prolonged downtime because recovery steps are undocumented..
+    * *Why D is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
+    * *Why B is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
 

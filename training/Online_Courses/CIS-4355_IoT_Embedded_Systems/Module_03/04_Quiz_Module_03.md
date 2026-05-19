@@ -17,30 +17,30 @@ Why is static memory allocation preferred over dynamic allocation (malloc) in hi
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **pointers**?
-C) The descendant node connected to the left branch of a parent node in a binary tree structure.
-B) A structured, seven-step process (Prepare, Categorize, Select, Implement, Assess, Authorize, Monitor) created by NIST to help organizations manage cybersecurity risk.
+In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **registers mapping**?
+D) The practice of connecting an electrical circuit or chassis to the earth or a large conductor to safely dissipate static electricity or stray currents.
+C) A project management technique that identifies the sequence of dependent tasks that determines the shortest time to complete a project.
 A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
-D) A node in a tree structure that has no child nodes (its children point to null), representing the termination points of the branches.
+B) The additional execution time and CPU operations spent visiting nodes sequentially in memory, which is higher in linked structures than in contiguous arrays.
 *   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **pointers**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **pointers**.
-    * *Why A is correct:* This describes the exact role and function of **pointers**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **pointers**.
+    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **registers mapping**.
+    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **registers mapping**.
+    * *Why A is correct:* This describes the exact role and function of **registers mapping**.
+    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **registers mapping**.
 
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **review the last five project commits in a concise single-line format**. Which of the following commands is the most appropriate to execute?
-A) git log --oneline -n 5
-D) systemctl status iot_service
-B) docker-compose up -d
+A systems administrator or developer needs to **launch all application services in the background using docker-compose configuration**. Which of the following commands is the most appropriate to execute?
+A) docker-compose up -d
+D) git log --oneline -n 5
+B) systemctl status iot_service
 C) terraform validate
-*   **Correct Answer:** A) git log --oneline -n 5
+*   **Correct Answer:** A) docker-compose up -d
 *   **Distractor Analysis:**
-    * *Why A is correct:* The `git log --oneline -n 5` command is directly designed to review the last five project commits in a concise single-line format.
+    * *Why A is correct:* The `docker-compose up -d` command is directly designed to launch all application services in the background using docker-compose configuration.
     * *Why D is incorrect:* This command handles alternative administrative tasks.
     * *Why B is incorrect:* This command handles alternative administrative tasks.
     * *Why C is incorrect:* This command handles alternative administrative tasks.
@@ -65,15 +65,15 @@ D) Reboot the physical machine and wait for services to reload.
 ---
 
 **Question 5**
-When designing a system for **Embedded Programming C/C++**, you must mitigate the risk of **Stakeholders requesting changes directly to developers, leading to untracked features and security vulnerabilities.**. Which of the following security configurations or controls represents the best practice to implement?
-B) Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services.
-A) Establish formal authorization procedures and digital signatures for all project scope modifications.
+When designing a system for **Embedded Programming C/C++**, you must mitigate the risk of **A disaster or ransomware attack causing prolonged downtime because recovery steps are undocumented.**. Which of the following security configurations or controls represents the best practice to implement?
+B) Establish formal authorization procedures and digital signatures for all project scope modifications.
 C) Enable full disk encryption on all client endpoints.
+A) Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services.
 D) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Establish formal authorization procedures and digital signatures for all project scope modifications.
+*   **Correct Answer:** A) Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This does not address the security vulnerability of Unauthorized Scope Modification.
-    * *Why A is correct:* Implementing Establish formal authorization procedures and digital signatures for all project scope modifications. mitigates the risk of Stakeholders requesting changes directly to developers, leading to untracked features and security vulnerabilities..
-    * *Why C is incorrect:* This does not address the security vulnerability of Unauthorized Scope Modification.
-    * *Why D is incorrect:* This does not address the security vulnerability of Unauthorized Scope Modification.
+    * *Why B is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
+    * *Why C is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
+    * *Why A is correct:* Implementing Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services. mitigates the risk of A disaster or ransomware attack causing prolonged downtime because recovery steps are undocumented..
+    * *Why D is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
 

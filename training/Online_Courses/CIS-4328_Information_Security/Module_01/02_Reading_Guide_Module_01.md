@@ -16,6 +16,9 @@ Review these essential definitions carefully. The certification exam expects you
 *   **Zero Trust Architecture**: The principle of "never trust, always verify." Every request is verified as if it originated from an open network, regardless of whether the user is inside the corporate office or at home.
 *   **Defense in Depth**: Layering multiple security controls so that if one fails, others are there to catch the threat (e.g., using a firewall, AND an antivirus, AND user training).
 *   **Control Types by Function**: * *Preventive:* Stops the attack (Firewall).
+*   **Focus Area**: Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
+*   **Scenario Trap**: Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
+*   **Study Resource**: To reinforce these concepts visually, review this targeted search query: [YouTube Exam Study Reference Link](https://www.youtube.com/results?search_query=4328_Information_Security+-+CompTIA+Security%2B+%28SY0-701%29+Threats).
 
 ---
 

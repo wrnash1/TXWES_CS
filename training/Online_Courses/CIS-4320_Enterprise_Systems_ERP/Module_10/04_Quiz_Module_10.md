@@ -17,63 +17,63 @@ Which programming language is proprietary to SAP and used to develop custom repo
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **proprietary scripting (Salesforce Apex**?
+In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Low-code tools**?
 A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within database operations.
-C) The entry point or first node in a linked list, which serves as the reference for traversing the rest of the list structure.
-B) The total memory space required by an algorithm to execute to completion. This includes the static instruction space, variable space, and dynamic allocation space (like recursion stack frames or temporary arrays).
-D) A node in a tree structure that has no child nodes (its children point to null), representing the termination points of the branches.
+D) Data about the HTML document (like description, keywords, author, and viewport configurations) that is processed by browsers and search engine crawlers.
+B) A mathematical representation used to describe the asymptotic upper bound of an algorithm's running time or space complexity relative to the input size N. It helps developers predict how an algorithm will scale as data grows.
+C) A binary tree in which every level, except possibly the last, is completely filled, and all nodes in the last level are as far left as possible.
 *   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within database operations.
 *   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **proprietary scripting (Salesforce Apex**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **proprietary scripting (Salesforce Apex**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **proprietary scripting (Salesforce Apex**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **proprietary scripting (Salesforce Apex**.
+    * *Why A is correct:* This describes the exact role and function of **Low-code tools**.
+    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Low-code tools**.
+    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Low-code tools**.
+    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Low-code tools**.
 
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **query and retrieve active user records matching specific conditions from the database table**. Which of the following commands is the most appropriate to execute?
-B) EXPLAIN ANALYZE SELECT * FROM logs;
-D) GRANT SELECT ON client_db TO analyst_role;
-A) SELECT * FROM users WHERE active = 1;
+A systems administrator or developer needs to **assign read-only access privileges on the database to a specific security role**. Which of the following commands is the most appropriate to execute?
 C) CREATE INDEX idx_email ON users(email);
-*   **Correct Answer:** A) SELECT * FROM users WHERE active = 1;
+B) SELECT * FROM users WHERE active = 1;
+D) EXPLAIN ANALYZE SELECT * FROM logs;
+A) GRANT SELECT ON client_db TO analyst_role;
+*   **Correct Answer:** A) GRANT SELECT ON client_db TO analyst_role;
 *   **Distractor Analysis:**
+    * *Why C is incorrect:* This command handles alternative administrative tasks.
     * *Why B is incorrect:* This command handles alternative administrative tasks.
     * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `SELECT * FROM users WHERE active = 1;` command is directly designed to query and retrieve active user records matching specific conditions from the database table.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
+    * *Why A is correct:* The `GRANT SELECT ON client_db TO analyst_role;` command is directly designed to assign read-only access privileges on the database to a specific security role.
 
 
 ---
 
 **Question 4**
-While working on **Customizing ERP Systems** in a production environment, you encounter a system alert indicating a **Slow Query Performance** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-B) Increase the database connection pool limit, adjust timeout configurations, or scale database resources.
-A) Analyze the query plan and create appropriate indexes on columns frequently used in WHERE and JOIN clauses.
+While working on **Customizing ERP Systems** in a production environment, you encounter a system alert indicating a **Connection Timeout** error. Which of the following is the most effective troubleshooting action to resolve this issue?
+A) Increase the database connection pool limit, adjust timeout configurations, or scale database resources.
 D) Reboot the physical machine and wait for services to reload.
-C) Optimize application query order, implement retry logic, and keep transaction blocks as brief as possible.
-*   **Correct Answer:** A) Analyze the query plan and create appropriate indexes on columns frequently used in WHERE and JOIN clauses.
+B) Optimize application query order, implement retry logic, and keep transaction blocks as brief as possible.
+C) Analyze the query plan and create appropriate indexes on columns frequently used in WHERE and JOIN clauses.
+*   **Correct Answer:** A) Increase the database connection pool limit, adjust timeout configurations, or scale database resources.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This action does not resolve the root cause of Slow Query Performance.
-    * *Why A is correct:* Because The database is performing a full table scan on millions of rows due to a missing index or poorly written SQL syntax. The appropriate fix is to Analyze the query plan and create appropriate indexes on columns frequently used in WHERE and JOIN clauses..
-    * *Why D is incorrect:* This action does not resolve the root cause of Slow Query Performance.
-    * *Why C is incorrect:* This action does not resolve the root cause of Slow Query Performance.
+    * *Why A is correct:* Because The database server has exhausted its pool of concurrent client connections or is overloaded with work. The appropriate fix is to Increase the database connection pool limit, adjust timeout configurations, or scale database resources..
+    * *Why D is incorrect:* This action does not resolve the root cause of Connection Timeout.
+    * *Why B is incorrect:* This action does not resolve the root cause of Connection Timeout.
+    * *Why C is incorrect:* This action does not resolve the root cause of Connection Timeout.
 
 
 ---
 
 **Question 5**
-When designing a system for **Customizing ERP Systems**, you must mitigate the risk of **Unauthorized access to database backup files or physical drives exposing all customer data.**. Which of the following security configurations or controls represents the best practice to implement?
-C) Enable full disk encryption on all client endpoints.
-B) Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs.
+When designing a system for **Customizing ERP Systems**, you must mitigate the risk of **Attackers injecting malicious SQL strings that bypass authentication and leak entire database contents.**. Which of the following security configurations or controls represents the best practice to implement?
 D) Enable full disk encryption on all client endpoints.
-A) Enable Transparent Data Encryption (TDE) or cloud database storage encryption at rest.
-*   **Correct Answer:** A) Enable Transparent Data Encryption (TDE) or cloud database storage encryption at rest.
+A) Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs.
+C) Enable full disk encryption on all client endpoints.
+B) Enable Transparent Data Encryption (TDE) or cloud database storage encryption at rest.
+*   **Correct Answer:** A) Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This does not address the security vulnerability of Unencrypted Storage.
-    * *Why B is incorrect:* This does not address the security vulnerability of Unencrypted Storage.
-    * *Why D is incorrect:* This does not address the security vulnerability of Unencrypted Storage.
-    * *Why A is correct:* Implementing Enable Transparent Data Encryption (TDE) or cloud database storage encryption at rest. mitigates the risk of Unauthorized access to database backup files or physical drives exposing all customer data..
+    * *Why D is incorrect:* This does not address the security vulnerability of SQL Injection Exposure.
+    * *Why A is correct:* Implementing Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs. mitigates the risk of Attackers injecting malicious SQL strings that bypass authentication and leak entire database contents..
+    * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Exposure.
+    * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Exposure.
 

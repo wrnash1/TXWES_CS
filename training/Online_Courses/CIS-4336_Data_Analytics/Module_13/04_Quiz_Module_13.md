@@ -18,62 +18,62 @@ Which of the following is classified as Personally Identifiable Information (PII
 
 **Question 2**
 In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **data masking**?
-D) The additional execution time and CPU operations spent visiting nodes sequentially in memory, which is higher in linked structures than in contiguous arrays.
-B) The difference in height between the left and right subtrees of a node in an AVL tree, which must be -1, 0, or 1 to remain balanced.
-C) Electrostatic Discharge protection; tools (like wrist straps, grounding mats) used to prevent static electricity from destroying sensitive microchips when handling hardware.
 A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within database operations.
+C) The descendant node connected to the left branch of a parent node in a binary tree structure.
+D) The difference in height between the left and right subtrees of a node in an AVL tree, which must be -1, 0, or 1 to remain balanced.
+B) A mathematical representation used to describe the asymptotic upper bound of an algorithm's running time or space complexity relative to the input size N. It helps developers predict how an algorithm will scale as data grows.
 *   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within database operations.
 *   **Distractor Analysis:**
+    * *Why A is correct:* This describes the exact role and function of **data masking**.
+    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **data masking**.
     * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **data masking**.
     * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **data masking**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **data masking**.
-    * *Why A is correct:* This describes the exact role and function of **data masking**.
 
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **query and retrieve active user records matching specific conditions from the database table**. Which of the following commands is the most appropriate to execute?
-A) SELECT * FROM users WHERE active = 1;
-D) EXPLAIN ANALYZE SELECT * FROM logs;
-B) CREATE INDEX idx_email ON users(email);
-C) GRANT SELECT ON client_db TO analyst_role;
-*   **Correct Answer:** A) SELECT * FROM users WHERE active = 1;
+A systems administrator or developer needs to **assign read-only access privileges on the database to a specific security role**. Which of the following commands is the most appropriate to execute?
+A) GRANT SELECT ON client_db TO analyst_role;
+C) SELECT * FROM users WHERE active = 1;
+D) CREATE INDEX idx_email ON users(email);
+B) EXPLAIN ANALYZE SELECT * FROM logs;
+*   **Correct Answer:** A) GRANT SELECT ON client_db TO analyst_role;
 *   **Distractor Analysis:**
-    * *Why A is correct:* The `SELECT * FROM users WHERE active = 1;` command is directly designed to query and retrieve active user records matching specific conditions from the database table.
+    * *Why A is correct:* The `GRANT SELECT ON client_db TO analyst_role;` command is directly designed to assign read-only access privileges on the database to a specific security role.
+    * *Why C is incorrect:* This command handles alternative administrative tasks.
     * *Why D is incorrect:* This command handles alternative administrative tasks.
     * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
 
 
 ---
 
 **Question 4**
-While working on **Data Governance & Privacy** in a production environment, you encounter a system alert indicating a **Slow Query Performance** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-A) Analyze the query plan and create appropriate indexes on columns frequently used in WHERE and JOIN clauses.
+While working on **Data Governance & Privacy** in a production environment, you encounter a system alert indicating a **Connection Timeout** error. Which of the following is the most effective troubleshooting action to resolve this issue?
 D) Reboot the physical machine and wait for services to reload.
-C) Increase the database connection pool limit, adjust timeout configurations, or scale database resources.
 B) Optimize application query order, implement retry logic, and keep transaction blocks as brief as possible.
-*   **Correct Answer:** A) Analyze the query plan and create appropriate indexes on columns frequently used in WHERE and JOIN clauses.
+A) Increase the database connection pool limit, adjust timeout configurations, or scale database resources.
+C) Analyze the query plan and create appropriate indexes on columns frequently used in WHERE and JOIN clauses.
+*   **Correct Answer:** A) Increase the database connection pool limit, adjust timeout configurations, or scale database resources.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Because The database is performing a full table scan on millions of rows due to a missing index or poorly written SQL syntax. The appropriate fix is to Analyze the query plan and create appropriate indexes on columns frequently used in WHERE and JOIN clauses..
-    * *Why D is incorrect:* This action does not resolve the root cause of Slow Query Performance.
-    * *Why C is incorrect:* This action does not resolve the root cause of Slow Query Performance.
-    * *Why B is incorrect:* This action does not resolve the root cause of Slow Query Performance.
+    * *Why D is incorrect:* This action does not resolve the root cause of Connection Timeout.
+    * *Why B is incorrect:* This action does not resolve the root cause of Connection Timeout.
+    * *Why A is correct:* Because The database server has exhausted its pool of concurrent client connections or is overloaded with work. The appropriate fix is to Increase the database connection pool limit, adjust timeout configurations, or scale database resources..
+    * *Why C is incorrect:* This action does not resolve the root cause of Connection Timeout.
 
 
 ---
 
 **Question 5**
-When designing a system for **Data Governance & Privacy**, you must mitigate the risk of **Unauthorized access to database backup files or physical drives exposing all customer data.**. Which of the following security configurations or controls represents the best practice to implement?
+When designing a system for **Data Governance & Privacy**, you must mitigate the risk of **Attackers injecting malicious SQL strings that bypass authentication and leak entire database contents.**. Which of the following security configurations or controls represents the best practice to implement?
+B) Enable Transparent Data Encryption (TDE) or cloud database storage encryption at rest.
 D) Enable full disk encryption on all client endpoints.
-B) Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs.
-A) Enable Transparent Data Encryption (TDE) or cloud database storage encryption at rest.
+A) Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs.
 C) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Enable Transparent Data Encryption (TDE) or cloud database storage encryption at rest.
+*   **Correct Answer:** A) Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This does not address the security vulnerability of Unencrypted Storage.
-    * *Why B is incorrect:* This does not address the security vulnerability of Unencrypted Storage.
-    * *Why A is correct:* Implementing Enable Transparent Data Encryption (TDE) or cloud database storage encryption at rest. mitigates the risk of Unauthorized access to database backup files or physical drives exposing all customer data..
-    * *Why C is incorrect:* This does not address the security vulnerability of Unencrypted Storage.
+    * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Exposure.
+    * *Why D is incorrect:* This does not address the security vulnerability of SQL Injection Exposure.
+    * *Why A is correct:* Implementing Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs. mitigates the risk of Attackers injecting malicious SQL strings that bypass authentication and leak entire database contents..
+    * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Exposure.
 

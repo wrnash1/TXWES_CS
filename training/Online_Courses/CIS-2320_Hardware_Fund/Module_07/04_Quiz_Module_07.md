@@ -17,30 +17,30 @@ Which display connector supports daisy-chaining multiple monitors together from 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **resolution and refresh rates.**?
+In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **HDMI vs DisplayPort vs DVI**?
+C) CSS properties (like block, inline, flex, grid) that determine how an element is rendered and how it behaves relative to surrounding elements.
+D) An algebraic restructuring operation on a binary tree that changes the parent-child relationships to restore balance without violating the search order.
 A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within os_admin operations.
-D) Background utility processes that run continuously without direct user interaction to handle system tasks.
-C) An efficient mapping technique for complete binary trees where parent-child indices can be computed using simple arithmetic (e.g., parent is (i-1)/2).
-B) The expected yearly cost of a security risk, calculated by multiplying the Single Loss Expectancy by the Annualized Rate of Occurrence (ALE = SLE * ARO).
+B) A structured, seven-step process (Prepare, Categorize, Select, Implement, Assess, Authorize, Monitor) created by NIST to help organizations manage cybersecurity risk.
 *   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within os_admin operations.
 *   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **resolution and refresh rates.**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **resolution and refresh rates.**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **resolution and refresh rates.**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **resolution and refresh rates.**.
+    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **HDMI vs DisplayPort vs DVI**.
+    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **HDMI vs DisplayPort vs DVI**.
+    * *Why A is correct:* This describes the exact role and function of **HDMI vs DisplayPort vs DVI**.
+    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **HDMI vs DisplayPort vs DVI**.
 
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **display total disk space capacity, usage, and available space in a human-readable format**. Which of the following commands is the most appropriate to execute?
-A) df -h
-B) ps aux
-C) systemctl restart service
+A systems administrator or developer needs to **instruct the systemd init system to restart a specified background service process**. Which of the following commands is the most appropriate to execute?
+A) systemctl restart service
+B) df -h
+C) ps aux
 D) chmod 600 config.conf
-*   **Correct Answer:** A) df -h
+*   **Correct Answer:** A) systemctl restart service
 *   **Distractor Analysis:**
-    * *Why A is correct:* The `df -h` command is directly designed to display total disk space capacity, usage, and available space in a human-readable format.
+    * *Why A is correct:* The `systemctl restart service` command is directly designed to instruct the systemd init system to restart a specified background service process.
     * *Why B is incorrect:* This command handles alternative administrative tasks.
     * *Why C is incorrect:* This command handles alternative administrative tasks.
     * *Why D is incorrect:* This command handles alternative administrative tasks.
@@ -49,31 +49,31 @@ D) chmod 600 config.conf
 ---
 
 **Question 4**
-While working on **Display Technologies and Connectors** in a production environment, you encounter a system alert indicating a **Service Failed to Bind Port** error. Which of the following is the most effective troubleshooting action to resolve this issue?
+While working on **Display Technologies and Connectors** in a production environment, you encounter a system alert indicating a **Permission Denied** error. Which of the following is the most effective troubleshooting action to resolve this issue?
+C) Identify and terminate the process already utilizing the target port, or modify the service configuration to use an open port.
+B) Run log rotations, clean temporary files, or expand the logical volume capacity.
+A) Prepend the command with 'sudo' to run it with superuser administrative privileges, or adjust the file permissions.
 D) Reboot the physical machine and wait for services to reload.
-B) Prepend the command with 'sudo' to run it with superuser administrative privileges, or adjust the file permissions.
-C) Run log rotations, clean temporary files, or expand the logical volume capacity.
-A) Identify and terminate the process already utilizing the target port, or modify the service configuration to use an open port.
-*   **Correct Answer:** A) Identify and terminate the process already utilizing the target port, or modify the service configuration to use an open port.
+*   **Correct Answer:** A) Prepend the command with 'sudo' to run it with superuser administrative privileges, or adjust the file permissions.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This action does not resolve the root cause of Service Failed to Bind Port.
-    * *Why B is incorrect:* This action does not resolve the root cause of Service Failed to Bind Port.
-    * *Why C is incorrect:* This action does not resolve the root cause of Service Failed to Bind Port.
-    * *Why A is correct:* Because Another application or stale instance of the service is already listening on the designated network port. The appropriate fix is to Identify and terminate the process already utilizing the target port, or modify the service configuration to use an open port..
+    * *Why C is incorrect:* This action does not resolve the root cause of Permission Denied.
+    * *Why B is incorrect:* This action does not resolve the root cause of Permission Denied.
+    * *Why A is correct:* Because The current user account lacks the required read, write, or execute permissions for the target file or system call. The appropriate fix is to Prepend the command with 'sudo' to run it with superuser administrative privileges, or adjust the file permissions..
+    * *Why D is incorrect:* This action does not resolve the root cause of Permission Denied.
 
 
 ---
 
 **Question 5**
 When designing a system for **Display Technologies and Connectors**, you must mitigate the risk of **Attackers exploiting vulnerabilities in forgotten background services or using abandoned accounts to gain persistent access.**. Which of the following security configurations or controls represents the best practice to implement?
-B) Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC.
-A) Disable unused system accounts and run a port scan to disable unnecessary active background services.
-D) Enable full disk encryption on all client endpoints.
 C) Enable full disk encryption on all client endpoints.
+D) Enable full disk encryption on all client endpoints.
+A) Disable unused system accounts and run a port scan to disable unnecessary active background services.
+B) Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC.
 *   **Correct Answer:** A) Disable unused system accounts and run a port scan to disable unnecessary active background services.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This does not address the security vulnerability of Stale Accounts & Services.
-    * *Why A is correct:* Implementing Disable unused system accounts and run a port scan to disable unnecessary active background services. mitigates the risk of Attackers exploiting vulnerabilities in forgotten background services or using abandoned accounts to gain persistent access..
-    * *Why D is incorrect:* This does not address the security vulnerability of Stale Accounts & Services.
     * *Why C is incorrect:* This does not address the security vulnerability of Stale Accounts & Services.
+    * *Why D is incorrect:* This does not address the security vulnerability of Stale Accounts & Services.
+    * *Why A is correct:* Implementing Disable unused system accounts and run a port scan to disable unnecessary active background services. mitigates the risk of Attackers exploiting vulnerabilities in forgotten background services or using abandoned accounts to gain persistent access..
+    * *Why B is incorrect:* This does not address the security vulnerability of Stale Accounts & Services.
 

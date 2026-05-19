@@ -17,49 +17,49 @@ Which business entity is the primary focus of a Customer Relationship Management
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **account management**?
-B) The memory block allocated on the system stack for a single function call, storing parameters, local variables, and the return address.
-C) A column or group of columns in one database table that refers to the primary key in another table, enforcing referential integrity.
+In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **sales pipelines**?
+D) The operational principle of a queue, where the first element added is the first one to be removed, mimicking a line at a checkout register.
+C) An algebraic restructuring operation on a binary tree that changes the parent-child relationships to restore balance without violating the search order.
+B) The expected yearly cost of a security risk, calculated by multiplying the Single Loss Expectancy by the Annualized Rate of Occurrence (ALE = SLE * ARO).
 A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within database operations.
-D) An access control system where users are assigned to specific roles, and permissions are linked to those roles rather than individual users, simplifying permission management.
 *   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within database operations.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **account management**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **account management**.
-    * *Why A is correct:* This describes the exact role and function of **account management**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **account management**.
+    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **sales pipelines**.
+    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **sales pipelines**.
+    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **sales pipelines**.
+    * *Why A is correct:* This describes the exact role and function of **sales pipelines**.
 
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **analyze the database execution plan to identify performance bottlenecks and slow scan steps**. Which of the following commands is the most appropriate to execute?
-B) CREATE INDEX idx_email ON users(email);
-D) SELECT * FROM users WHERE active = 1;
-A) EXPLAIN ANALYZE SELECT * FROM logs;
-C) GRANT SELECT ON client_db TO analyst_role;
-*   **Correct Answer:** A) EXPLAIN ANALYZE SELECT * FROM logs;
+A systems administrator or developer needs to **query and retrieve active user records matching specific conditions from the database table**. Which of the following commands is the most appropriate to execute?
+D) EXPLAIN ANALYZE SELECT * FROM logs;
+B) GRANT SELECT ON client_db TO analyst_role;
+C) CREATE INDEX idx_email ON users(email);
+A) SELECT * FROM users WHERE active = 1;
+*   **Correct Answer:** A) SELECT * FROM users WHERE active = 1;
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
     * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `EXPLAIN ANALYZE SELECT * FROM logs;` command is directly designed to analyze the database execution plan to identify performance bottlenecks and slow scan steps.
+    * *Why B is incorrect:* This command handles alternative administrative tasks.
     * *Why C is incorrect:* This command handles alternative administrative tasks.
+    * *Why A is correct:* The `SELECT * FROM users WHERE active = 1;` command is directly designed to query and retrieve active user records matching specific conditions from the database table.
 
 
 ---
 
 **Question 4**
-While working on **Customer Relationship Management Modules** in a production environment, you encounter a system alert indicating a **Slow Query Performance** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-C) Optimize application query order, implement retry logic, and keep transaction blocks as brief as possible.
-A) Analyze the query plan and create appropriate indexes on columns frequently used in WHERE and JOIN clauses.
-B) Increase the database connection pool limit, adjust timeout configurations, or scale database resources.
+While working on **Customer Relationship Management Modules** in a production environment, you encounter a system alert indicating a **Connection Timeout** error. Which of the following is the most effective troubleshooting action to resolve this issue?
+A) Increase the database connection pool limit, adjust timeout configurations, or scale database resources.
 D) Reboot the physical machine and wait for services to reload.
-*   **Correct Answer:** A) Analyze the query plan and create appropriate indexes on columns frequently used in WHERE and JOIN clauses.
+B) Analyze the query plan and create appropriate indexes on columns frequently used in WHERE and JOIN clauses.
+C) Optimize application query order, implement retry logic, and keep transaction blocks as brief as possible.
+*   **Correct Answer:** A) Increase the database connection pool limit, adjust timeout configurations, or scale database resources.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This action does not resolve the root cause of Slow Query Performance.
-    * *Why A is correct:* Because The database is performing a full table scan on millions of rows due to a missing index or poorly written SQL syntax. The appropriate fix is to Analyze the query plan and create appropriate indexes on columns frequently used in WHERE and JOIN clauses..
-    * *Why B is incorrect:* This action does not resolve the root cause of Slow Query Performance.
-    * *Why D is incorrect:* This action does not resolve the root cause of Slow Query Performance.
+    * *Why A is correct:* Because The database server has exhausted its pool of concurrent client connections or is overloaded with work. The appropriate fix is to Increase the database connection pool limit, adjust timeout configurations, or scale database resources..
+    * *Why D is incorrect:* This action does not resolve the root cause of Connection Timeout.
+    * *Why B is incorrect:* This action does not resolve the root cause of Connection Timeout.
+    * *Why C is incorrect:* This action does not resolve the root cause of Connection Timeout.
 
 
 ---
@@ -67,13 +67,13 @@ D) Reboot the physical machine and wait for services to reload.
 **Question 5**
 When designing a system for **Customer Relationship Management Modules**, you must mitigate the risk of **Unauthorized access to database backup files or physical drives exposing all customer data.**. Which of the following security configurations or controls represents the best practice to implement?
 D) Enable full disk encryption on all client endpoints.
+C) Enable full disk encryption on all client endpoints.
 B) Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs.
 A) Enable Transparent Data Encryption (TDE) or cloud database storage encryption at rest.
-C) Enable full disk encryption on all client endpoints.
 *   **Correct Answer:** A) Enable Transparent Data Encryption (TDE) or cloud database storage encryption at rest.
 *   **Distractor Analysis:**
     * *Why D is incorrect:* This does not address the security vulnerability of Unencrypted Storage.
+    * *Why C is incorrect:* This does not address the security vulnerability of Unencrypted Storage.
     * *Why B is incorrect:* This does not address the security vulnerability of Unencrypted Storage.
     * *Why A is correct:* Implementing Enable Transparent Data Encryption (TDE) or cloud database storage encryption at rest. mitigates the risk of Unauthorized access to database backup files or physical drives exposing all customer data..
-    * *Why C is incorrect:* This does not address the security vulnerability of Unencrypted Storage.
 

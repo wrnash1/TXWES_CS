@@ -17,63 +17,63 @@ Which SQL clause is used to filter group results after aggregation has occurred?
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **SQL SELECT**?
+In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **JOIN (INNER**?
+D) A structured, seven-step process (Prepare, Categorize, Select, Implement, Assess, Authorize, Monitor) created by NIST to help organizations manage cybersecurity risk.
 A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within database operations.
-C) A security control that divides a critical transaction workflow among multiple users to prevent fraud and errors (e.g., one person approves a purchase order, another pays the vendor).
-B) Elements placed inside the <head> block of an HTML document that define metadata, links to stylesheets, scripts, character sets, and page titles.
-D) The practice of connecting an electrical circuit or chassis to the earth or a large conductor to safely dissipate static electricity or stray currents.
+C) The memory block allocated on the system stack for a single function call, storing parameters, local variables, and the return address.
+B) A binary search tree that automatically adjusts its height during insertions and deletions (e.g., AVL, Red-Black) to maintain logarithmic operations.
 *   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within database operations.
 *   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **SQL SELECT**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **SQL SELECT**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **SQL SELECT**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **SQL SELECT**.
+    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **JOIN (INNER**.
+    * *Why A is correct:* This describes the exact role and function of **JOIN (INNER**.
+    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **JOIN (INNER**.
+    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **JOIN (INNER**.
 
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **analyze the database execution plan to identify performance bottlenecks and slow scan steps**. Which of the following commands is the most appropriate to execute?
-B) CREATE INDEX idx_email ON users(email);
-C) GRANT SELECT ON client_db TO analyst_role;
-A) EXPLAIN ANALYZE SELECT * FROM logs;
-D) SELECT * FROM users WHERE active = 1;
-*   **Correct Answer:** A) EXPLAIN ANALYZE SELECT * FROM logs;
+A systems administrator or developer needs to **query and retrieve active user records matching specific conditions from the database table**. Which of the following commands is the most appropriate to execute?
+C) EXPLAIN ANALYZE SELECT * FROM logs;
+B) GRANT SELECT ON client_db TO analyst_role;
+D) CREATE INDEX idx_email ON users(email);
+A) SELECT * FROM users WHERE active = 1;
+*   **Correct Answer:** A) SELECT * FROM users WHERE active = 1;
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
     * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `EXPLAIN ANALYZE SELECT * FROM logs;` command is directly designed to analyze the database execution plan to identify performance bottlenecks and slow scan steps.
+    * *Why B is incorrect:* This command handles alternative administrative tasks.
     * *Why D is incorrect:* This command handles alternative administrative tasks.
+    * *Why A is correct:* The `SELECT * FROM users WHERE active = 1;` command is directly designed to query and retrieve active user records matching specific conditions from the database table.
 
 
 ---
 
 **Question 4**
-While working on **Data Acquisition and SQL** in a production environment, you encounter a system alert indicating a **Database Deadlock** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-C) Analyze the query plan and create appropriate indexes on columns frequently used in WHERE and JOIN clauses.
-B) Increase the database connection pool limit, adjust timeout configurations, or scale database resources.
+While working on **Data Acquisition and SQL** in a production environment, you encounter a system alert indicating a **Connection Timeout** error. Which of the following is the most effective troubleshooting action to resolve this issue?
+C) Optimize application query order, implement retry logic, and keep transaction blocks as brief as possible.
+B) Analyze the query plan and create appropriate indexes on columns frequently used in WHERE and JOIN clauses.
+A) Increase the database connection pool limit, adjust timeout configurations, or scale database resources.
 D) Reboot the physical machine and wait for services to reload.
-A) Optimize application query order, implement retry logic, and keep transaction blocks as brief as possible.
-*   **Correct Answer:** A) Optimize application query order, implement retry logic, and keep transaction blocks as brief as possible.
+*   **Correct Answer:** A) Increase the database connection pool limit, adjust timeout configurations, or scale database resources.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This action does not resolve the root cause of Database Deadlock.
-    * *Why B is incorrect:* This action does not resolve the root cause of Database Deadlock.
-    * *Why D is incorrect:* This action does not resolve the root cause of Database Deadlock.
-    * *Why A is correct:* Because Two or more transactions are waiting for each other to release locks on resources, causing a permanent block. The appropriate fix is to Optimize application query order, implement retry logic, and keep transaction blocks as brief as possible..
+    * *Why C is incorrect:* This action does not resolve the root cause of Connection Timeout.
+    * *Why B is incorrect:* This action does not resolve the root cause of Connection Timeout.
+    * *Why A is correct:* Because The database server has exhausted its pool of concurrent client connections or is overloaded with work. The appropriate fix is to Increase the database connection pool limit, adjust timeout configurations, or scale database resources..
+    * *Why D is incorrect:* This action does not resolve the root cause of Connection Timeout.
 
 
 ---
 
 **Question 5**
-When designing a system for **Data Acquisition and SQL**, you must mitigate the risk of **Unauthorized access to database backup files or physical drives exposing all customer data.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Enable Transparent Data Encryption (TDE) or cloud database storage encryption at rest.
-D) Enable full disk encryption on all client endpoints.
-B) Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs.
+When designing a system for **Data Acquisition and SQL**, you must mitigate the risk of **Attackers injecting malicious SQL strings that bypass authentication and leak entire database contents.**. Which of the following security configurations or controls represents the best practice to implement?
+B) Enable Transparent Data Encryption (TDE) or cloud database storage encryption at rest.
+A) Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs.
 C) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Enable Transparent Data Encryption (TDE) or cloud database storage encryption at rest.
+D) Enable full disk encryption on all client endpoints.
+*   **Correct Answer:** A) Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Enable Transparent Data Encryption (TDE) or cloud database storage encryption at rest. mitigates the risk of Unauthorized access to database backup files or physical drives exposing all customer data..
-    * *Why D is incorrect:* This does not address the security vulnerability of Unencrypted Storage.
-    * *Why B is incorrect:* This does not address the security vulnerability of Unencrypted Storage.
-    * *Why C is incorrect:* This does not address the security vulnerability of Unencrypted Storage.
+    * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Exposure.
+    * *Why A is correct:* Implementing Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs. mitigates the risk of Attackers injecting malicious SQL strings that bypass authentication and leak entire database contents..
+    * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Exposure.
+    * *Why D is incorrect:* This does not address the security vulnerability of SQL Injection Exposure.
 

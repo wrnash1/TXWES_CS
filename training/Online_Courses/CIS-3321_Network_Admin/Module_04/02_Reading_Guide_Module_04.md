@@ -16,6 +16,9 @@ Review these essential definitions carefully. The certification exam expects you
 *   **AAA Framework**: * *Authentication:* Proving who you are (Passwords, Biometrics).
 *   **Multi-Factor Authentication (MFA)**: Requires at least two different *factors*. Factors include: Something you know (Password), Something you have (Smartphone/Token), Something you are (Fingerprint).
 *   **Port Security**: A Layer 2 switch feature that limits exactly which MAC addresses are allowed to plug into a specific physical port, preventing rogue devices.
+*   **Focus Area**: Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
+*   **Scenario Trap**: Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
+*   **Study Resource**: To reinforce these concepts visually, review this targeted search query: [YouTube Exam Study Reference Link](https://www.youtube.com/results?search_query=3321_Network_Admin+-+CompTIA+Network%2B+%28N10-008%29+Security).
 
 ---
 

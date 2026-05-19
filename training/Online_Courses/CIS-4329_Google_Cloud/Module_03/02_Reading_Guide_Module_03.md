@@ -16,6 +16,9 @@ Review these essential definitions carefully. The certification exam expects you
 *   **Cloud Marketplace**: A repository of pre-configured software stacks (like a WordPress blog or a LAMP stack) that can be deployed to Compute Engine with a single click.
 *   **Custom Images vs. Snapshots**: A snapshot is a backup of a disk at a specific point in time. A Custom Image is a reusable template created from a disk to stamp out identical VMs in the future.
 *   **GKE Autopilot vs. Standard**: In Standard GKE, you manage the underlying Compute Engine nodes. In Autopilot GKE, Google manages the nodes completely, and you only pay for the pods you deploy.
+*   **Focus Area**: Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
+*   **Scenario Trap**: Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
+*   **Study Resource**: To reinforce these concepts visually, review this targeted search query: [YouTube Exam Study Reference Link](https://www.youtube.com/results?search_query=4329_Google_Cloud+-+Google+Cloud+Associate+Cloud+Engineer+GKE).
 
 ---
 

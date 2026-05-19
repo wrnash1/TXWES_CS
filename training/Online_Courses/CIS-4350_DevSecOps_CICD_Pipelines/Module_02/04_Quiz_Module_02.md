@@ -17,63 +17,63 @@ What is the primary function of a linter tool in a Continuous Integration pipeli
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **local commit hooks**?
+In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Automation runners**?
+D) An efficient mapping technique for complete binary trees where parent-child indices can be computed using simple arithmetic (e.g., parent is (i-1)/2).
+B) The process of restructuring existing computer code without changing its external behavior to improve readability and reduce complexity.
+C) The region of a program where a variable is accessible, such as local, global, or class scope.
 A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-C) The operational principle of a queue, where the first element added is the first one to be removed, mimicking a line at a checkout register.
-D) A deployment model that uses two identical production environments (Blue and Green) to minimize downtime and risk; updates are deployed to the idle environment before routing live traffic.
-B) An operation in Red-Black trees where nodes are flipped between red and black to maintain structural invariants after insertions or deletions.
 *   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
 *   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **local commit hooks**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **local commit hooks**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **local commit hooks**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **local commit hooks**.
+    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Automation runners**.
+    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Automation runners**.
+    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Automation runners**.
+    * *Why A is correct:* This describes the exact role and function of **Automation runners**.
 
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **run the automated unit testing suite to verify system functionality**. Which of the following commands is the most appropriate to execute?
-B) python3 -m venv .venv
-C) pip install -r requirements.txt
-A) pytest
-D) git commit -m 'update'
-*   **Correct Answer:** A) pytest
+A systems administrator or developer needs to **install all external project dependencies specified in the requirements manifest**. Which of the following commands is the most appropriate to execute?
+B) git commit -m 'update'
+A) pip install -r requirements.txt
+C) python3 -m venv .venv
+D) pytest
+*   **Correct Answer:** A) pip install -r requirements.txt
 *   **Distractor Analysis:**
     * *Why B is incorrect:* This command handles alternative administrative tasks.
+    * *Why A is correct:* The `pip install -r requirements.txt` command is directly designed to install all external project dependencies specified in the requirements manifest.
     * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `pytest` command is directly designed to run the automated unit testing suite to verify system functionality.
     * *Why D is incorrect:* This command handles alternative administrative tasks.
 
 
 ---
 
 **Question 4**
-While working on **Continuous Integration Concepts** in a production environment, you encounter a system alert indicating a **KeyError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-A) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
-D) Reboot the physical machine and wait for services to reload.
+While working on **Continuous Integration Concepts** in a production environment, you encounter a system alert indicating a **TypeError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
 C) Verify that the index is within the valid range of 0 to len(list)-1.
-B) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-*   **Correct Answer:** A) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
+B) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
+D) Reboot the physical machine and wait for services to reload.
+A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
+*   **Correct Answer:** A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Because The code attempted to access a dictionary key that is not defined in the object. The appropriate fix is to Ensure the requested key exists in the dictionary, or use the .get() method to return a default value..
-    * *Why D is incorrect:* This action does not resolve the root cause of KeyError.
-    * *Why C is incorrect:* This action does not resolve the root cause of KeyError.
-    * *Why B is incorrect:* This action does not resolve the root cause of KeyError.
+    * *Why C is incorrect:* This action does not resolve the root cause of TypeError.
+    * *Why B is incorrect:* This action does not resolve the root cause of TypeError.
+    * *Why D is incorrect:* This action does not resolve the root cause of TypeError.
+    * *Why A is correct:* Because An operation or function was applied to an object of an inappropriate data type. The appropriate fix is to Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types..
 
 
 ---
 
 **Question 5**
-When designing a system for **Continuous Integration Concepts**, you must mitigate the risk of **Allowing attackers to execute arbitrary SQL commands on the backend database via input forms.**. Which of the following security configurations or controls represents the best practice to implement?
-C) Enable full disk encryption on all client endpoints.
+When designing a system for **Continuous Integration Concepts**, you must mitigate the risk of **Storing user credentials in plain text, making them vulnerable to database breaches.**. Which of the following security configurations or controls represents the best practice to implement?
+B) Implement parameterized queries and prepared statements rather than raw string concatenation.
 D) Enable full disk encryption on all client endpoints.
-B) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-A) Implement parameterized queries and prepared statements rather than raw string concatenation.
-*   **Correct Answer:** A) Implement parameterized queries and prepared statements rather than raw string concatenation.
+A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
+C) Enable full disk encryption on all client endpoints.
+*   **Correct Answer:** A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why D is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why A is correct:* Implementing Implement parameterized queries and prepared statements rather than raw string concatenation. mitigates the risk of Allowing attackers to execute arbitrary SQL commands on the backend database via input forms..
+    * *Why B is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
+    * *Why D is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
+    * *Why A is correct:* Implementing Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt. mitigates the risk of Storing user credentials in plain text, making them vulnerable to database breaches..
+    * *Why C is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
 

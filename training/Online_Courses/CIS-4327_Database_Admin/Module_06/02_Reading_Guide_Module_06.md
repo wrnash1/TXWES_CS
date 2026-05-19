@@ -15,6 +15,9 @@ Review these essential definitions carefully. The certification exam expects you
 
 *   **Columnar Storage**: Unlike traditional databases that store data row-by-row, BigQuery stores data column-by-column, allowing it to aggregate massive datasets in seconds.
 *   **Serverless**: You do not provision servers for BigQuery. You simply run a query, and Google temporarily assigns thousands of CPUs to process it, charging you based on the bytes processed.
+*   **Focus Area**: Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
+*   **Scenario Trap**: Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
+*   **Study Resource**: To reinforce these concepts visually, review this targeted search query: [YouTube Exam Study Reference Link](https://www.youtube.com/results?search_query=4327_Database_Admin+-+Google+Cloud+Associate+Database+Engineer+BigQuery).
 
 ---
 

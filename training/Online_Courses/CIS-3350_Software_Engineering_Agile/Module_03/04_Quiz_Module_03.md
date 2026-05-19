@@ -17,33 +17,33 @@ What software design principle is violated when you copy and paste identical blo
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **comment overhead.**?
-C) The descendant node connected to the left branch of a parent node in a binary tree structure.
-D) The process of adjusting node positions in a binary heap to restore the heap property (min-heap or max-heap) after an insertion or deletion.
+In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **refactoring techniques**?
+D) The configuration of input data that forces an algorithm to perform the maximum number of operations, providing a guaranteed upper limit on execution time.
 A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-B) Data about the HTML document (like description, keywords, author, and viewport configurations) that is processed by browsers and search engine crawlers.
+B) CSS rules (like width, height, max-width, box-sizing) that dictate how the dimensions of elements are calculated and rendered.
+C) CSS properties (like block, inline, flex, grid) that determine how an element is rendered and how it behaves relative to surrounding elements.
 *   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **comment overhead.**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **comment overhead.**.
-    * *Why A is correct:* This describes the exact role and function of **comment overhead.**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **comment overhead.**.
+    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **refactoring techniques**.
+    * *Why A is correct:* This describes the exact role and function of **refactoring techniques**.
+    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **refactoring techniques**.
+    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **refactoring techniques**.
 
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **create a sandboxed Python virtual environment to manage dependencies locally**. Which of the following commands is the most appropriate to execute?
-A) python3 -m venv .venv
+A systems administrator or developer needs to **install all external project dependencies specified in the requirements manifest**. Which of the following commands is the most appropriate to execute?
+B) python3 -m venv .venv
+A) pip install -r requirements.txt
 C) pytest
-D) pip install -r requirements.txt
-B) git commit -m 'update'
-*   **Correct Answer:** A) python3 -m venv .venv
+D) git commit -m 'update'
+*   **Correct Answer:** A) pip install -r requirements.txt
 *   **Distractor Analysis:**
-    * *Why A is correct:* The `python3 -m venv .venv` command is directly designed to create a sandboxed Python virtual environment to manage dependencies locally.
+    * *Why B is incorrect:* This command handles alternative administrative tasks.
+    * *Why A is correct:* The `pip install -r requirements.txt` command is directly designed to install all external project dependencies specified in the requirements manifest.
     * *Why C is incorrect:* This command handles alternative administrative tasks.
     * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
 
 
 ---
@@ -51,29 +51,29 @@ B) git commit -m 'update'
 **Question 4**
 While working on **Clean Code & Refactoring** in a production environment, you encounter a system alert indicating a **IndexError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
 A) Verify that the index is within the valid range of 0 to len(list)-1.
-C) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
+B) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
+C) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
 D) Reboot the physical machine and wait for services to reload.
-B) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
 *   **Correct Answer:** A) Verify that the index is within the valid range of 0 to len(list)-1.
 *   **Distractor Analysis:**
     * *Why A is correct:* Because The code attempted to access an element of a sequence using an out-of-bounds index. The appropriate fix is to Verify that the index is within the valid range of 0 to len(list)-1..
+    * *Why B is incorrect:* This action does not resolve the root cause of IndexError.
     * *Why C is incorrect:* This action does not resolve the root cause of IndexError.
     * *Why D is incorrect:* This action does not resolve the root cause of IndexError.
-    * *Why B is incorrect:* This action does not resolve the root cause of IndexError.
 
 
 ---
 
 **Question 5**
-When designing a system for **Clean Code & Refactoring**, you must mitigate the risk of **Allowing attackers to execute arbitrary SQL commands on the backend database via input forms.**. Which of the following security configurations or controls represents the best practice to implement?
-B) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
+When designing a system for **Clean Code & Refactoring**, you must mitigate the risk of **Storing user credentials in plain text, making them vulnerable to database breaches.**. Which of the following security configurations or controls represents the best practice to implement?
 D) Enable full disk encryption on all client endpoints.
-A) Implement parameterized queries and prepared statements rather than raw string concatenation.
 C) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Implement parameterized queries and prepared statements rather than raw string concatenation.
+A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
+B) Implement parameterized queries and prepared statements rather than raw string concatenation.
+*   **Correct Answer:** A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why D is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why A is correct:* Implementing Implement parameterized queries and prepared statements rather than raw string concatenation. mitigates the risk of Allowing attackers to execute arbitrary SQL commands on the backend database via input forms..
-    * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
+    * *Why D is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
+    * *Why C is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
+    * *Why A is correct:* Implementing Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt. mitigates the risk of Storing user credentials in plain text, making them vulnerable to database breaches..
+    * *Why B is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
 

@@ -16,6 +16,9 @@ Review these essential definitions carefully. The certification exam expects you
 *   **Threat Actors**: Know the difference between Script Kiddies (low skill, use pre-made tools), Hacktivists (motivated by ideology/politics), and Advanced Persistent Threats / APTs (highly skilled, nation-state sponsored, focused on espionage and long-term access).
 *   **Vulnerability Scanning vs. Penetration Testing**: A vulnerability scan is automated, non-intrusive, and identifies missing patches. A penetration test (Pen Test) is active, intrusive, and attempts to explicitly exploit vulnerabilities to prove they can be compromised.
 *   **Zero-Day Exploit**: An attack that exploits a previously unknown vulnerability. Because it is unknown, there is no patch ("zero days" of notice).
+*   **Focus Area**: Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
+*   **Scenario Trap**: Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
+*   **Study Resource**: To reinforce these concepts visually, review this targeted search query: [YouTube Exam Study Reference Link](https://www.youtube.com/results?search_query=4328_Information_Security+-+CompTIA+Security%2B+%28SY0-701%29+Network+Sec).
 
 ---
 

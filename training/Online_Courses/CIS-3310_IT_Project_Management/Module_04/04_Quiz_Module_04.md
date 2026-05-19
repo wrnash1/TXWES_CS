@@ -18,62 +18,62 @@ Which dependency type describes a scenario where Task B cannot start until Task 
 
 **Question 2**
 In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **dependency types (Finish-to-Start)**?
-C) The operational principle of a stack, where the element added most recently is the first one to be removed, similar to a stack of trays.
+D) The core security model consisting of Confidentiality (preventing unauthorized access), Integrity (preventing unauthorized modification), and Availability (ensuring systems are accessible when needed).
 A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
-D) The total memory space required by an algorithm to execute to completion. This includes the static instruction space, variable space, and dynamic allocation space (like recursion stack frames or temporary arrays).
-B) Electrostatic Discharge protection; tools (like wrist straps, grounding mats) used to prevent static electricity from destroying sensitive microchips when handling hardware.
+C) A binary tree in which every level, except possibly the last, is completely filled, and all nodes in the last level are as far left as possible.
+B) The descendant node connected to the right branch of a parent node in a binary tree structure.
 *   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **dependency types (Finish-to-Start)**.
-    * *Why A is correct:* This describes the exact role and function of **dependency types (Finish-to-Start)**.
     * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **dependency types (Finish-to-Start)**.
+    * *Why A is correct:* This describes the exact role and function of **dependency types (Finish-to-Start)**.
+    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **dependency types (Finish-to-Start)**.
     * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **dependency types (Finish-to-Start)**.
 
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **check the configuration files for syntactic and internal consistency correctness**. Which of the following commands is the most appropriate to execute?
-A) terraform validate
-B) git log --oneline -n 5
-D) docker-compose up -d
-C) systemctl status iot_service
-*   **Correct Answer:** A) terraform validate
+A systems administrator or developer needs to **review the last five project commits in a concise single-line format**. Which of the following commands is the most appropriate to execute?
+D) terraform validate
+A) git log --oneline -n 5
+C) docker-compose up -d
+B) systemctl status iot_service
+*   **Correct Answer:** A) git log --oneline -n 5
 *   **Distractor Analysis:**
-    * *Why A is correct:* The `terraform validate` command is directly designed to check the configuration files for syntactic and internal consistency correctness.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
     * *Why D is incorrect:* This command handles alternative administrative tasks.
+    * *Why A is correct:* The `git log --oneline -n 5` command is directly designed to review the last five project commits in a concise single-line format.
     * *Why C is incorrect:* This command handles alternative administrative tasks.
+    * *Why B is incorrect:* This command handles alternative administrative tasks.
 
 
 ---
 
 **Question 4**
-While working on **Project Schedule & Gantt Charts** in a production environment, you encounter a system alert indicating a **Dependency Bottleneck** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-C) Optimize service resources, implement load balancing, or update failover mechanisms.
-A) Re-assign resources to critical path tasks and establish clear communication protocols.
+While working on **Project Schedule & Gantt Charts** in a production environment, you encounter a system alert indicating a **SLA Breach Alert** error. Which of the following is the most effective troubleshooting action to resolve this issue?
+A) Optimize service resources, implement load balancing, or update failover mechanisms.
 D) Reboot the physical machine and wait for services to reload.
-B) Implement strict change control boards (CCB) and re-baseline the project constraints.
-*   **Correct Answer:** A) Re-assign resources to critical path tasks and establish clear communication protocols.
+B) Re-assign resources to critical path tasks and establish clear communication protocols.
+C) Implement strict change control boards (CCB) and re-baseline the project constraints.
+*   **Correct Answer:** A) Optimize service resources, implement load balancing, or update failover mechanisms.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This action does not resolve the root cause of Dependency Bottleneck.
-    * *Why A is correct:* Because A critical task is blocked by a delayed prerequisite task, stalling the entire project timeline. The appropriate fix is to Re-assign resources to critical path tasks and establish clear communication protocols..
-    * *Why D is incorrect:* This action does not resolve the root cause of Dependency Bottleneck.
-    * *Why B is incorrect:* This action does not resolve the root cause of Dependency Bottleneck.
+    * *Why A is correct:* Because A system outage or slow response time has exceeded the limits guaranteed in the Service Level Agreement. The appropriate fix is to Optimize service resources, implement load balancing, or update failover mechanisms..
+    * *Why D is incorrect:* This action does not resolve the root cause of SLA Breach Alert.
+    * *Why B is incorrect:* This action does not resolve the root cause of SLA Breach Alert.
+    * *Why C is incorrect:* This action does not resolve the root cause of SLA Breach Alert.
 
 
 ---
 
 **Question 5**
 When designing a system for **Project Schedule & Gantt Charts**, you must mitigate the risk of **A disaster or ransomware attack causing prolonged downtime because recovery steps are undocumented.**. Which of the following security configurations or controls represents the best practice to implement?
+A) Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services.
 B) Establish formal authorization procedures and digital signatures for all project scope modifications.
 C) Enable full disk encryption on all client endpoints.
 D) Enable full disk encryption on all client endpoints.
-A) Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services.
 *   **Correct Answer:** A) Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services.
 *   **Distractor Analysis:**
+    * *Why A is correct:* Implementing Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services. mitigates the risk of A disaster or ransomware attack causing prolonged downtime because recovery steps are undocumented..
     * *Why B is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
     * *Why C is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
     * *Why D is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
-    * *Why A is correct:* Implementing Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services. mitigates the risk of A disaster or ransomware attack causing prolonged downtime because recovery steps are undocumented..
 

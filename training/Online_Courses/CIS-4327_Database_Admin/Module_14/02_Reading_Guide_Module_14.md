@@ -16,6 +16,9 @@ Review these essential definitions carefully. The certification exam expects you
 *   **Core Concept**: This module focuses on Cross-Region DR. Ensure you understand the primary terminology and how it applies to the certification exam objectives.
 *   **Exam Tip**: Memorize the common ports, protocols, and command-line syntax associated with Cross-Region DR.
 *   **Documentation**: Always refer to the official vendor documentation (Microsoft Learn, Google Cloud Docs, or CompTIA objectives) linked in your ZTC guide for the most up-to-date information.
+*   **Focus Area**: Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
+*   **Scenario Trap**: Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
+*   **Study Resource**: To reinforce these concepts visually, review this targeted search query: [YouTube Exam Study Reference Link](https://www.youtube.com/results?search_query=4327_Database_Admin+-+Google+Cloud+Associate+Database+Engineer+Cross-Region+DR).
 
 ---
 

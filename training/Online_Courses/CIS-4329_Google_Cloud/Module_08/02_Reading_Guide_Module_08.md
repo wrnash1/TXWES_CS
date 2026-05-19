@@ -16,6 +16,9 @@ Review these essential definitions carefully. The certification exam expects you
 *   **Core Operations**: A primary configuration standard and technical parameter essential for coordinating CLI Tools activities, enforcing security boundaries, and verifying operational statuses within the cloud environment.
 *   **Best Practices**: A primary configuration standard and technical parameter essential for coordinating CLI Tools activities, enforcing security boundaries, and verifying operational statuses within the cloud environment.
 *   **System Configuration**: A primary configuration standard and technical parameter essential for coordinating CLI Tools activities, enforcing security boundaries, and verifying operational statuses within the cloud environment.
+*   **Focus Area**: Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
+*   **Scenario Trap**: Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
+*   **Study Resource**: To reinforce these concepts visually, review this targeted search query: [YouTube Exam Study Reference Link](https://www.youtube.com/results?search_query=4329_Google_Cloud+-+Google+Cloud+Associate+Cloud+Engineer+CLI+Tools).
 
 ---
 

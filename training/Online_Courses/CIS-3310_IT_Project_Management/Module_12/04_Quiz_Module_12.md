@@ -17,33 +17,33 @@ How does scope changes management differ in Agile compared to traditional Waterf
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Agile methodologies**?
-D) The operational principle of a stack, where the element added most recently is the first one to be removed, similar to a stack of trays.
+In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **adaptive planning.**?
 A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
-B) Nodes that contain two pointers: one pointing forward to the next node and one pointing backward to the previous node, allowing bidirectional traversal.
-C) A complete binary tree where the key of any parent node is greater than or equal to the keys of its children, guaranteeing the root is always the maximum element.
+B) A complete binary tree where the key of any parent node is greater than or equal to the keys of its children, guaranteeing the root is always the maximum element.
+C) The process of adjusting node positions in a binary heap to restore the heap property (min-heap or max-heap) after an insertion or deletion.
+D) An algebraic restructuring operation on a binary tree that changes the parent-child relationships to restore balance without violating the search order.
 *   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Agile methodologies**.
-    * *Why A is correct:* This describes the exact role and function of **Agile methodologies**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Agile methodologies**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Agile methodologies**.
+    * *Why A is correct:* This describes the exact role and function of **adaptive planning.**.
+    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **adaptive planning.**.
+    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **adaptive planning.**.
+    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **adaptive planning.**.
 
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **review the last five project commits in a concise single-line format**. Which of the following commands is the most appropriate to execute?
+A systems administrator or developer needs to **verify the active status and resource usage of the background service daemon**. Which of the following commands is the most appropriate to execute?
+C) git log --oneline -n 5
 B) docker-compose up -d
-A) git log --oneline -n 5
-D) systemctl status iot_service
-C) terraform validate
-*   **Correct Answer:** A) git log --oneline -n 5
+A) systemctl status iot_service
+D) terraform validate
+*   **Correct Answer:** A) systemctl status iot_service
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `git log --oneline -n 5` command is directly designed to review the last five project commits in a concise single-line format.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
     * *Why C is incorrect:* This command handles alternative administrative tasks.
+    * *Why B is incorrect:* This command handles alternative administrative tasks.
+    * *Why A is correct:* The `systemctl status iot_service` command is directly designed to verify the active status and resource usage of the background service daemon.
+    * *Why D is incorrect:* This command handles alternative administrative tasks.
 
 
 ---
@@ -66,14 +66,14 @@ C) Implement strict change control boards (CCB) and re-baseline the project cons
 
 **Question 5**
 When designing a system for **Agile Project Management Overview**, you must mitigate the risk of **A disaster or ransomware attack causing prolonged downtime because recovery steps are undocumented.**. Which of the following security configurations or controls represents the best practice to implement?
-C) Enable full disk encryption on all client endpoints.
 B) Establish formal authorization procedures and digital signatures for all project scope modifications.
+C) Enable full disk encryption on all client endpoints.
 D) Enable full disk encryption on all client endpoints.
 A) Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services.
 *   **Correct Answer:** A) Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
     * *Why B is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
+    * *Why C is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
     * *Why D is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
     * *Why A is correct:* Implementing Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services. mitigates the risk of A disaster or ransomware attack causing prolonged downtime because recovery steps are undocumented..
 

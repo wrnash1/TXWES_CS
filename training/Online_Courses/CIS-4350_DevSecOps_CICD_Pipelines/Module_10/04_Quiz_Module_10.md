@@ -18,16 +18,16 @@ Which deployment strategy maintains two identical environments, routing traffic 
 
 **Question 2**
 In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **blue-green deployment**?
-C) HTML tags that convey the meaning and structure of the enclosed content to both the browser and search engines (e.g., <header>, <article>, <footer>) instead of generic containers.
-B) Web Content Accessibility Guidelines; international standards ensuring web content is usable for people with disabilities (e.g., screen reader compatibility, color contrast).
-D) A reference or memory address stored within a node that points to another node in a linked structure, forming the link between elements.
 A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
+C) The core operations of a stack: 'push' inserts an element onto the top, and 'pop' removes and returns the top element.
+B) The scenario where an algorithm requires the absolute minimum number of steps to complete (e.g., searching for an element that happens to be at the very beginning of a list).
+D) A reference or memory address stored within a node that points to another node in a linked structure, forming the link between elements.
 *   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
 *   **Distractor Analysis:**
+    * *Why A is correct:* This describes the exact role and function of **blue-green deployment**.
     * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **blue-green deployment**.
     * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **blue-green deployment**.
     * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **blue-green deployment**.
-    * *Why A is correct:* This describes the exact role and function of **blue-green deployment**.
 
 
 ---
@@ -36,8 +36,8 @@ A) A critical parameter and standard protocol utilized to enforce access rules, 
 A systems administrator or developer needs to **install all external project dependencies specified in the requirements manifest**. Which of the following commands is the most appropriate to execute?
 C) pytest
 A) pip install -r requirements.txt
-B) git commit -m 'update'
-D) python3 -m venv .venv
+B) python3 -m venv .venv
+D) git commit -m 'update'
 *   **Correct Answer:** A) pip install -r requirements.txt
 *   **Distractor Analysis:**
     * *Why C is incorrect:* This command handles alternative administrative tasks.
@@ -50,8 +50,8 @@ D) python3 -m venv .venv
 
 **Question 4**
 While working on **Automated Cloud Deployment** in a production environment, you encounter a system alert indicating a **TypeError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-C) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
-B) Verify that the index is within the valid range of 0 to len(list)-1.
+C) Verify that the index is within the valid range of 0 to len(list)-1.
+B) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
 A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
 D) Reboot the physical machine and wait for services to reload.
 *   **Correct Answer:** A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
@@ -65,15 +65,15 @@ D) Reboot the physical machine and wait for services to reload.
 ---
 
 **Question 5**
-When designing a system for **Automated Cloud Deployment**, you must mitigate the risk of **Storing user credentials in plain text, making them vulnerable to database breaches.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-C) Enable full disk encryption on all client endpoints.
-B) Implement parameterized queries and prepared statements rather than raw string concatenation.
+When designing a system for **Automated Cloud Deployment**, you must mitigate the risk of **Allowing attackers to execute arbitrary SQL commands on the backend database via input forms.**. Which of the following security configurations or controls represents the best practice to implement?
+A) Implement parameterized queries and prepared statements rather than raw string concatenation.
+B) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
 D) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
+C) Enable full disk encryption on all client endpoints.
+*   **Correct Answer:** A) Implement parameterized queries and prepared statements rather than raw string concatenation.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt. mitigates the risk of Storing user credentials in plain text, making them vulnerable to database breaches..
-    * *Why C is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-    * *Why B is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-    * *Why D is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
+    * *Why A is correct:* Implementing Implement parameterized queries and prepared statements rather than raw string concatenation. mitigates the risk of Allowing attackers to execute arbitrary SQL commands on the backend database via input forms..
+    * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
+    * *Why D is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
+    * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
 

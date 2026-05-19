@@ -17,6 +17,8 @@ D) No Access
 
 ---
 
+---
+
 **Question 2**
 A company has two file servers, one in New York and one in Los Angeles. Users currently have to remember two different server names (`\\NY-FS01\Data` and `\\LA-FS01\Data`) to access company files. Which Windows Server technology should you implement to allow users to access all files via a single, unified path like `\\company.local\SharedData`?
 A) DFS Replication (DFSR)
@@ -31,17 +33,19 @@ D) Storage Spaces Direct (S2D)
 
 ---
 
+---
+
 **Question 3**
-A systems administrator or developer needs to **instruct the systemd init system to restart a specified background service process**. Which of the following commands is the most appropriate to execute?
-B) chmod 600 config.conf
-C) ps aux
-A) systemctl restart service
+A systems administrator or developer needs to **restrict file read and write permissions to the file owner only, removing all group and other access**. Which of the following commands is the most appropriate to execute?
+C) systemctl restart service
+B) ps aux
+A) chmod 600 config.conf
 D) df -h
-*   **Correct Answer:** A) systemctl restart service
+*   **Correct Answer:** A) chmod 600 config.conf
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
     * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `systemctl restart service` command is directly designed to instruct the systemd init system to restart a specified background service process.
+    * *Why B is incorrect:* This command handles alternative administrative tasks.
+    * *Why A is correct:* The `chmod 600 config.conf` command is directly designed to restrict file read and write permissions to the file owner only, removing all group and other access.
     * *Why D is incorrect:* This command handles alternative administrative tasks.
 
 
@@ -49,30 +53,30 @@ D) df -h
 
 **Question 4**
 While working on **File Services** in a production environment, you encounter a system alert indicating a **Service Failed to Bind Port** error. Which of the following is the most effective troubleshooting action to resolve this issue?
+D) Reboot the physical machine and wait for services to reload.
 C) Run log rotations, clean temporary files, or expand the logical volume capacity.
 A) Identify and terminate the process already utilizing the target port, or modify the service configuration to use an open port.
 B) Prepend the command with 'sudo' to run it with superuser administrative privileges, or adjust the file permissions.
-D) Reboot the physical machine and wait for services to reload.
 *   **Correct Answer:** A) Identify and terminate the process already utilizing the target port, or modify the service configuration to use an open port.
 *   **Distractor Analysis:**
+    * *Why D is incorrect:* This action does not resolve the root cause of Service Failed to Bind Port.
     * *Why C is incorrect:* This action does not resolve the root cause of Service Failed to Bind Port.
     * *Why A is correct:* Because Another application or stale instance of the service is already listening on the designated network port. The appropriate fix is to Identify and terminate the process already utilizing the target port, or modify the service configuration to use an open port..
     * *Why B is incorrect:* This action does not resolve the root cause of Service Failed to Bind Port.
-    * *Why D is incorrect:* This action does not resolve the root cause of Service Failed to Bind Port.
 
 
 ---
 
 **Question 5**
-When designing a system for **File Services**, you must mitigate the risk of **Attackers exploiting vulnerabilities in forgotten background services or using abandoned accounts to gain persistent access.**. Which of the following security configurations or controls represents the best practice to implement?
-C) Enable full disk encryption on all client endpoints.
-B) Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC.
+When designing a system for **File Services**, you must mitigate the risk of **Administrators logging in routinely as root or Administrator, increasing the blast radius of user errors or malware.**. Which of the following security configurations or controls represents the best practice to implement?
 D) Enable full disk encryption on all client endpoints.
-A) Disable unused system accounts and run a port scan to disable unnecessary active background services.
-*   **Correct Answer:** A) Disable unused system accounts and run a port scan to disable unnecessary active background services.
+C) Enable full disk encryption on all client endpoints.
+B) Disable unused system accounts and run a port scan to disable unnecessary active background services.
+A) Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC.
+*   **Correct Answer:** A) Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This does not address the security vulnerability of Stale Accounts & Services.
-    * *Why B is incorrect:* This does not address the security vulnerability of Stale Accounts & Services.
-    * *Why D is incorrect:* This does not address the security vulnerability of Stale Accounts & Services.
-    * *Why A is correct:* Implementing Disable unused system accounts and run a port scan to disable unnecessary active background services. mitigates the risk of Attackers exploiting vulnerabilities in forgotten background services or using abandoned accounts to gain persistent access..
+    * *Why D is incorrect:* This does not address the security vulnerability of Privileged Access Abuse.
+    * *Why C is incorrect:* This does not address the security vulnerability of Privileged Access Abuse.
+    * *Why B is incorrect:* This does not address the security vulnerability of Privileged Access Abuse.
+    * *Why A is correct:* Implementing Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC. mitigates the risk of Administrators logging in routinely as root or Administrator, increasing the blast radius of user errors or malware..
 

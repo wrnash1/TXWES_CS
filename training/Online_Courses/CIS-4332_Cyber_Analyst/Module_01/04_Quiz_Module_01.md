@@ -17,63 +17,63 @@ What does IOC stand for in security operations?
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **intelligence gathering frameworks.**?
-D) The monetary loss expected from a single occurrence of a specific risk event, calculated as Asset Value multiplied by the Exposure Factor (SLE = AV * EF).
-C) Search Engine Optimization; practices designed to improve the visibility and ranking of web pages in search engine results through clean HTML, meta tags, and alt text.
+In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **threat landscape**?
+C) A cryptographic method that uses a public key to encrypt data and a mathematically related private key to decrypt it.
 A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within security operations.
-B) The single, top-most node in a tree structure from which all other nodes descend, serving as the starting reference for search algorithms.
+B) The maximum acceptable age of data that must be recovered from backup storage to restore operations, representing the limit of tolerable data loss.
+D) The operational principle of a queue, where the first element added is the first one to be removed, mimicking a line at a checkout register.
 *   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within security operations.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **intelligence gathering frameworks.**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **intelligence gathering frameworks.**.
-    * *Why A is correct:* This describes the exact role and function of **intelligence gathering frameworks.**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **intelligence gathering frameworks.**.
+    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **threat landscape**.
+    * *Why A is correct:* This describes the exact role and function of **threat landscape**.
+    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **threat landscape**.
+    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **threat landscape**.
 
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **launch the graphical packet analyzer to capture and dissect network frames in real-time**. Which of the following commands is the most appropriate to execute?
-B) hydra -l admin -P passwords.txt ssh://target
-D) nmap -sV -p 1-1024 target_ip
-A) wireshark
-C) openssl x509 -text -noout -in cert.pem
-*   **Correct Answer:** A) wireshark
+A systems administrator or developer needs to **scan ports on a target host to identify active services and their version numbers**. Which of the following commands is the most appropriate to execute?
+D) openssl x509 -text -noout -in cert.pem
+B) wireshark
+A) nmap -sV -p 1-1024 target_ip
+C) hydra -l admin -P passwords.txt ssh://target
+*   **Correct Answer:** A) nmap -sV -p 1-1024 target_ip
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
     * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `wireshark` command is directly designed to launch the graphical packet analyzer to capture and dissect network frames in real-time.
+    * *Why B is incorrect:* This command handles alternative administrative tasks.
+    * *Why A is correct:* The `nmap -sV -p 1-1024 target_ip` command is directly designed to scan ports on a target host to identify active services and their version numbers.
     * *Why C is incorrect:* This command handles alternative administrative tasks.
 
 
 ---
 
 **Question 4**
-While working on **Security Operations & Analyst Role** in a production environment, you encounter a system alert indicating a **IDS False Positives** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-D) Reboot the physical machine and wait for services to reload.
-B) Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA.
-A) Tune the detection signatures and define exceptions for authorized administrative activities.
+While working on **Security Operations & Analyst Role** in a production environment, you encounter a system alert indicating a **Certificate Expired Error** error. Which of the following is the most effective troubleshooting action to resolve this issue?
 C) Review active security rules and add a permissive firewall rule allowing the specific source IP and destination port.
-*   **Correct Answer:** A) Tune the detection signatures and define exceptions for authorized administrative activities.
+D) Reboot the physical machine and wait for services to reload.
+B) Tune the detection signatures and define exceptions for authorized administrative activities.
+A) Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA.
+*   **Correct Answer:** A) Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This action does not resolve the root cause of IDS False Positives.
-    * *Why B is incorrect:* This action does not resolve the root cause of IDS False Positives.
-    * *Why A is correct:* Because The network security system flags benign administrative scans or regular traffic patterns as malicious exploits. The appropriate fix is to Tune the detection signatures and define exceptions for authorized administrative activities..
-    * *Why C is incorrect:* This action does not resolve the root cause of IDS False Positives.
+    * *Why C is incorrect:* This action does not resolve the root cause of Certificate Expired Error.
+    * *Why D is incorrect:* This action does not resolve the root cause of Certificate Expired Error.
+    * *Why B is incorrect:* This action does not resolve the root cause of Certificate Expired Error.
+    * *Why A is correct:* Because The SSL/TLS digital certificate presented by the server has passed its validity end date, causing clients to block connections. The appropriate fix is to Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA..
 
 
 ---
 
 **Question 5**
 When designing a system for **Security Operations & Analyst Role**, you must mitigate the risk of **Attackers cracking weak encryption keys using commodity hardware, compromises confidentiality.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Enforce RSA keys with a minimum length of 2048/4096 bits or switch to Elliptic Curve Cryptography (ECC).
-C) Enable full disk encryption on all client endpoints.
 B) Forward all system logs to a secure, write-once SIEM (Security Information and Event Management) platform.
+A) Enforce RSA keys with a minimum length of 2048/4096 bits or switch to Elliptic Curve Cryptography (ECC).
 D) Enable full disk encryption on all client endpoints.
+C) Enable full disk encryption on all client endpoints.
 *   **Correct Answer:** A) Enforce RSA keys with a minimum length of 2048/4096 bits or switch to Elliptic Curve Cryptography (ECC).
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Enforce RSA keys with a minimum length of 2048/4096 bits or switch to Elliptic Curve Cryptography (ECC). mitigates the risk of Attackers cracking weak encryption keys using commodity hardware, compromises confidentiality..
-    * *Why C is incorrect:* This does not address the security vulnerability of Weak Key Strength.
     * *Why B is incorrect:* This does not address the security vulnerability of Weak Key Strength.
+    * *Why A is correct:* Implementing Enforce RSA keys with a minimum length of 2048/4096 bits or switch to Elliptic Curve Cryptography (ECC). mitigates the risk of Attackers cracking weak encryption keys using commodity hardware, compromises confidentiality..
     * *Why D is incorrect:* This does not address the security vulnerability of Weak Key Strength.
+    * *Why C is incorrect:* This does not address the security vulnerability of Weak Key Strength.
 

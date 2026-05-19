@@ -24,6 +24,9 @@ Review these essential definitions carefully. The certification exam expects you
 *   **Decapsulation**: The process of stripping headers as data moves up the OSI model at the receiving end.
 *   **MAC Address**: A physical, hardcoded 48-bit address on a Network Interface Card (NIC).
 *   **IP Address**: A logical address assigned to a device on a network.
+*   **Focus Area**: Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
+*   **Scenario Trap**: Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
+*   **Study Resource**: To reinforce these concepts visually, review this targeted search query: [YouTube Exam Study Reference Link](https://www.youtube.com/results?search_query=3321_Network_Admin+-+CompTIA+Network%2B+%28N10-008%29+OSI+Model).
 
 ---
 

@@ -16,6 +16,10 @@ Review these essential definitions carefully. The certification exam expects you
 *   **Synchronous vs Asynchronous Replication**: HA in Cloud SQL uses *synchronous* replication (data must be written to both zones before returning success). Read Replicas use *asynchronous* replication.
 *   **Failover Process**: During a failover, the primary instance is stopped, the persistent disk is attached to the standby instance, and the standby becomes the new primary. Connections are briefly dropped and must be re-established by the client application.
 *   **Point-in-Time Recovery (PITR)**: PITR requires automated backups to be enabled. It allows restoration to any point within the retention period (usually up to 7 days).
+*   **Focus Area**: Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
+*   **Scenario Trap**: Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
+*   **Study Resource**: To reinforce these concepts visually, review this targeted search query: [YouTube Exam Study Reference Link](https://www.youtube.com/results?search_query=4327_Database_Admin+-+Google+Cloud+Associate+Database+Engineer+Spanner).
+*   **Deliverable**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
 
 ---
 

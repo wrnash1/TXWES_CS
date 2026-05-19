@@ -3,7 +3,7 @@
 
 ---
 
-**Question 2**
+**Question 1**
 In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Captive Portals**?
 B) A structured, seven-step process (Prepare, Categorize, Select, Implement, Assess, Authorize, Monitor) created by NIST to help organizations manage cybersecurity risk.
 C) A binary tree in which every level, except possibly the last, is completely filled, and all nodes in the last level are as far left as possible.
@@ -16,6 +16,8 @@ D) The configuration of input data that forces an algorithm to perform the maxim
     * *Why A is correct:* This describes the exact role and function of **Captive Portals**.
     * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Captive Portals**.
 
+
+---
 
 ---
 
@@ -35,48 +37,50 @@ B) The descendant node connected to the left branch of a parent node in a binary
 
 ---
 
+---
+
 **Question 3**
-A systems administrator or developer needs to **map and trace the exact path of router hops packets travel to reach a target destination**. Which of the following commands is the most appropriate to execute?
-A) traceroute
-D) nslookup
-B) netstat -ano
-C) ping
-*   **Correct Answer:** A) traceroute
+A systems administrator or developer needs to **verify basic network connectivity and latency to a remote host using ICMP Echo Requests**. Which of the following commands is the most appropriate to execute?
+B) nslookup
+D) traceroute
+A) ping
+C) netstat -ano
+*   **Correct Answer:** A) ping
 *   **Distractor Analysis:**
-    * *Why A is correct:* The `traceroute` command is directly designed to map and trace the exact path of router hops packets travel to reach a target destination.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
     * *Why B is incorrect:* This command handles alternative administrative tasks.
+    * *Why D is incorrect:* This command handles alternative administrative tasks.
+    * *Why A is correct:* The `ping` command is directly designed to verify basic network connectivity and latency to a remote host using ICMP Echo Requests.
     * *Why C is incorrect:* This command handles alternative administrative tasks.
 
 
 ---
 
 **Question 4**
-While working on **Wireless** in a production environment, you encounter a system alert indicating a **Subnet Mask Mismatch** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-A) Correct the subnet mask configuration on the interface to match the network segment parameters.
-B) Change the local network interface settings to use a public DNS resolver like 8.8.8.8 or 1.1.1.1.
+While working on **Wireless** in a production environment, you encounter a system alert indicating a **DNS Failure** error. Which of the following is the most effective troubleshooting action to resolve this issue?
+B) Release and renew the DHCP lease, or configure a unique static IP address outside the DHCP pool range.
+C) Correct the subnet mask configuration on the interface to match the network segment parameters.
 D) Reboot the physical machine and wait for services to reload.
-C) Release and renew the DHCP lease, or configure a unique static IP address outside the DHCP pool range.
-*   **Correct Answer:** A) Correct the subnet mask configuration on the interface to match the network segment parameters.
+A) Change the local network interface settings to use a public DNS resolver like 8.8.8.8 or 1.1.1.1.
+*   **Correct Answer:** A) Change the local network interface settings to use a public DNS resolver like 8.8.8.8 or 1.1.1.1.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Because A host is configured with an incorrect subnet mask, preventing it from identifying local vs. remote addresses. The appropriate fix is to Correct the subnet mask configuration on the interface to match the network segment parameters..
-    * *Why B is incorrect:* This action does not resolve the root cause of Subnet Mask Mismatch.
-    * *Why D is incorrect:* This action does not resolve the root cause of Subnet Mask Mismatch.
-    * *Why C is incorrect:* This action does not resolve the root cause of Subnet Mask Mismatch.
+    * *Why B is incorrect:* This action does not resolve the root cause of DNS Failure.
+    * *Why C is incorrect:* This action does not resolve the root cause of DNS Failure.
+    * *Why D is incorrect:* This action does not resolve the root cause of DNS Failure.
+    * *Why A is correct:* Because The configured DNS server is offline, misconfigured, or unreachable, preventing host name resolution. The appropriate fix is to Change the local network interface settings to use a public DNS resolver like 8.8.8.8 or 1.1.1.1..
 
 
 ---
 
 **Question 5**
-When designing a system for **Wireless**, you must mitigate the risk of **Attackers connecting rogue access points or unauthorized laptops directly to internal switch ports.**. Which of the following security configurations or controls represents the best practice to implement?
+When designing a system for **Wireless**, you must mitigate the risk of **Attackers capturing plaintext management passwords or session data using network sniffers.**. Which of the following security configurations or controls represents the best practice to implement?
 C) Enable full disk encryption on all client endpoints.
-B) Configure SSH (port 22) for terminal access and HTTPS (port 443) for web interfaces, disabling Telnet and HTTP.
-A) Implement switch Port Security to restrict access to switch ports based on approved MAC addresses.
+B) Implement switch Port Security to restrict access to switch ports based on approved MAC addresses.
 D) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Implement switch Port Security to restrict access to switch ports based on approved MAC addresses.
+A) Configure SSH (port 22) for terminal access and HTTPS (port 443) for web interfaces, disabling Telnet and HTTP.
+*   **Correct Answer:** A) Configure SSH (port 22) for terminal access and HTTPS (port 443) for web interfaces, disabling Telnet and HTTP.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This does not address the security vulnerability of Unauthorized Port Access.
-    * *Why B is incorrect:* This does not address the security vulnerability of Unauthorized Port Access.
-    * *Why A is correct:* Implementing Implement switch Port Security to restrict access to switch ports based on approved MAC addresses. mitigates the risk of Attackers connecting rogue access points or unauthorized laptops directly to internal switch ports..
-    * *Why D is incorrect:* This does not address the security vulnerability of Unauthorized Port Access.
+    * *Why C is incorrect:* This does not address the security vulnerability of Unencrypted Traffic Exposure.
+    * *Why B is incorrect:* This does not address the security vulnerability of Unencrypted Traffic Exposure.
+    * *Why D is incorrect:* This does not address the security vulnerability of Unencrypted Traffic Exposure.
+    * *Why A is correct:* Implementing Configure SSH (port 22) for terminal access and HTTPS (port 443) for web interfaces, disabling Telnet and HTTP. mitigates the risk of Attackers capturing plaintext management passwords or session data using network sniffers..
 

@@ -16,6 +16,9 @@ Review these essential definitions carefully. The certification exam expects you
 *   **Cloud Service Models**: * *IaaS (Infrastructure):* You manage the OS, provider manages hardware (e.g., AWS EC2).
 *   **Antenna Types**: Omnidirectional (radiates in all directions, good for offices). Unidirectional/Yagi (focuses beam in one direction, good for building-to-building links).
 *   **CSMA/CA**: Carrier Sense Multiple Access with Collision Avoidance. The protocol Wi-Fi uses to ensure devices don't talk over each other.
+*   **Focus Area**: Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
+*   **Scenario Trap**: Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
+*   **Study Resource**: To reinforce these concepts visually, review this targeted search query: [YouTube Exam Study Reference Link](https://www.youtube.com/results?search_query=3321_Network_Admin+-+CompTIA+Network%2B+%28N10-008%29+Routing).
 
 ---
 

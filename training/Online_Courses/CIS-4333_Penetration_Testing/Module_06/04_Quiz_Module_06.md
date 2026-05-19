@@ -17,49 +17,49 @@ What is a phishing attack that specifically targets high-profile corporate execu
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **tailgating**?
+In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **spear-phishing vs whaling.**?
+B) A structured, seven-step process (Prepare, Categorize, Select, Implement, Assess, Authorize, Monitor) created by NIST to help organizations manage cybersecurity risk.
+C) A complete binary tree where the key of any parent node is less than or equal to the keys of its children, guaranteeing the root is always the minimum element.
 A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within security operations.
-B) The memory block allocated on the system stack for a single function call, storing parameters, local variables, and the return address.
-D) HTML tags that convey the meaning and structure of the enclosed content to both the browser and search engines (e.g., <header>, <article>, <footer>) instead of generic containers.
-C) The single, top-most node in a tree structure from which all other nodes descend, serving as the starting reference for search algorithms.
+D) The expected yearly cost of a security risk, calculated by multiplying the Single Loss Expectancy by the Annualized Rate of Occurrence (ALE = SLE * ARO).
 *   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within security operations.
 *   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **tailgating**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **tailgating**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **tailgating**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **tailgating**.
+    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **spear-phishing vs whaling.**.
+    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **spear-phishing vs whaling.**.
+    * *Why A is correct:* This describes the exact role and function of **spear-phishing vs whaling.**.
+    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **spear-phishing vs whaling.**.
 
 
 ---
 
 **Question 3**
 A systems administrator or developer needs to **scan ports on a target host to identify active services and their version numbers**. Which of the following commands is the most appropriate to execute?
+B) wireshark
+D) hydra -l admin -P passwords.txt ssh://target
 A) nmap -sV -p 1-1024 target_ip
-D) openssl x509 -text -noout -in cert.pem
-C) wireshark
-B) hydra -l admin -P passwords.txt ssh://target
+C) openssl x509 -text -noout -in cert.pem
 *   **Correct Answer:** A) nmap -sV -p 1-1024 target_ip
 *   **Distractor Analysis:**
-    * *Why A is correct:* The `nmap -sV -p 1-1024 target_ip` command is directly designed to scan ports on a target host to identify active services and their version numbers.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
     * *Why B is incorrect:* This command handles alternative administrative tasks.
+    * *Why D is incorrect:* This command handles alternative administrative tasks.
+    * *Why A is correct:* The `nmap -sV -p 1-1024 target_ip` command is directly designed to scan ports on a target host to identify active services and their version numbers.
+    * *Why C is incorrect:* This command handles alternative administrative tasks.
 
 
 ---
 
 **Question 4**
-While working on **Social Engineering Attacks** in a production environment, you encounter a system alert indicating a **IDS False Positives** error. Which of the following is the most effective troubleshooting action to resolve this issue?
+While working on **Social Engineering Attacks** in a production environment, you encounter a system alert indicating a **Firewall Blocking Valid Traffic** error. Which of the following is the most effective troubleshooting action to resolve this issue?
+B) Tune the detection signatures and define exceptions for authorized administrative activities.
+A) Review active security rules and add a permissive firewall rule allowing the specific source IP and destination port.
 D) Reboot the physical machine and wait for services to reload.
-C) Review active security rules and add a permissive firewall rule allowing the specific source IP and destination port.
-B) Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA.
-A) Tune the detection signatures and define exceptions for authorized administrative activities.
-*   **Correct Answer:** A) Tune the detection signatures and define exceptions for authorized administrative activities.
+C) Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA.
+*   **Correct Answer:** A) Review active security rules and add a permissive firewall rule allowing the specific source IP and destination port.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This action does not resolve the root cause of IDS False Positives.
-    * *Why C is incorrect:* This action does not resolve the root cause of IDS False Positives.
-    * *Why B is incorrect:* This action does not resolve the root cause of IDS False Positives.
-    * *Why A is correct:* Because The network security system flags benign administrative scans or regular traffic patterns as malicious exploits. The appropriate fix is to Tune the detection signatures and define exceptions for authorized administrative activities..
+    * *Why B is incorrect:* This action does not resolve the root cause of Firewall Blocking Valid Traffic.
+    * *Why A is correct:* Because The default-deny firewall rule is blocking a newly deployed service that has not been whitelisted. The appropriate fix is to Review active security rules and add a permissive firewall rule allowing the specific source IP and destination port..
+    * *Why D is incorrect:* This action does not resolve the root cause of Firewall Blocking Valid Traffic.
+    * *Why C is incorrect:* This action does not resolve the root cause of Firewall Blocking Valid Traffic.
 
 
 ---

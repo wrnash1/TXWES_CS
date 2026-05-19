@@ -17,63 +17,63 @@ Which control type is a security awareness training program classified as?
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **defense-in-depth**?
-D) The memory block allocated on the system stack for a single function call, storing parameters, local variables, and the return address.
+In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **security logging topologies.**?
+B) A reference or memory address stored within a node that points to another node in a linked structure, forming the link between elements.
+D) The core model of cybersecurity representing three objectives: Confidentiality, Integrity, and Availability.
+C) An algebraic restructuring operation on a binary tree that changes the parent-child relationships to restore balance without violating the search order.
 A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within security operations.
-B) The total memory space required by an algorithm to execute to completion. This includes the static instruction space, variable space, and dynamic allocation space (like recursion stack frames or temporary arrays).
-C) The defining rule of a BST: for any given node, all keys in its left subtree must be less than or equal to its key, and all keys in its right subtree must be greater.
 *   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within security operations.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **defense-in-depth**.
-    * *Why A is correct:* This describes the exact role and function of **defense-in-depth**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **defense-in-depth**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **defense-in-depth**.
+    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **security logging topologies.**.
+    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **security logging topologies.**.
+    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **security logging topologies.**.
+    * *Why A is correct:* This describes the exact role and function of **security logging topologies.**.
 
 
 ---
 
 **Question 3**
 A systems administrator or developer needs to **run a dictionary brute-force attack against the target SSH service to test credential strength**. Which of the following commands is the most appropriate to execute?
-D) wireshark
-C) openssl x509 -text -noout -in cert.pem
-B) nmap -sV -p 1-1024 target_ip
 A) hydra -l admin -P passwords.txt ssh://target
+C) nmap -sV -p 1-1024 target_ip
+D) openssl x509 -text -noout -in cert.pem
+B) wireshark
 *   **Correct Answer:** A) hydra -l admin -P passwords.txt ssh://target
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
     * *Why A is correct:* The `hydra -l admin -P passwords.txt ssh://target` command is directly designed to run a dictionary brute-force attack against the target SSH service to test credential strength.
+    * *Why C is incorrect:* This command handles alternative administrative tasks.
+    * *Why D is incorrect:* This command handles alternative administrative tasks.
+    * *Why B is incorrect:* This command handles alternative administrative tasks.
 
 
 ---
 
 **Question 4**
-While working on **Security Controls & Architecture** in a production environment, you encounter a system alert indicating a **Certificate Expired Error** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-B) Review active security rules and add a permissive firewall rule allowing the specific source IP and destination port.
-C) Tune the detection signatures and define exceptions for authorized administrative activities.
-A) Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA.
+While working on **Security Controls & Architecture** in a production environment, you encounter a system alert indicating a **Firewall Blocking Valid Traffic** error. Which of the following is the most effective troubleshooting action to resolve this issue?
+C) Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA.
+B) Tune the detection signatures and define exceptions for authorized administrative activities.
 D) Reboot the physical machine and wait for services to reload.
-*   **Correct Answer:** A) Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA.
+A) Review active security rules and add a permissive firewall rule allowing the specific source IP and destination port.
+*   **Correct Answer:** A) Review active security rules and add a permissive firewall rule allowing the specific source IP and destination port.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This action does not resolve the root cause of Certificate Expired Error.
-    * *Why C is incorrect:* This action does not resolve the root cause of Certificate Expired Error.
-    * *Why A is correct:* Because The SSL/TLS digital certificate presented by the server has passed its validity end date, causing clients to block connections. The appropriate fix is to Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA..
-    * *Why D is incorrect:* This action does not resolve the root cause of Certificate Expired Error.
+    * *Why C is incorrect:* This action does not resolve the root cause of Firewall Blocking Valid Traffic.
+    * *Why B is incorrect:* This action does not resolve the root cause of Firewall Blocking Valid Traffic.
+    * *Why D is incorrect:* This action does not resolve the root cause of Firewall Blocking Valid Traffic.
+    * *Why A is correct:* Because The default-deny firewall rule is blocking a newly deployed service that has not been whitelisted. The appropriate fix is to Review active security rules and add a permissive firewall rule allowing the specific source IP and destination port..
 
 
 ---
 
 **Question 5**
-When designing a system for **Security Controls & Architecture**, you must mitigate the risk of **Attackers cracking weak encryption keys using commodity hardware, compromises confidentiality.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Enforce RSA keys with a minimum length of 2048/4096 bits or switch to Elliptic Curve Cryptography (ECC).
-B) Forward all system logs to a secure, write-once SIEM (Security Information and Event Management) platform.
+When designing a system for **Security Controls & Architecture**, you must mitigate the risk of **Intruders deleting local system event logs after a breach to hide their tracks and prevent investigation.**. Which of the following security configurations or controls represents the best practice to implement?
+A) Forward all system logs to a secure, write-once SIEM (Security Information and Event Management) platform.
 D) Enable full disk encryption on all client endpoints.
 C) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Enforce RSA keys with a minimum length of 2048/4096 bits or switch to Elliptic Curve Cryptography (ECC).
+B) Enforce RSA keys with a minimum length of 2048/4096 bits or switch to Elliptic Curve Cryptography (ECC).
+*   **Correct Answer:** A) Forward all system logs to a secure, write-once SIEM (Security Information and Event Management) platform.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Enforce RSA keys with a minimum length of 2048/4096 bits or switch to Elliptic Curve Cryptography (ECC). mitigates the risk of Attackers cracking weak encryption keys using commodity hardware, compromises confidentiality..
-    * *Why B is incorrect:* This does not address the security vulnerability of Weak Key Strength.
-    * *Why D is incorrect:* This does not address the security vulnerability of Weak Key Strength.
-    * *Why C is incorrect:* This does not address the security vulnerability of Weak Key Strength.
+    * *Why A is correct:* Implementing Forward all system logs to a secure, write-once SIEM (Security Information and Event Management) platform. mitigates the risk of Intruders deleting local system event logs after a breach to hide their tracks and prevent investigation..
+    * *Why D is incorrect:* This does not address the security vulnerability of Lack of Centralized Logs.
+    * *Why C is incorrect:* This does not address the security vulnerability of Lack of Centralized Logs.
+    * *Why B is incorrect:* This does not address the security vulnerability of Lack of Centralized Logs.
 

@@ -18,48 +18,48 @@ What keyword is required to modify a variable defined at the module level from i
 
 **Question 2**
 In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Global vs local scope**?
+D) The entry point or first node in a linked list, which serves as the reference for traversing the rest of the list structure.
+B) The core CSS layout block consisting of margins, borders, padding, and the actual content area, defining the sizing and spacing of every page element.
+C) The maximum acceptable age of data that must be recovered from backup storage to restore operations, representing the limit of tolerable data loss.
 A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-B) A security control that divides a critical transaction workflow among multiple users to prevent fraud and errors (e.g., one person approves a purchase order, another pays the vendor).
-C) The mathematical expectation of an algorithm's performance across all possible inputs of size N, representing typical real-world runtime behavior.
-D) A reference or memory address stored within a node that points to another node in a linked structure, forming the link between elements.
 *   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
 *   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **Global vs local scope**.
+    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Global vs local scope**.
     * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Global vs local scope**.
     * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Global vs local scope**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Global vs local scope**.
+    * *Why A is correct:* This describes the exact role and function of **Global vs local scope**.
 
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **install all external project dependencies specified in the requirements manifest**. Which of the following commands is the most appropriate to execute?
-B) git commit -m 'update'
-A) pip install -r requirements.txt
-D) pytest
-C) python3 -m venv .venv
-*   **Correct Answer:** A) pip install -r requirements.txt
+A systems administrator or developer needs to **create a sandboxed Python virtual environment to manage dependencies locally**. Which of the following commands is the most appropriate to execute?
+C) pip install -r requirements.txt
+D) git commit -m 'update'
+B) pytest
+A) python3 -m venv .venv
+*   **Correct Answer:** A) python3 -m venv .venv
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `pip install -r requirements.txt` command is directly designed to install all external project dependencies specified in the requirements manifest.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
     * *Why C is incorrect:* This command handles alternative administrative tasks.
+    * *Why D is incorrect:* This command handles alternative administrative tasks.
+    * *Why B is incorrect:* This command handles alternative administrative tasks.
+    * *Why A is correct:* The `python3 -m venv .venv` command is directly designed to create a sandboxed Python virtual environment to manage dependencies locally.
 
 
 ---
 
 **Question 4**
-While working on **Scopes, Namespaces, and Recursion** in a production environment, you encounter a system alert indicating a **IndexError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-B) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-C) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
+While working on **Scopes, Namespaces, and Recursion** in a production environment, you encounter a system alert indicating a **KeyError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
 D) Reboot the physical machine and wait for services to reload.
-A) Verify that the index is within the valid range of 0 to len(list)-1.
-*   **Correct Answer:** A) Verify that the index is within the valid range of 0 to len(list)-1.
+A) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
+B) Verify that the index is within the valid range of 0 to len(list)-1.
+C) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
+*   **Correct Answer:** A) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This action does not resolve the root cause of IndexError.
-    * *Why C is incorrect:* This action does not resolve the root cause of IndexError.
-    * *Why D is incorrect:* This action does not resolve the root cause of IndexError.
-    * *Why A is correct:* Because The code attempted to access an element of a sequence using an out-of-bounds index. The appropriate fix is to Verify that the index is within the valid range of 0 to len(list)-1..
+    * *Why D is incorrect:* This action does not resolve the root cause of KeyError.
+    * *Why A is correct:* Because The code attempted to access a dictionary key that is not defined in the object. The appropriate fix is to Ensure the requested key exists in the dictionary, or use the .get() method to return a default value..
+    * *Why B is incorrect:* This action does not resolve the root cause of KeyError.
+    * *Why C is incorrect:* This action does not resolve the root cause of KeyError.
 
 
 ---

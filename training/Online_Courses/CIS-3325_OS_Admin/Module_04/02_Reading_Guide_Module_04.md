@@ -16,6 +16,9 @@ Review these essential definitions carefully. The certification exam expects you
 *   **Background vs. Foreground Processes**: Appending an ampersand `&` to the end of a command (e.g., `sleep 100 &`) runs the process in the background, freeing up your terminal prompt immediately.
 *   **Standard Streams**: * *stdin (0):* Standard Input (usually the keyboard).
 *   **Redirection**: Use `>` to redirect stdout to a file (overwriting it). Use `>>` to append to a file. Use `2>` to redirect errors to a file.
+*   **Focus Area**: Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
+*   **Scenario Trap**: Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
+*   **Study Resource**: To reinforce these concepts visually, review this targeted search query: [YouTube Exam Study Reference Link](https://www.youtube.com/results?search_query=3325_OS_Admin+-+CompTIA+Linux%2B+%28XK0-005%29+Permissions).
 
 ---
 

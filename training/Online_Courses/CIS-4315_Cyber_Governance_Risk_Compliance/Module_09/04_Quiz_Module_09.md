@@ -17,30 +17,30 @@ Which regulatory law mandates strict electronic security and privacy controls to
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Health Insurance Portability and Accountability Act (HIPAA)**?
+In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Sarbanes-Oxley (SOX)**?
+D) A binary tree in which every level, except possibly the last, is completely filled, and all nodes in the last level are as far left as possible.
+C) The absolute maximum time a business process can be disrupted before the organization suffers irreparable damage or failure.
+B) The single, top-most node in a tree structure from which all other nodes descend, serving as the starting reference for search algorithms.
 A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
-B) Data about the HTML document (like description, keywords, author, and viewport configurations) that is processed by browsers and search engine crawlers.
-D) The entry point or first node in a linked list, which serves as the reference for traversing the rest of the list structure.
-C) An algebraic restructuring operation on a binary tree that changes the parent-child relationships to restore balance without violating the search order.
 *   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
 *   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **Health Insurance Portability and Accountability Act (HIPAA)**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Health Insurance Portability and Accountability Act (HIPAA)**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Health Insurance Portability and Accountability Act (HIPAA)**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Health Insurance Portability and Accountability Act (HIPAA)**.
+    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Sarbanes-Oxley (SOX)**.
+    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Sarbanes-Oxley (SOX)**.
+    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Sarbanes-Oxley (SOX)**.
+    * *Why A is correct:* This describes the exact role and function of **Sarbanes-Oxley (SOX)**.
 
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **check the configuration files for syntactic and internal consistency correctness**. Which of the following commands is the most appropriate to execute?
-A) terraform validate
-C) git log --oneline -n 5
-B) systemctl status iot_service
-D) docker-compose up -d
-*   **Correct Answer:** A) terraform validate
+A systems administrator or developer needs to **verify the active status and resource usage of the background service daemon**. Which of the following commands is the most appropriate to execute?
+A) systemctl status iot_service
+C) docker-compose up -d
+B) terraform validate
+D) git log --oneline -n 5
+*   **Correct Answer:** A) systemctl status iot_service
 *   **Distractor Analysis:**
-    * *Why A is correct:* The `terraform validate` command is directly designed to check the configuration files for syntactic and internal consistency correctness.
+    * *Why A is correct:* The `systemctl status iot_service` command is directly designed to verify the active status and resource usage of the background service daemon.
     * *Why C is incorrect:* This command handles alternative administrative tasks.
     * *Why B is incorrect:* This command handles alternative administrative tasks.
     * *Why D is incorrect:* This command handles alternative administrative tasks.
@@ -50,30 +50,30 @@ D) docker-compose up -d
 
 **Question 4**
 While working on **Regulatory Compliance (HIPAA, SOX)** in a production environment, you encounter a system alert indicating a **Scope Exceeded Budget Limit** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-B) Re-assign resources to critical path tasks and establish clear communication protocols.
-A) Implement strict change control boards (CCB) and re-baseline the project constraints.
+C) Re-assign resources to critical path tasks and establish clear communication protocols.
+B) Optimize service resources, implement load balancing, or update failover mechanisms.
 D) Reboot the physical machine and wait for services to reload.
-C) Optimize service resources, implement load balancing, or update failover mechanisms.
+A) Implement strict change control boards (CCB) and re-baseline the project constraints.
 *   **Correct Answer:** A) Implement strict change control boards (CCB) and re-baseline the project constraints.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This action does not resolve the root cause of Scope Exceeded Budget Limit.
-    * *Why A is correct:* Because The project scope expanded during execution without adjusting budget or schedule allocations. The appropriate fix is to Implement strict change control boards (CCB) and re-baseline the project constraints..
-    * *Why D is incorrect:* This action does not resolve the root cause of Scope Exceeded Budget Limit.
     * *Why C is incorrect:* This action does not resolve the root cause of Scope Exceeded Budget Limit.
+    * *Why B is incorrect:* This action does not resolve the root cause of Scope Exceeded Budget Limit.
+    * *Why D is incorrect:* This action does not resolve the root cause of Scope Exceeded Budget Limit.
+    * *Why A is correct:* Because The project scope expanded during execution without adjusting budget or schedule allocations. The appropriate fix is to Implement strict change control boards (CCB) and re-baseline the project constraints..
 
 
 ---
 
 **Question 5**
-When designing a system for **Regulatory Compliance (HIPAA, SOX)**, you must mitigate the risk of **Stakeholders requesting changes directly to developers, leading to untracked features and security vulnerabilities.**. Which of the following security configurations or controls represents the best practice to implement?
+When designing a system for **Regulatory Compliance (HIPAA, SOX)**, you must mitigate the risk of **A disaster or ransomware attack causing prolonged downtime because recovery steps are undocumented.**. Which of the following security configurations or controls represents the best practice to implement?
+A) Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services.
+B) Establish formal authorization procedures and digital signatures for all project scope modifications.
 C) Enable full disk encryption on all client endpoints.
-B) Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services.
 D) Enable full disk encryption on all client endpoints.
-A) Establish formal authorization procedures and digital signatures for all project scope modifications.
-*   **Correct Answer:** A) Establish formal authorization procedures and digital signatures for all project scope modifications.
+*   **Correct Answer:** A) Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This does not address the security vulnerability of Unauthorized Scope Modification.
-    * *Why B is incorrect:* This does not address the security vulnerability of Unauthorized Scope Modification.
-    * *Why D is incorrect:* This does not address the security vulnerability of Unauthorized Scope Modification.
-    * *Why A is correct:* Implementing Establish formal authorization procedures and digital signatures for all project scope modifications. mitigates the risk of Stakeholders requesting changes directly to developers, leading to untracked features and security vulnerabilities..
+    * *Why A is correct:* Implementing Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services. mitigates the risk of A disaster or ransomware attack causing prolonged downtime because recovery steps are undocumented..
+    * *Why B is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
+    * *Why C is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
+    * *Why D is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
 

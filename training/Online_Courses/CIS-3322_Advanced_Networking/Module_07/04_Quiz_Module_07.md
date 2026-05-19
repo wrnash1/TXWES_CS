@@ -18,62 +18,62 @@ In a Router-on-a-stick topology, how are multiple VLANs terminated on a single p
 
 **Question 2**
 In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Layer 3 Switch SVI configuration.**?
-C) A binary search tree that automatically adjusts its height during insertions and deletions (e.g., AVL, Red-Black) to maintain logarithmic operations.
-D) The final node in a linked list, whose next pointer typically references null (or the head node in a circular list), marking the end of the chain.
+B) A security control that divides a critical transaction workflow among multiple users to prevent fraud and errors (e.g., one person approves a purchase order, another pays the vendor).
+D) A complete binary tree where the key of any parent node is greater than or equal to the keys of its children, guaranteeing the root is always the maximum element.
 A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within networking operations.
-B) The mathematical expectation of an algorithm's performance across all possible inputs of size N, representing typical real-world runtime behavior.
+C) The defining rule of a BST: for any given node, all keys in its left subtree must be less than or equal to its key, and all keys in its right subtree must be greater.
 *   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within networking operations.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Layer 3 Switch SVI configuration.**.
+    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Layer 3 Switch SVI configuration.**.
     * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Layer 3 Switch SVI configuration.**.
     * *Why A is correct:* This describes the exact role and function of **Layer 3 Switch SVI configuration.**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Layer 3 Switch SVI configuration.**.
+    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Layer 3 Switch SVI configuration.**.
 
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **query DNS servers to verify domain name resolution and retrieve resource records**. Which of the following commands is the most appropriate to execute?
+A systems administrator or developer needs to **display all active network connections, listening ports, and corresponding process identifiers**. Which of the following commands is the most appropriate to execute?
 C) traceroute
-D) netstat -ano
-A) nslookup
-B) ping
-*   **Correct Answer:** A) nslookup
+B) nslookup
+A) netstat -ano
+D) ping
+*   **Correct Answer:** A) netstat -ano
 *   **Distractor Analysis:**
     * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `nslookup` command is directly designed to query DNS servers to verify domain name resolution and retrieve resource records.
     * *Why B is incorrect:* This command handles alternative administrative tasks.
+    * *Why A is correct:* The `netstat -ano` command is directly designed to display all active network connections, listening ports, and corresponding process identifiers.
+    * *Why D is incorrect:* This command handles alternative administrative tasks.
 
 
 ---
 
 **Question 4**
-While working on **Inter-VLAN Routing Solutions** in a production environment, you encounter a system alert indicating a **IP Address Conflict** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-B) Correct the subnet mask configuration on the interface to match the network segment parameters.
-A) Release and renew the DHCP lease, or configure a unique static IP address outside the DHCP pool range.
-C) Change the local network interface settings to use a public DNS resolver like 8.8.8.8 or 1.1.1.1.
+While working on **Inter-VLAN Routing Solutions** in a production environment, you encounter a system alert indicating a **DNS Failure** error. Which of the following is the most effective troubleshooting action to resolve this issue?
+C) Release and renew the DHCP lease, or configure a unique static IP address outside the DHCP pool range.
 D) Reboot the physical machine and wait for services to reload.
-*   **Correct Answer:** A) Release and renew the DHCP lease, or configure a unique static IP address outside the DHCP pool range.
+B) Correct the subnet mask configuration on the interface to match the network segment parameters.
+A) Change the local network interface settings to use a public DNS resolver like 8.8.8.8 or 1.1.1.1.
+*   **Correct Answer:** A) Change the local network interface settings to use a public DNS resolver like 8.8.8.8 or 1.1.1.1.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This action does not resolve the root cause of IP Address Conflict.
-    * *Why A is correct:* Because Two devices on the same physical or logical network segment are configured with the identical IP address. The appropriate fix is to Release and renew the DHCP lease, or configure a unique static IP address outside the DHCP pool range..
-    * *Why C is incorrect:* This action does not resolve the root cause of IP Address Conflict.
-    * *Why D is incorrect:* This action does not resolve the root cause of IP Address Conflict.
+    * *Why C is incorrect:* This action does not resolve the root cause of DNS Failure.
+    * *Why D is incorrect:* This action does not resolve the root cause of DNS Failure.
+    * *Why B is incorrect:* This action does not resolve the root cause of DNS Failure.
+    * *Why A is correct:* Because The configured DNS server is offline, misconfigured, or unreachable, preventing host name resolution. The appropriate fix is to Change the local network interface settings to use a public DNS resolver like 8.8.8.8 or 1.1.1.1..
 
 
 ---
 
 **Question 5**
-When designing a system for **Inter-VLAN Routing Solutions**, you must mitigate the risk of **Attackers connecting rogue access points or unauthorized laptops directly to internal switch ports.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Implement switch Port Security to restrict access to switch ports based on approved MAC addresses.
+When designing a system for **Inter-VLAN Routing Solutions**, you must mitigate the risk of **Attackers capturing plaintext management passwords or session data using network sniffers.**. Which of the following security configurations or controls represents the best practice to implement?
+A) Configure SSH (port 22) for terminal access and HTTPS (port 443) for web interfaces, disabling Telnet and HTTP.
 D) Enable full disk encryption on all client endpoints.
+B) Implement switch Port Security to restrict access to switch ports based on approved MAC addresses.
 C) Enable full disk encryption on all client endpoints.
-B) Configure SSH (port 22) for terminal access and HTTPS (port 443) for web interfaces, disabling Telnet and HTTP.
-*   **Correct Answer:** A) Implement switch Port Security to restrict access to switch ports based on approved MAC addresses.
+*   **Correct Answer:** A) Configure SSH (port 22) for terminal access and HTTPS (port 443) for web interfaces, disabling Telnet and HTTP.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Implement switch Port Security to restrict access to switch ports based on approved MAC addresses. mitigates the risk of Attackers connecting rogue access points or unauthorized laptops directly to internal switch ports..
-    * *Why D is incorrect:* This does not address the security vulnerability of Unauthorized Port Access.
-    * *Why C is incorrect:* This does not address the security vulnerability of Unauthorized Port Access.
-    * *Why B is incorrect:* This does not address the security vulnerability of Unauthorized Port Access.
+    * *Why A is correct:* Implementing Configure SSH (port 22) for terminal access and HTTPS (port 443) for web interfaces, disabling Telnet and HTTP. mitigates the risk of Attackers capturing plaintext management passwords or session data using network sniffers..
+    * *Why D is incorrect:* This does not address the security vulnerability of Unencrypted Traffic Exposure.
+    * *Why B is incorrect:* This does not address the security vulnerability of Unencrypted Traffic Exposure.
+    * *Why C is incorrect:* This does not address the security vulnerability of Unencrypted Traffic Exposure.
 

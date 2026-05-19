@@ -17,63 +17,63 @@ What is the benefit of using multi-stage builds in a Dockerfile?
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **container layers**?
-B) An instruction within a function that invokes the function itself, passing modified arguments to solve a smaller subproblem.
-D) CSS properties (like block, inline, flex, grid) that determine how an element is rendered and how it behaves relative to surrounding elements.
+In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Dockerfile syntax**?
+B) The additional execution time and CPU operations spent visiting nodes sequentially in memory, which is higher in linked structures than in contiguous arrays.
+D) The maximum acceptable age of data that must be recovered from backup storage to restore operations, representing the limit of tolerable data loss.
 A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-C) The final node in a linked list, whose next pointer typically references null (or the head node in a circular list), marking the end of the chain.
+C) A mathematical representation used to describe the asymptotic upper bound of an algorithm's running time or space complexity relative to the input size N. It helps developers predict how an algorithm will scale as data grows.
 *   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **container layers**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **container layers**.
-    * *Why A is correct:* This describes the exact role and function of **container layers**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **container layers**.
+    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Dockerfile syntax**.
+    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Dockerfile syntax**.
+    * *Why A is correct:* This describes the exact role and function of **Dockerfile syntax**.
+    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Dockerfile syntax**.
 
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **run the automated unit testing suite to verify system functionality**. Which of the following commands is the most appropriate to execute?
-B) git commit -m 'update'
-C) pip install -r requirements.txt
-D) python3 -m venv .venv
-A) pytest
-*   **Correct Answer:** A) pytest
+A systems administrator or developer needs to **install all external project dependencies specified in the requirements manifest**. Which of the following commands is the most appropriate to execute?
+C) pytest
+D) git commit -m 'update'
+B) python3 -m venv .venv
+A) pip install -r requirements.txt
+*   **Correct Answer:** A) pip install -r requirements.txt
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
     * *Why C is incorrect:* This command handles alternative administrative tasks.
     * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `pytest` command is directly designed to run the automated unit testing suite to verify system functionality.
+    * *Why B is incorrect:* This command handles alternative administrative tasks.
+    * *Why A is correct:* The `pip install -r requirements.txt` command is directly designed to install all external project dependencies specified in the requirements manifest.
 
 
 ---
 
 **Question 4**
-While working on **Docker Containerization in CI/CD** in a production environment, you encounter a system alert indicating a **TypeError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
+While working on **Docker Containerization in CI/CD** in a production environment, you encounter a system alert indicating a **IndexError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
+B) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
 C) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
-B) Verify that the index is within the valid range of 0 to len(list)-1.
-A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
 D) Reboot the physical machine and wait for services to reload.
-*   **Correct Answer:** A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
+A) Verify that the index is within the valid range of 0 to len(list)-1.
+*   **Correct Answer:** A) Verify that the index is within the valid range of 0 to len(list)-1.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This action does not resolve the root cause of TypeError.
-    * *Why B is incorrect:* This action does not resolve the root cause of TypeError.
-    * *Why A is correct:* Because An operation or function was applied to an object of an inappropriate data type. The appropriate fix is to Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types..
-    * *Why D is incorrect:* This action does not resolve the root cause of TypeError.
+    * *Why B is incorrect:* This action does not resolve the root cause of IndexError.
+    * *Why C is incorrect:* This action does not resolve the root cause of IndexError.
+    * *Why D is incorrect:* This action does not resolve the root cause of IndexError.
+    * *Why A is correct:* Because The code attempted to access an element of a sequence using an out-of-bounds index. The appropriate fix is to Verify that the index is within the valid range of 0 to len(list)-1..
 
 
 ---
 
 **Question 5**
 When designing a system for **Docker Containerization in CI/CD**, you must mitigate the risk of **Storing user credentials in plain text, making them vulnerable to database breaches.**. Which of the following security configurations or controls represents the best practice to implement?
-B) Implement parameterized queries and prepared statements rather than raw string concatenation.
 D) Enable full disk encryption on all client endpoints.
 C) Enable full disk encryption on all client endpoints.
 A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
+B) Implement parameterized queries and prepared statements rather than raw string concatenation.
 *   **Correct Answer:** A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
     * *Why D is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
     * *Why C is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
     * *Why A is correct:* Implementing Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt. mitigates the risk of Storing user credentials in plain text, making them vulnerable to database breaches..
+    * *Why B is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
 

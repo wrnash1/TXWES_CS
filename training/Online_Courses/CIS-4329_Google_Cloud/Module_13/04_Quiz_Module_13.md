@@ -3,7 +3,7 @@
 
 ---
 
-**Question 2**
+**Question 1**
 In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Exam Tip**?
 D) A structured, seven-step process (Prepare, Categorize, Select, Implement, Assess, Authorize, Monitor) created by NIST to help organizations manage cybersecurity risk.
 A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within cloud operations.
@@ -16,6 +16,8 @@ B) The additional execution time and CPU operations spent visiting nodes sequent
     * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Exam Tip**.
     * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Exam Tip**.
 
+
+---
 
 ---
 
@@ -35,48 +37,50 @@ B) A cloud feature that dynamically adjusts resource capacity (number of VMs) ba
 
 ---
 
+---
+
 **Question 3**
-A systems administrator or developer needs to **list all active container pods running in the production namespace of the Kubernetes cluster**. Which of the following commands is the most appropriate to execute?
-C) gcloud compute instances list
+A systems administrator or developer needs to **execute the infrastructure plan to provision or modify resources defined in the configuration files**. Which of the following commands is the most appropriate to execute?
+D) kubectl get pods -n production
 B) aws s3 sync local_dir s3://my-bucket
-A) kubectl get pods -n production
-D) terraform apply
-*   **Correct Answer:** A) kubectl get pods -n production
+C) gcloud compute instances list
+A) terraform apply
+*   **Correct Answer:** A) terraform apply
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `kubectl get pods -n production` command is directly designed to list all active container pods running in the production namespace of the Kubernetes cluster.
     * *Why D is incorrect:* This command handles alternative administrative tasks.
+    * *Why B is incorrect:* This command handles alternative administrative tasks.
+    * *Why C is incorrect:* This command handles alternative administrative tasks.
+    * *Why A is correct:* The `terraform apply` command is directly designed to execute the infrastructure plan to provision or modify resources defined in the configuration files.
 
 
 ---
 
 **Question 4**
 While working on **Hybrid Cloud** in a production environment, you encounter a system alert indicating a **Cloud Instance Unreachable** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-A) Check the VPC route table for an Internet Gateway path and verify that the security group allows incoming traffic.
-C) Review the user's IAM policies and attach the specific policy granting permissions for the resource action.
-D) Reboot the physical machine and wait for services to reload.
 B) Set up billing alerts, delete unused volumes, and configure auto-scaling scale-down policies.
+C) Review the user's IAM policies and attach the specific policy granting permissions for the resource action.
+A) Check the VPC route table for an Internet Gateway path and verify that the security group allows incoming traffic.
+D) Reboot the physical machine and wait for services to reload.
 *   **Correct Answer:** A) Check the VPC route table for an Internet Gateway path and verify that the security group allows incoming traffic.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Because The virtual machine is inside a private subnet without routing to the internet, or the security group blocks the connection. The appropriate fix is to Check the VPC route table for an Internet Gateway path and verify that the security group allows incoming traffic..
-    * *Why C is incorrect:* This action does not resolve the root cause of Cloud Instance Unreachable.
-    * *Why D is incorrect:* This action does not resolve the root cause of Cloud Instance Unreachable.
     * *Why B is incorrect:* This action does not resolve the root cause of Cloud Instance Unreachable.
+    * *Why C is incorrect:* This action does not resolve the root cause of Cloud Instance Unreachable.
+    * *Why A is correct:* Because The virtual machine is inside a private subnet without routing to the internet, or the security group blocks the connection. The appropriate fix is to Check the VPC route table for an Internet Gateway path and verify that the security group allows incoming traffic..
+    * *Why D is incorrect:* This action does not resolve the root cause of Cloud Instance Unreachable.
 
 
 ---
 
 **Question 5**
-When designing a system for **Hybrid Cloud**, you must mitigate the risk of **Storing sensitive corporate documents in publicly readable cloud buckets, leading to data breaches.**. Which of the following security configurations or controls represents the best practice to implement?
-B) Enforce temporary credentials (STS), rotate keys regularly, and never hardcode API keys in repositories.
+When designing a system for **Hybrid Cloud**, you must mitigate the risk of **Developers committing plain-text cloud access keys to public source code repositories, allowing full account takeover.**. Which of the following security configurations or controls represents the best practice to implement?
+B) Enable Block Public Access configurations and enforce access control via IAM or signed URLs.
 D) Enable full disk encryption on all client endpoints.
+A) Enforce temporary credentials (STS), rotate keys regularly, and never hardcode API keys in repositories.
 C) Enable full disk encryption on all client endpoints.
-A) Enable Block Public Access configurations and enforce access control via IAM or signed URLs.
-*   **Correct Answer:** A) Enable Block Public Access configurations and enforce access control via IAM or signed URLs.
+*   **Correct Answer:** A) Enforce temporary credentials (STS), rotate keys regularly, and never hardcode API keys in repositories.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This does not address the security vulnerability of Publicly Exposed Storage Buckets.
-    * *Why D is incorrect:* This does not address the security vulnerability of Publicly Exposed Storage Buckets.
-    * *Why C is incorrect:* This does not address the security vulnerability of Publicly Exposed Storage Buckets.
-    * *Why A is correct:* Implementing Enable Block Public Access configurations and enforce access control via IAM or signed URLs. mitigates the risk of Storing sensitive corporate documents in publicly readable cloud buckets, leading to data breaches..
+    * *Why B is incorrect:* This does not address the security vulnerability of Compromised Access Keys.
+    * *Why D is incorrect:* This does not address the security vulnerability of Compromised Access Keys.
+    * *Why A is correct:* Implementing Enforce temporary credentials (STS), rotate keys regularly, and never hardcode API keys in repositories. mitigates the risk of Developers committing plain-text cloud access keys to public source code repositories, allowing full account takeover..
+    * *Why C is incorrect:* This does not address the security vulnerability of Compromised Access Keys.
 

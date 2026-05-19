@@ -3,7 +3,7 @@
 
 ---
 
-**Question 2**
+**Question 1**
 In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Core Concept**?
 D) Flexible Box Layout; a one-dimensional CSS layout model that makes it easy to align items and distribute space within a container, handling varying screen sizes dynamically.
 A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within database operations.
@@ -16,6 +16,8 @@ C) A structured, seven-step process (Prepare, Categorize, Select, Implement, Ass
     * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Core Concept**.
     * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Core Concept**.
 
+
+---
 
 ---
 
@@ -35,16 +37,18 @@ B) The core CSS layout block consisting of margins, borders, padding, and the ac
 
 ---
 
+---
+
 **Question 3**
 A systems administrator or developer needs to **analyze the database execution plan to identify performance bottlenecks and slow scan steps**. Which of the following commands is the most appropriate to execute?
-C) CREATE INDEX idx_email ON users(email);
 A) EXPLAIN ANALYZE SELECT * FROM logs;
-D) SELECT * FROM users WHERE active = 1;
-B) GRANT SELECT ON client_db TO analyst_role;
+C) CREATE INDEX idx_email ON users(email);
+D) GRANT SELECT ON client_db TO analyst_role;
+B) SELECT * FROM users WHERE active = 1;
 *   **Correct Answer:** A) EXPLAIN ANALYZE SELECT * FROM logs;
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
     * *Why A is correct:* The `EXPLAIN ANALYZE SELECT * FROM logs;` command is directly designed to analyze the database execution plan to identify performance bottlenecks and slow scan steps.
+    * *Why C is incorrect:* This command handles alternative administrative tasks.
     * *Why D is incorrect:* This command handles alternative administrative tasks.
     * *Why B is incorrect:* This command handles alternative administrative tasks.
 
@@ -52,31 +56,31 @@ B) GRANT SELECT ON client_db TO analyst_role;
 ---
 
 **Question 4**
-While working on **Datastream** in a production environment, you encounter a system alert indicating a **Slow Query Performance** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-C) Optimize application query order, implement retry logic, and keep transaction blocks as brief as possible.
-D) Reboot the physical machine and wait for services to reload.
+While working on **Datastream** in a production environment, you encounter a system alert indicating a **Database Deadlock** error. Which of the following is the most effective troubleshooting action to resolve this issue?
 B) Increase the database connection pool limit, adjust timeout configurations, or scale database resources.
-A) Analyze the query plan and create appropriate indexes on columns frequently used in WHERE and JOIN clauses.
-*   **Correct Answer:** A) Analyze the query plan and create appropriate indexes on columns frequently used in WHERE and JOIN clauses.
+A) Optimize application query order, implement retry logic, and keep transaction blocks as brief as possible.
+D) Reboot the physical machine and wait for services to reload.
+C) Analyze the query plan and create appropriate indexes on columns frequently used in WHERE and JOIN clauses.
+*   **Correct Answer:** A) Optimize application query order, implement retry logic, and keep transaction blocks as brief as possible.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This action does not resolve the root cause of Slow Query Performance.
-    * *Why D is incorrect:* This action does not resolve the root cause of Slow Query Performance.
-    * *Why B is incorrect:* This action does not resolve the root cause of Slow Query Performance.
-    * *Why A is correct:* Because The database is performing a full table scan on millions of rows due to a missing index or poorly written SQL syntax. The appropriate fix is to Analyze the query plan and create appropriate indexes on columns frequently used in WHERE and JOIN clauses..
+    * *Why B is incorrect:* This action does not resolve the root cause of Database Deadlock.
+    * *Why A is correct:* Because Two or more transactions are waiting for each other to release locks on resources, causing a permanent block. The appropriate fix is to Optimize application query order, implement retry logic, and keep transaction blocks as brief as possible..
+    * *Why D is incorrect:* This action does not resolve the root cause of Database Deadlock.
+    * *Why C is incorrect:* This action does not resolve the root cause of Database Deadlock.
 
 
 ---
 
 **Question 5**
 When designing a system for **Datastream**, you must mitigate the risk of **Attackers injecting malicious SQL strings that bypass authentication and leak entire database contents.**. Which of the following security configurations or controls represents the best practice to implement?
+C) Enable full disk encryption on all client endpoints.
 A) Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs.
 D) Enable full disk encryption on all client endpoints.
 B) Enable Transparent Data Encryption (TDE) or cloud database storage encryption at rest.
-C) Enable full disk encryption on all client endpoints.
 *   **Correct Answer:** A) Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs.
 *   **Distractor Analysis:**
+    * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Exposure.
     * *Why A is correct:* Implementing Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs. mitigates the risk of Attackers injecting malicious SQL strings that bypass authentication and leak entire database contents..
     * *Why D is incorrect:* This does not address the security vulnerability of SQL Injection Exposure.
     * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Exposure.
-    * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Exposure.
 

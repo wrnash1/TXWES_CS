@@ -17,63 +17,63 @@ Which method involves replacing missing dataset values with statistical estimate
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **identifying outliers using Z-score and Interquartile Range (IQR).**?
-B) A binary search tree that automatically adjusts its height during insertions and deletions (e.g., AVL, Red-Black) to maintain logarithmic operations.
-D) An algebraic restructuring operation on a binary tree that changes the parent-child relationships to restore balance without violating the search order.
-C) HTML tags that convey the meaning and structure of the enclosed content to both the browser and search engines (e.g., <header>, <article>, <footer>) instead of generic containers.
+In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **deletion methods**?
 A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within database operations.
+C) A column or group of columns in one database table that refers to the primary key in another table, enforcing referential integrity.
+B) A unique identifier column or set of columns in a database table that guarantees every row can be uniquely identified.
+D) A mathematical representation used to describe the asymptotic upper bound of an algorithm's running time or space complexity relative to the input size N. It helps developers predict how an algorithm will scale as data grows.
 *   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within database operations.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **identifying outliers using Z-score and Interquartile Range (IQR).**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **identifying outliers using Z-score and Interquartile Range (IQR).**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **identifying outliers using Z-score and Interquartile Range (IQR).**.
-    * *Why A is correct:* This describes the exact role and function of **identifying outliers using Z-score and Interquartile Range (IQR).**.
+    * *Why A is correct:* This describes the exact role and function of **deletion methods**.
+    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **deletion methods**.
+    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **deletion methods**.
+    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **deletion methods**.
 
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **assign read-only access privileges on the database to a specific security role**. Which of the following commands is the most appropriate to execute?
-A) GRANT SELECT ON client_db TO analyst_role;
-D) CREATE INDEX idx_email ON users(email);
-B) EXPLAIN ANALYZE SELECT * FROM logs;
-C) SELECT * FROM users WHERE active = 1;
-*   **Correct Answer:** A) GRANT SELECT ON client_db TO analyst_role;
+A systems administrator or developer needs to **query and retrieve active user records matching specific conditions from the database table**. Which of the following commands is the most appropriate to execute?
+D) EXPLAIN ANALYZE SELECT * FROM logs;
+C) CREATE INDEX idx_email ON users(email);
+B) GRANT SELECT ON client_db TO analyst_role;
+A) SELECT * FROM users WHERE active = 1;
+*   **Correct Answer:** A) SELECT * FROM users WHERE active = 1;
 *   **Distractor Analysis:**
-    * *Why A is correct:* The `GRANT SELECT ON client_db TO analyst_role;` command is directly designed to assign read-only access privileges on the database to a specific security role.
     * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
     * *Why C is incorrect:* This command handles alternative administrative tasks.
+    * *Why B is incorrect:* This command handles alternative administrative tasks.
+    * *Why A is correct:* The `SELECT * FROM users WHERE active = 1;` command is directly designed to query and retrieve active user records matching specific conditions from the database table.
 
 
 ---
 
 **Question 4**
-While working on **Handling Missing Data and Outliers** in a production environment, you encounter a system alert indicating a **Connection Timeout** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-B) Optimize application query order, implement retry logic, and keep transaction blocks as brief as possible.
-C) Analyze the query plan and create appropriate indexes on columns frequently used in WHERE and JOIN clauses.
-A) Increase the database connection pool limit, adjust timeout configurations, or scale database resources.
+While working on **Handling Missing Data and Outliers** in a production environment, you encounter a system alert indicating a **Slow Query Performance** error. Which of the following is the most effective troubleshooting action to resolve this issue?
+A) Analyze the query plan and create appropriate indexes on columns frequently used in WHERE and JOIN clauses.
+C) Optimize application query order, implement retry logic, and keep transaction blocks as brief as possible.
 D) Reboot the physical machine and wait for services to reload.
-*   **Correct Answer:** A) Increase the database connection pool limit, adjust timeout configurations, or scale database resources.
+B) Increase the database connection pool limit, adjust timeout configurations, or scale database resources.
+*   **Correct Answer:** A) Analyze the query plan and create appropriate indexes on columns frequently used in WHERE and JOIN clauses.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This action does not resolve the root cause of Connection Timeout.
-    * *Why C is incorrect:* This action does not resolve the root cause of Connection Timeout.
-    * *Why A is correct:* Because The database server has exhausted its pool of concurrent client connections or is overloaded with work. The appropriate fix is to Increase the database connection pool limit, adjust timeout configurations, or scale database resources..
-    * *Why D is incorrect:* This action does not resolve the root cause of Connection Timeout.
+    * *Why A is correct:* Because The database is performing a full table scan on millions of rows due to a missing index or poorly written SQL syntax. The appropriate fix is to Analyze the query plan and create appropriate indexes on columns frequently used in WHERE and JOIN clauses..
+    * *Why C is incorrect:* This action does not resolve the root cause of Slow Query Performance.
+    * *Why D is incorrect:* This action does not resolve the root cause of Slow Query Performance.
+    * *Why B is incorrect:* This action does not resolve the root cause of Slow Query Performance.
 
 
 ---
 
 **Question 5**
-When designing a system for **Handling Missing Data and Outliers**, you must mitigate the risk of **Attackers injecting malicious SQL strings that bypass authentication and leak entire database contents.**. Which of the following security configurations or controls represents the best practice to implement?
+When designing a system for **Handling Missing Data and Outliers**, you must mitigate the risk of **Unauthorized access to database backup files or physical drives exposing all customer data.**. Which of the following security configurations or controls represents the best practice to implement?
+A) Enable Transparent Data Encryption (TDE) or cloud database storage encryption at rest.
 C) Enable full disk encryption on all client endpoints.
-B) Enable Transparent Data Encryption (TDE) or cloud database storage encryption at rest.
-A) Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs.
 D) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs.
+B) Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs.
+*   **Correct Answer:** A) Enable Transparent Data Encryption (TDE) or cloud database storage encryption at rest.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Exposure.
-    * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Exposure.
-    * *Why A is correct:* Implementing Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs. mitigates the risk of Attackers injecting malicious SQL strings that bypass authentication and leak entire database contents..
-    * *Why D is incorrect:* This does not address the security vulnerability of SQL Injection Exposure.
+    * *Why A is correct:* Implementing Enable Transparent Data Encryption (TDE) or cloud database storage encryption at rest. mitigates the risk of Unauthorized access to database backup files or physical drives exposing all customer data..
+    * *Why C is incorrect:* This does not address the security vulnerability of Unencrypted Storage.
+    * *Why D is incorrect:* This does not address the security vulnerability of Unencrypted Storage.
+    * *Why B is incorrect:* This does not address the security vulnerability of Unencrypted Storage.
 

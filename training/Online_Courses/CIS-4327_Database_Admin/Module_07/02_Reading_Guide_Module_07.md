@@ -14,6 +14,9 @@ As a student, you will learn the primary operational roles, command syntaxes, an
 Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
 
 *   **State Files**: Terraform remembers what it built by storing a `.tfstate` file. If you run the code again, Terraform looks at the state file and changes nothing, because it is *idempotent*.
+*   **Focus Area**: Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
+*   **Scenario Trap**: Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
+*   **Study Resource**: To reinforce these concepts visually, review this targeted search query: [YouTube Exam Study Reference Link](https://www.youtube.com/results?search_query=4327_Database_Admin+-+Google+Cloud+Associate+Database+Engineer+Terraform).
 
 ---
 

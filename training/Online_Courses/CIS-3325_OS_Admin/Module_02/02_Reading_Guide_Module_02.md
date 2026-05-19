@@ -16,6 +16,9 @@ Review these essential definitions carefully. The certification exam expects you
 *   **Absolute vs. Relative Paths**: An absolute path always starts at the root (e.g., `/var/log/syslog`). A relative path starts from your current directory (e.g., `../log/syslog`).
 *   **Command Syntax**: The standard format is `Command [Options] [Arguments]`. For example: `ls -l /etc`. `ls` is the command, `-l` is the option (long format), and `/etc` is the argument.
 *   **Getting Help**: Use the `man` command to read the manual page for any other command (e.g., `man ls`).
+*   **Focus Area**: Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
+*   **Scenario Trap**: Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
+*   **Study Resource**: To reinforce these concepts visually, review this targeted search query: [YouTube Exam Study Reference Link](https://www.youtube.com/results?search_query=3325_OS_Admin+-+CompTIA+Linux%2B+%28XK0-005%29+Command+Line).
 
 ---
 

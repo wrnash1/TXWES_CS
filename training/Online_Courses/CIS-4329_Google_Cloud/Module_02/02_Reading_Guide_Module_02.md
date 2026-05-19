@@ -16,6 +16,9 @@ Review these essential definitions carefully. The certification exam expects you
 *   **Preemptible VMs / Spot VMs**: Compute Engine VMs that run at a massive discount (up to 91% off) but can be terminated by Google at any time with only 30 seconds notice. Excellent for fault-tolerant batch processing, terrible for database servers.
 *   **VPC Networks**: Virtual Private Clouds are global resources in GCP (unlike AWS where they are regional). Subnets are regional.
 *   **Pricing Calculator**: Understand that you use the Google Cloud Pricing Calculator to estimate the monthly cost of a proposed architecture *before* you deploy it.
+*   **Focus Area**: Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
+*   **Scenario Trap**: Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
+*   **Study Resource**: To reinforce these concepts visually, review this targeted search query: [YouTube Exam Study Reference Link](https://www.youtube.com/results?search_query=4329_Google_Cloud+-+Google+Cloud+Associate+Cloud+Engineer+Compute%2FStorage).
 
 ---
 

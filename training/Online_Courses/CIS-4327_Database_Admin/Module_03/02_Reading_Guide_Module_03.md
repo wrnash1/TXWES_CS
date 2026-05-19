@@ -16,6 +16,9 @@ Review these essential definitions carefully. The certification exam expects you
 *   **Connectivity**: For DMS to work, it must be able to securely connect to your source database. This is typically achieved via IPsec VPN, Dedicated Interconnect, or an IP allowlist if the source is publicly accessible (not recommended).
 *   **Cutover Strategy**: Understand the phases of continuous migration: Setup -> Initial load -> Change Data Capture (CDC) replication -> Cutover.
 *   **Supported Sources**: DMS natively supports migrating from MySQL, PostgreSQL, SQL Server, and Oracle (preview/heterogeneous).
+*   **Focus Area**: Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
+*   **Scenario Trap**: Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
+*   **Study Resource**: To reinforce these concepts visually, review this targeted search query: [YouTube Exam Study Reference Link](https://www.youtube.com/results?search_query=4327_Database_Admin+-+Google+Cloud+Associate+Database+Engineer+Migration).
 
 ---
 

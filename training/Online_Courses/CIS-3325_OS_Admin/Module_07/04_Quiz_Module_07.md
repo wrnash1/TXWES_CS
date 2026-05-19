@@ -3,7 +3,7 @@
 
 ---
 
-**Question 2**
+**Question 1**
 In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **System Configuration**?
 D) The core CSS layout block consisting of margins, borders, padding, and the actual content area, defining the sizing and spacing of every page element.
 B) HTML tags that convey the meaning and structure of the enclosed content to both the browser and search engines (e.g., <header>, <article>, <footer>) instead of generic containers.
@@ -16,6 +16,8 @@ A) A critical parameter and standard protocol utilized to enforce access rules, 
     * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **System Configuration**.
     * *Why A is correct:* This describes the exact role and function of **System Configuration**.
 
+
+---
 
 ---
 
@@ -35,48 +37,50 @@ B) The entry point or first node in a linked list, which serves as the reference
 
 ---
 
+---
+
 **Question 3**
-A systems administrator or developer needs to **display total disk space capacity, usage, and available space in a human-readable format**. Which of the following commands is the most appropriate to execute?
-B) systemctl restart service
-A) df -h
-C) ps aux
+A systems administrator or developer needs to **list all currently active processes running on the system with CPU and memory usage statistics**. Which of the following commands is the most appropriate to execute?
+C) systemctl restart service
+A) ps aux
+B) df -h
 D) chmod 600 config.conf
-*   **Correct Answer:** A) df -h
+*   **Correct Answer:** A) ps aux
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `df -h` command is directly designed to display total disk space capacity, usage, and available space in a human-readable format.
     * *Why C is incorrect:* This command handles alternative administrative tasks.
+    * *Why A is correct:* The `ps aux` command is directly designed to list all currently active processes running on the system with CPU and memory usage statistics.
+    * *Why B is incorrect:* This command handles alternative administrative tasks.
     * *Why D is incorrect:* This command handles alternative administrative tasks.
 
 
 ---
 
 **Question 4**
-While working on **Archiving** in a production environment, you encounter a system alert indicating a **Service Failed to Bind Port** error. Which of the following is the most effective troubleshooting action to resolve this issue?
+While working on **Archiving** in a production environment, you encounter a system alert indicating a **Disk Space Full** error. Which of the following is the most effective troubleshooting action to resolve this issue?
 D) Reboot the physical machine and wait for services to reload.
-B) Run log rotations, clean temporary files, or expand the logical volume capacity.
-C) Prepend the command with 'sudo' to run it with superuser administrative privileges, or adjust the file permissions.
-A) Identify and terminate the process already utilizing the target port, or modify the service configuration to use an open port.
-*   **Correct Answer:** A) Identify and terminate the process already utilizing the target port, or modify the service configuration to use an open port.
+C) Identify and terminate the process already utilizing the target port, or modify the service configuration to use an open port.
+B) Prepend the command with 'sudo' to run it with superuser administrative privileges, or adjust the file permissions.
+A) Run log rotations, clean temporary files, or expand the logical volume capacity.
+*   **Correct Answer:** A) Run log rotations, clean temporary files, or expand the logical volume capacity.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This action does not resolve the root cause of Service Failed to Bind Port.
-    * *Why B is incorrect:* This action does not resolve the root cause of Service Failed to Bind Port.
-    * *Why C is incorrect:* This action does not resolve the root cause of Service Failed to Bind Port.
-    * *Why A is correct:* Because Another application or stale instance of the service is already listening on the designated network port. The appropriate fix is to Identify and terminate the process already utilizing the target port, or modify the service configuration to use an open port..
+    * *Why D is incorrect:* This action does not resolve the root cause of Disk Space Full.
+    * *Why C is incorrect:* This action does not resolve the root cause of Disk Space Full.
+    * *Why B is incorrect:* This action does not resolve the root cause of Disk Space Full.
+    * *Why A is correct:* Because The storage volume has run out of space, preventing files from being written and causing system services to fail. The appropriate fix is to Run log rotations, clean temporary files, or expand the logical volume capacity..
 
 
 ---
 
 **Question 5**
-When designing a system for **Archiving**, you must mitigate the risk of **Administrators logging in routinely as root or Administrator, increasing the blast radius of user errors or malware.**. Which of the following security configurations or controls represents the best practice to implement?
-D) Enable full disk encryption on all client endpoints.
-A) Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC.
-B) Disable unused system accounts and run a port scan to disable unnecessary active background services.
+When designing a system for **Archiving**, you must mitigate the risk of **Attackers exploiting vulnerabilities in forgotten background services or using abandoned accounts to gain persistent access.**. Which of the following security configurations or controls represents the best practice to implement?
 C) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC.
+B) Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC.
+A) Disable unused system accounts and run a port scan to disable unnecessary active background services.
+D) Enable full disk encryption on all client endpoints.
+*   **Correct Answer:** A) Disable unused system accounts and run a port scan to disable unnecessary active background services.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This does not address the security vulnerability of Privileged Access Abuse.
-    * *Why A is correct:* Implementing Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC. mitigates the risk of Administrators logging in routinely as root or Administrator, increasing the blast radius of user errors or malware..
-    * *Why B is incorrect:* This does not address the security vulnerability of Privileged Access Abuse.
-    * *Why C is incorrect:* This does not address the security vulnerability of Privileged Access Abuse.
+    * *Why C is incorrect:* This does not address the security vulnerability of Stale Accounts & Services.
+    * *Why B is incorrect:* This does not address the security vulnerability of Stale Accounts & Services.
+    * *Why A is correct:* Implementing Disable unused system accounts and run a port scan to disable unnecessary active background services. mitigates the risk of Attackers exploiting vulnerabilities in forgotten background services or using abandoned accounts to gain persistent access..
+    * *Why D is incorrect:* This does not address the security vulnerability of Stale Accounts & Services.
 

@@ -3,7 +3,7 @@
 
 ---
 
-**Question 2**
+**Question 1**
 In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Core Concept**?
 C) The additional execution time and CPU operations spent visiting nodes sequentially in memory, which is higher in linked structures than in contiguous arrays.
 A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within cloud operations.
@@ -16,6 +16,8 @@ D) A computer data storage architecture that manages data as objects (e.g. AWS S
     * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Core Concept**.
     * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Core Concept**.
 
+
+---
 
 ---
 
@@ -35,48 +37,50 @@ A) A critical parameter and standard protocol utilized to enforce access rules, 
 
 ---
 
+---
+
 **Question 3**
-A systems administrator or developer needs to **synchronize local files directly to a cloud object storage bucket**. Which of the following commands is the most appropriate to execute?
-A) aws s3 sync local_dir s3://my-bucket
-C) gcloud compute instances list
-D) terraform apply
-B) kubectl get pods -n production
-*   **Correct Answer:** A) aws s3 sync local_dir s3://my-bucket
+A systems administrator or developer needs to **query the cloud API to retrieve a list of all active virtual machines in the project**. Which of the following commands is the most appropriate to execute?
+B) terraform apply
+C) aws s3 sync local_dir s3://my-bucket
+A) gcloud compute instances list
+D) kubectl get pods -n production
+*   **Correct Answer:** A) gcloud compute instances list
 *   **Distractor Analysis:**
-    * *Why A is correct:* The `aws s3 sync local_dir s3://my-bucket` command is directly designed to synchronize local files directly to a cloud object storage bucket.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
     * *Why B is incorrect:* This command handles alternative administrative tasks.
+    * *Why C is incorrect:* This command handles alternative administrative tasks.
+    * *Why A is correct:* The `gcloud compute instances list` command is directly designed to query the cloud API to retrieve a list of all active virtual machines in the project.
+    * *Why D is incorrect:* This command handles alternative administrative tasks.
 
 
 ---
 
 **Question 4**
-While working on **App Engine/Cloud Run** in a production environment, you encounter a system alert indicating a **IAM Access Denied** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-B) Check the VPC route table for an Internet Gateway path and verify that the security group allows incoming traffic.
-A) Review the user's IAM policies and attach the specific policy granting permissions for the resource action.
+While working on **App Engine/Cloud Run** in a production environment, you encounter a system alert indicating a **Cloud Instance Unreachable** error. Which of the following is the most effective troubleshooting action to resolve this issue?
+A) Check the VPC route table for an Internet Gateway path and verify that the security group allows incoming traffic.
 D) Reboot the physical machine and wait for services to reload.
 C) Set up billing alerts, delete unused volumes, and configure auto-scaling scale-down policies.
-*   **Correct Answer:** A) Review the user's IAM policies and attach the specific policy granting permissions for the resource action.
+B) Review the user's IAM policies and attach the specific policy granting permissions for the resource action.
+*   **Correct Answer:** A) Check the VPC route table for an Internet Gateway path and verify that the security group allows incoming traffic.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This action does not resolve the root cause of IAM Access Denied.
-    * *Why A is correct:* Because The user account or service role lacks the explicit IAM permissions required to execute the API call. The appropriate fix is to Review the user's IAM policies and attach the specific policy granting permissions for the resource action..
-    * *Why D is incorrect:* This action does not resolve the root cause of IAM Access Denied.
-    * *Why C is incorrect:* This action does not resolve the root cause of IAM Access Denied.
+    * *Why A is correct:* Because The virtual machine is inside a private subnet without routing to the internet, or the security group blocks the connection. The appropriate fix is to Check the VPC route table for an Internet Gateway path and verify that the security group allows incoming traffic..
+    * *Why D is incorrect:* This action does not resolve the root cause of Cloud Instance Unreachable.
+    * *Why C is incorrect:* This action does not resolve the root cause of Cloud Instance Unreachable.
+    * *Why B is incorrect:* This action does not resolve the root cause of Cloud Instance Unreachable.
 
 
 ---
 
 **Question 5**
 When designing a system for **App Engine/Cloud Run**, you must mitigate the risk of **Storing sensitive corporate documents in publicly readable cloud buckets, leading to data breaches.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Enable Block Public Access configurations and enforce access control via IAM or signed URLs.
 C) Enable full disk encryption on all client endpoints.
+A) Enable Block Public Access configurations and enforce access control via IAM or signed URLs.
 B) Enforce temporary credentials (STS), rotate keys regularly, and never hardcode API keys in repositories.
 D) Enable full disk encryption on all client endpoints.
 *   **Correct Answer:** A) Enable Block Public Access configurations and enforce access control via IAM or signed URLs.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Enable Block Public Access configurations and enforce access control via IAM or signed URLs. mitigates the risk of Storing sensitive corporate documents in publicly readable cloud buckets, leading to data breaches..
     * *Why C is incorrect:* This does not address the security vulnerability of Publicly Exposed Storage Buckets.
+    * *Why A is correct:* Implementing Enable Block Public Access configurations and enforce access control via IAM or signed URLs. mitigates the risk of Storing sensitive corporate documents in publicly readable cloud buckets, leading to data breaches..
     * *Why B is incorrect:* This does not address the security vulnerability of Publicly Exposed Storage Buckets.
     * *Why D is incorrect:* This does not address the security vulnerability of Publicly Exposed Storage Buckets.
 

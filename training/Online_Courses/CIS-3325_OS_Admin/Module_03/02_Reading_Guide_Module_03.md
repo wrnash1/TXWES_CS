@@ -16,6 +16,9 @@ Review these essential definitions carefully. The certification exam expects you
 *   **The root user**: The superuser in Linux. The root user ignores all permission restrictions. You should never log in directly as root; instead, use the `sudo` command to execute administrative tasks temporarily.
 *   **chown**: Command to change the owner and/or group of a file (e.g., `chown alice:sales report.txt`).
 *   **umask**: The default permission mask applied when a new file or directory is created. It subtracts permissions from a base of 666 (files) or 777 (directories).
+*   **Focus Area**: Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
+*   **Scenario Trap**: Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
+*   **Study Resource**: To reinforce these concepts visually, review this targeted search query: [YouTube Exam Study Reference Link](https://www.youtube.com/results?search_query=3325_OS_Admin+-+CompTIA+Linux%2B+%28XK0-005%29+Users).
 
 ---
 

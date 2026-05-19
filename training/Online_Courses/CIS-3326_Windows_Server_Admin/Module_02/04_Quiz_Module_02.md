@@ -17,6 +17,8 @@ D) To synchronize time across all computers in the domain.
 
 ---
 
+---
+
 **Question 2**
 After installing the Active Directory Domain Services (AD DS) role via Server Manager or PowerShell, what critical step must be performed before the server can begin authenticating users?
 A) The server must be promoted to a Domain Controller.
@@ -31,34 +33,36 @@ D) The Global Catalog service must be disabled.
 
 ---
 
+---
+
 **Question 3**
-A systems administrator or developer needs to **instruct the systemd init system to restart a specified background service process**. Which of the following commands is the most appropriate to execute?
-D) df -h
-B) chmod 600 config.conf
-C) ps aux
-A) systemctl restart service
-*   **Correct Answer:** A) systemctl restart service
+A systems administrator or developer needs to **display total disk space capacity, usage, and available space in a human-readable format**. Which of the following commands is the most appropriate to execute?
+B) systemctl restart service
+A) df -h
+C) chmod 600 config.conf
+D) ps aux
+*   **Correct Answer:** A) df -h
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
     * *Why B is incorrect:* This command handles alternative administrative tasks.
+    * *Why A is correct:* The `df -h` command is directly designed to display total disk space capacity, usage, and available space in a human-readable format.
     * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `systemctl restart service` command is directly designed to instruct the systemd init system to restart a specified background service process.
+    * *Why D is incorrect:* This command handles alternative administrative tasks.
 
 
 ---
 
 **Question 4**
-While working on **AD DS** in a production environment, you encounter a system alert indicating a **Service Failed to Bind Port** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-C) Prepend the command with 'sudo' to run it with superuser administrative privileges, or adjust the file permissions.
+While working on **AD DS** in a production environment, you encounter a system alert indicating a **Disk Space Full** error. Which of the following is the most effective troubleshooting action to resolve this issue?
+B) Prepend the command with 'sudo' to run it with superuser administrative privileges, or adjust the file permissions.
 D) Reboot the physical machine and wait for services to reload.
-A) Identify and terminate the process already utilizing the target port, or modify the service configuration to use an open port.
-B) Run log rotations, clean temporary files, or expand the logical volume capacity.
-*   **Correct Answer:** A) Identify and terminate the process already utilizing the target port, or modify the service configuration to use an open port.
+C) Identify and terminate the process already utilizing the target port, or modify the service configuration to use an open port.
+A) Run log rotations, clean temporary files, or expand the logical volume capacity.
+*   **Correct Answer:** A) Run log rotations, clean temporary files, or expand the logical volume capacity.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This action does not resolve the root cause of Service Failed to Bind Port.
-    * *Why D is incorrect:* This action does not resolve the root cause of Service Failed to Bind Port.
-    * *Why A is correct:* Because Another application or stale instance of the service is already listening on the designated network port. The appropriate fix is to Identify and terminate the process already utilizing the target port, or modify the service configuration to use an open port..
-    * *Why B is incorrect:* This action does not resolve the root cause of Service Failed to Bind Port.
+    * *Why B is incorrect:* This action does not resolve the root cause of Disk Space Full.
+    * *Why D is incorrect:* This action does not resolve the root cause of Disk Space Full.
+    * *Why C is incorrect:* This action does not resolve the root cause of Disk Space Full.
+    * *Why A is correct:* Because The storage volume has run out of space, preventing files from being written and causing system services to fail. The appropriate fix is to Run log rotations, clean temporary files, or expand the logical volume capacity..
 
 
 ---

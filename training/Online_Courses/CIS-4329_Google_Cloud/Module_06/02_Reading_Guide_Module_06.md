@@ -15,6 +15,9 @@ Review these essential definitions carefully. The certification exam expects you
 
 *   **Primitive vs. Predefined Roles**: Never use primitive roles (Owner/Editor/Viewer) in production. Use predefined roles (e.g., `roles/storage.objectAdmin`) to enforce least privilege.
 *   **Custom Roles**: If a predefined role gives too much access, you can create a Custom Role by combining specific, granular API permissions.
+*   **Focus Area**: Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
+*   **Scenario Trap**: Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
+*   **Study Resource**: To reinforce these concepts visually, review this targeted search query: [YouTube Exam Study Reference Link](https://www.youtube.com/results?search_query=4329_Google_Cloud+-+Google+Cloud+Associate+Cloud+Engineer+IAM).
 
 ---
 

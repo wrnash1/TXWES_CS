@@ -17,63 +17,63 @@ Which process describes the 'Bagging' ensemble technique used in Random Forests?
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **ensemble methods**?
-D) The absolute maximum time a business process can be disrupted before the organization suffers irreparable damage or failure.
-C) The method of evaluating an algorithm's efficiency by analyzing its behavior as the input size approaches infinity, focusing on growth rates rather than specific hardware speeds.
+In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Entropy index**?
+C) The core security model consisting of Confidentiality (preventing unauthorized access), Integrity (preventing unauthorized modification), and Availability (ensuring systems are accessible when needed).
 A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within ai operations.
-B) The core operations of a queue: 'enqueue' appends an element to the back, and 'dequeue' removes and returns the front element.
+B) The method of evaluating an algorithm's efficiency by analyzing its behavior as the input size approaches infinity, focusing on growth rates rather than specific hardware speeds.
+D) An efficient mapping technique for complete binary trees where parent-child indices can be computed using simple arithmetic (e.g., parent is (i-1)/2).
 *   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within ai operations.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **ensemble methods**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **ensemble methods**.
-    * *Why A is correct:* This describes the exact role and function of **ensemble methods**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **ensemble methods**.
+    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Entropy index**.
+    * *Why A is correct:* This describes the exact role and function of **Entropy index**.
+    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Entropy index**.
+    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Entropy index**.
 
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **train the machine learning model on the training features and targets**. Which of the following commands is the most appropriate to execute?
+A systems administrator or developer needs to **import the pandas library to load and analyze a tabular dataset**. Which of the following commands is the most appropriate to execute?
+A) import pandas as pd; df = pd.read_csv('data.csv')
 C) accuracy = accuracy_score(y_test, predictions)
-A) model.fit(X_train, y_train)
+D) model.fit(X_train, y_train)
 B) predictions = model.predict(X_test)
-D) import pandas as pd; df = pd.read_csv('data.csv')
-*   **Correct Answer:** A) model.fit(X_train, y_train)
+*   **Correct Answer:** A) import pandas as pd; df = pd.read_csv('data.csv')
 *   **Distractor Analysis:**
+    * *Why A is correct:* The `import pandas as pd; df = pd.read_csv('data.csv')` command is directly designed to import the pandas library to load and analyze a tabular dataset.
     * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `model.fit(X_train, y_train)` command is directly designed to train the machine learning model on the training features and targets.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
     * *Why D is incorrect:* This command handles alternative administrative tasks.
+    * *Why B is incorrect:* This command handles alternative administrative tasks.
 
 
 ---
 
 **Question 4**
-While working on **Decision Trees & Random Forests** in a production environment, you encounter a system alert indicating a **Low Model Generalization** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-B) Ensure data preprocessing steps (scaling, normalization) are fit only on the training set and applied to the test set.
+While working on **Decision Trees & Random Forests** in a production environment, you encounter a system alert indicating a **Missing Value Errors** error. Which of the following is the most effective troubleshooting action to resolve this issue?
 D) Reboot the physical machine and wait for services to reload.
-C) Use imputation techniques (mean, median, mode) or drop rows/columns containing missing values.
-A) Apply regularization techniques (L1/L2), gather more training data, or simplify the model architecture.
-*   **Correct Answer:** A) Apply regularization techniques (L1/L2), gather more training data, or simplify the model architecture.
+B) Ensure data preprocessing steps (scaling, normalization) are fit only on the training set and applied to the test set.
+C) Apply regularization techniques (L1/L2), gather more training data, or simplify the model architecture.
+A) Use imputation techniques (mean, median, mode) or drop rows/columns containing missing values.
+*   **Correct Answer:** A) Use imputation techniques (mean, median, mode) or drop rows/columns containing missing values.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This action does not resolve the root cause of Low Model Generalization.
-    * *Why D is incorrect:* This action does not resolve the root cause of Low Model Generalization.
-    * *Why C is incorrect:* This action does not resolve the root cause of Low Model Generalization.
-    * *Why A is correct:* Because The model has overfit the training data and performs poorly on unseen validation or testing datasets. The appropriate fix is to Apply regularization techniques (L1/L2), gather more training data, or simplify the model architecture..
+    * *Why D is incorrect:* This action does not resolve the root cause of Missing Value Errors.
+    * *Why B is incorrect:* This action does not resolve the root cause of Missing Value Errors.
+    * *Why C is incorrect:* This action does not resolve the root cause of Missing Value Errors.
+    * *Why A is correct:* Because The dataset contains null or missing values, causing mathematical operators in the model to fail. The appropriate fix is to Use imputation techniques (mean, median, mode) or drop rows/columns containing missing values..
 
 
 ---
 
 **Question 5**
-When designing a system for **Decision Trees & Random Forests**, you must mitigate the risk of **Attackers reconstructing sensitive training data by querying the public model API and analyzing outputs.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Apply differential privacy methods to the training data and limit public API rate queries.
+When designing a system for **Decision Trees & Random Forests**, you must mitigate the risk of **Attackers injecting subtle, imperceptible noise into input data (e.g. images) to force the AI into making incorrect classifications.**. Which of the following security configurations or controls represents the best practice to implement?
 D) Enable full disk encryption on all client endpoints.
-B) Train models with adversarial inputs and implement input validation/filtering on inputs.
+B) Apply differential privacy methods to the training data and limit public API rate queries.
 C) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Apply differential privacy methods to the training data and limit public API rate queries.
+A) Train models with adversarial inputs and implement input validation/filtering on inputs.
+*   **Correct Answer:** A) Train models with adversarial inputs and implement input validation/filtering on inputs.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Apply differential privacy methods to the training data and limit public API rate queries. mitigates the risk of Attackers reconstructing sensitive training data by querying the public model API and analyzing outputs..
-    * *Why D is incorrect:* This does not address the security vulnerability of Model Inversion Vulnerability.
-    * *Why B is incorrect:* This does not address the security vulnerability of Model Inversion Vulnerability.
-    * *Why C is incorrect:* This does not address the security vulnerability of Model Inversion Vulnerability.
+    * *Why D is incorrect:* This does not address the security vulnerability of Adversarial Examples.
+    * *Why B is incorrect:* This does not address the security vulnerability of Adversarial Examples.
+    * *Why C is incorrect:* This does not address the security vulnerability of Adversarial Examples.
+    * *Why A is correct:* Implementing Train models with adversarial inputs and implement input validation/filtering on inputs. mitigates the risk of Attackers injecting subtle, imperceptible noise into input data (e.g. images) to force the AI into making incorrect classifications..
 

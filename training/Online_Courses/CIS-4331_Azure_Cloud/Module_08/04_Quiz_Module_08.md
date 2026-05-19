@@ -18,62 +18,62 @@ What is the primary function of Microsoft Entra ID?
 
 **Question 2**
 In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **groups**?
-B) An access control system where users are assigned to specific roles, and permissions are linked to those roles rather than individual users, simplifying permission management.
+B) A complete binary tree where the key of any parent node is less than or equal to the keys of its children, guaranteeing the root is always the minimum element.
 A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within cloud operations.
-C) The maximum acceptable age of data that must be recovered from backup storage to restore operations, representing the limit of tolerable data loss.
-D) The operational principle of a queue, where the first element added is the first one to be removed, mimicking a line at a checkout register.
+D) Flexible Box Layout; a one-dimensional CSS layout model that makes it easy to align items and distribute space within a container, handling varying screen sizes dynamically.
+C) A deployment model that uses two identical production environments (Blue and Green) to minimize downtime and risk; updates are deployed to the idle environment before routing live traffic.
 *   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within cloud operations.
 *   **Distractor Analysis:**
     * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **groups**.
     * *Why A is correct:* This describes the exact role and function of **groups**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **groups**.
     * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **groups**.
+    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **groups**.
 
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **execute the infrastructure plan to provision or modify resources defined in the configuration files**. Which of the following commands is the most appropriate to execute?
-A) terraform apply
-C) aws s3 sync local_dir s3://my-bucket
-B) kubectl get pods -n production
+A systems administrator or developer needs to **list all active container pods running in the production namespace of the Kubernetes cluster**. Which of the following commands is the most appropriate to execute?
+B) terraform apply
 D) gcloud compute instances list
-*   **Correct Answer:** A) terraform apply
+A) kubectl get pods -n production
+C) aws s3 sync local_dir s3://my-bucket
+*   **Correct Answer:** A) kubectl get pods -n production
 *   **Distractor Analysis:**
-    * *Why A is correct:* The `terraform apply` command is directly designed to execute the infrastructure plan to provision or modify resources defined in the configuration files.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
     * *Why B is incorrect:* This command handles alternative administrative tasks.
     * *Why D is incorrect:* This command handles alternative administrative tasks.
+    * *Why A is correct:* The `kubectl get pods -n production` command is directly designed to list all active container pods running in the production namespace of the Kubernetes cluster.
+    * *Why C is incorrect:* This command handles alternative administrative tasks.
 
 
 ---
 
 **Question 4**
-While working on **Microsoft Entra ID (Azure AD) Basics** in a production environment, you encounter a system alert indicating a **Cloud Billing Spike** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-A) Set up billing alerts, delete unused volumes, and configure auto-scaling scale-down policies.
-C) Check the VPC route table for an Internet Gateway path and verify that the security group allows incoming traffic.
-D) Reboot the physical machine and wait for services to reload.
+While working on **Microsoft Entra ID (Azure AD) Basics** in a production environment, you encounter a system alert indicating a **Cloud Instance Unreachable** error. Which of the following is the most effective troubleshooting action to resolve this issue?
+C) Set up billing alerts, delete unused volumes, and configure auto-scaling scale-down policies.
 B) Review the user's IAM policies and attach the specific policy granting permissions for the resource action.
-*   **Correct Answer:** A) Set up billing alerts, delete unused volumes, and configure auto-scaling scale-down policies.
+D) Reboot the physical machine and wait for services to reload.
+A) Check the VPC route table for an Internet Gateway path and verify that the security group allows incoming traffic.
+*   **Correct Answer:** A) Check the VPC route table for an Internet Gateway path and verify that the security group allows incoming traffic.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Because Idle or over-provisioned virtual machine instances and orphan storage volumes are running continuously. The appropriate fix is to Set up billing alerts, delete unused volumes, and configure auto-scaling scale-down policies..
-    * *Why C is incorrect:* This action does not resolve the root cause of Cloud Billing Spike.
-    * *Why D is incorrect:* This action does not resolve the root cause of Cloud Billing Spike.
-    * *Why B is incorrect:* This action does not resolve the root cause of Cloud Billing Spike.
+    * *Why C is incorrect:* This action does not resolve the root cause of Cloud Instance Unreachable.
+    * *Why B is incorrect:* This action does not resolve the root cause of Cloud Instance Unreachable.
+    * *Why D is incorrect:* This action does not resolve the root cause of Cloud Instance Unreachable.
+    * *Why A is correct:* Because The virtual machine is inside a private subnet without routing to the internet, or the security group blocks the connection. The appropriate fix is to Check the VPC route table for an Internet Gateway path and verify that the security group allows incoming traffic..
 
 
 ---
 
 **Question 5**
-When designing a system for **Microsoft Entra ID (Azure AD) Basics**, you must mitigate the risk of **Storing sensitive corporate documents in publicly readable cloud buckets, leading to data breaches.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Enable Block Public Access configurations and enforce access control via IAM or signed URLs.
-D) Enable full disk encryption on all client endpoints.
+When designing a system for **Microsoft Entra ID (Azure AD) Basics**, you must mitigate the risk of **Developers committing plain-text cloud access keys to public source code repositories, allowing full account takeover.**. Which of the following security configurations or controls represents the best practice to implement?
+B) Enable Block Public Access configurations and enforce access control via IAM or signed URLs.
 C) Enable full disk encryption on all client endpoints.
-B) Enforce temporary credentials (STS), rotate keys regularly, and never hardcode API keys in repositories.
-*   **Correct Answer:** A) Enable Block Public Access configurations and enforce access control via IAM or signed URLs.
+D) Enable full disk encryption on all client endpoints.
+A) Enforce temporary credentials (STS), rotate keys regularly, and never hardcode API keys in repositories.
+*   **Correct Answer:** A) Enforce temporary credentials (STS), rotate keys regularly, and never hardcode API keys in repositories.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Enable Block Public Access configurations and enforce access control via IAM or signed URLs. mitigates the risk of Storing sensitive corporate documents in publicly readable cloud buckets, leading to data breaches..
-    * *Why D is incorrect:* This does not address the security vulnerability of Publicly Exposed Storage Buckets.
-    * *Why C is incorrect:* This does not address the security vulnerability of Publicly Exposed Storage Buckets.
-    * *Why B is incorrect:* This does not address the security vulnerability of Publicly Exposed Storage Buckets.
+    * *Why B is incorrect:* This does not address the security vulnerability of Compromised Access Keys.
+    * *Why C is incorrect:* This does not address the security vulnerability of Compromised Access Keys.
+    * *Why D is incorrect:* This does not address the security vulnerability of Compromised Access Keys.
+    * *Why A is correct:* Implementing Enforce temporary credentials (STS), rotate keys regularly, and never hardcode API keys in repositories. mitigates the risk of Developers committing plain-text cloud access keys to public source code repositories, allowing full account takeover..
 

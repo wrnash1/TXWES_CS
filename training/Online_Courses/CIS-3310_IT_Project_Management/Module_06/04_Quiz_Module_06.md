@@ -17,63 +17,63 @@ Which cost estimation technique uses historical data from similar projects as th
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Analogous vs parametric estimating**?
-B) The danger of exhausting the call stack memory allocation when recursive calls are made too deeply or without hitting a base case, crashing the program.
+In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **bottom-up estimation**?
 A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
-C) CSS properties (like block, inline, flex, grid) that determine how an element is rendered and how it behaves relative to surrounding elements.
-D) A reference or memory address stored within a node that points to another node in a linked structure, forming the link between elements.
+B) The memory block allocated on the system stack for a single function call, storing parameters, local variables, and the return address.
+C) A node in a tree structure that has no child nodes (its children point to null), representing the termination points of the branches.
+D) The operational principle of a queue, where the first element added is the first one to be removed, mimicking a line at a checkout register.
 *   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Analogous vs parametric estimating**.
-    * *Why A is correct:* This describes the exact role and function of **Analogous vs parametric estimating**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Analogous vs parametric estimating**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Analogous vs parametric estimating**.
+    * *Why A is correct:* This describes the exact role and function of **bottom-up estimation**.
+    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **bottom-up estimation**.
+    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **bottom-up estimation**.
+    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **bottom-up estimation**.
 
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **check the configuration files for syntactic and internal consistency correctness**. Which of the following commands is the most appropriate to execute?
-C) docker-compose up -d
-B) systemctl status iot_service
-D) git log --oneline -n 5
-A) terraform validate
-*   **Correct Answer:** A) terraform validate
+A systems administrator or developer needs to **launch all application services in the background using docker-compose configuration**. Which of the following commands is the most appropriate to execute?
+A) docker-compose up -d
+D) terraform validate
+B) git log --oneline -n 5
+C) systemctl status iot_service
+*   **Correct Answer:** A) docker-compose up -d
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
+    * *Why A is correct:* The `docker-compose up -d` command is directly designed to launch all application services in the background using docker-compose configuration.
     * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `terraform validate` command is directly designed to check the configuration files for syntactic and internal consistency correctness.
+    * *Why B is incorrect:* This command handles alternative administrative tasks.
+    * *Why C is incorrect:* This command handles alternative administrative tasks.
 
 
 ---
 
 **Question 4**
-While working on **Cost Estimation & Budgeting** in a production environment, you encounter a system alert indicating a **Scope Exceeded Budget Limit** error. Which of the following is the most effective troubleshooting action to resolve this issue?
+While working on **Cost Estimation & Budgeting** in a production environment, you encounter a system alert indicating a **Dependency Bottleneck** error. Which of the following is the most effective troubleshooting action to resolve this issue?
 C) Optimize service resources, implement load balancing, or update failover mechanisms.
-A) Implement strict change control boards (CCB) and re-baseline the project constraints.
 D) Reboot the physical machine and wait for services to reload.
-B) Re-assign resources to critical path tasks and establish clear communication protocols.
-*   **Correct Answer:** A) Implement strict change control boards (CCB) and re-baseline the project constraints.
+B) Implement strict change control boards (CCB) and re-baseline the project constraints.
+A) Re-assign resources to critical path tasks and establish clear communication protocols.
+*   **Correct Answer:** A) Re-assign resources to critical path tasks and establish clear communication protocols.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This action does not resolve the root cause of Scope Exceeded Budget Limit.
-    * *Why A is correct:* Because The project scope expanded during execution without adjusting budget or schedule allocations. The appropriate fix is to Implement strict change control boards (CCB) and re-baseline the project constraints..
-    * *Why D is incorrect:* This action does not resolve the root cause of Scope Exceeded Budget Limit.
-    * *Why B is incorrect:* This action does not resolve the root cause of Scope Exceeded Budget Limit.
+    * *Why C is incorrect:* This action does not resolve the root cause of Dependency Bottleneck.
+    * *Why D is incorrect:* This action does not resolve the root cause of Dependency Bottleneck.
+    * *Why B is incorrect:* This action does not resolve the root cause of Dependency Bottleneck.
+    * *Why A is correct:* Because A critical task is blocked by a delayed prerequisite task, stalling the entire project timeline. The appropriate fix is to Re-assign resources to critical path tasks and establish clear communication protocols..
 
 
 ---
 
 **Question 5**
-When designing a system for **Cost Estimation & Budgeting**, you must mitigate the risk of **A disaster or ransomware attack causing prolonged downtime because recovery steps are undocumented.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services.
+When designing a system for **Cost Estimation & Budgeting**, you must mitigate the risk of **Stakeholders requesting changes directly to developers, leading to untracked features and security vulnerabilities.**. Which of the following security configurations or controls represents the best practice to implement?
+B) Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services.
 D) Enable full disk encryption on all client endpoints.
 C) Enable full disk encryption on all client endpoints.
-B) Establish formal authorization procedures and digital signatures for all project scope modifications.
-*   **Correct Answer:** A) Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services.
+A) Establish formal authorization procedures and digital signatures for all project scope modifications.
+*   **Correct Answer:** A) Establish formal authorization procedures and digital signatures for all project scope modifications.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services. mitigates the risk of A disaster or ransomware attack causing prolonged downtime because recovery steps are undocumented..
-    * *Why D is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
-    * *Why C is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
-    * *Why B is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
+    * *Why B is incorrect:* This does not address the security vulnerability of Unauthorized Scope Modification.
+    * *Why D is incorrect:* This does not address the security vulnerability of Unauthorized Scope Modification.
+    * *Why C is incorrect:* This does not address the security vulnerability of Unauthorized Scope Modification.
+    * *Why A is correct:* Implementing Establish formal authorization procedures and digital signatures for all project scope modifications. mitigates the risk of Stakeholders requesting changes directly to developers, leading to untracked features and security vulnerabilities..
 

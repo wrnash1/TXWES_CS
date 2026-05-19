@@ -17,63 +17,63 @@ Which ERP module records all financial transactions and serves as the primary da
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **financial reporting.**?
+In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **asset accounting**?
+D) The monetary loss expected from a single occurrence of a specific risk event, calculated as Asset Value multiplied by the Exposure Factor (SLE = AV * EF).
+C) The defining rule of a BST: for any given node, all keys in its left subtree must be less than or equal to its key, and all keys in its right subtree must be greater.
 A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within database operations.
-B) The total memory space required by an algorithm to execute to completion. This includes the static instruction space, variable space, and dynamic allocation space (like recursion stack frames or temporary arrays).
-D) A security control that divides a critical transaction workflow among multiple users to prevent fraud and errors (e.g., one person approves a purchase order, another pays the vendor).
-C) A deployment model that uses two identical production environments (Blue and Green) to minimize downtime and risk; updates are deployed to the idle environment before routing live traffic.
+B) A data structure that improves the speed of data retrieval operations on a database table at the cost of additional write speed and storage.
 *   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within database operations.
 *   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **financial reporting.**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **financial reporting.**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **financial reporting.**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **financial reporting.**.
+    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **asset accounting**.
+    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **asset accounting**.
+    * *Why A is correct:* This describes the exact role and function of **asset accounting**.
+    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **asset accounting**.
 
 
 ---
 
 **Question 3**
 A systems administrator or developer needs to **analyze the database execution plan to identify performance bottlenecks and slow scan steps**. Which of the following commands is the most appropriate to execute?
-D) CREATE INDEX idx_email ON users(email);
-B) GRANT SELECT ON client_db TO analyst_role;
 A) EXPLAIN ANALYZE SELECT * FROM logs;
+D) CREATE INDEX idx_email ON users(email);
 C) SELECT * FROM users WHERE active = 1;
+B) GRANT SELECT ON client_db TO analyst_role;
 *   **Correct Answer:** A) EXPLAIN ANALYZE SELECT * FROM logs;
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
     * *Why A is correct:* The `EXPLAIN ANALYZE SELECT * FROM logs;` command is directly designed to analyze the database execution plan to identify performance bottlenecks and slow scan steps.
+    * *Why D is incorrect:* This command handles alternative administrative tasks.
     * *Why C is incorrect:* This command handles alternative administrative tasks.
+    * *Why B is incorrect:* This command handles alternative administrative tasks.
 
 
 ---
 
 **Question 4**
-While working on **Financial Management Modules** in a production environment, you encounter a system alert indicating a **Database Deadlock** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-C) Analyze the query plan and create appropriate indexes on columns frequently used in WHERE and JOIN clauses.
-A) Optimize application query order, implement retry logic, and keep transaction blocks as brief as possible.
-B) Increase the database connection pool limit, adjust timeout configurations, or scale database resources.
+While working on **Financial Management Modules** in a production environment, you encounter a system alert indicating a **Connection Timeout** error. Which of the following is the most effective troubleshooting action to resolve this issue?
 D) Reboot the physical machine and wait for services to reload.
-*   **Correct Answer:** A) Optimize application query order, implement retry logic, and keep transaction blocks as brief as possible.
+B) Optimize application query order, implement retry logic, and keep transaction blocks as brief as possible.
+A) Increase the database connection pool limit, adjust timeout configurations, or scale database resources.
+C) Analyze the query plan and create appropriate indexes on columns frequently used in WHERE and JOIN clauses.
+*   **Correct Answer:** A) Increase the database connection pool limit, adjust timeout configurations, or scale database resources.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This action does not resolve the root cause of Database Deadlock.
-    * *Why A is correct:* Because Two or more transactions are waiting for each other to release locks on resources, causing a permanent block. The appropriate fix is to Optimize application query order, implement retry logic, and keep transaction blocks as brief as possible..
-    * *Why B is incorrect:* This action does not resolve the root cause of Database Deadlock.
-    * *Why D is incorrect:* This action does not resolve the root cause of Database Deadlock.
+    * *Why D is incorrect:* This action does not resolve the root cause of Connection Timeout.
+    * *Why B is incorrect:* This action does not resolve the root cause of Connection Timeout.
+    * *Why A is correct:* Because The database server has exhausted its pool of concurrent client connections or is overloaded with work. The appropriate fix is to Increase the database connection pool limit, adjust timeout configurations, or scale database resources..
+    * *Why C is incorrect:* This action does not resolve the root cause of Connection Timeout.
 
 
 ---
 
 **Question 5**
-When designing a system for **Financial Management Modules**, you must mitigate the risk of **Unauthorized access to database backup files or physical drives exposing all customer data.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Enable Transparent Data Encryption (TDE) or cloud database storage encryption at rest.
-B) Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs.
-D) Enable full disk encryption on all client endpoints.
+When designing a system for **Financial Management Modules**, you must mitigate the risk of **Attackers injecting malicious SQL strings that bypass authentication and leak entire database contents.**. Which of the following security configurations or controls represents the best practice to implement?
+B) Enable Transparent Data Encryption (TDE) or cloud database storage encryption at rest.
+A) Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs.
 C) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Enable Transparent Data Encryption (TDE) or cloud database storage encryption at rest.
+D) Enable full disk encryption on all client endpoints.
+*   **Correct Answer:** A) Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Enable Transparent Data Encryption (TDE) or cloud database storage encryption at rest. mitigates the risk of Unauthorized access to database backup files or physical drives exposing all customer data..
-    * *Why B is incorrect:* This does not address the security vulnerability of Unencrypted Storage.
-    * *Why D is incorrect:* This does not address the security vulnerability of Unencrypted Storage.
-    * *Why C is incorrect:* This does not address the security vulnerability of Unencrypted Storage.
+    * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Exposure.
+    * *Why A is correct:* Implementing Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs. mitigates the risk of Attackers injecting malicious SQL strings that bypass authentication and leak entire database contents..
+    * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Exposure.
+    * *Why D is incorrect:* This does not address the security vulnerability of SQL Injection Exposure.
 

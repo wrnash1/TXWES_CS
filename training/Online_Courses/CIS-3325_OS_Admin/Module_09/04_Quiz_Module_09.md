@@ -3,7 +3,7 @@
 
 ---
 
-**Question 2**
+**Question 1**
 In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Documentation**?
 B) The single, top-most node in a tree structure from which all other nodes descend, serving as the starting reference for search algorithms.
 C) The descendant node connected to the right branch of a parent node in a binary tree structure.
@@ -16,6 +16,8 @@ D) An efficient mapping technique for complete binary trees where parent-child i
     * *Why A is correct:* This describes the exact role and function of **Documentation**.
     * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Documentation**.
 
+
+---
 
 ---
 
@@ -35,48 +37,50 @@ D) A security control that divides a critical transaction workflow among multipl
 
 ---
 
+---
+
 **Question 3**
 A systems administrator or developer needs to **list all currently active processes running on the system with CPU and memory usage statistics**. Which of the following commands is the most appropriate to execute?
-D) systemctl restart service
+D) chmod 600 config.conf
+B) systemctl restart service
 A) ps aux
-B) df -h
-C) chmod 600 config.conf
+C) df -h
 *   **Correct Answer:** A) ps aux
 *   **Distractor Analysis:**
     * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `ps aux` command is directly designed to list all currently active processes running on the system with CPU and memory usage statistics.
     * *Why B is incorrect:* This command handles alternative administrative tasks.
+    * *Why A is correct:* The `ps aux` command is directly designed to list all currently active processes running on the system with CPU and memory usage statistics.
     * *Why C is incorrect:* This command handles alternative administrative tasks.
 
 
 ---
 
 **Question 4**
-While working on **Package Management** in a production environment, you encounter a system alert indicating a **Service Failed to Bind Port** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-C) Run log rotations, clean temporary files, or expand the logical volume capacity.
+While working on **Package Management** in a production environment, you encounter a system alert indicating a **Disk Space Full** error. Which of the following is the most effective troubleshooting action to resolve this issue?
+C) Prepend the command with 'sudo' to run it with superuser administrative privileges, or adjust the file permissions.
+A) Run log rotations, clean temporary files, or expand the logical volume capacity.
 D) Reboot the physical machine and wait for services to reload.
-A) Identify and terminate the process already utilizing the target port, or modify the service configuration to use an open port.
-B) Prepend the command with 'sudo' to run it with superuser administrative privileges, or adjust the file permissions.
-*   **Correct Answer:** A) Identify and terminate the process already utilizing the target port, or modify the service configuration to use an open port.
+B) Identify and terminate the process already utilizing the target port, or modify the service configuration to use an open port.
+*   **Correct Answer:** A) Run log rotations, clean temporary files, or expand the logical volume capacity.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This action does not resolve the root cause of Service Failed to Bind Port.
-    * *Why D is incorrect:* This action does not resolve the root cause of Service Failed to Bind Port.
-    * *Why A is correct:* Because Another application or stale instance of the service is already listening on the designated network port. The appropriate fix is to Identify and terminate the process already utilizing the target port, or modify the service configuration to use an open port..
-    * *Why B is incorrect:* This action does not resolve the root cause of Service Failed to Bind Port.
+    * *Why C is incorrect:* This action does not resolve the root cause of Disk Space Full.
+    * *Why A is correct:* Because The storage volume has run out of space, preventing files from being written and causing system services to fail. The appropriate fix is to Run log rotations, clean temporary files, or expand the logical volume capacity..
+    * *Why D is incorrect:* This action does not resolve the root cause of Disk Space Full.
+    * *Why B is incorrect:* This action does not resolve the root cause of Disk Space Full.
 
 
 ---
 
 **Question 5**
-When designing a system for **Package Management**, you must mitigate the risk of **Administrators logging in routinely as root or Administrator, increasing the blast radius of user errors or malware.**. Which of the following security configurations or controls represents the best practice to implement?
-B) Disable unused system accounts and run a port scan to disable unnecessary active background services.
+When designing a system for **Package Management**, you must mitigate the risk of **Attackers exploiting vulnerabilities in forgotten background services or using abandoned accounts to gain persistent access.**. Which of the following security configurations or controls represents the best practice to implement?
 C) Enable full disk encryption on all client endpoints.
-A) Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC.
+B) Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC.
 D) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC.
+A) Disable unused system accounts and run a port scan to disable unnecessary active background services.
+*   **Correct Answer:** A) Disable unused system accounts and run a port scan to disable unnecessary active background services.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This does not address the security vulnerability of Privileged Access Abuse.
-    * *Why C is incorrect:* This does not address the security vulnerability of Privileged Access Abuse.
-    * *Why A is correct:* Implementing Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC. mitigates the risk of Administrators logging in routinely as root or Administrator, increasing the blast radius of user errors or malware..
-    * *Why D is incorrect:* This does not address the security vulnerability of Privileged Access Abuse.
+    * *Why C is incorrect:* This does not address the security vulnerability of Stale Accounts & Services.
+    * *Why B is incorrect:* This does not address the security vulnerability of Stale Accounts & Services.
+    * *Why D is incorrect:* This does not address the security vulnerability of Stale Accounts & Services.
+    * *Why A is correct:* Implementing Disable unused system accounts and run a port scan to disable unnecessary active background services. mitigates the risk of Attackers exploiting vulnerabilities in forgotten background services or using abandoned accounts to gain persistent access..
 

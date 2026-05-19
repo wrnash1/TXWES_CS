@@ -16,6 +16,9 @@ Review these essential definitions carefully. The certification exam expects you
 *   **Type 1 vs. Type 2 Hypervisors**: Type 1 (Bare Metal) runs directly on the hardware (e.g., VMware ESXi, Hyper-V). Type 2 runs on a host OS (e.g., VirtualBox, VMware Workstation).
 *   **Kernel vs. User Space**: The kernel is the core of the OS with complete control over everything in the system. User space is where normal applications run, restricted from direct hardware access to prevent crashes.
 *   **Open Source vs. Closed Source**: Linux is open-source (code is freely available). Windows Server is closed-source/proprietary.
+*   **Focus Area**: Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
+*   **Scenario Trap**: Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
+*   **Study Resource**: To reinforce these concepts visually, review this targeted search query: [YouTube Exam Study Reference Link](https://www.youtube.com/results?search_query=3325_OS_Admin+-+CompTIA+Linux%2B+%28XK0-005%29+OS+Basics).
 
 ---
 

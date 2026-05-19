@@ -1655,6 +1655,165 @@ for code, val in ORIGINAL_DATA.items():
 for code, val in NEW_COURSES_DATA.items():
     ALL_COURSES[code] = val
 
+ALL_COURSES["CIS-1320_Intro_to_JavaScript"] = {
+    "cert": "JSE (Certified Associate in JavaScript Programming)",
+    "desc": "Introduction to JavaScript Programming, covering basic syntax, variables, data types, control flow, loops, functions, objects, arrays, DOM manipulation, asynchronous programming, and error handling.",
+    "oer": "W3Schools JavaScript Tutorial / MDN Web Docs",
+    "weeks": [
+        {
+            "topic": "JavaScript Introduction & Execution",
+            "terms": "Scripting tag, client-side, JS engine, console log, execution context, statements.",
+            "lab": ["Create a basic HTML page with an inline script tag", "Use console.log to print hello world", "Verify script execution in browser console"],
+            "q": "Which HTML tag is used to embed or reference client-side JavaScript code within a web page?",
+            "opts": ["A) <javascript>", "B) <script>", "C) <js>", "D) <code class='javascript'>"],
+            "ans": "B",
+            "expl": "The `<script>` tag is the standard HTML element used to embed or link external JavaScript code.",
+            "dist": "The other options represent non-existent HTML tags."
+        },
+        {
+            "topic": "Variables, Constants, and Scope",
+            "terms": "var keyword, let keyword, const keyword, block scope, hoisting, global variable.",
+            "lab": ["Declare variables using var, let, and const", "Demonstrate block scope behavior of let vs var", "Trigger a TypeError by reassigning a const variable"],
+            "q": "Which keyword was introduced in ES6 to declare block-scoped variables that can be reassigned?",
+            "opts": ["A) var", "B) let", "C) const", "D) define"],
+            "ans": "B",
+            "expl": "The `let` keyword declares block-scoped variables that can be reassigned.",
+            "dist": "var is function-scoped and hoisted. const cannot be reassigned. define is not a variable declaration keyword."
+        },
+        {
+            "topic": "Data Types & Operators",
+            "terms": "Primitive types, type coercion, strict equality, arithmetic operators, typeof operator, null vs undefined.",
+            "lab": ["Verify the type of variables using the typeof operator", "Demonstrate type coercion using the + operator with numbers and strings", "Compare values using == and ==="],
+            "q": "What is the difference between the double-equality operator (==) and the triple-equality operator (===) in JavaScript?",
+            "opts": ["A) == performs type coercion before comparing; === compares both value and type without coercion", "B) === performs type coercion; == does not", "C) == is used for strings; === is used for numbers", "D) There is no difference; they are interchangeable"],
+            "ans": "A",
+            "expl": "The strict equality operator (===) requires both operands to be of the same type and value, whereas == performs type coercion first.",
+            "dist": "B is inverted. C is false because both operators can be used with any type. D is incorrect."
+        },
+        {
+            "topic": "Control Flow & Conditionals",
+            "terms": "if statement, else if clause, switch statement, ternary operator, logical operators, truthy vs falsy.",
+            "lab": ["Write a conditional block evaluating test grades", "Implement a switch statement mapping weekdays", "Rewrite an if/else block using a ternary operator"],
+            "q": "Which of the following values is evaluated as 'truthy' in a JavaScript conditional statement?",
+            "opts": ["A) 0", "B) '' (empty string)", "C) [] (empty array)", "D) null"],
+            "ans": "C",
+            "expl": "In JavaScript, empty arrays `[]` and empty objects `{}` are truthy, whereas 0, empty strings, null, and undefined are falsy.",
+            "dist": "0, empty string, and null are all falsy values."
+        },
+        {
+            "topic": "Loops & Iteration",
+            "terms": "for loop, while loop, do-while loop, break statement, continue statement, infinite loop.",
+            "lab": ["Write a for loop that prints numbers 1 to 10", "Write a while loop that processes an array", "Use continue to skip printing odd numbers"],
+            "q": "What is the primary characteristic of a do-while loop compared to a standard while loop?",
+            "opts": ["A) It executes the code block at least once before checking the condition", "B) It does not check any conditions", "C) It only runs if the condition is false", "D) It cannot run indefinitely"],
+            "ans": "A",
+            "expl": "A do-while loop evaluates its condition after executing the body, ensuring the block runs at least once.",
+            "dist": "The other options represent incorrect looping behaviors."
+        },
+        {
+            "topic": "Functions & Arrow Functions",
+            "terms": "Function declaration, function expression, arrow function, parameters, return statement, default arguments.",
+            "lab": ["Define a function using standard function declaration", "Create an arrow function to calculate tax", "Use default parameters in a greeting function"],
+            "q": "How does an arrow function handle the binding of the 'this' keyword?",
+            "opts": ["A) It binds 'this' dynamically at runtime", "B) It has no 'this' of its own; it inherits 'this' from the lexical context", "C) It binds 'this' to the global window object always", "D) It forces 'this' to be undefined"],
+            "ans": "B",
+            "expl": "Arrow functions do not define their own `this` context; they inherit it from the surrounding lexical scope.",
+            "dist": "Standard functions bind `this` dynamically based on execution context."
+        },
+        {
+            "topic": "Objects & Properties",
+            "terms": "Object literal, dot notation, bracket notation, methods, this keyword, key-value pairs.",
+            "lab": ["Create a user object literal", "Access properties using dot and bracket notation", "Define a method that references this.username"],
+            "q": "Which syntax is required to access an object property dynamically using a variable containing the property name?",
+            "opts": ["A) dot notation (object.variableName)", "B) bracket notation (object[variableName])", "C) parenthetical notation (object(variableName))", "D) arrow notation (object->variableName)"],
+            "ans": "B",
+            "expl": "Bracket notation allows variable-based dynamic key lookup (e.g. `obj[key]`), whereas dot notation expects a literal identifier name.",
+            "dist": "A will lookup a property literally named 'variableName'. C and D are syntactically invalid for property access in JavaScript."
+        },
+        {
+            "topic": "Midterm Prep & Arrays",
+            "terms": "Array literal, array index, push/pop, shift/unshift, array length, review concepts.",
+            "lab": ["Create an array of fruits and manipulate elements", "Add elements using push and unshift", "Remove elements using pop and shift"],
+            "q": "Which array method adds one or more elements to the *beginning* of an array and returns the new length?",
+            "opts": ["A) push()", "B) pop()", "C) shift()", "D) unshift()"],
+            "ans": "D",
+            "expl": "The `unshift()` method adds elements to the front of the array; `push()` adds them to the end.",
+            "dist": "push adds to the end. pop removes from the end. shift removes from the front."
+        },
+        {
+            "topic": "Array Iteration & Callback Functions",
+            "terms": "forEach method, map method, filter method, reduce method, callback execution.",
+            "lab": ["Iterate over an array using forEach", "Create a new array of squared numbers using map", "Filter out odd numbers from a list"],
+            "q": "Which array iteration method creates and returns a new array containing only elements that pass a logical condition?",
+            "opts": ["A) map()", "B) filter()", "C) forEach()", "D) reduce()"],
+            "ans": "B",
+            "expl": "The `filter()` method returns a new array with elements that return true for the callback's condition.",
+            "dist": "map transforms all elements. forEach iterates without returning a new array. reduce accumulates values."
+        },
+        {
+            "topic": "Document Object Model (DOM) Basics",
+            "terms": "DOM tree, document object, querySelector, querySelectorAll, getElementById, textContent.",
+            "lab": ["Access elements by ID and Class", "Use querySelector to target elements", "Change element text using textContent"],
+            "q": "Which DOM query method returns a static NodeList of all elements matching a specified CSS selector group?",
+            "opts": ["A) getElementById()", "B) querySelector()", "C) querySelectorAll()", "D) getElementsByClassName()"],
+            "ans": "C",
+            "expl": "The `querySelectorAll()` method targets all elements matching a CSS selector and returns them in a NodeList.",
+            "dist": "getElementById returns a single element. querySelector returns only the first matching element. getElementsByClassName returns an HTMLCollection."
+        },
+        {
+            "topic": "DOM Manipulation & Styling",
+            "terms": "createElement, appendChild, classList, setAttribute, inline styles, DOM hierarchy.",
+            "lab": ["Create a new list item element dynamically", "Append elements to a list container", "Toggle classes using classList.toggle"],
+            "q": "What is the recommended method to add a new CSS class to an element without overwriting existing classes?",
+            "opts": ["A) element.className = 'new-class'", "B) element.classList.add('new-class')", "C) element.setAttribute('class', 'new-class')", "D) element.style.class = 'new-class'"],
+            "ans": "B",
+            "expl": "The `classList.add()` method appends the new class, preserving existing classes.",
+            "dist": "className assignment and setAttribute overwrite the entire class attribute. style.class is invalid syntax."
+        },
+        {
+            "topic": "Event Handling & Listeners",
+            "terms": "addEventListener, click event, event object, event target, preventDefault, bubbling.",
+            "lab": ["Attach a click handler to a button", "Access event details using the event parameter", "Use preventDefault on a form submit event"],
+            "q": "Which method on the event object is used to stop the default browser action, such as navigating a link or submitting a form?",
+            "opts": ["A) stopPropagation()", "B) preventDefault()", "C) stopImmediatePropagation()", "D) cancelEvent()"],
+            "ans": "B",
+            "expl": "The `preventDefault()` method tells the user agent that if the event goes unhandled, its default action should not be taken.",
+            "dist": "stopPropagation prevents event bubbling. cancelEvent is not a valid method name."
+        },
+        {
+            "topic": "Asynchronous JavaScript",
+            "terms": "Synchronous block, callback queue, event loop, setTimeout, setInterval, stack execution.",
+            "lab": ["Create a delayed alert using setTimeout", "Implement a digital clock using setInterval", "Demonstrate non-blocking execution order in console logs"],
+            "q": "What is the purpose of the Event Loop in the JavaScript runtime environment?",
+            "opts": ["A) To compile JavaScript source code into machine code", "B) To monitor the call stack and callback queue, pushing queued tasks when the stack is empty", "C) To handle garbage collection and memory allocation", "D) To execute SQL queries directly on the browser database"],
+            "ans": "B",
+            "expl": "The event loop continuously checks if the execution call stack is empty; if it is, it pulls tasks from the callback queue to run.",
+            "dist": "The other options represent compiler, memory manager, or database functions."
+        },
+        {
+            "topic": "Promises & Async/Await",
+            "terms": "Promise state, resolve/reject, then/catch, async keyword, await expression, fetch API.",
+            "lab": ["Create and resolve a custom Promise", "Fetch data from a public API using fetch and then()", "Refactor fetch calls using async/await syntax"],
+            "q": "What does a function declared with the 'async' keyword always return?",
+            "opts": ["A) An array of values", "B) A Promise", "C) A boolean representing success or failure", "D) The direct return value without wrapping"],
+            "ans": "B",
+            "expl": "An async function always returns a Promise. If the function returns a value, the Promise is resolved with that value.",
+            "dist": "The other options are incorrect."
+        },
+        {
+            "topic": "Error Handling & Debugging",
+            "terms": "try block, catch clause, throw statement, stack trace, breakpoints, developer tools.",
+            "lab": ["Implement a try/catch block to handle division by zero", "Throw a custom error if user input is invalid", "Add debugger statements to trace variables"],
+            "q": "Which block in a try/catch statement runs regardless of whether an exception was thrown or caught?",
+            "opts": ["A) try", "B) catch", "C) finally", "D) throw"],
+            "ans": "C",
+            "expl": "The `finally` block is executed immediately after try/catch, whether an error occurs or not.",
+            "dist": "try and catch execution depend on the occurrence of errors. throw launches an exception."
+        }
+    ]
+}
+
+
 def clean_term_key(term):
     # Cleans trailing brackets, parentheses, and backticks for lookup
     t = term.strip().replace("`", "").replace("...", "")

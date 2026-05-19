@@ -18,48 +18,48 @@ Which keyword is used to represent 'else if' in Python?
 
 **Question 2**
 In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **if-elif-else syntax**?
-B) The total memory space required by an algorithm to execute to completion. This includes the static instruction space, variable space, and dynamic allocation space (like recursion stack frames or temporary arrays).
+C) A security control that divides a critical transaction workflow among multiple users to prevent fraud and errors (e.g., one person approves a purchase order, another pays the vendor).
+B) A structured, seven-step process (Prepare, Categorize, Select, Implement, Assess, Authorize, Monitor) created by NIST to help organizations manage cybersecurity risk.
+D) The termination condition in a recursive function that stops further recursive calls and begins unwinding the call stack, preventing infinite execution.
 A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-D) The region of a program where a variable is accessible, such as local, global, or class scope.
-C) An operation in Red-Black trees where nodes are flipped between red and black to maintain structural invariants after insertions or deletions.
 *   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **if-elif-else syntax**.
-    * *Why A is correct:* This describes the exact role and function of **if-elif-else syntax**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **if-elif-else syntax**.
     * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **if-elif-else syntax**.
+    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **if-elif-else syntax**.
+    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **if-elif-else syntax**.
+    * *Why A is correct:* This describes the exact role and function of **if-elif-else syntax**.
 
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **install all external project dependencies specified in the requirements manifest**. Which of the following commands is the most appropriate to execute?
-B) pytest
-A) pip install -r requirements.txt
+A systems administrator or developer needs to **record staged code modifications into the repository version history**. Which of the following commands is the most appropriate to execute?
 D) python3 -m venv .venv
-C) git commit -m 'update'
-*   **Correct Answer:** A) pip install -r requirements.txt
+C) pytest
+B) pip install -r requirements.txt
+A) git commit -m 'update'
+*   **Correct Answer:** A) git commit -m 'update'
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `pip install -r requirements.txt` command is directly designed to install all external project dependencies specified in the requirements manifest.
     * *Why D is incorrect:* This command handles alternative administrative tasks.
     * *Why C is incorrect:* This command handles alternative administrative tasks.
+    * *Why B is incorrect:* This command handles alternative administrative tasks.
+    * *Why A is correct:* The `git commit -m 'update'` command is directly designed to record staged code modifications into the repository version history.
 
 
 ---
 
 **Question 4**
-While working on **Control Flow - Conditional Statements** in a production environment, you encounter a system alert indicating a **KeyError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-C) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-D) Reboot the physical machine and wait for services to reload.
+While working on **Control Flow - Conditional Statements** in a production environment, you encounter a system alert indicating a **TypeError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
 B) Verify that the index is within the valid range of 0 to len(list)-1.
-A) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
-*   **Correct Answer:** A) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
+D) Reboot the physical machine and wait for services to reload.
+C) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
+A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
+*   **Correct Answer:** A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This action does not resolve the root cause of KeyError.
-    * *Why D is incorrect:* This action does not resolve the root cause of KeyError.
-    * *Why B is incorrect:* This action does not resolve the root cause of KeyError.
-    * *Why A is correct:* Because The code attempted to access a dictionary key that is not defined in the object. The appropriate fix is to Ensure the requested key exists in the dictionary, or use the .get() method to return a default value..
+    * *Why B is incorrect:* This action does not resolve the root cause of TypeError.
+    * *Why D is incorrect:* This action does not resolve the root cause of TypeError.
+    * *Why C is incorrect:* This action does not resolve the root cause of TypeError.
+    * *Why A is correct:* Because An operation or function was applied to an object of an inappropriate data type. The appropriate fix is to Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types..
 
 
 ---

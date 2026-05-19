@@ -17,48 +17,48 @@ Which command downloads and installs the provider plugins defined in your Terraf
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **providers**?
-B) HTML tags that convey the meaning and structure of the enclosed content to both the browser and search engines (e.g., <header>, <article>, <footer>) instead of generic containers.
-C) The core operations of a queue: 'enqueue' appends an element to the back, and 'dequeue' removes and returns the front element.
-D) The final node in a linked list, whose next pointer typically references null (or the head node in a circular list), marking the end of the chain.
+In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **HCL (HashiCorp Configuration Language)**?
+D) Elements placed inside the <head> block of an HTML document that define metadata, links to stylesheets, scripts, character sets, and page titles.
+B) The practice of connecting an electrical circuit or chassis to the earth or a large conductor to safely dissipate static electricity or stray currents.
+C) The mathematical expectation of an algorithm's performance across all possible inputs of size N, representing typical real-world runtime behavior.
 A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within os_admin operations.
 *   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within os_admin operations.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **providers**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **providers**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **providers**.
-    * *Why A is correct:* This describes the exact role and function of **providers**.
+    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **HCL (HashiCorp Configuration Language)**.
+    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **HCL (HashiCorp Configuration Language)**.
+    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **HCL (HashiCorp Configuration Language)**.
+    * *Why A is correct:* This describes the exact role and function of **HCL (HashiCorp Configuration Language)**.
 
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **display total disk space capacity, usage, and available space in a human-readable format**. Which of the following commands is the most appropriate to execute?
-C) systemctl restart service
-A) df -h
-B) ps aux
+A systems administrator or developer needs to **list all currently active processes running on the system with CPU and memory usage statistics**. Which of the following commands is the most appropriate to execute?
 D) chmod 600 config.conf
-*   **Correct Answer:** A) df -h
+B) systemctl restart service
+A) ps aux
+C) df -h
+*   **Correct Answer:** A) ps aux
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `df -h` command is directly designed to display total disk space capacity, usage, and available space in a human-readable format.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
     * *Why D is incorrect:* This command handles alternative administrative tasks.
+    * *Why B is incorrect:* This command handles alternative administrative tasks.
+    * *Why A is correct:* The `ps aux` command is directly designed to list all currently active processes running on the system with CPU and memory usage statistics.
+    * *Why C is incorrect:* This command handles alternative administrative tasks.
 
 
 ---
 
 **Question 4**
 While working on **Terraform Architecture** in a production environment, you encounter a system alert indicating a **Disk Space Full** error. Which of the following is the most effective troubleshooting action to resolve this issue?
+A) Run log rotations, clean temporary files, or expand the logical volume capacity.
 C) Identify and terminate the process already utilizing the target port, or modify the service configuration to use an open port.
 D) Reboot the physical machine and wait for services to reload.
-A) Run log rotations, clean temporary files, or expand the logical volume capacity.
 B) Prepend the command with 'sudo' to run it with superuser administrative privileges, or adjust the file permissions.
 *   **Correct Answer:** A) Run log rotations, clean temporary files, or expand the logical volume capacity.
 *   **Distractor Analysis:**
+    * *Why A is correct:* Because The storage volume has run out of space, preventing files from being written and causing system services to fail. The appropriate fix is to Run log rotations, clean temporary files, or expand the logical volume capacity..
     * *Why C is incorrect:* This action does not resolve the root cause of Disk Space Full.
     * *Why D is incorrect:* This action does not resolve the root cause of Disk Space Full.
-    * *Why A is correct:* Because The storage volume has run out of space, preventing files from being written and causing system services to fail. The appropriate fix is to Run log rotations, clean temporary files, or expand the logical volume capacity..
     * *Why B is incorrect:* This action does not resolve the root cause of Disk Space Full.
 
 

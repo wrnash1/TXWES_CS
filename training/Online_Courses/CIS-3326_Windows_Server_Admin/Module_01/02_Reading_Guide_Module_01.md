@@ -16,6 +16,9 @@ Review these essential definitions carefully. The certification exam expects you
 *   **Windows Admin Center (WAC)**: A web-based, locally deployed application for managing Windows Servers, clusters, and hyper-converged infrastructure. It is the modern replacement for traditional MMC snap-ins.
 *   **PowerShell cmdlets**: Familiarize yourself with basic networking cmdlets like `New-NetIPAddress` and `Rename-Computer`.
 *   **Roles vs. Features**: A Role is the primary function of the server (e.g., Domain Controller, DNS Server). A Feature is a supplementary capability (e.g., BitLocker, Windows Server Backup).
+*   **Focus Area**: Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
+*   **Scenario Trap**: Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
+*   **Study Resource**: To reinforce these concepts visually, review this targeted search query: [YouTube Exam Study Reference Link](https://www.youtube.com/results?search_query=3326_Windows_Server_Admin+-+Microsoft+Windows+Server+Administration+%28Active+Directory%29+Server+Core).
 
 ---
 
