@@ -4,7 +4,18 @@
 LOG_FILE="/var/log/txwes_labs.log"
 EMAIL_RECIPIENT="nash@txwes.edu"
 
-touch "$LOG_FILE" && chmod 666 "$LOG_FILE"
+# Ensure log file exists and is writable, otherwise fall back to user's home directory
+if [ ! -f "$LOG_FILE" ]; then
+    if ! touch "$LOG_FILE" 2>/dev/null; then
+        LOG_FILE="$HOME/.txwes_labs.log"
+        touch "$LOG_FILE"
+    else
+        chmod 666 "$LOG_FILE" 2>/dev/null
+    fi
+elif [ ! -w "$LOG_FILE" ]; then
+    LOG_FILE="$HOME/.txwes_labs.log"
+    touch "$LOG_FILE"
+fi
 
 STUDENT_NAME=$1
 LAB_ID=$2

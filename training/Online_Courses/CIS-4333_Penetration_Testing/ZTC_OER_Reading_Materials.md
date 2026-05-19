@@ -1,11 +1,14 @@
 # CIS-4333_Penetration_Testing: Zero Textbook Cost (ZTC) OER Guide
-**Target Certification:** CompTIA PenTest+
 
-This course uses a Zero Textbook Cost model. You are not required to purchase a textbook.
+Welcome to the course resource repository! This course is part of our Zero Textbook Cost (ZTC) initiative. You are not required to buy any textbooks for this course.
 
-## Primary OER Textbook Replacements
-You will rely heavily on free, high-quality open educational resources.
-*   **Primary Source:** [TryHackMe PenTest+ Pathway](https://google.com/search?q=TryHackMe+PenTest++Pathway)
-*   **Secondary Source:** Official CompTIA PenTest+ Exam Objectives.
+## Primary Learning Channels
+1.  **Primary Open Educational Resource (OER):** TryHackMe PenTest+ Pathway (tryhackme.com)
+2.  **Video Lectures:** Curated YouTube streams matching the study units (links are included in each weekly video script).
+3.  **Vendor Documentation:** Official developer portals and command reference manuals.
 
-> **Instructor Note:** When the Blackboard Module asks you to read the "High-Yield Concepts", use the links above to explore the concepts in depth.
+## Study Method
+*   **Module Page (Video Script):** Read through the visual and audio narration outline to build a conceptual baseline before studying.
+*   **Reading Guide:** Examine high-yield definitions and exam-prep tip blocks.
+*   **Lab Activity:** Complete the hands-on commands in your Linux workstation VM, verify outputs, and log submissions.
+*   **Practice Quiz:** Test your understanding and review the detailed distractor analyses to build active recall.
