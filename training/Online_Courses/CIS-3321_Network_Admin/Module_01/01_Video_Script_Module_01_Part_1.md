@@ -3,6 +3,11 @@
 
 ---
 
+**Module:** 1 (Networking Fundamentals)
+**Estimated Duration:** 6 minutes
+
+---
+
 ## Script & Visual Directives
 
 **[00:00 - 01:00] Introduction**

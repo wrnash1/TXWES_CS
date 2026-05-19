@@ -3,26 +3,77 @@
 
 ---
 
-### Question 1
+**Question 1**
 How does scope changes management differ in Agile compared to traditional Waterfall project management?
-
 *   A) Agile permits changes at any time by prioritizing the backlog, while Waterfall uses strict change control boards
 *   B) Agile does not allow any changes
 *   C) Waterfall updates code dynamically
 *   D) Agile requires more documentation
+*   **Correct Answer:** A) Agile welcomes change by re-evaluating the prioritizations of user stories before every sprint.
+*   **Distractor Analysis:**
+    *   *Why correct:* Agile welcomes change by re-evaluating the prioritizations of user stories before every sprint.
+    *   Waterfall freezes scope early, requiring formal change management approval for revisions.
 
 ---
 
-### Answer Key
-*   **Correct Option:** **A**
+**Question 2**
+In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Agile methodologies**?
+D) The operational principle of a stack, where the element added most recently is the first one to be removed, similar to a stack of trays.
+A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
+B) Nodes that contain two pointers: one pointing forward to the next node and one pointing backward to the previous node, allowing bidirectional traversal.
+C) A complete binary tree where the key of any parent node is greater than or equal to the keys of its children, guaranteeing the root is always the maximum element.
+*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
+*   **Distractor Analysis:**
+    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Agile methodologies**.
+    * *Why A is correct:* This describes the exact role and function of **Agile methodologies**.
+    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Agile methodologies**.
+    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Agile methodologies**.
+
 
 ---
 
-### Explanation
-Agile welcomes change by re-evaluating the prioritizations of user stories before every sprint.
+**Question 3**
+A systems administrator or developer needs to **review the last five project commits in a concise single-line format**. Which of the following commands is the most appropriate to execute?
+B) docker-compose up -d
+A) git log --oneline -n 5
+D) systemctl status iot_service
+C) terraform validate
+*   **Correct Answer:** A) git log --oneline -n 5
+*   **Distractor Analysis:**
+    * *Why B is incorrect:* This command handles alternative administrative tasks.
+    * *Why A is correct:* The `git log --oneline -n 5` command is directly designed to review the last five project commits in a concise single-line format.
+    * *Why D is incorrect:* This command handles alternative administrative tasks.
+    * *Why C is incorrect:* This command handles alternative administrative tasks.
+
 
 ---
 
-### Distractor Analysis
-*   **Why the incorrect options are wrong:**
-    Waterfall freezes scope early, requiring formal change management approval for revisions.
+**Question 4**
+While working on **Agile Project Management Overview** in a production environment, you encounter a system alert indicating a **Dependency Bottleneck** error. Which of the following is the most effective troubleshooting action to resolve this issue?
+A) Re-assign resources to critical path tasks and establish clear communication protocols.
+D) Reboot the physical machine and wait for services to reload.
+B) Optimize service resources, implement load balancing, or update failover mechanisms.
+C) Implement strict change control boards (CCB) and re-baseline the project constraints.
+*   **Correct Answer:** A) Re-assign resources to critical path tasks and establish clear communication protocols.
+*   **Distractor Analysis:**
+    * *Why A is correct:* Because A critical task is blocked by a delayed prerequisite task, stalling the entire project timeline. The appropriate fix is to Re-assign resources to critical path tasks and establish clear communication protocols..
+    * *Why D is incorrect:* This action does not resolve the root cause of Dependency Bottleneck.
+    * *Why B is incorrect:* This action does not resolve the root cause of Dependency Bottleneck.
+    * *Why C is incorrect:* This action does not resolve the root cause of Dependency Bottleneck.
+
+
+---
+
+**Question 5**
+When designing a system for **Agile Project Management Overview**, you must mitigate the risk of **A disaster or ransomware attack causing prolonged downtime because recovery steps are undocumented.**. Which of the following security configurations or controls represents the best practice to implement?
+C) Enable full disk encryption on all client endpoints.
+B) Establish formal authorization procedures and digital signatures for all project scope modifications.
+D) Enable full disk encryption on all client endpoints.
+A) Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services.
+*   **Correct Answer:** A) Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services.
+*   **Distractor Analysis:**
+    * *Why C is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
+    * *Why B is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
+    * *Why D is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
+    * *Why A is correct:* Implementing Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services. mitigates the risk of A disaster or ransomware attack causing prolonged downtime because recovery steps are undocumented..
+

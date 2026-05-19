@@ -3,6 +3,8 @@
 
 ---
 
+**Objective:** Create an Instance Template, deploy a Managed Instance Group, and trigger autoscaling.
+**Instructions:**
 1. In the GCP Console, go to **Compute Engine -> Instance templates**. Create a template named `web-template`. Under Advanced -> Management, add the Nginx startup script from Lab 3.
 2. Go to **Instance groups**. Create a new Managed Instance Group named `web-mig`.
 3. Select your `web-template`. Set the minimum instances to 1, and the maximum to 4.

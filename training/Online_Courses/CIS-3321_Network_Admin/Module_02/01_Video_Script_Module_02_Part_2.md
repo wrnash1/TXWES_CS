@@ -3,6 +3,11 @@
 
 ---
 
+**Module:** 2 (Network Implementations)
+**Estimated Duration:** 7 minutes
+
+---
+
 ## Script & Visual Directives
 
 **[00:00 - 01:30] Introduction to IPv4**

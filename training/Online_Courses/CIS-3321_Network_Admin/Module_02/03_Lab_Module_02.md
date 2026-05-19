@@ -3,6 +3,9 @@
 
 ---
 
+**Format:** Local Virtualization
+
+## Objective
 To understand 802.1Q tagging by configuring virtual LANs (VLANs) on a Linux virtual machine acting as a router/switch.
 
 ## Prerequisites

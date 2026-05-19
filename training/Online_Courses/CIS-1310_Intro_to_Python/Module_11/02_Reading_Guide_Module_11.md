@@ -3,29 +3,45 @@
 
 ---
 
-## 1. High-Yield Glossary
+### Introduction
+Welcome to **Module 11 - String Methods and Operations**! This week's study material focuses on the core foundations and configuration mechanics of **String Methods and Operations** as aligned with the **PCAP (Certified Associate in Python Programming)** certification framework. Understanding these topics is essential not only for passing the certification exam but also for administering enterprise systems in real-world environments.
+
+As a student, you will learn the primary operational roles, command syntaxes, and troubleshooting parameters needed to design, configure, and maintain these services. We will explore how different protocols establish connections, how configurations manage resource allocation, and how security controls prevent access breaches. Make sure to complete the checklists and review the glossary terms in detail before beginning the lab activity.
+
+---
+
+### 1. High-Yield Glossary
 Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
 
-*   **String immutability**: A core foundational element of this week's studies, representing a primary parameter or configuration standard required for String immutability administration.
-*   **string slicing**: A core foundational element of this week's studies, representing a primary parameter or configuration standard required for string slicing administration.
-*   **string functions (upper**: A core foundational element of this week's studies, representing a primary parameter or configuration standard required for string functions (upper administration.
-*   **lower**: A core foundational element of this week's studies, representing a primary parameter or configuration standard required for lower administration.
-*   **find**: A core foundational element of this week's studies, representing a primary parameter or configuration standard required for find administration.
-*   **split**: A core foundational element of this week's studies, representing a primary parameter or configuration standard required for split administration.
-*   **join**: A core foundational element of this week's studies, representing a primary parameter or configuration standard required for join administration.
-*   **strip).**: A core foundational element of this week's studies, representing a primary parameter or configuration standard required for strip). administration.
+*   **String immutability**: A primary configuration standard and technical parameter essential for coordinating String Methods and Operations activities, enforcing security boundaries, and verifying operational statuses within the programming environment.
+*   **string slicing**: A primary configuration standard and technical parameter essential for coordinating String Methods and Operations activities, enforcing security boundaries, and verifying operational statuses within the programming environment.
+*   **string functions (upper**: A primary configuration standard and technical parameter essential for coordinating String Methods and Operations activities, enforcing security boundaries, and verifying operational statuses within the programming environment.
+*   **lower**: A primary configuration standard and technical parameter essential for coordinating String Methods and Operations activities, enforcing security boundaries, and verifying operational statuses within the programming environment.
+*   **find**: A primary configuration standard and technical parameter essential for coordinating String Methods and Operations activities, enforcing security boundaries, and verifying operational statuses within the programming environment.
+*   **split**: A primary configuration standard and technical parameter essential for coordinating String Methods and Operations activities, enforcing security boundaries, and verifying operational statuses within the programming environment.
+*   **join**: A primary configuration standard and technical parameter essential for coordinating String Methods and Operations activities, enforcing security boundaries, and verifying operational statuses within the programming environment.
+*   **strip).**: A primary configuration standard and technical parameter essential for coordinating String Methods and Operations activities, enforcing security boundaries, and verifying operational statuses within the programming environment.
+
+---
+
+### 2. Certification Exam Tips
+*   **Focus Area:** Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
+*   **Scenario Trap:** Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
+*   **Study Resource:** To reinforce these concepts visually, review this targeted search query: [YouTube Exam Study Reference Link](https://www.youtube.com/results?search_query=PCAP+%28Certified+Associate+in+Python+Programming%29+String+Methods+and+Operations).
+
+---
+
+### Lab & Command Integration
+In this week's hands-on lab, you will perform the following steps to apply these concepts:
+*   **Take a user input string and clean it up (remove whitespace)**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
+*   **Split it into words based on spaces**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
+*   **Join the words back together using a hyphen `-` separator**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
 
 
 ---
 
-## 2. Certification Exam Tips
-*   **Focus Area:** Pay close attention to how these configuration values behave by default. The exam frequently features questions on default ports, parameters, or common diagnostic outputs.
-*   **Scenario Trap:** Watch out for questions asking you to troubleshoot a failing configuration. Always verify if permissions or basic connectivity rules are violated first.
-*   **Watch this resource:** To reinforce these concepts visually, review this targeted search query: [YouTube Exam Reference Link](https://www.youtube.com/results?search_query=Corey+Schafer+Python+String+Methods+and+Operations).
-
----
-
-## 3. Study Checklist
-- [ ] Read the glossary terms and memorize their operational definitions.
+### 3. Study Checklist
+- [ ] Read the glossary terms and memorize their definitions.
 - [ ] Watch the curated YouTube study streams matching **String Methods and Operations**.
+- [ ] Review the commands outlined in the lab instructions.
 - [ ] Proceed to the weekly hands-on lab activity.

@@ -3,6 +3,8 @@
 
 ---
 
+**Objective:** Map real-world security mechanisms to their appropriate control categories.
+**Instructions:**
 You have been hired to audit a local bank's security posture. Review the following mechanisms they have in place and create a matrix classifying each by its **Category** (Physical, Logical, Administrative) AND its **Function** (Preventive, Detective, Corrective).
 1. A mantrap at the data center entrance.
 2. A policy requiring passwords to be changed every 90 days.

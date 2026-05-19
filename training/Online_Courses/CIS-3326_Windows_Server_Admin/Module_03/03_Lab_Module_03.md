@@ -3,6 +3,8 @@
 
 ---
 
+**Objective:** Create a GPO that restricts user capabilities and apply it to a specific OU.
+**Instructions:**
 1. Log into your Windows Server Domain Controller VM.
 2. Open **Group Policy Management** from the Tools menu.
 3. Expand your domain, right-click the "Marketing" OU you created in Lab 2, and select "Create a GPO in this domain, and Link it here...".

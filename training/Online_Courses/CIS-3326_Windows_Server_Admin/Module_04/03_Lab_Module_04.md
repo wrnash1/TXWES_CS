@@ -3,6 +3,8 @@
 
 ---
 
+**Objective:** Create a unified DFS Namespace and apply restrictive NTFS permissions to a shared folder.
+**Instructions:**
 1. Boot your Windows Server DC VM.
 2. Open **Server Manager** and install the **DFS Namespaces** role service (under File and Storage Services).
 3. On the C: drive, create a folder named `CorpData`. Inside it, create a folder named `Finance`.

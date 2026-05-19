@@ -3,6 +3,11 @@
 
 ---
 
+**Module:** 2 (Network Implementations)
+**Estimated Duration:** 6 minutes
+
+---
+
 ## Script & Visual Directives
 
 **[00:00 - 01:00] Introduction**

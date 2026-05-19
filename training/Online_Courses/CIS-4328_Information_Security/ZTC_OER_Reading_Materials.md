@@ -1,26 +1,22 @@
-# CIS 4328: Zero Textbook Cost (ZTC) OER Guide
-**Target Certification:** CompTIA Security+ (SY0-701)
+# Zero Textbook Cost (ZTC) & Open Educational Resources (OER) Guide
+## Course: CIS-4328_Information_Security
 
-This course uses a Zero Textbook Cost model. You are not required to purchase a Security+ study guide. We will utilize free video training and open-source intelligence frameworks to cover the exam objectives.
+This course is designed as a Zero Textbook Cost (ZTC) curriculum. All core lecture notes, video scripts, lab activities, and practice quizzes are integrated directly within the Canvas LMS course shell.
 
-## Primary OER Textbook Replacements
+---
 
-### Module 1-4: Threats, Vulnerabilities, & Security Operations
-*   **Reading 1:** [Professor Messer's Free Security+ SY0-701 Video Course](https://www.professormesser.com/security-plus/sy0-701/sy0-701-video/sy0-701-training-course/)
-    *   *Focus:* Watch Domain 1 (General Security Concepts) and Domain 2 (Threats, Vulnerabilities, and Mitigations).
-*   **Reading 2:** [MITRE ATT&CK Framework](https://attack.mitre.org/)
-    *   *Focus:* Explore this free, globally recognized knowledge base of adversary tactics (replaces traditional malware textbook chapters).
+## Recommended Free Study Resources & Links
 
-### Module 5-8: IAM, Cryptography, & Risk Management
-*   **Reading 3:** [NIST Cybersecurity Framework (CSF) V2.0](https://www.nist.gov/cyberframework)
-    *   *Focus:* Download and read the free core framework (Identify, Protect, Detect, Respond, Recover).
-*   **Reading 4:** [Professor Messer's Free Security+ SY0-701 Video Course](https://www.professormesser.com/security-plus/sy0-701/sy0-701-video/sy0-701-training-course/)
-    *   *Focus:* Watch Domain 3 (Security Architecture) and Domain 4 (Security Operations).
+To help you study and prepare for your examinations, we recommend the following free open-education resources:
 
-### Module 9-16: Application Security, Cloud, & Incident Response
-*   **Reading 5:** [OWASP Top 10 (Free Web Security Guide)](https://owasp.org/www-project-top-ten/)
-    *   *Focus:* Read the documentation on Injection attacks, Broken Authentication, and XSS.
-*   **Reading 6:** [Official CompTIA SY0-701 Exam Objectives (PDF)](https://www.comptia.org/certifications/security)
-    *   *Focus:* Use this as your definitive checklist.
+1.  **Video Study Stream Lectures (Curated for 4328_Information_Security - CompTIA Security+ (SY0-701)):**
+    *   [YouTube Search Link for 4328_Information_Security - CompTIA Security+ (SY0-701)](https://www.youtube.com/results?search_query=4328_Information_Security+-+CompTIA+Security%2B+%28SY0-701%29)
+    *   *Tip:* Use this link to search for specific module topics as you progress through each week.
 
-> **Instructor Note:** Professor Messer's course is universally recognized as being equal to (or better than) any $50 textbook. Use his videos in conjunction with the high-yield summaries in the Blackboard modules.
+2.  **Official Vendor Documentation:**
+    *   Refer to the official documentation websites matching this certification standard (such as Microsoft Learn, Google Cloud documentation, AWS documentation, or Linux man pages).
+
+---
+
+## Weekly Reading Guide Integration
+Each module's `02_Reading_Guide_Module_XX.md` file contains a targeted checklist pointing you to these resources. Follow the checklists weekly to reinforce your learning before attempting the hands-on lab exercises and practice quizzes.

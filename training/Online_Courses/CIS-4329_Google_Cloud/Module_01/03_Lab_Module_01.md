@@ -3,6 +3,8 @@
 
 ---
 
+**Objective:** Use Cloud Shell to create a project and set a default compute region.
+**Instructions:**
 1. Log into your Google Cloud account.
 2. Click the **Activate Cloud Shell** icon (`>_`) in the top right header.
 3. Wait for the terminal to provision.

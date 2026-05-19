@@ -1,14 +1,22 @@
-# CIS-3350_Software_Engineering_Agile: Zero Textbook Cost (ZTC) OER Guide
+# Zero Textbook Cost (ZTC) & Open Educational Resources (OER) Guide
+## Course: CIS-3350_Software_Engineering_Agile
 
-Welcome to the course resource repository! This course is part of our Zero Textbook Cost (ZTC) initiative. You are not required to buy any textbooks for this course.
+This course is designed as a Zero Textbook Cost (ZTC) curriculum. All core lecture notes, video scripts, lab activities, and practice quizzes are integrated directly within the Canvas LMS course shell.
 
-## Primary Learning Channels
-1.  **Primary Open Educational Resource (OER):** Official Scrum Guide (scrumguides.org)
-2.  **Video Lectures:** Curated YouTube streams matching the study units (links are included in each weekly video script).
-3.  **Vendor Documentation:** Official developer portals and command reference manuals.
+---
 
-## Study Method
-*   **Module Page (Video Script):** Read through the visual and audio narration outline to build a conceptual baseline before studying.
-*   **Reading Guide:** Examine high-yield definitions and exam-prep tip blocks.
-*   **Lab Activity:** Complete the hands-on commands in your Linux workstation VM, verify outputs, and log submissions.
-*   **Practice Quiz:** Test your understanding and review the detailed distractor analyses to build active recall.
+## Recommended Free Study Resources & Links
+
+To help you study and prepare for your examinations, we recommend the following free open-education resources:
+
+1.  **Video Study Stream Lectures (Curated for Professional Scrum Master (PSM I)):**
+    *   [YouTube Search Link for Professional Scrum Master (PSM I)](https://www.youtube.com/results?search_query=Professional+Scrum+Master+%28PSM+I%29)
+    *   *Tip:* Use this link to search for specific module topics as you progress through each week.
+
+2.  **Official Vendor Documentation:**
+    *   Refer to the official documentation websites matching this certification standard (such as Microsoft Learn, Google Cloud documentation, AWS documentation, or Linux man pages).
+
+---
+
+## Weekly Reading Guide Integration
+Each module's `02_Reading_Guide_Module_XX.md` file contains a targeted checklist pointing you to these resources. Follow the checklists weekly to reinforce your learning before attempting the hands-on lab exercises and practice quizzes.

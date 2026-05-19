@@ -3,6 +3,8 @@
 
 ---
 
+**Objective:** Migrate a standalone MySQL database to Cloud SQL using DMS.
+**Instructions:**
 1. In Google Cloud Console, navigate to **Database Migration -> Migration jobs**.
 2. Click **Create migration job**.
 3. Under Source, select a pre-existing Compute Engine VM running MySQL (you will deploy this via a provided Deployment Manager script).

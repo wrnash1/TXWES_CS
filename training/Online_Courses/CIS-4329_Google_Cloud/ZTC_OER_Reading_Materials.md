@@ -1,28 +1,22 @@
-# CIS 4329: Zero Textbook Cost (ZTC) OER Guide
-**Target Certification:** Google Cloud Associate Cloud Engineer (ACE)
+# Zero Textbook Cost (ZTC) & Open Educational Resources (OER) Guide
+## Course: CIS-4329_Google_Cloud
 
-This course uses a Zero Textbook Cost model. Because cloud interfaces update weekly, textbooks become obsolete instantly. We will exclusively use the official, free Google Cloud documentation and interactive learning paths.
+This course is designed as a Zero Textbook Cost (ZTC) curriculum. All core lecture notes, video scripts, lab activities, and practice quizzes are integrated directly within the Canvas LMS course shell.
 
-## Primary OER Textbook Replacements
+---
 
-### Module 1-4: Compute Engine & Infrastructure
-*   **Reading 1:** [Google Cloud Skills Boost: ACE Learning Path](https://www.cloudskillsboost.google/paths/11)
-    *   *Focus:* Follow this free curated path provided by Google.
-*   **Reading 2:** [Compute Engine Documentation](https://cloud.google.com/compute/docs)
-    *   *Focus:* Read the sections on Machine Types, Persistent Disks, and Managed Instance Groups (MIGs).
+## Recommended Free Study Resources & Links
 
-### Module 5-8: Networking, IAM, & Cloud Storage
-*   **Reading 3:** [VPC Networking Documentation](https://cloud.google.com/vpc/docs/overview)
-    *   *Focus:* Understand that VPCs are Global and Subnets are Regional.
-*   **Reading 4:** [Cloud Storage Documentation](https://cloud.google.com/storage/docs)
-    *   *Focus:* Differentiate between Standard, Nearline, Coldline, and Archive storage classes.
-*   **Reading 5:** [Google Cloud IAM Concepts](https://cloud.google.com/iam/docs/concepts)
+To help you study and prepare for your examinations, we recommend the following free open-education resources:
 
-### Module 9-16: GKE, Serverless, & Operations
-*   **Reading 6:** [Kubernetes Engine (GKE) Overview](https://cloud.google.com/kubernetes-engine/docs/concepts/kubernetes-engine-overview)
-    *   *Focus:* Understand Pods, Deployments, and Services.
-*   **Reading 7:** [App Engine vs. Cloud Run Decision Guide](https://cloud.google.com/serverless-options)
-*   **Reading 8:** [Official Certification Exam Guide](https://cloud.google.com/certification/guides/cloud-engineer)
-    *   *Focus:* Review the official exam blueprint.
+1.  **Video Study Stream Lectures (Curated for 4329_Google_Cloud - Google Cloud Associate Cloud Engineer):**
+    *   [YouTube Search Link for 4329_Google_Cloud - Google Cloud Associate Cloud Engineer](https://www.youtube.com/results?search_query=4329_Google_Cloud+-+Google+Cloud+Associate+Cloud+Engineer)
+    *   *Tip:* Use this link to search for specific module topics as you progress through each week.
 
-> **Instructor Note:** When the Blackboard Module asks you to read the "High-Yield Concepts", use the `gcloud` command line cheat sheets and the official Google Cloud documentation links provided above to explore the concepts in depth.
+2.  **Official Vendor Documentation:**
+    *   Refer to the official documentation websites matching this certification standard (such as Microsoft Learn, Google Cloud documentation, AWS documentation, or Linux man pages).
+
+---
+
+## Weekly Reading Guide Integration
+Each module's `02_Reading_Guide_Module_XX.md` file contains a targeted checklist pointing you to these resources. Follow the checklists weekly to reinforce your learning before attempting the hands-on lab exercises and practice quizzes.

@@ -3,6 +3,8 @@
 
 ---
 
+**Objective:** Manage local users and utilize chmod/chown to secure files.
+**Instructions:**
 1. Log into your Ubuntu Server VM.
 2. Create a new user named 'student1': `sudo useradd -m student1`
 3. Create a new group named 'developers': `sudo groupadd developers`

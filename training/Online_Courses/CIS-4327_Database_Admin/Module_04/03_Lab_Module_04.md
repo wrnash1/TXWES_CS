@@ -3,6 +3,8 @@
 
 ---
 
+**Objective:** Apply least privilege IAM roles and create a proactive monitoring alert.
+**Instructions:**
 1. Log into your Google Cloud project.
 2. Navigate to **IAM & Admin -> IAM**.
 3. Click **Grant Access**. Enter the email address of a classmate or a secondary Google account you own.

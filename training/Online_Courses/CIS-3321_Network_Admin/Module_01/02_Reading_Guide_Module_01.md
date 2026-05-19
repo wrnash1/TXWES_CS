@@ -1,32 +1,47 @@
 # Reading Guide: Module 01 - OSI Model
-## Course: CIS-3321_Network_Admin (CompTIA Network+ (N10-008))
+## Course: CIS-3321_Network_Admin (3321_Network_Admin - CompTIA Network+ (N10-008))
 
 ---
 
-As you read Chapter 1 of your text, focus heavily on the following concepts, as they are guaranteed to appear on the Network+ certification exam.
+### Introduction
+Welcome to **Module 01 - OSI Model**! This week's study material focuses on the core foundations and configuration mechanics of **OSI Model** as aligned with the **3321_Network_Admin - CompTIA Network+ (N10-008)** certification framework. Understanding these topics is essential not only for passing the certification exam but also for administering enterprise systems in real-world environments.
 
-### 1. The OSI Model vs. TCP/IP Model
-You must be able to compare and contrast the 7-layer OSI model with the 4-layer TCP/IP model.
-*   **OSI Layer 7, 6, 5** = **TCP/IP Application Layer**
-*   **OSI Layer 4 (Transport)** = **TCP/IP Transport Layer**
-*   **OSI Layer 3 (Network)** = **TCP/IP Internet Layer**
-*   **OSI Layer 2, 1** = **TCP/IP Network Access / Link Layer**
+As a student, you will learn the primary operational roles, command syntaxes, and troubleshooting parameters needed to design, configure, and maintain these services. We will explore how different protocols establish connections, how configurations manage resource allocation, and how security controls prevent access breaches. Make sure to complete the checklists and review the glossary terms in detail before beginning the lab activity.
 
-### 2. Protocol Data Units (PDUs)
-Know what data is called at the different OSI layers:
-*   Layer 4 (Transport) = **Segments** (TCP) or **Datagrams** (UDP)
-*   Layer 3 (Network) = **Packets** (IP addresses are used here)
-*   Layer 2 (Data Link) = **Frames** (MAC addresses are used here)
-*   Layer 1 (Physical) = **Bits** (1s and 0s)
+---
 
-### 3. Network Topologies
-Understand the advantages and disadvantages of each:
-*   **Star:** Most common. Single point of failure is the central switch.
-*   **Mesh:** Most redundant and expensive. Every node connects to every other node. Formula for connections: `n(n-1)/2`.
-*   **Hybrid:** A combination of two or more topologies.
+### 1. High-Yield Glossary
+Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
 
-## Key Terms Glossary
-*   **Encapsulation:** The process of adding headers to data as it moves down the OSI model.
-*   **Decapsulation:** The process of stripping headers as data moves up the OSI model at the receiving end.
-*   **MAC Address:** A physical, hardcoded 48-bit address on a Network Interface Card (NIC).
-*   **IP Address:** A logical address assigned to a device on a network.
+*   **OSI Layer 7, 6, 5**: = **TCP/IP Application Layer**
+*   **OSI Layer 4 (Transport)**: = **TCP/IP Transport Layer**
+*   **OSI Layer 3 (Network)**: = **TCP/IP Internet Layer**
+*   **OSI Layer 2, 1**: = **TCP/IP Network Access / Link Layer**
+*   **Star**: Most common. Single point of failure is the central switch.
+*   **Mesh**: Most redundant and expensive. Every node connects to every other node. Formula for connections: `n(n-1)/2`.
+*   **Hybrid**: A combination of two or more topologies.
+*   **Encapsulation**: The process of adding headers to data as it moves down the OSI model.
+*   **Decapsulation**: The process of stripping headers as data moves up the OSI model at the receiving end.
+*   **MAC Address**: A physical, hardcoded 48-bit address on a Network Interface Card (NIC).
+*   **IP Address**: A logical address assigned to a device on a network.
+
+---
+
+### 2. Certification Exam Tips
+*   **Focus Area:** Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
+*   **Scenario Trap:** Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
+*   **Study Resource:** To reinforce these concepts visually, review this targeted search query: [YouTube Exam Study Reference Link](https://www.youtube.com/results?search_query=3321_Network_Admin+-+CompTIA+Network%2B+%28N10-008%29+OSI+Model).
+
+---
+
+### Lab & Command Integration
+In this week's hands-on lab, you will run command sequences to verify configuration files and check service statuses. Make sure to execute administrative commands using elevated privileges (sudo/Administrator) and review console outputs for errors.
+
+
+---
+
+### 3. Study Checklist
+- [ ] Read the glossary terms and memorize their definitions.
+- [ ] Watch the curated YouTube study streams matching **OSI Model**.
+- [ ] Review the commands outlined in the lab instructions.
+- [ ] Proceed to the weekly hands-on lab activity.

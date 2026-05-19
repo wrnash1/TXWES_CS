@@ -3,6 +3,8 @@
 
 ---
 
+**Objective:** Use an automated tool to identify open ports and missing security patches on a target system.
+**Instructions:**
 1. Boot your Kali Linux VM and your Windows Server Evaluation VM (the target). Ensure both are on the same Internal Network in VirtualBox.
 2. Note the IP address of the Windows Server.
 3. On Kali Linux, open a terminal and run a basic Nmap scan against the Windows IP:

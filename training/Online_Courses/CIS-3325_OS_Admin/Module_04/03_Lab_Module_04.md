@@ -3,6 +3,8 @@
 
 ---
 
+**Objective:** Monitor system resources, kill rogue processes, and manage background services.
+**Instructions:**
 1. Log into your Ubuntu Server VM.
 2. Start a continuous ping in the background: `ping google.com > /dev/null &`
 3. Use the `ps aux | grep ping` command to find the Process ID (PID) of your ping command.

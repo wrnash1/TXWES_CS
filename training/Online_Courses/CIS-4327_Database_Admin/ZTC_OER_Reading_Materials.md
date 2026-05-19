@@ -1,28 +1,22 @@
-# CIS 4327: Zero Textbook Cost (ZTC) OER Guide
-**Target Certification:** Google Cloud Professional Cloud Database Engineer
+# Zero Textbook Cost (ZTC) & Open Educational Resources (OER) Guide
+## Course: CIS-4327_Database_Admin
 
-This course uses a Zero Textbook Cost model. Because cloud technology changes daily, printed textbooks are obsolete before they are published. We will exclusively use the official, free Google Cloud Architecture Center and documentation.
+This course is designed as a Zero Textbook Cost (ZTC) curriculum. All core lecture notes, video scripts, lab activities, and practice quizzes are integrated directly within the Canvas LMS course shell.
 
-## Primary OER Textbook Replacements
+---
 
-### Module 1-4: Relational Databases & High Availability
-*   **Reading 1:** [Google Cloud Architecture Center: Database Design](https://cloud.google.com/architecture)
-*   **Reading 2:** [Cloud SQL Official Documentation](https://cloud.google.com/sql/docs)
-    *   *Focus:* Read the concepts regarding High Availability (HA) configuration, Point-in-Time Recovery (PITR), and Read Replicas.
-*   **Reading 3:** [Google Cloud IAM Documentation](https://cloud.google.com/iam/docs)
-    *   *Focus:* Read about predefined roles vs. primitive roles.
+## Recommended Free Study Resources & Links
 
-### Module 5-8: Spanner, BigQuery, & Terraform
-*   **Reading 4:** [Cloud Spanner: TrueTime and External Consistency (Whitepaper)](https://cloud.google.com/spanner/docs/true-time-external-consistency)
-    *   *Focus:* This free whitepaper replaces the need for a textbook chapter on distributed database consistency.
-*   **Reading 5:** [BigQuery Official Documentation](https://cloud.google.com/bigquery/docs)
-    *   *Focus:* Understand columnar storage and serverless data warehousing.
-*   **Reading 6:** [HashiCorp Terraform for Google Cloud (Free Tutorial)](https://developer.hashicorp.com/terraform/tutorials/gcp-get-started)
+To help you study and prepare for your examinations, we recommend the following free open-education resources:
 
-### Module 9-16: NoSQL, Migration, & Performance
-*   **Reading 7:** [Choosing the right database service in GCP (Decision Tree)](https://cloud.google.com/products/databases)
-*   **Reading 8:** [Database Migration Service Documentation](https://cloud.google.com/database-migration/docs)
-*   **Reading 9:** [Official Certification Exam Guide](https://cloud.google.com/certification/guides/cloud-database-engineer)
-    *   *Focus:* Review the exact exam objectives.
+1.  **Video Study Stream Lectures (Curated for 4327_Database_Admin - Google Cloud Associate Database Engineer):**
+    *   [YouTube Search Link for 4327_Database_Admin - Google Cloud Associate Database Engineer](https://www.youtube.com/results?search_query=4327_Database_Admin+-+Google+Cloud+Associate+Database+Engineer)
+    *   *Tip:* Use this link to search for specific module topics as you progress through each week.
 
-> **Instructor Note:** When the Blackboard Module asks you to read the "High-Yield Concepts", use the official Google Cloud documentation links provided above to explore the concepts in depth.
+2.  **Official Vendor Documentation:**
+    *   Refer to the official documentation websites matching this certification standard (such as Microsoft Learn, Google Cloud documentation, AWS documentation, or Linux man pages).
+
+---
+
+## Weekly Reading Guide Integration
+Each module's `02_Reading_Guide_Module_XX.md` file contains a targeted checklist pointing you to these resources. Follow the checklists weekly to reinforce your learning before attempting the hands-on lab exercises and practice quizzes.

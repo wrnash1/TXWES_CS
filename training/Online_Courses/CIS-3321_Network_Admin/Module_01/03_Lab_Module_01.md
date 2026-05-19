@@ -3,6 +3,9 @@
 
 ---
 
+**Format:** Local Virtualization
+
+## Objective
 To understand physical/logical topologies and IP addressing by creating an isolated internal network between two virtual machines using Oracle VirtualBox.
 
 ## Prerequisites

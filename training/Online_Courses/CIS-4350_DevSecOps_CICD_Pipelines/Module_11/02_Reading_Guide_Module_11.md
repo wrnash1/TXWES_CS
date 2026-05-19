@@ -3,25 +3,41 @@
 
 ---
 
-## 1. High-Yield Glossary
+### Introduction
+Welcome to **Module 11 - Secret Management in Pipelines**! This week's study material focuses on the core foundations and configuration mechanics of **Secret Management in Pipelines** as aligned with the **Certified DevSecOps Professional (CDP)** certification framework. Understanding these topics is essential not only for passing the certification exam but also for administering enterprise systems in real-world environments.
+
+As a student, you will learn the primary operational roles, command syntaxes, and troubleshooting parameters needed to design, configure, and maintain these services. We will explore how different protocols establish connections, how configurations manage resource allocation, and how security controls prevent access breaches. Make sure to complete the checklists and review the glossary terms in detail before beginning the lab activity.
+
+---
+
+### 1. High-Yield Glossary
 Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
 
-*   **Secret scanning**: A core foundational element of this week's studies, representing a primary parameter or configuration standard required for Secret scanning administration.
-*   **git leaks prevention**: A core foundational element of this week's studies, representing a primary parameter or configuration standard required for git leaks prevention administration.
-*   **HashiCorp Vault**: A core foundational element of this week's studies, representing a primary parameter or configuration standard required for HashiCorp Vault administration.
-*   **encrypted env variables.**: A core foundational element of this week's studies, representing a primary parameter or configuration standard required for encrypted env variables. administration.
+*   **Secret scanning**: A primary configuration standard and technical parameter essential for coordinating Secret Management in Pipelines activities, enforcing security boundaries, and verifying operational statuses within the programming environment.
+*   **git leaks prevention**: A primary configuration standard and technical parameter essential for coordinating Secret Management in Pipelines activities, enforcing security boundaries, and verifying operational statuses within the programming environment.
+*   **HashiCorp Vault**: A primary configuration standard and technical parameter essential for coordinating Secret Management in Pipelines activities, enforcing security boundaries, and verifying operational statuses within the programming environment.
+*   **encrypted env variables.**: A primary configuration standard and technical parameter essential for coordinating Secret Management in Pipelines activities, enforcing security boundaries, and verifying operational statuses within the programming environment.
+
+---
+
+### 2. Certification Exam Tips
+*   **Focus Area:** Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
+*   **Scenario Trap:** Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
+*   **Study Resource:** To reinforce these concepts visually, review this targeted search query: [YouTube Exam Study Reference Link](https://www.youtube.com/results?search_query=Certified+DevSecOps+Professional+%28CDP%29+Secret+Management+in+Pipelines).
+
+---
+
+### Lab & Command Integration
+In this week's hands-on lab, you will perform the following steps to apply these concepts:
+*   **Configure github actions secrets variables**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
+*   **Run a git leak scan detecting exposed tokens**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
+*   **Verify secrets masking in logs**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
 
 
 ---
 
-## 2. Certification Exam Tips
-*   **Focus Area:** Pay close attention to how these configuration values behave by default. The exam frequently features questions on default ports, parameters, or common diagnostic outputs.
-*   **Scenario Trap:** Watch out for questions asking you to troubleshoot a failing configuration. Always verify if permissions or basic connectivity rules are violated first.
-*   **Watch this resource:** To reinforce these concepts visually, review this targeted search query: [YouTube Exam Reference Link](https://www.youtube.com/results?search_query=Certified+DevSecOps+Professional+%28CDP%29+Secret+Management+in+Pipelines).
-
----
-
-## 3. Study Checklist
-- [ ] Read the glossary terms and memorize their operational definitions.
+### 3. Study Checklist
+- [ ] Read the glossary terms and memorize their definitions.
 - [ ] Watch the curated YouTube study streams matching **Secret Management in Pipelines**.
+- [ ] Review the commands outlined in the lab instructions.
 - [ ] Proceed to the weekly hands-on lab activity.

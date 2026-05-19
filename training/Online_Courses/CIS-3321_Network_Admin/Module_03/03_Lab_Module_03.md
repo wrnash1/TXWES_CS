@@ -3,6 +3,8 @@
 
 ---
 
+**Objective:** Solidify the understanding of virtualization by reviewing hypervisor networking settings.
+**Instructions:**
 1. Open Oracle VirtualBox.
 2. Go to **File -> Host Network Manager**.
 3. Create a new Host-Only Ethernet Adapter. Note the IPv4 Address (usually 192.168.56.1).

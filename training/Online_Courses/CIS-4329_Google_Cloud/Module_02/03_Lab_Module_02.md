@@ -3,6 +3,8 @@
 
 ---
 
+**Objective:** Use the Pricing Calculator and create a multi-regional Cloud Storage bucket.
+**Instructions:**
 1. Open the Google Cloud Pricing Calculator in your browser.
 2. Estimate the monthly cost of running 4 `e2-medium` Compute Engine instances in Iowa (us-central1) 24/7. Note the price.
 3. Now, in the Google Cloud Console, navigate to **Cloud Storage -> Buckets**.

@@ -3,6 +3,8 @@
 
 ---
 
+**Objective:** Install the AD DS role and create a new forest.
+**Instructions:**
 1. Boot your Windows Server Core VM from Lab 1.
 2. In the PowerShell prompt, install the AD DS role:
    `Install-WindowsFeature -Name AD-Domain-Services -IncludeManagementTools`

@@ -3,6 +3,8 @@
 
 ---
 
+**Objective:** Navigate the FHS and manipulate files using only the command line.
+**Instructions:**
 1. Boot your Ubuntu Server VM and log in.
 2. Determine your current location: `pwd`
 3. Navigate to the system configuration directory: `cd /etc`

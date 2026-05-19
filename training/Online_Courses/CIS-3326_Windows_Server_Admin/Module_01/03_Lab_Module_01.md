@@ -3,6 +3,8 @@
 
 ---
 
+**Objective:** Deploy Windows Server 2022 Core and configure its identity.
+**Instructions:**
 1. Deploy a new VM in VirtualBox using the Windows Server 2022 Evaluation ISO.
 2. During setup, specifically select **Windows Server 2022 Standard (Server Core)** (Do NOT select Desktop Experience).
 3. Once logged in (default Administrator password), type `sconfig` and press Enter.

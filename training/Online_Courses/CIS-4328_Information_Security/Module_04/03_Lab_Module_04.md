@@ -3,6 +3,8 @@
 
 ---
 
+**Objective:** Act as a Tier 1 SOC Analyst to identify an intrusion from a provided log file.
+**Instructions:**
 1. Download the `auth_logs.csv` file provided in the Blackboard module.
 2. Open the file using Excel or a Linux text editor.
 3. Use filtering (or `grep` in Linux) to find anomalies. Look for:

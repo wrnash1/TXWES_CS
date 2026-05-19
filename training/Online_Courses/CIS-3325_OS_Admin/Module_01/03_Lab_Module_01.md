@@ -3,6 +3,8 @@
 
 ---
 
+**Objective:** Deploy two VMs using VirtualBox.
+**Instructions:**
 1. Download the Ubuntu 22.04 LTS Server ISO and the Windows Server 2022 Evaluation ISO.
 2. In VirtualBox, click **New**.
 3. Name: `Ubuntu_Server_1`, Type: `Linux`, Version: `Ubuntu (64-bit)`.

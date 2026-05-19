@@ -3,6 +3,8 @@
 
 ---
 
+**Objective:** Use `ufw` (Uncomplicated Firewall) on Ubuntu to block and allow specific network traffic.
+**Instructions:**
 1. Boot your Ubuntu Server VM from previous labs.
 2. Check the status of the firewall: `sudo ufw status` (It should be inactive).
 3. Before enabling the firewall, you must ensure you don't lock yourself out. Allow SSH (Port 22): `sudo ufw allow ssh`

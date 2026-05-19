@@ -3,6 +3,8 @@
 
 ---
 
+**Objective:** Deploy a PostgreSQL instance using Google Cloud Console and connect via Cloud Shell.
+**Instructions:**
 1. Log into your Google Cloud Student Account. Ensure your project is selected.
 2. Navigate to **SQL** in the navigation menu. Click **Create Instance**.
 3. Choose **PostgreSQL**.
