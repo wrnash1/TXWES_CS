@@ -13,40 +13,40 @@ As a student, you will learn the primary operational roles, command syntaxes, an
 ### 1. High-Yield Glossary
 Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
 
-*   **Root bridge election**: A primary configuration standard and technical parameter essential for coordinating Spanning Tree Protocol (STP & RSTP) activities, enforcing security boundaries, and verifying operational statuses within the networking environment.
-*   **port roles (Root**: A primary configuration standard and technical parameter essential for coordinating Spanning Tree Protocol (STP & RSTP) activities, enforcing security boundaries, and verifying operational statuses within the networking environment.
-*   **Designated**: A primary configuration standard and technical parameter essential for coordinating Spanning Tree Protocol (STP & RSTP) activities, enforcing security boundaries, and verifying operational statuses within the networking environment.
-*   **Blocked)**: A primary configuration standard and technical parameter essential for coordinating Spanning Tree Protocol (STP & RSTP) activities, enforcing security boundaries, and verifying operational statuses within the networking environment.
-*   **802.1D vs 802.1w (RSTP).**: A primary configuration standard and technical parameter essential for coordinating Spanning Tree Protocol (STP & RSTP) activities, enforcing security boundaries, and verifying operational statuses within the networking environment.
+*   **Root bridge election**: STP elects a single root bridge per VLAN by comparing Bridge IDs (BIDs). The BID is a combination of the 2-byte Bridge Priority (default 32768, adjustable in increments of 4096) plus a 6-byte MAC address. The switch with the lowest BID wins. Cisco supports per-VLAN spanning tree (PVST+), so a separate root bridge is elected for each VLAN.
+*   **Port roles (Root, Designated, Blocked)**: In STP, every non-root switch selects its best path to the root bridge — that port becomes the **Root Port**. On each network segment, the switch offering the lowest-cost path to the root becomes the **Designated Port** for that segment. All remaining ports enter the **Blocked (Alternate/Backup)** role to prevent Layer 2 loops while maintaining loop-free topology.
+*   **802.1D vs 802.1w (RSTP)**: IEEE 802.1D (classic STP) uses five port states — Blocking, Listening, Learning, Forwarding, and Disabled — and convergence can take 30–50 seconds. IEEE 802.1w (RSTP) reduces this to three states (Discarding, Learning, Forwarding) and converges in 1–2 seconds by introducing rapid transition mechanisms and new port roles (Alternate and Backup). Cisco's implementation of RSTP is called Rapid PVST+.
 
 ---
 
 ### 2. Certification Exam Tips
-*   **Focus Area:** Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
-*   **Scenario Trap:** Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
-*   **Study Resource:** To reinforce these concepts visually, review this targeted search query: [Jeremy's IT Lab CCNA Complete Course - Spanning Tree Protocol (STP & RSTP)](https://www.youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ).
+*   **CCNA Domain:** STP falls under **Network Access (20%)** of the CCNA 200-301 exam. Expect STP topology diagrams where you must identify port roles and predict which ports are forwarding or blocked.
+*   **Root bridge election rule:** Lowest Bridge Priority wins. If priorities are equal (e.g., all default 32768), the switch with the **lowest MAC address** wins. The exam frequently presents a tie-break scenario — remember MAC address is the tiebreaker, not hostname.
+*   **Common Trap:** PortFast should only be enabled on **access ports** connected to end devices, never on ports connecting to other switches. Enabling PortFast on a switch-to-switch link bypasses STP and can cause a bridging loop. The exam tests this boundary.
+*   **BPDU Guard:** Enable BPDU Guard on PortFast-enabled ports using `spanning-tree bpduguard enable` at the interface or `spanning-tree portfast bpduguard default` globally. If a BPDU is received, the port is placed in `err-disabled` state.
+*   **Study Resource:** Watch the STP and RSTP episodes in the Jeremy's IT Lab CCNA free playlist, which include port role diagrams and cost calculation walk-throughs: [Jeremy's IT Lab CCNA Complete Course on YouTube](https://www.youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ). Look for the "Spanning Tree Protocol" series episodes.
 
 ---
 
 ### Required Readings & Videos
 To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the section/chapter covering **Spanning Tree Protocol (STP & RSTP)** in the OER Textbook: [Cisco Skills for All Portal - CCNA Guides](https://skillsforall.com/).
-*   **Required Video:** Watch the video lecture on **Spanning Tree Protocol (STP & RSTP)** in the official course playlist: [Jeremy's IT Lab CCNA Complete Course](https://www.youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ).
+*   **Required Reading:** Read the section covering **Spanning Tree Protocol** in the Cisco Skills for All CCNA course. The activities include STP port role identification exercises with multi-switch topologies: [Cisco Skills for All Portal - CCNA Guides](https://skillsforall.com/). Navigate to "CCNA: Switching, Routing and Wireless Essentials" — the STP chapter.
+*   **Required Video:** Watch the STP and RSTP episodes in the Jeremy's IT Lab CCNA complete playlist. These videos cover BID calculation, root bridge election, port role assignment, and the differences between 802.1D and 802.1w: [Jeremy's IT Lab CCNA Complete Course](https://www.youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ).
 
 ---
 
 ### Lab & Command Integration
 In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Inspect STP status: `show spanning-tree`**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-*   **Force root bridge election: `spanning-tree vlan 1 root primary`**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-*   **Configure PortFast on edge ports**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
+*   **Inspect STP status: `show spanning-tree`**: This command displays the root bridge BID, your switch's own BID, port roles, port states, and path costs for each VLAN. Examine the output to confirm which port is the root port and which are designated or blocked.
+*   **Force root bridge election: `spanning-tree vlan 1 root primary`**: This macro sets the bridge priority to 24576 (or lower) to ensure this switch becomes the root for VLAN 1. Alternatively, manually set priority with `spanning-tree vlan 1 priority 4096`.
+*   **Configure PortFast on edge ports**: In interface configuration mode, enter `spanning-tree portfast` on any port connected to a PC or server. Immediately follow with `spanning-tree bpduguard enable` to protect against accidental switch connections.
 
 
 ---
 
 ### 3. Study Checklist
 - [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read the section/chapter covering **Spanning Tree Protocol (STP & RSTP)** in [Cisco Skills for All Portal - CCNA Guides](https://skillsforall.com/).
-- [ ] Watch the video lecture on **Spanning Tree Protocol (STP & RSTP)** in [Jeremy's IT Lab CCNA Complete Course](https://www.youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ).
+- [ ] Read the section covering **Spanning Tree Protocol** in [Cisco Skills for All Portal - CCNA Guides](https://skillsforall.com/).
+- [ ] Watch the STP and RSTP episodes in [Jeremy's IT Lab CCNA Complete Course](https://www.youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ).
 - [ ] Review the commands outlined in the lab instructions.
 - [ ] Proceed to the weekly hands-on lab activity.

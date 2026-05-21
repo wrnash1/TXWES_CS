@@ -1,51 +1,57 @@
-# Reading Guide: Module 04 - Active Reconnaissance (Nmap)
+# Reading Guide: Module 04 - Active Reconnaissance – Nmap and Enumeration
 ## Course: CIS-4333_Penetration_Testing (CompTIA PenTest+)
 
 ---
 
 ### Introduction
-Welcome to **Module 04 - Active Reconnaissance (Nmap)**! This week's study material focuses on the core foundations and configuration mechanics of **Active Reconnaissance (Nmap)** as aligned with the **CompTIA PenTest+** certification framework. Understanding these topics is essential not only for passing the certification exam but also for administering enterprise systems in real-world environments.
+Welcome to **Module 04 - Active Reconnaissance – Nmap and Enumeration**! This module transitions from passive intelligence gathering to direct interaction with target systems. Active reconnaissance involves sending packets to target hosts and analyzing the responses to map open ports, identify running services, detect operating systems, and discover potential vulnerabilities. Nmap (Network Mapper) is the industry-standard tool for this phase and is explicitly tested on the CompTIA PenTest+ PT0-002 exam within the **Information Gathering and Vulnerability Scanning** domain (**22% of exam weight**).
 
-As a student, you will learn the primary operational roles, command syntaxes, and troubleshooting parameters needed to design, configure, and maintain these services. We will explore how different protocols establish connections, how configurations manage resource allocation, and how security controls prevent access breaches. Make sure to complete the checklists and review the glossary terms in detail before beginning the lab activity.
+Active reconnaissance leaves traces in firewall logs, IDS/IPS alerts, and server logs — so understanding the trade-off between scan thoroughness and detection risk is a key exam topic.
 
 ---
 
 ### 1. High-Yield Glossary
 Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
 
-*   **SYN scans (-sS) vs Connect scans (-sT)**: A primary configuration standard and technical parameter essential for coordinating Active Reconnaissance (Nmap) activities, enforcing security boundaries, and verifying operational statuses within the security environment.
-*   **service version detection (-sV)**: A primary configuration standard and technical parameter essential for coordinating Active Reconnaissance (Nmap) activities, enforcing security boundaries, and verifying operational statuses within the security environment.
-*   **OS detection (-O)**: A primary configuration standard and technical parameter essential for coordinating Active Reconnaissance (Nmap) activities, enforcing security boundaries, and verifying operational statuses within the security environment.
-*   **Nmap scripting engine (-sC).**: A primary configuration standard and technical parameter essential for coordinating Active Reconnaissance (Nmap) activities, enforcing security boundaries, and verifying operational statuses within the security environment.
+*   **SYN Scan (`-sS`) vs. Connect Scan (`-sT`)**: A SYN scan (also called a "stealth" or "half-open" scan) sends a TCP SYN packet and, upon receiving a SYN-ACK, responds with RST rather than completing the handshake — leaving no established connection and minimal log entries on the target. A Connect scan (`-sT`) completes the full TCP three-way handshake using the OS's connect() system call, which is more detectable but does not require root/admin privileges. PT0-002 expects you to know that `-sS` requires elevated privileges and is stealthier; `-sT` does not require elevated privileges but leaves full connection logs.
+
+*   **Service Version Detection (`-sV`)**: An Nmap flag that probes open ports with protocol-specific banners and responses to identify the exact software and version running on each port (e.g., Apache 2.4.51, OpenSSH 8.2). Version information is critical for matching services to known CVEs during vulnerability analysis. The `--version-intensity` flag (0–9) controls the depth of probing.
+
+*   **OS Detection (`-O`)**: An Nmap technique that analyzes subtle differences in TCP/IP stack behavior — such as TTL values, window sizes, and TCP option ordering — to fingerprint the target's operating system. Accurate OS detection helps prioritize exploitation paths. Requires at least one open and one closed port to function, and requires root/admin privileges.
+
+*   **Nmap Scripting Engine (`-sC` / `--script`)**: The NSE (Nmap Scripting Engine) extends Nmap with Lua-based scripts that perform automated service enumeration, vulnerability detection, and exploitation checks. `-sC` runs the default script set. Common script categories tested on PT0-002 include: `vuln` (vulnerability checks), `auth` (authentication bypass tests), `brute` (credential brute-forcing), `discovery` (service enumeration), and `exploit` (active exploitation). Example: `nmap --script smb-vuln-ms17-010` tests for EternalBlue.
 
 ---
 
 ### 2. Certification Exam Tips
-*   **Focus Area:** Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
-*   **Scenario Trap:** Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
-*   **Study Resource:** To reinforce these concepts visually, review this targeted search query: [CompTIA PenTest+ Complete Course by freeCodeCamp - Active Reconnaissance (Nmap)](https://www.youtube.com/watch?v=3Kq1MIfC-4U).
+*   **Domain Weight:** Information Gathering and Vulnerability Scanning is **22% of PT0-002**. Expect multiple Nmap questions testing flag meanings and scan type trade-offs.
+*   **Key Nmap Flags to Know:** `-sS` (SYN/stealth), `-sT` (connect), `-sU` (UDP), `-sV` (version), `-O` (OS detect), `-A` (aggressive: OS+version+scripts+traceroute), `-p` (port range), `-Pn` (skip host discovery), `-sn` (ping sweep only), `-oN`/`-oX` (output formats), `-T0` through `-T5` (timing templates).
+*   **Exam Trap — UDP Scanning:** UDP scans (`-sU`) are slow and often unreliable. PT0-002 may test that UDP scans work differently from TCP — ports appear "open|filtered" unless a response is received. Common UDP services: DNS (53), SNMP (161/162), DHCP (67/68), NTP (123).
+*   **Exam Trap — `-A` Flag:** The `-A` flag enables OS detection, version detection, script scanning, and traceroute simultaneously. It is aggressive and noisy — PT0-002 may ask which flag produces the most comprehensive but detectable scan.
+*   **Timing Templates:** `-T0` (paranoid, very slow) through `-T5` (insane, fast/noisy). For stealth, use `-T1` or `-T2`. Default is `-T3`. PT0-002 tests whether students know that faster templates increase detection risk.
+*   **Study Resource:** [TryHackMe Pentest Learning Path](https://tryhackme.com/path/outline/pentesting) — The "Nmap" room series on TryHackMe provides hands-on practice with every major Nmap flag against live vulnerable machines in a legal lab environment. No local VM required.
+*   **Video Lecture:** [CompTIA PenTest+ Complete Course by freeCodeCamp](https://www.youtube.com/watch?v=3Kq1MIfC-4U) — Navigate to the Active Reconnaissance and Nmap section for PT0-002 domain 2 content covering all tested scan types and flags.
 
 ---
 
 ### Required Readings & Videos
 To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the section/chapter covering **Active Reconnaissance (Nmap)** in the OER Textbook: [TryHackMe Pentest Learning Path Tutorials](https://tryhackme.com/).
-*   **Required Video:** Watch the video lecture on **Active Reconnaissance (Nmap)** in the official course playlist: [CompTIA PenTest+ Complete Course by freeCodeCamp](https://www.youtube.com/watch?v=3Kq1MIfC-4U).
+*   **Required Reading:** Complete the Nmap rooms in the [TryHackMe Pentest Learning Path](https://tryhackme.com/path/outline/pentesting). These guided rooms cover every major scan type, NSE scripts, and output formats with hands-on exercises against vulnerable targets in a safe lab environment.
+*   **Required Video:** Watch the Active Reconnaissance and Nmap segment of the [CompTIA PenTest+ Complete Course by freeCodeCamp](https://www.youtube.com/watch?v=3Kq1MIfC-4U). Use chapter markers to navigate to domain 2 content on active scanning techniques.
 
 ---
 
 ### Lab & Command Integration
 In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Perform a SYN scan: `nmap -sS target_ip`**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-*   **Identify open services and versions: `nmap -sV target_ip`**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-*   **Use basic vulnerability scan script: `nmap --script vuln target_ip`**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-
+*   **Perform a SYN scan: `nmap -sS target_ip`**: You will execute a stealth SYN scan against a lab target, interpret the open/closed/filtered port states in the output, and explain why this scan type is preferred for stealth over a Connect scan.
+*   **Identify open services and versions: `nmap -sV target_ip`**: You will use service version detection against the same target, identify the software and version strings returned, and explain how this information would be used to search for matching CVEs.
+*   **Use the vulnerability scan script: `nmap --script vuln target_ip`**: You will run the NSE vulnerability script set against the target, interpret the results, and document any detected vulnerabilities by CVE number and severity.
 
 ---
 
 ### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read the section/chapter covering **Active Reconnaissance (Nmap)** in [TryHackMe Pentest Learning Path Tutorials](https://tryhackme.com/).
-- [ ] Watch the video lecture on **Active Reconnaissance (Nmap)** in [CompTIA PenTest+ Complete Course by freeCodeCamp](https://www.youtube.com/watch?v=3Kq1MIfC-4U).
-- [ ] Review the commands outlined in the lab instructions.
+- [ ] Read the glossary terms and be able to explain each in your own words.
+- [ ] Complete the Nmap rooms in [TryHackMe Pentest Learning Path](https://tryhackme.com/path/outline/pentesting).
+- [ ] Watch the Active Reconnaissance section of the [CompTIA PenTest+ Complete Course by freeCodeCamp](https://www.youtube.com/watch?v=3Kq1MIfC-4U).
+- [ ] Review the lab instructions and understand the purpose of each step before starting.
 - [ ] Proceed to the weekly hands-on lab activity.

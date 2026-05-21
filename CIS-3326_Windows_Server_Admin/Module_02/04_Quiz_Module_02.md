@@ -1,82 +1,88 @@
-# Quiz: Module 02 - AD DS
+# Quiz: Module 02 - Active Directory Domain Services (AD DS) Overview
+
 ## Course: CIS-3326_Windows_Server_Admin (3326_Windows_Server_Admin - Microsoft Windows Server Administration (Active Directory))
 
 ---
 
-**Question 1**
+### Question 1
+
 In an Active Directory environment, what is the purpose of an Organizational Unit (OU)?
-A) To create a boundary for password policies across the entire forest.
+
+A) To create a security and replication boundary between groups of domain controllers.
 B) To group users, computers, and other objects to delegate administrative control and apply Group Policy.
 C) To act as a standalone server that authenticates users when the primary Domain Controller fails.
 D) To synchronize time across all computers in the domain.
-*   **Correct Answer:** B) To group users, computers, and other objects to delegate administrative control and apply Group Policy.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Password policies are traditionally applied at the Domain level, not the OU level (though Fine-Grained Password Policies allow targeting specific groups, OUs are primarily for management delegation and GPO linking).
-    *   *Why C is incorrect:* A standalone server that authenticates users is a Backup Domain Controller (or simply another DC in modern AD), not an OU. An OU is a logical container, not a physical server.
-    *   *Why D is incorrect:* Time synchronization in a domain is handled by the PDC Emulator FSMO role, not an OU.
+
+* **Correct Answer:** B) To group users, computers, and other objects to delegate administrative control and apply Group Policy.
+* **Distractor Analysis:**
+  * *Why A is incorrect:* Security and replication boundaries are created by domains and forests, not OUs. An OU is a logical container within a single domain and does not create a trust or replication boundary.
+  * *Why C is incorrect:* A server that authenticates users when another DC fails is simply an additional Domain Controller. An OU is a directory container object, not a server or role.
+  * *Why D is incorrect:* Time synchronization in a domain is handled by the PDC Emulator FSMO role, not by an OU.
 
 ---
 
----
+### Question 2
 
-**Question 2**
-After installing the Active Directory Domain Services (AD DS) role via Server Manager or PowerShell, what critical step must be performed before the server can begin authenticating users?
-A) The server must be promoted to a Domain Controller.
-B) The server must be joined to a workgroup.
-C) The schema must be manually modified using ADSI Edit.
-D) The Global Catalog service must be disabled.
-*   **Correct Answer:** A) The server must be promoted to a Domain Controller.
-*   **Distractor Analysis:**
-    *   *Why B is incorrect:* Domain Controllers cannot belong to a workgroup; they define the domain.
-    *   *Why C is incorrect:* The schema is automatically modified/prepared during the promotion process; manual modification is rarely required for initial setup.
-    *   *Why D is incorrect:* The first Domain Controller in a new forest is automatically configured as a Global Catalog server, and disabling it would break functionality.
+After installing the Active Directory Domain Services (AD DS) role via Server Manager or PowerShell, what critical step must be performed before the server can begin authenticating domain users?
 
----
+A) The server must be promoted to a Domain Controller by running the AD DS Configuration Wizard or `Install-ADDSForest`.
+B) The server must be removed from its current workgroup and joined to a domain as a member server.
+C) The AD DS schema must be manually extended using ADSI Edit before any users can log in.
+D) The Global Catalog service must be disabled on the new server to avoid replication conflicts.
 
----
-
-**Question 3**
-A systems administrator or developer needs to **display total disk space capacity, usage, and available space in a human-readable format**. Which of the following commands is the most appropriate to execute?
-B) systemctl restart service
-A) df -h
-C) chmod 600 config.conf
-D) ps aux
-*   **Correct Answer:** A) df -h
-*   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `df -h` command is directly designed to display total disk space capacity, usage, and available space in a human-readable format.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-
+* **Correct Answer:** A) The server must be promoted to a Domain Controller by running the AD DS Configuration Wizard or `Install-ADDSForest`.
+* **Distractor Analysis:**
+  * *Why B is incorrect:* A Domain Controller cannot belong to a workgroup or be a domain member — it defines and hosts the domain itself. Joining it as a member server is the opposite of promotion.
+  * *Why C is incorrect:* The AD DS schema is automatically prepared during the promotion process using `adprep`; manual schema extension with ADSI Edit is not required and would be dangerous without proper planning.
+  * *Why D is incorrect:* The first Domain Controller in a new forest is automatically designated as a Global Catalog server, and disabling the GC would break forest-wide searches and universal group authentication.
 
 ---
 
-**Question 4**
-While working on **AD DS** in a production environment, you encounter a system alert indicating a **Disk Space Full** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-B) Prepend the command with 'sudo' to run it with superuser administrative privileges, or adjust the file permissions.
-D) Reboot the physical machine and wait for services to reload.
-C) Identify and terminate the process already utilizing the target port, or modify the service configuration to use an open port.
-A) Run log rotations, clean temporary files, or expand the logical volume capacity.
-*   **Correct Answer:** A) Run log rotations, clean temporary files, or expand the logical volume capacity.
-*   **Distractor Analysis:**
-    * *Why B is incorrect:* This action does not resolve the root cause of Disk Space Full.
-    * *Why D is incorrect:* This action does not resolve the root cause of Disk Space Full.
-    * *Why C is incorrect:* This action does not resolve the root cause of Disk Space Full.
-    * *Why A is correct:* Because The storage volume has run out of space, preventing files from being written and causing system services to fail. The appropriate fix is to Run log rotations, clean temporary files, or expand the logical volume capacity..
+### Question 3
 
+Which of the following best describes the role of the PDC Emulator FSMO role in an Active Directory domain?
+
+A) It stores a partial read-only copy of all objects in the forest for cross-domain searches.
+B) It allocates pools of relative identifiers (RIDs) to other Domain Controllers so they can create new security principals.
+C) It acts as the authoritative time source for the domain, processes account lockouts, and handles password change replication with priority.
+D) It controls all changes to the Active Directory schema, such as adding new object classes or attributes.
+
+* **Correct Answer:** C) It acts as the authoritative time source for the domain, processes account lockouts, and handles password change replication with priority.
+* **Distractor Analysis:**
+  * *Why A is incorrect:* That description matches the Global Catalog server, which holds a partial read-only replica of all forest objects — not the PDC Emulator.
+  * *Why B is incorrect:* Allocating RID pools to other DCs is the function of the RID Master FSMO role, not the PDC Emulator.
+  * *Why D is incorrect:* Controlling schema changes is the function of the Schema Master FSMO role. Only the Schema Master can authorize modifications to the AD schema.
 
 ---
 
-**Question 5**
-When designing a system for **AD DS**, you must mitigate the risk of **Attackers exploiting vulnerabilities in forgotten background services or using abandoned accounts to gain persistent access.**. Which of the following security configurations or controls represents the best practice to implement?
-D) Enable full disk encryption on all client endpoints.
-A) Disable unused system accounts and run a port scan to disable unnecessary active background services.
-B) Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC.
-C) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Disable unused system accounts and run a port scan to disable unnecessary active background services.
-*   **Distractor Analysis:**
-    * *Why D is incorrect:* This does not address the security vulnerability of Stale Accounts & Services.
-    * *Why A is correct:* Implementing Disable unused system accounts and run a port scan to disable unnecessary active background services. mitigates the risk of Attackers exploiting vulnerabilities in forgotten background services or using abandoned accounts to gain persistent access..
-    * *Why B is incorrect:* This does not address the security vulnerability of Stale Accounts & Services.
-    * *Why C is incorrect:* This does not address the security vulnerability of Stale Accounts & Services.
+### Question 4
 
+A Windows domain has the following structure: a forest root domain named `corp.local` with a child domain named `eu.corp.local`. Users in `eu.corp.local` need to access a file share hosted in `corp.local`. Which AD DS feature automatically enables this access without any manual configuration?
+
+A) External trust, which must be manually created between the two domains before cross-domain resource access is possible.
+B) The two-way transitive trust that is automatically created between parent and child domains during domain promotion.
+C) A shortcut trust, which the administrator must create to improve authentication speed between sibling domains.
+D) A realm trust, which connects Active Directory domains to non-Windows Kerberos realms for cross-domain access.
+
+* **Correct Answer:** B) The two-way transitive trust that is automatically created between parent and child domains during domain promotion.
+* **Distractor Analysis:**
+  * *Why A is incorrect:* External trusts are manually created one-way, non-transitive trusts used to connect separate forests or legacy NT domains — not child domains within the same forest, which already have automatic transitive trusts.
+  * *Why C is incorrect:* Shortcut trusts are optional manual optimizations that improve authentication speed between domains deep in a forest hierarchy, but they are not required for basic cross-domain access within the same forest.
+  * *Why D is incorrect:* Realm trusts are used to federate Active Directory with non-Windows Kerberos V5 realms (such as MIT Kerberos on Linux), not for access between Windows domains in the same forest.
+
+---
+
+### Question 5
+
+An administrator runs `netdom query fsmo` on a Domain Controller and finds that the Infrastructure Master role is held by a Domain Controller that is also a Global Catalog server. In a single-domain forest, why is this configuration acceptable?
+
+A) It is never acceptable; the Infrastructure Master must always be on a DC that is not a Global Catalog server.
+B) In a single-domain forest, every DC is effectively a Global Catalog server, so the Infrastructure Master placement restriction does not apply.
+C) The Infrastructure Master role is obsolete in Windows Server 2016 and later and can be ignored regardless of placement.
+D) It is only acceptable if the DC is running Windows Server Datacenter edition, which lifts FSMO placement restrictions.
+
+* **Correct Answer:** B) In a single-domain forest, every DC is effectively a Global Catalog server, so the Infrastructure Master placement restriction does not apply.
+* **Distractor Analysis:**
+  * *Why A is incorrect:* The restriction that the Infrastructure Master should not be on a GC server applies only in multi-domain forests. In a single-domain forest, all objects are local and the GC contains all domain objects anyway, making the restriction irrelevant.
+  * *Why C is incorrect:* The Infrastructure Master FSMO role is still active and relevant in Windows Server 2016 and later for multi-domain forests; it is not obsolete.
+  * *Why D is incorrect:* FSMO placement guidelines are based on forest topology, not server edition. Datacenter vs. Standard edition has no bearing on which FSMO roles can be hosted on a given DC.

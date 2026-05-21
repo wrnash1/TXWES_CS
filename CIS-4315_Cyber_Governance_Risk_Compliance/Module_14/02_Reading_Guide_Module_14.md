@@ -1,51 +1,52 @@
-# Reading Guide: Module 14 - Security Awareness Programs
+# Reading Guide: Module 14 - Audit and Assurance
 ## Course: CIS-4315_Cyber_Governance_Risk_Compliance (ISACA Certified Information Security Manager (CISM))
 
 ---
 
 ### Introduction
-Welcome to **Module 14 - Security Awareness Programs**! This week's study material focuses on the core foundations and configuration mechanics of **Security Awareness Programs** as aligned with the **ISACA Certified Information Security Manager (CISM)** certification framework. Understanding these topics is essential not only for passing the certification exam but also for administering enterprise systems in real-world environments.
+Welcome to **Module 14 - Audit and Assurance**! This module covers security awareness and training programs — a critical human-centered control that reduces the risk of social engineering, phishing, and insider threats. Security awareness is addressed across all four CISM domains as a foundational element of an effective security program.
 
-As a student, you will learn the primary operational roles, command syntaxes, and troubleshooting parameters needed to design, configure, and maintain these services. We will explore how different protocols establish connections, how configurations manage resource allocation, and how security controls prevent access breaches. Make sure to complete the checklists and review the glossary terms in detail before beginning the lab activity.
+The CISM exam approaches security awareness from a program management perspective: designing effective programs, measuring their impact, and justifying their value to leadership. The goal is behavioral change, not merely delivering training content.
 
 ---
 
 ### 1. High-Yield Glossary
 Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
 
-*   **Social engineering mitigation**: A primary configuration standard and technical parameter essential for coordinating Security Awareness Programs activities, enforcing security boundaries, and verifying operational statuses within the management_services environment.
-*   **phishing simulations**: A primary configuration standard and technical parameter essential for coordinating Security Awareness Programs activities, enforcing security boundaries, and verifying operational statuses within the management_services environment.
-*   **user training metrics**: A primary configuration standard and technical parameter essential for coordinating Security Awareness Programs activities, enforcing security boundaries, and verifying operational statuses within the management_services environment.
-*   **security culture.**: A primary configuration standard and technical parameter essential for coordinating Security Awareness Programs activities, enforcing security boundaries, and verifying operational statuses within the management_services environment.
+*   **Social engineering mitigation**: The combination of security awareness training, simulated attack exercises, and procedural controls designed to reduce the likelihood that employees will be manipulated by social engineering tactics (phishing, pretexting, vishing, baiting). Effective mitigation addresses the human factor in the security model — the most frequently exploited attack vector.
+*   **Phishing simulations**: Controlled, authorized exercises in which an organization's security team (or a contracted service) sends simulated phishing emails to employees to test susceptibility, measure click rates, and identify individuals who need additional training. Simulation results provide data-driven insights for targeting security awareness efforts.
+*   **User training metrics**: Quantitative and qualitative measures used to evaluate the effectiveness of a security awareness program, including phishing simulation click rates (before and after training), training completion rates, policy acknowledgment rates, and security incident rates attributable to human error. These metrics enable the security manager to demonstrate program ROI to leadership.
+*   **Security culture**: The shared values, attitudes, beliefs, and behaviors within an organization that influence how employees think about and act on security responsibilities. A strong security culture integrates security awareness into daily work habits, making security everyone's responsibility rather than solely an IT function.
 
 ---
 
 ### 2. Certification Exam Tips
-*   **Focus Area:** Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
-*   **Scenario Trap:** Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
-*   **Study Resource:** To reinforce these concepts visually, review this targeted search query: [ISACA CISM / Cyber GRC Course Playlist - Security Awareness Programs](https://www.youtube.com/playlist?list=PLbnu8t2G_vG0V7kC0V3n_nU9Y3S-4K178).
+*   **Training Alone Is Not Enough:** The CISM exam tests the principle that one-time annual training is insufficient. Effective awareness programs use ongoing reinforcement — simulations, newsletters, targeted micro-learning — to sustain behavioral change.
+*   **Role-Based Training:** The exam emphasizes that different roles require different training content. Executives need governance and risk awareness; developers need secure coding; help desk staff need social engineering recognition. Generic training does not address role-specific risks.
+*   **Measuring Effectiveness:** CISM candidates should know how to evaluate awareness program effectiveness. Decreasing phishing click rates over successive simulations, reduced security incident rates, and increased security report rates are meaningful metrics.
+*   **Study Resource:** [NIST SP 800-50: Building an Information Technology Security Awareness and Training Program](https://csrc.nist.gov/publications/detail/sp/800-50/final) — This free NIST publication provides guidance on designing, implementing, and measuring security awareness and training programs.
 
 ---
 
 ### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the section/chapter covering **Security Awareness Programs** in the OER Textbook: [NIST Risk Management Framework (SP 800-37) & Security Controls (SP 800-53)](https://csrc.nist.gov/publications/).
-*   **Required Video:** Watch the video lecture on **Security Awareness Programs** in the official course playlist: [ISACA CISM / Cyber GRC Course Playlist](https://www.youtube.com/playlist?list=PLbnu8t2G_vG0V7kC0V3n_nU9Y3S-4K178).
+*   **Required Reading:** [NIST SP 800-50: Building an IT Security Awareness and Training Program](https://csrc.nist.gov/publications/detail/sp/800-50/final) — This free publication covers program design, content development, delivery methods, and program evaluation for security awareness initiatives. Focus on Section 3 (Awareness) and Section 4 (Training).
+*   **Required Video:** Watch the video lecture on **Audit and Assurance** in the official course playlist: [ISACA CISM / Cyber GRC Course Playlist](https://www.youtube.com/playlist?list=PLbnu8t2G_vG0V7kC0V3n_nU9Y3S-4K178).
 
 ---
 
 ### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Draft a phishing simulation training slide outline**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-*   **Review metric statistics for user link clicks during tests**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-*   **Outline training agendas**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
+In this week's hands-on lab, you will apply security awareness program concepts through the following activities:
+*   **Design a phishing simulation training campaign**: Outline a three-phase phishing simulation program including baseline simulation (no prior training), targeted training for click responders, and follow-up simulation to measure improvement. Define success metrics for each phase.
+*   **Analyze training effectiveness metrics**: Given a dataset showing phishing simulation click rates across four quarterly campaigns, calculate the trend, identify departments with persistent high-click rates, and recommend targeted interventions.
+*   **Draft a role-based training curriculum outline**: Create a one-page training plan for three distinct roles (executive, software developer, and customer service representative), specifying different training topics for each role and justifying why each topic is relevant to that role's security risk profile.
 
 
 ---
 
 ### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read the section/chapter covering **Security Awareness Programs** in [NIST Risk Management Framework (SP 800-37) & Security Controls (SP 800-53)](https://csrc.nist.gov/publications/).
-- [ ] Watch the video lecture on **Security Awareness Programs** in [ISACA CISM / Cyber GRC Course Playlist](https://www.youtube.com/playlist?list=PLbnu8t2G_vG0V7kC0V3n_nU9Y3S-4K178).
-- [ ] Review the commands outlined in the lab instructions.
-- [ ] Proceed to the weekly hands-on lab activity.
+- [ ] Understand the limitations of one-time annual security training.
+- [ ] Know what metrics demonstrate security awareness program effectiveness.
+- [ ] Read [NIST SP 800-50](https://csrc.nist.gov/publications/detail/sp/800-50/final), Sections 3 and 4.
+- [ ] Watch the video lecture on **Audit and Assurance** in [ISACA CISM / Cyber GRC Course Playlist](https://www.youtube.com/playlist?list=PLbnu8t2G_vG0V7kC0V3n_nU9Y3S-4K178).
+- [ ] Complete the lab activity on phishing simulation design and role-based training curriculum.
+- [ ] Proceed to the Module 14 quiz.

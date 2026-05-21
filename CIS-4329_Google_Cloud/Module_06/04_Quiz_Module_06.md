@@ -1,86 +1,82 @@
-# Quiz: Module 06 - IAM
-## Course: CIS-4329_Google_Cloud (4329_Google_Cloud - Google Cloud Associate Cloud Engineer)
+# Quiz: Module 06 – Cloud Load Balancing and Cloud CDN
+## Course: CIS-4329 – Google Cloud Administration (Google Cloud Associate Cloud Engineer)
 
 ---
 
 **Question 1**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Custom Roles**?
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within cloud operations.
-C) An efficient mapping technique for complete binary trees where parent-child indices can be computed using simple arithmetic (e.g., parent is (i-1)/2).
-D) The core security model consisting of Confidentiality (preventing unauthorized access), Integrity (preventing unauthorized modification), and Availability (ensuring systems are accessible when needed).
-B) The descendant node connected to the right branch of a parent node in a binary tree structure.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within cloud operations.
+Your company runs a web application that serves users across North America, Europe, and Asia. You need a single global IP address that routes users to the nearest healthy backend automatically, supports HTTPS termination, and can route `/api` requests to one set of VMs and `/static` requests to another. Which load balancer type is correct?
+
+A) Regional TCP/UDP Network Load Balancer
+B) Internal HTTP(S) Load Balancer
+C) Global External HTTP(S) Load Balancer
+D) Regional External HTTP(S) Load Balancer
+
+*   **Correct Answer:** C) Global External HTTP(S) Load Balancer
 *   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **Custom Roles**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Custom Roles**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Custom Roles**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Custom Roles**.
-
-
----
+    *   *Why A is incorrect:* A TCP/UDP Network Load Balancer operates at Layer 4 and cannot perform URL-based routing, HTTPS termination, or global anycast distribution.
+    *   *Why B is incorrect:* The Internal HTTP(S) Load Balancer is for private traffic between services inside a VPC — it does not have a public IP and cannot serve external users.
+    *   *Why D is incorrect:* A Regional External HTTP(S) Load Balancer serves one region only and cannot provide a single global IP that routes users across continents to the nearest backend.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Primitive vs. Predefined Roles**?
-B) Nodes that contain two pointers: one pointing forward to the next node and one pointing backward to the previous node, allowing bidirectional traversal.
-D) The defining rule of a BST: for any given node, all keys in its left subtree must be less than or equal to its key, and all keys in its right subtree must be greater.
-C) The process of adjusting node positions in a binary heap to restore the heap property (min-heap or max-heap) after an insertion or deletion.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within cloud operations.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within cloud operations.
+You have configured a Global HTTP(S) Load Balancer with a Managed Instance Group backend. Users report intermittent 502 errors. You check the load balancer logs and see that the health check is failing. Which firewall rule is most likely missing?
+
+A) An egress rule allowing the VMs to send health check responses to Google's servers.
+B) An ingress rule allowing TCP traffic from Google's health check IP ranges (`35.191.0.0/16` and `130.211.0.0/22`) to reach the backend VMs on the health check port.
+C) An ingress rule allowing all internet traffic to port 80 on the backend VMs.
+D) A rule allowing the load balancer's frontend IP to communicate with the backend VMs directly.
+
+*   **Correct Answer:** B) An ingress rule allowing TCP traffic from Google's health check IP ranges (`35.191.0.0/16` and `130.211.0.0/22`) to reach the backend VMs on the health check port.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Primitive vs. Predefined Roles**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Primitive vs. Predefined Roles**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Primitive vs. Predefined Roles**.
-    * *Why A is correct:* This describes the exact role and function of **Primitive vs. Predefined Roles**.
-
-
----
+    *   *Why A is incorrect:* GCP firewall rules are stateful — if the inbound health check probe is allowed, the outbound response is automatically permitted without a separate egress rule.
+    *   *Why C is incorrect:* Opening port 80 to all internet traffic is overly broad and not required for health checks; only the specific Google health check probe ranges need access to the health check port.
+    *   *Why D is incorrect:* Global HTTP(S) Load Balancer is a distributed proxy — there is no single load balancer IP that connects to backends. Health check traffic originates from Google's dedicated health check IP ranges, not from a frontend IP.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **synchronize local files directly to a cloud object storage bucket**. Which of the following commands is the most appropriate to execute?
-D) terraform apply
-A) aws s3 sync local_dir s3://my-bucket
-C) kubectl get pods -n production
-B) gcloud compute instances list
-*   **Correct Answer:** A) aws s3 sync local_dir s3://my-bucket
-*   **Distractor Analysis:**
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `aws s3 sync local_dir s3://my-bucket` command is directly designed to synchronize local files directly to a cloud object storage bucket.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
+Your application serves a large number of static images and JavaScript files that rarely change. Users worldwide are reporting slow page load times. You already have a Global HTTP(S) Load Balancer in place. Which feature can you enable to reduce latency and origin server load with minimal configuration changes?
 
+A) Enable session affinity on the backend service to pin users to the same VM.
+B) Add a second backend MIG in each region to handle local traffic.
+C) Enable Cloud CDN on the backend service to cache static content at Google's edge nodes.
+D) Switch to a Network Load Balancer, which has lower latency than the HTTP(S) Load Balancer.
+
+*   **Correct Answer:** C) Enable Cloud CDN on the backend service to cache static content at Google's edge nodes.
+*   **Distractor Analysis:**
+    *   *Why A is incorrect:* Session affinity routes the same user to the same backend VM to preserve state — it does not cache content at the edge or reduce global latency for static assets.
+    *   *Why B is incorrect:* Adding more MIGs increases backend capacity and reduces regional load, but users still retrieve content from your origin servers; it does not cache content at the network edge close to users.
+    *   *Why D is incorrect:* Network Load Balancers operate at Layer 4 and have no concept of HTTP caching; Cloud CDN only works with the Global HTTP(S) Load Balancer, making a switch away counterproductive.
 
 ---
 
 **Question 4**
-While working on **IAM** in a production environment, you encounter a system alert indicating a **Cloud Billing Spike** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-A) Set up billing alerts, delete unused volumes, and configure auto-scaling scale-down policies.
-D) Reboot the physical machine and wait for services to reload.
-B) Review the user's IAM policies and attach the specific policy granting permissions for the resource action.
-C) Check the VPC route table for an Internet Gateway path and verify that the security group allows incoming traffic.
-*   **Correct Answer:** A) Set up billing alerts, delete unused volumes, and configure auto-scaling scale-down policies.
-*   **Distractor Analysis:**
-    * *Why A is correct:* Because Idle or over-provisioned virtual machine instances and orphan storage volumes are running continuously. The appropriate fix is to Set up billing alerts, delete unused volumes, and configure auto-scaling scale-down policies..
-    * *Why D is incorrect:* This action does not resolve the root cause of Cloud Billing Spike.
-    * *Why B is incorrect:* This action does not resolve the root cause of Cloud Billing Spike.
-    * *Why C is incorrect:* This action does not resolve the root cause of Cloud Billing Spike.
+You need to load balance internal traffic between a set of microservices running on Compute Engine VMs within the same VPC. The microservices communicate using HTTP/2 (gRPC). No public IP addresses should be involved. Which load balancer type is correct?
 
+A) Global External HTTP(S) Load Balancer with SSL certificate
+B) Regional External TCP/UDP Network Load Balancer
+C) Internal HTTP(S) Load Balancer
+D) Cloud Armor policy attached to an internal backend service
+
+*   **Correct Answer:** C) Internal HTTP(S) Load Balancer
+*   **Distractor Analysis:**
+    *   *Why A is incorrect:* The Global External HTTP(S) Load Balancer has a public IP and is designed for external internet traffic — it is not appropriate for internal VPC-to-VPC microservice traffic.
+    *   *Why B is incorrect:* The Regional External TCP/UDP Network Load Balancer also has a public-facing frontend and is designed for external traffic; it does not provide an internal-only load balancing endpoint.
+    *   *Why D is incorrect:* Cloud Armor is a web application firewall layer that attaches to load balancers for DDoS protection and rule-based filtering — it is not a load balancer itself and cannot distribute traffic.
 
 ---
 
 **Question 5**
-When designing a system for **IAM**, you must mitigate the risk of **Developers committing plain-text cloud access keys to public source code repositories, allowing full account takeover.**. Which of the following security configurations or controls represents the best practice to implement?
-B) Enable Block Public Access configurations and enforce access control via IAM or signed URLs.
-D) Enable full disk encryption on all client endpoints.
-C) Enable full disk encryption on all client endpoints.
-A) Enforce temporary credentials (STS), rotate keys regularly, and never hardcode API keys in repositories.
-*   **Correct Answer:** A) Enforce temporary credentials (STS), rotate keys regularly, and never hardcode API keys in repositories.
-*   **Distractor Analysis:**
-    * *Why B is incorrect:* This does not address the security vulnerability of Compromised Access Keys.
-    * *Why D is incorrect:* This does not address the security vulnerability of Compromised Access Keys.
-    * *Why C is incorrect:* This does not address the security vulnerability of Compromised Access Keys.
-    * *Why A is correct:* Implementing Enforce temporary credentials (STS), rotate keys regularly, and never hardcode API keys in repositories. mitigates the risk of Developers committing plain-text cloud access keys to public source code repositories, allowing full account takeover..
+A backend VM in your HTTP(S) Load Balancer's Managed Instance Group is receiving traffic even though its application has crashed and it is returning HTTP 500 errors. What configuration change will cause the load balancer to stop sending traffic to this unhealthy instance?
 
+A) Add a Cloud Armor security policy to block 5xx responses from reaching users.
+B) Configure a URL map rule to redirect `/error` paths away from the broken instance.
+C) Configure an HTTP health check on the backend service that checks for HTTP 200 responses, so the failing VM is automatically marked unhealthy and removed from rotation.
+D) Enable Cloud CDN caching so that previously cached 200 responses are served instead of the live 500 errors.
+
+*   **Correct Answer:** C) Configure an HTTP health check on the backend service that checks for HTTP 200 responses, so the failing VM is automatically marked unhealthy and removed from rotation.
+*   **Distractor Analysis:**
+    *   *Why A is incorrect:* Cloud Armor security policies filter incoming requests based on IP addresses, geo-location, and request attributes — they do not inspect backend response codes or control which backend VMs receive traffic.
+    *   *Why B is incorrect:* URL map rules route traffic based on request path patterns — they do not monitor backend health or dynamically reroute traffic based on runtime errors from a specific VM.
+    *   *Why D is incorrect:* Cloud CDN caches successful responses but does not serve stale cached content instead of live backend errors when the backend is still reachable (just returning 5xx); health checks are the correct mechanism for removing failed instances from rotation.

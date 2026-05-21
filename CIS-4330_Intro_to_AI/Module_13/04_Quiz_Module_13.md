@@ -1,79 +1,75 @@
-# Quiz: Module 13 - Cloud AI Services
+# Quiz: Module 13 - Data Preparation and Feature Engineering
 ## Course: CIS-4330_Intro_to_AI (AI-900 (Microsoft Azure AI Fundamentals))
 
 ---
 
 **Question 1**
-What is the benefit of using Cloud Cognitive Services over building models from scratch?
-*   A) Pre-trained models save development time and compute resources
-*   B) They are always free
-*   C) They do not require an internet connection
-*   D) They support any custom hardware
-*   **Correct Answer:** A) Cloud cognitive APIs provide pre-trained, vendor-hosted models that can be integrated via simple HTTP requests, bypassing complex local model training.
+What is the primary benefit of using Azure Cognitive Services (pre-built models) over building a custom model from scratch?
+*   A) Pre-trained models save development time and compute resources by providing ready-to-use AI capabilities via REST API, with no labeled training data or model training required.
+*   B) Pre-trained Azure Cognitive Services models are always free and have no usage limits for production applications.
+*   C) Pre-trained models run entirely on the developer's local hardware without requiring an internet connection.
+*   D) Pre-trained models always outperform custom-trained models regardless of the domain or task.
+*   **Correct Answer:** A) Pre-trained models save development time and compute resources by providing ready-to-use AI capabilities via REST API, with no labeled training data or model training required.
 *   **Distractor Analysis:**
-    *   *Why correct:* Cloud cognitive APIs provide pre-trained, vendor-hosted models that can be integrated via simple HTTP requests, bypassing complex local model training.
-    *   They are billed services, require internet connections, and run on cloud hardware.
+    *   *Why correct:* Cognitive Services provide vendor-trained models accessible via authenticated HTTP requests — developers integrate AI capabilities in hours rather than weeks, without needing ML expertise or training infrastructure.
+    *   Cognitive Services are billed per API call (not free at scale). They require an internet connection to reach Azure endpoints. For highly specialized domains, a custom-trained model may outperform a general pre-trained model.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **pre-trained vs custom models**?
-C) The difference in height between the left and right subtrees of a node in an AVL tree, which must be -1, 0, or 1 to remain balanced.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within ai operations.
-B) An access control system where users are assigned to specific roles, and permissions are linked to those roles rather than individual users, simplifying permission management.
-D) The final node in a linked list, whose next pointer typically references null (or the head node in a circular list), marking the end of the chain.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within ai operations.
+In the context of machine learning data pipelines, which of the following is the most accurate definition of **feature engineering**?
+*   A) The process of using domain knowledge to transform raw data into new or modified input variables that better represent the underlying problem structure, improving a model's ability to learn accurate patterns.
+*   B) The process of splitting a labeled dataset into training and test subsets to provide an unbiased estimate of model performance on unseen data.
+*   C) A technique that reduces the number of input variables by projecting high-dimensional data onto a lower-dimensional space while retaining the most important variance.
+*   D) The process of adjusting a model's hyperparameters (such as learning rate, tree depth, or regularization strength) to optimize performance on a validation set.
+*   **Correct Answer:** A) The process of using domain knowledge to transform raw data into new or modified input variables that better represent the underlying problem structure, improving a model's ability to learn accurate patterns.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **pre-trained vs custom models**.
-    * *Why A is correct:* This describes the exact role and function of **pre-trained vs custom models**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **pre-trained vs custom models**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **pre-trained vs custom models**.
-
+    *   *Why A is correct:* Feature engineering bridges raw data and model input — examples include creating ratio features, one-hot encoding categories, extracting date components, or binning continuous values. It often delivers larger accuracy gains than algorithm selection alone.
+    *   *Why B is incorrect:* This describes the train/test split — a model evaluation technique, not feature creation.
+    *   *Why C is incorrect:* This describes dimensionality reduction (e.g., PCA) — it reduces existing features rather than creating new meaningful ones from domain knowledge.
+    *   *Why D is incorrect:* This describes hyperparameter tuning — adjusting model configuration settings, not transforming input data.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **import the pandas library to load and analyze a tabular dataset**. Which of the following commands is the most appropriate to execute?
-B) predictions = model.predict(X_test)
-A) import pandas as pd; df = pd.read_csv('data.csv')
-D) accuracy = accuracy_score(y_test, predictions)
-C) model.fit(X_train, y_train)
-*   **Correct Answer:** A) import pandas as pd; df = pd.read_csv('data.csv')
+A developer needs to **calculate the accuracy of model predictions against actual test labels**. Which command is most appropriate?
+*   A) accuracy = accuracy_score(y_test, predictions)
+*   B) model.fit(X_train, y_train)
+*   C) predictions = model.predict(X_test)
+*   D) import pandas as pd; df = pd.read_csv('data.csv')
+*   **Correct Answer:** A) accuracy = accuracy_score(y_test, predictions)
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `import pandas as pd; df = pd.read_csv('data.csv')` command is directly designed to import the pandas library to load and analyze a tabular dataset.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is correct:* `accuracy_score(y_test, predictions)` compares the model's predicted labels to the true test labels and returns the fraction of correct predictions — the standard classification evaluation metric.
+    *   *Why B is incorrect:* `model.fit()` trains the model; it does not evaluate prediction accuracy against test labels.
+    *   *Why C is incorrect:* `model.predict()` generates predictions from a trained model; it does not compute a performance metric.
+    *   *Why D is incorrect:* This loads a CSV file into a DataFrame — data loading, which occurs before training and evaluation.
 
 ---
 
 **Question 4**
-While working on **Cloud AI Services** in a production environment, you encounter a system alert indicating a **Low Model Generalization** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-D) Reboot the physical machine and wait for services to reload.
-A) Apply regularization techniques (L1/L2), gather more training data, or simplify the model architecture.
-B) Use imputation techniques (mean, median, mode) or drop rows/columns containing missing values.
-C) Ensure data preprocessing steps (scaling, normalization) are fit only on the training set and applied to the test set.
-*   **Correct Answer:** A) Apply regularization techniques (L1/L2), gather more training data, or simplify the model architecture.
+A data scientist finds that after one-hot encoding a categorical feature with 500 unique values, the model's training time increases dramatically and performance drops. What is the most effective approach to address this?
+*   A) Use target encoding or ordinal encoding instead of one-hot encoding for high-cardinality categorical features, or apply dimensionality reduction (e.g., PCA) after encoding to reduce the expanded feature space.
+*   B) Apply L2 regularization to the model weights to penalize the large number of new binary features and reduce overfitting caused by the encoding expansion.
+*   C) Ensure the one-hot encoder is fitted only on training data and applied to test data separately to prevent data leakage from test category frequencies.
+*   D) Increase the number of training epochs or estimators so the model has more iterations to learn the relationships across all 500 binary indicator columns.
+*   **Correct Answer:** A) Use target encoding or ordinal encoding instead of one-hot encoding for high-cardinality categorical features, or apply dimensionality reduction (e.g., PCA) after encoding to reduce the expanded feature space.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This action does not resolve the root cause of Low Model Generalization.
-    * *Why A is correct:* Because The model has overfit the training data and performs poorly on unseen validation or testing datasets. The appropriate fix is to Apply regularization techniques (L1/L2), gather more training data, or simplify the model architecture..
-    * *Why B is incorrect:* This action does not resolve the root cause of Low Model Generalization.
-    * *Why C is incorrect:* This action does not resolve the root cause of Low Model Generalization.
-
+    *   *Why A is correct:* One-hot encoding a 500-category feature creates 500 new binary columns (high cardinality), causing a "curse of dimensionality" problem. Target encoding replaces categories with their mean target value (one column), and ordinal encoding assigns integer ranks — both avoid the explosion in feature space.
+    *   *Why B is incorrect:* L2 regularization can help reduce overfitting from noisy features, but it does not address the root cause of training time explosion from 500 binary columns.
+    *   *Why C is incorrect:* Fitting the encoder only on training data is correct practice to prevent data leakage, but this is a separate issue from the high-cardinality dimensionality problem described.
+    *   *Why D is incorrect:* More training iterations will not reduce the dimensionality problem and will further increase training time rather than solving it.
 
 ---
 
 **Question 5**
-When designing a system for **Cloud AI Services**, you must mitigate the risk of **Attackers injecting subtle, imperceptible noise into input data (e.g. images) to force the AI into making incorrect classifications.**. Which of the following security configurations or controls represents the best practice to implement?
-D) Enable full disk encryption on all client endpoints.
-C) Enable full disk encryption on all client endpoints.
-B) Apply differential privacy methods to the training data and limit public API rate queries.
-A) Train models with adversarial inputs and implement input validation/filtering on inputs.
-*   **Correct Answer:** A) Train models with adversarial inputs and implement input validation/filtering on inputs.
+Attackers are sending subtly modified images to an Azure Custom Vision endpoint used for quality control in manufacturing, causing defective parts to be classified as passing. Which defense best mitigates this **adversarial example** attack?
+*   A) Train the model with adversarial examples included in the training set and implement input validation and filtering to detect anomalous image inputs before they reach the classifier.
+*   B) Apply differential privacy to the training image dataset and rate-limit the Custom Vision prediction endpoint.
+*   C) Enable full disk encryption on all edge devices that capture images and submit them to the API.
+*   D) Restrict Custom Vision endpoint access using Azure Private Link so only internal factory network traffic can reach the prediction URL.
+*   **Correct Answer:** A) Train the model with adversarial examples included in the training set and implement input validation and filtering to detect anomalous image inputs before they reach the classifier.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This does not address the security vulnerability of Adversarial Examples.
-    * *Why C is incorrect:* This does not address the security vulnerability of Adversarial Examples.
-    * *Why B is incorrect:* This does not address the security vulnerability of Adversarial Examples.
-    * *Why A is correct:* Implementing Train models with adversarial inputs and implement input validation/filtering on inputs. mitigates the risk of Attackers injecting subtle, imperceptible noise into input data (e.g. images) to force the AI into making incorrect classifications..
-
+    *   *Why A is correct:* Adversarial training on perturbed images builds model robustness against crafted noise. Input filtering can detect images with statistical anomalies (unusual pixel distributions) before classification, blocking the attack path entirely.
+    *   *Why B is incorrect:* Differential privacy defends against training data reconstruction via model inversion — it does not make the model robust to adversarial pixel perturbations submitted at inference time.
+    *   *Why C is incorrect:* Disk encryption protects image data stored on edge devices at rest; it has no effect on manipulated images submitted through the live prediction API.
+    *   *Why D is incorrect:* Private Link restricts which network can reach the endpoint but does not prevent an internal attacker or a compromised device on the factory network from sending adversarially crafted images.

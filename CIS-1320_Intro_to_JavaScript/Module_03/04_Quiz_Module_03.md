@@ -17,63 +17,59 @@ What is the difference between the double-equality operator (==) and the triple-
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **typeof operator**?
-B) A structured, seven-step process (Prepare, Categorize, Select, Implement, Assess, Authorize, Monitor) created by NIST to help organizations manage cybersecurity risk.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-D) A complete binary tree where the key of any parent node is less than or equal to the keys of its children, guaranteeing the root is always the minimum element.
-C) Electrostatic Discharge protection; tools (like wrist straps, grounding mats) used to prevent static electricity from destroying sensitive microchips when handling hardware.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
+Which of the following most accurately describes the **typeof operator** in JavaScript?
+*   A) An operator that converts a value to a specific type, such as turning a string into a number
+*   B) A unary operator that returns a string naming the data type of its operand (e.g., `"number"`, `"string"`, `"boolean"`)
+*   C) A comparison operator that checks if two values share the same type, returning `true` or `false`
+*   D) A method on every object that lists all the property names it contains
+*   **Correct Answer:** B) A unary operator that returns a string naming the data type of its operand (e.g., `"number"`, `"string"`, `"boolean"`).
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **typeof operator**.
-    * *Why A is correct:* This describes the exact role and function of **typeof operator**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **typeof operator**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **typeof operator**.
-
+    *   *Why A is incorrect:* That describes explicit type conversion functions like `Number()` or `String()`, not `typeof`.
+    *   *Why B is correct:* `typeof` is a prefix operator that evaluates its operand and returns a type label as a string.
+    *   *Why C is incorrect:* `typeof` does not return a boolean; it returns a string. Comparing types uses `===` on the `typeof` result.
+    *   *Why D is incorrect:* That describes `Object.keys()` or `for...in`, not `typeof`.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **install all external project dependencies specified in the requirements manifest**. Which of the following commands is the most appropriate to execute?
-B) git commit -m 'update'
-D) pytest
-A) pip install -r requirements.txt
-C) python3 -m venv .venv
-*   **Correct Answer:** A) pip install -r requirements.txt
+What is the result of evaluating `"10" - 4` in JavaScript?
+*   A) `"104"` (string concatenation)
+*   B) `NaN` (Not a Number)
+*   C) `6` (numeric subtraction after coercion)
+*   D) A TypeError is thrown because you cannot subtract from a string
+*   **Correct Answer:** C) `6` (numeric subtraction after coercion)
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `pip install -r requirements.txt` command is directly designed to install all external project dependencies specified in the requirements manifest.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is incorrect:* String concatenation only occurs with `+`; the `-` operator forces numeric conversion.
+    *   *Why B is incorrect:* `NaN` results when coercion fails (e.g., `"abc" - 4`); `"10"` coerces cleanly to `10`.
+    *   *Why C is correct:* The `-` operator has no string meaning, so JS coerces `"10"` to the number `10` and computes `10 - 4 = 6`.
+    *   *Why D is incorrect:* JavaScript does not throw a TypeError here; it silently coerces the string operand.
 
 ---
 
 **Question 4**
 While working on **Data Types & Operators** in a production environment, you encounter a system alert indicating a **TypeError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-B) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
-C) Verify that the index is within the valid range of 0 to len(list)-1.
-D) Reboot the physical machine and wait for services to reload.
-A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-*   **Correct Answer:** A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
+*   A) Perform explicit type checking (e.g., `typeof x === "number"`) or conversion (e.g., `Number(x)`) before executing operations on mixed data types.
+*   B) Ensure the requested key exists in the object before accessing it, using optional chaining (`?.`) or a conditional check.
+*   C) Verify that the array index is within bounds before accessing the element.
+*   D) Reboot the development environment and clear the browser cache.
+*   **Correct Answer:** A) Perform explicit type checking (e.g., `typeof x === "number"`) or conversion (e.g., `Number(x)`) before executing operations on mixed data types.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This action does not resolve the root cause of TypeError.
-    * *Why C is incorrect:* This action does not resolve the root cause of TypeError.
-    * *Why D is incorrect:* This action does not resolve the root cause of TypeError.
-    * *Why A is correct:* Because An operation or function was applied to an object of an inappropriate data type. The appropriate fix is to Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types..
-
+    *   *Why A is correct:* A `TypeError` in JavaScript typically means an operation was applied to a value of the wrong type. Checking or converting the type first prevents the error.
+    *   *Why B is incorrect:* Checking for missing object keys prevents `undefined` access errors, not `TypeError` from type mismatches.
+    *   *Why C is incorrect:* Bounds checking prevents out-of-range index errors, which is a separate issue from type mismatch.
+    *   *Why D is incorrect:* Rebooting does not fix a code-level type error; the root cause must be corrected in the logic.
 
 ---
 
 **Question 5**
-When designing a system for **Data Types & Operators**, you must mitigate the risk of **Allowing attackers to execute arbitrary SQL commands on the backend database via input forms.**. Which of the following security configurations or controls represents the best practice to implement?
-D) Enable full disk encryption on all client endpoints.
-B) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-C) Enable full disk encryption on all client endpoints.
-A) Implement parameterized queries and prepared statements rather than raw string concatenation.
-*   **Correct Answer:** A) Implement parameterized queries and prepared statements rather than raw string concatenation.
+What does `typeof null` return in JavaScript?
+*   A) `"null"`
+*   B) `"undefined"`
+*   C) `"object"`
+*   D) `"boolean"`
+*   **Correct Answer:** C) `"object"`
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why A is correct:* Implementing Implement parameterized queries and prepared statements rather than raw string concatenation. mitigates the risk of Allowing attackers to execute arbitrary SQL commands on the backend database via input forms..
-
+    *   *Why A is incorrect:* There is no `"null"` type string returned by `typeof`; this is a common but wrong assumption.
+    *   *Why B is incorrect:* `typeof undefined` returns `"undefined"`; `null` and `undefined` are different values.
+    *   *Why C is correct:* `typeof null === "object"` is a well-known historical bug in JavaScript that has never been corrected for backward-compatibility reasons.
+    *   *Why D is incorrect:* `typeof false` returns `"boolean"`; `null` is not a boolean value.

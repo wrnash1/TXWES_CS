@@ -1,79 +1,78 @@
-# Quiz: Module 01 - AWS Infrastructure & Core Architecture
+# Quiz: Module 01 - AWS Global Infrastructure and Core Services Overview
 ## Course: CIS-4334_AWS_Cloud_Architecture (AWS Certified Solutions Architect - Associate)
 
 ---
 
 **Question 1**
-Which AWS infrastructure component consists of one or more discrete datacenters with redundant power and networking?
-*   A) Region
+Which AWS infrastructure component consists of one or more discrete data centers with redundant power, networking, and connectivity, designed so that failures in one component are isolated from others?
+*   A) AWS Region
 *   B) Edge Location
 *   C) Availability Zone
 *   D) Local Zone
-*   **Correct Answer:** C) An Availability Zone (AZ) is a group of datacenters inside a Region, designed for fault isolation.
+*   **Correct Answer:** C) An Availability Zone (AZ) is one or more discrete data centers within a Region, each with redundant infrastructure and physically separated from other AZs to isolate failures.
 *   **Distractor Analysis:**
-    *   *Why correct:* An Availability Zone (AZ) is a group of datacenters inside a Region, designed for fault isolation.
-    *   Regions contain multiple AZs. Edge locations cache content.
+    *   *Why A is incorrect:* A Region is the broader geographic container that holds multiple AZs; it is not itself a discrete data center cluster.
+    *   *Why B is incorrect:* Edge Locations are Points of Presence used by CloudFront and Route 53 for content caching and DNS, not general-purpose compute infrastructure.
+    *   *Why C is correct:* An Availability Zone is the physical fault-isolation unit within a Region. Each AZ has independent power, cooling, and networking, and AZs are connected to each other by high-bandwidth, low-latency fiber.
+    *   *Why D is incorrect:* A Local Zone is an AWS infrastructure extension to a metropolitan area for ultra-low latency, but it is not the standard HA unit described in the question.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Availability Zones**?
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within cloud operations.
-C) The core operations of a stack: 'push' inserts an element onto the top, and 'pop' removes and returns the top element.
-B) The additional execution time and CPU operations spent visiting nodes sequentially in memory, which is higher in linked structures than in contiguous arrays.
-D) A logically isolated virtual network dedicated to a cloud account, giving control over subnets, IP ranges, and route tables.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within cloud operations.
+Which of the following is the most accurate definition of an **AWS Availability Zone (AZ)** in the context of cloud architecture?
+*   A) A global content delivery network node that caches static assets closer to end users to reduce latency.
+*   B) One or more physically separated, redundant data centers within a Region, connected by high-bandwidth fiber, designed to isolate faults and enable high-availability deployments.
+*   C) A logical grouping of AWS accounts used to apply organizational policies and service control policies across an enterprise.
+*   D) A dedicated physical server allocated to a single AWS customer to meet licensing or compliance requirements.
+*   **Correct Answer:** B) An Availability Zone is one or more physically separated, redundant data centers within a Region connected by high-bandwidth fiber, designed to isolate faults and enable high-availability deployments.
 *   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **Availability Zones**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Availability Zones**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Availability Zones**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Availability Zones**.
-
+    *   *Why A is incorrect:* This describes an Edge Location (CloudFront PoP), not an AZ.
+    *   *Why B is correct:* This is the precise AWS definition of an AZ — the primary unit of physical fault isolation used for HA design on SAA-C03.
+    *   *Why C is incorrect:* This describes AWS Organizations and organizational units (OUs), not infrastructure geography.
+    *   *Why D is incorrect:* This describes a Dedicated Host, which is a billing/licensing construct, not an infrastructure topology concept.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **synchronize local files directly to a cloud object storage bucket**. Which of the following commands is the most appropriate to execute?
-C) gcloud compute instances list
-D) terraform apply
-A) aws s3 sync local_dir s3://my-bucket
-B) kubectl get pods -n production
-*   **Correct Answer:** A) aws s3 sync local_dir s3://my-bucket
+A solutions architect needs to design a web application that remains available if a single AWS data center loses power. Which deployment strategy directly addresses this requirement?
+*   A) Deploy all EC2 instances in a single Availability Zone and enable detailed CloudWatch monitoring.
+*   B) Deploy EC2 instances across at least two Availability Zones in the same Region behind an Application Load Balancer.
+*   C) Store all application data in S3 Standard storage class and enable versioning on the bucket.
+*   D) Purchase Reserved Instances to reduce cost and guarantee capacity in one AZ.
+*   **Correct Answer:** B) Deploy EC2 instances across at least two Availability Zones in the same Region behind an Application Load Balancer.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `aws s3 sync local_dir s3://my-bucket` command is directly designed to synchronize local files directly to a cloud object storage bucket.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is incorrect:* A single AZ is a single fault domain — losing that data center takes down the entire application regardless of monitoring.
+    *   *Why B is correct:* Multi-AZ deployment with an ALB distributes traffic and automatically routes away from an unhealthy AZ, directly satisfying the availability requirement.
+    *   *Why C is incorrect:* S3 versioning protects against accidental deletion of objects but does nothing to keep a web application available during a data center outage.
+    *   *Why D is incorrect:* Reserved Instances are a cost-optimization commitment, not an availability mechanism.
 
 ---
 
 **Question 4**
-While working on **AWS Infrastructure & Core Architecture** in a production environment, you encounter a system alert indicating a **IAM Access Denied** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-B) Check the VPC route table for an Internet Gateway path and verify that the security group allows incoming traffic.
-D) Reboot the physical machine and wait for services to reload.
-A) Review the user's IAM policies and attach the specific policy granting permissions for the resource action.
-C) Set up billing alerts, delete unused volumes, and configure auto-scaling scale-down policies.
-*   **Correct Answer:** A) Review the user's IAM policies and attach the specific policy granting permissions for the resource action.
+Under the AWS Shared Responsibility Model, which of the following is the customer's responsibility when running an application on Amazon EC2?
+*   A) Maintaining the physical security of the data center where the EC2 host server resides.
+*   B) Patching and updating the hypervisor software running beneath the EC2 instance.
+*   C) Patching the guest operating system and managing security group rules for the instance.
+*   D) Replacing failed hardware components in the underlying EC2 host server.
+*   **Correct Answer:** C) Patching the guest operating system and managing security group rules for the instance.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This action does not resolve the root cause of IAM Access Denied.
-    * *Why D is incorrect:* This action does not resolve the root cause of IAM Access Denied.
-    * *Why A is correct:* Because The user account or service role lacks the explicit IAM permissions required to execute the API call. The appropriate fix is to Review the user's IAM policies and attach the specific policy granting permissions for the resource action..
-    * *Why C is incorrect:* This action does not resolve the root cause of IAM Access Denied.
-
+    *   *Why A is incorrect:* Physical data center security is AWS's responsibility — customers never have physical access to AWS facilities.
+    *   *Why B is incorrect:* AWS owns and patches the hypervisor. Customers have no access to or responsibility for the virtualization layer.
+    *   *Why C is correct:* The guest OS, application code, IAM configuration, firewall rules (security groups), and data encryption are all customer responsibilities under the Shared Responsibility Model.
+    *   *Why D is incorrect:* Hardware maintenance and replacement is AWS's responsibility as part of their "security of the cloud" obligation.
 
 ---
 
 **Question 5**
-When designing a system for **AWS Infrastructure & Core Architecture**, you must mitigate the risk of **Developers committing plain-text cloud access keys to public source code repositories, allowing full account takeover.**. Which of the following security configurations or controls represents the best practice to implement?
-C) Enable full disk encryption on all client endpoints.
-A) Enforce temporary credentials (STS), rotate keys regularly, and never hardcode API keys in repositories.
-B) Enable Block Public Access configurations and enforce access control via IAM or signed URLs.
-D) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Enforce temporary credentials (STS), rotate keys regularly, and never hardcode API keys in repositories.
+When designing a globally distributed application, a solutions architect wants to minimize the risk of a **full Region outage taking down all user-facing traffic**. Which of the following is the best architectural control to implement?
+*   A) Deploy the application in a single Region with EC2 instances spread across all available AZs.
+*   B) Enable automatic snapshots on all EBS volumes and store copies in the same Region.
+*   C) Deploy the application in multiple AWS Regions and use Route 53 with failover or latency-based routing to direct traffic.
+*   D) Enable AWS Shield Standard on the application to protect against regional infrastructure failures.
+*   **Correct Answer:** C) Deploy the application in multiple AWS Regions and use Route 53 with failover or latency-based routing to direct traffic.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This does not address the security vulnerability of Compromised Access Keys.
-    * *Why A is correct:* Implementing Enforce temporary credentials (STS), rotate keys regularly, and never hardcode API keys in repositories. mitigates the risk of Developers committing plain-text cloud access keys to public source code repositories, allowing full account takeover..
-    * *Why B is incorrect:* This does not address the security vulnerability of Compromised Access Keys.
-    * *Why D is incorrect:* This does not address the security vulnerability of Compromised Access Keys.
+    *   *Why A is incorrect:* Multi-AZ within a single Region protects against individual AZ failures, not a full Region outage. All AZs in a Region share the same regional control plane dependencies.
+    *   *Why B is incorrect:* EBS snapshots protect data durability but do not keep the application running during a Region outage — there is no compute to serve traffic.
+    *   *Why C is correct:* Multi-Region deployments with Route 53 routing is the canonical SAA-C03 pattern for regional fault tolerance and global disaster recovery. Route 53 health checks detect a regional failure and reroute traffic to the secondary Region.
+    *   *Why D is incorrect:* AWS Shield Standard protects against DDoS attacks, not infrastructure or Region-level outages.
 

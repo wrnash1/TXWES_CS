@@ -1,4 +1,4 @@
-# Quiz: Module 03 - Data Acquisition and SQL
+# Quiz: Module 03 - Data Cleaning and Transformation
 ## Course: CIS-4336_Data_Analytics (CompTIA Data+)
 
 ---
@@ -9,71 +9,67 @@ Which SQL clause is used to filter group results after aggregation has occurred?
 *   B) HAVING
 *   C) GROUP BY
 *   D) SELECT
-*   **Correct Answer:** B) `HAVING` filters aggregated values. `WHERE` filters individual rows before aggregation.
+*   **Correct Answer:** B) `HAVING` filters aggregated values (e.g., groups with SUM > 1000). `WHERE` filters individual rows before aggregation occurs.
 *   **Distractor Analysis:**
-    *   *Why correct:* `HAVING` filters aggregated values. `WHERE` filters individual rows before aggregation.
-    *   WHERE filters rows beforehand.
+    *   *Why correct:* `HAVING` operates on the result of GROUP BY, filtering out groups that do not meet the aggregate condition.
+    *   WHERE filters rows before grouping. SELECT defines the output columns. GROUP BY creates the groups but does not filter them.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **JOIN (INNER**?
-D) A structured, seven-step process (Prepare, Categorize, Select, Implement, Assess, Authorize, Monitor) created by NIST to help organizations manage cybersecurity risk.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within database operations.
-C) The memory block allocated on the system stack for a single function call, storing parameters, local variables, and the return address.
-B) A binary search tree that automatically adjusts its height during insertions and deletions (e.g., AVL, Red-Black) to maintain logarithmic operations.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within database operations.
+In data cleaning, which of the following most accurately defines **deduplication**?
+*   A) The process of identifying and removing redundant duplicate records from a dataset so that each real-world entity is represented only once, using key-field matching or fuzzy matching techniques.
+*   B) Converting a column from one data type to another — for example, changing a text-format date into a proper date type recognized by the database engine.
+*   C) Replacing missing (NULL) values with a calculated substitute such as the column mean, median, or mode to preserve the usable row count for analysis.
+*   D) Restructuring a database into smaller, related tables to eliminate redundancy and prevent insert, update, and delete anomalies.
+*   **Correct Answer:** A) The process of identifying and removing redundant duplicate records from a dataset so that each real-world entity is represented only once.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **JOIN (INNER**.
-    * *Why A is correct:* This describes the exact role and function of **JOIN (INNER**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **JOIN (INNER**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **JOIN (INNER**.
-
+    *   *Why A is correct:* Deduplication specifically targets duplicate records — its defining characteristic is the removal of redundancy at the row level.
+    *   *Why B is incorrect:* This describes type casting, a separate cleaning operation that converts data types.
+    *   *Why C is incorrect:* This describes imputation, which addresses missing values rather than duplicate records.
+    *   *Why D is incorrect:* This describes schema normalization, a database design operation, not a record-level cleaning step.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **query and retrieve active user records matching specific conditions from the database table**. Which of the following commands is the most appropriate to execute?
-C) EXPLAIN ANALYZE SELECT * FROM logs;
-B) GRANT SELECT ON client_db TO analyst_role;
-D) CREATE INDEX idx_email ON users(email);
-A) SELECT * FROM users WHERE active = 1;
-*   **Correct Answer:** A) SELECT * FROM users WHERE active = 1;
+A data analyst discovers that a `phone_number` column in a customer table contains values in four different formats: "(555) 123-4567", "555-123-4567", "5551234567", and "+1-555-123-4567". Which cleaning technique is most appropriate to standardize this column?
+*   A) Imputation — replace all phone numbers with the column mode.
+*   B) Deduplication — remove all rows with non-standard phone number formats.
+*   C) Regex-based text transformation — apply a pattern to strip non-numeric characters and reformat all values to a single standard (e.g., "5551234567").
+*   D) Type casting — convert the phone number column from VARCHAR to INTEGER.
+*   **Correct Answer:** C) Regex-based text transformation — apply a pattern to strip non-numeric characters and reformat all values to a single standard.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `SELECT * FROM users WHERE active = 1;` command is directly designed to query and retrieve active user records matching specific conditions from the database table.
-
+    *   *Why C is correct:* Inconsistent text formats are precisely what regex transformation is designed to fix. A pattern like `[^0-9]` strips non-numeric characters to produce a uniform 10-digit string.
+    *   *Why A is incorrect:* Imputation replaces missing values; phone numbers with different formats are not missing values.
+    *   *Why B is incorrect:* Deduplication removes duplicate records; non-standard formats are not duplicate records.
+    *   *Why D is incorrect:* Phone numbers should not be stored as integers because leading zeros would be lost and they are not used for arithmetic.
 
 ---
 
 **Question 4**
-While working on **Data Acquisition and SQL** in a production environment, you encounter a system alert indicating a **Connection Timeout** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-C) Optimize application query order, implement retry logic, and keep transaction blocks as brief as possible.
-B) Analyze the query plan and create appropriate indexes on columns frequently used in WHERE and JOIN clauses.
-A) Increase the database connection pool limit, adjust timeout configurations, or scale database resources.
-D) Reboot the physical machine and wait for services to reload.
-*   **Correct Answer:** A) Increase the database connection pool limit, adjust timeout configurations, or scale database resources.
+A dataset has 5% missing values in the `annual_salary` column. The salary distribution is strongly right-skewed due to a few executives with very high salaries. Which imputation method is most appropriate?
+*   A) Mean imputation, because it uses all available data points to compute the estimate.
+*   B) Median imputation, because the median is resistant to the skew caused by extreme high-salary outliers.
+*   C) Mode imputation, because the most common salary value is always the best substitute for any missing numeric field.
+*   D) Listwise deletion, because 5% missing is always too small to justify any imputation effort.
+*   **Correct Answer:** B) Median imputation, because the median is resistant to the skew caused by extreme high-salary outliers.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This action does not resolve the root cause of Connection Timeout.
-    * *Why B is incorrect:* This action does not resolve the root cause of Connection Timeout.
-    * *Why A is correct:* Because The database server has exhausted its pool of concurrent client connections or is overloaded with work. The appropriate fix is to Increase the database connection pool limit, adjust timeout configurations, or scale database resources..
-    * *Why D is incorrect:* This action does not resolve the root cause of Connection Timeout.
-
+    *   *Why B is correct:* In a right-skewed distribution, the mean is pulled upward by high outliers. The median is the central value that splits the distribution in half and is unaffected by extreme values.
+    *   *Why A is incorrect:* Mean imputation in a skewed distribution introduces bias because the inflated mean would overestimate missing salaries for typical employees.
+    *   *Why C is incorrect:* Mode imputation applies to categorical variables; using the most frequent exact salary for a continuous variable would be misleading.
+    *   *Why D is incorrect:* 5% missing is a moderate rate for which imputation is often preferred over deletion, which would reduce the sample size unnecessarily.
 
 ---
 
 **Question 5**
-When designing a system for **Data Acquisition and SQL**, you must mitigate the risk of **Attackers injecting malicious SQL strings that bypass authentication and leak entire database contents.**. Which of the following security configurations or controls represents the best practice to implement?
-B) Enable Transparent Data Encryption (TDE) or cloud database storage encryption at rest.
-A) Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs.
-C) Enable full disk encryption on all client endpoints.
-D) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs.
+After loading a CSV file, a column labeled `order_date` has dtype `object` (string) instead of `datetime`. SQL date range queries on this column return incorrect results. What is the correct remediation?
+*   A) Delete all rows where `order_date` contains a value, since string dates cannot be converted.
+*   B) Apply type casting to convert the `order_date` column from string to a proper datetime type using the appropriate parsing function.
+*   C) Apply deduplication to remove rows with duplicate date strings.
+*   D) Replace all string dates with the column mean using imputation.
+*   **Correct Answer:** B) Apply type casting to convert the `order_date` column from string to a proper datetime type using the appropriate parsing function.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Exposure.
-    * *Why A is correct:* Implementing Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs. mitigates the risk of Attackers injecting malicious SQL strings that bypass authentication and leak entire database contents..
-    * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Exposure.
-    * *Why D is incorrect:* This does not address the security vulnerability of SQL Injection Exposure.
-
+    *   *Why B is correct:* Type casting (e.g., `pd.to_datetime()` in Pandas or `CAST(order_date AS DATE)` in SQL) is the correct operation to convert string-formatted dates into a recognized date type that supports range queries.
+    *   *Why A is incorrect:* String dates can be converted; deleting all date rows would destroy the dataset.
+    *   *Why C is incorrect:* Deduplication targets duplicate records, not data type mismatches.
+    *   *Why D is incorrect:* Imputation replaces missing values; non-missing string dates need type conversion, not substitution.

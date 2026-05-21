@@ -1,52 +1,53 @@
-# Reading Guide: Module 04 - Data Cleaning & Normalization
+# Reading Guide: Module 04 - Relational Databases and SQL for Analytics
 ## Course: CIS-4336_Data_Analytics (CompTIA Data+)
 
 ---
 
 ### Introduction
-Welcome to **Module 04 - Data Cleaning & Normalization**! This week's study material focuses on the core foundations and configuration mechanics of **Data Cleaning & Normalization** as aligned with the **CompTIA Data+** certification framework. Understanding these topics is essential not only for passing the certification exam but also for administering enterprise systems in real-world environments.
+Welcome to **Module 04 - Relational Databases and SQL for Analytics**! SQL is the universal language of data — every data analyst, regardless of their tool stack, must be able to query, filter, join, and aggregate relational data. This module covers the SQL statements and database concepts that appear most frequently on the **CompTIA Data+** exam and in real-world analytics roles.
 
-As a student, you will learn the primary operational roles, command syntaxes, and troubleshooting parameters needed to design, configure, and maintain these services. We will explore how different protocols establish connections, how configurations manage resource allocation, and how security controls prevent access breaches. Make sure to complete the checklists and review the glossary terms in detail before beginning the lab activity.
+You will learn how to retrieve data with SELECT, filter it with WHERE, combine tables with JOINs, group and summarize with GROUP BY and aggregate functions, and understand how indexes affect query performance.
 
 ---
 
 ### 1. High-Yield Glossary
 Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
 
-*   **Deduplication**: A primary configuration standard and technical parameter essential for coordinating Data Cleaning & Normalization activities, enforcing security boundaries, and verifying operational statuses within the database environment.
-*   **handling missing values**: A primary configuration standard and technical parameter essential for coordinating Data Cleaning & Normalization activities, enforcing security boundaries, and verifying operational statuses within the database environment.
-*   **type casting**: A primary configuration standard and technical parameter essential for coordinating Data Cleaning & Normalization activities, enforcing security boundaries, and verifying operational statuses within the database environment.
-*   **text cleaning (regex)**: A primary configuration standard and technical parameter essential for coordinating Data Cleaning & Normalization activities, enforcing security boundaries, and verifying operational statuses within the database environment.
-*   **normalizing schemas.**: A primary configuration standard and technical parameter essential for coordinating Data Cleaning & Normalization activities, enforcing security boundaries, and verifying operational statuses within the database environment.
+*   **SELECT and WHERE**: SELECT specifies which columns to return from a query; WHERE filters which rows are included based on one or more conditions. Together they form the most fundamental query pattern in SQL. The Data+ exam tests your ability to read a SQL statement and predict its output.
+*   **JOIN types (INNER, LEFT, RIGHT)**: An INNER JOIN returns only rows where the join condition matches in both tables. A LEFT JOIN returns all rows from the left table and matching rows from the right — unmatched right-table rows appear as NULL. A RIGHT JOIN is the mirror image. Understanding which rows are included or excluded by each join type is a frequent exam topic.
+*   **GROUP BY and HAVING**: GROUP BY collapses rows that share the same value in one or more columns into a single summary row. Aggregate functions (COUNT, SUM, AVG, MIN, MAX) are then applied to each group. HAVING filters the resulting groups — it is the equivalent of WHERE but operates after aggregation, not before.
+*   **Aggregation functions**: COUNT() counts rows (or non-null values in a column), SUM() adds numeric values, AVG() computes the arithmetic mean, MIN() and MAX() return the smallest and largest values. These functions are central to every analytics SQL query.
+*   **Indexes**: A database index is a data structure (typically a B-tree) that allows the database engine to locate rows matching a condition without scanning every row in the table. Indexes dramatically speed up SELECT queries with WHERE clauses on indexed columns but add overhead to INSERT, UPDATE, and DELETE operations.
 
 ---
 
 ### 2. Certification Exam Tips
-*   **Focus Area:** Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
-*   **Scenario Trap:** Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
-*   **Study Resource:** To reinforce these concepts visually, review this targeted search query: [Data Analysis with Python Course by freeCodeCamp - Data Cleaning & Normalization](https://www.youtube.com/watch?v=GPVsHOl2238).
+*   **Domain weight:** SQL and relational database concepts appear across multiple Data+ domains. Data Mining (Domain 3, ~23%) heavily tests SELECT, JOIN, GROUP BY, and HAVING in scenario questions.
+*   **Exam trap — WHERE vs. HAVING:** This is one of the most commonly tested distinctions. WHERE filters individual rows before grouping; HAVING filters groups after aggregation. If a question asks you to "show only departments with more than 10 employees," the answer requires HAVING COUNT(*) > 10, not WHERE.
+*   **Exam trap — INNER vs. LEFT JOIN:** When a scenario says "show all customers including those who have never placed an order," the answer is a LEFT JOIN from Customers to Orders, not INNER JOIN. INNER JOIN would exclude customers with no orders.
+*   **Exam trap — COUNT(*) vs. COUNT(column):** COUNT(*) counts all rows including NULLs. COUNT(column_name) counts only non-null values in that column. The exam uses this distinction in scenario-based aggregation questions.
+*   **Study Resource:** The SQL chapters of [Introduction to Data Science by Rafael A. Irizarry](https://rafalab.github.io/dsbook/) cover database querying with worked examples. The [Data Analysis with Python Course by freeCodeCamp](https://www.youtube.com/watch?v=GPVsHOl2238) covers SQL integration with Pandas for end-to-end analytics workflows.
 
 ---
 
 ### Required Readings & Videos
 To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the section/chapter covering **Data Cleaning & Normalization** in the OER Textbook: [Introduction to Data Science by Rafael A. Irizarry](https://rafalab.github.io/dsbook/).
-*   **Required Video:** Watch the video lecture on **Data Cleaning & Normalization** in the official course playlist: [Data Analysis with Python Course by freeCodeCamp](https://www.youtube.com/watch?v=GPVsHOl2238).
+*   **Required Reading:** Read the relational databases and SQL chapters in the OER Textbook: [Introduction to Data Science by Rafael A. Irizarry](https://rafalab.github.io/dsbook/). Focus on SELECT, JOIN, GROUP BY, and aggregation function examples.
+*   **Required Video:** Watch the database query sections of the [Data Analysis with Python Course by freeCodeCamp](https://www.youtube.com/watch?v=GPVsHOl2238), which demonstrates how SQL queries connect to Python-based analytics pipelines.
 
 ---
 
 ### Lab & Command Integration
 In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Deduplicate a list of transaction records**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-*   **Convert text columns to uppercase**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-*   **Handle empty entries using baseline values**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-
+*   **Write a SQL query using SELECT, WHERE, and ORDER BY**: Retrieve student records with a grade of 90 or higher, sorted descending by grade.
+*   **Write a query joining students and courses tables**: Use an INNER JOIN to list every student with their enrolled course name, and then modify it to a LEFT JOIN to include students not yet enrolled in any course.
+*   **Group results by course and calculate average grade**: Use GROUP BY on the course column and AVG() on the grade column, then use HAVING to show only courses with an average above 75.
 
 ---
 
 ### 3. Study Checklist
 - [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read the section/chapter covering **Data Cleaning & Normalization** in [Introduction to Data Science by Rafael A. Irizarry](https://rafalab.github.io/dsbook/).
-- [ ] Watch the video lecture on **Data Cleaning & Normalization** in [Data Analysis with Python Course by freeCodeCamp](https://www.youtube.com/watch?v=GPVsHOl2238).
-- [ ] Review the commands outlined in the lab instructions.
+- [ ] Read the SQL and relational database chapters in [Introduction to Data Science by Rafael A. Irizarry](https://rafalab.github.io/dsbook/).
+- [ ] Watch the [Data Analysis with Python Course by freeCodeCamp](https://www.youtube.com/watch?v=GPVsHOl2238).
+- [ ] Review the lab instructions and understand what each task requires.
 - [ ] Proceed to the weekly hands-on lab activity.

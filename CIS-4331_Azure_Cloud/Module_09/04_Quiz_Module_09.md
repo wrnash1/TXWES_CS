@@ -1,79 +1,81 @@
 # Quiz: Module 09 - Entra Authentication and MFA
+
 ## Course: CIS-4331_Azure_Cloud (Microsoft Azure Fundamentals (AZ-900))
 
 ---
 
 **Question 1**
-Which Entra ID feature allows you to enforce security policies based on signals like user location or device state?
-*   A) Multi-Factor Authentication
-*   B) Conditional Access
-*   C) Role-Based Access Control
-*   D) Privileged Identity Management
-*   **Correct Answer:** B) Conditional Access implements 'if-then' policies (e.g. if logging in from outside corporate network, require MFA).
-*   **Distractor Analysis:**
-    *   *Why correct:* Conditional Access implements 'if-then' policies (e.g. if logging in from outside corporate network, require MFA).
-    *   MFA is the authentication mechanism, but Conditional Access controls when it is triggered.
+Which Entra ID feature allows you to enforce security policies based on signals like user location or device compliance state?
+
+* A) Multi-Factor Authentication
+* B) Conditional Access
+* C) Role-Based Access Control
+* D) Privileged Identity Management
+* **Correct Answer:** B) Conditional Access implements "if-then" policies (e.g., if logging in from outside the corporate network, require MFA).
+* **Distractor Analysis:**
+  * *Why correct:* Conditional Access evaluates signals (location, device state, user risk) and applies access controls based on those conditions.
+  * *Why A is incorrect:* MFA is the authentication mechanism — Conditional Access is the policy that decides when MFA is triggered.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Single Sign-On (SSO).**?
-B) The security framework dividing operations between the cloud provider (security OF the cloud) and the customer (security IN the cloud).
-D) A security control that divides a critical transaction workflow among multiple users to prevent fraud and errors (e.g., one person approves a purchase order, another pays the vendor).
-C) The practice of connecting an electrical circuit or chassis to the earth or a large conductor to safely dissipate static electricity or stray currents.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within cloud operations.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within cloud operations.
-*   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Single Sign-On (SSO).**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Single Sign-On (SSO).**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Single Sign-On (SSO).**.
-    * *Why A is correct:* This describes the exact role and function of **Single Sign-On (SSO).**.
+Which of the following most accurately describes **Single Sign-On (SSO)** in the context of Microsoft Entra ID?
 
+* A) An authentication capability that allows users to sign in once with a single set of credentials and gain access to multiple integrated applications without re-entering their password for each one.
+* B) A method of requiring users to provide two or more verification factors before accessing cloud resources.
+* C) A policy that evaluates user location, device compliance, and risk level to decide whether to allow, block, or require additional verification for a sign-in attempt.
+* D) A synchronization tool that copies on-premises Active Directory identities to Microsoft Entra ID for hybrid identity scenarios.
+* **Correct Answer:** A) SSO allows users to authenticate once and access multiple applications — Entra ID issues tokens honored by all integrated services.
+* **Distractor Analysis:**
+  * *Why A is correct:* SSO's defining feature is single authentication for multiple application access, reducing password fatigue and improving security through centralized identity control.
+  * *Why B is incorrect:* That describes Multi-Factor Authentication (MFA), not SSO.
+  * *Why C is incorrect:* That describes Conditional Access policies, not SSO.
+  * *Why D is incorrect:* That describes Microsoft Entra Connect (directory synchronization), not SSO.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **execute the infrastructure plan to provision or modify resources defined in the configuration files**. Which of the following commands is the most appropriate to execute?
-D) aws s3 sync local_dir s3://my-bucket
-C) gcloud compute instances list
-B) kubectl get pods -n production
-A) terraform apply
-*   **Correct Answer:** A) terraform apply
-*   **Distractor Analysis:**
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `terraform apply` command is directly designed to execute the infrastructure plan to provision or modify resources defined in the configuration files.
+A security team needs to ensure that users accessing the Azure portal from unmanaged, personal devices are always required to complete MFA, while users on corporate-managed devices on the internal network are not prompted. Which feature implements this requirement?
 
+* A) Per-user MFA with always-on enforcement in Entra ID settings
+* B) Conditional Access policy with device compliance and network location as conditions
+* C) Azure RBAC with MFA-only role assignments
+* D) Entra ID Password Protection with banned password lists
+* **Correct Answer:** B) A Conditional Access policy can use device compliance status and named locations (corporate network) as conditions, requiring MFA only when those conditions are not met.
+* **Distractor Analysis:**
+  * *Why B is correct:* Conditional Access's "if-then" logic handles exactly this scenario: if unmanaged device or outside corporate network, then require MFA.
+  * *Why A is incorrect:* Per-user always-on MFA applies to all sign-ins regardless of device or location — it cannot differentiate based on device compliance.
+  * *Why C is incorrect:* RBAC controls what users can do after authentication — it does not control authentication requirements.
+  * *Why D is incorrect:* Password Protection enforces password complexity rules and blocks banned passwords — it does not trigger MFA based on device state.
 
 ---
 
 **Question 4**
-While working on **Entra Authentication and MFA** in a production environment, you encounter a system alert indicating a **IAM Access Denied** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-C) Check the VPC route table for an Internet Gateway path and verify that the security group allows incoming traffic.
-B) Set up billing alerts, delete unused volumes, and configure auto-scaling scale-down policies.
-A) Review the user's IAM policies and attach the specific policy granting permissions for the resource action.
-D) Reboot the physical machine and wait for services to reload.
-*   **Correct Answer:** A) Review the user's IAM policies and attach the specific policy granting permissions for the resource action.
-*   **Distractor Analysis:**
-    * *Why C is incorrect:* This action does not resolve the root cause of IAM Access Denied.
-    * *Why B is incorrect:* This action does not resolve the root cause of IAM Access Denied.
-    * *Why A is correct:* Because The user account or service role lacks the explicit IAM permissions required to execute the API call. The appropriate fix is to Review the user's IAM policies and attach the specific policy granting permissions for the resource action..
-    * *Why D is incorrect:* This action does not resolve the root cause of IAM Access Denied.
+After a user's credentials are compromised, security administrators need to immediately prevent that user from accessing all Microsoft 365 and Azure applications, including all active sessions. What is the most effective immediate action?
 
+* A) Reset the user's password in the on-premises Active Directory
+* B) Disable the user's account in Microsoft Entra ID and revoke all active refresh tokens
+* C) Remove the user from all security groups in Entra ID
+* D) Delete all Conditional Access policies that apply to the user
+* **Correct Answer:** B) Disabling the Entra ID account and revoking refresh tokens immediately blocks all new sign-ins and invalidates existing sessions across all Entra ID-integrated applications.
+* **Distractor Analysis:**
+  * *Why B is correct:* Disabling the Entra ID account stops new authentications; revoking refresh tokens (via "Revoke sessions" in the portal) invalidates existing access across all connected apps simultaneously.
+  * *Why A is incorrect:* Resetting the on-premises AD password only helps if Entra Connect is syncing credentials — active cloud sessions using existing tokens would remain valid.
+  * *Why C is incorrect:* Removing from groups removes permissions but does not invalidate active authentication sessions or prevent sign-in.
+  * *Why D is incorrect:* Deleting Conditional Access policies removes access controls — this would make the environment less secure, not more.
 
 ---
 
 **Question 5**
-When designing a system for **Entra Authentication and MFA**, you must mitigate the risk of **Storing sensitive corporate documents in publicly readable cloud buckets, leading to data breaches.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Enable Block Public Access configurations and enforce access control via IAM or signed URLs.
-C) Enable full disk encryption on all client endpoints.
-B) Enforce temporary credentials (STS), rotate keys regularly, and never hardcode API keys in repositories.
-D) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Enable Block Public Access configurations and enforce access control via IAM or signed URLs.
-*   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Enable Block Public Access configurations and enforce access control via IAM or signed URLs. mitigates the risk of Storing sensitive corporate documents in publicly readable cloud buckets, leading to data breaches..
-    * *Why C is incorrect:* This does not address the security vulnerability of Publicly Exposed Storage Buckets.
-    * *Why B is incorrect:* This does not address the security vulnerability of Publicly Exposed Storage Buckets.
-    * *Why D is incorrect:* This does not address the security vulnerability of Publicly Exposed Storage Buckets.
+Which statement correctly describes the relationship between MFA and Conditional Access in Microsoft Entra ID?
 
+* A) MFA replaces Conditional Access — once MFA is enabled, no Conditional Access policies are needed.
+* B) MFA is an authentication method; Conditional Access is the policy engine that determines when and under what conditions MFA is required.
+* C) Conditional Access is only available when MFA is disabled — the two features cannot be used simultaneously.
+* D) MFA requires Entra ID P2 licensing; Conditional Access is available in the Free tier only.
+* **Correct Answer:** B) MFA is the authentication method (second factor); Conditional Access is the policy engine controlling when MFA is triggered based on evaluated signals.
+* **Distractor Analysis:**
+  * *Why B is correct:* MFA and Conditional Access are complementary. Conditional Access evaluates conditions and can require MFA as a grant control when conditions are met.
+  * *Why A is incorrect:* MFA and Conditional Access serve different functions and are both needed — MFA provides the second factor; Conditional Access applies context-based rules.
+  * *Why C is incorrect:* MFA and Conditional Access are designed to work together — Conditional Access commonly uses MFA as its enforcement action.
+  * *Why D is incorrect:* The licensing is reversed — Conditional Access (policy-driven MFA) requires Entra ID P1 or higher; per-user MFA is available in the Free tier.

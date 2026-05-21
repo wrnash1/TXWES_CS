@@ -1,5 +1,5 @@
-# Quiz: Module 04 - Security
-## Course: CIS-4327_Database_Admin (4327_Database_Admin - Google Cloud Associate Database Engineer)
+# Quiz: Module 04 - Cloud Spanner – Globally Distributed Databases
+## Course: CIS-4327_Database_Admin (4327_Database_Admin - Google Cloud Professional Cloud Database Engineer)
 
 ---
 
@@ -11,72 +11,69 @@ C) Transparent Data Encryption (TDE)
 D) IPsec VPN tunnels
 *   **Correct Answer:** B) Customer-Managed Encryption Keys (CMEK) using Cloud KMS
 *   **Distractor Analysis:**
-    *   *Why A is incorrect:* Google-managed keys are the default, but they do not satisfy compliance requirements demanding that the *customer* generate and manage the key material.
-    *   *Why C is incorrect:* TDE is a specific Microsoft SQL Server feature, not the Google Cloud native method for managing disk-level encryption keys across GCP services.
-    *   *Why D is incorrect:* IPsec VPN encrypts data in *transit* across a network, not data at *rest* on persistent disks or backups.
+    *   *Why A is incorrect:* Google-managed keys are the default encryption method, but they do not satisfy compliance requirements that demand the *customer* generate and exclusively control the key material.
+    *   *Why C is incorrect:* TDE is a specific Microsoft SQL Server encryption feature. GCP's equivalent mechanism for customer-controlled key management across GCP services is CMEK via Cloud KMS.
+    *   *Why D is incorrect:* IPsec VPN encrypts data *in transit* across a network connection; it does not encrypt data *at rest* on persistent disks or backup storage.
 
 ---
 
 ---
 
 **Question 2**
-A developer complains that their application is running slowly. You suspect the database is the bottleneck, but the overall CPU utilization of the Cloud SQL instance is only at 40%. You need to identify if a specific, poorly optimized SQL `SELECT` statement is taking too long to execute. Which Google Cloud tool provides this specific visibility?
+A developer complains that an application is running slowly. You suspect the Cloud SQL database is the bottleneck, but the overall CPU utilization of the instance is only 40%. You need to identify if a specific SQL `SELECT` statement is taking too long to execute. Which Google Cloud tool provides this specific visibility?
 A) Cloud Audit Logs
-B) Cloud SQL Proxy
+B) Cloud SQL Auth Proxy
 C) Query Insights
 D) Identity and Access Management (IAM)
 *   **Correct Answer:** C) Query Insights
 *   **Distractor Analysis:**
-    *   *Why A is incorrect:* Audit Logs track *who* performed an action (Data Access logs can show the query was run), but they do not provide performance metrics, execution plans, or database load analysis.
-    *   *Why B is incorrect:* Cloud SQL Proxy is a tool used to establish a secure connection to the database, not a monitoring or performance tuning tool.
-    *   *Why D is incorrect:* IAM manages access control and permissions, entirely unrelated to database query performance.
+    *   *Why A is incorrect:* Cloud Audit Logs record *who* performed administrative and data access actions, but do not provide per-query execution time, query plans, or load analysis.
+    *   *Why B is incorrect:* Cloud SQL Auth Proxy establishes a secure, IAM-authenticated connection tunnel to Cloud SQL; it is not a monitoring or performance analysis tool.
+    *   *Why D is incorrect:* IAM manages access control and permissions across Google Cloud; it is entirely unrelated to diagnosing database query performance.
 
 ---
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **analyze the database execution plan to identify performance bottlenecks and slow scan steps**. Which of the following commands is the most appropriate to execute?
-A) EXPLAIN ANALYZE SELECT * FROM logs;
-B) CREATE INDEX idx_email ON users(email);
-D) SELECT * FROM users WHERE active = 1;
-C) GRANT SELECT ON client_db TO analyst_role;
-*   **Correct Answer:** A) EXPLAIN ANALYZE SELECT * FROM logs;
+A Cloud Spanner schema designer is building a table for `Orders` and a child table for `OrderItems`. To ensure that `OrderItems` rows are physically co-located with their parent `Orders` row for efficient retrieval, which DDL clause must be added to the `OrderItems` table definition?
+A) `INTERLEAVE IN PARENT Orders ON DELETE CASCADE`
+B) `FOREIGN KEY (order_id) REFERENCES Orders(order_id)`
+C) `CREATE INDEX idx_order ON OrderItems(order_id) STORING (quantity, price)`
+D) `PARTITION BY order_id`
+*   **Correct Answer:** A) `INTERLEAVE IN PARENT Orders ON DELETE CASCADE`
 *   **Distractor Analysis:**
-    * *Why A is correct:* The `EXPLAIN ANALYZE SELECT * FROM logs;` command is directly designed to analyze the database execution plan to identify performance bottlenecks and slow scan steps.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is correct:* The `INTERLEAVE IN PARENT` clause is a Cloud Spanner-specific DDL directive that physically co-locates child rows on the same storage split as their parent row, eliminating cross-split remote reads for parent-child queries.
+    *   *Why B is incorrect:* A `FOREIGN KEY` constraint enforces referential integrity but does not alter the physical storage layout; rows may still reside on different splits, incurring remote read overhead.
+    *   *Why C is incorrect:* A secondary index with a `STORING` clause helps locate rows by a non-primary-key column but does not co-locate child rows with parent rows on the same split.
+    *   *Why D is incorrect:* `PARTITION BY` is a BigQuery DDL concept for partitioned tables; it does not exist in Cloud Spanner DDL.
 
 ---
 
 **Question 4**
-While working on **Security** in a production environment, you encounter a system alert indicating a **Database Deadlock** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-A) Optimize application query order, implement retry logic, and keep transaction blocks as brief as possible.
-C) Analyze the query plan and create appropriate indexes on columns frequently used in WHERE and JOIN clauses.
-D) Reboot the physical machine and wait for services to reload.
-B) Increase the database connection pool limit, adjust timeout configurations, or scale database resources.
-*   **Correct Answer:** A) Optimize application query order, implement retry logic, and keep transaction blocks as brief as possible.
+While administering a Cloud Spanner instance, you notice that write throughput has degraded significantly even though CPU utilization on compute nodes is low. After reviewing the key distribution, you discover that all recent inserts are going to the same storage split. What is the most likely root cause?
+A) The application is using bounded-staleness stale reads instead of strong reads.
+B) The schema is using a monotonically increasing integer (auto-increment) as the primary key, causing a write hotspot.
+C) The instance does not have enough Processing Units allocated for the current query load.
+D) The interleaved child table has grown larger than the parent table, causing rebalancing overhead.
+*   **Correct Answer:** B) The schema is using a monotonically increasing integer (auto-increment) as the primary key, causing a write hotspot.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Because Two or more transactions are waiting for each other to release locks on resources, causing a permanent block. The appropriate fix is to Optimize application query order, implement retry logic, and keep transaction blocks as brief as possible..
-    * *Why C is incorrect:* This action does not resolve the root cause of Database Deadlock.
-    * *Why D is incorrect:* This action does not resolve the root cause of Database Deadlock.
-    * *Why B is incorrect:* This action does not resolve the root cause of Database Deadlock.
-
+    *   *Why B is correct:* Cloud Spanner distributes data across splits by key range. Sequential (auto-incrementing) primary keys cause all new writes to land at the top of the key range, which maps to a single split — a classic hotspot. The fix is to use UUIDs, bit-reversed integers, or a hash prefix.
+    *   *Why A is incorrect:* Stale reads are a read-path optimization that reduce lock contention; they do not cause write concentration on a single split.
+    *   *Why C is incorrect:* Low CPU utilization on nodes indicates the bottleneck is not a compute resource shortage; it points to a data distribution problem.
+    *   *Why D is incorrect:* Spanner splits are rebalanced automatically by the service when they exceed size thresholds; this does not cause a write throughput regression related to key distribution.
 
 ---
 
 **Question 5**
-When designing a system for **Security**, you must mitigate the risk of **Attackers injecting malicious SQL strings that bypass authentication and leak entire database contents.**. Which of the following security configurations or controls represents the best practice to implement?
-D) Enable full disk encryption on all client endpoints.
-A) Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs.
-B) Enable Transparent Data Encryption (TDE) or cloud database storage encryption at rest.
-C) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs.
+When designing a global Cloud Spanner deployment, you must mitigate the risk of **attackers injecting malicious SQL strings that bypass authentication and expose database contents**. Which control best addresses this vulnerability?
+A) Enforce parameterized queries and use the Spanner client libraries' statement binding API, rejecting direct string concatenation of user inputs.
+B) Enable CMEK with Cloud KMS to encrypt all Spanner data at rest.
+C) Configure a VPC Service Controls perimeter around the Cloud Spanner API to restrict access by network.
+D) Enable Cloud Audit Logs Data Access logs to record all SQL statements executed against the Spanner instance.
+*   **Correct Answer:** A) Enforce parameterized queries and use the Spanner client libraries' statement binding API, rejecting direct string concatenation of user inputs.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This does not address the security vulnerability of SQL Injection Exposure.
-    * *Why A is correct:* Implementing Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs. mitigates the risk of Attackers injecting malicious SQL strings that bypass authentication and leak entire database contents..
-    * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Exposure.
-    * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Exposure.
-
+    *   *Why A is correct:* SQL injection is a code-level vulnerability. Cloud Spanner client libraries support parameterized queries with type-safe parameter binding. Passing user input as a bound parameter prevents the database from ever interpreting user-supplied strings as SQL syntax.
+    *   *Why B is incorrect:* CMEK protects data at rest on Spanner's physical storage; it does not affect how the application constructs query strings and provides no protection against injection.
+    *   *Why C is incorrect:* VPC Service Controls restrict which networks and identities can call the Spanner API, reducing attack surface but not preventing injection from a legitimate, compromised application.
+    *   *Why D is incorrect:* Audit logs record that an injection occurred after the fact but do not prevent the attack. Detection is not a substitute for prevention.

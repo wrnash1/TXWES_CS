@@ -1,5 +1,5 @@
-# Quiz: Module 02 - VLANs
-## Course: CIS-3321_Network_Admin (3321_Network_Admin - CompTIA Network+ (N10-008))
+# Quiz: Module 02 - TCP/IP Model and Network Protocols
+## Course: CIS-3321 – Network Administration (CompTIA Network+ N10-009)
 
 ---
 
@@ -11,72 +11,63 @@ C) VLAN (Virtual Local Area Network)
 D) STP (Spanning Tree Protocol)
 *   **Correct Answer:** C) VLAN (Virtual Local Area Network)
 *   **Distractor Analysis:**
-    *   *Why A is incorrect:* NAT translates between public and private IP addresses, it does not segment local switch broadcast domains.
-    *   *Why B is incorrect:* DHCP assigns IP addresses dynamically, it does not create broadcast boundaries.
-    *   *Why D is incorrect:* STP prevents switching loops, it does not segment a switch into logical broadcast domains.
-
----
+    *   *Why A is incorrect:* NAT translates between public and private IP addresses at Layer 3; it does not segment local switch broadcast domains.
+    *   *Why B is incorrect:* DHCP dynamically assigns IP configuration to clients; it does not create broadcast domain boundaries on a switch.
+    *   *Why D is incorrect:* STP (Spanning Tree Protocol) prevents Layer 2 switching loops in redundant topologies; it does not divide a switch into isolated broadcast domains.
 
 ---
 
 **Question 2**
-Which of the following IP addresses falls within the private ranges defined by RFC 1918?
-A) 172.32.10.5
-B) 192.168.4.25
-C) 11.0.0.1
-D) 192.169.1.1
-*   **Correct Answer:** B) 192.168.4.25
+A network technician is troubleshooting email delivery. Users can receive email but cannot send new messages to external recipients. Which protocol and port combination is most likely involved in the sending failure?
+A) IMAP on port 143 — the client cannot retrieve messages from the mail server
+B) SMTP on port 25 — the outbound mail server cannot relay messages to external domains
+C) POP3 on port 110 — the client is downloading messages and deleting them from the server
+D) HTTPS on port 443 — the webmail interface is unreachable due to a TLS certificate error
+*   **Correct Answer:** B) SMTP on port 25 — the outbound mail server cannot relay messages to external domains
 *   **Distractor Analysis:**
-    *   *Why A is incorrect:* The private Class B range is 172.16.0.0 to 172.31.255.255. 172.32.x.x is public.
-    *   *Why C is incorrect:* The private Class A range is 10.0.0.0/8. 11.0.0.1 is public.
-    *   *Why D is incorrect:* The private Class C range is 192.168.0.0/16. 192.169.x.x is public.
-
----
+    *   *Why A is incorrect:* IMAP (port 143) is used to access and read email stored on a server; it is a receive-side protocol, not involved in sending messages to external recipients.
+    *   *Why C is incorrect:* POP3 (port 110) downloads messages from a server to a client; it is a receive-side protocol and has no role in sending outbound email.
+    *   *Why D is incorrect:* HTTPS (port 443) would affect the webmail interface login, but the question specifies outbound mail delivery failure, which is an SMTP function.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **map and trace the exact path of router hops packets travel to reach a target destination**. Which of the following commands is the most appropriate to execute?
-A) traceroute
-C) ping
-B) netstat -ano
+A network engineer needs to verify basic IP connectivity and measure round-trip latency to a remote server. Which command is most appropriate?
+A) ping
+B) traceroute
+C) netstat -ano
 D) nslookup
-*   **Correct Answer:** A) traceroute
+*   **Correct Answer:** A) ping
 *   **Distractor Analysis:**
-    * *Why A is correct:* The `traceroute` command is directly designed to map and trace the exact path of router hops packets travel to reach a target destination.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why B is incorrect:* `traceroute` maps each intermediate router hop along the path; it provides routing path information, not a simple latency/connectivity test.
+    *   *Why C is incorrect:* `netstat -ano` displays active local TCP/UDP connections, listening ports, and process IDs on the local machine — it does not test remote connectivity.
+    *   *Why D is incorrect:* `nslookup` queries DNS servers to resolve hostnames to IP addresses; it does not measure IP-layer connectivity or latency.
 
 ---
 
 **Question 4**
-While working on **VLANs** in a production environment, you encounter a system alert indicating a **Subnet Mask Mismatch** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-A) Correct the subnet mask configuration on the interface to match the network segment parameters.
-C) Change the local network interface settings to use a public DNS resolver like 8.8.8.8 or 1.1.1.1.
-B) Release and renew the DHCP lease, or configure a unique static IP address outside the DHCP pool range.
-D) Reboot the physical machine and wait for services to reload.
-*   **Correct Answer:** A) Correct the subnet mask configuration on the interface to match the network segment parameters.
+A workstation receives an IP address of 169.254.x.x after booting. The user cannot access any network resources. What is the most likely cause?
+A) The DNS server is offline and cannot resolve hostnames.
+B) The workstation failed to receive a DHCP lease and self-assigned an APIPA address.
+C) The default gateway is configured with an incorrect subnet mask.
+D) The network switch port has Port Security enabled and is blocking the device's MAC address.
+*   **Correct Answer:** B) The workstation failed to receive a DHCP lease and self-assigned an APIPA address.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Because A host is configured with an incorrect subnet mask, preventing it from identifying local vs. remote addresses. The appropriate fix is to Correct the subnet mask configuration on the interface to match the network segment parameters..
-    * *Why C is incorrect:* This action does not resolve the root cause of Subnet Mask Mismatch.
-    * *Why B is incorrect:* This action does not resolve the root cause of Subnet Mask Mismatch.
-    * *Why D is incorrect:* This action does not resolve the root cause of Subnet Mask Mismatch.
-
+    *   *Why A is incorrect:* A DNS failure would produce a valid DHCP-assigned IP address; the user could still ping IP addresses directly. An APIPA address (169.254.x.x) specifically indicates the DHCP discovery process failed entirely.
+    *   *Why C is incorrect:* A gateway subnet mask error would still result in a valid IP address being assigned; it would not produce the 169.254.x.x APIPA range.
+    *   *Why D is incorrect:* Port Security blocking a MAC address would prevent all frames from passing, resulting in no network link — not an APIPA address assignment.
 
 ---
 
 **Question 5**
-When designing a system for **VLANs**, you must mitigate the risk of **Attackers capturing plaintext management passwords or session data using network sniffers.**. Which of the following security configurations or controls represents the best practice to implement?
-D) Enable full disk encryption on all client endpoints.
-B) Implement switch Port Security to restrict access to switch ports based on approved MAC addresses.
-C) Enable full disk encryption on all client endpoints.
-A) Configure SSH (port 22) for terminal access and HTTPS (port 443) for web interfaces, disabling Telnet and HTTP.
-*   **Correct Answer:** A) Configure SSH (port 22) for terminal access and HTTPS (port 443) for web interfaces, disabling Telnet and HTTP.
+A security audit finds that administrators are managing network switches using a protocol that transmits all credentials and commands in cleartext over port 23. Which security control should be implemented to remediate this vulnerability?
+A) Disable Telnet and configure SSH on port 22 for all switch management sessions.
+B) Enable HTTPS on port 443 and disable HTTP on port 80 for the switch web interface.
+C) Implement SNMP v3 with authentication and encryption to replace SNMP v1 community strings.
+D) Deploy a RADIUS server to centralize authentication for all management access using 802.1X.
+*   **Correct Answer:** A) Disable Telnet and configure SSH on port 22 for all switch management sessions.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This does not address the security vulnerability of Unencrypted Traffic Exposure.
-    * *Why B is incorrect:* This does not address the security vulnerability of Unencrypted Traffic Exposure.
-    * *Why C is incorrect:* This does not address the security vulnerability of Unencrypted Traffic Exposure.
-    * *Why A is correct:* Implementing Configure SSH (port 22) for terminal access and HTTPS (port 443) for web interfaces, disabling Telnet and HTTP. mitigates the risk of Attackers capturing plaintext management passwords or session data using network sniffers..
-
+    *   *Why A is correct:* Port 23 is Telnet, which is the cleartext protocol described in the scenario. SSH (port 22) provides encrypted terminal access and is the direct replacement.
+    *   *Why B is incorrect:* Switching HTTP to HTTPS addresses web interface security, but the scenario specifically identifies port 23 (Telnet) as the problem, not HTTP/HTTPS.
+    *   *Why C is incorrect:* Upgrading to SNMPv3 addresses insecure SNMP community strings (port 161), not the Telnet management vulnerability on port 23.
+    *   *Why D is incorrect:* RADIUS/802.1X centralizes authentication but does not by itself replace the unencrypted Telnet protocol with an encrypted one.

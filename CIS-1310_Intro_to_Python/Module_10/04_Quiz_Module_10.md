@@ -17,17 +17,17 @@ Which dictionary method returns both keys and values as tuples?
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Tuple immutability**?
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-C) A complete binary tree where the key of any parent node is greater than or equal to the keys of its children, guaranteeing the root is always the maximum element.
-B) The descendant node connected to the left branch of a parent node in a binary tree structure.
-D) Flexible Box Layout; a one-dimensional CSS layout model that makes it easy to align items and distribute space within a container, handling varying screen sizes dynamically.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
+Which of the following best describes **Tuple immutability** in Python?
+*   A) Tuples are mutable sequences like lists, but they use parentheses instead of brackets; elements can be reassigned or removed using standard index assignment
+*   B) Once a tuple is created its elements cannot be changed, added, or removed; any attempt to modify a tuple element raises a TypeError
+*   C) Tuples are immutable only when they contain exclusively numeric values; tuples that contain strings or lists can be modified after creation
+*   D) Tuples become immutable only after they are assigned to a variable; the literal `(1, 2, 3)` before assignment is a temporary mutable structure
+*   **Correct Answer:** B) Once a tuple is created its elements cannot be changed, added, or removed; any attempt to modify a tuple element raises a TypeError.
 *   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **Tuple immutability**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Tuple immutability**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Tuple immutability**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Tuple immutability**.
+    *   *Why A is incorrect:* Tuples are not mutable — `t[0] = 99` on any tuple raises `TypeError: 'tuple' object does not support item assignment`; the parenthesis syntax is a secondary difference, but immutability is the defining characteristic.
+    *   *Why B is correct:* Immutability is a permanent, unconditional property of tuples; it applies from the moment the tuple is created regardless of what it contains or whether it is assigned to a variable.
+    *   *Why C is incorrect:* Tuple immutability applies to all tuples regardless of their element types; a tuple that contains a list can have the list mutated in place, but the tuple slot itself cannot be reassigned to a different object.
+    *   *Why D is incorrect:* Immutability is not tied to assignment; the tuple object itself is immutable as soon as it is constructed, whether or not it is bound to a name.
 
 
 ---
@@ -68,12 +68,11 @@ D) Reboot the physical machine and wait for services to reload.
 When designing a system for **Tuples and Dictionaries**, you must mitigate the risk of **Allowing attackers to execute arbitrary SQL commands on the backend database via input forms.**. Which of the following security configurations or controls represents the best practice to implement?
 A) Implement parameterized queries and prepared statements rather than raw string concatenation.
 B) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-D) Enable full disk encryption on all client endpoints.
+D) Store query parameters in a tuple and pass the tuple directly into a raw SQL string using Python's `%` string formatting operator.
 C) Enable full disk encryption on all client endpoints.
 *   **Correct Answer:** A) Implement parameterized queries and prepared statements rather than raw string concatenation.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Implement parameterized queries and prepared statements rather than raw string concatenation. mitigates the risk of Allowing attackers to execute arbitrary SQL commands on the backend database via input forms..
+    * *Why A is correct:* Implementing parameterized queries and prepared statements rather than raw string concatenation mitigates the risk of allowing attackers to execute arbitrary SQL commands on the backend database via input forms.
     * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why D is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
+    * *Why D is incorrect:* Passing a tuple of values into a raw SQL string with `%` formatting is still string interpolation — the database driver does not treat the values as bound parameters, so SQL injection remains possible; true parameterized queries use the database API's placeholder syntax (e.g., `cursor.execute("SELECT * FROM users WHERE id = ?", (user_id,))`).
     * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-

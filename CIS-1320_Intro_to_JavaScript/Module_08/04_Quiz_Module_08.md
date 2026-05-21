@@ -17,63 +17,63 @@ Which array method adds one or more elements to the *beginning* of an array and 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **push/pop**?
-B) A node in a tree structure that has no child nodes (its children point to null), representing the termination points of the branches.
-A) The core operations of a stack: 'push' inserts an element onto the top, and 'pop' removes and returns the top element.
-C) The entry point or first node in a linked list, which serves as the reference for traversing the rest of the list structure.
-D) The operational principle of a stack, where the element added most recently is the first one to be removed, similar to a stack of trays.
-*   **Correct Answer:** A) The core operations of a stack: 'push' inserts an element onto the top, and 'pop' removes and returns the top element.
+Which of the following most accurately describes **push/pop** array methods in JavaScript?
+*   A) `push()` adds an element to the beginning of an array; `pop()` removes the first element
+*   B) `push()` adds one or more elements to the end of an array and returns the new length; `pop()` removes and returns the last element
+*   C) `push()` and `pop()` both return `undefined` and modify the array without providing a return value
+*   D) `push()` creates a new array by appending an element; `pop()` creates a new array with the last element removed
+*   **Correct Answer:** B) `push()` adds one or more elements to the end of an array and returns the new length; `pop()` removes and returns the last element.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **push/pop**.
-    * *Why A is correct:* This describes the exact role and function of **push/pop**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **push/pop**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **push/pop**.
-
+    *   *Why A is incorrect:* Those are the behaviors of `unshift()` (add to front) and `shift()` (remove from front), not `push`/`pop`.
+    *   *Why B is correct:* `push` targets the tail and returns the new `length`; `pop` targets the tail and returns the removed element.
+    *   *Why C is incorrect:* Both methods have meaningful return values — `push` returns the new length; `pop` returns the removed element.
+    *   *Why D is incorrect:* Both `push` and `pop` mutate the original array in place; they do not create new arrays.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **run the automated unit testing suite to verify system functionality**. Which of the following commands is the most appropriate to execute?
-C) python3 -m venv .venv
-D) pip install -r requirements.txt
-B) git commit -m 'update'
-A) pytest
-*   **Correct Answer:** A) pytest
+What is the value of `arr` and the return value of the call in the following code?
+```javascript
+const arr = [1, 2, 3];
+const result = arr.push(4, 5);
+```
+*   A) `arr` is `[1, 2, 3]` and `result` is `[1, 2, 3, 4, 5]`
+*   B) `arr` is `[1, 2, 3, 4, 5]` and `result` is `5` (the new length)
+*   C) `arr` is `[4, 5, 1, 2, 3]` and `result` is `5`
+*   D) `arr` is unchanged and `result` is a new array `[1, 2, 3, 4, 5]`
+*   **Correct Answer:** B) `arr` is `[1, 2, 3, 4, 5]` and `result` is `5` (the new length).
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `pytest` command is directly designed to run the automated unit testing suite to verify system functionality.
-
+    *   *Why A is incorrect:* `push` mutates the original array; `arr` changes. The return value is the new length, not the array itself.
+    *   *Why B is correct:* `push` appends elements to the end of the array and returns the resulting length (`5`).
+    *   *Why C is incorrect:* `push` appends to the end, not the beginning. Prepending is done with `unshift`.
+    *   *Why D is incorrect:* `push` mutates the original array; it does not create a new one.
 
 ---
 
 **Question 4**
-While working on **Midterm Prep & Arrays** in a production environment, you encounter a system alert indicating a **TypeError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-C) Verify that the index is within the valid range of 0 to len(list)-1.
-D) Reboot the physical machine and wait for services to reload.
-B) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
-A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-*   **Correct Answer:** A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
+While working on **Arrays**, a developer needs to extract a portion of an array without modifying the original. Which method is most appropriate?
+*   A) `splice()` — removes and returns the portion from the original array
+*   B) `pop()` — removes and returns the last element
+*   C) `slice()` — returns a shallow copy of a portion of the array without mutating the original
+*   D) `shift()` — removes and returns the first element
+*   **Correct Answer:** C) `slice()` — returns a shallow copy of a portion of the array without mutating the original.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This action does not resolve the root cause of TypeError.
-    * *Why D is incorrect:* This action does not resolve the root cause of TypeError.
-    * *Why B is incorrect:* This action does not resolve the root cause of TypeError.
-    * *Why A is correct:* Because An operation or function was applied to an object of an inappropriate data type. The appropriate fix is to Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types..
-
+    *   *Why A is incorrect:* `splice()` modifies the original array in place (removes or inserts elements); it does not preserve the original.
+    *   *Why B is incorrect:* `pop()` removes only the last element and mutates the array.
+    *   *Why C is correct:* `slice(start, end)` returns a new array containing elements from `start` up to (but not including) `end`; the original array is unchanged.
+    *   *Why D is incorrect:* `shift()` removes only the first element and mutates the array.
 
 ---
 
 **Question 5**
-When designing a system for **Midterm Prep & Arrays**, you must mitigate the risk of **Storing user credentials in plain text, making them vulnerable to database breaches.**. Which of the following security configurations or controls represents the best practice to implement?
-B) Implement parameterized queries and prepared statements rather than raw string concatenation.
-A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-D) Enable full disk encryption on all client endpoints.
-C) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
+What does `arr.length` return for `const arr = ["a", "b", "c"]`?
+*   A) `2` (the index of the last element)
+*   B) `3` (the total number of elements)
+*   C) `"abc"` (all elements concatenated)
+*   D) `undefined` (length is not a property of arrays, only strings)
+*   **Correct Answer:** B) `3` (the total number of elements).
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-    * *Why A is correct:* Implementing Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt. mitigates the risk of Storing user credentials in plain text, making them vulnerable to database breaches..
-    * *Why D is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-    * *Why C is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-
+    *   *Why A is incorrect:* The last index is `2`, but `length` reports the count of elements, not the last index.
+    *   *Why B is correct:* `arr.length` always returns the total number of elements; for a three-element array it is `3`.
+    *   *Why C is incorrect:* `arr.join("")` would produce `"abc"`; `length` is a numeric count.
+    *   *Why D is incorrect:* Arrays in JavaScript have a `length` property just like strings; it is one of the most frequently used array properties.

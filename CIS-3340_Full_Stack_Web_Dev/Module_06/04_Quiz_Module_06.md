@@ -9,71 +9,69 @@ Which HTTP status code class indicates a server-side processing error occurred?
 *   B) 3xx
 *   C) 4xx
 *   D) 5xx
-*   **Correct Answer:** D) 5xx status codes (e.g. 500 Internal Server Error) represent backend processing failures.
+*   **Correct Answer:** D) `5xx` status codes (e.g., `500 Internal Server Error`, `502 Bad Gateway`, `503 Service Unavailable`) indicate that the server encountered an error while attempting to fulfill a valid request.
 *   **Distractor Analysis:**
-    *   *Why correct:* 5xx status codes (e.g. 500 Internal Server Error) represent backend processing failures.
-    *   4xx is for client-side input errors (e.g. 404 Not Found).
+    *   *Why A is incorrect:* `2xx` codes indicate success — the request was received, understood, and processed (e.g., `200 OK`, `201 Created`).
+    *   *Why B is incorrect:* `3xx` codes indicate redirection — the client must take additional action to complete the request (e.g., `301 Moved Permanently`).
+    *   *Why C is incorrect:* `4xx` codes indicate client-side errors — the request was malformed or unauthorized (e.g., `404 Not Found`, `401 Unauthorized`).
+    *   *Why D is correct:* `5xx` codes are exclusively server-side failures — the client's request was valid but the server could not fulfill it.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **endpoints**?
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-D) The core security model consisting of Confidentiality (preventing unauthorized access), Integrity (preventing unauthorized modification), and Availability (ensuring systems are accessible when needed).
-B) The ability of different classes to respond to the same message or method call in their own unique way.
-C) The memory block allocated on the system stack for a single function call, storing parameters, local variables, and the return address.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
+Which of the following is the most accurate definition of **endpoints** in a REST API?
+*   A) The URL paths combined with HTTP methods that identify where a specific resource or operation is accessible — such as `GET /users` for listing users or `DELETE /users/:id` for removing a specific user.
+*   B) The encryption keys stored on the server that are used to sign and verify JSON Web Tokens for API authentication.
+*   C) The database index columns that allow the API server to perform fast lookups when querying records by primary key.
+*   D) The network firewall rules that restrict which IP addresses are allowed to make requests to the API server.
+*   **Correct Answer:** A) The URL paths combined with HTTP methods that identify where a specific resource or operation is accessible — such as `GET /users` for listing users or `DELETE /users/:id` for removing a specific user.
 *   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **endpoints**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **endpoints**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **endpoints**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **endpoints**.
-
+    *   *Why A is correct:* In REST API design, an endpoint is the combination of an HTTP method and a URL path — together they define a unique, addressable operation on a resource.
+    *   *Why B is incorrect:* This describes JWT signing keys — an authentication concept, not an API endpoint.
+    *   *Why C is incorrect:* This describes database index columns — a data storage optimization, not an API endpoint.
+    *   *Why D is incorrect:* This describes network security group or firewall rules — an infrastructure concern, not an API endpoint.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **record staged code modifications into the repository version history**. Which of the following commands is the most appropriate to execute?
-B) pip install -r requirements.txt
-D) pytest
-A) git commit -m 'update'
-C) python3 -m venv .venv
-*   **Correct Answer:** A) git commit -m 'update'
+A developer is designing a REST API for a bookstore application. Which URL structure best follows REST naming conventions for retrieving a single book by ID?
+*   A) `GET /getBook?id=42`
+*   B) `GET /books/42`
+*   C) `POST /retrieveBook/42`
+*   D) `GET /book-fetch/id/42`
+*   **Correct Answer:** B) `GET /books/42` — REST convention uses plural nouns for resource collections (`/books`) and places the resource identifier in the URL path (`/42`), not in a query string or verb.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `git commit -m 'update'` command is directly designed to record staged code modifications into the repository version history.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is incorrect:* Using `?id=42` as a query parameter is acceptable for filtering collections but unconventional for identifying a specific resource — the ID belongs in the path.
+    *   *Why B is correct:* `GET /books/42` is the standard REST pattern: `GET` retrieves, `/books` is the collection noun, and `/42` identifies the specific resource.
+    *   *Why C is incorrect:* REST endpoints should not contain verbs (`retrieveBook`) — the HTTP method (`GET`) communicates the action.
+    *   *Why D is incorrect:* `/book-fetch/id/42` is a non-standard, verbose path that does not follow REST naming conventions.
 
 ---
 
 **Question 4**
-While working on **RESTful API Principles** in a production environment, you encounter a system alert indicating a **KeyError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-D) Reboot the physical machine and wait for services to reload.
-C) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-A) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
-B) Verify that the index is within the valid range of 0 to len(list)-1.
-*   **Correct Answer:** A) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
+An AWS Lambda function behind an API Gateway endpoint is called three times due to a network retry. The function creates a new database record on each invocation. What REST/HTTP concept explains why this is a design problem?
+*   A) The `GET` method was used instead of `POST` — GET requests should be used for all database writes.
+*   B) `POST` is not idempotent — repeating it creates duplicate resources. The API should use an idempotency key or switch to `PUT` with a client-generated ID to make the operation safe to retry.
+*   C) Lambda functions automatically deduplicate all requests — the problem must be in the database, not the API design.
+*   D) HTTP status code `201 Created` should have been `200 OK` — returning the wrong status code causes API Gateway to retry the request automatically.
+*   **Correct Answer:** B) `POST` is not idempotent — repeating it creates duplicate resources. The API should use an idempotency key or switch to `PUT` with a client-generated ID to make the operation safe to retry.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This action does not resolve the root cause of KeyError.
-    * *Why C is incorrect:* This action does not resolve the root cause of KeyError.
-    * *Why A is correct:* Because The code attempted to access a dictionary key that is not defined in the object. The appropriate fix is to Ensure the requested key exists in the dictionary, or use the .get() method to return a default value..
-    * *Why B is incorrect:* This action does not resolve the root cause of KeyError.
-
+    *   *Why A is incorrect:* `GET` must never be used for write operations — it is semantically read-only and safe.
+    *   *Why B is correct:* `POST` creates a new resource each time it is called — making it non-idempotent. Retries produce duplicates unless an idempotency key prevents repeated processing.
+    *   *Why C is incorrect:* Lambda does not automatically deduplicate requests — the developer must implement idempotency logic.
+    *   *Why D is incorrect:* `201 Created` is the correct status code for a successful resource creation — it does not trigger automatic retries.
 
 ---
 
 **Question 5**
-When designing a system for **RESTful API Principles**, you must mitigate the risk of **Allowing attackers to execute arbitrary SQL commands on the backend database via input forms.**. Which of the following security configurations or controls represents the best practice to implement?
-C) Enable full disk encryption on all client endpoints.
-B) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-D) Enable full disk encryption on all client endpoints.
-A) Implement parameterized queries and prepared statements rather than raw string concatenation.
-*   **Correct Answer:** A) Implement parameterized queries and prepared statements rather than raw string concatenation.
+A React front-end sends a `DELETE /api/posts/7` request to an Express server. The post is successfully deleted, and the server should return a response with no body. Which HTTP status code is most appropriate?
+*   A) `200 OK`
+*   B) `201 Created`
+*   C) `204 No Content`
+*   D) `404 Not Found`
+*   **Correct Answer:** C) `204 No Content` indicates a successful request that intentionally returns no response body — the standard status code for a successful `DELETE` operation.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why D is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why A is correct:* Implementing Implement parameterized queries and prepared statements rather than raw string concatenation. mitigates the risk of Allowing attackers to execute arbitrary SQL commands on the backend database via input forms..
-
+    *   *Why A is incorrect:* `200 OK` is correct for successful requests that return a response body — for a DELETE with no body, `204` is more precise.
+    *   *Why B is incorrect:* `201 Created` is used when a new resource has been created — not for deletion.
+    *   *Why C is correct:* `204 No Content` is the REST convention for successful DELETE (and some PUT/PATCH) operations that do not return a response body.
+    *   *Why D is incorrect:* `404 Not Found` would indicate the post to be deleted does not exist — not a successful deletion.

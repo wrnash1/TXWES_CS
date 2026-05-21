@@ -1,5 +1,5 @@
-# Quiz: Module 01 - OSI Model
-## Course: CIS-3321_Network_Admin (3321_Network_Admin - CompTIA Network+ (N10-008))
+# Quiz: Module 01 - Networking Fundamentals and the OSI Model
+## Course: CIS-3321 – Network Administration (CompTIA Network+ N10-009)
 
 ---
 
@@ -11,72 +11,63 @@ C) Layer 4 (Transport Layer)
 D) Layer 7 (Application Layer)
 *   **Correct Answer:** B) Layer 3 (Network Layer)
 *   **Distractor Analysis:**
-    *   *Why A is incorrect:* Layer 2 handles MAC addressing and framing on the same physical link, not routing across logical networks.
-    *   *Why C is incorrect:* Layer 4 manages end-to-end transport protocols (TCP/UDP) and port numbers, not routing.
-    *   *Why D is incorrect:* Layer 7 handles application-specific protocols (HTTP, SMTP), not network routing.
-
----
+    *   *Why A is incorrect:* Layer 2 handles MAC addressing and framing for delivery on the same physical link segment, not routing across multiple logical networks.
+    *   *Why C is incorrect:* Layer 4 manages end-to-end transport protocols (TCP/UDP) and port numbers, not routing decisions between networks.
+    *   *Why D is incorrect:* Layer 7 handles application-specific protocols (HTTP, SMTP, DNS), not network routing.
 
 ---
 
 **Question 2**
-What is the Protocol Data Unit (PDU) processed at Layer 2 of the OSI model?
-A) Segment
-B) Packet
-C) Frame
-D) Bit
-*   **Correct Answer:** C) Frame
+A network administrator is documenting the OSI model for a training session. Which of the following correctly identifies the Protocol Data Unit (PDU) and the primary device associated with Layer 2 of the OSI model?
+A) PDU: Packet; Device: Router
+B) PDU: Segment; Device: Firewall
+C) PDU: Frame; Device: Switch
+D) PDU: Bit; Device: Hub
+*   **Correct Answer:** C) PDU: Frame; Device: Switch
 *   **Distractor Analysis:**
-    *   *Why A is incorrect:* Segments are the PDU of Layer 4 (Transport Layer).
-    *   *Why B is incorrect:* Packets are the PDU of Layer 3 (Network Layer).
-    *   *Why D is incorrect:* Bits are the PDU of Layer 1 (Physical Layer).
-
----
+    *   *Why A is incorrect:* Packets are the PDU of Layer 3 (Network), and routers are Layer 3 devices.
+    *   *Why B is incorrect:* Segments are the PDU of Layer 4 (Transport); firewalls can operate at multiple layers but are not the primary Layer 2 device.
+    *   *Why D is incorrect:* Bits are the PDU of Layer 1 (Physical), and hubs are Layer 1 devices.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **map and trace the exact path of router hops packets travel to reach a target destination**. Which of the following commands is the most appropriate to execute?
-D) nslookup
-C) netstat -ano
-B) ping
+A network engineer needs to map and trace the exact path of router hops that packets travel to reach a target destination. Which of the following commands is the most appropriate?
 A) traceroute
+B) ping
+C) netstat -ano
+D) nslookup
 *   **Correct Answer:** A) traceroute
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `traceroute` command is directly designed to map and trace the exact path of router hops packets travel to reach a target destination.
-
+    *   *Why B is incorrect:* The `ping` command uses ICMP Echo Requests to test basic reachability and measure round-trip latency, but does not reveal intermediate hop information.
+    *   *Why C is incorrect:* The `netstat -ano` command displays active local connections, listening ports, and process IDs — it does not trace routes to remote hosts.
+    *   *Why D is incorrect:* The `nslookup` command queries DNS servers to resolve hostnames; it has no routing trace capability.
 
 ---
 
 **Question 4**
-While working on **OSI Model** in a production environment, you encounter a system alert indicating a **DNS Failure** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-D) Reboot the physical machine and wait for services to reload.
-A) Change the local network interface settings to use a public DNS resolver like 8.8.8.8 or 1.1.1.1.
-B) Release and renew the DHCP lease, or configure a unique static IP address outside the DHCP pool range.
-C) Correct the subnet mask configuration on the interface to match the network segment parameters.
-*   **Correct Answer:** A) Change the local network interface settings to use a public DNS resolver like 8.8.8.8 or 1.1.1.1.
+A user reports they cannot browse the internet but can ping 8.8.8.8 by IP address successfully. Which of the following is the most likely cause?
+A) The default gateway is misconfigured.
+B) The network cable is unplugged.
+C) DNS resolution is failing because the configured DNS server is unreachable.
+D) The user's subnet mask does not match the rest of the network.
+*   **Correct Answer:** C) DNS resolution is failing because the configured DNS server is unreachable.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This action does not resolve the root cause of DNS Failure.
-    * *Why A is correct:* Because The configured DNS server is offline, misconfigured, or unreachable, preventing host name resolution. The appropriate fix is to Change the local network interface settings to use a public DNS resolver like 8.8.8.8 or 1.1.1.1..
-    * *Why B is incorrect:* This action does not resolve the root cause of DNS Failure.
-    * *Why C is incorrect:* This action does not resolve the root cause of DNS Failure.
-
+    *   *Why A is incorrect:* If the default gateway were misconfigured, the user could not ping an external IP address (8.8.8.8) at all; pinging by IP succeeds, eliminating this cause.
+    *   *Why B is incorrect:* An unplugged cable would prevent all connectivity, including the successful ping by IP address.
+    *   *Why D is incorrect:* A subnet mask mismatch would prevent reaching any external hosts; again, the successful IP ping rules this out.
 
 ---
 
 **Question 5**
-When designing a system for **OSI Model**, you must mitigate the risk of **Attackers connecting rogue access points or unauthorized laptops directly to internal switch ports.**. Which of the following security configurations or controls represents the best practice to implement?
+When securing a network against attackers connecting rogue devices directly to internal switch ports, which of the following security controls is the most appropriate first line of defense?
 A) Implement switch Port Security to restrict access to switch ports based on approved MAC addresses.
-C) Enable full disk encryption on all client endpoints.
 B) Configure SSH (port 22) for terminal access and HTTPS (port 443) for web interfaces, disabling Telnet and HTTP.
-D) Enable full disk encryption on all client endpoints.
+C) Enable 802.1X Network Access Control (NAC) to require authentication before any device is granted network access.
+D) Deploy an Intrusion Prevention System (IPS) to detect and block malicious traffic signatures inline.
 *   **Correct Answer:** A) Implement switch Port Security to restrict access to switch ports based on approved MAC addresses.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Implement switch Port Security to restrict access to switch ports based on approved MAC addresses. mitigates the risk of Attackers connecting rogue access points or unauthorized laptops directly to internal switch ports..
-    * *Why C is incorrect:* This does not address the security vulnerability of Unauthorized Port Access.
-    * *Why B is incorrect:* This does not address the security vulnerability of Unauthorized Port Access.
-    * *Why D is incorrect:* This does not address the security vulnerability of Unauthorized Port Access.
-
+    *   *Why A is correct:* Port Security is a Layer 2 switch feature that limits which MAC addresses may connect to a specific physical port, directly preventing unauthorized physical device attachment.
+    *   *Why B is incorrect:* Replacing Telnet with SSH encrypts management sessions but does not prevent an unauthorized device from physically connecting to an open switch port.
+    *   *Why C is incorrect:* 802.1X NAC is a strong control but is an enterprise-level authentication solution; Port Security is the direct, immediate answer for preventing rogue physical connections on a per-port basis.
+    *   *Why D is incorrect:* An IPS inspects traffic flowing through the network but does not prevent an unauthorized device from obtaining a link-layer connection on an open switch port.

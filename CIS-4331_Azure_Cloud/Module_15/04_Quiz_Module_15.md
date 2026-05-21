@@ -1,79 +1,81 @@
 # Quiz: Module 15 - Azure Resource Manager (ARM) & CLI
+
 ## Course: CIS-4331_Azure_Cloud (Microsoft Azure Fundamentals (AZ-900))
 
 ---
 
 **Question 1**
 What file format is used to write Azure Resource Manager (ARM) templates?
-*   A) XML
-*   B) JSON
-*   C) YAML
-*   D) CSV
-*   **Correct Answer:** B) ARM templates are written in JSON (JavaScript Object Notation), representing resources declaratively.
-*   **Distractor Analysis:**
-    *   *Why correct:* ARM templates are written in JSON (JavaScript Object Notation), representing resources declaratively.
-    *   YAML is used for Bicep or Kubernetes configurations but not native ARM templates.
+
+* A) XML
+* B) JSON
+* C) YAML
+* D) CSV
+* **Correct Answer:** B) ARM templates are written in JSON (JavaScript Object Notation), representing resources declaratively.
+* **Distractor Analysis:**
+  * *Why correct:* Native ARM templates use JSON format. Bicep is a higher-level language that compiles to ARM JSON but is not itself the ARM template format.
+  * *Why C is incorrect:* YAML is used for Kubernetes manifests and some CI/CD pipeline definitions but is not the native format for ARM templates.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Azure Cloud Shell**?
-C) A computer data storage architecture that manages data as objects (e.g. AWS S3, Google Cloud Storage), offering high scalability.
-B) A two-dimensional CSS layout system that allows developers to design complex grid-based user interfaces with rows and columns, offering precise control over alignment.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within cloud operations.
-D) The security framework dividing operations between the cloud provider (security OF the cloud) and the customer (security IN the cloud).
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within cloud operations.
-*   **Distractor Analysis:**
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Azure Cloud Shell**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Azure Cloud Shell**.
-    * *Why A is correct:* This describes the exact role and function of **Azure Cloud Shell**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Azure Cloud Shell**.
+Which of the following most accurately describes **Azure Cloud Shell**?
 
+* A) A browser-based, pre-authenticated shell environment accessible from the Azure portal or shell.azure.com that provides Bash (with Azure CLI) and PowerShell without requiring any local software installation.
+* B) A local command-line tool installed on Windows, macOS, or Linux that requires `az login` authentication before managing Azure resources.
+* C) A cloud storage service that persists shell scripts and configuration files between Azure CLI sessions on a local machine.
+* D) A virtual machine SKU optimized for running automation scripts and ARM template deployments at scale.
+* **Correct Answer:** A) Azure Cloud Shell is a browser-based, pre-authenticated shell providing Bash and PowerShell without any local installation required.
+* **Distractor Analysis:**
+  * *Why A is correct:* Cloud Shell's key characteristics on AZ-900 are: browser-based, pre-authenticated to your subscription, no local install required, supports both Bash and PowerShell.
+  * *Why B is incorrect:* That describes the locally installed Azure CLI — it requires `az login`, unlike Cloud Shell.
+  * *Why C is incorrect:* Cloud Shell does use Azure Files for file persistence, but that is a feature of Cloud Shell, not its definition.
+  * *Why D is incorrect:* Cloud Shell is a browser-based shell, not a VM SKU.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **query the cloud API to retrieve a list of all active virtual machines in the project**. Which of the following commands is the most appropriate to execute?
-B) kubectl get pods -n production
-C) terraform apply
-A) gcloud compute instances list
-D) aws s3 sync local_dir s3://my-bucket
-*   **Correct Answer:** A) gcloud compute instances list
-*   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `gcloud compute instances list` command is directly designed to query the cloud API to retrieve a list of all active virtual machines in the project.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
+An operations team needs to deploy the same virtual network configuration to 50 different Azure subscriptions reliably, with no risk of configuration drift between deployments. Which Azure tool is best suited for this?
 
+* A) Azure CLI interactive commands run manually in each subscription
+* B) Azure ARM template deployed using a Management Group-scope deployment
+* C) Azure Advisor recommendations for each subscription
+* D) Azure portal manual configuration for each subscription
+* **Correct Answer:** B) ARM templates are declarative and idempotent — deploying the same template to all subscriptions guarantees consistent configuration with no drift.
+* **Distractor Analysis:**
+  * *Why B is correct:* ARM templates' declarative nature means the same JSON file produces identical results across all subscriptions. Management Group scope deployments can target multiple subscriptions simultaneously.
+  * *Why A is incorrect:* Manual CLI commands across 50 subscriptions are error-prone and not idempotent — small variations in command execution can cause configuration drift.
+  * *Why C is incorrect:* Advisor provides recommendations — it cannot deploy or configure network resources.
+  * *Why D is incorrect:* Manual portal configuration across 50 subscriptions is highly error-prone and time-consuming — not suitable for consistent at-scale deployment.
 
 ---
 
 **Question 4**
-While working on **Azure Resource Manager (ARM) & CLI** in a production environment, you encounter a system alert indicating a **Cloud Billing Spike** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-B) Check the VPC route table for an Internet Gateway path and verify that the security group allows incoming traffic.
-D) Reboot the physical machine and wait for services to reload.
-A) Set up billing alerts, delete unused volumes, and configure auto-scaling scale-down policies.
-C) Review the user's IAM policies and attach the specific policy granting permissions for the resource action.
-*   **Correct Answer:** A) Set up billing alerts, delete unused volumes, and configure auto-scaling scale-down policies.
-*   **Distractor Analysis:**
-    * *Why B is incorrect:* This action does not resolve the root cause of Cloud Billing Spike.
-    * *Why D is incorrect:* This action does not resolve the root cause of Cloud Billing Spike.
-    * *Why A is correct:* Because Idle or over-provisioned virtual machine instances and orphan storage volumes are running continuously. The appropriate fix is to Set up billing alerts, delete unused volumes, and configure auto-scaling scale-down policies..
-    * *Why C is incorrect:* This action does not resolve the root cause of Cloud Billing Spike.
+What is the key advantage of ARM templates being **declarative** compared to imperative scripting with Azure CLI or PowerShell?
 
+* A) ARM templates are faster to execute than CLI commands because they bypass Azure Resource Manager.
+* B) ARM templates allow you to define the desired end-state of infrastructure, and Azure determines how to achieve it — running the same template multiple times produces the same result (idempotency).
+* C) ARM templates are written in Python, making them more readable than JSON-based CLI scripts.
+* D) ARM templates require no Azure permissions — any user can deploy them regardless of RBAC role assignments.
+* **Correct Answer:** B) ARM templates are declarative and idempotent — you specify what you want, Azure handles the how, and re-running the template never creates duplicates.
+* **Distractor Analysis:**
+  * *Why B is correct:* Declarative + idempotent is the core advantage of ARM templates over imperative scripting. This makes deployments safe to repeat for audits, disaster recovery, or re-deployment scenarios.
+  * *Why A is incorrect:* ARM templates are processed through Azure Resource Manager — they do not bypass it.
+  * *Why C is incorrect:* ARM templates are JSON, not Python. Bicep is a DSL that compiles to ARM JSON.
+  * *Why D is incorrect:* ARM template deployments require appropriate RBAC permissions (at minimum Contributor at the target scope).
 
 ---
 
 **Question 5**
-When designing a system for **Azure Resource Manager (ARM) & CLI**, you must mitigate the risk of **Storing sensitive corporate documents in publicly readable cloud buckets, leading to data breaches.**. Which of the following security configurations or controls represents the best practice to implement?
-B) Enforce temporary credentials (STS), rotate keys regularly, and never hardcode API keys in repositories.
-D) Enable full disk encryption on all client endpoints.
-A) Enable Block Public Access configurations and enforce access control via IAM or signed URLs.
-C) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Enable Block Public Access configurations and enforce access control via IAM or signed URLs.
-*   **Distractor Analysis:**
-    * *Why B is incorrect:* This does not address the security vulnerability of Publicly Exposed Storage Buckets.
-    * *Why D is incorrect:* This does not address the security vulnerability of Publicly Exposed Storage Buckets.
-    * *Why A is correct:* Implementing Enable Block Public Access configurations and enforce access control via IAM or signed URLs. mitigates the risk of Storing sensitive corporate documents in publicly readable cloud buckets, leading to data breaches..
-    * *Why C is incorrect:* This does not address the security vulnerability of Publicly Exposed Storage Buckets.
+An administrator needs to quickly list all Resource Groups in their Azure subscription using a command-line tool, without installing anything locally. Which combination of tool and command achieves this?
 
+* A) Locally installed Azure CLI: `az group list --output table`
+* B) Azure Cloud Shell (Bash): `az group list --output table`
+* C) Azure PowerShell local install: `Get-AzResourceGroup`
+* D) Azure portal search bar: type "Resource Groups"
+* **Correct Answer:** B) Azure Cloud Shell provides a pre-authenticated, browser-based Bash environment — `az group list --output table` lists all Resource Groups with no local installation required.
+* **Distractor Analysis:**
+  * *Why B is correct:* Cloud Shell requires no local software, is pre-authenticated, and supports the `az` CLI commands — it is the tool that satisfies both "command-line" and "no local installation."
+  * *Why A is incorrect:* A locally installed Azure CLI requires installation and `az login` authentication — it does not meet the "no local installation" requirement.
+  * *Why C is incorrect:* Azure PowerShell local install also requires installation — it does not meet the no-install requirement.
+  * *Why D is incorrect:* The portal search bar is a GUI, not a command-line tool — it does not execute CLI commands.

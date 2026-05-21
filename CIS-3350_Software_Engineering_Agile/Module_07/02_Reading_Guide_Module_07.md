@@ -1,51 +1,66 @@
-# Reading Guide: Module 07 - Design Patterns (Structural & Behavioral)
+# Reading Guide: Module 07 – User Stories and Acceptance Criteria
+
 ## Course: CIS-3350_Software_Engineering_Agile (Professional Scrum Master (PSM I))
 
 ---
 
 ### Introduction
-Welcome to **Module 07 - Design Patterns (Structural & Behavioral)**! This week's study material focuses on the core foundations and configuration mechanics of **Design Patterns (Structural & Behavioral)** as aligned with the **Professional Scrum Master (PSM I)** certification framework. Understanding these topics is essential not only for passing the certification exam but also for administering enterprise systems in real-world environments.
 
-As a student, you will learn the primary operational roles, command syntaxes, and troubleshooting parameters needed to design, configure, and maintain these services. We will explore how different protocols establish connections, how configurations manage resource allocation, and how security controls prevent access breaches. Make sure to complete the checklists and review the glossary terms in detail before beginning the lab activity.
+Welcome to **Module 07 – User Stories and Acceptance Criteria**! User stories are the most widely used format for expressing Product Backlog items in Agile teams. While the Scrum Guide does not mandate user stories specifically, the PSM I exam environment assumes familiarity with them as a common Scrum practice.
+
+This module covers the anatomy of a well-formed user story, the role of acceptance criteria in defining "done" at the story level, and the INVEST criteria for evaluating story quality. These skills bridge the gap between Scrum theory and the practical day-to-day work of a Scrum team.
 
 ---
 
 ### 1. High-Yield Glossary
+
 Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
 
-*   **Observer pattern**: A primary configuration standard and technical parameter essential for coordinating Design Patterns (Structural & Behavioral) activities, enforcing security boundaries, and verifying operational statuses within the programming environment.
-*   **Strategy pattern**: A primary configuration standard and technical parameter essential for coordinating Design Patterns (Structural & Behavioral) activities, enforcing security boundaries, and verifying operational statuses within the programming environment.
-*   **decoupled components**: A primary configuration standard and technical parameter essential for coordinating Design Patterns (Structural & Behavioral) activities, enforcing security boundaries, and verifying operational statuses within the programming environment.
-*   **state machines.**: A primary configuration standard and technical parameter essential for coordinating Design Patterns (Structural & Behavioral) activities, enforcing security boundaries, and verifying operational statuses within the programming environment.
+* **User story:** A short, informal description of a software feature written from the perspective of an end user, following the format: "As a [type of user], I want [some goal] so that [some reason]." User stories encourage conversation between the Product Owner, stakeholders, and Developers rather than serving as a complete specification.
+
+* **Acceptance criteria:** Specific, testable conditions that a user story must satisfy to be considered complete. Acceptance criteria define the boundary of a story's scope and are agreed upon between the Product Owner and Developers before work begins. They are distinct from the Definition of Done, which applies to all Increments.
+
+* **INVEST criteria:** A checklist for evaluating user story quality, where each letter represents a quality attribute: Independent (can be developed without depending on other stories), Negotiable (details are open to discussion), Valuable (delivers value to the user or business), Estimable (the team can size it), Small (fits within a Sprint), Testable (acceptance criteria can be verified). Stories that fail INVEST criteria should be refined or split.
+
+* **Story splitting:** The practice of decomposing a large user story (an "epic") into smaller, independently deliverable stories that each fit within a Sprint. Common splitting patterns include splitting by workflow steps, data variations, user roles, happy/unhappy paths, and operational boundaries.
+
+* **Epic:** A large user story or feature too big to complete in a single Sprint that must be broken down into smaller stories before it can be selected for Sprint Planning. Epics are valid Product Backlog items but are not ready for a Sprint until split into appropriately sized stories.
 
 ---
 
 ### 2. Certification Exam Tips
-*   **Focus Area:** Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
-*   **Scenario Trap:** Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
-*   **Study Resource:** To reinforce these concepts visually, review this targeted search query: [Scrum Framework Tutorial by Scrum Alliance / freeCodeCamp - Design Patterns (Structural & Behavioral)](https://www.youtube.com/watch?v=28Tz-ODMcD4).
+
+* **PSM I Focus — User stories are not required by the Scrum Guide:** A common trap presents user stories as a Scrum requirement. They are not. The Scrum Guide says Product Backlog items should have a description, order, and estimate — but does not prescribe format. User stories are a widely adopted practice, not a Scrum rule.
+* **Scenario Trap — Acceptance criteria vs. Definition of Done:** Acceptance criteria are story-specific conditions agreed between the Product Owner and Developers. The Definition of Done applies to all Increments as a quality floor. A story can meet its acceptance criteria but still not meet the DoD — in which case it is not done.
+* **INVEST — Negotiable does not mean changeable at will:** The "N" in INVEST means the details of a story should be open for conversation before the Sprint begins — not that scope can be changed mid-Sprint. Once a story is in the Sprint Backlog, it is committed to the Sprint Goal.
+* **"As a user" is not enough:** A vague actor in a user story (e.g., "as a user") produces vague acceptance criteria. Good stories name a specific role with specific needs, leading to more testable acceptance criteria.
+* **Study Resource:** [The Scrum Guide (2020)](https://scrumguides.org/) does not cover user stories directly. Supplement with the [Agile Alliance user story guide](https://www.agilealliance.org/glossary/user-stories/) and Mike Cohn's *User Stories Applied* (available via library or OpenLibrary).
 
 ---
 
 ### Required Readings & Videos
+
 To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the section/chapter covering **Design Patterns (Structural & Behavioral)** in the OER Textbook: [The Scrum Guide](https://scrumguides.org/).
-*   **Required Video:** Watch the video lecture on **Design Patterns (Structural & Behavioral)** in the official course playlist: [Scrum Framework Tutorial by Scrum Alliance / freeCodeCamp](https://www.youtube.com/watch?v=28Tz-ODMcD4).
+
+* **Required Reading:** [User Stories — Agile Alliance Glossary](https://www.agilealliance.org/glossary/user-stories/) — the Agile Alliance's free definition covering story format, INVEST criteria, and the relationship between stories and acceptance criteria.
+* **Required Video:** [Writing Good User Stories and Acceptance Criteria – Agile for Humans](https://www.youtube.com/watch?v=tKSUokG3a0g) — practical examples of strong vs. weak user stories and how to write acceptance criteria using Given-When-Then format. (~14 min)
 
 ---
 
 ### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Implement Observer pattern to notify clients on data updates**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-*   **Implement Strategy pattern swapping payment calculators**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-*   **Verify decoupled state dependencies**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
 
+In this week's hands-on lab, you will:
+
+* **Write user stories from a product brief:** Given a one-paragraph product description, write five user stories in the standard "As a / I want / So that" format, each targeting a distinct user role and delivering specific value.
+* **Add acceptance criteria using Given-When-Then:** For each of your five user stories, write at least two acceptance criteria using the Gherkin Given-When-Then format, ensuring each criterion is independently testable.
+* **Apply INVEST to evaluate story quality:** Score each of your five stories against the INVEST criteria and identify any that need to be split, refined, or clarified before they would be ready for Sprint Planning.
 
 ---
 
 ### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read the section/chapter covering **Design Patterns (Structural & Behavioral)** in [The Scrum Guide](https://scrumguides.org/).
-- [ ] Watch the video lecture on **Design Patterns (Structural & Behavioral)** in [Scrum Framework Tutorial by Scrum Alliance / freeCodeCamp](https://www.youtube.com/watch?v=28Tz-ODMcD4).
-- [ ] Review the commands outlined in the lab instructions.
-- [ ] Proceed to the weekly hands-on lab activity.
+
+* [ ] Read the Agile Alliance user story glossary entry and memorize the INVEST criteria.
+* [ ] Be able to write a user story in the standard format without referring to notes.
+* [ ] Understand the difference between acceptance criteria (story-level) and the Definition of Done (increment-level).
+* [ ] Watch the required video and practice writing at least two Given-When-Then acceptance criteria.
+* [ ] Proceed to the weekly hands-on lab activity.

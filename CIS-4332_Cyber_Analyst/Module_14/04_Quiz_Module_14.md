@@ -1,79 +1,82 @@
-# Quiz: Module 14 - Threat Detection & Containment
+# Quiz: Module 14 - Threat Hunting Methodologies
 ## Course: CIS-4332_Cyber_Analyst (CompTIA CySA+)
 
 ---
 
 **Question 1**
-What is the purpose of DNS sinkholing in incident containment?
-*   A) Speeding up DNS requests
-*   B) Redirecting malicious outbound traffic to a secure internal IP address
-*   C) Encrypting domain records
-*   D) Shutting down the DNS server
-*   **Correct Answer:** B) DNS sinkholing resolves blacklisted domains to a controlled IP, preventing communication with C2 servers.
+What is the primary purpose of DNS sinkholing in threat hunting and incident containment?
+
+*   A) Speeding up DNS resolution for internal hosts by caching frequently requested domain records on a local resolver
+*   B) Redirecting queries for known-malicious domains to a controlled internal IP address — severing C2 communication and identifying which internal hosts are infected by observing which systems query the sinkholed domain
+*   C) Encrypting all DNS query traffic between internal resolvers and external root servers to prevent DNS eavesdropping
+*   D) Shutting down the organization's primary DNS server to prevent all external name resolution during an active incident
+*   **Correct Answer:** B) Redirecting queries for known-malicious domains to a controlled internal IP address — severing C2 communication and identifying which internal hosts are infected by observing which systems query the sinkholed domain.
 *   **Distractor Analysis:**
-    *   *Why correct:* DNS sinkholing resolves blacklisted domains to a controlled IP, preventing communication with C2 servers.
-    *   It is a containment mechanism, not an optimization tool.
+    *   *Why A is incorrect:* Caching for performance is a standard DNS resolver function; it has nothing to do with threat containment or malicious domain redirection. DNS sinkholing is a security control, not a performance optimization.
+    *   *Why B is correct:* A DNS sinkhole resolves blacklisted C2 domains to an internal controlled IP (e.g., `127.0.0.1` or a monitored sensor). This simultaneously cuts the infected host's communication path to the C2 server (containment) and generates observable traffic to the sinkhole address that reveals exactly which internal hosts are compromised (threat identification). Both capabilities make it a high-value threat hunting and IR tool.
+    *   *Why C is incorrect:* Encrypting DNS traffic between resolvers and root servers describes DNS over HTTPS (DoH) or DNS over TLS (DoT) — privacy and integrity controls, not containment techniques.
+    *   *Why D is incorrect:* Shutting down the DNS server would cause complete internal name resolution failure — a self-inflicted denial of service. DNS sinkholing targets specific malicious domains, not all DNS service.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **firewall IP blocks**?
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within security operations.
-D) A mathematical representation used to describe the asymptotic upper bound of an algorithm's running time or space complexity relative to the input size N. It helps developers predict how an algorithm will scale as data grows.
-C) A binary search tree that automatically adjusts its height during insertions and deletions (e.g., AVL, Red-Black) to maintain logarithmic operations.
-B) The mathematical expectation of an algorithm's performance across all possible inputs of size N, representing typical real-world runtime behavior.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within security operations.
-*   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **firewall IP blocks**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **firewall IP blocks**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **firewall IP blocks**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **firewall IP blocks**.
+In threat hunting, which of the following most accurately defines **hypothesis-driven hunting**?
 
+*   A) Responding to a SIEM alert that has fired on a known-malicious IP address by investigating the affected host and escalating if the alert is confirmed as a true positive
+*   B) A structured approach in which the hunter formulates a specific, testable assumption about attacker behavior — typically based on threat intelligence or ATT&CK techniques — then queries available data sources to confirm or refute it
+*   C) Running automated vulnerability scans against all production systems on a weekly schedule to identify new CVEs before attackers can exploit them
+*   D) Reviewing threat intelligence reports from external feeds and ingesting the listed IOCs into the SIEM for automated correlation against future log events
+*   **Correct Answer:** B) A structured approach in which the hunter formulates a specific, testable assumption about attacker behavior — typically based on threat intelligence or ATT&CK techniques — then queries available data sources to confirm or refute it.
+*   **Distractor Analysis:**
+    *   *Why A is incorrect:* Responding to a fired SIEM alert is reactive alert triage — it begins with a detection event, not a proactive hypothesis. Hypothesis-driven hunting begins before any alert fires, under the assumption that adversaries may already be present.
+    *   *Why B is correct:* Hypothesis-driven hunting starts with a structured question such as "Based on recent threat intelligence about this threat actor group, they may be using T1059.001 PowerShell execution in our environment — let me hunt for encoded PowerShell commands in endpoint logs from the past 30 days." The hunt produces a documented result regardless of outcome, improving future detection capability even when nothing is found.
+    *   *Why C is incorrect:* Automated vulnerability scanning is a vulnerability management activity; it looks for exploitable weaknesses in systems, not for adversary activity already present in the environment.
+    *   *Why D is incorrect:* Ingesting IOCs into the SIEM for automated correlation is a reactive threat intelligence integration task; it depends on future alerts firing when IOCs match, rather than proactively searching for existing adversary activity.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **run a dictionary brute-force attack against the target SSH service to test credential strength**. Which of the following commands is the most appropriate to execute?
-B) openssl x509 -text -noout -in cert.pem
-C) wireshark
-D) nmap -sV -p 1-1024 target_ip
-A) hydra -l admin -P passwords.txt ssh://target
-*   **Correct Answer:** A) hydra -l admin -P passwords.txt ssh://target
-*   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `hydra -l admin -P passwords.txt ssh://target` command is directly designed to run a dictionary brute-force attack against the target SSH service to test credential strength.
+A threat hunter forms the following hypothesis: "Based on recent threat actor TTPs for our industry, attackers may have established persistence using scheduled tasks created outside business hours." Which MITRE ATT&CK technique and Windows event log data source should the hunter use to test this hypothesis?
 
+*   A) ATT&CK T1078 (Valid Accounts) — query Windows Security Event Log for Event ID 4624 (successful logon) events outside business hours
+*   B) ATT&CK T1053.005 (Scheduled Task/Job) — query Windows Security Event Log for Event ID 4698 (scheduled task created) events filtered to after-hours timestamps and non-standard task names
+*   C) ATT&CK T1071 (Application Layer Protocol) — query network proxy logs for outbound HTTP/HTTPS connections to domains with high entropy names
+*   D) ATT&CK T1003 (OS Credential Dumping) — query Windows Security Event Log for Event ID 4688 (process creation) events involving lsass.exe as the target process
+*   **Correct Answer:** B) ATT&CK T1053.005 (Scheduled Task/Job) — query Windows Security Event Log for Event ID 4698 (scheduled task created) events filtered to after-hours timestamps and non-standard task names.
+*   **Distractor Analysis:**
+    *   *Why A is incorrect:* T1078 (Valid Accounts) addresses credential reuse and account compromise; Event ID 4624 (logon events) would test for unauthorized logins, not for scheduled task persistence. The hypothesis is specifically about persistence via scheduled tasks.
+    *   *Why B is correct:* T1053.005 is the ATT&CK sub-technique for Windows Scheduled Task persistence. Event ID 4698 records the creation of a new scheduled task, including the task name, command, creator, and timestamp. Filtering to after-hours creation timestamps and excluding known legitimate task names directly tests whether the persistence hypothesis is true.
+    *   *Why C is incorrect:* T1071 (Application Layer Protocol) is a C2 communication technique; querying proxy logs for high-entropy domain names tests for C2 beaconing, not scheduled task persistence.
+    *   *Why D is incorrect:* T1003 (OS Credential Dumping) targets lsass.exe process access for credential extraction; it is a different ATT&CK technique and data source unrelated to the scheduled task persistence hypothesis.
 
 ---
 
 **Question 4**
-While working on **Threat Detection & Containment** in a production environment, you encounter a system alert indicating a **Certificate Expired Error** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-A) Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA.
-C) Review active security rules and add a permissive firewall rule allowing the specific source IP and destination port.
-B) Tune the detection signatures and define exceptions for authorized administrative activities.
-D) Reboot the physical machine and wait for services to reload.
-*   **Correct Answer:** A) Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA.
-*   **Distractor Analysis:**
-    * *Why A is correct:* Because The SSL/TLS digital certificate presented by the server has passed its validity end date, causing clients to block connections. The appropriate fix is to Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA..
-    * *Why C is incorrect:* This action does not resolve the root cause of Certificate Expired Error.
-    * *Why B is incorrect:* This action does not resolve the root cause of Certificate Expired Error.
-    * *Why D is incorrect:* This action does not resolve the root cause of Certificate Expired Error.
+During a threat hunt, an analyst queries DNS query logs and finds that 14 internal workstations have queried a domain that was registered three days ago, uses a DGA-like name pattern, and resolves to an IP address flagged in a current threat intelligence feed. No SIEM alerts have fired for any of these hosts. What does the absence of SIEM alerts indicate, and what should the analyst do next?
 
+*   A) The absence of alerts confirms these are false positives — the threat intelligence feed must be outdated and the domains are legitimate; no further action is needed
+*   B) The absence of alerts indicates the automated detection rules did not cover this specific C2 domain, demonstrating the value of proactive threat hunting; the analyst should escalate all 14 hosts as potentially compromised for Tier 2 investigation and EDR isolation
+*   C) The absence of alerts means the workstations are protected and the threat hunting query returned an incorrect result; the query should be re-run against a different data source to confirm
+*   D) The absence of SIEM alerts indicates the 14 workstations are honeypots intentionally configured to attract attacker traffic; no incident response action is required
+*   **Correct Answer:** B) The absence of alerts indicates the automated detection rules did not cover this specific C2 domain, demonstrating the value of proactive threat hunting; the analyst should escalate all 14 hosts as potentially compromised for Tier 2 investigation and EDR isolation.
+*   **Distractor Analysis:**
+    *   *Why A is incorrect:* The absence of SIEM alerts does not indicate the activity is benign — it indicates the detection rules missed it. A recently registered domain with a DGA-like name pattern resolving to a threat-intel-flagged IP is a high-confidence compromise indicator regardless of whether a SIEM rule fired.
+    *   *Why B is correct:* This scenario perfectly illustrates the value of threat hunting: 14 hosts are exhibiting C2-like behavior that no automated rule detected. The hunter's proactive DNS log query surfaced the activity. The correct next step is immediate escalation — all 14 hosts are in scope for investigation and isolation — and the hunt finding should be used to create a new SIEM detection rule for this domain pattern going forward.
+    *   *Why C is incorrect:* The query result is consistent and supported by threat intelligence correlation; there is no basis for assuming the query is incorrect. Dismissing valid hunt findings because no alert fired would negate the entire value of threat hunting.
+    *   *Why D is incorrect:* There is no indication these workstations are honeypots; treating real compromised production hosts as honeypots would leave 14 active C2-connected systems uncontained.
 
 ---
 
 **Question 5**
-When designing a system for **Threat Detection & Containment**, you must mitigate the risk of **Intruders deleting local system event logs after a breach to hide their tracks and prevent investigation.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Forward all system logs to a secure, write-once SIEM (Security Information and Event Management) platform.
-D) Enable full disk encryption on all client endpoints.
-C) Enable full disk encryption on all client endpoints.
-B) Enforce RSA keys with a minimum length of 2048/4096 bits or switch to Elliptic Curve Cryptography (ECC).
-*   **Correct Answer:** A) Forward all system logs to a secure, write-once SIEM (Security Information and Event Management) platform.
-*   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Forward all system logs to a secure, write-once SIEM (Security Information and Event Management) platform. mitigates the risk of Intruders deleting local system event logs after a breach to hide their tracks and prevent investigation..
-    * *Why D is incorrect:* This does not address the security vulnerability of Lack of Centralized Logs.
-    * *Why C is incorrect:* This does not address the security vulnerability of Lack of Centralized Logs.
-    * *Why B is incorrect:* This does not address the security vulnerability of Lack of Centralized Logs.
+An organization wants to improve its ability to detect adversary activity that bypasses signature-based SIEM rules. Which two controls together best address this capability gap?
 
+*   A) Deploy full-disk encryption on all endpoints and require pre-boot authentication to prevent unauthorized access to powered-off systems
+*   B) Establish a dedicated threat hunting program where analysts use MITRE ATT&CK as a hypothesis framework to proactively hunt through endpoint, DNS, and network logs weekly — and implement DNS sinkholing for all known-malicious C2 domains in current threat intelligence feeds to identify infected hosts that have not triggered alerts
+*   C) Increase the SIEM storage retention period from 90 days to 365 days to enable longer historical lookback for retrospective investigations
+*   D) Enforce application whitelisting on all endpoints using AppLocker to block execution of any binary not in the approved software inventory
+*   **Correct Answer:** B) Establish a dedicated threat hunting program using ATT&CK hypotheses to proactively hunt through endpoint, DNS, and network logs — and implement DNS sinkholing for known-malicious C2 domains to identify infected hosts that have not triggered alerts.
+*   **Distractor Analysis:**
+    *   *Why A is incorrect:* Full-disk encryption and pre-boot authentication protect offline data confidentiality; they have no effect on detecting active adversary activity already present on running, authenticated systems.
+    *   *Why B is correct:* Signature-based SIEM rules only detect what they are programmed to detect — novel or slightly modified attack techniques evade them. A threat hunting program proactively searches for attacker behaviors that rules miss, using ATT&CK as a guide for what to hunt. DNS sinkholing adds a passive identification layer that surfaces C2-connected hosts without requiring a detection rule for each specific domain. Together these directly address the gap between automated detection capability and real adversary activity.
+    *   *Why C is incorrect:* Extended log retention improves retrospective investigation capability after a compromise is discovered — it is a forensic lookback enabler, not a real-time detection improvement for evading adversaries.
+    *   *Why D is incorrect:* Application whitelisting reduces the attack surface by limiting what can execute, which is valuable — but it is a preventive control, not a detection control. It does not find adversaries already operating inside the environment using whitelisted LOLBins.

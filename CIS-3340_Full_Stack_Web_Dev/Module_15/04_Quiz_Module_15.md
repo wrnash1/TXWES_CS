@@ -4,76 +4,74 @@
 ---
 
 **Question 1**
-What is the primary benefit of WebSockets over standard HTTP polling?
-*   A) WebSockets encrypt data automatically
-*   B) WebSockets provide full-duplex, persistent connection channels over a single TCP socket
-*   C) WebSockets do not require ports
-*   D) WebSockets run faster than compiled C++ code
-*   **Correct Answer:** B) WebSockets allow continuous, bi-directional real-time communication without the overhead of repeating HTTP headers.
+What is the primary benefit of WebSockets over standard HTTP polling for real-time applications?
+*   A) WebSockets automatically encrypt all data with TLS — HTTP polling sends data in plaintext.
+*   B) WebSockets establish a persistent, full-duplex TCP connection — allowing the server to push data to the client at any time without the client initiating each exchange, eliminating per-message HTTP header overhead.
+*   C) WebSockets bypass the browser's Same-Origin Policy — enabling cross-origin communication without CORS headers.
+*   D) WebSockets execute 10x faster than HTTP because they bypass the JavaScript engine's event loop.
+*   **Correct Answer:** B) WebSockets establish a persistent, full-duplex TCP connection — allowing the server to push data to clients without repeated HTTP request/response cycles, eliminating the latency and overhead of polling.
 *   **Distractor Analysis:**
-    *   *Why correct:* WebSockets allow continuous, bi-directional real-time communication without the overhead of repeating HTTP headers.
-    *   Encryption requires WSS (Secure), and ports are still utilized.
+    *   *Why A is incorrect:* WebSockets do not automatically encrypt data — WSS (WebSocket Secure) uses TLS, but plain WS does not. The same is true for HTTP vs. HTTPS.
+    *   *Why B is correct:* The key advantage of WebSockets is server-initiated push over a persistent connection — HTTP polling requires the client to make repeated requests to check for new data.
+    *   *Why C is incorrect:* WebSockets are still subject to the Same-Origin Policy — cross-origin WebSocket connections require the server to accept requests from non-matching origins.
+    *   *Why D is incorrect:* WebSockets do not bypass the JavaScript event loop — they use the same asynchronous event-driven model as HTTP requests.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **polling fallbacks**?
-B) The scenario where an algorithm requires the absolute minimum number of steps to complete (e.g., searching for an element that happens to be at the very beginning of a list).
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-D) A key object-oriented programming concept where a child class derives attributes and behaviors from a parent class.
-C) The mathematical expectation of an algorithm's performance across all possible inputs of size N, representing typical real-world runtime behavior.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
+Which of the following is the most accurate definition of **polling fallbacks** in the context of Socket.io?
+*   A) The Socket.io feature that automatically retries a failed WebSocket connection up to five times before throwing an error.
+*   B) Degraded transport mechanisms (HTTP long-polling or short-polling) that Socket.io uses when a WebSocket connection cannot be established — such as in corporate proxy environments that block WebSocket upgrades.
+*   C) The browser's native `EventSource` API that provides one-way server-sent events as a fallback when the WebSocket handshake fails.
+*   D) The AWS API Gateway feature that falls back to REST API routing when a WebSocket `$connect` route Lambda function times out.
+*   **Correct Answer:** B) Degraded transport mechanisms (HTTP long-polling or short-polling) that Socket.io uses when a WebSocket connection cannot be established — such as in corporate proxy environments that block WebSocket upgrades.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **polling fallbacks**.
-    * *Why A is correct:* This describes the exact role and function of **polling fallbacks**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **polling fallbacks**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **polling fallbacks**.
-
+    *   *Why A is incorrect:* This describes Socket.io's reconnection logic — not polling fallbacks. Polling fallbacks are an alternative transport, not a retry mechanism.
+    *   *Why B is correct:* Socket.io transparently negotiates the best available transport — starting with WebSockets and falling back to HTTP polling if the environment does not support WebSocket upgrades.
+    *   *Why C is incorrect:* Server-Sent Events (SSE) via `EventSource` is a browser API for one-way push from server to client — it is a different technology from Socket.io's polling fallback mechanism.
+    *   *Why D is incorrect:* AWS API Gateway WebSocket APIs do not fall back to REST routing on Lambda timeout — this is a made-up behavior.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **run the automated unit testing suite to verify system functionality**. Which of the following commands is the most appropriate to execute?
-A) pytest
-C) pip install -r requirements.txt
-B) git commit -m 'update'
-D) python3 -m venv .venv
-*   **Correct Answer:** A) pytest
+In Socket.io, what is the difference between `socket.emit()` and `io.emit()`?
+*   A) `socket.emit()` sends events to all connected clients; `io.emit()` sends events only to the client represented by the `socket` object.
+*   B) `socket.emit()` sends an event to the single client represented by that socket connection; `io.emit()` broadcasts the event to all currently connected clients.
+*   C) `socket.emit()` emits events synchronously; `io.emit()` emits events asynchronously via a Promise.
+*   D) `socket.emit()` is used on the server side; `io.emit()` is used on the browser client side.
+*   **Correct Answer:** B) `socket.emit()` sends an event only to the specific client represented by that socket connection; `io.emit()` broadcasts the event to all currently connected clients.
 *   **Distractor Analysis:**
-    * *Why A is correct:* The `pytest` command is directly designed to run the automated unit testing suite to verify system functionality.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is incorrect:* This reverses the correct behavior — `io.emit()` broadcasts to all, `socket.emit()` targets one.
+    *   *Why B is correct:* In Socket.io server-side code, `socket` refers to a single client connection — `socket.emit()` targets that client. `io` is the server instance — `io.emit()` broadcasts to every connected socket.
+    *   *Why C is incorrect:* Both methods are event-driven and non-blocking — neither is synchronous in the traditional sense.
+    *   *Why D is incorrect:* Both `socket.emit()` and `io.emit()` are server-side Socket.io methods. On the browser client side, the client socket also has its own `socket.emit()` for sending events to the server.
 
 ---
 
 **Question 4**
-While working on **Web Sockets** in a production environment, you encounter a system alert indicating a **IndexError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-D) Reboot the physical machine and wait for services to reload.
-B) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
-C) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-A) Verify that the index is within the valid range of 0 to len(list)-1.
-*   **Correct Answer:** A) Verify that the index is within the valid range of 0 to len(list)-1.
+On AWS, which service provides a managed WebSocket API that routes connections and messages to AWS Lambda functions without managing a WebSocket server?
+*   A) Amazon EC2 with a Node.js Socket.io server running on port 443.
+*   B) AWS API Gateway WebSocket API
+*   C) Amazon SQS with long-polling enabled
+*   D) AWS Elastic Load Balancer with sticky sessions
+*   **Correct Answer:** B) AWS API Gateway WebSocket API provides a managed WebSocket endpoint — it routes `$connect`, `$disconnect`, and custom message routes to individual Lambda functions without any server management.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This action does not resolve the root cause of IndexError.
-    * *Why B is incorrect:* This action does not resolve the root cause of IndexError.
-    * *Why C is incorrect:* This action does not resolve the root cause of IndexError.
-    * *Why A is correct:* Because The code attempted to access an element of a sequence using an out-of-bounds index. The appropriate fix is to Verify that the index is within the valid range of 0 to len(list)-1..
-
+    *   *Why A is incorrect:* Running Socket.io on EC2 is a valid option but requires server management — it is not a managed serverless WebSocket service.
+    *   *Why B is correct:* API Gateway WebSocket APIs are the AWS-native managed solution for WebSocket connections backed by Lambda — a key DVA-C02 exam topic.
+    *   *Why C is incorrect:* Amazon SQS with long-polling retrieves messages from a queue — it is a message queue service, not a real-time browser WebSocket service.
+    *   *Why D is incorrect:* Elastic Load Balancers with sticky sessions route HTTP requests to consistent backend instances — they do not provide WebSocket API management with Lambda integration.
 
 ---
 
 **Question 5**
-When designing a system for **Web Sockets**, you must mitigate the risk of **Storing user credentials in plain text, making them vulnerable to database breaches.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-C) Enable full disk encryption on all client endpoints.
-D) Enable full disk encryption on all client endpoints.
-B) Implement parameterized queries and prepared statements rather than raw string concatenation.
-*   **Correct Answer:** A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
+A real-time collaborative whiteboard app uses Socket.io. When one user draws a shape, all other users in the same "room" should see it, but users in different rooms should not. Which Socket.io feature enables this targeted broadcasting?
+*   A) `io.emit()` with a filter callback that checks each socket's session data before delivering the event.
+*   B) Socket.io rooms — the server places each user's socket into a named room with `socket.join(roomId)` and broadcasts to room members only with `io.to(roomId).emit('draw', shape)`.
+*   C) Socket.io namespaces — each whiteboard session connects to a separate namespace URL and broadcasts are scoped to the namespace.
+*   D) WebSocket subprotocols — the server negotiates a unique subprotocol string per room during the handshake, and messages are automatically delivered only to sockets sharing the same subprotocol.
+*   **Correct Answer:** B) Socket.io rooms — the server places each user's socket into a named room with `socket.join(roomId)` and broadcasts to that room with `io.to(roomId).emit('draw', shape)`.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt. mitigates the risk of Storing user credentials in plain text, making them vulnerable to database breaches..
-    * *Why C is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-    * *Why D is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-    * *Why B is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-
+    *   *Why A is incorrect:* `io.emit()` broadcasts to all connected clients — there is no filter callback in the standard API. Implementing per-socket filtering manually is inefficient and error-prone.
+    *   *Why B is correct:* Socket.io rooms are a lightweight grouping mechanism specifically designed for this use case — placing sockets in rooms and targeting `io.to(roomId).emit()` is the canonical pattern.
+    *   *Why C is incorrect:* Namespaces are higher-level divisions of a Socket.io server (like separate endpoints) — they are appropriate for separating different application features, not individual whiteboard sessions with many room IDs.
+    *   *Why D is incorrect:* WebSocket subprotocols are negotiated during the HTTP upgrade handshake for protocol identification — they do not provide room-based message routing.

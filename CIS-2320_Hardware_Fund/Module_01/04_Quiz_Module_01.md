@@ -17,63 +17,63 @@ What is the primary danger when working inside a computer case without ESD safet
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **grounding**?
-D) The process of adjusting node positions in a binary heap to restore the heap property (min-heap or max-heap) after an insertion or deletion.
-B) The danger of exhausting the call stack memory allocation when recursive calls are made too deeply or without hitting a base case, crashing the program.
-C) A complete binary tree where the key of any parent node is greater than or equal to the keys of its children, guaranteeing the root is always the maximum element.
-A) The practice of connecting an electrical circuit or chassis to the earth or a large conductor to safely dissipate static electricity or stray currents.
+In the context of PC hardware safety, which of the following is the most accurate definition of **grounding**?
+*   A) The practice of connecting an electrical circuit or chassis to the earth or a large conductor to safely dissipate static electricity or stray currents.
+*   B) The process of installing a CPU into its socket and securing it with a retention lever or load plate.
+*   C) A method of formatting a hard drive so that all sectors are wiped and the partition table is reset to defaults.
+*   D) The technique of re-applying thermal paste between a processor and its heat sink to restore proper heat transfer.
 *   **Correct Answer:** A) The practice of connecting an electrical circuit or chassis to the earth or a large conductor to safely dissipate static electricity or stray currents.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **grounding**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **grounding**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **grounding**.
-    * *Why A is correct:* This describes the exact role and function of **grounding**.
+    * *Why A is correct:* This is the exact definition of grounding as it applies to ESD safety and PC hardware work.
+    * *Why B is incorrect:* This describes CPU installation, not grounding.
+    * *Why C is incorrect:* This describes low-level disk formatting, an unrelated storage procedure.
+    * *Why D is incorrect:* This describes thermal paste application, a cooling procedure not related to grounding.
 
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **instruct the systemd init system to restart a specified background service process**. Which of the following commands is the most appropriate to execute?
-A) systemctl restart service
-D) df -h
-B) ps aux
-C) chmod 600 config.conf
-*   **Correct Answer:** A) systemctl restart service
+A technician opens a desktop PC and notices the system powers on but immediately shuts off after a few seconds. Which component is most likely responsible for this thermal-protection shutdown?
+*   A) RAM module seated in the wrong slot
+*   B) CPU fan not connected to the 4-pin fan header
+*   C) SATA data cable disconnected from the hard drive
+*   D) PCIe graphics card inserted into an x1 slot instead of x16
+*   **Correct Answer:** B) CPU fan not connected to the 4-pin fan header
 *   **Distractor Analysis:**
-    * *Why A is correct:* The `systemctl restart service` command is directly designed to instruct the systemd init system to restart a specified background service process.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
+    * *Why B is correct:* Without a CPU fan signal, BIOS/UEFI triggers an immediate thermal shutdown to protect the processor.
+    * *Why A is incorrect:* Wrong RAM slot placement causes POST failure or no boot, not a thermal shutdown.
+    * *Why C is incorrect:* A disconnected SATA data cable causes a missing OS error, not a shutdown.
+    * *Why D is incorrect:* A card in the wrong slot may reduce performance but typically does not cause immediate shutdown.
 
 
 ---
 
 **Question 4**
-While working on **Introduction to PC Hardware & Safety** in a production environment, you encounter a system alert indicating a **Service Failed to Bind Port** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-A) Identify and terminate the process already utilizing the target port, or modify the service configuration to use an open port.
-D) Reboot the physical machine and wait for services to reload.
-B) Prepend the command with 'sudo' to run it with superuser administrative privileges, or adjust the file permissions.
-C) Run log rotations, clean temporary files, or expand the logical volume capacity.
-*   **Correct Answer:** A) Identify and terminate the process already utilizing the target port, or modify the service configuration to use an open port.
+While handling a RAM module, a technician notices a small visible spark from their fingertip to the DIMM's edge connector. Which of the following best describes the risk this event poses?
+*   A) The RAM module may have been permanently damaged by electrostatic discharge, even if it appears physically undamaged.
+*   B) The spark indicates the RAM is incompatible with the motherboard and should be returned.
+*   C) This is a normal occurrence and does not affect the functionality of the RAM module.
+*   D) The spark confirms the RAM module has correct voltage and is properly charged for installation.
+*   **Correct Answer:** A) The RAM module may have been permanently damaged by electrostatic discharge, even if it appears physically undamaged.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Because Another application or stale instance of the service is already listening on the designated network port. The appropriate fix is to Identify and terminate the process already utilizing the target port, or modify the service configuration to use an open port..
-    * *Why D is incorrect:* This action does not resolve the root cause of Service Failed to Bind Port.
-    * *Why B is incorrect:* This action does not resolve the root cause of Service Failed to Bind Port.
-    * *Why C is incorrect:* This action does not resolve the root cause of Service Failed to Bind Port.
+    * *Why A is correct:* A visible ESD spark can exceed thousands of volts and permanently destroy CMOS circuits on the module.
+    * *Why B is incorrect:* Compatibility is determined by specification, not by ESD events.
+    * *Why C is incorrect:* ESD is never a "normal occurrence" during hardware handling; it always poses a damage risk.
+    * *Why D is incorrect:* ESD sparks indicate dangerous charge discharge, not correct voltage levels.
 
 
 ---
 
 **Question 5**
-When designing a system for **Introduction to PC Hardware & Safety**, you must mitigate the risk of **Administrators logging in routinely as root or Administrator, increasing the blast radius of user errors or malware.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC.
-D) Enable full disk encryption on all client endpoints.
-C) Enable full disk encryption on all client endpoints.
-B) Disable unused system accounts and run a port scan to disable unnecessary active background services.
-*   **Correct Answer:** A) Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC.
+When preparing to work inside a PC case, which of the following represents the correct first step according to PC hardware safety best practices?
+*   A) Remove the side panel and immediately begin swapping components to save time.
+*   B) Power down the system, unplug the AC power cord, and press the power button to discharge residual capacitor charge.
+*   C) Put on an ESD wrist strap before powering down so you are grounded during the shutdown process.
+*   D) Turn off the power strip but leave the power cable connected so the PC chassis remains grounded through the outlet.
+*   **Correct Answer:** B) Power down the system, unplug the AC power cord, and press the power button to discharge residual capacitor charge.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC. mitigates the risk of Administrators logging in routinely as root or Administrator, increasing the blast radius of user errors or malware..
-    * *Why D is incorrect:* This does not address the security vulnerability of Privileged Access Abuse.
-    * *Why C is incorrect:* This does not address the security vulnerability of Privileged Access Abuse.
-    * *Why B is incorrect:* This does not address the security vulnerability of Privileged Access Abuse.
+    * *Why B is correct:* Unplugging first eliminates live voltage risk; pressing the power button drains remaining capacitor charge from the motherboard.
+    * *Why A is incorrect:* Opening and immediately swapping components without safety steps risks ESD damage and live-voltage exposure.
+    * *Why C is incorrect:* The ESD strap should be applied after powering down, not during — and working on a live system is dangerous.
+    * *Why D is incorrect:* Leaving the power cable connected keeps the PSU energized and does not make the system safe to work on.
 

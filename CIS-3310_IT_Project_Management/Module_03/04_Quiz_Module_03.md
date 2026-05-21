@@ -1,4 +1,4 @@
-# Quiz: Module 03 - Defining Scope & WBS
+# Quiz: Module 03 - Scope Management – WBS and Scope Statement
 ## Course: CIS-3310_IT_Project_Management (CompTIA Project+ / PMI CAPM)
 
 ---
@@ -9,71 +9,69 @@ What is the lowest level of decomposition in a Work Breakdown Structure (WBS) ca
 *   B) Task group
 *   C) Work Package
 *   D) Milestone
-*   **Correct Answer:** C) Work packages are the granular units at the bottom of the WBS tree, where costs and schedules can be estimated.
+*   **Correct Answer:** C) Work packages are the granular, deliverable-oriented units at the bottom of the WBS tree, from which schedule activities and cost estimates are derived.
 *   **Distractor Analysis:**
-    *   *Why correct:* Work packages are the granular units at the bottom of the WBS tree, where costs and schedules can be estimated.
-    *   Milestones are points in time with zero duration.
+    *   *Why C is correct:* The WBS 100% Rule requires all project work to be represented, and work packages are the lowest-level components. Each work package can be owned, estimated, and scheduled by a single team.
+    *   *Why A is incorrect:* A sub-project is a separately managed section of a large project (e.g., a phase managed by a separate team); it is not the lowest level of WBS decomposition.
+    *   *Why B is incorrect:* "Task group" is not a standard PMI WBS term; it is informal language sometimes used in scheduling tools.
+    *   *Why D is incorrect:* Milestones are significant points or events with zero duration; they are schedule artifacts, not WBS decomposition levels.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **work packages**?
-B) The memory block allocated on the system stack for a single function call, storing parameters, local variables, and the return address.
-D) The descendant node connected to the right branch of a parent node in a binary tree structure.
-C) HTML tags that convey the meaning and structure of the enclosed content to both the browser and search engines (e.g., <header>, <article>, <footer>) instead of generic containers.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
+Which of the following best defines a **Work Package** in project scope management?
+*   A) The lowest-level WBS component representing a unit of work that can be assigned, estimated, and controlled by a single person or team.
+*   B) A high-level summary of all deliverables produced during the project Initiating process group.
+*   C) A legal contract signed between the project sponsor and the performing organization before work begins.
+*   D) A visual diagram showing the sequence of activities from project start to project completion.
+*   **Correct Answer:** A) The lowest-level WBS component representing a unit of work that can be assigned, estimated, and controlled by a single person or team.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **work packages**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **work packages**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **work packages**.
-    * *Why A is correct:* This describes the exact role and function of **work packages**.
-
+    *   *Why A is correct:* Work packages are the actionable building blocks of the WBS. They are the point at which cost and schedule estimates are developed, and each is small enough to be reliably tracked.
+    *   *Why B is incorrect:* A high-level summary of deliverables describes the project scope statement or project charter, not a work package.
+    *   *Why C is incorrect:* A legal contract is a procurement document (e.g., a Fixed-Price contract or T&M agreement), not a WBS component.
+    *   *Why D is incorrect:* A visual diagram showing activity sequence describes a network diagram or schedule, not a work package.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **launch all application services in the background using docker-compose configuration**. Which of the following commands is the most appropriate to execute?
-A) docker-compose up -d
-B) terraform validate
-C) git log --oneline -n 5
-D) systemctl status iot_service
-*   **Correct Answer:** A) docker-compose up -d
+A developer on a software project starts adding extra reporting features that were never in the approved scope, claiming stakeholders "mentioned they would be nice to have." Which term best describes this situation?
+*   A) Fast-tracking
+*   B) Gold plating
+*   C) Scope creep
+*   D) Risk acceptance
+*   **Correct Answer:** C) Scope creep is the uncontrolled expansion of project scope, typically through informal requests that bypass the formal change control process.
 *   **Distractor Analysis:**
-    * *Why A is correct:* The `docker-compose up -d` command is directly designed to launch all application services in the background using docker-compose configuration.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why C is correct:* The developer is adding work without a formal change request or approval, which is the classic definition of scope creep. The PM should stop the unauthorized work and route it through change control.
+    *   *Why A is incorrect:* Fast-tracking is a schedule compression technique where overlapping tasks are performed in parallel; it has nothing to do with unauthorized feature additions.
+    *   *Why B is incorrect:* Gold plating refers specifically to the project team voluntarily adding extras beyond what was requested, often with good intentions but without approval—this is closely related to scope creep but the more precise term for the situation described (informal stakeholder request being implemented without a change request) is scope creep.
+    *   *Why D is incorrect:* Risk acceptance is a risk response strategy (acknowledging a risk and choosing to take no action); it is completely unrelated to unauthorized scope additions.
 
 ---
 
 **Question 4**
-While working on **Defining Scope & WBS** in a production environment, you encounter a system alert indicating a **Scope Exceeded Budget Limit** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-C) Optimize service resources, implement load balancing, or update failover mechanisms.
-B) Re-assign resources to critical path tasks and establish clear communication protocols.
-D) Reboot the physical machine and wait for services to reload.
-A) Implement strict change control boards (CCB) and re-baseline the project constraints.
-*   **Correct Answer:** A) Implement strict change control boards (CCB) and re-baseline the project constraints.
+The project team has completed the WBS for a network infrastructure upgrade. The project manager discovers that server decommissioning activities were accidentally omitted. Which WBS principle does this violation break?
+*   A) The decomposition rule
+*   B) The 100% Rule
+*   C) The work package ownership rule
+*   D) The scope baseline rule
+*   **Correct Answer:** B) The 100% Rule requires that the WBS include 100% of the project scope—every deliverable, activity, and outcome—with nothing missing and nothing added that is outside scope.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This action does not resolve the root cause of Scope Exceeded Budget Limit.
-    * *Why B is incorrect:* This action does not resolve the root cause of Scope Exceeded Budget Limit.
-    * *Why D is incorrect:* This action does not resolve the root cause of Scope Exceeded Budget Limit.
-    * *Why A is correct:* Because The project scope expanded during execution without adjusting budget or schedule allocations. The appropriate fix is to Implement strict change control boards (CCB) and re-baseline the project constraints..
-
+    *   *Why B is correct:* Omitting server decommissioning means the WBS does not capture 100% of the work, violating the fundamental WBS principle that all scope must be represented.
+    *   *Why A is incorrect:* The decomposition rule addresses how far down to break work packages, not whether scope is complete; this is a different concern.
+    *   *Why C is incorrect:* The work package ownership rule addresses whether a single party is assigned responsibility for each package; it is not about scope completeness.
+    *   *Why D is incorrect:* The scope baseline (scope statement + WBS + WBS dictionary) is a document set, not a specific rule; the issue here is about the content of the WBS being incomplete.
 
 ---
 
 **Question 5**
-When designing a system for **Defining Scope & WBS**, you must mitigate the risk of **Stakeholders requesting changes directly to developers, leading to untracked features and security vulnerabilities.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Establish formal authorization procedures and digital signatures for all project scope modifications.
-B) Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services.
-D) Enable full disk encryption on all client endpoints.
-C) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Establish formal authorization procedures and digital signatures for all project scope modifications.
+A project manager wants to add information to the WBS for each element, including descriptions of work, acceptance criteria, and the responsible team. What document should the PM create?
+*   A) Project Charter
+*   B) Communications Management Plan
+*   C) WBS Dictionary
+*   D) Risk Register
+*   **Correct Answer:** C) The WBS Dictionary is a companion document to the WBS that provides detailed descriptions, acceptance criteria, owners, and other information for each WBS element.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Establish formal authorization procedures and digital signatures for all project scope modifications. mitigates the risk of Stakeholders requesting changes directly to developers, leading to untracked features and security vulnerabilities..
-    * *Why B is incorrect:* This does not address the security vulnerability of Unauthorized Scope Modification.
-    * *Why D is incorrect:* This does not address the security vulnerability of Unauthorized Scope Modification.
-    * *Why C is incorrect:* This does not address the security vulnerability of Unauthorized Scope Modification.
-
+    *   *Why C is correct:* The WBS Dictionary transforms the WBS from a visual outline into a fully documented scope reference. It is considered part of the Scope Baseline alongside the WBS and Scope Statement.
+    *   *Why A is incorrect:* The Project Charter is an authorization document created during Initiating; it does not contain detailed decomposition or acceptance criteria for individual work packages.
+    *   *Why B is incorrect:* The Communications Management Plan defines how project information will be distributed, stored, and reported; it does not define scope elements or acceptance criteria.
+    *   *Why D is incorrect:* The Risk Register identifies, analyzes, and tracks risks; it contains no information about WBS element descriptions or acceptance criteria.

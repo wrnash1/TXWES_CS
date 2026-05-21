@@ -17,17 +17,17 @@ Which protocol is the open standard for dynamically negotiating EtherChannel lin
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **LACP vs PAgP**?
-C) The core operations of a queue: 'enqueue' appends an element to the back, and 'dequeue' removes and returns the front element.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within networking operations.
-D) The operational principle of a stack, where the element added most recently is the first one to be removed, similar to a stack of trays.
-B) The node or router interface on a network that serves as an access point to other logical networks or the internet.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within networking operations.
+Which of the following most accurately describes the difference between **LACP and PAgP**?
+*   A) LACP is an open standard (IEEE 802.3ad) that works between any vendor's devices, while PAgP is Cisco-proprietary and only works between Cisco switches; both use negotiation modes but with different mode names.
+*   B) LACP bundles up to 16 physical links into one logical channel, while PAgP is limited to a maximum of 4 physical links per bundle, regardless of platform.
+*   C) LACP operates at Layer 3 and negotiates IP-based link bundles between routers, while PAgP operates at Layer 2 and only works between directly connected switches.
+*   D) LACP requires that all member ports share the same VLAN ID, while PAgP allows member ports to belong to different VLANs as long as the port-channel is configured as a trunk.
+*   **Correct Answer:** A) LACP is an open standard (IEEE 802.3ad) that works between any vendor's devices, while PAgP is Cisco-proprietary and only works between Cisco switches; both use negotiation modes but with different mode names.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **LACP vs PAgP**.
-    * *Why A is correct:* This describes the exact role and function of **LACP vs PAgP**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **LACP vs PAgP**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **LACP vs PAgP**.
+    * *Why A is correct:* The primary distinction is vendor interoperability — LACP is the IEEE standard, PAgP is Cisco-only. Mode names differ: LACP uses active/passive; PAgP uses desirable/auto.
+    * *Why B is incorrect:* While Cisco platforms often support up to 8 active links per channel, the 16-vs-4 comparison is not the defining difference between LACP and PAgP.
+    * *Why C is incorrect:* Both LACP and PAgP operate at Layer 2 between directly connected switches — neither is a Layer 3 protocol.
+    * *Why D is incorrect:* Both LACP and PAgP require matching VLAN/trunk configuration on all member ports; neither allows mixed VLAN membership within a bundle.
 
 
 ---
@@ -57,7 +57,7 @@ C) Change the local network interface settings to use a public DNS resolver like
 *   **Correct Answer:** A) Release and renew the DHCP lease, or configure a unique static IP address outside the DHCP pool range.
 *   **Distractor Analysis:**
     * *Why B is incorrect:* This action does not resolve the root cause of IP Address Conflict.
-    * *Why A is correct:* Because Two devices on the same physical or logical network segment are configured with the identical IP address. The appropriate fix is to Release and renew the DHCP lease, or configure a unique static IP address outside the DHCP pool range..
+    * *Why A is correct:* Because Two devices on the same physical or logical network segment are configured with the identical IP address. The appropriate fix is to Release and renew the DHCP lease, or configure a unique static IP address outside the DHCP pool range.
     * *Why D is incorrect:* This action does not resolve the root cause of IP Address Conflict.
     * *Why C is incorrect:* This action does not resolve the root cause of IP Address Conflict.
 
@@ -65,15 +65,14 @@ C) Change the local network interface settings to use a public DNS resolver like
 ---
 
 **Question 5**
-When designing a system for **EtherChannel Link Aggregation**, you must mitigate the risk of **Attackers capturing plaintext management passwords or session data using network sniffers.**. Which of the following security configurations or controls represents the best practice to implement?
+When configuring **EtherChannel Link Aggregation**, you must mitigate the risk of **Attackers capturing plaintext management passwords or session data using network sniffers.**. Which of the following security configurations or controls represents the best practice to implement?
 B) Implement switch Port Security to restrict access to switch ports based on approved MAC addresses.
-C) Enable full disk encryption on all client endpoints.
+C) Configure SNMPv3 with `authPriv` security level to encrypt SNMP management polling traffic.
 A) Configure SSH (port 22) for terminal access and HTTPS (port 443) for web interfaces, disabling Telnet and HTTP.
-D) Enable full disk encryption on all client endpoints.
+D) Use `service password-encryption` on Cisco IOS devices to obfuscate passwords stored in the running configuration.
 *   **Correct Answer:** A) Configure SSH (port 22) for terminal access and HTTPS (port 443) for web interfaces, disabling Telnet and HTTP.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This does not address the security vulnerability of Unencrypted Traffic Exposure.
-    * *Why C is incorrect:* This does not address the security vulnerability of Unencrypted Traffic Exposure.
-    * *Why A is correct:* Implementing Configure SSH (port 22) for terminal access and HTTPS (port 443) for web interfaces, disabling Telnet and HTTP. mitigates the risk of Attackers capturing plaintext management passwords or session data using network sniffers..
-    * *Why D is incorrect:* This does not address the security vulnerability of Unencrypted Traffic Exposure.
-
+    * *Why A is correct:* SSH and HTTPS encrypt management session data in transit, preventing credential capture by a packet sniffer on the network.
+    * *Why B is incorrect:* Port Security controls physical access by MAC address — it does not encrypt management traffic passing over the network.
+    * *Why C is incorrect:* SNMPv3 authPriv encrypts SNMP traffic specifically, but does not address Telnet or HTTP credential exposure.
+    * *Why D is incorrect:* `service password-encryption` applies a weak Vigenere cipher to stored passwords in the config — it does not encrypt credentials during transmission.

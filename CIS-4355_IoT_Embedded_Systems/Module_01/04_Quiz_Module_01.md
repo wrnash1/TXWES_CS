@@ -1,4 +1,4 @@
-# Quiz: Module 01 - IoT Architecture Layers
+# Quiz: Module 01 - IoT Architecture – Devices, Gateways, Cloud, and Edge
 ## Course: CIS-4355_IoT_Embedded_Systems (IoT & Embedded Security (General Principles))
 
 ---
@@ -9,71 +9,67 @@ Which IoT architecture layer contains the sensors, actuators, and hardware compo
 *   B) Perception (Sensing) Layer
 *   C) Network Layer
 *   D) Support Layer
-*   **Correct Answer:** B) The Perception layer handles physical signals (temperature, light, motions) and digitizes them.
+*   **Correct Answer:** B) The Perception layer handles physical signals (temperature, light, motion) and digitizes them for transmission.
 *   **Distractor Analysis:**
-    *   *Why correct:* The Perception layer handles physical signals (temperature, light, motions) and digitizes them.
-    *   Network layer handles communications routing (gateways, routers).
+    *   *Why correct:* The Perception layer handles physical signals (temperature, light, motion) and digitizes them for transmission.
+    *   Network layer handles communications routing (gateways, routers); Application layer delivers processed data to end users.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **edge devices**?
-B) A deployment model that uses two identical production environments (Blue and Green) to minimize downtime and risk; updates are deployed to the idle environment before routing live traffic.
-C) CSS rules (like width, height, max-width, box-sizing) that dictate how the dimensions of elements are calculated and rendered.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
-D) The core operations of a queue: 'enqueue' appends an element to the back, and 'dequeue' removes and returns the front element.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
+Which of the following is the most accurate definition of an **edge device** in an IoT architecture?
+*   A) A cloud server that stores archived sensor data in a relational database for long-term reporting.
+*   B) A compute node deployed close to the data source that processes sensor data locally to reduce latency and cloud bandwidth usage.
+*   C) A software library used to parse JSON payloads received from an MQTT broker.
+*   D) A certificate authority responsible for issuing TLS certificates to cloud application servers.
+*   **Correct Answer:** B) A compute node deployed close to the data source that processes sensor data locally to reduce latency and cloud bandwidth usage.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **edge devices**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **edge devices**.
-    * *Why A is correct:* This describes the exact role and function of **edge devices**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **edge devices**.
-
+    *   *Why A is incorrect:* A cloud server is in the cloud tier, not at the network edge near the devices.
+    *   *Why B is correct:* Edge devices (e.g., Raspberry Pi, AWS Greengrass) run processing logic near the source to minimize latency and bandwidth usage.
+    *   *Why C is incorrect:* A JSON parsing library is a software component, not a physical or logical edge compute node.
+    *   *Why D is incorrect:* A certificate authority is a PKI service; it is not the same as an edge compute device.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **review the last five project commits in a concise single-line format**. Which of the following commands is the most appropriate to execute?
-A) git log --oneline -n 5
-B) terraform validate
-C) docker-compose up -d
-D) systemctl status iot_service
-*   **Correct Answer:** A) git log --oneline -n 5
+A smart building deploys 500 temperature sensors reporting every 5 seconds. The system must trigger an alarm within 200 ms of a spike. Which processing tier is most appropriate?
+*   A) Batch processing in a centralized data warehouse queried once per day.
+*   B) Edge/gateway processing on a local node co-located with the sensors.
+*   C) A mobile application polling a REST API every 30 seconds.
+*   D) Manual review by a technician reading raw log files.
+*   **Correct Answer:** B) Edge/gateway processing on a local node co-located with the sensors.
 *   **Distractor Analysis:**
-    * *Why A is correct:* The `git log --oneline -n 5` command is directly designed to review the last five project commits in a concise single-line format.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is incorrect:* Batch warehouse queries run on a schedule and cannot meet a 200 ms real-time alarm requirement.
+    *   *Why B is correct:* Local edge processing eliminates round-trip latency to the cloud, enabling sub-second alarm responses.
+    *   *Why C is incorrect:* A 30-second REST poll interval is far too slow for a 200 ms response requirement.
+    *   *Why D is incorrect:* Manual log review introduces human latency and is unsuitable for automated safety alarms.
 
 ---
 
 **Question 4**
-While working on **IoT Architecture Layers** in a production environment, you encounter a system alert indicating a **SLA Breach Alert** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-D) Reboot the physical machine and wait for services to reload.
-B) Re-assign resources to critical path tasks and establish clear communication protocols.
-A) Optimize service resources, implement load balancing, or update failover mechanisms.
-C) Implement strict change control boards (CCB) and re-baseline the project constraints.
-*   **Correct Answer:** A) Optimize service resources, implement load balancing, or update failover mechanisms.
+In an IoT deployment, which of the following best describes the role of an **IoT gateway**?
+*   A) A cloud service that trains machine learning models on historical sensor data.
+*   B) A device that bridges local low-power wireless networks (e.g., Zigbee, BLE) to IP-based networks, performing protocol translation and device authentication.
+*   C) A firmware update server that distributes signed binary images to microcontrollers.
+*   D) A VLAN switch that enforces Quality of Service (QoS) rules on enterprise Wi-Fi traffic.
+*   **Correct Answer:** B) A device that bridges local low-power wireless networks (e.g., Zigbee, BLE) to IP-based networks, performing protocol translation and device authentication.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This action does not resolve the root cause of SLA Breach Alert.
-    * *Why B is incorrect:* This action does not resolve the root cause of SLA Breach Alert.
-    * *Why A is correct:* Because A system outage or slow response time has exceeded the limits guaranteed in the Service Level Agreement. The appropriate fix is to Optimize service resources, implement load balancing, or update failover mechanisms..
-    * *Why C is incorrect:* This action does not resolve the root cause of SLA Breach Alert.
-
+    *   *Why A is incorrect:* ML model training is a cloud analytics function, not a gateway function.
+    *   *Why B is correct:* Gateways sit at the boundary between constrained device networks and IP networks, translating protocols and managing device identities.
+    *   *Why C is incorrect:* An OTA update server is a separate service, though a gateway may proxy firmware downloads.
+    *   *Why D is incorrect:* A VLAN switch operates at Layer 2 and does not perform IoT protocol translation or device identity management.
 
 ---
 
 **Question 5**
-When designing a system for **IoT Architecture Layers**, you must mitigate the risk of **Stakeholders requesting changes directly to developers, leading to untracked features and security vulnerabilities.**. Which of the following security configurations or controls represents the best practice to implement?
-C) Enable full disk encryption on all client endpoints.
-D) Enable full disk encryption on all client endpoints.
-B) Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services.
-A) Establish formal authorization procedures and digital signatures for all project scope modifications.
-*   **Correct Answer:** A) Establish formal authorization procedures and digital signatures for all project scope modifications.
+When securing an IoT system using a **defense-in-depth** approach, which combination of controls best addresses threats across all architecture layers?
+*   A) Applying TLS only at the cloud API layer and relying on physical security for all other layers.
+*   B) Using a single shared password across all devices to simplify credential management.
+*   C) Enforcing unique device credentials at the Perception layer, encrypted transport at the Network layer, and authenticated APIs with least-privilege access at the Application layer.
+*   D) Restricting firmware updates to devices that have already been physically inspected by a technician on-site.
+*   **Correct Answer:** C) Enforcing unique device credentials at the Perception layer, encrypted transport at the Network layer, and authenticated APIs with least-privilege access at the Application layer.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This does not address the security vulnerability of Unauthorized Scope Modification.
-    * *Why D is incorrect:* This does not address the security vulnerability of Unauthorized Scope Modification.
-    * *Why B is incorrect:* This does not address the security vulnerability of Unauthorized Scope Modification.
-    * *Why A is correct:* Implementing Establish formal authorization procedures and digital signatures for all project scope modifications. mitigates the risk of Stakeholders requesting changes directly to developers, leading to untracked features and security vulnerabilities..
-
+    *   *Why A is incorrect:* Applying TLS only at the cloud boundary leaves device-to-gateway and broker communications unprotected.
+    *   *Why B is incorrect:* Shared passwords violate least-privilege; a single compromised device exposes the entire fleet.
+    *   *Why C is correct:* Defense-in-depth applies independent controls at every layer so a failure at one layer does not cascade through the system.
+    *   *Why D is incorrect:* Manual on-site inspection does not scale and does not address network-layer or application-layer threats.

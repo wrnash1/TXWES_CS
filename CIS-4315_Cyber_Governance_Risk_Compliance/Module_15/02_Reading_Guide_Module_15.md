@@ -1,52 +1,53 @@
-# Reading Guide: Module 15 - Incident Response Governance
+# Reading Guide: Module 15 - Security Metrics and KPIs
 ## Course: CIS-4315_Cyber_Governance_Risk_Compliance (ISACA Certified Information Security Manager (CISM))
 
 ---
 
 ### Introduction
-Welcome to **Module 15 - Incident Response Governance**! This week's study material focuses on the core foundations and configuration mechanics of **Incident Response Governance** as aligned with the **ISACA Certified Information Security Manager (CISM)** certification framework. Understanding these topics is essential not only for passing the certification exam but also for administering enterprise systems in real-world environments.
+Welcome to **Module 15 - Security Metrics and KPIs**! This module covers incident response governance — the management structures, escalation pathways, and communication frameworks that ensure security incidents are handled effectively and in compliance with regulatory notification obligations. Incident management is CISM Domain 4, representing approximately 20% of the exam.
 
-As a student, you will learn the primary operational roles, command syntaxes, and troubleshooting parameters needed to design, configure, and maintain these services. We will explore how different protocols establish connections, how configurations manage resource allocation, and how security controls prevent access breaches. Make sure to complete the checklists and review the glossary terms in detail before beginning the lab activity.
+The CISM exam focuses on the governance and management aspects of incident response: who is authorized to make decisions, how incidents are classified, what notifications are required, and how lessons learned improve the program.
 
 ---
 
 ### 1. High-Yield Glossary
 Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
 
-*   **Incident classification**: A primary configuration standard and technical parameter essential for coordinating Incident Response Governance activities, enforcing security boundaries, and verifying operational statuses within the management_services environment.
-*   **escalation pathways**: A primary configuration standard and technical parameter essential for coordinating Incident Response Governance activities, enforcing security boundaries, and verifying operational statuses within the management_services environment.
-*   **communication logs**: A primary configuration standard and technical parameter essential for coordinating Incident Response Governance activities, enforcing security boundaries, and verifying operational statuses within the management_services environment.
-*   **post-incident reviews**: A primary configuration standard and technical parameter essential for coordinating Incident Response Governance activities, enforcing security boundaries, and verifying operational statuses within the management_services environment.
-*   **regulatory notifications.**: A primary configuration standard and technical parameter essential for coordinating Incident Response Governance activities, enforcing security boundaries, and verifying operational statuses within the management_services environment.
+*   **Incident classification**: The process of categorizing a security event by its type, severity, and business impact to determine the appropriate response priority, resources, and escalation pathway. Effective classification ensures that critical incidents receive immediate attention while lower-priority events are handled through standard processes without overwhelming response resources.
+*   **Escalation pathways**: Pre-defined procedures that specify when and how security incidents are elevated from technical teams to management, legal, compliance, and executive leadership. Escalation triggers may be based on incident severity, regulatory notification thresholds, potential financial impact, or involvement of personal data.
+*   **Communication logs**: Documented records of all communications during a security incident, including notifications to internal stakeholders, regulators, affected individuals, and external parties. Communication logs serve as evidence of compliance with notification requirements and support post-incident review.
+*   **Post-incident reviews (lessons learned)**: Structured analysis conducted after an incident is resolved to identify what worked well, what failed, root causes, and improvements to policies, procedures, and controls. Post-incident reviews (also called after-action reviews) are a governance requirement for any significant incident and are the primary mechanism for improving the security program.
+*   **Regulatory notifications**: Mandatory disclosures to government agencies, affected individuals, or other required parties following a security breach, as specified by applicable regulations (GDPR 72-hour supervisory notification, HIPAA 60-day individual notification, state breach notification laws). Failure to notify within required timeframes is a separate regulatory violation from the breach itself.
 
 ---
 
 ### 2. Certification Exam Tips
-*   **Focus Area:** Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
-*   **Scenario Trap:** Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
-*   **Study Resource:** To reinforce these concepts visually, review this targeted search query: [ISACA CISM / Cyber GRC Course Playlist - Incident Response Governance](https://www.youtube.com/playlist?list=PLbnu8t2G_vG0V7kC0V3n_nU9Y3S-4K178).
+*   **CISM Domain 4 Focus:** Incident management is Domain 4 and accounts for about 20% of the exam. Know the six phases of incident response (Preparation, Detection, Analysis, Containment, Eradication, Recovery, and Post-Incident Review) and be able to identify the correct phase for actions described in scenarios.
+*   **Escalation Triggers Are Pre-Defined:** The exam tests the principle that escalation decisions should be made based on pre-defined criteria, not individual judgment in the heat of an incident. Delayed escalation is a common governance failure tested on the exam.
+*   **Post-Incident Review Is Mandatory:** The exam emphasizes that every significant incident must conclude with a formal post-incident review. Organizations that skip this step fail to improve their defenses and are likely to repeat mistakes.
+*   **Study Resource:** [NIST SP 800-61 Rev. 2: Computer Security Incident Handling Guide](https://csrc.nist.gov/publications/detail/sp/800-61/rev-2/final) — This free NIST publication is the authoritative incident response reference and directly maps to CISM Domain 4 content. It is a critical ZTC resource for this module.
 
 ---
 
 ### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the section/chapter covering **Incident Response Governance** in the OER Textbook: [NIST Risk Management Framework (SP 800-37) & Security Controls (SP 800-53)](https://csrc.nist.gov/publications/).
-*   **Required Video:** Watch the video lecture on **Incident Response Governance** in the official course playlist: [ISACA CISM / Cyber GRC Course Playlist](https://www.youtube.com/playlist?list=PLbnu8t2G_vG0V7kC0V3n_nU9Y3S-4K178).
+*   **Required Reading:** [NIST SP 800-61 Rev. 2: Computer Security Incident Handling Guide](https://csrc.nist.gov/publications/detail/sp/800-61/rev-2/final) — This free NIST publication covers the complete incident response lifecycle including preparation, detection, containment, eradication, recovery, and post-incident activity. Focus on Chapter 3 (Handling an Incident) and Section 3.4 (Post-Incident Activity).
+*   **Required Video:** Watch the video lecture on **Security Metrics and KPIs** in the official course playlist: [ISACA CISM / Cyber GRC Course Playlist](https://www.youtube.com/playlist?list=PLbnu8t2G_vG0V7kC0V3n_nU9Y3S-4K178).
 
 ---
 
 ### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Draft an incident escalation flow chart**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-*   **Calculate regulatory breach notification schedules**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-*   **Complete post-incident analysis reports**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
+In this week's hands-on lab, you will apply incident response governance concepts through the following activities:
+*   **Design an incident escalation flowchart**: Create a visual escalation decision tree covering three severity levels (Low, Medium, High/Critical), specifying who must be notified at each level, within what timeframe, and what decisions require executive authorization.
+*   **Map regulatory notification requirements**: For a scenario involving a healthcare organization with operations in California and EU customers, identify all applicable breach notification obligations (HIPAA, CCPA, GDPR) and build a notification timeline showing the most restrictive deadline for each requirement.
+*   **Write a post-incident review template**: Draft a structured post-incident review document including sections for: incident timeline, detection gap analysis, containment effectiveness, root cause, lessons learned, and recommended control improvements with owners and deadlines.
 
 
 ---
 
 ### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read the section/chapter covering **Incident Response Governance** in [NIST Risk Management Framework (SP 800-37) & Security Controls (SP 800-53)](https://csrc.nist.gov/publications/).
-- [ ] Watch the video lecture on **Incident Response Governance** in [ISACA CISM / Cyber GRC Course Playlist](https://www.youtube.com/playlist?list=PLbnu8t2G_vG0V7kC0V3n_nU9Y3S-4K178).
-- [ ] Review the commands outlined in the lab instructions.
-- [ ] Proceed to the weekly hands-on lab activity.
+- [ ] Know the six incident response phases and be able to identify the correct phase for given actions.
+- [ ] Understand that escalation criteria should be pre-defined, not determined ad hoc.
+- [ ] Read [NIST SP 800-61 Rev. 2](https://csrc.nist.gov/publications/detail/sp/800-61/rev-2/final), Chapter 3 and Section 3.4.
+- [ ] Watch the video lecture on **Security Metrics and KPIs** in [ISACA CISM / Cyber GRC Course Playlist](https://www.youtube.com/playlist?list=PLbnu8t2G_vG0V7kC0V3n_nU9Y3S-4K178).
+- [ ] Complete the lab activity on escalation flowchart design and regulatory notification mapping.
+- [ ] Proceed to the Module 15 quiz.

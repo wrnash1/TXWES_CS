@@ -5,75 +5,73 @@
 
 **Question 1**
 Which React Hook is used to add local state variables to functional components?
-*   A) useEffect
-*   B) useContext
-*   C) useState
-*   D) useStateVariable
-*   **Correct Answer:** C) The useState hook returns a state value and a setter function to trigger re-renders.
+*   A) `useEffect`
+*   B) `useContext`
+*   C) `useState`
+*   D) `useStateVariable`
+*   **Correct Answer:** C) `useState` returns a tuple of `[currentValue, setterFunction]` — calling the setter with a new value schedules a component re-render with the updated state.
 *   **Distractor Analysis:**
-    *   *Why correct:* The useState hook returns a state value and a setter function to trigger re-renders.
-    *   useEffect handles side effects. useContext handles global context.
+    *   *Why A is incorrect:* `useEffect` is used to perform side effects (API calls, subscriptions, DOM mutations) after renders — not to declare state variables.
+    *   *Why B is incorrect:* `useContext` reads the current value of a React context created with `createContext()` — it is used for global state access, not local component state.
+    *   *Why C is correct:* `useState` is the hook specifically designed to add reactive, local state to functional components.
+    *   *Why D is incorrect:* `useStateVariable` is not a React API — it does not exist.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **immutable props**?
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-D) An instruction within a function that invokes the function itself, passing modified arguments to solve a smaller subproblem.
-C) An operation in Red-Black trees where nodes are flipped between red and black to maintain structural invariants after insertions or deletions.
-B) The memory block allocated on the system stack for a single function call, storing parameters, local variables, and the return address.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
+Which of the following is the most accurate definition of **immutable props** in React?
+*   A) CSS custom properties (`--variable-name`) defined in the `:root` selector that cannot be changed after the stylesheet is loaded.
+*   B) Read-only data objects that parent components pass to child components via JSX attributes — the receiving child component cannot modify them; communication back to the parent uses callback functions passed as props.
+*   C) React state variables declared with `const` that are frozen with `Object.freeze()` to prevent accidental mutation.
+*   D) The fixed initial values provided to `useState()` that cannot be changed after the component first mounts.
+*   **Correct Answer:** B) Read-only data objects that parent components pass to child components via JSX attributes — the receiving child component cannot modify them; communication back to the parent uses callback functions passed as props.
 *   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **immutable props**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **immutable props**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **immutable props**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **immutable props**.
-
+    *   *Why A is incorrect:* CSS custom properties are a styling mechanism — unrelated to React component props.
+    *   *Why B is correct:* React enforces a unidirectional data flow where props flow from parent to child and cannot be mutated by the child — this is the core definition of immutable props.
+    *   *Why C is incorrect:* State variables declared with `const` in JavaScript cannot be reassigned (the variable binding is fixed), but the state value itself is updated by calling the setter function — this is separate from props immutability.
+    *   *Why D is incorrect:* The initial value passed to `useState()` is only used for the first render — the state can subsequently be updated by calling the setter function. This is a description of state initialization, not props.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **run the automated unit testing suite to verify system functionality**. Which of the following commands is the most appropriate to execute?
-D) python3 -m venv .venv
-B) pip install -r requirements.txt
-C) git commit -m 'update'
-A) pytest
-*   **Correct Answer:** A) pytest
+A React component needs to fetch data from an API when it first renders and store the result for display. Which hook combination is most appropriate?
+*   A) `useRef` to store the data and `useMemo` to trigger the fetch on mount.
+*   B) `useState` to store the fetched data and `useEffect` with an empty dependency array (`[]`) to trigger the fetch once on mount.
+*   C) `useContext` to store the data globally and `useReducer` to dispatch the fetch action.
+*   D) Two `useState` hooks — one for triggering the fetch and one for storing the result.
+*   **Correct Answer:** B) `useState` to store the fetched data and `useEffect` with an empty dependency array (`[]`) to trigger the fetch once on mount.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `pytest` command is directly designed to run the automated unit testing suite to verify system functionality.
-
+    *   *Why A is incorrect:* `useRef` stores mutable values that do not trigger re-renders — it is not appropriate for display data. `useMemo` memoizes computed values, not side effects.
+    *   *Why B is correct:* This is the standard React data-fetching pattern: `useEffect(() => { fetch(...).then(...).then(data => setData(data)) }, [])` runs the fetch once on mount and `useState` holds the result for rendering.
+    *   *Why C is incorrect:* `useContext` is for consuming shared context — it does not initiate fetch calls. `useReducer` is for complex state transitions, not the primary pattern for simple API fetches.
+    *   *Why D is incorrect:* A boolean "trigger" state is an anti-pattern — `useEffect` with `[]` runs once on mount without needing a trigger state variable.
 
 ---
 
 **Question 4**
-While working on **React State & Props** in a production environment, you encounter a system alert indicating a **IndexError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-D) Reboot the physical machine and wait for services to reload.
-B) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-C) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
-A) Verify that the index is within the valid range of 0 to len(list)-1.
-*   **Correct Answer:** A) Verify that the index is within the valid range of 0 to len(list)-1.
+A parent component passes `count={5}` as a prop to a `Counter` child component. Inside `Counter`, the developer calls `props.count = 10`. What happens?
+*   A) The parent component's state updates to `10` and re-renders.
+*   B) React throws a runtime error because props are read-only and cannot be directly mutated.
+*   C) The `Counter` component's local `props.count` updates to `10` for the current render only, without affecting the parent.
+*   D) The assignment is silently ignored in strict mode — in development, React shows a console warning but the prop is not changed.
+*   **Correct Answer:** B) React enforces props as read-only objects. Attempting to directly assign to `props.count` throws a `TypeError` because React freezes the props object in development mode (and the frozen object throws on mutation in strict mode).
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This action does not resolve the root cause of IndexError.
-    * *Why B is incorrect:* This action does not resolve the root cause of IndexError.
-    * *Why C is incorrect:* This action does not resolve the root cause of IndexError.
-    * *Why A is correct:* Because The code attempted to access an element of a sequence using an out-of-bounds index. The appropriate fix is to Verify that the index is within the valid range of 0 to len(list)-1..
-
+    *   *Why A is incorrect:* Modifying `props.count` in the child does not communicate back to the parent — React's data flow is unidirectional (top-down only).
+    *   *Why B is correct:* Props are immutable by design — direct mutation throws a TypeError because the props object is frozen.
+    *   *Why C is incorrect:* The props object is frozen — direct assignment throws an error rather than creating a temporary local mutation.
+    *   *Why D is incorrect:* The error is not silently ignored — it throws in strict mode. If outside strict mode, the assignment fails silently on a frozen object, but the prop value does not change.
 
 ---
 
 **Question 5**
-When designing a system for **React State & Props**, you must mitigate the risk of **Allowing attackers to execute arbitrary SQL commands on the backend database via input forms.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Implement parameterized queries and prepared statements rather than raw string concatenation.
-D) Enable full disk encryption on all client endpoints.
-C) Enable full disk encryption on all client endpoints.
-B) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-*   **Correct Answer:** A) Implement parameterized queries and prepared statements rather than raw string concatenation.
+A React component conditionally renders a loading spinner while data is being fetched and the results table after the fetch completes. Which pattern correctly implements this?
+*   A) Use two separate components on two different pages — one shows the spinner and the other shows the table.
+*   B) Use `useState` to track a `loading` boolean and the `data` array; render `{loading ? <Spinner /> : <Table data={data} />}` in the JSX return.
+*   C) Use `document.getElementById('spinner').style.display = 'none'` inside `useEffect` to hide the spinner after the fetch completes.
+*   D) Define the spinner and the table in separate CSS classes and toggle their `visibility` using a prop passed down from the router.
+*   **Correct Answer:** B) Use `useState` to track a `loading` boolean and the `data` array; render `{loading ? <Spinner /> : <Table data={data} />}` in the JSX return.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Implement parameterized queries and prepared statements rather than raw string concatenation. mitigates the risk of Allowing attackers to execute arbitrary SQL commands on the backend database via input forms..
-    * *Why D is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-
+    *   *Why A is incorrect:* Splitting into separate pages defeats the purpose of conditional rendering — SPA UX requires transitioning between views within the same component without navigation.
+    *   *Why B is correct:* Conditional rendering with a `loading` state flag is the standard React pattern — JSX ternary expressions render different UI based on current state.
+    *   *Why C is incorrect:* Direct DOM manipulation with `getElementById` bypasses React's rendering model — it is an anti-pattern that causes React's Virtual DOM to get out of sync with the real DOM.
+    *   *Why D is incorrect:* Toggling `visibility` via CSS hides the element visually but keeps it in the DOM and in the accessibility tree — conditional rendering is the correct React approach.

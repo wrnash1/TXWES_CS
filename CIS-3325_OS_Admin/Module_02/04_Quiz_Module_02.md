@@ -1,5 +1,5 @@
-# Quiz: Module 02 - Command Line
-## Course: CIS-3325_OS_Admin (3325_OS_Admin - CompTIA Linux+ (XK0-005))
+# Quiz: Module 02 - File System Hierarchy and Navigation Commands
+## Course: CIS-3325_OS_Admin (CompTIA Linux+ XK0-005)
 
 ---
 
@@ -12,8 +12,8 @@ D) /home
 *   **Correct Answer:** C) /etc
 *   **Distractor Analysis:**
     *   *Why A is incorrect:* `/bin` contains essential user command binaries (like `ls` and `cp`), not configuration files.
-    *   *Why B is incorrect:* `/var` contains variable data that changes rapidly, such as system logs and print spools.
-    *   *Why D is incorrect:* `/home` contains the personal directories and files for individual users, not system-wide configurations.
+    *   *Why B is incorrect:* `/var` contains variable data that changes frequently during operation, such as system logs and print spools.
+    *   *Why D is incorrect:* `/home` contains the personal directories and files for individual user accounts, not system-wide configurations.
 
 ---
 
@@ -24,59 +24,54 @@ You are currently in the directory `/home/user/documents/`. You want to navigate
 A) cd ../../var/log
 B) cd /var/log
 C) cd var/log
-D) cd ~/var/log
+D) cd ~/log
 *   **Correct Answer:** B) cd /var/log
 *   **Distractor Analysis:**
-    *   *Why A is incorrect:* This is a relative path utilizing `../` to go up two directories. While it works, it is not an *absolute* path.
-    *   *Why C is incorrect:* Missing the leading forward slash makes this a relative path; the shell will look for a folder named `var` inside your current `documents` directory and fail.
-    *   *Why D is incorrect:* The tilde `~` expands to the user's home directory (`/home/user/`). This command would try to navigate to `/home/user/var/log`, which likely doesn't exist.
+    *   *Why A is incorrect:* This is a relative path using `../` to traverse upward. While it may reach the correct destination, it is not an absolute path as the question requires.
+    *   *Why C is incorrect:* Without the leading `/`, this is a relative path; the shell will look for a `var` subdirectory inside the current `documents` directory and fail.
+    *   *Why D is incorrect:* The tilde `~` expands to the current user's home directory (`/home/user`). This command would attempt to navigate to `/home/user/log`, which does not exist.
 
 ---
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **display total disk space capacity, usage, and available space in a human-readable format**. Which of the following commands is the most appropriate to execute?
-C) ps aux
-B) systemctl restart service
-A) df -h
-D) chmod 600 config.conf
-*   **Correct Answer:** A) df -h
+An administrator needs to search for all files named `sshd_config` anywhere on the filesystem in real time, without relying on a pre-built index database. Which command is most appropriate?
+A) locate sshd_config
+B) grep sshd_config /etc
+C) find / -name sshd_config
+D) ls -R / | grep sshd_config
+*   **Correct Answer:** C) find / -name sshd_config
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `df -h` command is directly designed to display total disk space capacity, usage, and available space in a human-readable format.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is incorrect:* `locate` searches a pre-built index database (`/var/lib/mlocate/mlocate.db`). If the database has not been updated with `updatedb` since the file was created, `locate` will miss it.
+    *   *Why B is incorrect:* `grep` searches file contents for a pattern, not filenames. Passing `/etc` as the only path also limits the search to that directory.
+    *   *Why D is incorrect:* While this would eventually list the filename, piping `ls -R` to `grep` is unreliable, extremely slow, and can miss files with spaces in their names. `find` is the correct tool.
 
 ---
 
 **Question 4**
-While working on **Command Line** in a production environment, you encounter a system alert indicating a **Disk Space Full** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-A) Run log rotations, clean temporary files, or expand the logical volume capacity.
-C) Prepend the command with 'sudo' to run it with superuser administrative privileges, or adjust the file permissions.
-B) Identify and terminate the process already utilizing the target port, or modify the service configuration to use an open port.
-D) Reboot the physical machine and wait for services to reload.
-*   **Correct Answer:** A) Run log rotations, clean temporary files, or expand the logical volume capacity.
+A junior administrator tries to run `cat /var/log/auth.log` and receives a "No such file or directory" error. The senior administrator reminds them that on RHEL-based systems this log has a different path. What is the correct path on a Red Hat Enterprise Linux system?
+A) /etc/log/secure
+B) /var/log/secure
+C) /proc/log/auth
+D) /home/logs/auth.log
+*   **Correct Answer:** B) /var/log/secure
 *   **Distractor Analysis:**
-    * *Why A is correct:* Because The storage volume has run out of space, preventing files from being written and causing system services to fail. The appropriate fix is to Run log rotations, clean temporary files, or expand the logical volume capacity..
-    * *Why C is incorrect:* This action does not resolve the root cause of Disk Space Full.
-    * *Why B is incorrect:* This action does not resolve the root cause of Disk Space Full.
-    * *Why D is incorrect:* This action does not resolve the root cause of Disk Space Full.
-
+    *   *Why A is incorrect:* `/etc` holds configuration files, not log files. There is no standard `/etc/log/` directory.
+    *   *Why C is incorrect:* `/proc` is a virtual filesystem exposing kernel and process data; it does not contain traditional log files.
+    *   *Why D is incorrect:* Log files are never stored under `/home`; that directory is reserved for user home directories.
 
 ---
 
 **Question 5**
-When designing a system for **Command Line**, you must mitigate the risk of **Attackers exploiting vulnerabilities in forgotten background services or using abandoned accounts to gain persistent access.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Disable unused system accounts and run a port scan to disable unnecessary active background services.
-B) Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC.
-C) Enable full disk encryption on all client endpoints.
-D) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Disable unused system accounts and run a port scan to disable unnecessary active background services.
+Which of the following correctly describes the purpose of the `/proc` directory on a Linux system?
+A) It stores compiled program binaries that are protected from modification by standard users.
+B) It is a virtual filesystem generated by the kernel in memory, providing real-time information about running processes and hardware.
+C) It holds temporary files created during package installations that are cleared automatically after each reboot.
+D) It contains the process configuration files used by systemd to start and stop background services.
+*   **Correct Answer:** B) It is a virtual filesystem generated by the kernel in memory, providing real-time information about running processes and hardware.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Disable unused system accounts and run a port scan to disable unnecessary active background services. mitigates the risk of Attackers exploiting vulnerabilities in forgotten background services or using abandoned accounts to gain persistent access..
-    * *Why B is incorrect:* This does not address the security vulnerability of Stale Accounts & Services.
-    * *Why C is incorrect:* This does not address the security vulnerability of Stale Accounts & Services.
-    * *Why D is incorrect:* This does not address the security vulnerability of Stale Accounts & Services.
+    *   *Why A is incorrect:* Compiled binaries are stored in `/bin`, `/usr/bin`, `/sbin`, or `/usr/local/bin` depending on their role; `/proc` contains no executable program files.
+    *   *Why C is incorrect:* Temporary files cleared on reboot are stored in `/tmp`, not `/proc`.
+    *   *Why D is incorrect:* systemd service unit files are stored in `/lib/systemd/system/` and `/etc/systemd/system/`, not in `/proc`.
 

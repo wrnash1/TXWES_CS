@@ -1,79 +1,77 @@
-# Quiz: Module 03 - Risk Management Frameworks
+# Quiz: Module 03 - Risk Management Frameworks (NIST RMF, ISO 27005)
 ## Course: CIS-4315_Cyber_Governance_Risk_Compliance (ISACA Certified Information Security Manager (CISM))
 
 ---
 
 **Question 1**
-What is the first step of the NIST Risk Management Framework (RMF)?
+What is the first step of the NIST Risk Management Framework (RMF) as defined in SP 800-37 Rev. 2?
 *   A) Categorize System
 *   B) Select Controls
 *   C) Prepare
 *   D) Implement Controls
-*   **Correct Answer:** C) The RMF updated structure introduces Prepare as the initial step to align security goals prior to categorization.
+*   **Correct Answer:** C) The updated RMF introduced the Prepare step to establish the organizational context, assign roles, and align risk management strategy before system-level work begins.
 *   **Distractor Analysis:**
-    *   *Why correct:* The RMF updated structure introduces Prepare as the initial step to align security goals prior to categorization.
-    *   Categorize is the subsequent analytical step.
+    *   *Why C is correct:* SP 800-37 Rev. 2 added Prepare as a preliminary step to improve efficiency and ensure risk management activities are organizationally anchored.
+    *   *Why A is incorrect:* Categorize is the second step; it follows Prepare and focuses on determining the system's impact level.
+    *   *Why B is incorrect:* Select Controls is the third step, occurring after categorization.
+    *   *Why D is incorrect:* Implement Controls is the fourth step in the RMF sequence.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Risk management frameworks**?
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
-C) The maximum acceptable duration of downtime before a business process or system must be restored to operation after a disaster.
-B) CSS rules (like width, height, max-width, box-sizing) that dictate how the dimensions of elements are calculated and rendered.
-D) A project management document that lists identified risks, their severity, likelihood, and mitigation strategies.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
+Which of the following most accurately describes a **risk management framework**?
+*   A) A software platform used to automate vulnerability scanning and patch management across enterprise endpoints
+*   B) A structured methodology providing organizations with a repeatable, documented process for identifying, assessing, treating, and monitoring information security risks
+*   C) A set of cryptographic algorithms approved for use in protecting classified government communications
+*   D) A project management approach that schedules security activities in two-week development sprints
+*   **Correct Answer:** B) Risk management frameworks provide the organizational structure and process consistency needed to make risk decisions in a repeatable, auditable way.
 *   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **Risk management frameworks**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Risk management frameworks**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Risk management frameworks**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Risk management frameworks**.
-
+    *   *Why A is incorrect:* Vulnerability scanners are technical tools, not risk management frameworks.
+    *   *Why B is correct:* This definition captures the essential purpose of frameworks like NIST RMF and ISO 27005 — structured, repeatable risk management processes.
+    *   *Why C is incorrect:* Cryptographic algorithm suites (e.g., CNSS-approved algorithms) are a standards concern, not a risk management framework.
+    *   *Why D is incorrect:* Agile sprint methodology is a software development approach unrelated to information security risk management.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **check the configuration files for syntactic and internal consistency correctness**. Which of the following commands is the most appropriate to execute?
-B) docker-compose up -d
-A) terraform validate
-C) git log --oneline -n 5
-D) systemctl status iot_service
-*   **Correct Answer:** A) terraform validate
+An organization is implementing NIST RMF for a new payroll processing system. The security team has completed system categorization and control selection. Which step should they perform next?
+*   A) Authorize the system for operation
+*   B) Monitor the system for ongoing compliance
+*   C) Implement the selected security controls
+*   D) Prepare the organizational risk management strategy
+*   **Correct Answer:** C) After selecting controls (Step 3), the next RMF step is Implement (Step 4), where selected controls are put in place and documented.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `terraform validate` command is directly designed to check the configuration files for syntactic and internal consistency correctness.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is incorrect:* Authorize (Step 6) occurs after controls are implemented and assessed — it cannot precede implementation.
+    *   *Why B is incorrect:* Monitor (Step 7) is the final ongoing step; it follows authorization.
+    *   *Why C is correct:* The RMF sequence after Select is Implement — controls must be deployed before they can be assessed.
+    *   *Why D is incorrect:* Prepare is Step 1; it precedes all subsequent steps and cannot be revisited mid-process as a next step here.
 
 ---
 
 **Question 4**
-While working on **Risk Management Frameworks** in a production environment, you encounter a system alert indicating a **Scope Exceeded Budget Limit** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-B) Re-assign resources to critical path tasks and establish clear communication protocols.
-D) Reboot the physical machine and wait for services to reload.
-C) Optimize service resources, implement load balancing, or update failover mechanisms.
-A) Implement strict change control boards (CCB) and re-baseline the project constraints.
-*   **Correct Answer:** A) Implement strict change control boards (CCB) and re-baseline the project constraints.
+What is the primary purpose of system categorization in the NIST RMF (using FIPS 199)?
+*   A) To assign a dollar value to each information system for insurance and asset management purposes
+*   B) To determine the potential impact (Low, Moderate, High) of a security breach on organizational operations, assets, and individuals, which drives control selection
+*   C) To rank the priority of software development projects in the IT project portfolio
+*   D) To classify data by sensitivity level for storage location decisions
+*   **Correct Answer:** B) Categorization sets the impact level of the system, which directly determines the appropriate baseline of security controls from NIST SP 800-53.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This action does not resolve the root cause of Scope Exceeded Budget Limit.
-    * *Why D is incorrect:* This action does not resolve the root cause of Scope Exceeded Budget Limit.
-    * *Why C is incorrect:* This action does not resolve the root cause of Scope Exceeded Budget Limit.
-    * *Why A is correct:* Because The project scope expanded during execution without adjusting budget or schedule allocations. The appropriate fix is to Implement strict change control boards (CCB) and re-baseline the project constraints..
-
+    *   *Why A is incorrect:* Financial asset valuation is an accounting function separate from FIPS 199 impact categorization.
+    *   *Why B is correct:* FIPS 199 evaluates the potential impact on Confidentiality, Integrity, and Availability — the result drives control baseline selection in SP 800-53.
+    *   *Why C is incorrect:* Project portfolio prioritization is an IT governance function, not an RMF categorization activity.
+    *   *Why D is incorrect:* Data classification is a related but separate process; FIPS 199 categorizes systems based on potential impact, not data sensitivity labels.
 
 ---
 
 **Question 5**
-When designing a system for **Risk Management Frameworks**, you must mitigate the risk of **Stakeholders requesting changes directly to developers, leading to untracked features and security vulnerabilities.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Establish formal authorization procedures and digital signatures for all project scope modifications.
-B) Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services.
-C) Enable full disk encryption on all client endpoints.
-D) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Establish formal authorization procedures and digital signatures for all project scope modifications.
+A federal agency has deployed a Moderate-impact system, completed all RMF steps through Assessment, and received a favorable assessment report. What is the appropriate next action?
+*   A) Begin continuous monitoring immediately without additional review
+*   B) Submit the security authorization package to the Authorizing Official for an Authorization to Operate (ATO) decision
+*   C) Restart the RMF process from the Categorize step to confirm the impact level
+*   D) Implement additional High-baseline controls to ensure comprehensive coverage
+*   **Correct Answer:** B) After a favorable assessment, the authorization package (System Security Plan, SAR, POA&M) goes to the Authorizing Official, who makes the ATO decision based on residual risk.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Establish formal authorization procedures and digital signatures for all project scope modifications. mitigates the risk of Stakeholders requesting changes directly to developers, leading to untracked features and security vulnerabilities..
-    * *Why B is incorrect:* This does not address the security vulnerability of Unauthorized Scope Modification.
-    * *Why C is incorrect:* This does not address the security vulnerability of Unauthorized Scope Modification.
-    * *Why D is incorrect:* This does not address the security vulnerability of Unauthorized Scope Modification.
-
+    *   *Why A is incorrect:* Continuous monitoring (Step 7) requires a formal authorization decision first; systems cannot enter production without an ATO.
+    *   *Why B is correct:* RMF Step 6 (Authorize) requires the Authorizing Official to review the package and formally accept residual risk before the system operates.
+    *   *Why C is incorrect:* Re-categorization is only triggered by significant system changes, not as a routine post-assessment step.
+    *   *Why D is incorrect:* Applying High-baseline controls to a Moderate system is disproportionate and not called for by the RMF process unless the categorization is revised upward.

@@ -1,86 +1,76 @@
-# Quiz: Module 12 - IoT Security
-## Course: CIS-4328_Information_Security (4328_Information_Security - CompTIA Security+ (SY0-701))
+# Quiz: Module 12 - Incident Response
+## Course: CIS-4328_Information_Security (CompTIA Security+ SY0-701)
 
 ---
 
 **Question 1**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Documentation**?
-C) The core model of cybersecurity representing three objectives: Confidentiality, Integrity, and Availability.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within security operations.
-D) An instruction within a function that invokes the function itself, passing modified arguments to solve a smaller subproblem.
-B) An operation in Red-Black trees where nodes are flipped between red and black to maintain structural invariants after insertions or deletions.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within security operations.
+A security analyst receives a SIEM alert at 2:00 AM indicating that a workstation is making outbound connections to a known command-and-control server IP address. The analyst confirms the connection is real and that the workstation is likely compromised. The analyst immediately disconnects the workstation from the network. Which phase of the NIST incident response lifecycle does this action belong to?
+A) Preparation
+B) Detection and Analysis
+C) Containment, Eradication, and Recovery
+D) Post-Incident Activity
+*   **Correct Answer:** C) Containment, Eradication, and Recovery
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Documentation**.
-    * *Why A is correct:* This describes the exact role and function of **Documentation**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Documentation**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Documentation**.
-
+    *   *Why A is incorrect:* Preparation occurs before any incident — it encompasses building IR policies, playbooks, and tools. Once an incident is confirmed and active, the team has moved past the Preparation phase.
+    *   *Why B is incorrect:* Detection and Analysis is the phase where the analyst reviews the SIEM alert and determines whether the event is a genuine incident. Disconnecting the workstation is the response action that follows confirmation — it is a containment action, not an analysis action.
+    *   *Why D is incorrect:* Post-Incident Activity occurs after the incident is fully resolved — it involves lessons-learned reviews and updating controls. The incident is still active in this scenario.
 
 ---
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Documentation**?
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within security operations.
-D) Electrostatic Discharge protection; tools (like wrist straps, grounding mats) used to prevent static electricity from destroying sensitive microchips when handling hardware.
-C) The core model of cybersecurity representing three objectives: Confidentiality, Integrity, and Availability.
-B) The additional execution time and CPU operations spent visiting nodes sequentially in memory, which is higher in linked structures than in contiguous arrays.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within security operations.
+After containing a ransomware infection on three servers, the IR team is preparing to wipe and rebuild the affected systems. Before performing the rebuild, the team lead insists on creating forensic disk images of the infected servers. What is the PRIMARY reason for imaging the systems before eradication?
+A) To save time by avoiding the need to reconfigure the servers from scratch after the rebuild.
+B) To preserve evidence for forensic investigation, legal proceedings, and root-cause analysis before destroying the affected systems.
+C) To transfer the ransomware to an isolated lab environment for malware analysis using the live infected images.
+D) To satisfy the backup retention policy, which requires a snapshot before any system changes are made.
+*   **Correct Answer:** B) To preserve evidence for forensic investigation, legal proceedings, and root-cause analysis before destroying the affected systems.
 *   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **Documentation**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Documentation**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Documentation**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Documentation**.
-
+    *   *Why A is incorrect:* Forensic imaging captures the infected disk state — it is not a configuration backup and cannot be used to restore a clean system. Rebuilding still requires clean installation media and configuration management, not the forensic image.
+    *   *Why C is incorrect:* While malware analysis in an isolated lab is a valid technique, it is performed using a copy of the image in a controlled environment — it is not the primary reason for imaging before eradication. The primary reason is evidence preservation.
+    *   *Why D is incorrect:* Backup retention policies govern recovery-oriented snapshots of clean system states — forensic imaging of an actively infected system is a security investigation procedure, not a backup compliance action.
 
 ---
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **run a dictionary brute-force attack against the target SSH service to test credential strength**. Which of the following commands is the most appropriate to execute?
-D) wireshark
-A) hydra -l admin -P passwords.txt ssh://target
-B) nmap -sV -p 1-1024 target_ip
-C) openssl x509 -text -noout -in cert.pem
-*   **Correct Answer:** A) hydra -l admin -P passwords.txt ssh://target
+A threat hunter reviewing network logs identifies the following pattern: a single endpoint has made 47 outbound DNS queries for randomly generated domain names (e.g., x7k2m.attacker.com, p9q3n.attacker.com) over the past hour. No user was active on the workstation during this time. Which type of malicious activity does this traffic pattern most likely indicate?
+A) A password spraying attack against the domain controller
+B) Domain generation algorithm (DGA) beaconing by malware communicating with a command-and-control server
+C) A DNS amplification DDoS attack originating from the endpoint
+D) A port scan being conducted by a network discovery tool
+*   **Correct Answer:** B) Domain generation algorithm (DGA) beaconing by malware communicating with a command-and-control server
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `hydra -l admin -P passwords.txt ssh://target` command is directly designed to run a dictionary brute-force attack against the target SSH service to test credential strength.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is incorrect:* Password spraying involves authentication attempts against login services (LDAP, Kerberos, web forms) — it does not generate DNS queries for randomly generated external domain names.
+    *   *Why C is incorrect:* A DNS amplification attack sends small DNS queries with a spoofed victim IP to open DNS resolvers to generate large response traffic toward the victim — the attacker's endpoint would be the source of spoofed requests, not the endpoint making sequential queries for unique random subdomains.
+    *   *Why D is incorrect:* Port scanning (e.g., nmap) generates TCP/UDP connection attempts to target IP addresses across many ports — it does not produce a pattern of sequential DNS queries for algorithmically generated domain names.
 
 ---
 
 **Question 4**
-While working on **IoT Security** in a production environment, you encounter a system alert indicating a **Certificate Expired Error** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-A) Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA.
-C) Tune the detection signatures and define exceptions for authorized administrative activities.
-D) Reboot the physical machine and wait for services to reload.
-B) Review active security rules and add a permissive firewall rule allowing the specific source IP and destination port.
-*   **Correct Answer:** A) Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA.
+An organization's incident response team has successfully removed ransomware from infected systems, restored data from clean backups, and returned all systems to normal operation. The CISO asks the team to document what happened, identify how the attacker gained initial access, and recommend three specific control improvements to prevent recurrence. Which NIST IR phase does this task represent?
+A) Preparation
+B) Detection and Analysis
+C) Containment, Eradication, and Recovery
+D) Post-Incident Activity (Lessons Learned)
+*   **Correct Answer:** D) Post-Incident Activity (Lessons Learned)
 *   **Distractor Analysis:**
-    * *Why A is correct:* Because The SSL/TLS digital certificate presented by the server has passed its validity end date, causing clients to block connections. The appropriate fix is to Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA..
-    * *Why C is incorrect:* This action does not resolve the root cause of Certificate Expired Error.
-    * *Why D is incorrect:* This action does not resolve the root cause of Certificate Expired Error.
-    * *Why B is incorrect:* This action does not resolve the root cause of Certificate Expired Error.
-
+    *   *Why A is incorrect:* Preparation is the phase before incidents occur — it involves building IR capability. The task described occurs after the incident is fully resolved, making it a post-incident activity, not preparation.
+    *   *Why B is incorrect:* Detection and Analysis involves identifying and confirming the incident during its active phase — the incident is already resolved in this scenario.
+    *   *Why C is incorrect:* Containment, Eradication, and Recovery are the active response actions during the incident — removing the ransomware and restoring backups was this phase. The CISO's request for documentation and control improvement recommendations comes after recovery is complete.
 
 ---
 
 **Question 5**
-When designing a system for **IoT Security**, you must mitigate the risk of **Attackers cracking weak encryption keys using commodity hardware, compromises confidentiality.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Enforce RSA keys with a minimum length of 2048/4096 bits or switch to Elliptic Curve Cryptography (ECC).
-B) Forward all system logs to a secure, write-once SIEM (Security Information and Event Management) platform.
-D) Enable full disk encryption on all client endpoints.
-C) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Enforce RSA keys with a minimum length of 2048/4096 bits or switch to Elliptic Curve Cryptography (ECC).
+A security operations center (SOC) team wants to automate their response to phishing alerts. When the SIEM generates a phishing alert, they want the system to automatically pull the email headers, query threat intelligence feeds for the sender IP, sandbox any attachments, and isolate the affected user's mailbox — all without requiring manual analyst intervention for each alert. Which technology category is designed to enable this type of automated IR workflow?
+A) Security Information and Event Management (SIEM)
+B) Security Orchestration, Automation, and Response (SOAR)
+C) Endpoint Detection and Response (EDR)
+D) Data Loss Prevention (DLP)
+*   **Correct Answer:** B) Security Orchestration, Automation, and Response (SOAR)
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Enforce RSA keys with a minimum length of 2048/4096 bits or switch to Elliptic Curve Cryptography (ECC). mitigates the risk of Attackers cracking weak encryption keys using commodity hardware, compromises confidentiality..
-    * *Why B is incorrect:* This does not address the security vulnerability of Weak Key Strength.
-    * *Why D is incorrect:* This does not address the security vulnerability of Weak Key Strength.
-    * *Why C is incorrect:* This does not address the security vulnerability of Weak Key Strength.
-
+    *   *Why A is incorrect:* A SIEM aggregates logs and generates alerts based on correlation rules — it detects the phishing event and triggers the alert, but it does not execute automated multi-step response workflows across different security tools. That orchestration capability is provided by SOAR.
+    *   *Why C is incorrect:* EDR monitors endpoint activity, detects malicious behavior on devices, and can isolate individual endpoints — it is an endpoint-focused tool and does not orchestrate cross-tool workflows involving email analysis, threat intelligence lookups, and mailbox isolation.
+    *   *Why D is incorrect:* DLP monitors and prevents the unauthorized transfer of sensitive data — it enforces data handling policies but does not perform incident response automation or coordinate actions across multiple security tools in response to an alert.

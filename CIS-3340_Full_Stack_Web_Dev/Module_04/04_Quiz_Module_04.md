@@ -4,76 +4,74 @@
 ---
 
 **Question 1**
-Which DOM query method retrieves all page elements matching a class identifier?
-*   A) document.getElementById()
-*   B) document.querySelector()
-*   C) document.querySelectorAll()
-*   D) document.classList()
-*   **Correct Answer:** C) querySelectorAll returns a NodeList of all page elements matching the provided CSS selector.
+Which DOM query method retrieves all page elements matching a CSS class selector?
+*   A) `document.getElementById()`
+*   B) `document.querySelector()`
+*   C) `document.querySelectorAll()`
+*   D) `document.classList()`
+*   **Correct Answer:** C) `document.querySelectorAll()` returns a static `NodeList` containing every element in the document that matches the provided CSS selector string.
 *   **Distractor Analysis:**
-    *   *Why correct:* querySelectorAll returns a NodeList of all page elements matching the provided CSS selector.
-    *   querySelector only returns the first matching node.
+    *   *Why A is incorrect:* `getElementById()` returns a single element by its unique `id` attribute value — it cannot match by class name.
+    *   *Why B is incorrect:* `querySelector()` returns only the *first* element matching the selector — not all matches.
+    *   *Why C is correct:* `querySelectorAll('.classname')` returns all matching elements as a `NodeList` that can be iterated with `forEach()`.
+    *   *Why D is incorrect:* `classList` is a property on an element object that provides methods to add, remove, and toggle CSS classes — it is not a document-level query method.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Document Object Model (DOM)**?
-D) The process of adjusting node positions in a binary heap to restore the heap property (min-heap or max-heap) after an insertion or deletion.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-B) Web Content Accessibility Guidelines; international standards ensuring web content is usable for people with disabilities (e.g., screen reader compatibility, color contrast).
-C) The process of restructuring existing computer code without changing its external behavior to improve readability and reduce complexity.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
+Which of the following is the most accurate definition of the **Document Object Model (DOM)**?
+*   A) A browser security policy that prevents JavaScript loaded from one origin from reading DOM content rendered by a different origin's HTML.
+*   B) A JavaScript module system that allows one script file to import functions and variables exported by another file using `import` / `export` syntax.
+*   C) A programming interface that represents an HTML document as a hierarchical tree of node objects, allowing JavaScript to read and modify page content, structure, and style at runtime.
+*   D) A CSS rendering engine feature that pre-computes layout geometry for all page elements before the first paint, reducing cumulative layout shift.
+*   **Correct Answer:** C) A programming interface that represents an HTML document as a hierarchical tree of node objects, allowing JavaScript to read and modify page content, structure, and style at runtime.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Document Object Model (DOM)**.
-    * *Why A is correct:* This describes the exact role and function of **Document Object Model (DOM)**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Document Object Model (DOM)**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Document Object Model (DOM)**.
-
+    *   *Why A is incorrect:* This describes the Same-Origin Policy, a browser security model — not the DOM.
+    *   *Why B is incorrect:* This describes the ES Module system (`import`/`export`) — not the DOM.
+    *   *Why C is correct:* The DOM is the in-memory tree representation of an HTML document that JavaScript interacts with via browser APIs.
+    *   *Why D is incorrect:* This describes the browser's layout engine behavior related to Cumulative Layout Shift (CLS) — not the DOM.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **record staged code modifications into the repository version history**. Which of the following commands is the most appropriate to execute?
-C) python3 -m venv .venv
-A) git commit -m 'update'
-D) pip install -r requirements.txt
-B) pytest
-*   **Correct Answer:** A) git commit -m 'update'
+A developer wants to prevent a form from submitting to the server and instead handle the data with JavaScript. Which code correctly intercepts the form submission?
+*   A) `form.addEventListener('submit', function(event) { event.preventDefault(); });`
+*   B) `form.addEventListener('submit', function() { return false; });`
+*   C) `form.setAttribute('action', 'javascript:void(0)');`
+*   D) `form.removeEventListener('click', submitHandler);`
+*   **Correct Answer:** A) `form.addEventListener('submit', function(event) { event.preventDefault(); });` — calling `event.preventDefault()` inside the submit handler stops the browser's default form submission behavior.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `git commit -m 'update'` command is directly designed to record staged code modifications into the repository version history.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is correct:* `event.preventDefault()` is the standard method to cancel the default action of any DOM event, including form submission.
+    *   *Why B is incorrect:* `return false` only cancels default behavior when used in an inline HTML `onsubmit` attribute handler — it has no effect inside `addEventListener` callbacks.
+    *   *Why C is incorrect:* Setting `action="javascript:void(0)"` is an outdated, non-semantic approach that does not reliably prevent submission in all browsers.
+    *   *Why D is incorrect:* `removeEventListener` removes a previously registered listener but does nothing to intercept the submit event itself.
 
 ---
 
 **Question 4**
-While working on **JavaScript DOM Manipulation** in a production environment, you encounter a system alert indicating a **TypeError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-C) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
-D) Reboot the physical machine and wait for services to reload.
-B) Verify that the index is within the valid range of 0 to len(list)-1.
-A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-*   **Correct Answer:** A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
+During DOM event propagation, a click on a child `<button>` inside a `<div>` triggers handlers on both elements. What is the correct description of the default event propagation behavior?
+*   A) The event fires simultaneously on all elements that contain the target, with no defined order.
+*   B) The event fires on the `<button>` first (target phase) and then propagates upward through the `<div>` and subsequent ancestors (bubbling phase).
+*   C) The event fires on the outermost ancestor first and travels downward to the `<button>` — this is called the bubbling phase.
+*   D) Events only fire on the exact element clicked and never propagate to parent elements unless `addEventListener` is called with `{ capture: false }`.
+*   **Correct Answer:** B) The event fires on the `<button>` first (target phase) and then propagates upward through the `<div>` and subsequent ancestors (bubbling phase).
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This action does not resolve the root cause of TypeError.
-    * *Why D is incorrect:* This action does not resolve the root cause of TypeError.
-    * *Why B is incorrect:* This action does not resolve the root cause of TypeError.
-    * *Why A is correct:* Because An operation or function was applied to an object of an inappropriate data type. The appropriate fix is to Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types..
-
+    *   *Why A is incorrect:* Event propagation has a defined order — it is not simultaneous.
+    *   *Why B is correct:* By default, DOM events bubble upward from the target element through its ancestor chain — this is why a click on a child triggers listeners attached to parent elements.
+    *   *Why C is incorrect:* The downward phase is called the *capturing* phase — bubbling is the upward phase.
+    *   *Why D is incorrect:* Events do bubble by default even without any explicit `addEventListener` options — propagation must be explicitly stopped with `event.stopPropagation()`.
 
 ---
 
 **Question 5**
-When designing a system for **JavaScript DOM Manipulation**, you must mitigate the risk of **Storing user credentials in plain text, making them vulnerable to database breaches.**. Which of the following security configurations or controls represents the best practice to implement?
-B) Implement parameterized queries and prepared statements rather than raw string concatenation.
-A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-C) Enable full disk encryption on all client endpoints.
-D) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
+A developer needs to add 200 click event listeners to a dynamically generated table with 200 rows. Which approach is most performant?
+*   A) Attach a separate `addEventListener('click', handler)` to each of the 200 `<tr>` elements after they are appended to the DOM.
+*   B) Use event delegation: attach a single `addEventListener('click', handler)` to the parent `<tbody>` and use `event.target` inside the handler to identify which row was clicked.
+*   C) Use `setInterval()` to poll `document.querySelectorAll('tr')` every 100ms and check which row has focus.
+*   D) Add an inline `onclick` attribute to each `<tr>` tag in the HTML string passed to `innerHTML`.
+*   **Correct Answer:** B) Use event delegation: attach a single `addEventListener('click', handler)` to the parent `<tbody>` and use `event.target` inside the handler to identify which row was clicked.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-    * *Why A is correct:* Implementing Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt. mitigates the risk of Storing user credentials in plain text, making them vulnerable to database breaches..
-    * *Why C is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-    * *Why D is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-
+    *   *Why A is incorrect:* Attaching 200 individual listeners consumes more memory and requires re-registration every time rows are added or removed dynamically.
+    *   *Why B is correct:* Event delegation leverages event bubbling — one listener on the parent handles all child clicks, and `event.target` identifies the exact clicked row. This is the industry-standard pattern for dynamic lists.
+    *   *Why C is incorrect:* Polling with `setInterval` is an anti-pattern — it wastes CPU cycles and does not accurately detect click events.
+    *   *Why D is incorrect:* Inline `onclick` attributes mix behavior with structure, are harder to maintain, and do not benefit from event delegation.

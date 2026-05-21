@@ -1,79 +1,103 @@
-# Quiz: Module 12 - Scrum Events
+# Quiz: Module 12 – Test-Driven Development (TDD) and BDD
+
 ## Course: CIS-3350_Software_Engineering_Agile (Professional Scrum Master (PSM I))
 
 ---
 
-**Question 1**
-What is the maximum timebox duration for the Daily Scrum event?
-*   A) 5 minutes
-*   B) 15 minutes
-*   C) 30 minutes
-*   D) 1 hour
-*   **Correct Answer:** B) The Daily Scrum is strictly timeboxed to 15 minutes to keep alignment meetings focused and brief.
-*   **Distractor Analysis:**
-    *   *Why correct:* The Daily Scrum is strictly timeboxed to 15 minutes to keep alignment meetings focused and brief.
-    *   Other durations are too long for daily alignment.
+### Question 1
+
+What is the correct sequence of phases in the Test-Driven Development (TDD) cycle?
+
+* A) Refactor, Write Code, Write Test
+* B) Write Test (Red), Implement Code (Green), Refactor
+* C) Design, Code, Test, Release
+* D) Deploy, Assert, Cleanup
+
+Correct Answer: B) TDD proceeds in a tight loop: write a failing test (Red), implement just enough code to make it pass (Green), then improve the code structure without changing behavior (Refactor).
+
+Distractor Analysis:
+
+* *Why B is correct:* The Red-Green-Refactor sequence is the defining characteristic of TDD. Tests are always written before the code they verify.
+* *Why A is incorrect:* Starting with Refactor before writing a test or code makes no sense — there is nothing to refactor yet. This sequence reverses TDD's intent entirely.
+* *Why C is incorrect:* Design-Code-Test-Release is a Waterfall phase model, not TDD. TDD does not have a separate "design" phase before coding — the test serves as the design specification.
+* *Why D is incorrect:* Deploy-Assert-Cleanup is not a recognized development cycle. It conflates deployment with testing in a way that does not reflect TDD practice.
 
 ---
 
-**Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Sprint Retrospective**?
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-D) The configuration of input data that forces an algorithm to perform the maximum number of operations, providing a guaranteed upper limit on execution time.
-B) An access control system where users are assigned to specific roles, and permissions are linked to those roles rather than individual users, simplifying permission management.
-C) An operation in Red-Black trees where nodes are flipped between red and black to maintain structural invariants after insertions or deletions.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-*   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **Sprint Retrospective**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Sprint Retrospective**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Sprint Retrospective**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Sprint Retrospective**.
+### Question 2
 
+Which of the following is the most accurate definition of Behavior-Driven Development (BDD)?
 
----
+* A) A testing methodology where QA engineers write automated regression tests after all development is complete.
+* B) An extension of TDD that expresses system behaviors in natural language (Given-When-Then) so that tests serve as executable specifications readable by non-technical stakeholders.
+* C) A deployment strategy that releases new features to a small subset of users before full rollout to detect behavioral regressions.
+* D) A project management approach where the Product Owner defines system behavior and Developers implement it without discussion.
 
-**Question 3**
-A systems administrator or developer needs to **create a sandboxed Python virtual environment to manage dependencies locally**. Which of the following commands is the most appropriate to execute?
-D) pip install -r requirements.txt
-B) git commit -m 'update'
-C) pytest
-A) python3 -m venv .venv
-*   **Correct Answer:** A) python3 -m venv .venv
-*   **Distractor Analysis:**
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `python3 -m venv .venv` command is directly designed to create a sandboxed Python virtual environment to manage dependencies locally.
+Correct Answer: B)
 
+Distractor Analysis:
+
+* *Why B is correct:* BDD bridges the collaboration gap between technical and non-technical team members by writing test scenarios in human-readable Gherkin (Given-When-Then) format that can be validated by the Product Owner before development and executed as automated tests.
+* *Why A is incorrect:* Writing tests after all development is complete is regression testing, not TDD or BDD. Both TDD and BDD require tests to be written before or alongside production code.
+* *Why C is incorrect:* This describes a canary release or feature flag deployment strategy — unrelated to BDD as a development practice.
+* *Why D is incorrect:* BDD is explicitly collaborative — Product Owners, QA, and Developers author scenarios together. It is not a one-way specification delivery model.
 
 ---
 
-**Question 4**
-While working on **Scrum Events** in a production environment, you encounter a system alert indicating a **KeyError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-B) Verify that the index is within the valid range of 0 to len(list)-1.
-C) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-A) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
-D) Reboot the physical machine and wait for services to reload.
-*   **Correct Answer:** A) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
-*   **Distractor Analysis:**
-    * *Why B is incorrect:* This action does not resolve the root cause of KeyError.
-    * *Why C is incorrect:* This action does not resolve the root cause of KeyError.
-    * *Why A is correct:* Because The code attempted to access a dictionary key that is not defined in the object. The appropriate fix is to Ensure the requested key exists in the dictionary, or use the .get() method to return a default value..
-    * *Why D is incorrect:* This action does not resolve the root cause of KeyError.
+### Question 3
 
+A developer writes the following BDD scenario: "Given a logged-in user, When they submit an empty search query, Then an error message 'Please enter a search term' is displayed." At what point in the Sprint should this scenario be written?
+
+* A) After the search feature is fully implemented and manually tested
+* B) Before the implementation code is written, to serve as the acceptance criterion driving development
+* C) During the Sprint Review, when stakeholders can validate the scenario against the live system
+* D) During the Sprint Retrospective, when the team reflects on what was built
+
+Correct Answer: B)
+
+Distractor Analysis:
+
+* *Why B is correct:* In BDD, scenarios are written collaboratively before implementation begins — they serve as executable acceptance criteria that define what "done" looks like for the story, driving the development from the outside in.
+* *Why A is incorrect:* Writing BDD scenarios after implementation converts them from specifications into documentation. This misses BDD's core purpose of guiding development and catching specification ambiguities early.
+* *Why C is incorrect:* Sprint Review inspects completed Increments. Writing scenarios during the review would mean development happened without a clear acceptance criterion.
+* *Why D is incorrect:* Sprint Retrospective is for process improvement, not for defining product acceptance criteria.
 
 ---
 
-**Question 5**
-When designing a system for **Scrum Events**, you must mitigate the risk of **Allowing attackers to execute arbitrary SQL commands on the backend database via input forms.**. Which of the following security configurations or controls represents the best practice to implement?
-B) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-C) Enable full disk encryption on all client endpoints.
-A) Implement parameterized queries and prepared statements rather than raw string concatenation.
-D) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Implement parameterized queries and prepared statements rather than raw string concatenation.
-*   **Distractor Analysis:**
-    * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why A is correct:* Implementing Implement parameterized queries and prepared statements rather than raw string concatenation. mitigates the risk of Allowing attackers to execute arbitrary SQL commands on the backend database via input forms..
-    * *Why D is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
+### Question 4
 
+During the Refactor phase of the TDD cycle, a developer adds a new "export to CSV" feature while cleaning up existing code. What is wrong with this approach?
+
+* A) Refactoring should only happen in the Sprint Retrospective, not during active development.
+* B) The Refactor phase is strictly for improving existing code structure — adding new features requires starting a new Red-Green-Refactor cycle.
+* C) CSV export is a non-functional requirement and should be added to the Definition of Done, not the Sprint Backlog.
+* D) Nothing is wrong — the Refactor phase is the appropriate time to add new features because tests are already passing.
+
+Correct Answer: B)
+
+Distractor Analysis:
+
+* *Why B is correct:* The Refactor phase is exclusively for restructuring code — improving naming, eliminating duplication, applying patterns — without changing external behavior. Adding a new feature during Refactor bypasses the Red phase and skips the failing test that should drive the new behavior.
+* *Why A is incorrect:* Refactoring happens continuously during development as part of the TDD cycle — not only during the Sprint Retrospective.
+* *Why C is incorrect:* CSV export is a functional feature, not a non-functional requirement. Its placement in the Definition of Done vs. Sprint Backlog depends on whether it is a universal quality standard or a specific deliverable.
+* *Why D is incorrect:* Adding features without a failing test violates TDD's core discipline. Tests must be written first to ensure the new behavior is intentional and verifiable.
+
+---
+
+### Question 5
+
+A Scrum Team never practices TDD and instead writes manual tests at the end of each Sprint. Over time, the team notices their Sprint velocity is declining and they spend more time fixing bugs than building new features. What is the most likely root cause?
+
+* A) The Sprint timeboxes are too short and need to be extended to one month.
+* B) Accumulating technical debt from untested code makes each Sprint's work harder and riskier as the codebase grows.
+* C) The Product Owner is adding too many backlog items to each Sprint, exceeding the team's capacity.
+* D) The Scrum Master is not facilitating the Daily Scrum correctly, causing misalignment.
+
+Correct Answer: B)
+
+Distractor Analysis:
+
+* *Why B is correct:* Without automated test coverage built incrementally through TDD, defects accumulate and interactions between features become unpredictable. The team spends increasing Sprint capacity on regression fixes rather than new value delivery — a classic technical debt spiral.
+* *Why A is incorrect:* Sprint timebox length does not determine defect accumulation rates. A longer Sprint with the same testing practices would produce the same accumulation problem over a longer period.
+* *Why C is incorrect:* Over-commitment is a separate Sprint Planning problem. The specific symptom described — more bug-fixing over time — points to codebase quality, not Sprint commitment size.
+* *Why D is incorrect:* Daily Scrum facilitation issues affect daily alignment, not the long-term trend of increasing defect rates. The described pattern is a code quality and testing practice problem.

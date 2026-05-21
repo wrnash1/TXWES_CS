@@ -1,86 +1,76 @@
-# Quiz: Module 13 - Compliance/GRC
-## Course: CIS-4328_Information_Security (4328_Information_Security - CompTIA Security+ (SY0-701))
+# Quiz: Module 13 - Digital Forensics and Threat Intelligence
+## Course: CIS-4328_Information_Security (CompTIA Security+ SY0-701)
 
 ---
 
 **Question 1**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Core Concept**?
-D) The expected yearly cost of a security risk, calculated by multiplying the Single Loss Expectancy by the Annualized Rate of Occurrence (ALE = SLE * ARO).
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within security operations.
-C) The security rule that users and systems should only be granted the minimum necessary permissions required to perform their tasks.
-B) The core operations of a stack: 'push' inserts an element onto the top, and 'pop' removes and returns the top element.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within security operations.
+A forensic investigator arrives at the scene of a suspected insider threat incident. The suspect's workstation is still powered on and running. The investigator needs to collect evidence before shutting down the machine. According to the order of volatility, which data source should be collected FIRST?
+A) The contents of the local hard drive, including deleted files and unallocated space.
+B) The contents of system RAM, including running processes, open network connections, and decryption keys loaded in memory.
+C) The system's event logs stored in the Windows Event Viewer on disk.
+D) Archived backup tapes held in the organization's offsite storage facility.
+*   **Correct Answer:** B) The contents of system RAM, including running processes, open network connections, and decryption keys loaded in memory.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Core Concept**.
-    * *Why A is correct:* This describes the exact role and function of **Core Concept**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Core Concept**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Core Concept**.
-
+    *   *Why A is incorrect:* Hard drive data is persistent — it survives a system shutdown and can be collected after RAM is captured. Collecting disk before RAM wastes the opportunity to recover highly volatile in-memory evidence that will be permanently lost when the machine is powered off.
+    *   *Why C is incorrect:* Event logs stored on disk are non-volatile — they persist after shutdown. While important evidence, they are significantly less volatile than RAM contents and should be collected after memory acquisition.
+    *   *Why D is incorrect:* Offsite backup tapes are the least volatile evidence source in the order of volatility — they are durable, persistent, and will not be lost regardless of what happens to the live system. They should be collected last.
 
 ---
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Core Concept**?
-C) The process of adjusting node positions in a binary heap to restore the heap property (min-heap or max-heap) after an insertion or deletion.
-B) The single, top-most node in a tree structure from which all other nodes descend, serving as the starting reference for search algorithms.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within security operations.
-D) A reference or memory address stored within a node that points to another node in a linked structure, forming the link between elements.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within security operations.
+A forensic analyst is preparing to image the hard drive from a compromised server for legal proceedings. Before connecting the drive to the forensic workstation, the analyst attaches a hardware device between the drive and the workstation. After imaging is complete, the analyst computes SHA-256 hashes of both the original drive and the forensic image and confirms they match. What is the purpose of the hardware device used during imaging?
+A) To accelerate the imaging process by providing a dedicated processing channel between the drive and the workstation.
+B) To prevent the forensic workstation from writing any data to the original evidence drive, preserving its integrity.
+C) To encrypt the forensic image as it is created, protecting evidence confidentiality during transfer.
+D) To automatically verify the hash of each sector as it is copied to detect read errors during acquisition.
+*   **Correct Answer:** B) To prevent the forensic workstation from writing any data to the original evidence drive, preserving its integrity.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Core Concept**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Core Concept**.
-    * *Why A is correct:* This describes the exact role and function of **Core Concept**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Core Concept**.
-
+    *   *Why A is incorrect:* A write blocker does not accelerate the imaging process — it is a passive or active hardware device that intercepts write commands and discards them, leaving only read operations to proceed. Speed is not its function.
+    *   *Why C is incorrect:* Write blockers do not perform encryption — they are evidence integrity tools, not confidentiality tools. Encryption of the forensic image is handled separately by the imaging software or storage solution.
+    *   *Why D is incorrect:* While some forensic imaging tools do perform sector-level hash verification, that is a software function of the imaging application — not the function of the write blocker hardware device. The write blocker's sole purpose is preventing writes to the original media.
 
 ---
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **launch the graphical packet analyzer to capture and dissect network frames in real-time**. Which of the following commands is the most appropriate to execute?
-B) hydra -l admin -P passwords.txt ssh://target
-A) wireshark
-D) nmap -sV -p 1-1024 target_ip
-C) openssl x509 -text -noout -in cert.pem
-*   **Correct Answer:** A) wireshark
+A threat intelligence analyst is reviewing a report from a commercial feed that describes a nation-state group's attack campaign. The report includes details about the group's initial access techniques (spear phishing with malicious attachments), persistence mechanisms (registry run key modifications), and lateral movement methods (Pass-the-Hash). The analyst wants to map these behaviors to a standardized framework to identify which defensive controls are missing. Which framework is designed for this purpose?
+A) NIST Cybersecurity Framework (CSF)
+B) MITRE ATT&CK Framework
+C) ISO/IEC 27001
+D) OWASP Top 10
+*   **Correct Answer:** B) MITRE ATT&CK Framework
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `wireshark` command is directly designed to launch the graphical packet analyzer to capture and dissect network frames in real-time.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is incorrect:* The NIST Cybersecurity Framework provides a high-level organizational structure for managing cybersecurity risk across five functions (Identify, Protect, Detect, Respond, Recover) — it does not catalog specific adversary tactics and techniques that can be mapped to observed attack behaviors.
+    *   *Why C is incorrect:* ISO/IEC 27001 is an international standard for information security management systems (ISMS) — it defines requirements for establishing and maintaining an ISMS program but does not provide a technique-level catalog of adversary behaviors for threat mapping.
+    *   *Why D is incorrect:* The OWASP Top 10 lists the most critical web application security risks (SQL injection, XSS, insecure deserialization, etc.) — it is scoped to web application vulnerabilities and does not cover the full range of adversary TTPs described in the scenario.
 
 ---
 
 **Question 4**
-While working on **Compliance/GRC** in a production environment, you encounter a system alert indicating a **Certificate Expired Error** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-C) Tune the detection signatures and define exceptions for authorized administrative activities.
-D) Reboot the physical machine and wait for services to reload.
-B) Review active security rules and add a permissive firewall rule allowing the specific source IP and destination port.
-A) Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA.
-*   **Correct Answer:** A) Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA.
+An organization wants to automatically receive and ingest structured threat intelligence from multiple external partners and government sharing programs in a machine-readable format. The security team specifies that the intelligence must be described in a standardized language and delivered via a standardized transport protocol so their SIEM can consume it automatically. Which combination of standards meets this requirement?
+A) STIX for describing the threat intelligence data; TAXII for transporting it between organizations.
+B) TAXII for describing the threat intelligence data; STIX for transporting it between organizations.
+C) MITRE ATT&CK for describing threat data; CVSS for scoring and transporting vulnerability severity.
+D) OpenIOC for describing indicators; SMTP for delivering threat reports via email.
+*   **Correct Answer:** A) STIX for describing the threat intelligence data; TAXII for transporting it between organizations.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This action does not resolve the root cause of Certificate Expired Error.
-    * *Why D is incorrect:* This action does not resolve the root cause of Certificate Expired Error.
-    * *Why B is incorrect:* This action does not resolve the root cause of Certificate Expired Error.
-    * *Why A is correct:* Because The SSL/TLS digital certificate presented by the server has passed its validity end date, causing clients to block connections. The appropriate fix is to Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA..
-
+    *   *Why B is incorrect:* This reverses the roles. STIX (Structured Threat Information eXpression) is the data format/language used to describe threat intelligence. TAXII (Trusted Automated eXchange of Intelligence Information) is the transport protocol used to share that data. Swapping them is a common exam trap.
+    *   *Why C is incorrect:* MITRE ATT&CK is a knowledge base for mapping adversary behaviors to techniques — it is not a machine-readable transport format for automated intelligence ingestion. CVSS (Common Vulnerability Scoring System) scores software vulnerability severity and does not transport threat intelligence.
+    *   *Why D is incorrect:* OpenIOC is a legacy indicator format developed by Mandiant that is not the current standard for automated SIEM ingestion. SMTP is an email delivery protocol — it is not a structured, automated machine-to-machine threat intelligence transport mechanism.
 
 ---
 
 **Question 5**
-When designing a system for **Compliance/GRC**, you must mitigate the risk of **Intruders deleting local system event logs after a breach to hide their tracks and prevent investigation.**. Which of the following security configurations or controls represents the best practice to implement?
-D) Enable full disk encryption on all client endpoints.
-B) Enforce RSA keys with a minimum length of 2048/4096 bits or switch to Elliptic Curve Cryptography (ECC).
-A) Forward all system logs to a secure, write-once SIEM (Security Information and Event Management) platform.
-C) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Forward all system logs to a secure, write-once SIEM (Security Information and Event Management) platform.
+A security analyst is performing proactive threat hunting in the enterprise environment. The analyst hypothesizes that an attacker may have established persistence using a scheduled task that runs a PowerShell script from an unusual directory. The analyst queries the EDR platform for scheduled tasks created in the past 30 days that execute PowerShell from non-standard paths. No SIEM alert was triggered for this activity. What distinguishes threat hunting from standard security monitoring in this scenario?
+A) Threat hunting uses different tools than SIEM-based monitoring, so it can detect attacks that SIEM cannot.
+B) Threat hunting is a reactive process triggered by a security alert, while monitoring is proactive.
+C) Threat hunting is a proactive, hypothesis-driven search for adversary activity that has evaded automated detection, rather than waiting for an alert to be generated.
+D) Threat hunting only applies to nation-state attacks; standard monitoring handles commodity malware.
+*   **Correct Answer:** C) Threat hunting is a proactive, hypothesis-driven search for adversary activity that has evaded automated detection, rather than waiting for an alert to be generated.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This does not address the security vulnerability of Lack of Centralized Logs.
-    * *Why B is incorrect:* This does not address the security vulnerability of Lack of Centralized Logs.
-    * *Why A is correct:* Implementing Forward all system logs to a secure, write-once SIEM (Security Information and Event Management) platform. mitigates the risk of Intruders deleting local system event logs after a breach to hide their tracks and prevent investigation..
-    * *Why C is incorrect:* This does not address the security vulnerability of Lack of Centralized Logs.
-
+    *   *Why A is incorrect:* Threat hunters often use the same platforms (EDR, SIEM, packet capture) as standard monitoring — the distinction is not the toolset but the approach. Hunters query and pivot through data guided by a hypothesis rather than waiting for automated rules to fire.
+    *   *Why B is incorrect:* This reverses the definitions. Standard monitoring (SIEM alerting) is reactive — it responds to triggered alerts. Threat hunting is proactive — the analyst initiates the search based on intelligence and hypotheses before any alert exists.
+    *   *Why D is incorrect:* Threat hunting is applied across all threat categories — commodity malware, insider threats, and nation-state actors. The defining characteristic is the proactive, hypothesis-driven methodology, not the threat actor classification.

@@ -5,75 +5,73 @@
 
 **Question 1**
 Which CSS property converts an element into a grid container?
-*   A) display: grid
-*   B) layout: grid
-*   C) grid-template: true
-*   D) position: relative
-*   **Correct Answer:** A) Setting display: grid instructs the rendering engine to compute nested children as grid items.
+*   A) `display: grid`
+*   B) `layout: grid`
+*   C) `grid-template: true`
+*   D) `position: relative`
+*   **Correct Answer:** A) Setting `display: grid` on an element activates the CSS Grid formatting context, making all direct children become grid items that can be placed across defined rows and columns.
 *   **Distractor Analysis:**
-    *   *Why correct:* Setting display: grid instructs the rendering engine to compute nested children as grid items.
-    *   display is the core CSS layout configuration property.
+    *   *Why A is correct:* `display` is the core CSS property that establishes a formatting context — `display: grid` creates a block-level grid container.
+    *   *Why B is incorrect:* `layout` is not a valid CSS property.
+    *   *Why C is incorrect:* `grid-template` is used to define row/column tracks on an existing grid container — it does not activate grid layout on its own.
+    *   *Why D is incorrect:* `position: relative` offsets an element from its normal flow position but does not create a grid context.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **sizing properties.**?
-D) The memory block allocated on the system stack for a single function call, storing parameters, local variables, and the return address.
-B) A complete binary tree where the key of any parent node is greater than or equal to the keys of its children, guaranteeing the root is always the maximum element.
-C) The danger of exhausting the call stack memory allocation when recursive calls are made too deeply or without hitting a base case, crashing the program.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
+Which of the following is the most accurate definition of **sizing properties** in CSS?
+*   A) CSS properties such as `width`, `height`, `min-width`, and `max-width` that constrain element dimensions; using relative units like `%`, `em`, or `vw` allows elements to scale proportionally with their parent or viewport.
+*   B) The CSS box model layers — margin, border, padding, and content — that determine the total rendered size and spacing of every page element.
+*   C) CSS `display` property values (`block`, `inline`, `flex`, `grid`) that control how an element participates in document flow and establishes a formatting context for its children.
+*   D) A browser security model that prevents JavaScript on one origin from reading responses from a different origin unless the server sends permissive CORS headers.
+*   **Correct Answer:** A) CSS properties such as `width`, `height`, `min-width`, and `max-width` that constrain element dimensions; using relative units like `%`, `em`, or `vw` allows elements to scale proportionally with their parent or viewport.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **sizing properties.**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **sizing properties.**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **sizing properties.**.
-    * *Why A is correct:* This describes the exact role and function of **sizing properties.**.
-
+    *   *Why A is correct:* This accurately describes CSS sizing properties and the role of relative units in responsive design.
+    *   *Why B is incorrect:* This describes the CSS box model, which is a related but distinct concept.
+    *   *Why C is incorrect:* This describes CSS display attributes, not sizing properties.
+    *   *Why D is incorrect:* This describes the Cross-Origin Resource Sharing (CORS) policy — a browser security mechanism unrelated to CSS sizing.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **install all external project dependencies specified in the requirements manifest**. Which of the following commands is the most appropriate to execute?
-A) pip install -r requirements.txt
-D) git commit -m 'update'
-C) python3 -m venv .venv
-B) pytest
-*   **Correct Answer:** A) pip install -r requirements.txt
+A developer wants to center a single flex item both horizontally and vertically inside its flex container. Which CSS declarations achieve this?
+*   A) `justify-content: center; align-items: center;` on the container
+*   B) `margin: auto;` on the container
+*   C) `text-align: center; vertical-align: middle;` on the container
+*   D) `position: center;` on the flex item
+*   **Correct Answer:** A) `justify-content: center` centers items along the main axis, and `align-items: center` centers them along the cross axis — together they produce perfect horizontal and vertical centering inside a flex container.
 *   **Distractor Analysis:**
-    * *Why A is correct:* The `pip install -r requirements.txt` command is directly designed to install all external project dependencies specified in the requirements manifest.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is correct:* These two flex container properties together center all child items on both axes.
+    *   *Why B is incorrect:* `margin: auto` on the container centers the container itself within its parent — it does not center children inside the container.
+    *   *Why C is incorrect:* `text-align` and `vertical-align` apply to inline or table-cell contexts, not flex containers.
+    *   *Why D is incorrect:* `position: center` is not a valid CSS declaration.
 
 ---
 
 **Question 4**
-While working on **Modern CSS Layouts** in a production environment, you encounter a system alert indicating a **IndexError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-D) Reboot the physical machine and wait for services to reload.
-A) Verify that the index is within the valid range of 0 to len(list)-1.
-C) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
-B) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-*   **Correct Answer:** A) Verify that the index is within the valid range of 0 to len(list)-1.
+While debugging a CSS Grid layout, a developer notices that grid items overflow their column boundaries and overlap adjacent cells. Which is the most likely root cause?
+*   A) The developer forgot to set `display: flex` before defining grid tracks.
+*   B) Explicit `width` values set on the items in pixels exceed the computed column track width, causing overflow that is not automatically clipped.
+*   C) CSS Grid automatically ignores `padding` values, causing items to expand beyond their boundaries.
+*   D) The `position: absolute` property is not required on all grid items to keep them inside their grid area.
+*   **Correct Answer:** B) Explicit `width` values set on the items in pixels exceed the computed column track width, causing overflow that is not automatically clipped.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This action does not resolve the root cause of IndexError.
-    * *Why A is correct:* Because The code attempted to access an element of a sequence using an out-of-bounds index. The appropriate fix is to Verify that the index is within the valid range of 0 to len(list)-1..
-    * *Why C is incorrect:* This action does not resolve the root cause of IndexError.
-    * *Why B is incorrect:* This action does not resolve the root cause of IndexError.
-
+    *   *Why A is incorrect:* `display: flex` and `display: grid` are separate layout models — setting `display: flex` on a grid container would override the grid context entirely.
+    *   *Why B is correct:* Hard-coded pixel widths on grid items frequently exceed fractional (`fr`) or percentage-based column tracks, especially as viewport narrows.
+    *   *Why C is incorrect:* CSS Grid does account for `padding` in size calculations; this is not a Grid limitation.
+    *   *Why D is incorrect:* Grid items should not be positioned with `position: absolute` unless intentionally removed from grid flow; doing so removes them from the layout algorithm.
 
 ---
 
 **Question 5**
-When designing a system for **Modern CSS Layouts**, you must mitigate the risk of **Storing user credentials in plain text, making them vulnerable to database breaches.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-C) Enable full disk encryption on all client endpoints.
-B) Implement parameterized queries and prepared statements rather than raw string concatenation.
-D) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
+Which CSS approach correctly implements a responsive two-column layout that collapses to a single column on screens narrower than 600px?
+*   A) Define a Flexbox container with `flex-wrap: wrap`, set each item to `flex: 1 1 300px`, and allow natural wrapping — no media query needed for this specific breakpoint.
+*   B) Use `display: block` on the container and `float: left; width: 50%` on each item, which automatically collapses at all screen sizes.
+*   C) Set `width: 200%` on each column and rely on the browser to auto-fit within the viewport.
+*   D) Use `position: fixed` on both columns so they remain side-by-side regardless of viewport width.
+*   **Correct Answer:** A) Define a Flexbox container with `flex-wrap: wrap`, set each item to `flex: 1 1 300px`, and allow natural wrapping — no media query needed for this specific breakpoint.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt. mitigates the risk of Storing user credentials in plain text, making them vulnerable to database breaches..
-    * *Why C is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-    * *Why B is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-    * *Why D is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-
+    *   *Why A is correct:* `flex: 1 1 300px` means each item starts at 300px and can grow or shrink. When the container is narrower than 600px (two 300px items), they wrap to separate rows, producing a single-column layout automatically.
+    *   *Why B is incorrect:* `float`-based layouts do not automatically collapse and require explicit media queries; floats are a legacy technique discouraged in modern CSS.
+    *   *Why C is incorrect:* `width: 200%` would make each column twice the width of the viewport, causing severe overflow.
+    *   *Why D is incorrect:* `position: fixed` removes elements from normal document flow and pins them to the viewport — not a layout technique for content columns.

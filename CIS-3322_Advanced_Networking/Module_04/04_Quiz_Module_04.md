@@ -17,17 +17,17 @@ Which frame tagging standard is used to carry traffic for multiple VLANs over a 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **DTP (Dynamic Trunking Protocol).**?
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within networking operations.
-C) Elements placed inside the <head> block of an HTML document that define metadata, links to stylesheets, scripts, character sets, and page titles.
-B) The absolute maximum time a business process can be disrupted before the organization suffers irreparable damage or failure.
-D) Web Content Accessibility Guidelines; international standards ensuring web content is usable for people with disabilities (e.g., screen reader compatibility, color contrast).
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within networking operations.
+Which of the following most accurately describes **DTP (Dynamic Trunking Protocol)**?
+*   A) A Cisco-proprietary protocol that allows adjacent switch ports to automatically negotiate whether to form an 802.1Q trunk link, using modes such as dynamic auto and dynamic desirable.
+*   B) An IEEE standard that allows a switch to forward frames based on destination MAC addresses, building a MAC address table by learning source MAC addresses from incoming frames.
+*   C) A Cisco protocol that propagates VLAN configuration information from a VTP server to all VTP client switches in the same management domain across trunk links.
+*   D) An IEEE spanning-tree enhancement that places switch ports connected to end hosts directly into a forwarding state, bypassing the normal listening and learning phases.
+*   **Correct Answer:** A) A Cisco-proprietary protocol that allows adjacent switch ports to automatically negotiate whether to form an 802.1Q trunk link, using modes such as dynamic auto and dynamic desirable.
 *   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **DTP (Dynamic Trunking Protocol).**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **DTP (Dynamic Trunking Protocol).**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **DTP (Dynamic Trunking Protocol).**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **DTP (Dynamic Trunking Protocol).**.
+    * *Why A is correct:* DTP is Cisco-proprietary and handles trunk negotiation between directly connected Cisco switches — security best practice is to disable it on user-facing ports with `switchport nonegotiate`.
+    * *Why C is incorrect:* This describes VTP (VLAN Trunking Protocol), which propagates VLAN database information — not trunk negotiation.
+    * *Why B is incorrect:* This describes basic Layer 2 switching and MAC address learning, which is a switch forwarding mechanism, not a negotiation protocol.
+    * *Why D is incorrect:* This describes PortFast (an STP enhancement), not DTP.
 
 
 ---
@@ -59,21 +59,20 @@ A) Release and renew the DHCP lease, or configure a unique static IP address out
     * *Why C is incorrect:* This action does not resolve the root cause of IP Address Conflict.
     * *Why B is incorrect:* This action does not resolve the root cause of IP Address Conflict.
     * *Why D is incorrect:* This action does not resolve the root cause of IP Address Conflict.
-    * *Why A is correct:* Because Two devices on the same physical or logical network segment are configured with the identical IP address. The appropriate fix is to Release and renew the DHCP lease, or configure a unique static IP address outside the DHCP pool range..
+    * *Why A is correct:* Because Two devices on the same physical or logical network segment are configured with the identical IP address. The appropriate fix is to Release and renew the DHCP lease, or configure a unique static IP address outside the DHCP pool range.
 
 
 ---
 
 **Question 5**
-When designing a system for **Switching Concepts & VLANs**, you must mitigate the risk of **Attackers capturing plaintext management passwords or session data using network sniffers.**. Which of the following security configurations or controls represents the best practice to implement?
+When configuring **Switching Concepts & VLANs**, you must mitigate the risk of **Attackers capturing plaintext management passwords or session data using network sniffers.**. Which of the following security configurations or controls represents the best practice to implement?
 A) Configure SSH (port 22) for terminal access and HTTPS (port 443) for web interfaces, disabling Telnet and HTTP.
 B) Implement switch Port Security to restrict access to switch ports based on approved MAC addresses.
-C) Enable full disk encryption on all client endpoints.
-D) Enable full disk encryption on all client endpoints.
+C) Disable DTP on all switch ports with `switchport nonegotiate` to prevent unauthorized trunk formation.
+D) Enable VTP transparent mode on all switches to prevent unauthorized VLAN database updates from propagating.
 *   **Correct Answer:** A) Configure SSH (port 22) for terminal access and HTTPS (port 443) for web interfaces, disabling Telnet and HTTP.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Configure SSH (port 22) for terminal access and HTTPS (port 443) for web interfaces, disabling Telnet and HTTP. mitigates the risk of Attackers capturing plaintext management passwords or session data using network sniffers..
-    * *Why B is incorrect:* This does not address the security vulnerability of Unencrypted Traffic Exposure.
-    * *Why C is incorrect:* This does not address the security vulnerability of Unencrypted Traffic Exposure.
-    * *Why D is incorrect:* This does not address the security vulnerability of Unencrypted Traffic Exposure.
-
+    * *Why A is correct:* SSH encrypts all data in the management session, preventing credential sniffing. On Cisco IOS, configure with `line vty 0 4` → `transport input ssh`.
+    * *Why B is incorrect:* Port Security restricts physical access by MAC address but does not encrypt management credentials that may be sent in plaintext.
+    * *Why C is incorrect:* Disabling DTP is a good hardening practice to prevent VLAN hopping, but it does not address plaintext credential capture.
+    * *Why D is incorrect:* VTP transparent mode prevents VLAN propagation attacks but does not address the sniffing of management credentials.

@@ -1,52 +1,57 @@
-# Reading Guide: Module 10 - Database Design & Normalization
-## Course: CIS-3312_Systems_Analysis_Design (IIBA Entry Certificate in Business Analysis (ECBA))
+# Reading Guide: Module 10 - User Interface and UX Design Principles
+## Course: CIS-3312 Systems Analysis & Design (IIBA ECBA)
 
 ---
 
 ### Introduction
-Welcome to **Module 10 - Database Design & Normalization**! This week's study material focuses on the core foundations and configuration mechanics of **Database Design & Normalization** as aligned with the **IIBA Entry Certificate in Business Analysis (ECBA)** certification framework. Understanding these topics is essential not only for passing the certification exam but also for administering enterprise systems in real-world environments.
+Welcome to **Module 10 – User Interface and UX Design Principles**! A system that satisfies all its functional and non-functional requirements but is confusing, frustrating, or inaccessible to users will fail in practice. User interface (UI) design focuses on the visual and interactive elements users engage with, while user experience (UX) design focuses on the entire experience of using the system — efficiency, satisfaction, learnability, and accessibility.
 
-As a student, you will learn the primary operational roles, command syntaxes, and troubleshooting parameters needed to design, configure, and maintain these services. We will explore how different protocols establish connections, how configurations manage resource allocation, and how security controls prevent access breaches. Make sure to complete the checklists and review the glossary terms in detail before beginning the lab activity.
+For business analysts, understanding UI/UX principles is critical because BAs often bridge the gap between user needs (elicited in requirements) and the design team's solutions. BAs participate in usability reviews, evaluate prototypes against acceptance criteria, and advocate for user needs throughout the design process.
 
 ---
 
 ### 1. High-Yield Glossary
 Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
 
-*   **Normalization steps**: A primary configuration standard and technical parameter essential for coordinating Database Design & Normalization activities, enforcing security boundaries, and verifying operational statuses within the management_services environment.
-*   **First Normal Form (1NF)**: A primary configuration standard and technical parameter essential for coordinating Database Design & Normalization activities, enforcing security boundaries, and verifying operational statuses within the management_services environment.
-*   **Second Normal Form (2NF)**: A primary configuration standard and technical parameter essential for coordinating Database Design & Normalization activities, enforcing security boundaries, and verifying operational statuses within the management_services environment.
-*   **Third Normal Form (3NF)**: A primary configuration standard and technical parameter essential for coordinating Database Design & Normalization activities, enforcing security boundaries, and verifying operational statuses within the management_services environment.
-*   **transitive dependencies.**: A primary configuration standard and technical parameter essential for coordinating Database Design & Normalization activities, enforcing security boundaries, and verifying operational statuses within the management_services environment.
+*   **Usability**: Usability is the degree to which a system enables its users to achieve specific goals effectively, efficiently, and with satisfaction. The ISO 9241 standard defines usability along three dimensions: effectiveness (can users accomplish their tasks?), efficiency (how much effort does it take?), and satisfaction (do users find the experience acceptable?). A highly usable system reduces training time, decreases errors, and improves user adoption.
+
+*   **Nielsen's 10 Usability Heuristics**: Jakob Nielsen's 10 usability heuristics are widely used design principles for evaluating interface quality. Key heuristics include: (1) Visibility of system status — keep users informed of what the system is doing; (2) Match between system and real world — use language and concepts familiar to users; (3) User control and freedom — support undo and redo; (4) Error prevention — design to prevent errors before they occur; (5) Recognition over recall — make information visible rather than requiring users to remember it. These heuristics are used in heuristic evaluation reviews.
+
+*   **Wireframe**: A wireframe is a low-fidelity visual representation of a user interface that shows the layout, structure, and placement of UI components (buttons, forms, navigation, content areas) without color, detailed graphics, or final styling. Wireframes are used early in the design process to communicate UI structure to stakeholders and gather feedback before investment in high-fidelity design or development. They are the most efficient way to validate interface designs before coding begins.
+
+*   **Prototype**: A prototype is a working or simulated model of a user interface that allows stakeholders to interact with the proposed system design before development. Low-fidelity prototypes (paper sketches, wireframe clickthroughs) test navigation and workflow. High-fidelity prototypes (polished, interactive mockups) test visual design and detailed interactions. Prototyping is both an elicitation technique (surfaces unstated requirements) and a validation technique (confirms design meets needs).
+
+*   **Accessibility**: Accessibility is the design practice of ensuring that systems can be used by people with a wide range of abilities, including those with visual, auditory, motor, or cognitive disabilities. The Web Content Accessibility Guidelines (WCAG) published by W3C define accessibility standards across four principles: Perceivable, Operable, Understandable, and Robust (POUR). WCAG 2.1 AA compliance is the most commonly required accessibility standard for enterprise systems.
+
+*   **User-Centered Design (UCD)**: User-centered design is an iterative design approach in which the needs, behaviors, and goals of end users are the primary driver of design decisions at every stage. UCD involves direct user research (interviews, observation, usability testing), iterative prototyping, and continuous feedback loops. It contrasts with technology-centered design, where system capabilities drive what users are asked to do. UCD typically produces systems with higher adoption and lower training costs.
 
 ---
 
 ### 2. Certification Exam Tips
-*   **Focus Area:** Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
-*   **Scenario Trap:** Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
-*   **Study Resource:** To reinforce these concepts visually, review this targeted search query: [Systems Analysis & Design Tutorial - Database Design & Normalization](https://www.youtube.com/playlist?list=PL2309C5A85A48F7B1).
+*   **Usability Heuristics in Scenarios**: The ECBA exam may describe a usability problem and ask which heuristic it violates. For example: a system shows a loading spinner but no estimated time or progress → violates "Visibility of system status." A system uses technical jargon unfamiliar to users → violates "Match between system and real world." Memorize the 10 heuristics by name and example.
+*   **Wireframe vs. Prototype**: Know the difference for exam questions: wireframes are static structural representations; prototypes are interactive simulations. When a question asks about getting stakeholder feedback on navigation flow before coding → use a prototype. When a question asks about communicating page layout to a developer → use a wireframe.
+*   **WCAG and Accessibility**: The ECBA exam is increasingly including accessibility as part of non-functional requirements. Know that WCAG 2.1 AA is the standard required by most U.S. federal agencies and many enterprise contracts. "Perceivable, Operable, Understandable, Robust" (POUR) is the testable acronym.
+*   **Study Resource**: The Nielsen Norman Group publishes free usability articles and the full list of 10 usability heuristics with examples at [https://www.nngroup.com/articles/ten-usability-heuristics/](https://www.nngroup.com/articles/ten-usability-heuristics/) — this is the most authoritative free resource for the UX concepts tested on the ECBA exam.
 
 ---
 
 ### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the section/chapter covering **Database Design & Normalization** in the OER Textbook: [Systems Analysis and Design OER](https://open.umn.edu/opentextbooks/textbooks/systems-analysis-and-design).
-*   **Required Video:** Watch the video lecture on **Database Design & Normalization** in the official course playlist: [Systems Analysis & Design Tutorial](https://www.youtube.com/playlist?list=PL2309C5A85A48F7B1).
+*   **Required Reading**: Review Nielsen's 10 Usability Heuristics at [https://www.nngroup.com/articles/ten-usability-heuristics/](https://www.nngroup.com/articles/ten-usability-heuristics/). Also review the W3C WCAG 2.1 Quick Reference at [https://www.w3.org/WAI/WCAG21/quickref/](https://www.w3.org/WAI/WCAG21/quickref/) — focus on the four POUR principles and the AA-level requirements.
+*   **Supplemental Reading**: BABOK® Guide v3 Techniques — "Prototyping" and "User Interface Design" — describe both from the BA perspective, including when to use low vs. high fidelity and how prototypes confirm elicitation results.
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Normalize a raw flat spreadsheet file into 1NF, 2NF, and 3NF relational tables**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-*   **Define keys and indexes**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-*   **Verify database integrity constraints**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-
+### Lab & Activity Integration
+In this week's lab, you will:
+*   Evaluate a provided screenshot of a web application interface against three of Nielsen's 10 usability heuristics, citing specific violations or strengths.
+*   Create a wireframe (in draw.io or on paper, photographed) for the main dashboard screen of a provided system scenario, showing navigation, key content areas, and primary actions.
+*   Review a provided wireframe and write three acceptance criteria it must satisfy before the design is approved for development.
 
 ---
 
 ### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read the section/chapter covering **Database Design & Normalization** in [Systems Analysis and Design OER](https://open.umn.edu/opentextbooks/textbooks/systems-analysis-and-design).
-- [ ] Watch the video lecture on **Database Design & Normalization** in [Systems Analysis & Design Tutorial](https://www.youtube.com/playlist?list=PL2309C5A85A48F7B1).
-- [ ] Review the commands outlined in the lab instructions.
-- [ ] Proceed to the weekly hands-on lab activity.
+- [ ] Read the glossary terms and write your own one-sentence version of each definition.
+- [ ] Read Nielsen's 10 Usability Heuristics at [https://www.nngroup.com/articles/ten-usability-heuristics/](https://www.nngroup.com/articles/ten-usability-heuristics/).
+- [ ] Review the WCAG 2.1 Quick Reference at [https://www.w3.org/WAI/WCAG21/quickref/](https://www.w3.org/WAI/WCAG21/quickref/).
+- [ ] Watch the Module 10 video lecture.
+- [ ] Complete the heuristic evaluation and wireframe lab before taking the quiz.

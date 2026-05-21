@@ -17,17 +17,17 @@ Which criteria is analyzed FIRST during the Root Bridge election process in Span
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Blocked)**?
-B) The practice of dividing a single logical network into multiple smaller, manageable subnetwork segments to optimize traffic and enhance security.
-D) The core operations of a stack: 'push' inserts an element onto the top, and 'pop' removes and returns the top element.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within networking operations.
-C) The total memory space required by an algorithm to execute to completion. This includes the static instruction space, variable space, and dynamic allocation space (like recursion stack frames or temporary arrays).
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within networking operations.
+In Spanning Tree Protocol, which port role describes a port that is **not** the root port or designated port, and is placed in a blocking state to prevent Layer 2 loops?
+*   A) Alternate Port — a port that provides the best alternative path to the root bridge and transitions to forwarding if the root port fails (RSTP term).
+*   B) Blocked Port — a non-root, non-designated port that discards frames and does not participate in active forwarding to prevent switching loops.
+*   C) Backup Port — a redundant port on the same switch that provides a second connection to the same shared segment as an existing designated port (RSTP term).
+*   D) Disabled Port — a port that has been administratively shut down using the `shutdown` command and does not participate in STP at all.
+*   **Correct Answer:** B) Blocked Port — a non-root, non-designated port that discards frames and does not participate in active forwarding to prevent switching loops.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Blocked)**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Blocked)**.
-    * *Why A is correct:* This describes the exact role and function of **Blocked)**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Blocked)**.
+    * *Why B is correct:* In IEEE 802.1D STP, non-root non-designated ports enter the Blocking state to break loops. The port role is called "Blocked" in 802.1D and "Alternate/Backup" in RSTP (802.1w).
+    * *Why A is incorrect:* The Alternate Port is the RSTP-specific term — in 802.1D this role is simply a blocked port.
+    * *Why C is incorrect:* The Backup Port is also an RSTP-specific term for a redundant connection to the same segment, distinct from the Alternate port.
+    * *Why D is incorrect:* A Disabled port is administratively down via `shutdown`, which removes it from STP participation entirely — it is not the same as a Blocked port.
 
 
 ---
@@ -58,22 +58,21 @@ D) Reboot the physical machine and wait for services to reload.
 *   **Distractor Analysis:**
     * *Why C is incorrect:* This action does not resolve the root cause of Subnet Mask Mismatch.
     * *Why B is incorrect:* This action does not resolve the root cause of Subnet Mask Mismatch.
-    * *Why A is correct:* Because A host is configured with an incorrect subnet mask, preventing it from identifying local vs. remote addresses. The appropriate fix is to Correct the subnet mask configuration on the interface to match the network segment parameters..
+    * *Why A is correct:* Because A host is configured with an incorrect subnet mask, preventing it from identifying local vs. remote addresses. The appropriate fix is to Correct the subnet mask configuration on the interface to match the network segment parameters.
     * *Why D is incorrect:* This action does not resolve the root cause of Subnet Mask Mismatch.
 
 
 ---
 
 **Question 5**
-When designing a system for **Spanning Tree Protocol (STP & RSTP)**, you must mitigate the risk of **Attackers connecting rogue access points or unauthorized laptops directly to internal switch ports.**. Which of the following security configurations or controls represents the best practice to implement?
+When configuring **Spanning Tree Protocol**, you must mitigate the risk of **Attackers connecting rogue access points or unauthorized laptops directly to internal switch ports.**. Which of the following security configurations or controls represents the best practice to implement?
 A) Implement switch Port Security to restrict access to switch ports based on approved MAC addresses.
-D) Enable full disk encryption on all client endpoints.
+D) Enable BPDU Guard on all PortFast-enabled access ports to err-disable the port if a BPDU is received.
 B) Configure SSH (port 22) for terminal access and HTTPS (port 443) for web interfaces, disabling Telnet and HTTP.
-C) Enable full disk encryption on all client endpoints.
+C) Enable Root Guard on uplink ports facing the distribution layer to prevent a rogue switch from claiming the root bridge role.
 *   **Correct Answer:** A) Implement switch Port Security to restrict access to switch ports based on approved MAC addresses.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Implement switch Port Security to restrict access to switch ports based on approved MAC addresses. mitigates the risk of Attackers connecting rogue access points or unauthorized laptops directly to internal switch ports..
-    * *Why D is incorrect:* This does not address the security vulnerability of Unauthorized Port Access.
-    * *Why B is incorrect:* This does not address the security vulnerability of Unauthorized Port Access.
-    * *Why C is incorrect:* This does not address the security vulnerability of Unauthorized Port Access.
-
+    * *Why A is correct:* Port Security directly prevents unauthorized devices from communicating by restricting which MAC addresses are permitted on a port — the most direct control against rogue physical connections.
+    * *Why D is incorrect:* BPDU Guard protects against a rogue switch being connected (which sends BPDUs) but does not prevent a regular laptop or access point from connecting to the port.
+    * *Why B is incorrect:* SSH/HTTPS secures management traffic but does not prevent unauthorized device connections to switch ports.
+    * *Why C is incorrect:* Root Guard prevents topology manipulation by a rogue switch claiming root bridge status — it does not block unauthorized end devices from connecting.

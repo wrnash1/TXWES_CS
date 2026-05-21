@@ -17,63 +17,65 @@ How does an arrow function handle the binding of the 'this' keyword?
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **parameters**?
-D) A binary tree in which every level, except possibly the last, is completely filled, and all nodes in the last level are as far left as possible.
-C) An access control system where users are assigned to specific roles, and permissions are linked to those roles rather than individual users, simplifying permission management.
-B) The maximum acceptable duration of downtime before a business process or system must be restored to operation after a disaster.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
+Which of the following most accurately describes **parameters** in a JavaScript function?
+*   A) The actual values passed to the function when it is called (e.g., `add(3, 5)` — 3 and 5 are the arguments)
+*   B) Named local variables listed in the function definition that receive the values passed by the caller
+*   C) Variables declared inside the function body using `let` or `const`
+*   D) The value that a function sends back to the caller using the `return` keyword
+*   **Correct Answer:** B) Named local variables listed in the function definition that receive the values passed by the caller.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **parameters**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **parameters**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **parameters**.
-    * *Why A is correct:* This describes the exact role and function of **parameters**.
-
+    *   *Why A is incorrect:* That describes *arguments* (the values supplied at call time), not parameters (the names in the definition).
+    *   *Why B is correct:* Parameters are the named placeholders in the function signature (e.g., `function add(a, b)` — `a` and `b` are parameters).
+    *   *Why C is incorrect:* Those are local variables declared inside the body, not parameters listed in the parentheses.
+    *   *Why D is incorrect:* That describes the return value, not parameters.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **run the automated unit testing suite to verify system functionality**. Which of the following commands is the most appropriate to execute?
-C) python3 -m venv .venv
-D) git commit -m 'update'
-B) pip install -r requirements.txt
-A) pytest
-*   **Correct Answer:** A) pytest
+What is the key difference between a function declaration and a function expression?
+*   A) Function declarations can only accept one parameter; function expressions accept unlimited parameters.
+*   B) Function declarations are hoisted fully and can be called before their definition; function expressions stored in `const`/`let` cannot be called before initialization.
+*   C) Function expressions can use the `return` statement; function declarations cannot.
+*   D) Function declarations always return `undefined`; function expressions can return any value.
+*   **Correct Answer:** B) Function declarations are hoisted fully and can be called before their definition; function expressions stored in `const`/`let` cannot be called before initialization.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `pytest` command is directly designed to run the automated unit testing suite to verify system functionality.
-
+    *   *Why A is incorrect:* Both declarations and expressions accept any number of parameters.
+    *   *Why B is correct:* Hoisting is the key distinction — `function foo() {}` is fully hoisted; `const foo = function() {}` is in the temporal dead zone until its line executes.
+    *   *Why C is incorrect:* Both declarations and expressions can include a `return` statement.
+    *   *Why D is incorrect:* Both can return any value; the return behavior is identical.
 
 ---
 
 **Question 4**
-While working on **Functions & Arrow Functions** in a production environment, you encounter a system alert indicating a **IndexError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-B) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
-C) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-D) Reboot the physical machine and wait for services to reload.
-A) Verify that the index is within the valid range of 0 to len(list)-1.
-*   **Correct Answer:** A) Verify that the index is within the valid range of 0 to len(list)-1.
+While working on **Functions & Arrow Functions**, a developer wants to define a method inside an object that references the object's own properties via `this`. Which function type is most appropriate?
+*   A) Arrow function, because it always binds `this` to the calling object
+*   B) Regular function declaration or expression, because `this` is bound dynamically to the object that called the method
+*   C) Arrow function, because it provides a shorter syntax and `this` behaves the same as in regular functions
+*   D) An immediately invoked function expression (IIFE), because `this` must be invoked immediately to work correctly
+*   **Correct Answer:** B) Regular function declaration or expression, because `this` is bound dynamically to the object that called the method.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This action does not resolve the root cause of IndexError.
-    * *Why C is incorrect:* This action does not resolve the root cause of IndexError.
-    * *Why D is incorrect:* This action does not resolve the root cause of IndexError.
-    * *Why A is correct:* Because The code attempted to access an element of a sequence using an out-of-bounds index. The appropriate fix is to Verify that the index is within the valid range of 0 to len(list)-1..
-
+    *   *Why A is incorrect:* Arrow functions do NOT bind `this` to the calling object; they inherit `this` from the surrounding lexical scope, which is often the wrong context for object methods.
+    *   *Why B is correct:* Regular functions bind `this` dynamically — when called as `obj.method()`, `this` inside the function refers to `obj`.
+    *   *Why C is incorrect:* `this` in arrow functions does NOT behave the same as in regular functions; that is the entire point of the distinction.
+    *   *Why D is incorrect:* IIFEs are for immediately-executed code, not for defining reusable object methods.
 
 ---
 
 **Question 5**
-When designing a system for **Functions & Arrow Functions**, you must mitigate the risk of **Allowing attackers to execute arbitrary SQL commands on the backend database via input forms.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Implement parameterized queries and prepared statements rather than raw string concatenation.
-C) Enable full disk encryption on all client endpoints.
-D) Enable full disk encryption on all client endpoints.
-B) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-*   **Correct Answer:** A) Implement parameterized queries and prepared statements rather than raw string concatenation.
+What is returned by the following function call?
+```javascript
+function multiply(a, b = 2) {
+  return a * b;
+}
+console.log(multiply(5));
+```
+*   A) `NaN` because `b` is `undefined` when only one argument is passed
+*   B) `5` because JavaScript ignores the second parameter when it is not provided
+*   C) `10` because the default value `b = 2` is used when no second argument is supplied
+*   D) A `TypeError` because the function requires two arguments
+*   **Correct Answer:** C) `10` because the default value `b = 2` is used when no second argument is supplied.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Implement parameterized queries and prepared statements rather than raw string concatenation. mitigates the risk of Allowing attackers to execute arbitrary SQL commands on the backend database via input forms..
-    * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why D is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-
+    *   *Why A is incorrect:* Default parameters prevent `undefined` from being used; `b` receives `2` when no argument is passed.
+    *   *Why B is incorrect:* JavaScript does not ignore the parameter; it applies the default value `2`, making the computation `5 * 2 = 10`.
+    *   *Why C is correct:* ES6 default parameters substitute the default value when the caller passes `undefined` or no argument at all.
+    *   *Why D is incorrect:* JavaScript does not throw errors for missing arguments; missing parameters receive `undefined` or their default value.

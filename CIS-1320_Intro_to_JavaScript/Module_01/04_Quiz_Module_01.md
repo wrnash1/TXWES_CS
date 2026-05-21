@@ -5,10 +5,10 @@
 
 **Question 1**
 Which HTML tag is used to embed or reference client-side JavaScript code within a web page?
-*   A) <javascript>
-*   B) <script>
-*   C) <js>
-*   D) <code class='javascript'>
+*   A) `<javascript>`
+*   B) `<script>`
+*   C) `<js>`
+*   D) `<code class='javascript'>`
 *   **Correct Answer:** B) The `<script>` tag is the standard HTML element used to embed or link external JavaScript code.
 *   **Distractor Analysis:**
     *   *Why correct:* The `<script>` tag is the standard HTML element used to embed or link external JavaScript code.
@@ -17,63 +17,59 @@ Which HTML tag is used to embed or reference client-side JavaScript code within 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **JS engine**?
-C) CSS rules (like width, height, max-width, box-sizing) that dictate how the dimensions of elements are calculated and rendered.
-D) The maximum acceptable age of data that must be recovered from backup storage to restore operations, representing the limit of tolerable data loss.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-B) The operational principle of a queue, where the first element added is the first one to be removed, mimicking a line at a checkout register.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
+Which of the following most accurately describes a **JS engine**?
+*   A) A browser component that parses HTML and builds the DOM tree from markup
+*   B) A runtime that reads, compiles, and executes JavaScript code (e.g., V8 in Chrome)
+*   C) A JavaScript library that simplifies DOM selection using CSS-style queries
+*   D) The `window` object that represents the global scope in a browser environment
+*   **Correct Answer:** B) A runtime that reads, compiles, and executes JavaScript code (e.g., V8 in Chrome).
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **JS engine**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **JS engine**.
-    * *Why A is correct:* This describes the exact role and function of **JS engine**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **JS engine**.
-
+    *   *Why A is incorrect:* That describes an HTML parser, not a JS engine.
+    *   *Why B is correct:* A JS engine is the browser's dedicated component that processes and runs JavaScript source code.
+    *   *Why C is incorrect:* That describes a library like jQuery, not the JS engine itself.
+    *   *Why D is incorrect:* `window` is the global object; the engine is the runtime that evaluates all JS code.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **record staged code modifications into the repository version history**. Which of the following commands is the most appropriate to execute?
-B) pytest
-A) git commit -m 'update'
-C) pip install -r requirements.txt
-D) python3 -m venv .venv
-*   **Correct Answer:** A) git commit -m 'update'
+A developer wants to confirm that a variable named `score` holds the value `42` at a specific point in their script. Which statement is most appropriate to add temporarily for this purpose?
+*   A) `document.write(score);`
+*   B) `alert(score);`
+*   C) `console.log(score);`
+*   D) `score.print();`
+*   **Correct Answer:** C) `console.log(score);`
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `git commit -m 'update'` command is directly designed to record staged code modifications into the repository version history.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is incorrect:* `document.write` injects content into the page body and can erase the page if called after load.
+    *   *Why B is incorrect:* `alert()` works but is intrusive and blocks execution; not the standard debugging tool.
+    *   *Why C is correct:* `console.log()` is the standard non-blocking way to inspect values in the browser DevTools console.
+    *   *Why D is incorrect:* Numbers in JavaScript do not have a `.print()` method; this throws a TypeError.
 
 ---
 
 **Question 4**
-While working on **JavaScript Introduction & Execution** in a production environment, you encounter a system alert indicating a **KeyError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-D) Reboot the physical machine and wait for services to reload.
-B) Verify that the index is within the valid range of 0 to len(list)-1.
-A) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
-C) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-*   **Correct Answer:** A) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
+A student places a `<script src="app.js"></script>` tag in the `<head>` of their HTML file without any additional attributes. The script tries to access a `<div>` element in the `<body>`. What will happen?
+*   A) The script runs successfully because the `<head>` executes after the `<body>`.
+*   B) The script will fail because `<head>` scripts run before `<body>` elements are parsed, so the `<div>` is `null`.
+*   C) The script runs in a separate thread and will wait for the DOM to finish loading.
+*   D) The browser ignores scripts placed in the `<head>` and moves them to the bottom automatically.
+*   **Correct Answer:** B) The script will fail because `<head>` scripts run before `<body>` elements are parsed, so the `<div>` is `null`.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This action does not resolve the root cause of KeyError.
-    * *Why B is incorrect:* This action does not resolve the root cause of KeyError.
-    * *Why A is correct:* Because The code attempted to access a dictionary key that is not defined in the object. The appropriate fix is to Ensure the requested key exists in the dictionary, or use the .get() method to return a default value..
-    * *Why C is incorrect:* This action does not resolve the root cause of KeyError.
-
+    *   *Why A is incorrect:* `<head>` is parsed before `<body>`, not after.
+    *   *Why B is correct:* Without `defer` or moving the tag to the bottom of `<body>`, the script executes before those DOM elements exist.
+    *   *Why C is incorrect:* JavaScript is single-threaded; there is no automatic background waiting without `defer` or event listeners.
+    *   *Why D is incorrect:* The browser does not reorder script tags automatically.
 
 ---
 
 **Question 5**
-When designing a system for **JavaScript Introduction & Execution**, you must mitigate the risk of **Allowing attackers to execute arbitrary SQL commands on the backend database via input forms.**. Which of the following security configurations or controls represents the best practice to implement?
-D) Enable full disk encryption on all client endpoints.
-B) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-C) Enable full disk encryption on all client endpoints.
-A) Implement parameterized queries and prepared statements rather than raw string concatenation.
-*   **Correct Answer:** A) Implement parameterized queries and prepared statements rather than raw string concatenation.
+When does a JavaScript **execution context** get created?
+*   A) Only once, when the browser first starts up
+*   B) Every time a function is called or a script file begins executing
+*   C) Only when a variable is declared with `var`
+*   D) Whenever the browser receives a network response from a server
+*   **Correct Answer:** B) Every time a function is called or a script file begins executing.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why A is correct:* Implementing Implement parameterized queries and prepared statements rather than raw string concatenation. mitigates the risk of Allowing attackers to execute arbitrary SQL commands on the backend database via input forms..
-
+    *   *Why A is incorrect:* Execution contexts are created dynamically during program execution, not just at browser startup.
+    *   *Why B is correct:* The JS engine creates a new execution context for the global scope and for every function invocation, pushing it onto the call stack.
+    *   *Why C is incorrect:* Variable declarations do not trigger a new execution context; function calls do.
+    *   *Why D is incorrect:* Network responses can trigger callbacks, but the execution context is created when that callback function is called, not by the network event itself.

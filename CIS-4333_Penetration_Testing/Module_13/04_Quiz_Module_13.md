@@ -1,79 +1,77 @@
-# Quiz: Module 13 - Maintaining Access & Pivoting
+# Quiz: Module 13 - Password Attacks – Hashcat and John the Ripper
 ## Course: CIS-4333_Penetration_Testing (CompTIA PenTest+)
 
 ---
 
 **Question 1**
-Which technique allows a tester to route traffic through a compromised host to access a internal network subnet?
+Which technique allows a penetration tester to route attack traffic through a compromised host to reach internal network segments that are not directly accessible from the attacker's machine?
 *   A) Privilege Escalation
 *   B) Pivoting
 *   C) Vulnerability Scanning
-*   D) Social Engineering
-*   **Correct Answer:** B) Pivoting uses a compromised dual-homed host as a bridge to send traffic into internal systems.
+*   D) Password Spraying
+*   **Correct Answer:** B) Pivoting
 *   **Distractor Analysis:**
-    *   *Why correct:* Pivoting uses a compromised dual-homed host as a bridge to send traffic into internal systems.
-    *   Escalation increases local permission level.
+    *   *Why B is correct:* Pivoting uses a compromised host as a relay point to access network segments that are otherwise unreachable from the attacker's system. The compromised host acts as a bridge — tools like SSH port forwarding, Metasploit's `route` command, and `proxychains` route attack traffic through the pivot host into internal subnets. This technique demonstrates how a single perimeter breach can expose the entire internal network.
+    *   *Why A is incorrect:* Privilege escalation increases the access level on the current compromised host — from standard user to administrator or root. It does not provide access to other network segments or hosts.
+    *   *Why C is incorrect:* Vulnerability scanning is a reconnaissance activity performed earlier in the methodology to identify potential weaknesses. It does not involve routing traffic through a compromised host or accessing isolated network segments.
+    *   *Why D is incorrect:* Password spraying is an online credential attack that submits one common password against many accounts to avoid lockout thresholds. It is an initial access technique, not a network routing or pivoting technique.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **pivoting**?
-D) The entry point or first node in a linked list, which serves as the reference for traversing the rest of the list structure.
-B) An operation in Red-Black trees where nodes are flipped between red and black to maintain structural invariants after insertions or deletions.
-C) An instruction within a function that invokes the function itself, passing modified arguments to solve a smaller subproblem.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within security operations.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within security operations.
+In the context of password attacks, which of the following best defines a **dictionary attack**?
+*   A) A technique that systematically generates every possible character combination up to a specified length, guaranteeing password recovery given sufficient time and computational resources.
+*   B) A technique that uses precomputed hash-to-plaintext lookup tables to instantly reverse a hash without performing live cracking computations.
+*   C) A password cracking technique that submits words from a pre-built wordlist as password candidates against a captured hash or authentication service.
+*   D) A technique that intercepts and captures password hashes from network authentication traffic for later offline cracking.
+*   **Correct Answer:** C) A password cracking technique that submits words from a pre-built wordlist as password candidates against a captured hash or authentication service.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **pivoting**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **pivoting**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **pivoting**.
-    * *Why A is correct:* This describes the exact role and function of **pivoting**.
-
+    *   *Why C is correct:* A dictionary attack uses a wordlist of common passwords, dictionary words, and known breach passwords — such as the `rockyou.txt` list with over 14 million entries — as candidates. Each word is hashed and compared against the target hash. Dictionary attacks are fast, effective against common passwords, and are the default starting point for both Hashcat (`-a 0`) and John the Ripper before escalating to brute-force if the wordlist fails.
+    *   *Why A is incorrect:* This describes a brute-force attack — exhaustive enumeration of all possible combinations. Brute-force is not limited to a wordlist and guarantees coverage at the cost of time. It is a distinct attack mode from dictionary attacks.
+    *   *Why B is incorrect:* This describes a rainbow table attack — using precomputed hash chains to instantly look up plaintext values. Rainbow tables are only effective against unsalted hashes and are a separate technique from dictionary attacks, which compute hashes live from a wordlist.
+    *   *Why D is incorrect:* This describes network hash capture — a passive reconnaissance technique (e.g., capturing Net-NTLMv2 hashes via Responder). Capturing hashes is a prerequisite step that produces material for offline cracking, but it is not itself a dictionary attack.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **scan ports on a target host to identify active services and their version numbers**. Which of the following commands is the most appropriate to execute?
-B) hydra -l admin -P passwords.txt ssh://target
-D) openssl x509 -text -noout -in cert.pem
-A) nmap -sV -p 1-1024 target_ip
-C) wireshark
-*   **Correct Answer:** A) nmap -sV -p 1-1024 target_ip
+A penetration tester has extracted NTLM password hashes from a compromised Windows system's SAM database. Which Hashcat command performs a dictionary attack against these hashes using the rockyou.txt wordlist?
+*   A) `john --format=NT hashes.txt --wordlist=/usr/share/wordlists/rockyou.txt`
+*   B) `hashcat -m 1000 -a 0 hashes.txt /usr/share/wordlists/rockyou.txt`
+*   C) `hydra -L hashes.txt -P rockyou.txt smb://target`
+*   D) `aircrack-ng -w rockyou.txt -b <BSSID> capture.cap`
+*   **Correct Answer:** B) `hashcat -m 1000 -a 0 hashes.txt /usr/share/wordlists/rockyou.txt`
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `nmap -sV -p 1-1024 target_ip` command is directly designed to scan ports on a target host to identify active services and their version numbers.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why B is correct:* In Hashcat, `-m 1000` specifies the NTLM hash type (Windows NT hash), `-a 0` selects dictionary attack mode, `hashes.txt` is the file containing the extracted NTLM hashes, and `/usr/share/wordlists/rockyou.txt` is the wordlist. Hashcat uses GPU acceleration to test millions or billions of candidates per second. This is the standard command for cracking NTLM hashes from a Windows SAM database dump.
+    *   *Why A is incorrect:* This is a valid John the Ripper command for the same task — `--format=NT` specifies NTLM and `--wordlist` specifies the dictionary. However, the question specifically asks for a Hashcat command. John and Hashcat use different syntax and different acceleration approaches.
+    *   *Why C is incorrect:* Hydra performs online brute-force attacks against live authentication services — in this case, SMB. It does not process offline hash files and cannot crack hashes from a SAM database dump. It would also require valid credentials format, not hash format.
+    *   *Why D is incorrect:* `aircrack-ng` cracks WPA2 wireless handshake captures, not NTLM password hashes. It is a wireless-specific tool that processes 802.11 packet captures, not Windows authentication hashes.
 
 ---
 
 **Question 4**
-While working on **Maintaining Access & Pivoting** in a production environment, you encounter a system alert indicating a **IDS False Positives** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-C) Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA.
-A) Tune the detection signatures and define exceptions for authorized administrative activities.
-B) Review active security rules and add a permissive firewall rule allowing the specific source IP and destination port.
-D) Reboot the physical machine and wait for services to reload.
-*   **Correct Answer:** A) Tune the detection signatures and define exceptions for authorized administrative activities.
+A penetration tester wants to crack the password protecting a ZIP archive found on a compromised system. Which John the Ripper workflow correctly accomplishes this?
+*   A) `hashcat -m 17210 -a 0 protected.zip rockyou.txt` — Hashcat directly processes ZIP archives in dictionary mode.
+*   B) `zip2john protected.zip > zip.hash` followed by `john zip.hash --wordlist=rockyou.txt` — extract the hash first, then crack it.
+*   C) `john --format=zip --stdin protected.zip < rockyou.txt` — John reads the ZIP file directly with stdin input.
+*   D) `unzip -P $(cat rockyou.txt) protected.zip` — pass each password from the wordlist directly to the unzip command.
+*   **Correct Answer:** B) `zip2john protected.zip > zip.hash` followed by `john zip.hash --wordlist=rockyou.txt` — extract the hash first, then crack it.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This action does not resolve the root cause of IDS False Positives.
-    * *Why A is correct:* Because The network security system flags benign administrative scans or regular traffic patterns as malicious exploits. The appropriate fix is to Tune the detection signatures and define exceptions for authorized administrative activities..
-    * *Why B is incorrect:* This action does not resolve the root cause of IDS False Positives.
-    * *Why D is incorrect:* This action does not resolve the root cause of IDS False Positives.
-
+    *   *Why B is correct:* John the Ripper cannot directly process binary file formats. The `zip2john` companion tool extracts the password hash from the ZIP archive's encryption header and outputs it in a format John can process. The resulting hash file is then fed to `john` with a wordlist for dictionary cracking. The same pattern applies to other protected file types: `ssh2john` for SSH keys, `pdf2john` for PDFs, `office2john` for Microsoft Office documents. This two-step workflow is the standard John the Ripper approach for file-based password cracking.
+    *   *Why A is incorrect:* While Hashcat does support some ZIP hash modes (PKZIP is `-m 17200`), the question asks about the John the Ripper workflow. More importantly, Hashcat cannot directly process a `.zip` file — it also requires extracting the hash first using a compatible tool before cracking.
+    *   *Why C is incorrect:* John does not accept `--stdin` input for password candidates in this manner, and it cannot read the ZIP file directly as a binary input. The `--stdin` option reads password candidates from standard input for a hash file, not a ZIP archive directly.
+    *   *Why D is incorrect:* This is a shell scripting approach that would call `unzip` for each line in the wordlist — extremely slow, generates excessive process overhead, and is not a recognized penetration testing workflow. It would also fail to handle passwords with special characters correctly without careful shell escaping.
 
 ---
 
 **Question 5**
-When designing a system for **Maintaining Access & Pivoting**, you must mitigate the risk of **Intruders deleting local system event logs after a breach to hide their tracks and prevent investigation.**. Which of the following security configurations or controls represents the best practice to implement?
-C) Enable full disk encryption on all client endpoints.
-A) Forward all system logs to a secure, write-once SIEM (Security Information and Event Management) platform.
-D) Enable full disk encryption on all client endpoints.
-B) Enforce RSA keys with a minimum length of 2048/4096 bits or switch to Elliptic Curve Cryptography (ECC).
-*   **Correct Answer:** A) Forward all system logs to a secure, write-once SIEM (Security Information and Event Management) platform.
+During an engagement, a penetration tester wants to test authentication strength across all domain user accounts without triggering account lockout policies. Which attack technique is most appropriate?
+*   A) Credential stuffing — using username/password pairs from previous breach databases against the domain's authentication service.
+*   B) Offline brute-force with Hashcat — generating all character combinations against captured NTLM hashes until a match is found.
+*   C) Password spraying — attempting one or two common passwords against all accounts, staying below the lockout threshold.
+*   D) Rainbow table attack — using precomputed hash chains to instantly look up Active Directory password hashes.
+*   **Correct Answer:** C) Password spraying — attempting one or two common passwords against all accounts, staying below the lockout threshold.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This does not address the security vulnerability of Lack of Centralized Logs.
-    * *Why A is correct:* Implementing Forward all system logs to a secure, write-once SIEM (Security Information and Event Management) platform. mitigates the risk of Intruders deleting local system event logs after a breach to hide their tracks and prevent investigation..
-    * *Why D is incorrect:* This does not address the security vulnerability of Lack of Centralized Logs.
-    * *Why B is incorrect:* This does not address the security vulnerability of Lack of Centralized Logs.
-
+    *   *Why C is correct:* Password spraying deliberately inverts the traditional brute-force approach: instead of many passwords against one account (which triggers lockout), it tries one or a few common passwords (e.g., `Welcome1!`, `CompanyName2024!`) against every account in the domain. This stays under typical lockout thresholds (usually 5–10 failed attempts per account) while testing the entire user population. It is highly effective against organizations that use predictable password patterns and is a standard PT0-002-tested technique.
+    *   *Why A is incorrect:* Credential stuffing uses previously breached username/password pairs from other sites — testing whether users have reused passwords across services. It is distinct from password spraying because it uses full credential pairs from external breaches rather than common password patterns tested against all accounts.
+    *   *Why B is incorrect:* Offline brute-force with Hashcat requires already-captured password hashes — it is an offline cracking technique, not an online authentication test. It also does not risk triggering lockout since it does not interact with live authentication services. The question asks about testing live authentication strength.
+    *   *Why D is incorrect:* Rainbow table attacks work offline against captured hashes and require unsalted hashes to be effective. Active Directory hashes use NTLM (unsalted), so rainbow tables are theoretically applicable, but this is still an offline technique — it does not test live authentication and does not address the lockout concern at all.

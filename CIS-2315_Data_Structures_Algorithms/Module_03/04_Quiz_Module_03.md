@@ -1,79 +1,77 @@
-# Quiz: Module 03 - Stacks & Queues
-## Course: CIS-2315_Data_Structures_Algorithms (Technical Interview Readiness (LeetCode / HackerRank))
+# Quiz: Module 03 – Linked Lists: Singly and Doubly
+## Course: CIS-2315 Data Structures & Algorithms (Technical Interview Readiness)
 
 ---
 
 **Question 1**
-Which data structure follows the LIFO (Last-In-First-Out) principle?
-*   A) Queue
-*   B) Priority Queue
-*   C) Stack
-*   D) Hash Table
-*   **Correct Answer:** C) A Stack works by inserting and removing from the same end, matching Last-In-First-Out behavior.
+What is the time complexity of deleting a node from the middle of a singly linked list when you are given only a pointer to that node (not to its predecessor)?
+*   A) O(1)
+*   B) O(n)
+*   C) O(log n)
+*   D) O(n²)
+*   **Correct Answer:** A) O(1)
 *   **Distractor Analysis:**
-    *   *Why correct:* A Stack works by inserting and removing from the same end, matching Last-In-First-Out behavior.
-    *   Queue is FIFO (First-In-First-Out). Priority Queue removes based on key value, not order. Hash Table uses direct keys.
+    *   *Why correct:* Copy the value of the next node into the current node and then set current.next = current.next.next, effectively deleting the next node while keeping the pointer valid. This is O(1) — a classic interview trick (LeetCode #237).
+    *   B is incorrect: O(n) would be required if you had to traverse from the head to find the predecessor, but the trick above avoids that.
+    *   C is incorrect: O(log n) has no application here; there is no halving or search structure.
+    *   D is incorrect: O(n²) would imply nested traversal which is entirely unnecessary for a single deletion.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **push/pop**?
-D) A node in a tree structure that has no child nodes (its children point to null), representing the termination points of the branches.
-B) The termination condition in a recursive function that stops further recursive calls and begins unwinding the call stack, preventing infinite execution.
-A) The core operations of a stack: 'push' inserts an element onto the top, and 'pop' removes and returns the top element.
-C) Search Engine Optimization; practices designed to improve the visibility and ranking of web pages in search engine results through clean HTML, meta tags, and alt text.
-*   **Correct Answer:** A) The core operations of a stack: 'push' inserts an element onto the top, and 'pop' removes and returns the top element.
+Which of the following is the most accurate definition of **Floyd's cycle detection algorithm** (fast and slow pointer)?
+*   A) An algorithm that finds the shortest path between two nodes in a graph by expanding outward one level at a time, using a queue to track visited nodes.
+*   B) A two-pointer technique where one pointer advances one node per step and another advances two nodes per step; if a cycle exists they will eventually meet, and the cycle entry point can be found by resetting one pointer to the head and advancing both one step at a time until they meet again.
+*   C) A method for reversing a linked list in-place by maintaining three pointers (prev, curr, next) and redirecting each node's next pointer to its predecessor.
+*   D) A divide-and-conquer approach that splits a linked list in half recursively until single nodes remain, then merges them back in sorted order.
+*   **Correct Answer:** B) A two-pointer technique where one pointer advances one node per step and another advances two nodes per step; if a cycle exists they will eventually meet, and the cycle entry point can be found by resetting one pointer to the head and advancing both one step at a time until they meet again.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **push/pop**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **push/pop**.
-    * *Why A is correct:* This describes the exact role and function of **push/pop**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **push/pop**.
-
+    *   *Why A is incorrect:* That describes Breadth-First Search (BFS) on a graph, not Floyd's algorithm on a linked list.
+    *   *Why B is correct:* Floyd's algorithm uses exactly this two-phase approach: phase 1 detects the cycle (fast meets slow), phase 2 finds the entry node.
+    *   *Why C is incorrect:* That describes iterative in-place reversal, a separate linked list technique.
+    *   *Why D is incorrect:* That describes merge sort applied to a linked list, not cycle detection.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **record staged code modifications into the repository version history**. Which of the following commands is the most appropriate to execute?
-B) python3 -m venv .venv
-C) pytest
-A) git commit -m 'update'
-D) pip install -r requirements.txt
-*   **Correct Answer:** A) git commit -m 'update'
+Which advantage does a doubly linked list have over a singly linked list?
+*   A) Doubly linked lists use less memory per node.
+*   B) Doubly linked lists allow O(1) deletion of a node when given only a pointer to that node, without the copy-value trick.
+*   C) Doubly linked lists support O(1) random access by index.
+*   D) Doubly linked lists eliminate the need for a head pointer.
+*   **Correct Answer:** B) Doubly linked lists allow O(1) deletion of a node when given only a pointer to that node, without the copy-value trick.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `git commit -m 'update'` command is directly designed to record staged code modifications into the repository version history.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is incorrect:* Doubly linked list nodes store an extra `prev` pointer, using *more* memory per node, not less.
+    *   *Why B is correct:* With a `prev` pointer, you can access the predecessor directly (node.prev) and splice out the current node in O(1) cleanly, without the copy-value workaround.
+    *   *Why C is incorrect:* Neither singly nor doubly linked lists support O(1) random access; reaching index k always requires O(k) traversal.
+    *   *Why D is incorrect:* Both list types still need a head reference to start traversal.
 
 ---
 
 **Question 4**
-While working on **Stacks & Queues** in a production environment, you encounter a system alert indicating a **TypeError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-B) Verify that the index is within the valid range of 0 to len(list)-1.
-A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-C) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
-D) Reboot the physical machine and wait for services to reload.
-*   **Correct Answer:** A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
+You need to find the k-th node from the end of a singly linked list in a single pass. Which technique works best?
+*   A) Traverse the list twice: first to count n nodes, then to access node n–k.
+*   B) Copy all nodes into an array, then access index (length–k) directly.
+*   C) Use the runner technique: advance one pointer k steps ahead, then move both pointers one step at a time until the lead pointer reaches the end.
+*   D) Use a recursive function that counts nodes on the call stack and returns the target on the way back up.
+*   **Correct Answer:** C) Use the runner technique: advance one pointer k steps ahead, then move both pointers one step at a time until the lead pointer reaches the end.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This action does not resolve the root cause of TypeError.
-    * *Why A is correct:* Because An operation or function was applied to an object of an inappropriate data type. The appropriate fix is to Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types..
-    * *Why C is incorrect:* This action does not resolve the root cause of TypeError.
-    * *Why D is incorrect:* This action does not resolve the root cause of TypeError.
-
+    *   *Why A is incorrect:* Two passes work correctly but do not satisfy "single pass." It is O(n) time but misses the one-pass constraint.
+    *   *Why B is incorrect:* Copying to an array is O(n) time and O(n) space; the runner technique uses O(1) space.
+    *   *Why C is correct:* The runner/two-pointer technique covers the list in exactly one pass with O(1) auxiliary space. When the lead pointer exits, the trailing pointer is at node n–k.
+    *   *Why D is incorrect:* Recursion uses O(n) call stack space — it solves the problem but wastes memory unnecessarily.
 
 ---
 
 **Question 5**
-When designing a system for **Stacks & Queues**, you must mitigate the risk of **Storing user credentials in plain text, making them vulnerable to database breaches.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-B) Implement parameterized queries and prepared statements rather than raw string concatenation.
-C) Enable full disk encryption on all client endpoints.
-D) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
+What is the purpose of using a dummy (sentinel) head node when implementing linked list operations?
+*   A) It increases the traversal speed by storing a pointer to the middle of the list.
+*   B) It eliminates special-case code for operations at the head of the list, because the dummy node is always present and the real list starts at dummy.next.
+*   C) It reduces memory usage by sharing a single node reference across multiple lists.
+*   D) It prevents the garbage collector from freeing the first node while the list is being modified.
+*   **Correct Answer:** B) It eliminates special-case code for operations at the head of the list, because the dummy node is always present and the real list starts at dummy.next.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt. mitigates the risk of Storing user credentials in plain text, making them vulnerable to database breaches..
-    * *Why B is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-    * *Why C is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-    * *Why D is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-
+    *   *Why A is incorrect:* A dummy head stores no list data and provides no pointer to the middle; it is positioned before the first real element.
+    *   *Why B is correct:* With a dummy head, insert and delete operations at any position use the same pointer-update logic, removing the `if head is None` and `if removing head` branches.
+    *   *Why C is incorrect:* Dummy nodes do not share references across lists; each list has its own dummy head.
+    *   *Why D is incorrect:* Garbage collection behavior is unrelated to the algorithmic purpose of a dummy head node.

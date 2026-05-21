@@ -1,51 +1,51 @@
-# Reading Guide: Module 01 - Security Governance Frameworks
+# Reading Guide: Module 01 - Information Security Governance Foundations
 ## Course: CIS-4315_Cyber_Governance_Risk_Compliance (ISACA Certified Information Security Manager (CISM))
 
 ---
 
 ### Introduction
-Welcome to **Module 01 - Security Governance Frameworks**! This week's study material focuses on the core foundations and configuration mechanics of **Security Governance Frameworks** as aligned with the **ISACA Certified Information Security Manager (CISM)** certification framework. Understanding these topics is essential not only for passing the certification exam but also for administering enterprise systems in real-world environments.
+Welcome to **Module 01 - Information Security Governance Foundations**! This module introduces the core frameworks and principles that define how organizations establish, direct, and control their information security programs. These foundations underpin all four CISM domains and are central to exam success.
 
-As a student, you will learn the primary operational roles, command syntaxes, and troubleshooting parameters needed to design, configure, and maintain these services. We will explore how different protocols establish connections, how configurations manage resource allocation, and how security controls prevent access breaches. Make sure to complete the checklists and review the glossary terms in detail before beginning the lab activity.
+As a CISM candidate, you should approach governance from a **management and business perspective**, not a purely technical one. The exam focuses on how security leaders align security strategy with organizational goals, exercise oversight, and demonstrate accountability to executive stakeholders and boards of directors.
 
 ---
 
 ### 1. High-Yield Glossary
 Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
 
-*   **Information security governance**: A primary configuration standard and technical parameter essential for coordinating Security Governance Frameworks activities, enforcing security boundaries, and verifying operational statuses within the management_services environment.
-*   **CIA triad**: The core security model consisting of Confidentiality (preventing unauthorized access), Integrity (preventing unauthorized modification), and Availability (ensuring systems are accessible when needed).
-*   **security alignments**: A primary configuration standard and technical parameter essential for coordinating Security Governance Frameworks activities, enforcing security boundaries, and verifying operational statuses within the management_services environment.
-*   **strategic objectives.**: A primary configuration standard and technical parameter essential for coordinating Security Governance Frameworks activities, enforcing security boundaries, and verifying operational statuses within the management_services environment.
+*   **Information security governance**: The system of policies, accountability structures, and decision-making processes through which an organization directs and controls its information security program. Effective governance ensures that security investments align with business objectives and that risks are managed within the organization's risk appetite.
+*   **CIA triad**: The foundational security model consisting of Confidentiality (preventing unauthorized disclosure of information), Integrity (preventing unauthorized modification of information), and Availability (ensuring authorized users can access information when needed). All security controls are ultimately designed to protect one or more of these three properties.
+*   **Security strategy alignment**: The process of ensuring that the information security program supports and enables the organization's overall business strategy and mission. CISM candidates must understand how to translate business goals into security objectives, resource decisions, and performance metrics.
+*   **Strategic objectives**: Measurable, long-range organizational goals that define what the enterprise intends to achieve over a multi-year horizon. Information security governance must demonstrate how security activities directly contribute to achieving these objectives, rather than operating as a separate function.
 
 ---
 
 ### 2. Certification Exam Tips
-*   **Focus Area:** Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
-*   **Scenario Trap:** Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
-*   **Study Resource:** To reinforce these concepts visually, review this targeted search query: [ISACA CISM / Cyber GRC Course Playlist - Security Governance Frameworks](https://www.youtube.com/playlist?list=PLbnu8t2G_vG0V7kC0V3n_nU9Y3S-4K178).
+*   **Management Perspective First:** CISM questions test your ability to think like a security manager, not a technician. When choosing between answers, favor the option that addresses organizational risk, governance oversight, or business alignment over options that describe technical controls.
+*   **Governance vs. Management:** The exam distinguishes between governance (oversight, direction, accountability — typically a board-level responsibility) and management (day-to-day operational execution). Know which level each activity belongs to.
+*   **CISM Domain 1 — Security Governance:** This module directly maps to CISM Domain 1, which accounts for approximately 17% of the exam. Expect scenario questions that ask you to advise a CISO, respond to a board inquiry about security posture, or prioritize governance investments.
+*   **Study Resource:** The ISACA CISM Review Manual (available through ISACA.org) is the authoritative source. For a free supplemental overview of governance concepts, review [NIST SP 800-39: Managing Information Security Risk](https://csrc.nist.gov/publications/detail/sp/800-39/final), which covers organization-wide governance structures at no cost.
 
 ---
 
 ### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the section/chapter covering **Security Governance Frameworks** in the OER Textbook: [NIST Risk Management Framework (SP 800-37) & Security Controls (SP 800-53)](https://csrc.nist.gov/publications/).
-*   **Required Video:** Watch the video lecture on **Security Governance Frameworks** in the official course playlist: [ISACA CISM / Cyber GRC Course Playlist](https://www.youtube.com/playlist?list=PLbnu8t2G_vG0V7kC0V3n_nU9Y3S-4K178).
+*   **Required Reading:** [NIST SP 800-39: Managing Information Security Risk](https://csrc.nist.gov/publications/detail/sp/800-39/final) — This free NIST publication covers enterprise-wide governance, risk framing, and the relationship between organizational strategy and security oversight. Focus on Section 2 (Framing Risk) and Section 3 (Governance structures).
+*   **Required Video:** Watch the video lecture on **Information Security Governance Foundations** in the official course playlist: [ISACA CISM / Cyber GRC Course Playlist](https://www.youtube.com/playlist?list=PLbnu8t2G_vG0V7kC0V3n_nU9Y3S-4K178).
 
 ---
 
 ### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Map security program alignments to corporate goals**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-*   **Review CIA triad definitions**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-*   **Document security steering committee responsibilities**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
+In this week's hands-on lab, you will apply governance concepts through the following activities:
+*   **Map security program goals to corporate strategic objectives**: Review a sample organization's strategic plan and identify how each major security initiative supports a stated business goal.
+*   **Analyze CIA triad requirements for three sample systems**: For each system (payroll database, public website, internal email), determine which CIA property carries the highest priority and justify your ranking.
+*   **Document a security steering committee charter**: Draft the scope, membership, meeting cadence, and decision authority for a hypothetical enterprise security steering committee.
 
 
 ---
 
 ### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read the section/chapter covering **Security Governance Frameworks** in [NIST Risk Management Framework (SP 800-37) & Security Controls (SP 800-53)](https://csrc.nist.gov/publications/).
-- [ ] Watch the video lecture on **Security Governance Frameworks** in [ISACA CISM / Cyber GRC Course Playlist](https://www.youtube.com/playlist?list=PLbnu8t2G_vG0V7kC0V3n_nU9Y3S-4K178).
-- [ ] Review the commands outlined in the lab instructions.
-- [ ] Proceed to the weekly hands-on lab activity.
+- [ ] Read the glossary terms and write your own 1-sentence summary of each.
+- [ ] Read [NIST SP 800-39: Managing Information Security Risk](https://csrc.nist.gov/publications/detail/sp/800-39/final), focusing on Sections 2–3 covering governance and risk framing.
+- [ ] Watch the video lecture on **Information Security Governance Foundations** in [ISACA CISM / Cyber GRC Course Playlist](https://www.youtube.com/playlist?list=PLbnu8t2G_vG0V7kC0V3n_nU9Y3S-4K178).
+- [ ] Complete the lab activity on aligning security goals to corporate strategy.
+- [ ] Proceed to the Module 01 quiz.

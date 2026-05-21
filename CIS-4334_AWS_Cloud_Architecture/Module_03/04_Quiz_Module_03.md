@@ -1,79 +1,78 @@
-# Quiz: Module 03 - Amazon VPC Virtual Networks
+# Quiz: Module 03 - EC2 – Instance Types, Auto Scaling, and Load Balancing
 ## Course: CIS-4334_AWS_Cloud_Architecture (AWS Certified Solutions Architect - Associate)
 
 ---
 
 **Question 1**
-What VPC component is required to route traffic from a public subnet out to the public internet?
-*   A) NAT Gateway
-*   B) Internet Gateway (IGW)
-*   C) Customer Gateway
-*   D) Direct Connect
-*   **Correct Answer:** B) An Internet Gateway links the VPC to the public internet, enabling bidirectional communication.
+A data engineering team needs an EC2 instance to run an in-memory Apache Spark analytics job that requires approximately 384 GB of RAM. Which EC2 instance family is most appropriate?
+*   A) C5 (Compute Optimized)
+*   B) T3 (General Purpose – Burstable)
+*   C) R6i (Memory Optimized)
+*   D) I3 (Storage Optimized)
+*   **Correct Answer:** C) R6i is a Memory Optimized instance family designed for workloads requiring large amounts of RAM, such as in-memory analytics, large caches, and high-performance databases.
 *   **Distractor Analysis:**
-    *   *Why correct:* An Internet Gateway links the VPC to the public internet, enabling bidirectional communication.
-    *   NAT Gateway provides outbound-only internet access for private subnets.
+    *   *Why A is incorrect:* C5 is Compute Optimized, designed for CPU-intensive batch and media processing. It offers high CPU-to-memory ratios, not high memory-to-CPU ratios.
+    *   *Why B is incorrect:* T3 instances are burstable general-purpose instances with modest memory; they are designed for variable workloads like small web servers, not 384 GB RAM analytics jobs.
+    *   *Why C is correct:* Memory Optimized families (R, X, z1d) are designed specifically for memory-intensive workloads. R6i instances provide up to 768 GB RAM with a balanced CPU complement, making them the correct family for Spark in-memory processing.
+    *   *Why D is incorrect:* I3 is Storage Optimized, designed for high IOPS NVMe storage workloads like NoSQL databases. It does not offer the large RAM footprint needed for in-memory analytics.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **route tables.**?
-D) The final node in a linked list, whose next pointer typically references null (or the head node in a circular list), marking the end of the chain.
-B) A two-dimensional CSS layout system that allows developers to design complex grid-based user interfaces with rows and columns, offering precise control over alignment.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within cloud operations.
-C) The total memory space required by an algorithm to execute to completion. This includes the static instruction space, variable space, and dynamic allocation space (like recursion stack frames or temporary arrays).
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within cloud operations.
+Which of the following is the most accurate definition of an **EC2 Auto Scaling Group (ASG)**?
+*   A) A billing construct that reserves EC2 capacity for a 1- or 3-year term at a discounted hourly rate.
+*   B) A managed fleet of EC2 instances with defined minimum, desired, and maximum capacity limits, automatically launching or terminating instances in response to demand or health check failures.
+*   C) A pre-configured template containing an OS image, launch parameters, and application software used to launch EC2 instances identically at scale.
+*   D) A virtual firewall that controls inbound and outbound traffic to and from EC2 instances at the instance level.
+*   **Correct Answer:** B) An Auto Scaling Group manages a fleet of EC2 instances, maintaining desired capacity and scaling in or out based on policies, health checks, and schedules.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **route tables.**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **route tables.**.
-    * *Why A is correct:* This describes the exact role and function of **route tables.**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **route tables.**.
-
+    *   *Why A is incorrect:* This describes a Reserved Instance — a pricing model, not a scaling mechanism.
+    *   *Why B is correct:* An ASG is the EC2 fleet management construct. It enforces min/max/desired counts, replaces unhealthy instances automatically, and applies scaling policies (Target Tracking, Step Scaling, Scheduled) to adjust capacity dynamically.
+    *   *Why C is incorrect:* This describes a Launch Template (or AMI), which defines what instances look like. An ASG uses Launch Templates but is itself the fleet management layer, not the template.
+    *   *Why D is incorrect:* This describes a Security Group, which is a stateful network firewall at the instance level, not a scaling mechanism.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **synchronize local files directly to a cloud object storage bucket**. Which of the following commands is the most appropriate to execute?
-B) terraform apply
-A) aws s3 sync local_dir s3://my-bucket
-D) kubectl get pods -n production
-C) gcloud compute instances list
-*   **Correct Answer:** A) aws s3 sync local_dir s3://my-bucket
+A company runs a microservices application on EC2 instances. Service A handles API requests at the path `/api/*` and Service B serves static content at `/static/*`. Both services must be accessible through a single DNS endpoint. Which load balancer and configuration best meets this requirement?
+*   A) Network Load Balancer with TCP listeners on port 80 routing to a single target group.
+*   B) Application Load Balancer with path-based routing rules directing `/api/*` to one target group and `/static/*` to a second target group.
+*   C) Classic Load Balancer with two listeners on different ports routing to separate instance sets.
+*   D) Network Load Balancer with two static IPs, one per service, registered in Route 53.
+*   **Correct Answer:** B) An Application Load Balancer with path-based routing rules on a single listener cleanly splits traffic between the two services under one DNS name.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `aws s3 sync local_dir s3://my-bucket` command is directly designed to synchronize local files directly to a cloud object storage bucket.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is incorrect:* An NLB operates at Layer 4 (TCP/UDP) and cannot inspect HTTP paths. It has no concept of URL path-based routing.
+    *   *Why B is correct:* ALB operates at Layer 7 and supports path-based routing natively. A single ALB DNS name with listener rules matching `/api/*` and `/static/*` routes to independent target groups — the canonical microservices pattern on SAA-C03.
+    *   *Why C is incorrect:* Classic Load Balancers are legacy and do not support path-based routing. Using different ports for each service also breaks the "single endpoint" requirement for HTTP traffic on port 80.
+    *   *Why D is incorrect:* Two separate NLBs with separate IPs do not meet the requirement of a single DNS endpoint for both services.
 
 ---
 
 **Question 4**
-While working on **Amazon VPC Virtual Networks** in a production environment, you encounter a system alert indicating a **Cloud Instance Unreachable** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-C) Review the user's IAM policies and attach the specific policy granting permissions for the resource action.
-B) Set up billing alerts, delete unused volumes, and configure auto-scaling scale-down policies.
-A) Check the VPC route table for an Internet Gateway path and verify that the security group allows incoming traffic.
-D) Reboot the physical machine and wait for services to reload.
-*   **Correct Answer:** A) Check the VPC route table for an Internet Gateway path and verify that the security group allows incoming traffic.
+A company has a steady baseline EC2 workload of 20 instances running continuously, plus variable demand that spikes to 50 instances for unpredictable short periods. Which combination of purchase options minimizes cost while maintaining availability?
+*   A) Run all 50 instances as On-Demand to handle peak demand at any time.
+*   B) Purchase 20 Reserved Instances for the steady baseline and use On-Demand or Spot for the variable spike capacity.
+*   C) Purchase 50 Reserved Instances to cover both baseline and peak demand with the maximum discount.
+*   D) Run all 50 instances as Spot Instances to get the lowest possible price.
+*   **Correct Answer:** B) Reserve the 20 steady-state instances for maximum savings and use On-Demand (or Spot if the workload is fault-tolerant) for variable spike capacity.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This action does not resolve the root cause of Cloud Instance Unreachable.
-    * *Why B is incorrect:* This action does not resolve the root cause of Cloud Instance Unreachable.
-    * *Why A is correct:* Because The virtual machine is inside a private subnet without routing to the internet, or the security group blocks the connection. The appropriate fix is to Check the VPC route table for an Internet Gateway path and verify that the security group allows incoming traffic..
-    * *Why D is incorrect:* This action does not resolve the root cause of Cloud Instance Unreachable.
-
+    *   *Why A is incorrect:* Running 50 On-Demand instances at all times pays full price for the steady 20, missing the opportunity for Reserved Instance savings on that predictable baseline.
+    *   *Why B is correct:* This is the canonical cost optimization pattern for the SAA-C03 exam. Reserved Instances save up to 72% on committed baseline capacity. Variable/spiky overflow uses On-Demand (guaranteed availability) or Spot (cheapest for fault-tolerant spikes).
+    *   *Why C is incorrect:* Buying 50 Reserved Instances commits you to paying for 30 instances that sit unused during non-peak periods, generating wasted Reserved Instance spend.
+    *   *Why D is incorrect:* Spot Instances can be interrupted with 2-minute notice. Running the steady 20 critical instances as Spot exposes the baseline workload to availability risk — an unacceptable trade-off for a continuously running baseline.
 
 ---
 
 **Question 5**
-When designing a system for **Amazon VPC Virtual Networks**, you must mitigate the risk of **Storing sensitive corporate documents in publicly readable cloud buckets, leading to data breaches.**. Which of the following security configurations or controls represents the best practice to implement?
-C) Enable full disk encryption on all client endpoints.
-A) Enable Block Public Access configurations and enforce access control via IAM or signed URLs.
-D) Enable full disk encryption on all client endpoints.
-B) Enforce temporary credentials (STS), rotate keys regularly, and never hardcode API keys in repositories.
-*   **Correct Answer:** A) Enable Block Public Access configurations and enforce access control via IAM or signed URLs.
+An Auto Scaling Group is configured with EC2 health checks only. An EC2 instance passes the EC2 status check (the OS is running) but fails the Application Load Balancer health check (the application is returning HTTP 503). What happens in this scenario, and what change should be made to ensure unhealthy application instances are automatically replaced?
+*   A) The ASG replaces the instance because ALB health check failures are automatically detected without any configuration change.
+*   B) Nothing happens; the ASG continues to count the instance as healthy. Enable ELB health checks on the ASG to allow ALB health check failures to trigger instance replacement.
+*   C) AWS Route 53 detects the HTTP 503 response and redirects traffic to a healthy Region automatically.
+*   D) The ALB deregisters the instance from the target group and the ASG automatically terminates and replaces it without any configuration change.
+*   **Correct Answer:** B) With EC2-only health checks, the ASG treats the instance as healthy even when the application fails. Enabling ELB health checks on the ASG propagates ALB health check results so that application-level failures trigger instance termination and replacement.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This does not address the security vulnerability of Publicly Exposed Storage Buckets.
-    * *Why A is correct:* Implementing Enable Block Public Access configurations and enforce access control via IAM or signed URLs. mitigates the risk of Storing sensitive corporate documents in publicly readable cloud buckets, leading to data breaches..
-    * *Why D is incorrect:* This does not address the security vulnerability of Publicly Exposed Storage Buckets.
-    * *Why B is incorrect:* This does not address the security vulnerability of Publicly Exposed Storage Buckets.
+    *   *Why A is incorrect:* ALB health check failures do not automatically propagate to the ASG unless ELB health checks are explicitly enabled on the ASG. The default is EC2 health checks only.
+    *   *Why B is correct:* This is a classic SAA-C03 exam trap. The ALB can deregister the unhealthy instance from its target group (stopping new traffic), but the ASG will not replace the instance unless you explicitly enable ELB health check mode on the ASG so that ALB health failures trigger termination.
+    *   *Why C is incorrect:* Route 53 health checks and routing policies operate at the DNS level; they cannot detect HTTP 503 responses at the individual instance level within a single ALB target group.
+    *   *Why D is incorrect:* The ALB does deregister the instance (stopping it from receiving new requests), but without ELB health checks enabled on the ASG, the ASG does not terminate and replace the instance.
 

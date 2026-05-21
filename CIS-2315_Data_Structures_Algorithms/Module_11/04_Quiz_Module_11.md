@@ -1,79 +1,77 @@
-# Quiz: Module 11 - Dijkstra's Shortest Path
-## Course: CIS-2315_Data_Structures_Algorithms (Technical Interview Readiness (LeetCode / HackerRank))
+# Quiz: Module 11 – Searching: Binary Search and Variants
+## Course: CIS-2315 Data Structures & Algorithms (Technical Interview Readiness)
 
 ---
 
 **Question 1**
-Why is Dijkstra's algorithm unable to guarantee correct shortest paths in graphs with negative edge weights?
-*   A) It uses a queue instead of stack
-*   B) Once a vertex is visited/relaxed, the algorithm assumes its shortest path is permanently solved
-*   C) It only works on binary trees
-*   D) It runs in O(N^3) time
-*   **Correct Answer:** B) Dijkstra's greedy choice assumes that paths can only increase in cost; a negative edge can invalidate earlier evaluations.
+What is the time complexity of binary search on a sorted array of n elements?
+*   A) O(n)
+*   B) O(n²)
+*   C) O(log n)
+*   D) O(n log n)
+*   **Correct Answer:** C) O(log n)
 *   **Distractor Analysis:**
-    *   *Why correct:* Dijkstra's greedy choice assumes that paths can only increase in cost; a negative edge can invalidate earlier evaluations.
-    *   Bellman-Ford is used for graphs with negative weights because it repeatedly relaxes all edges.
+    *   *Why correct:* Each comparison halves the search space. Starting with n elements, after k steps there are n/2^k candidates. When n/2^k = 1, k = log₂(n) steps have been taken.
+    *   A is incorrect: O(n) describes linear search — examining each element one by one without halving.
+    *   B is incorrect: O(n²) is never a characteristic of binary search; it would imply nested iteration.
+    *   D is incorrect: O(n log n) describes efficient sorting, not a single search operation.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **priority queue**?
-D) A binary tree in which every level, except possibly the last, is completely filled, and all nodes in the last level are as far left as possible.
-B) A mathematical representation used to describe the asymptotic upper bound of an algorithm's running time or space complexity relative to the input size N. It helps developers predict how an algorithm will scale as data grows.
-C) CSS properties (like block, inline, flex, grid) that determine how an element is rendered and how it behaves relative to surrounding elements.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
+Which of the following is the most accurate definition of **binary search on the answer** as a problem-solving technique?
+*   A) A technique that uses binary search to locate a target value in a sorted 2D matrix by treating the matrix as a flattened 1D sorted array with index arithmetic.
+*   B) A technique that binary searches over the range of possible answer values (rather than array indices), using a feasibility check function to determine whether a candidate answer is too small or too large, applicable when feasibility is monotone.
+*   C) A technique that applies binary search to a BST, comparing the target to the current node and going left or right based on the BST property until the value is found or a null is reached.
+*   D) A technique that combines binary search with memoization to reduce the number of redundant feasibility checks when the answer space has overlapping subproblems.
+*   **Correct Answer:** B) A technique that binary searches over the range of possible answer values (rather than array indices), using a feasibility check function to determine whether a candidate answer is too small or too large, applicable when feasibility is monotone.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **priority queue**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **priority queue**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **priority queue**.
-    * *Why A is correct:* This describes the exact role and function of **priority queue**.
-
+    *   *Why A is incorrect:* That describes binary search on a sorted matrix (LeetCode #74), which is still binary search on an index, not on the answer value.
+    *   *Why B is correct:* "Binary search on answer" applies when the problem asks for a minimum or maximum value satisfying some condition, and larger/smaller values always satisfy/fail that condition monotonically. LeetCode #875 (Koko Eating Bananas) is the canonical example.
+    *   *Why C is incorrect:* That describes standard BST search, which binary searches the tree structure by value, not the range of possible answers.
+    *   *Why D is incorrect:* Binary search on answer does not use memoization; the feasibility check function is typically re-evaluated fresh at each midpoint.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **run the automated unit testing suite to verify system functionality**. Which of the following commands is the most appropriate to execute?
-B) python3 -m venv .venv
-D) pip install -r requirements.txt
-C) git commit -m 'update'
-A) pytest
-*   **Correct Answer:** A) pytest
+In the binary search template `lo, hi = 0, len(arr)-1; while lo <= hi: mid = lo + (hi-lo)//2`, why is `mid` calculated as `lo + (hi-lo)//2` rather than `(lo + hi) // 2`?
+*   A) The formula `lo + (hi-lo)//2` is faster because it avoids a subtraction.
+*   B) The formula `(lo + hi) // 2` can cause integer overflow when `lo` and `hi` are large integers, whereas `lo + (hi-lo)//2` cannot overflow because the difference is always within bounds.
+*   C) The formula `lo + (hi-lo)//2` always rounds up to avoid missing the target when the array length is odd.
+*   D) Python requires this form because its `//` operator behaves differently for sums versus differences of large integers.
+*   **Correct Answer:** B) The formula `(lo + hi) // 2` can cause integer overflow when `lo` and `hi` are large integers, whereas `lo + (hi-lo)//2` cannot overflow because the difference is always within bounds.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `pytest` command is directly designed to run the automated unit testing suite to verify system functionality.
-
+    *   *Why A is incorrect:* Both forms require the same number of arithmetic operations; the difference is overflow safety, not speed.
+    *   *Why B is correct:* In languages with fixed-size integers (Java, C++, C), `lo + hi` can overflow a 32-bit int when both are near INT_MAX. `hi - lo` is at most the array length, which is safe. Python has arbitrary-precision integers so overflow does not apply, but the form is best practice from Java/C++ interview environments.
+    *   *Why C is incorrect:* Both forms produce the same floor-division result; neither consistently rounds up.
+    *   *Why D is incorrect:* Python's `//` is floor division and behaves identically for both forms given the same mathematical input.
 
 ---
 
 **Question 4**
-While working on **Dijkstra's Shortest Path** in a production environment, you encounter a system alert indicating a **IndexError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-A) Verify that the index is within the valid range of 0 to len(list)-1.
-D) Reboot the physical machine and wait for services to reload.
-C) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-B) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
-*   **Correct Answer:** A) Verify that the index is within the valid range of 0 to len(list)-1.
+You are given a sorted array that has been rotated at an unknown pivot: `[5, 6, 7, 0, 1, 2, 4]`. You want to find target = 0. After computing `mid = 3` (value 0), binary search has already found the answer. But suppose `mid` pointed to value `6`. Which portion of the array is definitively sorted and how would you decide which half to search?
+*   A) The right half `[7, 0, 1, 2, 4]` is sorted because it contains the end of the array; search it for the target.
+*   B) The left half `[5, 6]` is sorted (arr[lo] <= arr[mid]); if target is in [arr[lo], arr[mid]), search left; otherwise search right.
+*   C) Neither half can be determined as sorted without first finding the pivot index by linearly scanning.
+*   D) Always search the left half first regardless of which side is sorted; fall back to the right half if not found.
+*   **Correct Answer:** B) The left half `[5, 6]` is sorted (arr[lo] <= arr[mid]); if target is in [arr[lo], arr[mid]), search left; otherwise search right.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Because The code attempted to access an element of a sequence using an out-of-bounds index. The appropriate fix is to Verify that the index is within the valid range of 0 to len(list)-1..
-    * *Why D is incorrect:* This action does not resolve the root cause of IndexError.
-    * *Why C is incorrect:* This action does not resolve the root cause of IndexError.
-    * *Why B is incorrect:* This action does not resolve the root cause of IndexError.
-
+    *   *Why A is incorrect:* `[7, 0, 1, 2, 4]` is not sorted — it contains the rotation point (7 > 0). Treating it as sorted would lead to incorrect binary search behavior.
+    *   *Why B is correct:* Checking `arr[lo] <= arr[mid]` identifies which half is sorted. Here arr[lo]=5 <= arr[mid]=6, so the left half [5,6] is sorted. Since 0 is not in [5,6], search the right half.
+    *   *Why C is incorrect:* Finding the pivot requires O(n) scan, defeating the purpose of O(log n) binary search. The comparison `arr[lo] <= arr[mid]` identifies the sorted half in O(1).
+    *   *Why D is incorrect:* Blindly choosing a side regardless of target range can permanently eliminate the half containing the target.
 
 ---
 
 **Question 5**
-When designing a system for **Dijkstra's Shortest Path**, you must mitigate the risk of **Storing user credentials in plain text, making them vulnerable to database breaches.**. Which of the following security configurations or controls represents the best practice to implement?
-D) Enable full disk encryption on all client endpoints.
-A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-B) Implement parameterized queries and prepared statements rather than raw string concatenation.
-C) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
+Using Python's `bisect` module, `bisect_left(arr, x)` returns the leftmost index where `x` can be inserted to keep `arr` sorted. If `arr = [1, 3, 3, 5, 7]` and `x = 3`, what does `bisect_left(arr, 3)` return?
+*   A) 0 — it always returns the beginning of the array for safety.
+*   B) 1 — the first index where arr[i] >= 3.
+*   C) 3 — the first index where arr[i] > 3.
+*   D) 5 — the position after all elements equal to 3.
+*   **Correct Answer:** B) 1 — the first index where arr[i] >= 3.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-    * *Why A is correct:* Implementing Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt. mitigates the risk of Storing user credentials in plain text, making them vulnerable to database breaches..
-    * *Why B is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-    * *Why C is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-
+    *   *Why A is incorrect:* `bisect_left` does not default to index 0; it finds the actual leftmost insertion point for the given value.
+    *   *Why B is correct:* `bisect_left` finds the first index where `arr[i] >= x`. In `[1, 3, 3, 5, 7]`, the first element >= 3 is at index 1 (value 3). Inserting 3 at index 1 would give `[1, 3, 3, 3, 5, 7]`.
+    *   *Why C is incorrect:* Index 3 (value 5) is where `arr[i] > 3` — that is `bisect_right(arr, 3)`, not `bisect_left`.
+    *   *Why D is incorrect:* Index 5 is after all 3s — the result of `bisect_right`, not `bisect_left`.

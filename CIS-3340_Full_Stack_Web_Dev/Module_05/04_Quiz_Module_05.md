@@ -9,71 +9,76 @@ What state does a JavaScript Promise enter once it has completed successfully?
 *   B) Fulfilled
 *   C) Rejected
 *   D) Resolved
-*   **Correct Answer:** B) Promises transition from Pending to either Fulfilled (resolved successfully) or Rejected (errored out).
+*   **Correct Answer:** B) A Promise transitions from Pending to **Fulfilled** when its asynchronous operation completes successfully, providing the resolved value to `.then()` handlers.
 *   **Distractor Analysis:**
-    *   *Why correct:* Promises transition from Pending to either Fulfilled (resolved successfully) or Rejected (errored out).
-    *   Resolved is the general term for completion, but the explicit state is Fulfilled.
+    *   *Why A is incorrect:* Pending is the initial state of a Promise while the operation is still in progress — not a completion state.
+    *   *Why B is correct:* Fulfilled is the specific terminal state for a successfully completed Promise — it exposes the resolved value.
+    *   *Why C is incorrect:* Rejected is the terminal state for a failed Promise — it exposes the error reason to `.catch()` handlers.
+    *   *Why D is incorrect:* "Resolved" is an informal/general term for a Promise that has settled (either fulfilled or rejected), but it is not one of the three formal Promise states defined in the specification.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Call stack**?
-D) A deployment model that uses two identical production environments (Blue and Green) to minimize downtime and risk; updates are deployed to the idle environment before routing live traffic.
-C) The scenario where an algorithm requires the absolute minimum number of steps to complete (e.g., searching for an element that happens to be at the very beginning of a list).
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-B) The configuration of input data that forces an algorithm to perform the maximum number of operations, providing a guaranteed upper limit on execution time.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
+Which of the following is the most accurate definition of the **call stack** in JavaScript?
+*   A) A browser security model that prevents scripts from one origin from making network requests to a different origin without explicit server permission.
+*   B) The LIFO (Last In, First Out) data structure used by the JavaScript engine to track function execution contexts — each function call adds a frame, and each return removes one.
+*   C) The queue where resolved Promise callbacks wait before the event loop moves them onto the call stack for execution.
+*   D) A deployment pattern where two identical production environments alternate receiving live traffic to enable zero-downtime releases.
+*   **Correct Answer:** B) The LIFO (Last In, First Out) data structure used by the JavaScript engine to track function execution contexts — each function call adds a frame, and each return removes one.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Call stack**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Call stack**.
-    * *Why A is correct:* This describes the exact role and function of **Call stack**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Call stack**.
-
+    *   *Why A is incorrect:* This describes the Same-Origin Policy / CORS model — not the call stack.
+    *   *Why B is correct:* The call stack is the execution context tracker — JavaScript's single thread runs exactly what is on top of this stack.
+    *   *Why C is incorrect:* This describes the microtask queue (or callback queue), not the call stack.
+    *   *Why D is incorrect:* This describes a blue/green deployment strategy — a DevOps concept unrelated to JavaScript runtime.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **create a sandboxed Python virtual environment to manage dependencies locally**. Which of the following commands is the most appropriate to execute?
-C) pytest
-D) pip install -r requirements.txt
-A) python3 -m venv .venv
-B) git commit -m 'update'
-*   **Correct Answer:** A) python3 -m venv .venv
-*   **Distractor Analysis:**
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `python3 -m venv .venv` command is directly designed to create a sandboxed Python virtual environment to manage dependencies locally.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
+A developer writes the following code but the console logs print in the wrong order. What is the root cause?
 
+```js
+console.log('A');
+setTimeout(() => console.log('B'), 0);
+console.log('C');
+```
+
+*   A) `setTimeout` with `0ms` delay executes synchronously before the next `console.log`.
+*   B) `setTimeout` callbacks are placed in the callback queue and only run after the call stack is fully empty — even a 0ms delay defers execution past synchronous code.
+*   C) `console.log` calls are asynchronous and execute in an unpredictable order.
+*   D) The JavaScript engine processes the last statement first (LIFO ordering) — `'C'` logs before `'A'`.
+*   **Correct Answer:** B) `setTimeout` callbacks are placed in the callback queue and only run after the call stack is fully empty — even a 0ms delay defers execution past synchronous code.
+*   **Distractor Analysis:**
+    *   *Why A is incorrect:* A `0ms` delay does not mean synchronous execution — it means "run as soon as the call stack is empty," which is always after synchronous code completes.
+    *   *Why B is correct:* The event loop only moves the setTimeout callback from the queue to the stack after all synchronous statements finish, producing the output: A → C → B.
+    *   *Why C is incorrect:* `console.log` is a synchronous call — it executes immediately in order.
+    *   *Why D is incorrect:* The call stack is LIFO for function frames within a call, but sequential statements execute top-to-bottom, not in reverse.
 
 ---
 
 **Question 4**
-While working on **Asynchronous JavaScript** in a production environment, you encounter a system alert indicating a **TypeError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-C) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
-D) Reboot the physical machine and wait for services to reload.
-B) Verify that the index is within the valid range of 0 to len(list)-1.
-A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-*   **Correct Answer:** A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
+An async function fetches data from an API but silently returns `undefined` instead of the expected data. What is the most likely cause?
+*   A) The `async` keyword was omitted from the function declaration.
+*   B) The developer forgot to use `await` before the `fetch()` call — the function returned before the Promise resolved, so the data was never captured.
+*   C) The fetch API is not available inside async functions — `XMLHttpRequest` must be used instead.
+*   D) The `try`/`catch` block automatically returns `undefined` on success when no explicit `return` statement is present.
+*   **Correct Answer:** B) The developer forgot to use `await` before the `fetch()` call — the function returned before the Promise resolved, so the data was never captured.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This action does not resolve the root cause of TypeError.
-    * *Why D is incorrect:* This action does not resolve the root cause of TypeError.
-    * *Why B is incorrect:* This action does not resolve the root cause of TypeError.
-    * *Why A is correct:* Because An operation or function was applied to an object of an inappropriate data type. The appropriate fix is to Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types..
-
+    *   *Why A is incorrect:* If the `async` keyword were omitted, using `await` inside would throw a syntax error — not silently return `undefined`.
+    *   *Why B is correct:* Without `await`, the `fetch()` call returns a Promise object immediately; the variable assigned to it holds an unresolved Promise, not the data.
+    *   *Why C is incorrect:* The Fetch API works perfectly inside async functions — in fact, async/await is the recommended way to consume `fetch()`.
+    *   *Why D is incorrect:* A `try`/`catch` block does not change the return value behavior — if there is no error, the `catch` block is skipped entirely.
 
 ---
 
 **Question 5**
-When designing a system for **Asynchronous JavaScript**, you must mitigate the risk of **Allowing attackers to execute arbitrary SQL commands on the backend database via input forms.**. Which of the following security configurations or controls represents the best practice to implement?
-B) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-D) Enable full disk encryption on all client endpoints.
-A) Implement parameterized queries and prepared statements rather than raw string concatenation.
-C) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Implement parameterized queries and prepared statements rather than raw string concatenation.
+When calling an AWS API Gateway endpoint from a browser front-end using `fetch()`, the request succeeds on the server but the browser blocks the response. What is the most likely cause and fix?
+*   A) The `fetch()` call used `async/await` instead of `.then()` — switching to `.then()` will resolve the block.
+*   B) The API Gateway endpoint is missing CORS headers (`Access-Control-Allow-Origin`) in its response — the browser's Same-Origin Policy blocks the response until the server explicitly permits the cross-origin request.
+*   C) The AWS Lambda function behind the API must be written in Node.js; Python Lambda responses are automatically blocked by browsers.
+*   D) The browser blocks all HTTPS API responses unless the front-end application is also served from HTTPS — switching both to HTTP will fix the issue.
+*   **Correct Answer:** B) The API Gateway endpoint is missing CORS headers (`Access-Control-Allow-Origin`) in its response — the browser's Same-Origin Policy blocks the response until the server explicitly permits the cross-origin request.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why D is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why A is correct:* Implementing Implement parameterized queries and prepared statements rather than raw string concatenation. mitigates the risk of Allowing attackers to execute arbitrary SQL commands on the backend database via input forms..
-    * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-
+    *   *Why A is incorrect:* `async/await` and `.then()` are equivalent — the choice of syntax has no effect on CORS enforcement.
+    *   *Why B is correct:* Browsers enforce the Same-Origin Policy on responses — API Gateway must include `Access-Control-Allow-Origin: *` (or a specific origin) in its response headers, configured under the API Gateway CORS settings.
+    *   *Why C is incorrect:* Lambda runtime (Node.js vs. Python) does not affect CORS — the response headers are what matter, regardless of the runtime language.
+    *   *Why D is incorrect:* Mixing HTTP and HTTPS does cause mixed-content blocking, but this scenario describes a CORS block (successful server response, browser-side rejection) — not a protocol mismatch.

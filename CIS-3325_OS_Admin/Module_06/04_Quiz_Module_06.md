@@ -1,86 +1,77 @@
-# Quiz: Module 06 - Networking
-## Course: CIS-3325_OS_Admin (3325_OS_Admin - CompTIA Linux+ (XK0-005))
+# Quiz: Module 06 - Process Management
+## Course: CIS-3325_OS_Admin (CompTIA Linux+ XK0-005)
 
 ---
 
 **Question 1**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Core Operations**?
-D) The single, top-most node in a tree structure from which all other nodes descend, serving as the starting reference for search algorithms.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within os_admin operations.
-C) The monetary loss expected from a single occurrence of a specific risk event, calculated as Asset Value multiplied by the Exposure Factor (SLE = AV * EF).
-B) Web Content Accessibility Guidelines; international standards ensuring web content is usable for people with disabilities (e.g., screen reader compatibility, color contrast).
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within os_admin operations.
+A systems administrator wants to view all currently running processes for all users, including processes not attached to a terminal, in a user-friendly format showing CPU and memory usage. Which command is correct?
+A) ps -e
+B) ps aux
+C) top -b -n 1
+D) pgrep -l nginx
+*   **Correct Answer:** B) ps aux
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Core Operations**.
-    * *Why A is correct:* This describes the exact role and function of **Core Operations**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Core Operations**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Core Operations**.
-
+    *   *Why A is incorrect:* `ps -e` lists all processes but uses a minimal format that does not include CPU/memory percentages or the full command path.
+    *   *Why C is incorrect:* `top -b -n 1` runs top in batch mode for one iteration, which is useful for scripting, but the default `ps aux` is the standard answer for a human-readable snapshot of all processes.
+    *   *Why D is incorrect:* `pgrep -l nginx` searches for processes matching the name `nginx` and lists their PIDs. It does not show all processes or include CPU/memory statistics.
 
 ---
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **System Configuration**?
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within os_admin operations.
-C) A deployment model that uses two identical production environments (Blue and Green) to minimize downtime and risk; updates are deployed to the idle environment before routing live traffic.
-B) The entry point or first node in a linked list, which serves as the reference for traversing the rest of the list structure.
-D) Elements placed inside the <head> block of an HTML document that define metadata, links to stylesheets, scripts, character sets, and page titles.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within os_admin operations.
+A web server process with PID 4821 has stopped responding to requests and is consuming 100% CPU. The administrator needs to immediately terminate it without waiting for a graceful shutdown. Which command is correct?
+A) kill 4821
+B) kill -1 4821
+C) kill -9 4821
+D) kill -15 4821
+*   **Correct Answer:** C) kill -9 4821
 *   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **System Configuration**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **System Configuration**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **System Configuration**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **System Configuration**.
-
+    *   *Why A is incorrect:* `kill 4821` sends SIGTERM (signal 15), which requests a graceful shutdown. A hung process may be unable or unwilling to respond to SIGTERM, making it ineffective here.
+    *   *Why B is incorrect:* `kill -1` sends SIGHUP, traditionally used to tell a process to reload its configuration file. It does not terminate a hung process.
+    *   *Why D is incorrect:* `kill -15` is equivalent to the default `kill` with no flag — it sends SIGTERM for graceful termination, which is insufficient for a process that is not responding.
 
 ---
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **display total disk space capacity, usage, and available space in a human-readable format**. Which of the following commands is the most appropriate to execute?
-D) chmod 600 config.conf
-C) ps aux
-A) df -h
-B) systemctl restart service
-*   **Correct Answer:** A) df -h
+An administrator needs to display total disk space usage across all mounted filesystems in a human-readable format. Which command is correct?
+A) du -sh /*
+B) df -h
+C) lsblk -f
+D) fdisk -l
+*   **Correct Answer:** B) df -h
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `df -h` command is directly designed to display total disk space capacity, usage, and available space in a human-readable format.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is incorrect:* `du -sh /*` calculates disk usage consumed by files in each top-level directory, not the total capacity/usage/available space per mounted filesystem.
+    *   *Why C is incorrect:* `lsblk -f` shows block device layout, filesystem types, and UUIDs, but does not display used and available space in human-readable sizes.
+    *   *Why D is incorrect:* `fdisk -l` lists partition tables on block devices. It shows partition sizes in bytes/sectors but does not report filesystem usage or available space.
 
 ---
 
 **Question 4**
-While working on **Networking** in a production environment, you encounter a system alert indicating a **Permission Denied** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-C) Run log rotations, clean temporary files, or expand the logical volume capacity.
-D) Reboot the physical machine and wait for services to reload.
-B) Identify and terminate the process already utilizing the target port, or modify the service configuration to use an open port.
-A) Prepend the command with 'sudo' to run it with superuser administrative privileges, or adjust the file permissions.
-*   **Correct Answer:** A) Prepend the command with 'sudo' to run it with superuser administrative privileges, or adjust the file permissions.
+After editing the unit file for a custom systemd service at `/etc/systemd/system/myapp.service`, the administrator runs `systemctl restart myapp` but the old configuration is still in effect. What step was missed?
+A) The service needed to be stopped with `systemctl stop myapp` before editing the unit file.
+B) `systemctl daemon-reload` must be run after editing a unit file to reload systemd's configuration from disk.
+C) The unit file must be placed in `/usr/lib/systemd/system/` instead of `/etc/systemd/system/`.
+D) The administrator must reboot the system for changes to unit files to take effect.
+*   **Correct Answer:** B) `systemctl daemon-reload` must be run after editing a unit file to reload systemd's configuration from disk.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This action does not resolve the root cause of Permission Denied.
-    * *Why D is incorrect:* This action does not resolve the root cause of Permission Denied.
-    * *Why B is incorrect:* This action does not resolve the root cause of Permission Denied.
-    * *Why A is correct:* Because The current user account lacks the required read, write, or execute permissions for the target file or system call. The appropriate fix is to Prepend the command with 'sudo' to run it with superuser administrative privileges, or adjust the file permissions..
-
+    *   *Why A is incorrect:* Stopping the service before editing the unit file is not required, and does not cause systemd to re-read the file. The missing step is explicitly telling systemd to reload its unit file cache.
+    *   *Why C is incorrect:* `/etc/systemd/system/` is the correct and preferred location for administrator-created and administrator-modified unit files. It takes precedence over `/usr/lib/systemd/system/`, which is owned by packages.
+    *   *Why D is incorrect:* A full system reboot is not required and would be disruptive. `systemctl daemon-reload` followed by `systemctl restart myapp` is the correct and non-disruptive procedure.
 
 ---
 
 **Question 5**
-When designing a system for **Networking**, you must mitigate the risk of **Administrators logging in routinely as root or Administrator, increasing the blast radius of user errors or malware.**. Which of the following security configurations or controls represents the best practice to implement?
-C) Enable full disk encryption on all client endpoints.
-B) Disable unused system accounts and run a port scan to disable unnecessary active background services.
-D) Enable full disk encryption on all client endpoints.
-A) Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC.
-*   **Correct Answer:** A) Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC.
+A Linux system shows a process in `ps aux` output with a STAT value of `Z`. What does this indicate, and what is the correct resolution?
+A) The process is consuming excessive CPU. Send it SIGKILL to terminate it immediately.
+B) The process is sleeping and waiting for I/O. It will resume automatically when the I/O completes.
+C) The process has finished executing but its parent has not collected its exit status. Fix or terminate the parent process.
+D) The process is stopped by a signal. Send SIGCONT to resume it.
+*   **Correct Answer:** C) The process has finished executing but its parent has not collected its exit status. Fix or terminate the parent process.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This does not address the security vulnerability of Privileged Access Abuse.
-    * *Why B is incorrect:* This does not address the security vulnerability of Privileged Access Abuse.
-    * *Why D is incorrect:* This does not address the security vulnerability of Privileged Access Abuse.
-    * *Why A is correct:* Implementing Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC. mitigates the risk of Administrators logging in routinely as root or Administrator, increasing the blast radius of user errors or malware..
+    *   *Why A is incorrect:* A Z (zombie) process is already dead — it is not consuming CPU. Sending SIGKILL has no effect on a zombie because there is no running code to kill.
+    *   *Why B is incorrect:* A process waiting for I/O is shown with the STAT value `D` (uninterruptible sleep), not `Z`.
+    *   *Why D is incorrect:* A stopped process is shown with STAT value `T`. SIGCONT resumes a stopped process. Zombies are not stopped — they are complete but uncollected, and SIGCONT is irrelevant to them.
 

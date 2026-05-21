@@ -1,79 +1,77 @@
-# Quiz: Module 05 - Binary Trees & BSTs
-## Course: CIS-2315_Data_Structures_Algorithms (Technical Interview Readiness (LeetCode / HackerRank))
+# Quiz: Module 05 – Hash Tables and Hash Maps
+## Course: CIS-2315 Data Structures & Algorithms (Technical Interview Readiness)
 
 ---
 
 **Question 1**
-In a valid Binary Search Tree (BST), what property must be true for every node N?
-*   A) All left descendants <= N, and all right descendants > N
-*   B) Left child and right child must have equal height
-*   C) Every node must have exactly two child nodes
-*   D) The tree must be balanced
-*   **Correct Answer:** A) The BST invariant requires all values in the left subtree of N to be less than or equal to N, and all values in the right subtree to be greater.
+What is the average-case time complexity of lookup in a well-implemented hash table?
+*   A) O(n)
+*   B) O(log n)
+*   C) O(n log n)
+*   D) O(1)
+*   **Correct Answer:** D) O(1)
 *   **Distractor Analysis:**
-    *   *Why correct:* The BST invariant requires all values in the left subtree of N to be less than or equal to N, and all values in the right subtree to be greater.
-    *   Equal height defines balanced trees. Node count properties define strict binary trees.
+    *   *Why correct:* A hash function maps the key directly to an index in one step; with a low load factor and good distribution, the chain or probe sequence at that index is near-constant length, giving O(1) average lookup.
+    *   A is incorrect: O(n) is the worst case (all keys collide into one chain), not the average case.
+    *   B is incorrect: O(log n) describes binary search trees, not hash tables.
+    *   C is incorrect: O(n log n) is a sorting complexity, entirely unrelated to hash table lookup.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Root node**?
-C) An access control system where users are assigned to specific roles, and permissions are linked to those roles rather than individual users, simplifying permission management.
-D) The entry point or first node in a linked list, which serves as the reference for traversing the rest of the list structure.
-A) The single, top-most node in a tree structure from which all other nodes descend, serving as the starting reference for search algorithms.
-B) The descendant node connected to the left branch of a parent node in a binary tree structure.
-*   **Correct Answer:** A) The single, top-most node in a tree structure from which all other nodes descend, serving as the starting reference for search algorithms.
+Which of the following is the most accurate definition of **separate chaining** as a hash table collision resolution strategy?
+*   A) When a collision occurs, the algorithm scans forward through the array one slot at a time until it finds an empty position, keeping all data in the main array for better cache locality.
+*   B) When a collision occurs, the table is immediately doubled in size and all existing keys are rehashed into the new larger array to restore a low load factor.
+*   C) When a collision occurs, both keys are stored at the same index by appending them to a linked list (or other collection) at that slot, so lookup scans the list at the target index.
+*   D) When a collision occurs, the second key is assigned to a secondary hash table computed using a different hash function, and lookups check both tables.
+*   **Correct Answer:** C) When a collision occurs, both keys are stored at the same index by appending them to a linked list (or other collection) at that slot, so lookup scans the list at the target index.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Root node**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Root node**.
-    * *Why A is correct:* This describes the exact role and function of **Root node**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Root node**.
-
+    *   *Why A is incorrect:* That describes open addressing with linear probing, not separate chaining.
+    *   *Why B is incorrect:* That describes rehashing/resizing, which is a load factor management strategy, not a collision resolution method.
+    *   *Why C is correct:* Separate chaining keeps a list at each bucket; all keys with the same hash go into the same list. Average lookup is O(1) when chains are short.
+    *   *Why D is incorrect:* That describes cuckoo hashing or a two-table scheme — a more advanced variant, not the standard definition of separate chaining.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **create a sandboxed Python virtual environment to manage dependencies locally**. Which of the following commands is the most appropriate to execute?
-B) pip install -r requirements.txt
-C) git commit -m 'update'
-A) python3 -m venv .venv
-D) pytest
-*   **Correct Answer:** A) python3 -m venv .venv
+You are given an array of integers and a target sum. You need to find whether any two elements add up to the target. Which approach gives O(n) time and O(n) space?
+*   A) Sort the array and use binary search to find the complement of each element.
+*   B) Use nested loops to check every pair of elements.
+*   C) Store each element in a hash set as you iterate; for each element, check whether its complement (target – element) already exists in the set.
+*   D) Use a stack to push elements and pop pairs that sum to the target.
+*   **Correct Answer:** C) Store each element in a hash set as you iterate; for each element, check whether its complement (target – element) already exists in the set.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `python3 -m venv .venv` command is directly designed to create a sandboxed Python virtual environment to manage dependencies locally.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is incorrect:* Sorting is O(n log n); binary search per element adds another O(n log n). This gives O(n log n) time, not O(n).
+    *   *Why B is incorrect:* Nested loops check all O(n²) pairs — correct but does not meet the O(n) time requirement.
+    *   *Why C is correct:* Each element is inserted and looked up once in O(1) average time, giving O(n) total. The hash set stores seen values, so the complement check is O(1).
+    *   *Why D is incorrect:* A stack's LIFO order does not help identify complement pairs; this approach would not work correctly for the general case.
 
 ---
 
 **Question 4**
-While working on **Binary Trees & BSTs** in a production environment, you encounter a system alert indicating a **TypeError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-C) Verify that the index is within the valid range of 0 to len(list)-1.
-B) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
-D) Reboot the physical machine and wait for services to reload.
-*   **Correct Answer:** A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
+What happens to hash table performance when the load factor becomes very high (approaching 1.0)?
+*   A) Performance improves because fewer memory allocations are needed.
+*   B) Performance degrades because chains become longer (chaining) or probe sequences grow (open addressing), increasing average lookup time toward O(n).
+*   C) Performance remains O(1) regardless of load factor because the hash function is deterministic.
+*   D) The hash table automatically switches to a binary search tree to maintain O(log n) performance.
+*   **Correct Answer:** B) Performance degrades because chains become longer (chaining) or probe sequences grow (open addressing), increasing average lookup time toward O(n).
 *   **Distractor Analysis:**
-    * *Why A is correct:* Because An operation or function was applied to an object of an inappropriate data type. The appropriate fix is to Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types..
-    * *Why C is incorrect:* This action does not resolve the root cause of TypeError.
-    * *Why B is incorrect:* This action does not resolve the root cause of TypeError.
-    * *Why D is incorrect:* This action does not resolve the root cause of TypeError.
-
+    *   *Why A is incorrect:* High load factor means more collisions, which hurts performance; fewer allocations do not compensate.
+    *   *Why B is correct:* With load factor near 1, the expected chain length (chaining) or probe length (open addressing) grows, degrading O(1) average toward O(n) worst case. This is why tables resize at ~0.75 load.
+    *   *Why C is incorrect:* A deterministic hash function distributes keys uniformly but cannot prevent long chains when the table is nearly full.
+    *   *Why D is incorrect:* Hash tables do not automatically convert to BSTs; they rehash into a larger array.
 
 ---
 
 **Question 5**
-When designing a system for **Binary Trees & BSTs**, you must mitigate the risk of **Allowing attackers to execute arbitrary SQL commands on the backend database via input forms.**. Which of the following security configurations or controls represents the best practice to implement?
-C) Enable full disk encryption on all client endpoints.
-B) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-A) Implement parameterized queries and prepared statements rather than raw string concatenation.
-D) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Implement parameterized queries and prepared statements rather than raw string concatenation.
+In Python, which of the following can be used as a dictionary key?
+*   A) A list such as `[1, 2, 3]`
+*   B) A tuple such as `(1, 2, 3)`
+*   C) A set such as `{1, 2, 3}`
+*   D) A dictionary such as `{"a": 1}`
+*   **Correct Answer:** B) A tuple such as `(1, 2, 3)`
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why A is correct:* Implementing Implement parameterized queries and prepared statements rather than raw string concatenation. mitigates the risk of Allowing attackers to execute arbitrary SQL commands on the backend database via input forms..
-    * *Why D is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-
+    *   *Why A is incorrect:* Lists are mutable and unhashable in Python; using one as a dict key raises a `TypeError`. Mutability makes hashing unreliable since the hash could change.
+    *   *Why B is correct:* Tuples are immutable and therefore hashable. `hash((1, 2, 3))` returns a consistent integer, making tuples valid dict keys — a common pattern in DSA solutions (e.g., grouping anagrams by `tuple(sorted(word))`).
+    *   *Why C is incorrect:* Python sets are mutable and unhashable. `frozenset` is the immutable, hashable alternative.
+    *   *Why D is incorrect:* Dicts are mutable and unhashable; they cannot be used as keys in another dict.

@@ -1,51 +1,62 @@
-# Reading Guide: Module 03 - Stacks & Queues
-## Course: CIS-2315_Data_Structures_Algorithms (Technical Interview Readiness (LeetCode / HackerRank))
+# Reading Guide: Module 03 – Linked Lists: Singly and Doubly
+## Course: CIS-2315 Data Structures & Algorithms (Technical Interview Readiness)
 
 ---
 
 ### Introduction
-Welcome to **Module 03 - Stacks & Queues**! This week's study material focuses on the core foundations and configuration mechanics of **Stacks & Queues** as aligned with the **Technical Interview Readiness (LeetCode / HackerRank)** certification framework. Understanding these topics is essential not only for passing the certification exam but also for administering enterprise systems in real-world environments.
+Welcome to **Module 03 – Linked Lists: Singly and Doubly**! Linked lists are the classic example of a pointer-based data structure and one of the most heavily tested topics in technical interviews. Problems like reversing a list, detecting a cycle, finding the middle node, and merging sorted lists appear on LeetCode, Google, and Meta interviews regularly. Mastering linked lists also builds the pointer manipulation skills needed for trees and graphs.
 
-As a student, you will learn the primary operational roles, command syntaxes, and troubleshooting parameters needed to design, configure, and maintain these services. We will explore how different protocols establish connections, how configurations manage resource allocation, and how security controls prevent access breaches. Make sure to complete the checklists and review the glossary terms in detail before beginning the lab activity.
+This module covers the internal structure of singly and doubly linked lists, their time/space trade-offs versus arrays, and the most common interview patterns.
 
 ---
 
 ### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
 
-*   **LIFO (Last-In-First-Out)**: The operational principle of a stack, where the element added most recently is the first one to be removed, similar to a stack of trays.
-*   **FIFO (First-In-First-Out)**: The operational principle of a queue, where the first element added is the first one to be removed, mimicking a line at a checkout register.
-*   **push/pop**: The core operations of a stack: 'push' inserts an element onto the top, and 'pop' removes and returns the top element.
-*   **enqueue/dequeue.**: A primary configuration standard and technical parameter essential for coordinating Stacks & Queues activities, enforcing security boundaries, and verifying operational statuses within the programming environment.
+*   **Singly linked list**: A linear data structure where each node holds a data value and a single `next` pointer to the following node. The last node's `next` is `None`. Traversal is O(n) forward-only; there is no backward link.
+
+*   **Doubly linked list**: A linked list where each node holds a data value, a `next` pointer, and a `prev` pointer to the preceding node. This enables O(1) deletion of a node given only its reference, and O(n) traversal in either direction.
+
+*   **Head and tail pointers**: References to the first and last nodes of the list. Maintaining a tail pointer allows O(1) append to the end; without it, appending requires O(n) traversal to find the last node.
+
+*   **Fast and slow pointer (Floyd's algorithm)**: A two-pointer technique where one pointer advances one node at a time and another advances two. When they meet, a cycle exists; when the fast pointer reaches the end, the slow pointer is at the middle. Essential for cycle detection (LeetCode #141/#142) and finding the midpoint.
+
+*   **Sentinel / dummy node**: A placeholder node inserted at the head (or both head and tail) of a list to eliminate special-case logic for empty lists or operations at the boundary. Common in implementations to avoid `if head is None` checks.
+
+*   **In-place reversal**: Reversing a linked list without allocating a new list by updating `next` pointers iteratively with three pointers (prev, curr, next). Runs in O(n) time and O(1) auxiliary space.
+
+*   **Runner technique**: A variant of fast/slow pointers where one pointer is advanced k steps ahead of the other before both start moving, used to find the k-th node from the end in one pass.
 
 ---
 
 ### 2. Certification Exam Tips
-*   **Focus Area:** Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
-*   **Scenario Trap:** Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
-*   **Study Resource:** To reinforce these concepts visually, review this targeted search query: [Data Structures & Algorithms Course by Abdul Bari - Stacks & Queues](https://www.youtube.com/watch?v=RBSGKlAvoiM).
+*   **Draw every pointer change on paper:** Linked list bugs are almost always pointer update errors. Before coding, sketch the before/after state of `prev`, `curr`, and `next` for one iteration of your loop.
+*   **Handle edge cases first:** What happens with an empty list? A single-node list? A two-node list? State these explicitly before your interviewer asks.
+*   **Cycle detection is always fast/slow pointers:** If you see "cycle," reach for Floyd's algorithm immediately. Memorize the two-phase approach: detect (meet in cycle), then find entry point (reset one pointer to head, advance both one step at a time).
+*   **Merging sorted lists is a common variant:** LeetCode #21 (Merge Two Sorted Lists) and #23 (Merge k Sorted Lists). The two-list version is O(m+n); the k-list version uses a min-heap for O(N log k).
+*   **Dummy head simplifies boundary logic:** For problems that modify the list structure (remove nth from end, insert, partition), always use a dummy node — it removes the "is head being changed?" special case.
+*   **Study Resource:** Explore the [LeetCode Linked List Explore Card](https://leetcode.com/explore/learn/card/linked-list/) for a structured set of problems with hints, progressing from basic traversal to advanced in-place manipulation.
 
 ---
 
 ### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the section/chapter covering **Stacks & Queues** in the OER Textbook: [OpenDSA Data Structures and Algorithms](https://opendsa-server.cs.vt.edu/).
-*   **Required Video:** Watch the video lecture on **Stacks & Queues** in the official course playlist: [Data Structures & Algorithms Course by Abdul Bari](https://www.youtube.com/watch?v=RBSGKlAvoiM).
+*   **Required Reading:** [Linked Lists – Open Data Structures (Pat Morin), Chapter 3](https://opendatastructures.org/ods-python/3_Linked_Lists.html) — covers singly and doubly linked list implementations with Python code and full complexity analysis.
+*   **Required Video:** [Linked List – NeetCode on YouTube](https://www.youtube.com/watch?v=Hj_rA0dhr2I) — a 30-minute deep dive covering node structure, reversal, and cycle detection with LeetCode walkthroughs.
 
 ---
 
 ### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Build a custom stack class using an array backend**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-*   **Build a queue using a linked list structure**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-*   **Implement a matching parenthesis checker using a stack**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-
+In this week's hands-on lab, you will:
+*   **Implement a `SinglyLinkedList` class** with `append`, `prepend`, `delete_by_value`, `reverse`, and `__str__` methods from scratch.
+*   **Solve LeetCode #206 (Reverse Linked List)** iteratively and recursively, comparing stack space usage.
+*   **Solve LeetCode #141 (Linked List Cycle)** using Floyd's fast/slow pointer algorithm.
+*   **Solve LeetCode #876 (Middle of the Linked List)** using the fast/slow pointer to find the midpoint in one pass.
 
 ---
 
 ### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read the section/chapter covering **Stacks & Queues** in [OpenDSA Data Structures and Algorithms](https://opendsa-server.cs.vt.edu/).
-- [ ] Watch the video lecture on **Stacks & Queues** in [Data Structures & Algorithms Course by Abdul Bari](https://www.youtube.com/watch?v=RBSGKlAvoiM).
-- [ ] Review the commands outlined in the lab instructions.
-- [ ] Proceed to the weekly hands-on lab activity.
+- [ ] Read the glossary terms and be able to explain each in your own words.
+- [ ] Read Chapter 3 of Open Data Structures.
+- [ ] Watch the NeetCode Linked List video.
+- [ ] Implement the SinglyLinkedList class from scratch.
+- [ ] Solve LeetCode #206, #141, and #876.
+- [ ] Proceed to the Module 03 Quiz.

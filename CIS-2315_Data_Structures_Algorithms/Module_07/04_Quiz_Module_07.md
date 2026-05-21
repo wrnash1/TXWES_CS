@@ -1,79 +1,77 @@
-# Quiz: Module 07 - Heaps & Priority Queues
-## Course: CIS-2315_Data_Structures_Algorithms (Technical Interview Readiness (LeetCode / HackerRank))
+# Quiz: Module 07 – Binary Search Trees (BST)
+## Course: CIS-2315 Data Structures & Algorithms (Technical Interview Readiness)
 
 ---
 
 **Question 1**
-Which array index represents the parent of a node located at index i in a 0-indexed binary heap?
-*   A) 2*i + 1
-*   B) 2*i + 2
-*   C) (i - 1) // 2
-*   D) i // 2
-*   **Correct Answer:** C) For any 0-indexed element i, its parent is located at index floor((i-1)/2).
+What is the average-case time complexity of searching for a value in a balanced BST with n nodes?
+*   A) O(n)
+*   B) O(n log n)
+*   C) O(log n)
+*   D) O(1)
+*   **Correct Answer:** C) O(log n)
 *   **Distractor Analysis:**
-    *   *Why correct:* For any 0-indexed element i, its parent is located at index floor((i-1)/2).
-    *   2*i+1 is left child. 2*i+2 is right child.
+    *   *Why correct:* Each comparison eliminates the entire left or right subtree from consideration. In a balanced BST of height log n, the search path visits at most log n nodes.
+    *   A is incorrect: O(n) is the worst case for a degenerate (completely unbalanced) BST, not the average case for a balanced one.
+    *   B is incorrect: O(n log n) describes sorting algorithms; it does not describe a single search operation.
+    *   D is incorrect: O(1) describes hash table lookup; BST search always requires traversing at least part of the tree.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **array representation.**?
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-C) The scenario where an algorithm requires the absolute minimum number of steps to complete (e.g., searching for an element that happens to be at the very beginning of a list).
-D) Data about the HTML document (like description, keywords, author, and viewport configurations) that is processed by browsers and search engine crawlers.
-B) The additional execution time and CPU operations spent visiting nodes sequentially in memory, which is higher in linked structures than in contiguous arrays.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
+Which of the following is the most accurate description of the **BST property** (the invariant that makes a binary tree a valid BST)?
+*   A) For every node N, the left child's value is less than N's value and the right child's value is greater — this single parent-child check is sufficient to validate the entire tree.
+*   B) For every node N, ALL values in N's left subtree are strictly less than N's value, and ALL values in N's right subtree are strictly greater — this invariant must hold recursively throughout the entire tree.
+*   C) For every node N, the left and right subtrees have heights that differ by at most 1, ensuring the tree remains balanced and all operations run in O(log n).
+*   D) For every node N, the node stores the minimum value of its entire subtree so that range minimum queries can be answered in O(1) by accessing any node directly.
+*   **Correct Answer:** B) For every node N, ALL values in N's left subtree are strictly less than N's value, and ALL values in N's right subtree are strictly greater — this invariant must hold recursively throughout the entire tree.
 *   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **array representation.**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **array representation.**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **array representation.**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **array representation.**.
-
+    *   *Why A is incorrect:* Checking only the immediate parent-child relationship is the classic BST validation trap. A node can satisfy the parent-child check yet violate the invariant if a value in a deep subtree is out of bounds (e.g., a node with value 3 in the right subtree of 5).
+    *   *Why B is correct:* The BST property is a global constraint: every ancestor's bounds apply to all nodes in that subtree, not just the immediate child.
+    *   *Why C is incorrect:* That describes the AVL tree balance condition, not the fundamental BST ordering property. A valid BST need not be balanced.
+    *   *Why D is incorrect:* That describes a segment tree or range minimum query structure, not a BST.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **install all external project dependencies specified in the requirements manifest**. Which of the following commands is the most appropriate to execute?
-A) pip install -r requirements.txt
-D) python3 -m venv .venv
-C) git commit -m 'update'
-B) pytest
-*   **Correct Answer:** A) pip install -r requirements.txt
+When deleting a node with two children from a BST, what value is typically used to replace the deleted node?
+*   A) The value of the deleted node's parent.
+*   B) The value of the deleted node's left child.
+*   C) The value of the in-order successor — the smallest value in the deleted node's right subtree.
+*   D) The value of the root node, and the root is then replaced by its own in-order successor recursively.
+*   **Correct Answer:** C) The value of the in-order successor — the smallest value in the deleted node's right subtree.
 *   **Distractor Analysis:**
-    * *Why A is correct:* The `pip install -r requirements.txt` command is directly designed to install all external project dependencies specified in the requirements manifest.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is incorrect:* Replacing with the parent's value would destroy the parent-child relationship and is not a standard BST deletion strategy.
+    *   *Why B is incorrect:* The left child is the largest value smaller than the deleted node (the in-order predecessor), which can also be used, but the canonical approach uses the in-order successor (right subtree minimum).
+    *   *Why C is correct:* The in-order successor is the leftmost node in the right subtree. Copying its value to the deleted node and then deleting the successor (which has at most one child) preserves the BST property.
+    *   *Why D is incorrect:* The root is not involved unless the root itself is being deleted. Replacement cascading to the root would be needlessly complex.
 
 ---
 
 **Question 4**
-While working on **Heaps & Priority Queues** in a production environment, you encounter a system alert indicating a **IndexError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-D) Reboot the physical machine and wait for services to reload.
-B) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
-A) Verify that the index is within the valid range of 0 to len(list)-1.
-C) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-*   **Correct Answer:** A) Verify that the index is within the valid range of 0 to len(list)-1.
+What does inorder traversal of a valid BST always produce?
+*   A) Elements in reverse sorted order, from largest to smallest.
+*   B) Elements in the order they were inserted into the tree.
+*   C) Elements in ascending sorted order, from smallest to largest.
+*   D) Elements by level, with the root first and leaves last.
+*   **Correct Answer:** C) Elements in ascending sorted order, from smallest to largest.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This action does not resolve the root cause of IndexError.
-    * *Why B is incorrect:* This action does not resolve the root cause of IndexError.
-    * *Why A is correct:* Because The code attempted to access an element of a sequence using an out-of-bounds index. The appropriate fix is to Verify that the index is within the valid range of 0 to len(list)-1..
-    * *Why C is incorrect:* This action does not resolve the root cause of IndexError.
-
+    *   *Why A is incorrect:* Reverse sorted order is produced by Right–Root–Left traversal (reverse inorder), not standard inorder.
+    *   *Why B is incorrect:* Insertion order is only recovered by preorder traversal of a specific kind of tree; inorder always gives the BST's ordering.
+    *   *Why C is correct:* Because the BST property guarantees all left-subtree values are smaller and all right-subtree values are larger, visiting Left–Root–Right visits nodes in ascending order.
+    *   *Why D is incorrect:* Level-by-level (BFS) order is produced by level-order (BFS) traversal using a queue, not inorder DFS.
 
 ---
 
 **Question 5**
-When designing a system for **Heaps & Priority Queues**, you must mitigate the risk of **Storing user credentials in plain text, making them vulnerable to database breaches.**. Which of the following security configurations or controls represents the best practice to implement?
-C) Enable full disk encryption on all client endpoints.
-B) Implement parameterized queries and prepared statements rather than raw string concatenation.
-D) Enable full disk encryption on all client endpoints.
-A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-*   **Correct Answer:** A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
+You are implementing `isValidBST` using a recursive helper that passes bounds. What are the correct initial bounds when calling the helper on the root?
+*   A) min = 0, max = 0
+*   B) min = root.val – 1, max = root.val + 1
+*   C) min = –infinity, max = +infinity
+*   D) min = leftmost_leaf.val, max = rightmost_leaf.val
+*   **Correct Answer:** C) min = –infinity, max = +infinity
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-    * *Why B is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-    * *Why D is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-    * *Why A is correct:* Implementing Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt. mitigates the risk of Storing user credentials in plain text, making them vulnerable to database breaches..
-
+    *   *Why A is incorrect:* Initializing both bounds to 0 would immediately invalidate any root value that is not between 0 and 0, incorrectly rejecting all trees whose root is not 0.
+    *   *Why B is incorrect:* Bounding by root ± 1 would restrict the entire tree to values within one of the root, which is wrong for any non-trivial BST.
+    *   *Why C is correct:* The root can hold any value, so initial bounds are unconstrained (–∞, +∞). As recursion descends left, the upper bound tightens to the current node's value; descending right tightens the lower bound. This correctly enforces the BST property across all ancestors.
+    *   *Why D is incorrect:* Leaf values are unknown at the start of validation and would produce incorrect bounds even if known.

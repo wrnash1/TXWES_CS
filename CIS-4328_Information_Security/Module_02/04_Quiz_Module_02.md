@@ -1,5 +1,5 @@
-# Quiz: Module 02 - Network Sec
-## Course: CIS-4328_Information_Security (4328_Information_Security - CompTIA Security+ (SY0-701))
+# Quiz: Module 02 - Social Engineering and Phishing
+## Course: CIS-4328_Information_Security (CompTIA Security+ SY0-701)
 
 ---
 
@@ -11,72 +11,66 @@ C) Smishing
 D) Pharming
 *   **Correct Answer:** B) Whaling
 *   **Distractor Analysis:**
-    *   *Why A is incorrect:* Vishing (Voice Phishing) relies on telephone calls, not email.
-    *   *Why C is incorrect:* Smishing (SMS Phishing) relies on text messages, not email.
-    *   *Why D is incorrect:* Pharming involves poisoning a DNS server to redirect legitimate traffic to a fake website; it is not a targeted email attack. Whaling is a form of spear-phishing specifically targeting high-level executives (the "big fish" or whales).
+    *   *Why A is incorrect:* Vishing (Voice Phishing) relies on telephone calls, not email. The attacker speaks directly with the victim to extract information or credentials verbally.
+    *   *Why C is incorrect:* Smishing (SMS Phishing) is delivered via text message, not email. It typically contains a shortened URL to a credential-harvesting site.
+    *   *Why D is incorrect:* Pharming poisons DNS records to redirect users from legitimate URLs to malicious sites — it does not involve sending targeted emails. Whaling is spear phishing aimed specifically at high-value executives.
 
 ---
 
 ---
 
 **Question 2**
-A system administrator runs a tool against the corporate network. The tool actively attempts to bypass security controls, steal hashed passwords, and gain shell access to servers to prove that the network is insecure. Which of the following best describes this activity?
-A) Vulnerability Scanning
-B) Penetration Testing
-C) Risk Assessment
-D) Threat Hunting
-*   **Correct Answer:** B) Penetration Testing
+A security analyst needs to collect forensic evidence from a compromised workstation. According to the standard order of volatility, which of the following data sources should the analyst collect FIRST?
+A) The local hard drive (HDD/SSD)
+B) The routing tables and ARP cache
+C) System Memory (RAM)
+D) Archival backup tapes
+*   **Correct Answer:** C) System Memory (RAM)
 *   **Distractor Analysis:**
-    *   *Why A is incorrect:* Vulnerability scanning is passive and automated; it identifies potential weaknesses (like missing patches) but does *not* actively exploit them to steal data or gain access.
-    *   *Why C is incorrect:* A risk assessment is an administrative process of identifying assets, threats, and risks on paper, not a technical exploitation of a network.
-    *   *Why D is incorrect:* Threat hunting is the proactive searching through logs and systems to find hidden attackers that have already bypassed defenses; it is not the act of exploiting the network yourself.
+    *   *Why A is incorrect:* Hard drives store non-volatile data that survives a reboot — they have a lower volatility than RAM and should be collected after volatile sources are captured.
+    *   *Why B is incorrect:* Routing tables and ARP cache are volatile but considered slightly less critical to capture before full RAM, which contains running processes, encryption keys, and active network connections.
+    *   *Why D is incorrect:* Archival backup tapes are the least volatile storage medium; the data is static and can be retrieved at any time during the investigation.
 
 ---
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **launch the graphical packet analyzer to capture and dissect network frames in real-time**. Which of the following commands is the most appropriate to execute?
-C) hydra -l admin -P passwords.txt ssh://target
-B) openssl x509 -text -noout -in cert.pem
-A) wireshark
-D) nmap -sV -p 1-1024 target_ip
-*   **Correct Answer:** A) wireshark
+An employee receives a phone call from someone claiming to be from the company's IT helpdesk. The caller says there is a security incident and asks the employee to provide their password immediately to prevent account lockout. Which social engineering technique is the attacker primarily using?
+A) Smishing
+B) Pharming
+C) Vishing combined with pretexting
+D) Spear phishing
+*   **Correct Answer:** C) Vishing combined with pretexting
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `wireshark` command is directly designed to launch the graphical packet analyzer to capture and dissect network frames in real-time.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is incorrect:* Smishing is delivered via SMS text message, not a phone call. This scenario involves a live voice interaction.
+    *   *Why B is incorrect:* Pharming is a technical DNS-manipulation attack that silently redirects browser traffic — it does not involve a phone call or a fabricated scenario.
+    *   *Why D is incorrect:* Spear phishing is a targeted email attack. This attack uses a telephone call (vishing) combined with a fabricated helpdesk scenario (pretexting) to manufacture urgency and authority.
 
 ---
 
 **Question 4**
-While working on **Network Sec** in a production environment, you encounter a system alert indicating a **IDS False Positives** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-B) Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA.
-A) Tune the detection signatures and define exceptions for authorized administrative activities.
-C) Review active security rules and add a permissive firewall rule allowing the specific source IP and destination port.
-D) Reboot the physical machine and wait for services to reload.
-*   **Correct Answer:** A) Tune the detection signatures and define exceptions for authorized administrative activities.
+A user reports that after clicking a link in an email, they were taken to what appeared to be their bank's login page. They entered their credentials but noticed the URL in the browser bar was slightly different from normal. Which type of attack does this describe?
+A) Vishing
+B) Smishing
+C) Pharming
+D) Phishing / Credential harvesting
+*   **Correct Answer:** D) Phishing / Credential harvesting
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This action does not resolve the root cause of IDS False Positives.
-    * *Why A is correct:* Because The network security system flags benign administrative scans or regular traffic patterns as malicious exploits. The appropriate fix is to Tune the detection signatures and define exceptions for authorized administrative activities..
-    * *Why C is incorrect:* This action does not resolve the root cause of IDS False Positives.
-    * *Why D is incorrect:* This action does not resolve the root cause of IDS False Positives.
-
+    *   *Why A is incorrect:* Vishing is a voice-based attack over the telephone — no email link or website is involved.
+    *   *Why B is incorrect:* Smishing delivers the malicious link via SMS text message, not email. The delivery channel here is email.
+    *   *Why C is incorrect:* Pharming redirects a user who typed a legitimate URL to a fake site by poisoning DNS — the user does not click a link in an email. Here the user clicked a link, making this a classic phishing credential-harvesting attack.
 
 ---
 
 **Question 5**
-When designing a system for **Network Sec**, you must mitigate the risk of **Attackers cracking weak encryption keys using commodity hardware, compromises confidentiality.**. Which of the following security configurations or controls represents the best practice to implement?
-D) Enable full disk encryption on all client endpoints.
-C) Enable full disk encryption on all client endpoints.
-B) Forward all system logs to a secure, write-once SIEM (Security Information and Event Management) platform.
-A) Enforce RSA keys with a minimum length of 2048/4096 bits or switch to Elliptic Curve Cryptography (ECC).
-*   **Correct Answer:** A) Enforce RSA keys with a minimum length of 2048/4096 bits or switch to Elliptic Curve Cryptography (ECC).
+When designing employee security awareness training to reduce social engineering risk, which of the following mitigations is MOST effective against phishing attacks?
+A) Deploy a perimeter firewall with deep packet inspection to block all external email.
+B) Train employees to verify sender identity through a separate trusted channel before acting on urgent requests.
+C) Enforce full disk encryption on all endpoints to protect stored credentials.
+D) Require employees to change their passwords every 30 days regardless of compromise indicators.
+*   **Correct Answer:** B) Train employees to verify sender identity through a separate trusted channel before acting on urgent requests.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This does not address the security vulnerability of Weak Key Strength.
-    * *Why C is incorrect:* This does not address the security vulnerability of Weak Key Strength.
-    * *Why B is incorrect:* This does not address the security vulnerability of Weak Key Strength.
-    * *Why A is correct:* Implementing Enforce RSA keys with a minimum length of 2048/4096 bits or switch to Elliptic Curve Cryptography (ECC). mitigates the risk of Attackers cracking weak encryption keys using commodity hardware, compromises confidentiality..
-
+    *   *Why A is incorrect:* Blocking all external email is operationally infeasible for any business — organizations depend on external communication. Technical filters reduce phishing volume but cannot catch all attacks, especially targeted spear phishing.
+    *   *Why C is incorrect:* Full disk encryption protects data confidentiality at rest if a device is lost or stolen — it does not prevent an employee from voluntarily entering credentials into a phishing site.
+    *   *Why D is incorrect:* Frequent mandatory password resets have limited effectiveness against phishing. If an employee just entered credentials on a phishing site, the attacker already has the current password. Out-of-band verification breaks the social engineering chain before credentials are disclosed.

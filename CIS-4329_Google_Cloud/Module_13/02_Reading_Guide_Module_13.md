@@ -1,50 +1,68 @@
-# Reading Guide: Module 13 - Hybrid Cloud
-## Course: CIS-4329_Google_Cloud (4329_Google_Cloud - Google Cloud Associate Cloud Engineer)
+# Reading Guide: Module 13 – Cloud Deployment Manager and Terraform on GCP
+## Course: CIS-4329 – Google Cloud Administration (Google Cloud Associate Cloud Engineer)
 
 ---
 
 ### Introduction
-Welcome to **Module 13 - Hybrid Cloud**! This week's study material focuses on the core foundations and configuration mechanics of **Hybrid Cloud** as aligned with the **4329_Google_Cloud - Google Cloud Associate Cloud Engineer** certification framework. Understanding these topics is essential not only for passing the certification exam but also for administering enterprise systems in real-world environments.
-
-As a student, you will learn the primary operational roles, command syntaxes, and troubleshooting parameters needed to design, configure, and maintain these services. We will explore how different protocols establish connections, how configurations manage resource allocation, and how security controls prevent access breaches. Make sure to complete the checklists and review the glossary terms in detail before beginning the lab activity.
+Welcome to **Module 13 – Cloud Deployment Manager and Terraform on GCP**! Infrastructure as Code (IaC) lets you define, version, and repeatedly deploy cloud resources using configuration files rather than manual Console clicks. This module covers Google Cloud Deployment Manager (GCP's native IaC tool) and HashiCorp Terraform (the most widely adopted multi-cloud IaC tool), including how each manages state, handles updates, and integrates with GCP. The ACE exam tests your ability to recognize IaC concepts, interpret basic configuration syntax, and understand when each tool is appropriate.
 
 ---
 
 ### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
+Review these essential definitions carefully. The ACE exam tests these concepts in scenario-based questions.
 
-*   **Core Concept**: This module focuses on Hybrid Cloud. Ensure you understand the primary terminology and how it applies to the certification exam objectives.
-*   **Exam Tip**: Memorize the common ports, protocols, and command-line syntax associated with Hybrid Cloud.
-*   **Documentation**: Always refer to the official vendor documentation (Microsoft Learn, Google Cloud Docs, or CompTIA objectives) linked in your ZTC guide for the most up-to-date information.
-*   **Focus Area**: Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
-*   **Scenario Trap**: Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
-*   **Study Resource**: To reinforce these concepts visually, review this targeted search query: [Google Cloud ACE Certification Course by freeCodeCamp - Hybrid Cloud](https://www.youtube.com/watch?v=UGRDM86MBIQ).
+*   **Infrastructure as Code (IaC)**: The practice of managing and provisioning cloud infrastructure through machine-readable configuration files rather than manual processes. IaC enables version control, repeatability, and peer review of infrastructure changes. Both Deployment Manager and Terraform implement IaC for GCP resources.
+
+*   **Cloud Deployment Manager**: GCP's native IaC service. Configurations are written in YAML (with optional Python or Jinja2 templates). Deployment Manager manages a **deployment** — a collection of GCP resources defined in a configuration file. It tracks resource state internally and supports `create`, `update`, and `delete` operations on deployments.
+
+*   **Terraform**: An open-source IaC tool by HashiCorp that uses HashiCorp Configuration Language (HCL). Terraform manages resources across multiple cloud providers. On GCP, Terraform uses the `google` provider. Key workflow: `terraform init` (downloads providers), `terraform plan` (previews changes), `terraform apply` (creates/updates resources), `terraform destroy` (deletes all managed resources).
+
+*   **Terraform State**: A file (by default `terraform.tfstate`) that records the current state of all resources Terraform manages. Terraform compares the desired state (your `.tf` files) against the recorded state to determine what changes need to be made. For team environments, state should be stored remotely in a Cloud Storage bucket to prevent conflicts.
+
+*   **Idempotency**: The property of an operation that produces the same result whether applied once or many times. Both Deployment Manager and Terraform are idempotent — re-running a deployment with no configuration changes results in no resource modifications.
+
+*   **`gcloud deployment-manager` commands**: The CLI interface for Cloud Deployment Manager. Key subcommands: `deployments create`, `deployments update`, `deployments delete`, and `deployments describe`. The `--config` flag specifies the YAML configuration file to use.
 
 ---
 
 ### 2. Certification Exam Tips
-*   **Focus Area:** Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
-*   **Scenario Trap:** Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
-*   **Study Resource:** To reinforce these concepts visually, review this targeted search query: [Google Cloud ACE Certification Course by freeCodeCamp - Hybrid Cloud](https://www.youtube.com/watch?v=UGRDM86MBIQ).
+
+*   **`terraform plan` before `terraform apply`**: The ACE exam tests the Terraform workflow. Always run `terraform plan` to preview changes before applying them. The plan output shows what resources will be created (`+`), modified (`~`), or destroyed (`-`). This prevents unintended infrastructure changes.
+
+*   **Remote state storage in Cloud Storage**: For production Terraform usage with a team, store the state file in a Cloud Storage bucket with versioning enabled. This prevents two team members from running `terraform apply` simultaneously and corrupting the state. The exam may ask about the correct backend configuration for GCP.
+
+*   **Deployment Manager vs. Terraform — when each is appropriate**: Deployment Manager is GCP-native and requires no additional tooling. Terraform supports multi-cloud deployments and has a larger ecosystem of modules. The ACE exam primarily tests Deployment Manager concepts but expects familiarity with Terraform commands and workflow.
+
+*   **Import existing resources**: Both tools can import existing manually created resources into their management. In Terraform, `terraform import` brings an existing GCP resource under Terraform management by adding it to the state file. The exam may test that you know you cannot manage a resource with Terraform until it is imported or until the resource is recreated by Terraform.
+
+*   **Study Resource**: The freeCodeCamp ACE course covers Deployment Manager configuration syntax and Terraform provider setup for GCP: [Google Cloud ACE Certification Course by freeCodeCamp](https://www.youtube.com/watch?v=UGRDM86MBIQ). Navigate to the Infrastructure as Code chapter using the video index.
 
 ---
 
 ### Required Readings & Videos
 To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the section/chapter covering **Hybrid Cloud** in the OER Textbook: [Google Cloud Associate Cloud Engineer Documentation](https://cloud.google.com/docs).
-*   **Required Video:** Watch the video lecture on **Hybrid Cloud** in the official course playlist: [Google Cloud ACE Certification Course by freeCodeCamp](https://www.youtube.com/watch?v=UGRDM86MBIQ).
+
+*   **Required Reading**: Review the Cloud Deployment Manager overview including configuration file structure, deployments, and the `gcloud deployment-manager` command reference: [Cloud Deployment Manager Overview](https://cloud.google.com/deployment-manager/docs/overview). The YAML configuration structure is directly exam-relevant.
+*   **Required Reading**: Review the Terraform on GCP getting started guide, which covers provider configuration, resource blocks, and the init/plan/apply workflow: [Terraform on Google Cloud](https://developer.hashicorp.com/terraform/tutorials/gcp-get-started). Focus on the core workflow commands.
+*   **Required Video**: Watch the Infrastructure as Code segment of the ACE certification course: [Google Cloud ACE Certification Course by freeCodeCamp](https://www.youtube.com/watch?v=UGRDM86MBIQ). Navigate to the Deployment Manager and Terraform chapter using the video index.
 
 ---
 
 ### Lab & Command Integration
-In this week's hands-on lab, you will run command sequences to verify configuration files and check service statuses. Make sure to execute administrative commands using elevated privileges (sudo/Administrator) and review console outputs for errors.
+In this module's lab, you will create a GCP resource using Cloud Deployment Manager and deploy a simple infrastructure using Terraform. Key commands to practice:
 
+*   `gcloud deployment-manager deployments create my-deployment --config=config.yaml` — creates a new deployment from a YAML configuration file
+*   `gcloud deployment-manager deployments update my-deployment --config=config.yaml` — applies changes to an existing deployment
+*   `terraform init` — initializes the working directory, downloads the GCP provider plugin
+*   `terraform plan -out=tfplan` — generates and saves an execution plan showing proposed changes
+*   `terraform apply tfplan` — applies the saved execution plan to create or modify resources
 
 ---
 
 ### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read the section/chapter covering **Hybrid Cloud** in [Google Cloud Associate Cloud Engineer Documentation](https://cloud.google.com/docs).
-- [ ] Watch the video lecture on **Hybrid Cloud** in [Google Cloud ACE Certification Course by freeCodeCamp](https://www.youtube.com/watch?v=UGRDM86MBIQ).
-- [ ] Review the commands outlined in the lab instructions.
-- [ ] Proceed to the weekly hands-on lab activity.
+- [ ] Read the glossary terms and be able to explain each in your own words.
+- [ ] Read the [Cloud Deployment Manager Overview](https://cloud.google.com/deployment-manager/docs/overview) documentation page.
+- [ ] Read the [Terraform on Google Cloud](https://developer.hashicorp.com/terraform/tutorials/gcp-get-started) getting started guide.
+- [ ] Watch the Infrastructure as Code segment of the [ACE Certification Course by freeCodeCamp](https://www.youtube.com/watch?v=UGRDM86MBIQ).
+- [ ] Complete the module lab: deploy a GCP resource using Deployment Manager and Terraform.
+- [ ] Proceed to the weekly quiz.

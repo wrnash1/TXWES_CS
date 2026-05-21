@@ -1,5 +1,5 @@
-# Quiz: Module 01 - OS Basics
-## Course: CIS-3325_OS_Admin (3325_OS_Admin - CompTIA Linux+ (XK0-005))
+# Quiz: Module 01 - Linux Installation and VM Setup
+## Course: CIS-3325_OS_Admin (CompTIA Linux+ XK0-005)
 
 ---
 
@@ -21,62 +21,57 @@ D) It requires Oracle VirtualBox to function.
 
 **Question 2**
 What is the primary function of an operating system's kernel?
-A) To provide a graphical user interface (GUI) for the user.
-B) To compile source code into executable binaries.
-C) To manage hardware resources and act as a bridge between applications and data processing.
-D) To run web browsers and word processors.
-*   **Correct Answer:** C) To manage hardware resources and act as a bridge between applications and data processing.
+A) To provide a graphical desktop environment and window manager for the user.
+B) To compile source code written in C into executable ELF binaries.
+C) To manage hardware resources and act as a bridge between applications and the underlying hardware.
+D) To store user documents and run web browsers in isolated containers.
+*   **Correct Answer:** C) To manage hardware resources and act as a bridge between applications and the underlying hardware.
 *   **Distractor Analysis:**
-    *   *Why A is incorrect:* The GUI is a user-space application (like a desktop environment), not the kernel itself.
-    *   *Why B is incorrect:* Compiling code is done by a compiler (like GCC), not the OS kernel.
-    *   *Why D is incorrect:* Web browsers run in user space; the kernel simply provides them the resources they need to run.
+    *   *Why A is incorrect:* The desktop environment (e.g., GNOME, KDE) is a user-space application layered on top of the kernel, not part of the kernel itself.
+    *   *Why B is incorrect:* Compiling source code is the role of a compiler such as GCC, not the OS kernel.
+    *   *Why D is incorrect:* Web browsers and document storage applications run in user space; the kernel provides them system calls and hardware access but does not run them directly.
 
 ---
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **instruct the systemd init system to restart a specified background service process**. Which of the following commands is the most appropriate to execute?
-C) ps aux
-A) systemctl restart service
-D) chmod 600 config.conf
+A systems administrator needs to verify which Linux kernel version is currently running on a freshly installed virtual machine. Which command should they use?
+A) uname -r
 B) df -h
-*   **Correct Answer:** A) systemctl restart service
+C) lsblk
+D) chmod 600 /etc/os-release
+*   **Correct Answer:** A) uname -r
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `systemctl restart service` command is directly designed to instruct the systemd init system to restart a specified background service process.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why B is incorrect:* `df -h` reports disk space usage on mounted filesystems, not kernel version.
+    *   *Why C is incorrect:* `lsblk` lists block devices and partition layout, not kernel information.
+    *   *Why D is incorrect:* `chmod 600` changes file permissions; `/etc/os-release` contains distro name and version, not the running kernel version.
 
 ---
 
 **Question 4**
-While working on **OS Basics** in a production environment, you encounter a system alert indicating a **Disk Space Full** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-B) Prepend the command with 'sudo' to run it with superuser administrative privileges, or adjust the file permissions.
-C) Identify and terminate the process already utilizing the target port, or modify the service configuration to use an open port.
-A) Run log rotations, clean temporary files, or expand the logical volume capacity.
-D) Reboot the physical machine and wait for services to reload.
-*   **Correct Answer:** A) Run log rotations, clean temporary files, or expand the logical volume capacity.
+A student installs Ubuntu in VirtualBox but the screen resolution stays small and copy-paste between the host and guest does not work. What is the most likely solution?
+A) Reinstall the Linux kernel from source.
+B) Install VirtualBox Guest Additions inside the guest VM.
+C) Switch from a Type 2 to a Type 1 hypervisor.
+D) Reformat the virtual disk using GPT instead of MBR.
+*   **Correct Answer:** B) Install VirtualBox Guest Additions inside the guest VM.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This action does not resolve the root cause of Disk Space Full.
-    * *Why C is incorrect:* This action does not resolve the root cause of Disk Space Full.
-    * *Why A is correct:* Because The storage volume has run out of space, preventing files from being written and causing system services to fail. The appropriate fix is to Run log rotations, clean temporary files, or expand the logical volume capacity..
-    * *Why D is incorrect:* This action does not resolve the root cause of Disk Space Full.
-
+    *   *Why A is incorrect:* Compiling a custom kernel does not add VirtualBox display or clipboard integration drivers.
+    *   *Why C is incorrect:* VirtualBox is inherently a Type 2 hypervisor; switching hypervisor type does not resolve guest integration features.
+    *   *Why D is incorrect:* The partition table format (GPT vs MBR) affects boot and storage layout, not screen resolution or clipboard sharing.
 
 ---
 
 **Question 5**
-When designing a system for **OS Basics**, you must mitigate the risk of **Attackers exploiting vulnerabilities in forgotten background services or using abandoned accounts to gain persistent access.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Disable unused system accounts and run a port scan to disable unnecessary active background services.
-C) Enable full disk encryption on all client endpoints.
-D) Enable full disk encryption on all client endpoints.
-B) Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC.
-*   **Correct Answer:** A) Disable unused system accounts and run a port scan to disable unnecessary active background services.
+When preparing a Linux server for a production environment, a junior administrator installs the full GNOME desktop environment by default. A senior administrator says this violates hardening best practices. Which of the following best explains why?
+A) GNOME is incompatible with the Linux kernel on UEFI systems.
+B) Desktop environments require GPT partition tables, which cannot be used on servers.
+C) Unnecessary software packages increase the attack surface by introducing additional services and potential vulnerabilities.
+D) A graphical interface prevents administrators from using SSH to connect remotely.
+*   **Correct Answer:** C) Unnecessary software packages increase the attack surface by introducing additional services and potential vulnerabilities.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Disable unused system accounts and run a port scan to disable unnecessary active background services. mitigates the risk of Attackers exploiting vulnerabilities in forgotten background services or using abandoned accounts to gain persistent access..
-    * *Why C is incorrect:* This does not address the security vulnerability of Stale Accounts & Services.
-    * *Why D is incorrect:* This does not address the security vulnerability of Stale Accounts & Services.
-    * *Why B is incorrect:* This does not address the security vulnerability of Stale Accounts & Services.
+    *   *Why A is incorrect:* GNOME is fully compatible with UEFI systems; this is a fabricated incompatibility.
+    *   *Why B is incorrect:* The desktop environment has no dependency on GPT versus MBR; both work fine with or without a GUI.
+    *   *Why D is incorrect:* SSH operates independently of the graphical environment; you can run both simultaneously. The hardening concern is about unneeded software, not SSH access.
 

@@ -17,17 +17,17 @@ What is Python's execution model?
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **script mode**?
-D) Elements placed inside the <head> block of an HTML document that define metadata, links to stylesheets, scripts, character sets, and page titles.
-C) The mathematical expectation of an algorithm's performance across all possible inputs of size N, representing typical real-world runtime behavior.
-B) The process of restructuring existing computer code without changing its external behavior to improve readability and reduce complexity.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
+Which of the following best describes **script mode** in Python?
+*   A) Running Python statements one at a time in an interactive session that immediately prints results
+*   B) Executing a saved `.py` file from top to bottom through the interpreter
+*   C) A special debugging mode that pauses execution after every line
+*   D) A mode that compiles Python code into bytecode and stores it as a standalone executable
+*   **Correct Answer:** B) Executing a saved `.py` file from top to bottom through the interpreter.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **script mode**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **script mode**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **script mode**.
-    * *Why A is correct:* This describes the exact role and function of **script mode**.
+    *   *Why A is incorrect:* That describes the REPL (interactive shell), not script mode — in script mode you run a complete file, not one statement at a time.
+    *   *Why B is correct:* Script mode means passing a `.py` file to the interpreter (e.g., `python3 myscript.py`), which executes all statements sequentially.
+    *   *Why C is incorrect:* Python has no built-in "pause after every line" mode by default; that would require a debugger like `pdb`.
+    *   *Why D is incorrect:* Python does compile to `.pyc` bytecode internally, but that is transparent to the user and does not produce a standalone executable.
 
 
 ---
@@ -69,11 +69,10 @@ When designing a system for **Python Basics & Local Environment**, you must miti
 B) Implement parameterized queries and prepared statements rather than raw string concatenation.
 A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
 C) Enable full disk encryption on all client endpoints.
-D) Enable full disk encryption on all client endpoints.
+D) Store passwords using reversible symmetric encryption so they can be recovered if needed.
 *   **Correct Answer:** A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
 *   **Distractor Analysis:**
     * *Why B is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
     * *Why A is correct:* Implementing Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt. mitigates the risk of Storing user credentials in plain text, making them vulnerable to database breaches..
-    * *Why C is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-    * *Why D is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-
+    * *Why C is incorrect:* Full disk encryption protects data at rest on the physical drive but does not prevent a running application from reading plain-text credentials from a database.
+    * *Why D is incorrect:* Reversible encryption is dangerous for passwords because if the encryption key is compromised, all passwords are exposed; one-way hashing with bcrypt is the correct approach.

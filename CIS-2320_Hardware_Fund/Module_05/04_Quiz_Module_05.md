@@ -17,63 +17,63 @@ Which RAID level provides data striping without parity or redundancy?
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **2.5)**?
-B) The difference in height between the left and right subtrees of a node in an AVL tree, which must be -1, 0, or 1 to remain balanced.
-D) The memory block allocated on the system stack for a single function call, storing parameters, local variables, and the return address.
-C) The practice of connecting an electrical circuit or chassis to the earth or a large conductor to safely dissipate static electricity or stray currents.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within os_admin operations.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within os_admin operations.
+In the context of PC hardware, which of the following most accurately describes the **2.5-inch drive form factor**?
+*   A) A compact drive size used in laptops and desktop SATA SSDs, measuring approximately 2.5 inches wide, compatible with the same SATA data and power connectors as 3.5-inch drives but requiring only 5V power.
+*   B) A drive form factor that uses PCIe lanes and the NVMe protocol, plugging directly into an M.2 slot on the motherboard without any external cables.
+*   C) A drive enclosure size used exclusively for enterprise SAS drives in rack-mounted servers, not compatible with standard desktop SATA controllers.
+*   D) A physical dimension that refers to the width of the SATA data cable rather than the drive itself, distinguishing it from the wider IDE ribbon cable standard.
+*   **Correct Answer:** A) A compact drive size used in laptops and desktop SATA SSDs, measuring approximately 2.5 inches wide, compatible with the same SATA data and power connectors as 3.5-inch drives but requiring only 5V power.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **2.5)**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **2.5)**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **2.5)**.
-    * *Why A is correct:* This describes the exact role and function of **2.5)**.
+    * *Why A is correct:* This accurately describes the 2.5-inch form factor's dimensions, use cases, and power requirements compared to the 3.5-inch desktop drive standard.
+    * *Why B is incorrect:* This describes an M.2 NVMe drive, which is a different form factor entirely, not a 2.5-inch drive.
+    * *Why C is incorrect:* 2.5-inch is a standard consumer laptop/SSD form factor; it is not exclusive to enterprise SAS drives.
+    * *Why D is incorrect:* Form factor refers to the physical dimensions of the drive chassis, not cable width.
 
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **list all currently active processes running on the system with CPU and memory usage statistics**. Which of the following commands is the most appropriate to execute?
-C) chmod 600 config.conf
-B) df -h
-A) ps aux
-D) systemctl restart service
-*   **Correct Answer:** A) ps aux
+A company stores critical data on a four-drive RAID 5 array. One drive fails during business hours. What is the correct immediate action?
+*   A) Power down the server immediately; all data is now lost because RAID 5 cannot survive any drive failures
+*   B) Continue operations normally and replace the failed drive as soon as possible; RAID 5 can survive one drive failure and will rebuild automatically
+*   C) Remove a second drive to trigger a full rebuild, which resets the parity calculations across all remaining drives
+*   D) Convert the array to RAID 0 before replacing the drive to avoid data corruption during the rebuild process
+*   **Correct Answer:** B) Continue operations normally and replace the failed drive as soon as possible; RAID 5 can survive one drive failure and will rebuild automatically
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `ps aux` command is directly designed to list all currently active processes running on the system with CPU and memory usage statistics.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
+    * *Why B is correct:* RAID 5 uses distributed parity to reconstruct missing data from the remaining drives; the array remains accessible (in degraded mode) until the failed drive is replaced and rebuilt.
+    * *Why A is incorrect:* RAID 5 is specifically designed to survive one drive failure with no data loss; immediate shutdown is unnecessary.
+    * *Why C is incorrect:* Removing a second drive from a degraded RAID 5 array will cause total data loss; only one drive failure is tolerated.
+    * *Why D is incorrect:* Converting to RAID 0 destroys redundancy entirely and is never the correct response to a drive failure in a production array.
 
 
 ---
 
 **Question 4**
-While working on **Storage Devices** in a production environment, you encounter a system alert indicating a **Permission Denied** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-D) Reboot the physical machine and wait for services to reload.
-C) Identify and terminate the process already utilizing the target port, or modify the service configuration to use an open port.
-B) Run log rotations, clean temporary files, or expand the logical volume capacity.
-A) Prepend the command with 'sudo' to run it with superuser administrative privileges, or adjust the file permissions.
-*   **Correct Answer:** A) Prepend the command with 'sudo' to run it with superuser administrative privileges, or adjust the file permissions.
+A technician is building a gaming PC and wants the fastest possible boot drive. The motherboard has both SATA ports and an M.2 slot that supports PCIe 4.0 NVMe. Which drive type provides the highest sequential read performance?
+*   A) 3.5-inch 7200 RPM SATA HDD
+*   B) 2.5-inch SATA SSD
+*   C) M.2 SATA SSD
+*   D) M.2 PCIe 4.0 NVMe SSD
+*   **Correct Answer:** D) M.2 PCIe 4.0 NVMe SSD
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This action does not resolve the root cause of Permission Denied.
-    * *Why C is incorrect:* This action does not resolve the root cause of Permission Denied.
-    * *Why B is incorrect:* This action does not resolve the root cause of Permission Denied.
-    * *Why A is correct:* Because The current user account lacks the required read, write, or execute permissions for the target file or system call. The appropriate fix is to Prepend the command with 'sudo' to run it with superuser administrative privileges, or adjust the file permissions..
+    * *Why D is correct:* PCIe 4.0 NVMe drives achieve 5,000–7,000+ MB/s sequential reads, far exceeding all SATA-based options.
+    * *Why A is incorrect:* A 7200 RPM HDD achieves approximately 100–160 MB/s sequential reads — the slowest option by a large margin.
+    * *Why B is incorrect:* SATA SSDs are capped at approximately 550 MB/s by the SATA III interface limitation.
+    * *Why C is incorrect:* An M.2 SATA SSD still uses the SATA protocol and is limited to ~550 MB/s regardless of its M.2 physical form factor.
 
 
 ---
 
 **Question 5**
-When designing a system for **Storage Devices**, you must mitigate the risk of **Administrators logging in routinely as root or Administrator, increasing the blast radius of user errors or malware.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC.
-C) Enable full disk encryption on all client endpoints.
-D) Enable full disk encryption on all client endpoints.
-B) Disable unused system accounts and run a port scan to disable unnecessary active background services.
-*   **Correct Answer:** A) Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC.
+A small business needs a storage solution that mirrors data across two drives for redundancy but also provides the best read performance of any two-drive RAID configuration. Which RAID level meets both requirements?
+*   A) RAID 0 — striping across two drives maximizes both performance and redundancy
+*   B) RAID 1 — mirroring provides redundancy and some read performance benefit from reading both drives simultaneously
+*   C) RAID 5 — parity distribution provides redundancy and high write performance across two drives
+*   D) RAID 6 — double parity across two drives ensures the highest fault tolerance available
+*   **Correct Answer:** B) RAID 1 — mirroring provides redundancy and some read performance benefit from reading both drives simultaneously
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC. mitigates the risk of Administrators logging in routinely as root or Administrator, increasing the blast radius of user errors or malware..
-    * *Why C is incorrect:* This does not address the security vulnerability of Privileged Access Abuse.
-    * *Why D is incorrect:* This does not address the security vulnerability of Privileged Access Abuse.
-    * *Why B is incorrect:* This does not address the security vulnerability of Privileged Access Abuse.
+    * *Why B is correct:* RAID 1 is the standard two-drive redundant configuration; some RAID controllers can read from both drives simultaneously, improving read throughput while maintaining full mirroring.
+    * *Why A is incorrect:* RAID 0 provides zero redundancy — one drive failure destroys all data; it does not meet the redundancy requirement.
+    * *Why C is incorrect:* RAID 5 requires a minimum of three drives; it cannot be configured with only two drives.
+    * *Why D is incorrect:* RAID 6 requires a minimum of four drives; it is not a valid two-drive configuration.
 

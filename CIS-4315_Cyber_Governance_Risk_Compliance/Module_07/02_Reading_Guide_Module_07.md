@@ -1,52 +1,52 @@
-# Reading Guide: Module 07 - Business Impact Analysis
+# Reading Guide: Module 07 - Security Program Development and Management
 ## Course: CIS-4315_Cyber_Governance_Risk_Compliance (ISACA Certified Information Security Manager (CISM))
 
 ---
 
 ### Introduction
-Welcome to **Module 07 - Business Impact Analysis**! This week's study material focuses on the core foundations and configuration mechanics of **Business Impact Analysis** as aligned with the **ISACA Certified Information Security Manager (CISM)** certification framework. Understanding these topics is essential not only for passing the certification exam but also for administering enterprise systems in real-world environments.
+Welcome to **Module 07 - Security Program Development and Management**! This module covers Business Impact Analysis (BIA) — the systematic process of identifying critical business functions and determining the consequences of disruption. BIA is the foundation of both business continuity planning and the security program's prioritization of protective controls.
 
-As a student, you will learn the primary operational roles, command syntaxes, and troubleshooting parameters needed to design, configure, and maintain these services. We will explore how different protocols establish connections, how configurations manage resource allocation, and how security controls prevent access breaches. Make sure to complete the checklists and review the glossary terms in detail before beginning the lab activity.
+BIA bridges CISM Domain 2 (Risk Management) and Domain 4 (Incident Management). Candidates must understand how BIA outputs — RTOs, RPOs, and MTDs — drive recovery planning and resource allocation decisions.
 
 ---
 
 ### 1. High-Yield Glossary
 Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
 
-*   **Business Impact Analysis (BIA)**: A primary configuration standard and technical parameter essential for coordinating Business Impact Analysis activities, enforcing security boundaries, and verifying operational statuses within the management_services environment.
-*   **critical business functions**: A primary configuration standard and technical parameter essential for coordinating Business Impact Analysis activities, enforcing security boundaries, and verifying operational statuses within the management_services environment.
-*   **Recovery Time Objective (RTO)**: The maximum acceptable duration of downtime before a business process or system must be restored to operation after a disaster.
-*   **Recovery Point Objective (RPO)**: The maximum acceptable age of data that must be recovered from backup storage to restore operations, representing the limit of tolerable data loss.
-*   **Maximum Tolerable Downtime (MTD).**: A primary configuration standard and technical parameter essential for coordinating Business Impact Analysis activities, enforcing security boundaries, and verifying operational statuses within the management_services environment.
+*   **Business Impact Analysis (BIA)**: A systematic process that identifies and evaluates the potential effects of disruptions to critical business functions, quantifying financial, operational, legal, and reputational impacts. BIA outputs establish the priority order for recovering business functions and inform the design of continuity and disaster recovery plans.
+*   **Critical business functions**: The subset of organizational processes whose disruption would cause unacceptable harm to the organization's mission, finances, regulatory standing, or reputation if unavailable for more than a defined period. Identifying critical functions is the first and most important step in BIA.
+*   **Recovery Time Objective (RTO)**: The maximum acceptable duration of downtime before a business process or system must be restored to operation after a disruption. RTO is defined by business requirements, not technical capability — it represents the business's tolerance for unavailability.
+*   **Recovery Point Objective (RPO)**: The maximum acceptable age of data that must be recovered from backup storage to restore normal operations, representing the limit of tolerable data loss. RPO drives backup frequency decisions: an RPO of 4 hours requires backup intervals of 4 hours or less.
+*   **Maximum Tolerable Downtime (MTD)**: The absolute longest period a business function can be disrupted before the organization suffers irreparable harm (financial collapse, loss of license, permanent customer loss). MTD is always greater than or equal to RTO; if recovery takes longer than MTD, the organization may not survive the disruption.
 
 ---
 
 ### 2. Certification Exam Tips
-*   **Focus Area:** Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
-*   **Scenario Trap:** Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
-*   **Study Resource:** To reinforce these concepts visually, review this targeted search query: [ISACA CISM / Cyber GRC Course Playlist - Business Impact Analysis](https://www.youtube.com/playlist?list=PLbnu8t2G_vG0V7kC0V3n_nU9Y3S-4K178).
+*   **RTO vs. RPO vs. MTD Distinctions:** The CISM exam frequently tests these three metrics in scenario questions. RTO = maximum downtime tolerated; RPO = maximum data loss tolerated; MTD = absolute survival limit. Recovery must occur within RTO, which must be less than MTD.
+*   **BIA Is Business-Led, Not IT-Led:** The CISM exam emphasizes that BIA must be driven by business unit managers who understand operational impact — IT staff cannot determine business impact values without input from the business.
+*   **BIA Precedes Recovery Planning:** A common exam trap is to present recovery planning before BIA. The correct sequence is BIA → Recovery Strategy → DRP/BCP. Without BIA outputs, recovery plans cannot be properly prioritized.
+*   **Study Resource:** [NIST SP 800-34 Rev. 1: Contingency Planning Guide for Federal Information Systems](https://csrc.nist.gov/publications/detail/sp/800-34/rev-1/final) is a free publication that covers BIA methodology, RTO/RPO development, and their relationship to continuity planning.
 
 ---
 
 ### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the section/chapter covering **Business Impact Analysis** in the OER Textbook: [NIST Risk Management Framework (SP 800-37) & Security Controls (SP 800-53)](https://csrc.nist.gov/publications/).
-*   **Required Video:** Watch the video lecture on **Business Impact Analysis** in the official course playlist: [ISACA CISM / Cyber GRC Course Playlist](https://www.youtube.com/playlist?list=PLbnu8t2G_vG0V7kC0V3n_nU9Y3S-4K178).
+*   **Required Reading:** [NIST SP 800-34 Rev. 1: Contingency Planning Guide](https://csrc.nist.gov/publications/detail/sp/800-34/rev-1/final) — This free NIST publication covers BIA methodology in Section 3.2, including how to identify critical functions, determine impact, and establish recovery time objectives. This is a ZTC resource.
+*   **Required Video:** Watch the video lecture on **Security Program Development and Management** in the official course playlist: [ISACA CISM / Cyber GRC Course Playlist](https://www.youtube.com/playlist?list=PLbnu8t2G_vG0V7kC0V3n_nU9Y3S-4K178).
 
 ---
 
 ### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Draft a BIA questionnaire layout**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-*   **Identify critical business processes and assign MTD scores**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-*   **Determine RTO/RPO limits**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
+In this week's hands-on lab, you will apply BIA methodology through the following activities:
+*   **Draft a BIA questionnaire**: Create a 10-question survey designed for business unit managers to identify critical functions, quantify disruption costs per hour/day, and define their maximum tolerable downtime.
+*   **Prioritize critical processes and assign MTD scores**: Given a list of 8 business processes, rank them by MTD (shortest to longest) and justify why certain processes have lower tolerance for downtime than others.
+*   **Determine RTO and RPO requirements**: For three prioritized processes, derive RTO and RPO values from provided MTD and business impact data, and identify what backup/recovery technologies would be required to meet those objectives.
 
 
 ---
 
 ### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read the section/chapter covering **Business Impact Analysis** in [NIST Risk Management Framework (SP 800-37) & Security Controls (SP 800-53)](https://csrc.nist.gov/publications/).
-- [ ] Watch the video lecture on **Business Impact Analysis** in [ISACA CISM / Cyber GRC Course Playlist](https://www.youtube.com/playlist?list=PLbnu8t2G_vG0V7kC0V3n_nU9Y3S-4K178).
-- [ ] Review the commands outlined in the lab instructions.
-- [ ] Proceed to the weekly hands-on lab activity.
+- [ ] Be able to define RTO, RPO, and MTD and explain the relationship between them.
+- [ ] Read [NIST SP 800-34 Rev. 1](https://csrc.nist.gov/publications/detail/sp/800-34/rev-1/final), Section 3.2 on BIA methodology.
+- [ ] Watch the video lecture on **Security Program Development and Management** in [ISACA CISM / Cyber GRC Course Playlist](https://www.youtube.com/playlist?list=PLbnu8t2G_vG0V7kC0V3n_nU9Y3S-4K178).
+- [ ] Complete the lab activity on building a BIA questionnaire and prioritizing recovery objectives.
+- [ ] Proceed to the Module 07 quiz.

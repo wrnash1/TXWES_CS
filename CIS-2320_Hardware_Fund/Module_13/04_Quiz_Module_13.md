@@ -17,63 +17,62 @@ Why must you carefully disconnect laptop antenna wires when swapping a Wi-Fi car
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **LCD screen replacement**?
-C) The method of evaluating an algorithm's efficiency by analyzing its behavior as the input size approaches infinity, focusing on growth rates rather than specific hardware speeds.
-D) Nodes that contain two pointers: one pointing forward to the next node and one pointing backward to the previous node, allowing bidirectional traversal.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within os_admin operations.
-B) The mathematical expectation of an algorithm's performance across all possible inputs of size N, representing typical real-world runtime behavior.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within os_admin operations.
+In the context of laptop hardware, which of the following most accurately describes **LCD screen replacement**?
+*   A) A repair procedure requiring removal of the display bezel, disconnection of the LVDS or eDP video cable (and digitizer flex cable on touchscreen models), and separation of the panel from the lid assembly — all hinges, bezel clips, and flex cables must be handled carefully to avoid cracking the panel or damaging connectors.
+*   B) A repair that requires only removing the single retaining screw on the back of the display lid and sliding the LCD panel out of the chassis, as all laptop displays use a universal HDMI connector that unplugs with no additional cable routing.
+*   C) A procedure exclusive to CCFL-backlit displays manufactured before 2012; modern LED-backlit laptop displays are fused to the chassis and cannot be replaced — the entire laptop must be replaced when the display fails.
+*   D) A straightforward swap identical to replacing a desktop monitor, where the display detaches via a standard DisplayPort cable and requires no disassembly of the lid assembly or bezel.
+*   **Correct Answer:** A) A repair procedure requiring removal of the display bezel, disconnection of the LVDS or eDP video cable (and digitizer flex cable on touchscreen models), and separation of the panel from the lid assembly — all hinges, bezel clips, and flex cables must be handled carefully to avoid cracking the panel or damaging connectors.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **LCD screen replacement**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **LCD screen replacement**.
-    * *Why A is correct:* This describes the exact role and function of **LCD screen replacement**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **LCD screen replacement**.
+    * *Why A is correct:* This accurately describes the complexity of laptop LCD replacement — bezel removal, video cable disconnection, and careful handling of flex cables and hinges are all required steps tested in A+ laptop hardware scenarios.
+    * *Why B is incorrect:* Laptop displays do not use HDMI connectors internally; they use LVDS (older) or eDP (modern) video cables, which are proprietary flat flex cables routed through the hinge and require full bezel disassembly to access.
+    * *Why C is incorrect:* LED-backlit laptop displays are absolutely replaceable; most modern laptop display panels can be sourced and swapped by a technician, and the A+ exam specifically tests this repair procedure.
+    * *Why D is incorrect:* Laptop displays are integrated into the lid assembly and are not comparable to external desktop monitors; disassembly of the bezel and lid is always required, and the internal connection is not a standard DisplayPort cable.
 
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **display total disk space capacity, usage, and available space in a human-readable format**. Which of the following commands is the most appropriate to execute?
-C) ps aux
-B) systemctl restart service
-A) df -h
-D) chmod 600 config.conf
-*   **Correct Answer:** A) df -h
+A technician needs to replace a laptop's internal Wi-Fi card. After removing the battery and back panel, the technician finds two thin cables attached to the card labeled "Main" and "Aux." What are these cables, and what is the correct procedure for removing them?
+*   A) These are the SATA data cables for the internal SSD; they should be unplugged by gripping the cable firmly and pulling straight back with moderate force
+*   B) These are the wireless antenna coaxial cables routed from the LCD bezel; they should be disconnected by gently prying each snap-on connector off the card using a non-conductive spudger, not by pulling the cable itself
+*   C) These are the display backlight power cables; they must be cut with scissors and resoldered to the replacement card because they are permanently fused to the Wi-Fi module
+*   D) These are USB data cables connecting the Wi-Fi card to the motherboard's USB controller; they unplug by pressing the release tab on each connector and pulling straight up
+*   **Correct Answer:** B) These are the wireless antenna coaxial cables routed from the LCD bezel; they should be disconnected by gently prying each snap-on connector off the card using a non-conductive spudger, not by pulling the cable itself
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `df -h` command is directly designed to display total disk space capacity, usage, and available space in a human-readable format.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
+    * *Why B is correct:* Laptop Wi-Fi cards use MHF4 snap-on coaxial connectors for the antenna leads; pulling the cable instead of prying the connector body risks tearing the antenna trace or breaking the connector, which would require replacing the entire antenna assembly routed through the lid.
+    * *Why A is incorrect:* SATA data cables use a different connector type entirely and are not present on a Wi-Fi card; Wi-Fi cards use Mini-PCIe or M.2 slots, not SATA.
+    * *Why C is incorrect:* Antenna cables are separate from the backlight circuit and are never cut during a Wi-Fi card swap; they are reusable and transfer to the replacement card by snapping the connectors onto the new card's antenna ports.
+    * *Why D is incorrect:* Laptop Wi-Fi antenna connectors are coaxial RF connections, not USB connectors; they have no release tab and are removed by careful prying of the connector body.
 
 
 ---
 
 **Question 4**
-While working on **Laptop Components and Disassembly** in a production environment, you encounter a system alert indicating a **Permission Denied** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-B) Run log rotations, clean temporary files, or expand the logical volume capacity.
-A) Prepend the command with 'sudo' to run it with superuser administrative privileges, or adjust the file permissions.
-C) Identify and terminate the process already utilizing the target port, or modify the service configuration to use an open port.
-D) Reboot the physical machine and wait for services to reload.
-*   **Correct Answer:** A) Prepend the command with 'sudo' to run it with superuser administrative privileges, or adjust the file permissions.
+A user reports that their laptop charges intermittently — sometimes charging normally, sometimes showing no charge even with the AC adapter plugged in. The issue seems related to the angle of the power cable. Which component is most likely failing?
+*   A) The laptop battery — lithium-ion batteries develop internal cell failures that cause them to accept charge only when held at specific orientations
+*   B) The DC power jack — a damaged or loose power jack creates an intermittent electrical connection that breaks when the connector shifts, causing inconsistent charging
+*   C) The AC adapter — the adapter's internal transformer overheats and throttles power output based on the cable routing angle to prevent damage
+*   D) The voltage regulator on the motherboard — regulators fail progressively and accept input power only within a narrow voltage range that varies depending on connector position
+*   **Correct Answer:** B) The DC power jack — a damaged or loose power jack creates an intermittent electrical connection that breaks when the connector shifts, causing inconsistent charging
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This action does not resolve the root cause of Permission Denied.
-    * *Why A is correct:* Because The current user account lacks the required read, write, or execute permissions for the target file or system call. The appropriate fix is to Prepend the command with 'sudo' to run it with superuser administrative privileges, or adjust the file permissions..
-    * *Why C is incorrect:* This action does not resolve the root cause of Permission Denied.
-    * *Why D is incorrect:* This action does not resolve the root cause of Permission Denied.
+    * *Why B is correct:* The symptom of charging only at certain angles is the classic presentation of a physically damaged or loose DC power jack; the barrel connector makes intermittent contact inside a cracked or worn jack, and the charging state changes as the connector moves.
+    * *Why A is incorrect:* Battery cell failures cause capacity loss, rapid discharge, or failure to hold a charge — not positional charging behavior. Batteries do not respond to physical orientation in the manner described.
+    * *Why C is incorrect:* AC adapters deliver a fixed voltage regardless of cable routing angle; thermal throttling is not a feature of AC adapters and would result in consistent reduced output, not positional intermittent failure.
+    * *Why D is incorrect:* A failing voltage regulator would cause consistent power delivery issues or system instability, not a symptom that varies with cable angle at the input connector.
 
 
 ---
 
 **Question 5**
-When designing a system for **Laptop Components and Disassembly**, you must mitigate the risk of **Attackers exploiting vulnerabilities in forgotten background services or using abandoned accounts to gain persistent access.**. Which of the following security configurations or controls represents the best practice to implement?
-B) Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC.
-A) Disable unused system accounts and run a port scan to disable unnecessary active background services.
-C) Enable full disk encryption on all client endpoints.
-D) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Disable unused system accounts and run a port scan to disable unnecessary active background services.
+Before performing any internal service on a laptop — including replacing the keyboard, Wi-Fi card, or RAM — what is the mandatory first step a technician must always perform?
+*   A) Update the BIOS/UEFI firmware to the latest version to ensure the replacement component is recognized correctly after reinstallation
+*   B) Disconnect or remove the battery (and unplug the AC adapter) to eliminate all power from the system before touching any internal components
+*   C) Run a full virus scan on the laptop to ensure no malware interferes with hardware detection after the repair is complete
+*   D) Connect the laptop to an ESD mat but leave the battery installed so the mat has a complete ground path through the system's power circuit
+*   **Correct Answer:** B) Disconnect or remove the battery (and unplug the AC adapter) to eliminate all power from the system before touching any internal components
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This does not address the security vulnerability of Stale Accounts & Services.
-    * *Why A is correct:* Implementing Disable unused system accounts and run a port scan to disable unnecessary active background services. mitigates the risk of Attackers exploiting vulnerabilities in forgotten background services or using abandoned accounts to gain persistent access..
-    * *Why C is incorrect:* This does not address the security vulnerability of Stale Accounts & Services.
-    * *Why D is incorrect:* This does not address the security vulnerability of Stale Accounts & Services.
-
+    * *Why B is correct:* Disconnecting the battery is the first and most critical step in all laptop internal service — it removes residual power that could cause short circuits, damage components, or injure the technician. The AC adapter must also be unplugged before battery removal.
+    * *Why A is incorrect:* BIOS firmware updates are performed as a software maintenance step, not as a prerequisite to physical hardware service; updating firmware before repair is not required and is unrelated to safe disassembly procedure.
+    * *Why C is incorrect:* A virus scan is a software security procedure with no relevance to safe physical disassembly; malware does not affect hardware recognition in the manner implied and is never a step in a hardware repair workflow.
+    * *Why D is incorrect:* The battery should never remain installed during internal service; leaving the battery connected defeats the purpose of ESD protection because powered components can still be damaged by electrical discharge or accidental short circuits regardless of the ESD mat connection.

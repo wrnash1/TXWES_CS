@@ -17,17 +17,17 @@ What interface status indicates a physical layer cable disconnection on a Cisco 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **mismatch symptoms.**?
-C) The node or router interface on a network that serves as an access point to other logical networks or the internet.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within networking operations.
-D) A data table stored in a router or network host that lists the paths and network destinations to determine where packets should be forwarded.
-B) A structured, seven-step process (Prepare, Categorize, Select, Implement, Assess, Authorize, Monitor) created by NIST to help organizations manage cybersecurity risk.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within networking operations.
+Which of the following most accurately describes **mismatch symptoms** in the context of Cisco network troubleshooting?
+*   A) Configuration inconsistencies between directly connected devices — such as duplex, speed, native VLAN, or encapsulation mismatches — that prevent or degrade communication and produce characteristic error counters or log messages.
+*   B) A condition where packets loop between two or more routers indefinitely because each router's routing table incorrectly points to the other as the best path to a destination.
+*   C) The set of IOS `show` commands used to verify interface state, routing table entries, OSPF neighbor adjacency, and VLAN assignments during systematic fault isolation.
+*   D) A Layer 3 addressing error in which two devices on the same physical segment are configured with the same IP address, causing unpredictable packet delivery and ARP table inconsistencies.
+*   **Correct Answer:** A) Configuration inconsistencies between directly connected devices — such as duplex, speed, native VLAN, or encapsulation mismatches — that prevent or degrade communication and produce characteristic error counters or log messages.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **mismatch symptoms.**.
-    * *Why A is correct:* This describes the exact role and function of **mismatch symptoms.**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **mismatch symptoms.**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **mismatch symptoms.**.
+    * *Why A is correct:* Mismatch symptoms describe the observable effects of misconfigured parameters between peer devices — duplex mismatches cause late collisions; native VLAN mismatches cause CDP warnings; encapsulation mismatches cause `up/down` status on serial links.
+    * *Why B is incorrect:* This describes a routing loop, which is a separate networking condition — not a "mismatch" between directly connected devices.
+    * *Why C is incorrect:* This describes a set of diagnostic `show` commands (a troubleshooting toolkit), not the concept of mismatch symptoms.
+    * *Why D is incorrect:* This describes an IP address conflict, which is a specific misconfiguration — one type of problem, not the broader category of mismatch symptoms.
 
 
 ---
@@ -56,7 +56,7 @@ B) Release and renew the DHCP lease, or configure a unique static IP address out
 C) Correct the subnet mask configuration on the interface to match the network segment parameters.
 *   **Correct Answer:** A) Change the local network interface settings to use a public DNS resolver like 8.8.8.8 or 1.1.1.1.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Because The configured DNS server is offline, misconfigured, or unreachable, preventing host name resolution. The appropriate fix is to Change the local network interface settings to use a public DNS resolver like 8.8.8.8 or 1.1.1.1..
+    * *Why A is correct:* Because The configured DNS server is offline, misconfigured, or unreachable, preventing host name resolution. The appropriate fix is to Change the local network interface settings to use a public DNS resolver like 8.8.8.8 or 1.1.1.1.
     * *Why D is incorrect:* This action does not resolve the root cause of DNS Failure.
     * *Why B is incorrect:* This action does not resolve the root cause of DNS Failure.
     * *Why C is incorrect:* This action does not resolve the root cause of DNS Failure.
@@ -65,15 +65,14 @@ C) Correct the subnet mask configuration on the interface to match the network s
 ---
 
 **Question 5**
-When designing a system for **CCNA Review and Diagnostics**, you must mitigate the risk of **Attackers connecting rogue access points or unauthorized laptops directly to internal switch ports.**. Which of the following security configurations or controls represents the best practice to implement?
-C) Enable full disk encryption on all client endpoints.
-D) Enable full disk encryption on all client endpoints.
+When performing **CCNA Review and Diagnostics**, you must mitigate the risk of **Attackers connecting rogue access points or unauthorized laptops directly to internal switch ports.**. Which of the following security configurations or controls represents the best practice to implement?
+C) Configure DHCP Snooping on all VLANs to block unauthorized DHCP server responses from rogue devices connected to untrusted switch ports.
+D) Enable Dynamic ARP Inspection (DAI) to validate ARP packets against the DHCP snooping binding table and drop spoofed ARP replies.
 B) Configure SSH (port 22) for terminal access and HTTPS (port 443) for web interfaces, disabling Telnet and HTTP.
 A) Implement switch Port Security to restrict access to switch ports based on approved MAC addresses.
 *   **Correct Answer:** A) Implement switch Port Security to restrict access to switch ports based on approved MAC addresses.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This does not address the security vulnerability of Unauthorized Port Access.
-    * *Why D is incorrect:* This does not address the security vulnerability of Unauthorized Port Access.
-    * *Why B is incorrect:* This does not address the security vulnerability of Unauthorized Port Access.
-    * *Why A is correct:* Implementing Implement switch Port Security to restrict access to switch ports based on approved MAC addresses. mitigates the risk of Attackers connecting rogue access points or unauthorized laptops directly to internal switch ports..
-
+    * *Why A is correct:* Port Security directly prevents unauthorized devices from connecting to switch ports by enforcing a maximum MAC count and/or specific allowed MACs — the most direct preventive control against the described risk.
+    * *Why C is incorrect:* DHCP Snooping protects against rogue DHCP servers (a related but different attack) — it does not prevent unauthorized devices from physically connecting to switch ports.
+    * *Why D is incorrect:* DAI (Dynamic ARP Inspection) protects against ARP spoofing/poisoning attacks — not physical unauthorized port connections.
+    * *Why B is incorrect:* SSH/HTTPS secures management sessions in transit but does not prevent unauthorized devices from connecting to switch ports.

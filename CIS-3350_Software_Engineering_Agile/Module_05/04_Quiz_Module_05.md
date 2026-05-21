@@ -1,79 +1,103 @@
-# Quiz: Module 05 - UML Diagrams
+# Quiz: Module 05 – Sprint Review and Retrospective
+
 ## Course: CIS-3350_Software_Engineering_Agile (Professional Scrum Master (PSM I))
 
 ---
 
-**Question 1**
-Which UML diagram is best suited to visualize the logical lifecycle of objects and the exact order of messages passed between them over time?
-*   A) Class Diagram
-*   B) Use Case Diagram
-*   C) Sequence Diagram
-*   D) Deployment Diagram
-*   **Correct Answer:** C) Sequence diagrams are behavioral diagrams showing step-by-step object interactions and message sequences ordered chronologically.
-*   **Distractor Analysis:**
-    *   *Why correct:* Sequence diagrams are behavioral diagrams showing step-by-step object interactions and message sequences ordered chronologically.
-    *   Class diagrams are structural and show static linkages, not timeline-based calls.
+### Question 1
+
+What is the primary purpose of the Sprint Review according to the Scrum Guide?
+
+* A) To allow the Scrum Master to formally approve completed work before it is shown to stakeholders
+* B) To inspect the Increment and adapt the Product Backlog based on stakeholder collaboration
+* C) To measure Developer performance and assign individual ratings for the Sprint
+* D) To conduct a post-mortem on what went wrong during the Sprint
+
+Correct Answer: B) The Sprint Review is a collaborative working session where the Scrum Team and stakeholders inspect the Increment and adapt the Product Backlog together.
+
+Distractor Analysis:
+
+* *Why B is correct:* The Scrum Guide defines the Sprint Review as an event to inspect the outcome and determine future adaptations — the Product Backlog may be adjusted based on what stakeholders and the team learn together.
+* *Why A is incorrect:* The Scrum Master does not approve work. The Definition of Done determines whether an Increment is complete; the Sprint Review is not a gate or approval ceremony.
+* *Why C is incorrect:* Scrum does not prescribe individual performance measurement. The Scrum Guide focuses on team outcomes, not Developer ratings.
+* *Why D is incorrect:* Post-mortems on what went wrong are the domain of the Sprint Retrospective, not the Sprint Review.
 
 ---
 
-**Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Unified Modeling Language**?
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-B) A structured, seven-step process (Prepare, Categorize, Select, Implement, Assess, Authorize, Monitor) created by NIST to help organizations manage cybersecurity risk.
-C) The final node in a linked list, whose next pointer typically references null (or the head node in a circular list), marking the end of the chain.
-D) A complete binary tree where the key of any parent node is less than or equal to the keys of its children, guaranteeing the root is always the minimum element.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-*   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **Unified Modeling Language**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Unified Modeling Language**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Unified Modeling Language**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Unified Modeling Language**.
+### Question 2
 
+Which of the following is the most accurate definition of the Definition of Done (DoD)?
 
----
+* A) A list of tasks that Developers check off to close a Sprint Backlog item.
+* B) A formal description of the quality standard an Increment must meet to be considered releasable.
+* C) The Product Owner's sign-off confirming that delivered features match the original requirements.
+* D) A governance document signed by the Scrum Master certifying that a Sprint was completed on time.
 
-**Question 3**
-A systems administrator or developer needs to **run the automated unit testing suite to verify system functionality**. Which of the following commands is the most appropriate to execute?
-A) pytest
-C) git commit -m 'update'
-D) pip install -r requirements.txt
-B) python3 -m venv .venv
-*   **Correct Answer:** A) pytest
-*   **Distractor Analysis:**
-    * *Why A is correct:* The `pytest` command is directly designed to run the automated unit testing suite to verify system functionality.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
+Correct Answer: B)
 
+Distractor Analysis:
+
+* *Why B is correct:* The Scrum Guide defines the Definition of Done as "a formal description of the state of the Increment when it meets the quality measures required for the product." It creates shared transparency about what "done" means.
+* *Why A is incorrect:* A task checklist is an informal team practice, not the DoD. The DoD is a quality standard for the Increment, not a task completion list.
+* *Why C is incorrect:* The Definition of Done is owned by the Developers (or the organization if no Scrum Team DoD exists yet) — not by the Product Owner as an approval step.
+* *Why D is incorrect:* The Scrum Master does not certify Sprint completion. The DoD is about product quality, not schedule adherence.
 
 ---
 
-**Question 4**
-While working on **UML Diagrams** in a production environment, you encounter a system alert indicating a **IndexError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-B) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
-C) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-A) Verify that the index is within the valid range of 0 to len(list)-1.
-D) Reboot the physical machine and wait for services to reload.
-*   **Correct Answer:** A) Verify that the index is within the valid range of 0 to len(list)-1.
-*   **Distractor Analysis:**
-    * *Why B is incorrect:* This action does not resolve the root cause of IndexError.
-    * *Why C is incorrect:* This action does not resolve the root cause of IndexError.
-    * *Why A is correct:* Because The code attempted to access an element of a sequence using an out-of-bounds index. The appropriate fix is to Verify that the index is within the valid range of 0 to len(list)-1..
-    * *Why D is incorrect:* This action does not resolve the root cause of IndexError.
+### Question 3
 
+Who should attend the Sprint Retrospective?
+
+* A) The Scrum Team (Product Owner, Scrum Master, and Developers) only
+* B) The Scrum Team plus all key stakeholders and business sponsors
+* C) The Developers and Scrum Master only; the Product Owner is excluded
+* D) Only the Developers; the Scrum Master and Product Owner attend optionally
+
+Correct Answer: A)
+
+Distractor Analysis:
+
+* *Why A is correct:* The Scrum Guide states the Sprint Retrospective is attended by the Scrum Team — which means the Product Owner, Scrum Master, and Developers. Stakeholders are not invited.
+* *Why B is incorrect:* Stakeholders attend the Sprint Review, not the Retrospective. The Retrospective is an internal team reflection event.
+* *Why C is incorrect:* The Product Owner is a full member of the Scrum Team and attends the Sprint Retrospective. Excluding the Product Owner violates the Scrum Team's collaborative improvement responsibility.
+* *Why D is incorrect:* The Scrum Guide does not make any Scrum Team member's attendance at the Retrospective optional; all three accountabilities are expected to participate.
 
 ---
 
-**Question 5**
-When designing a system for **UML Diagrams**, you must mitigate the risk of **Allowing attackers to execute arbitrary SQL commands on the backend database via input forms.**. Which of the following security configurations or controls represents the best practice to implement?
-B) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-C) Enable full disk encryption on all client endpoints.
-A) Implement parameterized queries and prepared statements rather than raw string concatenation.
-D) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Implement parameterized queries and prepared statements rather than raw string concatenation.
-*   **Distractor Analysis:**
-    * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why A is correct:* Implementing Implement parameterized queries and prepared statements rather than raw string concatenation. mitigates the risk of Allowing attackers to execute arbitrary SQL commands on the backend database via input forms..
-    * *Why D is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
+### Question 4
 
+The Scrum Team finishes a Sprint Review and moves directly into next Sprint's Sprint Planning without holding a Sprint Retrospective. What is wrong with this approach?
+
+* A) Nothing — the Sprint Retrospective is optional when the Sprint Review goes smoothly.
+* B) The Scrum Master should have cancelled the Sprint Review instead.
+* C) Skipping the Sprint Retrospective removes the team's only formal opportunity to inspect its processes and plan improvements.
+* D) Sprint Planning cannot begin without the Product Owner's written approval of the Retrospective outputs.
+
+Correct Answer: C)
+
+Distractor Analysis:
+
+* *Why C is correct:* The Scrum Guide prescribes the Sprint Retrospective as one of the five Scrum events. Skipping it eliminates the structured inspect-and-adapt loop for team process improvement — a core empirical practice.
+* *Why A is incorrect:* The Sprint Retrospective is not optional in Scrum. All five Scrum events are required, regardless of how well the Sprint went.
+* *Why B is incorrect:* The Scrum Master does not cancel Sprint Reviews. Cancelling the Sprint Review would compound the problem, not fix it.
+* *Why D is incorrect:* No such approval requirement exists in the Scrum Guide. Sprint Planning does not depend on Retrospective documentation.
+
+---
+
+### Question 5
+
+In the correct order of Scrum events within a Sprint, which event occurs last?
+
+* A) Sprint Review
+* B) Daily Scrum
+* C) Sprint Retrospective
+* D) Sprint Planning
+
+Correct Answer: C)
+
+Distractor Analysis:
+
+* *Why C is correct:* The Sprint Retrospective is the final event of each Sprint. The correct order is: Sprint Planning → Daily Scrum (daily throughout) → Sprint Review → Sprint Retrospective → next Sprint Planning.
+* *Why A is incorrect:* The Sprint Review occurs fourth — before the Sprint Retrospective, not after it.
+* *Why B is incorrect:* The Daily Scrum occurs every working day throughout the Sprint, not at the end.
+* *Why D is incorrect:* Sprint Planning is the first event that opens a Sprint, not the last.

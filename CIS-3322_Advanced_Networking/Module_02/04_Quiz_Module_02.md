@@ -17,17 +17,17 @@ How many usable host IP addresses are available in a `/28` subnet mask?
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **CIDR prefix matching.**?
-C) An efficient mapping technique for complete binary trees where parent-child indices can be computed using simple arithmetic (e.g., parent is (i-1)/2).
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within networking operations.
-D) Elements placed inside the <head> block of an HTML document that define metadata, links to stylesheets, scripts, character sets, and page titles.
-B) The process of adjusting node positions in a binary heap to restore the heap property (min-heap or max-heap) after an insertion or deletion.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within networking operations.
+Which of the following most accurately describes **CIDR prefix matching** as used in IP routing?
+*   A) The process by which a router selects the routing table entry with the longest (most specific) matching prefix when forwarding a packet to its destination.
+*   B) A method for assigning Class A, B, or C addresses based on the first octet value, without support for variable-length subnet boundaries.
+*   C) A technique for splitting a large broadcast domain into smaller subnets by borrowing host bits to create additional network bits.
+*   D) The process of summarizing multiple contiguous network prefixes into a single, shorter prefix advertisement to reduce routing table size.
+*   **Correct Answer:** A) The process by which a router selects the routing table entry with the longest (most specific) matching prefix when forwarding a packet to its destination.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **CIDR prefix matching.**.
-    * *Why A is correct:* This describes the exact role and function of **CIDR prefix matching.**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **CIDR prefix matching.**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **CIDR prefix matching.**.
+    * *Why A is correct:* CIDR prefix matching (longest-prefix match) is the fundamental lookup rule all IP routers use — the most specific route wins.
+    * *Why B is incorrect:* This describes classful addressing (pre-CIDR), which does not support variable-length subnet masks.
+    * *Why C is incorrect:* This describes subnetting — borrowing host bits — not prefix matching during packet forwarding.
+    * *Why D is incorrect:* This describes route summarization (supernetting), which is a related but distinct concept from prefix matching.
 
 
 ---
@@ -58,22 +58,21 @@ D) Reboot the physical machine and wait for services to reload.
 *   **Distractor Analysis:**
     * *Why C is incorrect:* This action does not resolve the root cause of IP Address Conflict.
     * *Why B is incorrect:* This action does not resolve the root cause of IP Address Conflict.
-    * *Why A is correct:* Because Two devices on the same physical or logical network segment are configured with the identical IP address. The appropriate fix is to Release and renew the DHCP lease, or configure a unique static IP address outside the DHCP pool range..
+    * *Why A is correct:* Because Two devices on the same physical or logical network segment are configured with the identical IP address. The appropriate fix is to Release and renew the DHCP lease, or configure a unique static IP address outside the DHCP pool range.
     * *Why D is incorrect:* This action does not resolve the root cause of IP Address Conflict.
 
 
 ---
 
 **Question 5**
-When designing a system for **Subnetting and VLSM Configurations**, you must mitigate the risk of **Attackers capturing plaintext management passwords or session data using network sniffers.**. Which of the following security configurations or controls represents the best practice to implement?
+When designing subnets for **Subnetting and VLSM Configurations**, you must mitigate the risk of **Attackers capturing plaintext management passwords or session data using network sniffers.**. Which of the following security configurations or controls represents the best practice to implement?
 A) Configure SSH (port 22) for terminal access and HTTPS (port 443) for web interfaces, disabling Telnet and HTTP.
 B) Implement switch Port Security to restrict access to switch ports based on approved MAC addresses.
-C) Enable full disk encryption on all client endpoints.
-D) Enable full disk encryption on all client endpoints.
+C) Enable SNMP version 3 with authentication and privacy (authPriv) to encrypt network management traffic.
+D) Deploy a dedicated out-of-band management network to isolate administrative traffic from user data traffic.
 *   **Correct Answer:** A) Configure SSH (port 22) for terminal access and HTTPS (port 443) for web interfaces, disabling Telnet and HTTP.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Configure SSH (port 22) for terminal access and HTTPS (port 443) for web interfaces, disabling Telnet and HTTP. mitigates the risk of Attackers capturing plaintext management passwords or session data using network sniffers..
-    * *Why B is incorrect:* This does not address the security vulnerability of Unencrypted Traffic Exposure.
-    * *Why C is incorrect:* This does not address the security vulnerability of Unencrypted Traffic Exposure.
-    * *Why D is incorrect:* This does not address the security vulnerability of Unencrypted Traffic Exposure.
-
+    * *Why A is correct:* SSH and HTTPS encrypt management sessions in transit, directly preventing credential capture by packet sniffers. Use `transport input ssh` on VTY lines.
+    * *Why B is incorrect:* Port Security restricts MAC addresses at access ports — it does not protect against sniffing of credentials sent in plaintext over the network.
+    * *Why C is incorrect:* SNMPv3 authPriv is a good practice for SNMP security, but does not address SSH/Telnet credential exposure.
+    * *Why D is incorrect:* An out-of-band management network adds isolation but does not encrypt credentials — Telnet over an isolated network is still plaintext.

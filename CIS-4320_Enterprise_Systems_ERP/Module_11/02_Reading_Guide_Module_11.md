@@ -1,51 +1,61 @@
 # Reading Guide: Module 11 - Enterprise Application Integration (EAI)
+
 ## Course: CIS-4320_Enterprise_Systems_ERP (Salesforce Certified Associate / SAP Certified Associate)
 
 ---
 
 ### Introduction
-Welcome to **Module 11 - Enterprise Application Integration (EAI)**! This week's study material focuses on the core foundations and configuration mechanics of **Enterprise Application Integration (EAI)** as aligned with the **Salesforce Certified Associate / SAP Certified Associate** certification framework. Understanding these topics is essential not only for passing the certification exam but also for administering enterprise systems in real-world environments.
 
-As a student, you will learn the primary operational roles, command syntaxes, and troubleshooting parameters needed to design, configure, and maintain these services. We will explore how different protocols establish connections, how configurations manage resource allocation, and how security controls prevent access breaches. Make sure to complete the checklists and review the glossary terms in detail before beginning the lab activity.
+Welcome to **Module 11 - Enterprise Application Integration (EAI)**! No enterprise runs on a single system. A typical large organization has an ERP for back-office operations, a CRM for customer management, an HCM platform for HR, an e-commerce system, and dozens of specialized tools — all of which need to exchange data reliably. Enterprise Application Integration is the discipline of connecting these systems so data flows correctly between them without manual re-entry.
+
+This module covers integration architecture patterns (point-to-point vs. hub-and-spoke), the API standards used (REST and SOAP), and the role of middleware platforms like MuleSoft in translating and routing data between disparate systems. These concepts appear on both the Salesforce and SAP certification paths.
 
 ---
 
 ### 1. High-Yield Glossary
+
 Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
 
-*   **EAI principles**: A primary configuration standard and technical parameter essential for coordinating Enterprise Application Integration (EAI) activities, enforcing security boundaries, and verifying operational statuses within the database environment.
-*   **REST/SOAP APIs**: A primary configuration standard and technical parameter essential for coordinating Enterprise Application Integration (EAI) activities, enforcing security boundaries, and verifying operational statuses within the database environment.
-*   **middleware brokers (MuleSoft)**: A primary configuration standard and technical parameter essential for coordinating Enterprise Application Integration (EAI) activities, enforcing security boundaries, and verifying operational statuses within the database environment.
-*   **data transformation schemas.**: A primary configuration standard and technical parameter essential for coordinating Enterprise Application Integration (EAI) activities, enforcing security boundaries, and verifying operational statuses within the database environment.
+* **EAI principles**: The foundational design concepts for connecting enterprise applications — including loose coupling (systems should not depend directly on each other's internal implementation), data transformation (converting formats between systems), and reliable message delivery (ensuring no transaction is lost in transit).
+* **REST/SOAP APIs**: The two dominant web service standards for system-to-system communication. REST (Representational State Transfer) uses HTTP verbs (GET, POST, PUT, DELETE) and JSON payloads; it is lightweight and widely used in modern cloud integrations. SOAP (Simple Object Access Protocol) uses XML envelopes and WSDL contracts; it is older, more formal, and still common in enterprise middleware and SAP integrations.
+* **Middleware brokers (MuleSoft)**: Integration platforms that act as central message brokers, receiving data from one system, transforming it to the required format, and routing it to destination systems. MuleSoft Anypoint Platform is Salesforce's owned integration platform; SAP Integration Suite (formerly SAP Cloud Platform Integration) is SAP's equivalent.
+* **Data transformation schemas**: Mapping definitions that specify how fields in a source system correspond to fields in a target system — including data type conversions, field renaming, and value lookups. Transformations are configured in the middleware layer so neither source nor target system requires modification.
 
 ---
 
 ### 2. Certification Exam Tips
-*   **Focus Area:** Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
-*   **Scenario Trap:** Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
-*   **Study Resource:** To reinforce these concepts visually, review this targeted search query: [Salesforce & SAP ERP Fundamentals Tutorial - Enterprise Application Integration (EAI)](https://www.youtube.com/playlist?list=PLD2549A0D756627C1).
+
+* **Salesforce Certified Associate focus:** The exam tests your understanding of how Salesforce connects to external systems. Know that Salesforce exposes REST and SOAP APIs for external systems to call, and that Connected Apps and OAuth 2.0 are the authentication mechanism for API access. MuleSoft is Salesforce's recommended integration platform.
+* **Integration patterns:** Know the difference between real-time (synchronous) integration — where the calling system waits for a response — and batch (asynchronous) integration — where records are collected and sent in bulk on a schedule. ERP-to-CRM nightly data syncs are typically batch; order placement confirmations are typically real-time.
+* **SAP iDoc:** SAP uses Intermediate Documents (iDocs) as its legacy message format for system-to-system communication. iDocs are still widely used for EDI (Electronic Data Interchange) with trading partners. Modern SAP integrations increasingly use REST APIs through SAP Integration Suite.
+* **Point-to-point vs. hub-and-spoke:** Point-to-point integration connects each pair of systems directly; n systems require n(n-1)/2 connections. Hub-and-spoke (middleware) centralizes all connections through one broker, reducing total connections to n. Exam scenarios testing scalability always favor hub-and-spoke.
+* **Study Resource:** Complete the Salesforce Trailhead module [Integration Architecture](https://trailhead.salesforce.com/content/learn/modules/integration-architecture) — a free module covering REST, SOAP, and MuleSoft integration patterns applicable to the Associate and Administrator exam paths.
 
 ---
 
 ### Required Readings & Videos
+
 To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the section/chapter covering **Enterprise Application Integration (EAI)** in the OER Textbook: [Salesforce Trailhead Modules & ERP Basics](https://trailhead.salesforce.com/).
-*   **Required Video:** Watch the video lecture on **Enterprise Application Integration (EAI)** in the official course playlist: [Salesforce & SAP ERP Fundamentals Tutorial](https://www.youtube.com/playlist?list=PLD2549A0D756627C1).
+
+* **Required Reading:** Complete the Salesforce Trailhead module [Integration Architecture](https://trailhead.salesforce.com/content/learn/modules/integration-architecture) — a free module explaining how Salesforce integrates with external systems using REST, SOAP, and platform events.
+* **Required Video:** Watch the video lecture on **Enterprise Application Integration** in the official course playlist: [Salesforce & SAP ERP Fundamentals Tutorial](https://www.youtube.com/playlist?list=PLD2549A0D756627C1).
 
 ---
 
 ### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Map database values to JSON API formats**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-*   **Draft middleware broker mapping definitions**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-*   **Trace REST integrations**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
 
+In this week's hands-on lab, you will perform the following steps to apply these concepts:
+
+* **Map database values to JSON API formats**: Given a sample SAP vendor master record (with fields in SAP-format naming conventions), write a JSON payload that represents the same vendor data in a REST API format suitable for creating a Salesforce Account record.
+* **Draft middleware broker mapping definitions**: Create a field mapping table showing how five fields from a Salesforce Opportunity record (Name, Amount, CloseDate, StageName, AccountId) map to the corresponding fields in a hypothetical ERP sales order record.
+* **Trace REST integrations**: Document the full request-response cycle for a REST API call that retrieves a Salesforce Account record by ID — including the HTTP method, endpoint URL structure, authentication header, and expected JSON response format.
 
 ---
 
 ### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read the section/chapter covering **Enterprise Application Integration (EAI)** in [Salesforce Trailhead Modules & ERP Basics](https://trailhead.salesforce.com/).
-- [ ] Watch the video lecture on **Enterprise Application Integration (EAI)** in [Salesforce & SAP ERP Fundamentals Tutorial](https://www.youtube.com/playlist?list=PLD2549A0D756627C1).
-- [ ] Review the commands outlined in the lab instructions.
-- [ ] Proceed to the weekly hands-on lab activity.
+
+* [ ] Read all glossary definitions and be able to explain the difference between REST and SOAP in one sentence each.
+* [ ] Complete [Integration Architecture](https://trailhead.salesforce.com/content/learn/modules/integration-architecture) on Trailhead (earn the badge).
+* [ ] Watch the video lecture on **Enterprise Application Integration** in [Salesforce & SAP ERP Fundamentals Tutorial](https://www.youtube.com/playlist?list=PLD2549A0D756627C1).
+* [ ] Complete the lab JSON mapping, field translation table, and REST call trace exercises.
+* [ ] Proceed to the weekly quiz.

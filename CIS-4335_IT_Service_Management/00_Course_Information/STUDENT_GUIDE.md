@@ -1,64 +1,58 @@
 # Texas Wesleyan University (TXWES) Computer Science Department
 ## Student Study Guide: CIS-4335 IT Service Management
 
-Welcome to the Texas Wesleyan Computer Science department! This comprehensive orientation and study guide is designed to help you set up your local development environment, learn how to log and submit your lab assignments, and study effectively using our Zero Textbook Cost (ZTC) Open Educational Resources (OER) curriculum model.
+Welcome to CIS-4335 IT Service Management at Texas Wesleyan University! This guide will help you navigate the course structure, understand how to complete and submit your lab activities, and develop effective study strategies for the ITIL 4 Foundation certification exam.
 
 ---
 
-## 1. Lab Environment Setup
+## 1. Course Overview and What to Expect
 
-All hands-on labs in our courses are designed to be run directly on your own computer or cloud-based environment. This provides flexibility and mirrors real-world software development practices.
+This course prepares you for the ITIL 4 Foundation certification — the globally recognized entry-level credential in IT Service Management. The course covers the ITIL 4 Service Value System, the four dimensions of service management, the seven guiding principles, and the key service management and technical management practices tested on the certification exam.
 
-### Recommended Setup
-1. **Operating System**: A standard operating system (Windows, macOS, or Linux) with terminal/command line access.
-2. **Key Tools**:
-   * **Python**: Install Python 3.10+ (for Python programming, AI, and Machine Learning).
-   * **Git**: Install Git for source code control and version management.
-   * **Docker**: Recommended for complex, containerized software architectures (e.g., Full Stack Web Dev, DevSecOps).
-   * **Cloud Accounts**: Free tier accounts on AWS, Azure, or Google Cloud (as required by specific cloud courses).
-3. **Editor**: A modern text editor or IDE such as Visual Studio Code (VS Code) is highly recommended.
+The ITIL 4 Foundation exam consists of forty multiple-choice questions with a sixty-minute time limit. The passing score is 65% (26 out of 40 correct). Every module in this course is aligned to the official ITIL 4 Foundation syllabus, and the weekly quizzes are structured to mirror the scenario-based format of the actual certification exam.
+
+No special software installation is required for this course. All study materials, reading guides, and lab activities are accessible through Canvas.
 
 ---
 
-## 2. Lab Submission Workflow
+## 2. Lab Activity Submission Workflow
 
-Every course module (Modules 01 to 15) contains a practical lab activity. When you complete a lab, you will document your progress and upload the deliverables directly to the course LMS.
+Every module (Modules 01 to 15) contains a hands-on lab activity. Lab activities in this course are scenario-based written exercises rather than command-line labs. You will apply ITIL 4 concepts to realistic IT service management scenarios and document your analysis.
 
 ### How to Submit
-1. **Document Execution**: Take screenshots or save command line output logs demonstrating the successful completion of all key lab instructions.
-2. **Write Summary (Optional)**: If requested by your instructor, include a brief summary detailing any troubleshooting steps or configuration issues you resolved.
-3. **Upload to Canvas**: Navigate to your Canvas LMS course shell, locate the corresponding Module assignment, and upload your screenshots, logs, or PDF report.
+1. **Complete the lab activity**: Read the lab instructions in the module carefully. Complete all required tasks — these typically involve classification exercises, scenario analysis, or drafting ITIL 4 artifacts (such as incident records, change requests, or CMDB entries).
+2. **Document your work**: Write up your responses in a Word document or PDF. Include your name, the module number, and the date. Be specific — use correct ITIL 4 terminology throughout.
+3. **Upload to Canvas**: Navigate to your Canvas course shell, locate the corresponding Module lab assignment, and upload your completed document.
 
 ---
 
-## 3. The Zero Textbook Cost (ZTC) & OER Strategy
+## 3. The Zero Textbook Cost (ZTC) and OER Strategy
 
-To save you money and ensure your training remains aligned with modern cloud and scripting updates, we use a **Zero Textbook Cost** model. Traditional textbooks are obsolete before they are printed. Instead, we use official vendor documentation, standards-body whitepapers, and curated professional video channels.
+This course uses a Zero Textbook Cost model. All required reading materials are provided free within Canvas or via the links in each module's Reading Guide. You do not need to purchase any textbook.
 
-### Active Learning Study Strategies
-* **Code Daily**: In scripting courses (Python, Infrastructure Automation), do not just read the guides. Type the code manually into your interpreter and observe the outcomes.
-* **Inspect the Error Logs**: When a script or service fails, read the terminal tracebacks or log outputs. Debugging errors is the fastest way to master software.
-* **Draw Network Topologies**: For networking and cloud architecture courses, sketch the flow of data packets (IPs, VLANs, route maps) on paper before configuring switches or VPC routing tables.
-* **Practice Active Recall**: Utilize the multiple-choice question banks in each module's quiz guide. Analyze the *distractor explanations* to understand why incorrect options are wrong.
+The two primary free resources used throughout this course are:
+*   **Axelos ITIL 4 Foundation page** at [https://www.axelos.com/certifications/itil-service-management/itil-4-foundation](https://www.axelos.com/certifications/itil-service-management/itil-4-foundation) — the official certification body for ITIL 4. This page includes the official glossary, the candidate guidance document, and the exam syllabus. Bookmark this page and use the official glossary to verify any definition you are uncertain about.
+*   **ITIL 4 Foundation Certification Complete Course Playlist** on YouTube at [https://www.youtube.com/playlist?list=PLK-tWc9i-GZ5V68tH3pB2rWn3Bv-yP85W](https://www.youtube.com/playlist?list=PLK-tWc9i-GZ5V68tH3pB2rWn3Bv-yP85W) — a comprehensive free video series covering all ITIL 4 Foundation exam topics. Each module's Reading Guide links to the relevant video for that week's topic.
 
 ---
 
-## 4. 27-Course Curriculum & Certification Directory
+## 4. Active Learning Study Strategies for ITIL 4
 
-Below is the study roadmap for every course in our computer science and computer management curriculum. Each path targets a high-demand industry certification.
+ITIL 4 Foundation is a scenario-based exam. Memorizing definitions is necessary but not sufficient — you must be able to apply each concept to a realistic situation and distinguish it from closely related practices and terms.
 
-| Course Code & Name | Target Certification | Key Study Strategy | Primary Free OER Resource |
-| :--- | :--- | :--- | :--- |
-| **CIS-4335: IT Service Mgmt** | ITIL 4 Foundation | Master core terminology (Service Value System, Service Desk, SLA, Incident vs Problem Management). | [ITIL 4 Framework Overviews](https://www.axelos.com/) |
-
+*   **Learn by distinction**: The exam is built around confusable pairs. Focus on clearly understanding the difference between incidents and problems, changes and service requests, releases and deployments, IT assets and configuration items, and events and alerts. Each module's Reading Guide highlights these distinctions in the Certification Exam Tips section.
+*   **Practice active recall**: After reading each module's glossary, close the guide and write the definition of each term from memory. Then reopen and check. This retrieval practice is far more effective for exam preparation than re-reading.
+*   **Use the distractor explanations**: Each module quiz question includes a detailed distractor analysis explaining why each wrong answer is wrong — not just why the correct answer is right. Read these carefully. Understanding why incorrect options are tempting (and why they fail) is the best preparation for ITIL 4 scenario questions.
+*   **Map practices to the Service Value System**: As you work through Modules 6–15, build a running reference sheet mapping each practice to its purpose, the SVS component it supports, and at least one common exam trap associated with it.
+*   **Review the guiding principles in context**: The seven guiding principles are tested through scenarios, not definitions. For each principle, identify one realistic scenario where it is the primary guidance that applies. Use these scenarios as memory anchors when reviewing.
 
 ---
 
 ## 5. Final Exam Certification Policy (Module 16)
 
-The culmination of every course in our department (Module 16) is the official industry certification exam. Rather than a traditional written exam, you will complete the official vendor exam:
+The Module 16 final exam requires you to sit the official ITIL 4 Foundation proctored certification exam through an authorized testing provider.
 
-1. **Schedule**: Register for your exam at our on-campus ComputerMinds testing center (or an authorized PearsonVUE provider).
-2. **Take the Exam**: Complete the exam.
-3. **Submit Score Report**: Scan or download your official score report PDF showing your name, passing score, and date.
-4. **Dropbox**: Upload the score report to the Canvas dropbox in Module 16 to receive your final grade credit.
+1. **Schedule**: Register for your exam at the on-campus ComputerMinds testing center or an authorized PearsonVUE provider. The ITIL 4 Foundation exam is available as a proctored in-person or online exam.
+2. **Take the Exam**: Complete the official forty-question ITIL 4 Foundation exam within the sixty-minute time limit.
+3. **Submit Your Score Report**: After completing the exam, download or scan your official score report showing your name, score, and exam date.
+4. **Upload to Canvas**: Upload the score report PDF or screenshot to the Module 16 assignment dropbox in Canvas to receive your final exam credit.

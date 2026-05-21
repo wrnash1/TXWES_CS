@@ -1,82 +1,72 @@
-# Quiz: Module 03 - Routing
-## Course: CIS-3321_Network_Admin (3321_Network_Admin - CompTIA Network+ (N10-008))
+# Quiz: Module 03 - IP Addressing – IPv4, Subnetting, CIDR
+## Course: CIS-3321 – Network Administration (CompTIA Network+ N10-009)
 
 ---
 
 **Question 1**
-Your company wants to move away from hosting its own email servers to a model where a third-party provider manages the hardware, the operating system, the email software, and the maintenance. Which cloud service model does this represent?
-A) IaaS
-B) PaaS
-C) SaaS
-D) DaaS
-*   **Correct Answer:** C) SaaS
+A network technician is assigned the subnet 192.168.10.0/26. How many usable host addresses are available in this subnet?
+A) 30
+B) 62
+C) 126
+D) 254
+*   **Correct Answer:** B) 62
 *   **Distractor Analysis:**
-    *   *Why A is incorrect:* Infrastructure as a Service (IaaS) only provides the virtual hardware; you must install and manage the OS and the email server software yourself.
-    *   *Why B is incorrect:* Platform as a Service (PaaS) provides the environment for developers to write code, not a finished, ready-to-use application like email.
-    *   *Why D is incorrect:* Desktop as a Service (DaaS) provides a virtual desktop operating system, not a specific software application.
-
----
+    *   *Why A is incorrect:* 30 usable hosts corresponds to a /27 subnet (32 addresses − 2 = 30), which borrows 3 bits from a /24, not 2.
+    *   *Why C is incorrect:* 126 usable hosts corresponds to a /25 subnet (128 addresses − 2 = 126), which borrows only 1 bit from a /24.
+    *   *Why D is incorrect:* 254 usable hosts corresponds to an unsubnetted /24 network (256 − 2 = 254); a /26 borrows 2 bits and produces only 64 total addresses.
 
 ---
 
 **Question 2**
-Which IEEE wireless standard operates exclusively in the 5 GHz frequency band and introduced standardized support for MU-MIMO (Multi-User Multiple-Input Multiple-Output)?
-A) 802.11b
-B) 802.11g
-C) 802.11n
-D) 802.11ac
-*   **Correct Answer:** D) 802.11ac
+Which of the following IPv4 addresses falls within a private address range defined by RFC 1918?
+A) 172.32.10.5
+B) 11.0.0.1
+C) 10.200.15.33
+D) 192.169.1.1
+*   **Correct Answer:** C) 10.200.15.33
 *   **Distractor Analysis:**
-    *   *Why A is incorrect:* 802.11b operates exclusively in the 2.4 GHz band.
-    *   *Why B is incorrect:* 802.11g operates exclusively in the 2.4 GHz band.
-    *   *Why C is incorrect:* 802.11n operates in both 2.4 GHz and 5 GHz bands, but 802.11ac operates *exclusively* in the 5 GHz band and heavily utilized MU-MIMO.
-
----
+    *   *Why A is incorrect:* The private Class B range is 172.16.0.0 to 172.31.255.255. The address 172.32.x.x falls outside this range and is a public address.
+    *   *Why B is incorrect:* The private Class A range is 10.0.0.0/8 only. The address 11.0.0.1 begins with 11, not 10, and is therefore a public address.
+    *   *Why D is incorrect:* The private Class C range is 192.168.0.0/16. The address 192.169.x.x is one octet beyond the private range and is a public address.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **verify basic network connectivity and latency to a remote host using ICMP Echo Requests**. Which of the following commands is the most appropriate to execute?
-A) ping
-D) nslookup
-C) netstat -ano
-B) traceroute
-*   **Correct Answer:** A) ping
+A host is assigned the IP address 192.168.1.75 with a subnet mask of 255.255.255.224 (/27). What is the broadcast address of this host's subnet?
+A) 192.168.1.63
+B) 192.168.1.95
+C) 192.168.1.127
+D) 192.168.1.255
+*   **Correct Answer:** B) 192.168.1.95
 *   **Distractor Analysis:**
-    * *Why A is correct:* The `ping` command is directly designed to verify basic network connectivity and latency to a remote host using ICMP Echo Requests.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is incorrect:* 192.168.1.63 is the broadcast address of the first /27 block (192.168.1.32–63), not the block containing .75.
+    *   *Why C is incorrect:* 192.168.1.127 is the broadcast address of the third /27 block (192.168.1.96–127); the host .75 falls in the second block (64–95).
+    *   *Why D is incorrect:* 192.168.1.255 is the broadcast address of the entire /24 network, not of the /27 subnet containing this host.
 
 ---
 
 **Question 4**
-While working on **Routing** in a production environment, you encounter a system alert indicating a **DNS Failure** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-D) Reboot the physical machine and wait for services to reload.
-B) Release and renew the DHCP lease, or configure a unique static IP address outside the DHCP pool range.
-C) Correct the subnet mask configuration on the interface to match the network segment parameters.
-A) Change the local network interface settings to use a public DNS resolver like 8.8.8.8 or 1.1.1.1.
-*   **Correct Answer:** A) Change the local network interface settings to use a public DNS resolver like 8.8.8.8 or 1.1.1.1.
+A technician sees that a workstation has self-assigned the IP address 169.254.14.22 and cannot communicate with any network resources. What is the most likely root cause and correct remediation?
+A) The default gateway is unreachable; configure a static gateway address on the workstation.
+B) The DHCP server is unavailable or unreachable; restore the DHCP server or assign a static IP in the correct subnet.
+C) The DNS server is offline; change the DNS server setting on the workstation to 8.8.8.8.
+D) The subnet mask is misconfigured; correct it to match the rest of the network segment.
+*   **Correct Answer:** B) The DHCP server is unavailable or unreachable; restore the DHCP server or assign a static IP in the correct subnet.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This action does not resolve the root cause of DNS Failure.
-    * *Why B is incorrect:* This action does not resolve the root cause of DNS Failure.
-    * *Why C is incorrect:* This action does not resolve the root cause of DNS Failure.
-    * *Why A is correct:* Because The configured DNS server is offline, misconfigured, or unreachable, preventing host name resolution. The appropriate fix is to Change the local network interface settings to use a public DNS resolver like 8.8.8.8 or 1.1.1.1..
-
+    *   *Why A is incorrect:* A missing default gateway would still allow DHCP to assign a valid IP address; the 169.254.x.x range specifically signals DHCP failure before any gateway issue matters.
+    *   *Why C is incorrect:* A DNS failure results in a valid IP being assigned; the workstation would still have a proper address and could ping by IP. APIPA (169.254.x.x) is not a DNS problem.
+    *   *Why D is incorrect:* A subnet mask misconfiguration assumes a valid IP address was already assigned; APIPA addresses indicate no DHCP lease was obtained at all.
 
 ---
 
 **Question 5**
-When designing a system for **Routing**, you must mitigate the risk of **Attackers connecting rogue access points or unauthorized laptops directly to internal switch ports.**. Which of the following security configurations or controls represents the best practice to implement?
-D) Enable full disk encryption on all client endpoints.
-A) Implement switch Port Security to restrict access to switch ports based on approved MAC addresses.
-C) Enable full disk encryption on all client endpoints.
-B) Configure SSH (port 22) for terminal access and HTTPS (port 443) for web interfaces, disabling Telnet and HTTP.
-*   **Correct Answer:** A) Implement switch Port Security to restrict access to switch ports based on approved MAC addresses.
+A network design requires a subnet that connects exactly two routers on a point-to-point WAN link with minimal address waste. Which subnet mask is the most appropriate?
+A) /24 — provides 254 usable host addresses
+B) /28 — provides 14 usable host addresses
+C) /30 — provides 2 usable host addresses
+D) /32 — a host route representing a single device with no broadcast domain
+*   **Correct Answer:** C) /30 — provides 2 usable host addresses
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This does not address the security vulnerability of Unauthorized Port Access.
-    * *Why A is correct:* Implementing Implement switch Port Security to restrict access to switch ports based on approved MAC addresses. mitigates the risk of Attackers connecting rogue access points or unauthorized laptops directly to internal switch ports..
-    * *Why C is incorrect:* This does not address the security vulnerability of Unauthorized Port Access.
-    * *Why B is incorrect:* This does not address the security vulnerability of Unauthorized Port Access.
-
+    *   *Why A is incorrect:* A /24 wastes 252 addresses on a link that only needs 2; it violates the principle of minimal address waste for point-to-point links.
+    *   *Why B is incorrect:* A /28 provides 14 usable addresses, which is more than needed for a two-endpoint link and still wastes 12 addresses.
+    *   *Why D is incorrect:* A /32 is a host route (no subnet, no broadcast) used in routing tables and loopback configurations; it cannot be used to create a subnet connecting two devices.

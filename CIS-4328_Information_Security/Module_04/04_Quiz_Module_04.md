@@ -1,5 +1,5 @@
-# Quiz: Module 04 - Operations
-## Course: CIS-4328_Information_Security (4328_Information_Security - CompTIA Security+ (SY0-701))
+# Quiz: Module 04 - Network Attacks - DDoS, Spoofing, MITM
+## Course: CIS-4328_Information_Security (CompTIA Security+ SY0-701)
 
 ---
 
@@ -11,72 +11,66 @@ C) Eradication
 D) Recovery
 *   **Correct Answer:** B) Containment
 *   **Distractor Analysis:**
-    *   *Why A is incorrect:* Identification is the phase where the team confirms an incident is actually occurring. Disconnecting the server is an action taken *after* it has been identified.
-    *   *Why C is incorrect:* Eradication involves removing the malware (e.g., wiping the drive, running antivirus). Disconnecting the cable stops the spread, but the malware is still on the machine.
-    *   *Why D is incorrect:* Recovery is the process of restoring the server to normal business operations, which cannot happen until the threat is eradicated.
+    *   *Why A is incorrect:* Identification is the phase where analysts confirm an incident is actually occurring — the decision to disconnect the cable is taken after identification is complete.
+    *   *Why C is incorrect:* Eradication involves removing malware from the system (wiping drives, patching vulnerabilities). Disconnecting the network cable stops spread but leaves the malware in place.
+    *   *Why D is incorrect:* Recovery restores the system to normal production operations, which cannot begin until eradication is confirmed and verified.
 
 ---
 
 ---
 
 **Question 2**
-A security analyst needs to collect forensic evidence from a compromised workstation. According to the standard order of volatility, which of the following data sources should the analyst collect FIRST?
-A) The local hard drive (HDD/SSD)
-B) The routing tables and ARP cache
-C) System Memory (RAM)
-D) Archival backup tapes
-*   **Correct Answer:** C) System Memory (RAM)
+A network administrator notices that all traffic on a LAN segment is being redirected through an unauthorized host before reaching the default gateway. A packet capture confirms the unauthorized host is sending unsolicited ARP replies. Which attack is taking place?
+A) DNS Cache Poisoning
+B) IP Spoofing
+C) ARP Poisoning
+D) Smurf Attack
+*   **Correct Answer:** C) ARP Poisoning
 *   **Distractor Analysis:**
-    *   *Why A is incorrect:* Hard drives represent non-volatile storage. Data on a hard drive will survive a reboot, so it is collected *after* highly volatile sources.
-    *   *Why B is incorrect:* While routing tables are volatile, RAM (which includes CPU registers and cache in broader definitions) is generally prioritized as the primary source of volatile running processes and encryption keys. (Note: CPU registers are technically higher than RAM, but among these options, RAM is the highest).
-    *   *Why D is incorrect:* Backup tapes are the least volatile form of storage and can be collected at any time.
+    *   *Why A is incorrect:* DNS cache poisoning injects fraudulent DNS records into a resolver — it operates at Layer 7 and does not involve ARP replies or Layer 2 MAC address manipulation.
+    *   *Why B is incorrect:* IP spoofing forges the source IP address field in packets but does not send unsolicited ARP replies or redirect Layer 2 traffic through an unauthorized host.
+    *   *Why D is incorrect:* A Smurf attack sends ICMP echo requests with a spoofed source IP to broadcast addresses to flood the victim — it does not use ARP replies to redirect traffic.
 
 ---
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **display the detailed metadata and validation parameters of an SSL/TLS digital certificate**. Which of the following commands is the most appropriate to execute?
-C) wireshark
-B) hydra -l admin -P passwords.txt ssh://target
-A) openssl x509 -text -noout -in cert.pem
-D) nmap -sV -p 1-1024 target_ip
-*   **Correct Answer:** A) openssl x509 -text -noout -in cert.pem
+An organization's web servers become unreachable to legitimate customers. Analysis shows millions of HTTP GET requests per second arriving from thousands of geographically distributed IP addresses, all requesting a single resource-intensive database query page. Which type of attack is this?
+A) SYN Flood
+B) Smurf Attack
+C) Application-Layer DDoS (Layer 7)
+D) ARP Poisoning
+*   **Correct Answer:** C) Application-Layer DDoS (Layer 7)
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `openssl x509 -text -noout -in cert.pem` command is directly designed to display the detailed metadata and validation parameters of an SSL/TLS digital certificate.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is incorrect:* A SYN flood is a protocol-layer (Layer 4) attack that sends a high volume of TCP SYN packets without completing the handshake, exhausting connection state tables — it does not target specific application resources with HTTP GET requests.
+    *   *Why B is incorrect:* A Smurf attack uses ICMP echo requests broadcast across a network to flood a victim — it operates at Layer 3 and does not involve HTTP application requests.
+    *   *Why D is incorrect:* ARP poisoning is a local-segment Layer 2 attack that redirects traffic through an attacker — it does not involve external distributed traffic flooding a web server.
 
 ---
 
 **Question 4**
-While working on **Operations** in a production environment, you encounter a system alert indicating a **IDS False Positives** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-A) Tune the detection signatures and define exceptions for authorized administrative activities.
-B) Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA.
-C) Review active security rules and add a permissive firewall rule allowing the specific source IP and destination port.
-D) Reboot the physical machine and wait for services to reload.
-*   **Correct Answer:** A) Tune the detection signatures and define exceptions for authorized administrative activities.
+A security analyst captures network traffic and observes that a host is sending ICMP echo requests with the victim organization's IP address as the source to multiple network broadcast addresses. Which attack does this traffic pattern indicate?
+A) Man-in-the-Middle via ARP Poisoning
+B) DNS Amplification Attack
+C) Smurf Attack
+D) Rogue DHCP Server Attack
+*   **Correct Answer:** C) Smurf Attack
 *   **Distractor Analysis:**
-    * *Why A is correct:* Because The network security system flags benign administrative scans or regular traffic patterns as malicious exploits. The appropriate fix is to Tune the detection signatures and define exceptions for authorized administrative activities..
-    * *Why B is incorrect:* This action does not resolve the root cause of IDS False Positives.
-    * *Why C is incorrect:* This action does not resolve the root cause of IDS False Positives.
-    * *Why D is incorrect:* This action does not resolve the root cause of IDS False Positives.
-
+    *   *Why A is incorrect:* ARP poisoning sends fraudulent ARP replies on a local segment to redirect Layer 2 traffic — it does not involve ICMP echo requests sent to broadcast addresses.
+    *   *Why B is incorrect:* DNS amplification sends small spoofed DNS queries to public resolvers that return large responses to the victim — it uses UDP port 53, not ICMP, and targets DNS servers rather than broadcast addresses.
+    *   *Why D is incorrect:* A rogue DHCP server responds to DHCP discovery requests with false configuration (e.g., a malicious gateway IP) — it does not involve ICMP or broadcast amplification.
 
 ---
 
 **Question 5**
-When designing a system for **Operations**, you must mitigate the risk of **Intruders deleting local system event logs after a breach to hide their tracks and prevent investigation.**. Which of the following security configurations or controls represents the best practice to implement?
-B) Enforce RSA keys with a minimum length of 2048/4096 bits or switch to Elliptic Curve Cryptography (ECC).
-C) Enable full disk encryption on all client endpoints.
-D) Enable full disk encryption on all client endpoints.
-A) Forward all system logs to a secure, write-once SIEM (Security Information and Event Management) platform.
-*   **Correct Answer:** A) Forward all system logs to a secure, write-once SIEM (Security Information and Event Management) platform.
+A company wants to prevent attackers from intercepting and modifying traffic between its remote employees and internal systems. Which combination of controls BEST mitigates Man-in-the-Middle attacks?
+A) Deploy an IDS sensor on the core switch and enable port mirroring to capture all traffic.
+B) Enforce mutual TLS authentication and implement certificate pinning for all critical applications.
+C) Require employees to change passwords every 60 days and use a minimum of 12 characters.
+D) Enable full disk encryption on all laptops and require VPN split tunneling for remote access.
+*   **Correct Answer:** B) Enforce mutual TLS authentication and implement certificate pinning for all critical applications.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This does not address the security vulnerability of Lack of Centralized Logs.
-    * *Why C is incorrect:* This does not address the security vulnerability of Lack of Centralized Logs.
-    * *Why D is incorrect:* This does not address the security vulnerability of Lack of Centralized Logs.
-    * *Why A is correct:* Implementing Forward all system logs to a secure, write-once SIEM (Security Information and Event Management) platform. mitigates the risk of Intruders deleting local system event logs after a breach to hide their tracks and prevent investigation..
-
+    *   *Why A is incorrect:* An IDS with port mirroring detects anomalies after the fact but does not prevent an active MITM interception — the attacker can still read and modify traffic while the IDS is alerting.
+    *   *Why C is incorrect:* Password complexity and rotation policies strengthen authentication but do not protect against traffic interception in transit — an attacker in the middle intercepts encrypted sessions, not passwords.
+    *   *Why D is incorrect:* Full disk encryption protects data at rest on the device. Split tunneling actually increases MITM risk by routing non-corporate traffic outside the VPN tunnel. Neither control prevents in-transit interception.

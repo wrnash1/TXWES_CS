@@ -1,82 +1,81 @@
-# Quiz: Module 16 - Course Module
+# Quiz: Module 16 - Final Exam Prep & JSE Certification Review
 ## Course: CIS-1320_Intro_to_JavaScript (JSE (Certified Associate in JavaScript Programming))
 
 ---
 
-**Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Core Operations**?
-B) The descendant node connected to the right branch of a parent node in a binary tree structure.
-C) Elements placed inside the <head> block of an HTML document that define metadata, links to stylesheets, scripts, character sets, and page titles.
-D) The method of evaluating an algorithm's efficiency by analyzing its behavior as the input size approaches infinity, focusing on growth rates rather than specific hardware speeds.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
+**Question 1**
+Which of the following JSE best practices should you follow when inserting user-supplied text into the DOM?
+*   A) Use `innerHTML` because it is the most powerful DOM property and handles all content types
+*   B) Use `textContent` because it treats the value as plain text and does not parse HTML tags, preventing XSS
+*   C) Use `document.write()` because it is the most direct way to add content to the page
+*   D) Use `setAttribute("value", ...)` because it stores content as an attribute rather than in the DOM tree
+*   **Correct Answer:** B) Use `textContent` because it treats the value as plain text and does not parse HTML tags, preventing XSS.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Core Operations**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Core Operations**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Core Operations**.
-    * *Why A is correct:* This describes the exact role and function of **Core Operations**.
-
+    *   *Why correct:* `textContent` does not interpret the string as HTML, so injected `<script>` or event handler tags are rendered as visible characters rather than executed — this is the safe choice for untrusted input.
+    *   The other options either present security risks or use inappropriate APIs for this purpose.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Core Operations**?
-C) The standard configuration parameters pre-loaded into a software application or system before any custom adjustments are made by an administrator.
-D) CSS rules (like width, height, max-width, box-sizing) that dictate how the dimensions of elements are calculated and rendered.
-B) An algebraic restructuring operation on a binary tree that changes the parent-child relationships to restore balance without violating the search order.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
+Which of the following most accurately describes **JavaScript Core Operations** that are tested on the JSE exam?
+*   A) The configuration settings stored in a `package.json` file that define how a Node.js project is built and run
+*   B) The foundational language mechanics — variable scope, type coercion, function invocation, array/object manipulation, DOM interaction, and async patterns — that underpin every JavaScript program
+*   C) The set of network protocols (HTTP, HTTPS, WebSockets) that JavaScript uses to communicate with backend servers
+*   D) The browser-rendering pipeline steps (parsing, layout, painting, compositing) that determine how fast a web page loads
+*   **Correct Answer:** B) The foundational language mechanics — variable scope, type coercion, function invocation, array/object manipulation, DOM interaction, and async patterns — that underpin every JavaScript program.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Core Operations**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Core Operations**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Core Operations**.
-    * *Why A is correct:* This describes the exact role and function of **Core Operations**.
-
+    *   *Why A is incorrect:* `package.json` is a Node.js/npm configuration concern; JSE tests the JavaScript language itself, not project tooling.
+    *   *Why B is correct:* JSE Core Operations covers the language fundamentals every JavaScript developer must know: declarations, operators, control flow, functions, objects, the DOM, and asynchronous programming.
+    *   *Why C is incorrect:* Network protocols are a web architecture topic; the JSE exam focuses on JavaScript language semantics, not HTTP or WebSocket specifications.
+    *   *Why D is incorrect:* The browser rendering pipeline is a performance and browser internals topic, not a JavaScript language concept tested by the JSE.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **create a sandboxed Python virtual environment to manage dependencies locally**. Which of the following commands is the most appropriate to execute?
-A) python3 -m venv .venv
-B) git commit -m 'update'
-C) pip install -r requirements.txt
-D) pytest
-*   **Correct Answer:** A) python3 -m venv .venv
+A developer is reviewing code for a final project. Which of the following changes represents the best JavaScript practice?
+*   A) Replacing `let count = 0;` with `var count = 0;` to ensure the variable is globally accessible
+*   B) Replacing `if (x == null)` with `if (x === null || x === undefined)` for a more explicit null/undefined check
+*   C) Replacing `element.textContent = userInput` with `element.innerHTML = userInput` for richer display options
+*   D) Replacing `try/catch` blocks with empty catch handlers to prevent error messages from reaching users
+*   **Correct Answer:** B) Replacing `if (x == null)` with `if (x === null || x === undefined)` for a more explicit null/undefined check
 *   **Distractor Analysis:**
-    * *Why A is correct:* The `python3 -m venv .venv` command is directly designed to create a sandboxed Python virtual environment to manage dependencies locally.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is incorrect:* Switching to `var` for global access is an anti-pattern; use `let`/`const` and pass values explicitly.
+    *   *Why B is correct:* While `x == null` already catches both `null` and `undefined` (due to loose equality), using strict checks makes the intent explicit and avoids relying on coercion rules.
+    *   *Why C is incorrect:* Assigning user input to `innerHTML` is a security risk (XSS); `textContent` is the safer approach.
+    *   *Why D is incorrect:* Empty catch handlers silently swallow errors, making debugging extremely difficult; errors should always be logged or handled.
 
 ---
 
 **Question 4**
-While working on **Course Module** in a production environment, you encounter a system alert indicating a **KeyError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-B) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-C) Verify that the index is within the valid range of 0 to len(list)-1.
-A) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
-D) Reboot the physical machine and wait for services to reload.
-*   **Correct Answer:** A) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
+While doing final review for the JSE exam, a student reads this code and must predict the output:
+```javascript
+const obj = { x: 10 };
+const fn = () => this.x;
+console.log(fn.call(obj));
+```
+What is logged?
+*   A) `10` because `call()` binds `this` to `obj`
+*   B) `undefined` because arrow functions ignore `call()`, `apply()`, and `bind()` for `this` binding
+*   C) A `TypeError` because arrow functions cannot be called with `call()`
+*   D) `NaN` because `this.x` returns a string in arrow functions
+*   **Correct Answer:** B) `undefined` because arrow functions ignore `call()`, `apply()`, and `bind()` for `this` binding.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This action does not resolve the root cause of KeyError.
-    * *Why C is incorrect:* This action does not resolve the root cause of KeyError.
-    * *Why A is correct:* Because The code attempted to access a dictionary key that is not defined in the object. The appropriate fix is to Ensure the requested key exists in the dictionary, or use the .get() method to return a default value..
-    * *Why D is incorrect:* This action does not resolve the root cause of KeyError.
-
+    *   *Why A is incorrect:* `call()` can override `this` in regular functions, but arrow functions capture `this` lexically and cannot be rebound.
+    *   *Why B is correct:* Arrow functions have no own `this`; `call()`, `apply()`, and `bind()` silently do nothing to change `this` in an arrow function. `this` refers to the outer scope's `this` (likely `undefined` in strict mode or the global object in non-strict), so `this.x` is `undefined`.
+    *   *Why C is incorrect:* Arrow functions can be invoked with `call()` without error; `call()` simply has no effect on their `this`.
+    *   *Why D is incorrect:* `this.x` returns `undefined` (not a string), and `undefined` logged directly prints as `undefined`, not `NaN`.
 
 ---
 
 **Question 5**
-When designing a system for **Course Module**, you must mitigate the risk of **Allowing attackers to execute arbitrary SQL commands on the backend database via input forms.**. Which of the following security configurations or controls represents the best practice to implement?
-C) Enable full disk encryption on all client endpoints.
-B) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-D) Enable full disk encryption on all client endpoints.
-A) Implement parameterized queries and prepared statements rather than raw string concatenation.
-*   **Correct Answer:** A) Implement parameterized queries and prepared statements rather than raw string concatenation.
+Which of the following is the correct way to export a function `greet` from a JavaScript module file and import it in another file?
+*   A) Export: `module.exports = greet;` — Import: `const greet = require("./module");`
+*   B) Export: `export function greet() {}` — Import: `import { greet } from "./module.js";`
+*   C) Export: `window.greet = greet;` — Import: `const greet = window.greet;`
+*   D) Export: `export default greet;` — Import: `import { greet } from "./module.js";`
+*   **Correct Answer:** B) Export: `export function greet() {}` — Import: `import { greet } from "./module.js";`
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why D is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why A is correct:* Implementing Implement parameterized queries and prepared statements rather than raw string concatenation. mitigates the risk of Allowing attackers to execute arbitrary SQL commands on the backend database via input forms..
-
+    *   *Why A is incorrect:* `module.exports`/`require` is CommonJS syntax used in Node.js, not ES6 module syntax used in browsers and the JSE exam.
+    *   *Why B is correct:* Named exports use `export` on the declaration and are imported with curly braces `{ greet }` — this is the ES6 module syntax tested by the JSE.
+    *   *Why C is incorrect:* Adding to `window` creates a global variable, not a module export; this is an anti-pattern and not a module system.
+    *   *Why D is incorrect:* `export default` uses default export syntax, which must be imported without braces: `import greet from "./module.js"`. Importing a default export with `{ greet }` will result in `undefined`.

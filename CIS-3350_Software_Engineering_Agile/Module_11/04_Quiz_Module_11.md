@@ -1,79 +1,103 @@
-# Quiz: Module 11 - Scrum Framework Roles
+# Quiz: Module 11 – Software Design Patterns
+
 ## Course: CIS-3350_Software_Engineering_Agile (Professional Scrum Master (PSM I))
 
 ---
 
-**Question 1**
-Who on the Scrum Team is accountable for maximizing the value of the product and managing the Product Backlog?
-*   A) Scrum Master
-*   B) Developers
-*   C) Product Owner
-*   D) Project Manager
-*   **Correct Answer:** C) The Product Owner represents client stakeholders and maintains the prioritization of product backlog items.
-*   **Distractor Analysis:**
-    *   *Why correct:* The Product Owner represents client stakeholders and maintains the prioritization of product backlog items.
-    *   Scrum Master manages process adherence. Developers implement features.
+### Question 1
+
+A logging service must ensure that only one instance exists across an entire application, and all components share the same log output stream. Which design pattern is most appropriate?
+
+* A) Factory Method — to create different logger types based on runtime configuration
+* B) Observer — to notify all components when a new log entry is written
+* C) Singleton — to restrict instantiation to a single shared logger instance
+* D) Decorator — to add log formatting behavior dynamically at runtime
+
+Correct Answer: C) The Singleton pattern restricts a class to a single instance and provides a global access point — ideal for shared resources like a logging service.
+
+Distractor Analysis:
+
+* *Why C is correct:* The Singleton pattern ensures only one logger object is ever created; all callers receive a reference to the same instance, guaranteeing a single shared log stream.
+* *Why A is incorrect:* Factory Method creates objects of different types based on context — it does not prevent multiple instances of the same class from being created.
+* *Why B is incorrect:* Observer defines a one-to-many notification relationship between objects — it is a behavioral pattern for event propagation, not for controlling instantiation count.
+* *Why D is incorrect:* Decorator adds behavior to an object dynamically without changing its class — it is a structural pattern for extending functionality, not for limiting instance count.
 
 ---
 
-**Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Scrum Guide**?
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-C) The entry point or first node in a linked list, which serves as the reference for traversing the rest of the list structure.
-D) The ability of different classes to respond to the same message or method call in their own unique way.
-B) The core security model consisting of Confidentiality (preventing unauthorized access), Integrity (preventing unauthorized modification), and Availability (ensuring systems are accessible when needed).
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-*   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **Scrum Guide**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Scrum Guide**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Scrum Guide**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Scrum Guide**.
+### Question 2
 
+Which of the following is the most accurate definition of the Strategy design pattern?
 
----
+* A) A pattern that ensures a class has only one instance and provides a global access point to it.
+* B) A pattern that defines a family of interchangeable algorithms, encapsulates each one, and makes them swappable at runtime without changing the client code.
+* C) A pattern that converts the interface of a class into another interface that clients expect, resolving incompatibility between existing classes.
+* D) A pattern that composes objects into tree structures to represent part-whole hierarchies, treating individual objects and compositions uniformly.
 
-**Question 3**
-A systems administrator or developer needs to **run the automated unit testing suite to verify system functionality**. Which of the following commands is the most appropriate to execute?
-A) pytest
-B) pip install -r requirements.txt
-D) git commit -m 'update'
-C) python3 -m venv .venv
-*   **Correct Answer:** A) pytest
-*   **Distractor Analysis:**
-    * *Why A is correct:* The `pytest` command is directly designed to run the automated unit testing suite to verify system functionality.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
+Correct Answer: B)
 
+Distractor Analysis:
+
+* *Why B is correct:* The Strategy pattern defines a set of algorithms that can be swapped independently of the clients that use them — for example, swapping a bubble sort for a merge sort without changing the code that calls the sort.
+* *Why A is incorrect:* This describes the Singleton pattern, which controls instance creation — not algorithm swapping.
+* *Why C is incorrect:* This describes the Adapter pattern, which resolves interface incompatibilities between classes — a structural pattern, not a behavioral one.
+* *Why D is incorrect:* This describes the Composite pattern, which treats individual objects and tree-structured groups of objects uniformly — a structural pattern.
 
 ---
 
-**Question 4**
-While working on **Scrum Framework Roles** in a production environment, you encounter a system alert indicating a **TypeError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-D) Reboot the physical machine and wait for services to reload.
-C) Verify that the index is within the valid range of 0 to len(list)-1.
-B) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
-*   **Correct Answer:** A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-*   **Distractor Analysis:**
-    * *Why A is correct:* Because An operation or function was applied to an object of an inappropriate data type. The appropriate fix is to Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types..
-    * *Why D is incorrect:* This action does not resolve the root cause of TypeError.
-    * *Why C is incorrect:* This action does not resolve the root cause of TypeError.
-    * *Why B is incorrect:* This action does not resolve the root cause of TypeError.
+### Question 3
 
+Which category does the Observer pattern belong to in the Gang of Four classification?
+
+* A) Creational — because it creates subscriber objects dynamically
+* B) Structural — because it defines the structure of the subject-observer relationship
+* C) Behavioral — because it defines communication and responsibility distribution between objects
+* D) Architectural — because it implements the Model-View-Controller separation of concerns
+
+Correct Answer: C)
+
+Distractor Analysis:
+
+* *Why C is correct:* Behavioral patterns define how objects communicate and assign responsibilities. Observer defines the publish-subscribe communication protocol between a subject and its dependents — a behavioral concern.
+* *Why A is incorrect:* Creational patterns address object creation mechanisms. Observer does not create subscriber objects — it registers them with a subject.
+* *Why B is incorrect:* Structural patterns describe how classes and objects are composed. Observer is about communication flow, not static structural composition.
+* *Why D is incorrect:* MVC is an architectural pattern; it is related to Observer conceptually but the Observer pattern itself is classified as Behavioral in the GoF taxonomy.
 
 ---
 
-**Question 5**
-When designing a system for **Scrum Framework Roles**, you must mitigate the risk of **Allowing attackers to execute arbitrary SQL commands on the backend database via input forms.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Implement parameterized queries and prepared statements rather than raw string concatenation.
-D) Enable full disk encryption on all client endpoints.
-C) Enable full disk encryption on all client endpoints.
-B) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-*   **Correct Answer:** A) Implement parameterized queries and prepared statements rather than raw string concatenation.
-*   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Implement parameterized queries and prepared statements rather than raw string concatenation. mitigates the risk of Allowing attackers to execute arbitrary SQL commands on the backend database via input forms..
-    * *Why D is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
+### Question 4
 
+A Scrum Team is experiencing slow Sprint velocity because every new feature requires changes to a central "Manager" class that handles authentication, data access, and business rules in a single 2,000-line file. Which software design principle and pattern would best resolve this?
+
+* A) Apply the Singleton pattern so only one Manager instance exists, reducing memory usage.
+* B) Apply the Facade pattern so external classes interact with the Manager through a simplified interface.
+* C) Decompose the Manager class according to the Single Responsibility Principle, separating concerns into distinct classes.
+* D) Apply the Decorator pattern to add new behaviors to the Manager class without modifying it.
+
+Correct Answer: C)
+
+Distractor Analysis:
+
+* *Why C is correct:* The "God Object" anti-pattern (one class doing everything) violates Single Responsibility and creates tight coupling — every feature change risks breaking other features. Decomposing into focused, single-responsibility classes makes the codebase safer to extend in each Sprint.
+* *Why A is incorrect:* Singleton controls instance count, not class responsibility scope. A Singleton God Object is still a God Object.
+* *Why B is incorrect:* Facade provides a simplified interface to a subsystem but does not fix the underlying architectural problem of one class carrying too many responsibilities.
+* *Why D is incorrect:* Decorator adds behaviors to objects dynamically but does not resolve the structural problem of a class with mixed, tightly coupled responsibilities.
+
+---
+
+### Question 5
+
+The Factory Method pattern differs from directly instantiating objects with `new ClassName()` in what key way?
+
+* A) Factory Method prevents the same class from being instantiated more than once per program execution.
+* B) Factory Method delegates the decision of which concrete class to instantiate to subclasses, allowing the code to remain open for extension without modification.
+* C) Factory Method automatically registers all created objects with an Observer subject for event notification.
+* D) Factory Method eliminates the need for constructors by building objects entirely from configuration files.
+
+Correct Answer: B)
+
+Distractor Analysis:
+
+* *Why B is correct:* The Factory Method pattern defines an interface for creating an object but lets subclasses decide which class to instantiate — enabling new object types to be added without modifying existing client code (Open/Closed Principle).
+* *Why A is incorrect:* Preventing multiple instances is the Singleton pattern's purpose. Factory Method does not constrain instance count.
+* *Why C is incorrect:* Factory Method has no inherent connection to the Observer pattern. Object registration with subjects is a separate design concern.
+* *Why D is incorrect:* Factory Method is a code-level pattern that still uses constructors internally. It does not eliminate constructors or replace them with configuration files.

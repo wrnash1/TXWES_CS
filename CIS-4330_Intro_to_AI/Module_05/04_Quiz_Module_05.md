@@ -1,4 +1,4 @@
-# Quiz: Module 05 - Linear and Logistic Regression Models
+# Quiz: Module 05 - Natural Language Processing (NLP) Fundamentals
 ## Course: CIS-4330_Intro_to_AI (AI-900 (Microsoft Azure AI Fundamentals))
 
 ---
@@ -11,69 +11,65 @@ Which model is appropriate for predicting binary (yes/no) output class labels?
 *   D) Principal Component Analysis
 *   **Correct Answer:** B) Logistic regression maps output predictions to a probability between 0 and 1, making it ideal for binary classification.
 *   **Distractor Analysis:**
-    *   *Why correct:* Logistic regression maps output predictions to a probability between 0 and 1, making it ideal for binary classification.
-    *   Linear regression is for continuous variables. K-Means is for grouping.
+    *   *Why correct:* Logistic regression applies the sigmoid function to produce a class probability, then thresholds it (typically at 0.5) to assign a binary label.
+    *   Linear regression predicts continuous values, not class labels. K-Means is unsupervised grouping. PCA is dimensionality reduction.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **logistic sigmoid curve for classification.**?
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within ai operations.
-C) A binary search tree that automatically adjusts its height during insertions and deletions (e.g., AVL, Red-Black) to maintain logarithmic operations.
-D) The defining rule of a BST: for any given node, all keys in its left subtree must be less than or equal to its key, and all keys in its right subtree must be greater.
-B) The memory block allocated on the system stack for a single function call, storing parameters, local variables, and the return address.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within ai operations.
+In the context of machine learning and NLP, which of the following is the most accurate definition of the **logistic sigmoid curve for classification**?
+*   A) An S-shaped mathematical function that maps any real-valued input to a probability between 0 and 1, used in logistic regression to convert a linear score into a predicted class probability.
+*   B) A self-balancing binary search tree that maintains logarithmic insertion and lookup times by adjusting node heights after each operation.
+*   C) A rule that defines the ordering property of a binary search tree: all left-subtree keys are less than the parent, all right-subtree keys are greater.
+*   D) A memory region allocated on the call stack for a single function invocation, storing its local variables, parameters, and return address.
+*   **Correct Answer:** A) An S-shaped mathematical function that maps any real-valued input to a probability between 0 and 1, used in logistic regression to convert a linear score into a predicted class probability.
 *   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **logistic sigmoid curve for classification.**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **logistic sigmoid curve for classification.**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **logistic sigmoid curve for classification.**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **logistic sigmoid curve for classification.**.
-
+    *   *Why A is correct:* The sigmoid σ(z) = 1/(1+e^-z) is specifically designed to squash unbounded linear outputs into the [0,1] probability range required for binary classification.
+    *   *Why B is incorrect:* This describes a self-balancing BST (e.g., AVL tree) — a data structures concept unrelated to NLP or classification.
+    *   *Why C is incorrect:* This describes the BST ordering invariant, also a data structures concept unrelated to classification functions.
+    *   *Why D is incorrect:* This describes a call stack frame — a systems programming concept entirely unrelated to ML.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **use the trained model to generate predictions on unseen test data**. Which of the following commands is the most appropriate to execute?
-A) predictions = model.predict(X_test)
-D) import pandas as pd; df = pd.read_csv('data.csv')
-B) model.fit(X_train, y_train)
-C) accuracy = accuracy_score(y_test, predictions)
+A developer needs to **use a trained model to generate predictions on unseen test data**. Which command is most appropriate?
+*   A) predictions = model.predict(X_test)
+*   B) import pandas as pd; df = pd.read_csv('data.csv')
+*   C) model.fit(X_train, y_train)
+*   D) accuracy = accuracy_score(y_test, predictions)
 *   **Correct Answer:** A) predictions = model.predict(X_test)
 *   **Distractor Analysis:**
-    * *Why A is correct:* The `predictions = model.predict(X_test)` command is directly designed to use the trained model to generate predictions on unseen test data.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is correct:* `model.predict(X_test)` passes unseen test features through the trained model and returns predicted labels or values.
+    *   *Why B is incorrect:* This loads data from a CSV file — data loading, not prediction.
+    *   *Why C is incorrect:* `model.fit()` trains the model on known labeled data; it does not generate predictions on new data.
+    *   *Why D is incorrect:* `accuracy_score()` computes a performance metric from existing predictions; it does not produce predictions itself.
 
 ---
 
 **Question 4**
-While working on **Linear and Logistic Regression Models** in a production environment, you encounter a system alert indicating a **Data Leakage** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-B) Apply regularization techniques (L1/L2), gather more training data, or simplify the model architecture.
-C) Use imputation techniques (mean, median, mode) or drop rows/columns containing missing values.
-D) Reboot the physical machine and wait for services to reload.
-A) Ensure data preprocessing steps (scaling, normalization) are fit only on the training set and applied to the test set.
-*   **Correct Answer:** A) Ensure data preprocessing steps (scaling, normalization) are fit only on the training set and applied to the test set.
+A regression model is producing suspiciously optimistic validation scores. Investigation reveals the MinMaxScaler was fitted on the combined train+test dataset. What is this problem called and how should it be fixed?
+*   A) Data leakage — fit the scaler only on training data using `.fit_transform()`, then apply `.transform()` to test data separately.
+*   B) Overfitting — apply L1 (Lasso) or L2 (Ridge) regularization to penalize large model coefficients.
+*   C) Missing value errors — impute or drop null entries before fitting the scaler.
+*   D) Underfitting — increase model complexity by adding polynomial features or more hidden layers.
+*   **Correct Answer:** A) Data leakage — fit the scaler only on training data using `.fit_transform()`, then apply `.transform()` to test data separately.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This action does not resolve the root cause of Data Leakage.
-    * *Why C is incorrect:* This action does not resolve the root cause of Data Leakage.
-    * *Why D is incorrect:* This action does not resolve the root cause of Data Leakage.
-    * *Why A is correct:* Because Information from outside the training dataset is used to train the model, resulting in overly optimistic validation scores. The appropriate fix is to Ensure data preprocessing steps (scaling, normalization) are fit only on the training set and applied to the test set..
-
+    *   *Why A is correct:* Fitting the scaler on the full dataset lets test-set statistics influence training normalization, making the model appear better than it truly is on unseen data.
+    *   *Why B is incorrect:* Regularization addresses overfitting (high train accuracy, low validation accuracy), not data leakage from improper scaler fitting.
+    *   *Why C is incorrect:* Missing value imputation is a separate concern; null values cause errors or bias but do not inflate validation scores.
+    *   *Why D is incorrect:* Underfitting produces uniformly low accuracy on both sets; it is the opposite of artificially high validation scores.
 
 ---
 
 **Question 5**
-When designing a system for **Linear and Logistic Regression Models**, you must mitigate the risk of **Attackers injecting subtle, imperceptible noise into input data (e.g. images) to force the AI into making incorrect classifications.**. Which of the following security configurations or controls represents the best practice to implement?
-D) Enable full disk encryption on all client endpoints.
-A) Train models with adversarial inputs and implement input validation/filtering on inputs.
-C) Enable full disk encryption on all client endpoints.
-B) Apply differential privacy methods to the training data and limit public API rate queries.
-*   **Correct Answer:** A) Train models with adversarial inputs and implement input validation/filtering on inputs.
+Attackers are sending subtly modified input images to a deployed vision model, causing it to misclassify stop signs as speed limit signs with high confidence. Which defense best mitigates this **adversarial example** attack?
+*   A) Train the model with adversarial examples included in the training set and validate/filter all inputs before inference.
+*   B) Apply differential privacy techniques to the training data and rate-limit the public API.
+*   C) Enable full disk encryption on all client endpoints connecting to the model API.
+*   D) Use Azure Private Link to restrict model endpoint access to internal virtual networks only.
+*   **Correct Answer:** A) Train the model with adversarial examples included in the training set and validate/filter all inputs before inference.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This does not address the security vulnerability of Adversarial Examples.
-    * *Why A is correct:* Implementing Train models with adversarial inputs and implement input validation/filtering on inputs. mitigates the risk of Attackers injecting subtle, imperceptible noise into input data (e.g. images) to force the AI into making incorrect classifications..
-    * *Why C is incorrect:* This does not address the security vulnerability of Adversarial Examples.
-    * *Why B is incorrect:* This does not address the security vulnerability of Adversarial Examples.
-
+    *   *Why A is correct:* Adversarial training exposes the model to crafted perturbations during training, building robustness. Input validation detects anomalous inputs before they reach the model.
+    *   *Why B is incorrect:* Differential privacy protects training data from reconstruction via model inversion; it does not defend against adversarial perturbations on inference inputs.
+    *   *Why C is incorrect:* Disk encryption protects data at rest; it is irrelevant to manipulated inputs submitted through a live API.
+    *   *Why D is incorrect:* Private Link restricts network access but does not prevent a legitimate internal user (or compromised system) from sending adversarial inputs.

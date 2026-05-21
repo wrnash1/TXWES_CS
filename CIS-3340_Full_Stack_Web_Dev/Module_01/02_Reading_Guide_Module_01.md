@@ -4,49 +4,46 @@
 ---
 
 ### Introduction
-Welcome to **Module 01 - HTML5 Semantics & SEO**! This week's study material focuses on the core foundations and configuration mechanics of **HTML5 Semantics & SEO** as aligned with the **AWS Certified Developer - Associate** certification framework. Understanding these topics is essential not only for passing the certification exam but also for administering enterprise systems in real-world environments.
-
-As a student, you will learn the primary operational roles, command syntaxes, and troubleshooting parameters needed to design, configure, and maintain these services. We will explore how different protocols establish connections, how configurations manage resource allocation, and how security controls prevent access breaches. Make sure to complete the checklists and review the glossary terms in detail before beginning the lab activity.
+Welcome to **Module 01 - HTML5 Semantics & SEO**! This module covers the foundational building blocks of every web application: structured HTML5 markup and the principles that make pages discoverable and accessible. You will learn how semantic elements communicate page meaning to browsers, assistive technologies, and search engine crawlers. Mastering clean, well-structured HTML is a prerequisite skill before moving into CSS layout, JavaScript interactivity, and cloud deployment.
 
 ---
 
 ### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
+Review these essential definitions carefully before beginning the lab and quiz:
 
-*   **Semantic markup**: HTML tags that convey the meaning and structure of the enclosed content to both the browser and search engines (e.g., <header>, <article>, <footer>) instead of generic containers.
-*   **SEO optimization**: Search Engine Optimization; practices designed to improve the visibility and ranking of web pages in search engine results through clean HTML, meta tags, and alt text.
-*   **head tags**: Elements placed inside the <head> block of an HTML document that define metadata, links to stylesheets, scripts, character sets, and page titles.
-*   **accessibility guidelines (WCAG)**: Web Content Accessibility Guidelines; international standards ensuring web content is usable for people with disabilities (e.g., screen reader compatibility, color contrast).
-*   **metadata.**: A primary configuration standard and technical parameter essential for coordinating HTML5 Semantics & SEO activities, enforcing security boundaries, and verifying operational statuses within the programming environment.
+*   **Semantic markup**: HTML elements that describe the *meaning* of their content — such as `<header>`, `<nav>`, `<article>`, `<section>`, `<aside>`, and `<footer>` — rather than just controlling visual presentation. Semantic markup helps browsers, screen readers, and search engine crawlers correctly interpret page structure and improves both SEO ranking and accessibility compliance.
+*   **SEO (Search Engine Optimization)**: A set of practices for improving a page's visibility in organic search results. In HTML, this includes writing descriptive `<title>` tags, meaningful `<meta name="description">` content, proper heading hierarchy (`<h1>`–`<h6>`), and descriptive `alt` attributes on images so crawlers can index content accurately.
+*   **Head tags**: Elements placed inside the `<head>` block of an HTML document that define document metadata — including `<meta charset>`, `<meta name="viewport">`, `<title>`, stylesheet `<link>` references, and `<script>` deferred loads. These elements are not rendered in the visible page body but control browser behavior and search engine indexing.
+*   **Accessibility guidelines (WCAG)**: The Web Content Accessibility Guidelines published by the W3C; a set of international standards organized around four principles — Perceivable, Operable, Understandable, and Robust (POUR). Compliance ensures that users with visual, motor, or cognitive disabilities can navigate and consume web content, typically enforced by writing proper `alt` text, ARIA labels, sufficient color contrast, and keyboard-navigable focus management.
+*   **Metadata**: Structured data embedded in the `<head>` of an HTML document — such as `<meta name="description">`, `<meta name="author">`, Open Graph tags, and `<meta name="viewport" content="width=device-width, initial-scale=1">` — that is consumed by browsers, crawlers, and social media parsers but is not displayed to end users on the page.
 
 ---
 
 ### 2. Certification Exam Tips
-*   **Focus Area:** Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
-*   **Scenario Trap:** Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
-*   **Study Resource:** To reinforce these concepts visually, review this targeted search query: [Full Stack Web Development Course by freeCodeCamp - HTML5 Semantics & SEO](https://www.youtube.com/watch?v=nu_pCVPKzTk).
+*   **HTML Foundations for AWS DVA-C02:** While the DVA-C02 exam does not directly test HTML syntax, understanding how front-end assets are structured is essential for deploying full-stack applications on AWS. Static HTML/CSS/JS builds are uploaded to S3 buckets and served through CloudFront — knowing what a "static site" means in practice is foundational.
+*   **Accessibility and Compliance:** Know that WCAG compliance is a legal requirement for many enterprise applications. When AWS Amplify or Elastic Beanstalk is used to serve a front-end, the HTML the server returns is still your responsibility. Always use semantic elements to make pages screen-reader compatible.
+*   **Study Resource:** The MDN Web Docs are the most authoritative reference for HTML semantics. [MDN HTML Reference — Semantic Elements](https://developer.mozilla.org/en-US/docs/Glossary/Semantics#semantics_in_html) provides interactive examples and browser compatibility tables for every semantic tag covered in this module.
 
 ---
 
 ### Required Readings & Videos
 To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the section/chapter covering **HTML5 Semantics & SEO** in the OER Textbook: [Full Stack Open by University of Helsinki](https://fullstackopen.com/en/).
-*   **Required Video:** Watch the video lecture on **HTML5 Semantics & SEO** in the official course playlist: [Full Stack Web Development Course by freeCodeCamp](https://www.youtube.com/watch?v=nu_pCVPKzTk).
+*   **Required Reading:** Read the section covering **HTML5 Semantics & Structure** in the OER Textbook: [Full Stack Open by University of Helsinki](https://fullstackopen.com/en/) — this free, peer-reviewed resource is used throughout the course.
+*   **Required Video:** Watch the HTML fundamentals section of the [Full Stack Web Development Course by freeCodeCamp on YouTube](https://www.youtube.com/watch?v=nu_pCVPKzTk) — a comprehensive open-access video covering HTML, CSS, and JavaScript from scratch.
 
 ---
 
 ### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Draft a structured HTML page using semantic tags**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-*   **Verify tags against accessibility validator**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-*   **Write descriptive alt text**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-
+In this week's hands-on lab, you will apply semantic HTML concepts directly:
+*   **Draft a structured HTML page using semantic tags**: Build a complete page skeleton using `<header>`, `<nav>`, `<main>`, `<article>`, `<aside>`, and `<footer>` — replacing all `<div>` containers with meaningful equivalents where appropriate.
+*   **Verify tags against accessibility validator**: Run your HTML file through the [W3C Nu HTML Checker](https://validator.w3.org/nu/) to identify missing `alt` attributes, duplicate `<h1>` tags, or malformed structure.
+*   **Write descriptive alt text**: Add meaningful `alt` attributes to all `<img>` elements — describing the image content for screen reader users rather than leaving the attribute empty or using filename strings.
 
 ---
 
 ### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read the section/chapter covering **HTML5 Semantics & SEO** in [Full Stack Open by University of Helsinki](https://fullstackopen.com/en/).
-- [ ] Watch the video lecture on **HTML5 Semantics & SEO** in [Full Stack Web Development Course by freeCodeCamp](https://www.youtube.com/watch?v=nu_pCVPKzTk).
-- [ ] Review the commands outlined in the lab instructions.
+- [ ] Read the glossary terms and understand their definitions in context.
+- [ ] Read the section covering **HTML5 Semantics** in [Full Stack Open by University of Helsinki](https://fullstackopen.com/en/).
+- [ ] Watch the HTML fundamentals section of the [Full Stack Web Development Course by freeCodeCamp](https://www.youtube.com/watch?v=nu_pCVPKzTk).
+- [ ] Review the semantic elements and accessibility requirements outlined in the lab instructions.
 - [ ] Proceed to the weekly hands-on lab activity.

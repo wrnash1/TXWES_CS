@@ -1,79 +1,76 @@
-# Quiz: Module 04 - Analyzing Vulnerability Reports
+# Quiz: Module 04 - Log Analysis and SIEM Operations
 ## Course: CIS-4332_Cyber_Analyst (CompTIA CySA+)
 
 ---
 
 **Question 1**
-Which CVSS metric group represents the characteristics of a vulnerability that constant over time and across environments?
+Which CVSS metric group represents the characteristics of a vulnerability that are constant over time and across environments?
 *   A) Base Metric Group
 *   B) Temporal Metric Group
 *   C) Environmental Metric Group
 *   D) Local Metric Group
 *   **Correct Answer:** A) Base metrics represent the core qualities of the vulnerability that do not change.
 *   **Distractor Analysis:**
-    *   *Why correct:* Base metrics represent the core qualities of the vulnerability that do not change.
-    *   Temporal metrics reflect threat activity. Environmental metrics reflect local network importance.
+    *   *Why correct:* Base metrics represent intrinsic, unchanging characteristics of a vulnerability such as attack vector, attack complexity, and impact scope.
+    *   Temporal metrics change over time as exploits and patches emerge. Environmental metrics reflect the specific local context of the organization.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **CVSS scoring system**?
-B) The operational principle of a queue, where the first element added is the first one to be removed, mimicking a line at a checkout register.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within security operations.
-C) HTML tags that convey the meaning and structure of the enclosed content to both the browser and search engines (e.g., <header>, <article>, <footer>) instead of generic containers.
-D) Elements placed inside the <head> block of an HTML document that define metadata, links to stylesheets, scripts, character sets, and page titles.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within security operations.
+In a SIEM context, which of the following most accurately defines **SIEM dashboards**?
+*   A) Firewall rule sets that automatically block traffic matching known malicious signatures in real time
+*   B) Visual interfaces in a SIEM platform that aggregate security metrics, alert trends, and event data to give analysts situational awareness across monitored systems
+*   C) Encrypted tunnels that forward raw log data from endpoints to a centralized log aggregation server
+*   D) Automated playbooks that execute containment actions such as account lockouts when a correlation rule fires
+*   **Correct Answer:** B) Visual interfaces in a SIEM platform that aggregate security metrics, alert trends, and event data to give analysts situational awareness across monitored systems.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **CVSS scoring system**.
-    * *Why A is correct:* This describes the exact role and function of **CVSS scoring system**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **CVSS scoring system**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **CVSS scoring system**.
-
+    *   *Why A is incorrect:* Blocking traffic based on signatures is the function of an IPS, not a SIEM dashboard; a SIEM detects and alerts but does not block.
+    *   *Why B is correct:* SIEM dashboards provide real-time visual summaries of alert volumes, top event sources, geographic activity, and severity breakdowns — enabling analysts to prioritize investigations during a shift.
+    *   *Why C is incorrect:* Encrypted log forwarding describes a log transport mechanism (e.g., syslog-ng with TLS), not a SIEM dashboard function.
+    *   *Why D is incorrect:* Automated playbooks that take containment actions describe SOAR (Security Orchestration, Automation, and Response) functionality, which is separate from SIEM dashboards.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **display the detailed metadata and validation parameters of an SSL/TLS digital certificate**. Which of the following commands is the most appropriate to execute?
-C) nmap -sV -p 1-1024 target_ip
-B) wireshark
-A) openssl x509 -text -noout -in cert.pem
-D) hydra -l admin -P passwords.txt ssh://target
-*   **Correct Answer:** A) openssl x509 -text -noout -in cert.pem
+A SOC analyst is investigating a potential brute-force attack on a Linux SSH server. Which log file and command should the analyst query first to identify failed authentication attempts?
+*   A) `grep 'Failed password' /var/log/auth.log` — searches the Linux authentication log for failed SSH login entries
+*   B) `cat /var/log/syslog | grep ERROR` — searches the general system log for error-level messages
+*   C) `tail -f /var/log/apache2/access.log` — streams the latest entries from the Apache web server access log
+*   D) `journalctl -u nginx` — retrieves log entries for the nginx web service from systemd journal
+*   **Correct Answer:** A) `grep 'Failed password' /var/log/auth.log` — searches the Linux authentication log for failed SSH login entries.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `openssl x509 -text -noout -in cert.pem` command is directly designed to display the detailed metadata and validation parameters of an SSL/TLS digital certificate.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is correct:* `/var/log/auth.log` records all authentication events on Linux systems including SSH login attempts; the string "Failed password" appears for each unsuccessful credential submission, making this the direct data source for brute-force investigation.
+    *   *Why B is incorrect:* `/var/log/syslog` is a general system log that captures many event types; while SSH events may appear there on some distributions, `auth.log` is the authoritative source for authentication-specific events.
+    *   *Why C is incorrect:* The Apache access log records HTTP web requests, not SSH authentication events.
+    *   *Why D is incorrect:* `journalctl -u nginx` retrieves nginx web server logs; these are unrelated to SSH authentication failures.
 
 ---
 
 **Question 4**
-While working on **Analyzing Vulnerability Reports** in a production environment, you encounter a system alert indicating a **Certificate Expired Error** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-C) Review active security rules and add a permissive firewall rule allowing the specific source IP and destination port.
-D) Reboot the physical machine and wait for services to reload.
-A) Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA.
-B) Tune the detection signatures and define exceptions for authorized administrative activities.
-*   **Correct Answer:** A) Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA.
+A SIEM correlation rule is generating hundreds of alerts per day for a known administrative scanning tool used by the network team. Which action best resolves this without reducing overall detection coverage?
+*   A) Delete the correlation rule entirely to eliminate the false positives
+*   B) Add an exception to the rule that excludes the network team's authorized scanner IP addresses and document the change
+*   C) Increase the correlation rule threshold to require 10,000 events before firing instead of the current setting
+*   D) Disable all network scanning across the organization to prevent the alerts from occurring
+*   **Correct Answer:** B) Add an exception to the rule that excludes the network team's authorized scanner IP addresses and document the change.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This action does not resolve the root cause of Certificate Expired Error.
-    * *Why D is incorrect:* This action does not resolve the root cause of Certificate Expired Error.
-    * *Why A is correct:* Because The SSL/TLS digital certificate presented by the server has passed its validity end date, causing clients to block connections. The appropriate fix is to Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA..
-    * *Why B is incorrect:* This action does not resolve the root cause of Certificate Expired Error.
-
+    *   *Why A is incorrect:* Deleting the rule removes detection coverage for genuine attacks using the same pattern; tuning is always preferable to removal.
+    *   *Why B is correct:* Adding an IP-based exception for authorized scanners suppresses known-good activity while preserving the rule's ability to fire on identical behavior from unauthorized sources — this is standard SIEM tuning practice.
+    *   *Why C is incorrect:* Raising the threshold to an unrealistic value effectively disables the rule for real attack scenarios and does not address the root cause of authorized scanner noise.
+    *   *Why D is incorrect:* Disabling authorized scanning removes a critical security monitoring capability; the SIEM rule should be tuned, not the business process removed.
 
 ---
 
 **Question 5**
-When designing a system for **Analyzing Vulnerability Reports**, you must mitigate the risk of **Attackers cracking weak encryption keys using commodity hardware, compromises confidentiality.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Enforce RSA keys with a minimum length of 2048/4096 bits or switch to Elliptic Curve Cryptography (ECC).
-C) Enable full disk encryption on all client endpoints.
-B) Forward all system logs to a secure, write-once SIEM (Security Information and Event Management) platform.
-D) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Enforce RSA keys with a minimum length of 2048/4096 bits or switch to Elliptic Curve Cryptography (ECC).
+An organization wants to ensure that if an attacker compromises a server and attempts to clear the local event logs, the activity is still detectable. Which two controls together best achieve this goal?
+*   A) Enable full-disk encryption and require smart card authentication for all administrators
+*   B) Forward logs in real time to a centralized write-protected SIEM, and create a correlation rule that alerts when the Windows Security Event Log is cleared (Event ID 1102)
+*   C) Deploy an antivirus solution and run daily vulnerability scans against all servers
+*   D) Implement network segmentation and restrict outbound traffic using firewall ACLs
+*   **Correct Answer:** B) Forward logs in real time to a centralized write-protected SIEM, and create a correlation rule that alerts when the Windows Security Event Log is cleared (Event ID 1102).
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Enforce RSA keys with a minimum length of 2048/4096 bits or switch to Elliptic Curve Cryptography (ECC). mitigates the risk of Attackers cracking weak encryption keys using commodity hardware, compromises confidentiality..
-    * *Why C is incorrect:* This does not address the security vulnerability of Weak Key Strength.
-    * *Why B is incorrect:* This does not address the security vulnerability of Weak Key Strength.
-    * *Why D is incorrect:* This does not address the security vulnerability of Weak Key Strength.
+    *   *Why A is incorrect:* Disk encryption and smart card auth address access control and data-at-rest confidentiality; neither preserves log integrity after a system is already compromised.
+    *   *Why B is correct:* Real-time log forwarding to an immutable SIEM preserves evidence even if local logs are deleted, and a correlation rule on Event ID 1102 (audit log cleared) provides an immediate alert when the deletion occurs — combining prevention of evidence loss with active detection.
+    *   *Why C is incorrect:* Antivirus and vulnerability scanning address malware and patch management; they do not preserve or protect log data from deletion.
+    *   *Why D is incorrect:* Network segmentation and firewall ACLs limit lateral movement and exfiltration; they do not protect local log integrity after host compromise.
 

@@ -1,79 +1,81 @@
 # Quiz: Module 04 - Azure Container Services
+
 ## Course: CIS-4331_Azure_Cloud (Microsoft Azure Fundamentals (AZ-900))
 
 ---
 
 **Question 1**
 What is the fastest way to run a single Docker container in Azure without provisioning virtual machines?
-*   A) Azure Kubernetes Service (AKS)
-*   B) Azure Container Instances (ACI)
-*   C) Azure Functions
-*   D) Windows Server container host
-*   **Correct Answer:** B) ACI is a serverless container solution designed to quickly run single containers without VM management overhead.
-*   **Distractor Analysis:**
-    *   *Why correct:* ACI is a serverless container solution designed to quickly run single containers without VM management overhead.
-    *   AKS is for full container orchestrations and requires cluster provisioning.
+
+* A) Azure Kubernetes Service (AKS)
+* B) Azure Container Instances (ACI)
+* C) Azure Functions
+* D) Windows Server container host
+* **Correct Answer:** B) ACI is a serverless container solution designed to quickly run single containers without VM management overhead.
+* **Distractor Analysis:**
+  * *Why correct:* ACI is a serverless container solution designed to quickly run single containers without VM management overhead.
+  * *Why A is incorrect:* AKS is for full container orchestration and requires cluster provisioning.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **serverless computing.**?
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within cloud operations.
-B) The configuration of input data that forces an algorithm to perform the maximum number of operations, providing a guaranteed upper limit on execution time.
-D) The termination condition in a recursive function that stops further recursive calls and begins unwinding the call stack, preventing infinite execution.
-C) The maximum acceptable age of data that must be recovered from backup storage to restore operations, representing the limit of tolerable data loss.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within cloud operations.
-*   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **serverless computing.**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **serverless computing.**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **serverless computing.**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **serverless computing.**.
+Which of the following most accurately describes **serverless computing** in the context of Azure?
 
+* A) A cloud execution model where the provider dynamically allocates and manages all underlying infrastructure, and the customer is billed only for actual execution time rather than reserved capacity.
+* B) A deployment model where no servers are used at all — workloads run entirely on client devices.
+* C) A licensing model where servers are provided free of charge by the cloud provider to qualifying startups.
+* D) An on-premises architecture where physical servers are replaced with software-defined virtual servers managed by the customer.
+* **Correct Answer:** A) Serverless computing means the provider manages all infrastructure dynamically; billing is based on execution time, not reserved capacity.
+* **Distractor Analysis:**
+  * *Why A is correct:* Serverless abstracts infrastructure management — servers exist but are fully managed by the provider. Azure Functions and ACI are examples.
+  * *Why B is incorrect:* Serverless does not mean no servers exist — it means the customer does not manage them.
+  * *Why C is incorrect:* Serverless is not a licensing model; it is a deployment and billing model tied to execution-based pricing.
+  * *Why D is incorrect:* That describes on-premises virtualization, which is the opposite of cloud serverless.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **query the cloud API to retrieve a list of all active virtual machines in the project**. Which of the following commands is the most appropriate to execute?
-B) terraform apply
-D) aws s3 sync local_dir s3://my-bucket
-A) gcloud compute instances list
-C) kubectl get pods -n production
-*   **Correct Answer:** A) gcloud compute instances list
-*   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `gcloud compute instances list` command is directly designed to query the cloud API to retrieve a list of all active virtual machines in the project.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
+A development team needs to run a microservices application composed of 15 interdependent containers with service discovery, rolling deployments, and auto-healing. Which Azure service best addresses these requirements?
 
+* A) Azure Container Instances
+* B) Azure Kubernetes Service
+* C) Azure App Service
+* D) Azure Virtual Machine Scale Sets
+* **Correct Answer:** B) Azure Kubernetes Service provides full container orchestration including service discovery, rolling updates, and self-healing for complex multi-container applications.
+* **Distractor Analysis:**
+  * *Why B is correct:* AKS is purpose-built for orchestrating multiple interdependent containers with advanced features like rolling deployments and service mesh.
+  * *Why A is incorrect:* ACI runs individual containers without orchestration — it does not support service discovery or rolling deployments across containers.
+  * *Why C is incorrect:* App Service is PaaS for web apps; it does not provide Kubernetes-style container orchestration.
+  * *Why D is incorrect:* VMSS scales identical VMs, not containers, and does not provide container service discovery.
 
 ---
 
 **Question 4**
-While working on **Azure Container Services** in a production environment, you encounter a system alert indicating a **IAM Access Denied** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-C) Set up billing alerts, delete unused volumes, and configure auto-scaling scale-down policies.
-A) Review the user's IAM policies and attach the specific policy granting permissions for the resource action.
-D) Reboot the physical machine and wait for services to reload.
-B) Check the VPC route table for an Internet Gateway path and verify that the security group allows incoming traffic.
-*   **Correct Answer:** A) Review the user's IAM policies and attach the specific policy granting permissions for the resource action.
-*   **Distractor Analysis:**
-    * *Why C is incorrect:* This action does not resolve the root cause of IAM Access Denied.
-    * *Why A is correct:* Because The user account or service role lacks the explicit IAM permissions required to execute the API call. The appropriate fix is to Review the user's IAM policies and attach the specific policy granting permissions for the resource action..
-    * *Why D is incorrect:* This action does not resolve the root cause of IAM Access Denied.
-    * *Why B is incorrect:* This action does not resolve the root cause of IAM Access Denied.
+A company stores container image configurations and source code in public GitHub repositories. They accidentally committed a production Azure storage connection string. Which action most directly mitigates the immediate risk?
 
+* A) Enable Azure Defender for Containers on the AKS cluster
+* B) Rotate the storage account key immediately and update the application to use Azure Key Vault for secret retrieval
+* C) Move the container registry from public to private network access
+* D) Enable read-only locks on the storage account resource
+* **Correct Answer:** B) Rotating the compromised key immediately invalidates the exposed credential, and using Azure Key Vault prevents future hardcoded secrets.
+* **Distractor Analysis:**
+  * *Why B is correct:* The exposed connection string must be invalidated immediately by rotating the key. Key Vault then provides a secure, audited way to store and retrieve secrets without hardcoding.
+  * *Why A is incorrect:* Defender for Containers monitors runtime threats — it does not revoke already-exposed credentials.
+  * *Why C is incorrect:* Making the registry private does not help since the connection string, not the registry, is compromised.
+  * *Why D is incorrect:* A ReadOnly lock prevents deletion and configuration changes but does not revoke an already-exposed access key.
 
 ---
 
 **Question 5**
-When designing a system for **Azure Container Services**, you must mitigate the risk of **Storing sensitive corporate documents in publicly readable cloud buckets, leading to data breaches.**. Which of the following security configurations or controls represents the best practice to implement?
-D) Enable full disk encryption on all client endpoints.
-B) Enforce temporary credentials (STS), rotate keys regularly, and never hardcode API keys in repositories.
-C) Enable full disk encryption on all client endpoints.
-A) Enable Block Public Access configurations and enforce access control via IAM or signed URLs.
-*   **Correct Answer:** A) Enable Block Public Access configurations and enforce access control via IAM or signed URLs.
-*   **Distractor Analysis:**
-    * *Why D is incorrect:* This does not address the security vulnerability of Publicly Exposed Storage Buckets.
-    * *Why B is incorrect:* This does not address the security vulnerability of Publicly Exposed Storage Buckets.
-    * *Why C is incorrect:* This does not address the security vulnerability of Publicly Exposed Storage Buckets.
-    * *Why A is correct:* Implementing Enable Block Public Access configurations and enforce access control via IAM or signed URLs. mitigates the risk of Storing sensitive corporate documents in publicly readable cloud buckets, leading to data breaches..
+When choosing between Azure Container Instances and Azure Kubernetes Service, which scenario is ACI the more appropriate choice?
 
+* A) Running 50 microservices with interdependencies, persistent volumes, and blue-green deployments
+* B) Orchestrating a containerized application that requires automatic certificate renewal and service mesh
+* C) Quickly running a one-off batch processing container that completes and terminates within minutes
+* D) Hosting a production application requiring 99.99% uptime across multiple availability zones
+* **Correct Answer:** C) ACI is ideal for short-lived, single-container workloads like batch jobs that run to completion — no cluster management required.
+* **Distractor Analysis:**
+  * *Why C is correct:* ACI's serverless, per-second billing and instant startup make it perfect for burst or batch workloads without persistent orchestration needs.
+  * *Why A is incorrect:* Fifty interdependent microservices require AKS's orchestration capabilities, not ACI's single-container model.
+  * *Why B is incorrect:* Certificate management and service mesh are AKS features — ACI does not provide these.
+  * *Why D is incorrect:* High-availability production workloads spanning zones require AKS cluster configuration, not ACI's ephemeral model.

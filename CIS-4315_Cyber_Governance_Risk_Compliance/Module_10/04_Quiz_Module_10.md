@@ -1,79 +1,77 @@
-# Quiz: Module 10 - Privacy Regulations (GDPR, CCPA)
+# Quiz: Module 10 - Incident Response – Containment, Eradication, Recovery
 ## Course: CIS-4315_Cyber_Governance_Risk_Compliance (ISACA Certified Information Security Manager (CISM))
 
 ---
 
 **Question 1**
 What is the primary focus of the General Data Protection Regulation (GDPR)?
-*   A) Securing financial reports
-*   B) Protecting data privacy and individual rights for citizens of the European Union
-*   C) Regulating defense networks
-*   D) Setting software speed targets
-*   **Correct Answer:** B) GDPR enforces strict guidelines on how personal data (PII) is collected, stored, and processed for EU residents.
+*   A) Securing financial reporting systems for publicly traded companies in the European Union
+*   B) Protecting the privacy rights and personal data of European Union residents, regardless of where the processing organization is located
+*   C) Regulating cybersecurity standards for critical infrastructure operators in EU member states
+*   D) Setting minimum software security development standards for applications sold within the EU
+*   **Correct Answer:** B) GDPR grants EU residents rights over their personal data and applies to any organization worldwide that processes personal data of EU residents.
 *   **Distractor Analysis:**
-    *   *Why correct:* GDPR enforces strict guidelines on how personal data (PII) is collected, stored, and processed for EU residents.
-    *   GDPR covers personal privacy, not corporate accounting or military systems.
+    *   *Why B is correct:* GDPR's scope is defined by the data subject's location, not the organization's location — any company processing EU residents' data must comply.
+    *   *Why A is incorrect:* SOX covers financial reporting systems; GDPR does not address financial reporting requirements.
+    *   *Why C is incorrect:* The EU NIS Directive (and NIS2) addresses critical infrastructure cybersecurity; GDPR focuses specifically on personal data privacy.
+    *   *Why D is incorrect:* Software security development standards are not within GDPR's scope; GDPR addresses personal data processing practices.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Personally Identifiable Information (PII)**?
-D) The operational principle of a queue, where the first element added is the first one to be removed, mimicking a line at a checkout register.
-C) The method of evaluating an algorithm's efficiency by analyzing its behavior as the input size approaches infinity, focusing on growth rates rather than specific hardware speeds.
-B) The core security model consisting of Confidentiality (preventing unauthorized access), Integrity (preventing unauthorized modification), and Availability (ensuring systems are accessible when needed).
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
+Which of the following most accurately describes **Personally Identifiable Information (PII)**?
+*   A) All data stored within an organization's databases, regardless of its content or sensitivity
+*   B) Information that is exclusively contained in government-issued identity documents such as passports
+*   C) Any data that can identify, locate, or contact a specific individual, either alone or in combination with other information
+*   D) Encrypted data that has been anonymized using approved cryptographic techniques
+*   **Correct Answer:** C) PII is broadly defined as data that enables the identification of a specific individual — it includes names, addresses, SSNs, email addresses, IP addresses, and combinations of data that together enable identification.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Personally Identifiable Information (PII)**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Personally Identifiable Information (PII)**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Personally Identifiable Information (PII)**.
-    * *Why A is correct:* This describes the exact role and function of **Personally Identifiable Information (PII)**.
-
+    *   *Why A is incorrect:* Not all organizational data is PII; confidential business information, public data, and anonymized data are not PII.
+    *   *Why B is incorrect:* PII is not limited to government documents; it includes any identifying data regardless of source.
+    *   *Why C is correct:* This captures both direct identifiers (SSN, name) and indirect identifiers (combinations of data) that regulatory definitions of PII encompass.
+    *   *Why D is incorrect:* Properly anonymized data no longer constitutes PII because it cannot be re-linked to an individual; encryption alone does not anonymize data.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **launch all application services in the background using docker-compose configuration**. Which of the following commands is the most appropriate to execute?
-A) docker-compose up -d
-D) systemctl status iot_service
-C) git log --oneline -n 5
-B) terraform validate
-*   **Correct Answer:** A) docker-compose up -d
+A U.S.-based e-commerce company processes orders from customers in Germany, France, and Spain. Which privacy regulation most directly governs the company's handling of those customers' personal data?
+*   A) CCPA (California Consumer Privacy Act)
+*   B) HIPAA (Health Insurance Portability and Accountability Act)
+*   C) GDPR (General Data Protection Regulation)
+*   D) GLBA (Gramm-Leach-Bliley Act)
+*   **Correct Answer:** C) GDPR applies based on the location of the data subjects — EU residents in Germany, France, and Spain are protected by GDPR regardless of where the processing organization is headquartered.
 *   **Distractor Analysis:**
-    * *Why A is correct:* The `docker-compose up -d` command is directly designed to launch all application services in the background using docker-compose configuration.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is incorrect:* CCPA applies to California residents' data; it does not govern EU residents' personal data.
+    *   *Why B is incorrect:* HIPAA governs protected health information in the healthcare industry; it does not apply to e-commerce customer purchase data.
+    *   *Why C is correct:* GDPR's extraterritorial reach (Article 3) explicitly covers data processing of EU residents by organizations outside the EU.
+    *   *Why D is incorrect:* GLBA governs U.S. financial institutions' handling of customer financial information; it does not apply to EU residents' data.
 
 ---
 
 **Question 4**
-While working on **Privacy Regulations (GDPR, CCPA)** in a production environment, you encounter a system alert indicating a **SLA Breach Alert** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-B) Re-assign resources to critical path tasks and establish clear communication protocols.
-A) Optimize service resources, implement load balancing, or update failover mechanisms.
-D) Reboot the physical machine and wait for services to reload.
-C) Implement strict change control boards (CCB) and re-baseline the project constraints.
-*   **Correct Answer:** A) Optimize service resources, implement load balancing, or update failover mechanisms.
+Under GDPR, within how many hours of discovering a personal data breach must an organization notify the relevant supervisory authority?
+*   A) 24 hours
+*   B) 48 hours
+*   C) 72 hours
+*   D) 7 days
+*   **Correct Answer:** C) GDPR Article 33 requires notification to the supervisory authority within 72 hours of the organization becoming aware of the breach, where feasible.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This action does not resolve the root cause of SLA Breach Alert.
-    * *Why A is correct:* Because A system outage or slow response time has exceeded the limits guaranteed in the Service Level Agreement. The appropriate fix is to Optimize service resources, implement load balancing, or update failover mechanisms..
-    * *Why D is incorrect:* This action does not resolve the root cause of SLA Breach Alert.
-    * *Why C is incorrect:* This action does not resolve the root cause of SLA Breach Alert.
-
+    *   *Why A is incorrect:* A 24-hour timeline is not the GDPR standard; 72 hours is the requirement.
+    *   *Why B is incorrect:* 48 hours is a common distractor; the correct GDPR requirement is 72 hours.
+    *   *Why C is correct:* This is the explicit GDPR requirement — 72 hours to the supervisory authority, with notification to affected individuals when the breach is likely to result in high risk to their rights and freedoms.
+    *   *Why D is incorrect:* A 7-day timeline would violate GDPR's notification requirement; this matches some older, less stringent breach laws but not GDPR.
 
 ---
 
 **Question 5**
-When designing a system for **Privacy Regulations (GDPR, CCPA)**, you must mitigate the risk of **A disaster or ransomware attack causing prolonged downtime because recovery steps are undocumented.**. Which of the following security configurations or controls represents the best practice to implement?
-B) Establish formal authorization procedures and digital signatures for all project scope modifications.
-D) Enable full disk encryption on all client endpoints.
-C) Enable full disk encryption on all client endpoints.
-A) Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services.
-*   **Correct Answer:** A) Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services.
+An EU resident submits a request to a company demanding permanent deletion of all personal data the company holds about them, citing GDPR Article 17. The company's marketing team argues the data is still needed for targeting future campaigns. Under GDPR, which response is most appropriate?
+*   A) Retain the data indefinitely since legitimate business interest overrides all erasure requests
+*   B) Delete the data within the required timeframe unless a specific legal basis (legal obligation, legitimate interest override, or ongoing legal proceedings) exists to retain it
+*   C) Anonymize the data and continue using it for marketing, satisfying the erasure request
+*   D) Transfer the data to a third-party processor to remove it from the company's own systems without deleting it
+*   **Correct Answer:** B) GDPR's right to erasure is not absolute — organizations must delete data unless a specific enumerated exception applies; "we want to keep using it for marketing" is not a valid exception once consent is withdrawn.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
-    * *Why D is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
-    * *Why C is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
-    * *Why A is correct:* Implementing Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services. mitigates the risk of A disaster or ransomware attack causing prolonged downtime because recovery steps are undocumented..
-
+    *   *Why A is incorrect:* "Legitimate business interest" does not automatically override a valid erasure request when consent was the legal basis for processing; GDPR provides specific, limited exceptions.
+    *   *Why B is correct:* The right to erasure requires deletion unless one of GDPR Article 17(3)'s specific exceptions applies — continued marketing use is not an exception after an erasure request.
+    *   *Why C is incorrect:* True anonymization (which severs all re-identification possibility) would technically satisfy the request, but incomplete anonymization that preserves targeting ability does not.
+    *   *Why D is incorrect:* Transferring data to a processor does not constitute deletion and would violate the erasure request; the data controller remains responsible for data processing by its processors.

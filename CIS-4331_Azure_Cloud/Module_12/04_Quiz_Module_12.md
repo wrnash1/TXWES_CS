@@ -1,79 +1,81 @@
 # Quiz: Module 12 - Azure Governance & Compliance
+
 ## Course: CIS-4331_Azure_Cloud (Microsoft Azure Fundamentals (AZ-900))
 
 ---
 
 **Question 1**
 Which resource lock type prevents users from deleting a resource but still allows them to read and modify it?
-*   A) ReadOnly
-*   B) CanNotDelete
-*   C) WriteLock
-*   D) DeleteLock
-*   **Correct Answer:** B) The `CanNotDelete` lock allows read and write modifications but blocks deletion requests.
-*   **Distractor Analysis:**
-    *   *Why correct:* The `CanNotDelete` lock allows read and write modifications but blocks deletion requests.
-    *   ReadOnly blocks both deletions and writes.
+
+* A) ReadOnly
+* B) CanNotDelete
+* C) WriteLock
+* D) DeleteLock
+* **Correct Answer:** B) The `CanNotDelete` lock allows read and write modifications but blocks deletion requests.
+* **Distractor Analysis:**
+  * *Why correct:* CanNotDelete permits all read and write operations — it only blocks the delete action.
+  * *Why A is incorrect:* ReadOnly is more restrictive — it blocks both write modifications and delete operations, allowing only reads.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Azure Blueprints**?
-C) A deployment model that uses two identical production environments (Blue and Green) to minimize downtime and risk; updates are deployed to the idle environment before routing live traffic.
-D) A node in a tree structure that has no child nodes (its children point to null), representing the termination points of the branches.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within cloud operations.
-B) A complete binary tree where the key of any parent node is less than or equal to the keys of its children, guaranteeing the root is always the minimum element.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within cloud operations.
-*   **Distractor Analysis:**
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Azure Blueprints**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Azure Blueprints**.
-    * *Why A is correct:* This describes the exact role and function of **Azure Blueprints**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Azure Blueprints**.
+Which of the following most accurately describes **Azure Blueprints**?
 
+* A) A service that packages multiple governance artifacts — including ARM templates, RBAC role assignments, and Azure Policy assignments — into a single deployable unit for setting up compliant Azure environments consistently and repeatedly.
+* B) A service that evaluates individual Azure resource configurations against defined rules and can deny non-compliant deployments or trigger automatic remediation.
+* C) A name-value metadata label applied to Azure resources to organize them by department, environment, or project for cost tracking and resource filtering.
+* D) A lock applied at the Resource Group scope that prevents child resources from being modified or deleted, regardless of a user's RBAC permissions.
+* **Correct Answer:** A) Azure Blueprints packages ARM templates, RBAC assignments, and Policy assignments together for repeatable, compliant environment deployment.
+* **Distractor Analysis:**
+  * *Why A is correct:* Blueprints are about packaging and deploying a consistent set of governance artifacts — they are the "environment template" including policies, roles, and infrastructure.
+  * *Why B is incorrect:* That describes Azure Policy, which evaluates and enforces individual resource configuration rules.
+  * *Why C is incorrect:* That describes Resource Tags, which are metadata labels with no enforcement mechanism of their own.
+  * *Why D is incorrect:* That describes Resource Locks, which prevent modification or deletion of specific resources.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **query the cloud API to retrieve a list of all active virtual machines in the project**. Which of the following commands is the most appropriate to execute?
-C) aws s3 sync local_dir s3://my-bucket
-D) terraform apply
-A) gcloud compute instances list
-B) kubectl get pods -n production
-*   **Correct Answer:** A) gcloud compute instances list
-*   **Distractor Analysis:**
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `gcloud compute instances list` command is directly designed to query the cloud API to retrieve a list of all active virtual machines in the project.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
+An organization wants to ensure that every Azure VM deployed must use an approved VM SKU list and must have a cost-center tag. What is the correct Azure service to automatically enforce and audit these requirements?
 
+* A) Azure Advisor
+* B) Azure Blueprints
+* C) Azure Policy
+* D) Azure Resource Manager templates
+* **Correct Answer:** C) Azure Policy can deny VM deployments that use unapproved SKUs and audit or enforce tag requirements at deployment time.
+* **Distractor Analysis:**
+  * *Why C is correct:* Azure Policy is the enforcement engine for organizational standards — it can block non-compliant deployments in real time and audit existing resources.
+  * *Why A is incorrect:* Azure Advisor provides recommendations but cannot enforce or block deployments.
+  * *Why B is incorrect:* Azure Blueprints packages multiple governance artifacts together, but the enforcement mechanism within Blueprints is Azure Policy — Policy is the direct answer.
+  * *Why D is incorrect:* ARM templates define what to deploy but cannot by themselves enforce organizational standards across all deployments from all methods.
 
 ---
 
 **Question 4**
-While working on **Azure Governance & Compliance** in a production environment, you encounter a system alert indicating a **Cloud Billing Spike** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-D) Reboot the physical machine and wait for services to reload.
-B) Check the VPC route table for an Internet Gateway path and verify that the security group allows incoming traffic.
-A) Set up billing alerts, delete unused volumes, and configure auto-scaling scale-down policies.
-C) Review the user's IAM policies and attach the specific policy granting permissions for the resource action.
-*   **Correct Answer:** A) Set up billing alerts, delete unused volumes, and configure auto-scaling scale-down policies.
-*   **Distractor Analysis:**
-    * *Why D is incorrect:* This action does not resolve the root cause of Cloud Billing Spike.
-    * *Why B is incorrect:* This action does not resolve the root cause of Cloud Billing Spike.
-    * *Why A is correct:* Because Idle or over-provisioned virtual machine instances and orphan storage volumes are running continuously. The appropriate fix is to Set up billing alerts, delete unused volumes, and configure auto-scaling scale-down policies..
-    * *Why C is incorrect:* This action does not resolve the root cause of Cloud Billing Spike.
+A team accidentally deleted a production virtual network last week. Management wants to prevent this from happening again. Which Azure feature should be applied to protect the VNet going forward?
 
+* A) Azure Policy with a "deny" effect on VNet delete operations
+* B) A CanNotDelete resource lock on the VNet resource
+* C) RBAC Contributor role removal from all team members
+* D) Azure Advisor security recommendation acknowledgment
+* **Correct Answer:** B) A CanNotDelete resource lock prevents deletion of the VNet regardless of the user's RBAC permissions — the lock must be explicitly removed before deletion is possible.
+* **Distractor Analysis:**
+  * *Why B is correct:* Resource locks are the specific mechanism for protecting individual resources from accidental deletion — they operate independently of RBAC.
+  * *Why A is incorrect:* Azure Policy can restrict deployment of new resources but is not designed to block deletion of individual existing resources via a deny effect on delete operations.
+  * *Why C is incorrect:* Removing Contributor access would prevent the team from managing any resource, not just deleting the VNet — this violates least-privilege and is operationally disruptive.
+  * *Why D is incorrect:* Azure Advisor recommendations are informational — acknowledging them does not apply any protection to resources.
 
 ---
 
 **Question 5**
-When designing a system for **Azure Governance & Compliance**, you must mitigate the risk of **Storing sensitive corporate documents in publicly readable cloud buckets, leading to data breaches.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Enable Block Public Access configurations and enforce access control via IAM or signed URLs.
-B) Enforce temporary credentials (STS), rotate keys regularly, and never hardcode API keys in repositories.
-C) Enable full disk encryption on all client endpoints.
-D) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Enable Block Public Access configurations and enforce access control via IAM or signed URLs.
-*   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Enable Block Public Access configurations and enforce access control via IAM or signed URLs. mitigates the risk of Storing sensitive corporate documents in publicly readable cloud buckets, leading to data breaches..
-    * *Why B is incorrect:* This does not address the security vulnerability of Publicly Exposed Storage Buckets.
-    * *Why C is incorrect:* This does not address the security vulnerability of Publicly Exposed Storage Buckets.
-    * *Why D is incorrect:* This does not address the security vulnerability of Publicly Exposed Storage Buckets.
+What is the purpose of resource tags in Azure, and what is an important limitation of tags to know for AZ-900?
 
+* A) Tags enforce security rules on resources — a resource without a required tag cannot be accessed by users.
+* B) Tags are name-value metadata pairs used to organize and filter resources for billing and management. They do not inherit automatically from Resource Groups to child resources — this must be enforced through Azure Policy.
+* C) Tags replace resource locks — applying a "protected" tag prevents a resource from being deleted.
+* D) Tags are geographic location labels that determine which Azure region a resource's data is stored in.
+* **Correct Answer:** B) Tags are metadata for organization and cost tracking. They do not automatically inherit to child resources — Policy is required for enforced inheritance.
+* **Distractor Analysis:**
+  * *Why B is correct:* Tags are purely organizational metadata and do not enforce access, protect resources, or control data location. The lack of automatic inheritance from Resource Groups is a common AZ-900 exam trap.
+  * *Why A is incorrect:* Tags have no security enforcement capability — access is controlled by RBAC and NSGs.
+  * *Why C is incorrect:* Tags cannot protect resources from deletion — that requires a resource lock.
+  * *Why D is incorrect:* Resource location (region) is a separate property set at creation time — tags do not determine or override data residency.

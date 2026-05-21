@@ -1,4 +1,4 @@
-# Quiz: Module 03 - Infrastructure Scanning Tools
+# Quiz: Module 03 - Vulnerability Management – Scanning and Prioritization
 ## Course: CIS-4332_Cyber_Analyst (CompTIA CySA+)
 
 ---
@@ -12,68 +12,65 @@ Which type of scan provides the most accurate view of patch levels and installed
 *   **Correct Answer:** B) Credentialed scans log into the system to read local registry settings and files directly, preventing false positives.
 *   **Distractor Analysis:**
     *   *Why correct:* Credentialed scans log into the system to read local registry settings and files directly, preventing false positives.
-    *   Non-credentialed scans can only analyze open network ports and banners.
+    *   Non-credentialed scans can only analyze open network ports and banners, missing locally installed software vulnerabilities.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **credentialed vs non-credentialed scans**?
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within security operations.
-D) Flexible Box Layout; a one-dimensional CSS layout model that makes it easy to align items and distribute space within a container, handling varying screen sizes dynamically.
-B) The termination condition in a recursive function that stops further recursive calls and begins unwinding the call stack, preventing infinite execution.
-C) The core operations of a stack: 'push' inserts an element onto the top, and 'pop' removes and returns the top element.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within security operations.
+In a vulnerability management context, which of the following most accurately defines **credentialed vs. non-credentialed scans**?
+*   A) Credentialed scans use supplied login credentials to inspect a system internally for patch levels and configurations, while non-credentialed scans can only probe open network ports and service banners from the outside
+*   B) Credentialed scans are performed by an external penetration tester with written authorization, while non-credentialed scans are run by internal staff without formal approval
+*   C) Credentialed scans encrypt all traffic between the scanner and target, while non-credentialed scans transmit results in plaintext
+*   D) Credentialed scans identify only network-layer vulnerabilities, while non-credentialed scans identify both host-based and network-layer issues
+*   **Correct Answer:** A) Credentialed scans use supplied login credentials to inspect a system internally for patch levels and configurations, while non-credentialed scans can only probe open network ports and service banners from the outside.
 *   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **credentialed vs non-credentialed scans**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **credentialed vs non-credentialed scans**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **credentialed vs non-credentialed scans**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **credentialed vs non-credentialed scans**.
-
+    *   *Why A is correct:* The defining distinction is whether the scanner authenticates to the target system. With credentials, the scanner reads local data (registry, installed packages, services); without credentials, it is limited to externally visible information.
+    *   *Why B is incorrect:* The credential distinction refers to system login credentials provided to the scanner, not to analyst authorization levels or organizational roles.
+    *   *Why C is incorrect:* Encryption of scan traffic is a separate configuration concern unrelated to whether the scanner authenticates to the target host.
+    *   *Why D is incorrect:* This reverses the actual capabilities — credentialed scans find more vulnerabilities including host-based ones, not fewer.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **display the detailed metadata and validation parameters of an SSL/TLS digital certificate**. Which of the following commands is the most appropriate to execute?
-D) wireshark
-C) nmap -sV -p 1-1024 target_ip
-B) hydra -l admin -P passwords.txt ssh://target
-A) openssl x509 -text -noout -in cert.pem
-*   **Correct Answer:** A) openssl x509 -text -noout -in cert.pem
+A vulnerability analyst needs to identify which services are running on a target host and determine their exact version numbers in order to cross-reference against a vulnerability database. Which command is most appropriate?
+*   A) `nmap -sV -p 1-1024 target_ip` — service version detection scan across the first 1024 ports
+*   B) `openssl s_client -connect target_ip:443` — tests the SSL/TLS handshake on port 443
+*   C) `wireshark -i eth0 -k` — launches a live packet capture on the network interface
+*   D) `netstat -an` — displays active TCP/UDP connections on the local machine only
+*   **Correct Answer:** A) `nmap -sV -p 1-1024 target_ip` — service version detection scan across the first 1024 ports.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `openssl x509 -text -noout -in cert.pem` command is directly designed to display the detailed metadata and validation parameters of an SSL/TLS digital certificate.
-
+    *   *Why A is correct:* The `-sV` flag instructs Nmap to probe open ports and report the service name and version string, which is exactly what is needed to match against CVE databases.
+    *   *Why B is incorrect:* `openssl s_client` tests a single SSL/TLS connection; it does not enumerate services across multiple ports or return version strings for non-TLS services.
+    *   *Why C is incorrect:* Wireshark captures live network traffic passively; it does not actively probe a target to enumerate running services or their versions.
+    *   *Why D is incorrect:* `netstat` shows connections on the local machine where it is run; it cannot remotely enumerate services on a separate target host.
 
 ---
 
 **Question 4**
-While working on **Infrastructure Scanning Tools** in a production environment, you encounter a system alert indicating a **IDS False Positives** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-D) Reboot the physical machine and wait for services to reload.
-B) Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA.
-A) Tune the detection signatures and define exceptions for authorized administrative activities.
-C) Review active security rules and add a permissive firewall rule allowing the specific source IP and destination port.
-*   **Correct Answer:** A) Tune the detection signatures and define exceptions for authorized administrative activities.
+A SOC analyst notices that after a credentialed vulnerability scan ran against a legacy SCADA host, the device became unresponsive. Which lesson-learned action best prevents this in future scans?
+*   A) Switch to a non-credentialed scan so the scanner cannot directly interact with system processes
+*   B) Create a separate scan policy with reduced scan intensity and excluded plugins known to crash fragile systems, and test it in a maintenance window
+*   C) Disable all vulnerability scanning for operational technology (OT) networks permanently
+*   D) Increase the scan frequency so the system has less time to become unstable between checks
+*   **Correct Answer:** B) Create a separate scan policy with reduced scan intensity and excluded plugins known to crash fragile systems, and test it in a maintenance window.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This action does not resolve the root cause of IDS False Positives.
-    * *Why B is incorrect:* This action does not resolve the root cause of IDS False Positives.
-    * *Why A is correct:* Because The network security system flags benign administrative scans or regular traffic patterns as malicious exploits. The appropriate fix is to Tune the detection signatures and define exceptions for authorized administrative activities..
-    * *Why C is incorrect:* This action does not resolve the root cause of IDS False Positives.
-
+    *   *Why A is incorrect:* Switching to non-credentialed scans reduces accuracy but does not guarantee the device will not be impacted by aggressive network probing; the root cause is scan policy configuration, not credentials.
+    *   *Why B is correct:* Fragile OT/SCADA devices require custom scan policies that disable intrusive plugins, reduce scan speed, and are tested during planned maintenance windows to avoid production impact.
+    *   *Why C is incorrect:* Completely disabling scanning leaves OT assets without vulnerability visibility; the correct approach is to adapt the scan policy, not eliminate scanning.
+    *   *Why D is incorrect:* Increasing scan frequency would increase the stress on the device and raise the risk of repeated outages.
 
 ---
 
 **Question 5**
-When designing a system for **Infrastructure Scanning Tools**, you must mitigate the risk of **Intruders deleting local system event logs after a breach to hide their tracks and prevent investigation.**. Which of the following security configurations or controls represents the best practice to implement?
-B) Enforce RSA keys with a minimum length of 2048/4096 bits or switch to Elliptic Curve Cryptography (ECC).
-A) Forward all system logs to a secure, write-once SIEM (Security Information and Event Management) platform.
-C) Enable full disk encryption on all client endpoints.
-D) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Forward all system logs to a secure, write-once SIEM (Security Information and Event Management) platform.
+A security team discovers that an attacker who breached a workstation deleted the local Windows Event Logs before being detected. Which control would have best preserved evidence for the investigation?
+*   A) Deploying a host-based intrusion detection system (HIDS) on the workstation
+*   B) Enabling BitLocker full-disk encryption on the workstation
+*   C) Forwarding Windows Event Logs in real time to a centralized, write-protected SIEM platform
+*   D) Requiring a screensaver password lock after five minutes of inactivity
+*   **Correct Answer:** C) Forwarding Windows Event Logs in real time to a centralized, write-protected SIEM platform.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This does not address the security vulnerability of Lack of Centralized Logs.
-    * *Why A is correct:* Implementing Forward all system logs to a secure, write-once SIEM (Security Information and Event Management) platform. mitigates the risk of Intruders deleting local system event logs after a breach to hide their tracks and prevent investigation..
-    * *Why C is incorrect:* This does not address the security vulnerability of Lack of Centralized Logs.
-    * *Why D is incorrect:* This does not address the security vulnerability of Lack of Centralized Logs.
+    *   *Why A is incorrect:* A HIDS can alert on suspicious activity but does not inherently prevent an attacker with local admin rights from deleting the local log store.
+    *   *Why B is incorrect:* Disk encryption protects data confidentiality if the drive is removed; it does not prevent an authenticated local session from deleting log files.
+    *   *Why C is correct:* Streaming logs off the host to a centralized immutable SIEM ensures that even if the attacker clears local logs, the off-host copy remains intact and available for forensic review.
+    *   *Why D is incorrect:* A screensaver lock addresses physical access risk at an unattended console; it has no effect on log preservation after a system has already been compromised remotely.
 

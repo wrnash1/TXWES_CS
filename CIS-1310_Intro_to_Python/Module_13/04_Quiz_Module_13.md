@@ -17,17 +17,17 @@ What does `import math` do?
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **creating custom modules.**?
-C) The method of evaluating an algorithm's efficiency by analyzing its behavior as the input size approaches infinity, focusing on growth rates rather than specific hardware speeds.
-D) The descendant node connected to the left branch of a parent node in a binary tree structure.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-B) A structured, seven-step process (Prepare, Categorize, Select, Implement, Assess, Authorize, Monitor) created by NIST to help organizations manage cybersecurity risk.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
+Which of the following best describes **creating custom modules** in Python?
+*   A) A custom module must be registered with pip and installed into the virtual environment before it can be imported; Python does not search the current directory for unregistered modules
+*   B) Any `.py` file saved in the same directory as the importing script (or on `sys.path`) can be imported as a module; the `__name__` variable equals `"__main__"` when run directly and the module name when imported
+*   C) A custom module must contain a class with the same name as the file; Python raises `ImportError` if no matching class is found when the module is imported
+*   D) Importing a custom module re-executes all its top-level code every time it is imported in the same program, so module-level side effects occur once per import statement
+*   **Correct Answer:** B) Any `.py` file saved in the same directory as the importing script (or on `sys.path`) can be imported as a module; the `__name__` variable equals `"__main__"` when run directly and the module name when imported.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **creating custom modules.**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **creating custom modules.**.
-    * *Why A is correct:* This describes the exact role and function of **creating custom modules.**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **creating custom modules.**.
+    *   *Why A is incorrect:* Python searches `sys.path` automatically, which includes the current directory by default; local `.py` files are importable without pip registration — pip is only needed for third-party packages not already on the path.
+    *   *Why B is correct:* Any `.py` file is a valid module; the `__name__ == "__main__"` guard is the standard pattern to prevent test or script code from running when the file is used as a library by another script.
+    *   *Why C is incorrect:* A module does not need to contain any class at all — it can contain functions, constants, or any Python code; there is no requirement for a class matching the filename.
+    *   *Why D is incorrect:* Python caches imported modules in `sys.modules` and executes their top-level code only once per interpreter session, regardless of how many times `import` is called — subsequent imports return the cached module object.
 
 
 ---
@@ -69,11 +69,10 @@ When designing a system for **Modules and Packages**, you must mitigate the risk
 A) Implement parameterized queries and prepared statements rather than raw string concatenation.
 C) Enable full disk encryption on all client endpoints.
 B) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-D) Enable full disk encryption on all client endpoints.
+D) Use `from config import *` to load database credentials into module-level variables so all modules share a single connection string.
 *   **Correct Answer:** A) Implement parameterized queries and prepared statements rather than raw string concatenation.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Implement parameterized queries and prepared statements rather than raw string concatenation. mitigates the risk of Allowing attackers to execute arbitrary SQL commands on the backend database via input forms..
+    * *Why A is correct:* Implementing parameterized queries and prepared statements rather than raw string concatenation mitigates the risk of allowing attackers to execute arbitrary SQL commands on the backend database via input forms.
     * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
     * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why D is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-
+    * *Why D is incorrect:* Sharing database credentials via a wildcard module import makes them globally accessible throughout the application, increasing the attack surface; it does not prevent SQL injection and is itself a security anti-pattern that exposes credentials to any module that performs the import.

@@ -1,79 +1,103 @@
-# Quiz: Module 03 - Clean Code & Refactoring
+# Quiz: Module 03 – Scrum Framework: Roles, Events, Artifacts
+
 ## Course: CIS-3350_Software_Engineering_Agile (Professional Scrum Master (PSM I))
 
 ---
 
-**Question 1**
-What software design principle is violated when you copy and paste identical blocks of code across multiple parts of a program?
-*   A) SOLID
-*   B) DRY (Don't Repeat Yourself)
-*   C) KISS (Keep It Simple, Stupid)
-*   D) YAGNI (You Aren't Gonna Need It)
-*   **Correct Answer:** B) DRY demands that every piece of knowledge must have a single, unambiguous representation within a system.
-*   **Distractor Analysis:**
-    *   *Why correct:* DRY demands that every piece of knowledge must have a single, unambiguous representation within a system.
-    *   YAGNI cautions against building unused features ahead of time.
+### Question 1
+
+According to the Scrum Guide, who is accountable for managing and ordering the Product Backlog?
+
+* A) The Scrum Master
+* B) The Product Owner
+* C) The Developers
+* D) The Steering Committee
+
+Correct Answer: B) The Product Owner is the sole person accountable for the Product Backlog, including its content, ordering, and availability to stakeholders.
+
+Distractor Analysis:
+
+* *Why B is correct:* The Scrum Guide explicitly states: "The Product Owner is accountable for maximizing the value of the product resulting from the work of the Scrum Team" and for managing the Product Backlog.
+* *Why A is incorrect:* The Scrum Master is accountable for Scrum adoption and removing impediments — not for product direction or backlog ordering.
+* *Why C is incorrect:* Developers own the Sprint Backlog but do not manage or order the Product Backlog.
+* *Why D is incorrect:* The Scrum Guide does not define a Steering Committee role. External stakeholders can influence the backlog through the Product Owner, but they do not own it.
 
 ---
 
-**Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **refactoring techniques**?
-D) The configuration of input data that forces an algorithm to perform the maximum number of operations, providing a guaranteed upper limit on execution time.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-B) CSS rules (like width, height, max-width, box-sizing) that dictate how the dimensions of elements are calculated and rendered.
-C) CSS properties (like block, inline, flex, grid) that determine how an element is rendered and how it behaves relative to surrounding elements.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-*   **Distractor Analysis:**
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **refactoring techniques**.
-    * *Why A is correct:* This describes the exact role and function of **refactoring techniques**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **refactoring techniques**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **refactoring techniques**.
+### Question 2
 
+Which of the following is the most accurate definition of a Sprint in Scrum?
 
----
+* A) A planning document that lists all features to be delivered over the next six months of development.
+* B) A fixed-length event of one month or less in which the Scrum Team creates a usable, potentially releasable product Increment.
+* C) A daily meeting where Developers report completed work to the Scrum Master for approval.
+* D) An optional iteration cycle used only when requirements are unclear.
 
-**Question 3**
-A systems administrator or developer needs to **install all external project dependencies specified in the requirements manifest**. Which of the following commands is the most appropriate to execute?
-B) python3 -m venv .venv
-A) pip install -r requirements.txt
-C) pytest
-D) git commit -m 'update'
-*   **Correct Answer:** A) pip install -r requirements.txt
-*   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `pip install -r requirements.txt` command is directly designed to install all external project dependencies specified in the requirements manifest.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
+Correct Answer: B)
 
+Distractor Analysis:
+
+* *Why B is correct:* The Scrum Guide defines the Sprint as a fixed-length container of one month or less that holds all other Scrum events and produces at least one Increment.
+* *Why A is incorrect:* This describes a release roadmap or long-range plan — not a Sprint. A Sprint is a short time-box, not a planning document.
+* *Why C is incorrect:* The Daily Scrum is a 15-minute event for Developers to synchronize with each other — not a reporting meeting to the Scrum Master.
+* *Why D is incorrect:* Sprints are not optional. The Scrum Guide states Sprints are the heartbeat of Scrum and occur continuously, regardless of requirement clarity.
 
 ---
 
-**Question 4**
-While working on **Clean Code & Refactoring** in a production environment, you encounter a system alert indicating a **IndexError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-A) Verify that the index is within the valid range of 0 to len(list)-1.
-B) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
-C) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-D) Reboot the physical machine and wait for services to reload.
-*   **Correct Answer:** A) Verify that the index is within the valid range of 0 to len(list)-1.
-*   **Distractor Analysis:**
-    * *Why A is correct:* Because The code attempted to access an element of a sequence using an out-of-bounds index. The appropriate fix is to Verify that the index is within the valid range of 0 to len(list)-1..
-    * *Why B is incorrect:* This action does not resolve the root cause of IndexError.
-    * *Why C is incorrect:* This action does not resolve the root cause of IndexError.
-    * *Why D is incorrect:* This action does not resolve the root cause of IndexError.
+### Question 3
 
+What is the maximum timebox for Sprint Planning in a one-month Sprint?
+
+* A) 2 hours
+* B) 4 hours
+* C) 8 hours
+* D) 16 hours
+
+Correct Answer: C)
+
+Distractor Analysis:
+
+* *Why C is correct:* The Scrum Guide specifies Sprint Planning is timeboxed to a maximum of eight hours for a one-month Sprint; shorter Sprints use proportionally less time.
+* *Why A is incorrect:* Two hours is the approximate timebox for a Sprint Retrospective in a one-month Sprint, not Sprint Planning.
+* *Why B is incorrect:* Four hours is the maximum timebox for the Sprint Review — not Sprint Planning.
+* *Why D is incorrect:* Sixteen hours has no basis in the Scrum Guide; no Scrum event is timeboxed at 16 hours.
 
 ---
 
-**Question 5**
-When designing a system for **Clean Code & Refactoring**, you must mitigate the risk of **Storing user credentials in plain text, making them vulnerable to database breaches.**. Which of the following security configurations or controls represents the best practice to implement?
-D) Enable full disk encryption on all client endpoints.
-C) Enable full disk encryption on all client endpoints.
-A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-B) Implement parameterized queries and prepared statements rather than raw string concatenation.
-*   **Correct Answer:** A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-*   **Distractor Analysis:**
-    * *Why D is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-    * *Why C is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-    * *Why A is correct:* Implementing Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt. mitigates the risk of Storing user credentials in plain text, making them vulnerable to database breaches..
-    * *Why B is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
+### Question 4
 
+During a Sprint, a stakeholder approaches a Developer directly and requests that a new high-priority feature be added to the current Sprint immediately. What should the Developer do?
+
+* A) Add the feature to the Sprint Backlog and begin work immediately to satisfy the stakeholder.
+* B) Escalate to the Scrum Master, who will decide whether to add the item.
+* C) Refer the stakeholder to the Product Owner, who manages the Product Backlog and Sprint scope changes.
+* D) Stop all current work and hold an emergency Sprint Planning session.
+
+Correct Answer: C)
+
+Distractor Analysis:
+
+* *Why C is correct:* All new work requests go through the Product Owner, who manages the Product Backlog. Mid-Sprint scope additions that threaten the Sprint Goal require the Product Owner's decision in collaboration with the Developers.
+* *Why A is incorrect:* Developers do not unilaterally add scope to the Sprint. Doing so bypasses the Product Owner's accountability and can undermine the Sprint Goal.
+* *Why B is incorrect:* The Scrum Master does not make product scope decisions. The Scrum Master's role is to coach process adherence, not to arbitrate backlog changes.
+* *Why D is incorrect:* An emergency re-planning session is not a Scrum-prescribed response to a scope request. Only if the Sprint Goal becomes obsolete should the Product Owner consider cancelling the Sprint.
+
+---
+
+### Question 5
+
+Which of the following correctly pairs a Scrum artifact with its associated commitment?
+
+* A) Product Backlog — Definition of Done
+* B) Sprint Backlog — Product Goal
+* C) Increment — Sprint Goal
+* D) Product Backlog — Product Goal
+
+Correct Answer: D)
+
+Distractor Analysis:
+
+* *Why D is correct:* The Scrum Guide maps three artifact-commitment pairs: Product Backlog → Product Goal; Sprint Backlog → Sprint Goal; Increment → Definition of Done.
+* *Why A is incorrect:* The Definition of Done is the commitment for the Increment, not the Product Backlog.
+* *Why B is incorrect:* The Sprint Goal is the commitment for the Sprint Backlog, not the Product Goal. The Product Goal belongs to the Product Backlog.
+* *Why C is incorrect:* The Sprint Goal is the commitment for the Sprint Backlog; the Increment's commitment is the Definition of Done.

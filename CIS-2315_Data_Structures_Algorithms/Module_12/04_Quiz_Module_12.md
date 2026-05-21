@@ -1,79 +1,77 @@
-# Quiz: Module 12 - Divide & Conquer
-## Course: CIS-2315_Data_Structures_Algorithms (Technical Interview Readiness (LeetCode / HackerRank))
+# Quiz: Module 12 – Recursion and Backtracking
+## Course: CIS-2315 Data Structures & Algorithms (Technical Interview Readiness)
 
 ---
 
 **Question 1**
-What is the average and worst-case time complexity of the Quick Sort algorithm?
-*   A) Average: O(N log N), Worst: O(N^2)
-*   B) Average: O(N), Worst: O(N log N)
-*   C) Average: O(N log N), Worst: O(N log N)
-*   D) Average: O(N^2), Worst: O(N^2)
-*   **Correct Answer:** A) Quick Sort runs in O(N log N) on average, but degrades to O(N^2) if the pivot splits the array highly unevenly (e.g. sorted arrays).
+What is the space complexity of a recursive function with n levels of recursion and O(1) work per call frame?
+*   A) O(1) — recursion uses no extra memory.
+*   B) O(n) — each active call frame occupies stack space proportional to recursion depth.
+*   C) O(n²) — each call frame stores all previous results.
+*   D) O(log n) — the call stack shrinks as calls return.
+*   **Correct Answer:** B) O(n) — each active call frame occupies stack space proportional to recursion depth.
 *   **Distractor Analysis:**
-    *   *Why correct:* Quick Sort runs in O(N log N) on average, but degrades to O(N^2) if the pivot splits the array highly unevenly (e.g. sorted arrays).
-    *   Merge Sort guarantees O(N log N) in both average and worst cases but requires O(N) extra memory space.
+    *   *Why correct:* Each recursive call pushes a new frame onto the call stack. With n levels of recursion simultaneously active, O(n) stack frames are held in memory at peak depth.
+    *   A is incorrect: Recursion does use memory — the call stack grows with each nested call. A tail-recursive function optimized by the compiler might use O(1) space, but Python does not perform tail call optimization.
+    *   C is incorrect: O(n²) would require each frame to store O(n) data. With O(1) data per frame, depth n gives O(n) total.
+    *   D is incorrect: O(log n) stack depth applies to recursion that halves its input (like binary search or merge sort recursion), not to recursion that decrements by 1.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **conquer combining**?
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-C) The mathematical expectation of an algorithm's performance across all possible inputs of size N, representing typical real-world runtime behavior.
-D) The operational principle of a stack, where the element added most recently is the first one to be removed, similar to a stack of trays.
-B) The core operations of a stack: 'push' inserts an element onto the top, and 'pop' removes and returns the top element.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
+Which of the following most accurately describes the **backtracking technique**?
+*   A) A dynamic programming approach that stores previously computed subproblem results in a table to avoid recomputation, reducing exponential recursive time to polynomial.
+*   B) A recursive strategy that builds a solution incrementally by making one choice at a time, checks if the partial solution can still lead to a valid result, and undoes the last choice (backtracks) when a constraint is violated — then tries the next alternative.
+*   C) A divide-and-conquer method that splits the problem into independent halves, solves each recursively, and combines their results — discarding partial solutions that are smaller than the current best.
+*   D) A greedy approach that always makes the locally optimal choice at each step without reconsidering earlier decisions, building the solution in a single forward pass.
+*   **Correct Answer:** B) A recursive strategy that builds a solution incrementally by making one choice at a time, checks if the partial solution can still lead to a valid result, and undoes the last choice (backtracks) when a constraint is violated — then tries the next alternative.
 *   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **conquer combining**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **conquer combining**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **conquer combining**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **conquer combining**.
-
+    *   *Why A is incorrect:* That describes memoization (top-down dynamic programming). Backtracking does not cache subproblem results.
+    *   *Why B is correct:* The "choose → recurse → undo" cycle is the defining structure of backtracking. Pruning (checking constraints before recursing deeper) is what separates backtracking from brute-force enumeration.
+    *   *Why C is incorrect:* That describes divide-and-conquer (e.g., merge sort, quick sort). Divide-and-conquer produces and combines partial results; it does not "undo" choices.
+    *   *Why D is incorrect:* That describes greedy algorithms. Greedy never revisits choices; backtracking explicitly does.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **record staged code modifications into the repository version history**. Which of the following commands is the most appropriate to execute?
-A) git commit -m 'update'
-D) pytest
-C) pip install -r requirements.txt
-B) python3 -m venv .venv
-*   **Correct Answer:** A) git commit -m 'update'
+In generating all permutations of `[1, 2, 3]` using backtracking, you maintain a `used` boolean array. When is the result array appended to the output?
+*   A) Every time any element is added to the current partial permutation.
+*   B) Only when the partial permutation's length equals the input array length (all elements have been placed).
+*   C) Only when the first element of the partial permutation is the smallest available element.
+*   D) When the recursive call stack depth reaches n/2, indicating the halfway point of the search.
+*   **Correct Answer:** B) Only when the partial permutation's length equals the input array length (all elements have been placed).
 *   **Distractor Analysis:**
-    * *Why A is correct:* The `git commit -m 'update'` command is directly designed to record staged code modifications into the repository version history.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is incorrect:* Appending at every step would add incomplete (partial) permutations to the result, producing wrong output.
+    *   *Why B is correct:* A permutation is complete only when every element has been placed. The base case is `len(current) == len(nums)` — at this point the complete permutation is copied and added to results.
+    *   *Why C is incorrect:* The order of the first element has no bearing on when to record a result; all complete permutations are valid regardless of the first element's value.
+    *   *Why D is incorrect:* Recursion depth n/2 means only half the elements have been placed — the permutation is incomplete and should not be recorded.
 
 ---
 
 **Question 4**
-While working on **Divide & Conquer** in a production environment, you encounter a system alert indicating a **IndexError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-A) Verify that the index is within the valid range of 0 to len(list)-1.
-C) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-D) Reboot the physical machine and wait for services to reload.
-B) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
-*   **Correct Answer:** A) Verify that the index is within the valid range of 0 to len(list)-1.
+What is the key difference between generating **subsets** (LeetCode #78) and generating **permutations** (LeetCode #46) using backtracking?
+*   A) Subsets use a stack while permutations use a queue.
+*   B) Subsets record every partial state (including empty and intermediate results) and use an index to avoid re-including earlier elements; permutations record only complete results and use a `used` array to track which elements have been included regardless of position.
+*   C) Subsets require sorting the input; permutations do not.
+*   D) Subsets use memoization to avoid recomputing identical subsets; permutations avoid memoization because permutations of the same elements are distinct.
+*   **Correct Answer:** B) Subsets record every partial state (including empty and intermediate results) and use an index to avoid re-including earlier elements; permutations record only complete results and use a `used` array to track which elements have been included regardless of position.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Because The code attempted to access an element of a sequence using an out-of-bounds index. The appropriate fix is to Verify that the index is within the valid range of 0 to len(list)-1..
-    * *Why C is incorrect:* This action does not resolve the root cause of IndexError.
-    * *Why D is incorrect:* This action does not resolve the root cause of IndexError.
-    * *Why B is incorrect:* This action does not resolve the root cause of IndexError.
-
+    *   *Why A is incorrect:* Both subset and permutation backtracking use the call stack via recursion, not explicit stack/queue data structures.
+    *   *Why B is correct:* In subsets, order does not matter and each element can appear at most once — controlled by a start index. In permutations, order matters and each element must appear exactly once — controlled by a `used` boolean array.
+    *   *Why C is incorrect:* Sorting helps with deduplication (for problems with duplicate input), but it is not required for the fundamental subset or permutation generation.
+    *   *Why D is incorrect:* Neither standard subsets nor permutations use memoization because their subproblems are not overlapping in the DP sense.
 
 ---
 
 **Question 5**
-When designing a system for **Divide & Conquer**, you must mitigate the risk of **Storing user credentials in plain text, making them vulnerable to database breaches.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-C) Enable full disk encryption on all client endpoints.
-B) Implement parameterized queries and prepared statements rather than raw string concatenation.
-D) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
+In a word search backtracking problem (LeetCode #79), you mark a cell as visited before recursing into it and unmark it after returning. What goes wrong if you forget the "unmark" step?
+*   A) The algorithm runs faster because it skips cells it has already seen.
+*   B) The algorithm incorrectly treats cells used in one search path as permanently unavailable, causing it to miss valid words that reuse those cells in a different path.
+*   C) The algorithm produces duplicate results because the same cell is counted multiple times.
+*   D) Nothing — cells in a grid are never revisited, so the unmark step is optional.
+*   **Correct Answer:** B) The algorithm incorrectly treats cells used in one search path as permanently unavailable, causing it to miss valid words that reuse those cells in a different path.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt. mitigates the risk of Storing user credentials in plain text, making them vulnerable to database breaches..
-    * *Why C is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-    * *Why B is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-    * *Why D is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-
+    *   *Why A is incorrect:* Forgetting to unmark does not speed up the algorithm; it produces incorrect results, not performance gains.
+    *   *Why B is correct:* The "unmark" step is the undo of backtracking. Without it, a cell visited on one recursive branch is marked used forever, so other branches that need that cell cannot use it — producing missed valid paths (false negatives).
+    *   *Why C is incorrect:* Forgetting to unmark causes missed results (false negatives), not duplicates. Duplicates would occur if marking were skipped entirely so cells could be revisited in the same path.
+    *   *Why D is incorrect:* Grid cells absolutely can be revisited across different search paths (though not within the same path). The unmark step restores availability for sibling branches.

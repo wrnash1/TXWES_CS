@@ -1,86 +1,81 @@
-# Quiz: Module 06 - BigQuery
-## Course: CIS-4327_Database_Admin (4327_Database_Admin - Google Cloud Associate Database Engineer)
+# Quiz: Module 06 - Firestore and Datastore – Document Databases
+## Course: CIS-4327_Database_Admin (4327_Database_Admin - Google Cloud Professional Cloud Database Engineer)
 
 ---
 
 **Question 1**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Serverless**?
-D) The configuration of input data that forces an algorithm to perform the maximum number of operations, providing a guaranteed upper limit on execution time.
-B) A node in a tree structure that has no child nodes (its children point to null), representing the termination points of the branches.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within database operations.
-C) An access control system where users are assigned to specific roles, and permissions are linked to those roles rather than individual users, simplifying permission management.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within database operations.
+A startup is building a real-time collaborative document editing application. The backend must push data changes to thousands of simultaneously connected web clients within milliseconds and support offline editing on mobile devices. Which Google Cloud database service is most appropriate?
+A) Cloud Bigtable
+B) Cloud SQL for MySQL
+C) Firestore in Native mode
+D) Cloud Spanner
+*   **Correct Answer:** C) Firestore in Native mode
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Serverless**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Serverless**.
-    * *Why A is correct:* This describes the exact role and function of **Serverless**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Serverless**.
-
+    *   *Why C is correct:* Firestore in Native mode is purpose-built for exactly this use case. It provides real-time listeners that push document changes to connected clients instantly, and its client SDKs include built-in offline persistence for mobile and web apps.
+    *   *Why A is incorrect:* Bigtable is optimized for high-throughput, low-latency reads and writes using a single row key; it has no real-time listener SDK or offline sync capability for client applications.
+    *   *Why B is incorrect:* Cloud SQL is a relational database that requires clients to poll for changes; it has no native real-time push mechanism and no offline sync SDK.
+    *   *Why D is incorrect:* Cloud Spanner is designed for globally distributed transactional workloads; it has no real-time listener SDK and is not designed for direct client-facing application backends.
 
 ---
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Serverless**?
-C) A unique identifier column or set of columns in a database table that guarantees every row can be uniquely identified.
-D) The mathematical expectation of an algorithm's performance across all possible inputs of size N, representing typical real-world runtime behavior.
-B) A security control that divides a critical transaction workflow among multiple users to prevent fraud and errors (e.g., one person approves a purchase order, another pays the vendor).
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within database operations.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within database operations.
+A Firestore application query returns an error: `"The query requires an index"`. The query filters documents on `status == 'active'` AND orders results by `created_at DESC`. What is the correct resolution?
+A) Rewrite the query to filter on only one field; Firestore cannot filter and sort simultaneously.
+B) Create a composite index on `(status ASC, created_at DESC)` in the Firestore index configuration.
+C) Switch the database from Native mode to Datastore mode, which supports ad-hoc multi-field queries.
+D) Add a `LIMIT 1000` clause to the query to reduce the result set size below the index threshold.
+*   **Correct Answer:** B) Create a composite index on `(status ASC, created_at DESC)` in the Firestore index configuration.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Serverless**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Serverless**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Serverless**.
-    * *Why A is correct:* This describes the exact role and function of **Serverless**.
-
+    *   *Why B is correct:* Firestore requires a composite index for any query that filters or sorts on more than one field. The index must exactly match the fields and sort directions used in the query. You define it in `firestore.indexes.json` and deploy it with the Firebase CLI, or create it through the Firestore console.
+    *   *Why A is incorrect:* Firestore supports compound queries that filter and sort on multiple fields — but only when the required composite index exists. The fix is to create the index, not to simplify the query.
+    *   *Why C is incorrect:* Datastore mode does not eliminate the need for composite indexes; it still requires indexes for multi-field queries. Switching modes does not fix an index error.
+    *   *Why D is incorrect:* The `LIMIT` clause restricts the number of results returned but does not change whether an index is required; the error will persist regardless of the limit value.
 
 ---
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **query and retrieve active user records matching specific conditions from the database table**. Which of the following commands is the most appropriate to execute?
-B) GRANT SELECT ON client_db TO analyst_role;
-C) EXPLAIN ANALYZE SELECT * FROM logs;
-D) CREATE INDEX idx_email ON users(email);
-A) SELECT * FROM users WHERE active = 1;
-*   **Correct Answer:** A) SELECT * FROM users WHERE active = 1;
+A Firestore database administrator needs to **grant read-only access to a specific Firestore collection to a service account used by a reporting pipeline**. Which approach is most appropriate on Google Cloud?
+A) Use IAM to grant the `roles/datastore.viewer` role to the service account at the project level.
+B) Create a Firestore composite index that restricts which documents the service account can read.
+C) Run `GRANT SELECT ON collection TO service_account` in the Firestore query console.
+D) Add the service account email to the Firestore Security Rules `allow read` condition.
+*   **Correct Answer:** A) Use IAM to grant the `roles/datastore.viewer` role to the service account at the project level.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `SELECT * FROM users WHERE active = 1;` command is directly designed to query and retrieve active user records matching specific conditions from the database table.
-
+    *   *Why A is correct:* Access to Firestore from server-side applications (like reporting pipelines using the Admin SDK) is controlled by GCP IAM roles. The `roles/datastore.viewer` role grants read-only access to all Firestore data for the assigned identity. For more granular collection-level control, VPC Service Controls or server-side filtering should be used alongside IAM.
+    *   *Why B is incorrect:* Composite indexes are query optimization structures that define which multi-field queries Firestore can execute; they have no access control function.
+    *   *Why C is incorrect:* Firestore does not support SQL syntax; there is no `GRANT SELECT` command. Firestore uses IAM and Security Rules for access control.
+    *   *Why D is incorrect:* Firestore Security Rules control access from client SDKs (web and mobile); they do not apply to server-side Admin SDK access, which is governed exclusively by IAM.
 
 ---
 
 **Question 4**
-While working on **BigQuery** in a production environment, you encounter a system alert indicating a **Connection Timeout** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-B) Optimize application query order, implement retry logic, and keep transaction blocks as brief as possible.
-C) Analyze the query plan and create appropriate indexes on columns frequently used in WHERE and JOIN clauses.
-D) Reboot the physical machine and wait for services to reload.
-A) Increase the database connection pool limit, adjust timeout configurations, or scale database resources.
-*   **Correct Answer:** A) Increase the database connection pool limit, adjust timeout configurations, or scale database resources.
+A Firestore-backed application is experiencing **slow query performance** when retrieving all orders for a specific customer, filtering by `customer_id == 'C001'` and ordering by `order_date DESC`. The query was working fine when the collection had 1,000 documents but is now slow with 5 million documents. What is the most likely cause and the correct fix?
+A) Firestore is performing a full collection scan because no composite index exists for `(customer_id, order_date DESC)`. Create the required composite index.
+B) Firestore document reads are throttled at 5 million documents per collection. Archive older orders to a separate collection.
+C) The Firestore instance needs more nodes. Scale up the compute capacity in the Firestore console.
+D) Switch the database to Datastore mode, which uses a B-tree index engine that scales better for large collections.
+*   **Correct Answer:** A) Firestore is performing a full collection scan because no composite index exists for `(customer_id, order_date DESC)`. Create the required composite index.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This action does not resolve the root cause of Connection Timeout.
-    * *Why C is incorrect:* This action does not resolve the root cause of Connection Timeout.
-    * *Why D is incorrect:* This action does not resolve the root cause of Connection Timeout.
-    * *Why A is correct:* Because The database server has exhausted its pool of concurrent client connections or is overloaded with work. The appropriate fix is to Increase the database connection pool limit, adjust timeout configurations, or scale database resources..
-
+    *   *Why A is correct:* Without a composite index on `(customer_id, order_date DESC)`, Firestore must scan the entire collection to evaluate the filter and sort, which degrades linearly with collection size. Creating the composite index reduces the query to an index range scan — constant time regardless of collection size.
+    *   *Why B is incorrect:* Firestore has no inherent per-collection document count throttle; it is designed to scale to billions of documents. The performance problem is an index issue, not a capacity limit.
+    *   *Why C is incorrect:* Firestore is fully serverless; there are no user-managed nodes or compute resources to scale. Performance is determined by schema and index design.
+    *   *Why D is incorrect:* Datastore mode and Native mode use the same underlying index engine. Switching modes does not change indexing behavior and would lose real-time listener functionality.
 
 ---
 
 **Question 5**
-When designing a system for **BigQuery**, you must mitigate the risk of **Attackers injecting malicious SQL strings that bypass authentication and leak entire database contents.**. Which of the following security configurations or controls represents the best practice to implement?
-D) Enable full disk encryption on all client endpoints.
-B) Enable Transparent Data Encryption (TDE) or cloud database storage encryption at rest.
-C) Enable full disk encryption on all client endpoints.
-A) Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs.
-*   **Correct Answer:** A) Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs.
+When securing a Firestore database backing a mobile application, you must mitigate the risk of **unauthenticated users reading all documents in a collection by directly calling the Firestore API**. Which control best addresses this vulnerability?
+A) Write Firestore Security Rules that require `request.auth != null` before allowing any read operation.
+B) Enable CMEK to encrypt Firestore documents at rest so unauthenticated reads return encrypted data.
+C) Configure a VPC Service Controls perimeter around Firestore to block all external API calls.
+D) Enable Cloud Audit Data Access Logs to detect and alert on unauthenticated read attempts.
+*   **Correct Answer:** A) Write Firestore Security Rules that require `request.auth != null` before allowing any read operation.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This does not address the security vulnerability of SQL Injection Exposure.
-    * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Exposure.
-    * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Exposure.
-    * *Why A is correct:* Implementing Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs. mitigates the risk of Attackers injecting malicious SQL strings that bypass authentication and leak entire database contents..
-
+    *   *Why A is correct:* Firestore Security Rules are evaluated server-side for every client SDK request. A rule requiring `request.auth != null` ensures that only authenticated users (those who have signed in with Firebase Authentication or a GCP identity) can read documents. Unauthenticated requests are rejected at the Firestore service layer.
+    *   *Why B is incorrect:* CMEK encrypts data at rest on GCP's physical storage infrastructure; it does not affect API-level access control. Unauthenticated clients calling the Firestore API would still receive decrypted document data in the response if no access rules are in place.
+    *   *Why C is incorrect:* VPC Service Controls restricts access from network perimeters and is designed for server-to-server Admin SDK access; it is not the correct tool for controlling unauthenticated end-user access from mobile/web clients.
+    *   *Why D is incorrect:* Audit logs detect unauthorized access after it has occurred; they do not prevent unauthenticated users from reading documents. Detection is not a substitute for access control rules.

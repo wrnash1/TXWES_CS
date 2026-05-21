@@ -9,71 +9,69 @@ Which data format does MongoDB use natively to store documents in collections?
 *   B) CSV
 *   C) BSON (Binary JSON)
 *   D) SQL Table Structure
-*   **Correct Answer:** C) MongoDB processes data objects as BSON, an optimized binary representation of JSON files.
+*   **Correct Answer:** C) MongoDB stores documents internally as BSON (Binary JSON) — a binary-encoded extension of JSON that supports additional data types including `Date`, `ObjectId`, and 64-bit integers not available in plain JSON.
 *   **Distractor Analysis:**
-    *   *Why correct:* MongoDB processes data objects as BSON, an optimized binary representation of JSON files.
-    *   BSON supports more data types (such as dates) than plain JSON.
+    *   *Why A is incorrect:* XML is a markup language used for document exchange and configuration files — MongoDB does not use XML for document storage.
+    *   *Why B is incorrect:* CSV is a flat text format for tabular data — it has no concept of nested documents or arrays and is incompatible with MongoDB's document model.
+    *   *Why C is correct:* BSON (Binary JSON) is MongoDB's native storage format — it is optimized for efficient encoding, decoding, and traversal of documents.
+    *   *Why D is incorrect:* SQL table structures are rows and columns in a relational schema — MongoDB explicitly avoids this fixed-schema tabular model.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **mongoose model operations.**?
-B) The mathematical expectation of an algorithm's performance across all possible inputs of size N, representing typical real-world runtime behavior.
-C) The descendant node connected to the left branch of a parent node in a binary tree structure.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-D) An access control system where users are assigned to specific roles, and permissions are linked to those roles rather than individual users, simplifying permission management.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
+Which of the following is the most accurate definition of **Mongoose model operations**?
+*   A) Low-level TCP socket operations used by the MongoDB driver to open, authenticate, and close connections to the database server.
+*   B) The CRUD API methods provided by a Mongoose model — such as `Model.create()`, `Model.find()`, `Model.findByIdAndUpdate()`, and `Model.findByIdAndDelete()` — that perform database operations asynchronously and return Promises.
+*   C) The configuration options passed to `mongoose.connect()` that control connection pool size, timeout duration, and SSL certificate validation.
+*   D) The Express route handlers that proxy HTTP requests from the API layer to the MongoDB database without any intermediate application logic.
+*   **Correct Answer:** B) The CRUD API methods provided by a Mongoose model — such as `Model.create()`, `Model.find()`, `Model.findByIdAndUpdate()`, and `Model.findByIdAndDelete()` — that perform database operations asynchronously and return Promises.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **mongoose model operations.**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **mongoose model operations.**.
-    * *Why A is correct:* This describes the exact role and function of **mongoose model operations.**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **mongoose model operations.**.
-
+    *   *Why A is incorrect:* This describes the MongoDB driver's connection layer — not Mongoose model operations.
+    *   *Why B is correct:* Mongoose model operations are the query and mutation methods on compiled Mongoose models — they provide a higher-level abstraction over the raw MongoDB driver.
+    *   *Why C is incorrect:* These are connection configuration options — separate from model operation methods.
+    *   *Why D is incorrect:* Mongoose models are application-layer abstractions — they are not Express middleware or HTTP proxy handlers.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **run the automated unit testing suite to verify system functionality**. Which of the following commands is the most appropriate to execute?
-A) pytest
-B) git commit -m 'update'
-C) python3 -m venv .venv
-D) pip install -r requirements.txt
-*   **Correct Answer:** A) pytest
+A Mongoose schema is defined as `{ title: { type: String, required: true }, published: Boolean }`. A developer tries to save a document with `{ published: true }` — omitting `title`. What happens?
+*   A) MongoDB silently inserts the document without `title` because collections have no schema enforcement by default.
+*   B) Mongoose throws a `ValidationError` before sending the insert to MongoDB, because the `required: true` constraint on `title` is violated.
+*   C) The document is saved with `title: null` automatically since MongoDB defaults missing required fields to null.
+*   D) The operation succeeds but returns a warning — Mongoose `required` constraints are advisory only and do not block saves.
+*   **Correct Answer:** B) Mongoose throws a `ValidationError` before sending the insert to MongoDB, because the `required: true` constraint on `title` is violated.
 *   **Distractor Analysis:**
-    * *Why A is correct:* The `pytest` command is directly designed to run the automated unit testing suite to verify system functionality.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is incorrect:* This is true for raw MongoDB without Mongoose, but Mongoose adds schema-level validation that runs before the database operation.
+    *   *Why B is correct:* Mongoose validates documents against the schema before executing the database write. `required: true` causes validation to fail and throws a `ValidationError`.
+    *   *Why C is incorrect:* Mongoose does not default missing required fields to `null` — it throws a validation error.
+    *   *Why D is incorrect:* `required` in a Mongoose schema is a hard constraint that blocks saves, not an advisory warning.
 
 ---
 
 **Question 4**
-While working on **NoSQL Databases with MongoDB** in a production environment, you encounter a system alert indicating a **TypeError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-C) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
-D) Reboot the physical machine and wait for services to reload.
-B) Verify that the index is within the valid range of 0 to len(list)-1.
-A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-*   **Correct Answer:** A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
+When should a developer choose MongoDB over PostgreSQL for an AWS application?
+*   A) When the data has a fixed, well-defined schema with strong referential integrity requirements between multiple related entities.
+*   B) When the application needs complex multi-table JOIN queries with ACID transaction guarantees across multiple related records.
+*   C) When the data structure varies between records (e.g., product catalogs with different attributes per category) or when horizontal scalability at the document level is a primary requirement.
+*   D) When the application needs to store and query data using SQL syntax, because MongoDB supports standard SQL via the aggregation pipeline.
+*   **Correct Answer:** C) When the data structure varies between records (e.g., product catalogs with different attributes per category) or when horizontal scalability at the document level is a primary requirement.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This action does not resolve the root cause of TypeError.
-    * *Why D is incorrect:* This action does not resolve the root cause of TypeError.
-    * *Why B is incorrect:* This action does not resolve the root cause of TypeError.
-    * *Why A is correct:* Because An operation or function was applied to an object of an inappropriate data type. The appropriate fix is to Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types..
-
+    *   *Why A is incorrect:* Fixed schemas with strong referential integrity are a strength of relational databases like PostgreSQL — not a MongoDB use case.
+    *   *Why B is incorrect:* Complex multi-table JOINs and multi-record ACID transactions are where relational databases excel — MongoDB's aggregation pipeline is more complex for relational patterns.
+    *   *Why C is correct:* MongoDB's schema-flexible document model is best suited for heterogeneous data where documents in the same collection legitimately have different fields.
+    *   *Why D is incorrect:* MongoDB does not support SQL syntax — it uses its own query language and aggregation framework.
 
 ---
 
 **Question 5**
-When designing a system for **NoSQL Databases with MongoDB**, you must mitigate the risk of **Allowing attackers to execute arbitrary SQL commands on the backend database via input forms.**. Which of the following security configurations or controls represents the best practice to implement?
-D) Enable full disk encryption on all client endpoints.
-A) Implement parameterized queries and prepared statements rather than raw string concatenation.
-B) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-C) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Implement parameterized queries and prepared statements rather than raw string concatenation.
+On AWS, which service is the managed option for running MongoDB-compatible workloads without managing the underlying infrastructure?
+*   A) Amazon RDS for MySQL
+*   B) Amazon DynamoDB
+*   C) Amazon DocumentDB (with MongoDB compatibility)
+*   D) Amazon Redshift
+*   **Correct Answer:** C) Amazon DocumentDB (with MongoDB compatibility) is AWS's managed document database service that implements MongoDB's API, allowing applications written for MongoDB to run without code changes while AWS handles patching, backups, and storage scaling.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why A is correct:* Implementing Implement parameterized queries and prepared statements rather than raw string concatenation. mitigates the risk of Allowing attackers to execute arbitrary SQL commands on the backend database via input forms..
-    * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-
+    *   *Why A is incorrect:* Amazon RDS for MySQL is a relational database service — it uses SQL and a table-based schema, not MongoDB's document model.
+    *   *Why B is incorrect:* Amazon DynamoDB is a key-value and document NoSQL database but is not MongoDB-compatible — it uses a different API and data model.
+    *   *Why C is correct:* DocumentDB was designed to be API-compatible with MongoDB, making it the AWS migration target for MongoDB workloads.
+    *   *Why D is incorrect:* Amazon Redshift is a cloud data warehouse optimized for analytical SQL queries against large datasets — not a document or operational database.

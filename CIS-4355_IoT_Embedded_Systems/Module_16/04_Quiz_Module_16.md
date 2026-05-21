@@ -1,82 +1,77 @@
-# Quiz: Module 16 - Course Module
+# Quiz: Module 16 - Final Exam Prep and IoT Security Capstone
 ## Course: CIS-4355_IoT_Embedded_Systems (IoT & Embedded Security (General Principles))
 
 ---
 
-**Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Core Operations**?
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
-D) The practice of connecting an electrical circuit or chassis to the earth or a large conductor to safely dissipate static electricity or stray currents.
-B) The scenario where an algorithm requires the absolute minimum number of steps to complete (e.g., searching for an element that happens to be at the very beginning of a list).
-C) The mathematical expectation of an algorithm's performance across all possible inputs of size N, representing typical real-world runtime behavior.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
+**Question 1**
+A security engineer conducts a full audit of a smart building IoT deployment and finds the following three issues simultaneously: (1) all IP cameras share the password "admin/admin", (2) MQTT telemetry is transmitted over port 1883 with no TLS, and (3) the edge gateway firmware has not been updated in 24 months despite two published CVEs. How many distinct OWASP IoT Top 10 categories are represented by these findings, and which categories apply?
+*   A) One category — OWASP IoT #1 (Weak, Guessable, or Hardcoded Passwords) covers all three findings because weak credentials are the root cause of each vulnerability.
+*   B) Three distinct categories — OWASP IoT #1 (Weak Passwords: shared "admin/admin" credentials), OWASP IoT #7 (Insecure Data Transfer and Storage: unencrypted MQTT on port 1883), and OWASP IoT #4 (Lack of Secure Update Mechanism: 24-month-old firmware with unpatched CVEs).
+*   C) Two categories — OWASP IoT #2 (Insecure Network Services) covers both the unencrypted MQTT and the outdated firmware, while OWASP IoT #1 covers the credential finding.
+*   D) Three distinct categories — OWASP IoT #3 (Insecure Ecosystem Interfaces: API exposure), OWASP IoT #6 (Insufficient Privacy Protection: camera imagery), and OWASP IoT #9 (Insecure Default Settings: factory defaults not changed).
+*   **Correct Answer:** B) Three distinct categories — OWASP IoT #1 (Weak Passwords), OWASP IoT #7 (Insecure Data Transfer and Storage), and OWASP IoT #4 (Lack of Secure Update Mechanism).
 *   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **Core Operations**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Core Operations**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Core Operations**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Core Operations**.
-
+    *   *Why A is incorrect:* OWASP IoT #1 specifically addresses authentication credential weaknesses. Unencrypted transport and absent patch management are separate, independent failure modes addressed by different OWASP categories — collapsing them into one category obscures the distinct remediations required for each.
+    *   *Why B is correct:* Each finding maps to a distinct OWASP IoT category with a distinct remediation: #1 requires per-device unique passwords or credential rotation policy; #7 requires enabling TLS on the MQTT broker (port 8883) with certificate validation; #4 requires an OTA update mechanism with a patch management process. All three categories are present simultaneously — a real-world scenario that examiners frequently test.
+    *   *Why C is incorrect:* OWASP IoT #2 (Insecure Network Services) refers to unnecessary or unprotected network service ports running on the device itself, not to transport encryption gaps or firmware patch management. Unencrypted MQTT is a #7 finding; unpatched firmware is a #4 finding.
+    *   *Why D is incorrect:* The three categories cited — #3, #6, #9 — are not the primary mappings for the three specific findings described. The findings are precisely described in terms of credential weakness, unencrypted transport, and absent update mechanism, which map directly to #1, #7, and #4 respectively.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **System Configuration**?
-B) The scenario where an algorithm requires the absolute minimum number of steps to complete (e.g., searching for an element that happens to be at the very beginning of a list).
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
-D) The operational principle of a stack, where the element added most recently is the first one to be removed, similar to a stack of trays.
-C) The memory block allocated on the system stack for a single function call, storing parameters, local variables, and the return address.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
+Which of the following is the most accurate description of a **zero-trust security model** as applied to an IoT fleet, and how does it differ from a traditional perimeter-based security model?
+*   A) Zero-trust is a physical security model that requires all IoT devices to be deployed inside a locked equipment room with no external network connectivity, eliminating the network attack surface by creating a true air gap between devices and the internet.
+*   B) Zero-trust eliminates implicit trust based on network location — every device must authenticate with a unique identity (X.509 certificate), every request must be authorized against a least-privilege policy (IoT policy scoped to specific MQTT topics), and device health is continuously attested. Unlike perimeter security, a compromised device inside the network cannot reach other devices or services beyond its authorized scope.
+*   C) Zero-trust is equivalent to end-to-end encryption — once TLS 1.3 is enabled on all device-to-cloud communications, the system achieves zero-trust because no plaintext data can be intercepted by an attacker who has breached the network perimeter.
+*   D) Zero-trust is a compliance certification issued by NIST that IoT manufacturers apply for after completing an audit demonstrating that all devices ship without default credentials, completing a zero-trust attestation process documented in NIST SP 800-207.
+*   **Correct Answer:** B) Zero-trust eliminates implicit trust based on network location, requiring per-device authentication, least-privilege authorization, and continuous health attestation regardless of network position.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **System Configuration**.
-    * *Why A is correct:* This describes the exact role and function of **System Configuration**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **System Configuration**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **System Configuration**.
-
+    *   *Why A is incorrect:* Zero-trust is a network security architecture, not a physical isolation strategy. Air-gapping devices eliminates connectivity entirely — zero-trust allows network connectivity while ensuring every connection is authenticated and authorized. The two concepts are complementary but not equivalent.
+    *   *Why B is correct:* NIST SP 800-207 defines zero-trust as a shift from perimeter-based ("trust but verify if inside the network") to identity-based ("never trust, always verify"). For IoT, this means: each device has a unique X.509 certificate (not a shared key), the cloud IoT policy permits only the specific topics the device needs, and device posture (firmware version, secure boot status) is continuously reported. A device inside the corporate network that is compromised cannot reach the finance server because it has no authorized path — the lateral movement that perimeter security fails to prevent.
+    *   *Why C is incorrect:* TLS provides transport confidentiality and server authentication, but it does not address authorization — what a device is permitted to do once the TLS handshake succeeds. Zero-trust requires both strong authentication and fine-grained authorization. A device with a valid certificate but an overly broad IoT policy (e.g., subscribe to all topics) violates zero-trust principles even with TLS enabled.
+    *   *Why D is incorrect:* Zero-trust is a security architecture principle, not a NIST certification or audit program. NIST SP 800-207 is a guidance publication defining zero-trust architecture principles — it does not issue certifications. The absence of default credentials is a separate requirement (ETSI EN 303 645 Provision 1, California SB-327) that contributes to zero-trust implementation but is not itself a zero-trust certification.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **check the configuration files for syntactic and internal consistency correctness**. Which of the following commands is the most appropriate to execute?
-A) terraform validate
-C) git log --oneline -n 5
-B) systemctl status iot_service
-D) docker-compose up -d
-*   **Correct Answer:** A) terraform validate
+An attacker successfully compromises a consumer IoT thermostat by exploiting a buffer overflow in its BLE pairing handler. From the thermostat, the attacker discovers the home Wi-Fi pre-shared key stored in plaintext in the device's flash. Using the Wi-Fi key, they join the home network, scan the network, and find a NAS device with unpatched SMB vulnerabilities, which they exploit to exfiltrate the homeowner's documents. Trace this attack chain — which sequence of OWASP IoT Top 10 categories does it traverse?
+*   A) OWASP IoT #5 (Use of Insecure or Outdated Components) → OWASP IoT #7 (Insecure Data Transfer and Storage) → OWASP IoT #2 (Insecure Network Services).
+*   B) OWASP IoT #1 (Weak Passwords) → OWASP IoT #3 (Insecure Ecosystem Interfaces) → OWASP IoT #10 (Lack of Physical Hardening).
+*   C) OWASP IoT #6 (Insufficient Privacy Protection) → OWASP IoT #4 (Lack of Secure Update Mechanism) → OWASP IoT #8 (Lack of Device Management).
+*   D) OWASP IoT #9 (Insecure Default Settings) → OWASP IoT #2 (Insecure Network Services) → OWASP IoT #7 (Insecure Data Transfer and Storage).
+*   **Correct Answer:** A) OWASP IoT #5 (Outdated Components: buffer overflow in BLE handler) → OWASP IoT #7 (Insecure Data Transfer and Storage: Wi-Fi PSK in plaintext flash) → OWASP IoT #2 (Insecure Network Services: unpatched SMB on NAS).
 *   **Distractor Analysis:**
-    * *Why A is correct:* The `terraform validate` command is directly designed to check the configuration files for syntactic and internal consistency correctness.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is correct:* Step 1 — the buffer overflow in the BLE pairing handler exploits a software vulnerability in an insecure component (OWASP IoT #5: Use of Insecure or Outdated Components). Step 2 — the Wi-Fi PSK stored in plaintext in flash is insecure data storage (OWASP IoT #7: Insecure Data Transfer and Storage). Step 3 — the unpatched SMB service on the NAS with known exploitable vulnerabilities is an insecure network service (OWASP IoT #2: Insecure Network Services). This three-step chain illustrates how a single device compromise becomes a whole-network breach when IoT devices are not isolated and when sensitive credentials are stored insecurely.
+    *   *Why B is incorrect:* The initial exploit was a buffer overflow (a software vulnerability in a component), not a weak password (#1). The NAS compromise was via an unpatched network service, not a physical hardening failure (#10).
+    *   *Why C is incorrect:* Privacy protection (#6) concerns how personal data is collected and disclosed — the initial BLE exploit was not a privacy violation but an unpatched component exploitation. The attack chain in option C does not match the described sequence of events.
+    *   *Why D is incorrect:* Insecure default settings (#9) could be a contributing factor if the thermostat shipped with weak default configuration, but the specific exploit described was a buffer overflow in the BLE handler — a software vulnerability, not a configuration default issue. The sequence in option D does not accurately characterize the described attack.
 
 ---
 
 **Question 4**
-While working on **Course Module** in a production environment, you encounter a system alert indicating a **SLA Breach Alert** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-C) Implement strict change control boards (CCB) and re-baseline the project constraints.
-A) Optimize service resources, implement load balancing, or update failover mechanisms.
-B) Re-assign resources to critical path tasks and establish clear communication protocols.
-D) Reboot the physical machine and wait for services to reload.
-*   **Correct Answer:** A) Optimize service resources, implement load balancing, or update failover mechanisms.
+A product security team is reviewing a newly designed agricultural IoT moisture sensor intended for deployment in 50,000 units across rural farms. The sensor: uses LoRaWAN for long-range, low-power connectivity; authenticates to The Things Network using a shared NwkSKey and AppSKey hardcoded in all units; has no OTA firmware update capability; and stores 30 days of soil moisture readings in plaintext EEPROM accessible via a physical I2C debug port. Which combination of controls, mapped to specific course modules, would most comprehensively address the security gaps?
+*   A) Replace LoRaWAN with BLE for stronger AES encryption, disable the I2C port in software, and add GDPR consent notices to the companion mobile app to address data privacy obligations.
+*   B) Implement per-device unique NwkSKey/AppSKey provisioned at manufacture (Module 06 — device provisioning), add an OTA firmware update mechanism over LoRaWAN with ECDSA-signed packages (Module 10 — firmware security), encrypt EEPROM storage with a device-unique key derived from hardware identity (Module 09 — data storage security), and physically disable or gate the I2C debug port with fuse bits (Module 10 — physical hardening).
+*   C) Enable TLS 1.3 on all LoRaWAN uplink transmissions, deploy an InfluxDB time-series database to store sensor readings with at-rest encryption enabled, and implement a stream processing filter using Apache Kafka to detect anomalous moisture readings and trigger OTA update requests when firmware version drift is detected.
+*   D) Apply INT8 quantization to the soil moisture ML model running on the sensor to reduce flash usage, freeing space for a larger certificate store that can hold unique X.509 certificates for each device, and deploy an Edge Impulse anomaly detection pipeline to flag unusual moisture readings as potential sensor tampering events.
+*   **Correct Answer:** B) Per-device unique session keys (provisioning), ECDSA-signed OTA updates (firmware security), encrypted EEPROM with hardware-derived key (data storage), and physically gated debug port (physical hardening).
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This action does not resolve the root cause of SLA Breach Alert.
-    * *Why A is correct:* Because A system outage or slow response time has exceeded the limits guaranteed in the Service Level Agreement. The appropriate fix is to Optimize service resources, implement load balancing, or update failover mechanisms..
-    * *Why B is incorrect:* This action does not resolve the root cause of SLA Breach Alert.
-    * *Why D is incorrect:* This action does not resolve the root cause of SLA Breach Alert.
-
+    *   *Why A is incorrect:* LoRaWAN is the correct protocol for this use case (long range, low power, rural deployment) — replacing it with BLE would sacrifice range and is the wrong trade-off. Disabling the I2C port in software does not provide the same protection as a hardware fuse, since software can be modified. GDPR consent notices do not address the technical security gaps identified.
+    *   *Why B is correct:* Each control directly addresses a named gap. Shared NwkSKey/AppSKey across 50,000 devices means a single compromised device exposes all network sessions — per-device unique keys limit blast radius (Module 06). No OTA capability means discovered CVEs cannot be patched in the field — ECDSA-signed OTA over LoRaWAN (or a management uplink) enables secure patching (Module 10). Plaintext EEPROM is an insecure storage finding (OWASP IoT #7) — encryption with a device-unique key (derived from factory-provisioned hardware identity) protects data at rest (Module 09). A physical I2C debug port exposes the device to hardware attacks (OWASP IoT #10) — hardware fuse disabling or a physical tamper-evident mechanism is the correct control (Module 10).
+    *   *Why C is incorrect:* LoRaWAN does not support TLS 1.3 — it uses AES-128 session keys (NwkSKey/AppSKey) at the MAC layer. TLS cannot be added to LoRaWAN uplinks. InfluxDB and Kafka are cloud-side data pipeline technologies (Module 12) that are appropriate for the backend but do not address the on-device security gaps described.
+    *   *Why D is incorrect:* The sensor described is a moisture sensor, not an ML inference device — there is no ML model to quantize. X.509 certificates are used with TCP-based protocols (MQTT/HTTPS) for cloud authentication, not with LoRaWAN session key authentication. Edge Impulse anomaly detection is relevant for edge ML applications (Module 13) but does not address the provisioning, OTA, storage, or physical debug port gaps.
 
 ---
 
 **Question 5**
-When designing a system for **Course Module**, you must mitigate the risk of **Stakeholders requesting changes directly to developers, leading to untracked features and security vulnerabilities.**. Which of the following security configurations or controls represents the best practice to implement?
-C) Enable full disk encryption on all client endpoints.
-B) Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services.
-D) Enable full disk encryption on all client endpoints.
-A) Establish formal authorization procedures and digital signatures for all project scope modifications.
-*   **Correct Answer:** A) Establish formal authorization procedures and digital signatures for all project scope modifications.
+During the capstone project, a student designs a security architecture for a hospital patient monitoring IoT system. The system collects ECG and blood pressure data from bedside sensors, transmits it over Wi-Fi to an on-premises edge gateway, and forwards it to a cloud SIEM for alert processing. The student's design includes: per-device X.509 certificates with mutual TLS, IoT policies scoped to each device's patient ID topic, AES-256 encrypted storage on the edge gateway, and VLAN isolation separating medical devices from the hospital's administrative network. Which additional control is most critical and is absent from this design?
+*   A) Replacing Wi-Fi with LoRaWAN to reduce electromagnetic interference from hospital equipment, which could corrupt ECG signal readings and produce false positive arrhythmia alerts that compromise patient safety.
+*   B) Implementing INT8 model quantization on the edge gateway's ECG anomaly detection model to reduce inference latency from 300 ms to under 50 ms, ensuring real-time alert generation within the hospital's clinical response time requirements.
+*   C) Adding a firmware integrity verification mechanism (secure boot + signed OTA updates) for the bedside sensor firmware, because without it an attacker with physical access to a patient room could replace the firmware with a version that falsifies vital sign readings — directly endangering patients and evading the SIEM's anomaly detection.
+*   D) Migrating from the on-premises edge gateway to a public cloud edge runtime (AWS Greengrass or Azure IoT Edge) to achieve 99.99% uptime SLA guarantees, since an on-premises gateway is a single point of failure that could interrupt patient monitoring during hardware failure.
+*   **Correct Answer:** C) Firmware integrity verification (secure boot + signed OTA) for bedside sensor firmware, preventing physical firmware replacement that falsifies vital sign readings.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This does not address the security vulnerability of Unauthorized Scope Modification.
-    * *Why B is incorrect:* This does not address the security vulnerability of Unauthorized Scope Modification.
-    * *Why D is incorrect:* This does not address the security vulnerability of Unauthorized Scope Modification.
-    * *Why A is correct:* Implementing Establish formal authorization procedures and digital signatures for all project scope modifications. mitigates the risk of Stakeholders requesting changes directly to developers, leading to untracked features and security vulnerabilities..
-
+    *   *Why A is incorrect:* Wi-Fi is appropriate for in-hospital deployments where coverage and bandwidth are needed for high-frequency ECG data. LoRaWAN's low data rate makes it unsuitable for continuous waveform data. The described concern about electromagnetic interference is a clinical engineering issue, not an information security control gap.
+    *   *Why B is incorrect:* INT8 quantization is an edge ML optimization (Module 13) that could improve inference performance, but the design does not mention an ML model at all — the SIEM handles alert processing. More importantly, quantization is a performance optimization, not a security control. The question asks for the most critical absent security control.
+    *   *Why C is correct:* The design secures communications (mTLS), authorization (IoT policies), storage (AES-256), and network segmentation (VLAN) — but it does not protect the firmware running on the bedside sensors themselves. A hospital attacker with brief physical access to a patient room (a realistic threat in the healthcare context) could connect to a device's debug port, replace the firmware with a version that reports falsified vital signs, and re-connect the device. The legitimate-looking device would then transmit false ECG data, potentially masking a real arrhythmia or triggering false alarms. Secure boot prevents unsigned firmware from executing; signed OTA prevents remote firmware replacement with unsigned images. This maps to OWASP IoT #4 (Lack of Secure Update Mechanism) and Module 10 (Firmware Security).
+    *   *Why D is incorrect:* High availability (99.99% uptime) is an operational reliability concern, not a security control. An on-premises gateway can achieve high availability through local redundancy. More importantly, migrating to a public cloud edge runtime introduces a new attack surface (cloud management APIs, internet connectivity for the edge runtime) that may be less appropriate for a hospital's sensitive clinical data environment than an isolated on-premises deployment.

@@ -1,4 +1,4 @@
-# Quiz: Module 03 - Settings, Providers, & Resources
+# Quiz: Module 03 - HCL Syntax – Providers, Resources, and Variables
 ## Course: CIS-4337_Infrastructure_Automation (HashiCorp Certified: Terraform Associate)
 
 ---
@@ -9,71 +9,69 @@ What block type in HCL is used to configure plugins that interact with cloud pla
 *   B) variable
 *   C) provider
 *   D) output
-*   **Correct Answer:** C) The `provider` block configures the plugins that translate HCL declarations into API calls.
+*   **Correct Answer:** C) The `provider` block configures the plugin that translates HCL resource declarations into API calls for a specific cloud platform.
 *   **Distractor Analysis:**
-    *   *Why correct:* The `provider` block configures the plugins that translate HCL declarations into API calls.
-    *   resource declares infrastructure objects.
+    *   *Why C is correct:* Each cloud platform requires a provider plugin; the `provider` block is where you supply authentication credentials, region, and other platform-specific settings.
+    *   *Why A is incorrect:* The `resource` block declares specific infrastructure objects (like a VM or S3 bucket) managed by the provider — it does not configure the provider itself.
+    *   *Why B is incorrect:* The `variable` block declares input parameters for the configuration; it has nothing to do with provider plugin setup.
+    *   *Why D is incorrect:* The `output` block exposes values after apply for display or cross-module reference; it does not configure plugins.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **provider block parameters**?
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within os_admin operations.
-C) The core operations of a stack: 'push' inserts an element onto the top, and 'pop' removes and returns the top element.
-D) Electrostatic Discharge protection; tools (like wrist straps, grounding mats) used to prevent static electricity from destroying sensitive microchips when handling hardware.
-B) The configuration of input data that forces an algorithm to perform the maximum number of operations, providing a guaranteed upper limit on execution time.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within os_admin operations.
+Which of the following is the most accurate definition of **provider block parameters** in Terraform?
+*   A) The arguments declared inside a `provider {}` block that configure how Terraform connects to and authenticates with a specific cloud platform, such as `region`, `alias`, and credential settings
+*   B) The list of required input variables that must be supplied before `terraform apply` can execute
+*   C) The set of output values published from a module that can be consumed by the calling root configuration
+*   D) The version constraints declared in the `required_providers` block that prevent incompatible provider upgrades
+*   **Correct Answer:** A) Provider block parameters are the configuration arguments inside the `provider {}` block — they tell Terraform how to connect to and authenticate with the target platform.
 *   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **provider block parameters**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **provider block parameters**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **provider block parameters**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **provider block parameters**.
-
+    *   *Why A is correct:* Parameters like `region = "us-east-1"` inside `provider "aws" {}` are provider block parameters. The `alias` parameter enables multiple configurations of the same provider for multi-region deployments.
+    *   *Why B is incorrect:* Required input variables are declared with `variable {}` blocks and supplied via `.tfvars` files or environment variables, not in the provider block.
+    *   *Why C is incorrect:* Module outputs are declared with `output {}` blocks inside the module and referenced via `module.<name>.<output>` in the caller.
+    *   *Why D is incorrect:* Version constraints live in the `required_providers` block inside `terraform {}`, not inside the `provider {}` block (that location is deprecated).
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **display total disk space capacity, usage, and available space in a human-readable format**. Which of the following commands is the most appropriate to execute?
-A) df -h
-B) chmod 600 config.conf
-D) ps aux
-C) systemctl restart service
-*   **Correct Answer:** A) df -h
+A Terraform configuration creates resource B, which must exist only after resource A is fully created, but resource B does not reference any attribute of resource A. How should this dependency be expressed?
+*   A) By declaring resource A inside the resource B block body
+*   B) Using the `depends_on` meta-argument inside resource B's block, referencing resource A
+*   C) By running `terraform apply` twice — once for A and once for B
+*   D) By placing resource A before resource B in the `.tf` file; Terraform reads files top-to-bottom
+*   **Correct Answer:** B) The `depends_on` meta-argument creates an explicit dependency when no implicit reference exists. Terraform will not create B until A is fully provisioned.
 *   **Distractor Analysis:**
-    * *Why A is correct:* The `df -h` command is directly designed to display total disk space capacity, usage, and available space in a human-readable format.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why B is correct:* When resource B does not reference any attribute of resource A (no implicit dependency), `depends_on = [resource_type.name]` inside B's block explicitly instructs Terraform to serialize their creation.
+    *   *Why A is incorrect:* Nesting resource declarations inside other resource blocks is not valid HCL syntax.
+    *   *Why C is incorrect:* Terraform manages dependencies automatically within a single apply; splitting into multiple runs is unnecessary and fragile.
+    *   *Why D is incorrect:* Terraform builds a dependency graph regardless of file order; the physical order of blocks in `.tf` files has no effect on execution order.
 
 ---
 
 **Question 4**
-While working on **Settings, Providers, & Resources** in a production environment, you encounter a system alert indicating a **Disk Space Full** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-D) Reboot the physical machine and wait for services to reload.
-A) Run log rotations, clean temporary files, or expand the logical volume capacity.
-B) Prepend the command with 'sudo' to run it with superuser administrative privileges, or adjust the file permissions.
-C) Identify and terminate the process already utilizing the target port, or modify the service configuration to use an open port.
-*   **Correct Answer:** A) Run log rotations, clean temporary files, or expand the logical volume capacity.
+You need a Terraform variable that accepts a list of strings representing subnet IDs (e.g., `["subnet-aaa", "subnet-bbb"]`). Which type declaration is correct?
+*   A) `type = string`
+*   B) `type = map(string)`
+*   C) `type = list(string)`
+*   D) `type = bool`
+*   **Correct Answer:** C) `list(string)` declares an ordered collection of string values, which is the correct type for a set of subnet IDs that may be iterated with `for_each` or indexed.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This action does not resolve the root cause of Disk Space Full.
-    * *Why A is correct:* Because The storage volume has run out of space, preventing files from being written and causing system services to fail. The appropriate fix is to Run log rotations, clean temporary files, or expand the logical volume capacity..
-    * *Why B is incorrect:* This action does not resolve the root cause of Disk Space Full.
-    * *Why C is incorrect:* This action does not resolve the root cause of Disk Space Full.
-
+    *   *Why C is correct:* `list(string)` accepts `["subnet-aaa", "subnet-bbb"]` and allows index-based access via `var.subnet_ids[0]`. This is a common exam pattern.
+    *   *Why A is incorrect:* `type = string` accepts only a single string value, not a collection. Passing a list to a string variable causes a type error.
+    *   *Why B is incorrect:* `map(string)` accepts key-value pairs like `{az1 = "subnet-aaa", az2 = "subnet-bbb"}`, not a plain list. The structure is different.
+    *   *Why D is incorrect:* `type = bool` accepts only `true` or `false` and cannot hold subnet ID strings.
 
 ---
 
 **Question 5**
-When designing a system for **Settings, Providers, & Resources**, you must mitigate the risk of **Attackers exploiting vulnerabilities in forgotten background services or using abandoned accounts to gain persistent access.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Disable unused system accounts and run a port scan to disable unnecessary active background services.
-C) Enable full disk encryption on all client endpoints.
-D) Enable full disk encryption on all client endpoints.
-B) Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC.
-*   **Correct Answer:** A) Disable unused system accounts and run a port scan to disable unnecessary active background services.
+Which resource meta-argument prevents Terraform from destroying a resource even when `terraform destroy` is explicitly run?
+*   A) `ignore_changes = [all]`
+*   B) `create_before_destroy = true`
+*   C) `prevent_destroy = true`
+*   D) `depends_on = []`
+*   **Correct Answer:** C) The `lifecycle { prevent_destroy = true }` setting causes Terraform to raise an error and abort rather than proceed with destroying the protected resource.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Disable unused system accounts and run a port scan to disable unnecessary active background services. mitigates the risk of Attackers exploiting vulnerabilities in forgotten background services or using abandoned accounts to gain persistent access..
-    * *Why C is incorrect:* This does not address the security vulnerability of Stale Accounts & Services.
-    * *Why D is incorrect:* This does not address the security vulnerability of Stale Accounts & Services.
-    * *Why B is incorrect:* This does not address the security vulnerability of Stale Accounts & Services.
-
+    *   *Why C is correct:* `prevent_destroy = true` inside the `lifecycle {}` block is the explicit safeguard for production resources (databases, state buckets) that should never be accidentally deleted. The exam tests this distinction.
+    *   *Why A is incorrect:* `ignore_changes` tells Terraform to ignore specific attribute changes during plan; it does not prevent destruction of the resource itself.
+    *   *Why B is incorrect:* `create_before_destroy = true` changes the replacement order (create new before deleting old) but does not prevent destruction.
+    *   *Why D is incorrect:* `depends_on = []` manages execution order, not lifecycle protection. An empty `depends_on` list has no practical effect.

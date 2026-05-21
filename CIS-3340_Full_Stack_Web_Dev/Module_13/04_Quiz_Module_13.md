@@ -7,73 +7,71 @@
 What are the three parts of a JSON Web Token (JWT)?
 *   A) Header, Payload, Signature
 *   B) ID, Key, Secret
-*   C) Username, Date, Salt
+*   C) Username, Timestamp, Salt
 *   D) Origin, Destination, Protocol
-*   **Correct Answer:** A) A JWT is a dot-separated string containing a Header (metadata), a Payload (claims), and a cryptographically verified Signature.
+*   **Correct Answer:** A) A JWT is a dot-separated string with three Base64URL-encoded sections: a **Header** (algorithm + token type), a **Payload** (claims including user data and expiration), and a **Signature** (cryptographic hash verifying the token has not been tampered with).
 *   **Distractor Analysis:**
-    *   *Why correct:* A JWT is a dot-separated string containing a Header (metadata), a Payload (claims), and a cryptographically verified Signature.
-    *   Only the base structure guarantees validation.
+    *   *Why A is correct:* Header.Payload.Signature is the standard JWT structure defined in RFC 7519.
+    *   *Why B is incorrect:* ID, Key, and Secret are generic authentication concepts — not the structural components of a JWT.
+    *   *Why C is incorrect:* Username, Timestamp, and Salt are password-related concepts — not the three sections of a JWT.
+    *   *Why D is incorrect:* Origin, Destination, and Protocol describe network routing concepts — unrelated to JWT structure.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Cross-Origin Resource Sharing (CORS)**?
-C) The mathematical expectation of an algorithm's performance across all possible inputs of size N, representing typical real-world runtime behavior.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-D) The memory block allocated on the system stack for a single function call, storing parameters, local variables, and the return address.
-B) The maximum acceptable age of data that must be recovered from backup storage to restore operations, representing the limit of tolerable data loss.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
+Which of the following is the most accurate definition of **Cross-Origin Resource Sharing (CORS)**?
+*   A) A browser security mechanism that allows or restricts browser-side JavaScript from reading HTTP responses from a different origin than the page that initiated the request — enforced via response headers like `Access-Control-Allow-Origin`.
+*   B) A cryptographic protocol that encrypts all data transferred between a browser and a web server using TLS certificates issued by a trusted Certificate Authority.
+*   C) An AWS IAM policy mechanism that restricts which AWS accounts can invoke an API Gateway endpoint from external accounts.
+*   D) A JavaScript content security policy that prevents inline scripts and eval() from executing in the browser to mitigate XSS attacks.
+*   **Correct Answer:** A) A browser security mechanism that allows or restricts browser-side JavaScript from reading HTTP responses from a different origin — enforced via response headers like `Access-Control-Allow-Origin`.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Cross-Origin Resource Sharing (CORS)**.
-    * *Why A is correct:* This describes the exact role and function of **Cross-Origin Resource Sharing (CORS)**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Cross-Origin Resource Sharing (CORS)**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Cross-Origin Resource Sharing (CORS)**.
-
+    *   *Why A is correct:* CORS is enforced by the browser at the HTTP response level — the server sends permission headers and the browser decides whether to expose the response to JavaScript.
+    *   *Why B is incorrect:* This describes HTTPS/TLS — the transport encryption layer. CORS is about origin-based access control, not encryption.
+    *   *Why C is incorrect:* This describes AWS resource-based policies for cross-account API access — a separate AWS security mechanism.
+    *   *Why D is incorrect:* This describes Content Security Policy (CSP) — a separate browser security header that restricts script sources and execution contexts.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **create a sandboxed Python virtual environment to manage dependencies locally**. Which of the following commands is the most appropriate to execute?
-D) pip install -r requirements.txt
-B) git commit -m 'update'
-C) pytest
-A) python3 -m venv .venv
-*   **Correct Answer:** A) python3 -m venv .venv
+A developer stores a JWT in the browser. Where is it most appropriately stored for security?
+*   A) In a JavaScript variable in the global `window` object — accessible everywhere across the application.
+*   B) In `localStorage` — persists across tabs and sessions, simple to access.
+*   C) In an HTTP-only, Secure, SameSite=Strict cookie — inaccessible to JavaScript, preventing XSS theft, and protected against CSRF with the SameSite attribute.
+*   D) In the URL query string — so it can be easily passed between pages without additional JavaScript.
+*   **Correct Answer:** C) In an HTTP-only, Secure, SameSite=Strict cookie — inaccessible to JavaScript, preventing XSS theft, and protected against CSRF with the SameSite attribute.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `python3 -m venv .venv` command is directly designed to create a sandboxed Python virtual environment to manage dependencies locally.
-
+    *   *Why A is incorrect:* Storing a JWT in `window` exposes it to any JavaScript on the page — a XSS attack can immediately steal it.
+    *   *Why B is incorrect:* `localStorage` is accessible by JavaScript — any XSS payload on the page can read and exfiltrate the token. The OWASP recommendation is to avoid storing JWTs in `localStorage`.
+    *   *Why C is correct:* HTTP-only cookies cannot be read by JavaScript — eliminating XSS theft. `Secure` ensures transmission only over HTTPS. `SameSite=Strict` prevents the cookie from being sent on cross-site requests, mitigating CSRF.
+    *   *Why D is incorrect:* Tokens in URL query strings are logged in server access logs, browser history, and referrer headers — a significant credential exposure risk.
 
 ---
 
 **Question 4**
-While working on **Web Security (JWT & CORS)** in a production environment, you encounter a system alert indicating a **IndexError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-B) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
-C) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-A) Verify that the index is within the valid range of 0 to len(list)-1.
-D) Reboot the physical machine and wait for services to reload.
-*   **Correct Answer:** A) Verify that the index is within the valid range of 0 to len(list)-1.
+An Express API receives a `POST /login` request with a username and password. The user is found in the database. What is the correct sequence for verifying the password and issuing a JWT?
+*   A) Compare the plain-text submitted password directly to the stored password hash using `===`.
+*   B) Use `bcrypt.compare(submittedPassword, storedHash)` to verify the password, then call `jwt.sign({ userId }, JWT_SECRET, { expiresIn: '1h' })` to generate and return the token if the comparison returns `true`.
+*   C) Decrypt the stored password hash using `bcrypt.decrypt()` and compare the result to the submitted password.
+*   D) Hash the submitted password with `bcrypt.hash()` and store the new hash — then issue the JWT unconditionally since the user was found.
+*   **Correct Answer:** B) Use `bcrypt.compare(submittedPassword, storedHash)` to verify the password, then issue the JWT only if the comparison returns `true`.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This action does not resolve the root cause of IndexError.
-    * *Why C is incorrect:* This action does not resolve the root cause of IndexError.
-    * *Why A is correct:* Because The code attempted to access an element of a sequence using an out-of-bounds index. The appropriate fix is to Verify that the index is within the valid range of 0 to len(list)-1..
-    * *Why D is incorrect:* This action does not resolve the root cause of IndexError.
-
+    *   *Why A is incorrect:* The stored value is a bcrypt hash, not the plaintext password — direct string comparison will always fail and should never be used for password verification.
+    *   *Why B is correct:* `bcrypt.compare()` rehashes the submitted password with the salt embedded in the stored hash and compares the result — this is the correct, secure verification pattern.
+    *   *Why C is incorrect:* bcrypt is a one-way hash function — there is no `bcrypt.decrypt()`. One-way hashes cannot be reversed by design.
+    *   *Why D is incorrect:* Re-hashing on every login does not verify the password — it would replace the stored hash and issue a JWT regardless of whether the password was correct.
 
 ---
 
 **Question 5**
-When designing a system for **Web Security (JWT & CORS)**, you must mitigate the risk of **Storing user credentials in plain text, making them vulnerable to database breaches.**. Which of the following security configurations or controls represents the best practice to implement?
-B) Implement parameterized queries and prepared statements rather than raw string concatenation.
-D) Enable full disk encryption on all client endpoints.
-C) Enable full disk encryption on all client endpoints.
-A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-*   **Correct Answer:** A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
+A JWT issued by an API has an `exp` claim set to a Unix timestamp 1 hour in the future. The server's `jwt.verify()` call starts rejecting the token 70 minutes after issuance. What is the most accurate explanation?
+*   A) The `exp` claim was overridden by the `iat` (issued-at) claim, shortening the effective token lifetime.
+*   B) The JWT has expired — the `exp` claim specifies the absolute Unix timestamp after which the token is invalid, and 70 minutes after issuance exceeds the 1-hour `expiresIn` window.
+*   C) JWT tokens automatically expire after 60 minutes regardless of the `exp` value — the `expiresIn` option is advisory only.
+*   D) The server's system clock drifted 10 minutes ahead — causing it to consider the token expired 10 minutes before the client expects.
+*   **Correct Answer:** B) The JWT has expired — the `exp` claim specifies the absolute Unix timestamp after which the token is invalid, and 70 minutes after issuance exceeds the 1-hour `expiresIn` window.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-    * *Why D is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-    * *Why C is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-    * *Why A is correct:* Implementing Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt. mitigates the risk of Storing user credentials in plain text, making them vulnerable to database breaches..
-
+    *   *Why A is incorrect:* The `iat` claim records when the token was issued but does not override `exp` — both can exist in the same token.
+    *   *Why B is correct:* `exp` is an absolute Unix timestamp. After that timestamp passes, `jwt.verify()` throws a `TokenExpiredError`. 70 minutes after issuance exceeds the 1-hour (3600-second) window.
+    *   *Why C is incorrect:* The `exp` claim is enforced by the verifier — it is not advisory. `expiresIn` controls what timestamp is written into `exp` during signing.
+    *   *Why D is incorrect:* Clock skew between client and server is a real operational concern, but 10 minutes of skew is unusually large. While the answer is plausible, option B is the primary explanation that directly accounts for the 70-minute timeline.

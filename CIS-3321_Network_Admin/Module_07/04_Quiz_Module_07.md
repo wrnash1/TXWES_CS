@@ -1,86 +1,73 @@
-# Quiz: Module 07 - Monitoring
-## Course: CIS-3321_Network_Admin (3321_Network_Admin - CompTIA Network+ (N10-008))
+# Quiz: Module 07 - WAN and Cloud Connectivity
+## Course: CIS-3321 – Network Administration (CompTIA Network+ N10-009)
 
 ---
 
 **Question 1**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **NetFlow**?
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within networking operations.
-D) The final node in a linked list, whose next pointer typically references null (or the head node in a circular list), marking the end of the chain.
-C) Elements placed inside the <head> block of an HTML document that define metadata, links to stylesheets, scripts, character sets, and page titles.
-B) The core security model consisting of Confidentiality (preventing unauthorized access), Integrity (preventing unauthorized modification), and Availability (ensuring systems are accessible when needed).
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within networking operations.
+A company has multiple branch offices that need to communicate over a carrier network with guaranteed quality of service and predictable latency for VoIP traffic. Which WAN technology is best suited for this requirement?
+A) DSL (ADSL) — asymmetric broadband over copper phone lines with variable contention-based latency
+B) DOCSIS cable — shared coaxial broadband where neighborhood traffic affects available bandwidth
+C) MPLS (Multiprotocol Label Switching) — a carrier service that uses labels to forward packets with defined traffic classes and guaranteed QoS
+D) GRE tunneling — encapsulates multiprotocol traffic in IP headers for transit across a public network
+*   **Correct Answer:** C) MPLS (Multiprotocol Label Switching) — a carrier service that uses labels to forward packets with defined traffic classes and guaranteed QoS
 *   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **NetFlow**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **NetFlow**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **NetFlow**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **NetFlow**.
-
-
----
+    *   *Why A is incorrect:* ADSL is an asymmetric best-effort broadband service; it does not provide guaranteed latency or quality of service guarantees required for enterprise VoIP.
+    *   *Why B is incorrect:* Cable/DOCSIS bandwidth is shared among local subscribers, creating variable latency that is unsuitable for latency-sensitive VoIP traffic.
+    *   *Why D is incorrect:* GRE is a tunneling protocol that encapsulates packets — it provides no QoS guarantees and typically runs over an existing WAN link rather than replacing it.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **NetFlow**?
-B) The additional execution time and CPU operations spent visiting nodes sequentially in memory, which is higher in linked structures than in contiguous arrays.
-C) The operational principle of a stack, where the element added most recently is the first one to be removed, similar to a stack of trays.
-D) The monetary loss expected from a single occurrence of a specific risk event, calculated as Asset Value multiplied by the Exposure Factor (SLE = AV * EF).
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within networking operations.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within networking operations.
+A network administrator is configuring a site-to-site VPN between two corporate offices. The VPN must encrypt the entire original IP packet — including the original source and destination headers — so that only the VPN gateway addresses are visible to the transit network. Which IPsec mode accomplishes this?
+A) Transport mode — encrypts only the IP payload while leaving the original IP header intact and visible
+B) Tunnel mode — wraps the entire original IP packet (header + payload) inside a new IP header with VPN gateway addresses
+C) GRE over plaintext — encapsulates the original packet inside a new IP header without encryption
+D) SSL/TLS Transport — uses TLS record-layer encryption on individual TCP segments between hosts
+*   **Correct Answer:** B) Tunnel mode — wraps the entire original IP packet (header + payload) inside a new IP header with VPN gateway addresses
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **NetFlow**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **NetFlow**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **NetFlow**.
-    * *Why A is correct:* This describes the exact role and function of **NetFlow**.
-
-
----
+    *   *Why A is incorrect:* IPsec Transport mode encrypts only the payload, leaving the original IP header exposed — internal source/destination addresses would be visible to the transit network, violating the requirement.
+    *   *Why C is incorrect:* GRE over plaintext provides encapsulation but no encryption; original headers would be visible and the traffic would not be secured in transit.
+    *   *Why D is incorrect:* SSL/TLS Transport operates at the session layer and encrypts application data between hosts — it does not wrap entire IP packets the way IPsec Tunnel mode does, and it is not used for site-to-site infrastructure VPNs.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **display all active network connections, listening ports, and corresponding process identifiers**. Which of the following commands is the most appropriate to execute?
-C) ping
-D) nslookup
-A) netstat -ano
-B) traceroute
-*   **Correct Answer:** A) netstat -ano
+A remote employee is working from a hotel where the firewall blocks all traffic except ports 80 and 443. They need to connect to the corporate VPN. Which VPN technology will traverse this restrictive firewall successfully?
+A) IPsec using IKEv2 on UDP port 500 and NAT-T on UDP port 4500
+B) L2TP/IPsec on UDP port 1701 with IPsec encapsulation on UDP 500
+C) SSL/TLS VPN on TCP port 443, which appears as standard HTTPS traffic to the firewall
+D) PPTP on TCP port 1723 with GRE protocol 47 for the data tunnel
+*   **Correct Answer:** C) SSL/TLS VPN on TCP port 443, which appears as standard HTTPS traffic to the firewall
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `netstat -ano` command is directly designed to display all active network connections, listening ports, and corresponding process identifiers.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is incorrect:* IPsec IKEv2 requires UDP 500 and UDP 4500 for NAT traversal — both of these ports are blocked in this scenario.
+    *   *Why B is incorrect:* L2TP/IPsec requires UDP 1701 for L2TP and UDP 500/4500 for IPsec — all blocked. It would not function in this environment.
+    *   *Why D is incorrect:* PPTP requires TCP 1723 and GRE protocol 47 — TCP 1723 is not in the allowed list, and GRE is a non-TCP/UDP protocol that most restrictive firewalls block entirely.
 
 ---
 
 **Question 4**
-While working on **Monitoring** in a production environment, you encounter a system alert indicating a **Subnet Mask Mismatch** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-C) Change the local network interface settings to use a public DNS resolver like 8.8.8.8 or 1.1.1.1.
-A) Correct the subnet mask configuration on the interface to match the network segment parameters.
-B) Release and renew the DHCP lease, or configure a unique static IP address outside the DHCP pool range.
-D) Reboot the physical machine and wait for services to reload.
-*   **Correct Answer:** A) Correct the subnet mask configuration on the interface to match the network segment parameters.
+A company wants to migrate its customer-facing web application to the cloud. The development team wants to focus solely on writing and deploying application code without managing virtual machines, operating systems, or patching. Which cloud service model meets this requirement?
+A) IaaS (Infrastructure as a Service) — provides virtual machines, storage, and networking; the team manages OS, middleware, and applications
+B) PaaS (Platform as a Service) — the provider manages infrastructure and OS; the team deploys and manages only the application code
+C) SaaS (Software as a Service) — the provider delivers a fully managed application; the team only configures and uses it
+D) Private Cloud — on-premises virtualized infrastructure owned and operated exclusively by the company
+*   **Correct Answer:** B) PaaS (Platform as a Service) — the provider manages infrastructure and OS; the team deploys and manages only the application code
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This action does not resolve the root cause of Subnet Mask Mismatch.
-    * *Why A is correct:* Because A host is configured with an incorrect subnet mask, preventing it from identifying local vs. remote addresses. The appropriate fix is to Correct the subnet mask configuration on the interface to match the network segment parameters..
-    * *Why B is incorrect:* This action does not resolve the root cause of Subnet Mask Mismatch.
-    * *Why D is incorrect:* This action does not resolve the root cause of Subnet Mask Mismatch.
-
+    *   *Why A is incorrect:* IaaS requires the team to manage the OS, middleware, security patches, and runtime — exactly what they want to avoid. The team would still be responsible for everything above the hypervisor.
+    *   *Why C is incorrect:* SaaS delivers a pre-built application (like email or CRM) — the team cannot deploy custom application code to a SaaS platform; they can only use what the provider offers.
+    *   *Why D is incorrect:* Private cloud is a deployment model (where infrastructure is hosted), not a service model that eliminates OS management responsibility. It describes who owns the hardware, not who manages the software stack.
 
 ---
 
 **Question 5**
-When designing a system for **Monitoring**, you must mitigate the risk of **Attackers connecting rogue access points or unauthorized laptops directly to internal switch ports.**. Which of the following security configurations or controls represents the best practice to implement?
-D) Enable full disk encryption on all client endpoints.
-A) Implement switch Port Security to restrict access to switch ports based on approved MAC addresses.
-C) Enable full disk encryption on all client endpoints.
-B) Configure SSH (port 22) for terminal access and HTTPS (port 443) for web interfaces, disabling Telnet and HTTP.
-*   **Correct Answer:** A) Implement switch Port Security to restrict access to switch ports based on approved MAC addresses.
+A security architect is designing a remote-access solution for employees who work from home. The solution must encrypt all traffic between the employee's device and the corporate network, authenticate users with individual credentials, and prevent split tunneling so all internet traffic routes through the corporate firewall. Which combination of controls best satisfies all three requirements?
+A) Deploy a full-tunnel SSL/TLS VPN with certificate-based user authentication and a VPN policy enforcing that all traffic is routed through the corporate gateway.
+B) Configure WPA3-SAE on the corporate wireless network and require employees to connect to the office Wi-Fi remotely.
+C) Enable IPsec Transport mode between employee laptops and the nearest branch router using a shared group PSK for authentication.
+D) Implement a site-to-site GRE tunnel between the home router and corporate edge router, with no additional encryption layer.
+*   **Correct Answer:** A) Deploy a full-tunnel SSL/TLS VPN with certificate-based user authentication and a VPN policy enforcing that all traffic is routed through the corporate gateway.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This does not address the security vulnerability of Unauthorized Port Access.
-    * *Why A is correct:* Implementing Implement switch Port Security to restrict access to switch ports based on approved MAC addresses. mitigates the risk of Attackers connecting rogue access points or unauthorized laptops directly to internal switch ports..
-    * *Why C is incorrect:* This does not address the security vulnerability of Unauthorized Port Access.
-    * *Why B is incorrect:* This does not address the security vulnerability of Unauthorized Port Access.
-
+    *   *Why A is correct:* SSL/TLS VPN provides encrypted tunneling, certificate-based per-user authentication satisfies the individual credential requirement, and a full-tunnel policy routes all traffic (including internet) through the corporate firewall — meeting all three requirements.
+    *   *Why B is incorrect:* WPA3-SAE is a wireless LAN security protocol for local network access — it cannot be used remotely from a home location and has no remote-access VPN capability.
+    *   *Why C is incorrect:* IPsec Transport mode encrypts only the payload between two hosts and leaves the original IP header exposed — it is not designed for remote-access VPN. A shared PSK also fails the individual credential requirement.
+    *   *Why D is incorrect:* GRE provides encapsulation but no encryption — all traffic would be transmitted in plaintext, failing the encryption requirement entirely.

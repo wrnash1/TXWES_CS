@@ -5,75 +5,73 @@
 
 **Question 1**
 What media query rule targets screen sizes that are 768px wide or smaller?
-*   A) @media (min-width: 768px)
-*   B) @media (max-width: 768px)
-*   C) @media screen 768
-*   D) @breakpoint 768px
-*   **Correct Answer:** B) max-width: 768px matches screens up to and including 768px in width.
+*   A) `@media (min-width: 768px)`
+*   B) `@media (max-width: 768px)`
+*   C) `@media screen 768`
+*   D) `@breakpoint 768px`
+*   **Correct Answer:** B) `@media (max-width: 768px)` matches any viewport up to and including 768px wide, making it the correct rule for targeting tablets and mobile devices.
 *   **Distractor Analysis:**
-    *   *Why correct:* max-width: 768px matches screens up to and including 768px in width.
-    *   min-width matches screens that are at least 768px wide.
+    *   *Why A is incorrect:* `min-width: 768px` matches screens that are *at least* 768px wide — the opposite of the requirement.
+    *   *Why B is correct:* `max-width: 768px` is the standard syntax for applying styles to viewports up to the specified threshold.
+    *   *Why C is incorrect:* `@media screen 768` is not valid CSS syntax — media queries require a feature condition in parentheses.
+    *   *Why D is incorrect:* `@breakpoint` is not a CSS at-rule — breakpoints are implemented using `@media` rules.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Media queries**?
-C) The absolute maximum time a business process can be disrupted before the organization suffers irreparable damage or failure.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-D) Electrostatic Discharge protection; tools (like wrist straps, grounding mats) used to prevent static electricity from destroying sensitive microchips when handling hardware.
-B) The configuration of input data that forces an algorithm to perform the maximum number of operations, providing a guaranteed upper limit on execution time.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
+Which of the following is the most accurate definition of **media queries**?
+*   A) CSS `@media` rule blocks that apply style declarations only when specific viewport or device conditions are met — such as screen width, orientation, or color scheme preference.
+*   B) JavaScript functions that listen for browser resize events and dynamically change DOM element class names in response to viewport width changes.
+*   C) HTTP request headers sent by the browser to inform the web server about the client device's screen resolution and preferred content format.
+*   D) SQL query statements used to retrieve responsive layout configuration data from a relational database at page load time.
+*   **Correct Answer:** A) CSS `@media` rule blocks that apply style declarations only when specific viewport or device conditions are met — such as screen width, orientation, or color scheme preference.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Media queries**.
-    * *Why A is correct:* This describes the exact role and function of **Media queries**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Media queries**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Media queries**.
-
+    *   *Why A is correct:* This is the accurate CSS definition of media queries — conditional blocks within a stylesheet.
+    *   *Why B is incorrect:* This describes a JavaScript resize event handler, which is a different (and less performant) technique for responsive behavior.
+    *   *Why C is incorrect:* HTTP request headers (`Accept`, `User-Agent`) exist but are separate from CSS media queries and do not directly control styling.
+    *   *Why D is incorrect:* SQL queries retrieve data from databases — they have no relationship to CSS layout or responsive design.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **install all external project dependencies specified in the requirements manifest**. Which of the following commands is the most appropriate to execute?
-B) python3 -m venv .venv
-A) pip install -r requirements.txt
-D) pytest
-C) git commit -m 'update'
-*   **Correct Answer:** A) pip install -r requirements.txt
+A developer is building a responsive site and wants the layout to start simple on mobile and progressively add complexity for larger screens. Which approach best describes this strategy?
+*   A) Desktop-first: write full desktop styles first, then use `max-width` media queries to simplify the layout for smaller screens.
+*   B) Mobile-first: write base styles for small screens first, then use `min-width` media queries to enhance the layout for progressively larger screens.
+*   C) Fixed-width: define a single `960px` centered container and use `overflow: hidden` to clip content on smaller screens.
+*   D) Fluid-only: use percentage widths on all elements and avoid media queries entirely, relying solely on proportional scaling.
+*   **Correct Answer:** B) Mobile-first: write base styles for small screens first, then use `min-width` media queries to enhance the layout for progressively larger screens.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `pip install -r requirements.txt` command is directly designed to install all external project dependencies specified in the requirements manifest.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is incorrect:* Desktop-first is the older approach; it is less performant for mobile devices because they must parse and override more CSS rules.
+    *   *Why B is correct:* Mobile-first is the current industry standard — it produces leaner default CSS and aligns with how Google evaluates page performance for SEO.
+    *   *Why C is incorrect:* A fixed-width container does not adapt to the viewport; content is clipped or requires horizontal scrolling on mobile.
+    *   *Why D is incorrect:* Pure fluid layouts without breakpoints often produce poor UX at extreme viewport sizes — very narrow or very wide screens typically require structural layout changes, not just proportional scaling.
 
 ---
 
 **Question 4**
-While working on **Responsive Design** in a production environment, you encounter a system alert indicating a **TypeError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-D) Reboot the physical machine and wait for services to reload.
-B) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
-C) Verify that the index is within the valid range of 0 to len(list)-1.
-A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-*   **Correct Answer:** A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
+A developer deploys a web application to AWS but mobile users report the page looks like a zoomed-out desktop version. What HTML fix resolves this?
+*   A) Add a `Content-Type: text/html; charset=UTF-8` header to the S3 bucket CORS configuration.
+*   B) Add `<meta name="viewport" content="width=device-width, initial-scale=1">` to the `<head>` of the HTML document.
+*   C) Set `body { zoom: 0.5; }` in the stylesheet to scale down the page for mobile devices.
+*   D) Configure AWS CloudFront to deliver a separate mobile-only HTML file using device detection headers.
+*   **Correct Answer:** B) Add `<meta name="viewport" content="width=device-width, initial-scale=1">` to the `<head>` of the HTML document.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This action does not resolve the root cause of TypeError.
-    * *Why B is incorrect:* This action does not resolve the root cause of TypeError.
-    * *Why C is incorrect:* This action does not resolve the root cause of TypeError.
-    * *Why A is correct:* Because An operation or function was applied to an object of an inappropriate data type. The appropriate fix is to Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types..
-
+    *   *Why A is incorrect:* CORS headers control cross-origin resource access, not mobile rendering behavior.
+    *   *Why B is correct:* Without the viewport meta tag, mobile browsers simulate a ~980px desktop layout and scale it down — this tag instructs them to render at the device's actual pixel width.
+    *   *Why C is incorrect:* The CSS `zoom` property is non-standard and scales visual rendering without changing the layout width the browser uses for media queries.
+    *   *Why D is incorrect:* CloudFront can route requests based on headers, but maintaining separate HTML files for mobile/desktop is an outdated approach that duplicates content and increases maintenance burden.
 
 ---
 
 **Question 5**
-When designing a system for **Responsive Design**, you must mitigate the risk of **Storing user credentials in plain text, making them vulnerable to database breaches.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-C) Enable full disk encryption on all client endpoints.
-D) Enable full disk encryption on all client endpoints.
-B) Implement parameterized queries and prepared statements rather than raw string concatenation.
-*   **Correct Answer:** A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
+Which CSS unit is most appropriate for setting `font-size` values in a way that respects a user's browser accessibility settings for base font size?
+*   A) `px` (pixels) — because pixel values are precise and consistent across all browsers.
+*   B) `rem` (root em) — because it scales relative to the root element's font size, which honors the user's browser font-size preference.
+*   C) `vw` (viewport width) — because font size should always scale with the viewport.
+*   D) `pt` (points) — because point units were designed specifically for web typography.
+*   **Correct Answer:** B) `rem` (root em) — because it scales relative to the root element's font size, which honors the user's browser font-size preference.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt. mitigates the risk of Storing user credentials in plain text, making them vulnerable to database breaches..
-    * *Why C is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-    * *Why D is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-    * *Why B is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-
+    *   *Why A is incorrect:* Pixel values are fixed — if a user sets their browser base font size to 20px for accessibility, `px`-based font sizes ignore that preference.
+    *   *Why B is correct:* `rem` multiplies against the root font size, so if a user enlarges their browser's default font, all `rem`-based text scales accordingly — this is the accessibility-preferred approach.
+    *   *Why C is incorrect:* `vw` scales font sizes with the viewport width — text in a full-screen browser on a wide monitor becomes very large while text in a narrow window becomes tiny, making it unsuitable as a standalone font-size unit.
+    *   *Why D is incorrect:* Point (`pt`) units are a print measurement equivalent to 1/72 inch — they have no responsive behavior and are not recommended for screen typography.

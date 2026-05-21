@@ -17,17 +17,17 @@ How do you call a method in the parent class from a child class?
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **super() function**?
-D) HTML tags that convey the meaning and structure of the enclosed content to both the browser and search engines (e.g., <header>, <article>, <footer>) instead of generic containers.
-C) The danger of exhausting the call stack memory allocation when recursive calls are made too deeply or without hitting a base case, crashing the program.
-B) The core security model consisting of Confidentiality (preventing unauthorized access), Integrity (preventing unauthorized modification), and Availability (ensuring systems are accessible when needed).
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
+Which of the following best describes the **`super()` function** in Python?
+*   A) `super()` returns the parent class object itself, allowing you to call any class method or access any class variable defined in the parent without needing an instance
+*   B) `super()` returns a proxy that delegates attribute lookups to the next class in the Method Resolution Order, most commonly used in `__init__` to call the parent's initializer without hardcoding the parent class name
+*   C) `super()` is only valid inside `__init__` methods; using it in any other method raises a `TypeError` because Python cannot determine the MRO outside of constructors
+*   D) `super()` always calls the method from the immediate parent class regardless of the inheritance hierarchy, making it equivalent to writing `ParentClass.method(self)` explicitly
+*   **Correct Answer:** B) `super()` returns a proxy that delegates attribute lookups to the next class in the Method Resolution Order, most commonly used in `__init__` to call the parent's initializer without hardcoding the parent class name.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **super() function**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **super() function**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **super() function**.
-    * *Why A is correct:* This describes the exact role and function of **super() function**.
+    *   *Why A is incorrect:* `super()` does not return the parent class object — it returns a proxy that forwards calls following the MRO; it also requires an instance context (or explicit arguments in Python 2), not class-level access.
+    *   *Why B is correct:* `super()` follows the MRO, making it safe for multiple inheritance where hardcoding the parent name would skip sibling classes in the chain; calling `super().__init__(...)` ensures the full initialization chain runs correctly.
+    *   *Why C is incorrect:* `super()` can be used in any instance method, not just `__init__` — it is commonly used in overridden methods like `__str__`, `save()`, or any other method where the child wants to extend rather than fully replace the parent's behavior.
+    *   *Why D is incorrect:* In multiple inheritance, `super()` does not necessarily call the immediate parent — it calls the next class in the MRO, which may be a sibling class before reaching the declared parent; this is the key difference from `ParentClass.method(self)`.
 
 
 ---
@@ -69,11 +69,10 @@ When designing a system for **Advanced OOP: Inheritance and Polymorphism**, you 
 A) Implement parameterized queries and prepared statements rather than raw string concatenation.
 C) Enable full disk encryption on all client endpoints.
 B) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-D) Enable full disk encryption on all client endpoints.
+D) Create a base `Repository` class with a `find_by_id(self, id)` method that builds SQL using f-string interpolation, and have all model classes inherit this behavior.
 *   **Correct Answer:** A) Implement parameterized queries and prepared statements rather than raw string concatenation.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Implement parameterized queries and prepared statements rather than raw string concatenation. mitigates the risk of Allowing attackers to execute arbitrary SQL commands on the backend database via input forms..
+    * *Why A is correct:* Implementing parameterized queries and prepared statements rather than raw string concatenation mitigates the risk of allowing attackers to execute arbitrary SQL commands on the backend database via input forms.
     * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
     * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why D is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-
+    * *Why D is incorrect:* Inheriting an f-string SQL builder propagates the injection vulnerability to every subclass — using inheritance to share unsafe query construction makes the problem worse, not better; the base class itself must use parameterized queries for all subclasses to be safe.

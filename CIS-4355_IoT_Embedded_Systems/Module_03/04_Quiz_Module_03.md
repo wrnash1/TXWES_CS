@@ -1,79 +1,75 @@
-# Quiz: Module 03 - Embedded Programming C/C++
+# Quiz: Module 03 - Embedded Programming – C and MicroPython Basics
 ## Course: CIS-4355_IoT_Embedded_Systems (IoT & Embedded Security (General Principles))
 
 ---
 
 **Question 1**
 Why is static memory allocation preferred over dynamic allocation (malloc) in high-reliability embedded systems?
-*   A) Static memory runs slower
-*   B) Dynamic allocation risks heap fragmentation and runtime memory exhaustion (out-of-memory crashes)
-*   C) C does not support dynamic allocation
-*   D) Pointers are not allowed
-*   **Correct Answer:** B) Microcontrollers have tiny RAM capacities; heap fragmentation can trigger unpredictable system crashes during long-term runs.
+*   A) Static memory runs slower than heap-allocated memory on ARM Cortex-M cores.
+*   B) Dynamic allocation risks heap fragmentation and runtime memory exhaustion, causing unpredictable crashes.
+*   C) The C language does not support dynamic memory allocation on any platform.
+*   D) Pointers are not allowed in safety-critical embedded code under any standard.
+*   **Correct Answer:** B) Dynamic allocation risks heap fragmentation and runtime memory exhaustion, causing unpredictable crashes.
 *   **Distractor Analysis:**
-    *   *Why correct:* Microcontrollers have tiny RAM capacities; heap fragmentation can trigger unpredictable system crashes during long-term runs.
-    *   Dynamic memory is supported in C but highly restricted in embedded code.
+    *   *Why correct:* Microcontrollers have tiny RAM; heap fragmentation over long uptimes can trigger out-of-memory failures that are impossible to predict at compile time.
+    *   Dynamic memory is supported in C but avoided in embedded code because failures are non-deterministic and hard to test exhaustively.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **registers mapping**?
-D) The practice of connecting an electrical circuit or chassis to the earth or a large conductor to safely dissipate static electricity or stray currents.
-C) A project management technique that identifies the sequence of dependent tasks that determines the shortest time to complete a project.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
-B) The additional execution time and CPU operations spent visiting nodes sequentially in memory, which is higher in linked structures than in contiguous arrays.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
+Which of the following is the most accurate definition of **register mapping** in embedded C programming?
+*   A) A technique of accessing microcontroller hardware peripheral control registers directly via their memory-mapped I/O addresses using volatile pointer casts.
+*   B) A compiler optimization that places frequently used variables into CPU cache to reduce RAM access latency.
+*   C) The process of assigning unique I2C bus addresses to multiple sensors sharing the same SDA/SCL lines.
+*   D) A Python decorator that maps function calls to GPIO pin toggle events on a Raspberry Pi.
+*   **Correct Answer:** A) A technique of accessing microcontroller hardware peripheral control registers directly via their memory-mapped I/O addresses using volatile pointer casts.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **registers mapping**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **registers mapping**.
-    * *Why A is correct:* This describes the exact role and function of **registers mapping**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **registers mapping**.
-
+    *   *Why A is correct:* Register mapping lets C code set individual peripheral control bits (e.g., enabling a UART transmitter) by writing to the documented hardware register address, avoiding overhead from HAL abstraction layers.
+    *   *Why B is incorrect:* This describes CPU caching, which is a microarchitecture optimization, not a programming technique under developer control on most MCUs.
+    *   *Why C is incorrect:* This describes I2C device addressing, which is a hardware configuration, not register mapping.
+    *   *Why D is incorrect:* Python decorators are a language feature; they are unrelated to memory-mapped hardware register access.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **launch all application services in the background using docker-compose configuration**. Which of the following commands is the most appropriate to execute?
-A) docker-compose up -d
-D) git log --oneline -n 5
-B) systemctl status iot_service
-C) terraform validate
-*   **Correct Answer:** A) docker-compose up -d
+An embedded C developer writes `char buf[16]; strcpy(buf, userInput);` where `userInput` is received from a network packet. Which vulnerability does this introduce?
+*   A) Integer overflow in the loop counter used to terminate the copy.
+*   B) Buffer overflow: if userInput exceeds 15 bytes, strcpy writes past the end of buf, corrupting adjacent stack memory.
+*   C) Race condition: two threads may call strcpy simultaneously on the same buffer.
+*   D) Null pointer dereference: strcpy returns NULL when the source string is empty.
+*   **Correct Answer:** B) Buffer overflow: if userInput exceeds 15 bytes, strcpy writes past the end of buf, corrupting adjacent stack memory.
 *   **Distractor Analysis:**
-    * *Why A is correct:* The `docker-compose up -d` command is directly designed to launch all application services in the background using docker-compose configuration.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is incorrect:* strcpy does not use an explicit integer loop counter exposed to the caller; the overflow risk is in destination bounds, not a counter variable.
+    *   *Why B is correct:* strcpy performs no bounds checking; input longer than 15 bytes (plus null terminator) overwrites adjacent stack variables or the return address, enabling code execution attacks.
+    *   *Why C is incorrect:* A race condition requires concurrent access; this code is a sequential single-threaded buffer overflow regardless of threading.
+    *   *Why D is incorrect:* strcpy does not return NULL on empty input; it copies zero bytes and null-terminates normally.
 
 ---
 
 **Question 4**
-While working on **Embedded Programming C/C++** in a production environment, you encounter a system alert indicating a **Scope Exceeded Budget Limit** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-A) Implement strict change control boards (CCB) and re-baseline the project constraints.
-C) Re-assign resources to critical path tasks and establish clear communication protocols.
-B) Optimize service resources, implement load balancing, or update failover mechanisms.
-D) Reboot the physical machine and wait for services to reload.
-*   **Correct Answer:** A) Implement strict change control boards (CCB) and re-baseline the project constraints.
+Which bitwise operation correctly clears bit 3 of a uint8_t register variable `reg` without affecting any other bits?
+*   A) reg = reg | (1 << 3);
+*   B) reg = reg & ~(1 << 3);
+*   C) reg = reg ^ (1 << 3);
+*   D) reg = reg >> 3;
+*   **Correct Answer:** B) reg = reg & ~(1 << 3);
 *   **Distractor Analysis:**
-    * *Why A is correct:* Because The project scope expanded during execution without adjusting budget or schedule allocations. The appropriate fix is to Implement strict change control boards (CCB) and re-baseline the project constraints..
-    * *Why C is incorrect:* This action does not resolve the root cause of Scope Exceeded Budget Limit.
-    * *Why B is incorrect:* This action does not resolve the root cause of Scope Exceeded Budget Limit.
-    * *Why D is incorrect:* This action does not resolve the root cause of Scope Exceeded Budget Limit.
-
+    *   *Why A is incorrect:* OR sets a bit to 1; it cannot clear a bit to 0.
+    *   *Why B is correct:* `~(1 << 3)` produces a mask with all bits set except bit 3; ANDing with reg forces bit 3 to 0 while leaving all other bits unchanged.
+    *   *Why C is incorrect:* XOR toggles the bit — if bit 3 was already 0, XOR would set it to 1.
+    *   *Why D is incorrect:* A right-shift moves all bits, destroying the original value rather than clearing a single bit in place.
 
 ---
 
 **Question 5**
-When designing a system for **Embedded Programming C/C++**, you must mitigate the risk of **A disaster or ransomware attack causing prolonged downtime because recovery steps are undocumented.**. Which of the following security configurations or controls represents the best practice to implement?
-B) Establish formal authorization procedures and digital signatures for all project scope modifications.
-C) Enable full disk encryption on all client endpoints.
-A) Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services.
-D) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services.
+When designing an IoT firmware update mechanism in C, which practice best mitigates the risk of an attacker delivering a malicious firmware image over the network?
+*   A) Compressing the firmware binary with gzip before transmission to reduce its size.
+*   B) Verifying a cryptographic signature (e.g., ECDSA over SHA-256) on the received firmware image before writing it to flash.
+*   C) Storing the firmware update URL in a compile-time constant to prevent runtime URL manipulation.
+*   D) Using dynamic memory allocation (malloc) to buffer the incoming image for flexible sizing.
+*   **Correct Answer:** B) Verifying a cryptographic signature (e.g., ECDSA over SHA-256) on the received firmware image before writing it to flash.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
-    * *Why C is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
-    * *Why A is correct:* Implementing Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services. mitigates the risk of A disaster or ransomware attack causing prolonged downtime because recovery steps are undocumented..
-    * *Why D is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
-
+    *   *Why A is incorrect:* Compression reduces size but provides no authentication — an attacker can compress a malicious image equally.
+    *   *Why B is correct:* A signature check with a key burned into the device ensures only firmware signed by the legitimate manufacturer can be installed, blocking unsigned or tampered images.
+    *   *Why C is incorrect:* A hardcoded URL prevents runtime redirection but does not validate that the content at that URL is authentic or unmodified.
+    *   *Why D is incorrect:* Dynamic allocation introduces memory fragmentation risk and does not address firmware authenticity; static buffers with signature checks are the secure pattern.

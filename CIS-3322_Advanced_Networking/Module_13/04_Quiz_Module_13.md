@@ -17,17 +17,17 @@ Which Layer 3 marking field in the IP header is used for configuring Quality of 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **queuing mechanisms (FIFO**?
-D) An operation in Red-Black trees where nodes are flipped between red and black to maintain structural invariants after insertions or deletions.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within networking operations.
-C) Web Content Accessibility Guidelines; international standards ensuring web content is usable for people with disabilities (e.g., screen reader compatibility, color contrast).
-B) The mathematical expectation of an algorithm's performance across all possible inputs of size N, representing typical real-world runtime behavior.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within networking operations.
+Which of the following most accurately describes **queuing mechanisms** in a network QoS context?
+*   A) Algorithms that manage which packets are transmitted next when a network interface is congested, ranging from simple first-in-first-out delivery to priority-based and weighted scheduling that protects delay-sensitive traffic.
+*   B) The process of examining packet headers to identify traffic types and assign DSCP or CoS markings that downstream devices will use to apply appropriate forwarding treatment.
+*   C) A proactive packet-drop mechanism that randomly discards lower-priority packets as a queue fills, triggering TCP senders to reduce their transmission rate before the queue overflows completely.
+*   D) A three-step Cisco IOS policy framework consisting of class-maps, policy-maps, and service-policies used to classify, mark, queue, and police traffic on a per-interface basis.
+*   **Correct Answer:** A) Algorithms that manage which packets are transmitted next when a network interface is congested, ranging from simple first-in-first-out delivery to priority-based and weighted scheduling that protects delay-sensitive traffic.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **queuing mechanisms (FIFO**.
-    * *Why A is correct:* This describes the exact role and function of **queuing mechanisms (FIFO**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **queuing mechanisms (FIFO**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **queuing mechanisms (FIFO**.
+    * *Why A is correct:* Queuing mechanisms specifically address how packets are ordered and scheduled for transmission during congestion — FIFO, WFQ, PQ, CBWFQ, and LLQ are all queuing algorithms.
+    * *Why B is incorrect:* This describes traffic classification and marking, which is a separate QoS function that occurs before queuing.
+    * *Why C is incorrect:* This describes WRED (Weighted Random Early Detection), which is a congestion avoidance mechanism — distinct from queuing.
+    * *Why D is incorrect:* This describes Cisco's MQC (Modular QoS CLI) framework, which is the configuration model for QoS — not queuing itself.
 
 
 ---
@@ -57,7 +57,7 @@ C) Correct the subnet mask configuration on the interface to match the network s
 *   **Correct Answer:** A) Change the local network interface settings to use a public DNS resolver like 8.8.8.8 or 1.1.1.1.
 *   **Distractor Analysis:**
     * *Why B is incorrect:* This action does not resolve the root cause of DNS Failure.
-    * *Why A is correct:* Because The configured DNS server is offline, misconfigured, or unreachable, preventing host name resolution. The appropriate fix is to Change the local network interface settings to use a public DNS resolver like 8.8.8.8 or 1.1.1.1..
+    * *Why A is correct:* Because The configured DNS server is offline, misconfigured, or unreachable, preventing host name resolution. The appropriate fix is to Change the local network interface settings to use a public DNS resolver like 8.8.8.8 or 1.1.1.1.
     * *Why D is incorrect:* This action does not resolve the root cause of DNS Failure.
     * *Why C is incorrect:* This action does not resolve the root cause of DNS Failure.
 
@@ -65,15 +65,14 @@ C) Correct the subnet mask configuration on the interface to match the network s
 ---
 
 **Question 5**
-When designing a system for **Quality of Service (QoS) Fundamentals**, you must mitigate the risk of **Attackers capturing plaintext management passwords or session data using network sniffers.**. Which of the following security configurations or controls represents the best practice to implement?
-C) Enable full disk encryption on all client endpoints.
-D) Enable full disk encryption on all client endpoints.
+When configuring **Quality of Service (QoS)**, you must mitigate the risk of **Attackers capturing plaintext management passwords or session data using network sniffers.**. Which of the following security configurations or controls represents the best practice to implement?
+C) Apply DSCP marking to management traffic and place it in a high-priority queue to ensure management sessions receive preferential treatment over user data flows.
+D) Use a dedicated management VLAN with an SVI, applying QoS policies to limit bandwidth available to the management VLAN to reduce exposure.
 B) Implement switch Port Security to restrict access to switch ports based on approved MAC addresses.
 A) Configure SSH (port 22) for terminal access and HTTPS (port 443) for web interfaces, disabling Telnet and HTTP.
 *   **Correct Answer:** A) Configure SSH (port 22) for terminal access and HTTPS (port 443) for web interfaces, disabling Telnet and HTTP.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This does not address the security vulnerability of Unencrypted Traffic Exposure.
-    * *Why D is incorrect:* This does not address the security vulnerability of Unencrypted Traffic Exposure.
-    * *Why B is incorrect:* This does not address the security vulnerability of Unencrypted Traffic Exposure.
-    * *Why A is correct:* Implementing Configure SSH (port 22) for terminal access and HTTPS (port 443) for web interfaces, disabling Telnet and HTTP. mitigates the risk of Attackers capturing plaintext management passwords or session data using network sniffers..
-
+    * *Why A is correct:* SSH and HTTPS encrypt interactive management sessions, preventing plaintext credential capture regardless of network path or QoS configuration.
+    * *Why C is incorrect:* Prioritizing management traffic with DSCP improves availability but does not encrypt session data — Telnet traffic in a high-priority queue is still readable in plaintext.
+    * *Why D is incorrect:* A dedicated management VLAN adds isolation, but limiting bandwidth to that VLAN does not prevent credential sniffing if Telnet is still in use.
+    * *Why B is incorrect:* Port Security restricts MAC-based physical access but has no effect on encrypting management session credentials transmitted over the network.

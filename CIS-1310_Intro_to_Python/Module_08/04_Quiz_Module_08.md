@@ -17,17 +17,17 @@ How are multiple values returned from a Python function?
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **return statement.**?
-C) The maximum acceptable duration of downtime before a business process or system must be restored to operation after a disaster.
-D) The process of adjusting node positions in a binary heap to restore the heap property (min-heap or max-heap) after an insertion or deletion.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-B) The danger of exhausting the call stack memory allocation when recursive calls are made too deeply or without hitting a base case, crashing the program.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
+Which of the following best describes the **return statement** in a Python function?
+*   A) A statement that pauses a function and saves its state so it can be resumed later, yielding one value per pause to an external iterator
+*   B) A statement that immediately exits the function and optionally sends a value back to the caller; a function with no return implicitly returns None
+*   C) A statement that marks the end of the function body and must appear as the last line; Python raises a SyntaxError if any code follows a return
+*   D) A statement used only inside class methods; stand-alone functions use the `output` keyword instead to send values back to the caller
+*   **Correct Answer:** B) A statement that immediately exits the function and optionally sends a value back to the caller; a function with no return implicitly returns None.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **return statement.**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **return statement.**.
-    * *Why A is correct:* This describes the exact role and function of **return statement.**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **return statement.**.
+    *   *Why A is incorrect:* That describes the `yield` statement used in generator functions; `return` exits the function entirely and does not preserve local state for resumption.
+    *   *Why B is correct:* `return` stops function execution immediately, passes the specified value back to the caller, and causes the function to return `None` if the value is omitted or `return` is absent.
+    *   *Why C is incorrect:* A `return` can appear anywhere in a function body, not just at the end; code after an unconditional `return` is unreachable but not a SyntaxError, and many functions have multiple `return` statements in different branches.
+    *   *Why D is incorrect:* `return` works identically in stand-alone functions and class methods; there is no `output` keyword in Python.
 
 
 ---
@@ -67,13 +67,12 @@ B) Perform explicit type casting (e.g. str() or int()) before executing operatio
 **Question 5**
 When designing a system for **Functions and Parameter Passing**, you must mitigate the risk of **Allowing attackers to execute arbitrary SQL commands on the backend database via input forms.**. Which of the following security configurations or controls represents the best practice to implement?
 A) Implement parameterized queries and prepared statements rather than raw string concatenation.
-D) Enable full disk encryption on all client endpoints.
-C) Enable full disk encryption on all client endpoints.
 B) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
+C) Enable full disk encryption on all client endpoints.
+D) Wrap all database-calling functions in a try-except block that catches exceptions and displays a generic error message to the user.
 *   **Correct Answer:** A) Implement parameterized queries and prepared statements rather than raw string concatenation.
 *   **Distractor Analysis:**
     * *Why A is correct:* Implementing Implement parameterized queries and prepared statements rather than raw string concatenation. mitigates the risk of Allowing attackers to execute arbitrary SQL commands on the backend database via input forms..
-    * *Why D is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
     * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-
+    * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
+    * *Why D is incorrect:* Catching exceptions and hiding error messages reduces information leakage but does not prevent the SQL injection from executing; parameterized queries prevent the malicious SQL from being interpreted in the first place.

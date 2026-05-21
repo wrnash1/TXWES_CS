@@ -17,63 +17,67 @@ What is the recommended method to add a new CSS class to an element without over
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **createElement**?
-C) The maximum acceptable age of data that must be recovered from backup storage to restore operations, representing the limit of tolerable data loss.
-B) Data about the HTML document (like description, keywords, author, and viewport configurations) that is processed by browsers and search engine crawlers.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-D) A reference or memory address stored within a node that points to another node in a linked structure, forming the link between elements.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
+Which of the following most accurately describes `createElement` in JavaScript?
+*   A) A method that selects an existing element from the DOM by its tag name and returns the first match
+*   B) A `document` method that creates a new HTML element node in memory, ready to be configured and inserted into the DOM
+*   C) A CSS property that instructs the browser to generate a new element when a pseudo-element selector matches
+*   D) A method that copies an existing element and all its children into a new, independent element
+*   **Correct Answer:** B) A `document` method that creates a new HTML element node in memory, ready to be configured and inserted into the DOM.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **createElement**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **createElement**.
-    * *Why A is correct:* This describes the exact role and function of **createElement**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **createElement**.
-
+    *   *Why A is incorrect:* That describes `document.querySelector()` or `getElementsByTagName()`, not `createElement`.
+    *   *Why B is correct:* `document.createElement("div")` produces a detached element object; it must be appended to the document tree to become visible.
+    *   *Why C is incorrect:* CSS pseudo-elements (`::before`, `::after`) are a styling concept unrelated to the JS `createElement` method.
+    *   *Why D is incorrect:* That describes `cloneNode(true)`, which copies an existing element rather than creating a fresh one.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **record staged code modifications into the repository version history**. Which of the following commands is the most appropriate to execute?
-B) pip install -r requirements.txt
-A) git commit -m 'update'
-D) python3 -m venv .venv
-C) pytest
-*   **Correct Answer:** A) git commit -m 'update'
+A developer runs this code:
+```javascript
+const btn = document.querySelector("#toggle");
+const box = document.querySelector("#box");
+btn.addEventListener("click", () => {
+  box.classList.toggle("hidden");
+});
+```
+What happens each time the button is clicked?
+*   A) The `hidden` class is permanently added to `box` after the first click and cannot be removed.
+*   B) The `hidden` class is added to `box` if it is not present, or removed if it is present, on each click.
+*   C) All classes on `box` are removed and replaced with `hidden` on every click.
+*   D) The `box` element is deleted from the DOM each time the button is clicked.
+*   **Correct Answer:** B) The `hidden` class is added to `box` if it is not present, or removed if it is present, on each click.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `git commit -m 'update'` command is directly designed to record staged code modifications into the repository version history.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is incorrect:* `toggle` is designed to flip the class on and off; calling it again removes a class that was just added.
+    *   *Why B is correct:* `classList.toggle("hidden")` adds `"hidden"` if absent or removes it if present — toggling the state on every invocation.
+    *   *Why C is incorrect:* `toggle` only affects the named class; all other classes on the element remain untouched.
+    *   *Why D is incorrect:* `classList.toggle` modifies the element's classes; it does not remove the element from the page.
 
 ---
 
 **Question 4**
-While working on **DOM Manipulation & Styling** in a production environment, you encounter a system alert indicating a **KeyError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-D) Reboot the physical machine and wait for services to reload.
-C) Verify that the index is within the valid range of 0 to len(list)-1.
-A) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
-B) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-*   **Correct Answer:** A) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
+While working on **DOM Manipulation**, a developer needs to insert a new `<li>` element as the last child of a `<ul>`. Which sequence of operations is correct?
+*   A) `document.insertBefore(li, ul)` → `li.textContent = "Item"`
+*   B) `const li = document.createElement("li")` → `li.textContent = "Item"` → `ul.appendChild(li)`
+*   C) `ul.setAttribute("child", li)` → `li.textContent = "Item"`
+*   D) `document.querySelectorAll("ul").push(li)`
+*   **Correct Answer:** B) `const li = document.createElement("li")` → `li.textContent = "Item"` → `ul.appendChild(li)`
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This action does not resolve the root cause of KeyError.
-    * *Why C is incorrect:* This action does not resolve the root cause of KeyError.
-    * *Why A is correct:* Because The code attempted to access a dictionary key that is not defined in the object. The appropriate fix is to Ensure the requested key exists in the dictionary, or use the .get() method to return a default value..
-    * *Why B is incorrect:* This action does not resolve the root cause of KeyError.
-
+    *   *Why A is incorrect:* `insertBefore` takes `(newNode, referenceNode)` where `referenceNode` is a child of the parent, not the parent itself; this usage is incorrect.
+    *   *Why B is correct:* The standard pattern is: create the element, configure its content, then append it to the parent container.
+    *   *Why C is incorrect:* `setAttribute` sets HTML attributes (like `id`, `class`, `src`); it cannot attach a child node as a child element.
+    *   *Why D is incorrect:* `querySelectorAll` returns a NodeList, not an actual array; NodeLists do not have a `push` method, and this would not insert the element into the DOM anyway.
 
 ---
 
 **Question 5**
-When designing a system for **DOM Manipulation & Styling**, you must mitigate the risk of **Allowing attackers to execute arbitrary SQL commands on the backend database via input forms.**. Which of the following security configurations or controls represents the best practice to implement?
-D) Enable full disk encryption on all client endpoints.
-C) Enable full disk encryption on all client endpoints.
-A) Implement parameterized queries and prepared statements rather than raw string concatenation.
-B) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-*   **Correct Answer:** A) Implement parameterized queries and prepared statements rather than raw string concatenation.
+How do you set an element's background color to `"blue"` using the `style` property in JavaScript?
+*   A) `element.style["background-color"] = "blue";`
+*   B) `element.style.backgroundColor = "blue";`
+*   C) `element.setAttribute("background-color", "blue");`
+*   D) Both A and B are valid ways to set the background color
+*   **Correct Answer:** D) Both A and B are valid ways to set the background color.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why A is correct:* Implementing Implement parameterized queries and prepared statements rather than raw string concatenation. mitigates the risk of Allowing attackers to execute arbitrary SQL commands on the backend database via input forms..
-    * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-
+    *   *Why A alone is incorrect as the only answer:* Bracket notation with the CSS hyphenated name works (JS evaluates the string), but B (camelCase) is the more common and readable form.
+    *   *Why B alone is incorrect as the only answer:* While `element.style.backgroundColor` is the standard camelCase approach, bracket notation `element.style["background-color"]` is also valid.
+    *   *Why C is incorrect:* `setAttribute("background-color", "blue")` sets an HTML attribute named `background-color`, which is not a valid HTML attribute; it does not change the element's style.
+    *   *Why D is correct:* JavaScript's `style` object supports both camelCase property names (`backgroundColor`) and bracket notation with hyphenated CSS names (`"background-color"`); both correctly set the inline style.

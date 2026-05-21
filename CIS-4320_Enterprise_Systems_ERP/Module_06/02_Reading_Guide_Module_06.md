@@ -1,52 +1,62 @@
 # Reading Guide: Module 06 - Supply Chain Management Integrations
+
 ## Course: CIS-4320_Enterprise_Systems_ERP (Salesforce Certified Associate / SAP Certified Associate)
 
 ---
 
 ### Introduction
-Welcome to **Module 06 - Supply Chain Management Integrations**! This week's study material focuses on the core foundations and configuration mechanics of **Supply Chain Management Integrations** as aligned with the **Salesforce Certified Associate / SAP Certified Associate** certification framework. Understanding these topics is essential not only for passing the certification exam but also for administering enterprise systems in real-world environments.
 
-As a student, you will learn the primary operational roles, command syntaxes, and troubleshooting parameters needed to design, configure, and maintain these services. We will explore how different protocols establish connections, how configurations manage resource allocation, and how security controls prevent access breaches. Make sure to complete the checklists and review the glossary terms in detail before beginning the lab activity.
+Welcome to **Module 06 - Supply Chain Management Integrations**! Supply chain management is one of the most operationally complex functions an ERP system supports. This module covers how SAP's Materials Management (MM) and Warehouse Management (WM) modules coordinate the procure-to-pay process — from identifying material needs through purchasing, receiving, storing, and paying vendors.
+
+You will learn how Material Requirements Planning (MRP) automates procurement decisions, how inventory levels are tracked in real time, and how supplier master data ties every procurement transaction to a verified vendor record.
 
 ---
 
 ### 1. High-Yield Glossary
+
 Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
 
-*   **Supply Chain Management (SCM)**: A primary configuration standard and technical parameter essential for coordinating Supply Chain Management Integrations activities, enforcing security boundaries, and verifying operational statuses within the database environment.
-*   **inventory control**: A primary configuration standard and technical parameter essential for coordinating Supply Chain Management Integrations activities, enforcing security boundaries, and verifying operational statuses within the database environment.
-*   **material requirements planning (MRP)**: A primary configuration standard and technical parameter essential for coordinating Supply Chain Management Integrations activities, enforcing security boundaries, and verifying operational statuses within the database environment.
-*   **logistics**: A primary configuration standard and technical parameter essential for coordinating Supply Chain Management Integrations activities, enforcing security boundaries, and verifying operational statuses within the database environment.
-*   **vendor records.**: A primary configuration standard and technical parameter essential for coordinating Supply Chain Management Integrations activities, enforcing security boundaries, and verifying operational statuses within the database environment.
+* **Supply Chain Management (SCM)**: The end-to-end coordination of the flow of goods, services, information, and finances from raw material suppliers through production and distribution to the end customer. ERP SCM modules automate procurement, inventory, and logistics to reduce cost and improve delivery reliability.
+* **Inventory control**: The ERP function that tracks real-time stock levels across all warehouse locations, triggering replenishment when quantities fall below defined reorder points and preventing stock-outs or costly over-stocking.
+* **Material Requirements Planning (MRP)**: An ERP planning algorithm that calculates what materials are needed, in what quantities, and by what dates — based on sales orders, bills of materials (BOMs), existing inventory levels, and production schedules. MRP generates automatic purchase requisitions and production orders to fulfill demand.
+* **Logistics**: In ERP context, the coordination of goods movement — inbound from vendors (goods receipt), between warehouse locations (transfer orders), and outbound to customers (delivery and shipment). SAP's logistics execution modules track every physical movement with a system transaction.
+* **Vendor records**: Master data records in SAP that store all information needed to do business with a supplier — name, address, bank account, payment terms, tax classification, and purchasing conditions. Vendor master records must be created and maintained before any purchasing transactions can be processed.
 
 ---
 
 ### 2. Certification Exam Tips
-*   **Focus Area:** Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
-*   **Scenario Trap:** Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
-*   **Study Resource:** To reinforce these concepts visually, review this targeted search query: [Salesforce & SAP ERP Fundamentals Tutorial - Supply Chain Management Integrations](https://www.youtube.com/playlist?list=PLD2549A0D756627C1).
+
+* **SAP MM procure-to-pay cycle:** Know the end-to-end process: Purchase Requisition → Purchase Order → Goods Receipt → Invoice Verification (three-way match) → Payment. Each step has a specific transaction code in SAP (ME51N, ME21N, MIGO, MIRO). Exam questions frequently test the correct sequence.
+* **MRP planning run:** SAP MRP (transaction MD01/MD02) reads demand from sales orders and planned independent requirements, then nets against current stock and open orders to generate procurement proposals. Know the difference between a planned order (internal production) and a purchase requisition (external procurement).
+* **Stock types:** SAP distinguishes between unrestricted stock (available for use), quality inspection stock (received but not yet released), and blocked stock (rejected). Exam questions may ask which stock type is consumed by a sales order (unrestricted only).
+* **Salesforce relevance:** Salesforce Manufacturing Cloud and Salesforce Order Management integrate with back-end ERP supply chain modules. Understanding how ERP manages inventory and fulfillment helps you configure Salesforce order-to-cash processes correctly.
+* **Study Resource:** Review the free [openSAP Materials Management](https://open.sap.com) course units for a walkthrough of the SAP MM procure-to-pay process with system screenshots.
 
 ---
 
 ### Required Readings & Videos
+
 To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the section/chapter covering **Supply Chain Management Integrations** in the OER Textbook: [Salesforce Trailhead Modules & ERP Basics](https://trailhead.salesforce.com/).
-*   **Required Video:** Watch the video lecture on **Supply Chain Management Integrations** in the official course playlist: [Salesforce & SAP ERP Fundamentals Tutorial](https://www.youtube.com/playlist?list=PLD2549A0D756627C1).
+
+* **Required Reading:** Review the [openSAP platform](https://open.sap.com) for free SAP Materials Management course content covering purchase orders, goods receipts, and MRP planning runs.
+* **Required Video:** Watch the video lecture on **Supply Chain Management Integrations** in the official course playlist: [Salesforce & SAP ERP Fundamentals Tutorial](https://www.youtube.com/playlist?list=PLD2549A0D756627C1).
 
 ---
 
 ### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Run a mock Material Requirements Planning (MRP) request**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-*   **Track inventory levels and purchase triggers**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-*   **Map supply chain links**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
 
+In this week's hands-on lab, you will perform the following steps to apply these concepts:
+
+* **Run a mock Material Requirements Planning (MRP) request**: Given a bill of materials, a sales order demand list, and current inventory levels, manually calculate the net requirements and identify which materials require a purchase requisition.
+* **Track inventory levels and purchase triggers**: Map the reorder point logic for three materials with different lead times and minimum stock levels, showing at what stock level a purchase requisition should automatically fire.
+* **Map supply chain links**: Draw a flow diagram tracing a single purchase order from vendor selection through goods receipt to the financial posting in Accounts Payable, labeling each module (MM, WM, FI-AP) responsible for each step.
 
 ---
 
 ### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read the section/chapter covering **Supply Chain Management Integrations** in [Salesforce Trailhead Modules & ERP Basics](https://trailhead.salesforce.com/).
-- [ ] Watch the video lecture on **Supply Chain Management Integrations** in [Salesforce & SAP ERP Fundamentals Tutorial](https://www.youtube.com/playlist?list=PLD2549A0D756627C1).
-- [ ] Review the commands outlined in the lab instructions.
-- [ ] Proceed to the weekly hands-on lab activity.
+
+* [ ] Read all glossary definitions and be able to sequence the procure-to-pay steps in the correct order.
+* [ ] Review [openSAP](https://open.sap.com) for free SAP Materials Management course content.
+* [ ] Watch the video lecture on **Supply Chain Management Integrations** in [Salesforce & SAP ERP Fundamentals Tutorial](https://www.youtube.com/playlist?list=PLD2549A0D756627C1).
+* [ ] Complete the lab MRP calculation, reorder point mapping, and supply chain flow diagram.
+* [ ] Proceed to the weekly quiz.

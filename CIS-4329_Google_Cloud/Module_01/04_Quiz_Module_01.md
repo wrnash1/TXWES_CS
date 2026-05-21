@@ -1,82 +1,82 @@
-# Quiz: Module 01 - Resource Hierarchy
-## Course: CIS-4329_Google_Cloud (4329_Google_Cloud - Google Cloud Associate Cloud Engineer)
+# Quiz: Module 01 – GCP Overview: Regions, Zones, and Console Navigation
+## Course: CIS-4329 – Google Cloud Administration (Google Cloud Associate Cloud Engineer)
 
 ---
 
 **Question 1**
 You want to receive an email notification if your Google Cloud spending exceeds $500 for the current month. You set up a budget and an alert threshold. What happens to your resources if the spending reaches $501?
+
 A) All resources are immediately suspended to prevent further charges.
 B) Compute instances are shut down, but storage remains active.
 C) The resources continue to run normally, and you receive an email alert.
 D) The project is automatically deleted.
+
 *   **Correct Answer:** C) The resources continue to run normally, and you receive an email alert.
 *   **Distractor Analysis:**
-    *   *Why A is incorrect:* Budgets in GCP only trigger notifications (emails or Pub/Sub messages). They do not cap spending or suspend resources natively without custom automation.
-    *   *Why B is incorrect:* GCP does not selectively shut down compute resources based on simple budget alerts.
-    *   *Why D is incorrect:* GCP will never delete a project simply for crossing a billing threshold.
-
----
+    *   *Why A is incorrect:* GCP budget alerts only trigger notifications (email or Pub/Sub messages). They do not cap spending or suspend resources automatically without custom automation.
+    *   *Why B is incorrect:* GCP does not selectively shut down compute resources based on budget alerts; no native budget action targets specific resource types.
+    *   *Why D is incorrect:* GCP will never automatically delete a project for crossing a billing threshold; deletion requires an explicit administrative action.
 
 ---
 
 **Question 2**
-At which level of the Google Cloud resource hierarchy are billing accounts attached to pay for consumed resources?
+At which level of the Google Cloud resource hierarchy are Billing Accounts attached to pay for consumed resources?
+
 A) Organization level
 B) Folder level
 C) Project level
 D) Resource level
+
 *   **Correct Answer:** C) Project level
 *   **Distractor Analysis:**
-    *   *Why A is incorrect:* While Organizations *own* Billing Accounts, the actual linkage that pays for a running VM happens by associating the Billing Account with the specific Project.
-    *   *Why B is incorrect:* Folders are used to group projects for IAM and policy inheritance, not for direct billing linkages.
-    *   *Why D is incorrect:* Individual resources (like a single VM) do not have their own billing accounts attached; they inherit the billing link from their parent Project.
-
----
+    *   *Why A is incorrect:* While Organizations *own* Billing Accounts, the actual linkage that pays for a running VM happens by associating the Billing Account with a specific Project, not the Organization node itself.
+    *   *Why B is incorrect:* Folders are used to group Projects for IAM policy inheritance and organizational structure, but Billing Accounts are not directly attached to Folders.
+    *   *Why D is incorrect:* Individual resources such as a single VM or Cloud Storage bucket do not have their own Billing Accounts; they inherit the billing link from their parent Project.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **execute the infrastructure plan to provision or modify resources defined in the configuration files**. Which of the following commands is the most appropriate to execute?
-A) terraform apply
-C) aws s3 sync local_dir s3://my-bucket
-B) kubectl get pods -n production
-D) gcloud compute instances list
-*   **Correct Answer:** A) terraform apply
-*   **Distractor Analysis:**
-    * *Why A is correct:* The `terraform apply` command is directly designed to execute the infrastructure plan to provision or modify resources defined in the configuration files.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
+A GCP administrator needs to display the currently active SDK configuration — including the active project, account, and default region — on their local workstation. Which command is most appropriate?
 
+A) `gcloud config list`
+B) `gcloud projects describe`
+C) `gcloud info --format=json`
+D) `gcloud init --show-config`
+
+*   **Correct Answer:** A) `gcloud config list`
+*   **Distractor Analysis:**
+    *   *Why B is incorrect:* `gcloud projects describe` returns metadata about a specific project (project number, labels, lifecycle state) — not the local SDK configuration.
+    *   *Why C is incorrect:* `gcloud info` outputs diagnostic information about the SDK installation environment, not the active configuration values.
+    *   *Why D is incorrect:* `gcloud init --show-config` is not a valid gcloud flag; `gcloud init` launches an interactive setup wizard, not a configuration display command.
 
 ---
 
 **Question 4**
-While working on **Resource Hierarchy** in a production environment, you encounter a system alert indicating a **Cloud Billing Spike** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-D) Reboot the physical machine and wait for services to reload.
-B) Review the user's IAM policies and attach the specific policy granting permissions for the resource action.
-A) Set up billing alerts, delete unused volumes, and configure auto-scaling scale-down policies.
-C) Check the VPC route table for an Internet Gateway path and verify that the security group allows incoming traffic.
-*   **Correct Answer:** A) Set up billing alerts, delete unused volumes, and configure auto-scaling scale-down policies.
-*   **Distractor Analysis:**
-    * *Why D is incorrect:* This action does not resolve the root cause of Cloud Billing Spike.
-    * *Why B is incorrect:* This action does not resolve the root cause of Cloud Billing Spike.
-    * *Why A is correct:* Because Idle or over-provisioned virtual machine instances and orphan storage volumes are running continuously. The appropriate fix is to Set up billing alerts, delete unused volumes, and configure auto-scaling scale-down policies..
-    * *Why C is incorrect:* This action does not resolve the root cause of Cloud Billing Spike.
+Your team needs to deploy a web application that must remain available even if a single Google Cloud data center experiences a hardware failure. The application does not need to survive a full regional outage. Which deployment strategy meets this requirement at the lowest complexity?
 
+A) Deploy the application to a single zone in one region.
+B) Deploy the application across multiple zones within a single region.
+C) Deploy the application across multiple regions using a global load balancer.
+D) Deploy the application on-premises and connect it to GCP via Cloud VPN.
+
+*   **Correct Answer:** B) Deploy the application across multiple zones within a single region.
+*   **Distractor Analysis:**
+    *   *Why A is incorrect:* A single-zone deployment has no redundancy; a hardware failure in that zone takes the application offline entirely.
+    *   *Why C is incorrect:* Multi-region deployment with a global load balancer provides resilience against full regional outages, which exceeds the stated requirement and adds significant cost and complexity.
+    *   *Why D is incorrect:* Deploying on-premises introduces infrastructure management overhead, does not leverage GCP's availability features, and contradicts the cloud administration context.
 
 ---
 
 **Question 5**
-When designing a system for **Resource Hierarchy**, you must mitigate the risk of **Developers committing plain-text cloud access keys to public source code repositories, allowing full account takeover.**. Which of the following security configurations or controls represents the best practice to implement?
-C) Enable full disk encryption on all client endpoints.
-A) Enforce temporary credentials (STS), rotate keys regularly, and never hardcode API keys in repositories.
-D) Enable full disk encryption on all client endpoints.
-B) Enable Block Public Access configurations and enforce access control via IAM or signed URLs.
-*   **Correct Answer:** A) Enforce temporary credentials (STS), rotate keys regularly, and never hardcode API keys in repositories.
-*   **Distractor Analysis:**
-    * *Why C is incorrect:* This does not address the security vulnerability of Compromised Access Keys.
-    * *Why A is correct:* Implementing Enforce temporary credentials (STS), rotate keys regularly, and never hardcode API keys in repositories. mitigates the risk of Developers committing plain-text cloud access keys to public source code repositories, allowing full account takeover..
-    * *Why D is incorrect:* This does not address the security vulnerability of Compromised Access Keys.
-    * *Why B is incorrect:* This does not address the security vulnerability of Compromised Access Keys.
+You are setting up a new GCP environment for your organization. You need to enforce a policy that prevents any Project in the entire organization from creating resources outside of specific approved regions. At which level of the resource hierarchy should you apply this Organization Policy constraint?
 
+A) At the individual resource level for each VM and bucket.
+B) At the Project level for every project separately.
+C) At the Folder level for each team's folder.
+D) At the Organization level so it automatically applies to all Folders and Projects.
+
+*   **Correct Answer:** D) At the Organization level so it automatically applies to all Folders and Projects.
+*   **Distractor Analysis:**
+    *   *Why A is incorrect:* Applying constraints at the resource level is not how Organization Policies work; policies apply at Organization, Folder, or Project levels, not on individual resources.
+    *   *Why B is incorrect:* Applying the policy separately to every Project is operationally unsustainable and risks missing new Projects created in the future.
+    *   *Why C is incorrect:* Applying the policy at the Folder level only covers Projects within that folder; Projects in other folders or directly under the Organization node would be unprotected.

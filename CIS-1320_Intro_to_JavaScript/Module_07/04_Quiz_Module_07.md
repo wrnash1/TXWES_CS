@@ -17,63 +17,69 @@ Which syntax is required to access an object property dynamically using a variab
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **this keyword**?
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-B) An algebraic restructuring operation on a binary tree that changes the parent-child relationships to restore balance without violating the search order.
-C) Search Engine Optimization; practices designed to improve the visibility and ranking of web pages in search engine results through clean HTML, meta tags, and alt text.
-D) The scenario where an algorithm requires the absolute minimum number of steps to complete (e.g., searching for an element that happens to be at the very beginning of a list).
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
+Which of the following most accurately describes the **`this` keyword** inside a regular function method of an object?
+*   A) `this` always refers to the global `window` object, regardless of how the method is called
+*   B) `this` refers to the object on which the method was called at runtime (dynamic binding)
+*   C) `this` is undefined inside any function that is a property of an object
+*   D) `this` refers to the function itself, allowing the function to call itself recursively
+*   **Correct Answer:** B) `this` refers to the object on which the method was called at runtime (dynamic binding).
 *   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **this keyword**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **this keyword**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **this keyword**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **this keyword**.
-
+    *   *Why A is incorrect:* `this` in a regular method refers to the calling object, not the global object; it only falls back to global (or `undefined` in strict mode) if the function is called without an object context.
+    *   *Why B is correct:* In a regular function, `this` is bound dynamically — `obj.method()` causes `this` inside `method` to be `obj`.
+    *   *Why C is incorrect:* `this` is not automatically `undefined` inside object methods; it is `undefined` inside arrow functions in strict mode when there is no outer `this`.
+    *   *Why D is incorrect:* `this` does not refer to the function itself; that would require `arguments.callee` (deprecated) or a named function reference.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **install all external project dependencies specified in the requirements manifest**. Which of the following commands is the most appropriate to execute?
-B) python3 -m venv .venv
-C) pytest
-A) pip install -r requirements.txt
-D) git commit -m 'update'
-*   **Correct Answer:** A) pip install -r requirements.txt
+A developer has an object `config` and a string variable `key = "timeout"`. Which expression correctly reads the `timeout` property?
+*   A) `config.key`
+*   B) `config[key]`
+*   C) `config.timeout(key)`
+*   D) `config->key`
+*   **Correct Answer:** B) `config[key]`
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `pip install -r requirements.txt` command is directly designed to install all external project dependencies specified in the requirements manifest.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is incorrect:* `config.key` looks for a property literally named `"key"`, not the value stored in the variable `key`.
+    *   *Why B is correct:* Bracket notation evaluates the expression inside the brackets, so `config["timeout"]` is accessed via the variable `key`.
+    *   *Why C is incorrect:* `config.timeout(key)` attempts to call `timeout` as a function, which would throw a `TypeError` if it is not callable.
+    *   *Why D is incorrect:* `->` is not valid JavaScript property access syntax; it is used in some other languages (like PHP or C).
 
 ---
 
 **Question 4**
-While working on **Objects & Properties** in a production environment, you encounter a system alert indicating a **TypeError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-B) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
-D) Reboot the physical machine and wait for services to reload.
-C) Verify that the index is within the valid range of 0 to len(list)-1.
-*   **Correct Answer:** A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
+While working on **Objects & Properties**, a developer defines the following:
+```javascript
+const user = {
+  name: "Alice",
+  greet: () => {
+    return "Hello, " + this.name;
+  }
+};
+console.log(user.greet());
+```
+What is logged?
+*   A) `"Hello, Alice"` because `this` refers to the `user` object
+*   B) `"Hello, undefined"` because arrow functions do not bind `this` to the calling object
+*   C) A `TypeError` because arrow functions cannot be used as object properties
+*   D) `"Hello, "` because strings require template literals inside methods
+*   **Correct Answer:** B) `"Hello, undefined"` because arrow functions do not bind `this` to the calling object.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Because An operation or function was applied to an object of an inappropriate data type. The appropriate fix is to Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types..
-    * *Why B is incorrect:* This action does not resolve the root cause of TypeError.
-    * *Why D is incorrect:* This action does not resolve the root cause of TypeError.
-    * *Why C is incorrect:* This action does not resolve the root cause of TypeError.
-
+    *   *Why A is incorrect:* Arrow functions capture `this` from the surrounding lexical scope (here, the module/global scope), not from the object — so `this.name` is `undefined`.
+    *   *Why B is correct:* This is the classic arrow function `this` trap: `this` inside the arrow refers to whatever `this` was where the object literal was written, not to `user`.
+    *   *Why C is incorrect:* Arrow functions can be object properties; they just do not bind `this` to the object.
+    *   *Why D is incorrect:* String concatenation with `+` works fine; the issue is `this.name` being `undefined`.
 
 ---
 
 **Question 5**
-When designing a system for **Objects & Properties**, you must mitigate the risk of **Allowing attackers to execute arbitrary SQL commands on the backend database via input forms.**. Which of the following security configurations or controls represents the best practice to implement?
-D) Enable full disk encryption on all client endpoints.
-B) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-A) Implement parameterized queries and prepared statements rather than raw string concatenation.
-C) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Implement parameterized queries and prepared statements rather than raw string concatenation.
+What does `Object.keys(obj)` return?
+*   A) An array of the object's own enumerable property values
+*   B) An array of the object's own enumerable property names (keys)
+*   C) A boolean indicating whether the object has any properties
+*   D) A copy of the object with all keys converted to lowercase
+*   **Correct Answer:** B) An array of the object's own enumerable property names (keys).
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why A is correct:* Implementing Implement parameterized queries and prepared statements rather than raw string concatenation. mitigates the risk of Allowing attackers to execute arbitrary SQL commands on the backend database via input forms..
-    * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-
+    *   *Why A is incorrect:* That describes `Object.values(obj)`, which returns an array of values.
+    *   *Why B is correct:* `Object.keys(obj)` returns an array of strings representing the names of the object's own enumerable properties.
+    *   *Why C is incorrect:* `Object.keys()` always returns an array; you would check `Object.keys(obj).length > 0` for emptiness.
+    *   *Why D is incorrect:* `Object.keys()` does not modify the keys or return a copy of the object.

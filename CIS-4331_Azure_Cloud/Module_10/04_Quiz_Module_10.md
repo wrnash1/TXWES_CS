@@ -1,79 +1,81 @@
 # Quiz: Module 10 - Azure RBAC and Subscriptions
+
 ## Course: CIS-4331_Azure_Cloud (Microsoft Azure Fundamentals (AZ-900))
 
 ---
 
 **Question 1**
 What is the scope hierarchy in Azure from largest to smallest?
-*   A) Subscription -> Resource Group -> Resource -> Management Group
-*   B) Management Group -> Subscription -> Resource Group -> Resource
-*   C) Resource -> Resource Group -> Subscription -> Management Group
-*   D) Tenant -> Resource -> Resource Group -> Subscription
-*   **Correct Answer:** B) Inheritance flows from Management Groups down to Subscriptions, Resource Groups, and individual Resources.
-*   **Distractor Analysis:**
-    *   *Why correct:* Inheritance flows from Management Groups down to Subscriptions, Resource Groups, and individual Resources.
-    *   A and C represent incorrect orderings. D starts at resource.
+
+* A) Subscription -> Resource Group -> Resource -> Management Group
+* B) Management Group -> Subscription -> Resource Group -> Resource
+* C) Resource -> Resource Group -> Subscription -> Management Group
+* D) Tenant -> Resource -> Resource Group -> Subscription
+* **Correct Answer:** B) Inheritance flows from Management Groups down to Subscriptions, Resource Groups, and individual Resources.
+* **Distractor Analysis:**
+  * *Why correct:* Permissions assigned at a higher scope level are inherited by all child scopes below — Management Group is the highest level.
+  * *Why A/C/D are incorrect:* These represent incorrect orderings. The correct sequence always flows from broadest (Management Group) to narrowest (Resource).
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **scopes**?
-B) A computer data storage architecture that manages data as objects (e.g. AWS S3, Google Cloud Storage), offering high scalability.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within cloud operations.
-D) The core CSS layout block consisting of margins, borders, padding, and the actual content area, defining the sizing and spacing of every page element.
-C) CSS rules (like width, height, max-width, box-sizing) that dictate how the dimensions of elements are calculated and rendered.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within cloud operations.
-*   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **scopes**.
-    * *Why A is correct:* This describes the exact role and function of **scopes**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **scopes**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **scopes**.
+Which of the following most accurately describes **RBAC scopes** in Azure?
 
+* A) The boundaries at which role assignments apply in Azure, arranged in a four-level hierarchy (Management Group, Subscription, Resource Group, Resource) where permissions assigned at a higher level are inherited by all resources below.
+* B) The geographic regions where Azure role assignments are stored and enforced, determining which datacenter processes authorization requests.
+* C) Custom permission sets that override Azure's built-in roles, allowing organizations to define unique access rules not available in the default role catalog.
+* D) The time windows during which RBAC role assignments are active, used to enforce just-in-time access for privileged operations.
+* **Correct Answer:** A) Scopes are the boundaries at which role assignments apply — the four-level hierarchy determines permission inheritance from Management Group down to Resource.
+* **Distractor Analysis:**
+  * *Why A is correct:* Scope defines where a role assignment takes effect and which child resources inherit those permissions.
+  * *Why B is incorrect:* Scopes are not geographic regions — they are logical management boundaries in the Azure resource hierarchy.
+  * *Why C is incorrect:* That describes custom role definitions, not scopes. Scopes are where any role (built-in or custom) is assigned.
+  * *Why D is incorrect:* Time-bound access is a feature of Privileged Identity Management (PIM), not RBAC scopes.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **synchronize local files directly to a cloud object storage bucket**. Which of the following commands is the most appropriate to execute?
-C) terraform apply
-B) kubectl get pods -n production
-D) gcloud compute instances list
-A) aws s3 sync local_dir s3://my-bucket
-*   **Correct Answer:** A) aws s3 sync local_dir s3://my-bucket
-*   **Distractor Analysis:**
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `aws s3 sync local_dir s3://my-bucket` command is directly designed to synchronize local files directly to a cloud object storage bucket.
+A junior developer needs to view all resources in a Resource Group but must not be able to create, modify, or delete anything. Which built-in RBAC role should be assigned?
 
+* A) Owner
+* B) Contributor
+* C) Reader
+* D) User Access Administrator
+* **Correct Answer:** C) The Reader role grants view-only access to Azure resources within the assigned scope — no create, modify, or delete permissions are included.
+* **Distractor Analysis:**
+  * *Why C is correct:* Reader is the least-privilege role for view-only access — it matches the requirement exactly.
+  * *Why A is incorrect:* Owner grants full access including the ability to assign roles — far exceeds the view-only requirement.
+  * *Why B is incorrect:* Contributor grants full create/manage/delete permissions (minus role assignment) — exceeds the view-only requirement.
+  * *Why D is incorrect:* User Access Administrator can manage role assignments — this is an elevated role unrelated to resource viewing.
 
 ---
 
 **Question 4**
-While working on **Azure RBAC and Subscriptions** in a production environment, you encounter a system alert indicating a **Cloud Billing Spike** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-A) Set up billing alerts, delete unused volumes, and configure auto-scaling scale-down policies.
-B) Review the user's IAM policies and attach the specific policy granting permissions for the resource action.
-C) Check the VPC route table for an Internet Gateway path and verify that the security group allows incoming traffic.
-D) Reboot the physical machine and wait for services to reload.
-*   **Correct Answer:** A) Set up billing alerts, delete unused volumes, and configure auto-scaling scale-down policies.
-*   **Distractor Analysis:**
-    * *Why A is correct:* Because Idle or over-provisioned virtual machine instances and orphan storage volumes are running continuously. The appropriate fix is to Set up billing alerts, delete unused volumes, and configure auto-scaling scale-down policies..
-    * *Why B is incorrect:* This action does not resolve the root cause of Cloud Billing Spike.
-    * *Why C is incorrect:* This action does not resolve the root cause of Cloud Billing Spike.
-    * *Why D is incorrect:* This action does not resolve the root cause of Cloud Billing Spike.
+A role assignment is made at the Subscription scope granting a user the Reader role. The subscription contains three Resource Groups, each with multiple resources. What is the effective access?
 
+* A) The user can only view the subscription-level metadata; they cannot see resources within Resource Groups.
+* B) The user has Reader access to the subscription and inherits Reader access to all Resource Groups and all resources within those groups.
+* C) The user must have the Reader role assigned separately on each Resource Group to view its resources.
+* D) The Reader role at the Subscription scope only applies to billing information, not to resource configurations.
+* **Correct Answer:** B) Role assignments at a higher scope inherit downward — a Reader assignment at the Subscription scope gives the user Reader access to all Resource Groups and Resources within that subscription.
+* **Distractor Analysis:**
+  * *Why B is correct:* Azure RBAC inheritance flows downward through the scope hierarchy — subscription-level assignments automatically cover all child resource groups and resources.
+  * *Why A is incorrect:* Subscription-scope assignments do propagate to child resources — inheritance is automatic.
+  * *Why C is incorrect:* Separate Resource Group assignments would be redundant — the subscription-scope assignment already covers them.
+  * *Why D is incorrect:* The Reader role applies to all resource configurations within the assigned scope, not just billing information.
 
 ---
 
 **Question 5**
-When designing a system for **Azure RBAC and Subscriptions**, you must mitigate the risk of **Developers committing plain-text cloud access keys to public source code repositories, allowing full account takeover.**. Which of the following security configurations or controls represents the best practice to implement?
-B) Enable Block Public Access configurations and enforce access control via IAM or signed URLs.
-D) Enable full disk encryption on all client endpoints.
-A) Enforce temporary credentials (STS), rotate keys regularly, and never hardcode API keys in repositories.
-C) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Enforce temporary credentials (STS), rotate keys regularly, and never hardcode API keys in repositories.
-*   **Distractor Analysis:**
-    * *Why B is incorrect:* This does not address the security vulnerability of Compromised Access Keys.
-    * *Why D is incorrect:* This does not address the security vulnerability of Compromised Access Keys.
-    * *Why A is correct:* Implementing Enforce temporary credentials (STS), rotate keys regularly, and never hardcode API keys in repositories. mitigates the risk of Developers committing plain-text cloud access keys to public source code repositories, allowing full account takeover..
-    * *Why C is incorrect:* This does not address the security vulnerability of Compromised Access Keys.
+What is the key difference between the **Owner** and **Contributor** built-in RBAC roles in Azure?
 
+* A) Owner can read and write resources; Contributor can only read resources.
+* B) Owner can assign roles to other users; Contributor has full resource management permissions but cannot assign roles.
+* C) Owner is limited to a single Resource Group; Contributor can be assigned at the Subscription scope.
+* D) Owner requires Entra ID P2 licensing; Contributor works with the Free tier.
+* **Correct Answer:** B) The only functional difference is role assignment — Owner can grant access to others; Contributor cannot, even though both can fully manage Azure resources.
+* **Distractor Analysis:**
+  * *Why B is correct:* Both Owner and Contributor can create, manage, and delete resources. The sole distinction is that Owner includes Microsoft.Authorization/roleAssignments/write permission.
+  * *Why A is incorrect:* Both Owner and Contributor have full read and write access to resources — Reader is the read-only role.
+  * *Why C is incorrect:* Both roles can be assigned at any scope level — Management Group, Subscription, Resource Group, or Resource.
+  * *Why D is incorrect:* RBAC role assignments have no dependency on Entra ID license tier.

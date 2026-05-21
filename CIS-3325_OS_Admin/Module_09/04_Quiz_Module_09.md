@@ -1,86 +1,76 @@
-# Quiz: Module 09 - Package Management
-## Course: CIS-3325_OS_Admin (3325_OS_Admin - CompTIA Linux+ (XK0-005))
+# Quiz: Module 09 - Networking Configuration
+## Course: CIS-3325_OS_Admin (CompTIA Linux+ XK0-005)
 
 ---
 
 **Question 1**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Documentation**?
-B) The single, top-most node in a tree structure from which all other nodes descend, serving as the starting reference for search algorithms.
-C) The descendant node connected to the right branch of a parent node in a binary tree structure.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within os_admin operations.
-D) An efficient mapping technique for complete binary trees where parent-child indices can be computed using simple arithmetic (e.g., parent is (i-1)/2).
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within os_admin operations.
+An administrator needs to display the IP address and subnet mask currently assigned to all network interfaces on a Linux server. Which command is correct?
+A) ifconfig -a
+B) ip addr show
+C) nmcli dev status
+D) netstat -i
+*   **Correct Answer:** B) ip addr show
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Documentation**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Documentation**.
-    * *Why A is correct:* This describes the exact role and function of **Documentation**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Documentation**.
-
+    *   *Why A is incorrect:* `ifconfig -a` works on older systems but is deprecated and not installed by default on RHEL 8+ or Ubuntu 20.04+. The exam-current answer for interface information is the `ip` command.
+    *   *Why C is incorrect:* `nmcli dev status` shows interface connection state (connected/disconnected) and the NetworkManager connection profile name, but does not display assigned IP addresses or subnet masks.
+    *   *Why D is incorrect:* `netstat -i` shows interface statistics such as packet counts and errors, not assigned IP addresses or subnet masks.
 
 ---
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Exam Tip**?
-B) The operational principle of a stack, where the element added most recently is the first one to be removed, similar to a stack of trays.
-C) The additional execution time and CPU operations spent visiting nodes sequentially in memory, which is higher in linked structures than in contiguous arrays.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within os_admin operations.
-D) A security control that divides a critical transaction workflow among multiple users to prevent fraud and errors (e.g., one person approves a purchase order, another pays the vendor).
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within os_admin operations.
+A Linux administrator wants to add a persistent static IP address to the `ens33` interface using NetworkManager so the configuration survives a reboot. Which command achieves this?
+A) ip addr add 10.0.0.5/24 dev ens33
+B) echo "IPADDR=10.0.0.5" >> /etc/network/interfaces
+C) nmcli con mod ens33 ipv4.addresses 10.0.0.5/24 ipv4.method manual
+D) ifconfig ens33 10.0.0.5 netmask 255.255.255.0
+*   **Correct Answer:** C) nmcli con mod ens33 ipv4.addresses 10.0.0.5/24 ipv4.method manual
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Exam Tip**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Exam Tip**.
-    * *Why A is correct:* This describes the exact role and function of **Exam Tip**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Exam Tip**.
-
+    *   *Why A is incorrect:* `ip addr add` makes a temporary, runtime-only change. The configuration is lost when the system reboots or when NetworkManager resets the interface.
+    *   *Why B is incorrect:* `/etc/network/interfaces` is the Debian/Ubuntu legacy network configuration file, not used on RHEL/CentOS systems or systems managed by NetworkManager. It is not the correct method for NetworkManager-based persistence.
+    *   *Why D is incorrect:* `ifconfig` is deprecated and its changes are not persistent. Like `ip addr add`, any address set with `ifconfig` is lost at reboot.
 
 ---
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **list all currently active processes running on the system with CPU and memory usage statistics**. Which of the following commands is the most appropriate to execute?
-D) chmod 600 config.conf
-B) systemctl restart service
-A) ps aux
-C) df -h
-*   **Correct Answer:** A) ps aux
+A server administrator needs to verify which TCP ports are currently listening on a Linux system without performing DNS lookups on the addresses. Which command is most appropriate?
+A) netstat -rn
+B) ss -tuln
+C) ip route show
+D) lsof -i tcp
+*   **Correct Answer:** B) ss -tuln
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `ps aux` command is directly designed to list all currently active processes running on the system with CPU and memory usage statistics.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is incorrect:* `netstat -rn` displays the kernel routing table with numeric addresses — it shows routes, not listening ports.
+    *   *Why C is incorrect:* `ip route show` displays the routing table entries. It does not list open sockets or listening ports.
+    *   *Why D is incorrect:* `lsof -i tcp` lists open TCP connections and sockets but includes all connections (established, listening, closing) and performs name resolution by default. `ss -tuln` is the standard, faster, modern tool for listing listeners.
 
 ---
 
 **Question 4**
-While working on **Package Management** in a production environment, you encounter a system alert indicating a **Disk Space Full** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-C) Prepend the command with 'sudo' to run it with superuser administrative privileges, or adjust the file permissions.
-A) Run log rotations, clean temporary files, or expand the logical volume capacity.
-D) Reboot the physical machine and wait for services to reload.
-B) Identify and terminate the process already utilizing the target port, or modify the service configuration to use an open port.
-*   **Correct Answer:** A) Run log rotations, clean temporary files, or expand the logical volume capacity.
+An administrator edits `/etc/hosts` on a workstation to add the line `10.10.1.20  appserver`. After saving, a `ping appserver` command still fails to resolve the name. Which file controls the order in which `/etc/hosts` and DNS are queried, and what should the administrator check?
+A) `/etc/resolv.conf` — verify the `nameserver` line points to the correct DNS server.
+B) `/etc/nsswitch.conf` — verify the `hosts:` line includes `files` before `dns`.
+C) `/etc/hostname` — verify the system's own hostname matches `appserver`.
+D) `/etc/NetworkManager/NetworkManager.conf` — verify `dns=none` is set so NetworkManager does not overwrite the hosts file.
+*   **Correct Answer:** B) `/etc/nsswitch.conf` — verify the `hosts:` line includes `files` before `dns`.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This action does not resolve the root cause of Disk Space Full.
-    * *Why A is correct:* Because The storage volume has run out of space, preventing files from being written and causing system services to fail. The appropriate fix is to Run log rotations, clean temporary files, or expand the logical volume capacity..
-    * *Why D is incorrect:* This action does not resolve the root cause of Disk Space Full.
-    * *Why B is incorrect:* This action does not resolve the root cause of Disk Space Full.
-
+    *   *Why A is incorrect:* `/etc/resolv.conf` configures which DNS servers to query. It does not control whether `/etc/hosts` is consulted at all or what priority it receives relative to DNS.
+    *   *Why C is incorrect:* `/etc/hostname` sets the system's own hostname, not the resolution of arbitrary hostnames. Editing it would not affect how `appserver` resolves.
+    *   *Why D is incorrect:* `dns=none` in NetworkManager.conf tells NetworkManager not to manage `/etc/resolv.conf`, but it has no bearing on whether the resolver reads `/etc/hosts`. The resolution order is governed by `nsswitch.conf`.
 
 ---
 
 **Question 5**
-When designing a system for **Package Management**, you must mitigate the risk of **Attackers exploiting vulnerabilities in forgotten background services or using abandoned accounts to gain persistent access.**. Which of the following security configurations or controls represents the best practice to implement?
-C) Enable full disk encryption on all client endpoints.
-B) Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC.
-D) Enable full disk encryption on all client endpoints.
-A) Disable unused system accounts and run a port scan to disable unnecessary active background services.
-*   **Correct Answer:** A) Disable unused system accounts and run a port scan to disable unnecessary active background services.
+An administrator uses `dig appserver.example.com` and gets no response. They then run `ping 10.10.1.20` and the ping succeeds. Which tool would best help diagnose whether the DNS query is reaching the nameserver and what response is returned?
+A) traceroute 10.10.1.20
+B) ss -tuln
+C) dig @10.10.1.1 appserver.example.com
+D) ip route show
+*   **Correct Answer:** C) dig @10.10.1.1 appserver.example.com
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This does not address the security vulnerability of Stale Accounts & Services.
-    * *Why B is incorrect:* This does not address the security vulnerability of Stale Accounts & Services.
-    * *Why D is incorrect:* This does not address the security vulnerability of Stale Accounts & Services.
-    * *Why A is correct:* Implementing Disable unused system accounts and run a port scan to disable unnecessary active background services. mitigates the risk of Attackers exploiting vulnerabilities in forgotten background services or using abandoned accounts to gain persistent access..
-
+    *   *Why A is incorrect:* `traceroute` shows network path hops to an IP destination. It tests layer-3 reachability but provides no information about DNS resolution or nameserver responses.
+    *   *Why B is incorrect:* `ss -tuln` shows listening ports on the local machine. It reveals nothing about remote DNS server behavior or DNS query results.
+    *   *Why D is incorrect:* `ip route show` displays the local routing table. It confirms how packets are routed but does not diagnose DNS query failures or test nameserver responses.

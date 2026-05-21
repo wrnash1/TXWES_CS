@@ -17,63 +17,59 @@ Which type of machine learning uses labeled data to predict continuous numerical
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **clustering**?
-B) The single, top-most node in a tree structure from which all other nodes descend, serving as the starting reference for search algorithms.
-C) The additional execution time and CPU operations spent visiting nodes sequentially in memory, which is higher in linked structures than in contiguous arrays.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within ai operations.
-D) A node in a tree structure that has no child nodes (its children point to null), representing the termination points of the branches.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within ai operations.
+In the context of AI and machine learning, which of the following is the most accurate definition of **clustering**?
+*   A) An unsupervised learning technique that groups data points by similarity without using predefined labels, allowing the algorithm to discover natural patterns in the data.
+*   B) A supervised method that assigns discrete category labels to input samples using a labeled training dataset.
+*   C) A technique that reduces the number of input features by combining correlated variables into fewer dimensions.
+*   D) A process that forecasts future values in a time series by fitting a regression model to historical data points.
+*   **Correct Answer:** A) An unsupervised learning technique that groups data points by similarity without using predefined labels, allowing the algorithm to discover natural patterns in the data.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **clustering**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **clustering**.
-    * *Why A is correct:* This describes the exact role and function of **clustering**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **clustering**.
-
+    *   *Why A is correct:* Clustering (e.g., K-Means) is an unsupervised method — no labels are needed — that partitions data into groups based on feature similarity.
+    *   *Why B is incorrect:* This describes classification, a supervised task that requires labeled training data.
+    *   *Why C is incorrect:* This describes dimensionality reduction (e.g., PCA), which compresses features rather than grouping records.
+    *   *Why D is incorrect:* This describes time-series regression/forecasting, not clustering.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **train the machine learning model on the training features and targets**. Which of the following commands is the most appropriate to execute?
-D) predictions = model.predict(X_test)
-B) import pandas as pd; df = pd.read_csv('data.csv')
-A) model.fit(X_train, y_train)
-C) accuracy = accuracy_score(y_test, predictions)
+A data scientist needs to **train a machine learning model on labeled training features and targets**. Which of the following commands is the most appropriate?
+*   A) model.fit(X_train, y_train)
+*   B) predictions = model.predict(X_test)
+*   C) accuracy = accuracy_score(y_test, predictions)
+*   D) import pandas as pd; df = pd.read_csv('data.csv')
 *   **Correct Answer:** A) model.fit(X_train, y_train)
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `model.fit(X_train, y_train)` command is directly designed to train the machine learning model on the training features and targets.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is correct:* `model.fit(X_train, y_train)` passes the feature matrix and target labels to the model's training algorithm.
+    *   *Why B is incorrect:* `model.predict()` generates predictions from an already-trained model — it does not perform training.
+    *   *Why C is incorrect:* `accuracy_score()` evaluates prediction quality after training and prediction are already complete.
+    *   *Why D is incorrect:* This loads data from a CSV file — it is data preparation, not model training.
 
 ---
 
 **Question 4**
-While working on **Supervised vs Unsupervised Learning** in a production environment, you encounter a system alert indicating a **Data Leakage** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-C) Apply regularization techniques (L1/L2), gather more training data, or simplify the model architecture.
-D) Reboot the physical machine and wait for services to reload.
-A) Ensure data preprocessing steps (scaling, normalization) are fit only on the training set and applied to the test set.
-B) Use imputation techniques (mean, median, mode) or drop rows/columns containing missing values.
-*   **Correct Answer:** A) Ensure data preprocessing steps (scaling, normalization) are fit only on the training set and applied to the test set.
+A model's validation accuracy is significantly higher than expected because preprocessing scalers were fitted on the entire dataset before splitting into train and test sets. Which term describes this problem, and what is the correct fix?
+*   A) Data leakage — fit preprocessing steps only on the training set, then apply (transform) to the test set.
+*   B) Overfitting — apply L1/L2 regularization and gather more training data.
+*   C) Missing value errors — use imputation techniques such as mean or median filling.
+*   D) Underfitting — increase model complexity or add more features.
+*   **Correct Answer:** A) Data leakage — fit preprocessing steps only on the training set, then apply (transform) to the test set.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This action does not resolve the root cause of Data Leakage.
-    * *Why D is incorrect:* This action does not resolve the root cause of Data Leakage.
-    * *Why A is correct:* Because Information from outside the training dataset is used to train the model, resulting in overly optimistic validation scores. The appropriate fix is to Ensure data preprocessing steps (scaling, normalization) are fit only on the training set and applied to the test set..
-    * *Why B is incorrect:* This action does not resolve the root cause of Data Leakage.
-
+    *   *Why A is correct:* Fitting the scaler on the full dataset leaks information from the test set into training, inflating performance metrics. The fix is to call `.fit_transform()` on training data only and `.transform()` on test data.
+    *   *Why B is incorrect:* Overfitting results in high training accuracy but low validation accuracy, not artificially high validation accuracy.
+    *   *Why C is incorrect:* Missing value errors cause model failures or biased imputations, not inflated validation scores.
+    *   *Why D is incorrect:* Underfitting produces low accuracy on both training and validation sets.
 
 ---
 
 **Question 5**
-When designing a system for **Supervised vs Unsupervised Learning**, you must mitigate the risk of **Attackers reconstructing sensitive training data by querying the public model API and analyzing outputs.**. Which of the following security configurations or controls represents the best practice to implement?
-C) Enable full disk encryption on all client endpoints.
-D) Enable full disk encryption on all client endpoints.
-B) Train models with adversarial inputs and implement input validation/filtering on inputs.
-A) Apply differential privacy methods to the training data and limit public API rate queries.
-*   **Correct Answer:** A) Apply differential privacy methods to the training data and limit public API rate queries.
+An AI model exposed via a public API is being exploited: attackers are sending thousands of crafted queries and reconstructing sensitive records from the model's outputs. Which security control best mitigates this **model inversion** attack?
+*   A) Apply differential privacy methods to the training data and limit public API query rates.
+*   B) Train models with adversarial inputs and implement input validation/filtering.
+*   C) Enable full disk encryption on all client endpoints.
+*   D) Store model weights in an encrypted key vault and rotate API keys monthly.
+*   **Correct Answer:** A) Apply differential privacy methods to the training data and limit public API query rates.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This does not address the security vulnerability of Model Inversion Vulnerability.
-    * *Why D is incorrect:* This does not address the security vulnerability of Model Inversion Vulnerability.
-    * *Why B is incorrect:* This does not address the security vulnerability of Model Inversion Vulnerability.
-    * *Why A is correct:* Implementing Apply differential privacy methods to the training data and limit public API rate queries. mitigates the risk of Attackers reconstructing sensitive training data by querying the public model API and analyzing outputs..
-
+    *   *Why A is correct:* Differential privacy injects calibrated noise so individual training records cannot be reconstructed; rate limiting reduces the attacker's ability to harvest outputs.
+    *   *Why B is incorrect:* Adversarial training defends against adversarial example attacks (perturbed inputs), not model inversion via output analysis.
+    *   *Why C is incorrect:* Disk encryption protects data at rest and is irrelevant to an API-based reconstruction attack.
+    *   *Why D is incorrect:* Key rotation controls API authentication but does not prevent a legitimate-looking flood of inference queries from an attacker.

@@ -12,68 +12,65 @@ What does IOC stand for in security operations?
 *   **Correct Answer:** B) Indicators of Compromise (IOCs) are forensic clues (file hashes, IPs, domains) that indicate a security breach.
 *   **Distractor Analysis:**
     *   *Why correct:* Indicators of Compromise (IOCs) are forensic clues (file hashes, IPs, domains) that indicate a security breach.
-    *   The other options are made up acronyms.
+    *   The other options are fabricated acronyms not used in security operations.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **threat landscape**?
-C) A cryptographic method that uses a public key to encrypt data and a mathematically related private key to decrypt it.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within security operations.
-B) The maximum acceptable age of data that must be recovered from backup storage to restore operations, representing the limit of tolerable data loss.
-D) The operational principle of a queue, where the first element added is the first one to be removed, mimicking a line at a checkout register.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within security operations.
+In a SOC, which of the following best defines the **threat landscape**?
+*   A) A SIEM dashboard view showing real-time firewall throughput statistics
+*   B) The complete set of threat actors, attack vectors, and vulnerabilities relevant to an organization at a given time
+*   C) A cryptographic method that uses a public key to encrypt data and a private key to decrypt it
+*   D) The maximum acceptable downtime before business operations are critically impacted
+*   **Correct Answer:** B) The complete set of threat actors, attack vectors, and vulnerabilities relevant to an organization at a given time.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **threat landscape**.
-    * *Why A is correct:* This describes the exact role and function of **threat landscape**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **threat landscape**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **threat landscape**.
-
+    *   *Why A is incorrect:* A SIEM dashboard displays log data and alerts; it is a tool used to observe part of the threat landscape, not the landscape itself.
+    *   *Why B is correct:* The threat landscape is the holistic picture of adversaries, techniques, and weaknesses facing an organization, which SOC analysts must continuously monitor.
+    *   *Why C is incorrect:* This describes asymmetric (public-key) encryption, an unrelated cryptographic concept.
+    *   *Why D is incorrect:* This describes Recovery Time Objective (RTO), a business continuity metric unrelated to threat landscape.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **scan ports on a target host to identify active services and their version numbers**. Which of the following commands is the most appropriate to execute?
-D) openssl x509 -text -noout -in cert.pem
-B) wireshark
-A) nmap -sV -p 1-1024 target_ip
-C) hydra -l admin -P passwords.txt ssh://target
-*   **Correct Answer:** A) nmap -sV -p 1-1024 target_ip
+A SOC analyst receives an alert showing multiple failed SSH login attempts from a single external IP address followed by a successful login. Which SOC analyst action is the most appropriate first step?
+*   A) Immediately block the external IP address at the perimeter firewall
+*   B) Verify whether the successful login matches an authorized user and correlate the source IP against threat intelligence feeds
+*   C) Reimage the target system to ensure no persistent malware was installed
+*   D) Close the alert as a false positive since the login eventually succeeded
+*   **Correct Answer:** B) Verify whether the successful login matches an authorized user and correlate the source IP against threat intelligence feeds.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `nmap -sV -p 1-1024 target_ip` command is directly designed to scan ports on a target host to identify active services and their version numbers.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is incorrect:* Blocking before verifying may interrupt legitimate business activity and skips the required triage step.
+    *   *Why B is correct:* Triage requires confirming the alert is a true positive by checking user authorization and threat intelligence context before taking containment action.
+    *   *Why C is incorrect:* Reimaging is a remediation action performed after confirmation and approval — not a first triage step.
+    *   *Why D is incorrect:* A successful login after repeated failures is a classic brute-force success pattern and should never be dismissed without investigation.
 
 ---
 
 **Question 4**
-While working on **Security Operations & Analyst Role** in a production environment, you encounter a system alert indicating a **Certificate Expired Error** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-C) Review active security rules and add a permissive firewall rule allowing the specific source IP and destination port.
-D) Reboot the physical machine and wait for services to reload.
-B) Tune the detection signatures and define exceptions for authorized administrative activities.
-A) Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA.
-*   **Correct Answer:** A) Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA.
+Which of the following best describes the role of a Tier 1 SOC analyst?
+*   A) Leading threat hunting operations and developing custom SIEM detection rules
+*   B) Performing initial alert triage, filtering false positives, and escalating confirmed incidents to Tier 2
+*   C) Conducting post-incident forensic analysis and producing executive-level reports
+*   D) Managing network infrastructure and applying security patches to production systems
+*   **Correct Answer:** B) Performing initial alert triage, filtering false positives, and escalating confirmed incidents to Tier 2.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This action does not resolve the root cause of Certificate Expired Error.
-    * *Why D is incorrect:* This action does not resolve the root cause of Certificate Expired Error.
-    * *Why B is incorrect:* This action does not resolve the root cause of Certificate Expired Error.
-    * *Why A is correct:* Because The SSL/TLS digital certificate presented by the server has passed its validity end date, causing clients to block connections. The appropriate fix is to Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA..
-
+    *   *Why A is incorrect:* Threat hunting and custom rule development are Tier 3 or senior analyst responsibilities requiring deeper expertise.
+    *   *Why B is correct:* Tier 1 analysts are the first responders — they monitor the alert queue, apply playbooks, determine if an alert is real, and hand off confirmed incidents.
+    *   *Why C is incorrect:* Forensic analysis and executive reporting are Tier 2/3 and management responsibilities.
+    *   *Why D is incorrect:* Infrastructure management and patching are IT operations roles, not SOC analyst duties.
 
 ---
 
 **Question 5**
-When designing a system for **Security Operations & Analyst Role**, you must mitigate the risk of **Attackers cracking weak encryption keys using commodity hardware, compromises confidentiality.**. Which of the following security configurations or controls represents the best practice to implement?
-B) Forward all system logs to a secure, write-once SIEM (Security Information and Event Management) platform.
-A) Enforce RSA keys with a minimum length of 2048/4096 bits or switch to Elliptic Curve Cryptography (ECC).
-D) Enable full disk encryption on all client endpoints.
-C) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Enforce RSA keys with a minimum length of 2048/4096 bits or switch to Elliptic Curve Cryptography (ECC).
+When designing a monitoring strategy for a SOC, which control best mitigates the risk of an attacker deleting local system logs after a breach to conceal their activity?
+*   A) Enforce multi-factor authentication on all privileged accounts
+*   B) Forward all system logs in real time to a centralized, write-protected SIEM platform
+*   C) Enable full-disk encryption on all endpoint systems
+*   D) Deploy a host-based intrusion prevention system on every workstation
+*   **Correct Answer:** B) Forward all system logs in real time to a centralized, write-protected SIEM platform.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This does not address the security vulnerability of Weak Key Strength.
-    * *Why A is correct:* Implementing Enforce RSA keys with a minimum length of 2048/4096 bits or switch to Elliptic Curve Cryptography (ECC). mitigates the risk of Attackers cracking weak encryption keys using commodity hardware, compromises confidentiality..
-    * *Why D is incorrect:* This does not address the security vulnerability of Weak Key Strength.
-    * *Why C is incorrect:* This does not address the security vulnerability of Weak Key Strength.
+    *   *Why A is incorrect:* MFA protects against unauthorized account access but does not prevent an already-authenticated attacker from deleting local logs.
+    *   *Why B is correct:* Centralizing logs to an immutable SIEM ensures that even if local logs are deleted, the off-system copy remains intact for investigation.
+    *   *Why C is incorrect:* Full-disk encryption protects data confidentiality at rest but does not prevent a logged-in user or attacker from deleting log files.
+    *   *Why D is incorrect:* HIPS can block some malicious actions but does not guarantee log preservation; a privileged attacker can often disable or bypass host-based controls.
 

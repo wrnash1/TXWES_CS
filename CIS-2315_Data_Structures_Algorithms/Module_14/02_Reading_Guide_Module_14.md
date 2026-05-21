@@ -1,51 +1,62 @@
-# Reading Guide: Module 14 - Dynamic Programming Basics
-## Course: CIS-2315_Data_Structures_Algorithms (Technical Interview Readiness (LeetCode / HackerRank))
+# Reading Guide: Module 14 – Greedy Algorithms
+## Course: CIS-2315 Data Structures & Algorithms (Technical Interview Readiness)
 
 ---
 
 ### Introduction
-Welcome to **Module 14 - Dynamic Programming Basics**! This week's study material focuses on the core foundations and configuration mechanics of **Dynamic Programming Basics** as aligned with the **Technical Interview Readiness (LeetCode / HackerRank)** certification framework. Understanding these topics is essential not only for passing the certification exam but also for administering enterprise systems in real-world environments.
+Welcome to **Module 14 – Greedy Algorithms**! A greedy algorithm makes the locally optimal choice at each step with the hope that this leads to a globally optimal solution. Greedy algorithms are elegant and efficient when they work — but they fail silently when they do not, and the critical skill is proving (or disproving) that a greedy strategy is correct for a specific problem. Interviews test your ability to propose a greedy solution and justify it, not just code it.
 
-As a student, you will learn the primary operational roles, command syntaxes, and troubleshooting parameters needed to design, configure, and maintain these services. We will explore how different protocols establish connections, how configurations manage resource allocation, and how security controls prevent access breaches. Make sure to complete the checklists and review the glossary terms in detail before beginning the lab activity.
+This module covers the conditions that make greedy algorithms correct (exchange argument, matroid structure), the most common greedy interview problems, and the key contrast between greedy and DP.
 
 ---
 
 ### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
 
-*   **Overlapping subproblems**: A primary configuration standard and technical parameter essential for coordinating Dynamic Programming Basics activities, enforcing security boundaries, and verifying operational statuses within the programming environment.
-*   **optimal substructure**: A primary configuration standard and technical parameter essential for coordinating Dynamic Programming Basics activities, enforcing security boundaries, and verifying operational statuses within the programming environment.
-*   **memoization (top-down)**: A primary configuration standard and technical parameter essential for coordinating Dynamic Programming Basics activities, enforcing security boundaries, and verifying operational statuses within the programming environment.
-*   **tabulation (bottom-up).**: A primary configuration standard and technical parameter essential for coordinating Dynamic Programming Basics activities, enforcing security boundaries, and verifying operational statuses within the programming environment.
+*   **Greedy algorithm**: An algorithm that builds a solution by making the choice that looks best at the current step, never reconsidering past decisions. Runs in a single forward pass, typically O(n log n) after an initial sort or O(n) without sorting.
+
+*   **Greedy choice property**: A problem has this property if a globally optimal solution can always be constructed by making locally optimal (greedy) choices. Proving this property is what justifies using a greedy algorithm over DP.
+
+*   **Exchange argument**: A common proof technique for greedy correctness: assume a non-greedy optimal solution exists, then show that swapping its choice for the greedy choice does not make it worse — eventually converting it to the greedy solution while maintaining optimality.
+
+*   **Activity selection problem**: A classic greedy problem: given intervals with start and end times, find the maximum number of non-overlapping intervals. The greedy strategy — always select the interval with the earliest end time — is provably optimal.
+
+*   **Interval scheduling / merging**: Problems involving intervals often have greedy solutions. Key pattern: sort by start time (for merging) or end time (for maximizing non-overlapping count), then make one-pass decisions.
+
+*   **Fractional knapsack**: A variant of the knapsack problem where items can be divided into fractions. The greedy strategy (sort by value-to-weight ratio, take as much as possible of the highest-ratio item) gives the optimal solution. The 0/1 knapsack (no fractions) requires DP.
+
+*   **Greedy vs. DP**: Greedy makes one irrevocable choice per step; DP explores all possibilities by storing subproblem solutions. Use greedy when the greedy choice property holds; use DP when it does not.
 
 ---
 
 ### 2. Certification Exam Tips
-*   **Focus Area:** Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
-*   **Scenario Trap:** Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
-*   **Study Resource:** To reinforce these concepts visually, review this targeted search query: [Data Structures & Algorithms Course by Abdul Bari - Dynamic Programming Basics](https://www.youtube.com/watch?v=RBSGKlAvoiM).
+*   **Always justify your greedy:** In an interview, state which greedy property you're using and why. "I sort by X because taking the smallest/earliest/cheapest first is always optimal because..." — an unjustified greedy answer looks like guessing.
+*   **Sorting first is the most common greedy setup:** Jump Game, Merge Intervals, Meeting Rooms, Task Scheduler — nearly all interval and scheduling greedy problems start with sorting.
+*   **The classic trap: Greedy fails for 0/1 knapsack:** If you cannot break items, greedy by value/weight ratio does not work. This is a common interview trap — mention DP is required when items are indivisible.
+*   **Jump Game (LeetCode #55) is the canonical greedy problem:** Track the maximum reachable index as you iterate. O(n) time, O(1) space — much simpler than a DP solution and provably equivalent.
+*   **Huffman coding = greedy on a priority queue:** Build an optimal prefix-free code by always merging the two lowest-frequency symbols first using a min-heap. The correctness proof is an exchange argument.
+*   **Study Resource:** [Greedy Algorithms – Algorithms by Jeff Erickson, Chapter 4](https://jeffe.cs.illinois.edu/teaching/algorithms/book/04-greedy.pdf) — a free open-access chapter with formal greedy proofs for interval scheduling, Huffman coding, and MST algorithms.
 
 ---
 
 ### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the section/chapter covering **Dynamic Programming Basics** in the OER Textbook: [OpenDSA Data Structures and Algorithms](https://opendsa-server.cs.vt.edu/).
-*   **Required Video:** Watch the video lecture on **Dynamic Programming Basics** in the official course playlist: [Data Structures & Algorithms Course by Abdul Bari](https://www.youtube.com/watch?v=RBSGKlAvoiM).
+*   **Required Reading:** [Greedy Algorithms – Algorithms (Jeff Erickson), Chapter 4](https://jeffe.cs.illinois.edu/teaching/algorithms/book/04-greedy.pdf) — covers the exchange argument proof technique, activity selection, fractional knapsack, and Huffman coding with rigorous analysis.
+*   **Required Video:** [Greedy – NeetCode on YouTube](https://www.youtube.com/watch?v=lfQvPHGtu6Q) — a 20-minute interview-focused video covering Jump Game, Merge Intervals, and Gas Station with greedy justification and LeetCode solutions.
 
 ---
 
 ### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Solve Fibonacci using memoization dict**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-*   **Solve Knapsack 0/1 using tabulation grid**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-*   **Compare execution steps**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-
+In this week's hands-on lab, you will:
+*   **Solve LeetCode #55 (Jump Game)** using the greedy max-reach approach — track the farthest reachable index in O(n).
+*   **Solve LeetCode #56 (Merge Intervals)** — sort by start time, then make greedy merge decisions in one pass.
+*   **Solve LeetCode #435 (Non-overlapping Intervals)** — minimum removals to eliminate overlaps (greedy: sort by end time, keep intervals with earliest end).
+*   **Compare LeetCode #322 (Coin Change)** using greedy vs. DP: demonstrate with a counterexample (coins = [1, 3, 4], amount = 6) that greedy fails and DP is required.
 
 ---
 
 ### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read the section/chapter covering **Dynamic Programming Basics** in [OpenDSA Data Structures and Algorithms](https://opendsa-server.cs.vt.edu/).
-- [ ] Watch the video lecture on **Dynamic Programming Basics** in [Data Structures & Algorithms Course by Abdul Bari](https://www.youtube.com/watch?v=RBSGKlAvoiM).
-- [ ] Review the commands outlined in the lab instructions.
-- [ ] Proceed to the weekly hands-on lab activity.
+- [ ] Read the glossary terms and be able to explain each in your own words.
+- [ ] Read Chapter 4 of Algorithms by Jeff Erickson.
+- [ ] Watch the NeetCode Greedy video.
+- [ ] Solve LeetCode #55, #56, and #435.
+- [ ] Construct and document a counterexample showing greedy fails for 0/1 knapsack.
+- [ ] Proceed to the Module 14 Quiz.

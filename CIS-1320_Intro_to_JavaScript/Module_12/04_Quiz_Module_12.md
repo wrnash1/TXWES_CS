@@ -17,63 +17,59 @@ Which method on the event object is used to stop the default browser action, suc
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **addEventListener**?
-D) Nodes that contain two pointers: one pointing forward to the next node and one pointing backward to the previous node, allowing bidirectional traversal.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-C) CSS rules (like width, height, max-width, box-sizing) that dictate how the dimensions of elements are calculated and rendered.
-B) A complete binary tree where the key of any parent node is less than or equal to the keys of its children, guaranteeing the root is always the minimum element.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
+Which of the following most accurately describes **`addEventListener`** in JavaScript?
+*   A) A method that replaces all existing event handlers on an element with the new handler function provided
+*   B) A DOM method called on an element to register a callback that fires whenever a specified event type occurs, supporting multiple handlers per event
+*   C) A global function that listens for events anywhere on the page without needing a specific target element
+*   D) An event property that stores the name of the most recently fired event on any element in the document
+*   **Correct Answer:** B) A DOM method called on an element to register a callback that fires whenever a specified event type occurs, supporting multiple handlers per event.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **addEventListener**.
-    * *Why A is correct:* This describes the exact role and function of **addEventListener**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **addEventListener**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **addEventListener**.
-
+    *   *Why A is incorrect:* Unlike setting `element.onclick = fn` (which replaces), `addEventListener` stacks multiple handlers on the same element and event without overwriting.
+    *   *Why B is correct:* `addEventListener(type, callback, options)` attaches a listener to a specific element; multiple calls for the same event type accumulate rather than replace.
+    *   *Why C is incorrect:* `addEventListener` must be called on a specific target (element, `document`, or `window`); there is no parameter-less global version.
+    *   *Why D is incorrect:* That describes a property like `event.type`, which identifies the current event's name; it is a property of the event object, not a method.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **install all external project dependencies specified in the requirements manifest**. Which of the following commands is the most appropriate to execute?
-C) pytest
-D) git commit -m 'update'
-A) pip install -r requirements.txt
-B) python3 -m venv .venv
-*   **Correct Answer:** A) pip install -r requirements.txt
+A developer has a `<ul>` list with many `<li>` items added dynamically. They want a single click handler that works for all current and future `<li>` items. Which approach correctly uses event delegation?
+*   A) Add a separate `addEventListener("click", ...)` to every `<li>` element as it is created.
+*   B) Add one `addEventListener("click", ...)` to the parent `<ul>` and use `event.target` inside the handler to detect which `<li>` was clicked.
+*   C) Add `addEventListener("click", ...)` to `document.body` and check `event.currentTarget` to find the clicked `<li>`.
+*   D) Use `addEventListener("bubble", ...)` on the `<ul>` to catch bubbled events from its children.
+*   **Correct Answer:** B) Add one `addEventListener("click", ...)` to the parent `<ul>` and use `event.target` inside the handler to detect which `<li>` was clicked.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `pip install -r requirements.txt` command is directly designed to install all external project dependencies specified in the requirements manifest.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is incorrect:* Adding individual handlers to every item is inefficient and fails for dynamically added elements unless the handler is reattached each time.
+    *   *Why B is correct:* Event delegation exploits bubbling — clicks on `<li>` items bubble up to the `<ul>`, where a single handler checks `event.target` to identify the originating item.
+    *   *Why C is incorrect:* `event.currentTarget` always refers to the element the listener is attached to (the `<body>` in this case), not the clicked `<li>`.
+    *   *Why D is incorrect:* `"bubble"` is not a valid event type; the correct approach is to listen for the event name (e.g., `"click"`) on the ancestor, taking advantage of bubbling automatically.
 
 ---
 
 **Question 4**
-While working on **Event Handling & Listeners** in a production environment, you encounter a system alert indicating a **KeyError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-C) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-B) Verify that the index is within the valid range of 0 to len(list)-1.
-A) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
-D) Reboot the physical machine and wait for services to reload.
-*   **Correct Answer:** A) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
+While working on **Event Handling**, a developer attaches a submit listener to a form but reports that the page reloads before their code runs. What is missing?
+*   A) A `return true;` statement at the end of the handler function
+*   B) A call to `event.preventDefault()` at the beginning of the handler to cancel the default form submission
+*   C) The `async` keyword on the handler function to prevent synchronous page reload
+*   D) A call to `event.stopPropagation()` to prevent the form event from reaching the server
+*   **Correct Answer:** B) A call to `event.preventDefault()` at the beginning of the handler to cancel the default form submission.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This action does not resolve the root cause of KeyError.
-    * *Why B is incorrect:* This action does not resolve the root cause of KeyError.
-    * *Why A is correct:* Because The code attempted to access a dictionary key that is not defined in the object. The appropriate fix is to Ensure the requested key exists in the dictionary, or use the .get() method to return a default value..
-    * *Why D is incorrect:* This action does not resolve the root cause of KeyError.
-
+    *   *Why A is incorrect:* `return true` does not prevent the default action; only `preventDefault()` does.
+    *   *Why B is correct:* The browser's default behavior for a form `submit` event is to serialize the form and navigate to a new URL; `preventDefault()` suppresses this, keeping the page in place.
+    *   *Why C is incorrect:* Making the handler `async` allows it to use `await`, but does not prevent the synchronous default submission behavior.
+    *   *Why D is incorrect:* `stopPropagation()` stops the event from bubbling to ancestor elements; it has no effect on the browser's default submit action.
 
 ---
 
 **Question 5**
-When designing a system for **Event Handling & Listeners**, you must mitigate the risk of **Storing user credentials in plain text, making them vulnerable to database breaches.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-B) Implement parameterized queries and prepared statements rather than raw string concatenation.
-C) Enable full disk encryption on all client endpoints.
-D) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
+What is the difference between `event.target` and `event.currentTarget`?
+*   A) They always refer to the same element; the two properties are aliases.
+*   B) `event.target` is the element that originally triggered the event; `event.currentTarget` is the element on which the currently-executing listener is registered.
+*   C) `event.target` refers to the element the listener is attached to; `event.currentTarget` refers to the element that was actually clicked.
+*   D) `event.target` is only available for mouse events; `event.currentTarget` is available for all event types.
+*   **Correct Answer:** B) `event.target` is the element that originally triggered the event; `event.currentTarget` is the element on which the currently-executing listener is registered.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt. mitigates the risk of Storing user credentials in plain text, making them vulnerable to database breaches..
-    * *Why B is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-    * *Why C is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-    * *Why D is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-
+    *   *Why A is incorrect:* They are the same only when the listener is on the element that was directly interacted with; when events bubble, they differ.
+    *   *Why B is correct:* During bubbling, `target` stays fixed as the originating element while `currentTarget` changes to each ancestor that has a listener as the event travels up.
+    *   *Why C is incorrect:* The descriptions are reversed.
+    *   *Why D is incorrect:* Both properties are available on all event types in all phases, not restricted to mouse events.

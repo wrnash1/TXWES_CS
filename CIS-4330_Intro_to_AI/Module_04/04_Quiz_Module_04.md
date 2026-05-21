@@ -1,4 +1,4 @@
-# Quiz: Module 04 - Data Preprocessing
+# Quiz: Module 04 - Neural Networks and Deep Learning
 ## Course: CIS-4330_Intro_to_AI (AI-900 (Microsoft Azure AI Fundamentals))
 
 ---
@@ -12,68 +12,64 @@ What is the purpose of one-hot encoding in data preprocessing?
 *   **Correct Answer:** B) One-hot encoding converts labels or categories into binary indicators (0 or 1) that machine learning models can compute.
 *   **Distractor Analysis:**
     *   *Why correct:* One-hot encoding converts labels or categories into binary indicators (0 or 1) that machine learning models can compute.
-    *   Normalization scales numbers. Compression and deduplication are general data administration.
+    *   Normalization scales numbers. Compression and deduplication are general data administration tasks unrelated to encoding.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **feature scaling**?
-B) A two-dimensional CSS layout system that allows developers to design complex grid-based user interfaces with rows and columns, offering precise control over alignment.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within ai operations.
-C) A node in a tree structure that has no child nodes (its children point to null), representing the termination points of the branches.
-D) Web Content Accessibility Guidelines; international standards ensuring web content is usable for people with disabilities (e.g., screen reader compatibility, color contrast).
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within ai operations.
+In the context of machine learning, which of the following is the most accurate definition of **feature scaling**?
+*   A) A preprocessing step that transforms numeric input features to a comparable range (e.g., 0–1 or zero mean/unit variance) so that gradient-based algorithms converge faster and no single feature dominates due to its magnitude.
+*   B) A two-dimensional CSS layout system that allows developers to design grid-based user interfaces with rows and columns.
+*   C) A technique that removes leaf nodes from a decision tree to reduce model complexity and prevent overfitting.
+*   D) A database normalization rule that eliminates redundant data by ensuring each non-key attribute depends only on the primary key.
+*   **Correct Answer:** A) A preprocessing step that transforms numeric input features to a comparable range so that gradient-based algorithms converge faster and no single feature dominates due to its magnitude.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **feature scaling**.
-    * *Why A is correct:* This describes the exact role and function of **feature scaling**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **feature scaling**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **feature scaling**.
-
+    *   *Why A is correct:* Feature scaling (via Min-Max normalization or standardization) is essential for neural networks and distance-based algorithms where unscaled features with large ranges distort learning.
+    *   *Why B is incorrect:* This describes CSS Grid layout — a web design concept entirely unrelated to machine learning preprocessing.
+    *   *Why C is incorrect:* This describes decision tree pruning, not feature scaling.
+    *   *Why D is incorrect:* This describes database normalization (3NF), a relational database concept unrelated to ML feature engineering.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **calculate the accuracy metric of the model predictions against actual labels**. Which of the following commands is the most appropriate to execute?
-C) model.fit(X_train, y_train)
-D) import pandas as pd; df = pd.read_csv('data.csv')
-B) predictions = model.predict(X_test)
-A) accuracy = accuracy_score(y_test, predictions)
+A data scientist needs to **calculate the accuracy of model predictions against actual test labels**. Which command is most appropriate?
+*   A) accuracy = accuracy_score(y_test, predictions)
+*   B) model.fit(X_train, y_train)
+*   C) predictions = model.predict(X_test)
+*   D) import pandas as pd; df = pd.read_csv('data.csv')
 *   **Correct Answer:** A) accuracy = accuracy_score(y_test, predictions)
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `accuracy = accuracy_score(y_test, predictions)` command is directly designed to calculate the accuracy metric of the model predictions against actual labels.
-
+    *   *Why A is correct:* `accuracy_score(y_test, predictions)` compares the model's predicted labels against the true test labels and returns the fraction that match.
+    *   *Why B is incorrect:* `model.fit()` trains the model; it does not evaluate prediction accuracy.
+    *   *Why C is incorrect:* `model.predict()` generates predictions; it does not compute an accuracy metric.
+    *   *Why D is incorrect:* This loads data from a CSV; it is data loading, not evaluation.
 
 ---
 
 **Question 4**
-While working on **Data Preprocessing** in a production environment, you encounter a system alert indicating a **Missing Value Errors** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-B) Ensure data preprocessing steps (scaling, normalization) are fit only on the training set and applied to the test set.
-A) Use imputation techniques (mean, median, mode) or drop rows/columns containing missing values.
-C) Apply regularization techniques (L1/L2), gather more training data, or simplify the model architecture.
-D) Reboot the physical machine and wait for services to reload.
-*   **Correct Answer:** A) Use imputation techniques (mean, median, mode) or drop rows/columns containing missing values.
+A model returns NaN loss values during training. Investigation reveals the dataset contains many null entries in numeric columns. Which action most directly resolves this?
+*   A) Use imputation techniques (mean, median, or mode) or drop rows/columns containing missing values before training.
+*   B) Apply L1/L2 regularization to the model weights to reduce overfitting.
+*   C) Ensure preprocessing scalers are fitted only on training data, then applied to test data.
+*   D) Reboot the training environment and restart the pipeline from scratch.
+*   **Correct Answer:** A) Use imputation techniques (mean, median, or mode) or drop rows/columns containing missing values before training.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This action does not resolve the root cause of Missing Value Errors.
-    * *Why A is correct:* Because The dataset contains null or missing values, causing mathematical operators in the model to fail. The appropriate fix is to Use imputation techniques (mean, median, mode) or drop rows/columns containing missing values..
-    * *Why C is incorrect:* This action does not resolve the root cause of Missing Value Errors.
-    * *Why D is incorrect:* This action does not resolve the root cause of Missing Value Errors.
-
+    *   *Why A is correct:* NaN values propagate through mathematical operations, causing NaN loss. Imputing or dropping missing values before training prevents this.
+    *   *Why B is incorrect:* Regularization addresses overfitting, not NaN values caused by missing data.
+    *   *Why C is incorrect:* Scaler fitting strategy prevents data leakage; it does not resolve NaN input values.
+    *   *Why D is incorrect:* Restarting a pipeline does not fix missing data in the underlying dataset.
 
 ---
 
 **Question 5**
-When designing a system for **Data Preprocessing**, you must mitigate the risk of **Attackers reconstructing sensitive training data by querying the public model API and analyzing outputs.**. Which of the following security configurations or controls represents the best practice to implement?
-D) Enable full disk encryption on all client endpoints.
-C) Enable full disk encryption on all client endpoints.
-B) Train models with adversarial inputs and implement input validation/filtering on inputs.
-A) Apply differential privacy methods to the training data and limit public API rate queries.
-*   **Correct Answer:** A) Apply differential privacy methods to the training data and limit public API rate queries.
+A public-facing model API is being exploited by attackers who send imperceptibly modified input images that cause the model to misclassify them with high confidence. Which security control best mitigates this **adversarial example** attack?
+*   A) Train the model with adversarial examples included in the training set and implement input validation/filtering on all incoming data.
+*   B) Apply differential privacy to the training data and rate-limit public API queries.
+*   C) Enable full disk encryption on all client endpoints.
+*   D) Rotate the model's API key every 30 days and enforce TLS 1.3 on all connections.
+*   **Correct Answer:** A) Train the model with adversarial examples included in the training set and implement input validation/filtering on all incoming data.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This does not address the security vulnerability of Model Inversion Vulnerability.
-    * *Why C is incorrect:* This does not address the security vulnerability of Model Inversion Vulnerability.
-    * *Why B is incorrect:* This does not address the security vulnerability of Model Inversion Vulnerability.
-    * *Why A is correct:* Implementing Apply differential privacy methods to the training data and limit public API rate queries. mitigates the risk of Attackers reconstructing sensitive training data by querying the public model API and analyzing outputs..
-
+    *   *Why A is correct:* Adversarial training exposes the model to perturbed inputs during training, improving its robustness. Input validation filters suspicious inputs before they reach the model.
+    *   *Why B is incorrect:* Differential privacy defends against model inversion attacks (reconstructing training data), not adversarial example attacks on inputs.
+    *   *Why C is incorrect:* Disk encryption protects stored data and is irrelevant to manipulated inference inputs sent via API.
+    *   *Why D is incorrect:* Key rotation and TLS protect the transport layer; they do not make the model robust against crafted adversarial inputs.

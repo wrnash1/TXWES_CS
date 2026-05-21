@@ -1,79 +1,77 @@
-# Quiz: Module 05 - Support Vector Machines
+# Quiz: Module 05 - TensorFlow and Keras Introduction
 ## Course: CIS-4345_Machine_Learning_Deep_Learning (TensorFlow Developer Certificate)
 
 ---
 
 **Question 1**
-What are support vectors in the context of Support Vector Machines?
-*   A) Empty dimensions
-*   B) The data points closest to the separating hyperplane that define the margin boundaries
-*   C) The outputs of activation layers
-*   D) Target variable index arrays
-*   **Correct Answer:** B) Support vectors are the data points closest to the separating hyperplane that define the margin boundaries.
+In the Keras build-compile-fit workflow, what does `model.compile()` configure?
+*   A) The layer architecture and number of neurons in each layer
+*   B) The optimizer algorithm, loss function, and evaluation metrics used during training
+*   C) The train/test data split ratio and batch size
+*   D) The number of epochs and learning rate schedule
+*   **Correct Answer:** B) `model.compile()` sets the training configuration — which optimizer minimizes the loss, which loss function is used, and which metrics are tracked — without performing any training.
 *   **Distractor Analysis:**
-    *   *Why correct:* Support vectors are the data points closest to the separating hyperplane that define the margin boundaries.
-    *   Support vectors are real points, not dimensions or activations.
+    *   *Why A is incorrect:* Layer architecture is defined when building the model with `tf.keras.Sequential([...])` or the Functional API, before compile is called.
+    *   *Why B is correct:* The three key arguments are `optimizer=`, `loss=`, and `metrics=`. This must be called before `model.fit()`.
+    *   *Why C is incorrect:* Data splitting is done externally with `train_test_split`; batch size is passed to `model.fit()`, not `model.compile()`.
+    *   *Why D is incorrect:* Epochs are passed to `model.fit(epochs=)`; learning rate schedules are set on the optimizer object, not in compile directly.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **kernel trick**?
-B) The termination condition in a recursive function that stops further recursive calls and begins unwinding the call stack, preventing infinite execution.
-C) The final node in a linked list, whose next pointer typically references null (or the head node in a circular list), marking the end of the chain.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within ai operations.
-D) The maximum acceptable age of data that must be recovered from backup storage to restore operations, representing the limit of tolerable data loss.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within ai operations.
+Which of the following is the most accurate definition of a **Keras EarlyStopping callback**?
+*   A) A layer type that randomly sets a fraction of neuron outputs to zero during each training batch to prevent co-adaptation.
+*   B) A training callback that monitors a specified metric (such as validation loss) and halts training automatically when the metric stops improving, preventing overfitting and wasted computation.
+*   C) A function that loads a previously saved model from disk and resumes training from the last completed epoch.
+*   D) A data preprocessing utility that splits the training dataset into mini-batches and shuffles them before each epoch.
+*   **Correct Answer:** B) EarlyStopping watches a monitored metric and stops training after `patience` epochs with no improvement, then optionally restores the best weights.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **kernel trick**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **kernel trick**.
-    * *Why A is correct:* This describes the exact role and function of **kernel trick**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **kernel trick**.
-
+    *   *Why A is incorrect:* This describes a Dropout layer, which is a regularization technique, not a training callback.
+    *   *Why B is correct:* Usage: `tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=3, restore_best_weights=True)`. This is a high-value exam pattern.
+    *   *Why C is incorrect:* Loading a saved model uses `tf.keras.models.load_model()`; callbacks do not perform this function.
+    *   *Why D is incorrect:* Mini-batch creation and shuffling are handled internally by `model.fit()`'s `batch_size` and `shuffle` parameters, not by callbacks.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **train the machine learning model on the training features and targets**. Which of the following commands is the most appropriate to execute?
-D) accuracy = accuracy_score(y_test, predictions)
-B) predictions = model.predict(X_test)
-A) model.fit(X_train, y_train)
-C) import pandas as pd; df = pd.read_csv('data.csv')
-*   **Correct Answer:** A) model.fit(X_train, y_train)
+A developer needs to **save a trained Keras model to disk** for later deployment. Which code is correct?
+*   A) `model.save('my_model.h5')`
+*   B) `model.export('my_model.pkl')`
+*   C) `np.save('weights.npy', model.layers)`
+*   D) `model.compile(save_path='my_model')`
+*   **Correct Answer:** A) `model.save()` serializes the full model — architecture, weights, and compile configuration — to HDF5 or SavedModel format.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `model.fit(X_train, y_train)` command is directly designed to train the machine learning model on the training features and targets.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is correct:* Both `model.save('path.h5')` (HDF5) and `model.save('saved_model/')` (SavedModel directory) are valid. Reload with `tf.keras.models.load_model('path')`.
+    *   *Why B is incorrect:* Keras models do not have an `.export()` method; `.pkl` is a Python pickle format used by scikit-learn, not TensorFlow.
+    *   *Why C is incorrect:* `np.save()` saves NumPy arrays; it cannot serialize an entire Keras model with its architecture and compile state.
+    *   *Why D is incorrect:* `model.compile()` has no `save_path` argument; it only configures the optimizer, loss, and metrics.
 
 ---
 
 **Question 4**
-While working on **Support Vector Machines** in a production environment, you encounter a system alert indicating a **Low Model Generalization** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-B) Ensure data preprocessing steps (scaling, normalization) are fit only on the training set and applied to the test set.
-C) Use imputation techniques (mean, median, mode) or drop rows/columns containing missing values.
-D) Reboot the physical machine and wait for services to reload.
-A) Apply regularization techniques (L1/L2), gather more training data, or simplify the model architecture.
-*   **Correct Answer:** A) Apply regularization techniques (L1/L2), gather more training data, or simplify the model architecture.
+When calling `model.fit(X_train, y_train, epochs=20, validation_data=(X_val, y_val))`, what does the `validation_data` argument do?
+*   A) It splits `X_train` internally so part of it is used for validation instead of training.
+*   B) It evaluates the model on the provided validation set at the end of each epoch and reports validation loss and metrics without using that data for weight updates.
+*   C) It enables data augmentation on the validation examples to improve generalization.
+*   D) It stops training when validation accuracy reaches 100%.
+*   **Correct Answer:** B) `validation_data` provides a held-out dataset that is evaluated each epoch to monitor generalization, but its samples never contribute to gradient updates.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This action does not resolve the root cause of Low Model Generalization.
-    * *Why C is incorrect:* This action does not resolve the root cause of Low Model Generalization.
-    * *Why D is incorrect:* This action does not resolve the root cause of Low Model Generalization.
-    * *Why A is correct:* Because The model has overfit the training data and performs poorly on unseen validation or testing datasets. The appropriate fix is to Apply regularization techniques (L1/L2), gather more training data, or simplify the model architecture..
-
+    *   *Why A is incorrect:* That describes `validation_split=0.2`, which carves a fraction from `X_train`. `validation_data` accepts a separate pre-split dataset.
+    *   *Why B is correct:* The validation metrics appear as `val_loss`, `val_accuracy`, etc. in training output and in `history.history`.
+    *   *Why C is incorrect:* Data augmentation is a separate preprocessing step; `validation_data` does not apply augmentation.
+    *   *Why D is incorrect:* Stopping on accuracy is controlled by `EarlyStopping(monitor='val_accuracy')`; `validation_data` alone does not stop training.
 
 ---
 
 **Question 5**
-When designing a system for **Support Vector Machines**, you must mitigate the risk of **Attackers injecting subtle, imperceptible noise into input data (e.g. images) to force the AI into making incorrect classifications.**. Which of the following security configurations or controls represents the best practice to implement?
-C) Enable full disk encryption on all client endpoints.
-B) Apply differential privacy methods to the training data and limit public API rate queries.
-D) Enable full disk encryption on all client endpoints.
-A) Train models with adversarial inputs and implement input validation/filtering on inputs.
-*   **Correct Answer:** A) Train models with adversarial inputs and implement input validation/filtering on inputs.
+Which Keras code correctly builds a model for 10-class image classification using the Sequential API?
+*   A) `model = tf.keras.Sequential([tf.keras.layers.Flatten(input_shape=(28,28)), tf.keras.layers.Dense(128, activation='relu'), tf.keras.layers.Dense(10, activation='softmax')])`
+*   B) `model = tf.keras.Sequential([tf.keras.layers.Dense(128, activation='sigmoid'), tf.keras.layers.Dense(1, activation='sigmoid')])`
+*   C) `model = tf.keras.Sequential([tf.keras.layers.Dense(10, activation='relu'), tf.keras.layers.Dense(1, activation='linear')])`
+*   D) `model = tf.keras.Sequential([tf.keras.layers.LSTM(128), tf.keras.layers.Dense(10, activation='softmax')])`
+*   **Correct Answer:** A) Flatten reshapes 2D image input to 1D, a hidden Dense layer with ReLU learns features, and a 10-unit softmax output produces a probability distribution over 10 classes.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This does not address the security vulnerability of Adversarial Examples.
-    * *Why B is incorrect:* This does not address the security vulnerability of Adversarial Examples.
-    * *Why D is incorrect:* This does not address the security vulnerability of Adversarial Examples.
-    * *Why A is correct:* Implementing Train models with adversarial inputs and implement input validation/filtering on inputs. mitigates the risk of Attackers injecting subtle, imperceptible noise into input data (e.g. images) to force the AI into making incorrect classifications..
-
+    *   *Why A is correct:* This is the standard MNIST-style model. Compile with `loss='sparse_categorical_crossentropy'` (integer labels) or `'categorical_crossentropy'` (one-hot labels).
+    *   *Why B is incorrect:* A single sigmoid output unit produces a binary probability, not a 10-class distribution. This is suitable for binary classification only.
+    *   *Why C is incorrect:* A linear output with 1 unit is for regression. Using ReLU in the output layer for classification prevents gradient flow and cannot produce valid class probabilities.
+    *   *Why D is incorrect:* LSTM layers are designed for sequential/time-series data, not flat image tensors. While technically runnable, LSTM is not the correct architecture for image classification.

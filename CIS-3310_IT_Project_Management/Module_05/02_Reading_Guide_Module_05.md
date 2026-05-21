@@ -1,51 +1,51 @@
-# Reading Guide: Module 05 - Critical Path Method
+# Reading Guide: Module 05 - Cost Management – Budgeting and EVM
 ## Course: CIS-3310_IT_Project_Management (CompTIA Project+ / PMI CAPM)
 
 ---
 
 ### Introduction
-Welcome to **Module 05 - Critical Path Method**! This week's study material focuses on the core foundations and configuration mechanics of **Critical Path Method** as aligned with the **CompTIA Project+ / PMI CAPM** certification framework. Understanding these topics is essential not only for passing the certification exam but also for administering enterprise systems in real-world environments.
+Welcome to **Module 05 - Cost Management – Budgeting and EVM**! This module covers how project costs are estimated, how a budget is built from those estimates, and how project performance is measured in financial terms using Earned Value Management (EVM). EVM is one of the most calculation-heavy topics on both the CompTIA Project+ and PMI CAPM exams—expect to calculate CPI, SPI, CV, and SV using the EVM formulas.
 
-As a student, you will learn the primary operational roles, command syntaxes, and troubleshooting parameters needed to design, configure, and maintain these services. We will explore how different protocols establish connections, how configurations manage resource allocation, and how security controls prevent access breaches. Make sure to complete the checklists and review the glossary terms in detail before beginning the lab activity.
+Cost management is also one of the most practically critical skills for a project manager: projects that go over budget typically face cancellation, reduced scope, or damaged stakeholder relationships. Understanding the estimating techniques and EVM calculations in this module will serve you in both certification exams and real-world PM roles.
 
 ---
 
 ### 1. High-Yield Glossary
 Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
 
-*   **Network diagram**: A primary configuration standard and technical parameter essential for coordinating Critical Path Method activities, enforcing security boundaries, and verifying operational statuses within the management_services environment.
-*   **forward pass (early start/finish)**: A primary configuration standard and technical parameter essential for coordinating Critical Path Method activities, enforcing security boundaries, and verifying operational statuses within the management_services environment.
-*   **backward pass (late start/finish)**: A primary configuration standard and technical parameter essential for coordinating Critical Path Method activities, enforcing security boundaries, and verifying operational statuses within the management_services environment.
-*   **float/slack time.**: A primary configuration standard and technical parameter essential for coordinating Critical Path Method activities, enforcing security boundaries, and verifying operational statuses within the management_services environment.
+*   **Network Diagram**: A graphical representation of project activities and their logical dependencies, used in the Critical Path Method (CPM) to calculate the project's earliest and latest start/finish dates and to identify the critical path. Common formats include the Activity-on-Node (AON) diagram, where each box represents an activity and arrows represent dependencies.
+*   **Forward Pass (Early Start / Early Finish)**: A CPM calculation technique that works left-to-right through the network diagram, computing the Earliest Start (ES) and Earliest Finish (EF) for each activity. ES of a successor equals the EF of its predecessor(s); EF = ES + Duration. This establishes the project's minimum duration.
+*   **Backward Pass (Late Start / Late Finish)**: A CPM calculation technique that works right-to-left through the network diagram, starting from the project's final finish date, to compute the Latest Finish (LF) and Latest Start (LS) for each activity. LS = LF - Duration. This determines how much delay each activity can absorb.
+*   **Float / Slack Time**: The amount of time an activity can be delayed without delaying the overall project finish date (Total Float) or the early start of the next activity (Free Float). Activities on the critical path have zero total float. Float = LS - ES (or LF - EF).
 
 ---
 
 ### 2. Certification Exam Tips
-*   **Focus Area:** Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
-*   **Scenario Trap:** Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
-*   **Study Resource:** To reinforce these concepts visually, review this targeted search query: [CompTIA Project+ Certification Playlist by Joseph Phillips - Critical Path Method](https://www.youtube.com/results?search_query=comptia+project%2B+joseph+phillips).
+*   **Project+ Tip – Memorize the CPM Formula Steps**: For the forward pass, remember ES → add duration → EF. For the backward pass, LF → subtract duration → LS. Float = LS - ES. Activities with zero float are on the critical path. Practice at least two full network diagram calculations before the exam.
+*   **CAPM Tip – EVM Formulas are Heavily Tested**: The CAPM dedicates significant question density to Earned Value. Memorize: CV = EV - AC (negative = over budget), SV = EV - PV (negative = behind schedule), CPI = EV/AC (below 1.0 = over budget), SPI = EV/PV (below 1.0 = behind schedule), EAC = BAC/CPI (forecast to complete).
+*   **Scenario Trap**: A question may give you a CPI below 1.0 and ask if the project is "over budget" or "ahead of schedule." Remember: CPI measures cost efficiency (budget), SPI measures schedule efficiency. Do not mix them up. A CPI of 0.80 means you are spending $1.25 for every $1.00 of work completed—over budget.
+*   **Study Resource**: For worked EVM calculation examples, search [YouTube: Earned Value Management EVM Project Management Formulas](https://www.youtube.com/results?search_query=earned+value+management+EVM+formulas+PMP+capm+project+management). Many channels provide free formula cheat sheets you can download.
 
 ---
 
 ### Required Readings & Videos
 To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the section/chapter covering **Critical Path Method** in the OER Textbook: [Project Management Open Textbook](https://opentextbc.ca/projectmanagement/).
-*   **Required Video:** Watch the video lecture on **Critical Path Method** in the official course playlist: [CompTIA Project+ Certification Playlist by Joseph Phillips](https://www.youtube.com/results?search_query=comptia+project%2B+joseph+phillips).
+*   **Required Reading:** Read the schedule and cost management chapters in the OER Textbook, with emphasis on the Critical Path Method and EVM sections: [Project Management Open Textbook – BC Campus](https://opentextbc.ca/projectmanagement/).
+*   **Required Video:** Watch the CPM and cost management lectures in the course playlist: [CompTIA Project+ PK0-005 Playlist by Joseph Phillips](https://www.youtube.com/results?search_query=comptia+project%2B+PK0-005+joseph+phillips).
 
 ---
 
 ### Lab & Command Integration
 In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Calculate ES/EF and LS/LF for a network diagram**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-*   **Identify critical path with zero float time**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-*   **Compute project duration**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-
+*   **Calculate ES/EF and LS/LF for a network diagram**: Given a provided six-activity network diagram with durations, perform both the forward pass and backward pass manually, recording all ES, EF, LS, LF values in a table.
+*   **Identify critical path with zero float time**: Using your CPM calculations, highlight the critical path activities and confirm their total float equals zero.
+*   **Compute project duration**: State the minimum project duration derived from your forward pass and explain what would happen to the project end date if one critical path task were delayed by two days.
 
 ---
 
 ### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read the section/chapter covering **Critical Path Method** in [Project Management Open Textbook](https://opentextbc.ca/projectmanagement/).
-- [ ] Watch the video lecture on **Critical Path Method** in [CompTIA Project+ Certification Playlist by Joseph Phillips](https://www.youtube.com/results?search_query=comptia+project%2B+joseph+phillips).
-- [ ] Review the commands outlined in the lab instructions.
-- [ ] Proceed to the weekly hands-on lab activity.
+- [ ] Read the glossary terms and be able to apply the forward pass and backward pass from memory.
+- [ ] Read the CPM and schedule chapters in the [Project Management Open Textbook](https://opentextbc.ca/projectmanagement/).
+- [ ] Watch the CPM video in the [CompTIA Project+ PK0-005 Playlist by Joseph Phillips](https://www.youtube.com/results?search_query=comptia+project%2B+PK0-005+joseph+phillips).
+- [ ] Complete the Module 05 Lab activity.
+- [ ] Take the Module 05 Quiz.

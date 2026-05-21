@@ -1,4 +1,4 @@
-# Quiz: Module 06 - Wireless Technologies
+# Quiz: Module 06 - IoT Cloud Platforms – AWS IoT Core, Azure IoT Hub, GCP IoT
 ## Course: CIS-4355_IoT_Embedded_Systems (IoT & Embedded Security (General Principles))
 
 ---
@@ -11,69 +11,65 @@ Which wireless protocol is best suited for low-power, long-range sensor networks
 *   D) Zigbee
 *   **Correct Answer:** B) LoRaWAN offers long-range (kilometers) communications at extremely low power rates, sacrificing bandwidth.
 *   **Distractor Analysis:**
-    *   *Why correct:* LoRaWAN offers long-range (kilometers) communications at extremely low power rates, sacrificing bandwidth.
-    *   BLE is restricted to short ranges (meters). Wi-Fi consumes too much power.
+    *   *Why correct:* LoRaWAN uses chirp spread-spectrum modulation to achieve 2–15 km range at 0.3–50 kbps, drawing microamps on average — ideal for remote agricultural deployments.
+    *   BLE is restricted to short ranges (10–100 m). Wi-Fi consumes 50–300 mA during transmission, draining batteries in days. Zigbee extends range through mesh but requires relay nodes every ~100 m, impractical over kilometers.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **energy usage.**?
-C) The expected yearly cost of a security risk, calculated by multiplying the Single Loss Expectancy by the Annualized Rate of Occurrence (ALE = SLE * ARO).
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
-D) The core CSS layout block consisting of margins, borders, padding, and the actual content area, defining the sizing and spacing of every page element.
-B) Search Engine Optimization; practices designed to improve the visibility and ranking of web pages in search engine results through clean HTML, meta tags, and alt text.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
+Which of the following is the most accurate definition of an **AWS IoT Core IoT Policy**?
+*   A) A JSON Web Token signed with an RSA private key that authenticates a device to Google Cloud IoT Core over MQTT.
+*   B) A JSON document attached to an X.509 certificate that specifies which MQTT topics a device is permitted to publish or subscribe to, enforcing least-privilege access on the broker.
+*   C) A cloud-side JSON document with "desired" and "reported" sections that synchronizes configuration state between the cloud and an offline IoT device.
+*   D) A managed container orchestration policy that scales IoT microservices in Kubernetes based on incoming message volume.
+*   **Correct Answer:** B) A JSON document attached to an X.509 certificate that specifies which MQTT topics a device is permitted to publish or subscribe to, enforcing least-privilege access on the broker.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **energy usage.**.
-    * *Why A is correct:* This describes the exact role and function of **energy usage.**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **energy usage.**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **energy usage.**.
-
+    *   *Why A is incorrect:* This describes GCP IoT Core's JWT authentication mechanism, not an AWS IoT Policy.
+    *   *Why B is correct:* AWS IoT Policies use IAM-style JSON with Allow/Deny rules on IoT actions (iot:Publish, iot:Subscribe) and topic ARNs; they are attached to the device certificate and evaluated on every connection and message.
+    *   *Why C is incorrect:* This describes the AWS IoT Device Shadow (or Azure Device Twin) state synchronization document, not a policy.
+    *   *Why D is incorrect:* Kubernetes scaling policies are unrelated to IoT device authorization on AWS IoT Core.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **review the last five project commits in a concise single-line format**. Which of the following commands is the most appropriate to execute?
-D) terraform validate
-C) systemctl status iot_service
-A) git log --oneline -n 5
-B) docker-compose up -d
-*   **Correct Answer:** A) git log --oneline -n 5
+An IoT deployment provisions 50,000 environmental sensors, each connecting to AWS IoT Core with the same X.509 certificate and an IoT Policy granting `iot:*` on resource `*`. A single sensor is physically stolen and its certificate is extracted. What is the primary security consequence?
+*   A) The stolen certificate can only be used to access the specific device shadow for the sensor it was extracted from.
+*   B) The attacker can use the stolen certificate to publish and subscribe to any topic on the broker, potentially impersonating other devices or reading all telemetry.
+*   C) AWS IoT Core automatically revokes the certificate when the device goes offline for more than 24 hours.
+*   D) The wildcard policy has no effect because AWS IoT Core enforces per-device topic isolation by default regardless of policy content.
+*   **Correct Answer:** B) The attacker can use the stolen certificate to publish and subscribe to any topic on the broker, potentially impersonating other devices or reading all telemetry.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `git log --oneline -n 5` command is directly designed to review the last five project commits in a concise single-line format.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is incorrect:* A shared certificate with wildcard policy grants access far beyond a single device shadow — the entire broker's topic namespace is accessible.
+    *   *Why B is correct:* Sharing a single certificate across devices violates both uniqueness and least-privilege principles. The wildcard `iot:*` on `*` means the stolen credential has unrestricted broker access until manually revoked.
+    *   *Why C is incorrect:* AWS IoT Core does not automatically revoke certificates based on device offline duration; revocation requires an explicit administrative action.
+    *   *Why D is incorrect:* Topic isolation is not enforced automatically — it must be explicitly configured in the IoT Policy using device-specific topic ARNs such as `devices/${iot:ClientId}/#`.
 
 ---
 
 **Question 4**
-While working on **Wireless Technologies** in a production environment, you encounter a system alert indicating a **SLA Breach Alert** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-B) Re-assign resources to critical path tasks and establish clear communication protocols.
-C) Implement strict change control boards (CCB) and re-baseline the project constraints.
-A) Optimize service resources, implement load balancing, or update failover mechanisms.
-D) Reboot the physical machine and wait for services to reload.
-*   **Correct Answer:** A) Optimize service resources, implement load balancing, or update failover mechanisms.
+A device running on Azure IoT Hub reconnects after being offline for 6 hours. During that time, an operator updated the device's desired configuration state in the Device Twin. What happens when the device reconnects?
+*   A) The device receives an error because the Device Twin was modified while the device was offline, and the twin must be manually reset before reconnecting.
+*   B) Azure IoT Hub discards the desired state changes made while the device was offline to avoid conflicts with the device's reported state.
+*   C) The device retrieves the Device Twin delta document containing the difference between the last reported state and the current desired state, then applies the pending configuration changes.
+*   D) The device must explicitly request a full firmware re-flash via OTA before the Device Twin can synchronize configuration.
+*   **Correct Answer:** C) The device retrieves the Device Twin delta document containing the difference between the last reported state and the current desired state, then applies the pending configuration changes.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This action does not resolve the root cause of SLA Breach Alert.
-    * *Why C is incorrect:* This action does not resolve the root cause of SLA Breach Alert.
-    * *Why A is correct:* Because A system outage or slow response time has exceeded the limits guaranteed in the Service Level Agreement. The appropriate fix is to Optimize service resources, implement load balancing, or update failover mechanisms..
-    * *Why D is incorrect:* This action does not resolve the root cause of SLA Breach Alert.
-
+    *   *Why A is incorrect:* Device Twin modifications during offline periods are intentional and supported — the twin persists desired state regardless of device connectivity.
+    *   *Why B is correct (why B is incorrect):* Discarding desired changes would defeat the purpose of Device Twins; the entire design goal is to reliably deliver configuration to intermittently connected devices.
+    *   *Why C is correct:* The delta document contains only the properties that differ between desired and reported state, minimizing bandwidth on reconnection and enabling reliable configuration delivery to offline devices.
+    *   *Why D is incorrect:* Device Twin synchronization handles configuration state; OTA firmware updates are a separate mechanism not triggered by twin synchronization.
 
 ---
 
 **Question 5**
-When designing a system for **Wireless Technologies**, you must mitigate the risk of **A disaster or ransomware attack causing prolonged downtime because recovery steps are undocumented.**. Which of the following security configurations or controls represents the best practice to implement?
-C) Enable full disk encryption on all client endpoints.
-A) Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services.
-D) Enable full disk encryption on all client endpoints.
-B) Establish formal authorization procedures and digital signatures for all project scope modifications.
-*   **Correct Answer:** A) Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services.
+A security team reviewing a GCP IoT Core deployment discovers that all 10,000 devices share the same RSA key pair for JWT authentication, and the Pub/Sub topic receiving telemetry has public read access enabled. Which two security controls most effectively remediate these findings?
+*   A) Issue unique RSA or EC key pairs per device at provisioning, and restrict the Pub/Sub subscription to authorized service accounts only.
+*   B) Switch all devices from MQTT to HTTP transport, and enable Cloud Armor DDoS protection on the Pub/Sub endpoint.
+*   C) Rotate the shared RSA key pair every 30 days and keep the Pub/Sub topic public to simplify downstream consumer access.
+*   D) Disable JWT authentication entirely and rely on TLS transport encryption alone for device identity verification.
+*   **Correct Answer:** A) Issue unique RSA or EC key pairs per device at provisioning, and restrict the Pub/Sub subscription to authorized service accounts only.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
-    * *Why A is correct:* Implementing Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services. mitigates the risk of A disaster or ransomware attack causing prolonged downtime because recovery steps are undocumented..
-    * *Why D is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
-    * *Why B is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
-
+    *   *Why A is correct:* Unique per-device keys limit the blast radius of any single compromised device to that device alone; restricting Pub/Sub access to authorized service accounts prevents unauthorized parties from reading all telemetry.
+    *   *Why B is incorrect:* Switching transport protocols does not address the shared key or public topic vulnerabilities; Cloud Armor protects against volumetric attacks, not data exposure.
+    *   *Why C is incorrect:* Rotating a shared key still leaves all devices using the same credential — a single compromised key still exposes all devices; keeping the topic public does not address the data exposure risk.
+    *   *Why D is incorrect:* TLS provides transport encryption but not device identity — removing JWT authentication means any client with a valid TLS connection can publish as any device.

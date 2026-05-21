@@ -100,9 +100,9 @@ Use these departmental rubrics to grade student submissions in SpeedGrader:
 Instructors must grade the Final Certification Exam assignment in Module 16 using the following departmental rules:
 *   **If the Student Passes the Certification:** Input **100% (A)** in the gradebook. Passing the exam automatically satisfies the final exam requirement.
 *   **If the Student Does Not Pass the Certification:** The final exam grade is prorated based on their numeric score relative to the passing threshold. Use the following formulas based on the certification vendor:
-    *   **CompTIA (Scale 100–900, Passing Score 720):**
-        $$\text{Final Exam Grade} = \left( \frac{\text{Student Score} - 100}{720 - 100} \right) \times 100$$
-        *(Example: A student scoring 600 gets $(500 / 620) \times 100 = 80.6\%$.)*
+    *   **CompTIA (Scale 100–900, Passing Score 750):**
+        $$\text{Final Exam Grade} = \left( \frac{\text{Student Score} - 100}{750 - 100} \right) \times 100$$
+        *(Example: A student scoring 600 gets $(500 / 650) \times 100 = 76.9\%$.)*
 
 ---
 

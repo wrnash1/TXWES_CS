@@ -17,63 +17,63 @@ What standard power connector is used to supply direct auxiliary power to high-e
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **case airflow (intake vs exhaust).**?
-C) HTML tags that convey the meaning and structure of the enclosed content to both the browser and search engines (e.g., <header>, <article>, <footer>) instead of generic containers.
-D) The entry point or first node in a linked list, which serves as the reference for traversing the rest of the list structure.
-B) The monetary loss expected from a single occurrence of a specific risk event, calculated as Asset Value multiplied by the Exposure Factor (SLE = AV * EF).
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within os_admin operations.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within os_admin operations.
+In the context of PC hardware, which of the following most accurately describes **case airflow (intake vs exhaust)**?
+*   A) The directional movement of air through a PC case where intake fans draw cool air in (typically front/bottom) and exhaust fans push hot air out (typically rear/top), creating a front-to-back, bottom-to-top thermal path across components.
+*   B) The process of measuring the voltage differential between the PSU's 12V and 5V rails to determine whether airflow regulators are operating within acceptable tolerances.
+*   C) A BIOS setting that controls fan speed curves based on CPU temperature readings, automatically adjusting RPM to balance noise and thermal performance.
+*   D) The circulation of coolant fluid through a closed-loop AIO liquid cooling system, where intake refers to the pump inlet and exhaust refers to the radiator outlet.
+*   **Correct Answer:** A) The directional movement of air through a PC case where intake fans draw cool air in (typically front/bottom) and exhaust fans push hot air out (typically rear/top), creating a front-to-back, bottom-to-top thermal path across components.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **case airflow (intake vs exhaust).**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **case airflow (intake vs exhaust).**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **case airflow (intake vs exhaust).**.
-    * *Why A is correct:* This describes the exact role and function of **case airflow (intake vs exhaust).**.
+    * *Why A is correct:* This accurately describes the airflow concept — the physical direction of fan-driven air movement through the case chassis.
+    * *Why B is incorrect:* This describes voltage rail measurement, a PSU diagnostic procedure unrelated to airflow direction.
+    * *Why C is incorrect:* This describes a fan speed/PWM control feature in BIOS, not the physical concept of intake vs. exhaust airflow.
+    * *Why D is incorrect:* This describes AIO liquid cooling loop terminology, not general case airflow strategy.
 
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **list all currently active processes running on the system with CPU and memory usage statistics**. Which of the following commands is the most appropriate to execute?
-A) ps aux
-B) systemctl restart service
-C) chmod 600 config.conf
-D) df -h
-*   **Correct Answer:** A) ps aux
+A technician is building a PC and estimates the total system power draw at 420W under full load. Which PSU wattage provides adequate headroom while following best practices?
+*   A) 430W — just above the estimated load is sufficient for normal operation
+*   B) 500W — provides approximately 20% headroom above the estimated draw
+*   C) 600W — provides approximately 30% headroom, which is the recommended buffer
+*   D) 1000W — maximum wattage always ensures the best system stability
+*   **Correct Answer:** C) 600W — provides approximately 30% headroom, which is the recommended buffer
 *   **Distractor Analysis:**
-    * *Why A is correct:* The `ps aux` command is directly designed to list all currently active processes running on the system with CPU and memory usage statistics.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
+    * *Why C is correct:* A 25–30% headroom buffer above estimated load is industry best practice; 600W on a 420W system provides ~43% headroom and keeps the PSU operating efficiently at mid-load.
+    * *Why A is incorrect:* A PSU running near its maximum rated wattage operates inefficiently, runs hotter, and has a shorter lifespan.
+    * *Why B is incorrect:* 500W provides only ~19% headroom, which is below the recommended 25–30% buffer for sustained safe operation.
+    * *Why D is incorrect:* Massively oversizing a PSU wastes money and causes the PSU to operate at very low load percentages where efficiency is also reduced.
 
 
 ---
 
 **Question 4**
-While working on **Power Supplies and System Cooling** in a production environment, you encounter a system alert indicating a **Permission Denied** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-A) Prepend the command with 'sudo' to run it with superuser administrative privileges, or adjust the file permissions.
-D) Reboot the physical machine and wait for services to reload.
-C) Run log rotations, clean temporary files, or expand the logical volume capacity.
-B) Identify and terminate the process already utilizing the target port, or modify the service configuration to use an open port.
-*   **Correct Answer:** A) Prepend the command with 'sudo' to run it with superuser administrative privileges, or adjust the file permissions.
+A desktop PC powers on briefly, all fans spin for 2–3 seconds, then the system shuts off completely. This cycle repeats when the power button is pressed again. Which component is most likely the root cause?
+*   A) The RAM modules need to be reseated because loose memory causes immediate shutdown
+*   B) The PSU is failing or underpowered and cannot sustain the system's power load during POST
+*   C) The operating system is corrupted and cannot complete the boot sequence
+*   D) The GPU driver is incompatible with the motherboard BIOS version
+*   **Correct Answer:** B) The PSU is failing or underpowered and cannot sustain the system's power load during POST
 *   **Distractor Analysis:**
-    * *Why A is correct:* Because The current user account lacks the required read, write, or execute permissions for the target file or system call. The appropriate fix is to Prepend the command with 'sudo' to run it with superuser administrative privileges, or adjust the file permissions..
-    * *Why D is incorrect:* This action does not resolve the root cause of Permission Denied.
-    * *Why C is incorrect:* This action does not resolve the root cause of Permission Denied.
-    * *Why B is incorrect:* This action does not resolve the root cause of Permission Denied.
+    * *Why B is correct:* A PSU that cannot sustain load causes the system to power cycle; this symptom — brief power-on then immediate shutdown — is a classic PSU failure or insufficient wattage indicator.
+    * *Why A is incorrect:* Loose RAM typically causes POST failure with beep codes or no display output, not a rapid power cycle.
+    * *Why C is incorrect:* OS corruption occurs after POST and would produce boot error messages, not an immediate power-off before any display output.
+    * *Why D is incorrect:* Driver incompatibility is a software issue that occurs after the OS loads, not during the initial power-on phase.
 
 
 ---
 
 **Question 5**
-When designing a system for **Power Supplies and System Cooling**, you must mitigate the risk of **Attackers exploiting vulnerabilities in forgotten background services or using abandoned accounts to gain persistent access.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Disable unused system accounts and run a port scan to disable unnecessary active background services.
-C) Enable full disk encryption on all client endpoints.
-B) Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC.
-D) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Disable unused system accounts and run a port scan to disable unnecessary active background services.
+A technician notices a PC running very hot even though all fans are spinning. Opening the case reveals that the front intake fans are installed backwards. What is the consequence of this error, and what is the correct fix?
+*   A) Reversed intake fans create positive pressure, which is always preferred; no fix is needed
+*   B) Reversed intake fans exhaust warm air out the front instead of drawing cool air in, disrupting the thermal path; fans should be rotated 180 degrees to restore intake direction
+*   C) Reversed fans cause a short circuit on the fan header because PWM signals are polarity-sensitive
+*   D) Fan direction does not affect system temperature because all fans move the same total volume of air regardless of orientation
+*   **Correct Answer:** B) Reversed intake fans exhaust warm air out the front instead of drawing cool air in, disrupting the thermal path; fans should be rotated 180 degrees to restore intake direction
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Disable unused system accounts and run a port scan to disable unnecessary active background services. mitigates the risk of Attackers exploiting vulnerabilities in forgotten background services or using abandoned accounts to gain persistent access..
-    * *Why C is incorrect:* This does not address the security vulnerability of Stale Accounts & Services.
-    * *Why B is incorrect:* This does not address the security vulnerability of Stale Accounts & Services.
-    * *Why D is incorrect:* This does not address the security vulnerability of Stale Accounts & Services.
+    * *Why B is correct:* Fan blades move air in the direction determined by their rotation and orientation; reversed intake fans push hot internal air outward through the front mesh instead of pulling cool external air in, breaking the front-to-back airflow path.
+    * *Why A is incorrect:* Positive pressure is created by having more intake than exhaust fans, not by reversing fans; a reversed front fan actually reduces effective intake.
+    * *Why C is incorrect:* Fan power headers (3-pin or 4-pin PWM) are keyed connectors; reversing a fan physically (spinning it around) does not affect the electrical connection.
+    * *Why D is incorrect:* Fan orientation critically determines airflow direction; moving the same volume of air in the wrong direction still results in poor thermal management.
 

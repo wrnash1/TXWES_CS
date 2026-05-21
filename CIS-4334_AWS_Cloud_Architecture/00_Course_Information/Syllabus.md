@@ -19,7 +19,7 @@
 ## Course Overview
 
 ### Course Description
-AWS global infrastructure, virtual private clouds, network security, identity access management, S3 storage, relational and NoSQL database setups.
+CIS-4334 is a hands-on, certification-aligned course covering AWS cloud architecture for the AWS Certified Solutions Architect – Associate (SAA-C03) exam. Topics include AWS global infrastructure, IAM identity and access management, EC2 compute and Auto Scaling, S3 storage and lifecycle management, VPC networking, managed relational and NoSQL databases (RDS, Aurora, DynamoDB), serverless computing (Lambda, API Gateway), content delivery (CloudFront, Route 53), messaging and event-driven architecture (SQS, SNS), container orchestration (ECS, EKS, Fargate), Infrastructure as Code (CloudFormation), AWS security services (KMS, WAF, Shield, GuardDuty), monitoring and governance (CloudWatch, CloudTrail, AWS Config), and the AWS Well-Architected Framework. Students complete weekly hands-on labs in the AWS console and AWS CLI, culminating in readiness for the SAA-C03 certification exam.
 
 ### Course Objectives / Student Learning Outcomes
 By the end of this course, students will be able to:
@@ -59,22 +59,22 @@ Your final grade is calculated based on the following breakdown:
 ## Course Calendars & Blueprint
 Below is the week-by-week layout of topics and assignments:
 
-*   **Module 01:** AWS Infrastructure & Core Architecture
-*   **Module 02:** Amazon EC2 Compute Instances
-*   **Module 03:** Amazon VPC Virtual Networks
-*   **Module 04:** AWS Network Security
-*   **Module 05:** AWS IAM (Identity Access Management)
-*   **Module 06:** Amazon S3 Object Storage
-*   **Module 07:** Amazon EBS & EFS Storage Systems
-*   **Module 08:** Amazon RDS and DynamoDB
-*   **Module 09:** Elastic Load Balancing & Auto Scaling
-*   **Module 10:** Route 53 & CloudFront CDN
-*   **Module 11:** AWS Monitoring & Governance
-*   **Module 12:** Serverless Implementations
-*   **Module 13:** AWS CloudFormation (IaC)
-*   **Module 14:** AWS High Availability Patterns
-*   **Module 15:** Well-Architected Framework
-*   **Module 16:** Final Exam Prep & Certification Exam (AWS Certified Solutions Architect - Associate)
+*   **Module 01:** AWS Global Infrastructure and Core Services Overview
+*   **Module 02:** IAM – Users, Roles, Policies, and Best Practices
+*   **Module 03:** EC2 – Instance Types, Auto Scaling, and Load Balancing
+*   **Module 04:** S3 – Storage Classes, Lifecycle Policies, and Security
+*   **Module 05:** VPC – Subnets, Route Tables, Security Groups, NACLs
+*   **Module 06:** RDS and Aurora – Managed Relational Databases
+*   **Module 07:** DynamoDB – NoSQL at Scale
+*   **Module 08:** Lambda and Serverless Architecture
+*   **Module 09:** CloudFront, Route 53, and Global Acceleration
+*   **Module 10:** SQS, SNS, and Event-Driven Architecture
+*   **Module 11:** ECS, EKS, and Container Architecture
+*   **Module 12:** Elastic Beanstalk, CloudFormation, and IaC
+*   **Module 13:** AWS Security – KMS, WAF, Shield, GuardDuty
+*   **Module 14:** Monitoring – CloudWatch, CloudTrail, AWS Config
+*   **Module 15:** Well-Architected Framework – 6 Pillars
+*   **Module 16:** Final Exam Prep & AWS Solutions Architect Associate (SAA-C03)
 
 ---
 

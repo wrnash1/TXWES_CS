@@ -1,4 +1,4 @@
-# Quiz: Module 05 - Risk Assessment Methodology
+# Quiz: Module 05 - Compliance – HIPAA, PCI DSS, SOX, GDPR
 ## Course: CIS-4315_Cyber_Governance_Risk_Compliance (ISACA Certified Information Security Manager (CISM))
 
 ---
@@ -9,71 +9,69 @@ An asset worth $100,000 has an exposure factor of 40% if a server room flood occ
 *   B) $200,000
 *   C) $8,000
 *   D) $20,000
-*   **Correct Answer:** C) SLE = $100,000 * 0.40 = $40,000. ARO = 1/5 = 0.2. ALE = SLE * ARO = $40,000 * 0.2 = $8,000.
+*   **Correct Answer:** C) SLE = $100,000 × 0.40 = $40,000. ARO = 1/5 = 0.2. ALE = SLE × ARO = $40,000 × 0.2 = $8,000.
 *   **Distractor Analysis:**
-    *   *Why correct:* SLE = $100,000 * 0.40 = $40,000. ARO = 1/5 = 0.2. ALE = SLE * ARO = $40,000 * 0.2 = $8,000.
-    *   40,000 is the SLE. 8,000 is the annualized expected loss.
+    *   *Why C is correct:* This applies the correct ALE formula chain: SLE first, then multiply by ARO.
+    *   *Why A is incorrect:* $40,000 is the SLE — the single-event loss before annualizing. It does not account for how frequently the event occurs.
+    *   *Why B is incorrect:* $200,000 results from multiplying asset value by ARO without applying the exposure factor — an incorrect calculation.
+    *   *Why D is incorrect:* $20,000 results from applying only a 20% exposure factor or an incorrect ARO — neither matches the scenario.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **likelihood**?
-B) The termination condition in a recursive function that stops further recursive calls and begins unwinding the call stack, preventing infinite execution.
-C) The descendant node connected to the right branch of a parent node in a binary tree structure.
-D) The configuration of input data that forces an algorithm to perform the maximum number of operations, providing a guaranteed upper limit on execution time.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
+Which of the following most accurately describes **likelihood** in the context of risk assessment?
+*   A) The dollar value of an information asset before considering any potential losses
+*   B) The percentage of an asset's value that would be lost in a single occurrence of a risk event
+*   C) The maximum amount of data an organization can afford to lose before a backup restore is required
+*   D) The probability or frequency with which a threat will successfully exploit a vulnerability within a defined period, often expressed as an Annualized Rate of Occurrence
+*   **Correct Answer:** D) Likelihood represents the probability dimension of risk; without assessing how often a threat event occurs, it is impossible to calculate meaningful risk exposure.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **likelihood**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **likelihood**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **likelihood**.
-    * *Why A is correct:* This describes the exact role and function of **likelihood**.
-
+    *   *Why A is incorrect:* That describes asset value — a separate input to SLE calculation.
+    *   *Why B is incorrect:* That describes the Exposure Factor (EF) component of the SLE formula.
+    *   *Why C is incorrect:* That describes Recovery Point Objective (RPO) — a business continuity metric.
+    *   *Why D is correct:* Likelihood (ARO in quantitative terms) is what transforms a potential harm into an expected annual cost in the ALE formula.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **verify the active status and resource usage of the background service daemon**. Which of the following commands is the most appropriate to execute?
-D) terraform validate
-A) systemctl status iot_service
-C) git log --oneline -n 5
-B) docker-compose up -d
-*   **Correct Answer:** A) systemctl status iot_service
+A security manager needs to quickly assess risk across 50 business processes within a two-week budget cycle. The organization lacks sufficient financial data to assign dollar values to all assets. Which risk assessment method is most appropriate?
+*   A) Quantitative assessment using ALE calculations for all 50 processes
+*   B) Penetration testing of all systems to identify exploitable vulnerabilities
+*   C) Qualitative assessment using a likelihood-impact matrix with High/Medium/Low ratings
+*   D) A full audit against NIST SP 800-53 controls for each business process
+*   **Correct Answer:** C) Qualitative assessment is appropriate when financial data is unavailable and a broad, rapid assessment is needed to prioritize further analysis.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `systemctl status iot_service` command is directly designed to verify the active status and resource usage of the background service daemon.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is incorrect:* Quantitative ALE calculation requires financial asset data that the scenario states is unavailable — it is also too resource-intensive for a two-week window covering 50 processes.
+    *   *Why B is incorrect:* Penetration testing identifies technical vulnerabilities; it is not a risk assessment methodology for business processes.
+    *   *Why C is correct:* Qualitative risk matrices (5×5 likelihood × impact grids) provide rapid, communicable risk rankings without requiring detailed financial data.
+    *   *Why D is incorrect:* A full NIST SP 800-53 control audit is a compliance assessment activity, not a risk assessment, and would far exceed a two-week timeline.
 
 ---
 
 **Question 4**
-While working on **Risk Assessment Methodology** in a production environment, you encounter a system alert indicating a **Dependency Bottleneck** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-C) Implement strict change control boards (CCB) and re-baseline the project constraints.
-D) Reboot the physical machine and wait for services to reload.
-B) Optimize service resources, implement load balancing, or update failover mechanisms.
-A) Re-assign resources to critical path tasks and establish clear communication protocols.
-*   **Correct Answer:** A) Re-assign resources to critical path tasks and establish clear communication protocols.
+What is the key distinction between a **threat** and a **vulnerability** in risk assessment terminology?
+*   A) Threats are internal to the organization; vulnerabilities come from external sources
+*   B) Threats are potential harmful events or actors; vulnerabilities are weaknesses that threats can exploit
+*   C) Threats are documented in audit reports; vulnerabilities are identified during penetration tests only
+*   D) Threats apply to data in transit; vulnerabilities apply to data at rest
+*   **Correct Answer:** B) Risk exists when a credible threat can exploit an existing vulnerability to cause impact — both elements must be present.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This action does not resolve the root cause of Dependency Bottleneck.
-    * *Why D is incorrect:* This action does not resolve the root cause of Dependency Bottleneck.
-    * *Why B is incorrect:* This action does not resolve the root cause of Dependency Bottleneck.
-    * *Why A is correct:* Because A critical task is blocked by a delayed prerequisite task, stalling the entire project timeline. The appropriate fix is to Re-assign resources to critical path tasks and establish clear communication protocols..
-
+    *   *Why A is incorrect:* Threats can be internal (insider threats) or external; vulnerabilities can exist internally or externally in systems.
+    *   *Why B is correct:* This is the standard CISM/NIST definition — threats exploit vulnerabilities to cause impact, forming the risk equation.
+    *   *Why C is incorrect:* Both threats and vulnerabilities are identified through multiple methods including assessments, threat intelligence, and audits.
+    *   *Why D is incorrect:* Threats and vulnerabilities apply to all data states and contexts, not segmented by data location.
 
 ---
 
 **Question 5**
-When designing a system for **Risk Assessment Methodology**, you must mitigate the risk of **A disaster or ransomware attack causing prolonged downtime because recovery steps are undocumented.**. Which of the following security configurations or controls represents the best practice to implement?
-B) Establish formal authorization procedures and digital signatures for all project scope modifications.
-A) Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services.
-C) Enable full disk encryption on all client endpoints.
-D) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services.
+After conducting a risk assessment, an organization determines that a web application vulnerability has a High likelihood of exploitation and a High impact if exploited. According to risk matrix principles, what is the most appropriate next action?
+*   A) Accept the risk and document it in the risk register with no further action
+*   B) Transfer the risk by purchasing additional cyber insurance coverage
+*   C) Prioritize the risk for immediate treatment — such as patching, additional controls, or remediation — given its High-High classification
+*   D) Defer treatment until the next annual risk assessment cycle
+*   **Correct Answer:** C) A High likelihood / High impact risk falls in the critical zone of a risk matrix and requires immediate, prioritized treatment action.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
-    * *Why A is correct:* Implementing Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services. mitigates the risk of A disaster or ransomware attack causing prolonged downtime because recovery steps are undocumented..
-    * *Why C is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
-    * *Why D is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
-
+    *   *Why A is incorrect:* Risk acceptance is appropriate only for low or residual risks within the organization's risk appetite; a High-High risk exceeds acceptable levels.
+    *   *Why B is incorrect:* Insurance (risk transfer) reduces financial impact but does not address the exploitation risk or protect the application itself.
+    *   *Why C is correct:* CISM Domain 2 establishes that High-High risks must be prioritized for treatment — the appropriate response is remediation or compensating controls.
+    *   *Why D is incorrect:* Deferring a critical risk until the next annual cycle is a governance failure; High-High risks require prompt management attention.

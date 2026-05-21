@@ -1,82 +1,75 @@
-# Quiz: Module 16 - Course Module
+# Quiz: Module 16 - Final Exam Prep and Microsoft AI-900 Certification
 ## Course: CIS-4330_Intro_to_AI (AI-900 (Microsoft Azure AI Fundamentals))
 
 ---
 
-**Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Core Operations**?
-C) The core operations of a queue: 'enqueue' appends an element to the back, and 'dequeue' removes and returns the front element.
-D) The maximum acceptable duration of downtime before a business process or system must be restored to operation after a disaster.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within ai operations.
-B) Web Content Accessibility Guidelines; international standards ensuring web content is usable for people with disabilities (e.g., screen reader compatibility, color contrast).
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within ai operations.
+**Question 1**
+A company wants to add real-time speech-to-text transcription to its customer call center application without training any custom models. Which Azure AI service is most appropriate?
+*   A) Azure Machine Learning
+*   B) Azure AI Speech (speech-to-text)
+*   C) Azure Custom Vision
+*   D) Azure AI Language
+*   **Correct Answer:** B) Azure AI Speech provides a pre-built speech-to-text capability accessible via REST API or SDK that transcribes spoken audio to written text in real time, with no training data or model development required.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Core Operations**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Core Operations**.
-    * *Why A is correct:* This describes the exact role and function of **Core Operations**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Core Operations**.
-
+    *   *Why correct:* The scenario specifies "no custom models" and a speech input — Azure AI Speech's speech-to-text service is the direct fit. It is one of the five Azure AI workload categories tested on AI-900.
+    *   Azure Machine Learning is for building and training custom models, not for pre-built speech transcription. Azure Custom Vision is an image classifier training service. Azure AI Language handles text-based NLP tasks (sentiment, key phrases, intent) — not audio input.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **System Configuration**?
-C) The process of adjusting node positions in a binary heap to restore the heap property (min-heap or max-heap) after an insertion or deletion.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within ai operations.
-D) An operation in Red-Black trees where nodes are flipped between red and black to maintain structural invariants after insertions or deletions.
-B) The process of using domain knowledge to extract features from raw data, improving machine learning model performance.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within ai operations.
+In the context of the AI-900 exam, which of the following is the most accurate definition of **Retrieval-Augmented Generation (RAG)**?
+*   A) A generative AI pattern that retrieves relevant passages from an external knowledge source at query time and injects them into the LLM's prompt as context, grounding the model's response in factual source documents and reducing hallucination.
+*   B) A supervised learning technique that continues training a pre-trained language model's weights on a smaller domain-specific dataset to specialize its knowledge for a particular task or writing style.
+*   C) A text representation method that converts words or sentences into dense numeric vectors encoding semantic meaning, enabling similarity comparisons between documents using cosine distance.
+*   D) A neural network training algorithm that calculates the gradient of the loss function with respect to each weight and propagates the error signal backward through the network to update weights via gradient descent.
+*   **Correct Answer:** A) A generative AI pattern that retrieves relevant passages from an external knowledge source at query time and injects them into the LLM's prompt as context, grounding the model's response in factual source documents and reducing hallucination.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **System Configuration**.
-    * *Why A is correct:* This describes the exact role and function of **System Configuration**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **System Configuration**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **System Configuration**.
-
+    *   *Why A is correct:* RAG solves the hallucination problem by giving the LLM access to current, specific source material through the prompt rather than relying solely on training data. It is the primary pattern for enterprise LLM deployments requiring factual accuracy.
+    *   *Why B is incorrect:* This describes **fine-tuning** — adapting a model's weights with domain-specific training data, which is a different (more expensive) approach to specialization.
+    *   *Why C is incorrect:* This describes **embeddings** — vector representations of text used for semantic search; embeddings are often used as part of a RAG system, but they are not RAG itself.
+    *   *Why D is incorrect:* This describes **backpropagation** — the neural network training algorithm, which is unrelated to the RAG inference-time retrieval pattern.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **calculate the accuracy metric of the model predictions against actual labels**. Which of the following commands is the most appropriate to execute?
-B) model.fit(X_train, y_train)
-D) import pandas as pd; df = pd.read_csv('data.csv')
-A) accuracy = accuracy_score(y_test, predictions)
-C) predictions = model.predict(X_test)
+A developer needs to **calculate the accuracy of model predictions against actual test labels**. Which command is most appropriate?
+*   A) accuracy = accuracy_score(y_test, predictions)
+*   B) model.fit(X_train, y_train)
+*   C) predictions = model.predict(X_test)
+*   D) import pandas as pd; df = pd.read_csv('data.csv')
 *   **Correct Answer:** A) accuracy = accuracy_score(y_test, predictions)
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `accuracy = accuracy_score(y_test, predictions)` command is directly designed to calculate the accuracy metric of the model predictions against actual labels.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is correct:* `accuracy_score(y_test, predictions)` compares the model's predicted labels to the true test labels and returns the fraction that are correct — the standard step for evaluating classification performance after prediction.
+    *   *Why B is incorrect:* `model.fit()` trains the model on labeled data; it does not compute an accuracy metric.
+    *   *Why C is incorrect:* `model.predict()` generates predictions from a trained model; predictions must exist before accuracy can be computed.
+    *   *Why D is incorrect:* This loads a CSV file into a DataFrame — data loading, the first step in the pipeline, not evaluation.
 
 ---
 
 **Question 4**
-While working on **Course Module** in a production environment, you encounter a system alert indicating a **Missing Value Errors** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-C) Ensure data preprocessing steps (scaling, normalization) are fit only on the training set and applied to the test set.
-B) Apply regularization techniques (L1/L2), gather more training data, or simplify the model architecture.
-D) Reboot the physical machine and wait for services to reload.
-A) Use imputation techniques (mean, median, mode) or drop rows/columns containing missing values.
-*   **Correct Answer:** A) Use imputation techniques (mean, median, mode) or drop rows/columns containing missing values.
+An organization's AI content moderation system flags user-uploaded images. Auditors find the system produces a much higher false positive rate (incorrectly flagging acceptable content) for images submitted by users in certain geographic regions compared to others. Which Responsible AI principle is most clearly being violated, and what is the recommended action?
+*   A) Fairness — audit the training dataset for geographic representation gaps, apply fairness-aware evaluation metrics stratified by region, and retrain with a more geographically balanced dataset before redeployment.
+*   B) Reliability and Safety — improve the model's overall accuracy by gathering more training data from all regions and retraining to reduce the aggregate false positive rate.
+*   C) Transparency — publish a detailed public report explaining the model's architecture, training data sources, and known performance limitations so affected users understand how decisions are made.
+*   D) Privacy and Security — encrypt all uploaded images at rest and in transit and restrict access logs to authorized compliance personnel only.
+*   **Correct Answer:** A) Fairness — audit the training dataset for geographic representation gaps, apply fairness-aware evaluation metrics stratified by region, and retrain with a more geographically balanced dataset before redeployment.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This action does not resolve the root cause of Missing Value Errors.
-    * *Why B is incorrect:* This action does not resolve the root cause of Missing Value Errors.
-    * *Why D is incorrect:* This action does not resolve the root cause of Missing Value Errors.
-    * *Why A is correct:* Because The dataset contains null or missing values, causing mathematical operators in the model to fail. The appropriate fix is to Use imputation techniques (mean, median, mode) or drop rows/columns containing missing values..
-
+    *   *Why A is correct:* Disparate error rates across demographic or geographic groups is a Fairness violation. The root cause is typically underrepresentation of certain groups in training data. The fix requires group-stratified evaluation and a more balanced training dataset.
+    *   *Why B is incorrect:* Reliability addresses inconsistent performance across operating conditions — improving aggregate accuracy without addressing group disparity would not resolve the Fairness violation and might actually widen the performance gap.
+    *   *Why C is incorrect:* Transparency (publishing explanations) improves openness but does not address the discriminatory error rate pattern that the Fairness principle requires fixing.
+    *   *Why D is incorrect:* Privacy and Security addresses data protection — encrypting images has no effect on the model's biased output distribution across geographic groups.
 
 ---
 
 **Question 5**
-When designing a system for **Course Module**, you must mitigate the risk of **Attackers injecting subtle, imperceptible noise into input data (e.g. images) to force the AI into making incorrect classifications.**. Which of the following security configurations or controls represents the best practice to implement?
-D) Enable full disk encryption on all client endpoints.
-A) Train models with adversarial inputs and implement input validation/filtering on inputs.
-B) Apply differential privacy methods to the training data and limit public API rate queries.
-C) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Train models with adversarial inputs and implement input validation/filtering on inputs.
+A healthcare organization deploys an Azure OpenAI Service application that answers clinical questions by retrieving relevant passages from internal medical guidelines. Security researchers discover that crafted user messages can override the system prompt and cause the model to ignore its safety instructions. Which defense best mitigates this **prompt injection** attack?
+*   A) Avoid embedding critical safety logic solely in the system prompt; implement output content filtering using Azure OpenAI's built-in content safety features; and monitor for anomalous response patterns that suggest instruction override.
+*   B) Apply differential privacy to the medical guidelines training data and rate-limit the number of questions users can submit per session.
+*   C) Enable full disk encryption on all Azure compute nodes hosting the OpenAI Service deployment.
+*   D) Require clinicians to complete multi-factor authentication before accessing the clinical question-answering application.
+*   **Correct Answer:** A) Avoid embedding critical safety logic solely in the system prompt; implement output content filtering using Azure OpenAI's built-in content safety features; and monitor for anomalous response patterns that suggest instruction override.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This does not address the security vulnerability of Adversarial Examples.
-    * *Why A is correct:* Implementing Train models with adversarial inputs and implement input validation/filtering on inputs. mitigates the risk of Attackers injecting subtle, imperceptible noise into input data (e.g. images) to force the AI into making incorrect classifications..
-    * *Why B is incorrect:* This does not address the security vulnerability of Adversarial Examples.
-    * *Why C is incorrect:* This does not address the security vulnerability of Adversarial Examples.
-
+    *   *Why A is correct:* Prompt injection exploits the LLM's instruction-following behavior to override the system prompt via user input. The mitigations are architectural: keep sensitive rules out of the easily-overridable system prompt, use Azure OpenAI's content safety layer to filter outputs, and monitor for responses that deviate from expected patterns.
+    *   *Why B is incorrect:* Differential privacy defends against training data reconstruction via model inversion — it does not prevent a deployed model from following injected instructions in user input at inference time.
+    *   *Why C is incorrect:* Disk encryption protects data at rest on compute nodes; it has no effect on a language model producing unsafe outputs in response to crafted prompts.
+    *   *Why D is incorrect:* MFA authenticates the user's identity but does not prevent an authenticated clinician (or an attacker with stolen credentials) from submitting prompt injection payloads to the application.

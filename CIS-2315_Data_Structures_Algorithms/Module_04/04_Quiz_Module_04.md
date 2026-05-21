@@ -1,79 +1,77 @@
-# Quiz: Module 04 - Recursion & Backtracking
-## Course: CIS-2315_Data_Structures_Algorithms (Technical Interview Readiness (LeetCode / HackerRank))
+# Quiz: Module 04 – Stacks and Queues
+## Course: CIS-2315 Data Structures & Algorithms (Technical Interview Readiness)
 
 ---
 
 **Question 1**
-What must every functional recursive function include to avoid infinite recursion and stack overflow?
-*   A) A global loop variable
-*   B) A base case that terminates recursion
-*   C) A try-except error wrapper
-*   D) A class destructor
-*   **Correct Answer:** B) The base case acts as the exit condition where the recursion stops calling itself.
+Which data structure should you use to implement a DFS (Depth-First Search) iteratively?
+*   A) Queue
+*   B) Stack
+*   C) Hash map
+*   D) Min-heap
+*   **Correct Answer:** B) Stack
 *   **Distractor Analysis:**
-    *   *Why correct:* The base case acts as the exit condition where the recursion stops calling itself.
-    *   Loops are not required for recursion. Error wrappers only capture crashes but don't prevent them. Destructors manage memory deallocation but not logical call structures.
+    *   *Why correct:* DFS explores as deep as possible before backtracking — exactly LIFO behavior. Each node's unvisited neighbors are pushed onto the stack; the most recently pushed node is explored next.
+    *   A is incorrect: A queue implements BFS (breadth-first), not DFS.
+    *   C is incorrect: A hash map tracks visited nodes but does not drive traversal order.
+    *   D is incorrect: A min-heap is used in Dijkstra's shortest path algorithm, not plain DFS.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **stack overflow risk**?
-B) HTML tags that convey the meaning and structure of the enclosed content to both the browser and search engines (e.g., <header>, <article>, <footer>) instead of generic containers.
-C) The method of evaluating an algorithm's efficiency by analyzing its behavior as the input size approaches infinity, focusing on growth rates rather than specific hardware speeds.
-D) An undesired resource consumption where a program fails to release allocated memory that is no longer needed.
-A) The danger of exhausting the call stack memory allocation when recursive calls are made too deeply or without hitting a base case, crashing the program.
-*   **Correct Answer:** A) The danger of exhausting the call stack memory allocation when recursive calls are made too deeply or without hitting a base case, crashing the program.
+Which of the following is the most accurate definition of a **monotonic stack** in the context of algorithms?
+*   A) A stack that stores elements in sorted order by repeatedly inserting new elements at their correct position using binary search, enabling O(log n) push.
+*   B) A stack maintained in strictly increasing or decreasing order by popping elements that violate the ordering constraint before each push, enabling O(n) total solutions to problems like Next Greater Element.
+*   C) A stack that limits its size to O(log n) elements by evicting the oldest item when capacity is exceeded, trading recency for space efficiency.
+*   D) A stack backed by two queues to achieve O(1) push and amortized O(1) pop by lazily moving elements between queues only when needed.
+*   **Correct Answer:** B) A stack maintained in strictly increasing or decreasing order by popping elements that violate the ordering constraint before each push, enabling O(n) total solutions to problems like Next Greater Element.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **stack overflow risk**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **stack overflow risk**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **stack overflow risk**.
-    * *Why A is correct:* This describes the exact role and function of **stack overflow risk**.
-
+    *   *Why A is incorrect:* That describes insertion into a sorted array or a sorted structure, not a stack. Stacks do not use binary search.
+    *   *Why B is correct:* The monotonic stack processes each element at most twice (one push, one pop), giving O(n) total work. The invariant (increasing or decreasing) is what enables finding the next-greater or next-smaller element efficiently.
+    *   *Why C is incorrect:* That describes an LRU cache or eviction policy, not a monotonic stack.
+    *   *Why D is incorrect:* That describes implementing a stack using two queues (or a queue using two stacks), a separate classic interview problem.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **install all external project dependencies specified in the requirements manifest**. Which of the following commands is the most appropriate to execute?
-D) pytest
-A) pip install -r requirements.txt
-B) git commit -m 'update'
-C) python3 -m venv .venv
-*   **Correct Answer:** A) pip install -r requirements.txt
+You implement a queue using two stacks (s1 for push, s2 for pop). What is the amortized time complexity of the dequeue operation?
+*   A) O(n) per dequeue always
+*   B) O(log n) per dequeue
+*   C) O(1) amortized per dequeue
+*   D) O(n²) worst case total
+*   **Correct Answer:** C) O(1) amortized per dequeue
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `pip install -r requirements.txt` command is directly designed to install all external project dependencies specified in the requirements manifest.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is incorrect:* O(n) is the worst case for a *single* dequeue when s2 is empty and all n elements must be moved from s1 — but that expensive operation only occurs once every n dequeues.
+    *   *Why B is incorrect:* There is no logarithmic structure in transferring elements between two stacks.
+    *   *Why C is correct:* Each element is pushed to s1 once and moved to s2 once — two operations total per element across all dequeues. Dividing by n operations gives O(1) amortized.
+    *   *Why D is incorrect:* Total cost for n dequeues is O(n), not O(n²). O(n²) would imply O(n) work per operation always.
 
 ---
 
 **Question 4**
-While working on **Recursion & Backtracking** in a production environment, you encounter a system alert indicating a **IndexError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-C) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-D) Reboot the physical machine and wait for services to reload.
-A) Verify that the index is within the valid range of 0 to len(list)-1.
-B) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
-*   **Correct Answer:** A) Verify that the index is within the valid range of 0 to len(list)-1.
+While checking for valid parentheses in the string `"({[]})"`, a stack-based algorithm processes each character. What is the correct final state of the stack after processing the entire string?
+*   A) The stack contains `[`, `{` because they were pushed but not matched.
+*   B) The stack is empty, indicating all brackets were matched correctly.
+*   C) The stack contains `)` because closing brackets are pushed, not popped.
+*   D) The stack contains all six characters because push and pop happen at different phases.
+*   **Correct Answer:** B) The stack is empty, indicating all brackets were matched correctly.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This action does not resolve the root cause of IndexError.
-    * *Why D is incorrect:* This action does not resolve the root cause of IndexError.
-    * *Why A is correct:* Because The code attempted to access an element of a sequence using an out-of-bounds index. The appropriate fix is to Verify that the index is within the valid range of 0 to len(list)-1..
-    * *Why B is incorrect:* This action does not resolve the root cause of IndexError.
-
+    *   *Why A is incorrect:* `{` and `[` are pushed then properly popped when their matching `}` and `]` are encountered. A non-empty stack means unmatched openers remain.
+    *   *Why B is correct:* In `"({[]})"`, every opening bracket is matched by a corresponding closing bracket in correct order. A valid string always leaves an empty stack.
+    *   *Why C is incorrect:* Closing brackets trigger a pop (to check the matching opener); they are never pushed themselves.
+    *   *Why D is incorrect:* The algorithm interleaves pushes and pops as each character is read, not in two separate phases.
 
 ---
 
 **Question 5**
-When designing a system for **Recursion & Backtracking**, you must mitigate the risk of **Allowing attackers to execute arbitrary SQL commands on the backend database via input forms.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Implement parameterized queries and prepared statements rather than raw string concatenation.
-C) Enable full disk encryption on all client endpoints.
-D) Enable full disk encryption on all client endpoints.
-B) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-*   **Correct Answer:** A) Implement parameterized queries and prepared statements rather than raw string concatenation.
+Which Python data structure provides O(1) operations at both the front and back, making it the preferred choice for implementing both stacks and queues in interview solutions?
+*   A) `list` — supports O(1) append and O(1) pop from the right end only.
+*   B) `collections.deque` — supports O(1) append and O(1) popleft at both ends.
+*   C) `heapq` — supports O(log n) push and O(log n) pop with automatic ordering.
+*   D) `dict` — supports O(1) insertion and deletion by key, usable as a queue with integer keys.
+*   **Correct Answer:** B) `collections.deque` — supports O(1) append and O(1) popleft at both ends.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Implement parameterized queries and prepared statements rather than raw string concatenation. mitigates the risk of Allowing attackers to execute arbitrary SQL commands on the backend database via input forms..
-    * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why D is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-
+    *   *Why A is incorrect:* Python `list.insert(0, x)` and `list.pop(0)` are O(n) because all elements shift. Using a list as a queue is a common and costly interview mistake.
+    *   *Why B is correct:* `collections.deque` is implemented as a doubly-linked list of fixed-size blocks, giving true O(1) operations at both ends. It is the correct tool for BFS queues and sliding window deque problems.
+    *   *Why C is incorrect:* `heapq` is a priority queue, not a general stack or FIFO queue. Its operations are O(log n), not O(1).
+    *   *Why D is incorrect:* Using a dict as a queue is non-standard, error-prone, and does not provide O(1) ordered removal semantics.

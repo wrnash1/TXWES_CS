@@ -1,79 +1,77 @@
-# Quiz: Module 09 - Graph Representations
-## Course: CIS-2315_Data_Structures_Algorithms (Technical Interview Readiness (LeetCode / HackerRank))
+# Quiz: Module 09 – Graphs: Representation and BFS/DFS
+## Course: CIS-2315 Data Structures & Algorithms (Technical Interview Readiness)
 
 ---
 
 **Question 1**
-Which representation is most memory-efficient for a sparse graph with N vertices and few edges?
-*   A) Adjacency Matrix
-*   B) Adjacency List
-*   C) Edge List
-*   D) Hash Matrix
-*   **Correct Answer:** B) Adjacency lists only store actual links, bypassing the O(N^2) memory footprint of adjacency matrices.
+Which graph traversal algorithm guarantees finding the shortest path in an unweighted graph?
+*   A) DFS using a stack
+*   B) BFS using a queue
+*   C) Topological sort
+*   D) In-order traversal
+*   **Correct Answer:** B) BFS using a queue
 *   **Distractor Analysis:**
-    *   *Why correct:* Adjacency lists only store actual links, bypassing the O(N^2) memory footprint of adjacency matrices.
-    *   Adjacency matrix always uses O(V^2) memory space regardless of edge density.
+    *   *Why correct:* BFS explores all nodes at distance d before any node at distance d+1. The first time it reaches the destination, the path used is guaranteed to be the shortest in terms of edge count.
+    *   A is incorrect: DFS follows one path as deep as possible and may reach the destination via a longer route before exploring shorter ones.
+    *   C is incorrect: Topological sort orders nodes by dependency; it does not find shortest paths.
+    *   D is incorrect: In-order traversal is a tree concept and does not apply to general graphs.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **adjacency list**?
-C) The ability of different classes to respond to the same message or method call in their own unique way.
-D) The descendant node connected to the right branch of a parent node in a binary tree structure.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-B) The maximum acceptable age of data that must be recovered from backup storage to restore operations, representing the limit of tolerable data loss.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
+Which of the following is the most accurate definition of an **adjacency list** graph representation?
+*   A) A V×V 2D array where entry [u][v] equals 1 if an edge exists from vertex u to vertex v and 0 otherwise, enabling O(1) edge existence queries.
+*   B) A data structure where each vertex maintains a list of its directly connected neighbors, using O(V + E) total space and making iteration over a vertex's neighbors O(degree) time.
+*   C) A sorted list of all edges in the graph stored as (u, v, weight) tuples, enabling binary search for edge existence in O(log E) time.
+*   D) A hash map from each vertex to its distance from the source, updated during BFS or Dijkstra's algorithm to track shortest path lengths.
+*   **Correct Answer:** B) A data structure where each vertex maintains a list of its directly connected neighbors, using O(V + E) total space and making iteration over a vertex's neighbors O(degree) time.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **adjacency list**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **adjacency list**.
-    * *Why A is correct:* This describes the exact role and function of **adjacency list**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **adjacency list**.
-
+    *   *Why A is incorrect:* That describes an adjacency matrix, not an adjacency list.
+    *   *Why B is correct:* An adjacency list stores, for each vertex, only its actual neighbors. Total space is proportional to the number of vertices plus edges — efficient for sparse graphs.
+    *   *Why C is incorrect:* That describes an edge list, a third representation distinct from both adjacency list and matrix.
+    *   *Why D is incorrect:* That describes the `dist` array in BFS/Dijkstra, which is an output of an algorithm, not a graph representation.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **install all external project dependencies specified in the requirements manifest**. Which of the following commands is the most appropriate to execute?
-B) python3 -m venv .venv
-C) git commit -m 'update'
-A) pip install -r requirements.txt
-D) pytest
-*   **Correct Answer:** A) pip install -r requirements.txt
+In the Number of Islands problem (LeetCode #200), you encounter a grid of '1's and '0's and must count connected land regions. After finding an unvisited '1', what should your DFS or BFS do?
+*   A) Count all '1' cells in the entire grid and divide by the average island size.
+*   B) Mark the current cell as visited (e.g., change '1' to '0' or add to visited set), then recursively/iteratively process all four adjacent '1' cells.
+*   C) Sort all '1' cells by row and column, then use a two-pointer technique to group adjacent cells.
+*   D) Push all grid cells into a priority queue ordered by value, then pop and connect cells greedily.
+*   **Correct Answer:** B) Mark the current cell as visited (e.g., change '1' to '0' or add to visited set), then recursively/iteratively process all four adjacent '1' cells.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `pip install -r requirements.txt` command is directly designed to install all external project dependencies specified in the requirements manifest.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is incorrect:* Islands vary in size; dividing a total count by an average is neither correct nor efficient.
+    *   *Why B is correct:* Marking visited prevents revisiting cells in cycles. Expanding to all four neighbors floods the entire island, so incrementing the count once per DFS/BFS launch counts each connected component exactly once.
+    *   *Why C is incorrect:* Sorting and two-pointers are array techniques; they do not correctly identify spatially connected components in a 2D grid.
+    *   *Why D is incorrect:* A priority queue adds unnecessary O(log n) overhead and does not model island connectivity.
 
 ---
 
 **Question 4**
-While working on **Graph Representations** in a production environment, you encounter a system alert indicating a **IndexError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-B) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
-C) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-A) Verify that the index is within the valid range of 0 to len(list)-1.
-D) Reboot the physical machine and wait for services to reload.
-*   **Correct Answer:** A) Verify that the index is within the valid range of 0 to len(list)-1.
+What data structure is used to detect cycles in a directed graph using DFS?
+*   A) A single `visited` set containing all nodes seen so far in any DFS call.
+*   B) Two sets: a `visited` set for nodes fully processed, and a `in_stack` (or `grey`) set for nodes in the current DFS path; a cycle exists if you reach a node already in `in_stack`.
+*   C) A queue containing the nodes at the current BFS frontier, which detects back-edges when a neighbor is already in the queue.
+*   D) A min-heap sorted by discovery time; a cycle is detected when the minimum discovery time equals the current depth.
+*   **Correct Answer:** B) Two sets: a `visited` set for nodes fully processed, and a `in_stack` (or `grey`) set for nodes in the current DFS path; a cycle exists if you reach a node already in `in_stack`.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This action does not resolve the root cause of IndexError.
-    * *Why C is incorrect:* This action does not resolve the root cause of IndexError.
-    * *Why A is correct:* Because The code attempted to access an element of a sequence using an out-of-bounds index. The appropriate fix is to Verify that the index is within the valid range of 0 to len(list)-1..
-    * *Why D is incorrect:* This action does not resolve the root cause of IndexError.
-
+    *   *Why A is incorrect:* A single visited set is sufficient for undirected graphs, but in directed graphs, reaching a previously visited node does not imply a cycle — the earlier visit may have been from a different path.
+    *   *Why B is correct:* In directed graphs, a back edge (edge to a node already on the current DFS stack) indicates a cycle. The `in_stack` set tracks which nodes are on the active recursion path.
+    *   *Why C is incorrect:* BFS frontier queues do not naturally detect directed cycles; a node leaving the queue does not mean its DFS path is finished.
+    *   *Why D is incorrect:* Min-heaps are used in Dijkstra's algorithm; discovery time ordering does not detect directed cycles.
 
 ---
 
 **Question 5**
-When designing a system for **Graph Representations**, you must mitigate the risk of **Allowing attackers to execute arbitrary SQL commands on the backend database via input forms.**. Which of the following security configurations or controls represents the best practice to implement?
-C) Enable full disk encryption on all client endpoints.
-B) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-D) Enable full disk encryption on all client endpoints.
-A) Implement parameterized queries and prepared statements rather than raw string concatenation.
-*   **Correct Answer:** A) Implement parameterized queries and prepared statements rather than raw string concatenation.
+You have a sparse graph with V = 1,000 vertices and E = 2,000 edges. Which representation is most space-efficient?
+*   A) Adjacency matrix — O(V²) = 1,000,000 entries
+*   B) Adjacency list — O(V + E) = 3,000 entries total
+*   C) Both use the same space because the graph is stored in memory either way.
+*   D) Adjacency matrix — because 2D arrays have better cache performance than linked lists.
+*   **Correct Answer:** B) Adjacency list — O(V + E) = 3,000 entries total
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why D is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why A is correct:* Implementing Implement parameterized queries and prepared statements rather than raw string concatenation. mitigates the risk of Allowing attackers to execute arbitrary SQL commands on the backend database via input forms..
-
+    *   *Why A is incorrect:* With V = 1,000, an adjacency matrix requires 1,000,000 cells regardless of how many edges actually exist — wasteful when only 2,000 edges are present.
+    *   *Why B is correct:* An adjacency list allocates space proportional to actual vertices plus actual edges: 1,000 + 2,000 = 3,000 — 333× more space-efficient than the matrix for this sparse graph.
+    *   *Why C is incorrect:* The two representations have dramatically different space requirements; they are not equivalent.
+    *   *Why D is incorrect:* Cache performance may favor matrices in dense graphs, but space efficiency is the primary concern here and the question asks about space, not cache behavior.

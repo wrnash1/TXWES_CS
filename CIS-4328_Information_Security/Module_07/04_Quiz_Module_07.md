@@ -1,86 +1,76 @@
-# Quiz: Module 07 - Risk
-## Course: CIS-4328_Information_Security (4328_Information_Security - CompTIA Security+ (SY0-701))
+# Quiz: Module 07 - Network Security - Firewalls, IDS/IPS, VPNs
+## Course: CIS-4328_Information_Security (CompTIA Security+ SY0-701)
 
 ---
 
 **Question 1**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Risk Responses**?
-B) Data about the HTML document (like description, keywords, author, and viewport configurations) that is processed by browsers and search engine crawlers.
-D) HTML tags that convey the meaning and structure of the enclosed content to both the browser and search engines (e.g., <header>, <article>, <footer>) instead of generic containers.
-C) An instruction within a function that invokes the function itself, passing modified arguments to solve a smaller subproblem.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within security operations.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within security operations.
+A security architect is designing the network for a new branch office. The requirement states that the security device must not only filter traffic based on IP address and port number, but also identify and block specific applications regardless of what port they use. Which device best meets this requirement?
+A) Stateful Firewall
+B) Packet-Filtering Firewall
+C) Next-Generation Firewall (NGFW)
+D) Network-Based IDS
+*   **Correct Answer:** C) Next-Generation Firewall (NGFW)
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Risk Responses**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Risk Responses**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Risk Responses**.
-    * *Why A is correct:* This describes the exact role and function of **Risk Responses**.
-
+    *   *Why A is incorrect:* A stateful firewall tracks connection state and filters by IP address, port, and protocol — it cannot identify applications that operate on non-standard ports or tunnel through common ports like 443.
+    *   *Why B is incorrect:* A packet-filtering firewall examines individual packets by source/destination IP and port only — it has no application-layer visibility and is the most basic firewall type.
+    *   *Why D is incorrect:* A network-based IDS passively monitors traffic and generates alerts but does not block anything — it cannot enforce application control policies.
 
 ---
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Risk Responses**?
-D) The total memory space required by an algorithm to execute to completion. This includes the static instruction space, variable space, and dynamic allocation space (like recursion stack frames or temporary arrays).
-B) Elements placed inside the <head> block of an HTML document that define metadata, links to stylesheets, scripts, character sets, and page titles.
-C) An algebraic restructuring operation on a binary tree that changes the parent-child relationships to restore balance without violating the search order.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within security operations.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within security operations.
+A security operations team receives an alert that the IDS flagged a port scan originating from an internal host at 2:00 AM. After investigation, the team determines the scan was performed by an authorized vulnerability scanner running on schedule. How should this alert be classified?
+A) True Positive
+B) True Negative
+C) False Positive
+D) False Negative
+*   **Correct Answer:** C) False Positive
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Risk Responses**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Risk Responses**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Risk Responses**.
-    * *Why A is correct:* This describes the exact role and function of **Risk Responses**.
-
+    *   *Why A is incorrect:* A true positive means the IDS correctly identified a real attack — the scan here was authorized and benign, so flagging it as malicious is incorrect.
+    *   *Why B is incorrect:* A true negative means the IDS correctly did not alert on legitimate traffic — the IDS did fire an alert in this scenario, so this classification does not apply.
+    *   *Why D is incorrect:* A false negative means the IDS missed a real attack and did not alert — the IDS did generate an alert here, so it is not a false negative.
 
 ---
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **display the detailed metadata and validation parameters of an SSL/TLS digital certificate**. Which of the following commands is the most appropriate to execute?
-B) nmap -sV -p 1-1024 target_ip
-D) hydra -l admin -P passwords.txt ssh://target
-C) wireshark
-A) openssl x509 -text -noout -in cert.pem
-*   **Correct Answer:** A) openssl x509 -text -noout -in cert.pem
+An organization needs to allow remote employees to securely access internal resources over the internet. The solution must encrypt all traffic between the employee's device and the corporate network without requiring a specialized VPN client application. Which VPN type best satisfies this requirement?
+A) IPsec tunnel mode site-to-site VPN
+B) SSL/TLS VPN (clientless)
+C) IPsec transport mode host-to-host VPN
+D) L2TP VPN without IPsec encapsulation
+*   **Correct Answer:** B) SSL/TLS VPN (clientless)
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `openssl x509 -text -noout -in cert.pem` command is directly designed to display the detailed metadata and validation parameters of an SSL/TLS digital certificate.
-
+    *   *Why A is incorrect:* IPsec tunnel mode site-to-site VPN connects two entire networks (e.g., two office locations) and requires VPN gateway hardware at both ends — it is not designed for individual remote user access.
+    *   *Why C is incorrect:* IPsec transport mode encrypts traffic between two specific hosts and requires IPsec software on both endpoints — it is not a remote access VPN solution and does not provide web-based clientless access.
+    *   *Why D is incorrect:* L2TP without IPsec provides tunneling with no encryption — traffic is transmitted in plaintext, making it unsuitable for any security-conscious remote access scenario.
 
 ---
 
 **Question 4**
-While working on **Risk** in a production environment, you encounter a system alert indicating a **Certificate Expired Error** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-B) Review active security rules and add a permissive firewall rule allowing the specific source IP and destination port.
-C) Tune the detection signatures and define exceptions for authorized administrative activities.
-A) Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA.
-D) Reboot the physical machine and wait for services to reload.
-*   **Correct Answer:** A) Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA.
+A network security engineer is tuning an IPS deployed at the corporate internet edge. After deployment, the operations team reports that legitimate customer HTTPS traffic to the e-commerce site is being intermittently blocked. What should the engineer do to resolve this while maintaining security?
+A) Disable the IPS temporarily and replace it with an IDS to eliminate all blocking.
+B) Review the triggered signatures, identify those causing false positives, and create tuned exceptions for known-good traffic patterns.
+C) Switch the IPS from inline mode to tap mode so it no longer blocks traffic.
+D) Increase the IPS sensitivity threshold to maximum to ensure all threats are caught.
+*   **Correct Answer:** B) Review the triggered signatures, identify those causing false positives, and create tuned exceptions for known-good traffic patterns.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This action does not resolve the root cause of Certificate Expired Error.
-    * *Why C is incorrect:* This action does not resolve the root cause of Certificate Expired Error.
-    * *Why A is correct:* Because The SSL/TLS digital certificate presented by the server has passed its validity end date, causing clients to block connections. The appropriate fix is to Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA..
-    * *Why D is incorrect:* This action does not resolve the root cause of Certificate Expired Error.
-
+    *   *Why A is incorrect:* Replacing an IPS with an IDS removes all active blocking capability — the organization would lose the protection the IPS provides against real attacks, not just the false positives.
+    *   *Why C is incorrect:* Switching to tap (passive) mode converts the IPS into a monitoring-only device equivalent to an IDS — this eliminates all prevention capability and is an overreaction to a tuning problem.
+    *   *Why D is incorrect:* Increasing sensitivity makes false positives worse, not better — higher sensitivity means more signatures fire on ambiguous traffic, which increases both false positives and legitimate traffic disruption.
 
 ---
 
 **Question 5**
-When designing a system for **Risk**, you must mitigate the risk of **Intruders deleting local system event logs after a breach to hide their tracks and prevent investigation.**. Which of the following security configurations or controls represents the best practice to implement?
-C) Enable full disk encryption on all client endpoints.
-A) Forward all system logs to a secure, write-once SIEM (Security Information and Event Management) platform.
-B) Enforce RSA keys with a minimum length of 2048/4096 bits or switch to Elliptic Curve Cryptography (ECC).
-D) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Forward all system logs to a secure, write-once SIEM (Security Information and Event Management) platform.
+A company wants to segment its network so that its industrial control systems (ICS) cannot communicate directly with corporate workstations, even if both are on the internal network. Which network security control achieves this segmentation?
+A) Deploy a VPN between the ICS network and the corporate network.
+B) Place a firewall between the ICS VLAN and the corporate VLAN with a default-deny policy.
+C) Install an IDS sensor on the ICS network to monitor traffic between the segments.
+D) Require all users to authenticate with MFA before accessing any internal resource.
+*   **Correct Answer:** B) Place a firewall between the ICS VLAN and the corporate VLAN with a default-deny policy.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This does not address the security vulnerability of Lack of Centralized Logs.
-    * *Why A is correct:* Implementing Forward all system logs to a secure, write-once SIEM (Security Information and Event Management) platform. mitigates the risk of Intruders deleting local system event logs after a breach to hide their tracks and prevent investigation..
-    * *Why B is incorrect:* This does not address the security vulnerability of Lack of Centralized Logs.
-    * *Why D is incorrect:* This does not address the security vulnerability of Lack of Centralized Logs.
-
+    *   *Why A is incorrect:* A VPN creates an encrypted tunnel for communication — it facilitates connectivity between networks rather than restricting it. Deploying a VPN between the segments would increase reachability, not segment it.
+    *   *Why C is incorrect:* An IDS passively monitors and alerts on traffic — it does not block or prevent communication between the ICS and corporate segments. Detection does not equal prevention.
+    *   *Why D is incorrect:* MFA controls who can authenticate to systems but does not create a network-layer barrier between VLANs. An authenticated user could still reach ICS systems if there is no firewall policy enforcing segmentation.

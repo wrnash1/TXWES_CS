@@ -1,4 +1,4 @@
-# Quiz: Module 09 - Communication & Stakeholder Management
+# Quiz: Module 09 - Risk Management – Identification and Response
 ## Course: CIS-3310_IT_Project_Management (CompTIA Project+ / PMI CAPM)
 
 ---
@@ -9,71 +9,69 @@ How many communication channels exist in a project team containing 8 members?
 *   B) 16
 *   C) 28
 *   D) 56
-*   **Correct Answer:** C) Using the channel formula: 8 * (8 - 1) / 2 = 8 * 7 / 2 = 56 / 2 = 28 channels.
+*   **Correct Answer:** C) Using the channels formula: N × (N-1) / 2 = 8 × 7 / 2 = 56 / 2 = 28 channels.
 *   **Distractor Analysis:**
-    *   *Why correct:* Using the channel formula: 8 * (8 - 1) / 2 = 8 * 7 / 2 = 56 / 2 = 28 channels.
-    *   The formula tracks unique connections between all members.
+    *   *Why C is correct:* The communication channels formula N(N-1)/2 gives the number of unique pairwise connections. With 8 members: 8 × 7 = 56 ÷ 2 = 28.
+    *   *Why A is incorrect:* 8 equals the number of team members (N), not the number of channels. Channels grow much faster than team size.
+    *   *Why B is incorrect:* 16 = 2 × N, which does not match the formula. This might seem intuitive but ignores the combinatorial nature of connections.
+    *   *Why D is incorrect:* 56 is the intermediate result before dividing by 2 (8 × 7 = 56). Forgetting to divide by 2 is the most common formula calculation error on the exam.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **stakeholder registers.**?
-B) Flexible Box Layout; a one-dimensional CSS layout model that makes it easy to align items and distribute space within a container, handling varying screen sizes dynamically.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
-C) The core CSS layout block consisting of margins, borders, padding, and the actual content area, defining the sizing and spacing of every page element.
-D) The standard configuration parameters pre-loaded into a software application or system before any custom adjustments are made by an administrator.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
+Which of the following best defines a **Stakeholder Register** in project management?
+*   A) A project document that identifies all stakeholders and records their roles, interests, influence levels, expectations, and communication preferences.
+*   B) A financial document that tracks all approved changes to the project budget and their impact on the cost baseline.
+*   C) A schedule tool that maps each stakeholder to the project milestones they are responsible for approving.
+*   D) A procurement document listing all vendors who have submitted proposals in response to an RFP.
+*   **Correct Answer:** A) The Stakeholder Register identifies all project stakeholders and captures key information about each, enabling the PM to tailor communication and engagement strategies.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **stakeholder registers.**.
-    * *Why A is correct:* This describes the exact role and function of **stakeholder registers.**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **stakeholder registers.**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **stakeholder registers.**.
-
+    *   *Why A is correct:* The Stakeholder Register is created during the Initiating process group and updated throughout the project. It is the foundation for the Communications Management Plan and the Stakeholder Engagement Plan.
+    *   *Why B is incorrect:* Tracking approved budget changes describes change management and cost control activities—different from stakeholder documentation.
+    *   *Why C is incorrect:* Mapping stakeholders to approval milestones describes a responsibility or approvals matrix (similar to RACI), not the Stakeholder Register.
+    *   *Why D is incorrect:* A list of vendors who submitted proposals describes a procurement evaluation document or bidder list, which is part of the Procurement Management knowledge area.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **check the configuration files for syntactic and internal consistency correctness**. Which of the following commands is the most appropriate to execute?
-D) systemctl status iot_service
-C) git log --oneline -n 5
-A) terraform validate
-B) docker-compose up -d
-*   **Correct Answer:** A) terraform validate
+A project manager wants to quickly assess which risks have the highest priority without performing complex statistical modeling. Which analysis technique is most appropriate?
+*   A) Monte Carlo Simulation
+*   B) Expected Monetary Value (EMV) Analysis
+*   C) Qualitative Risk Analysis
+*   D) Decision Tree Analysis
+*   **Correct Answer:** C) Qualitative Risk Analysis prioritizes risks using a Probability × Impact matrix, expert judgment, and subjective ratings—it is fast, requires no statistical tools, and is applied to all projects.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `terraform validate` command is directly designed to check the configuration files for syntactic and internal consistency correctness.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why C is correct:* Qualitative analysis (using a P×I matrix) ranks risks by their relative severity quickly, enabling the PM to focus attention on the highest-priority risks without needing detailed numerical data.
+    *   *Why A is incorrect:* Monte Carlo Simulation is a quantitative technique that runs thousands of schedule/cost scenarios using statistical distributions; it requires specialized software and detailed probability data—not appropriate for a quick prioritization pass.
+    *   *Why B is incorrect:* Expected Monetary Value (EMV) is a quantitative technique that calculates the statistical value of a risk (Probability × Dollar Impact); it requires numeric data and is more complex than a P×I matrix.
+    *   *Why D is incorrect:* Decision Tree Analysis is a quantitative tool used to evaluate complex decisions with multiple uncertain outcomes; it is more sophisticated than a quick qualitative prioritization.
 
 ---
 
 **Question 4**
-While working on **Communication & Stakeholder Management** in a production environment, you encounter a system alert indicating a **SLA Breach Alert** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-D) Reboot the physical machine and wait for services to reload.
-C) Re-assign resources to critical path tasks and establish clear communication protocols.
-B) Implement strict change control boards (CCB) and re-baseline the project constraints.
-A) Optimize service resources, implement load balancing, or update failover mechanisms.
-*   **Correct Answer:** A) Optimize service resources, implement load balancing, or update failover mechanisms.
+A project manager updates the Communications Management Plan to increase weekly status reports from one to three team members after discovering that key stakeholders were not receiving timely information. Which communications management process is the PM performing?
+*   A) Plan Communications Management
+*   B) Manage Communications
+*   C) Monitor Communications
+*   D) Distribute Information
+*   **Correct Answer:** C) Monitor Communications is the process of ensuring that the information needs of stakeholders and the project are being met; when gaps are found, the PM updates the plan accordingly.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This action does not resolve the root cause of SLA Breach Alert.
-    * *Why C is incorrect:* This action does not resolve the root cause of SLA Breach Alert.
-    * *Why B is incorrect:* This action does not resolve the root cause of SLA Breach Alert.
-    * *Why A is correct:* Because A system outage or slow response time has exceeded the limits guaranteed in the Service Level Agreement. The appropriate fix is to Optimize service resources, implement load balancing, or update failover mechanisms..
-
+    *   *Why C is correct:* Monitoring communications involves reviewing whether the current communication approach is effective and making adjustments when it is not. Discovering a gap and updating the plan is a classic monitor-and-adjust cycle.
+    *   *Why A is incorrect:* Plan Communications Management occurs during the Planning process group when the communication plan is initially created; the PM is not in planning—they are adjusting an existing plan during execution.
+    *   *Why B is incorrect:* Manage Communications is the execution of the communication plan (sending reports, running meetings); it does not include evaluating effectiveness or updating the plan.
+    *   *Why D is incorrect:* "Distribute Information" is not a current PMI process name (it was used in older PMBOK editions); it does not describe the evaluation and adjustment activity shown here.
 
 ---
 
 **Question 5**
-When designing a system for **Communication & Stakeholder Management**, you must mitigate the risk of **A disaster or ransomware attack causing prolonged downtime because recovery steps are undocumented.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services.
-D) Enable full disk encryption on all client endpoints.
-B) Establish formal authorization procedures and digital signatures for all project scope modifications.
-C) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services.
+A stakeholder analysis shows that the IT Director has high influence and high interest in the project outcome. According to stakeholder engagement best practices, what approach should the PM take?
+*   A) Monitor only—send minimal updates and involve them only at major milestones.
+*   B) Keep informed—send regular status reports but do not involve them in decisions.
+*   C) Manage closely—engage frequently, involve in key decisions, and address their concerns proactively.
+*   D) Keep satisfied—involve them occasionally but avoid overwhelming them with details.
+*   **Correct Answer:** C) High-influence, high-interest stakeholders should be managed closely—they have both the ability to impact the project and a strong desire to be involved, so proactive, frequent engagement is essential.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services. mitigates the risk of A disaster or ransomware attack causing prolonged downtime because recovery steps are undocumented..
-    * *Why D is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
-    * *Why B is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
-    * *Why C is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
-
+    *   *Why C is correct:* The Power/Interest Grid (a stakeholder analysis tool) places high power/high interest stakeholders in the "Manage Closely" quadrant. These stakeholders can make or break a project, so they require the PM's most intensive engagement.
+    *   *Why A is incorrect:* "Monitor only" is the strategy for low-power, low-interest stakeholders. Applying it to a high-influence person risks alienating someone who can derail the project.
+    *   *Why B is incorrect:* "Keep informed" is the strategy for high-interest but low-influence stakeholders. A high-influence person must be consulted, not just informed.
+    *   *Why D is incorrect:* "Keep satisfied" is the strategy for high-power but low-interest stakeholders—those who can impact the project but are not deeply invested in its day-to-day progress.

@@ -17,17 +17,17 @@ Which block runs regardless of whether an exception was raised or not?
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **else and finally clauses**?
-D) HTML tags that convey the meaning and structure of the enclosed content to both the browser and search engines (e.g., <header>, <article>, <footer>) instead of generic containers.
-B) The danger of exhausting the call stack memory allocation when recursive calls are made too deeply or without hitting a base case, crashing the program.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-C) The single, top-most node in a tree structure from which all other nodes descend, serving as the starting reference for search algorithms.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
+Which of the following best describes the **`else` and `finally` clauses** in a Python try-except structure?
+*   A) The `else` clause runs when an exception is caught; the `finally` clause runs only when no exception occurs, serving as the success path for the block
+*   B) The `else` clause runs only when no exception was raised in the `try` block; the `finally` clause always runs regardless of whether an exception occurred or was handled
+*   C) Both `else` and `finally` are optional aliases for the same behavior — each runs unconditionally after the `try` block completes, whether or not an exception was raised
+*   D) The `else` clause catches any exception not handled by a named `except` clause; the `finally` clause re-raises the most recent exception after cleanup code executes
+*   **Correct Answer:** B) The `else` clause runs only when no exception was raised in the `try` block; the `finally` clause always runs regardless of whether an exception occurred or was handled.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **else and finally clauses**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **else and finally clauses**.
-    * *Why A is correct:* This describes the exact role and function of **else and finally clauses**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **else and finally clauses**.
+    *   *Why A is incorrect:* The roles are reversed — `else` is the success path (no exception), not the caught-exception path; `finally` runs unconditionally, not only on success.
+    *   *Why B is correct:* `else` is the right place for code that should execute only when the `try` block succeeded without error; `finally` is guaranteed to run in all cases, even if a `return` or unhandled exception exits the block.
+    *   *Why C is incorrect:* `else` and `finally` have distinct, non-interchangeable behaviors; `else` skips on any exception while `finally` never skips — treating them as aliases would silently swallow errors that `else` is designed to avoid executing on.
+    *   *Why D is incorrect:* `else` does not catch exceptions — it is skipped entirely if any exception occurs in `try`; exception catching is the job of `except` clauses, not `else`.
 
 
 ---
@@ -67,13 +67,12 @@ B) Verify that the index is within the valid range of 0 to len(list)-1.
 **Question 5**
 When designing a system for **Exception Handling**, you must mitigate the risk of **Allowing attackers to execute arbitrary SQL commands on the backend database via input forms.**. Which of the following security configurations or controls represents the best practice to implement?
 A) Implement parameterized queries and prepared statements rather than raw string concatenation.
-D) Enable full disk encryption on all client endpoints.
+D) Wrap all database calls in a broad `except Exception: pass` block to suppress any SQL errors before they reach the user.
 B) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
 C) Enable full disk encryption on all client endpoints.
 *   **Correct Answer:** A) Implement parameterized queries and prepared statements rather than raw string concatenation.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Implement parameterized queries and prepared statements rather than raw string concatenation. mitigates the risk of Allowing attackers to execute arbitrary SQL commands on the backend database via input forms..
-    * *Why D is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
+    * *Why A is correct:* Implementing parameterized queries and prepared statements rather than raw string concatenation mitigates the risk of allowing attackers to execute arbitrary SQL commands on the backend database via input forms.
+    * *Why D is incorrect:* Suppressing SQL errors with a broad `except` block hides symptoms but does not prevent the injection — the malicious SQL still executes against the database; parameterized queries stop the attack before the query reaches the database engine.
     * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
     * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-

@@ -13,40 +13,41 @@ As a student, you will learn the primary operational roles, command syntaxes, an
 ### 1. High-Yield Glossary
 Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
 
-*   **Three-tier architecture (Core**: A primary configuration standard and technical parameter essential for coordinating Network Architectures & Topologies activities, enforcing security boundaries, and verifying operational statuses within the networking environment.
-*   **Distribution**: A primary configuration standard and technical parameter essential for coordinating Network Architectures & Topologies activities, enforcing security boundaries, and verifying operational statuses within the networking environment.
-*   **Access)**: A primary configuration standard and technical parameter essential for coordinating Network Architectures & Topologies activities, enforcing security boundaries, and verifying operational statuses within the networking environment.
-*   **Collapsed Core design**: A primary configuration standard and technical parameter essential for coordinating Network Architectures & Topologies activities, enforcing security boundaries, and verifying operational statuses within the networking environment.
-*   **spine-leaf topologies.**: A primary configuration standard and technical parameter essential for coordinating Network Architectures & Topologies activities, enforcing security boundaries, and verifying operational statuses within the networking environment.
+*   **Three-tier architecture (Core, Distribution, Access)**: A hierarchical enterprise network design model with three distinct layers. The Core layer provides high-speed backbone switching, the Distribution layer enforces policies and performs inter-VLAN routing, and the Access layer connects end-user devices to the network.
+*   **Collapsed Core design**: A two-tier network architecture where the Core and Distribution layers are merged into a single layer, typically used in smaller campus networks to reduce cost and complexity while still maintaining logical separation of access-layer devices.
+*   **Spine-leaf topology**: A two-tier data center architecture where every leaf switch connects to every spine switch, providing predictable low-latency and high-bandwidth paths. This design is used in modern hyperscale data centers and eliminates the Spanning Tree Protocol dependency.
+*   **Network topology**: The physical or logical arrangement of nodes and connections in a network. Common topologies tested on the CCNA include star, mesh, point-to-point, hub-and-spoke, and full mesh, each with different fault-tolerance and cost trade-offs.
 
 ---
 
 ### 2. Certification Exam Tips
-*   **Focus Area:** Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
-*   **Scenario Trap:** Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
-*   **Study Resource:** To reinforce these concepts visually, review this targeted search query: [Jeremy's IT Lab CCNA Complete Course - Network Architectures & Topologies](https://www.youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ).
+*   **CCNA Domain:** Network Fundamentals accounts for **20%** of the CCNA 200-301 exam. Topology and architecture questions frequently appear as scenario diagrams — practice reading and labeling three-tier diagrams.
+*   **Common Trap:** The exam often asks you to identify which layer performs a function. Remember: routing and policy enforcement (ACLs, QoS) belong at the **Distribution** layer, not the Core. The Core layer exists purely for fast forwarding — never apply ACLs there.
+*   **Memorize the difference:** Collapsed core = two tiers (no dedicated core); standard three-tier = separate core, distribution, and access. Exam scenarios will describe a "small campus network" to hint at collapsed core.
+*   **Spine-leaf key fact:** Every leaf connects to every spine — this creates equal-cost multipath (ECMP) routing. The CCNA exam tests the concept, not detailed spine-leaf CLI configuration.
+*   **Study Resource:** To reinforce these concepts visually, watch the Jeremy's IT Lab CCNA free course videos on network architecture and topology: [Jeremy's IT Lab CCNA Complete Course on YouTube](https://www.youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ). Start with the "Network Topology Overview" section for diagrams of each tier.
 
 ---
 
 ### Required Readings & Videos
 To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the section/chapter covering **Network Architectures & Topologies** in the OER Textbook: [Cisco Skills for All Portal - CCNA Guides](https://skillsforall.com/).
-*   **Required Video:** Watch the video lecture on **Network Architectures & Topologies** in the official course playlist: [Jeremy's IT Lab CCNA Complete Course](https://www.youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ).
+*   **Required Reading:** Read the section covering **Network Architectures and Topologies** in the free Cisco Skills for All CCNA course, which includes interactive topology diagrams and module quizzes: [Cisco Skills for All Portal - CCNA Guides](https://skillsforall.com/). Navigate to the "CCNA: Introduction to Networks" or "CCNA: Switching, Routing and Wireless Essentials" course.
+*   **Required Video:** Watch the video lecture on **Network Architectures & Topologies** in the Jeremy's IT Lab free CCNA playlist. Focus on the episodes covering enterprise network design and the three-tier model: [Jeremy's IT Lab CCNA Complete Course](https://www.youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ).
 
 ---
 
 ### Lab & Command Integration
 In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Draw a three-tier network diagram in Packet Tracer**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-*   **Examine routing links at Distribution layer**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-*   **Verify VLAN assignments at Access layer switches**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
+*   **Draw a three-tier network diagram in Packet Tracer**: Place Core, Distribution, and Access layer switches in a Packet Tracer topology. Label each device by its layer role and connect them with appropriate trunk links.
+*   **Examine routing links at Distribution layer**: On a multilayer switch, verify that Layer 3 routing is enabled between VLANs at the Distribution layer using `show ip route` and `show interfaces`.
+*   **Verify VLAN assignments at Access layer switches**: Use `show vlan brief` to confirm that access-layer switch ports are correctly assigned to their respective VLANs before inter-VLAN traffic is tested.
 
 
 ---
 
 ### 3. Study Checklist
 - [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read the section/chapter covering **Network Architectures & Topologies** in [Cisco Skills for All Portal - CCNA Guides](https://skillsforall.com/).
+- [ ] Read the section covering **Network Architectures and Topologies** in [Cisco Skills for All Portal - CCNA Guides](https://skillsforall.com/).
 - [ ] Watch the video lecture on **Network Architectures & Topologies** in [Jeremy's IT Lab CCNA Complete Course](https://www.youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ).
 - [ ] Review the commands outlined in the lab instructions.
 - [ ] Proceed to the weekly hands-on lab activity.

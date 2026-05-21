@@ -1,4 +1,4 @@
-# Quiz: Module 01 - Planning & Scoping Pen Tests
+# Quiz: Module 01 - Penetration Testing Methodology and Scoping
 ## Course: CIS-4333_Penetration_Testing (CompTIA PenTest+)
 
 ---
@@ -17,63 +17,59 @@ Which document explicitly defines the boundaries, methods, and authorized target
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **target classifications**?
-B) A cryptographic method that uses a public key to encrypt data and a mathematically related private key to decrypt it.
-C) The core operations of a stack: 'push' inserts an element onto the top, and 'pop' removes and returns the top element.
-D) An access control system where users are assigned to specific roles, and permissions are linked to those roles rather than individual users, simplifying permission management.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within security operations.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within security operations.
+In penetration testing, which of the following best defines **target classification**?
+*   A) The process of assigning severity ratings to discovered vulnerabilities using CVSS scores after exploitation.
+*   B) The categorization of in-scope assets by type and sensitivity level to guide testing methodology and prioritization.
+*   C) A legal agreement that specifies which systems are excluded from testing to reduce liability for the testing firm.
+*   D) A technique for fingerprinting operating systems by analyzing TTL values and TCP window sizes in network packets.
+*   **Correct Answer:** B) The categorization of in-scope assets by type and sensitivity level to guide testing methodology and prioritization.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **target classifications**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **target classifications**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **target classifications**.
-    * *Why A is correct:* This describes the exact role and function of **target classifications**.
-
+    *   *Why B is correct:* Target classification organizes in-scope systems by type (web app, network, wireless, physical) and sensitivity so testers apply the right methodology and prioritize higher-risk assets.
+    *   *Why A is incorrect:* CVSS scoring occurs during the reporting phase, after testing — it is a vulnerability severity measurement, not a classification of targets.
+    *   *Why C is incorrect:* Exclusion lists are part of the scoping document, not target classification. Classification groups what is in scope, not what is out.
+    *   *Why D is incorrect:* OS fingerprinting via TTL/TCP analysis is a passive reconnaissance technique performed during the information-gathering phase, not a pre-engagement planning activity.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **display the detailed metadata and validation parameters of an SSL/TLS digital certificate**. Which of the following commands is the most appropriate to execute?
-B) wireshark
-C) hydra -l admin -P passwords.txt ssh://target
-D) nmap -sV -p 1-1024 target_ip
-A) openssl x509 -text -noout -in cert.pem
-*   **Correct Answer:** A) openssl x509 -text -noout -in cert.pem
+A penetration tester has just completed active scanning of an in-scope subnet and discovers a server at an IP address that was not listed in the signed Rules of Engagement. What is the correct action?
+*   A) Continue testing the server — it is on the same subnet as authorized systems, implying implicit authorization.
+*   B) Run a service version scan to confirm whether it is a critical asset before deciding to proceed.
+*   C) Stop testing the out-of-scope system immediately and notify the client to discuss whether authorization can be extended.
+*   D) Document the server in the final report and include findings from any exploits run against it.
+*   **Correct Answer:** C) Stop testing the out-of-scope system immediately and notify the client to discuss whether authorization can be extended.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `openssl x509 -text -noout -in cert.pem` command is directly designed to display the detailed metadata and validation parameters of an SSL/TLS digital certificate.
-
+    *   *Why C is correct:* The PT0-002 exam consistently tests that testers must halt activity on any system not explicitly authorized in the RoE and contact the client before proceeding. Unauthorized access — even accidental — violates authorization boundaries.
+    *   *Why A is incorrect:* Subnet proximity does not imply authorization. Every in-scope target must be explicitly listed or described in the scoping document.
+    *   *Why B is incorrect:* Running even a passive scan against an unauthorized host still constitutes unauthorized testing and creates legal exposure for the tester.
+    *   *Why D is incorrect:* Including findings from an unauthorized system in the report would expose both the tester and the firm to legal liability.
 
 ---
 
 **Question 4**
-While working on **Planning & Scoping Pen Tests** in a production environment, you encounter a system alert indicating a **Certificate Expired Error** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-A) Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA.
-B) Review active security rules and add a permissive firewall rule allowing the specific source IP and destination port.
-C) Tune the detection signatures and define exceptions for authorized administrative activities.
-D) Reboot the physical machine and wait for services to reload.
-*   **Correct Answer:** A) Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA.
+During the pre-engagement phase, a client asks a penetration tester to skip drafting a formal scoping document to save time, saying a verbal agreement is sufficient. What is the appropriate response from the tester?
+*   A) Proceed with testing — verbal agreements are legally binding in most jurisdictions.
+*   B) Accept the verbal agreement but record the conversation as documentation.
+*   C) Decline to proceed until a written scoping document and Rules of Engagement are signed by an authorized representative.
+*   D) Begin passive reconnaissance only, which does not require formal authorization.
+*   **Correct Answer:** C) Decline to proceed until a written scoping document and Rules of Engagement are signed by an authorized representative.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Because The SSL/TLS digital certificate presented by the server has passed its validity end date, causing clients to block connections. The appropriate fix is to Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA..
-    * *Why B is incorrect:* This action does not resolve the root cause of Certificate Expired Error.
-    * *Why C is incorrect:* This action does not resolve the root cause of Certificate Expired Error.
-    * *Why D is incorrect:* This action does not resolve the root cause of Certificate Expired Error.
-
+    *   *Why C is correct:* Written authorization is a non-negotiable requirement in professional penetration testing. Without it, the tester has no legal protection and the activity could be considered unauthorized access under laws like the CFAA.
+    *   *Why A is incorrect:* Verbal agreements are extremely difficult to enforce and provide no concrete protection if a dispute arises or if law enforcement becomes involved.
+    *   *Why B is incorrect:* Recording a conversation does not carry the same legal weight as a signed authorization document and may not be admissible depending on jurisdiction.
+    *   *Why D is incorrect:* Even passive reconnaissance against systems requires written consent — gathering publicly available information about a specific target in the context of a test is part of the authorized engagement.
 
 ---
 
 **Question 5**
-When designing a system for **Planning & Scoping Pen Tests**, you must mitigate the risk of **Intruders deleting local system event logs after a breach to hide their tracks and prevent investigation.**. Which of the following security configurations or controls represents the best practice to implement?
-C) Enable full disk encryption on all client endpoints.
-A) Forward all system logs to a secure, write-once SIEM (Security Information and Event Management) platform.
-D) Enable full disk encryption on all client endpoints.
-B) Enforce RSA keys with a minimum length of 2048/4096 bits or switch to Elliptic Curve Cryptography (ECC).
-*   **Correct Answer:** A) Forward all system logs to a secure, write-once SIEM (Security Information and Event Management) platform.
+When designing a penetration test engagement for a financial institution, the client wants to ensure that any testers caught by internal security staff can prove the test is authorized. Which document serves this purpose and is sometimes called the "get-out-of-jail card"?
+*   A) The Non-Disclosure Agreement (NDA) signed at the start of the engagement.
+*   B) The penetration tester's professional certification (e.g., CompTIA PenTest+).
+*   C) The written authorization letter or permission letter signed by an executive of the client organization.
+*   D) The final penetration test report submitted after the engagement concludes.
+*   **Correct Answer:** C) The written authorization letter or permission letter signed by an executive of the client organization.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This does not address the security vulnerability of Lack of Centralized Logs.
-    * *Why A is correct:* Implementing Forward all system logs to a secure, write-once SIEM (Security Information and Event Management) platform. mitigates the risk of Intruders deleting local system event logs after a breach to hide their tracks and prevent investigation..
-    * *Why D is incorrect:* This does not address the security vulnerability of Lack of Centralized Logs.
-    * *Why B is incorrect:* This does not address the security vulnerability of Lack of Centralized Logs.
-
+    *   *Why C is correct:* The authorization/permission letter is a carry-on document that identifies the tester, the scope, and the dates of authorized testing. It is presented to internal security or law enforcement to confirm legitimacy — hence the nickname "get-out-of-jail card."
+    *   *Why A is incorrect:* An NDA protects confidential information shared between parties but does not authorize testing or serve as proof of permission during an active engagement.
+    *   *Why B is incorrect:* A certification proves the tester's qualifications but carries no legal authority to conduct a test on a specific organization's systems.
+    *   *Why D is incorrect:* The final report is produced after testing concludes and is not a real-time authorization document that can be presented during active testing.

@@ -1,79 +1,93 @@
 # Quiz: Module 11 - Enterprise Application Integration (EAI)
+
 ## Course: CIS-4320_Enterprise_Systems_ERP (Salesforce Certified Associate / SAP Certified Associate)
 
 ---
 
-**Question 1**
+### Question 1
+
 What role does middleware like MuleSoft play in enterprise system integration?
-*   A) It replaces database engines
-*   B) It acts as a broker, translating and routing data payloads between disparate applications
-*   C) It builds front-end client screens
-*   D) It hosts virtual machines
-*   **Correct Answer:** B) Middleware connects different architectures (e.g. cloud CRM to legacy on-premise ERP) by translating data formats on-the-fly.
-*   **Distractor Analysis:**
-    *   *Why correct:* Middleware connects different architectures (e.g. cloud CRM to legacy on-premise ERP) by translating data formats on-the-fly.
-    *   It is a routing and translation layer, not storage or virtualization.
+
+* A) It replaces the database engine in both the source and target systems
+* B) It acts as a broker, translating and routing data payloads between disparate applications that use different formats and protocols
+* C) It builds front-end user interface screens for web applications
+* D) It hosts virtual machines for running ERP application servers
+
+* **Correct Answer:** B) Middleware connects different system architectures (e.g., a cloud CRM to a legacy on-premise ERP) by translating data formats and routing messages on-the-fly.
+* **Distractor Analysis:**
+  * *Why B is correct:* MuleSoft Anypoint Platform sits between systems, receiving a message in the source format, applying a transformation map to convert it to the target format, and delivering it to the destination — without requiring either system to change.
+  * *Why A is incorrect:* Middleware does not replace database engines; source and target systems keep their own databases, and middleware only handles the data exchange layer between them.
+  * *Why C is incorrect:* Building UI screens is a front-end development task; middleware operates at the data integration layer and has no role in rendering user interfaces.
+  * *Why D is incorrect:* Hosting virtual machines is an infrastructure/cloud operations function; middleware is an application-layer data routing and transformation tool.
 
 ---
 
-**Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **EAI principles**?
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within database operations.
-D) A mathematical representation used to describe the asymptotic upper bound of an algorithm's running time or space complexity relative to the input size N. It helps developers predict how an algorithm will scale as data grows.
-C) The database design process of organizing tables to minimize data redundancy and dependency, dividing large tables into smaller ones.
-B) The maximum acceptable duration of downtime before a business process or system must be restored to operation after a disaster.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within database operations.
-*   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **EAI principles**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **EAI principles**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **EAI principles**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **EAI principles**.
+### Question 2
 
+Which of the following best describes the **EAI principle of loose coupling**?
 
----
+* A) Each integrated system is directly dependent on the internal data structures and APIs of every other system it connects to
+* B) Systems exchange data through a defined interface (API or message format) without knowing or depending on each other's internal implementation details
+* C) All enterprise systems are consolidated into a single database to eliminate the need for any data exchange
+* D) Integration connections are hard-coded in each application so that changes to one system automatically propagate to all connected systems
 
-**Question 3**
-A systems administrator or developer needs to **query and retrieve active user records matching specific conditions from the database table**. Which of the following commands is the most appropriate to execute?
-B) EXPLAIN ANALYZE SELECT * FROM logs;
-D) CREATE INDEX idx_email ON users(email);
-C) GRANT SELECT ON client_db TO analyst_role;
-A) SELECT * FROM users WHERE active = 1;
-*   **Correct Answer:** A) SELECT * FROM users WHERE active = 1;
-*   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `SELECT * FROM users WHERE active = 1;` command is directly designed to query and retrieve active user records matching specific conditions from the database table.
-
+* **Correct Answer:** B) Loose coupling means systems interact through stable, well-defined interfaces while remaining internally independent — so a change to one system's internal structure does not break its integration partners.
+* **Distractor Analysis:**
+  * *Why B is correct:* Loose coupling is a foundational EAI principle. When Salesforce calls the SAP REST API for an order status, it only needs to know the API contract (endpoint, request format, response schema) — not how SAP stores the order internally.
+  * *Why A is incorrect:* This describes tight coupling — the anti-pattern that makes systems brittle and expensive to change, exactly what EAI aims to avoid.
+  * *Why C is incorrect:* Consolidating all systems into one database describes an ERP strategy, not an integration architecture principle; it is also impractical for the full enterprise technology landscape.
+  * *Why D is incorrect:* Hard-coded direct dependencies between systems are the definition of point-to-point tight coupling, which creates a "spaghetti integration" architecture that is difficult to maintain.
 
 ---
 
-**Question 4**
-While working on **Enterprise Application Integration (EAI)** in a production environment, you encounter a system alert indicating a **Slow Query Performance** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-B) Increase the database connection pool limit, adjust timeout configurations, or scale database resources.
-D) Reboot the physical machine and wait for services to reload.
-C) Optimize application query order, implement retry logic, and keep transaction blocks as brief as possible.
-A) Analyze the query plan and create appropriate indexes on columns frequently used in WHERE and JOIN clauses.
-*   **Correct Answer:** A) Analyze the query plan and create appropriate indexes on columns frequently used in WHERE and JOIN clauses.
-*   **Distractor Analysis:**
-    * *Why B is incorrect:* This action does not resolve the root cause of Slow Query Performance.
-    * *Why D is incorrect:* This action does not resolve the root cause of Slow Query Performance.
-    * *Why C is incorrect:* This action does not resolve the root cause of Slow Query Performance.
-    * *Why A is correct:* Because The database is performing a full table scan on millions of rows due to a missing index or poorly written SQL syntax. The appropriate fix is to Analyze the query plan and create appropriate indexes on columns frequently used in WHERE and JOIN clauses..
+### Question 3
 
+A company has 8 enterprise systems that all need to share data with each other. An architect proposes deploying a central middleware platform as a hub. How many integration connections does hub-and-spoke require compared to point-to-point?
+
+* A) Hub-and-spoke: 28 connections; Point-to-point: 8 connections — hub-and-spoke is more complex
+* B) Hub-and-spoke: 8 connections (one per system to the hub); Point-to-point: 28 connections (one per unique system pair) — hub-and-spoke is simpler to maintain
+* C) Both architectures require exactly 8 connections regardless of the number of systems
+* D) Hub-and-spoke requires no connections because systems communicate through a shared database
+
+* **Correct Answer:** B) With 8 systems, point-to-point requires n(n-1)/2 = 28 connections; hub-and-spoke requires only 8 connections (each system connects once to the hub), dramatically reducing integration maintenance complexity.
+* **Distractor Analysis:**
+  * *Why B is correct:* The hub-and-spoke model's scalability advantage is a core EAI concept. Adding a 9th system to hub-and-spoke requires 1 new connection; adding it to point-to-point requires 8 new connections.
+  * *Why A is incorrect:* This reverses the connection counts; point-to-point has the exponentially growing connection count, not hub-and-spoke.
+  * *Why C is incorrect:* Point-to-point connection count grows quadratically with the number of systems (n(n-1)/2), not linearly.
+  * *Why D is incorrect:* Hub-and-spoke still requires each system to establish a connection to the middleware hub; it does not eliminate connections, it centralizes them.
 
 ---
 
-**Question 5**
-When designing a system for **Enterprise Application Integration (EAI)**, you must mitigate the risk of **Attackers injecting malicious SQL strings that bypass authentication and leak entire database contents.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs.
-B) Enable Transparent Data Encryption (TDE) or cloud database storage encryption at rest.
-D) Enable full disk encryption on all client endpoints.
-C) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs.
-*   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs. mitigates the risk of Attackers injecting malicious SQL strings that bypass authentication and leak entire database contents..
-    * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Exposure.
-    * *Why D is incorrect:* This does not address the security vulnerability of SQL Injection Exposure.
-    * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Exposure.
+### Question 4
 
+A Salesforce developer needs to call an external ERP REST API from Salesforce to retrieve a customer's open order count. Which Salesforce feature is required to allow Salesforce code to make outbound HTTP calls to external systems?
+
+* A) A Connected App OAuth configuration so the ERP can call Salesforce inbound
+* B) A Remote Site Setting (or Named Credential) that whitelists the external ERP endpoint URL so Salesforce allows the outbound HTTP callout
+* C) A Validation Rule on the Account object that triggers the API call when the record is saved
+* D) A custom Apex Batch class scheduled to run nightly to collect all order counts
+
+* **Correct Answer:** B) Salesforce requires all outbound HTTP callout destinations to be registered in Remote Site Settings (or as Named Credentials), which act as an allowlist of approved external endpoints for security purposes.
+* **Distractor Analysis:**
+  * *Why B is correct:* Before any Apex HTTP callout can succeed, the target URL must be registered. Named Credentials also store authentication details securely, so Apex code does not need to hard-code credentials.
+  * *Why A is incorrect:* Connected Apps configure external systems calling *into* Salesforce via OAuth; they do not control outbound calls from Salesforce to external systems.
+  * *Why C is incorrect:* Validation Rules evaluate field data for correctness before saves; they cannot make HTTP API calls to external systems.
+  * *Why D is incorrect:* A Batch class addresses scheduling and volume, not the security allowlist requirement. Without a Remote Site Setting, even a Batch class callout would fail with a `CalloutException`.
+
+---
+
+### Question 5
+
+When integrating Salesforce with an SAP system for a nightly customer account sync, which integration pattern is most appropriate?
+
+* A) Real-time synchronous REST API call triggered every time a user views an Account record in Salesforce
+* B) Scheduled batch integration that extracts updated Account records from SAP, transforms the data, and loads it into Salesforce once per night
+* C) A SOAP web service call that blocks the SAP user's screen until Salesforce confirms receipt
+* D) Direct database replication between the SAP HANA database and the Salesforce database
+
+* **Correct Answer:** B) A scheduled nightly batch integration is the appropriate pattern for a bulk account sync — it processes high volumes efficiently, avoids real-time latency impacts on users, and aligns with how SAP data is typically extracted.
+* **Distractor Analysis:**
+  * *Why B is correct:* Batch/scheduled integration is the standard pattern for bulk master data synchronization between ERP and CRM. The ETL cycle (Extract from SAP, Transform field mappings, Load to Salesforce) runs at low-traffic hours to avoid impacting operational users.
+  * *Why A is incorrect:* Triggering a live SAP API call every time a user opens an Account page would create excessive load on the SAP system and introduce latency into the Salesforce user experience for data that changes infrequently.
+  * *Why C is incorrect:* A synchronous SOAP call that blocks a user's screen is appropriate only for real-time, user-driven transactions (like order placement confirmation) — not for bulk background data synchronization.
+  * *Why D is incorrect:* Direct database replication between SAP HANA and Salesforce is technically impossible; Salesforce does not expose its underlying database for direct external replication. All Salesforce data access is through the API layer.

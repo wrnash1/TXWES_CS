@@ -1,52 +1,50 @@
-# Reading Guide: Module 02 - Spanner
-## Course: CIS-4327_Database_Admin (4327_Database_Admin - Google Cloud Associate Database Engineer)
+# Reading Guide: Module 02 - Database Design – Normalization and ERDs
+## Course: CIS-4327_Database_Admin (4327_Database_Admin - Google Cloud Professional Cloud Database Engineer)
 
 ---
 
 ### Introduction
-Welcome to **Module 02 - Spanner**! This week's study material focuses on the core foundations and configuration mechanics of **Spanner** as aligned with the **4327_Database_Admin - Google Cloud Associate Database Engineer** certification framework. Understanding these topics is essential not only for passing the certification exam but also for administering enterprise systems in real-world environments.
+Welcome to **Module 02 - Database Design – Normalization and ERDs**! This week focuses on how to design a sound relational schema before deploying it to any GCP database service. Poor schema design causes data anomalies, excessive storage costs, and slow queries — problems that are expensive to fix after data is in production on Cloud SQL or Cloud Spanner.
 
-As a student, you will learn the primary operational roles, command syntaxes, and troubleshooting parameters needed to design, configure, and maintain these services. We will explore how different protocols establish connections, how configurations manage resource allocation, and how security controls prevent access breaches. Make sure to complete the checklists and review the glossary terms in detail before beginning the lab activity.
+You will learn how to read and construct Entity-Relationship Diagrams (ERDs), apply normalization rules through Third Normal Form (3NF), and recognize when denormalization is a valid design trade-off for read-heavy workloads.
 
 ---
 
 ### 1. High-Yield Glossary
 Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
 
-*   **Synchronous vs Asynchronous Replication**: HA in Cloud SQL uses *synchronous* replication (data must be written to both zones before returning success). Read Replicas use *asynchronous* replication.
-*   **Failover Process**: During a failover, the primary instance is stopped, the persistent disk is attached to the standby instance, and the standby becomes the new primary. Connections are briefly dropped and must be re-established by the client application.
-*   **Point-in-Time Recovery (PITR)**: PITR requires automated backups to be enabled. It allows restoration to any point within the retention period (usually up to 7 days).
-*   **Focus Area**: Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
-*   **Scenario Trap**: Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
-*   **Study Resource**: To reinforce these concepts visually, review this targeted search query: [SQL & Database Administration Course by freeCodeCamp - Spanner](https://www.youtube.com/watch?v=HXV3zeQKqGY).
-*   **Deliverable**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
+*   **Entity-Relationship Diagram (ERD)**: A graphical model that maps the entities (tables), attributes (columns), and relationships (foreign key links) in a database schema. ERDs are used during design to communicate structure before any DDL is written, and the GCP exam may include a diagram to assess whether a schema is correctly normalized.
+*   **First Normal Form (1NF)**: A table is in 1NF when every column contains only atomic (indivisible) values and every row is uniquely identifiable. Storing a comma-separated list of phone numbers in one column violates 1NF and prevents efficient querying in Cloud SQL.
+*   **Second Normal Form (2NF)**: A table in 2NF must already be in 1NF, and every non-key attribute must depend on the entire primary key — not just part of it. Partial dependencies are only possible in tables with composite primary keys.
+*   **Third Normal Form (3NF)**: A table in 3NF must be in 2NF, and no non-key attribute may depend on another non-key attribute (no transitive dependencies). Achieving 3NF reduces update anomalies and is the standard target for OLTP schema design on Cloud SQL and AlloyDB.
+*   **Denormalization**: The deliberate reversal of normalization by combining tables or adding redundant columns to reduce JOIN operations at query time. This trade-off is common for read-heavy reporting tables in BigQuery, where columnar storage makes wide, flat tables far more efficient than normalized relational schemas.
 
 ---
 
 ### 2. Certification Exam Tips
-*   **Focus Area:** Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
-*   **Scenario Trap:** Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
-*   **Study Resource:** To reinforce these concepts visually, review this targeted search query: [SQL & Database Administration Course by freeCodeCamp - Spanner](https://www.youtube.com/watch?v=HXV3zeQKqGY).
+*   **Normalization Scenario Questions**: The GCP Professional Cloud Database Engineer exam presents schemas and asks you to identify the normal form violation or the correct remediation. Practice identifying which normal form is violated and which SQL DDL change (splitting a table, adding a surrogate key, moving a dependent column) fixes it.
+*   **ERD to DDL Translation**: Know how to translate an ERD cardinality notation (one-to-many, many-to-many) into actual SQL: a many-to-many relationship requires a junction table with two foreign keys.
+*   **Spanner Schema Design**: Cloud Spanner introduces the concept of interleaved tables — a physical schema technique where child rows are stored adjacent to their parent rows on disk. This is a Spanner-specific alternative to normalized table design that eliminates remote joins. Expect at least one Spanner schema question on the exam.
+*   **BigQuery vs. OLTP Schema**: Know that BigQuery favors denormalized, wide, nested-and-repeated schemas (using ARRAY and STRUCT types) over traditional 3NF schemas because the columnar engine penalizes JOINs across large tables. The exam tests your ability to choose the right schema style per service.
+*   **Study Resource:** The open textbook *Database Design* by Adrienne Watt has dedicated chapters on ERDs and normalization that are freely available and directly relevant to this module: [Database Design by Adrienne Watt (BCcampus OpenEd)](https://opentextbc.ca/dbdesign01/).
 
 ---
 
 ### Required Readings & Videos
 To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the section/chapter covering **Spanner** in the OER Textbook: [Database Design by Adrienne Watt](https://opentextbc.ca/dbdesign01/).
-*   **Required Video:** Watch the video lecture on **Spanner** in the official course playlist: [SQL & Database Administration Course by freeCodeCamp](https://www.youtube.com/watch?v=HXV3zeQKqGY).
+*   **Required Reading:** The chapters on entity-relationship modeling and normalization in the open textbook provide diagrams and worked examples that match exam question types: [Database Design by Adrienne Watt](https://opentextbc.ca/dbdesign01/).
+*   **Required Video:** This comprehensive free video lecture covers relational design, normalization, and ERD concepts used across all GCP relational services: [SQL and Database Administration – freeCodeCamp](https://www.youtube.com/watch?v=HXV3zeQKqGY).
 
 ---
 
 ### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Deliverable:**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-
+In this week's hands-on lab, you will draw an ERD for a sample business scenario, write the corresponding DDL (CREATE TABLE statements with constraints), load the schema into a Cloud SQL for PostgreSQL instance, and verify that normalization violations are caught by the database engine.
 
 ---
 
 ### 3. Study Checklist
 - [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read the section/chapter covering **Spanner** in [Database Design by Adrienne Watt](https://opentextbc.ca/dbdesign01/).
-- [ ] Watch the video lecture on **Spanner** in [SQL & Database Administration Course by freeCodeCamp](https://www.youtube.com/watch?v=HXV3zeQKqGY).
+- [ ] Read the ERD and normalization chapters in [Database Design by Adrienne Watt](https://opentextbc.ca/dbdesign01/).
+- [ ] Watch the schema design and normalization segments in [SQL and Database Administration – freeCodeCamp](https://www.youtube.com/watch?v=HXV3zeQKqGY).
 - [ ] Review the commands outlined in the lab instructions.
 - [ ] Proceed to the weekly hands-on lab activity.

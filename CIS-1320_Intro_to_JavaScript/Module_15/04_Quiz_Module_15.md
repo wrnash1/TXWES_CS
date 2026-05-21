@@ -17,63 +17,64 @@ Which block in a try/catch statement runs regardless of whether an exception was
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **developer tools.**?
-C) The entry point or first node in a linked list, which serves as the reference for traversing the rest of the list structure.
-D) An undesired resource consumption where a program fails to release allocated memory that is no longer needed.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-B) The process of restructuring existing computer code without changing its external behavior to improve readability and reduce complexity.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
+Which of the following most accurately describes **developer tools** in the context of JavaScript debugging?
+*   A) Third-party libraries (like React DevTools or Redux DevTools) that must be installed as browser extensions before they can be used
+*   B) Built-in browser panels (Console, Sources, Network, Elements) opened with F12 that allow developers to log values, set breakpoints, step through code, and inspect network requests
+*   C) A Node.js command-line utility that compiles and minifies JavaScript before deployment
+*   D) A special IDE plugin available only in VS Code that highlights syntax errors before the code runs in a browser
+*   **Correct Answer:** B) Built-in browser panels (Console, Sources, Network, Elements) opened with F12 that allow developers to log values, set breakpoints, step through code, and inspect network requests.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **developer tools.**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **developer tools.**.
-    * *Why A is correct:* This describes the exact role and function of **developer tools.**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **developer tools.**.
-
+    *   *Why A is incorrect:* Browser DevTools are built-in and require no installation; third-party dev tools extensions are separate products.
+    *   *Why B is correct:* Every modern browser ships with a complete DevTools suite accessible via F12 (or Cmd+Option+I on Mac) that includes all these panels for debugging.
+    *   *Why C is incorrect:* That describes tools like webpack, esbuild, or the Node.js CLI — not browser DevTools.
+    *   *Why D is incorrect:* Syntax highlighting and linting in VS Code are editor features; browser DevTools are runtime debugging tools that run in the browser.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **run the automated unit testing suite to verify system functionality**. Which of the following commands is the most appropriate to execute?
-D) git commit -m 'update'
-C) pip install -r requirements.txt
-B) python3 -m venv .venv
-A) pytest
-*   **Correct Answer:** A) pytest
+A developer writes the following and the `console.log` in the `catch` block never runs, even when `parseJSON` is called with invalid input. What is the most likely reason?
+```javascript
+try {
+  const data = parseJSON(input);
+} catch (e) {}
+```
+*   A) The `catch` block does not have a `finally` block, so it is skipped entirely.
+*   B) The catch block is empty (swallows the error silently), so the log statement was never added and failures go unnoticed.
+*   C) `try/catch` only works for synchronous code; `parseJSON` must be asynchronous.
+*   D) The `catch` parameter `e` must be declared with `const` before the block to be accessible.
+*   **Correct Answer:** B) The catch block is empty (swallows the error silently), so the log statement was never added and failures go unnoticed.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `pytest` command is directly designed to run the automated unit testing suite to verify system functionality.
-
+    *   *Why A is incorrect:* `finally` is optional; its absence does not cause `catch` to be skipped.
+    *   *Why B is correct:* An empty `catch {}` catches the error and discards it silently. There is no `console.log` in the block because it was never written — the developer simply has no error handling logic.
+    *   *Why C is incorrect:* `try/catch` works for synchronous exceptions; for async errors in `async` functions, `try/catch` also works with `await`. The scenario here is about the empty catch, not async behavior.
+    *   *Why D is incorrect:* The catch parameter does not need to be declared with `const`; it is automatically scoped to the catch block.
 
 ---
 
 **Question 4**
-While working on **Error Handling & Debugging** in a production environment, you encounter a system alert indicating a **TypeError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-D) Reboot the physical machine and wait for services to reload.
-A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-B) Verify that the index is within the valid range of 0 to len(list)-1.
-C) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
-*   **Correct Answer:** A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
+While working on **Error Handling**, a developer wants to throw a meaningful error when a function receives a negative number. Which code is most appropriate?
+*   A) `if (n < 0) { console.error("Negative number"); }`
+*   B) `if (n < 0) { return -1; }`
+*   C) `if (n < 0) { throw new RangeError("Number must be non-negative"); }`
+*   D) `if (n < 0) { catch(new Error("Negative")); }`
+*   **Correct Answer:** C) `if (n < 0) { throw new RangeError("Number must be non-negative"); }`
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This action does not resolve the root cause of TypeError.
-    * *Why A is correct:* Because An operation or function was applied to an object of an inappropriate data type. The appropriate fix is to Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types..
-    * *Why B is incorrect:* This action does not resolve the root cause of TypeError.
-    * *Why C is incorrect:* This action does not resolve the root cause of TypeError.
-
+    *   *Why A is incorrect:* `console.error` logs a message but does not interrupt execution; the function continues running with the invalid input.
+    *   *Why B is incorrect:* Returning a sentinel value (`-1`) is an older pattern that is easy to miss; callers may not check the return value and the error goes undetected.
+    *   *Why C is correct:* `throw new RangeError(...)` creates a meaningful exception with a message and stack trace; any calling code can catch it with `try/catch` and handle it appropriately.
+    *   *Why D is incorrect:* `catch` is not a function you call; it is a clause in a `try/catch` statement. This code would throw a `SyntaxError`.
 
 ---
 
 **Question 5**
-When designing a system for **Error Handling & Debugging**, you must mitigate the risk of **Allowing attackers to execute arbitrary SQL commands on the backend database via input forms.**. Which of the following security configurations or controls represents the best practice to implement?
-C) Enable full disk encryption on all client endpoints.
-A) Implement parameterized queries and prepared statements rather than raw string concatenation.
-B) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-D) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Implement parameterized queries and prepared statements rather than raw string concatenation.
+What information is most useful in a JavaScript **stack trace**?
+*   A) The total memory consumed by the program at the time of the error
+*   B) The sequence of function calls that led to the error, including file names and line numbers
+*   C) A list of all variables declared in the global scope at the time the error occurred
+*   D) The HTTP status code returned by the most recent network request before the error
+*   **Correct Answer:** B) The sequence of function calls that led to the error, including file names and line numbers.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why A is correct:* Implementing Implement parameterized queries and prepared statements rather than raw string concatenation. mitigates the risk of Allowing attackers to execute arbitrary SQL commands on the backend database via input forms..
-    * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why D is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-
+    *   *Why A is incorrect:* Memory usage is reported in the Performance and Memory panels of DevTools, not in a stack trace.
+    *   *Why B is correct:* A stack trace lists the call chain from the innermost function (where the error originated) back to the top-level caller, with each frame showing the function name, file, and line number.
+    *   *Why C is incorrect:* Global variables are visible in the Scope pane of DevTools during debugging; the stack trace shows the call chain, not a variable inventory.
+    *   *Why D is incorrect:* HTTP status codes are visible in the Network panel; they are unrelated to a JavaScript execution stack trace.

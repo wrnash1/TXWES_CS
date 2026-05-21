@@ -1,79 +1,81 @@
 # Quiz: Module 02 - Azure Physical Architecture
+
 ## Course: CIS-4331_Azure_Cloud (Microsoft Azure Fundamentals (AZ-900))
 
 ---
 
 **Question 1**
 How many separate physical datacenters must exist within a single Azure Availability Zone?
-*   A) At least one
-*   B) Exactly three
-*   C) Ten
-*   D) Availability Zones do not contain physical datacenters
-*   **Correct Answer:** A) An Availability Zone is made up of one or more physical datacenters equipped with independent power, cooling, and networking.
-*   **Distractor Analysis:**
-    *   *Why correct:* An Availability Zone is made up of one or more physical datacenters equipped with independent power, cooling, and networking.
-    *   Exactly three is a common misconception (an Azure region with AZ support has at least three zones, not datacenters per zone).
+
+* A) At least one
+* B) Exactly three
+* C) Ten
+* D) Availability Zones do not contain physical datacenters
+* **Correct Answer:** A) An Availability Zone is made up of one or more physical datacenters equipped with independent power, cooling, and networking.
+* **Distractor Analysis:**
+  * *Why correct:* An Availability Zone is made up of one or more physical datacenters equipped with independent power, cooling, and networking.
+  * *Why B is incorrect:* "Exactly three" is a common misconception — an Azure region with AZ support has at least three zones, not three datacenters per zone.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Azure Resource Manager.**?
-D) The descendant node connected to the left branch of a parent node in a binary tree structure.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within cloud operations.
-B) A node in a tree structure that has no child nodes (its children point to null), representing the termination points of the branches.
-C) The standard configuration parameters pre-loaded into a software application or system before any custom adjustments are made by an administrator.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within cloud operations.
-*   **Distractor Analysis:**
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Azure Resource Manager.**.
-    * *Why A is correct:* This describes the exact role and function of **Azure Resource Manager.**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Azure Resource Manager.**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Azure Resource Manager.**.
+Which of the following most accurately describes **Azure Resource Manager (ARM)**?
 
+* A) The deployment and management service through which all Azure resource operations — from the portal, CLI, PowerShell, or API — are processed, providing consistent RBAC, tagging, and template-based deployments.
+* B) A geographic datacenter location used to place Azure resources close to end users for low latency.
+* C) A logical container that groups related Azure resources sharing the same lifecycle and billing scope.
+* D) A feature that automatically replicates Azure resources to a secondary region at least 300 miles away.
+* **Correct Answer:** A) ARM is the deployment and management service through which all Azure resource operations are processed, providing consistent RBAC, tagging, and template-based deployments.
+* **Distractor Analysis:**
+  * *Why A is correct:* ARM is the control plane for all Azure resource interactions regardless of which tool is used.
+  * *Why B is incorrect:* That describes an Azure Region, not ARM.
+  * *Why C is incorrect:* That describes a Resource Group, which is a construct managed by ARM but is not ARM itself.
+  * *Why D is incorrect:* That describes Azure Region Pairs / geo-replication, not ARM.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **execute the infrastructure plan to provision or modify resources defined in the configuration files**. Which of the following commands is the most appropriate to execute?
-D) kubectl get pods -n production
-B) gcloud compute instances list
-A) terraform apply
-C) aws s3 sync local_dir s3://my-bucket
-*   **Correct Answer:** A) terraform apply
-*   **Distractor Analysis:**
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `terraform apply` command is directly designed to execute the infrastructure plan to provision or modify resources defined in the configuration files.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
+A compliance requirement states that all data must remain within the United States. Which Azure concept directly controls where resource data is physically stored?
 
+* A) Availability Zone selection
+* B) Azure Region selection
+* C) Resource Group naming convention
+* D) Azure Subscription tier
+* **Correct Answer:** B) Selecting an Azure Region determines the physical geographic location where your data is stored and processed, satisfying data residency requirements.
+* **Distractor Analysis:**
+  * *Why B is correct:* Region selection is the primary mechanism for data residency compliance in Azure.
+  * *Why A is incorrect:* Availability Zones are within a region and do not change the country where data is stored.
+  * *Why C is incorrect:* Resource Group names are metadata labels with no effect on physical data location.
+  * *Why D is incorrect:* Subscription tier affects pricing and resource limits, not data residency.
 
 ---
 
 **Question 4**
-While working on **Azure Physical Architecture** in a production environment, you encounter a system alert indicating a **Cloud Billing Spike** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-C) Review the user's IAM policies and attach the specific policy granting permissions for the resource action.
-B) Check the VPC route table for an Internet Gateway path and verify that the security group allows incoming traffic.
-A) Set up billing alerts, delete unused volumes, and configure auto-scaling scale-down policies.
-D) Reboot the physical machine and wait for services to reload.
-*   **Correct Answer:** A) Set up billing alerts, delete unused volumes, and configure auto-scaling scale-down policies.
-*   **Distractor Analysis:**
-    * *Why C is incorrect:* This action does not resolve the root cause of Cloud Billing Spike.
-    * *Why B is incorrect:* This action does not resolve the root cause of Cloud Billing Spike.
-    * *Why A is correct:* Because Idle or over-provisioned virtual machine instances and orphan storage volumes are running continuously. The appropriate fix is to Set up billing alerts, delete unused volumes, and configure auto-scaling scale-down policies..
-    * *Why D is incorrect:* This action does not resolve the root cause of Cloud Billing Spike.
+While designing an Azure deployment, you need services that remain available even if an entire Azure datacenter goes offline, without leaving the region. Which architecture pattern achieves this?
 
+* A) Deploy all resources to a single Availability Zone for lowest latency
+* B) Use Azure Paired Regions and enable geo-replication for all services
+* C) Deploy resources across multiple Availability Zones within the same region
+* D) Create multiple Resource Groups in the same datacenter
+* **Correct Answer:** C) Deploying resources across multiple Availability Zones within the same region provides datacenter-level fault tolerance while keeping data within the region.
+* **Distractor Analysis:**
+  * *Why C is correct:* Multiple Availability Zones within one region protects against single-datacenter failure without cross-region replication.
+  * *Why A is incorrect:* A single zone provides no fault tolerance against datacenter failure.
+  * *Why B is incorrect:* Paired Regions move data to a different geographic region, which may violate data residency requirements.
+  * *Why D is incorrect:* Multiple Resource Groups in the same datacenter are logical containers — they provide no physical redundancy.
 
 ---
 
 **Question 5**
-When designing a system for **Azure Physical Architecture**, you must mitigate the risk of **Developers committing plain-text cloud access keys to public source code repositories, allowing full account takeover.**. Which of the following security configurations or controls represents the best practice to implement?
-D) Enable full disk encryption on all client endpoints.
-C) Enable full disk encryption on all client endpoints.
-A) Enforce temporary credentials (STS), rotate keys regularly, and never hardcode API keys in repositories.
-B) Enable Block Public Access configurations and enforce access control via IAM or signed URLs.
-*   **Correct Answer:** A) Enforce temporary credentials (STS), rotate keys regularly, and never hardcode API keys in repositories.
-*   **Distractor Analysis:**
-    * *Why D is incorrect:* This does not address the security vulnerability of Compromised Access Keys.
-    * *Why C is incorrect:* This does not address the security vulnerability of Compromised Access Keys.
-    * *Why A is correct:* Implementing Enforce temporary credentials (STS), rotate keys regularly, and never hardcode API keys in repositories. mitigates the risk of Developers committing plain-text cloud access keys to public source code repositories, allowing full account takeover..
-    * *Why B is incorrect:* This does not address the security vulnerability of Compromised Access Keys.
+You want to ensure your Azure subscription follows corporate standards: all VMs must use approved SKUs and all resources must have a cost-center tag. Which Azure service enforces these rules automatically at deployment time?
 
+* A) Azure Advisor
+* B) Azure Monitor
+* C) Azure Policy
+* D) Azure Blueprints
+* **Correct Answer:** C) Azure Policy evaluates resources against defined rules and can deny deployments that do not comply with required SKUs, tags, or configurations.
+* **Distractor Analysis:**
+  * *Why C is correct:* Azure Policy is the governance service that enforces compliance rules and can block non-compliant deployments automatically.
+  * *Why A is incorrect:* Azure Advisor provides recommendations but cannot block deployments.
+  * *Why B is incorrect:* Azure Monitor collects telemetry data — it does not enforce deployment rules.
+  * *Why D is incorrect:* Azure Blueprints packages policies and role assignments for repeatable environment setup but the enforcement mechanism is still Azure Policy inside the blueprint.

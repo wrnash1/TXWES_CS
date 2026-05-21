@@ -17,17 +17,17 @@ Which IPsec component provides data integrity and origin authentication without 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **GRE tunnels**?
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within networking operations.
-D) The core operations of a stack: 'push' inserts an element onto the top, and 'pop' removes and returns the top element.
-B) The absolute maximum time a business process can be disrupted before the organization suffers irreparable damage or failure.
-C) A reference or memory address stored within a node that points to another node in a linked structure, forming the link between elements.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within networking operations.
+Which of the following most accurately describes **GRE (Generic Routing Encapsulation) tunnels**?
+*   A) A Cisco tunneling protocol that encapsulates any Layer 3 protocol within IP packets, enabling routing protocols and multicast traffic to traverse WAN links — but providing no native encryption.
+*   B) An IPsec transport-mode framework that encrypts only the payload of IP packets between two hosts while preserving the original IP header for routing across the public internet.
+*   C) A carrier WAN service that extends Ethernet frames over a metropolitan area network, offering point-to-point (E-Line) and multipoint (E-LAN) connectivity to enterprise customers.
+*   D) A Cisco-proprietary VPN technology that uses NHRP and IPsec to create dynamic spoke-to-spoke tunnels in a hub-and-spoke VPN overlay architecture.
+*   **Correct Answer:** A) A Cisco tunneling protocol that encapsulates any Layer 3 protocol within IP packets, enabling routing protocols and multicast traffic to traverse WAN links — but providing no native encryption.
 *   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **GRE tunnels**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **GRE tunnels**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **GRE tunnels**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **GRE tunnels**.
+    * *Why A is correct:* GRE is a versatile tunneling protocol that supports multicast (needed for OSPF/EIGRP), but is unencrypted on its own. It is commonly combined with IPsec for security.
+    * *Why B is incorrect:* This describes IPsec in transport mode, not GRE. GRE does not provide encryption at all.
+    * *Why C is incorrect:* This describes Metro Ethernet, a carrier WAN service type — not GRE.
+    * *Why D is incorrect:* This describes DMVPN (Dynamic Multipoint VPN), which uses GRE as one component but is a distinct, more advanced technology.
 
 
 ---
@@ -56,7 +56,7 @@ D) Reboot the physical machine and wait for services to reload.
 C) Change the local network interface settings to use a public DNS resolver like 8.8.8.8 or 1.1.1.1.
 *   **Correct Answer:** A) Release and renew the DHCP lease, or configure a unique static IP address outside the DHCP pool range.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Because Two devices on the same physical or logical network segment are configured with the identical IP address. The appropriate fix is to Release and renew the DHCP lease, or configure a unique static IP address outside the DHCP pool range..
+    * *Why A is correct:* Because Two devices on the same physical or logical network segment are configured with the identical IP address. The appropriate fix is to Release and renew the DHCP lease, or configure a unique static IP address outside the DHCP pool range.
     * *Why B is incorrect:* This action does not resolve the root cause of IP Address Conflict.
     * *Why D is incorrect:* This action does not resolve the root cause of IP Address Conflict.
     * *Why C is incorrect:* This action does not resolve the root cause of IP Address Conflict.
@@ -65,15 +65,14 @@ C) Change the local network interface settings to use a public DNS resolver like
 ---
 
 **Question 5**
-When designing a system for **WAN Technologies & VPNs**, you must mitigate the risk of **Attackers capturing plaintext management passwords or session data using network sniffers.**. Which of the following security configurations or controls represents the best practice to implement?
-C) Enable full disk encryption on all client endpoints.
+When configuring **WAN Technologies & VPNs**, you must mitigate the risk of **Attackers capturing plaintext management passwords or session data using network sniffers.**. Which of the following security configurations or controls represents the best practice to implement?
+C) Implement IPsec ESP tunnel mode between all branch sites to encrypt all inter-site traffic traversing the public WAN.
 A) Configure SSH (port 22) for terminal access and HTTPS (port 443) for web interfaces, disabling Telnet and HTTP.
-D) Enable full disk encryption on all client endpoints.
+D) Deploy DMVPN with IPsec to provide encrypted spoke-to-spoke connectivity without requiring full-mesh manual VPN configuration.
 B) Implement switch Port Security to restrict access to switch ports based on approved MAC addresses.
 *   **Correct Answer:** A) Configure SSH (port 22) for terminal access and HTTPS (port 443) for web interfaces, disabling Telnet and HTTP.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This does not address the security vulnerability of Unencrypted Traffic Exposure.
-    * *Why A is correct:* Implementing Configure SSH (port 22) for terminal access and HTTPS (port 443) for web interfaces, disabling Telnet and HTTP. mitigates the risk of Attackers capturing plaintext management passwords or session data using network sniffers..
-    * *Why D is incorrect:* This does not address the security vulnerability of Unencrypted Traffic Exposure.
-    * *Why B is incorrect:* This does not address the security vulnerability of Unencrypted Traffic Exposure.
-
+    * *Why A is correct:* SSH and HTTPS encrypt the interactive management session itself, preventing credential capture by a sniffer regardless of the network path.
+    * *Why C is incorrect:* IPsec ESP encrypts inter-site traffic, but does not protect local management sessions where Telnet is used on the device console or VTY lines.
+    * *Why D is incorrect:* DMVPN with IPsec is a scalable WAN solution, but does not address the risk of plaintext management credentials being sniffed during Telnet sessions.
+    * *Why B is incorrect:* Port Security restricts physical port access by MAC address and has no effect on management session encryption.

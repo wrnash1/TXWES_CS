@@ -1,86 +1,73 @@
-# Quiz: Module 08 - Troubleshooting
-## Course: CIS-3321_Network_Admin (3321_Network_Admin - CompTIA Network+ (N10-008))
+# Quiz: Module 08 - Network Security – Firewalls, IDS/IPS, and VPNs
+## Course: CIS-3321 – Network Administration (CompTIA Network+ N10-009)
 
 ---
 
 **Question 1**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **System Configuration**?
-D) The descendant node connected to the left branch of a parent node in a binary tree structure.
-C) Electrostatic Discharge protection; tools (like wrist straps, grounding mats) used to prevent static electricity from destroying sensitive microchips when handling hardware.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within networking operations.
-B) The method of evaluating an algorithm's efficiency by analyzing its behavior as the input size approaches infinity, focusing on growth rates rather than specific hardware speeds.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within networking operations.
+A security administrator wants to place a web server so it is accessible from the internet while ensuring that compromised web server cannot directly access internal HR or finance systems. Which network architecture accomplishes this?
+A) Place the web server on the internal LAN in its own VLAN, with inter-VLAN routing permitted through the core switch
+B) Place the web server in a DMZ segment connected to a dedicated firewall interface, with deny rules blocking DMZ-to-LAN traffic
+C) Place the web server on the internet-facing router interface with a static NAT entry pointing to a private IP address
+D) Place the web server directly on the ISP connection and use a host-based firewall on the server itself for protection
+*   **Correct Answer:** B) Place the web server in a DMZ segment connected to a dedicated firewall interface, with deny rules blocking DMZ-to-LAN traffic
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **System Configuration**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **System Configuration**.
-    * *Why A is correct:* This describes the exact role and function of **System Configuration**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **System Configuration**.
-
-
----
+    *   *Why A is incorrect:* Placing a public-facing server on the internal LAN — even in its own VLAN — means a compromised server has a Layer 3 path to internal systems. The DMZ specifically exists to prevent this by inserting a firewall boundary between public servers and private resources.
+    *   *Why C is incorrect:* Placing a server directly on a router interface with NAT provides no DMZ isolation. The server would be fully internet-exposed with only its own host security, and no firewall boundary separates it from internal systems.
+    *   *Why D is incorrect:* A server directly on the ISP link bypasses all network-layer security devices. A host-based firewall alone is insufficient to protect a public-facing server, and there is no isolation from the internal network.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Best Practices**?
-B) The maximum acceptable duration of downtime before a business process or system must be restored to operation after a disaster.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within networking operations.
-C) The defining rule of a BST: for any given node, all keys in its left subtree must be less than or equal to its key, and all keys in its right subtree must be greater.
-D) An access control system where users are assigned to specific roles, and permissions are linked to those roles rather than individual users, simplifying permission management.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within networking operations.
+A network security team receives an alert from their monitoring system showing a signature match for a known SQL injection attack pattern. The system generated the alert and logged the event but did not stop the attack traffic from reaching the web server. Which type of security system is in use?
+A) NGFW (Next-Generation Firewall) — deep packet inspection blocked the connection at the perimeter
+B) IPS (Intrusion Prevention System) — inline blocking prevented the payload from reaching the server
+C) IDS (Intrusion Detection System) — passive monitoring detected the signature and generated an alert without blocking traffic
+D) WAF (Web Application Firewall) — application-layer inspection identified and dropped the HTTP request
+*   **Correct Answer:** C) IDS (Intrusion Detection System) — passive monitoring detected the signature and generated an alert without blocking traffic
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Best Practices**.
-    * *Why A is correct:* This describes the exact role and function of **Best Practices**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Best Practices**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Best Practices**.
-
-
----
+    *   *Why A is incorrect:* An NGFW with active rules would have blocked the connection at the firewall before it reached the web server. The traffic was not blocked, eliminating NGFW as the active device.
+    *   *Why B is incorrect:* An IPS is an inline active system that blocks matching traffic in real time. If the attack traffic reached the server, the device is not acting as an IPS — it generated an alert only, which is IDS behavior.
+    *   *Why D is incorrect:* A WAF inspects and can block HTTP/HTTPS application-layer attacks including SQL injection. If the WAF were in active blocking mode, the attack would have been dropped before reaching the server.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **display all active network connections, listening ports, and corresponding process identifiers**. Which of the following commands is the most appropriate to execute?
-A) netstat -ano
-C) ping
-B) nslookup
-D) traceroute
-*   **Correct Answer:** A) netstat -ano
+A network administrator notices that the ARP table on a workstation has an entry mapping the default gateway's IP address to an unexpected MAC address belonging to another workstation on the same subnet. Which attack is most likely occurring, and which tool on a managed switch can mitigate it?
+A) VLAN hopping attack — mitigated by disabling DTP on all access ports and configuring explicit trunk ports
+B) ARP poisoning (ARP spoofing) attack — mitigated by enabling Dynamic ARP Inspection (DAI) on the switch
+C) MAC flooding attack — mitigated by configuring Port Security with a maximum MAC address limit per port
+D) IP spoofing attack — mitigated by enabling Unicast Reverse Path Forwarding (uRPF) on the router
+*   **Correct Answer:** B) ARP poisoning (ARP spoofing) attack — mitigated by enabling Dynamic ARP Inspection (DAI) on the switch
 *   **Distractor Analysis:**
-    * *Why A is correct:* The `netstat -ano` command is directly designed to display all active network connections, listening ports, and corresponding process identifiers.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is incorrect:* VLAN hopping exploits trunk negotiation (DTP) to access unauthorized VLANs — it does not result in incorrect IP-to-MAC mappings in an ARP table. The symptom described is specific to ARP poisoning.
+    *   *Why C is incorrect:* MAC flooding overwhelms the switch's CAM table to force it into hub mode, causing all traffic to be broadcast out all ports. It does not alter ARP table entries on workstations.
+    *   *Why D is incorrect:* IP spoofing involves forging the source IP address in packet headers — it does not produce a rogue MAC-to-IP mapping in a workstation's ARP cache. uRPF is a router-level control, not a switch-level ARP mitigation.
 
 ---
 
 **Question 4**
-While working on **Troubleshooting** in a production environment, you encounter a system alert indicating a **Subnet Mask Mismatch** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-C) Change the local network interface settings to use a public DNS resolver like 8.8.8.8 or 1.1.1.1.
-D) Reboot the physical machine and wait for services to reload.
-A) Correct the subnet mask configuration on the interface to match the network segment parameters.
-B) Release and renew the DHCP lease, or configure a unique static IP address outside the DHCP pool range.
-*   **Correct Answer:** A) Correct the subnet mask configuration on the interface to match the network segment parameters.
+A company's website becomes unavailable for 45 minutes after receiving millions of HTTP requests per second from thousands of different source IP addresses worldwide. Internal systems remain unaffected. Which type of attack best describes this event?
+A) Man-in-the-Middle (MitM) — an attacker intercepts traffic between users and the web server
+B) ARP poisoning — the attacker poisons ARP caches on the local network segment to redirect traffic
+C) Distributed Denial of Service (DDoS) — a botnet of compromised hosts floods the target with traffic to exhaust its resources
+D) VLAN hopping — the attacker sends double-tagged frames to reach a restricted network segment
+*   **Correct Answer:** C) Distributed Denial of Service (DDoS) — a botnet of compromised hosts floods the target with traffic to exhaust its resources
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This action does not resolve the root cause of Subnet Mask Mismatch.
-    * *Why D is incorrect:* This action does not resolve the root cause of Subnet Mask Mismatch.
-    * *Why A is correct:* Because A host is configured with an incorrect subnet mask, preventing it from identifying local vs. remote addresses. The appropriate fix is to Correct the subnet mask configuration on the interface to match the network segment parameters..
-    * *Why B is incorrect:* This action does not resolve the root cause of Subnet Mask Mismatch.
-
+    *   *Why A is incorrect:* A MitM attack intercepts communications between two parties — it does not cause an availability outage from thousands of external sources. The symptom is unavailability from massive traffic volume, not data interception.
+    *   *Why B is incorrect:* ARP poisoning is a local network attack that redirects traffic on the same subnet — it requires the attacker to be on the same network segment and does not generate millions of requests from worldwide sources.
+    *   *Why D is incorrect:* VLAN hopping is a Layer 2 attack targeting switch misconfiguration to access restricted VLANs — it does not cause a service availability outage and cannot originate from thousands of external internet hosts.
 
 ---
 
 **Question 5**
-When designing a system for **Troubleshooting**, you must mitigate the risk of **Attackers connecting rogue access points or unauthorized laptops directly to internal switch ports.**. Which of the following security configurations or controls represents the best practice to implement?
-B) Configure SSH (port 22) for terminal access and HTTPS (port 443) for web interfaces, disabling Telnet and HTTP.
-D) Enable full disk encryption on all client endpoints.
-A) Implement switch Port Security to restrict access to switch ports based on approved MAC addresses.
-C) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Implement switch Port Security to restrict access to switch ports based on approved MAC addresses.
+A security engineer is hardening a corporate network. The requirements are: (1) prevent unauthorized devices from plugging into switch ports, (2) block traffic from reaching internal systems from the DMZ web server, and (3) protect against known exploit payloads crossing the network boundary. Which combination of controls satisfies all three requirements?
+A) Enable Port Security with sticky MAC on access ports, configure firewall deny rules for DMZ-to-LAN traffic, and deploy an IPS inline at the network perimeter.
+B) Configure WPA3-SAE on all wireless APs, enable VLAN tagging on all trunk ports, and deploy an IDS sensor on the core switch.
+C) Enable SNMP monitoring on all switches, configure NAT on the perimeter router, and deploy a host-based antivirus on all servers.
+D) Implement 802.1Q VLAN segmentation on the core switch, enable spanning tree PortFast on access ports, and configure static ARP entries on all workstations.
+*   **Correct Answer:** A) Enable Port Security with sticky MAC on access ports, configure firewall deny rules for DMZ-to-LAN traffic, and deploy an IPS inline at the network perimeter.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This does not address the security vulnerability of Unauthorized Port Access.
-    * *Why D is incorrect:* This does not address the security vulnerability of Unauthorized Port Access.
-    * *Why A is correct:* Implementing Implement switch Port Security to restrict access to switch ports based on approved MAC addresses. mitigates the risk of Attackers connecting rogue access points or unauthorized laptops directly to internal switch ports..
-    * *Why C is incorrect:* This does not address the security vulnerability of Unauthorized Port Access.
-
+    *   *Why A is correct:* Port Security prevents unauthorized device connections (requirement 1); firewall deny rules block DMZ-to-LAN traffic (requirement 2); an inline IPS detects and blocks known exploit payloads at the network boundary (requirement 3). Each control maps directly to one requirement.
+    *   *Why B is incorrect:* WPA3-SAE secures wireless association but does not control wired switch port access. An IDS detects but does not block exploit payloads — failing requirement 3. VLAN tagging on trunk ports is a switching configuration, not a security control for DMZ isolation.
+    *   *Why C is incorrect:* SNMP monitoring provides visibility but no access control. NAT translates addresses but does not control which devices can plug into switch ports or block exploit payloads inline. Antivirus protects hosts after infection but does not satisfy any of the three network-layer requirements.
+    *   *Why D is incorrect:* VLAN segmentation improves network organization but does not prevent unauthorized devices from connecting to switch ports without authentication. PortFast speeds STP convergence on access ports — it is not a security control. Static ARP entries mitigate ARP poisoning but do not address the three stated requirements.

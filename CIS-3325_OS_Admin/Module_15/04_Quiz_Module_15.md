@@ -1,86 +1,76 @@
-# Quiz: Module 15 - Review
-## Course: CIS-3325_OS_Admin (3325_OS_Admin - CompTIA Linux+ (XK0-005))
+# Quiz: Module 15 - Containerization – Docker Basics on Linux
+## Course: CIS-3325_OS_Admin (CompTIA Linux+ XK0-005)
 
 ---
 
 **Question 1**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Core Concept**?
-B) The entry point or first node in a linked list, which serves as the reference for traversing the rest of the list structure.
-C) Background utility processes that run continuously without direct user interaction to handle system tasks.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within os_admin operations.
-D) Web Content Accessibility Guidelines; international standards ensuring web content is usable for people with disabilities (e.g., screen reader compatibility, color contrast).
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within os_admin operations.
+A developer asks how Docker containers differ from virtual machines. Which statement is most accurate?
+A) Containers include a full guest operating system and boot via a hypervisor, making them more portable than VMs.
+B) Containers share the host Linux kernel and use namespaces and cgroups for isolation, while VMs run separate guest OS instances on a hypervisor.
+C) Containers provide stronger security isolation than VMs because they run in encrypted memory regions.
+D) Containers require more RAM than VMs because each container loads a complete OS image at runtime.
+*   **Correct Answer:** B) Containers share the host Linux kernel and use namespaces and cgroups for isolation, while VMs run separate guest OS instances on a hypervisor.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Core Concept**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Core Concept**.
-    * *Why A is correct:* This describes the exact role and function of **Core Concept**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Core Concept**.
-
+    *   *Why A is incorrect:* This description applies to VMs, not containers. Containers do not include a guest OS or use a hypervisor. It is precisely the absence of a full OS that makes containers lightweight and fast to start.
+    *   *Why C is incorrect:* VMs actually provide stronger hardware-level isolation than containers because VMs include a full OS boundary and hypervisor separation. Containers share the host kernel, which means a kernel vulnerability could potentially affect all containers on the host.
+    *   *Why D is incorrect:* The opposite is true — containers consume far less RAM than VMs because they do not load a complete OS. A container runs only the application process and its dependencies within the host's existing kernel.
 
 ---
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Core Concept**?
-C) The termination condition in a recursive function that stops further recursive calls and begins unwinding the call stack, preventing infinite execution.
-B) A structured, seven-step process (Prepare, Categorize, Select, Implement, Assess, Authorize, Monitor) created by NIST to help organizations manage cybersecurity risk.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within os_admin operations.
-D) The single, top-most node in a tree structure from which all other nodes descend, serving as the starting reference for search algorithms.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within os_admin operations.
+An administrator runs `docker run -d -p 8080:80 nginx` on a Linux server. What does the `-p 8080:80` flag accomplish?
+A) It limits the container's CPU usage to 80% with a burst cap of 8080 MHz.
+B) It maps TCP port 8080 on the host to port 80 inside the container, making the containerized nginx accessible on the host's port 8080.
+C) It creates a volume that mounts the host directory `/8080` to the container path `/80`.
+D) It sets the container's hostname to `8080` and assigns it to network `80`.
+*   **Correct Answer:** B) It maps TCP port 8080 on the host to port 80 inside the container, making the containerized nginx accessible on the host's port 8080.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Core Concept**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Core Concept**.
-    * *Why A is correct:* This describes the exact role and function of **Core Concept**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Core Concept**.
-
+    *   *Why A is incorrect:* CPU resource limits are set with `--cpus` or `--cpu-shares` flags, not with `-p`. The `-p` flag is exclusively for port mapping between host and container.
+    *   *Why C is incorrect:* Volume mounts use the `-v` flag with the syntax `-v /host/path:/container/path`. The `-p` flag has no relationship to filesystem mounts.
+    *   *Why D is incorrect:* Container hostname is set with `--hostname` and network assignment uses `--network`. The `-p` flag performs port publishing only and does not affect the container's network identity.
 
 ---
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **instruct the systemd init system to restart a specified background service process**. Which of the following commands is the most appropriate to execute?
-D) df -h
-A) systemctl restart service
-B) chmod 600 config.conf
-C) ps aux
-*   **Correct Answer:** A) systemctl restart service
+An administrator needs to view the stdout log output from a running Docker container named `webserver`. Which command is correct?
+A) docker inspect webserver
+B) docker logs webserver
+C) docker exec webserver cat /var/log/nginx/access.log
+D) journalctl -u docker -n 50
+*   **Correct Answer:** B) docker logs webserver
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `systemctl restart service` command is directly designed to instruct the systemd init system to restart a specified background service process.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is incorrect:* `docker inspect webserver` outputs detailed JSON metadata about the container — configuration, network settings, mounts, and environment variables. It does not show application stdout/stderr log output.
+    *   *Why C is incorrect:* `docker exec webserver cat /var/log/nginx/access.log` reads a specific log file inside the container's filesystem. This works only if nginx writes to a file rather than stdout. Docker's standard logging mechanism captures stdout/stderr, which `docker logs` reads directly.
+    *   *Why D is incorrect:* `journalctl -u docker` shows systemd journal entries for the Docker daemon service itself — startup messages, pull events, and daemon errors. It does not show the application output from individual containers.
 
 ---
 
 **Question 4**
-While working on **Review** in a production environment, you encounter a system alert indicating a **Service Failed to Bind Port** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-D) Reboot the physical machine and wait for services to reload.
-C) Prepend the command with 'sudo' to run it with superuser administrative privileges, or adjust the file permissions.
-B) Run log rotations, clean temporary files, or expand the logical volume capacity.
-A) Identify and terminate the process already utilizing the target port, or modify the service configuration to use an open port.
-*   **Correct Answer:** A) Identify and terminate the process already utilizing the target port, or modify the service configuration to use an open port.
+After stopping a container with `docker stop webserver`, an administrator runs `docker ps` and does not see the container listed. They conclude the container has been deleted. Is this assessment correct?
+A) Yes — `docker stop` stops and removes the container in a single operation.
+B) No — `docker ps` only shows running containers. The stopped container still exists and can be seen with `docker ps -a`. It must be removed separately with `docker rm webserver`.
+C) Yes — stopped containers are automatically garbage-collected by the Docker daemon after 60 seconds.
+D) No — the container is paused, not stopped. Run `docker unpause webserver` to resume it.
+*   **Correct Answer:** B) No — `docker ps` only shows running containers. The stopped container still exists and can be seen with `docker ps -a`. It must be removed separately with `docker rm webserver`.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This action does not resolve the root cause of Service Failed to Bind Port.
-    * *Why C is incorrect:* This action does not resolve the root cause of Service Failed to Bind Port.
-    * *Why B is incorrect:* This action does not resolve the root cause of Service Failed to Bind Port.
-    * *Why A is correct:* Because Another application or stale instance of the service is already listening on the designated network port. The appropriate fix is to Identify and terminate the process already utilizing the target port, or modify the service configuration to use an open port..
-
+    *   *Why A is incorrect:* `docker stop` only sends SIGTERM (then SIGKILL if needed) to halt the container's main process — it does not delete the container. The container transitions to a stopped state and remains on disk until explicitly removed with `docker rm`.
+    *   *Why C is incorrect:* Docker does not automatically garbage-collect stopped containers. They persist indefinitely until removed with `docker rm` or until the daemon is run with `--rm` flag per-container at creation time (`docker run --rm`).
+    *   *Why D is incorrect:* `docker pause` suspends all processes in a container using cgroups freezer — it is a separate operation from `docker stop`. A stopped container has its process terminated; a paused container has its processes frozen but still exists in memory. `docker stop` does not pause — it terminates.
 
 ---
 
 **Question 5**
-When designing a system for **Review**, you must mitigate the risk of **Administrators logging in routinely as root or Administrator, increasing the blast radius of user errors or malware.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC.
-D) Enable full disk encryption on all client endpoints.
-C) Enable full disk encryption on all client endpoints.
-B) Disable unused system accounts and run a port scan to disable unnecessary active background services.
-*   **Correct Answer:** A) Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC.
+A Dockerfile contains the line `COPY index.html /usr/share/nginx/html/`. During `docker build`, this step fails with "COPY failed: file not found in build context." What is the most likely cause?
+A) The `/usr/share/nginx/html/` directory does not exist inside the container and must be created with a `RUN mkdir` instruction first.
+B) The `index.html` file does not exist in the build context directory (the directory passed to `docker build`) on the host machine.
+C) The `COPY` instruction requires the `--chown` flag to specify the file owner inside the container.
+D) Docker does not allow copying HTML files — only binary executables and configuration files can be copied with the `COPY` instruction.
+*   **Correct Answer:** B) The `index.html` file does not exist in the build context directory (the directory passed to `docker build`) on the host machine.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC. mitigates the risk of Administrators logging in routinely as root or Administrator, increasing the blast radius of user errors or malware..
-    * *Why D is incorrect:* This does not address the security vulnerability of Privileged Access Abuse.
-    * *Why C is incorrect:* This does not address the security vulnerability of Privileged Access Abuse.
-    * *Why B is incorrect:* This does not address the security vulnerability of Privileged Access Abuse.
-
+    *   *Why A is incorrect:* Docker's `COPY` instruction creates intermediate directories as needed when writing to the container filesystem. If the destination path's parent directories do not exist, Docker creates them — a separate `RUN mkdir` is not required for this error.
+    *   *Why C is incorrect:* `--chown` is an optional flag that sets file ownership inside the container. Its absence does not cause a build failure — files default to root ownership. The error message "file not found in build context" specifically points to a missing source file on the host.
+    *   *Why D is incorrect:* `COPY` has no restriction on file types. Any file — HTML, binaries, scripts, configuration files, images — can be copied into a container image using the `COPY` instruction.

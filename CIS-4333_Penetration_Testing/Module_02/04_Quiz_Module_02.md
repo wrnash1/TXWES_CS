@@ -1,4 +1,4 @@
-# Quiz: Module 02 - Legal & Ethical Considerations
+# Quiz: Module 02 - Rules of Engagement and Legal Considerations
 ## Course: CIS-4333_Penetration_Testing (CompTIA PenTest+)
 
 ---
@@ -11,69 +11,67 @@ What must a penetration tester secure before executing any port scanning or expl
 *   D) A server license
 *   **Correct Answer:** B) Without written, authorized consent, performing scanning or exploits is considered illegal hacking.
 *   **Distractor Analysis:**
-    *   *Why correct:* Without written, authorized consent, performing scanning or exploits is considered illegal hacking.
-    *   Authorization is legally required.
+    *   *Why correct:* Without written, authorized consent, performing scanning or exploits is considered illegal hacking. Authorization is legally required.
+    *   *Why A is incorrect:* A public IP certificate does not grant any legal authorization to test systems — it is not a recognized pre-engagement document.
+    *   *Why C is incorrect:* While professional liability insurance is a best practice for testing firms, it does not substitute for written client authorization.
+    *   *Why D is incorrect:* Server licenses govern software use rights, not the legal authorization to perform security testing against systems.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **regulatory frameworks (PCI-DSS**?
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within security operations.
-B) The method of evaluating an algorithm's efficiency by analyzing its behavior as the input size approaches infinity, focusing on growth rates rather than specific hardware speeds.
-C) An operation in Red-Black trees where nodes are flipped between red and black to maintain structural invariants after insertions or deletions.
-D) The core model of cybersecurity representing three objectives: Confidentiality, Integrity, and Availability.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within security operations.
+In penetration testing, which of the following best defines a **regulatory compliance framework** such as PCI-DSS?
+*   A) A set of industry-specific security standards and requirements that organizations must meet, often mandating regular penetration testing and security assessments as part of ongoing compliance obligations.
+*   B) A cryptographic protocol that uses asymmetric key pairs to encrypt data in transit between a client and server, protecting confidentiality.
+*   C) A software development methodology that breaks work into short sprints and uses daily standups to coordinate team tasks.
+*   D) A network segmentation model where each layer of the architecture is isolated from others to prevent lateral movement between zones.
+*   **Correct Answer:** A) A set of industry-specific security standards and requirements that organizations must meet, often mandating regular penetration testing and security assessments as part of ongoing compliance obligations.
 *   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **regulatory frameworks (PCI-DSS**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **regulatory frameworks (PCI-DSS**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **regulatory frameworks (PCI-DSS**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **regulatory frameworks (PCI-DSS**.
-
+    *   *Why A is correct:* PCI-DSS, HIPAA, SOX, and similar frameworks define mandatory security controls and assessment requirements. For example, PCI-DSS Requirement 11 specifically mandates annual external penetration testing for cardholder data environments.
+    *   *Why B is incorrect:* This describes TLS/SSL encryption protocols, which are a technical control — not a compliance framework that mandates security assessments.
+    *   *Why C is incorrect:* This describes Agile software development methodology, which is unrelated to security compliance frameworks.
+    *   *Why D is incorrect:* This describes a network architecture concept (defense in depth / DMZ segmentation), not a compliance framework.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **run a dictionary brute-force attack against the target SSH service to test credential strength**. Which of the following commands is the most appropriate to execute?
-A) hydra -l admin -P passwords.txt ssh://target
-B) wireshark
-C) openssl x509 -text -noout -in cert.pem
-D) nmap -sV -p 1-1024 target_ip
-*   **Correct Answer:** A) hydra -l admin -P passwords.txt ssh://target
+A penetration tester's client has their web application hosted on AWS. The tester's Rules of Engagement authorize testing the application. Before beginning, what additional step is required?
+*   A) No additional steps — the client authorization covers all infrastructure including cloud hosting.
+*   B) Notify the client's IT department so they can monitor for alerts during testing.
+*   C) Obtain separate permission from AWS using their vulnerability reporting or penetration testing request process.
+*   D) Run only passive reconnaissance against the application since active testing of cloud systems is never permitted.
+*   **Correct Answer:** C) Obtain separate permission from AWS using their vulnerability reporting or penetration testing request process.
 *   **Distractor Analysis:**
-    * *Why A is correct:* The `hydra -l admin -P passwords.txt ssh://target` command is directly designed to run a dictionary brute-force attack against the target SSH service to test credential strength.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why C is correct:* Cloud service providers (AWS, Azure, GCP) own the underlying infrastructure and have their own acceptable use policies. Testing cloud-hosted systems without CSP notification or approval may violate their terms of service and potentially trigger their incident response teams.
+    *   *Why A is incorrect:* Client authorization covers their application and data, but does not extend to the physical and virtual infrastructure owned and operated by the cloud provider.
+    *   *Why B is incorrect:* Notifying the IT department is good practice for coordination but does not constitute legal authorization from the cloud provider.
+    *   *Why D is incorrect:* Active testing of cloud-hosted applications is permitted, but it requires proper authorization from both the client and the cloud provider first.
 
 ---
 
 **Question 4**
-While working on **Legal & Ethical Considerations** in a production environment, you encounter a system alert indicating a **Firewall Blocking Valid Traffic** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-D) Reboot the physical machine and wait for services to reload.
-B) Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA.
-A) Review active security rules and add a permissive firewall rule allowing the specific source IP and destination port.
-C) Tune the detection signatures and define exceptions for authorized administrative activities.
-*   **Correct Answer:** A) Review active security rules and add a permissive firewall rule allowing the specific source IP and destination port.
+During a penetration test, a tester accidentally takes down a production web server that was in scope. What is the correct immediate action?
+*   A) Attempt to restore the server using the exploited access and document the recovery steps.
+*   B) Continue testing other in-scope systems and report the outage in the final report.
+*   C) Immediately stop testing, notify the client's designated emergency contact as specified in the RoE, and document the incident.
+*   D) Quietly move on — unintended outages are expected and covered by the liability clause in the MSA.
+*   **Correct Answer:** C) Immediately stop testing, notify the client's designated emergency contact as specified in the RoE, and document the incident.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This action does not resolve the root cause of Firewall Blocking Valid Traffic.
-    * *Why B is incorrect:* This action does not resolve the root cause of Firewall Blocking Valid Traffic.
-    * *Why A is correct:* Because The default-deny firewall rule is blocking a newly deployed service that has not been whitelisted. The appropriate fix is to Review active security rules and add a permissive firewall rule allowing the specific source IP and destination port..
-    * *Why C is incorrect:* This action does not resolve the root cause of Firewall Blocking Valid Traffic.
-
+    *   *Why C is correct:* The RoE always specifies an emergency contact and escalation procedure for unintended outages. Immediate notification is a professional and contractual obligation. Failing to notify promptly can compound damages and destroy client trust.
+    *   *Why A is incorrect:* Attempting self-recovery using exploited access could make the situation worse and create additional unauthorized changes. The client's operations team is better positioned to restore their own systems.
+    *   *Why B is incorrect:* Continuing to test after causing a service disruption without notifying the client is a serious breach of professional conduct and contractual obligation.
+    *   *Why D is incorrect:* Liability clauses typically require the tester to have acted within scope and with due care. Concealing an incident would likely void those protections and expose the tester to greater liability.
 
 ---
 
 **Question 5**
-When designing a system for **Legal & Ethical Considerations**, you must mitigate the risk of **Attackers cracking weak encryption keys using commodity hardware, compromises confidentiality.**. Which of the following security configurations or controls represents the best practice to implement?
-B) Forward all system logs to a secure, write-once SIEM (Security Information and Event Management) platform.
-A) Enforce RSA keys with a minimum length of 2048/4096 bits or switch to Elliptic Curve Cryptography (ECC).
-D) Enable full disk encryption on all client endpoints.
-C) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Enforce RSA keys with a minimum length of 2048/4096 bits or switch to Elliptic Curve Cryptography (ECC).
+Which document in a penetration testing engagement specifically limits what proprietary business information, network diagrams, and vulnerability findings can be shared outside the testing team?
+*   A) Rules of Engagement (RoE)
+*   B) Statement of Work (SOW)
+*   C) Non-Disclosure Agreement (NDA)
+*   D) System Security Plan (SSP)
+*   **Correct Answer:** C) Non-Disclosure Agreement (NDA)
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This does not address the security vulnerability of Weak Key Strength.
-    * *Why A is correct:* Implementing Enforce RSA keys with a minimum length of 2048/4096 bits or switch to Elliptic Curve Cryptography (ECC). mitigates the risk of Attackers cracking weak encryption keys using commodity hardware, compromises confidentiality..
-    * *Why D is incorrect:* This does not address the security vulnerability of Weak Key Strength.
-    * *Why C is incorrect:* This does not address the security vulnerability of Weak Key Strength.
-
+    *   *Why C is correct:* The NDA is a legally binding contract that restricts the tester from disclosing confidential information obtained during the engagement — including network architecture, discovered vulnerabilities, and business data — to unauthorized parties.
+    *   *Why A is incorrect:* The RoE defines testing boundaries, permitted methods, and targets. It governs what the tester may do, not what information may be shared externally.
+    *   *Why B is incorrect:* The SOW defines project scope, deliverables, timeline, and pricing. It is a commercial agreement, not a confidentiality instrument.
+    *   *Why D is incorrect:* A System Security Plan documents an organization's security posture and controls (used in FedRAMP/FISMA contexts). It is produced by the system owner, not part of the penetration testing contract.

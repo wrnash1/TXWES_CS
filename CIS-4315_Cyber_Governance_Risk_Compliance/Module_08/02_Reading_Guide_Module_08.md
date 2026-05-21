@@ -1,52 +1,52 @@
-# Reading Guide: Module 08 - Disaster Recovery & Business Continuity
+# Reading Guide: Module 08 - Security Architecture and Design
 ## Course: CIS-4315_Cyber_Governance_Risk_Compliance (ISACA Certified Information Security Manager (CISM))
 
 ---
 
 ### Introduction
-Welcome to **Module 08 - Disaster Recovery & Business Continuity**! This week's study material focuses on the core foundations and configuration mechanics of **Disaster Recovery & Business Continuity** as aligned with the **ISACA Certified Information Security Manager (CISM)** certification framework. Understanding these topics is essential not only for passing the certification exam but also for administering enterprise systems in real-world environments.
+Welcome to **Module 08 - Security Architecture and Design**! This module focuses on Business Continuity Planning (BCP) and Disaster Recovery Planning (DRP) — the disciplines that ensure an organization can survive and recover from disruptive events. These topics appear throughout CISM Domain 4 (Incident Management) and are closely linked to BIA concepts from Module 07.
 
-As a student, you will learn the primary operational roles, command syntaxes, and troubleshooting parameters needed to design, configure, and maintain these services. We will explore how different protocols establish connections, how configurations manage resource allocation, and how security controls prevent access breaches. Make sure to complete the checklists and review the glossary terms in detail before beginning the lab activity.
+The CISM exam distinguishes between BCP (maintaining business operations during a disruption) and DRP (restoring IT systems and data after a disaster). Candidates must understand both the strategic and operational dimensions of continuity planning.
 
 ---
 
 ### 1. High-Yield Glossary
 Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
 
-*   **Business Continuity Plan (BCP)**: A primary configuration standard and technical parameter essential for coordinating Disaster Recovery & Business Continuity activities, enforcing security boundaries, and verifying operational statuses within the management_services environment.
-*   **Disaster Recovery Plan (DRP)**: A primary configuration standard and technical parameter essential for coordinating Disaster Recovery & Business Continuity activities, enforcing security boundaries, and verifying operational statuses within the management_services environment.
-*   **hot/warm/cold sites**: A primary configuration standard and technical parameter essential for coordinating Disaster Recovery & Business Continuity activities, enforcing security boundaries, and verifying operational statuses within the management_services environment.
-*   **testing DRP (tabletop**: A primary configuration standard and technical parameter essential for coordinating Disaster Recovery & Business Continuity activities, enforcing security boundaries, and verifying operational statuses within the management_services environment.
-*   **walkthrough).**: A primary configuration standard and technical parameter essential for coordinating Disaster Recovery & Business Continuity activities, enforcing security boundaries, and verifying operational statuses within the management_services environment.
+*   **Business Continuity Plan (BCP)**: A comprehensive, documented set of procedures and resources designed to enable an organization to maintain or rapidly resume critical business functions during and after a disruptive event. BCPs address the full scope of business operations, including manual workarounds, communication plans, and alternate work arrangements.
+*   **Disaster Recovery Plan (DRP)**: A subset of the BCP that specifically addresses the procedures for restoring IT systems, applications, data, and infrastructure following a disaster. DRP focuses on the technology recovery aspects of continuity, guided by the RTO and RPO requirements established by the BIA.
+*   **Hot/warm/cold recovery sites**: A spectrum of alternate facility options for continuing operations after a primary site is lost. A hot site is a fully operational, real-time replica ready for immediate failover. A warm site has infrastructure and partial data but requires some setup time (hours to days). A cold site provides only physical space and utilities, requiring full equipment setup and data restoration before use.
+*   **DRP testing methods (tabletop, walkthrough, simulation, parallel, full interruption)**: Structured exercises used to validate DRP effectiveness. A tabletop exercise is a discussion-based review where team members talk through their response to a scenario. A walkthrough verifies that participants understand their roles. Simulation, parallel testing, and full interruption tests progressively increase operational realism and cost.
 
 ---
 
 ### 2. Certification Exam Tips
-*   **Focus Area:** Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
-*   **Scenario Trap:** Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
-*   **Study Resource:** To reinforce these concepts visually, review this targeted search query: [ISACA CISM / Cyber GRC Course Playlist - Disaster Recovery & Business Continuity](https://www.youtube.com/playlist?list=PLbnu8t2G_vG0V7kC0V3n_nU9Y3S-4K178).
+*   **BCP vs. DRP Scope:** CISM distinguishes these two plans. BCP is broader (business operations continuity); DRP is specific to IT systems recovery. Both are required; neither alone is sufficient.
+*   **Hot/Warm/Cold Site Trade-offs:** The CISM exam tests the cost-vs-recovery speed trade-off. Hot sites = fastest recovery, highest cost; cold sites = slowest recovery, lowest cost. The appropriate choice depends on the RTO established in the BIA.
+*   **Test Before You Need It:** The exam emphasizes that untested plans cannot be relied upon. Tabletop exercises are the least disruptive testing method and are a starting point; they do not replace functional testing.
+*   **Study Resource:** [NIST SP 800-34 Rev. 1: Contingency Planning Guide](https://csrc.nist.gov/publications/detail/sp/800-34/rev-1/final) — Section 3.5 covers alternate site strategies (hot/warm/cold) and Section 3.6 covers plan testing, training, and exercises. This is a free ZTC resource.
 
 ---
 
 ### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the section/chapter covering **Disaster Recovery & Business Continuity** in the OER Textbook: [NIST Risk Management Framework (SP 800-37) & Security Controls (SP 800-53)](https://csrc.nist.gov/publications/).
-*   **Required Video:** Watch the video lecture on **Disaster Recovery & Business Continuity** in the official course playlist: [ISACA CISM / Cyber GRC Course Playlist](https://www.youtube.com/playlist?list=PLbnu8t2G_vG0V7kC0V3n_nU9Y3S-4K178).
+*   **Required Reading:** [NIST SP 800-34 Rev. 1: Contingency Planning Guide](https://csrc.nist.gov/publications/detail/sp/800-34/rev-1/final) — Sections 3.5 (Alternate Sites) and 3.6 (Plan Testing). This free publication provides the authoritative guidance on recovery site selection and DRP testing methodologies.
+*   **Required Video:** Watch the video lecture on **Security Architecture and Design** in the official course playlist: [ISACA CISM / Cyber GRC Course Playlist](https://www.youtube.com/playlist?list=PLbnu8t2G_vG0V7kC0V3n_nU9Y3S-4K178).
 
 ---
 
 ### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Draft table-top exercise test agendas**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-*   **Compare hot vs cold recovery site parameters**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-*   **Write emergency activation procedures**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
+In this week's hands-on lab, you will apply BCP/DRP concepts through the following activities:
+*   **Design a tabletop exercise scenario**: Write a realistic disaster scenario (ransomware attack, datacenter fire, or regional power outage) and develop 5 inject questions that test participants' knowledge of DRP activation procedures, communication protocols, and recovery priorities.
+*   **Compare hot, warm, and cold site parameters**: Using a provided scenario with stated RTO requirements, evaluate which recovery site type is appropriate and calculate the estimated annual cost of each option against the business risk it mitigates.
+*   **Draft an emergency activation checklist**: Create a 15-step activation procedure for a fictional organization's DRP, covering declaration authority, initial notification contacts, site activation steps, and status reporting requirements.
 
 
 ---
 
 ### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read the section/chapter covering **Disaster Recovery & Business Continuity** in [NIST Risk Management Framework (SP 800-37) & Security Controls (SP 800-53)](https://csrc.nist.gov/publications/).
-- [ ] Watch the video lecture on **Disaster Recovery & Business Continuity** in [ISACA CISM / Cyber GRC Course Playlist](https://www.youtube.com/playlist?list=PLbnu8t2G_vG0V7kC0V3n_nU9Y3S-4K178).
-- [ ] Review the commands outlined in the lab instructions.
-- [ ] Proceed to the weekly hands-on lab activity.
+- [ ] Be able to distinguish BCP from DRP in scope and purpose.
+- [ ] Know the hot/warm/cold site characteristics and the cost-vs-speed trade-off for each.
+- [ ] Read [NIST SP 800-34 Rev. 1](https://csrc.nist.gov/publications/detail/sp/800-34/rev-1/final), Sections 3.5 and 3.6 on alternate sites and plan testing.
+- [ ] Watch the video lecture on **Security Architecture and Design** in [ISACA CISM / Cyber GRC Course Playlist](https://www.youtube.com/playlist?list=PLbnu8t2G_vG0V7kC0V3n_nU9Y3S-4K178).
+- [ ] Complete the lab activity on tabletop exercise design and recovery site comparison.
+- [ ] Proceed to the Module 08 quiz.

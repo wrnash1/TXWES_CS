@@ -1,79 +1,77 @@
-# Quiz: Module 04 - The Four Dimensions of ITSM
+# Quiz: Module 04 - ITIL Guiding Principles
 ## Course: CIS-4335_IT_Service_Management (ITIL 4 Foundation)
 
 ---
 
 **Question 1**
-Which of the four dimensions focuses on relations with other organizations involved in design, development, and delivery?
-*   A) Organizations and People
-*   B) Information and Technology
-*   C) Partners and Suppliers
-*   D) Value Streams and Processes
-*   **Correct Answer:** C) Partners and Suppliers addresses contracts, integrations, and relationships with vendor companies.
+Which guiding principle recommends using existing services, processes, and tools as a baseline rather than discarding them entirely and rebuilding from scratch?
+*   A) Focus on Value
+*   B) Start Where You Are
+*   C) Keep It Simple and Practical
+*   D) Optimize and Automate
+*   **Correct Answer:** B) "Start Where You Are" advises assessing and reusing what already exists before building from scratch.
 *   **Distractor Analysis:**
-    *   *Why correct:* Partners and Suppliers addresses contracts, integrations, and relationships with vendor companies.
-    *   Organizations covers structures. Value Streams covers workflows.
+    *   *Why B is correct:* This principle requires organizations to observe, measure, and build upon existing capabilities rather than assuming a clean slate is needed. Discarding working elements wastes resources and destroys institutional knowledge.
+    *   *Why A is incorrect:* "Focus on Value" is about ensuring all activities link to stakeholder value — it does not specifically address reusing existing assets.
+    *   *Why C is incorrect:* "Keep It Simple and Practical" is about eliminating unnecessary complexity, not about evaluating what to retain from the current state.
+    *   *Why D is incorrect:* "Optimize and Automate" addresses efficiency improvement — it does not govern the decision to start from existing work versus from scratch.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Value Streams & Processes.**?
-C) A two-dimensional CSS layout system that allows developers to design complex grid-based user interfaces with rows and columns, offering precise control over alignment.
-B) A commitment between a service provider and a client regarding the service's quality, availability, and responsibilities.
-D) HTML tags that convey the meaning and structure of the enclosed content to both the browser and search engines (e.g., <header>, <article>, <footer>) instead of generic containers.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
+Which of the following best defines the guiding principle "Think and Work Holistically"?
+*   A) Deliver work in small, iterative increments and use feedback from each iteration to adjust direction.
+*   B) Ensure all parts of an organization work together in an integrated way, recognizing that no service or practice operates in isolation.
+*   C) Eliminate unnecessary steps and documentation, using only the minimum effort required to achieve an objective.
+*   D) Direct all activity toward delivering outcomes that stakeholders recognize as valuable.
+*   **Correct Answer:** B) Ensure all parts of an organization work together in an integrated way, recognizing that no service or practice operates in isolation.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Value Streams & Processes.**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Value Streams & Processes.**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Value Streams & Processes.**.
-    * *Why A is correct:* This describes the exact role and function of **Value Streams & Processes.**.
-
+    *   *Why B is correct:* "Think and Work Holistically" requires understanding and managing the end-to-end system — how people, processes, technologies, and partners interact — rather than optimizing one component at the expense of others.
+    *   *Why A is incorrect:* That describes "Progress Iteratively with Feedback."
+    *   *Why C is incorrect:* That describes "Keep It Simple and Practical."
+    *   *Why D is incorrect:* That describes "Focus on Value."
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **launch all application services in the background using docker-compose configuration**. Which of the following commands is the most appropriate to execute?
-B) terraform validate
-A) docker-compose up -d
-D) systemctl status iot_service
-C) git log --oneline -n 5
-*   **Correct Answer:** A) docker-compose up -d
+An IT team is planning to automate their incident ticket routing process. Before writing any automation scripts, what does the "Optimize and Automate" principle require them to do first?
+*   A) Get approval from the Change Advisory Board before making any changes.
+*   B) Survey end users to confirm they want automation applied to this process.
+*   C) Review and optimize the current routing process to remove waste and inefficiency before automating it.
+*   D) Deploy the automation to a test environment to verify it works correctly.
+*   **Correct Answer:** C) Review and optimize the current routing process to remove waste and inefficiency before automating it.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `docker-compose up -d` command is directly designed to launch all application services in the background using docker-compose configuration.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why C is correct:* ITIL 4 explicitly states that automation should only follow optimization. Automating a flawed process encodes the flaws into the automation, making them harder to fix. Eliminate waste first, then automate the streamlined version.
+    *   *Why A is incorrect:* Change approval may be required later but is not the first step dictated by this principle.
+    *   *Why B is incorrect:* User surveys may inform design decisions but are not what the "Optimize and Automate" principle specifically requires before automation.
+    *   *Why D is incorrect:* Testing in a test environment is a deployment practice — it comes after the optimization and automation design phases, not before.
 
 ---
 
 **Question 4**
-While working on **The Four Dimensions of ITSM** in a production environment, you encounter a system alert indicating a **Scope Exceeded Budget Limit** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-B) Optimize service resources, implement load balancing, or update failover mechanisms.
-C) Re-assign resources to critical path tasks and establish clear communication protocols.
-D) Reboot the physical machine and wait for services to reload.
-A) Implement strict change control boards (CCB) and re-baseline the project constraints.
-*   **Correct Answer:** A) Implement strict change control boards (CCB) and re-baseline the project constraints.
+A project team is delivering a major new IT platform. Instead of waiting for a full 12-month delivery, management asks them to release working components every 6 weeks and gather user feedback after each release. Which guiding principle does this approach best demonstrate?
+*   A) Keep It Simple and Practical
+*   B) Collaborate and Promote Visibility
+*   C) Progress Iteratively with Feedback
+*   D) Start Where You Are
+*   **Correct Answer:** C) Progress Iteratively with Feedback
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This action does not resolve the root cause of Scope Exceeded Budget Limit.
-    * *Why C is incorrect:* This action does not resolve the root cause of Scope Exceeded Budget Limit.
-    * *Why D is incorrect:* This action does not resolve the root cause of Scope Exceeded Budget Limit.
-    * *Why A is correct:* Because The project scope expanded during execution without adjusting budget or schedule allocations. The appropriate fix is to Implement strict change control boards (CCB) and re-baseline the project constraints..
-
+    *   *Why C is correct:* Breaking delivery into smaller time-boxed increments and using feedback from each to adjust subsequent work is the core application of "Progress Iteratively with Feedback." This reduces risk and enables faster response to changing requirements.
+    *   *Why A is incorrect:* "Keep It Simple and Practical" is about reducing complexity, not about delivery cadence or feedback loops.
+    *   *Why B is incorrect:* While collaboration may be involved, the defining feature here — incremental delivery with feedback — maps to "Progress Iteratively with Feedback."
+    *   *Why D is incorrect:* "Start Where You Are" concerns evaluating and reusing existing capabilities, not iterative delivery.
 
 ---
 
 **Question 5**
-When designing a system for **The Four Dimensions of ITSM**, you must mitigate the risk of **A disaster or ransomware attack causing prolonged downtime because recovery steps are undocumented.**. Which of the following security configurations or controls represents the best practice to implement?
-C) Enable full disk encryption on all client endpoints.
-A) Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services.
-B) Establish formal authorization procedures and digital signatures for all project scope modifications.
-D) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services.
+A service manager notices that the team maintains 14 separate status reports covering the same data, each produced by a different team without sharing results. Which two guiding principles are most directly being violated?
+*   A) Focus on Value and Optimize and Automate
+*   B) Start Where You Are and Think and Work Holistically
+*   C) Collaborate and Promote Visibility, and Keep It Simple and Practical
+*   D) Progress Iteratively with Feedback and Focus on Value
+*   **Correct Answer:** C) Collaborate and Promote Visibility, and Keep It Simple and Practical
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
-    * *Why A is correct:* Implementing Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services. mitigates the risk of A disaster or ransomware attack causing prolonged downtime because recovery steps are undocumented..
-    * *Why B is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
-    * *Why D is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
-
+    *   *Why C is correct:* Teams producing redundant reports in silos without sharing information directly violates "Collaborate and Promote Visibility" (no shared visibility across teams). Maintaining 14 redundant reports when fewer would suffice violates "Keep It Simple and Practical."
+    *   *Why A is incorrect:* While automation could help, "Optimize and Automate" is not the primary issue. The root problem is siloed, duplicated work, not a missing automation.
+    *   *Why B is incorrect:* "Start Where You Are" applies to assessing existing assets before rebuilding — it does not address duplicated reporting. "Think and Work Holistically" is relevant but less precise than the two correct principles.
+    *   *Why D is incorrect:* Iterative delivery and value focus are not the primary concerns raised by duplicated, siloed reporting.

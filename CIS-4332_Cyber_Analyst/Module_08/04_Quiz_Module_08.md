@@ -1,79 +1,82 @@
-# Quiz: Module 08 - Log Analysis & SIEM
+# Quiz: Module 08 - Incident Response – Detection and Triage
 ## Course: CIS-4332_Cyber_Analyst (CompTIA CySA+)
 
 ---
 
 **Question 1**
-What is the primary purpose of event correlation in a SIEM?
-*   A) Compressing files to save storage space
-*   B) Linking separate events together across different systems to identify indicators of an attack
-*   C) Encrypting log data
-*   D) Running software updates
-*   **Correct Answer:** B) SIEM correlation engines match logical rules across disparate logs (e.g., firewall deny + failed SQL login = attack alert).
+What is the primary purpose of event correlation in a SIEM during the detection and triage phase of incident response?
+
+*   A) Compressing and archiving log files to reduce storage costs on the SIEM appliance
+*   B) Linking related events across multiple log sources to identify patterns that individually appear benign but together indicate an attack
+*   C) Encrypting log data in transit between log sources and the central SIEM collector
+*   D) Automatically patching vulnerabilities identified in endpoint scan results
+*   **Correct Answer:** B) Linking related events across multiple log sources to identify patterns that individually appear benign but together indicate an attack.
 *   **Distractor Analysis:**
-    *   *Why correct:* SIEM correlation engines match logical rules across disparate logs (e.g., firewall deny + failed SQL login = attack alert).
-    *   It is not for compression or updates.
+    *   *Why A is incorrect:* Log compression and archiving are storage management functions; they are unrelated to the analytic purpose of event correlation, which is attack pattern detection.
+    *   *Why B is correct:* SIEM correlation engines apply logical rules across disparate event streams — for example, five failed authentications followed by a successful login from the same IP is a brute-force success pattern that only becomes visible by correlating authentication log events over time. Correlation is the mechanism that transforms raw log noise into actionable security alerts.
+    *   *Why C is incorrect:* Encrypting log data in transit (e.g., syslog over TLS) is a data-in-transit security control; it protects log confidentiality but is not what event correlation does.
+    *   *Why D is incorrect:* Automated patching based on scan results is a vulnerability management function; it is separate from SIEM event correlation in the incident detection workflow.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **dashboards.**?
-B) The defining rule of a BST: for any given node, all keys in its left subtree must be less than or equal to its key, and all keys in its right subtree must be greater.
-D) A complete binary tree where the key of any parent node is greater than or equal to the keys of its children, guaranteeing the root is always the maximum element.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within security operations.
-C) A complete binary tree where the key of any parent node is less than or equal to the keys of its children, guaranteeing the root is always the minimum element.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within security operations.
-*   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **dashboards.**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **dashboards.**.
-    * *Why A is correct:* This describes the exact role and function of **dashboards.**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **dashboards.**.
+During alert triage, a SOC analyst reviews a SIEM alert for a port scan originating from an internal IP address. After investigation, the analyst determines the source is the authorized vulnerability scanner operated by the network security team, running on its scheduled weekly window. How should the analyst classify this alert?
 
+*   A) True positive — the scan traffic is real and the alert correctly identifies scanning behavior, so it must be escalated as an active attack
+*   B) False positive — the alert fired on legitimate, authorized activity; the detection is technically correct but the event is not malicious
+*   C) False negative — the SIEM missed the detection entirely and the alert should be reviewed for detection gaps
+*   D) True negative — no alert was generated and no malicious activity occurred, confirming the SIEM is working correctly
+*   **Correct Answer:** B) False positive — the alert fired on legitimate, authorized activity; the detection is technically correct but the event is not malicious.
+*   **Distractor Analysis:**
+    *   *Why A is incorrect:* Classifying an authorized scanner as an active attack (true positive) would incorrectly escalate benign activity and waste analyst resources. The key distinction is whether the activity is malicious — authorized scans are not malicious even though they generate scan-like traffic.
+    *   *Why B is correct:* A false positive occurs when an alert fires on real traffic but the underlying activity is not malicious. The SIEM rule correctly detected scanning behavior, but because the source is an authorized, scheduled scanner, it is a false positive that should be resolved by adding an exception for the scanner's IP address.
+    *   *Why C is incorrect:* A false negative means detection was missed entirely — the opposite of the described scenario, where an alert was generated.
+    *   *Why D is incorrect:* A true negative means no alert was generated and no attack occurred; the scenario describes a generated alert, which eliminates the true negative category.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **display the detailed metadata and validation parameters of an SSL/TLS digital certificate**. Which of the following commands is the most appropriate to execute?
-D) wireshark
-A) openssl x509 -text -noout -in cert.pem
-C) nmap -sV -p 1-1024 target_ip
-B) hydra -l admin -P passwords.txt ssh://target
-*   **Correct Answer:** A) openssl x509 -text -noout -in cert.pem
-*   **Distractor Analysis:**
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `openssl x509 -text -noout -in cert.pem` command is directly designed to display the detailed metadata and validation parameters of an SSL/TLS digital certificate.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
+A Tier 1 SOC analyst is reviewing a SIEM alert: an internal workstation made three successful outbound connections to a known-malicious IP address listed in a current threat intelligence feed. The analyst confirms the destination IP is flagged as active C2 infrastructure. Which action should the analyst take next?
 
+*   A) Close the alert as a false positive because the threat intelligence feed may contain outdated entries
+*   B) Wait 24 hours to observe whether additional connections occur before taking any action
+*   C) Escalate to Tier 2 with a structured escalation note documenting the affected host, IOC, connection timestamps, and recommended containment action
+*   D) Reboot the affected workstation to terminate the active connections and clear any malicious processes from memory
+*   **Correct Answer:** C) Escalate to Tier 2 with a structured escalation note documenting the affected host, IOC, connection timestamps, and recommended containment action.
+*   **Distractor Analysis:**
+    *   *Why A is incorrect:* Confirmed connections to known-malicious C2 infrastructure from a current threat feed represent a high-confidence true positive; closing it as a false positive without investigation would be a critical missed detection.
+    *   *Why B is incorrect:* Waiting 24 hours while an active C2 connection is confirmed allows the attacker continued access; the incident response lifecycle requires prompt detection-to-containment action, not delayed observation.
+    *   *Why C is correct:* An active confirmed C2 connection exceeds Tier 1 response authority. The correct action is immediate escalation to Tier 2 with a complete structured handoff note so that Tier 2 can take the appropriate containment action (EDR network isolation) without delay. This follows the NIST IR Detection and Analysis → Containment transition.
+    *   *Why D is incorrect:* Rebooting the workstation destroys volatile memory evidence (running processes, open network connections, encryption keys) — this is the same shutdown trap tested across multiple CySA+ domains. The correct containment is EDR network isolation, not reboot.
 
 ---
 
 **Question 4**
-While working on **Log Analysis & SIEM** in a production environment, you encounter a system alert indicating a **Certificate Expired Error** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-A) Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA.
-D) Reboot the physical machine and wait for services to reload.
-B) Tune the detection signatures and define exceptions for authorized administrative activities.
-C) Review active security rules and add a permissive firewall rule allowing the specific source IP and destination port.
-*   **Correct Answer:** A) Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA.
-*   **Distractor Analysis:**
-    * *Why A is correct:* Because The SSL/TLS digital certificate presented by the server has passed its validity end date, causing clients to block connections. The appropriate fix is to Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA..
-    * *Why D is incorrect:* This action does not resolve the root cause of Certificate Expired Error.
-    * *Why B is incorrect:* This action does not resolve the root cause of Certificate Expired Error.
-    * *Why C is incorrect:* This action does not resolve the root cause of Certificate Expired Error.
+An organization's IR runbook requires that a Tier 1 analyst document the scope of a potential incident before escalation. A confirmed ransomware infection is found on a single workstation. The analyst checks lateral movement indicators and finds the ransomware's C2 domain was also queried by two servers and four other workstations in the past 48 hours. How should the analyst document the scope?
 
+*   A) Scope: one workstation — only the initially confirmed infected system should be listed; additional systems require separate confirmed alerts before being included
+*   B) Scope: seven systems (one confirmed infected workstation plus two servers and four workstations showing C2 domain queries) — all systems with IOC overlap should be included in the preliminary scope
+*   C) Scope: the entire network — once ransomware is detected, all systems must be assumed compromised and listed in the scope until cleared
+*   D) Scope: zero systems — the C2 domain queries may be false positives and scope should not be documented until every system is individually forensically confirmed
+*   **Correct Answer:** B) Scope: seven systems (one confirmed infected workstation plus two servers and four workstations showing C2 domain queries) — all systems with IOC overlap should be included in the preliminary scope.
+*   **Distractor Analysis:**
+    *   *Why A is incorrect:* Limiting scope to only the initially confirmed system ignores the IOC pivot data already available. The C2 domain queries from the additional six systems are strong indicators of compromise that must be included in the preliminary scope for the Tier 2 investigation.
+    *   *Why B is correct:* Effective IR scoping uses IOC pivoting — when the same C2 domain appears in DNS query logs across multiple systems, those systems are in-scope for the investigation even before full forensic confirmation. Including them in the preliminary scope ensures Tier 2 investigators check all potentially affected assets immediately.
+    *   *Why C is incorrect:* Declaring the entire network in scope is operationally unworkable and unsupported by the available evidence. Scope should be evidence-driven, not assumed worst-case without data.
+    *   *Why D is incorrect:* Refusing to document scope until full forensic confirmation of each system would delay containment of active ransomware propagation. Preliminary scope based on available IOC evidence is required; it is labeled as preliminary and updated as investigation proceeds.
 
 ---
 
 **Question 5**
-When designing a system for **Log Analysis & SIEM**, you must mitigate the risk of **Attackers cracking weak encryption keys using commodity hardware, compromises confidentiality.**. Which of the following security configurations or controls represents the best practice to implement?
-D) Enable full disk encryption on all client endpoints.
-C) Enable full disk encryption on all client endpoints.
-A) Enforce RSA keys with a minimum length of 2048/4096 bits or switch to Elliptic Curve Cryptography (ECC).
-B) Forward all system logs to a secure, write-once SIEM (Security Information and Event Management) platform.
-*   **Correct Answer:** A) Enforce RSA keys with a minimum length of 2048/4096 bits or switch to Elliptic Curve Cryptography (ECC).
-*   **Distractor Analysis:**
-    * *Why D is incorrect:* This does not address the security vulnerability of Weak Key Strength.
-    * *Why C is incorrect:* This does not address the security vulnerability of Weak Key Strength.
-    * *Why A is correct:* Implementing Enforce RSA keys with a minimum length of 2048/4096 bits or switch to Elliptic Curve Cryptography (ECC). mitigates the risk of Attackers cracking weak encryption keys using commodity hardware, compromises confidentiality..
-    * *Why B is incorrect:* This does not address the security vulnerability of Weak Key Strength.
+An organization wants to ensure its IR team can detect active intrusions within one hour of the initial compromise and classify them correctly during the triage phase. Which two controls together best achieve this goal?
 
+*   A) Deploy full-disk encryption on all endpoints and require pre-boot authentication to prevent unauthorized access to system drives
+*   B) Configure the SIEM with correlation rules for high-confidence IOC patterns (C2 beaconing, lateral movement, privilege escalation) and conduct quarterly tabletop exercises so analysts practice applying IR triage classification under realistic scenarios
+*   C) Enforce application whitelisting on all endpoints and maintain a software inventory to track authorized applications
+*   D) Implement a network access control (NAC) solution that blocks unmanaged devices from connecting to the corporate LAN
+*   **Correct Answer:** B) Configure the SIEM with correlation rules for high-confidence IOC patterns (C2 beaconing, lateral movement, privilege escalation) and conduct quarterly tabletop exercises so analysts practice applying IR triage classification under realistic scenarios.
+*   **Distractor Analysis:**
+    *   *Why A is incorrect:* Full-disk encryption and pre-boot authentication protect data confidentiality on stolen or powered-off devices; they do not contribute to real-time intrusion detection speed or analyst triage skill.
+    *   *Why B is correct:* Detection speed depends on the SIEM having tuned correlation rules that surface high-confidence alerts quickly (reducing time-to-alert), and triage accuracy depends on analyst proficiency developed through regular tabletop exercises. Together these directly address both the detection timeline and classification accuracy objectives.
+    *   *Why C is incorrect:* Application whitelisting reduces attack surface by limiting what can execute, but it does not improve the speed of detecting active intrusions already in progress or the analyst's ability to classify triage findings.
+    *   *Why D is incorrect:* NAC prevents unauthorized devices from connecting but does not improve intrusion detection speed for attacks originating from already-connected managed endpoints — the most common attack vector.

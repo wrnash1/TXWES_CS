@@ -1,79 +1,77 @@
-# Quiz: Module 06 - AVL Trees & Red-Black Trees
-## Course: CIS-2315_Data_Structures_Algorithms (Technical Interview Readiness (LeetCode / HackerRank))
+# Quiz: Module 06 – Binary Trees and Tree Traversal
+## Course: CIS-2315 Data Structures & Algorithms (Technical Interview Readiness)
 
 ---
 
 **Question 1**
-What is the maximum height of an AVL tree containing N nodes?
-*   A) O(1)
-*   B) O(log N)
-*   C) O(N)
-*   D) O(N^2)
-*   **Correct Answer:** B) AVL trees guarantee a logarithmic height by maintaining a strict balance factor difference of at most 1.
+In what order does inorder traversal visit the nodes of a binary tree?
+*   A) Root → Left subtree → Right subtree
+*   B) Left subtree → Root → Right subtree
+*   C) Left subtree → Right subtree → Root
+*   D) Root → Right subtree → Left subtree
+*   **Correct Answer:** B) Left subtree → Root → Right subtree
 *   **Distractor Analysis:**
-    *   *Why correct:* AVL trees guarantee a logarithmic height by maintaining a strict balance factor difference of at most 1.
-    *   O(N) is the height of an unbalanced degenerate tree (linked list).
+    *   *Why correct:* "In-order" means the root is visited *in* the middle — after the left subtree and before the right subtree. On a BST, this produces sorted output.
+    *   A is incorrect: That is preorder traversal (Root–Left–Right).
+    *   C is incorrect: That is postorder traversal (Left–Right–Root).
+    *   D is incorrect: That is reverse preorder and does not correspond to a standard traversal.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Self-balancing tree**?
-B) The process of restructuring existing computer code without changing its external behavior to improve readability and reduce complexity.
-A) A binary search tree that automatically adjusts its height during insertions and deletions (e.g., AVL, Red-Black) to maintain logarithmic operations.
-C) An undesired resource consumption where a program fails to release allocated memory that is no longer needed.
-D) The descendant node connected to the right branch of a parent node in a binary tree structure.
-*   **Correct Answer:** A) A binary search tree that automatically adjusts its height during insertions and deletions (e.g., AVL, Red-Black) to maintain logarithmic operations.
+Which of the following is the most accurate definition of the **height** of a binary tree?
+*   A) The total number of nodes in the tree, counting every node from root to all leaves.
+*   B) The number of edges on the longest path from the root to any leaf node.
+*   C) The number of levels in the tree, counted as the sum of the depths of all leaf nodes divided by the number of leaves.
+*   D) The maximum number of children any single node in the tree has, capped at two for a binary tree.
+*   **Correct Answer:** B) The number of edges on the longest path from the root to any leaf node.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Self-balancing tree**.
-    * *Why A is correct:* This describes the exact role and function of **Self-balancing tree**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Self-balancing tree**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Self-balancing tree**.
-
+    *   *Why A is incorrect:* That describes the node count (size) of the tree, not its height.
+    *   *Why B is correct:* Height measures the longest root-to-leaf path in edge count. A single-node tree has height 0; an empty tree has height –1 by convention.
+    *   *Why C is incorrect:* That describes an average depth calculation, not height. Height is a maximum, not an average.
+    *   *Why D is incorrect:* That describes the branching factor (max children per node), which is a property of node degree, not tree height.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **install all external project dependencies specified in the requirements manifest**. Which of the following commands is the most appropriate to execute?
-B) pytest
-A) pip install -r requirements.txt
-D) git commit -m 'update'
-C) python3 -m venv .venv
-*   **Correct Answer:** A) pip install -r requirements.txt
+You need to find the minimum depth of a binary tree (the number of edges from the root to the nearest leaf). Which traversal strategy finds this most efficiently?
+*   A) Postorder DFS — it processes leaves before the root, so it finds the minimum naturally.
+*   B) Inorder DFS — it visits nodes in sorted order, enabling binary search for the minimum depth.
+*   C) Level-order BFS — it visits nodes level by level and returns as soon as the first leaf is found.
+*   D) Preorder DFS with memoization — caching subtree results avoids recomputation on shared subtrees.
+*   **Correct Answer:** C) Level-order BFS — it visits nodes level by level and returns as soon as the first leaf is found.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `pip install -r requirements.txt` command is directly designed to install all external project dependencies specified in the requirements manifest.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is incorrect:* Postorder DFS must visit the entire tree before returning; it cannot short-circuit when the first leaf is found.
+    *   *Why B is incorrect:* Inorder traversal has no notion of depth level and does not produce nodes in depth order.
+    *   *Why C is correct:* BFS explores nodes in increasing depth order. The moment it dequeues a leaf node (no left or right child), that depth is the minimum — it stops immediately without checking deeper levels.
+    *   *Why D is incorrect:* Binary trees have no shared subtrees (no DAG structure), so memoization provides no benefit. DFS would still explore the deepest path before returning.
 
 ---
 
 **Question 4**
-While working on **AVL Trees & Red-Black Trees** in a production environment, you encounter a system alert indicating a **IndexError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-A) Verify that the index is within the valid range of 0 to len(list)-1.
-B) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
-C) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-D) Reboot the physical machine and wait for services to reload.
-*   **Correct Answer:** A) Verify that the index is within the valid range of 0 to len(list)-1.
+What is the space complexity of a recursive inorder traversal on a balanced binary tree with n nodes?
+*   A) O(1) — the traversal reads nodes in-place without extra memory.
+*   B) O(n) — every node is stored in an output list during traversal.
+*   C) O(log n) — the recursive call stack depth equals the tree height, which is O(log n) for a balanced tree.
+*   D) O(n²) — each recursive call copies the subtree before processing it.
+*   **Correct Answer:** C) O(log n) — the recursive call stack depth equals the tree height, which is O(log n) for a balanced tree.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Because The code attempted to access an element of a sequence using an out-of-bounds index. The appropriate fix is to Verify that the index is within the valid range of 0 to len(list)-1..
-    * *Why B is incorrect:* This action does not resolve the root cause of IndexError.
-    * *Why C is incorrect:* This action does not resolve the root cause of IndexError.
-    * *Why D is incorrect:* This action does not resolve the root cause of IndexError.
-
+    *   *Why A is incorrect:* Recursion uses the call stack; each active call frame occupies stack space proportional to the current depth.
+    *   *Why B is incorrect:* O(n) is the space used if you collect results in a list; the *auxiliary* call stack space for a balanced tree is O(log n), not O(n).
+    *   *Why C is correct:* At any point during traversal, the call stack holds at most one frame per level from root to current node. A balanced tree of n nodes has height O(log n), so stack depth is O(log n).
+    *   *Why D is incorrect:* Recursive DFS does not copy subtrees; it processes nodes in-place by following pointers. O(n²) space is not a realistic complexity for tree traversal.
 
 ---
 
 **Question 5**
-When designing a system for **AVL Trees & Red-Black Trees**, you must mitigate the risk of **Storing user credentials in plain text, making them vulnerable to database breaches.**. Which of the following security configurations or controls represents the best practice to implement?
-C) Enable full disk encryption on all client endpoints.
-A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-B) Implement parameterized queries and prepared statements rather than raw string concatenation.
-D) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
+Which traversal order is most useful for serializing (encoding) a binary tree so that it can be perfectly reconstructed from the encoded string?
+*   A) Inorder traversal with null markers
+*   B) Preorder traversal with null markers
+*   C) Level-order traversal without null markers
+*   D) Postorder traversal without null markers
+*   **Correct Answer:** B) Preorder traversal with null markers
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-    * *Why A is correct:* Implementing Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt. mitigates the risk of Storing user credentials in plain text, making them vulnerable to database breaches..
-    * *Why B is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-    * *Why D is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-
+    *   *Why A is incorrect:* Inorder traversal alone, even with null markers, does not uniquely identify a binary tree — many different tree shapes produce the same inorder sequence with the same nulls unless combined with a second traversal.
+    *   *Why B is correct:* Preorder with null markers uniquely encodes every binary tree because the root is always first, so reconstruction is unambiguous: read root, recursively reconstruct left subtree until a null, then right subtree. This is the approach used in LeetCode #297.
+    *   *Why C is incorrect:* Omitting null markers means internal null branches are invisible, making reconstruction ambiguous when node values repeat or when the tree is sparse.
+    *   *Why D is incorrect:* Postorder without null markers has the same ambiguity problem as C and does not allow unambiguous reconstruction.

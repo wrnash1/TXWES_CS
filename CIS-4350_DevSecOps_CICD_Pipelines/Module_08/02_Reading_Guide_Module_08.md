@@ -1,51 +1,61 @@
-# Reading Guide: Module 08 - Software Composition Analysis
+# Reading Guide: Module 08 - SCA – Software Composition Analysis and Dependency Scanning
+
 ## Course: CIS-4350_DevSecOps_CICD_Pipelines (Certified DevSecOps Professional (CDP))
 
 ---
 
 ### Introduction
-Welcome to **Module 08 - Software Composition Analysis**! This week's study material focuses on the core foundations and configuration mechanics of **Software Composition Analysis** as aligned with the **Certified DevSecOps Professional (CDP)** certification framework. Understanding these topics is essential not only for passing the certification exam but also for administering enterprise systems in real-world environments.
 
-As a student, you will learn the primary operational roles, command syntaxes, and troubleshooting parameters needed to design, configure, and maintain these services. We will explore how different protocols establish connections, how configurations manage resource allocation, and how security controls prevent access breaches. Make sure to complete the checklists and review the glossary terms in detail before beginning the lab activity.
+Welcome to **Module 08 - SCA – Software Composition Analysis and Dependency Scanning**! This module covers SCA as the pipeline security gate that identifies vulnerabilities in the open-source and third-party dependencies that make up a significant portion of every modern application. You will learn how SCA tools analyze dependency manifests, build dependency trees, cross-reference component versions against CVE databases, and flag license compliance issues. Because supply chain attacks increasingly target transitive dependencies, SCA has become one of the most critical security gates in a DevSecOps pipeline and is a major focus area of the CDP exam.
 
 ---
 
 ### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
 
-*   **Software Composition Analysis (SCA)**: A primary configuration standard and technical parameter essential for coordinating Software Composition Analysis activities, enforcing security boundaries, and verifying operational statuses within the programming environment.
-*   **dependency trees**: A primary configuration standard and technical parameter essential for coordinating Software Composition Analysis activities, enforcing security boundaries, and verifying operational statuses within the programming environment.
-*   **CVE databases**: A primary configuration standard and technical parameter essential for coordinating Software Composition Analysis activities, enforcing security boundaries, and verifying operational statuses within the programming environment.
-*   **license compliance.**: A primary configuration standard and technical parameter essential for coordinating Software Composition Analysis activities, enforcing security boundaries, and verifying operational statuses within the programming environment.
+Review these essential definitions carefully. The CDP certification exam expects you to recognize and apply these concepts in scenario-based questions:
+
+* **Software Composition Analysis (SCA)**: A security testing technique that inventories all open-source and third-party components used in an application — both direct and transitive dependencies — and checks each component's version against known vulnerability databases (CVE, NVD, GitHub Advisory Database). Common SCA tools include OWASP Dependency-Check, Snyk, Grype, and GitHub Dependabot. SCA is distinct from SAST in that it focuses on component versions and known CVEs, not on how the application's own code uses those components.
+
+* **Dependency trees**: The hierarchical representation of all packages an application depends on, including direct dependencies (listed in `package.json` or `requirements.txt`) and their transitive dependencies (what those packages depend on). A vulnerability in a deep transitive dependency (e.g., `log4j` pulled in three levels deep) is just as exploitable as one in a direct dependency — SCA tools traverse the full dependency tree to surface all risks.
+
+* **CVE databases**: Centralized repositories of disclosed software vulnerabilities. Key databases include the National Vulnerability Database (NVD) maintained by NIST, which assigns CVE identifiers and CVSS severity scores, and the GitHub Advisory Database, which focuses on package-level advisories. SCA tools query these databases to determine whether any installed package version has a known, unpatched vulnerability.
+
+* **License compliance**: The process of ensuring that open-source components used in an application comply with the organization's licensing policy. Packages with copyleft licenses (GPL, AGPL) may impose requirements to open-source the containing application. SCA tools can flag license types and generate a Software Bill of Materials (SBOM) to support legal and compliance review.
 
 ---
 
 ### 2. Certification Exam Tips
-*   **Focus Area:** Pay close attention to how these configurations behave by default. The exam frequently features questions on default ports, configuration file paths, and diagnostic console commands.
-*   **Scenario Trap:** Watch out for questions asking you to troubleshoot a failing service. Always verify if basic network connectivity, local port conflicts, or permissions are violated first.
-*   **Study Resource:** To reinforce these concepts visually, review this targeted search query: [CI/CD Pipeline & DevSecOps Course by freeCodeCamp - Software Composition Analysis](https://www.youtube.com/watch?v=scEDHsr3APg).
+
+* **SAST vs. SCA**: The CDP exam tests the distinction carefully. SAST analyzes the application's own source code for insecure patterns. SCA analyzes the versions of external packages and libraries for known CVEs. Both are needed — a perfectly written application can still be vulnerable through a dependency with a critical CVE.
+* **Transitive Dependencies**: Know that transitive (indirect) dependencies are a major SCA challenge. The Log4Shell vulnerability (CVE-2021-44228) affected applications that included Log4j as a transitive dependency they may not have been aware of. The CDP exam tests whether you understand that SCA must scan the full dependency tree, not just direct dependencies.
+* **SBOM**: A Software Bill of Materials is an inventory of all components in an application, generated by SCA tools. The CDP exam tests knowledge of SBOM as a compliance and incident response artifact — if a new CVE is disclosed, an SBOM allows rapid assessment of which applications are affected.
+* **Study Resource**: The [OWASP Dependency-Check documentation](https://owasp.org/www-project-dependency-check/) covers how to run dependency scans in CI/CD pipelines, interpret HTML and JSON reports, and configure suppression files for accepted risks — essential reference for CDP exam SCA pipeline questions.
 
 ---
 
 ### Required Readings & Videos
+
 To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the section/chapter covering **Software Composition Analysis** in the OER Textbook: [DevSecOps Reference Architecture & GitHub Actions Guides](https://www.devsecops.org/).
-*   **Required Video:** Watch the video lecture on **Software Composition Analysis** in the official course playlist: [CI/CD Pipeline & DevSecOps Course by freeCodeCamp](https://www.youtube.com/watch?v=scEDHsr3APg).
+
+* **Required Reading**: Read the [OWASP Dependency-Check project page](https://owasp.org/www-project-dependency-check/) — covers how the tool scans dependency manifests against the NVD, generates HTML and JSON reports, and integrates into Jenkins, Maven, Gradle, and GitHub Actions pipelines. Focus on the pipeline integration and report interpretation sections.
+* **Required Video**: Watch the SCA and dependency scanning segment of [CI/CD Pipeline & DevSecOps Course by freeCodeCamp](https://www.youtube.com/watch?v=scEDHsr3APg) — demonstrates running SCA tools against a project with known vulnerable dependencies, interpreting CVE findings, and configuring a pipeline gate to fail on HIGH/CRITICAL severity vulnerabilities.
 
 ---
 
 ### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Run a SCA scan on dependencies**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-*   **Identify vulnerable packages**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
-*   **Review update mitigations**: Configure and execute this validation step in your lab environment, verifying exit codes and logging output files.
 
+In this week's hands-on lab, you will integrate SCA into a pipeline by:
+
+* **Run a SCA scan on dependencies**: Add a `snyk test` or `dependency-check` step to a GitHub Actions workflow, pointing it at the project's `requirements.txt` or `package.json`, and configure it to output results as a JSON report artifact.
+* **Identify vulnerable packages**: Review the SCA report to find at least two packages with known CVEs — note the CVE identifier, CVSS score, affected version, and the patched version to upgrade to.
+* **Review update mitigations**: For each identified vulnerable package, determine whether a patched version exists, document the upgrade command (`pip install package==new_version` or `npm install package@new_version`), and verify the SCA scan passes after the upgrade.
 
 ---
 
 ### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read the section/chapter covering **Software Composition Analysis** in [DevSecOps Reference Architecture & GitHub Actions Guides](https://www.devsecops.org/).
-- [ ] Watch the video lecture on **Software Composition Analysis** in [CI/CD Pipeline & DevSecOps Course by freeCodeCamp](https://www.youtube.com/watch?v=scEDHsr3APg).
-- [ ] Review the commands outlined in the lab instructions.
-- [ ] Proceed to the weekly hands-on lab activity.
+
+* [ ] Read the glossary terms and understand the difference between SCA, SAST, and container image scanning.
+* [ ] Read the OWASP Dependency-Check project documentation at [https://owasp.org/www-project-dependency-check/](https://owasp.org/www-project-dependency-check/).
+* [ ] Watch the SCA segment of [CI/CD Pipeline & DevSecOps Course by freeCodeCamp](https://www.youtube.com/watch?v=scEDHsr3APg).
+* [ ] Complete the dependency scan, CVE identification, and remediation steps in the lab activity.
+* [ ] Proceed to the weekly hands-on lab activity.

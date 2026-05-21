@@ -17,17 +17,17 @@ Which NAT terminology describes the public IP address of an inside host as seen 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **inside local/global definitions.**?
-B) Electrostatic Discharge protection; tools (like wrist straps, grounding mats) used to prevent static electricity from destroying sensitive microchips when handling hardware.
-C) The final node in a linked list, whose next pointer typically references null (or the head node in a circular list), marking the end of the chain.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within networking operations.
-D) The scenario where an algorithm requires the absolute minimum number of steps to complete (e.g., searching for an element that happens to be at the very beginning of a list).
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within networking operations.
+Which of the following most accurately describes **inside local and inside global** address definitions in Cisco NAT?
+*   A) Inside Local is the private IP address assigned to an internal host as seen from within the organization's network; Inside Global is the public IP address that same host appears to use when viewed from outside the network.
+*   B) Inside Local is the IP address of the NAT router's WAN interface, which represents the organization to the internet; Inside Global is the private IP address pool from which hosts are dynamically assigned.
+*   C) Inside Local refers to the IP address of the DNS server inside the organization; Inside Global refers to the publicly registered DNS server address used by external clients to reach internal resources.
+*   D) Inside Local is the first usable host address in the inside subnet; Inside Global is the network address (first address) of the public IP block allocated by the ISP to the organization.
+*   **Correct Answer:** A) Inside Local is the private IP address assigned to an internal host as seen from within the organization's network; Inside Global is the public IP address that same host appears to use when viewed from outside the network.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **inside local/global definitions.**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **inside local/global definitions.**.
-    * *Why A is correct:* This describes the exact role and function of **inside local/global definitions.**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **inside local/global definitions.**.
+    * *Why A is correct:* This is the exact Cisco definition. Inside Local = 10.x/172.16.x/192.168.x private IP. Inside Global = the translated public IP the host appears as on the internet.
+    * *Why B is incorrect:* The WAN interface IP is used as the Inside Global address in PAT configurations, but this option confuses the roles — it reverses the local/global relationship.
+    * *Why C is incorrect:* DNS server addresses are irrelevant to NAT address terminology. This option is a distractor introducing unrelated concepts.
+    * *Why D is incorrect:* NAT terminology is not about "first usable" or "network addresses" — it specifically refers to how a host's IP appears from different vantage points.
 
 
 ---
@@ -59,21 +59,20 @@ A) Change the local network interface settings to use a public DNS resolver like
     * *Why C is incorrect:* This action does not resolve the root cause of DNS Failure.
     * *Why D is incorrect:* This action does not resolve the root cause of DNS Failure.
     * *Why B is incorrect:* This action does not resolve the root cause of DNS Failure.
-    * *Why A is correct:* Because The configured DNS server is offline, misconfigured, or unreachable, preventing host name resolution. The appropriate fix is to Change the local network interface settings to use a public DNS resolver like 8.8.8.8 or 1.1.1.1..
+    * *Why A is correct:* Because The configured DNS server is offline, misconfigured, or unreachable, preventing host name resolution. The appropriate fix is to Change the local network interface settings to use a public DNS resolver like 8.8.8.8 or 1.1.1.1.
 
 
 ---
 
 **Question 5**
-When designing a system for **NAT and PAT Configurations**, you must mitigate the risk of **Attackers connecting rogue access points or unauthorized laptops directly to internal switch ports.**. Which of the following security configurations or controls represents the best practice to implement?
-C) Enable full disk encryption on all client endpoints.
-D) Enable full disk encryption on all client endpoints.
+When configuring **NAT and PAT**, you must mitigate the risk of **Attackers connecting rogue access points or unauthorized laptops directly to internal switch ports.**. Which of the following security configurations or controls represents the best practice to implement?
+C) Configure a NAT pool with a limited number of public IP addresses to restrict the number of devices that can simultaneously access the internet.
+D) Apply an inbound ACL on the NAT inside interface to block traffic from any source IP not in the authorized internal subnet range.
 B) Configure SSH (port 22) for terminal access and HTTPS (port 443) for web interfaces, disabling Telnet and HTTP.
 A) Implement switch Port Security to restrict access to switch ports based on approved MAC addresses.
 *   **Correct Answer:** A) Implement switch Port Security to restrict access to switch ports based on approved MAC addresses.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This does not address the security vulnerability of Unauthorized Port Access.
-    * *Why D is incorrect:* This does not address the security vulnerability of Unauthorized Port Access.
-    * *Why B is incorrect:* This does not address the security vulnerability of Unauthorized Port Access.
-    * *Why A is correct:* Implementing Implement switch Port Security to restrict access to switch ports based on approved MAC addresses. mitigates the risk of Attackers connecting rogue access points or unauthorized laptops directly to internal switch ports..
-
+    * *Why A is correct:* Port Security prevents unauthorized devices from connecting at the switch port level, stopping rogue devices before they can obtain a NAT translation.
+    * *Why C is incorrect:* Limiting NAT pool size slows down unauthorized access but does not prevent a rogue device from physically connecting and using an available translation slot.
+    * *Why D is incorrect:* An ACL on the NAT inside interface filters traffic after the device is already connected to the switch — it does not prevent the physical connection itself.
+    * *Why B is incorrect:* SSH/HTTPS secures management sessions but does not prevent unauthorized devices from physically connecting to internal switch ports.

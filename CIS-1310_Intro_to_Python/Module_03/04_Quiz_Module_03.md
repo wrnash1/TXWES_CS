@@ -17,17 +17,17 @@ What is the return type of the `input()` function?
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **type casting (int**?
-D) An efficient mapping technique for complete binary trees where parent-child indices can be computed using simple arithmetic (e.g., parent is (i-1)/2).
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-C) A mathematical representation used to describe the asymptotic upper bound of an algorithm's running time or space complexity relative to the input size N. It helps developers predict how an algorithm will scale as data grows.
-B) Web Content Accessibility Guidelines; international standards ensuring web content is usable for people with disabilities (e.g., screen reader compatibility, color contrast).
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
+Which of the following best describes **type casting** in Python?
+*   A) The automatic conversion Python performs when assigning a value of one type to a variable previously holding a different type
+*   B) The explicit conversion of a value from one data type to another using a constructor function such as `int()`, `float()`, or `str()`
+*   C) A compiler optimization that replaces slow dynamic type checks with faster static type inferences at runtime
+*   D) The process of checking whether a variable name follows Python's identifier rules before the interpreter binds the name to a value
+*   **Correct Answer:** B) The explicit conversion of a value from one data type to another using a constructor function such as `int()`, `float()`, or `str()`.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **type casting (int**.
-    * *Why A is correct:* This describes the exact role and function of **type casting (int**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **type casting (int**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **type casting (int**.
+    *   *Why A is incorrect:* Python does not automatically coerce types on assignment — you must perform explicit conversions yourself; implicit conversion happens only in a few narrow arithmetic contexts.
+    *   *Why B is correct:* Type casting means manually calling `int()`, `float()`, `str()`, etc. to convert a value to the desired type before using it in an operation.
+    *   *Why C is incorrect:* Python has no ahead-of-time compiler that replaces type checks; it is an interpreted, dynamically typed language and type information is managed at runtime.
+    *   *Why D is incorrect:* Checking identifier rules is part of the parsing/lexing step, not type casting; those are two separate concerns in Python's execution model.
 
 
 ---
@@ -69,11 +69,10 @@ When designing a system for **Variables and Basic I/O**, you must mitigate the r
 C) Enable full disk encryption on all client endpoints.
 A) Implement parameterized queries and prepared statements rather than raw string concatenation.
 B) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-D) Enable full disk encryption on all client endpoints.
+D) Validate that user input contains only alphanumeric characters and raise a ValueError for anything else.
 *   **Correct Answer:** A) Implement parameterized queries and prepared statements rather than raw string concatenation.
 *   **Distractor Analysis:**
     * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
     * *Why A is correct:* Implementing Implement parameterized queries and prepared statements rather than raw string concatenation. mitigates the risk of Allowing attackers to execute arbitrary SQL commands on the backend database via input forms..
     * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why D is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-
+    * *Why D is incorrect:* Input allowlisting can reduce the attack surface but is an incomplete control — parameterized queries are the definitive defense because they prevent SQL injection regardless of what characters are in the input.

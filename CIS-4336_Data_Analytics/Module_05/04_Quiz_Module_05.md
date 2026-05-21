@@ -1,4 +1,4 @@
-# Quiz: Module 05 - Handling Missing Data and Outliers
+# Quiz: Module 05 - Statistical Foundations – Descriptive Statistics
 ## Course: CIS-4336_Data_Analytics (CompTIA Data+)
 
 ---
@@ -9,71 +9,67 @@ Which method involves replacing missing dataset values with statistical estimate
 *   B) Imputation
 *   C) Normalization
 *   D) Deduplication
-*   **Correct Answer:** B) Imputation calculates replacing values rather than omitting records entirely.
+*   **Correct Answer:** B) Imputation replaces missing values with calculated substitutes rather than omitting records entirely, preserving sample size.
 *   **Distractor Analysis:**
-    *   *Why correct:* Imputation calculates replacing values rather than omitting records entirely.
-    *   Deletion drops rows. Deduplication removes duplicates.
+    *   *Why correct:* Imputation substitutes missing values with estimates derived from the existing data distribution.
+    *   Deletion drops rows with missing values. Normalization reduces database redundancy. Deduplication removes duplicate records.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **deletion methods**?
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within database operations.
-C) A column or group of columns in one database table that refers to the primary key in another table, enforcing referential integrity.
-B) A unique identifier column or set of columns in a database table that guarantees every row can be uniquely identified.
-D) A mathematical representation used to describe the asymptotic upper bound of an algorithm's running time or space complexity relative to the input size N. It helps developers predict how an algorithm will scale as data grows.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within database operations.
+In descriptive statistics, which of the following most accurately defines **deletion methods for handling missing data**?
+*   A) Replacing missing values in a column with the column mean, median, or mode to retain all rows for analysis.
+*   B) Removing rows (listwise deletion) or excluding specific variables from calculations (pairwise deletion) when data is missing, accepting the reduced sample size.
+*   C) Converting missing value placeholders from one data type to another so the database engine can process them.
+*   D) Applying a regex pattern to identify and remove whitespace characters that appear as blank but are not technically NULL.
+*   **Correct Answer:** B) Removing rows (listwise deletion) or excluding specific variables from calculations (pairwise deletion) when data is missing, accepting the reduced sample size.
 *   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **deletion methods**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **deletion methods**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **deletion methods**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **deletion methods**.
-
+    *   *Why B is correct:* Deletion methods explicitly remove data points or rows containing missing values, which reduces the available sample.
+    *   *Why A is incorrect:* This describes imputation, which retains rows by substituting estimates for missing values.
+    *   *Why C is incorrect:* This describes type casting, a data transformation operation unrelated to handling missingness.
+    *   *Why D is incorrect:* Whitespace removal is a text cleaning technique, not a missing-data strategy.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **query and retrieve active user records matching specific conditions from the database table**. Which of the following commands is the most appropriate to execute?
-D) EXPLAIN ANALYZE SELECT * FROM logs;
-C) CREATE INDEX idx_email ON users(email);
-B) GRANT SELECT ON client_db TO analyst_role;
-A) SELECT * FROM users WHERE active = 1;
-*   **Correct Answer:** A) SELECT * FROM users WHERE active = 1;
+A sorted dataset of 7 test scores is: 55, 62, 70, 74, 81, 88, 95. A student with a score of 200 (data entry error) is added, making 8 values. Which measure of central tendency is LEAST affected by this error?
+*   A) Mean, because it uses all data values in its calculation.
+*   B) Median, because it depends only on the middle values after sorting, not on extreme values.
+*   C) Range, because it measures the spread from minimum to maximum.
+*   D) Variance, because it squares each deviation from the mean.
+*   **Correct Answer:** B) Median, because it depends only on the middle values after sorting, not on extreme values.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `SELECT * FROM users WHERE active = 1;` command is directly designed to query and retrieve active user records matching specific conditions from the database table.
-
+    *   *Why B is correct:* With 8 sorted values, the median is the average of the 4th and 5th values. The extreme value 200 only shifts sorting position; the middle values change minimally. Mean, range, and variance are all pulled heavily by the outlier.
+    *   *Why A is incorrect:* The mean is calculated using all values, so the erroneous 200 inflates it significantly.
+    *   *Why C is incorrect:* Range is maximally sensitive to outliers — it is defined as max minus min, so adding 200 dramatically increases it.
+    *   *Why D is incorrect:* Variance squares deviations from the mean. When the mean is inflated by an outlier, variance is severely distorted.
 
 ---
 
 **Question 4**
-While working on **Handling Missing Data and Outliers** in a production environment, you encounter a system alert indicating a **Slow Query Performance** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-A) Analyze the query plan and create appropriate indexes on columns frequently used in WHERE and JOIN clauses.
-C) Optimize application query order, implement retry logic, and keep transaction blocks as brief as possible.
-D) Reboot the physical machine and wait for services to reload.
-B) Increase the database connection pool limit, adjust timeout configurations, or scale database resources.
-*   **Correct Answer:** A) Analyze the query plan and create appropriate indexes on columns frequently used in WHERE and JOIN clauses.
+A dataset has Q1 = 40, Q3 = 70, and IQR = 30. Using the standard 1.5×IQR rule, which value would be flagged as an outlier?
+*   A) 25, because it is below Q1.
+*   B) 85, because it is above Q3.
+*   C) 103, because it exceeds the upper fence of Q3 + 1.5×IQR = 70 + 45 = 115. Actually 103 < 115, so it is NOT an outlier.
+*   D) 118, because it exceeds the upper fence of Q3 + 1.5×IQR = 70 + 45 = 115.
+*   **Correct Answer:** D) 118, because it exceeds the upper fence of Q3 + 1.5×IQR = 70 + 45 = 115.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Because The database is performing a full table scan on millions of rows due to a missing index or poorly written SQL syntax. The appropriate fix is to Analyze the query plan and create appropriate indexes on columns frequently used in WHERE and JOIN clauses..
-    * *Why C is incorrect:* This action does not resolve the root cause of Slow Query Performance.
-    * *Why D is incorrect:* This action does not resolve the root cause of Slow Query Performance.
-    * *Why B is incorrect:* This action does not resolve the root cause of Slow Query Performance.
-
+    *   *Why D is correct:* Upper fence = Q3 + 1.5×IQR = 70 + 1.5(30) = 70 + 45 = 115. Lower fence = Q1 − 1.5×IQR = 40 − 45 = −5. Any value above 115 or below −5 is an outlier. Only 118 exceeds 115.
+    *   *Why A is incorrect:* 25 is above the lower fence of −5 (25 > −5), so it is not flagged as an outlier by the 1.5×IQR rule.
+    *   *Why B is incorrect:* 85 is above Q3 but below the upper fence of 115 (85 < 115), so it is not an outlier.
+    *   *Why C is incorrect:* This answer contains a self-correction — 103 is below the upper fence of 115 and is not an outlier.
 
 ---
 
 **Question 5**
-When designing a system for **Handling Missing Data and Outliers**, you must mitigate the risk of **Unauthorized access to database backup files or physical drives exposing all customer data.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Enable Transparent Data Encryption (TDE) or cloud database storage encryption at rest.
-C) Enable full disk encryption on all client endpoints.
-D) Enable full disk encryption on all client endpoints.
-B) Enforce parameterized queries and prepared statements, rejecting direct string concatenation of user inputs.
-*   **Correct Answer:** A) Enable Transparent Data Encryption (TDE) or cloud database storage encryption at rest.
+Two datasets each have a mean of 50. Dataset A has a standard deviation of 2; Dataset B has a standard deviation of 20. What does this difference tell an analyst?
+*   A) Dataset A has more data points than Dataset B.
+*   B) Dataset A's values are tightly clustered near 50, while Dataset B's values are widely spread around 50.
+*   C) Dataset B has more missing values than Dataset A.
+*   D) Both datasets are identical because they share the same mean.
+*   **Correct Answer:** B) Dataset A's values are tightly clustered near 50, while Dataset B's values are widely spread around 50.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Enable Transparent Data Encryption (TDE) or cloud database storage encryption at rest. mitigates the risk of Unauthorized access to database backup files or physical drives exposing all customer data..
-    * *Why C is incorrect:* This does not address the security vulnerability of Unencrypted Storage.
-    * *Why D is incorrect:* This does not address the security vulnerability of Unencrypted Storage.
-    * *Why B is incorrect:* This does not address the security vulnerability of Unencrypted Storage.
-
+    *   *Why B is correct:* Standard deviation measures dispersion around the mean. SD=2 means most values are within 2 units of 50; SD=20 means values can be 20+ units away from 50. Same mean does not imply same distribution shape.
+    *   *Why A is incorrect:* Standard deviation measures spread, not sample size. A dataset with 1,000 values can have a smaller standard deviation than one with 10 values.
+    *   *Why C is incorrect:* Standard deviation does not indicate the rate of missing values; those are separate data quality metrics.
+    *   *Why D is incorrect:* Two datasets can share the same mean while having completely different shapes and spreads — mean alone does not fully describe a distribution.

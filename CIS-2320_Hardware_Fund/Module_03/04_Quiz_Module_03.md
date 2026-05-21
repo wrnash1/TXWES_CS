@@ -17,63 +17,63 @@ Which CPU socket type features pins located on the motherboard rather than the p
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **heat sinks.**?
-B) A node in a tree structure that has no child nodes (its children point to null), representing the termination points of the branches.
-D) The expected yearly cost of a security risk, calculated by multiplying the Single Loss Expectancy by the Annualized Rate of Occurrence (ALE = SLE * ARO).
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within os_admin operations.
-C) The memory block allocated on the system stack for a single function call, storing parameters, local variables, and the return address.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within os_admin operations.
+In the context of PC hardware, which of the following is the most accurate definition of a **heat sink**?
+*   A) A passive cooling component made of aluminum or copper fins that absorbs heat from the CPU and dissipates it into surrounding air, typically paired with a fan connected to the CPU fan header.
+*   B) A thermally conductive paste applied between the CPU and cooler to fill microscopic surface imperfections and improve heat transfer efficiency.
+*   C) A sensor embedded in the CPU die that monitors operating temperature and signals the BIOS to throttle clock speed or shut down if a thermal threshold is exceeded.
+*   D) A liquid cooling block that circulates coolant over the CPU surface to transfer heat to a radiator mounted at a case exhaust vent.
+*   **Correct Answer:** A) A passive cooling component made of aluminum or copper fins that absorbs heat from the CPU and dissipates it into surrounding air, typically paired with a fan connected to the CPU fan header.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **heat sinks.**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **heat sinks.**.
-    * *Why A is correct:* This describes the exact role and function of **heat sinks.**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **heat sinks.**.
+    * *Why A is correct:* This accurately describes the heat sink's structure, material, and function as the primary passive heat dissipation component.
+    * *Why B is incorrect:* This describes thermal paste, not the heat sink itself.
+    * *Why C is incorrect:* This describes a thermal sensor/throttling mechanism built into the CPU, not a heat sink.
+    * *Why D is incorrect:* This describes an AIO (All-In-One) liquid cooler cold plate, a different cooling technology.
 
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **instruct the systemd init system to restart a specified background service process**. Which of the following commands is the most appropriate to execute?
-B) chmod 600 config.conf
-A) systemctl restart service
-D) df -h
-C) ps aux
-*   **Correct Answer:** A) systemctl restart service
+A technician is installing a CPU cooler and has a large amount of thermal paste left over from a previous job. They apply a thick, full-coverage layer across the entire CPU surface before seating the cooler. What is the most likely consequence of this action?
+*   A) The CPU will overheat because excess paste reduces contact pressure between the CPU and cooler
+*   B) Excess paste may overflow onto the motherboard socket, potentially shorting nearby circuitry
+*   C) The system will refuse to POST because the BIOS detects an incorrect thermal interface thickness
+*   D) Performance will improve because more paste creates a thicker thermal barrier
+*   **Correct Answer:** B) Excess paste may overflow onto the motherboard socket, potentially shorting nearby circuitry
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `systemctl restart service` command is directly designed to instruct the systemd init system to restart a specified background service process.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
+    * *Why B is correct:* Applying too much thermal paste risks it flowing into the CPU socket or onto capacitors when compressed by the cooler, which can cause electrical shorts.
+    * *Why A is incorrect:* Excess paste does not reduce contact pressure; the cooler mounting hardware controls that. However, too much paste is still incorrect technique.
+    * *Why C is incorrect:* BIOS does not detect thermal paste thickness; it monitors fan speed and temperature sensor readings.
+    * *Why D is incorrect:* More paste does not improve performance — a thin, even layer is optimal; excess paste can actually insulate rather than conduct heat.
 
 
 ---
 
 **Question 4**
-While working on **Processors (CPUs) and Cooling** in a production environment, you encounter a system alert indicating a **Permission Denied** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-C) Run log rotations, clean temporary files, or expand the logical volume capacity.
-B) Identify and terminate the process already utilizing the target port, or modify the service configuration to use an open port.
-D) Reboot the physical machine and wait for services to reload.
-A) Prepend the command with 'sudo' to run it with superuser administrative privileges, or adjust the file permissions.
-*   **Correct Answer:** A) Prepend the command with 'sudo' to run it with superuser administrative privileges, or adjust the file permissions.
+A user reports that their desktop PC shuts down abruptly after running for about 10 minutes, and the system feels very hot near the CPU area. The PC powers back on after cooling down for several minutes. Which is the most likely cause?
+*   A) The power supply unit is failing and cannot sustain load under thermal stress
+*   B) The CPU fan has stopped working or is disconnected, causing the CPU to overheat and trigger thermal shutdown
+*   C) The RAM modules are incompatible with the motherboard and generating excessive heat
+*   D) The hard drive is overheating because it is mounted too close to the CPU cooler
+*   **Correct Answer:** B) The CPU fan has stopped working or is disconnected, causing the CPU to overheat and trigger thermal shutdown
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This action does not resolve the root cause of Permission Denied.
-    * *Why B is incorrect:* This action does not resolve the root cause of Permission Denied.
-    * *Why D is incorrect:* This action does not resolve the root cause of Permission Denied.
-    * *Why A is correct:* Because The current user account lacks the required read, write, or execute permissions for the target file or system call. The appropriate fix is to Prepend the command with 'sudo' to run it with superuser administrative privileges, or adjust the file permissions..
+    * *Why B is correct:* A failed or disconnected CPU fan is the most common cause of thermal shutdown after a short run period; modern CPUs throttle then shut down when TJMax is reached.
+    * *Why A is incorrect:* PSU failure typically causes sudden power loss rather than a heat-then-shutdown pattern, and the PSU is not located near the CPU.
+    * *Why C is incorrect:* Incompatible RAM causes POST failure or BSODs, not cyclical thermal shutdowns.
+    * *Why D is incorrect:* HDDs do not generate enough heat to trigger CPU thermal shutdown, and this symptom pattern does not match drive overheating.
 
 
 ---
 
 **Question 5**
-When designing a system for **Processors (CPUs) and Cooling**, you must mitigate the risk of **Administrators logging in routinely as root or Administrator, increasing the blast radius of user errors or malware.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC.
-B) Disable unused system accounts and run a port scan to disable unnecessary active background services.
-D) Enable full disk encryption on all client endpoints.
-C) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC.
+Which of the following best describes the advantage of a CPU with 8 cores and Hyper-Threading (16 threads) compared to a CPU with 4 cores and no Hyper-Threading?
+*   A) The 8-core CPU runs at twice the clock speed, making single-threaded tasks faster
+*   B) The 8-core CPU can execute more parallel tasks simultaneously, improving performance in multithreaded workloads
+*   C) The 8-core CPU uses less power because each core handles fewer instructions per cycle
+*   D) The 8-core CPU has a larger L3 cache, which eliminates the need for RAM in most operations
+*   **Correct Answer:** B) The 8-core CPU can execute more parallel tasks simultaneously, improving performance in multithreaded workloads
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC. mitigates the risk of Administrators logging in routinely as root or Administrator, increasing the blast radius of user errors or malware..
-    * *Why B is incorrect:* This does not address the security vulnerability of Privileged Access Abuse.
-    * *Why D is incorrect:* This does not address the security vulnerability of Privileged Access Abuse.
-    * *Why C is incorrect:* This does not address the security vulnerability of Privileged Access Abuse.
+    * *Why B is correct:* More cores and threads allow the CPU to handle more simultaneous instruction streams, directly benefiting multitasking, video encoding, virtualization, and server workloads.
+    * *Why A is incorrect:* Core count and clock speed are independent specifications; more cores do not imply higher clock speeds.
+    * *Why C is incorrect:* More cores generally increase total power draw, not decrease it, as more transistors are switching simultaneously.
+    * *Why D is incorrect:* Cache size is a separate specification unrelated to core count; RAM is still required regardless of cache size.
 

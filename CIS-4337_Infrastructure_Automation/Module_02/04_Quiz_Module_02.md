@@ -1,4 +1,4 @@
-# Quiz: Module 02 - Terraform Architecture
+# Quiz: Module 02 - Terraform Workflow
 ## Course: CIS-4337_Infrastructure_Automation (HashiCorp Certified: Terraform Associate)
 
 ---
@@ -9,71 +9,69 @@ Which command downloads and installs the provider plugins defined in your Terraf
 *   B) terraform init
 *   C) terraform plan
 *   D) terraform get
-*   **Correct Answer:** B) `terraform init` initializes the folder, creating directory paths and downloading required provider plugins.
+*   **Correct Answer:** B) `terraform init` initializes the working directory, downloads required provider plugins into `.terraform/providers/`, and sets up the backend.
 *   **Distractor Analysis:**
-    *   *Why correct:* `terraform init` initializes the folder, creating directory paths and downloading required provider plugins.
-    *   apply deploys resources. plan creates templates. get fetches modules.
+    *   *Why B is correct:* `terraform init` is always the first command run in a new or cloned Terraform project; it resolves and downloads all provider and module dependencies.
+    *   *Why A is incorrect:* `terraform apply` executes the planned changes to create or modify infrastructure; it does not download providers.
+    *   *Why C is incorrect:* `terraform plan` generates an execution plan showing proposed changes; it requires providers to already be downloaded by `init`.
+    *   *Why D is incorrect:* `terraform get` downloads only modules, not providers, and is rarely used directly since `init` handles both.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **HCL (HashiCorp Configuration Language)**?
-D) Elements placed inside the <head> block of an HTML document that define metadata, links to stylesheets, scripts, character sets, and page titles.
-B) The practice of connecting an electrical circuit or chassis to the earth or a large conductor to safely dissipate static electricity or stray currents.
-C) The mathematical expectation of an algorithm's performance across all possible inputs of size N, representing typical real-world runtime behavior.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within os_admin operations.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within os_admin operations.
+Which of the following is the most accurate definition of **HCL (HashiCorp Configuration Language)** in the context of Terraform?
+*   A) A proprietary binary compilation format that Terraform uses to cache provider API responses for faster re-runs
+*   B) A human-readable, declarative language used to write Terraform configuration files that describe desired infrastructure state using blocks and attribute-value pairs
+*   C) A runtime scripting language embedded in Terraform that executes imperative shell commands against cloud provider APIs
+*   D) A JSON schema specification that validates the structure of `terraform.tfstate` files before each apply operation
+*   **Correct Answer:** B) HCL is the language of `.tf` files — it is declarative, human-readable, and expresses the desired end-state of infrastructure rather than procedural steps.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **HCL (HashiCorp Configuration Language)**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **HCL (HashiCorp Configuration Language)**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **HCL (HashiCorp Configuration Language)**.
-    * *Why A is correct:* This describes the exact role and function of **HCL (HashiCorp Configuration Language)**.
-
+    *   *Why B is correct:* HCL is the defining syntax of Terraform configurations. Understanding its block types (`resource`, `provider`, `variable`, `output`) is heavily tested on the Associate exam.
+    *   *Why A is incorrect:* HCL is a text-based configuration language, not a binary cache format.
+    *   *Why C is incorrect:* HCL is declarative, not a runtime scripting language. `local-exec` provisioners can run shell commands, but that is not what HCL itself is.
+    *   *Why D is incorrect:* HCL is not a JSON schema and does not validate state files; it is the language for writing configuration, not validating state.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **list all currently active processes running on the system with CPU and memory usage statistics**. Which of the following commands is the most appropriate to execute?
-D) chmod 600 config.conf
-B) systemctl restart service
-A) ps aux
-C) df -h
-*   **Correct Answer:** A) ps aux
+You run `terraform plan` and see a resource annotated with `-/+` in the output. What does this symbol mean?
+*   A) The resource will be updated in-place with no downtime
+*   B) The resource will be destroyed and then recreated (forced replacement)
+*   C) The resource is being imported from existing infrastructure
+*   D) The resource has no changes and will be left untouched
+*   **Correct Answer:** B) The `-/+` symbol means the resource must be destroyed and recreated because one of its attributes cannot be updated in-place — it forces replacement.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `ps aux` command is directly designed to list all currently active processes running on the system with CPU and memory usage statistics.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why B is correct:* Many cloud resource attributes are immutable after creation (e.g., an EC2 instance's AMI). When such an attribute changes, Terraform must destroy the old resource and create a new one. This is a critical distinction for the exam.
+    *   *Why A is incorrect:* In-place updates are shown with `~` (tilde), not `-/+`.
+    *   *Why C is incorrect:* Import operations use `terraform import` and do not appear as `-/+` in a plan.
+    *   *Why D is incorrect:* Resources with no changes are shown as no symbol or listed as "No changes" in the plan summary.
 
 ---
 
 **Question 4**
-While working on **Terraform Architecture** in a production environment, you encounter a system alert indicating a **Disk Space Full** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-A) Run log rotations, clean temporary files, or expand the logical volume capacity.
-C) Identify and terminate the process already utilizing the target port, or modify the service configuration to use an open port.
-D) Reboot the physical machine and wait for services to reload.
-B) Prepend the command with 'sudo' to run it with superuser administrative privileges, or adjust the file permissions.
-*   **Correct Answer:** A) Run log rotations, clean temporary files, or expand the logical volume capacity.
+In a Terraform project using a remote backend, what happens when `terraform init` is run again after a team member adds a new provider to `main.tf`?
+*   A) The new provider is automatically installed without any re-initialization needed
+*   B) `terraform init` downloads the new provider plugin and updates the `.terraform.lock.hcl` dependency lock file
+*   C) Terraform deletes the existing state file and starts fresh
+*   D) `terraform init` replaces the backend configuration and migrates all existing state to the new provider
+*   **Correct Answer:** B) Re-running `terraform init` after adding a new provider downloads the missing plugin and updates the lock file with the new provider's version hash.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Because The storage volume has run out of space, preventing files from being written and causing system services to fail. The appropriate fix is to Run log rotations, clean temporary files, or expand the logical volume capacity..
-    * *Why C is incorrect:* This action does not resolve the root cause of Disk Space Full.
-    * *Why D is incorrect:* This action does not resolve the root cause of Disk Space Full.
-    * *Why B is incorrect:* This action does not resolve the root cause of Disk Space Full.
-
+    *   *Why B is correct:* `init` is designed to be run whenever the configuration changes. It is safe and idempotent — it only adds what is missing. The `.terraform.lock.hcl` file records provider version hashes for reproducible installs.
+    *   *Why A is incorrect:* New providers are NOT automatically downloaded; you must explicitly run `terraform init` to fetch them.
+    *   *Why C is incorrect:* `terraform init` never modifies or deletes the state file under any circumstances.
+    *   *Why D is incorrect:* `init` does not replace backend configurations or migrate state automatically; backend migration requires explicit confirmation via the `-migrate-state` flag.
 
 ---
 
 **Question 5**
-When designing a system for **Terraform Architecture**, you must mitigate the risk of **Administrators logging in routinely as root or Administrator, increasing the blast radius of user errors or malware.**. Which of the following security configurations or controls represents the best practice to implement?
-C) Enable full disk encryption on all client endpoints.
-B) Disable unused system accounts and run a port scan to disable unnecessary active background services.
-A) Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC.
-D) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC.
+When designing an automated CI/CD pipeline for Terraform deployments, which workflow sequence ensures the exact plan reviewed by an engineer is the one applied in production?
+*   A) Run `terraform apply -auto-approve` directly, skipping the plan step to save pipeline execution time
+*   B) Run `terraform validate` only; if it passes, the pipeline automatically applies all changes
+*   C) Run `terraform plan -out=tfplan`, have the plan reviewed and approved, then run `terraform apply tfplan` to execute the saved plan exactly
+*   D) Run `terraform destroy` followed immediately by `terraform apply` to ensure a clean environment on every deployment
+*   **Correct Answer:** C) Saving the plan with `-out=tfplan` and then applying the saved file ensures no configuration changes can slip in between the review and execution steps.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This does not address the security vulnerability of Privileged Access Abuse.
-    * *Why B is incorrect:* This does not address the security vulnerability of Privileged Access Abuse.
-    * *Why A is correct:* Implementing Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC. mitigates the risk of Administrators logging in routinely as root or Administrator, increasing the blast radius of user errors or malware..
-    * *Why D is incorrect:* This does not address the security vulnerability of Privileged Access Abuse.
-
+    *   *Why C is correct:* This is the HashiCorp-recommended pipeline pattern. The saved plan file is a binary artifact that captures the exact changes; `apply tfplan` executes those changes without re-planning, preventing race conditions.
+    *   *Why A is incorrect:* Skipping the plan review removes human oversight over what changes will be applied to production, which is a significant risk.
+    *   *Why B is incorrect:* `terraform validate` only checks HCL syntax and configuration structure; it does not verify what infrastructure changes will be made.
+    *   *Why D is incorrect:* Destroying and re-applying on every deployment causes unnecessary downtime and data loss risks for stateful resources.

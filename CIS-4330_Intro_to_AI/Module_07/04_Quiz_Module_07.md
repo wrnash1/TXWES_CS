@@ -1,4 +1,4 @@
-# Quiz: Module 07 - Evaluating Machine Learning Models
+# Quiz: Module 07 - Azure Cognitive Services: Vision, Speech, and Language
 ## Course: CIS-4330_Intro_to_AI (AI-900 (Microsoft Azure AI Fundamentals))
 
 ---
@@ -11,69 +11,65 @@ Which metric measures the fraction of actual positive instances that were correc
 *   D) Specificity
 *   **Correct Answer:** B) Recall (True Positives / (True Positives + False Negatives)) measures the model's ability to find all actual positive cases.
 *   **Distractor Analysis:**
-    *   *Why correct:* Recall (True Positives / (True Positives + False Negatives)) measures the model's ability to find all actual positive cases.
-    *   Precision measures how many predicted positives are actually positive.
+    *   *Why correct:* Recall answers "of all the real positives, how many did the model catch?" — it penalizes missed positives (false negatives).
+    *   Precision measures how many predicted positives are actually positive (penalizes false alarms). Accuracy is the overall fraction correct. Specificity measures true negative rate.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Mean Squared Error (MSE).**?
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within ai operations.
-D) The defining rule of a BST: for any given node, all keys in its left subtree must be less than or equal to its key, and all keys in its right subtree must be greater.
-C) An algebraic restructuring operation on a binary tree that changes the parent-child relationships to restore balance without violating the search order.
-B) Nodes that contain two pointers: one pointing forward to the next node and one pointing backward to the previous node, allowing bidirectional traversal.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within ai operations.
+In the context of machine learning evaluation, which of the following is the most accurate definition of **Mean Squared Error (MSE)**?
+*   A) The average of the squared differences between each predicted value and the corresponding actual value, used as the standard loss metric for regression models.
+*   B) The harmonic mean of precision and recall, calculated as 2 × (Precision × Recall) / (Precision + Recall), used to balance false positives and false negatives.
+*   C) A table that displays the counts of true positives, true negatives, false positives, and false negatives for each class in a classification problem.
+*   D) The fraction of all predictions that are correct, calculated as (TP + TN) / (TP + TN + FP + FN), used as a high-level performance summary.
+*   **Correct Answer:** A) The average of the squared differences between each predicted value and the corresponding actual value, used as the standard loss metric for regression models.
 *   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **Mean Squared Error (MSE).**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Mean Squared Error (MSE).**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Mean Squared Error (MSE).**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Mean Squared Error (MSE).**.
-
+    *   *Why A is correct:* MSE quantifies regression error by squaring residuals (which penalizes large errors more heavily) and averaging them, giving a single number that measures how far predictions are from actual values.
+    *   *Why B is incorrect:* This describes the F1-Score — a classification metric, not a regression error metric.
+    *   *Why C is incorrect:* This describes the Confusion Matrix — a classification evaluation tool, not a numeric error measure for regression.
+    *   *Why D is incorrect:* This describes Accuracy — a classification metric measuring the overall fraction of correct predictions.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **use the trained model to generate predictions on unseen test data**. Which of the following commands is the most appropriate to execute?
-B) accuracy = accuracy_score(y_test, predictions)
-D) model.fit(X_train, y_train)
-A) predictions = model.predict(X_test)
-C) import pandas as pd; df = pd.read_csv('data.csv')
+A developer needs to **use a trained model to generate predictions on unseen test data**. Which command is most appropriate?
+*   A) predictions = model.predict(X_test)
+*   B) accuracy = accuracy_score(y_test, predictions)
+*   C) import pandas as pd; df = pd.read_csv('data.csv')
+*   D) model.fit(X_train, y_train)
 *   **Correct Answer:** A) predictions = model.predict(X_test)
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `predictions = model.predict(X_test)` command is directly designed to use the trained model to generate predictions on unseen test data.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is correct:* `model.predict(X_test)` passes unseen test features through the trained model and returns predicted labels or values.
+    *   *Why B is incorrect:* `accuracy_score()` computes a performance metric from existing predictions; it does not produce predictions itself.
+    *   *Why C is incorrect:* This loads data from a CSV file — data loading, not prediction.
+    *   *Why D is incorrect:* `model.fit()` trains the model on labeled training data; it does not generate predictions on new data.
 
 ---
 
 **Question 4**
-While working on **Evaluating Machine Learning Models** in a production environment, you encounter a system alert indicating a **Low Model Generalization** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-C) Ensure data preprocessing steps (scaling, normalization) are fit only on the training set and applied to the test set.
-B) Use imputation techniques (mean, median, mode) or drop rows/columns containing missing values.
-D) Reboot the physical machine and wait for services to reload.
-A) Apply regularization techniques (L1/L2), gather more training data, or simplify the model architecture.
-*   **Correct Answer:** A) Apply regularization techniques (L1/L2), gather more training data, or simplify the model architecture.
+A classification model achieves 99% accuracy on a medical diagnosis dataset, but the confusion matrix reveals it is predicting "healthy" for almost every patient. The dataset has 990 healthy and 10 sick patients. What problem does this illustrate, and what is the best fix?
+*   A) Class imbalance — use oversampling (SMOTE), undersampling, or class weights to force the model to learn the minority class.
+*   B) Data leakage — fit the preprocessing scaler only on training data using `.fit_transform()`, then apply `.transform()` to the test set separately.
+*   C) Missing value errors — impute null entries with mean or median before retraining the model.
+*   D) Underfitting — increase model complexity by adding more layers or polynomial features to improve performance.
+*   **Correct Answer:** A) Class imbalance — use oversampling (SMOTE), undersampling, or class weights to force the model to learn the minority class.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This action does not resolve the root cause of Low Model Generalization.
-    * *Why B is incorrect:* This action does not resolve the root cause of Low Model Generalization.
-    * *Why D is incorrect:* This action does not resolve the root cause of Low Model Generalization.
-    * *Why A is correct:* Because The model has overfit the training data and performs poorly on unseen validation or testing datasets. The appropriate fix is to Apply regularization techniques (L1/L2), gather more training data, or simplify the model architecture..
-
+    *   *Why A is correct:* When one class dominates the dataset, a model can achieve high accuracy by predicting the majority class almost exclusively. Rebalancing via SMOTE, undersampling, or `class_weight='balanced'` teaches the model to treat rare classes as important.
+    *   *Why B is incorrect:* Data leakage causes inflated validation scores from improper preprocessing, not the class-dominance pattern described here.
+    *   *Why C is incorrect:* Missing value imputation addresses NaN errors; the dataset here has no missing values — it has an imbalanced distribution.
+    *   *Why D is incorrect:* The model is not underfitting — it has learned a trivial rule (always predict healthy) that achieves high accuracy due to skewed class distribution.
 
 ---
 
 **Question 5**
-When designing a system for **Evaluating Machine Learning Models**, you must mitigate the risk of **Attackers reconstructing sensitive training data by querying the public model API and analyzing outputs.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Apply differential privacy methods to the training data and limit public API rate queries.
-B) Train models with adversarial inputs and implement input validation/filtering on inputs.
-D) Enable full disk encryption on all client endpoints.
-C) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Apply differential privacy methods to the training data and limit public API rate queries.
+Attackers are querying a public model API with many carefully crafted inputs and analyzing the output probabilities to reconstruct the private training data (including patient records). Which defense best mitigates this **model inversion** attack?
+*   A) Apply differential privacy to the training data and rate-limit the public inference API to reduce the attacker's ability to extract information.
+*   B) Train the model with adversarial examples included in the training set and implement input validation before inference.
+*   C) Enable full disk encryption on all client endpoints submitting queries to the API.
+*   D) Require multi-factor authentication (MFA) for all developer accounts with access to the model training pipeline.
+*   **Correct Answer:** A) Apply differential privacy to the training data and rate-limit the public inference API to reduce the attacker's ability to extract information.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Apply differential privacy methods to the training data and limit public API rate queries. mitigates the risk of Attackers reconstructing sensitive training data by querying the public model API and analyzing outputs..
-    * *Why B is incorrect:* This does not address the security vulnerability of Model Inversion Vulnerability.
-    * *Why D is incorrect:* This does not address the security vulnerability of Model Inversion Vulnerability.
-    * *Why C is incorrect:* This does not address the security vulnerability of Model Inversion Vulnerability.
-
+    *   *Why A is correct:* Differential privacy adds calibrated noise to training data, making it statistically difficult to reconstruct individual records from model outputs. Rate-limiting reduces the number of queries an attacker can submit, slowing or blocking the reconstruction attempt.
+    *   *Why B is incorrect:* Adversarial training defends against adversarial example attacks on inference inputs — it does not protect training data from model inversion via API output analysis.
+    *   *Why C is incorrect:* Disk encryption protects data at rest on a device; it has no effect on information leaked through a live inference API's probability outputs.
+    *   *Why D is incorrect:* MFA secures developer account access to the training pipeline but does not prevent a public API from leaking training data through its outputs.

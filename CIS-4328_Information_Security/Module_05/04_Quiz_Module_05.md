@@ -1,86 +1,77 @@
-# Quiz: Module 05 - IAM
-## Course: CIS-4328_Information_Security (4328_Information_Security - CompTIA Security+ (SY0-701))
+# Quiz: Module 05 - Cryptography Fundamentals
+## Course: CIS-4328_Information_Security (CompTIA Security+ SY0-701)
 
 ---
 
 **Question 1**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **RBAC vs ABAC**?
-C) The operational principle of a stack, where the element added most recently is the first one to be removed, similar to a stack of trays.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within security operations.
-D) Elements placed inside the <head> block of an HTML document that define metadata, links to stylesheets, scripts, character sets, and page titles.
-B) The core operations of a stack: 'push' inserts an element onto the top, and 'pop' removes and returns the top element.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within security operations.
+In the context of standard IT systems, which of the following is the most accurate definition of **Role-Based Access Control (RBAC)**?
+A) A method of granting permissions based on a user's job role, so that all users with the same role inherit the same set of access rights.
+B) A cryptographic method that uses a public key to encrypt data and a mathematically related private key to decrypt it.
+C) A security model where every access request is verified regardless of network location, assuming no implicit trust inside or outside the perimeter.
+D) A one-way mathematical function that produces a fixed-length digest used to verify data integrity without revealing the original data.
+*   **Correct Answer:** A) A method of granting permissions based on a user's job role, so that all users with the same role inherit the same set of access rights.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **RBAC vs ABAC**.
-    * *Why A is correct:* This describes the exact role and function of **RBAC vs ABAC**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **RBAC vs ABAC**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **RBAC vs ABAC**.
-
+    *   *Why A is correct:* RBAC assigns permissions to roles (e.g., "HR Manager," "Network Admin") rather than to individual users, simplifying administration and enforcing least privilege by job function.
+    *   *Why B is incorrect:* This describes asymmetric (public-key) cryptography — a completely separate concept from access control models.
+    *   *Why C is incorrect:* This describes the Zero Trust security model — an architectural principle about trust levels, not an access control assignment method.
+    *   *Why D is incorrect:* This describes a cryptographic hash function — a data integrity tool, not an access control mechanism.
 
 ---
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Biometrics**?
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within security operations.
-B) Nodes that contain two pointers: one pointing forward to the next node and one pointing backward to the previous node, allowing bidirectional traversal.
-C) An instruction within a function that invokes the function itself, passing modified arguments to solve a smaller subproblem.
-D) The difference in height between the left and right subtrees of a node in an AVL tree, which must be -1, 0, or 1 to remain balanced.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within security operations.
+An organization needs to store user passwords securely in its database so that even if the database is breached, plaintext passwords cannot be recovered. Which cryptographic technique should be applied to each password before storage?
+A) Encrypt each password with AES-256 using a master encryption key stored in a Hardware Security Module.
+B) Apply a salted hash using SHA-256 to each password before storing the digest in the database.
+C) Encode each password using Base64 encoding before writing it to the database.
+D) Apply RSA encryption to each password using the server's public key.
+*   **Correct Answer:** B) Apply a salted hash using SHA-256 to each password before storing the digest in the database.
 *   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **Biometrics**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Biometrics**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Biometrics**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Biometrics**.
-
+    *   *Why A is incorrect:* Symmetric encryption is reversible — if an attacker obtains the master key they can decrypt all passwords. Hashing is one-way and the preferred approach for password storage because recovery is computationally infeasible.
+    *   *Why C is incorrect:* Base64 is an encoding scheme, not encryption or hashing — it provides no security whatsoever. Any tool can decode Base64 in milliseconds.
+    *   *Why D is incorrect:* RSA is designed for key exchange and digital signatures on small data, not bulk password storage. RSA encryption is also reversible with the private key, defeating the purpose of one-way protection.
 
 ---
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **run a dictionary brute-force attack against the target SSH service to test credential strength**. Which of the following commands is the most appropriate to execute?
-D) nmap -sV -p 1-1024 target_ip
-B) openssl x509 -text -noout -in cert.pem
-C) wireshark
+A security engineer needs to run a dictionary brute-force test against an SSH service to evaluate password strength. Which command accomplishes this task?
 A) hydra -l admin -P passwords.txt ssh://target
+B) nmap -sV -p 1-1024 target_ip
+C) wireshark
+D) openssl x509 -text -noout -in cert.pem
 *   **Correct Answer:** A) hydra -l admin -P passwords.txt ssh://target
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `hydra -l admin -P passwords.txt ssh://target` command is directly designed to run a dictionary brute-force attack against the target SSH service to test credential strength.
-
+    *   *Why B is incorrect:* nmap performs port scanning and service version detection — it identifies open ports but does not attempt authentication against services.
+    *   *Why C is incorrect:* Wireshark is a packet capture and protocol analysis tool — it passively captures traffic but does not send authentication attempts.
+    *   *Why D is incorrect:* The openssl x509 command displays the contents of an X.509 certificate file — it is a certificate inspection tool, not a credential-testing tool.
 
 ---
 
 **Question 4**
-While working on **IAM** in a production environment, you encounter a system alert indicating a **Firewall Blocking Valid Traffic** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-D) Reboot the physical machine and wait for services to reload.
-A) Review active security rules and add a permissive firewall rule allowing the specific source IP and destination port.
-C) Tune the detection signatures and define exceptions for authorized administrative activities.
-B) Generate a new Certificate Signing Request (CSR) and obtain an updated certificate from a trusted CA.
-*   **Correct Answer:** A) Review active security rules and add a permissive firewall rule allowing the specific source IP and destination port.
+An organization wants to protect data in transit between a web server and clients using the strongest available symmetric encryption. Which algorithm and key length should the security team configure?
+A) DES with a 56-bit key
+B) RC4 with a 128-bit key
+C) 3DES with a 112-bit effective key
+D) AES with a 256-bit key
+*   **Correct Answer:** D) AES with a 256-bit key
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This action does not resolve the root cause of Firewall Blocking Valid Traffic.
-    * *Why A is correct:* Because The default-deny firewall rule is blocking a newly deployed service that has not been whitelisted. The appropriate fix is to Review active security rules and add a permissive firewall rule allowing the specific source IP and destination port..
-    * *Why C is incorrect:* This action does not resolve the root cause of Firewall Blocking Valid Traffic.
-    * *Why B is incorrect:* This action does not resolve the root cause of Firewall Blocking Valid Traffic.
-
+    *   *Why A is incorrect:* DES uses a 56-bit key that can be brute-forced in under 24 hours with modern hardware — it has been considered cryptographically broken since the late 1990s and is not approved for current use.
+    *   *Why B is incorrect:* RC4 is a stream cipher with multiple known biases and vulnerabilities that allow statistical attacks to recover plaintext. It was officially prohibited in TLS by RFC 7465 and should never be used for security purposes.
+    *   *Why C is incorrect:* 3DES applies DES three times to increase effective key length to 112 bits, but it is slow, vulnerable to the Sweet32 birthday attack on long-lived sessions, and deprecated by NIST as of 2023.
 
 ---
 
 **Question 5**
-When designing a system for **IAM**, you must mitigate the risk of **Intruders deleting local system event logs after a breach to hide their tracks and prevent investigation.**. Which of the following security configurations or controls represents the best practice to implement?
-D) Enable full disk encryption on all client endpoints.
-C) Enable full disk encryption on all client endpoints.
-B) Enforce RSA keys with a minimum length of 2048/4096 bits or switch to Elliptic Curve Cryptography (ECC).
-A) Forward all system logs to a secure, write-once SIEM (Security Information and Event Management) platform.
-*   **Correct Answer:** A) Forward all system logs to a secure, write-once SIEM (Security Information and Event Management) platform.
+A developer wants to ensure that a software package downloaded from the internet has not been tampered with during transit. Which cryptographic technique provides the BEST assurance of file integrity?
+A) Encrypt the file with AES-256 before uploading it to the distribution server.
+B) Publish the SHA-256 hash of the original file alongside the download link and verify it after download.
+C) Sign the download page with an SSL/TLS certificate so the channel is encrypted.
+D) Require users to download the file over a VPN tunnel to prevent interception.
+*   **Correct Answer:** B) Publish the SHA-256 hash of the original file alongside the download link and verify it after download.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This does not address the security vulnerability of Lack of Centralized Logs.
-    * *Why C is incorrect:* This does not address the security vulnerability of Lack of Centralized Logs.
-    * *Why B is incorrect:* This does not address the security vulnerability of Lack of Centralized Logs.
-    * *Why A is correct:* Implementing Forward all system logs to a secure, write-once SIEM (Security Information and Event Management) platform. mitigates the risk of Intruders deleting local system event logs after a breach to hide their tracks and prevent investigation..
-
+    *   *Why A is incorrect:* Encrypting the file protects confidentiality in transit, but if the file is tampered with at rest on the server before encryption, the hash of the tampered file will match the hash of the tampered ciphertext — encryption alone does not verify integrity of the original content.
+    *   *Why C is incorrect:* TLS encrypts the transport channel and authenticates the server, but it does not guarantee the file on the server itself was not modified before being served. A compromised server serves the tampered file over a perfectly valid TLS connection.
+    *   *Why D is incorrect:* A VPN encrypts the network tunnel between the user and the VPN endpoint but does not validate that the file content matches what the developer originally published — the tampered file arrives intact through the VPN.

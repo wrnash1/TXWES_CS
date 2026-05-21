@@ -17,17 +17,17 @@ What is the output of `'python'.upper()`?
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **join**?
-B) A binary search tree that automatically adjusts its height during insertions and deletions (e.g., AVL, Red-Black) to maintain logarithmic operations.
-C) Flexible Box Layout; a one-dimensional CSS layout model that makes it easy to align items and distribute space within a container, handling varying screen sizes dynamically.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-D) The single, top-most node in a tree structure from which all other nodes descend, serving as the starting reference for search algorithms.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
+Which of the following best describes the **`join` string method** in Python?
+*   A) A method called on a list that inserts a separator string between each element and returns the combined result as a single string
+*   B) A method called on a separator string that concatenates every element of an iterable, placing the separator between consecutive elements, and returns a new string
+*   C) A method that appends one string to the end of another string in place, modifying the original string object rather than returning a new one
+*   D) A method that searches a string for a substring and returns the index of the first match, or raises ValueError if the substring is not found
+*   **Correct Answer:** B) A method called on a separator string that concatenates every element of an iterable, placing the separator between consecutive elements, and returns a new string.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **join**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **join**.
-    * *Why A is correct:* This describes the exact role and function of **join**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **join**.
+    *   *Why A is incorrect:* `join` is a method on the separator string, not on the list — the correct syntax is `", ".join(my_list)`, not `my_list.join(", ")`; confusing the receiver is the most common PCAP trap for this method.
+    *   *Why B is correct:* `str.join(iterable)` is called on the separator and inserts it between every pair of elements from the iterable; all elements must be strings or a `TypeError` is raised.
+    *   *Why C is incorrect:* Strings are immutable in Python — no string method modifies the original object in place; `join` returns a brand-new string and leaves both the separator and the iterable unchanged.
+    *   *Why D is incorrect:* That describes the `.index()` method, not `.join()`; `.index(sub)` returns the position of a substring and raises `ValueError` if it is absent, while `.find(sub)` returns `-1` instead of raising.
 
 
 ---
@@ -66,14 +66,13 @@ B) Ensure the requested key exists in the dictionary, or use the .get() method t
 
 **Question 5**
 When designing a system for **String Methods and Operations**, you must mitigate the risk of **Storing user credentials in plain text, making them vulnerable to database breaches.**. Which of the following security configurations or controls represents the best practice to implement?
-D) Enable full disk encryption on all client endpoints.
+D) Use Python string methods such as `.replace()` and `.encode()` to obfuscate passwords before storing them in the database.
 C) Enable full disk encryption on all client endpoints.
 A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
 B) Implement parameterized queries and prepared statements rather than raw string concatenation.
 *   **Correct Answer:** A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
+    * *Why D is incorrect:* String manipulation such as `.replace()` or `.encode()` produces easily reversible transformations, not cryptographic security; obfuscation is not encryption, and any attacker with access to the source code can reverse the operation — proper one-way hashing with bcrypt is required.
     * *Why C is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-    * *Why A is correct:* Implementing Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt. mitigates the risk of Storing user credentials in plain text, making them vulnerable to database breaches..
+    * *Why A is correct:* Implementing high-entropy hashing algorithms like bcrypt mitigates the risk of storing user credentials in plain text, making them vulnerable to database breaches.
     * *Why B is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-

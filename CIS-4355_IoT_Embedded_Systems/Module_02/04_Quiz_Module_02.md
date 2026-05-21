@@ -1,4 +1,4 @@
-# Quiz: Module 02 - Microcontrollers & Interfaces
+# Quiz: Module 02 - Microcontrollers – Arduino and Raspberry Pi Basics
 ## Course: CIS-4355_IoT_Embedded_Systems (IoT & Embedded Security (General Principles))
 
 ---
@@ -9,71 +9,67 @@ How many data wire lines are used in the I2C communication protocol?
 *   B) Two wires (SDA and SCL)
 *   C) Four wires (MISO, MOSI, SCK, CS)
 *   D) Eight wires
-*   **Correct Answer:** B) I2C uses a Serial Data (SDA) line and a Serial Clock (SCL) line, supporting multiple master/slave nodes.
+*   **Correct Answer:** B) I2C uses a Serial Data (SDA) line and a Serial Clock (SCL) line, supporting multiple master/slave nodes on the same bus.
 *   **Distractor Analysis:**
     *   *Why correct:* I2C uses a Serial Data (SDA) line and a Serial Clock (SCL) line, supporting multiple master/slave nodes.
-    *   SPI uses four wire lines (MISO, MOSI, SCK, CS).
+    *   SPI uses four wire lines (MISO, MOSI, SCK, CS); 1-Wire protocols use a single data line.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **analog-to-digital converter (ADC).**?
-D) The additional execution time and CPU operations spent visiting nodes sequentially in memory, which is higher in linked structures than in contiguous arrays.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
-B) The defining rule of a BST: for any given node, all keys in its left subtree must be less than or equal to its key, and all keys in its right subtree must be greater.
-C) HTML tags that convey the meaning and structure of the enclosed content to both the browser and search engines (e.g., <header>, <article>, <footer>) instead of generic containers.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
+Which of the following is the most accurate definition of an **analog-to-digital converter (ADC)**?
+*   A) A hardware circuit that samples a continuously varying analog voltage and converts it to a discrete binary number for processing by a microcontroller.
+*   B) A two-wire serial bus that connects multiple sensor devices using unique addresses on shared SDA and SCL lines.
+*   C) A software interrupt routine that executes when a GPIO pin changes state from low to high.
+*   D) A technique for reducing power consumption by switching a microcontroller to a low-power sleep state between sensor readings.
+*   **Correct Answer:** A) A hardware circuit that samples a continuously varying analog voltage and converts it to a discrete binary number for processing by a microcontroller.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **analog-to-digital converter (ADC).**.
-    * *Why A is correct:* This describes the exact role and function of **analog-to-digital converter (ADC).**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **analog-to-digital converter (ADC).**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **analog-to-digital converter (ADC).**.
-
+    *   *Why A is correct:* An ADC bridges the analog physical world (voltage from a sensor) and the digital MCU world; resolution (bits) determines measurement precision.
+    *   *Why B is incorrect:* This describes the I2C bus, not an ADC.
+    *   *Why C is incorrect:* This describes a GPIO interrupt handler, not an ADC.
+    *   *Why D is incorrect:* This describes a sleep/power-saving mode, not an ADC.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **review the last five project commits in a concise single-line format**. Which of the following commands is the most appropriate to execute?
-C) terraform validate
-B) systemctl status iot_service
-A) git log --oneline -n 5
-D) docker-compose up -d
-*   **Correct Answer:** A) git log --oneline -n 5
+A developer needs to interface a high-speed SPI-connected display and three I2C temperature sensors to a single Raspberry Pi. Which statement is correct?
+*   A) SPI and I2C cannot coexist on the same Raspberry Pi.
+*   B) The three I2C sensors must each have unique 7-bit bus addresses; the SPI display uses a dedicated chip-select (CS) line.
+*   C) I2C requires four wires per device; SPI requires only two.
+*   D) SPI supports up to 127 devices on a single bus without additional chip-select lines.
+*   **Correct Answer:** B) The three I2C sensors must each have unique 7-bit bus addresses; the SPI display uses a dedicated chip-select (CS) line.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `git log --oneline -n 5` command is directly designed to review the last five project commits in a concise single-line format.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is incorrect:* Raspberry Pi exposes both I2C and SPI buses simultaneously on its GPIO header; they operate independently.
+    *   *Why B is correct:* I2C uses addressing (up to 127 unique addresses per bus); SPI slaves are selected by pulling their CS line low — both buses can coexist.
+    *   *Why C is incorrect:* I2C uses only 2 wires (SDA, SCL) shared across all devices; SPI uses 4 lines (plus one CS per slave).
+    *   *Why D is incorrect:* SPI has no built-in addressing; each additional SPI slave requires its own dedicated CS GPIO pin.
 
 ---
 
 **Question 4**
-While working on **Microcontrollers & Interfaces** in a production environment, you encounter a system alert indicating a **Scope Exceeded Budget Limit** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-A) Implement strict change control boards (CCB) and re-baseline the project constraints.
-D) Reboot the physical machine and wait for services to reload.
-C) Optimize service resources, implement load balancing, or update failover mechanisms.
-B) Re-assign resources to critical path tasks and establish clear communication protocols.
-*   **Correct Answer:** A) Implement strict change control boards (CCB) and re-baseline the project constraints.
+An embedded device is shipped with a UART debug port enabled and accessible via exposed header pins. Which IoT security risk does this represent?
+*   A) Increased power consumption from the UART transmitter circuit.
+*   B) Unauthorized physical access to a root shell or bootloader, enabling firmware extraction and modification.
+*   C) Reduced I2C bus speed due to UART clock interference.
+*   D) Incompatibility with cloud MQTT brokers that do not support serial transports.
+*   **Correct Answer:** B) Unauthorized physical access to a root shell or bootloader, enabling firmware extraction and modification.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Because The project scope expanded during execution without adjusting budget or schedule allocations. The appropriate fix is to Implement strict change control boards (CCB) and re-baseline the project constraints..
-    * *Why D is incorrect:* This action does not resolve the root cause of Scope Exceeded Budget Limit.
-    * *Why C is incorrect:* This action does not resolve the root cause of Scope Exceeded Budget Limit.
-    * *Why B is incorrect:* This action does not resolve the root cause of Scope Exceeded Budget Limit.
-
+    *   *Why A is incorrect:* UART power draw is negligible and is not a security risk.
+    *   *Why B is correct:* Exposed UART ports are listed in OWASP IoT Top 10 (Insecure Physical Interfaces) — attackers can attach a USB-to-UART adapter and access a root shell or interrupt the bootloader.
+    *   *Why C is incorrect:* UART and I2C operate on separate hardware peripherals with no shared clock.
+    *   *Why D is incorrect:* UART is a local hardware interface; cloud MQTT connectivity is separate and unaffected.
 
 ---
 
 **Question 5**
-When designing a system for **Microcontrollers & Interfaces**, you must mitigate the risk of **A disaster or ransomware attack causing prolonged downtime because recovery steps are undocumented.**. Which of the following security configurations or controls represents the best practice to implement?
-D) Enable full disk encryption on all client endpoints.
-A) Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services.
-C) Enable full disk encryption on all client endpoints.
-B) Establish formal authorization procedures and digital signatures for all project scope modifications.
-*   **Correct Answer:** A) Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services.
+When selecting between Arduino and Raspberry Pi for a battery-powered remote temperature sensor that must run for 6 months on two AA batteries, which platform and justification is most appropriate?
+*   A) Raspberry Pi 4, because it runs full Linux and can send HTTPS requests natively.
+*   B) Arduino (ATmega328P), because microcontrollers can enter deep sleep drawing microamps between readings, whereas a Linux SBC draws hundreds of milliamps continuously.
+*   C) Raspberry Pi Zero W, because its small size reduces battery drain proportionally to its physical footprint.
+*   D) Arduino Mega, because more GPIO pins provide redundant power supply paths that extend battery life.
+*   **Correct Answer:** B) Arduino (ATmega328P), because microcontrollers can enter deep sleep drawing microamps between readings, whereas a Linux SBC draws hundreds of milliamps continuously.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
-    * *Why A is correct:* Implementing Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services. mitigates the risk of A disaster or ransomware attack causing prolonged downtime because recovery steps are undocumented..
-    * *Why C is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
-    * *Why B is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
-
+    *   *Why A is incorrect:* A Raspberry Pi 4 draws 500–700 mA at idle — two AA batteries (roughly 3 Wh total) would last only a few hours.
+    *   *Why B is correct:* An ATmega328P in power-down sleep draws ~0.1 µA; waking every 60 seconds to take a reading makes months-long battery life achievable.
+    *   *Why C is incorrect:* Physical size does not determine power consumption; a Pi Zero W still runs Linux and draws 80–150 mA.
+    *   *Why D is incorrect:* Additional GPIO pins do not create power supply paths; the Mega draws more current than the Uno due to its larger chip.

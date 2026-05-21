@@ -17,17 +17,17 @@ What is the purpose of the `self` parameter in Python class methods?
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **instance variables vs class variables**?
-C) The standard configuration parameters pre-loaded into a software application or system before any custom adjustments are made by an administrator.
-B) The operational principle of a stack, where the element added most recently is the first one to be removed, similar to a stack of trays.
-D) The practice of hiding the internal state and representation of an object, exposing access only through public methods.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
+Which of the following best describes **instance variables vs class variables** in Python?
+*   A) Instance variables are defined in the class body outside any method and are shared by all objects of the class; class variables are defined inside `__init__` and belong exclusively to one object
+*   B) Instance variables are defined by assigning to `self.attribute` inside a method and belong to each individual object; class variables are defined in the class body and shared by all instances until overridden on a specific object
+*   C) There is no practical difference between instance and class variables in Python — both are stored in the same namespace and any change made through one instance is automatically reflected in all other instances
+*   D) Instance variables are read-only once set by `__init__`; class variables are mutable and serve as the only way to share writable state between methods of the same class
+*   **Correct Answer:** B) Instance variables are defined by assigning to `self.attribute` inside a method and belong to each individual object; class variables are defined in the class body and shared by all instances until overridden on a specific object.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **instance variables vs class variables**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **instance variables vs class variables**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **instance variables vs class variables**.
-    * *Why A is correct:* This describes the exact role and function of **instance variables vs class variables**.
+    *   *Why A is incorrect:* The descriptions are swapped — variables assigned in the class body (outside methods) are class variables shared by all instances; variables assigned via `self.x = value` inside a method are instance variables unique to each object.
+    *   *Why B is correct:* `self.attribute = value` creates an instance variable in the object's own `__dict__`; a class variable defined at class level is shared until an assignment like `obj.class_var = new_value` creates a shadowing instance variable on that specific object.
+    *   *Why C is incorrect:* Instance and class variables occupy different namespaces — assigning `obj.x = 5` creates or updates only that object's instance variable and does not change the class variable or other instances; mutating a mutable class variable in place (e.g., `obj.class_list.append(x)`) is the exception that does affect all instances.
+    *   *Why D is incorrect:* Instance variables are not read-only — they can be reassigned at any time with `obj.attribute = new_value`; the read-only constraint would require explicit enforcement via properties or `__slots__`, which are not the default behavior.
 
 
 ---
@@ -66,14 +66,13 @@ D) Reboot the physical machine and wait for services to reload.
 
 **Question 5**
 When designing a system for **Object-Oriented Programming (OOP) Basics**, you must mitigate the risk of **Allowing attackers to execute arbitrary SQL commands on the backend database via input forms.**. Which of the following security configurations or controls represents the best practice to implement?
-D) Enable full disk encryption on all client endpoints.
+D) Define a database helper class with a `query(self, sql)` method that accepts raw SQL strings and executes them directly, centralizing all database access in one place.
 C) Enable full disk encryption on all client endpoints.
 A) Implement parameterized queries and prepared statements rather than raw string concatenation.
 B) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
 *   **Correct Answer:** A) Implement parameterized queries and prepared statements rather than raw string concatenation.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
+    * *Why D is incorrect:* Centralizing database access in a class is good design practice, but a `query(self, sql)` method that accepts and executes raw SQL strings still passes unsanitized input directly to the database — the injection vulnerability exists in the query string itself, regardless of which class or method executes it.
     * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why A is correct:* Implementing Implement parameterized queries and prepared statements rather than raw string concatenation. mitigates the risk of Allowing attackers to execute arbitrary SQL commands on the backend database via input forms..
+    * *Why A is correct:* Implementing parameterized queries and prepared statements rather than raw string concatenation mitigates the risk of allowing attackers to execute arbitrary SQL commands on the backend database via input forms.
     * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-

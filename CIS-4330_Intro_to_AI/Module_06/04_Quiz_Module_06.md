@@ -1,4 +1,4 @@
-# Quiz: Module 06 - Decision Trees and Random Forests
+# Quiz: Module 06 - Computer Vision and Image Recognition
 ## Course: CIS-4330_Intro_to_AI (AI-900 (Microsoft Azure AI Fundamentals))
 
 ---
@@ -11,69 +11,65 @@ What type of machine learning model is a Random Forest?
 *   D) Neural Network
 *   **Correct Answer:** C) A Random Forest is an ensemble model that combines the predictions of multiple decision trees to improve overall stability.
 *   **Distractor Analysis:**
-    *   *Why correct:* A Random Forest is an ensemble model that combines the predictions of multiple decision trees to improve overall stability.
-    *   It is an ensemble (collection) of trees, not a single tree or linear model.
+    *   *Why correct:* A Random Forest is an ensemble (collection) of trees, not a single tree or linear model.
+    *   Linear models fit a single equation. Neural networks use layered neurons. Random Forest is specifically defined as an ensemble.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **bootstrap aggregation.**?
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within ai operations.
-C) The process of adjusting node positions in a binary heap to restore the heap property (min-heap or max-heap) after an insertion or deletion.
-D) Elements placed inside the <head> block of an HTML document that define metadata, links to stylesheets, scripts, character sets, and page titles.
-B) The core operations of a queue: 'enqueue' appends an element to the back, and 'dequeue' removes and returns the front element.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within ai operations.
+In the context of machine learning, which of the following is the most accurate definition of **bootstrap aggregation (bagging)**?
+*   A) A technique where multiple models are each trained on a different random sample (with replacement) of the training data, and their predictions are averaged or voted on to reduce variance.
+*   B) A process that adjusts node positions in a binary heap to restore the min-heap or max-heap property after an insertion or deletion.
+*   C) HTML elements placed in the document head that define metadata, stylesheets, and viewport settings for the browser.
+*   D) A queue operation pair where enqueue appends an element to the back and dequeue removes the front element.
+*   **Correct Answer:** A) A technique where multiple models are each trained on a different random sample (with replacement) of the training data, and their predictions are averaged or voted on to reduce variance.
 *   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **bootstrap aggregation.**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **bootstrap aggregation.**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **bootstrap aggregation.**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **bootstrap aggregation.**.
-
+    *   *Why A is correct:* Bagging (Bootstrap AGGregating) trains each base learner on a bootstrapped subset, making the ensemble more robust than any single model.
+    *   *Why B is incorrect:* This describes heap re-heapification — a data structures concept unrelated to ensemble learning.
+    *   *Why C is incorrect:* This describes HTML head elements — a web development concept entirely unrelated to ML.
+    *   *Why D is incorrect:* This describes queue operations — a computer science data structure unrelated to ML ensemble methods.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **import the pandas library to load and analyze a tabular dataset**. Which of the following commands is the most appropriate to execute?
-D) accuracy = accuracy_score(y_test, predictions)
-B) model.fit(X_train, y_train)
-C) predictions = model.predict(X_test)
-A) import pandas as pd; df = pd.read_csv('data.csv')
+A developer needs to **load a tabular dataset from a CSV file using the Pandas library**. Which command is most appropriate?
+*   A) import pandas as pd; df = pd.read_csv('data.csv')
+*   B) from sklearn.tree import DecisionTreeClassifier; model = DecisionTreeClassifier()
+*   C) from sklearn.ensemble import RandomForestClassifier; model = RandomForestClassifier()
+*   D) accuracy = accuracy_score(y_test, predictions)
 *   **Correct Answer:** A) import pandas as pd; df = pd.read_csv('data.csv')
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `import pandas as pd; df = pd.read_csv('data.csv')` command is directly designed to import the pandas library to load and analyze a tabular dataset.
-
+    *   *Why A is correct:* `pd.read_csv()` reads a CSV file into a Pandas DataFrame, which is the standard first step in any Python ML pipeline.
+    *   *Why B is incorrect:* This imports and instantiates a decision tree classifier — it trains a model, not loads data.
+    *   *Why C is incorrect:* This imports and instantiates a random forest classifier — also model setup, not data loading.
+    *   *Why D is incorrect:* `accuracy_score()` evaluates predictions — it requires data already loaded and a trained model.
 
 ---
 
 **Question 4**
-While working on **Decision Trees and Random Forests** in a production environment, you encounter a system alert indicating a **Low Model Generalization** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-A) Apply regularization techniques (L1/L2), gather more training data, or simplify the model architecture.
-C) Ensure data preprocessing steps (scaling, normalization) are fit only on the training set and applied to the test set.
-B) Use imputation techniques (mean, median, mode) or drop rows/columns containing missing values.
-D) Reboot the physical machine and wait for services to reload.
-*   **Correct Answer:** A) Apply regularization techniques (L1/L2), gather more training data, or simplify the model architecture.
+A Random Forest model achieves 98% accuracy on training data but only 71% on the validation set. The model has too many deep trees memorizing noise. What is the most effective action?
+*   A) Limit tree depth (`max_depth`), reduce the number of estimators, or apply regularization techniques to simplify the model architecture.
+*   B) Ensure preprocessing scalers are fitted only on training data to prevent data leakage.
+*   C) Use mean/median imputation to fill missing values before retraining.
+*   D) Reboot the training environment and wait for services to reinitialize.
+*   **Correct Answer:** A) Limit tree depth (`max_depth`), reduce the number of estimators, or apply regularization techniques to simplify the model architecture.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Because The model has overfit the training data and performs poorly on unseen validation or testing datasets. The appropriate fix is to Apply regularization techniques (L1/L2), gather more training data, or simplify the model architecture..
-    * *Why C is incorrect:* This action does not resolve the root cause of Low Model Generalization.
-    * *Why B is incorrect:* This action does not resolve the root cause of Low Model Generalization.
-    * *Why D is incorrect:* This action does not resolve the root cause of Low Model Generalization.
-
+    *   *Why A is correct:* High training accuracy with low validation accuracy is the hallmark of overfitting. Reducing model complexity (shallower trees, fewer estimators) or adding regularization improves generalization.
+    *   *Why B is incorrect:* Preventing data leakage addresses inflated validation scores from improper preprocessing, not the overfitting shown here.
+    *   *Why C is incorrect:* Missing value imputation addresses NaN errors; it does not reduce model variance from overfitting.
+    *   *Why D is incorrect:* Rebooting the environment has no effect on model complexity or overfitting behavior.
 
 ---
 
 **Question 5**
-When designing a system for **Decision Trees and Random Forests**, you must mitigate the risk of **Attackers injecting subtle, imperceptible noise into input data (e.g. images) to force the AI into making incorrect classifications.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Train models with adversarial inputs and implement input validation/filtering on inputs.
-B) Apply differential privacy methods to the training data and limit public API rate queries.
-C) Enable full disk encryption on all client endpoints.
-D) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Train models with adversarial inputs and implement input validation/filtering on inputs.
+Attackers are sending images with imperceptible pixel-level perturbations to an Azure Custom Vision classifier, causing it to misclassify safety equipment as absent. Which defense best mitigates this **adversarial example** attack?
+*   A) Train the model with adversarial examples included in the training set and implement input validation and filtering before inference.
+*   B) Apply differential privacy to the training data and rate-limit the public inference API.
+*   C) Enable full disk encryption on all client endpoints submitting images to the API.
+*   D) Restrict model endpoint access using Azure Private Link and virtual network service endpoints.
+*   **Correct Answer:** A) Train the model with adversarial examples included in the training set and implement input validation and filtering before inference.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Train models with adversarial inputs and implement input validation/filtering on inputs. mitigates the risk of Attackers injecting subtle, imperceptible noise into input data (e.g. images) to force the AI into making incorrect classifications..
-    * *Why B is incorrect:* This does not address the security vulnerability of Adversarial Examples.
-    * *Why C is incorrect:* This does not address the security vulnerability of Adversarial Examples.
-    * *Why D is incorrect:* This does not address the security vulnerability of Adversarial Examples.
-
+    *   *Why A is correct:* Adversarial training teaches the model to classify both clean and perturbed inputs correctly; input filtering can detect statistically anomalous inputs before they reach the model.
+    *   *Why B is incorrect:* Differential privacy defends against training data reconstruction (model inversion), not adversarial input perturbations at inference time.
+    *   *Why C is incorrect:* Disk encryption protects data at rest and is irrelevant to crafted image payloads submitted through a live API.
+    *   *Why D is incorrect:* Network-level access restriction limits who can reach the endpoint but does not prevent adversarial inputs from authorized users or compromised systems.

@@ -1,79 +1,75 @@
-# Quiz: Module 11 - Generative AI and Large Language Models
+# Quiz: Module 11 - Azure OpenAI Service and Generative AI
 ## Course: CIS-4330_Intro_to_AI (AI-900 (Microsoft Azure AI Fundamentals))
 
 ---
 
 **Question 1**
-What core neural network architecture is the foundation for modern Large Language Models (LLMs) like GPT?
+What core neural network architecture is the foundation for modern Large Language Models (LLMs) like GPT-4?
 *   A) Convolutional Neural Network (CNN)
 *   B) Recurrent Neural Network (RNN)
 *   C) Transformer
 *   D) Support Vector Machine (SVM)
-*   **Correct Answer:** C) Transformers utilize self-attention mechanisms to process sequence tokens in parallel, enabling training on large datasets.
+*   **Correct Answer:** C) Transformers use self-attention mechanisms to process all tokens in a sequence simultaneously, capturing long-range dependencies and enabling training on massive datasets — which is why they replaced RNNs as the dominant LLM architecture.
 *   **Distractor Analysis:**
-    *   *Why correct:* Transformers utilize self-attention mechanisms to process sequence tokens in parallel, enabling training on large datasets.
-    *   CNN is for images. RNN is sequential but superseded by Transformers for LLMs. SVM is a linear model.
+    *   *Why correct:* The Transformer's parallel processing and self-attention allow it to scale to billions of parameters, which is what makes GPT, BERT, and similar LLMs possible.
+    *   CNNs are designed for grid-like data such as images. RNNs process sequences one step at a time and suffer from vanishing gradients over long sequences. SVMs are shallow linear classifiers with no generative capability.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **fine-tuning**?
-B) An efficient mapping technique for complete binary trees where parent-child indices can be computed using simple arithmetic (e.g., parent is (i-1)/2).
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within ai operations.
-C) A structured, seven-step process (Prepare, Categorize, Select, Implement, Assess, Authorize, Monitor) created by NIST to help organizations manage cybersecurity risk.
-D) The descendant node connected to the right branch of a parent node in a binary tree structure.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within ai operations.
+In the context of generative AI and LLMs, which of the following is the most accurate definition of **fine-tuning**?
+*   A) The process of continuing to train a pre-trained model's weights on a smaller, task-specific dataset so the model specializes in a particular domain or style without being trained from scratch.
+*   B) The practice of crafting input prompts with clear instructions, context, and examples to guide a frozen pre-trained model toward a desired output without modifying any model weights.
+*   C) A technique that converts text into dense numeric vectors encoding semantic meaning, enabling similarity comparisons between documents using distance metrics like cosine similarity.
+*   D) A neural network mechanism that allows each token in a sequence to dynamically weigh the relevance of every other token, enabling the model to capture long-range contextual dependencies.
+*   **Correct Answer:** A) The process of continuing to train a pre-trained model's weights on a smaller, task-specific dataset so the model specializes in a particular domain or style without being trained from scratch.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **fine-tuning**.
-    * *Why A is correct:* This describes the exact role and function of **fine-tuning**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **fine-tuning**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **fine-tuning**.
-
+    *   *Why A is correct:* Fine-tuning updates the model's weights using domain-specific examples (e.g., medical records, legal documents), producing a more specialized model than prompt engineering alone can achieve.
+    *   *Why B is incorrect:* This describes **prompt engineering** — guiding a model's outputs through carefully designed input text, with no weight updates.
+    *   *Why C is incorrect:* This describes **embeddings** — numeric vector representations of text used for semantic search and retrieval, not model adaptation.
+    *   *Why D is incorrect:* This describes the **self-attention mechanism** within the Transformer architecture, not the fine-tuning training process.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **train the machine learning model on the training features and targets**. Which of the following commands is the most appropriate to execute?
-D) import pandas as pd; df = pd.read_csv('data.csv')
-C) accuracy = accuracy_score(y_test, predictions)
-A) model.fit(X_train, y_train)
-B) predictions = model.predict(X_test)
-*   **Correct Answer:** A) model.fit(X_train, y_train)
+A developer needs to **load a tabular dataset from a CSV file using the Pandas library**. Which command is most appropriate?
+*   A) import pandas as pd; df = pd.read_csv('data.csv')
+*   B) model.fit(X_train, y_train)
+*   C) predictions = model.predict(X_test)
+*   D) accuracy = accuracy_score(y_test, predictions)
+*   **Correct Answer:** A) import pandas as pd; df = pd.read_csv('data.csv')
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `model.fit(X_train, y_train)` command is directly designed to train the machine learning model on the training features and targets.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is correct:* `pd.read_csv()` reads a CSV file from disk into a Pandas DataFrame, which is the standard first step in any Python ML data pipeline.
+    *   *Why B is incorrect:* `model.fit()` trains a model on already-loaded data; it does not load data from a file.
+    *   *Why C is incorrect:* `model.predict()` generates predictions from a trained model; data must already be loaded and the model already fitted.
+    *   *Why D is incorrect:* `accuracy_score()` evaluates predictions against true labels — an evaluation step that occurs after loading, training, and predicting.
 
 ---
 
 **Question 4**
-While working on **Generative AI and Large Language Models** in a production environment, you encounter a system alert indicating a **Low Model Generalization** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-D) Reboot the physical machine and wait for services to reload.
-C) Use imputation techniques (mean, median, mode) or drop rows/columns containing missing values.
-B) Ensure data preprocessing steps (scaling, normalization) are fit only on the training set and applied to the test set.
-A) Apply regularization techniques (L1/L2), gather more training data, or simplify the model architecture.
-*   **Correct Answer:** A) Apply regularization techniques (L1/L2), gather more training data, or simplify the model architecture.
+An LLM deployed via Azure OpenAI Service is generating confident but factually incorrect answers about a company's internal product catalog. The model has no access to the catalog documents. What is the most effective fix?
+*   A) Implement Retrieval-Augmented Generation (RAG) — embed the product catalog documents, retrieve the most relevant passages at query time, and inject them into the prompt as context so the model grounds its answers in actual catalog content.
+*   B) Fine-tune the model on a dataset of question-answer pairs derived from the product catalog to encode catalog knowledge directly into the model's weights.
+*   C) Apply L2 regularization to the model's output layer to reduce its confidence in low-probability tokens and suppress hallucinated content.
+*   D) Increase the model's temperature parameter above 1.0 to generate more diverse and exploratory responses that are less likely to repeat incorrect patterns.
+*   **Correct Answer:** A) Implement Retrieval-Augmented Generation (RAG) — embed the product catalog documents, retrieve the most relevant passages at query time, and inject them into the prompt as context so the model grounds its answers in actual catalog content.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This action does not resolve the root cause of Low Model Generalization.
-    * *Why C is incorrect:* This action does not resolve the root cause of Low Model Generalization.
-    * *Why B is incorrect:* This action does not resolve the root cause of Low Model Generalization.
-    * *Why A is correct:* Because The model has overfit the training data and performs poorly on unseen validation or testing datasets. The appropriate fix is to Apply regularization techniques (L1/L2), gather more training data, or simplify the model architecture..
-
+    *   *Why A is correct:* Hallucinations occur when the model lacks relevant information and generates plausible-sounding but false content. RAG solves this by providing the correct source material in the prompt context, giving the model factual grounding without retraining.
+    *   *Why B is incorrect:* Fine-tuning on a static catalog dataset would help but requires significant effort and the catalog can go out of date; RAG is the faster, more maintainable solution for grounding LLMs in live documents.
+    *   *Why C is incorrect:* L2 regularization is a training-time technique for reducing weight magnitudes to prevent overfitting — it has no effect on hallucination at inference time and cannot be applied post-deployment.
+    *   *Why D is incorrect:* Raising the temperature increases randomness and creative variation in outputs, which would likely increase hallucination rather than reduce it.
 
 ---
 
 **Question 5**
-When designing a system for **Generative AI and Large Language Models**, you must mitigate the risk of **Attackers reconstructing sensitive training data by querying the public model API and analyzing outputs.**. Which of the following security configurations or controls represents the best practice to implement?
-C) Enable full disk encryption on all client endpoints.
-D) Enable full disk encryption on all client endpoints.
-A) Apply differential privacy methods to the training data and limit public API rate queries.
-B) Train models with adversarial inputs and implement input validation/filtering on inputs.
-*   **Correct Answer:** A) Apply differential privacy methods to the training data and limit public API rate queries.
+Attackers are submitting thousands of specially crafted prompts to an Azure OpenAI Service deployment, attempting to extract the confidential system prompt and proprietary few-shot examples embedded in it. Which defense best mitigates this **prompt injection / system prompt extraction** attack?
+*   A) Avoid placing sensitive business logic or proprietary data directly in the system prompt; use output filtering to detect and block responses that appear to be reproducing the system prompt; and monitor for anomalous query patterns.
+*   B) Apply differential privacy to the training data and rate-limit the public inference API to reduce the attacker's query volume.
+*   C) Enable full disk encryption on all Azure VMs hosting the OpenAI model deployment.
+*   D) Rotate the Azure OpenAI API key every 30 days and enforce TLS 1.3 on all API connections.
+*   **Correct Answer:** A) Avoid placing sensitive business logic or proprietary data directly in the system prompt; use output filtering to detect and block responses that appear to be reproducing the system prompt; and monitor for anomalous query patterns.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This does not address the security vulnerability of Model Inversion Vulnerability.
-    * *Why D is incorrect:* This does not address the security vulnerability of Model Inversion Vulnerability.
-    * *Why A is correct:* Implementing Apply differential privacy methods to the training data and limit public API rate queries. mitigates the risk of Attackers reconstructing sensitive training data by querying the public model API and analyzing outputs..
-    * *Why B is incorrect:* This does not address the security vulnerability of Model Inversion Vulnerability.
-
+    *   *Why A is correct:* System prompt extraction exploits the model's instruction-following behavior to reveal the prompt itself. The mitigations are architectural: keep secrets out of prompts, filter outputs for prompt leakage, and detect high-volume probing behavior.
+    *   *Why B is incorrect:* Differential privacy defends against training data reconstruction via model inversion — not against a deployed model repeating its system prompt in response to crafted queries.
+    *   *Why C is incorrect:* Disk encryption protects data stored on Azure VMs at rest; it has no effect on an LLM revealing its system prompt through its text outputs at inference time.
+    *   *Why D is incorrect:* API key rotation and TLS protect the transport layer and authenticate callers, but they do not prevent an authenticated caller from using prompt injection to extract the system prompt.

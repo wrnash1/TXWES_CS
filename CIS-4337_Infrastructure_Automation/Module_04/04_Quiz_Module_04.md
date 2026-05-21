@@ -1,79 +1,77 @@
-# Quiz: Module 04 - Terraform Variables & Outputs
+# Quiz: Module 04 - Terraform State – Local and Remote Backends
 ## Course: CIS-4337_Infrastructure_Automation (HashiCorp Certified: Terraform Associate)
 
 ---
 
 **Question 1**
-Which file extension is default for storing variable values in a Terraform project?
+Which file extension is used by default for the file that stores Terraform state locally?
 *   A) .tf
 *   B) .tfvars
-*   C) .json
+*   C) .tfstate
 *   D) .hcl
-*   **Correct Answer:** B) Terraform automatically loads variables values from files ending with `.tfvars`.
+*   **Correct Answer:** C) The default local state file is named `terraform.tfstate` and uses the `.tfstate` extension. It is a JSON file in the working directory.
 *   **Distractor Analysis:**
-    *   *Why correct:* Terraform automatically loads variables values from files ending with `.tfvars`.
-    *   .tf stores declarations. .json is alternative layout.
+    *   *Why C is correct:* Terraform writes state to `terraform.tfstate` by default. A backup of the previous state is kept in `terraform.tfstate.backup`. The exam tests this filename.
+    *   *Why A is incorrect:* `.tf` files contain HCL configuration declarations, not state data.
+    *   *Why B is incorrect:* `.tfvars` files supply variable values to a configuration; they have nothing to do with state storage.
+    *   *Why D is incorrect:* `.hcl` is the general HashiCorp Configuration Language extension; Terraform configuration files specifically use `.tf`, and state files use `.tfstate`.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **default parameters**?
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within os_admin operations.
-B) The expected yearly cost of a security risk, calculated by multiplying the Single Loss Expectancy by the Annualized Rate of Occurrence (ALE = SLE * ARO).
-C) A mathematical representation used to describe the asymptotic upper bound of an algorithm's running time or space complexity relative to the input size N. It helps developers predict how an algorithm will scale as data grows.
-D) The monetary loss expected from a single occurrence of a specific risk event, calculated as Asset Value multiplied by the Exposure Factor (SLE = AV * EF).
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within os_admin operations.
+Which of the following is the most accurate description of a **remote backend** in Terraform?
+*   A) A plugin installed alongside Terraform Core that provides additional resource types not available in public providers
+*   B) A configuration that stores the Terraform state file in a shared, external location (such as S3, GCS, or Terraform Cloud) enabling team collaboration, state locking, and encryption at rest
+*   C) A secondary Terraform binary installed on a remote server that executes `apply` operations on behalf of the local CLI
+*   D) A Git repository integration that automatically commits the state file after every `terraform apply` run
+*   **Correct Answer:** B) A remote backend stores state outside the local machine, enabling multiple team members to share the same state, with locking to prevent concurrent modification and encryption for security.
 *   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **default parameters**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **default parameters**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **default parameters**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **default parameters**.
-
+    *   *Why B is correct:* Remote backends are the standard for team use. The exam tests which backends (S3+DynamoDB, Terraform Cloud, GCS, Azure Blob) support locking and which require additional services for it.
+    *   *Why A is incorrect:* That describes a provider plugin, not a backend. Backends only manage state storage and locking; they do not add resource types.
+    *   *Why C is incorrect:* Terraform Cloud remote execution does run operations remotely, but that is a feature of Terraform Cloud workspaces, not what "remote backend" means in general.
+    *   *Why D is incorrect:* Terraform has no built-in Git integration for state. Storing state in Git is an anti-pattern because state files often contain sensitive plaintext secrets.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **instruct the systemd init system to restart a specified background service process**. Which of the following commands is the most appropriate to execute?
-A) systemctl restart service
-D) df -h
-B) chmod 600 config.conf
-C) ps aux
-*   **Correct Answer:** A) systemctl restart service
+A cloud resource was manually deleted from the AWS console, but it still appears in the Terraform state file. A developer needs to remove it from state without attempting to destroy anything. Which command should they run?
+*   A) terraform destroy -target=aws_instance.web
+*   B) terraform apply -replace=aws_instance.web
+*   C) terraform state rm aws_instance.web
+*   D) terraform import aws_instance.web
+*   **Correct Answer:** C) `terraform state rm` removes the resource record from the state file only, without touching any real infrastructure. This is the correct approach when a resource no longer exists outside of Terraform.
 *   **Distractor Analysis:**
-    * *Why A is correct:* The `systemctl restart service` command is directly designed to instruct the systemd init system to restart a specified background service process.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why C is correct:* After `terraform state rm`, Terraform no longer tracks the resource. Running `plan` afterward will show it as a new resource to create (if still in config) or show no changes (if also removed from config).
+    *   *Why A is incorrect:* `terraform destroy -target` would attempt to call the provider API to delete the resource — which would fail with an error since it no longer exists in AWS.
+    *   *Why B is incorrect:* `terraform apply -replace` forces recreation of a resource (destroy + create), which is wrong if the resource no longer exists at all.
+    *   *Why D is incorrect:* `terraform import` adds an existing real-world resource into state — the opposite of what is needed here.
 
 ---
 
 **Question 4**
-While working on **Terraform Variables & Outputs** in a production environment, you encounter a system alert indicating a **Permission Denied** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-A) Prepend the command with 'sudo' to run it with superuser administrative privileges, or adjust the file permissions.
-B) Identify and terminate the process already utilizing the target port, or modify the service configuration to use an open port.
-D) Reboot the physical machine and wait for services to reload.
-C) Run log rotations, clean temporary files, or expand the logical volume capacity.
-*   **Correct Answer:** A) Prepend the command with 'sudo' to run it with superuser administrative privileges, or adjust the file permissions.
+You are configuring an S3 remote backend with state locking. Which additional AWS service must be configured to enable locking for the S3 backend?
+*   A) AWS Lambda
+*   B) AWS IAM
+*   C) Amazon DynamoDB
+*   D) Amazon SQS
+*   **Correct Answer:** C) The S3 backend uses a DynamoDB table for state locking. You specify the table name in the `backend "s3"` block with the `dynamodb_table` argument.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Because The current user account lacks the required read, write, or execute permissions for the target file or system call. The appropriate fix is to Prepend the command with 'sudo' to run it with superuser administrative privileges, or adjust the file permissions..
-    * *Why B is incorrect:* This action does not resolve the root cause of Permission Denied.
-    * *Why D is incorrect:* This action does not resolve the root cause of Permission Denied.
-    * *Why C is incorrect:* This action does not resolve the root cause of Permission Denied.
-
+    *   *Why C is correct:* S3 itself has no native locking mechanism. The S3 backend offloads locking to a DynamoDB table with a `LockID` string primary key. This is a classic exam question.
+    *   *Why A is incorrect:* Lambda is a serverless compute service; it plays no role in Terraform state locking.
+    *   *Why B is incorrect:* IAM controls authentication and authorization for accessing the S3 bucket, but does not provide locking functionality itself.
+    *   *Why D is incorrect:* SQS is a message queuing service and is not involved in the S3 backend state locking mechanism.
 
 ---
 
 **Question 5**
-When designing a system for **Terraform Variables & Outputs**, you must mitigate the risk of **Administrators logging in routinely as root or Administrator, increasing the blast radius of user errors or malware.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC.
-C) Enable full disk encryption on all client endpoints.
-D) Enable full disk encryption on all client endpoints.
-B) Disable unused system accounts and run a port scan to disable unnecessary active background services.
-*   **Correct Answer:** A) Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC.
+Which statement about Terraform state file security is correct and directly relevant to the Terraform Associate exam?
+*   A) Variables marked `sensitive = true` are encrypted in the state file, so the state file is safe to store in a public S3 bucket
+*   B) The state file never contains credentials or secrets because providers handle authentication separately
+*   C) The state file stores sensitive values in plaintext regardless of `sensitive = true` on variables, so state must be encrypted at rest and access-controlled
+*   D) Running `terraform state list` automatically encrypts the state file with AES-256 before displaying output
+*   **Correct Answer:** C) `sensitive = true` only masks values in CLI output — it does not encrypt them in the state file. The state file always stores resource attributes, including secrets, as plaintext JSON, requiring proper backend encryption and access controls.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC. mitigates the risk of Administrators logging in routinely as root or Administrator, increasing the blast radius of user errors or malware..
-    * *Why C is incorrect:* This does not address the security vulnerability of Privileged Access Abuse.
-    * *Why D is incorrect:* This does not address the security vulnerability of Privileged Access Abuse.
-    * *Why B is incorrect:* This does not address the security vulnerability of Privileged Access Abuse.
-
+    *   *Why C is correct:* This is an explicit exam topic. HashiCorp documentation warns that state may contain secrets and recommends using a remote backend with encryption at rest (e.g., S3 with SSE, or Terraform Cloud which encrypts state automatically).
+    *   *Why A is incorrect:* `sensitive = true` has no effect on state file contents — secrets are still in plaintext. A public S3 bucket would expose all state data including credentials.
+    *   *Why B is incorrect:* Many resources write secrets to state (e.g., `aws_db_instance` writes the `password` attribute, `tls_private_key` writes the private key value).
+    *   *Why D is incorrect:* `terraform state list` is a read-only query command and has no effect on how the state file is stored or encrypted.

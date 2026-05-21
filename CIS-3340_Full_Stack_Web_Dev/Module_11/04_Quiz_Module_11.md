@@ -5,75 +5,73 @@
 
 **Question 1**
 How does React's Virtual DOM improve application rendering performance?
-*   A) It updates all page elements on every interaction
-*   B) It compiles javascript to machine code
-*   C) It computes changes in memory first and only updates altered elements in the real DOM
-*   D) It bypasses CSS parsing
-*   **Correct Answer:** C) React compares changes in a virtual DOM tree (reconciliation) and updates only the necessary elements, avoiding expensive global repaints.
+*   A) It pre-renders all components on the server and sends fully formed HTML to the browser, eliminating the need for client-side JavaScript execution.
+*   B) It compiles JSX directly to machine code during the build step, bypassing the JavaScript engine's JIT compilation.
+*   C) It computes a diff between the previous and new in-memory component trees (reconciliation) and updates only the changed elements in the real DOM — avoiding expensive full-page repaints.
+*   D) It caches all DOM elements in localStorage so they do not need to be re-queried on subsequent renders.
+*   **Correct Answer:** C) It computes a diff between the previous and new in-memory component trees (reconciliation) and updates only the changed elements in the real DOM — avoiding expensive full-page repaints.
 *   **Distractor Analysis:**
-    *   *Why correct:* React compares changes in a virtual DOM tree (reconciliation) and updates only the necessary elements, avoiding expensive global repaints.
-    *   Bypassing calculations or writing machine code is not how React operates.
+    *   *Why A is incorrect:* This describes Server-Side Rendering (SSR) — a separate technique. Standard React renders on the client side.
+    *   *Why B is incorrect:* JSX is compiled to `React.createElement()` calls by Babel — not to machine code. The JavaScript engine handles execution.
+    *   *Why C is correct:* React's reconciliation algorithm compares Virtual DOM snapshots and batches the minimal real DOM mutations needed, reducing browser reflow and repaint costs.
+    *   *Why D is incorrect:* React does not store DOM elements in localStorage — caching DOM queries in local variables is a JavaScript optimization technique unrelated to React's Virtual DOM.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **components**?
-D) HTML tags that convey the meaning and structure of the enclosed content to both the browser and search engines (e.g., <header>, <article>, <footer>) instead of generic containers.
-C) The core operations of a stack: 'push' inserts an element onto the top, and 'pop' removes and returns the top element.
-B) Electrostatic Discharge protection; tools (like wrist straps, grounding mats) used to prevent static electricity from destroying sensitive microchips when handling hardware.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
+Which of the following is the most accurate definition of **React components**?
+*   A) HTML `<section>` and `<article>` semantic elements that define reusable page regions without JavaScript functionality.
+*   B) Self-contained JavaScript functions (or classes) that accept input data via `props` and return JSX describing a portion of the user interface — composable into a complete application tree.
+*   C) CSS class definitions that apply visual styles to groups of related HTML elements across multiple pages of an application.
+*   D) SQL stored procedures that components invoke to fetch data from a relational database without writing explicit query strings.
+*   **Correct Answer:** B) Self-contained JavaScript functions (or classes) that accept input data via `props` and return JSX describing a portion of the user interface — composable into a complete application tree.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **components**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **components**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **components**.
-    * *Why A is correct:* This describes the exact role and function of **components**.
-
+    *   *Why A is incorrect:* HTML semantic elements are markup constructs — they do not contain JavaScript logic, state, or composable behavior.
+    *   *Why B is correct:* React components are the fundamental unit of a React application — reusable, isolated functions that render UI based on their input (`props`) and internal state.
+    *   *Why C is incorrect:* CSS classes style HTML elements but are not JavaScript components — they have no behavior, props, or lifecycle.
+    *   *Why D is incorrect:* SQL stored procedures run on a database server — React components are client-side JavaScript UI primitives.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **record staged code modifications into the repository version history**. Which of the following commands is the most appropriate to execute?
-D) pip install -r requirements.txt
-C) pytest
-A) git commit -m 'update'
-B) python3 -m venv .venv
-*   **Correct Answer:** A) git commit -m 'update'
+A developer writes valid HTML and pastes it into a React component's return statement, but the build fails. What is the most likely cause?
+*   A) React does not support standard HTML elements — all markup must use React's proprietary element library.
+*   B) The HTML uses `class` and `for` attributes, which are reserved JavaScript keywords — JSX requires `className` and `htmlFor` instead.
+*   C) The component is missing a default export — React requires every component file to use `module.exports`.
+*   D) The HTML contains inline styles with hyphenated property names (`font-size`) — JSX only supports camelCase style properties (`fontSize`).
+*   **Correct Answer:** B) The HTML uses `class` and `for` attributes, which are reserved JavaScript keywords — JSX requires `className` and `htmlFor` instead.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `git commit -m 'update'` command is directly designed to record staged code modifications into the repository version history.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is incorrect:* React components can render any standard HTML element — JSX just uses slightly different attribute names for a handful of reserved-word conflicts.
+    *   *Why B is correct:* `class` is a reserved JavaScript keyword (used for ES6 class definitions) and `for` is used in `for` loops — JSX uses `className` and `htmlFor` to avoid the conflict.
+    *   *Why C is incorrect:* React components use ES Module syntax (`export default` or named exports) — `module.exports` is CommonJS syntax and would not cause a JSX compilation failure.
+    *   *Why D is incorrect:* Both hyphenated attribute values in HTML and camelCase style properties in JSX refer to different things — inline `style` objects in JSX do use camelCase, but this is a runtime warning, not a build failure.
 
 ---
 
 **Question 4**
-While working on **Frontend Frameworks (React)** in a production environment, you encounter a system alert indicating a **KeyError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-B) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-A) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
-D) Reboot the physical machine and wait for services to reload.
-C) Verify that the index is within the valid range of 0 to len(list)-1.
-*   **Correct Answer:** A) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
+A developer deploys a React SPA to AWS S3 static website hosting. The root URL (`/`) loads correctly, but directly navigating to any other route (e.g., `/dashboard`) returns a 403 error. What is the cause?
+*   A) S3 static website hosting does not support HTTPS — the application must be moved to EC2.
+*   B) The React Router routes are defined on the client side — S3 does not know about them and returns a 403 (or 404) for any path that does not correspond to a real file. The fix is to configure the S3 error document to redirect to `index.html`, or use CloudFront with a custom error response for 403/404 that serves `index.html`.
+*   C) React SPAs cannot use S3 for hosting — they require an Express server to serve the `index.html` file for all routes.
+*   D) The IAM bucket policy is missing `s3:GetObject` permission for the specific `/dashboard` path — adding a separate policy statement for each route resolves the issue.
+*   **Correct Answer:** B) The React Router routes are defined on the client side — S3 does not know about them and returns a 403 (or 404) for any path that does not correspond to a real file. The fix is to configure the S3 error document to redirect to `index.html`, or use CloudFront with a custom error response.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This action does not resolve the root cause of KeyError.
-    * *Why A is correct:* Because The code attempted to access a dictionary key that is not defined in the object. The appropriate fix is to Ensure the requested key exists in the dictionary, or use the .get() method to return a default value..
-    * *Why D is incorrect:* This action does not resolve the root cause of KeyError.
-    * *Why C is incorrect:* This action does not resolve the root cause of KeyError.
-
+    *   *Why A is incorrect:* S3 static website hosting supports HTTPS when combined with CloudFront — HTTPS is not the cause of the routing error.
+    *   *Why B is correct:* In a React SPA, all routes are handled by React Router in `index.html` — the server must serve `index.html` for every path, not just `/`.
+    *   *Why C is incorrect:* React SPAs work perfectly with S3 static hosting when properly configured — no server-side rendering is required.
+    *   *Why D is incorrect:* A single `s3:GetObject` on `/*` covers all objects in the bucket — separate route-level policies are neither necessary nor effective.
 
 ---
 
 **Question 5**
-When designing a system for **Frontend Frameworks (React)**, you must mitigate the risk of **Storing user credentials in plain text, making them vulnerable to database breaches.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-D) Enable full disk encryption on all client endpoints.
-C) Enable full disk encryption on all client endpoints.
-B) Implement parameterized queries and prepared statements rather than raw string concatenation.
-*   **Correct Answer:** A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
+Which command produces an optimized production build of a React application created with Vite or Create React App?
+*   A) `npm run dev`
+*   B) `npm run build`
+*   C) `npm start`
+*   D) `npx react-compile --prod`
+*   **Correct Answer:** B) `npm run build` compiles the React application with minification, tree-shaking, and code splitting — producing a `build/` or `dist/` directory of static assets ready for deployment to S3, CloudFront, or any static web server.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt. mitigates the risk of Storing user credentials in plain text, making them vulnerable to database breaches..
-    * *Why D is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-    * *Why C is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-    * *Why B is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-
+    *   *Why A is incorrect:* `npm run dev` starts the local development server with hot module replacement — it does not produce a production build.
+    *   *Why B is correct:* `npm run build` is the standard command in both Create React App and Vite projects to produce optimized production assets.
+    *   *Why C is incorrect:* `npm start` in Create React App also starts the development server (equivalent to `npm run dev`) — not a production build.
+    *   *Why D is incorrect:* `npx react-compile --prod` is not a real command — production builds are managed through the project's own `package.json` build script.

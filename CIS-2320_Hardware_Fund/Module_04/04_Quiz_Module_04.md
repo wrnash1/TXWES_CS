@@ -17,63 +17,63 @@ Which RAM type is specifically designed for space-constrained laptops and thin c
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **SODIMM vs DIMM**?
-D) A node in a tree structure that has no child nodes (its children point to null), representing the termination points of the branches.
-B) The method of evaluating an algorithm's efficiency by analyzing its behavior as the input size approaches infinity, focusing on growth rates rather than specific hardware speeds.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within os_admin operations.
-C) A structured, seven-step process (Prepare, Categorize, Select, Implement, Assess, Authorize, Monitor) created by NIST to help organizations manage cybersecurity risk.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within os_admin operations.
+In the context of PC hardware, which of the following most accurately describes the difference between **SODIMM and DIMM**?
+*   A) SODIMM modules are approximately 67mm long and designed for laptops and small form factor systems, while full-size DIMMs are approximately 133mm long and used in desktop PCs; both come in DDR4 and DDR5 variants but are not interchangeable.
+*   B) SODIMM modules operate at higher voltages than DIMMs, making them faster but less energy-efficient in battery-powered devices.
+*   C) DIMMs use a single row of contacts on one side of the module, while SODIMMs use contacts on both sides, doubling their data bus width.
+*   D) SODIMM and DIMM refer to the same physical module; the naming difference only indicates whether the RAM is registered (buffered) or unbuffered.
+*   **Correct Answer:** A) SODIMM modules are approximately 67mm long and designed for laptops and small form factor systems, while full-size DIMMs are approximately 133mm long and used in desktop PCs; both come in DDR4 and DDR5 variants but are not interchangeable.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **SODIMM vs DIMM**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **SODIMM vs DIMM**.
-    * *Why A is correct:* This describes the exact role and function of **SODIMM vs DIMM**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **SODIMM vs DIMM**.
+    * *Why A is correct:* This accurately describes the physical size difference, use case, and the fact that the two form factors are not interchangeable despite sharing DDR generations.
+    * *Why B is incorrect:* SODIMMs operate at lower or equal voltages compared to DIMMs; DDR4 SODIMMs and DIMMs both run at 1.2V.
+    * *Why C is incorrect:* Both DIMM and SODIMM use contacts on both sides; the "dual inline" in both names refers to independent contact rows, not single vs. double sided.
+    * *Why D is incorrect:* SODIMM and DIMM are distinct physical form factors with different sizes and pin counts; the distinction is not about buffering.
 
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **instruct the systemd init system to restart a specified background service process**. Which of the following commands is the most appropriate to execute?
-B) chmod 600 config.conf
-D) df -h
-A) systemctl restart service
-C) ps aux
-*   **Correct Answer:** A) systemctl restart service
+A technician installs two 8 GB DDR4 DIMMs into a motherboard that supports dual-channel memory. After boot, CPU-Z shows the memory running in single-channel mode. What is the most likely cause?
+*   A) The two modules are from different manufacturers, which disables dual-channel
+*   B) The modules were installed in adjacent slots (e.g., A1 and A2) instead of paired slots (e.g., A1 and B1)
+*   C) DDR4 does not support dual-channel mode; only DDR3 supports this feature
+*   D) The total installed RAM exceeds the motherboard's single-channel capacity threshold
+*   **Correct Answer:** B) The modules were installed in adjacent slots (e.g., A1 and A2) instead of paired slots (e.g., A1 and B1)
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `systemctl restart service` command is directly designed to instruct the systemd init system to restart a specified background service process.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
+    * *Why B is correct:* Dual-channel requires modules in paired (matching channel) slots as defined by the motherboard; adjacent slots typically belong to the same channel.
+    * *Why A is incorrect:* Different manufacturers do not prevent dual-channel; matching speed and capacity are what matters.
+    * *Why C is incorrect:* DDR4 fully supports dual-channel mode when modules are in the correct paired slots.
+    * *Why D is incorrect:* There is no capacity threshold that disables dual-channel; the slot pairing is the only hardware requirement.
 
 
 ---
 
 **Question 4**
-While working on **Memory (RAM) Types and Configuration** in a production environment, you encounter a system alert indicating a **Disk Space Full** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-A) Run log rotations, clean temporary files, or expand the logical volume capacity.
-B) Prepend the command with 'sudo' to run it with superuser administrative privileges, or adjust the file permissions.
-D) Reboot the physical machine and wait for services to reload.
-C) Identify and terminate the process already utilizing the target port, or modify the service configuration to use an open port.
-*   **Correct Answer:** A) Run log rotations, clean temporary files, or expand the logical volume capacity.
+A user reports that after upgrading their desktop from 8 GB to 16 GB by adding a second 8 GB DDR4 stick, the system randomly crashes with memory errors. Both sticks are the same brand and speed. What should the technician check first?
+*   A) Whether the power supply has enough wattage to support additional RAM
+*   B) Whether the new module is seated in the correct dual-channel slot and the locking clips are fully engaged
+*   C) Whether the operating system license supports more than 8 GB of RAM
+*   D) Whether the SATA data cable needs to be replaced due to interference with the RAM slots
+*   **Correct Answer:** B) Whether the new module is seated in the correct dual-channel slot and the locking clips are fully engaged
 *   **Distractor Analysis:**
-    * *Why A is correct:* Because The storage volume has run out of space, preventing files from being written and causing system services to fail. The appropriate fix is to Run log rotations, clean temporary files, or expand the logical volume capacity..
-    * *Why B is incorrect:* This action does not resolve the root cause of Disk Space Full.
-    * *Why D is incorrect:* This action does not resolve the root cause of Disk Space Full.
-    * *Why C is incorrect:* This action does not resolve the root cause of Disk Space Full.
+    * *Why B is correct:* Improperly seated RAM is the most common cause of memory errors and instability after an upgrade; the locking clips must snap fully into place.
+    * *Why A is incorrect:* RAM draws very little additional power (a few watts per module); a PSU adequate for the original system handles additional RAM easily.
+    * *Why C is incorrect:* Windows 10/11 Home supports up to 128 GB; RAM capacity is not a licensing restriction for standard workloads.
+    * *Why D is incorrect:* SATA cables route to storage drives and do not interact electrically with RAM slots.
 
 
 ---
 
 **Question 5**
-When designing a system for **Memory (RAM) Types and Configuration**, you must mitigate the risk of **Administrators logging in routinely as root or Administrator, increasing the blast radius of user errors or malware.**. Which of the following security configurations or controls represents the best practice to implement?
-C) Enable full disk encryption on all client endpoints.
-D) Enable full disk encryption on all client endpoints.
-B) Disable unused system accounts and run a port scan to disable unnecessary active background services.
-A) Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC.
-*   **Correct Answer:** A) Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC.
+Which of the following correctly identifies how DDR4 and DDR5 DIMMs are physically distinguished from each other to prevent accidental cross-generation installation?
+*   A) DDR5 DIMMs are shorter than DDR4 DIMMs, so they will not reach the full length of a DDR4 slot
+*   B) DDR5 DIMMs have a different notch position along the bottom edge compared to DDR4, preventing insertion into a DDR4 slot
+*   C) DDR5 DIMMs have gold contacts on both sides while DDR4 contacts are only on one side
+*   D) DDR5 DIMMs require a locking tab on the top edge of the slot that DDR4 slots do not have
+*   **Correct Answer:** B) DDR5 DIMMs have a different notch position along the bottom edge compared to DDR4, preventing insertion into a DDR4 slot
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This does not address the security vulnerability of Privileged Access Abuse.
-    * *Why D is incorrect:* This does not address the security vulnerability of Privileged Access Abuse.
-    * *Why B is incorrect:* This does not address the security vulnerability of Privileged Access Abuse.
-    * *Why A is correct:* Implementing Enforce the principle of least privilege, requiring users to log in with standard accounts and elevate privileges via sudo/UAC. mitigates the risk of Administrators logging in routinely as root or Administrator, increasing the blast radius of user errors or malware..
+    * *Why B is correct:* The key notch position is the physical mechanism that prevents wrong-generation DIMMs from being inserted; DDR3, DDR4, and DDR5 all have distinct notch positions.
+    * *Why A is incorrect:* DDR4 and DDR5 DIMMs are both 288-pin modules of the same physical length (133.35mm); length is not the differentiator.
+    * *Why C is incorrect:* Both DDR4 and DDR5 DIMMs have gold contacts on both sides; this is not a distinguishing feature between generations.
+    * *Why D is incorrect:* There is no top-edge locking tab difference between DDR4 and DDR5 slots; the notch keying mechanism is the standard physical safety feature.
 

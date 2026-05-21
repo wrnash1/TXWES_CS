@@ -6,7 +6,7 @@ This document contains the administrative backbone for the course. Copy these it
 ## 1. Welcome Announcement
 **Subject:** Welcome to CIS 3321: Network Administration!
 **Message:**
-Welcome to CIS 3321! I am Professor Nash, and I am thrilled to guide you through the fascinating world of computer networking. This course is fully asynchronous and designed with a singular goal in mind: preparing you to pass the **CompTIA Network+ (N10-008)** certification exam. 
+Welcome to CIS 3321! I am Professor Nash, and I am thrilled to guide you through the fascinating world of computer networking. This course is fully asynchronous and designed with a singular goal in mind: preparing you to pass the **CompTIA Network+ (N10-009)** certification exam. 
 Every week, you will find bite-sized video lectures, targeted reading guides, and hands-on virtual labs. Please review the Syllabus located in the 'Course Information' folder. Your journey starts in **Module 1: Networking Fundamentals**. Let's get building!
 
 ---
@@ -23,7 +23,7 @@ More importantly, this entire course is mapped directly to the CompTIA Network+ 
 **Course:** CIS 3321 - Network Administration
 **Instructor:** Professor Nash
 **Format:** 100% Online Asynchronous
-**Target Certification:** CompTIA Network+ (N10-008)
+**Target Certification:** CompTIA Network+ (N10-009)
 
 **Course Description:**
 This course provides a comprehensive overview of network administration, focusing on the OSI model, IP addressing, routing, switching, wireless technologies, and network security. It is heavily hands-on, utilizing local virtualization (VirtualBox) for lab environments.
@@ -58,7 +58,7 @@ By the end of this course, students will be able to:
 **Location:** ComputerMinds Testing Center
 **Format:** Proctored, In-Person
 **Details:**
-Your final exam for this course is the actual **CompTIA Network+ (N10-008)** exam. You must schedule your exam with ComputerMinds prior to Finals Week. 
+Your final exam for this course is the actual **CompTIA Network+ (N10-009)** exam. You must schedule your exam with ComputerMinds prior to Finals Week. 
 *   **Passing the Certification:** If you pass the certification exam, you will automatically receive a 100% (A) for the Final Exam portion of your course grade.
 *   **Failing the Certification:** If you do not pass the certification, your final exam grade will be prorated based on your numeric score relative to the passing threshold (720 on a scale of 100-900).
 *   **Academic Integrity:** Use of AI (like ChatGPT) is permitted for brainstorming and lab troubleshooting during the semester *if explicitly cited*. However, the final exam is strictly proctored with zero tolerance for academic dishonesty.

@@ -1,86 +1,82 @@
-# Quiz: Module 10 - App Engine/Cloud Run
-## Course: CIS-4329_Google_Cloud (4329_Google_Cloud - Google Cloud Associate Cloud Engineer)
+# Quiz: Module 10 – Pub/Sub and Cloud Functions: Event-Driven Architecture
+## Course: CIS-4329 – Google Cloud Administration (Google Cloud Associate Cloud Engineer)
 
 ---
 
 **Question 1**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Core Concept**?
-C) The additional execution time and CPU operations spent visiting nodes sequentially in memory, which is higher in linked structures than in contiguous arrays.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within cloud operations.
-B) A deployment model that uses two identical production environments (Blue and Green) to minimize downtime and risk; updates are deployed to the idle environment before routing live traffic.
-D) A computer data storage architecture that manages data as objects (e.g. AWS S3, Google Cloud Storage), offering high scalability.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within cloud operations.
+Your data pipeline receives order events from multiple upstream applications. Each event must be processed by both an inventory service and an analytics service independently. The two services should not be aware of each other and should be able to process at their own rates. Which Pub/Sub configuration implements this pattern?
+
+A) Create one topic and one subscription shared between both services, so each message is delivered to whichever service polls first.
+B) Create one topic with two separate subscriptions — one for the inventory service and one for the analytics service.
+C) Create two topics — one for inventory and one for analytics — and publish each event to both topics using a custom fan-out function.
+D) Create one subscription with a filter that routes messages with `type=inventory` to one service and `type=analytics` to the other.
+
+*   **Correct Answer:** B) Create one topic with two separate subscriptions — one for the inventory service and one for the analytics service.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Core Concept**.
-    * *Why A is correct:* This describes the exact role and function of **Core Concept**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Core Concept**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Core Concept**.
-
-
----
+    *   *Why A is incorrect:* A single subscription delivers each message to only one subscriber — whichever service acknowledges it first. The other service never receives the same message. Two separate subscriptions are required so each service gets its own independent copy of every message.
+    *   *Why C is incorrect:* Publishing to two separate topics with a custom fan-out function adds unnecessary complexity and a single point of failure in the fan-out function. Pub/Sub's built-in multi-subscription model is purpose-built for this fan-out pattern.
+    *   *Why D is incorrect:* Pub/Sub subscription filters route messages to a single subscriber based on message attributes — they do not duplicate a message to multiple services. A filter-based single subscription still delivers each matching message only once.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Documentation**?
-D) An access control system where users are assigned to specific roles, and permissions are linked to those roles rather than individual users, simplifying permission management.
-C) A mathematical representation used to describe the asymptotic upper bound of an algorithm's running time or space complexity relative to the input size N. It helps developers predict how an algorithm will scale as data grows.
-B) The configuration of input data that forces an algorithm to perform the maximum number of operations, providing a guaranteed upper limit on execution time.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within cloud operations.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within cloud operations.
+A Cloud Function processes payment records published to a Pub/Sub topic. Occasionally the function fails midway through processing a record due to a transient database error, causing Pub/Sub to redeliver the message. You notice that some payments are being processed twice, resulting in duplicate charges. What is the root cause of this problem, and what is the correct fix?
+
+A) The Cloud Function's maximum retry count is set too high; reduce it to 1 to prevent redelivery.
+B) Pub/Sub delivers messages at least once and does not guarantee exactly-once delivery; the function must be made idempotent by checking whether the payment record already exists before processing it.
+C) The function is using a pull subscription instead of a push subscription; switching to push delivery prevents duplicate messages.
+D) The Pub/Sub acknowledgment deadline is too short; extend it to 600 seconds so the function always has time to acknowledge before redelivery occurs.
+
+*   **Correct Answer:** B) Pub/Sub delivers messages at least once and does not guarantee exactly-once delivery; the function must be made idempotent by checking whether the payment record already exists before processing it.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Documentation**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Documentation**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Documentation**.
-    * *Why A is correct:* This describes the exact role and function of **Documentation**.
-
-
----
+    *   *Why A is incorrect:* Reducing the retry count limits how many times a failed message is retried, but it does not prevent the fundamental at-least-once delivery behavior of Pub/Sub. Reducing retries to 1 would cause messages to be dropped on the first failure rather than fixing the duplicate processing problem.
+    *   *Why C is incorrect:* Push and pull delivery both provide at-least-once semantics — switching between them does not change the redelivery behavior. The delivery mode affects how messages are received, not whether duplicates can occur.
+    *   *Why D is incorrect:* Extending the acknowledgment deadline reduces the likelihood of redelivery during normal processing, but it does not eliminate it — network timeouts, function crashes, and cold starts can still cause a message to be redelivered after the deadline. Idempotency is the only reliable solution.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **query the cloud API to retrieve a list of all active virtual machines in the project**. Which of the following commands is the most appropriate to execute?
-B) terraform apply
-C) aws s3 sync local_dir s3://my-bucket
-A) gcloud compute instances list
-D) kubectl get pods -n production
-*   **Correct Answer:** A) gcloud compute instances list
-*   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `gcloud compute instances list` command is directly designed to query the cloud API to retrieve a list of all active virtual machines in the project.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
+You want to automatically resize images uploaded to a Cloud Storage bucket. Every time a new image file is uploaded, a processing function should run, create a thumbnail, and save it to a separate output bucket. No HTTP endpoint is needed. Which Cloud Functions trigger type is correct for this use case?
 
+A) HTTP trigger — configure an HTTPS endpoint and call it from the upload application after each upload completes.
+B) Cloud Storage trigger with the `google.storage.object.finalize` event type on the input bucket.
+C) Pub/Sub trigger — publish a message to a topic after each upload and have the function subscribe to that topic.
+D) Firestore trigger — write a document to Firestore on each upload and trigger the function on document creation.
+
+*   **Correct Answer:** B) Cloud Storage trigger with the `google.storage.object.finalize` event type on the input bucket.
+*   **Distractor Analysis:**
+    *   *Why A is incorrect:* An HTTP trigger requires the upload application to make an explicit HTTPS call to the function after each upload. This creates a tight coupling between the upload service and the processing function, and means the processing will fail silently if the call is missed. A Cloud Storage trigger fires automatically without any application-side changes.
+    *   *Why C is incorrect:* While a Pub/Sub trigger is a valid indirect approach (GCS can publish notifications to a Pub/Sub topic), it adds an intermediate resource that must be configured and maintained. The direct Cloud Storage trigger is simpler and is specifically designed for this pattern.
+    *   *Why D is incorrect:* Writing a Firestore document as an intermediary just to trigger the function on document creation is an unnecessary indirect pattern that adds complexity and latency. The Cloud Storage trigger fires directly on the upload event.
 
 ---
 
 **Question 4**
-While working on **App Engine/Cloud Run** in a production environment, you encounter a system alert indicating a **Cloud Instance Unreachable** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-A) Check the VPC route table for an Internet Gateway path and verify that the security group allows incoming traffic.
-D) Reboot the physical machine and wait for services to reload.
-C) Set up billing alerts, delete unused volumes, and configure auto-scaling scale-down policies.
-B) Review the user's IAM policies and attach the specific policy granting permissions for the resource action.
-*   **Correct Answer:** A) Check the VPC route table for an Internet Gateway path and verify that the security group allows incoming traffic.
-*   **Distractor Analysis:**
-    * *Why A is correct:* Because The virtual machine is inside a private subnet without routing to the internet, or the security group blocks the connection. The appropriate fix is to Check the VPC route table for an Internet Gateway path and verify that the security group allows incoming traffic..
-    * *Why D is incorrect:* This action does not resolve the root cause of Cloud Instance Unreachable.
-    * *Why C is incorrect:* This action does not resolve the root cause of Cloud Instance Unreachable.
-    * *Why B is incorrect:* This action does not resolve the root cause of Cloud Instance Unreachable.
+Your Cloud Function processes messages from a Pub/Sub subscription. Some messages consistently fail processing due to malformed data that will never succeed regardless of how many times they are retried. These messages are blocking your queue and consuming processing resources. What configuration prevents these messages from retrying indefinitely while preserving them for investigation?
 
+A) Set the subscription's acknowledgment deadline to 10 seconds so failed messages expire quickly and are dropped from the queue.
+B) Delete and recreate the subscription each time a bad message is detected to flush the queue.
+C) Configure a dead letter topic on the subscription with a maximum delivery attempt count, so messages that exceed the retry limit are forwarded to the dead letter topic for investigation.
+D) Enable message ordering on the subscription so that malformed messages are processed sequentially and do not block other messages.
+
+*   **Correct Answer:** C) Configure a dead letter topic on the subscription with a maximum delivery attempt count, so messages that exceed the retry limit are forwarded to the dead letter topic for investigation.
+*   **Distractor Analysis:**
+    *   *Why A is incorrect:* A short acknowledgment deadline causes messages to be redelivered faster, not dropped. Pub/Sub does not automatically discard unacknowledged messages based on the deadline alone — they continue to be redelivered until they are acknowledged or the message retention period expires (up to 7 days).
+    *   *Why B is incorrect:* Deleting and recreating the subscription discards all messages in the queue — including valid messages that have not yet been processed — and is a destructive operation that cannot be targeted at specific bad messages.
+    *   *Why D is incorrect:* Message ordering ensures messages with the same ordering key are delivered sequentially within a partition. It does not skip or remove malformed messages — ordered delivery of a bad message still blocks all subsequent messages with the same ordering key.
 
 ---
 
 **Question 5**
-When designing a system for **App Engine/Cloud Run**, you must mitigate the risk of **Storing sensitive corporate documents in publicly readable cloud buckets, leading to data breaches.**. Which of the following security configurations or controls represents the best practice to implement?
-C) Enable full disk encryption on all client endpoints.
-A) Enable Block Public Access configurations and enforce access control via IAM or signed URLs.
-B) Enforce temporary credentials (STS), rotate keys regularly, and never hardcode API keys in repositories.
-D) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Enable Block Public Access configurations and enforce access control via IAM or signed URLs.
-*   **Distractor Analysis:**
-    * *Why C is incorrect:* This does not address the security vulnerability of Publicly Exposed Storage Buckets.
-    * *Why A is correct:* Implementing Enable Block Public Access configurations and enforce access control via IAM or signed URLs. mitigates the risk of Storing sensitive corporate documents in publicly readable cloud buckets, leading to data breaches..
-    * *Why B is incorrect:* This does not address the security vulnerability of Publicly Exposed Storage Buckets.
-    * *Why D is incorrect:* This does not address the security vulnerability of Publicly Exposed Storage Buckets.
+You are designing a system where a Cloud Function must write processed results to a Cloud SQL database. The function is deployed without a VPC connector and the Cloud SQL instance is configured with only a private IP address (no public IP). The function cannot connect to the database. What is the correct fix?
 
+A) Assign a public IP address to the Cloud SQL instance and add the function's outbound IP range to the Cloud SQL authorized networks list.
+B) Configure a Serverless VPC Access connector for the Cloud Function and connect the function to the VPC that contains the Cloud SQL private IP, then use the Cloud SQL Auth Proxy sidecar.
+C) Deploy the Cloud Function in the same region as the Cloud SQL instance — same-region functions automatically have access to private IP resources.
+D) Grant the Cloud Function's service account the `roles/cloudsql.client` role, which enables direct access to private IP Cloud SQL instances without VPC configuration.
+
+*   **Correct Answer:** B) Configure a Serverless VPC Access connector for the Cloud Function and connect the function to the VPC that contains the Cloud SQL private IP, then use the Cloud SQL Auth Proxy sidecar.
+*   **Distractor Analysis:**
+    *   *Why A is incorrect:* Enabling a public IP on the Cloud SQL instance and adding the function's egress IP to authorized networks exposes the database to the public internet and requires managing IP allowlists. Using a private IP with a VPC connector is the recommended secure approach.
+    *   *Why C is incorrect:* Cloud Functions run in Google's managed serverless infrastructure, not inside your VPC. Being in the same region as a Cloud SQL instance with a private IP does not automatically grant network access — a Serverless VPC Access connector is required to route traffic from the function into the VPC.
+    *   *Why D is incorrect:* `roles/cloudsql.client` is an IAM role that grants permission to connect to Cloud SQL via the Cloud SQL Auth Proxy — it is an authorization credential, not a network path. Without a VPC connector providing network connectivity to the private IP, the IAM role alone cannot establish a TCP connection.

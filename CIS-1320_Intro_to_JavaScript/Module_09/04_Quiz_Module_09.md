@@ -17,63 +17,65 @@ Which array iteration method creates and returns a new array containing only ele
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **forEach method**?
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-B) The configuration of input data that forces an algorithm to perform the maximum number of operations, providing a guaranteed upper limit on execution time.
-D) An undesired resource consumption where a program fails to release allocated memory that is no longer needed.
-C) A reference or memory address stored within a node that points to another node in a linked structure, forming the link between elements.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
+Which of the following most accurately describes the **forEach method** in JavaScript?
+*   A) A method that transforms each element using a callback and returns a new array of the same length
+*   B) A method that calls a callback on each element for side effects and always returns `undefined`
+*   C) A method that accumulates array elements into a single value based on a reducer function
+*   D) A method that creates a sorted copy of the array based on a comparison callback
+*   **Correct Answer:** B) A method that calls a callback on each element for side effects and always returns `undefined`.
 *   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **forEach method**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **forEach method**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **forEach method**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **forEach method**.
-
+    *   *Why A is incorrect:* That describes `map()`, which produces a new array of transformed values.
+    *   *Why B is correct:* `forEach` is intended for side effects (logging, DOM updates, etc.); it does not collect return values and always returns `undefined`.
+    *   *Why C is incorrect:* That describes `reduce()`, which produces a single accumulated result.
+    *   *Why D is incorrect:* That describes `sort()`, which reorders elements in place using a comparator function.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **record staged code modifications into the repository version history**. Which of the following commands is the most appropriate to execute?
-B) pip install -r requirements.txt
-A) git commit -m 'update'
-C) pytest
-D) python3 -m venv .venv
-*   **Correct Answer:** A) git commit -m 'update'
+What is the output of the following code?
+```javascript
+const nums = [1, 2, 3];
+const doubled = nums.map(n => n * 2);
+console.log(doubled);
+console.log(nums);
+```
+*   A) `[2, 4, 6]` then `[2, 4, 6]` (both are mutated)
+*   B) `[2, 4, 6]` then `[1, 2, 3]` (map returns a new array; original is unchanged)
+*   C) `undefined` then `[1, 2, 3]` (map returns undefined like forEach)
+*   D) `[1, 2, 3]` then `[2, 4, 6]` (map mutates the original and returns it)
+*   **Correct Answer:** B) `[2, 4, 6]` then `[1, 2, 3]` (map returns a new array; original is unchanged).
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `git commit -m 'update'` command is directly designed to record staged code modifications into the repository version history.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is incorrect:* `map` does not mutate the original array; it produces a brand-new array.
+    *   *Why B is correct:* `map` returns a new array with transformed values; the original `nums` is never modified.
+    *   *Why C is incorrect:* `map` returns the new array, not `undefined`; that is the behavior of `forEach`.
+    *   *Why D is incorrect:* `map` does not mutate in place; the original is always preserved.
 
 ---
 
 **Question 4**
-While working on **Array Iteration & Callback Functions** in a production environment, you encounter a system alert indicating a **TypeError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-C) Verify that the index is within the valid range of 0 to len(list)-1.
-B) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
-A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-D) Reboot the physical machine and wait for services to reload.
-*   **Correct Answer:** A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
+While working on **Array Iteration**, a developer wants to calculate the total of all prices in an array. Which method is most appropriate?
+*   A) `filter()` — returns only the price values that meet a condition
+*   B) `map()` — transforms each price into a formatted string for display
+*   C) `reduce()` — accumulates all prices into a single total sum
+*   D) `forEach()` — iterates over prices and returns the final computed total
+*   **Correct Answer:** C) `reduce()` — accumulates all prices into a single total sum.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This action does not resolve the root cause of TypeError.
-    * *Why B is incorrect:* This action does not resolve the root cause of TypeError.
-    * *Why A is correct:* Because An operation or function was applied to an object of an inappropriate data type. The appropriate fix is to Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types..
-    * *Why D is incorrect:* This action does not resolve the root cause of TypeError.
-
+    *   *Why A is incorrect:* `filter` returns a subset array matching a condition; it does not produce a single number.
+    *   *Why B is incorrect:* `map` transforms each element into a new value but returns an array, not a single total.
+    *   *Why C is correct:* `reduce((total, price) => total + price, 0)` is the idiomatic way to sum an array into one value.
+    *   *Why D is incorrect:* `forEach` always returns `undefined`; you cannot use its return value to get a total.
 
 ---
 
 **Question 5**
-When designing a system for **Array Iteration & Callback Functions**, you must mitigate the risk of **Storing user credentials in plain text, making them vulnerable to database breaches.**. Which of the following security configurations or controls represents the best practice to implement?
-B) Implement parameterized queries and prepared statements rather than raw string concatenation.
-D) Enable full disk encryption on all client endpoints.
-A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-C) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
+Which of the following correctly uses `filter` to get all strings longer than 4 characters from `["hi", "hello", "hey", "world"]`?
+*   A) `arr.map(s => s.length > 4)`
+*   B) `arr.filter(s => s.length > 4)`
+*   C) `arr.forEach(s => s.length > 4)`
+*   D) `arr.reduce(s => s.length > 4)`
+*   **Correct Answer:** B) `arr.filter(s => s.length > 4)`
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-    * *Why D is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-    * *Why A is correct:* Implementing Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt. mitigates the risk of Storing user credentials in plain text, making them vulnerable to database breaches..
-    * *Why C is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-
+    *   *Why A is incorrect:* `map` with a boolean callback produces `[false, true, false, true]` — an array of booleans, not the matching strings.
+    *   *Why B is correct:* `filter` keeps elements for which the callback returns truthy; `s.length > 4` is `true` for `"hello"` and `"world"`, so the result is `["hello", "world"]`.
+    *   *Why C is incorrect:* `forEach` returns `undefined`; the boolean expression inside is computed but its result is discarded.
+    *   *Why D is incorrect:* `reduce` requires an accumulator pattern and would not work correctly with just a condition callback as written.

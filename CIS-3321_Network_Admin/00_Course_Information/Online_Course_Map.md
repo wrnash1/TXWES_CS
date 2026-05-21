@@ -1,5 +1,5 @@
 # Online Course Map: CIS 3321 - Network Administration
-**Target Certification:** CompTIA Network+ (N10-008)
+**Target Certification:** CompTIA Network+ (N10-009)
 
 ## Overview
 This online course map outlines the modular transition of CIS 3321 to a fully asynchronous format. The structure is designed to promote micro-learning, hands-on application via local virtual labs, and certification readiness through distractor-analyzed question banks.
@@ -57,6 +57,6 @@ This online course map outlines the modular transition of CIS 3321 to a fully as
 
 ## Pedagogical Standards Check
 - [x] **Micro-Learning:** All videos capped at 5-7 minutes.
-- [x] **Question Banks:** All quizzes map to N10-008 domains and use Distractor Analysis.
+- [x] **Question Banks:** All quizzes map to N10-009 domains and use Distractor Analysis.
 - [x] **Accessibility:** Visual aids in videos require explicitly written Alt-text scripts.
 - [x] **Labs:** Tuned for local execution via VirtualBox/Linux VMs.

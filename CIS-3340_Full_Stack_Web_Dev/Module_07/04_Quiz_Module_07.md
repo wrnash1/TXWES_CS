@@ -4,76 +4,74 @@
 ---
 
 **Question 1**
-Which code snippet initializes a basic Express application instance?
-*   A) const app = express()
-*   B) const app = new express.App()
-*   C) const app = require('express').start()
-*   D) const app = Express.init()
-*   **Correct Answer:** A) Invoking the required express module function creates an application instance.
+Which code snippet correctly initializes a basic Express application instance?
+*   A) `const app = express()`
+*   B) `const app = new express.App()`
+*   C) `const app = require('express').start()`
+*   D) `const app = Express.init()`
+*   **Correct Answer:** A) `const express = require('express'); const app = express();` — calling the required `express` module as a function returns a new application instance.
 *   **Distractor Analysis:**
-    *   *Why correct:* Invoking the required express module function creates an application instance.
-    *   The other options show incorrect module instantiation syntax.
+    *   *Why A is correct:* The `express` module exports a factory function — invoking it with `express()` creates and returns the application object.
+    *   *Why B is incorrect:* `express.App` is not a class — Express does not use `new` for instantiation.
+    *   *Why C is incorrect:* The Express module does not expose a `.start()` method — calling an Express app as a function is the correct pattern.
+    *   *Why D is incorrect:* `Express.init()` is not a valid Express API — `express` is lowercase and called as a function, not a static initializer.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **server setup**?
-B) The termination condition in a recursive function that stops further recursive calls and begins unwinding the call stack, preventing infinite execution.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-C) An efficient mapping technique for complete binary trees where parent-child indices can be computed using simple arithmetic (e.g., parent is (i-1)/2).
-D) A security control that divides a critical transaction workflow among multiple users to prevent fraud and errors (e.g., one person approves a purchase order, another pays the vendor).
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
+Which of the following is the most accurate definition of **server setup** in an Express application?
+*   A) The process of provisioning an AWS EC2 instance, attaching an Elastic IP address, and configuring SSH key pairs for remote access.
+*   B) Initializing an Express application, configuring global middleware (such as body parsing and CORS), defining route handlers, and calling `app.listen()` to bind the server to a network port.
+*   C) The process of containerizing a Node.js application with Docker, building an image, and pushing it to Amazon ECR for deployment to ECS.
+*   D) The configuration of IAM roles and security groups that control which AWS services an EC2 instance can access at runtime.
+*   **Correct Answer:** B) Initializing an Express application, configuring global middleware (such as body parsing and CORS), defining route handlers, and calling `app.listen()` to bind the server to a network port.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **server setup**.
-    * *Why A is correct:* This describes the exact role and function of **server setup**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **server setup**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **server setup**.
-
+    *   *Why A is incorrect:* This describes EC2 instance provisioning — an AWS infrastructure task, not Express server setup.
+    *   *Why B is correct:* Server setup in Express involves the code-level steps of creating the app, registering middleware, defining routes, and starting the listener.
+    *   *Why C is incorrect:* This describes Docker containerization and ECR deployment — a CI/CD and container concept, not Express server setup.
+    *   *Why D is incorrect:* This describes AWS IAM and security group configuration — cloud access control, not application-level server setup.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **create a sandboxed Python virtual environment to manage dependencies locally**. Which of the following commands is the most appropriate to execute?
-B) pip install -r requirements.txt
-A) python3 -m venv .venv
-D) git commit -m 'update'
-C) pytest
-*   **Correct Answer:** A) python3 -m venv .venv
+A developer needs to start an Express server so it automatically restarts whenever a source file is saved during development. Which command enables this behavior?
+*   A) `node index.js`
+*   B) `nodemon index.js`
+*   C) `npm start --watch`
+*   D) `pm2 start index.js`
+*   **Correct Answer:** B) `nodemon index.js` — `nodemon` is a development tool that monitors the project directory for file changes and automatically restarts the Node.js process, eliminating the need to manually stop and restart during development.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `python3 -m venv .venv` command is directly designed to create a sandboxed Python virtual environment to manage dependencies locally.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is incorrect:* `node index.js` starts the server once but does not watch for file changes — the server must be manually restarted after each edit.
+    *   *Why B is correct:* `nodemon` is the standard development-time auto-restart tool for Node.js applications (installed with `npm install -g nodemon`).
+    *   *Why C is incorrect:* `npm start --watch` is not a standard npm CLI flag — `--watch` support depends on the specific script defined in `package.json`.
+    *   *Why D is incorrect:* `pm2` is a production process manager that provides clustering and persistence — it is not intended for development-time file watching.
 
 ---
 
 **Question 4**
-While working on **Node.js & Express Server** in a production environment, you encounter a system alert indicating a **TypeError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-D) Reboot the physical machine and wait for services to reload.
-C) Verify that the index is within the valid range of 0 to len(list)-1.
-B) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
-A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-*   **Correct Answer:** A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
+An Express server running on an EC2 instance is unreachable from the internet even though the application is listening on port 3000. What is the most likely cause?
+*   A) Node.js cannot listen on ports above 1024 without superuser privileges.
+*   B) The EC2 instance's security group does not have an inbound rule allowing TCP traffic on port 3000 from the internet.
+*   C) Express requires a valid SSL certificate before it will accept inbound connections.
+*   D) `app.listen()` must be called with `'0.0.0.0'` as the host to accept external connections — using no host argument only binds to `127.0.0.1`.
+*   **Correct Answer:** B) The EC2 instance's security group does not have an inbound rule allowing TCP traffic on port 3000 from the internet.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This action does not resolve the root cause of TypeError.
-    * *Why C is incorrect:* This action does not resolve the root cause of TypeError.
-    * *Why B is incorrect:* This action does not resolve the root cause of TypeError.
-    * *Why A is correct:* Because An operation or function was applied to an object of an inappropriate data type. The appropriate fix is to Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types..
-
+    *   *Why A is incorrect:* Node.js can listen on any port above 1024 without elevated privileges — ports below 1024 require root on Linux, but 3000 does not.
+    *   *Why B is correct:* AWS security groups act as instance-level firewalls. A new EC2 instance blocks all inbound traffic by default — port 3000 must be explicitly allowed in the inbound rules.
+    *   *Why C is incorrect:* Express does not require SSL to accept connections — HTTPS is optional and configured separately.
+    *   *Why D is incorrect:* When `app.listen(3000)` is called without a host, Node.js binds to all available network interfaces (`0.0.0.0`) by default — this is not the cause of the connection failure.
 
 ---
 
 **Question 5**
-When designing a system for **Node.js & Express Server**, you must mitigate the risk of **Allowing attackers to execute arbitrary SQL commands on the backend database via input forms.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Implement parameterized queries and prepared statements rather than raw string concatenation.
-C) Enable full disk encryption on all client endpoints.
-B) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-D) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Implement parameterized queries and prepared statements rather than raw string concatenation.
+A Node.js/Express API processes incoming POST requests but the `req.body` object is always `undefined`. What is the most likely fix?
+*   A) Add `Content-Type: text/plain` as a request header instead of `application/json`.
+*   B) Register the `express.json()` middleware before the route handlers — without it, Express does not parse incoming JSON request bodies.
+*   C) Change the route from `app.post()` to `app.get()` since `req.body` is only populated on GET requests.
+*   D) Set `app.enable('body-parser')` in the Express configuration to activate the built-in body parsing feature.
+*   **Correct Answer:** B) Register the `express.json()` middleware before the route handlers — without it, Express does not parse incoming JSON request bodies.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Implement parameterized queries and prepared statements rather than raw string concatenation. mitigates the risk of Allowing attackers to execute arbitrary SQL commands on the backend database via input forms..
-    * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why D is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-
+    *   *Why A is incorrect:* Changing to `text/plain` would make the body a raw string, not a parsed object — and `req.body` would still be undefined without body-parsing middleware.
+    *   *Why B is correct:* `app.use(express.json())` registers the built-in JSON body parser as global middleware. Without it, Express passes the raw request stream to route handlers and `req.body` remains `undefined`.
+    *   *Why C is incorrect:* `req.body` is populated for POST, PUT, and PATCH requests — not GET requests, which have no body.
+    *   *Why D is incorrect:* `app.enable('body-parser')` is not a valid Express configuration option — body parsing middleware must be explicitly registered with `app.use()`.

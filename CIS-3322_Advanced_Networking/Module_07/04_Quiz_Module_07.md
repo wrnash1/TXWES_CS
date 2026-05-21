@@ -17,17 +17,17 @@ In a Router-on-a-stick topology, how are multiple VLANs terminated on a single p
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Layer 3 Switch SVI configuration.**?
-B) A security control that divides a critical transaction workflow among multiple users to prevent fraud and errors (e.g., one person approves a purchase order, another pays the vendor).
-D) A complete binary tree where the key of any parent node is greater than or equal to the keys of its children, guaranteeing the root is always the maximum element.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within networking operations.
-C) The defining rule of a BST: for any given node, all keys in its left subtree must be less than or equal to its key, and all keys in its right subtree must be greater.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within networking operations.
+Which of the following most accurately describes a **Layer 3 Switch SVI (Switched Virtual Interface)**?
+*   A) A virtual Layer 3 interface on a multilayer switch that represents a VLAN, configured with an IP address to serve as the default gateway for hosts in that VLAN.
+*   B) A physical router interface subdivided into logical virtual channels, each carrying 802.1Q-tagged frames for a separate VLAN over a single trunk link to a switch.
+*   C) A loopback interface on a Cisco router used to represent the router's stable management address that stays up regardless of physical interface state.
+*   D) A virtual port-channel interface that aggregates multiple physical switch ports into a single logical link for increased bandwidth and redundancy.
+*   **Correct Answer:** A) A virtual Layer 3 interface on a multilayer switch that represents a VLAN, configured with an IP address to serve as the default gateway for hosts in that VLAN.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Layer 3 Switch SVI configuration.**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Layer 3 Switch SVI configuration.**.
-    * *Why A is correct:* This describes the exact role and function of **Layer 3 Switch SVI configuration.**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Layer 3 Switch SVI configuration.**.
+    * *Why A is correct:* SVIs (`interface vlan [id]`) are the primary method for inter-VLAN routing on multilayer switches. They require `ip routing` globally and must have at least one active port in the VLAN to come up.
+    * *Why B is incorrect:* This describes a router subinterface used in router-on-a-stick configuration — not an SVI.
+    * *Why C is incorrect:* This describes a loopback interface, which is a separate IOS construct used for management and routing protocol configuration.
+    * *Why D is incorrect:* This describes a port-channel (EtherChannel) interface, which aggregates physical links — not a Layer 3 VLAN interface.
 
 
 ---
@@ -59,21 +59,20 @@ A) Change the local network interface settings to use a public DNS resolver like
     * *Why C is incorrect:* This action does not resolve the root cause of DNS Failure.
     * *Why D is incorrect:* This action does not resolve the root cause of DNS Failure.
     * *Why B is incorrect:* This action does not resolve the root cause of DNS Failure.
-    * *Why A is correct:* Because The configured DNS server is offline, misconfigured, or unreachable, preventing host name resolution. The appropriate fix is to Change the local network interface settings to use a public DNS resolver like 8.8.8.8 or 1.1.1.1..
+    * *Why A is correct:* Because The configured DNS server is offline, misconfigured, or unreachable, preventing host name resolution. The appropriate fix is to Change the local network interface settings to use a public DNS resolver like 8.8.8.8 or 1.1.1.1.
 
 
 ---
 
 **Question 5**
-When designing a system for **Inter-VLAN Routing Solutions**, you must mitigate the risk of **Attackers capturing plaintext management passwords or session data using network sniffers.**. Which of the following security configurations or controls represents the best practice to implement?
+When configuring **Inter-VLAN Routing Solutions**, you must mitigate the risk of **Attackers capturing plaintext management passwords or session data using network sniffers.**. Which of the following security configurations or controls represents the best practice to implement?
 A) Configure SSH (port 22) for terminal access and HTTPS (port 443) for web interfaces, disabling Telnet and HTTP.
-D) Enable full disk encryption on all client endpoints.
+D) Apply ACLs on the SVI interfaces to restrict which VLANs can send traffic to the management VLAN.
 B) Implement switch Port Security to restrict access to switch ports based on approved MAC addresses.
-C) Enable full disk encryption on all client endpoints.
+C) Configure a separate management VLAN (e.g., VLAN 99) and restrict SVI access to that VLAN using an ACL.
 *   **Correct Answer:** A) Configure SSH (port 22) for terminal access and HTTPS (port 443) for web interfaces, disabling Telnet and HTTP.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Configure SSH (port 22) for terminal access and HTTPS (port 443) for web interfaces, disabling Telnet and HTTP. mitigates the risk of Attackers capturing plaintext management passwords or session data using network sniffers..
-    * *Why D is incorrect:* This does not address the security vulnerability of Unencrypted Traffic Exposure.
-    * *Why B is incorrect:* This does not address the security vulnerability of Unencrypted Traffic Exposure.
-    * *Why C is incorrect:* This does not address the security vulnerability of Unencrypted Traffic Exposure.
-
+    * *Why A is correct:* SSH and HTTPS encrypt management credentials in transit, preventing capture by a packet sniffer. Configure with `transport input ssh` on VTY lines and `ip http secure-server`.
+    * *Why D is incorrect:* ACLs on SVI interfaces restrict which traffic can reach the management plane, but do not encrypt credentials if Telnet is still permitted.
+    * *Why B is incorrect:* Port Security controls physical MAC-based access, not encryption of management traffic on the network.
+    * *Why C is incorrect:* A management VLAN isolates management traffic but does not encrypt it — Telnet on a dedicated VLAN is still plaintext.

@@ -1,79 +1,77 @@
-# Quiz: Module 04 - Asset Identification & Valuation
+# Quiz: Module 04 - Risk Assessment and Treatment
 ## Course: CIS-4315_Cyber_Governance_Risk_Compliance (ISACA Certified Information Security Manager (CISM))
 
 ---
 
 **Question 1**
-Why is asset classification critical to risk management?
-*   A) To speed up network connections
-*   B) To ensure appropriate security controls are applied based on value and sensitivity of data
-*   C) To save local hard drive space
-*   D) To write database schema code
-*   **Correct Answer:** B) Classification allows organizations to apply cost-effective, high-tier security parameters to sensitive assets.
+Why is asset classification critical to an effective risk management program?
+*   A) It speeds up network packet routing by tagging frames with priority labels
+*   B) It ensures that appropriate security controls are applied based on the value and sensitivity of information assets
+*   C) It reduces local hard drive storage consumption by compressing low-priority files
+*   D) It enables database administrators to write more efficient SQL schema definitions
+*   **Correct Answer:** B) Classification allows organizations to apply cost-proportionate, high-tier security controls to sensitive assets while avoiding over-investment in low-risk areas.
 *   **Distractor Analysis:**
-    *   *Why correct:* Classification allows organizations to apply cost-effective, high-tier security parameters to sensitive assets.
-    *   It is a resource prioritization mechanism, not a database design or network performance tool.
+    *   *Why B is correct:* Classification is a resource prioritization mechanism that connects asset sensitivity to control requirements — a core CISM Domain 2 concept.
+    *   *Why A is incorrect:* Network QoS tagging is a networking function unrelated to information classification.
+    *   *Why C is incorrect:* Storage management is an IT operations concern; classification is about risk-based access and protection decisions.
+    *   *Why D is incorrect:* Database schema design is a development activity with no relationship to information security classification.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **asset valuation metrics.**?
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
-C) A mathematical representation used to describe the asymptotic upper bound of an algorithm's running time or space complexity relative to the input size N. It helps developers predict how an algorithm will scale as data grows.
-B) The method of evaluating an algorithm's efficiency by analyzing its behavior as the input size approaches infinity, focusing on growth rates rather than specific hardware speeds.
-D) Nodes that contain two pointers: one pointing forward to the next node and one pointing backward to the previous node, allowing bidirectional traversal.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
+Which of the following most accurately describes **asset valuation metrics**?
+*   A) The cryptographic key length and algorithm type used to encrypt stored data
+*   B) Performance benchmarks that measure how quickly a system processes database queries under peak load
+*   C) Quantitative or qualitative measures used to determine the business value of an information asset, informing risk prioritization and security investment decisions
+*   D) The number of user accounts with administrative privileges on a given system
+*   **Correct Answer:** C) Asset valuation metrics assess what an asset is worth to the organization — combining financial, operational, regulatory, and reputational dimensions to prioritize risk treatment.
 *   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **asset valuation metrics.**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **asset valuation metrics.**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **asset valuation metrics.**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **asset valuation metrics.**.
-
+    *   *Why A is incorrect:* Cryptographic parameters are a control implementation choice, not an asset valuation metric.
+    *   *Why B is incorrect:* System performance benchmarks are operational metrics, not security asset valuations.
+    *   *Why C is correct:* Valuation metrics (replacement cost, revenue dependency, regulatory exposure, reputational impact) are the inputs CISM-aligned risk managers use to justify security investment.
+    *   *Why D is incorrect:* Privileged account counts are an access control metric, not an asset valuation measure.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **launch all application services in the background using docker-compose configuration**. Which of the following commands is the most appropriate to execute?
-A) docker-compose up -d
-D) systemctl status iot_service
-C) git log --oneline -n 5
-B) terraform validate
-*   **Correct Answer:** A) docker-compose up -d
+In an organization's information security program, who should be designated as the **owner** of a customer records database?
+*   A) The database administrator who manages the server configurations
+*   B) The network security engineer responsible for firewall rules protecting the database segment
+*   C) The business unit manager whose department relies on the data to fulfill its function
+*   D) The CISO, because all information assets fall under the security organization's ownership
+*   **Correct Answer:** C) Asset ownership belongs to the business unit that has operational accountability for the data — not the IT team that maintains the infrastructure.
 *   **Distractor Analysis:**
-    * *Why A is correct:* The `docker-compose up -d` command is directly designed to launch all application services in the background using docker-compose configuration.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is incorrect:* The DBA is the custodian (technical steward), not the owner; custodians implement controls on behalf of the owner.
+    *   *Why B is incorrect:* Network engineers manage infrastructure protection but do not own the data assets themselves.
+    *   *Why C is correct:* CISM and ISO 27001 define asset owners as the individuals or organizational units accountable for the asset's appropriate use and protection.
+    *   *Why D is incorrect:* The CISO provides governance oversight and policy direction; assigning asset ownership to the CISO creates an organizational conflict of interest and overloads the security function.
 
 ---
 
 **Question 4**
-While working on **Asset Identification & Valuation** in a production environment, you encounter a system alert indicating a **Dependency Bottleneck** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-B) Optimize service resources, implement load balancing, or update failover mechanisms.
-D) Reboot the physical machine and wait for services to reload.
-A) Re-assign resources to critical path tasks and establish clear communication protocols.
-C) Implement strict change control boards (CCB) and re-baseline the project constraints.
-*   **Correct Answer:** A) Re-assign resources to critical path tasks and establish clear communication protocols.
+An organization discovers it has hundreds of untracked servers in a data center. Which risk management capability is most directly undermined by this situation?
+*   A) Incident response — because security analysts cannot contain threats they are unaware of
+*   B) Asset inventory management — because risk assessments cannot be performed on undiscovered assets
+*   C) Change management — because untracked servers may have unauthorized software installed
+*   D) Vulnerability management — because patch agents cannot be deployed to unknown systems
+*   **Correct Answer:** B) An incomplete asset inventory is the most foundational failure — you cannot assess, protect, or manage risk for assets you do not know exist.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This action does not resolve the root cause of Dependency Bottleneck.
-    * *Why D is incorrect:* This action does not resolve the root cause of Dependency Bottleneck.
-    * *Why A is correct:* Because A critical task is blocked by a delayed prerequisite task, stalling the entire project timeline. The appropriate fix is to Re-assign resources to critical path tasks and establish clear communication protocols..
-    * *Why C is incorrect:* This action does not resolve the root cause of Dependency Bottleneck.
-
+    *   *Why A is incorrect:* While incident response is impacted, the primary failure is inventory management — the root cause of all downstream problems.
+    *   *Why B is correct:* CISM and virtually all GRC frameworks establish asset identification as the prerequisite to all risk management activities.
+    *   *Why C is incorrect:* Change management is affected, but it is a secondary consequence of the inventory gap.
+    *   *Why D is incorrect:* Vulnerability management is also impacted, but it is a downstream consequence of missing inventory data, not the primary capability undermined.
 
 ---
 
 **Question 5**
-When designing a system for **Asset Identification & Valuation**, you must mitigate the risk of **Stakeholders requesting changes directly to developers, leading to untracked features and security vulnerabilities.**. Which of the following security configurations or controls represents the best practice to implement?
-C) Enable full disk encryption on all client endpoints.
-D) Enable full disk encryption on all client endpoints.
-B) Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services.
-A) Establish formal authorization procedures and digital signatures for all project scope modifications.
-*   **Correct Answer:** A) Establish formal authorization procedures and digital signatures for all project scope modifications.
+An organization is classifying its information assets. Which asset would most appropriately be assigned the highest classification tier (Restricted/Confidential)?
+*   A) The company's public-facing careers page content
+*   B) The IT department's internal help desk ticketing system procedures
+*   C) Customer credit card numbers and authentication credentials
+*   D) The corporate holiday schedule published on the intranet
+*   **Correct Answer:** C) Credit card numbers and authentication credentials carry the highest regulatory exposure (PCI DSS, breach notification laws) and potential for direct financial and reputational harm.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This does not address the security vulnerability of Unauthorized Scope Modification.
-    * *Why D is incorrect:* This does not address the security vulnerability of Unauthorized Scope Modification.
-    * *Why B is incorrect:* This does not address the security vulnerability of Unauthorized Scope Modification.
-    * *Why A is correct:* Implementing Establish formal authorization procedures and digital signatures for all project scope modifications. mitigates the risk of Stakeholders requesting changes directly to developers, leading to untracked features and security vulnerabilities..
-
+    *   *Why A is incorrect:* Public-facing web content is by definition public; it requires no confidentiality protection.
+    *   *Why B is incorrect:* Internal procedures are Internal or Confidential at most, but do not approach the sensitivity of regulated personal financial data.
+    *   *Why C is correct:* Payment card data and credentials are regulated data types subject to PCI DSS and privacy laws, requiring the strongest protection tier.
+    *   *Why D is incorrect:* A published holiday schedule is low-sensitivity internal information with no regulatory requirements.

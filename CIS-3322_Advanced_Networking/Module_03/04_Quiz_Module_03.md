@@ -17,17 +17,17 @@ What command enables a Cisco router to forward IPv6 traffic?
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **EUI-64 configuration**?
-C) An access control system where users are assigned to specific roles, and permissions are linked to those roles rather than individual users, simplifying permission management.
-B) An algebraic restructuring operation on a binary tree that changes the parent-child relationships to restore balance without violating the search order.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within networking operations.
-D) A deployment model that uses two identical production environments (Blue and Green) to minimize downtime and risk; updates are deployed to the idle environment before routing live traffic.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within networking operations.
+Which of the following most accurately describes the **EUI-64** method of generating an IPv6 interface identifier?
+*   A) A process that combines the 48-bit MAC address with the hex value FFFE inserted in the middle and the seventh bit inverted to produce a 64-bit interface ID.
+*   B) A stateless mechanism in which a host listens for Router Advertisement messages and combines the advertised prefix with a randomly generated 64-bit suffix.
+*   C) A 6-byte hardware address assigned to every network interface card at the factory, used by switches to build their MAC address tables for Layer 2 forwarding.
+*   D) A Cisco proprietary algorithm that generates a 64-bit host identifier by hashing the device hostname and serial number to ensure uniqueness across the network.
+*   **Correct Answer:** A) A process that combines the 48-bit MAC address with the hex value FFFE inserted in the middle and the seventh bit inverted to produce a 64-bit interface ID.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **EUI-64 configuration**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **EUI-64 configuration**.
-    * *Why A is correct:* This describes the exact role and function of **EUI-64 configuration**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **EUI-64 configuration**.
+    * *Why A is correct:* EUI-64 is the IEEE standard method: split the MAC at 3 bytes, insert FFFE, and flip bit 7 (the universal/local bit) to create a 64-bit interface identifier.
+    * *Why B is incorrect:* This describes SLAAC with a random or privacy extension suffix — not the EUI-64 derivation process specifically.
+    * *Why C is incorrect:* This describes a MAC address itself, not the EUI-64 conversion algorithm.
+    * *Why D is incorrect:* EUI-64 is an IEEE standard, not Cisco proprietary, and it derives the ID from the MAC address, not hostname or serial number.
 
 
 ---
@@ -59,21 +59,20 @@ A) Release and renew the DHCP lease, or configure a unique static IP address out
     * *Why C is incorrect:* This action does not resolve the root cause of IP Address Conflict.
     * *Why D is incorrect:* This action does not resolve the root cause of IP Address Conflict.
     * *Why B is incorrect:* This action does not resolve the root cause of IP Address Conflict.
-    * *Why A is correct:* Because Two devices on the same physical or logical network segment are configured with the identical IP address. The appropriate fix is to Release and renew the DHCP lease, or configure a unique static IP address outside the DHCP pool range..
+    * *Why A is correct:* Because Two devices on the same physical or logical network segment are configured with the identical IP address. The appropriate fix is to Release and renew the DHCP lease, or configure a unique static IP address outside the DHCP pool range.
 
 
 ---
 
 **Question 5**
-When designing a system for **IPv6 Addressing and Configuration**, you must mitigate the risk of **Attackers connecting rogue access points or unauthorized laptops directly to internal switch ports.**. Which of the following security configurations or controls represents the best practice to implement?
+When configuring **IPv6 Addressing**, you must mitigate the risk of **Attackers connecting rogue access points or unauthorized laptops directly to internal switch ports.**. Which of the following security configurations or controls represents the best practice to implement?
 A) Implement switch Port Security to restrict access to switch ports based on approved MAC addresses.
-C) Enable full disk encryption on all client endpoints.
+C) Configure IPv6 RA Guard on switch ports to block unauthorized devices from sending Router Advertisement messages.
 B) Configure SSH (port 22) for terminal access and HTTPS (port 443) for web interfaces, disabling Telnet and HTTP.
-D) Enable full disk encryption on all client endpoints.
+D) Enable IPv6 First-Hop Security (FHS) binding table to track and validate IPv6 source addresses on access ports.
 *   **Correct Answer:** A) Implement switch Port Security to restrict access to switch ports based on approved MAC addresses.
 *   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Implement switch Port Security to restrict access to switch ports based on approved MAC addresses. mitigates the risk of Attackers connecting rogue access points or unauthorized laptops directly to internal switch ports..
-    * *Why C is incorrect:* This does not address the security vulnerability of Unauthorized Port Access.
-    * *Why B is incorrect:* This does not address the security vulnerability of Unauthorized Port Access.
-    * *Why D is incorrect:* This does not address the security vulnerability of Unauthorized Port Access.
-
+    * *Why A is correct:* Port Security restricts which MAC addresses can communicate on a switchport, directly preventing unauthorized devices from connecting and obtaining network access.
+    * *Why C is incorrect:* RA Guard protects against rogue RA messages (a separate IPv6-specific attack), but does not prevent unauthorized physical device connections to the switch port.
+    * *Why B is incorrect:* SSH/HTTPS secures management access but does not prevent a rogue device from connecting to a switch port.
+    * *Why D is incorrect:* IPv6 FHS binding table validates source addresses but is a complementary control, not the primary defense against unauthorized port connections.

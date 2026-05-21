@@ -1,4 +1,4 @@
-# Quiz: Module 01 - IT Project Framework
+# Quiz: Module 01 - Introduction to Project Management and PMI Framework
 ## Course: CIS-3310_IT_Project_Management (CompTIA Project+ / PMI CAPM)
 
 ---
@@ -9,71 +9,69 @@ What are the three pillars of the Project Management Triple Constraint?
 *   B) Quality, Speed, Safety
 *   C) Staff, Hardware, Software
 *   D) Planning, Execution, Closure
-*   **Correct Answer:** A) Any change to scope, schedule (time), or budget (cost) impacts the other variables and overall quality.
+*   **Correct Answer:** A) Scope, Time, Cost — any change to one variable forces trade-offs in the other two, directly affecting overall quality.
 *   **Distractor Analysis:**
-    *   *Why correct:* Any change to scope, schedule (time), or budget (cost) impacts the other variables and overall quality.
-    *   Staff and planning are resources and phases, not core constraints.
+    *   *Why A is correct:* The triple constraint (also called the iron triangle) defines the three boundaries every project manager must balance: the work to be done (scope), the schedule (time), and the budget (cost).
+    *   *Why B is incorrect:* Quality, speed, and safety are important project concerns but are not the three formal constraint dimensions defined by PMI.
+    *   *Why C is incorrect:* Staff, hardware, and software are resource categories, not the core constraint variables.
+    *   *Why D is incorrect:* Planning, Execution, and Closure are process group phases, not project constraints.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **triple constraint (Scope**?
-D) The standard configuration parameters pre-loaded into a software application or system before any custom adjustments are made by an administrator.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
-C) The scenario where an algorithm requires the absolute minimum number of steps to complete (e.g., searching for an element that happens to be at the very beginning of a list).
-B) A set of detailed practices for IT service management (ITSM) that focuses on aligning IT services with the needs of business.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within management_services operations.
+Which of the following best defines the term **Triple Constraint** in project management?
+*   A) The three factors—scope, time, and cost—that bound a project and must be balanced because changing one affects the others.
+*   B) The three mandatory documents every project must produce: a charter, a WBS, and a risk register.
+*   C) A rule requiring three levels of management approval before a project can begin.
+*   D) The three types of project stakeholders: sponsors, users, and vendors.
+*   **Correct Answer:** A) The three factors—scope, time, and cost—that bound a project and must be balanced because changing one affects the others.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **triple constraint (Scope**.
-    * *Why A is correct:* This describes the exact role and function of **triple constraint (Scope**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **triple constraint (Scope**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **triple constraint (Scope**.
-
+    *   *Why A is correct:* The triple constraint is the foundational model describing how scope, schedule, and budget are interdependent. It is one of the most heavily tested concepts on the Project+ and CAPM exams.
+    *   *Why B is incorrect:* There is no PMI rule that mandates exactly three documents; this confuses documents with constraints.
+    *   *Why C is incorrect:* Approval levels relate to governance structure, not the constraint model.
+    *   *Why D is incorrect:* Stakeholder categories are part of stakeholder management, a separate knowledge area.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **verify the active status and resource usage of the background service daemon**. Which of the following commands is the most appropriate to execute?
-A) systemctl status iot_service
-C) git log --oneline -n 5
-D) terraform validate
-B) docker-compose up -d
-*   **Correct Answer:** A) systemctl status iot_service
+A project manager is told the delivery deadline for a new IT system cannot move, but the client just added three new feature requirements. According to the Triple Constraint model, what must the project manager address?
+*   A) Request more budget and/or reduce quality standards to absorb the added scope within the fixed schedule
+*   B) Accept all new features without adjusting any other constraint
+*   C) Close the project immediately because the baseline is invalid
+*   D) Transfer the project to a different project manager
+*   **Correct Answer:** A) Request more budget and/or reduce quality standards to absorb the added scope within the fixed schedule.
 *   **Distractor Analysis:**
-    * *Why A is correct:* The `systemctl status iot_service` command is directly designed to verify the active status and resource usage of the background service daemon.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is correct:* When scope increases and schedule is fixed, the PM must negotiate an increase in cost (more resources) or accept a reduction in quality—this is the core trade-off logic of the triple constraint.
+    *   *Why B is incorrect:* Accepting scope changes without adjusting any constraint is the definition of scope creep, a major project risk.
+    *   *Why C is incorrect:* Re-baselining may be appropriate, but closing the project is not the correct response to a scope change.
+    *   *Why D is incorrect:* Transferring project ownership does not resolve the constraint conflict.
 
 ---
 
 **Question 4**
-While working on **IT Project Framework** in a production environment, you encounter a system alert indicating a **SLA Breach Alert** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-D) Reboot the physical machine and wait for services to reload.
-B) Re-assign resources to critical path tasks and establish clear communication protocols.
-A) Optimize service resources, implement load balancing, or update failover mechanisms.
-C) Implement strict change control boards (CCB) and re-baseline the project constraints.
-*   **Correct Answer:** A) Optimize service resources, implement load balancing, or update failover mechanisms.
+Which PMI Process Group authorizes the project and grants the project manager the authority to apply organizational resources?
+*   A) Planning
+*   B) Executing
+*   C) Initiating
+*   D) Monitoring & Controlling
+*   **Correct Answer:** C) Initiating — the Project Charter is created during the Initiating process group, formally authorizing the project.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This action does not resolve the root cause of SLA Breach Alert.
-    * *Why B is incorrect:* This action does not resolve the root cause of SLA Breach Alert.
-    * *Why A is correct:* Because A system outage or slow response time has exceeded the limits guaranteed in the Service Level Agreement. The appropriate fix is to Optimize service resources, implement load balancing, or update failover mechanisms..
-    * *Why C is incorrect:* This action does not resolve the root cause of SLA Breach Alert.
-
+    *   *Why C is correct:* The Initiating process group produces the Project Charter and identifies stakeholders, giving the project manager official authority to proceed.
+    *   *Why A is incorrect:* Planning develops the detailed project management plan but does not formally authorize the project.
+    *   *Why B is incorrect:* Executing is where the work is performed, after the project has already been authorized.
+    *   *Why D is incorrect:* Monitoring & Controlling tracks progress against the plan; it does not grant initial authorization.
 
 ---
 
 **Question 5**
-When designing a system for **IT Project Framework**, you must mitigate the risk of **A disaster or ransomware attack causing prolonged downtime because recovery steps are undocumented.**. Which of the following security configurations or controls represents the best practice to implement?
-B) Establish formal authorization procedures and digital signatures for all project scope modifications.
-C) Enable full disk encryption on all client endpoints.
-D) Enable full disk encryption on all client endpoints.
-A) Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services.
-*   **Correct Answer:** A) Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services.
+A company's IT department runs daily backups, patches servers every Tuesday, and staffs a 24/7 help desk. Which statement best describes these activities?
+*   A) They are projects because they use IT resources and require skilled staff.
+*   B) They are operations because they are ongoing, repetitive activities with no defined end date.
+*   C) They are projects because they contribute to organizational goals.
+*   D) They are projects because they involve technology and require planning.
+*   **Correct Answer:** B) They are operations because they are ongoing, repetitive activities with no defined end date.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
-    * *Why C is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
-    * *Why D is incorrect:* This does not address the security vulnerability of Lack of Business Continuity Plan.
-    * *Why A is correct:* Implementing Perform a Business Impact Analysis (BIA) and define clear RTO and RPO metrics for all IT services. mitigates the risk of A disaster or ransomware attack causing prolonged downtime because recovery steps are undocumented..
-
+    *   *Why B is correct:* Operations are continuous, routine activities that sustain the business. A project, by definition, is temporary and produces a unique result. Daily backups and help desk support repeat indefinitely and are therefore operational.
+    *   *Why A is incorrect:* Using resources and requiring skilled staff is true of both projects and operations; it does not distinguish between them.
+    *   *Why C is incorrect:* Contributing to organizational goals applies to both projects and operations.
+    *   *Why D is incorrect:* Involving technology and requiring planning also applies to both categories; the defining characteristic of a project is its temporary, unique nature.

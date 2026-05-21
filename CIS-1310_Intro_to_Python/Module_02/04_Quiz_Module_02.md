@@ -17,17 +17,17 @@ What is the result of `print(11 // 3)` in Python?
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Data types (int**?
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-D) A complete binary tree where the key of any parent node is less than or equal to the keys of its children, guaranteeing the root is always the minimum element.
-C) Electrostatic Discharge protection; tools (like wrist straps, grounding mats) used to prevent static electricity from destroying sensitive microchips when handling hardware.
-B) A structured, seven-step process (Prepare, Categorize, Select, Implement, Assess, Authorize, Monitor) created by NIST to help organizations manage cybersecurity risk.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
+Which of the following best describes Python's **int** data type?
+*   A) A whole-number type that can represent arbitrarily large integers without overflow, unlike fixed-size integers in languages like C
+*   B) A numeric type that stores values as IEEE 754 double-precision floating-point, introducing small rounding errors for some decimals
+*   C) An immutable sequence of digits that must be explicitly converted before arithmetic operations can be performed on it
+*   D) A numeric type limited to values between -2,147,483,648 and 2,147,483,647 on all Python platforms
+*   **Correct Answer:** A) A whole-number type that can represent arbitrarily large integers without overflow, unlike fixed-size integers in languages like C.
 *   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **Data types (int**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Data types (int**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Data types (int**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Data types (int**.
+    *   *Why A is correct:* Python's `int` is an arbitrary-precision integer; it grows as needed and never overflows, which is a key difference from C/Java integer types.
+    *   *Why B is incorrect:* That describes the `float` type, not `int`; floats use IEEE 754 and have rounding issues, while `int` is exact.
+    *   *Why C is incorrect:* That describes the `str` type; a string of digits like `"42"` must be converted with `int()`, but the `int` type itself is a numeric value, not a sequence.
+    *   *Why D is incorrect:* Python `int` has no fixed-size limit — the range limitation described belongs to 32-bit integers in languages like Java or C.
 
 
 ---
@@ -68,12 +68,11 @@ A) Verify that the index is within the valid range of 0 to len(list)-1.
 When designing a system for **Literals, Operators, and Expressions**, you must mitigate the risk of **Storing user credentials in plain text, making them vulnerable to database breaches.**. Which of the following security configurations or controls represents the best practice to implement?
 B) Implement parameterized queries and prepared statements rather than raw string concatenation.
 C) Enable full disk encryption on all client endpoints.
-D) Enable full disk encryption on all client endpoints.
 A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
+D) Log all login attempts including the submitted password to a plain-text audit file for forensic review.
 *   **Correct Answer:** A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
 *   **Distractor Analysis:**
     * *Why B is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
     * *Why C is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-    * *Why D is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
     * *Why A is correct:* Implementing Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt. mitigates the risk of Storing user credentials in plain text, making them vulnerable to database breaches..
-
+    * *Why D is incorrect:* Logging submitted passwords creates a second plain-text credential store and dramatically worsens the exposure risk rather than mitigating it.

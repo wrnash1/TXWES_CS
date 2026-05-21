@@ -17,63 +17,59 @@ Which DOM query method returns a static NodeList of all elements matching a spec
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **document object**?
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
-C) An undesired resource consumption where a program fails to release allocated memory that is no longer needed.
-B) The standard configuration parameters pre-loaded into a software application or system before any custom adjustments are made by an administrator.
-D) The monetary loss expected from a single occurrence of a specific risk event, calculated as Asset Value multiplied by the Exposure Factor (SLE = AV * EF).
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within programming operations.
+Which of the following most accurately describes the **`document` object** in JavaScript?
+*   A) An array containing all HTML elements on the page, ordered by their position in the source code
+*   B) The global JavaScript object representing the entire HTML document, providing methods to access and create DOM elements
+*   C) A browser-specific API available only in Chrome for debugging page structure
+*   D) An object that stores CSS styles and applies them dynamically to elements when called
+*   **Correct Answer:** B) The global JavaScript object representing the entire HTML document, providing methods to access and create DOM elements.
 *   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **document object**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **document object**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **document object**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **document object**.
-
+    *   *Why A is incorrect:* `document` is not an array; it is a complex object with methods and properties for interacting with the DOM tree.
+    *   *Why B is correct:* `document` is the top-level entry point to the DOM, exposing `getElementById`, `querySelector`, `createElement`, and many other methods.
+    *   *Why C is incorrect:* `document` is part of the standard Web API available in all modern browsers, not a Chrome-specific debug tool.
+    *   *Why D is incorrect:* CSS style management is handled through `element.style` and CSS stylesheets; the `document` object covers structure, not just styling.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **create a sandboxed Python virtual environment to manage dependencies locally**. Which of the following commands is the most appropriate to execute?
-C) pip install -r requirements.txt
-A) python3 -m venv .venv
-B) git commit -m 'update'
-D) pytest
-*   **Correct Answer:** A) python3 -m venv .venv
+A developer has the HTML `<h1 id="title">Hello</h1>` and wants to change its visible text to "Welcome" using JavaScript. Which code is correct and safest?
+*   A) `document.getElementById("title").innerHTML = "<b>Welcome</b>";`
+*   B) `document.getElementById("title").textContent = "Welcome";`
+*   C) `document.querySelector("h1").id = "Welcome";`
+*   D) `document.getElementByTagName("h1").text = "Welcome";`
+*   **Correct Answer:** B) `document.getElementById("title").textContent = "Welcome";`
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `python3 -m venv .venv` command is directly designed to create a sandboxed Python virtual environment to manage dependencies locally.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is incorrect:* Using `innerHTML` works here, but it parses the value as HTML and is a security risk if the value comes from user input; `textContent` is safer for plain text.
+    *   *Why B is correct:* `textContent` sets the text without parsing HTML, making it the safe and correct choice for plain text replacement.
+    *   *Why C is incorrect:* Setting `.id` changes the element's ID attribute, not its visible text content.
+    *   *Why D is incorrect:* The correct method name is `getElementsByTagName` (plural, with an "s"); also, `.text` is not a standard DOM property for general elements.
 
 ---
 
 **Question 4**
-While working on **Document Object Model (DOM) Basics** in a production environment, you encounter a system alert indicating a **TypeError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-C) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
-B) Verify that the index is within the valid range of 0 to len(list)-1.
-A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-D) Reboot the physical machine and wait for services to reload.
-*   **Correct Answer:** A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
+While working on **DOM Basics**, a developer writes `document.querySelector(".card")`. The page has five elements with class `card`. How many elements does this call return?
+*   A) All five elements as an array
+*   B) All five elements as a NodeList
+*   C) Only the first matching element
+*   D) `null`, because `querySelector` only works with ID selectors
+*   **Correct Answer:** C) Only the first matching element.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This action does not resolve the root cause of TypeError.
-    * *Why B is incorrect:* This action does not resolve the root cause of TypeError.
-    * *Why A is correct:* Because An operation or function was applied to an object of an inappropriate data type. The appropriate fix is to Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types..
-    * *Why D is incorrect:* This action does not resolve the root cause of TypeError.
-
+    *   *Why A is incorrect:* `querySelector` never returns an array; to get multiple elements, use `querySelectorAll`.
+    *   *Why B is incorrect:* A NodeList is returned by `querySelectorAll`, not `querySelector`.
+    *   *Why C is correct:* `querySelector` always returns the **first** matching element in document order, even when many elements match the selector.
+    *   *Why D is incorrect:* `querySelector` accepts any valid CSS selector including class selectors (`.card`), attribute selectors, tag names, and more.
 
 ---
 
 **Question 5**
-When designing a system for **Document Object Model (DOM) Basics**, you must mitigate the risk of **Allowing attackers to execute arbitrary SQL commands on the backend database via input forms.**. Which of the following security configurations or controls represents the best practice to implement?
-D) Enable full disk encryption on all client endpoints.
-A) Implement parameterized queries and prepared statements rather than raw string concatenation.
-B) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-C) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Implement parameterized queries and prepared statements rather than raw string concatenation.
+What is the key difference between `textContent` and `innerHTML` when setting the content of a DOM element?
+*   A) `textContent` only works on `<p>` elements; `innerHTML` works on all elements
+*   B) `innerHTML` treats the value as plain text; `textContent` parses it as HTML markup
+*   C) `textContent` treats the value as plain text (safe for user input); `innerHTML` parses the value as HTML markup (risk of injection)
+*   D) There is no difference; both properties produce identical results for all input values
+*   **Correct Answer:** C) `textContent` treats the value as plain text (safe for user input); `innerHTML` parses the value as HTML markup (risk of injection).
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why A is correct:* Implementing Implement parameterized queries and prepared statements rather than raw string concatenation. mitigates the risk of Allowing attackers to execute arbitrary SQL commands on the backend database via input forms..
-    * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-
+    *   *Why A is incorrect:* Both properties are available on all element types, not just `<p>`.
+    *   *Why B is incorrect:* The descriptions are reversed; `innerHTML` parses HTML, `textContent` does not.
+    *   *Why C is correct:* Setting `textContent` to a string containing `<script>` renders it as visible text; setting `innerHTML` to the same string can execute the script.
+    *   *Why D is incorrect:* They produce different results when the value contains HTML tags — `textContent` escapes them, `innerHTML` renders them.

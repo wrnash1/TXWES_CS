@@ -17,17 +17,17 @@ Which protocol is used by lightweight access points to communicate with a centra
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **WLC configuration**?
-C) The additional execution time and CPU operations spent visiting nodes sequentially in memory, which is higher in linked structures than in contiguous arrays.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within networking operations.
-B) A complete binary tree where the key of any parent node is less than or equal to the keys of its children, guaranteeing the root is always the minimum element.
-D) A security control that divides a critical transaction workflow among multiple users to prevent fraud and errors (e.g., one person approves a purchase order, another pays the vendor).
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within networking operations.
+Which of the following most accurately describes the role of a **Wireless LAN Controller (WLC)** in an enterprise network?
+*   A) A centralized device that manages multiple lightweight APs, pushing SSID configurations, security policies, and RF settings to all associated APs while handling client authentication and roaming.
+*   B) A standalone access point that manages its own SSID configuration, authentication, and security settings independently without requiring a central management device.
+*   C) A Layer 2 switch that aggregates wireless traffic from multiple access points and forwards it to the distribution layer using 802.1Q trunk links.
+*   D) A RADIUS authentication server that stores wireless user credentials and responds to 802.1X EAP authentication requests from wireless clients.
+*   **Correct Answer:** A) A centralized device that manages multiple lightweight APs, pushing SSID configurations, security policies, and RF settings to all associated APs while handling client authentication and roaming.
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **WLC configuration**.
-    * *Why A is correct:* This describes the exact role and function of **WLC configuration**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **WLC configuration**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **WLC configuration**.
+    * *Why A is correct:* The WLC is the defining component of a centralized wireless architecture — it uses CAPWAP to control lightweight APs and provides single-pane management for the entire wireless deployment.
+    * *Why B is incorrect:* This describes an autonomous AP, which operates independently — the opposite of the lightweight/WLC model.
+    * *Why C is incorrect:* This describes a standard Layer 2 switch used in the wired infrastructure — not a wireless LAN controller.
+    * *Why D is incorrect:* This describes a RADIUS server (such as Cisco ISE), which handles authentication but is a separate device from the WLC.
 
 
 ---
@@ -59,21 +59,20 @@ A) Correct the subnet mask configuration on the interface to match the network s
     * *Why B is incorrect:* This action does not resolve the root cause of Subnet Mask Mismatch.
     * *Why D is incorrect:* This action does not resolve the root cause of Subnet Mask Mismatch.
     * *Why C is incorrect:* This action does not resolve the root cause of Subnet Mask Mismatch.
-    * *Why A is correct:* Because A host is configured with an incorrect subnet mask, preventing it from identifying local vs. remote addresses. The appropriate fix is to Correct the subnet mask configuration on the interface to match the network segment parameters..
+    * *Why A is correct:* Because A host is configured with an incorrect subnet mask, preventing it from identifying local vs. remote addresses. The appropriate fix is to Correct the subnet mask configuration on the interface to match the network segment parameters.
 
 
 ---
 
 **Question 5**
-When designing a system for **Wireless LANs (WLAN) & WLC**, you must mitigate the risk of **Attackers connecting rogue access points or unauthorized laptops directly to internal switch ports.**. Which of the following security configurations or controls represents the best practice to implement?
+When configuring **Wireless LANs (WLAN) & WLC**, you must mitigate the risk of **Attackers connecting rogue access points or unauthorized laptops directly to internal switch ports.**. Which of the following security configurations or controls represents the best practice to implement?
 B) Configure SSH (port 22) for terminal access and HTTPS (port 443) for web interfaces, disabling Telnet and HTTP.
 A) Implement switch Port Security to restrict access to switch ports based on approved MAC addresses.
-D) Enable full disk encryption on all client endpoints.
-C) Enable full disk encryption on all client endpoints.
+D) Enable Rogue AP detection on the WLC to automatically identify and alert on unauthorized access points in the airspace.
+C) Configure WPA3-Enterprise with 802.1X on all SSIDs to require individual user authentication before granting wireless network access.
 *   **Correct Answer:** A) Implement switch Port Security to restrict access to switch ports based on approved MAC addresses.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This does not address the security vulnerability of Unauthorized Port Access.
-    * *Why A is correct:* Implementing Implement switch Port Security to restrict access to switch ports based on approved MAC addresses. mitigates the risk of Attackers connecting rogue access points or unauthorized laptops directly to internal switch ports..
-    * *Why D is incorrect:* This does not address the security vulnerability of Unauthorized Port Access.
-    * *Why C is incorrect:* This does not address the security vulnerability of Unauthorized Port Access.
-
+    * *Why A is correct:* Port Security directly blocks unauthorized devices from connecting to switch ports and gaining wired network access, which is the specific risk described.
+    * *Why B is incorrect:* SSH/HTTPS secures management sessions but does not prevent unauthorized devices from physically plugging into switch ports.
+    * *Why D is incorrect:* Rogue AP detection identifies unauthorized wireless devices in the RF environment — it does not prevent wired switch port connections from unauthorized laptops.
+    * *Why C is incorrect:* WPA3-Enterprise secures wireless client authentication but does not address unauthorized physical wired connections to switch ports.

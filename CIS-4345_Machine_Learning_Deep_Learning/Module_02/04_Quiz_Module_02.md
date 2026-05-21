@@ -1,79 +1,77 @@
-# Quiz: Module 02 - Linear Regression
+# Quiz: Module 02 - Python for ML
 ## Course: CIS-4345_Machine_Learning_Deep_Learning (TensorFlow Developer Certificate)
 
 ---
 
 **Question 1**
-What is the objective of the Gradient Descent algorithm in model training?
-*   A) To select random features
-*   B) To iteratively adjust model weights to minimize the cost function value
-*   C) To prune decision tree leaves
-*   D) To backup SQL tables
-*   **Correct Answer:** B) Gradient Descent is an optimization method that computes cost gradients to update weights toward minimum cost levels.
+What is the objective of feature scaling (normalization/standardization) before training a neural network?
+*   A) To reduce the number of training samples
+*   B) To ensure all input features contribute equally to gradient updates and prevent slow or failed convergence
+*   C) To convert labels from integers to strings
+*   D) To remove duplicate rows from the dataset
+*   **Correct Answer:** B) Neural networks use gradient descent; features on vastly different scales cause gradients to be dominated by large-scale features, slowing learning.
 *   **Distractor Analysis:**
-    *   *Why correct:* Gradient Descent is an optimization method that computes cost gradients to update weights toward minimum cost levels.
-    *   Pruning trees and database administration are independent tasks.
+    *   *Why correct:* Scaling centers and narrows the loss surface so gradient descent converges faster and more reliably.
+    *   *Why A is incorrect:* Scaling does not change the number of samples, only the numeric range of feature values.
+    *   *Why C is incorrect:* Label encoding is a separate step; scaling applies to input features, not labels.
+    *   *Why D is incorrect:* Removing duplicates is a data cleaning step unrelated to feature scaling.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **weights and biases.**?
-D) A security control that divides a critical transaction workflow among multiple users to prevent fraud and errors (e.g., one person approves a purchase order, another pays the vendor).
-C) The entry point or first node in a linked list, which serves as the reference for traversing the rest of the list structure.
-B) Flexible Box Layout; a one-dimensional CSS layout model that makes it easy to align items and distribute space within a container, handling varying screen sizes dynamically.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within ai operations.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within ai operations.
+Which of the following is the most accurate definition of a **Pandas DataFrame**?
+*   A) A one-dimensional array of fixed-type values indexed by integers, equivalent to a single column of a spreadsheet.
+*   B) A two-dimensional labeled data structure with named columns that can hold mixed data types, used to load, inspect, and preprocess tabular datasets.
+*   C) A compiled computation graph that TensorFlow uses to execute tensor operations efficiently on GPU hardware.
+*   D) A dictionary mapping word tokens to integer indices, used to encode text sequences for NLP models.
+*   **Correct Answer:** B) A DataFrame is Pandas' primary tabular data structure — equivalent to a spreadsheet with labeled rows and columns.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **weights and biases.**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **weights and biases.**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **weights and biases.**.
-    * *Why A is correct:* This describes the exact role and function of **weights and biases.**.
-
+    *   *Why A is incorrect:* This describes a Pandas Series, which is one-dimensional. A DataFrame is two-dimensional with multiple named columns.
+    *   *Why B is correct:* DataFrames provide methods for loading CSVs, handling missing values, filtering rows, and encoding features — all critical preprocessing steps.
+    *   *Why C is incorrect:* This describes a TensorFlow computation graph, not a Pandas data structure.
+    *   *Why D is incorrect:* This describes a word-to-index vocabulary mapping used in NLP tokenization, not a DataFrame.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **train the machine learning model on the training features and targets**. Which of the following commands is the most appropriate to execute?
-D) accuracy = accuracy_score(y_test, predictions)
-A) model.fit(X_train, y_train)
-C) import pandas as pd; df = pd.read_csv('data.csv')
-B) predictions = model.predict(X_test)
-*   **Correct Answer:** A) model.fit(X_train, y_train)
+A developer needs to **load a CSV file and inspect the first five rows**. Which commands are most appropriate?
+*   A) `df = pd.read_csv('data.csv'); df.head()`
+*   B) `model.fit(X_train, y_train, epochs=10)`
+*   C) `np.reshape(X, (-1, 28, 28, 1))`
+*   D) `accuracy_score(y_test, predictions)`
+*   **Correct Answer:** A) `pd.read_csv()` loads a CSV into a DataFrame and `.head()` displays the first five rows for inspection.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `model.fit(X_train, y_train)` command is directly designed to train the machine learning model on the training features and targets.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-
+    *   *Why A is correct:* This is the standard Pandas pattern for loading and previewing tabular data before preprocessing.
+    *   *Why B is incorrect:* `model.fit()` trains a Keras model; it cannot load or preview a CSV file.
+    *   *Why C is incorrect:* `np.reshape()` changes array dimensions; it does not load files.
+    *   *Why D is incorrect:* `accuracy_score` evaluates predictions; it does not load or inspect data.
 
 ---
 
 **Question 4**
-While working on **Linear Regression** in a production environment, you encounter a system alert indicating a **Data Leakage** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-D) Reboot the physical machine and wait for services to reload.
-B) Apply regularization techniques (L1/L2), gather more training data, or simplify the model architecture.
-C) Use imputation techniques (mean, median, mode) or drop rows/columns containing missing values.
-A) Ensure data preprocessing steps (scaling, normalization) are fit only on the training set and applied to the test set.
-*   **Correct Answer:** A) Ensure data preprocessing steps (scaling, normalization) are fit only on the training set and applied to the test set.
+While preprocessing data for a model, a developer fits a `StandardScaler` on the full dataset (training + test) before splitting. What ML problem does this cause?
+*   A) Underfitting — the model becomes too simple because the scaler removes useful variance.
+*   B) Data leakage — test set statistics influence the scaler, giving an overly optimistic evaluation.
+*   C) Class imbalance — scaling changes the ratio of positive to negative examples.
+*   D) Gradient explosion — large scaled values cause weight updates to become unbounded.
+*   **Correct Answer:** B) Fitting the scaler on combined data lets test-set mean and std influence preprocessing, making test performance appear better than it truly is.
 *   **Distractor Analysis:**
-    * *Why D is incorrect:* This action does not resolve the root cause of Data Leakage.
-    * *Why B is incorrect:* This action does not resolve the root cause of Data Leakage.
-    * *Why C is incorrect:* This action does not resolve the root cause of Data Leakage.
-    * *Why A is correct:* Because Information from outside the training dataset is used to train the model, resulting in overly optimistic validation scores. The appropriate fix is to Ensure data preprocessing steps (scaling, normalization) are fit only on the training set and applied to the test set..
-
+    *   *Why A is incorrect:* Underfitting results from a model that is too simple, not from scaler fitting order.
+    *   *Why B is correct:* The fix is `scaler.fit(X_train)` then `scaler.transform(X_test)` — the test set should never influence any fitted transform.
+    *   *Why C is incorrect:* Scaling changes feature magnitude, not label counts or class proportions.
+    *   *Why D is incorrect:* StandardScaler makes features smaller and more uniform — it reduces, not increases, the risk of gradient explosion.
 
 ---
 
 **Question 5**
-When designing a system for **Linear Regression**, you must mitigate the risk of **Attackers injecting subtle, imperceptible noise into input data (e.g. images) to force the AI into making incorrect classifications.**. Which of the following security configurations or controls represents the best practice to implement?
-B) Apply differential privacy methods to the training data and limit public API rate queries.
-A) Train models with adversarial inputs and implement input validation/filtering on inputs.
-C) Enable full disk encryption on all client endpoints.
-D) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Train models with adversarial inputs and implement input validation/filtering on inputs.
+After calling `history = model.fit(X_train, y_train, epochs=20, validation_data=(X_val, y_val))`, which code correctly plots training and validation loss curves?
+*   A) `plt.plot(history.history['loss']); plt.plot(history.history['val_loss'])`
+*   B) `plt.bar(history['accuracy'], history['val_accuracy'])`
+*   C) `sns.heatmap(history.history)`
+*   D) `tf.keras.utils.plot_model(model, to_file='model.png')`
+*   **Correct Answer:** A) The `history.history` dict contains per-epoch metric lists; plotting `'loss'` and `'val_loss'` shows the training curve and whether overfitting is occurring.
 *   **Distractor Analysis:**
-    * *Why B is incorrect:* This does not address the security vulnerability of Adversarial Examples.
-    * *Why A is correct:* Implementing Train models with adversarial inputs and implement input validation/filtering on inputs. mitigates the risk of Attackers injecting subtle, imperceptible noise into input data (e.g. images) to force the AI into making incorrect classifications..
-    * *Why C is incorrect:* This does not address the security vulnerability of Adversarial Examples.
-    * *Why D is incorrect:* This does not address the security vulnerability of Adversarial Examples.
-
+    *   *Why A is correct:* This is the standard pattern for diagnosing model training — a widening gap between training and validation loss signals overfitting.
+    *   *Why B is incorrect:* `history` is an object; you must access `history.history['accuracy']`, and `plt.bar` produces a bar chart, not a learning curve.
+    *   *Why C is incorrect:* `sns.heatmap` requires a 2D matrix; `history.history` is a dict of lists, not a matrix suitable for heatmap visualization.
+    *   *Why D is incorrect:* `plot_model` visualizes the model architecture diagram, not the training loss history.

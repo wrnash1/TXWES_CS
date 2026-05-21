@@ -1,86 +1,82 @@
-# Quiz: Module 07 - Billing
-## Course: CIS-4329_Google_Cloud (4329_Google_Cloud - Google Cloud Associate Cloud Engineer)
+# Quiz: Module 07 – Kubernetes Engine (GKE): Cluster Management
+## Course: CIS-4329 – Google Cloud Administration (Google Cloud Associate Cloud Engineer)
 
 ---
 
 **Question 1**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Sustained Use Discounts**?
-C) CSS rules (like width, height, max-width, box-sizing) that dictate how the dimensions of elements are calculated and rendered.
-D) Search Engine Optimization; practices designed to improve the visibility and ranking of web pages in search engine results through clean HTML, meta tags, and alt text.
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within cloud operations.
-B) Elements placed inside the <head> block of an HTML document that define metadata, links to stylesheets, scripts, character sets, and page titles.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within cloud operations.
+Your team wants to deploy a containerized microservice on GKE. They want Google to fully manage all infrastructure including node provisioning, scaling, and upgrades. Your team should only need to define and deploy pods. Which GKE mode should you use?
+
+A) GKE Standard with node auto-upgrade enabled
+B) GKE Autopilot
+C) GKE Standard with Cluster Autoscaler enabled
+D) Anthos GKE on-premises
+
+*   **Correct Answer:** B) GKE Autopilot
 *   **Distractor Analysis:**
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Sustained Use Discounts**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Sustained Use Discounts**.
-    * *Why A is correct:* This describes the exact role and function of **Sustained Use Discounts**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Sustained Use Discounts**.
-
-
----
+    *   *Why A is incorrect:* GKE Standard with auto-upgrade still requires you to configure and manage node pools, choose machine types, and set minimum/maximum node counts — your team retains node-level responsibility.
+    *   *Why C is incorrect:* Cluster Autoscaler in Standard mode scales the number of nodes in existing node pools but does not remove the need to define and manage those node pools in the first place.
+    *   *Why D is incorrect:* Anthos GKE on-premises runs Kubernetes on your own data center hardware — it provides no Google-managed infrastructure and is the opposite of what is described.
 
 ---
 
 **Question 2**
-In the context of standard IT systems, which of the following is the most accurate definition of the concept or parameter **Sustained Use Discounts**?
-A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within cloud operations.
-D) The additional execution time and CPU operations spent visiting nodes sequentially in memory, which is higher in linked structures than in contiguous arrays.
-C) A mathematical representation used to describe the asymptotic upper bound of an algorithm's running time or space complexity relative to the input size N. It helps developers predict how an algorithm will scale as data grows.
-B) The operational principle of a stack, where the element added most recently is the first one to be removed, similar to a stack of trays.
-*   **Correct Answer:** A) A critical parameter and standard protocol utilized to enforce access rules, manage data flow, or verify integrity within cloud operations.
+You have deployed an application on GKE. The application processes user requests, and you want it to automatically add more pod replicas when CPU utilization exceeds 70%, and remove replicas when utilization drops back below that threshold. Which Kubernetes resource implements this behavior?
+
+A) Cluster Autoscaler configured on the node pool
+B) Horizontal Pod Autoscaler (HPA) targeting the application's Deployment
+C) A Kubernetes CronJob that runs a scaling script every 5 minutes
+D) A Managed Instance Group with CPU-based autoscaling attached to the cluster
+
+*   **Correct Answer:** B) Horizontal Pod Autoscaler (HPA) targeting the application's Deployment
 *   **Distractor Analysis:**
-    * *Why A is correct:* This describes the exact role and function of **Sustained Use Discounts**.
-    * *Why D is incorrect:* This option represents an alternative operational definition that does not apply to **Sustained Use Discounts**.
-    * *Why C is incorrect:* This option represents an alternative operational definition that does not apply to **Sustained Use Discounts**.
-    * *Why B is incorrect:* This option represents an alternative operational definition that does not apply to **Sustained Use Discounts**.
-
-
----
+    *   *Why A is incorrect:* Cluster Autoscaler scales the number of nodes (VMs) in a node pool when there is insufficient capacity to schedule pods — it does not scale the number of pod replicas based on CPU utilization.
+    *   *Why C is incorrect:* A CronJob runs a task on a time schedule — it has no awareness of real-time CPU metrics and is not the correct mechanism for reactive autoscaling.
+    *   *Why D is incorrect:* Managed Instance Groups are a Compute Engine concept that manage raw VMs — they have no integration with Kubernetes pod scheduling or Deployment replicas.
 
 ---
 
 **Question 3**
-A systems administrator or developer needs to **execute the infrastructure plan to provision or modify resources defined in the configuration files**. Which of the following commands is the most appropriate to execute?
-D) gcloud compute instances list
-C) kubectl get pods -n production
-A) terraform apply
-B) aws s3 sync local_dir s3://my-bucket
-*   **Correct Answer:** A) terraform apply
-*   **Distractor Analysis:**
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `terraform apply` command is directly designed to execute the infrastructure plan to provision or modify resources defined in the configuration files.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
+You need to give a pod running in your GKE cluster access to a Cloud Storage bucket so it can read and write objects. Following security best practices, which approach should you use?
 
+A) Download a Service Account key JSON file and mount it as a Kubernetes Secret in the pod.
+B) Grant `roles/storage.objectAdmin` to the Compute Engine default Service Account used by the cluster nodes.
+C) Use Workload Identity to link a Kubernetes Service Account to a GCP Service Account with `roles/storage.objectAdmin` on the bucket.
+D) Set the `GOOGLE_APPLICATION_CREDENTIALS` environment variable in the pod spec to point to the cluster's built-in credentials.
+
+*   **Correct Answer:** C) Use Workload Identity to link a Kubernetes Service Account to a GCP Service Account with `roles/storage.objectAdmin` on the bucket.
+*   **Distractor Analysis:**
+    *   *Why A is incorrect:* Mounting a Service Account key JSON file as a Secret is a security anti-pattern — if the Secret is exposed or the pod is compromised, the long-lived key can be exfiltrated. Workload Identity provides short-lived, automatically rotated credentials.
+    *   *Why B is incorrect:* Granting a broad role to the node's default Service Account gives every pod on every node in the cluster that access — violating least privilege. Workload Identity scopes credentials to individual pods.
+    *   *Why D is incorrect:* There is no built-in cluster credentials file that pods can reference via `GOOGLE_APPLICATION_CREDENTIALS`; this would require the same key file approach described in option A.
 
 ---
 
 **Question 4**
-While working on **Billing** in a production environment, you encounter a system alert indicating a **IAM Access Denied** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-D) Reboot the physical machine and wait for services to reload.
-B) Set up billing alerts, delete unused volumes, and configure auto-scaling scale-down policies.
-C) Check the VPC route table for an Internet Gateway path and verify that the security group allows incoming traffic.
-A) Review the user's IAM policies and attach the specific policy granting permissions for the resource action.
-*   **Correct Answer:** A) Review the user's IAM policies and attach the specific policy granting permissions for the resource action.
-*   **Distractor Analysis:**
-    * *Why D is incorrect:* This action does not resolve the root cause of IAM Access Denied.
-    * *Why B is incorrect:* This action does not resolve the root cause of IAM Access Denied.
-    * *Why C is incorrect:* This action does not resolve the root cause of IAM Access Denied.
-    * *Why A is correct:* Because The user account or service role lacks the explicit IAM permissions required to execute the API call. The appropriate fix is to Review the user's IAM policies and attach the specific policy granting permissions for the resource action..
+You perform a rolling update to your GKE Deployment and the new version contains a critical bug. Users are reporting errors. You need to restore the previous working version as quickly as possible. Which command accomplishes this?
 
+A) `kubectl delete deployment my-app && kubectl apply -f old-deployment.yaml`
+B) `kubectl rollout undo deployment/my-app`
+C) `gcloud container clusters upgrade my-cluster --rollback`
+D) `kubectl scale deployment my-app --replicas=0` then re-apply the old manifest
+
+*   **Correct Answer:** B) `kubectl rollout undo deployment/my-app`
+*   **Distractor Analysis:**
+    *   *Why A is incorrect:* Deleting the Deployment and reapplying an old manifest causes complete downtime during the deletion window and requires you to have the old YAML readily available — `rollout undo` achieves an instant rollback with zero downtime.
+    *   *Why C is incorrect:* `gcloud container clusters upgrade` manages cluster control plane and node version upgrades — it has nothing to do with rolling back an application Deployment.
+    *   *Why D is incorrect:* Scaling to zero replicas takes the application completely offline before the old version is restored, causing unnecessary downtime that a rolling rollback avoids.
 
 ---
 
 **Question 5**
-When designing a system for **Billing**, you must mitigate the risk of **Storing sensitive corporate documents in publicly readable cloud buckets, leading to data breaches.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Enable Block Public Access configurations and enforce access control via IAM or signed URLs.
-C) Enable full disk encryption on all client endpoints.
-B) Enforce temporary credentials (STS), rotate keys regularly, and never hardcode API keys in repositories.
-D) Enable full disk encryption on all client endpoints.
-*   **Correct Answer:** A) Enable Block Public Access configurations and enforce access control via IAM or signed URLs.
-*   **Distractor Analysis:**
-    * *Why A is correct:* Implementing Enable Block Public Access configurations and enforce access control via IAM or signed URLs. mitigates the risk of Storing sensitive corporate documents in publicly readable cloud buckets, leading to data breaches..
-    * *Why C is incorrect:* This does not address the security vulnerability of Publicly Exposed Storage Buckets.
-    * *Why B is incorrect:* This does not address the security vulnerability of Publicly Exposed Storage Buckets.
-    * *Why D is incorrect:* This does not address the security vulnerability of Publicly Exposed Storage Buckets.
+You want to expose your GKE application to external internet traffic with path-based routing: requests to `/api` should go to one backend service and requests to `/web` should go to another. Which Kubernetes resource and corresponding GCP resource combination achieves this?
 
+A) Two separate LoadBalancer Services — one for `/api` and one for `/web`.
+B) A Kubernetes Ingress resource, which provisions a Global HTTP(S) Load Balancer with URL map rules.
+C) A NodePort Service combined with a Cloud VPN tunnel for external access.
+D) A ClusterIP Service exposed externally by adding an external IP address directly to the Service spec.
+
+*   **Correct Answer:** B) A Kubernetes Ingress resource, which provisions a Global HTTP(S) Load Balancer with URL map rules.
+*   **Distractor Analysis:**
+    *   *Why A is incorrect:* LoadBalancer Services each get their own L4 external IP and cannot perform path-based routing — each service handles its own port but has no knowledge of URL paths.
+    *   *Why C is incorrect:* NodePort Services expose a port on each cluster node but are not designed for production external traffic routing; Cloud VPN is for private network connectivity, not public HTTP access.
+    *   *Why D is incorrect:* ClusterIP Services are internal-only by design; assigning an external IP directly to a ClusterIP Service is not a supported GKE pattern and provides no HTTP path-routing capability.
