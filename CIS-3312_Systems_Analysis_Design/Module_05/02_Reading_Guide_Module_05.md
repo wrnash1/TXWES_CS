@@ -1,57 +1,186 @@
 # Reading Guide: Module 05 - Use Case Modeling and User Stories
-## Course: CIS-3312 Systems Analysis & Design (IIBA ECBA)
+
+**Course:** CIS-3312 Systems Analysis and Design
+**Certification Alignment:** IIBA ECBA (Entry Certificate in Business Analysis)
+**Prepared by:** Professor Nash | Texas Wesleyan University
 
 ---
 
-### Introduction
-Welcome to **Module 05 – Use Case Modeling and User Stories**! This module covers two of the most widely used techniques for modeling functional requirements from the user's perspective: use cases (common in predictive/UML-based approaches) and user stories (standard in Agile/Scrum environments). Both techniques shift the focus of requirements from system features to user goals, making requirements far more understandable to both business stakeholders and developers.
+## Introduction
 
-This module bridges traditional systems analysis (UML use case diagrams) with modern Agile practices (user story format, acceptance criteria, and backlog management), equipping you with tools relevant across all project methodologies.
-
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **Use Case**: A use case describes a sequence of interactions between an actor (a person or external system) and the system under development to achieve a specific business goal. Use cases focus on the *value delivered to the actor* rather than internal system mechanisms. A use case specification typically includes a name, primary actor, preconditions, main success scenario (step-by-step), alternative flows, and postconditions.
-
-*   **Actor**: In use case modeling, an actor is any entity — human user, external system, or automated process — that interacts with the system from outside its boundary to achieve a goal. Actors are not part of the system; they initiate or participate in use cases. The same person can play multiple actor roles depending on the context (e.g., a librarian may act as both "Librarian" and "System Administrator" in different use cases).
-
-*   **Use Case Diagram**: A use case diagram is a UML behavioral diagram that provides a high-level visual overview of a system's functional scope by showing the actors, the use cases they participate in, and the system boundary. It does not show the sequence of steps within a use case; it shows only what the system does and who interacts with it. Use case diagrams are excellent for stakeholder communication and scope definition.
-
-*   **User Story**: A user story is a short, informal description of a software feature written from the perspective of an end user, following the format: "As a [role], I want [goal] so that [business value]." User stories are the primary unit of work in Agile/Scrum backlog management. They are deliberately brief to encourage conversation rather than serve as comprehensive documentation; the details emerge through discussion with the product owner and team.
-
-*   **Acceptance Criteria**: Acceptance criteria are the specific conditions that a user story must satisfy for the product owner to accept it as done. They make the user story testable and define the boundary of the feature implementation. Well-written acceptance criteria use clear, verifiable language (e.g., "Given that a user is logged in, when they click Logout, then their session is terminated and they are redirected to the login page").
-
-*   **Product Backlog**: A product backlog is a prioritized list of all work items — primarily user stories, but also bugs, technical tasks, and improvements — that the development team may be asked to implement. The product owner owns and maintains the backlog, continuously refining priorities based on business value, stakeholder feedback, and strategic direction. In Scrum, the sprint backlog is a subset of the product backlog selected for a specific sprint.
+Module 05 covers two of the most widely used techniques for modeling functional requirements from the user's perspective: use cases (common in traditional and UML-based approaches) and user stories (standard in Agile/Scrum environments). Both techniques shift the focus of requirements from system features to user goals, making requirements far more understandable to both business stakeholders and developers. This module bridges traditional systems analysis with modern Agile practice.
 
 ---
 
-### 2. Certification Exam Tips
-*   **Use Case vs. User Story**: The ECBA exam may test whether you can distinguish these two techniques. Use cases are more formal, document complete interaction flows, and are associated with traditional/UML methodologies. User stories are brief, focused on user value, and used in Agile contexts. Neither is "better" — the right choice depends on the project approach.
-*   **Include vs. Extend Relationships**: In UML use case diagrams, `<<include>>` indicates a use case that is always invoked as part of another use case (mandatory sub-flow), while `<<extend>>` indicates an optional flow that may occur under specific conditions. A common ECBA question will describe a scenario and ask which relationship type is appropriate.
-*   **INVEST Criteria for User Stories**: User stories should be Independent, Negotiable, Valuable, Estimable, Small, and Testable (INVEST). The ECBA exam may present a user story and ask you to evaluate its quality using the INVEST criteria — watch for stories that are too large (epic, not a story), not testable, or have no clear business value.
-*   **Study Resource**: The Agile Alliance maintains a free glossary and resource library covering user stories, acceptance criteria, and backlog management at [https://www.agilealliance.org/glossary/](https://www.agilealliance.org/glossary/) — the "User Story" and "Acceptance Criteria" entries directly support ECBA exam preparation.
+## 1. Core Vocabulary
+
+### 1.1 Use Case
+
+A use case describes a sequence of interactions between an actor and the system to achieve a specific goal. Use cases focus on the value delivered to the actor rather than on internal system mechanisms. A complete use case specification includes: name, primary actor, preconditions, main success scenario (step-by-step), alternative flows, exception flows, and postconditions.
+
+### 1.2 Actor
+
+An actor is any entity outside the system boundary that interacts with the system — a human user, an external system, or an automated process. Actors are not part of the system; they initiate or receive results from use cases. The same person can play multiple actor roles depending on context.
+
+### 1.3 Use Case Diagram
+
+A use case diagram is a UML behavioral diagram showing the system boundary, actors, use cases, and the associations between them. It provides a high-level visual overview of functional scope. It does not show the sequence of steps within a use case — that belongs in the written use case specification.
+
+### 1.4 Include Relationship
+
+The include relationship between two use cases indicates that the base use case always invokes the included use case as a mandatory part of its execution. The arrow points from the base use case to the included use case, labeled with the stereotype. Example: "Process Order" always includes "Validate Payment."
+
+### 1.5 Extend Relationship
+
+The extend relationship indicates that the extending use case optionally adds behavior to the base use case under a specific condition. The arrow points from the extending use case to the base use case, labeled with the stereotype, often with a condition note. Example: "Apply Restocking Fee" extends "Process Return" only when the item is open-box.
+
+### 1.6 User Story
+
+A user story is a brief, informal description of a feature written from the end user's perspective: "As a [role], I want [goal] so that [business value]." User stories are deliberately lightweight — they invite conversation rather than serve as comprehensive documentation. The detail lives in the acceptance criteria.
+
+### 1.7 Acceptance Criteria
+
+Acceptance criteria are the specific, verifiable conditions a user story must satisfy for the product owner to accept it as complete. They are commonly written in Given/When/Then format. They make user stories testable and define the implementation boundary.
+
+### 1.8 INVEST Criteria
+
+INVEST is a quality standard for user stories:
+
+- Independent: deliverable without dependency on another story
+- Negotiable: details are open to discussion
+- Valuable: delivers clear value to user or business
+- Estimable: the team can estimate the effort required
+- Small: completable within a single sprint
+- Testable: acceptance criteria can be written
 
 ---
 
-### Required Readings & Videos
-*   **Required Reading**: Review the OMG UML Specification summary for behavioral diagrams (use case diagram notation) at [https://www.omg.org/spec/UML/](https://www.omg.org/spec/UML/). Also read the Agile Alliance's articles on User Stories and Acceptance Criteria at [https://www.agilealliance.org/glossary/](https://www.agilealliance.org/glossary/).
-*   **Supplemental Reading**: BABOK® Guide v3 Techniques section — "Use Cases and Scenarios" and "User Stories." These entries describe both techniques from the IIBA perspective, which is the lens the ECBA exam uses.
+## 2. Use Case Diagram Notation Reference
+
+| Symbol | Notation | Represents |
+|---|---|---|
+| Stick figure | Actor | A person, system, or device outside the boundary |
+| Ellipse | Use case | A named goal pursued through system interaction |
+| Rectangle | System boundary | The scope of the system under development |
+| Solid line | Association | Connects actor to use case they participate in |
+| Dashed arrow with stereotype | Include or Extend | Relationship between two use cases |
 
 ---
 
-### Lab & Activity Integration
-In this week's lab, you will:
-*   Draw a use case diagram for a provided scenario (a library management system), identifying at least three actors and five use cases, and using at least one `<<include>>` or `<<extend>>` relationship.
-*   Write three user stories using the "As a / I want / So that" format, each with two to three acceptance criteria in Given/When/Then format.
-*   Identify which items in a provided list of work items belong in a product backlog vs. which are too large (epics) and need splitting.
+## 3. Include vs. Extend Comparison
+
+| Dimension | Include | Extend |
+|---|---|---|
+| Execution | Always mandatory | Optional, condition-based |
+| Arrow direction | Base use case to included use case | Extending use case to base use case |
+| Use when | Factoring out shared sub-flows | Modeling optional or exception behaviors |
+| Example | "Place Order" includes "Validate Payment" | "Apply Discount" extends "Place Order" if promo code entered |
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and write your own one-sentence version of each definition.
-- [ ] Review OMG UML use case diagram notation at [https://www.omg.org/spec/UML/](https://www.omg.org/spec/UML/).
-- [ ] Read the Agile Alliance User Story and Acceptance Criteria glossary entries at [https://www.agilealliance.org/glossary/](https://www.agilealliance.org/glossary/).
+## 4. Use Case Specification Template
+
+A complete use case specification contains:
+
+| Section | Contents |
+|---|---|
+| Use Case Name | Verb-noun phrase describing the actor's goal |
+| Use Case ID | Unique identifier (e.g., UC-007) |
+| Primary Actor | The actor who initiates the use case |
+| Secondary Actors | Other actors involved |
+| Preconditions | Conditions that must be true before the use case begins |
+| Main Success Scenario | Numbered step-by-step interaction when all goes well |
+| Alternate Flows | Valid variations from the main path |
+| Exception Flows | Failure or error paths |
+| Postconditions | What is true after the use case completes successfully |
+
+---
+
+## 5. User Story Format and Acceptance Criteria
+
+The standard user story format: "As a [role], I want [goal] so that [value]."
+
+The three parts serve distinct purposes:
+
+- Role: identifies who benefits — enables the team to prioritize by impact on real users
+- Goal: describes the feature at a functional level — what the user wants to do
+- Value: explains the business reason — prevents teams from implementing features without understanding their purpose
+
+Acceptance criteria in Given/When/Then format:
+
+- Given: the precondition or starting state
+- When: the action the user or system takes
+- Then: the expected outcome
+
+Example: "Given a registered customer is on the login page and has clicked Forgot Password, when they enter a valid registered email and click Submit, then they receive a password reset email within 60 seconds."
+
+---
+
+## 6. Epics vs. User Stories
+
+An epic is a large user story that is too big to complete in a single sprint. It must be broken down into smaller, sprint-sized stories before development can begin. Signs that a story is actually an epic:
+
+- The story contains the word "and" multiple times, bundling separate features
+- The team cannot estimate it because the scope is unclear
+- It would take more than one sprint to complete
+- It addresses multiple user roles or multiple system areas
+
+---
+
+## 7. Use Cases vs. User Stories Comparison
+
+| Dimension | Use Case | User Story |
+|---|---|---|
+| Format | Formal specification document | Brief narrative card |
+| Detail level | High — full flows, conditions, exceptions | Low — invites conversation for details |
+| Methodology | Traditional/UML, Waterfall | Agile/Scrum |
+| Audience | Technical and business stakeholders | Product owner and development team |
+| Acceptance | Formal sign-off on specification | Product owner accepts against criteria |
+| When to use | Complex interactions, multiple flows | Sprint-sized features in iterative delivery |
+
+---
+
+## 8. Certification Exam Tips
+
+1. The include relationship is always mandatory — the included use case runs every time. The extend relationship is optional — the extending use case runs only under a specific condition. The exam tests this distinction directly.
+
+2. The arrow direction for extend is often tested as a trap. The arrow points from the extending use case to the base use case — not the other way around.
+
+3. INVEST violations are tested by presenting a badly written user story and asking which criterion is violated. The most common violation tested is "not Small enough" (the story is actually an epic). Look for stories that bundle multiple features with "and."
+
+4. Acceptance criteria make user stories testable. When a question asks what element of a user story ensures it meets the Testable criterion, the answer is acceptance criteria.
+
+5. A use case diagram shows scope — what the system does and who interacts with it — but not sequence. Sequence is shown in sequence diagrams or the written use case specification.
+
+6. The product backlog is owned and prioritized by the Product Owner, not the BA or the Scrum Master. Backlog prioritization is a Product Owner responsibility.
+
+7. Given/When/Then is the standard format for acceptance criteria. Know all three parts: Given = precondition, When = action, Then = expected outcome.
+
+8. Use cases and user stories are both techniques in BABOK KA 5 (Requirements Analysis and Design Definition). The exam may present either in the context of KA 5 tasks.
+
+---
+
+## 9. Required and Supplemental Reading
+
+Required reading:
+
+- BABOK Guide v3, Chapter 10 (Techniques) — Use Cases and Scenarios; User Stories
+- BABOK Guide v3, KA 5: Requirements Analysis and Design Definition — Specify and Model Requirements task
+
+Supplemental reading:
+
+- Agile Alliance glossary entries for User Story and Acceptance Criteria (free at agilealliance.org)
+- OMG UML specification — Use Case Diagram notation reference (free at omg.org)
+
+---
+
+## 10. Study Checklist
+
+- [ ] Draw a use case diagram from memory with all five notation elements (actors, use cases, boundary, associations, relationships).
+- [ ] Explain include vs. extend in your own words with one example each.
+- [ ] Write a complete use case specification for a simple scenario (two flows minimum).
+- [ ] Write three user stories in the correct format with two acceptance criteria each in Given/When/Then format.
+- [ ] Name all six INVEST criteria and give one example of a story that violates each.
 - [ ] Watch the Module 05 video lecture.
-- [ ] Complete the use case diagram and user story lab before taking the quiz.
+- [ ] Complete the Module 05 lab activity.
+- [ ] Post your initial discussion response by Wednesday at 11:59 PM.

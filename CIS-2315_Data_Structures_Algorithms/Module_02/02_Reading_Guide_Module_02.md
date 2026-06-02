@@ -1,63 +1,352 @@
-# Reading Guide: Module 02 – Arrays and Dynamic Arrays
-## Course: CIS-2315 Data Structures & Algorithms (Technical Interview Readiness)
+# Reading Guide: Module 02 — Singly and Doubly Linked Lists
+
+## Course: CIS-2315 Data Structures & Algorithms
+
+**Certification Alignment:** Technical Interview Readiness (LeetCode / HackerRank)
 
 ---
 
-### Introduction
-Welcome to **Module 02 – Arrays and Dynamic Arrays**! Arrays are the most fundamental data structure in computer science and the foundation for dozens of interview problem patterns. A large fraction of LeetCode problems — two-pointer, sliding window, prefix sums, and more — are solved directly on arrays. Understanding how static and dynamic arrays work internally explains both their performance characteristics and the subtle bugs that trap candidates in interviews.
+## Introduction
 
-This module covers array memory layout, indexing, resizing, and the two-pointer and sliding window patterns that appear on virtually every technical interview track.
-
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully:
-
-*   **Static array**: A contiguous block of memory of fixed size allocated at compile time or initialization. Elements are accessed in O(1) via index arithmetic (base_address + index × element_size), but the capacity cannot change after allocation.
-
-*   **Dynamic array**: A resizable array (Python `list`, Java `ArrayList`) that starts with an initial capacity and automatically allocates a larger backing array (typically doubling in size) when the current capacity is exceeded. Appending is O(1) amortized due to the doubling strategy.
-
-*   **Index / random access**: Direct element retrieval using a numeric position in O(1) time, possible because all elements are stored at predictable memory offsets. This is the primary performance advantage of arrays over linked lists.
-
-*   **Two-pointer technique**: An algorithmic pattern where two index variables traverse an array — often from both ends toward the center, or at different speeds — to solve problems like removing duplicates, finding pairs that sum to a target, or reversing a string in O(n) time and O(1) space.
-
-*   **Sliding window**: A pattern for computing results over every contiguous subarray of a fixed or variable size. Instead of recomputing from scratch each time, the window "slides" by adding the new element and removing the element that just left, reducing O(n·k) solutions to O(n).
-
-*   **Prefix sum array**: A preprocessing technique where `prefix[i]` stores the sum of all elements from index 0 through i–1. Range sum queries that would cost O(n) each then become O(1) lookups: `sum(l, r) = prefix[r+1] - prefix[l]`.
-
-*   **Amortized O(1) append**: The average cost of appending to a dynamic array over many operations. When the backing array is full, it doubles in size at cost O(n); but because doubling happens exponentially less often, the average cost per append across n operations is O(1).
+Linked lists are the foundation of pointer-based data structure thinking. They appear directly in interview problems (reverse a list, detect a cycle, find the middle) and their node-and-reference structure reappears in trees, graphs, and more complex containers. This module covers the implementation of both singly and doubly linked lists, the complexity of every operation, and the core two-pointer patterns that solve five of the most common linked list interview problems.
 
 ---
 
-### 2. Certification Exam Tips
-*   **Two-pointer is the answer to many O(n) array problems:** Whenever you see "find a pair," "remove in-place," or "reverse," ask yourself whether two pointers can do it in one pass. Practice sorted-array two-sum, container with most water, and trapping rain water.
-*   **Sliding window template:** Fixed-window problems (max sum of k elements) use a simple add/remove pattern. Variable-window problems (longest substring without repeating characters) use a `while window_invalid: shrink_left` pattern. Memorize both templates.
-*   **Off-by-one errors kill interviews:** Array boundary bugs are the #1 source of wrong answers on easy problems. Always check: what happens when the array is empty? When there is one element? When i equals n–1?
-*   **Prefix sums unlock subarray problems:** If an interview problem involves ranges or cumulative counts (subarray sum equals k, pivot index), reach for prefix sums immediately.
-*   **Know the complexity table for arrays:** Access O(1), Search O(n), Insert at end O(1) amortized, Insert at middle O(n), Delete at middle O(n).
-*   **Study Resource:** Work through the [LeetCode Array Explore Card](https://leetcode.com/explore/learn/card/fun-with-arrays/) — a free, structured set of problems and explanations specifically designed to build array fluency for interviews.
+## 1. Singly Linked List
+
+### Structure
+
+A singly linked list consists of nodes where each node holds a value and a reference to the next node. The list maintains a `head` pointer; if `head` is `None`, the list is empty.
+
+```python
+class Node:
+    def __init__(self, value):
+        self.value = value
+        self.next = None
+
+class SinglyLinkedList:
+    def __init__(self):
+        self.head = None
+        self.tail = None   # optional: enables O(1) append
+        self.size = 0
+```
+
+### Core Operations
+
+#### Prepend — O(1)
+
+```python
+def prepend(self, value):
+    node = Node(value)
+    node.next = self.head
+    self.head = node
+    if self.tail is None:
+        self.tail = node
+    self.size += 1
+```
+
+#### Append — O(1) with tail pointer
+
+```python
+def append(self, value):
+    node = Node(value)
+    if self.tail is None:
+        self.head = self.tail = node
+    else:
+        self.tail.next = node
+        self.tail = node
+    self.size += 1
+```
+
+#### Delete by Value — O(n)
+
+```python
+def delete(self, value):
+    if not self.head:
+        return
+    if self.head.value == value:
+        self.head = self.head.next
+        if self.head is None:
+            self.tail = None
+        self.size -= 1
+        return
+    current = self.head
+    while current.next:
+        if current.next.value == value:
+            if current.next == self.tail:
+                self.tail = current
+            current.next = current.next.next
+            self.size -= 1
+            return
+        current = current.next
+```
+
+#### Search — O(n)
+
+```python
+def search(self, value):
+    current = self.head
+    while current:
+        if current.value == value:
+            return current
+        current = current.next
+    return None
+```
+
+**Traversal pattern (used in every operation):**
+
+```python
+current = self.head
+while current:
+    # process current.value
+    current = current.next
+```
 
 ---
 
-### Required Readings & Videos
-*   **Required Reading:** [Arrays – Open Data Structures (Pat Morin), Chapter 2](https://opendatastructures.org/ods-python/2_Array_Based_Lists.html) — covers static and dynamic array implementation with Python code and complexity proofs.
-*   **Required Video:** [Arrays for Coding Interviews – NeetCode on YouTube](https://www.youtube.com/watch?v=QJNwK2uJyGs) — a 30-minute walkthrough of array data structure internals and the two-pointer/sliding window patterns with LeetCode examples.
+## 2. Doubly Linked List
+
+### Structure
+
+Each node in a doubly linked list has both a `next` and a `prev` pointer. The list maintains both `head` and `tail` pointers.
+
+```python
+class DNode:
+    def __init__(self, value):
+        self.value = value
+        self.prev = None
+        self.next = None
+
+class DoublyLinkedList:
+    def __init__(self):
+        self.head = None
+        self.tail = None
+        self.size = 0
+```
+
+### Doubly List Append and Prepend — O(1)
+
+```python
+def append(self, value):
+    node = DNode(value)
+    if not self.tail:
+        self.head = self.tail = node
+    else:
+        node.prev = self.tail
+        self.tail.next = node
+        self.tail = node
+    self.size += 1
+
+def prepend(self, value):
+    node = DNode(value)
+    if not self.head:
+        self.head = self.tail = node
+    else:
+        node.next = self.head
+        self.head.prev = node
+        self.head = node
+    self.size += 1
+```
+
+### Delete by Node Reference — O(1)
+
+This is the key advantage over a singly linked list. Given a `DNode` reference, deletion is O(1):
+
+```python
+def delete_node(self, node):
+    if node.prev:
+        node.prev.next = node.next
+    else:
+        self.head = node.next
+
+    if node.next:
+        node.next.prev = node.prev
+    else:
+        self.tail = node.prev
+
+    self.size -= 1
+```
+
+Four cases to handle: node has prev, node has next, node is head, node is tail. Always update both directions.
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will:
-*   **Implement a dynamic array class in Python** supporting `append`, `get`, `set`, and `insert` with correct O(n) resizing logic.
-*   **Solve LeetCode #26 (Remove Duplicates from Sorted Array)** using the two-pointer technique in O(n) time, O(1) space.
-*   **Solve LeetCode #643 (Maximum Average Subarray I)** using the sliding window pattern.
-*   **Measure resizing events** by printing a message each time your dynamic array doubles, then verify the amortized O(1) append claim by running 10,000 appends and plotting resize frequency.
+## 3. Complexity Summary
+
+| Operation | Singly (no tail) | Singly (with tail) | Doubly |
+|---|---|---|---|
+| Prepend | O(1) | O(1) | O(1) |
+| Append | O(n) | O(1) | O(1) |
+| Insert at position k | O(k) | O(k) | O(k) |
+| Delete by value | O(n) | O(n) | O(n) |
+| Delete by node reference | O(n)* | O(n)* | O(1) |
+| Search | O(n) | O(n) | O(n) |
+| Access by index | O(n) | O(n) | O(n) |
+| Space | O(n) | O(n) | O(n) |
+
+*Singly linked list deletion by node reference is O(n) because you must find the preceding node.
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and be able to explain each in your own words.
-- [ ] Read Chapter 2 of Open Data Structures.
-- [ ] Watch the NeetCode Arrays video.
-- [ ] Implement the dynamic array class from scratch (no using Python list internally).
-- [ ] Solve LeetCode #26 and #643.
-- [ ] Proceed to the Module 02 Quiz.
+## 4. Arrays vs Linked Lists
+
+| Feature | Array (Python list) | Linked List |
+|---|---|---|
+| Access by index | O(1) | O(n) |
+| Prepend | O(n) — shifts all | O(1) |
+| Append | O(1) amortized | O(1) with tail pointer |
+| Insert at position k | O(n) — shifts | O(k) traversal + O(1) link |
+| Delete at position k | O(n) — shifts | O(k) traversal + O(1) unlink |
+| Memory | Contiguous — cache-friendly | Non-contiguous — pointer overhead |
+| Fixed capacity? | No (Python list grows) | No |
+
+**When to choose a linked list:**
+
+- Frequent insertions/deletions at arbitrary positions
+- Need O(1) delete by node reference (doubly linked)
+- Building a queue with O(1) enqueue and dequeue
+- When cache performance is not critical
+
+**When to choose an array (Python list):**
+
+- Frequent random access by index
+- Iterating through all elements sequentially
+- Space efficiency matters (no pointer overhead)
+
+---
+
+## 5. Two-Pointer Technique
+
+The fast-slow pointer pattern solves several classic linked list problems in O(n) time and O(1) space.
+
+### Find Middle Node
+
+```python
+def find_middle(head):
+    slow = fast = head
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+    return slow
+```
+
+When `fast` reaches the end, `slow` is at the midpoint.
+
+### Detect Cycle (Floyd's Algorithm)
+
+```python
+def has_cycle(head):
+    slow = fast = head
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+        if slow is fast:
+            return True
+    return False
+```
+
+If a cycle exists, `fast` will eventually lap `slow` and they will point to the same node.
+
+### Remove Nth Node from End
+
+```python
+def remove_nth_from_end(head, n):
+    dummy = Node(0)
+    dummy.next = head
+    fast = slow = dummy
+    for _ in range(n + 1):
+        fast = fast.next
+    while fast:
+        slow = slow.next
+        fast = fast.next
+    slow.next = slow.next.next
+    return dummy.next
+```
+
+Advance `fast` by n+1 steps first; then move both until `fast` is None. `slow` is now just before the node to remove. The dummy head simplifies the edge case of removing the head.
+
+### Reverse a Linked List
+
+```python
+def reverse(head):
+    prev = None
+    current = head
+    while current:
+        next_node = current.next
+        current.next = prev
+        prev = current
+        current = next_node
+    return prev
+```
+
+Three-pointer technique: always save `current.next` before overwriting it. Returns the new head.
+
+---
+
+## 6. LRU Cache — Doubly Linked List + Hash Map
+
+The Least Recently Used (LRU) cache is a classic interview problem (LeetCode #146) that requires O(1) `get` and `put` operations.
+
+Design: a doubly linked list maintains the usage order (most recent at tail, least recent at head). A hash map provides O(1) node access.
+
+```python
+class LRUCache:
+    def __init__(self, capacity):
+        self.capacity = capacity
+        self.map = {}          # key → DNode
+        self.list = DoublyLinkedList()
+
+    def get(self, key):
+        if key not in self.map:
+            return -1
+        node = self.map[key]
+        self.list.delete_node(node)
+        self.list.append(node.value)    # move to most-recently-used end
+        self.map[key] = self.list.tail
+        return node.value[1]            # value stored as (key, val) tuple
+
+    def put(self, key, value):
+        if key in self.map:
+            self.list.delete_node(self.map[key])
+        elif self.list.size == self.capacity:
+            lru = self.list.head
+            del self.map[lru.value[0]]
+            self.list.delete_node(lru)
+        self.list.append((key, value))
+        self.map[key] = self.list.tail
+```
+
+`get` and `put` are both O(1) — hash map for lookup, doubly linked list for O(1) delete and O(1) append.
+
+---
+
+## 7. Interview Exam Tips
+
+1. **Always handle edge cases first:** empty list (`head is None`), single-node list, deleting the head or tail.
+
+2. **Save `next` before modifying `next`:** In reversal and pointer manipulation, `next_node = current.next` before `current.next = prev`.
+
+3. **Fast-slow pointer:** Use for cycle detection, finding middle, and kth-from-end problems. It is O(n) time, O(1) space — always preferred over a visited set.
+
+4. **Dummy head node:** Adding a `dummy.next = head` node eliminates special cases for deleting the head. Remove it at the end with `return dummy.next`.
+
+5. **Doubly linked list for O(1) delete:** When a problem requires deleting the current node efficiently, the answer is a doubly linked list. Singly linked deletion by node reference is O(n).
+
+6. **`tail` pointer for O(1) append:** Without a tail pointer, appending requires O(n) traversal. Maintaining a `tail` reference is almost always worth it.
+
+7. **Draw the list before coding:** For complex pointer operations (reversal, merge), drawing the before and after states prevents mistakes.
+
+8. **LRU cache = doubly linked list + hash map:** This is the canonical use of doubly linked lists in interviews. Know it cold.
+
+---
+
+## 8. Study Checklist
+
+- [ ] Watch the Module 02 video lecture by Professor Nash.
+- [ ] Implement a singly linked list from scratch: prepend, append, delete, search, to_list.
+- [ ] Add a tail pointer and confirm append is O(1).
+- [ ] Implement a doubly linked list with O(1) append, prepend, and delete_node.
+- [ ] Implement find_middle, has_cycle, reverse, and remove_nth_from_end.
+- [ ] Solve LeetCode #206 (Reverse Linked List), #141 (Linked List Cycle), #876 (Middle of Linked List).
+- [ ] Complete the Module 02 Lab.
+- [ ] Complete the Module 02 Quiz.

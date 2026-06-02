@@ -1,77 +1,162 @@
-# Quiz: Module 06 - General Management Practices - Continual Improvement
-## Course: CIS-4335_IT_Service_Management (ITIL 4 Foundation)
+# Quiz: Module 06 — General Management Practices: Continual Improvement
+
+**Course:** CIS-4335 IT Service Management — Texas Wesleyan University
+**Instructor:** Professor Nash
+**Total Questions:** 10
+**Certification Alignment:** ITIL 4 Foundation
 
 ---
 
-**Question 1**
-Which of the following correctly lists the seven steps of the ITIL 4 Continual Improvement model in the right order?
-*   A) Take action → Where are we now? → Where do we want to be? → What is the vision? → How do we get there? → Did we get there? → How do we keep the momentum going?
-*   B) What is the vision? → Where are we now? → Where do we want to be? → How do we get there? → Take action → Did we get there? → How do we keep the momentum going?
-*   C) Where are we now? → What is the vision? → How do we get there? → Take action → Where do we want to be? → Did we get there? → How do we keep the momentum going?
-*   D) What is the vision? → How do we get there? → Where do we want to be? → Where are we now? → Take action → How do we keep the momentum going? → Did we get there?
-*   **Correct Answer:** B) The model begins by establishing the vision, assessing current state, defining the target, planning the approach, executing, evaluating, and then sustaining momentum.
-*   **Distractor Analysis:**
-    *   *Why B is correct:* The seven-step model follows a deliberate sequence that begins with purpose (vision) before assessing reality (where are we now), defining targets (where do we want to be), planning (how do we get there), executing (take action), evaluating (did we get there), and embedding (momentum). This sequence ensures that all improvement work is purposeful and measurable.
-    *   *Why A is incorrect:* Beginning with "Take action" skips the essential steps of establishing vision, assessing current state, and defining targets — meaning the action has no basis or direction.
-    *   *Why C is incorrect:* This sequence places assessing the current state before establishing the vision, which means the organization would not yet know what it is assessing toward.
-    *   *Why D is incorrect:* This sequence places "How do we get there?" before defining the target state, and moves "Did we get there?" to the second-to-last position, breaking the evaluation-momentum relationship.
+## Instructions
+
+Select the single best answer for each question. Each question is worth 10 points. Review the distractor analysis after submitting to reinforce exam-ready reasoning.
 
 ---
 
-**Question 2**
-Which of the following most accurately describes the purpose of the Continual Improvement Register (CIR)?
-*   A) A formal document that records active change requests submitted to the Change Advisory Board for approval.
-*   B) A living document used to record, assess, and prioritize improvement opportunities and initiatives across the organization so that no idea is lost and efforts focus on the highest-value opportunities.
-*   C) A project plan that tracks the milestones, deliverables, and resource allocations for a single large-scale IT improvement project.
-*   D) A configuration record that documents the current baseline state of IT services and infrastructure components.
-*   **Correct Answer:** B) The CIR is a living document used to record, assess, and prioritize improvement opportunities across the organization.
-*   **Distractor Analysis:**
-    *   *Why B is correct:* The Continual Improvement Register captures improvement ideas at all stages — captured but not yet prioritized, in progress, and completed. It is reviewed regularly and spans the entire organization, ensuring improvement efforts are tracked and directed at the highest-value opportunities.
-    *   *Why A is incorrect:* That describes a Change Request log or Change Schedule, which is maintained by the Change Enablement practice — not Continual Improvement.
-    *   *Why C is incorrect:* The CIR is not a project plan for a single initiative. It tracks many improvement opportunities at various stages across the whole organization.
-    *   *Why D is incorrect:* That describes a Configuration Management Database (CMDB), which is maintained by the IT Asset Management and Service Configuration Management practices.
+## Question 1
+
+What is the primary purpose of the Continual Improvement practice in ITIL 4?
+
+* A) To resolve incidents and restore normal service operation as quickly as possible
+* B) To align the organization's practices and services with changing business needs through ongoing identification and improvement
+* C) To manage changes to IT services to minimize disruption to live services
+* D) To establish and maintain agreed service levels between the service provider and its customers
+
+Correct answer: B
+
+Distractor analysis: B is correct because ITIL 4 defines the purpose of Continual Improvement as aligning practices and services with changing business needs through ongoing identification and improvement. A is incorrect because resolving incidents is the purpose of Incident Management, not Continual Improvement. C is incorrect because managing changes to minimize disruption is the purpose of Change Enablement. D is incorrect because establishing and maintaining service levels is the purpose of Service Level Management.
 
 ---
 
-**Question 3**
-An IT organization has identified that average incident resolution time has increased by 40% over the past quarter. The service manager wants to launch a formal improvement initiative. Using the Continual Improvement model, which step should the manager complete FIRST?
-*   A) Immediately assemble a task force to take corrective action on the incident resolution process.
-*   B) Define target KPIs for incident resolution time and set a measurable goal for the next quarter.
-*   C) Establish the vision for improvement by clarifying how faster incident resolution links to the organization's strategic outcomes and customer value.
-*   D) Assess the current state by collecting detailed data on where resolution time delays are occurring.
-*   **Correct Answer:** C) The first step of the Continual Improvement model is "What is the vision?" — establishing purpose before any other activity.
-*   **Distractor Analysis:**
-    *   *Why C is correct:* Step 1 of the model — "What is the vision?" — requires the organization to establish the strategic context and purpose for the improvement before assessing current state, setting targets, or taking action. Without this, subsequent steps lack direction and may address the wrong problem.
-    *   *Why A is incorrect:* Taking action immediately (Step 5) without completing the earlier steps of vision, current state assessment, and target setting violates the model's sequence and risks wasted effort.
-    *   *Why B is incorrect:* Defining target KPIs corresponds to Step 3 ("Where do we want to be?"), which comes after establishing the vision and assessing current state.
-    *   *Why D is incorrect:* Assessing the current state corresponds to Step 2 ("Where are we now?"), which is the second step — it must follow the vision step.
+## Question 2
+
+An IT team has identified that its average incident resolution time is 5.8 hours against a target of 2 hours. They are now analyzing ticket data to understand the root causes of long resolution times. Which step of the Continual Improvement Model does this activity represent?
+
+* A) Step 1: What is the vision?
+* B) Step 2: Where are we now?
+* C) Step 3: Where do we want to be?
+* D) Step 4: How do we get there?
+
+Correct answer: B
+
+Distractor analysis: B is correct because analyzing current performance to understand the gap between actual and target represents the baseline assessment work of Step 2 — "Where are we now?" A is incorrect because Step 1 connects the improvement to strategic vision, not to performance analysis. C is incorrect because Step 3 defines the target, which has already been established (2 hours); the scenario is measuring current state, not setting a new target. D is incorrect because Step 4 is planning the improvement approach, which comes after understanding the current state.
 
 ---
 
-**Question 4**
-A service manager is evaluating whether an improvement initiative has succeeded. The initiative aimed to reduce the mean time to restore service (MTRS) from 4 hours to 2 hours over a 6-month period. The latest data shows MTRS is now averaging 2.1 hours. Which step of the Continual Improvement model is the manager currently performing, and what should be the next action?
-*   A) Step 5 (Take action) — the manager should continue executing the improvement plan.
-*   B) Step 6 (Did we get there?) — the manager should determine that the target was substantially met and proceed to Step 7 to sustain the improvement.
-*   C) Step 3 (Where do we want to be?) — the manager should redefine the KPI target to account for the near-miss.
-*   D) Step 2 (Where are we now?) — the manager should collect more baseline data before evaluating the result.
-*   **Correct Answer:** B) Evaluating whether the outcome matches the target is Step 6 ("Did we get there?") — the result nearly meets the target, so the next step is sustaining momentum (Step 7).
-*   **Distractor Analysis:**
-    *   *Why B is correct:* Step 6 of the model requires comparing actual outcomes against the targets set in Step 3. MTRS of 2.1 hours against a 2-hour target represents a substantially successful result. The appropriate next action is Step 7 — embedding the improvement and maintaining momentum — rather than restarting the cycle.
-    *   *Why A is incorrect:* Step 5 (Take action) is the execution phase. That phase is already complete; the manager is now evaluating the outcome, not executing the plan.
-    *   *Why C is incorrect:* Step 3 (Where do we want to be?) is completed early in the cycle to set targets. Returning to it at this stage would restart the cycle unnecessarily when the result substantially meets the target.
-    *   *Why D is incorrect:* Step 2 (Where are we now?) is the baseline assessment performed at the beginning of the improvement cycle, not at the evaluation stage.
+## Question 3
+
+Which step of the Continual Improvement Model directly applies the Start Where You Are Guiding Principle?
+
+* A) Step 1: What is the vision?
+* B) Step 2: Where are we now?
+* C) Step 5: Take action
+* D) Step 7: How do we keep the momentum going?
+
+Correct answer: B
+
+Distractor analysis: B is correct because Step 2 — "Where are we now?" — is a baseline assessment of the current state, which is exactly what the Start Where You Are principle directs: assess existing capabilities and performance before designing improvements. A is incorrect because Step 1 connects to strategic vision, not to current state assessment. C is incorrect because Step 5 is implementation, not assessment. D is incorrect because Step 7 focuses on sustaining improvements, not initial baseline assessment.
 
 ---
 
-**Question 5**
-Which of the following statements about Continual Improvement in ITIL 4 is CORRECT?
-*   A) Continual Improvement is solely the responsibility of a dedicated improvement team and should not be delegated to operational staff.
-*   B) The Continual Improvement model applies only to technology improvements and does not cover people or process changes.
-*   C) Continual Improvement is both an SVS component that is embedded throughout the entire Service Value System and a standalone general management practice with its own activities and tools.
-*   D) The Continual Improvement Register is reviewed once per year during the annual IT planning cycle to prioritize the following year's improvement projects.
-*   **Correct Answer:** C) Continual Improvement is both an SVS component embedded across the entire SVS and a standalone general management practice.
-*   **Distractor Analysis:**
-    *   *Why C is correct:* ITIL 4 positions Continual Improvement in two complementary ways: as one of the five SVS components (meaning improvement is embedded in all activities across the SVS), and as a specific general management practice (providing a structured set of activities, tools like the CIR, and the seven-step model to manage improvement work).
-    *   *Why A is incorrect:* ITIL 4 explicitly states that all staff contribute to Continual Improvement. While a dedicated practice team may coordinate efforts, limiting CI to a single team contradicts a core ITIL 4 principle.
-    *   *Why B is incorrect:* The Continual Improvement model applies to all four dimensions of service management — Organizations and People, Information and Technology, Partners and Suppliers, and Value Streams and Processes — not technology alone.
-    *   *Why D is incorrect:* The Continual Improvement Register is a living document reviewed regularly throughout the year, not limited to an annual planning cycle. Treating it as an annual artifact would cause the organization to miss timely improvement opportunities.
+## Question 4
+
+An IT director implements a new process and measures its performance three months later, finding only partial improvement. She decides to standardize what worked, log the remaining gap in the CIR, and begin the improvement cycle again. Which step of the Continual Improvement Model does her decision represent?
+
+* A) Step 4: How do we get there?
+* B) Step 5: Take action
+* C) Step 6: Did we get there?
+* D) Step 7: How do we keep the momentum going?
+
+Correct answer: D
+
+Distractor analysis: D is correct because Step 7 — "How do we keep the momentum going?" — explicitly covers standardizing successful changes, documenting lessons learned, logging remaining gaps in the CIR, and initiating the next improvement cycle. A is incorrect because Step 4 is the planning step that occurs before implementation, not after measuring results. B is incorrect because Step 5 is implementation, not the post-measurement decision. C is incorrect because Step 6 is the measurement itself — measuring results and determining whether the target was met; the decision about what to do with partial results is Step 7.
+
+---
+
+## Question 5
+
+What is the Continual Improvement Register (CIR)?
+
+* A) A real-time dashboard showing current service performance metrics
+* B) A documented log used to record, prioritize, and track all improvement opportunities and initiatives
+* C) A formal contract between the service provider and customer defining improvement targets
+* D) A report produced quarterly by IT leadership summarizing completed improvement projects
+
+Correct answer: B
+
+Distractor analysis: B is correct because ITIL 4 defines the CIR as a documented log used to record, prioritize, and track improvement opportunities and initiatives — it is a managed backlog for improvement work. A is incorrect because a performance dashboard is a monitoring and reporting tool, not the CIR; the CIR captures improvement ideas and their status, not real-time metrics. C is incorrect because a formal contract with improvement targets describes a service level agreement, not the CIR. D is incorrect because the CIR is a continuous, ongoing log, not a quarterly leadership report.
+
+---
+
+## Question 6
+
+An IT department has a CIR with 120 items. The IT director reviews the list and notes that 45 items have been on the register for more than six months with no status change. What does this situation indicate, and what should the IT director do?
+
+* A) This is normal — long-standing CIR items demonstrate that the team is thorough in documenting opportunities.
+* B) The CIR is being used as a wish list rather than a managed backlog; the director should schedule a triage review to evaluate, prioritize, and close or defer stale items.
+* C) The CIR should be deleted and rebuilt from scratch to eliminate the accumulated backlog.
+* D) The items should be automatically escalated to the governance board, which is solely responsible for CIR prioritization.
+
+Correct answer: B
+
+Distractor analysis: B is correct because 45 items older than six months with no status change indicates the CIR is not being actively managed — ITIL 4 emphasizes that the CIR must be regularly reviewed and prioritized, not allowed to become a static archive. A is incorrect because stale items in the CIR indicate poor management, not thoroughness. C is incorrect because discarding a backlog without analysis violates both Start Where You Are and Focus on Value — some of the older items may represent significant improvement opportunities. D is incorrect because ITIL 4 does not assign CIR prioritization exclusively to governance; operational leadership is responsible for ongoing CIR management.
+
+---
+
+## Question 7
+
+Which of the following best distinguishes the Continual Improvement practice from the Improve SVC activity?
+
+* A) The Improve SVC activity is used during service incidents; the Continual Improvement practice is used only during strategic planning.
+* B) The Continual Improvement practice provides methodology and tools; the Improve SVC activity integrates improvement into the SVC's operational flow.
+* C) They are identical; the two terms are used interchangeably in ITIL 4.
+* D) The Continual Improvement practice applies only to services; the Improve SVC activity applies only to practices.
+
+Correct answer: B
+
+Distractor analysis: B is correct because ITIL 4 defines them as distinct but complementary — the practice provides the seven-step model, CIR, roles, and tools (the methodology), while the SVC activity routes improvement data and guidance across all six SVC activities (the operational integration). A is incorrect because neither is limited to incidents or strategic planning specifically. C is incorrect because they are explicitly distinguished in ITIL 4 as different concepts. D is incorrect because both apply broadly — neither is limited to only services or only practices.
+
+---
+
+## Question 8
+
+An organization is implementing an improvement to its service desk processes. Rather than launching all changes at once, the team implements an improved knowledge base first, measures the effect for four weeks, then introduces a new diagnostic script, measures again, and finally rolls out expanded agent authorizations. Which Guiding Principle is this approach most directly reflecting?
+
+* A) Focus on Value
+* B) Start Where You Are
+* C) Progress Iteratively with Feedback
+* D) Keep It Simple and Practical
+
+Correct answer: C
+
+Distractor analysis: C is correct because implementing changes in stages, measuring results after each stage, and using those results to inform the next stage is Progress Iteratively with Feedback — the principle specifically recommends organizing work into manageable iterations with feedback checkpoints. A is incorrect because Focus on Value is about aligning actions to stakeholder outcomes, not specifically about iterative delivery. B is incorrect because Start Where You Are is about assessing the current state before beginning, not about how subsequent changes are implemented. D is incorrect because Keep It Simple and Practical is about eliminating unnecessary complexity, not about iterative delivery.
+
+---
+
+## Question 9
+
+Which of the following statements about the scope of the Continual Improvement practice is correct?
+
+* A) Continual Improvement applies only to IT services, not to management practices.
+* B) Continual Improvement applies only to practices that are underperforming against defined targets.
+* C) Continual Improvement applies to all elements involved in service management, including services, practices, tools, skills, and governance.
+* D) Continual Improvement is managed exclusively by the IT service management office and does not involve front-line staff.
+
+Correct answer: C
+
+Distractor analysis: C is correct because ITIL 4 explicitly defines the scope of Continual Improvement as all elements involved in the efficient and effective management of products and services — including services, practices, tools, skills, and governance structures. A is incorrect because practices themselves are explicitly within the scope of continual improvement. B is incorrect because continual improvement applies proactively to all elements, not only to those that are already underperforming. D is incorrect because ITIL 4 states that improvement is everyone's responsibility and that any staff member can contribute improvement ideas to the CIR.
+
+---
+
+## Question 10
+
+An IT organization has no formal process for collecting improvement ideas from staff. A review reveals that the last significant service improvement was proposed three years ago by a contractor who has since left. Staff say they have ideas but do not know how to submit them. Which step of the Continual Improvement Model and which ITIL 4 element is most directly absent in this organization?
+
+* A) Step 3 (Where do we want to be?) and the Service Value Chain
+* B) Step 5 (Take action) and the Guiding Principles
+* C) Step 4 (How do we get there?) and the four dimensions
+* D) Step 1 (What is the vision?) and the Continual Improvement Register
+
+Correct answer: D
+
+Distractor analysis: D is correct because the absence of a formal idea submission channel means there is no functioning CIR — the tool ITIL 4 designates for capturing and tracking improvement opportunities from all staff levels. Additionally, the lack of a compelling vision for improvement (Step 1) means staff see no framework for why their ideas matter. A is incorrect because the SVC is not the missing element; the CIR is. B is incorrect because Step 5 is about implementation; the failure here is at the idea collection stage (Step 1 and CIR). C is incorrect because Step 4 is about planning; the failure is earlier in the improvement cycle.

@@ -1,68 +1,196 @@
 # Reading Guide: Module 03 – Scrum Framework: Roles, Events, Artifacts
 
-## Course: CIS-3350_Software_Engineering_Agile (Professional Scrum Master (PSM I))
+**Course:** CIS-3350 Software Engineering and Agile
+**Certification Alignment:** PSM I (Professional Scrum Master I) – Scrum.org
+**Instructor:** Professor Nash | Texas Wesleyan University
 
 ---
 
-### Introduction
+## Introduction
 
-Welcome to **Module 03 – Scrum Framework: Roles, Events, Artifacts**! This is the highest-density module for PSM I exam preparation. The Scrum Guide defines exactly three accountabilities, five events, three artifacts, and three commitments — and the exam tests precise knowledge of all of them, including their timeboxes, purposes, and who is responsible for each.
+This module covers the complete Scrum framework as defined in the 2020 Scrum Guide. The Scrum framework is the primary subject matter of the PSM I certification exam — every question on the exam tests your understanding of how Scrum works and why it is designed the way it is. This reading guide is your reference document for the framework's structure, language, and rationale.
 
-This module maps directly to the majority of PSM I scenario questions. Students who struggle on the exam almost always do so because they confuse the roles, get event timeboxes wrong, or do not know which team member owns each artifact. Treat this module as the backbone of your certification study.
-
----
-
-### 1. High-Yield Glossary
-
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-* **Scrum Team:** The fundamental unit of Scrum, consisting of exactly one Product Owner, one Scrum Master, and a group of Developers (typically 10 or fewer people total). The Scrum Team is self-managing — it decides internally how to do the work — and cross-functional — it has all skills needed to deliver a product increment each Sprint.
-
-* **Product Owner:** The single Scrum Team member accountable for maximizing the value of the product and for managing the Product Backlog. The Product Owner is the sole person responsible for ordering backlog items and communicating the Product Goal. They represent stakeholder needs but are not a committee — one person holds this accountability.
-
-* **Scrum Master:** The Scrum Team member accountable for establishing Scrum as defined in the Scrum Guide, coaching the team and organization on Scrum theory and practice, and removing impediments to the Developers' progress. The Scrum Master serves the Scrum Team, the Product Owner, and the broader organization — but does not manage the Developers or assign tasks.
-
-* **Developers:** The members of the Scrum Team who are committed to creating any aspect of a usable Increment each Sprint. Developers self-organize their work, create and own the Sprint Backlog, and are accountable for adhering to the Definition of Done.
-
-* **Sprint:** A fixed-length event (one month or less) that serves as the container for all other Scrum events. A new Sprint begins immediately after the previous one concludes. During a Sprint, no changes may be made that would endanger the Sprint Goal, quality standards do not decrease, and the Product Backlog is refined as needed.
-
-* **Scrum artifacts and their commitments:** Product Backlog (commitment: Product Goal), Sprint Backlog (commitment: Sprint Goal), Increment (commitment: Definition of Done). Each commitment gives the artifact measurable purpose and a standard for evaluation.
+The 2020 Scrum Guide is the authoritative source. It is free at scrum.org and is approximately 13 pages. You should read it in full before taking the PSM I exam. This guide supplements — but does not replace — that reading.
 
 ---
 
-### 2. Certification Exam Tips
+## 1. What Scrum Is (and Is Not)
 
-* **PSM I Focus — Timeboxes:** Memorize all five event timeboxes for a one-month Sprint: Sprint Planning (8 hrs), Daily Scrum (15 min), Sprint Review (4 hrs), Sprint Retrospective (3 hrs). For shorter Sprints, timeboxes are proportionally shorter. These appear on nearly every PSM I attempt.
-* **Scenario Trap — Scrum Master authority:** A frequent trap describes a Scrum Master "assigning tasks to Developers" or "approving completed work." Both are wrong. Developers self-assign work from the Sprint Backlog; the Product Owner owns acceptance of the product, not the Scrum Master.
-* **Scenario Trap — Product Owner as committee:** The Scrum Guide is explicit: the Product Owner is one person, not a committee. Questions often describe a "Product Owner committee" and ask if this is valid Scrum — it is not.
-* **Who owns the Sprint Backlog?** Developers own and manage the Sprint Backlog. The Product Owner and Scrum Master do not change it unilaterally during the Sprint.
-* **Study Resource:** Read the "Scrum Team," "Scrum Events," and "Scrum Artifacts" sections of [The Scrum Guide (2020)](https://scrumguides.org/) — this is the authoritative source and the only document PSM I is based on.
+The Scrum Guide defines Scrum as a lightweight framework that helps people, teams, and organizations generate value through adaptive solutions for complex problems. Key terms:
 
----
+- Lightweight: Scrum is intentionally minimal. It prescribes exactly three accountabilities, five events, three artifacts, and a small number of rules. Everything else is left to the team.
+- Framework: Scrum is not a methodology (a complete, prescriptive process). It is a framework within which teams use various techniques and practices. The Scrum Guide does not tell you how to write code, how to test, or how to design architecture.
+- Adaptive: Scrum is built for environments where the work cannot be fully planned upfront. It assumes the future is uncertain and creates mechanisms for continuous adjustment.
+- Complex problems: Scrum is designed for the complex domain — where cause and effect are only understood in retrospect and empirical process control is required.
 
-### Required Readings & Videos
-
-To prepare for this module's topics, you must complete the following readings and videos:
-
-* **Required Reading:** [The Scrum Guide (2020)](https://scrumguides.org/) — read the complete guide this week. Focus on the three accountabilities, five events with timeboxes, and three artifacts with their commitments.
-* **Required Video:** [Scrum in under 5 minutes – Scrum.org](https://www.youtube.com/watch?v=2Vt7Ik8Ublw) — a concise animated overview of the complete Scrum framework used as an official Scrum.org educational resource. (~5 min)
+What Scrum is not: Scrum is not a project management methodology, not a software development methodology, and not a set of engineering practices. It is a team operating framework.
 
 ---
 
-### Lab & Command Integration
+## 2. The Scrum Team
 
-In this week's hands-on lab, you will:
+The Scrum Team consists of one Product Owner, one Scrum Master, and Developers.
 
-* **Build a Scrum Team accountability map:** Create a visual diagram showing each accountability (Product Owner, Scrum Master, Developers), the artifacts they own, the events they are responsible for facilitating or attending, and their key responsibilities.
-* **Match events to timeboxes and purposes:** Complete a table mapping each of the five Scrum events to its timebox (for a one-month Sprint), its purpose as stated in the Scrum Guide, and who is primarily responsible for facilitating it.
-* **Identify artifact-commitment pairs:** For each artifact (Product Backlog, Sprint Backlog, Increment), state its associated commitment and explain in one sentence why the commitment matters.
+Key characteristics:
+
+- No sub-teams or hierarchies within a Scrum Team
+- Cross-functional: collectively possesses all skills needed to create value each Sprint
+- Self-managing: the team decides internally who does what, when, and how
+- Optimal size: typically 10 or fewer people
+- Accountable to stakeholders and the organization for creating a valuable, useful Increment each Sprint
 
 ---
 
-### 3. Study Checklist
+## 3. The Three Accountabilities — Reference Table
 
-* [ ] Read the complete [Scrum Guide (2020)](https://scrumguides.org/) from start to finish.
-* [ ] Memorize all five event timeboxes for a one-month Sprint.
-* [ ] Be able to state which team member owns each artifact without referring to notes.
-* [ ] Watch the required video and verify your mental model of the framework matches the Scrum Guide.
-* [ ] Proceed to the weekly hands-on lab activity.
+| Accountability | Primary Responsibility | Owns | Does NOT Do |
+|---|---|---|---|
+| Product Owner | Maximize product value | Product Backlog, Product Goal | Assign tasks to Developers, manage day-to-day work |
+| Scrum Master | Team effectiveness, Scrum adoption | Process coaching, impediment removal | Assign work, report to management on individual performance, make product decisions |
+| Developers | Create the Increment | Sprint Backlog, Definition of Done adherence | Receive work assignments from Scrum Master or managers |
+
+### Product Owner Deep Dive
+
+The Product Owner is one person, not a committee. Key accountabilities:
+
+- Developing and explicitly communicating the Product Goal
+- Creating and clearly communicating Product Backlog items
+- Ordering Product Backlog items
+- Ensuring the Product Backlog is transparent, visible, and understood
+
+The Product Owner may delegate these activities to others, but they remain accountable for the results. If a stakeholder wants to change the Product Backlog, they must convince the Product Owner.
+
+### Scrum Master Deep Dive
+
+The Scrum Master serves the Scrum Team by coaching team members in self-management and cross-functionality, helping focus on creating high-value Increments, removing impediments to progress, and ensuring all Scrum events take place and are positive, productive, and kept within the timebox.
+
+The Scrum Master serves the Product Owner by helping find techniques for effective Product Goal definition and Product Backlog management, helping establish empirical product planning, and facilitating stakeholder collaboration.
+
+The Scrum Master serves the organization by leading, training, and coaching in Scrum adoption, planning and advising Scrum implementations, and helping employees and stakeholders understand and enact Scrum.
+
+### Developers Deep Dive
+
+The Developers create a plan for the Sprint (Sprint Backlog), instill quality by adhering to a Definition of Done, adapt the plan each day toward the Sprint Goal, and hold each other accountable as professionals.
+
+---
+
+## 4. The Five Scrum Events — Sprint Timebox Table
+
+| Event | Purpose | Timebox (1-month Sprint) | Who Attends |
+|---|---|---|---|
+| Sprint | Container for all other events; produces Increment | 1 week to 1 month | Entire Scrum Team |
+| Sprint Planning | Define Sprint Goal, select backlog items, create plan | 8 hours maximum | Entire Scrum Team |
+| Daily Scrum | Inspect progress toward Sprint Goal, adapt Sprint Backlog | 15 minutes | Developers (others may observe) |
+| Sprint Review | Inspect Increment, gather feedback, update Product Backlog | 4 hours maximum | Scrum Team and stakeholders |
+| Sprint Retrospective | Inspect team process, create improvement plan | 3 hours maximum | Entire Scrum Team |
+
+### Sprint
+
+The Sprint is the heartbeat of Scrum. Key rules:
+
+- Fixed length: 1 week to 1 month; consistent throughout product development
+- No changes are made that would endanger the Sprint Goal
+- Quality does not decrease
+- The Product Backlog is refined as needed
+- Scope may be clarified and renegotiated with the Product Owner as more is learned
+- Only the Product Owner can cancel a Sprint, and only if the Sprint Goal becomes obsolete
+
+### Sprint Planning
+
+Sprint Planning creates the Sprint Backlog and Sprint Goal by answering three questions:
+
+1. Why is this Sprint valuable? (Product Owner proposes, team collaborates to define Sprint Goal)
+2. What can be Done this Sprint? (Developers select items from Product Backlog)
+3. How will the chosen work get done? (Developers plan the work, decomposing items into tasks of one day or less)
+
+### Daily Scrum
+
+The Daily Scrum is 15 minutes for Developers. It is held at the same time and place each working day. Its purpose is to inspect progress toward the Sprint Goal and adapt the Sprint Backlog. The Scrum Guide no longer mandates the three-question format — the structure is up to the team, as long as it focuses on the Sprint Goal.
+
+### Sprint Review
+
+The Sprint Review is a working session — not a presentation or status report. The Scrum Team demonstrates the Increment and gathers stakeholder feedback. The Product Backlog may be adjusted. The output is an updated Product Backlog.
+
+### Sprint Retrospective
+
+The Sprint Retrospective inspects: individuals, interactions, processes, tools, and the Definition of Done. It produces a plan of at least one high-priority process improvement for the next Sprint. The Scrum Guide says the most impactful improvements may be added to the Sprint Backlog for the next Sprint.
+
+---
+
+## 5. The Three Artifacts and Their Commitments
+
+| Artifact | Definition | Commitment |
+|---|---|---|
+| Product Backlog | Emergent, ordered list of everything needed in the product | Product Goal |
+| Sprint Backlog | Sprint Goal + selected PBIs + plan for the Sprint | Sprint Goal |
+| Increment | Concrete stepping stone toward Product Goal; must be Done | Definition of Done |
+
+### Product Backlog
+
+The Product Backlog is never complete. It is dynamic — as the product and market evolve, the Product Backlog evolves. Product Backlog items have the following attributes: description, order, size (estimate), and value. The Product Owner is responsible for the Product Backlog, but Developers add size estimates.
+
+Product Backlog Refinement is the act of breaking down and further defining Product Backlog items into smaller, more precise items. This is an ongoing activity and typically consumes no more than 10% of the Developers' capacity.
+
+### Sprint Backlog
+
+The Sprint Backlog belongs to the Developers. It is a real-time picture of the work planned for the Sprint. It is updated throughout the Sprint as the Developers learn more. The Sprint Goal is the single objective for the Sprint — it creates coherence and allows flexibility in exactly what work is done.
+
+### Increment
+
+An Increment is a concrete stepping stone toward the Product Goal. Each Increment is additive to all prior Increments. Multiple Increments may be created within a Sprint. An Increment must be usable before it can be released — the Product Owner decides whether to release it.
+
+### Definition of Done
+
+The Definition of Done (DoD) is a formal description of the quality state an Increment must reach. If a Product Backlog item does not meet the DoD, it cannot be included in the Sprint Review as a Done Increment. The DoD creates transparency and shared understanding of what "done" means.
+
+If the organization has a standard DoD, the Scrum Team must comply with it as a minimum. The team may adopt a stricter DoD.
+
+---
+
+## 6. Scrum Values
+
+The 2020 Scrum Guide emphasizes five Scrum values that enable successful Scrum practice:
+
+- Commitment: Scrum Team members personally commit to achieving their goals and supporting each other
+- Focus: Their primary focus is the work of the Sprint to make the best possible progress toward these goals
+- Openness: The Scrum Team and stakeholders are open about the work and challenges
+- Respect: Scrum Team members respect each other as capable, independent people
+- Courage: Scrum Team members have the courage to do the right thing and work on tough problems
+
+These values provide the foundation of trust that makes empirical process control possible.
+
+---
+
+## 7. PSM I Exam Tips
+
+Tip 1: The 2020 Scrum Guide uses "accountabilities" not "roles." Using "roles" in an exam answer is not wrong, but knowing the Guide's exact language demonstrates deeper familiarity.
+
+Tip 2: Know the exact timeboxes: Sprint Planning 8h, Daily Scrum 15 min, Sprint Review 4h, Sprint Retrospective 3h — all for one-month Sprints. Shorter Sprints have proportionally shorter events.
+
+Tip 3: The Daily Scrum is for Developers. The Scrum Master does not run it; they ensure it happens. The Product Owner does not attend unless they are also serving as a Developer (which the Scrum Guide permits in small teams).
+
+Tip 4: Only the Product Owner can cancel a Sprint. Not the Scrum Master. Not the Developers. Not a manager. Only the Product Owner.
+
+Tip 5: The Sprint Review is not a status meeting or a demo for approval. It is an inspection and adaptation event. The output is an updated Product Backlog, not approval to ship.
+
+Tip 6: The Sprint Retrospective focuses on the team's process, not on the product. The Sprint Review focuses on the product Increment. These two events are often confused on the exam.
+
+Tip 7: The Definition of Done is not the same as acceptance criteria. Acceptance criteria are specific to individual Product Backlog items. The Definition of Done applies to every Increment.
+
+Tip 8: Scrum does not prescribe engineering practices (unit testing, CI/CD, pair programming). These may be included in the Definition of Done, but Scrum itself does not mandate them.
+
+---
+
+## 8. Study Checklist
+
+- [ ] Draw the complete Scrum framework diagram from memory (accountabilities, events, artifacts, timeboxes, commitments)
+- [ ] State the responsibility of each accountability in two sentences
+- [ ] Recite the timebox for all five events (for a one-month Sprint)
+- [ ] Explain the commitment associated with each of the three artifacts
+- [ ] Explain the difference between the Sprint Review and the Sprint Retrospective
+- [ ] Explain what the Definition of Done is, and what happens to a PBI that does not meet it
+- [ ] State the five Scrum values from memory
+- [ ] Read the complete 2020 Scrum Guide at scrum.org before taking the Module 03 quiz
+- [ ] Complete the Module 03 Lab (Scrum Framework Diagram fill-in exercise)
+
+---

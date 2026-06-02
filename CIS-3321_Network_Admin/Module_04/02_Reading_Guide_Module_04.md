@@ -1,60 +1,227 @@
-# Reading Guide: Module 04 - IPv6 Addressing and Transition Technologies
-## Course: CIS-3321 – Network Administration (CompTIA Network+ N10-009)
+# Reading Guide: Module 04 – IPv6 Addressing and Transition Technologies
+## CIS-3321 Network Administration | CompTIA Network+ (N10-008)
+## Texas Wesleyan University | Professor Nash
 
 ---
 
 ### Introduction
-Welcome to **Module 04 – IPv6 Addressing and Transition Technologies**! IPv6 is a growing presence on the CompTIA Network+ N10-009 exam, appearing in both conceptual questions and scenario-based troubleshooting. You must understand IPv6 address types, notation rules, how addresses are auto-configured, and the transition technologies that allow IPv6 and IPv4 to coexist. The exam tests IPv6 with the same rigor as IPv4.
+
+Module 04 covers IPv6 — the protocol replacing IPv4 as the foundation of the modern internet. IPv6 appears frequently on the CompTIA Network+ exam, with questions testing address type identification by prefix, abbreviation rules, SLAAC autoconfiguration, EUI-64 interface ID derivation, and transition technology selection. This module requires memorization of specific prefixes, understanding of the EUI-64 calculation process, and the ability to compare IPv6 mechanisms with their IPv4 equivalents.
 
 ---
 
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
+### 1. Core Vocabulary
 
-*   **IPv6 Address**: A 128-bit address written as eight groups of four hexadecimal digits separated by colons (e.g., 2001:0db8:85a3:0000:0000:8a2e:0370:7334). Provides approximately 3.4 × 10^38 unique addresses, solving IPv4 exhaustion.
-*   **IPv6 Abbreviation Rules**: Two rules simplify notation. (1) Leading zeros in any group may be omitted (0db8 → db8). (2) One contiguous sequence of all-zero groups may be replaced with :: (double colon), but only once per address.
-*   **Global Unicast Address**: IPv6's equivalent of a public routable IPv4 address. Begins with the prefix **2000::/3** (addresses starting with 2 or 3). Globally unique and routable on the internet.
-*   **Link-Local Address**: Automatically generated on every IPv6-enabled interface using the prefix **fe80::/10**. Used only for communication on the local network segment — not routable. Equivalent to APIPA in IPv4. Generated using EUI-64 or randomly from the MAC address.
-*   **Loopback Address**: **::1/128** — the IPv6 equivalent of IPv4's 127.0.0.1. Used to test the local IP stack without sending traffic to the network.
-*   **Unique Local Address (ULA)**: Prefix **fc00::/7** (typically fd00::/8 in practice). IPv6's equivalent of RFC 1918 private addresses — not routable on the public internet. Used for internal networks.
-*   **Multicast Address**: Prefix **ff00::/8**. Replaces IPv4 broadcast — packets are delivered to all members of a multicast group rather than broadcast to all hosts. IPv6 has no broadcast.
-*   **Anycast Address**: An address assigned to multiple interfaces; packets are delivered to the nearest interface holding that address (routing-metric based). Used for load distribution and redundancy.
-*   **EUI-64**: A method for auto-generating the 64-bit host portion of an IPv6 address from a 48-bit MAC address. The MAC is split in half, FFFE is inserted in the middle, and the seventh bit (Universal/Local bit) is flipped.
-*   **SLAAC (Stateless Address Autoconfiguration)**: IPv6 mechanism allowing a host to automatically configure its own IP address using the network prefix advertised by a router (via Router Advertisement messages) combined with its EUI-64 host ID — no DHCP server required.
-*   **DHCPv6**: Stateful or stateless DHCPv6 can be used to assign IPv6 addresses and provide configuration options (like DNS) to hosts. Stateful DHCPv6 tracks address assignments; stateless DHCPv6 only provides options like DNS while SLAAC handles the address.
-*   **Dual Stack**: A transition technology where a network device runs both IPv4 and IPv6 simultaneously on the same interface. The device can communicate natively using either protocol. The preferred transition method.
-*   **Tunneling (6to4, Teredo, ISATAP)**: Techniques that encapsulate IPv6 packets inside IPv4 packets to traverse IPv4-only infrastructure. 6to4 uses the prefix 2002::/16; Teredo (Windows) uses 2001::/32; ISATAP uses link-local addresses over IPv4 tunnels.
-*   **NAT64**: Translates between IPv6 and IPv4 addresses, allowing IPv6-only clients to communicate with IPv4-only servers. Used at the network border when full dual-stack is not feasible.
-*   **NDP (Neighbor Discovery Protocol)**: IPv6 replacement for ARP. Uses ICMPv6 messages to discover the link-layer addresses of neighboring devices, detect duplicate addresses (DAD — Duplicate Address Detection), and find default routers.
+**IPv6** — A 128-bit network layer addressing protocol designed to replace IPv4. Provides approximately 3.4 × 10^38 unique addresses. Written as eight groups of four hexadecimal digits separated by colons.
+
+**Hexadecimal** — Base-16 numbering using digits 0–9 and letters A–F. Each hex digit represents 4 binary bits.
+
+**Global Unicast Address** — IPv6 public routable address. Prefix: 2000::/3. All addresses starting with hex 2 or 3. Globally unique and routable on the internet.
+
+**Link-Local Address** — Auto-generated on every IPv6-enabled interface. Prefix: fe80::/10. Used only for local segment communication. Not routed beyond the local link.
+
+**Loopback Address** — ::1/128. IPv6 equivalent of 127.0.0.1. Tests local IP stack.
+
+**Unique Local Address (ULA)** — fc00::/7, implemented as fd00::/8. IPv6 equivalent of RFC 1918 private addresses. Not routed on the public internet.
+
+**Multicast Address** — ff00::/8. Delivers packets to all members of a multicast group. Replaces IPv4 broadcast (IPv6 has no broadcast).
+
+**Anycast Address** — An address assigned to multiple interfaces. Packet is delivered to the nearest interface holding that address. Drawn from unicast address space.
+
+**EUI-64** — Process for deriving a 64-bit interface identifier from a 48-bit MAC address. Steps: split MAC in half, insert FF:FE in the middle, flip the seventh (Universal/Local) bit.
+
+**SLAAC (Stateless Address Autoconfiguration)** — IPv6 mechanism allowing hosts to automatically configure a global unicast address using the prefix advertised in Router Advertisement messages plus their EUI-64 interface ID. No DHCP server required.
+
+**Stateful DHCPv6** — DHCPv6 server assigns specific IPv6 addresses to clients and maintains address-assignment records. Triggered by the "M flag" in Router Advertisements.
+
+**Stateless DHCPv6** — Provides configuration options (DNS server, domain name) without assigning addresses — SLAAC handles addressing. Triggered by the "O flag" in Router Advertisements.
+
+**NDP (Neighbor Discovery Protocol)** — ICMPv6-based protocol replacing IPv4 ARP. Functions: address resolution (Neighbor Solicitation/Advertisement), router discovery (Router Solicitation/Advertisement), and Duplicate Address Detection (DAD).
+
+**DAD (Duplicate Address Detection)** — NDP process where a host sends a Neighbor Solicitation before using an address to verify no other host on the segment is already using that address.
+
+**Dual Stack** — Transition technology where a device runs both IPv4 and IPv6 simultaneously. Can communicate natively using either protocol. Preferred transition approach.
+
+**6to4 Tunneling** — Encapsulates IPv6 packets inside IPv4 packets to traverse IPv4-only infrastructure. Uses prefix 2002::/16.
+
+**Teredo** — Tunneling mechanism that carries IPv6 over IPv4 UDP through NAT devices. Uses prefix 2001::/32. A last-resort tunneling option for hosts behind NAT.
+
+**ISATAP** — Intra-Site Automatic Tunnel Addressing Protocol. IPv6-over-IPv4 tunneling for internal organizational networks.
+
+**NAT64** — Translates between IPv6 and IPv4 at a border device, allowing IPv6-only clients to reach IPv4-only servers.
+
+**ICMPv6** — Internet Control Message Protocol for IPv6. Used for NDP, error reporting, and path MTU discovery. Not the same as ICMPv4 despite the similar name.
+
+**Router Advertisement (RA)** — ICMPv6 Type 134 message sent by routers. Contains the network prefix for SLAAC, M and O flags for DHCPv6, and default router information.
+
+**Router Solicitation (RS)** — ICMPv6 Type 133 message sent by a host requesting an RA immediately rather than waiting for the periodic interval.
 
 ---
 
-### 2. Certification Exam Tips
-*   **Domain mapping (N10-009):** IPv6 falls under **Domain 1.0 – Networking Concepts (23%)**. Know address types by prefix — the exam gives you an address and asks what type it is.
-*   **Address type quick reference**: fe80:: = Link-Local; ::1 = Loopback; ff00:: = Multicast; 2001::/2xxx: = Global Unicast; fc00::/fd00:: = Unique Local. Memorize these prefixes cold.
-*   **IPv6 has no broadcast**: The exam will sometimes present "broadcast" as an IPv6 option — it does not exist. IPv6 uses multicast instead. All-nodes multicast is ff02::1; all-routers multicast is ff02::2.
-*   **NDP replaces ARP**: On the exam, any scenario asking about IPv6 address resolution on a local segment refers to NDP (ICMPv6), not ARP. ARP does not exist in IPv6.
-*   **Dual stack is the preferred transition answer**: When the exam asks the BEST transition method for a network supporting both IPv4 and IPv6 clients, the answer is almost always dual stack unless the scenario specifically describes a purely IPv4 or IPv6 constraint.
-*   **Study Resource:** Professor Messer's free [CompTIA Network+ N10-009 Course](https://www.professormesser.com/network-plus/n10-009/n10-009-video/n10-009-training-course/) has a dedicated IPv6 module covering all address types and transition technologies tested on the exam.
+### 2. IPv6 Address Type Reference Table
+
+Memorize the prefix for every row. This table is directly tested on the exam.
+
+| Address Type      | Prefix        | Scope         | IPv4 Equivalent        | Notes                                     |
+|-------------------|---------------|---------------|------------------------|-------------------------------------------|
+| Global Unicast    | 2000::/3      | Global internet | Public routable IPv4  | Starts with 2 or 3; assigned by ISPs      |
+| Link-Local        | fe80::/10     | Local segment | APIPA 169.254.x.x      | Auto-generated; required for IPv6; not routed |
+| Loopback          | ::1/128       | Local host    | 127.0.0.1              | Tests local IP stack only                 |
+| Unique Local      | fc00::/7 (fd00::/8) | Org-internal | RFC 1918 private     | Not internet-routable                     |
+| Multicast         | ff00::/8      | Group-defined | Broadcast (limited equiv) | No broadcast in IPv6; multicast replaces it |
+| Anycast           | Unicast space | Nearest interface | No direct equivalent | Same address on multiple interfaces       |
+
+**Key multicast addresses:**
+
+- ff02::1 — all-nodes multicast (all IPv6 hosts on segment)
+- ff02::2 — all-routers multicast
+- ff02::fb — mDNS (multicast DNS)
 
 ---
 
-### Required Readings & Videos
-*   **Required Reading:** Read the chapters on **IPv6 Addressing** in the OER Textbook: [Computer Networking: Principles, Protocols and Practice](https://www.computer-networking.info/). Pay particular attention to SLAAC, NDP, and the address type prefixes.
-*   **Required Video:** Watch Professor Messer's **IPv6 Addressing** videos from the [CompTIA Network+ N10-009 Course](https://www.professormesser.com/network-plus/n10-009/n10-009-video/n10-009-training-course/). Focus on the address type identification segments.
+### 3. IPv6 Abbreviation Rules with Examples
+
+**Rule 1 — Remove leading zeros within each group (not trailing zeros).**
+
+- 0001 becomes 1
+- 0db8 becomes db8
+- 0000 becomes 0
+
+**Rule 2 — Replace one contiguous sequence of all-zero groups with "::".**
+
+- Can be used only once per address
+- Choose the longest run of zeros for maximum compression
+
+**Example 1 — Full to Abbreviated:**
+
+Full: 2001:0db8:0000:0000:0000:0000:0000:0001
+
+After Rule 1: 2001:db8:0:0:0:0:0:1
+
+After Rule 2: 2001:db8::1
+
+**Example 2 — Abbreviated to Full:**
+
+Abbreviated: fe80::1a2b:3c4d
+
+Count present groups: fe80 and 1a2b and 3c4d = 3 groups
+
+Groups needed: 8 total. Missing: 5 groups → fill with zeros.
+
+Full: fe80:0000:0000:0000:0000:0000:1a2b:3c4d
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will use `ipconfig /all` (Windows) or `ip addr` (Linux) to observe both IPv4 and IPv6 address assignments on your VM interfaces, identify the link-local address generated automatically, and use `ping6` or `ping -6` to test IPv6 loopback and link-local connectivity.
+### 4. EUI-64 Calculation Process
+
+Given MAC address: 00:1A:2B:3C:4D:5E
+
+**Step 1:** Split the MAC into two 24-bit halves.
+
+First half: 00:1A:2B | Second half: 3C:4D:5E
+
+**Step 2:** Insert FF:FE between the halves.
+
+Result: 00:1A:2B:FF:FE:3C:4D:5E
+
+**Step 3:** Flip the seventh bit (Universal/Local bit) of the first byte.
+
+First byte: 00 = 00000000 in binary. Seventh bit (bit 1 from left, 0-indexed) = 0. Flip to 1.
+
+00000000 → 00000010 = 0x02
+
+**Final EUI-64 interface ID:** 02:1A:2B:FF:FE:3C:4D:5E
+
+Written as IPv6 groups: 021a:2bff:fe3c:4d5e
+
+**Assembled global unicast address with prefix 2001:db8::/64:**
+
+2001:db8::021a:2bff:fe3c:4d5e
 
 ---
 
-### 3. Study Checklist
-*   [ ] Memorize all IPv6 address type prefixes: Global Unicast, Link-Local, Loopback, Multicast, Unique Local.
-*   [ ] Practice applying the two IPv6 abbreviation rules to shorten full addresses.
-*   [ ] Understand SLAAC and EUI-64 host ID generation from a MAC address.
-*   [ ] Know dual stack, tunneling, and NAT64 as transition technologies.
-*   [ ] Read the **IPv6** chapter in [Computer Networking: Principles, Protocols and Practice](https://www.computer-networking.info/).
-*   [ ] Watch Professor Messer's IPv6 videos from the [N10-009 course](https://www.professormesser.com/network-plus/n10-009/n10-009-video/n10-009-training-course/).
-*   [ ] Proceed to the weekly hands-on lab activity.
+### 5. SLAAC vs. DHCPv6 Comparison
+
+| Feature                      | SLAAC                          | Stateful DHCPv6             | Stateless DHCPv6           |
+|------------------------------|--------------------------------|-----------------------------|----------------------------|
+| Address assignment           | Host self-configures using RA prefix + EUI-64 | Server assigns address | SLAAC handles address      |
+| Server required              | No (router RA only)            | Yes                         | Yes (for options only)     |
+| Address tracking             | No (stateless)                 | Yes (server maintains lease)| No                         |
+| DNS server assignment        | Via RDNSS option in RA         | Yes                         | Yes                        |
+| RA flag triggers             | No flags (default behavior)    | M flag set                  | O flag set                 |
+| Best suited for              | Simple networks, IoT           | Enterprise managed networks | Mixed approach             |
+
+---
+
+### 6. Transition Technology Comparison
+
+| Technology   | How It Works                                           | Best Use Case                                           | Prefix/Identifier       |
+|--------------|--------------------------------------------------------|---------------------------------------------------------|-------------------------|
+| Dual Stack   | Both IPv4 and IPv6 run natively on same interface      | Gradual migration; supports both protocol versions simultaneously | N/A (native both)    |
+| 6to4         | IPv6 packets encapsulated in IPv4; automatic tunnel    | IPv6 islands over IPv4 WAN                              | 2002::/16               |
+| Teredo       | IPv6 over IPv4 UDP through NAT                         | Last resort for hosts behind NAT                        | 2001::/32               |
+| ISATAP       | IPv4 as virtual link layer for IPv6 within an org      | Internal enterprise IPv6-over-IPv4 tunneling            | Link-local range        |
+| NAT64        | Protocol translation IPv6 ↔ IPv4 at border             | IPv6-only networks reaching IPv4-only servers           | 64:ff9b::/96 (typical)  |
+
+---
+
+### 7. NDP vs. ARP Comparison
+
+| Function                    | IPv4 Mechanism     | IPv6 Mechanism (NDP)                          |
+|-----------------------------|-------------------|-----------------------------------------------|
+| Resolve IP to MAC address   | ARP (broadcast)   | Neighbor Solicitation / Neighbor Advertisement (multicast) |
+| Router discovery            | None (manual/DHCP)| Router Solicitation / Router Advertisement    |
+| Duplicate address detection | None              | DAD using Neighbor Solicitation               |
+| Protocol                    | ARP (own protocol)| ICMPv6 Types 133–136                          |
+| Transport                   | Direct Ethernet   | ICMPv6 over IPv6                              |
+
+---
+
+### 8. Certification Exam Tips
+
+**Tip 1:** Identify IPv6 address types by their prefix — this is the most common exam question format. fe80:: is always link-local. ::1 is always loopback. ff prefix is always multicast. 2 or 3 in the first hex character is global unicast.
+
+**Tip 2:** IPv6 has no broadcast. Any exam answer option that includes "IPv6 broadcast" is incorrect. IPv6 uses multicast to replace all-nodes broadcast.
+
+**Tip 3:** NDP replaces ARP for IPv6. All questions about local address resolution in an IPv6 environment refer to NDP (ICMPv6), not ARP.
+
+**Tip 4:** Dual stack is the preferred and "best practice" transition technology unless the scenario specifically constraints you to IPv4-only or IPv6-only devices. The exam asks for the "best" method — almost always dual stack.
+
+**Tip 5:** The EUI-64 FFFE insertion is a reliable fact. If you see FF:FE in the middle of a 64-bit interface identifier, it was derived from a MAC address using EUI-64.
+
+**Tip 6:** The double colon "::" can appear only once per IPv6 address. If you see two "::" in an address, it is invalid.
+
+**Tip 7:** SLAAC is "stateless" because no server tracks assignments. Stateful DHCPv6 (with the M flag) requires a server and keeps assignment records. Know which is which.
+
+**Tip 8:** Link-local addresses (fe80::/10) are required for IPv6 to function and are generated on every interface automatically. They cannot be used for routing beyond the local segment.
+
+---
+
+### 9. Required Reading and Viewing
+
+**Required Reading:** Computer Networking: Principles, Protocols and Practice — read the IPv6 addressing sections. Focus on SLAAC, NDP, and address type prefixes.
+
+**Required Viewing:** Professor Messer's Network+ N10-008 video series — watch the IPv6 addressing and transition technology segments. Available free at professormesser.com.
+
+**Supplemental Reference:** CompTIA official N10-008 exam objectives at comptia.org — review Domain 1.0 for IPv6 objectives.
+
+---
+
+### 10. Study Checklist
+
+- [ ] Memorize the six IPv6 address types and their prefixes from the reference table
+- [ ] Practice applying both IPv6 abbreviation rules — full to abbreviated and abbreviated to full
+- [ ] Perform the EUI-64 calculation from a given MAC address without notes
+- [ ] Explain SLAAC — the steps a host takes to self-configure a global unicast address
+- [ ] Compare stateful DHCPv6, stateless DHCPv6, and SLAAC — when each is used
+- [ ] Distinguish NDP from ARP — list three functions NDP performs that ARP does not
+- [ ] Compare dual stack, tunneling (6to4, Teredo), and NAT64 as transition technologies
+- [ ] Watch Professor Messer's IPv6 videos at professormesser.com
+- [ ] Read the IPv6 chapter in the OER textbook
+- [ ] Complete the Lab 04 activity using ipconfig /all and ping
+- [ ] Post your Module 04 Discussion initial response by Wednesday at 11:59 PM
+- [ ] Complete the Module 04 Quiz
+
+---
+
+*CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash*

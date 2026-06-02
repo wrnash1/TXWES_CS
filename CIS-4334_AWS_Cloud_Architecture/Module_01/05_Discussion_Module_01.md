@@ -1,28 +1,50 @@
-# Discussion Forum: Module 01 - AWS Infrastructure & Core Architecture
-## Course: CIS-4334_AWS_Cloud_Architecture (AWS Certified Solutions Architect - Associate)
+# Discussion Forum: Module 01 - AWS Global Infrastructure and Core Services Overview
+
+**Course:** CIS-4334 AWS Cloud Architecture
+**Certification Target:** AWS Solutions Architect Associate (SAA-C03)
 
 ---
 
-## Discussion Prompt
-Consider the following real-world scenario or technical concept:
-*   **Topic Focus:** **AWS Infrastructure & Core Architecture** (specifically focusing on: `AWS Regions, Availability Zones, Edge Locations, AWS Global Infrastructure, shared responsibility model.`)
+## Instructions
 
-**Your Tasks:**
-1.  **Initial Post (Due Wednesday at 11:59 PM):** In 150-200 words, explain how you would apply AWS Infrastructure & Core Architecture in an enterprise system. Address the following:
-    *   What is the primary benefit of utilizing this configuration or standard in a production environment?
-    *   Identify one common security concern or operational challenge related to this topic, and suggest a best-practice mitigation strategy.
-2.  **Peer Responses (Due Sunday at 11:59 PM):** Read through your classmates' posts and write constructive replies (at least 50 words each) to at least two peers. In your replies:
-    *   Provide feedback on their proposed mitigation strategy.
-    *   Share an alternative approach or add context from your own research or lab exercises.
+Read all three scenarios below and select one to address in your initial post. Your initial post must be 175-225 words, technically precise, and reference at least one specific AWS service or infrastructure concept from the module. Respond to at least two classmates who chose different scenarios from yours.
+
+Initial post due: Wednesday at 11:59 PM
+Peer responses due: Sunday at 11:59 PM
 
 ---
 
-## Discussion Rubric (10 Points Total)
-*   **Initial Post (6 Points):**
-    *   *5-6 pts:* Thoroughly addresses all prompt questions with technical accuracy, clear explanations, and appropriate terminology. Meets the word count.
-    *   *3-4 pts:* Addresses some prompt questions, but lacks detail or technical accuracy.
-    *   *0-2 pts:* Incomplete or missing initial post.
-*   **Peer Responses (4 Points):**
-    *   *4 pts:* Responds constructively to at least two peers, contributing meaningful additions to the conversation.
-    *   *2 pts:* Responds to only one peer, or comments are superficial (e.g., "Good post!").
-    *   *0 pts:* No peer responses submitted.
+## Scenario A - Regional Expansion Decision
+
+A US-based healthcare company is expanding its patient records platform to serve clients in Germany. The platform currently runs entirely in us-east-1 (N. Virginia). The CTO proposes simply keeping all data in us-east-1 and relying on CloudFront Edge Locations in Europe to reduce latency. Describe the flaw in this proposal from both a compliance and an architectural standpoint. What AWS infrastructure decisions would you recommend instead, and how does the Shared Responsibility Model affect the company's obligations under GDPR? Your response should identify the specific Region or Regions you would use and explain why.
+
+---
+
+## Scenario B - Availability Zone Failure Planning
+
+A retail company runs a critical order-processing application on three EC2 instances, all deployed in us-west-2a. During an infrastructure review, an engineer proposes that because each EC2 instance has a separate EBS volume, the application is already highly available. Evaluate this claim. Explain what would happen to the application if us-west-2a experienced an outage, and describe the minimum architecture changes needed to achieve genuine high availability. Include in your response the specific AWS services that would enforce availability across fault domains and explain what role the Shared Responsibility Model plays in ensuring the application stays available during an AZ failure.
+
+---
+
+## Scenario C - Service Responsibility Confusion
+
+A startup's developer deployed a MySQL database on an Amazon RDS instance and told the CTO: "We don't need to worry about database security — it's all managed by AWS." Identify at least three specific security or operational tasks that remain the customer's responsibility for an RDS instance, and explain why each task is classified as the customer's responsibility under the Shared Responsibility Model. Then explain how this responsibility profile differs from running MySQL on an EC2 instance. What additional tasks would the team own if they moved from RDS to a self-managed EC2 deployment?
+
+---
+
+## Discussion Rubric
+
+| Criteria | Points | Description |
+|---|---|---|
+| Initial post — technical accuracy | 3 | Correctly applies AWS infrastructure concepts; no factual errors about services, responsibility model, or infrastructure components |
+| Initial post — depth and completeness | 2 | Addresses all parts of the chosen scenario; meets 175-225 word count; uses specific AWS service names |
+| Initial post — clarity | 1 | Well-organized, professional tone, correct terminology |
+| Peer response 1 — substantive engagement | 2 | Adds new technical detail, a counter-argument, or a real-world extension; minimum 50 words |
+| Peer response 2 — substantive engagement | 2 | Adds new technical detail, a counter-argument, or a real-world extension; minimum 50 words |
+| **Total** | **10** | |
+
+---
+
+## Professor Nash Note
+
+Responses that simply restate the scenario or list definitions without applying them to the specific situation will not earn full credit. Strong posts take a position, justify it with AWS infrastructure reasoning, and engage with the tradeoffs. If you are responding to a peer, challenge or extend their thinking — do not just agree and summarize what they said.

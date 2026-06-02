@@ -1,83 +1,226 @@
-# Quiz: Module 06 - SAST – Static Application Security Testing
+# Quiz: Module 06 - SAST: Static Application Security Testing
 
-## Course: CIS-4350_DevSecOps_CICD_Pipelines (Certified DevSecOps Professional (CDP))
+## Course: CIS-4350 DevSecOps and CI/CD Pipelines
 
----
-
-**Question 1**
-What is the characteristic behavior of a SAST (Static Application Security Testing) tool?
-
-* A) It scans code by executing the application in an isolated test sandbox and probing its endpoints
-* B) It analyzes source code, bytecode, or binaries for vulnerabilities without running the application
-* C) It monitors production CPU and memory usage to detect anomalous behavior indicative of exploitation
-* D) It intercepts network traffic between a browser and a web application to identify insecure HTTP responses
-* **Correct Answer:** B) SAST scanners evaluate source files against known vulnerability patterns (e.g., hardcoded keys, SQL concatenation) without requiring a running application.
-* **Distractor Analysis:**
-  * *Why B is correct:* SAST is a white-box, code-analysis technique that reads and parses source or binary files; because it does not execute the code, it can run at the earliest pipeline stage (commit/pull request) before a build even exists.
-  * *Why A is incorrect:* Executing the application in a sandbox and probing endpoints describes DAST (Dynamic Application Security Testing), not SAST.
-  * *Why C is incorrect:* Monitoring production CPU/memory for anomalies describes runtime application self-protection (RASP) or behavioral anomaly detection, not static analysis.
-  * *Why D is incorrect:* Intercepting traffic between a browser and a web application describes a DAST proxy tool (such as OWASP ZAP or Burp Suite), not a SAST tool.
+## Certification Alignment: DevSecOps Professional (DSOE)
 
 ---
 
-**Question 2**
-Which of the following most accurately describes pattern matching as used in SAST tooling?
+### Question 1
 
-* A) A machine learning technique that compares runtime behavior of an application against a baseline model to detect anomalies
-* B) A SAST analysis method that compares code against a library of known vulnerability signatures or insecure code constructs, such as detecting user input passed directly to a `exec()` call
-* C) A penetration testing method where an assessor manually searches for specific vulnerability patterns in a deployed application
-* D) A Git feature that selectively applies commit changes to a specific branch using a cherry-pick operation
-* **Correct Answer:** B) Pattern matching in SAST tools uses rule sets (like Semgrep YAML rules) to detect specific code constructs that match known vulnerability patterns — fast, deterministic, and easy to customize.
-* **Distractor Analysis:**
-  * *Why B is correct:* Tools like Semgrep use declarative pattern rules (e.g., match `sink(source)` where source is user-controlled) to systematically find classes of vulnerabilities across entire codebases in seconds.
-  * *Why A is incorrect:* Machine learning-based anomaly detection is a runtime security or SIEM technique; SAST pattern matching is rule-based, not ML-based.
-  * *Why C is incorrect:* Manual penetration testing searches for vulnerabilities in a running application, not in source code. Pattern matching in SAST is automated and code-analysis based.
-  * *Why D is incorrect:* Git cherry-pick is a version control operation for applying specific commits to a branch; it has no relationship to SAST analysis techniques.
+What is the fundamental difference between SAST and DAST?
 
----
+- A) SAST runs on the production environment while DAST runs on the development environment
+- B) SAST analyzes source code without executing the application, while DAST sends requests to a running application to find runtime vulnerabilities
+- C) SAST detects vulnerabilities in third-party dependencies, while DAST detects vulnerabilities in first-party application code
+- D) SAST requires a live database connection to perform analysis, while DAST runs entirely in memory
 
-**Question 3**
-A SAST scanner reports 47 findings in a pull request, but after manual review the team determines that 40 of them are false positives. What is the most appropriate DevSecOps response to prevent recurring false positive alert fatigue?
+#### Q1 Correct Answer
 
-* A) Disable the SAST scanner entirely to prevent the false positives from blocking future deployments
-* B) Tune the SAST rule configuration by adjusting severity thresholds, disabling rules with high false-positive rates for this codebase, and adding inline suppression comments with documented justifications for accepted risks
-* C) Automatically approve and suppress all findings without manual review to keep the pipeline moving
-* D) Switch to a DAST-only approach, since DAST produces fewer false positives by testing running code
-* **Correct Answer:** B) SAST tools should be tuned to the specific codebase — disabling inapplicable rules, adjusting thresholds, and documenting suppressed findings — so the scanner produces actionable signal without overwhelming developers.
-* **Distractor Analysis:**
-  * *Why B is correct:* Tuning reduces false positives while preserving true positive detection. Documented suppression comments (`# nosec BXXX -- justification`) create an audit trail, and periodic reviews ensure suppressed findings are reconsidered as the codebase evolves.
-  * *Why A is incorrect:* Disabling the scanner eliminates false positives but also eliminates true positive detection, removing a critical security gate from the pipeline.
-  * *Why C is incorrect:* Auto-approving all findings without review defeats the purpose of scanning; true positives (real vulnerabilities) would be silently suppressed along with false positives.
-  * *Why D is incorrect:* DAST tests running applications and finds runtime vulnerabilities that SAST cannot; it does not replace SAST's ability to catch code-level issues at the earliest pipeline stage. Both are needed in a complete DevSecOps pipeline.
+B — SAST (Static Analysis) analyzes source code without execution — it finds vulnerability patterns at the code level. DAST (Dynamic Analysis) sends crafted HTTP requests to a running application and observes responses to find runtime vulnerabilities. SAST runs at PR/commit; DAST runs at staging.
+
+#### Q1 Distractor Analysis
+
+- *Why A is incorrect:* SAST runs at the earliest pipeline stages (commit, PR). DAST runs at staging after deployment. Neither runs exclusively in production or development.
+- *Why C is incorrect:* Detecting third-party dependency vulnerabilities is SCA, not SAST or DAST.
+- *Why D is incorrect:* SAST reads source code files from the filesystem. It does not require a database connection.
 
 ---
 
-**Question 4**
-In a GitHub Actions SAST workflow using CodeQL, which configuration ensures that only HIGH and CRITICAL severity findings block the pull request merge while LOW and MEDIUM findings are reported but non-blocking?
+### Question 2
 
-* A) Set `on: push` instead of `on: pull_request` so the scan runs after merge and cannot block it
-* B) Configure the CodeQL action with a severity threshold of `high` in the action inputs, and set the GitHub required status check only on the SAST job, not the reporting job
-* C) Run CodeQL on a scheduled weekly basis rather than on every pull request to reduce pipeline execution time
-* D) Use a `.gitignore` file to exclude security-sensitive source directories from CodeQL analysis
-* **Correct Answer:** B) Setting a severity threshold in the SAST action configuration allows the pipeline step to fail (blocking the merge) only on findings at or above the defined severity level, while lower-severity findings appear in the security advisory tab without blocking merges.
-* **Distractor Analysis:**
-  * *Why B is correct:* Most SAST tools and GitHub Actions integrations support severity threshold arguments that control exit codes; an exit code of 0 (pass) for LOW/MEDIUM findings and non-zero (fail) for HIGH/CRITICAL findings triggers the branch protection status check accordingly.
-  * *Why A is incorrect:* Running the scan on `push` after merge means the scan cannot block the merge — the code is already merged when the scan runs. This defeats the purpose of a security gate.
-  * *Why C is incorrect:* Weekly scheduled scans cannot serve as merge gates because they are not triggered by pull request events and run independently of the merge workflow.
-  * *Why D is incorrect:* Excluding source directories from analysis reduces coverage, potentially hiding real vulnerabilities. The purpose of the severity threshold is to tune alert routing, not to reduce scan scope.
+A Semgrep scan flags the following line of Python code. What vulnerability type does this finding represent?
+
+```python
+query = "SELECT * FROM accounts WHERE user = '" + request.args.get('user') + "'"
+cursor.execute(query)
+```
+
+- A) Cross-Site Scripting (XSS) — user-controlled input is written to the HTML response
+- B) SQL Injection — untrusted user input is concatenated directly into a SQL query string without parameterization
+- C) Path Traversal — the user-controlled input is used to construct a filesystem path
+- D) Command Injection — the user-controlled input is passed to an OS shell command
+
+#### Q2 Correct Answer
+
+B — The `request.args.get('user')` value is an HTTP query parameter (untrusted user input). It is concatenated directly into the SQL query string using the `+` operator. The database executes whatever SQL the attacker injects through the `user` parameter.
+
+#### Q2 Distractor Analysis
+
+- *Why A is incorrect:* XSS involves writing untrusted data to an HTML response. This code executes a SQL query, not an HTML response.
+- *Why C is incorrect:* Path traversal involves constructing filesystem paths from user input. This code constructs a SQL query.
+- *Why D is incorrect:* Command injection involves passing user input to OS shell functions like `os.system()`. This code passes to a SQL cursor's execute method.
 
 ---
 
-**Question 5**
-A SAST scan of a Python web application flags the following code as a SQL injection vulnerability: `cursor.execute("SELECT * FROM orders WHERE user_id = " + user_id)`. Which remediation correctly addresses the root cause?
+### Question 3
 
-* A) Add input validation to ensure `user_id` contains only numeric characters before passing it to the query
-* B) Replace the string concatenation with a parameterized query: `cursor.execute("SELECT * FROM orders WHERE user_id = %s", (user_id,))`
-* C) Hash the `user_id` value with SHA-256 before concatenating it into the SQL string
-* D) Move the SQL query to a stored procedure in the database so the application does not handle raw SQL
-* **Correct Answer:** B) Parameterized queries (also called prepared statements) separate SQL code from user-supplied data, making it structurally impossible for user input to alter the query's logic regardless of its content.
-* **Distractor Analysis:**
-  * *Why B is correct:* Parameterized queries pass user input as a bound parameter, not as part of the SQL text. The database driver handles escaping and type enforcement, completely eliminating SQL injection as an attack vector.
-  * *Why A is incorrect:* Input validation (allow-listing numeric input) is a useful defense-in-depth measure but is not the root-cause fix. Validation can be bypassed or inconsistently applied; parameterized queries are structural and cannot be bypassed.
-  * *Why C is incorrect:* Hashing the user ID would produce a hash string that is still concatenated into the SQL statement. If the attacker controls input that produces a specific hash (impractical but conceptually), the injection remains possible. More practically, a valid user_id hash would still be concatenated unsafely.
-  * *Why D is incorrect:* Stored procedures can reduce exposure but do not eliminate SQL injection if the stored procedure itself concatenates user input into dynamic SQL. Parameterized queries within the application are the canonical fix.
+Which remediation correctly fixes the SQL injection vulnerability from Question 2?
+
+- A) Wrapping the query in a try/except block to catch SQL errors before they reach the user
+- B) Using a parameterized query with a `?` placeholder and passing user input as a separate parameter tuple
+- C) Converting the user input to uppercase before concatenating it into the query
+- D) Checking that the user input is not empty before executing the query
+
+#### Q3 Correct Answer
+
+B — A parameterized query separates the SQL structure from the data. The database driver handles the user input as a data value, not as SQL syntax. An attacker cannot inject SQL commands through a parameterized parameter.
+
+#### Q3 Distractor Analysis
+
+- *Why A is incorrect:* A try/except block catches errors after the injection has already been attempted. It does not prevent SQL injection from occurring.
+- *Why C is incorrect:* Converting to uppercase does not prevent SQL injection. SQL is case-insensitive and an attacker can construct effective injection payloads in any case.
+- *Why D is incorrect:* Checking for empty input prevents a null value error but does not prevent injection. An attacker will provide a non-empty, malicious input.
+
+---
+
+### Question 4
+
+A SAST tool is integrated into a pull request pipeline with `continue-on-error: true`. How does this affect the pipeline's behavior when the SAST tool finds a critical vulnerability?
+
+- A) The pipeline fails immediately and the PR cannot be merged until the vulnerability is fixed
+- B) The pipeline job reports the findings but exits successfully, allowing the PR to proceed and merge
+- C) The pipeline pauses and waits for a security engineer to manually approve before continuing
+- D) The SAST tool automatically applies the fix and recommits the corrected code
+
+#### Q4 Correct Answer
+
+B — `continue-on-error: true` makes the GitHub Actions step succeed regardless of the tool's exit code. SAST findings are reported in the log and any connected dashboard, but they do not cause the pipeline job to fail. The PR can merge despite findings. This is non-breaking mode.
+
+#### Q4 Distractor Analysis
+
+- *Why A is incorrect:* That describes breaking mode. `continue-on-error: true` is specifically the configuration that prevents the job from failing.
+- *Why C is incorrect:* There is no built-in GitHub Actions "pause for approval" mechanism in this context. That would require an environment protection rule, not `continue-on-error`.
+- *Why D is incorrect:* SAST tools are read-only analysis tools. They report findings but do not modify source code.
+
+---
+
+### Question 5
+
+Which SAST tool is most appropriate for a highly regulated financial institution that needs deep interprocedural taint analysis across a large Java monolith with complex method call chains?
+
+- A) Semgrep Community — because it has the largest community rule registry and free licensing
+- B) Hadolint — because it integrates directly with Java build tools like Maven and Gradle
+- C) Checkmarx — because it performs deep interprocedural taint analysis suited for complex enterprise codebases
+- D) Grype — because it scans Java JAR files for CVEs in compiled bytecode
+
+#### Q5 Correct Answer
+
+C — Checkmarx is designed for enterprise environments with complex codebases. Its deep interprocedural taint analysis traces data flow across method calls, class boundaries, and module imports — essential for finding injection vulnerabilities in large Java monoliths where taint sources and sinks may be in different modules.
+
+#### Q5 Distractor Analysis
+
+- *Why A is incorrect:* Semgrep is excellent for most use cases but uses pattern matching with lighter taint analysis. For deep interprocedural analysis in a complex enterprise codebase, Checkmarx provides more thorough coverage.
+- *Why B is incorrect:* Hadolint is a Dockerfile linter, not a Java source code SAST tool. It does not analyze Java code.
+- *Why D is incorrect:* Grype scans artifacts for known CVEs in dependencies. It does not perform source code vulnerability analysis or taint analysis.
+
+---
+
+### Question 6
+
+A developer finds a Semgrep finding that flags a line of code as a potential security issue. After careful review, they determine with certainty that the flagged code pattern cannot be exploited in this application's context. What is the correct way to handle this finding?
+
+- A) Delete the code entirely since any flagged code should be removed
+- B) Disable the Semgrep rule globally across the entire repository to prevent recurrence of this finding type
+- C) Add a `# nosemgrep: rule-id` comment on the flagged line with a comment explaining why the finding is a false positive
+- D) Ignore the finding permanently and instruct the team to filter it out of dashboard views
+
+#### Q6 Correct Answer
+
+C — A line-level suppression comment with the specific rule ID suppresses only that finding at that line. The rule remains active for all other code. A justification comment documents why the finding was reviewed and confirmed as a false positive, creating an audit trail.
+
+#### Q6 Distractor Analysis
+
+- *Why A is incorrect:* Code that is functionally correct and confirmed not exploitable should not be deleted. The SAST tool's judgment about exploitability is not infallible.
+- *Why B is incorrect:* Disabling a rule globally removes protection for all other locations where the same vulnerability pattern might genuinely exist.
+- *Why D is incorrect:* Silently ignoring findings without documentation creates no audit trail and allows future team members to be unaware that the finding was reviewed.
+
+---
+
+### Question 7
+
+A SonarQube quality gate is configured with the rule: "No new Critical vulnerabilities." A pull request adds three new files with two new Critical SAST findings. What happens when the PR is analyzed?
+
+- A) The PR can be merged because new findings only count against the next sprint's quality metrics
+- B) The quality gate fails, blocking the PR from merging until the two Critical findings are remediated
+- C) The quality gate sends a warning email but does not block the merge
+- D) SonarQube automatically increases the severity threshold to accommodate the new findings
+
+#### Q7 Correct Answer
+
+B — SonarQube quality gates evaluate the current code change against configured thresholds. Two new Critical findings violate the "no new Critical vulnerabilities" rule. The quality gate fails, and SonarQube reports a failure status to the CI/CD pipeline, blocking the PR merge through the branch protection required status check.
+
+#### Q7 Distractor Analysis
+
+- *Why A is incorrect:* SonarQube quality gates are evaluated on each analysis run. Findings do not carry over to future sprints — they must be remediated in the current change or the gate fails.
+- *Why C is incorrect:* A quality gate failure blocks merging when properly integrated with branch protection required status checks. It is not merely advisory.
+- *Why D is incorrect:* SonarQube does not automatically adjust quality gate thresholds. Thresholds are configured by the team and remain fixed until deliberately changed.
+
+---
+
+### Question 8
+
+Which CWE number corresponds to SQL Injection vulnerabilities?
+
+- A) CWE-79
+- B) CWE-22
+- C) CWE-89
+- D) CWE-798
+
+#### Q8 Correct Answer
+
+C — CWE-89 is "Improper Neutralization of Special Elements used in an SQL Command (SQL Injection)." This is one of the most common and highest-priority vulnerabilities detected by SAST tools.
+
+#### Q8 Distractor Analysis
+
+- *Why A is incorrect:* CWE-79 is Cross-Site Scripting (XSS) — improper neutralization of input during web page generation.
+- *Why B is incorrect:* CWE-22 is Path Traversal — improper limitation of a pathname to a restricted directory.
+- *Why D is incorrect:* CWE-798 is Use of Hard-coded Credentials — embedding passwords or cryptographic keys directly in source code.
+
+---
+
+### Question 9
+
+A security team wants to ensure that SAST covers the OWASP Top 10 vulnerability categories. Which Semgrep configuration parameter addresses this requirement most directly?
+
+- A) `config: p/secrets` — scans for hardcoded credentials and API keys
+- B) `config: p/owasp-top-ten` — uses the community rule pack mapped to OWASP Top 10 categories
+- C) `config: auto` — automatically selects rules based on the detected programming language
+- D) `config: p/python` — uses all Python-specific rules regardless of vulnerability category
+
+#### Q9 Correct Answer
+
+B — The `p/owasp-top-ten` Semgrep rule pack is specifically curated to cover the OWASP Top 10 web application security risk categories: Broken Access Control, Cryptographic Failures, Injection, Insecure Design, Security Misconfiguration, and others.
+
+#### Q9 Distractor Analysis
+
+- *Why A is incorrect:* `p/secrets` specifically targets hardcoded credentials and API keys. It covers OWASP A07 (authentication failures) but not the full Top 10.
+- *Why C is incorrect:* `auto` selects rules based on language detection, not vulnerability category coverage. It may not cover all OWASP Top 10 categories for a given language.
+- *Why D is incorrect:* `p/python` covers Python-specific coding patterns, but is not organized around OWASP Top 10 categories.
+
+---
+
+### Question 10
+
+A developer is performing taint analysis mentally before running a SAST tool. They identify this code path. What is the taint source, the sink, and the missing control?
+
+```python
+filename = request.form.get('document_name')
+with open(f'/app/documents/{filename}', 'rb') as f:
+    return f.read()
+```
+
+- A) Source: `/app/documents/` path string. Sink: `open()` call. Missing control: directory existence check
+- B) Source: `request.form.get('document_name')`. Sink: `open()` call with constructed path. Missing control: path validation to prevent traversal outside `/app/documents/`
+- C) Source: `f.read()` return value. Sink: the HTTP response. Missing control: response encryption
+- D) Source: `/app/documents/` directory. Sink: `request.form`. Missing control: CSRF token verification
+
+#### Q10 Correct Answer
+
+B — The taint source is the HTTP form parameter `document_name` (untrusted user input). It flows into an f-string that constructs a filesystem path. The sink is the `open()` call. Without path validation, an attacker can provide `../../etc/passwd` as the filename, traversing out of the intended directory. This is a Path Traversal vulnerability (CWE-22).
+
+#### Q10 Distractor Analysis
+
+- *Why A is incorrect:* The static path string `/app/documents/` is not tainted — it is hardcoded. The taint comes from the form input, not the path prefix.
+- *Why C is incorrect:* `f.read()` reads file content — it is not a taint source in this context. The taint source is the user-controlled `filename` parameter.
+- *Why D is incorrect:* The taint flow runs from the request form input to the file open call, not in the reverse direction. CSRF token verification addresses a different vulnerability class.

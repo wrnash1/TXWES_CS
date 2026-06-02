@@ -1,52 +1,185 @@
-# Reading Guide: Module 07 - Resource Management and Team Building
-## Course: CIS-3310_IT_Project_Management (CompTIA Project+ / PMI CAPM)
+# Reading Guide: Module 07 – Resource Management and Team Building
+
+**Course:** CIS-3310 IT Project Management
+**Certification Alignment:** CompTIA Project+ (PK0-005) | PMBOK 6th and 7th Editions
+**Prepared by:** Professor Nash | Texas Wesleyan University
 
 ---
 
-### Introduction
-Welcome to **Module 07 - Resource Management and Team Building**! Resources are the people, equipment, materials, and facilities needed to execute project work. This module covers how to identify, plan, acquire, and develop project team members, as well as how to manage resource conflicts and build a high-performing team. The RACI matrix is introduced here as a critical tool for role clarity.
+## Introduction
 
-On the Project+ and CAPM exams, resource management questions often focus on conflict resolution techniques, team development stages (Tuckman's model: Forming, Storming, Norming, Performing, Adjourning), and the correct use of the RACI matrix.
-
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **Quality Planning**: The process of identifying which quality standards are relevant to the project and determining how to satisfy them. Quality is planned in advance—not inspected in after the fact. Quality planning results in a Quality Management Plan that defines the quality metrics, checklists, and processes the team will follow.
-*   **Quality Assurance (QA) vs. Quality Control (QC)**: Quality Assurance is process-oriented and proactive—it audits the processes used to produce deliverables to ensure they comply with quality standards. Quality Control is product-oriented and reactive—it inspects the actual deliverables against defined acceptance criteria to identify defects. QA prevents defects; QC finds them.
-*   **Metrics**: Measurable values used to define what "quality" means for a specific deliverable or process. Examples include defect rate (number of bugs per 1,000 lines of code), test pass rate (percentage of test cases that pass), and system uptime percentage. Metrics must be defined during quality planning so they can be measured during quality control.
-*   **Pareto Charts**: A bar chart (often combined with a line graph) used in quality management to display the frequency of defects, errors, or problems in descending order, helping the team focus on the "vital few" causes that account for the majority of issues. Based on the 80/20 principle: approximately 80% of problems come from 20% of the causes.
-*   **Check Sheets**: Simple data collection tools used in quality control to record the frequency of specific events, defects, or observations as they occur. Check sheets transform raw observations into organized data that can be analyzed using other quality tools such as histograms or Pareto charts.
+Resource Management addresses both the mechanical side (acquiring people, equipment, and materials) and the human side (developing and leading the team) of project delivery. The Project+ exam tests RACI matrix rules, Tuckman's stages, organizational structure impacts on PM authority, and conflict resolution preferences. This reading guide provides the reference tables and exam tips you need.
 
 ---
 
-### 2. Certification Exam Tips
-*   **Project+ Tip – QA vs. QC is Heavily Tested**: The Project+ exam repeatedly presents a scenario activity and asks whether it is a QA or QC activity. Key rule: QA = process audits, process improvements, methodology reviews (proactive, done during execution). QC = inspections, testing, sampling, defect identification (reactive, done on finished deliverables).
-*   **CAPM Tip – Know the Seven Basic Quality Tools**: CAPM tests all seven basic quality tools: Cause-and-Effect (Ishikawa/Fishbone) Diagrams, Control Charts, Flowcharts, Histograms, Pareto Charts, Scatter Diagrams, and Check Sheets. Know what each tool is used for and when to apply it.
-*   **Scenario Trap**: A question may describe "adding extra testing steps" to a software release. This is QC (inspecting the product), not QA (auditing the process). Do not confuse thorough testing with process improvement.
-*   **Study Resource**: For a visual overview of all seven quality tools with examples, search [YouTube: Seven Basic Quality Tools Project Management QA QC](https://www.youtube.com/results?search_query=seven+basic+quality+tools+project+management+Pareto+Ishikawa). Many free resources include printable reference sheets for exam day preparation.
+## 1. High-Yield Glossary
+
+### Resource Management Plan
+
+A component of the Project Management Plan that defines how physical and team resources will be identified, acquired, managed, and eventually released. Includes team roles, responsibilities, reporting relationships, and staffing management approach.
+
+### Responsibility Assignment Matrix (RAM)
+
+A grid that links project roles or people to WBS work packages or activities, showing who is responsible for each piece of work. The RACI matrix is the most common RAM format.
+
+### RACI Matrix
+
+A specific RAM that assigns one of four roles to each team member for each task: Responsible (does the work), Accountable (owns the outcome — only one per task), Consulted (provides input), and Informed (receives updates).
+
+### Resource Histogram
+
+A bar chart showing resource usage over time. Used to identify over-allocation (a resource assigned more hours than available) or under-allocation.
+
+### Resource Leveling
+
+Adjusting the schedule to resolve resource over-allocation by delaying or splitting activities until the overloaded resource has capacity. Typically extends the schedule.
+
+### Tuckman's Model
+
+A five-stage model of team development: Forming, Storming, Norming, Performing, and Adjourning. Each stage has distinct characteristics and requires a different PM leadership style.
+
+### Functional Organization
+
+An organizational structure where employees report to functional (department) managers. PMs have limited authority — they coordinate but do not directly control resources.
+
+### Projectized Organization
+
+An organizational structure where employees report directly to the project manager. PMs have full authority. Resources are dedicated to the project.
+
+### Matrix Organization
+
+An organizational structure where employees report to both functional managers and project managers. Subtypes range from Weak Matrix (PM has limited authority) to Strong Matrix (PM has significant authority).
+
+### Conflict Resolution — Collaborate/Problem-Solve
+
+The preferred PMI conflict resolution approach. Both parties work together to find a mutually satisfying solution. Produces a win-win outcome and a durable resolution.
+
+### Conflict Resolution — Force/Direct
+
+The least preferred PMI approach. One party imposes their position. Produces a win-lose outcome and generates resentment. Should only be used in genuine emergencies.
+
+### Motivation Theories
+
+Theoretical frameworks that explain what drives human performance. Common exam references include Maslow's Hierarchy of Needs, Herzberg's Two-Factor Theory (hygiene factors vs. motivators), and McGregor's Theory X vs. Theory Y.
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the quality management chapter in the OER Textbook, covering quality planning, QA, QC, and quality tools: [Project Management Open Textbook – BC Campus](https://opentextbc.ca/projectmanagement/).
-*   **Required Video:** Watch the quality management lecture in the course playlist: [CompTIA Project+ PK0-005 Playlist by Joseph Phillips](https://www.youtube.com/results?search_query=comptia+project%2B+PK0-005+joseph+phillips).
+## 2. Organizational Structure Comparison
+
+| Attribute | Functional | Weak Matrix | Balanced Matrix | Strong Matrix | Projectized |
+|---|---|---|---|---|---|
+| PM Authority | Little to none | Limited | Low to moderate | Moderate to high | Full |
+| Resource Control | Functional Manager | Functional Manager | Shared | PM | PM |
+| PM Role | Part-time coordinator | Part-time coordinator | Full-time | Full-time | Full-time |
+| Team Loyalty | Functional department | Functional department | Divided | PM / Project | Project |
+| Best for | Stable operational work | Short projects needing functional expertise | Balanced multi-project environments | Multiple simultaneous projects | Large, long projects |
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Draft a quality management plan for software testing**: For your IT deployment scenario, write a quality management plan that defines at least three quality metrics, identifies the QC activities (what will be tested and how), and specifies acceptance criteria for the software release.
-*   **Analyze defect logs using a Pareto diagram**: Given a provided sample of 50 software defect records categorized by type, create a Pareto chart (in a spreadsheet) and identify the top two defect categories that account for the majority of issues.
-*   **Verify quality check metrics**: Using your quality plan metrics, create a check sheet template that a tester could use to record defect observations during a testing sprint.
+## 3. RACI Matrix Rules and Example
+
+Critical RACI rules:
+
+- Every task must have at least one R
+- Every task must have exactly one A
+- A and R can be the same person
+- C and I are optional but recommended for complex tasks
+- Multiple Rs are permitted; multiple As are prohibited
+
+Sample RACI for an IT project:
+
+| Task | PM | Dev Lead | QA Lead | Sponsor | Ops Manager |
+|---|---|---|---|---|---|
+| Approve project charter | C | I | I | A/R | I |
+| Define system requirements | R | R | C | I | C |
+| Develop application modules | I | A/R | C | I | I |
+| Conduct user acceptance testing | C | R | A/R | I | C |
+| Approve go-live | A | C | C | R | C |
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and be able to classify any described activity as QA or QC.
-- [ ] Read the quality management chapter in the [Project Management Open Textbook](https://opentextbc.ca/projectmanagement/).
-- [ ] Watch the quality management video in the [CompTIA Project+ PK0-005 Playlist by Joseph Phillips](https://www.youtube.com/results?search_query=comptia+project%2B+PK0-005+joseph+phillips).
-- [ ] Complete the Module 07 Lab activity.
-- [ ] Take the Module 07 Quiz.
+## 4. Tuckman's Five Stages Reference
+
+| Stage | Team Characteristics | PM Leadership Style | Key PM Actions |
+|---|---|---|---|
+| Forming | Polite, uncertain, getting acquainted | Directive | Set expectations, clarify roles, establish structure |
+| Storming | Conflict, competition, questioning authority | Coaching | Facilitate resolution, enforce ground rules, stay calm |
+| Norming | Cooperation, trust developing, norms established | Supportive | Encourage collaboration, recognize progress |
+| Performing | High productivity, motivated, self-directing | Delegating | Remove obstacles, trust the team, focus on results |
+| Adjourning | Project ending, team dispersing | Recognizing | Acknowledge contributions, manage transitions |
+
+---
+
+## 5. Conflict Resolution Techniques — PMI Preference Order
+
+| Technique | Outcome | PMI Preference | When to Use |
+|---|---|---|---|
+| Collaborate/Problem-Solve | Win-win | Most preferred | When time allows and the relationship matters |
+| Compromise/Reconcile | Win-some/lose-some | Second preferred | When a quick resolution is needed and collaboration is not feasible |
+| Smooth/Accommodate | Temporary relief | Third | When the issue is minor or maintaining harmony is a short-term priority |
+| Withdraw/Avoid | No resolution | Fourth | When more information is needed or the issue is trivial |
+| Force/Direct | Win-lose | Least preferred | Only in genuine emergencies requiring an immediate decision |
+
+---
+
+## 6. Motivation Theory Quick Reference
+
+| Theory | Key Concept | Exam Relevance |
+|---|---|---|
+| Maslow's Hierarchy | Five needs from physiological (base) to self-actualization (top) | A team member's unmet lower-level needs (safety, belonging) prevent higher motivation |
+| Herzberg Two-Factor | Hygiene factors (salary, working conditions) prevent dissatisfaction; motivators (recognition, achievement) drive satisfaction | Hygiene factors alone do not motivate — they only reduce dissatisfaction |
+| McGregor Theory X | Assumes workers are inherently lazy; require close supervision | Correlates with directive/authoritarian leadership style |
+| McGregor Theory Y | Assumes workers are self-motivated; thrive with autonomy | Correlates with participative/delegating leadership style |
+
+---
+
+## 7. Certification Exam Tips
+
+**Tip 1 — One Accountable per task:**
+This is the most commonly tested RACI rule. If a scenario describes two people sharing accountability, that violates the matrix. The RACI rule is exactly one A per task.
+
+**Tip 2 — Storming is normal:**
+Storming is not a sign of team failure. It is a predictable, necessary stage. The PM should facilitate it, not suppress it. Teams that skip Storming often regress into it later at a worse time.
+
+**Tip 3 — Resource leveling extends the schedule:**
+Resource leveling resolves over-allocation by moving activities — which typically extends the schedule. It is not a compression technique. Students confuse it with crashing.
+
+**Tip 4 — Collaborate is always the best answer:**
+For any Project+ exam question about the "best" or "most preferred" conflict resolution approach, the answer is Collaborate/Problem-Solve. For "worst" or "least preferred," the answer is Force/Direct.
+
+**Tip 5 — Functional vs. Projectized authority:**
+If the PM has "little authority" and must "negotiate with functional managers for resources," the organization is functional or weak matrix. If the PM "directly assigns and releases resources," the organization is projectized or strong matrix.
+
+**Tip 6 — Adjourning is the fifth stage:**
+Many students forget Adjourning. It was added by Tuckman after the original four stages. The exam sometimes tests whether students know all five stages in order.
+
+**Tip 7 — Herzberg: salary alone does not motivate:**
+According to Herzberg, salary and working conditions are hygiene factors — their absence causes dissatisfaction, but their presence does not create motivation. A salary increase alone will not improve long-term team performance.
+
+**Tip 8 — Consulted vs. Informed:**
+Consulted means two-way communication — the C person provides input that the R person uses. Informed means one-way communication — the I person receives updates but does not provide input. The exam tests this distinction.
+
+---
+
+## 8. Required Reading and Study Resources
+
+Complete the following before the lab and quiz:
+
+- Read the resource management chapter in the course OER textbook (linked in Canvas).
+- Review the CompTIA Project+ PK0-005 exam objectives at comptia.org for the resource management domain.
+- For supplemental study, visit professormesser.com for Project+ resource management coverage.
+
+---
+
+## 9. Study Checklist
+
+- [ ] Name and describe all five Tuckman stages with one PM action per stage
+- [ ] State the one mandatory RACI rule regarding the Accountable role
+- [ ] Distinguish Consulted from Informed in RACI
+- [ ] Rank all five conflict resolution techniques from most to least preferred (PMI order)
+- [ ] Explain why resource leveling extends the schedule
+- [ ] Describe the PM authority level in each of the five organizational structure types
+- [ ] Explain Herzberg's distinction between hygiene factors and motivators
+- [ ] Complete the Module 07 Lab activity
+- [ ] Take the Module 07 Quiz
+- [ ] Post Module 07 Discussion initial response by Wednesday at 11:59 PM

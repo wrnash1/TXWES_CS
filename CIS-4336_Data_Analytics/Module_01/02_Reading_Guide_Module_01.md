@@ -1,50 +1,195 @@
-# Reading Guide: Module 01 - Data Analytics Fundamentals and Data Types
-## Course: CIS-4336_Data_Analytics (CompTIA Data+)
+# Reading Guide — Module 01: Data Analytics Fundamentals and Data Types
+
+**Course:** CIS-4336 Data Analytics — Texas Wesleyan University
+**Instructor:** Professor Nash
+**Certification Alignment:** CompTIA Data+ DA0-001 — Domain 1: Data Concepts and Environments
 
 ---
 
-### Introduction
-Welcome to **Module 01 - Data Analytics Fundamentals and Data Types**! This module introduces the foundational vocabulary and concepts that underpin every domain of the **CompTIA Data+** certification. You will learn how organizations use data to drive decisions, the categories of data that analysts work with, and the lifecycle that transforms raw data into actionable insight.
+## Overview
 
-Understanding data types and the analytics lifecycle is not just theoretical — exam scenario questions will ask you to identify which phase an analyst is in, choose the right data type for a given business situation, and distinguish between structured and unstructured sources. Complete the glossary, readings, and checklist before proceeding to the lab.
-
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **Data analytics lifecycle**: The end-to-end process an organization follows to turn raw data into decisions, typically moving through stages of collection, cleaning, analysis, visualization, and communication of results. The CompTIA Data+ exam tests your ability to identify which lifecycle stage a given activity belongs to.
-*   **Structured vs. unstructured data**: Structured data is organized into rows and columns with a predefined schema (e.g., a relational database table). Unstructured data has no fixed format and includes text documents, images, video, and social media posts. Semi-structured data (JSON, XML) falls between the two and is increasingly important in modern analytics pipelines.
-*   **Qualitative vs. quantitative variables**: Quantitative variables represent numeric measurements that can be added or averaged (e.g., revenue, temperature). Qualitative (categorical) variables represent labels or groups that cannot be meaningfully averaged (e.g., region, product color). The exam distinguishes between continuous quantitative data (any value within a range) and discrete quantitative data (whole-number counts only).
+This reading guide supports Module 01 and maps directly to Domain 1 of the CompTIA Data+ DA0-001 exam. Work through each section before attempting the lab or quiz. The tables and reference sheets in this guide are designed for both study and on-the-job use.
 
 ---
 
-### 2. Certification Exam Tips
-*   **Domain weight:** Data Concepts and Environments is Domain 1 of the Data+ DA0-001 exam and accounts for approximately 15% of scored questions. Fundamental definitions from this module appear throughout this domain.
-*   **Common trap — qualitative vs. quantitative:** The exam often presents a variable like "customer satisfaction score (1–5)" and asks whether it is quantitative or qualitative. Likert-scale scores are ordinal (a type of qualitative/categorical), not truly quantitative, even though they use numbers.
-*   **Common trap — structured vs. semi-structured:** Do not confuse CSV files with structured data. A CSV exported from a database is structured; a raw JSON feed from an API is semi-structured. The exam tests this distinction in ETL and data-source questions.
-*   **Study Resource:** For a comprehensive free introduction, work through the data concepts chapters of [Introduction to Data Science by Rafael A. Irizarry](https://rafalab.github.io/dsbook/), a free OER textbook that covers foundational analytics vocabulary aligned with Data+ objectives.
+## Section 1 — Core Vocabulary
+
+Mastery of precise terminology is the first requirement for both the exam and professional practice.
+
+| Term | Definition |
+|---|---|
+| Data analytics | The process of examining raw data to uncover patterns, draw conclusions, and support decisions |
+| Descriptive analytics | Summarizes historical data to answer "what happened?" |
+| Diagnostic analytics | Investigates root causes to answer "why did it happen?" |
+| Predictive analytics | Uses models and statistics to answer "what is likely to happen?" |
+| Prescriptive analytics | Recommends actions to answer "what should we do?" |
+| Structured data | Data organized into a predefined schema of rows and columns |
+| Unstructured data | Data with no predefined format (text, images, audio, video) |
+| Semi-structured data | Data with partial organization via tags or keys, but no rigid schema (JSON, XML) |
+| Quantitative data | Numeric data supporting arithmetic operations |
+| Qualitative data | Categorical data representing labels or groups |
+| Discrete data | Quantitative data taking only countable, whole-number values |
+| Continuous data | Quantitative data that can take any value within a range |
+| Nominal data | Categorical data with no inherent order |
+| Ordinal data | Categorical data with a meaningful order but unequal intervals |
+| Data literacy | The ability to read, interpret, communicate, and reason with data |
+| Analytics lifecycle | The repeatable process from question definition through action and monitoring |
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the introductory chapters on data types and the analytics process in the OER Textbook: [Introduction to Data Science by Rafael A. Irizarry](https://rafalab.github.io/dsbook/). Pay particular attention to the sections distinguishing variable types and data structures.
-*   **Required Video:** Watch the full [Data Analysis with Python Course by freeCodeCamp](https://www.youtube.com/watch?v=GPVsHOl2238) — this 4-hour course covers data fundamentals, Pandas, and NumPy in a hands-on format aligned with Data+ practical skills.
+## Section 2 — Data Type Classification Table
+
+Use this table to classify any variable you encounter in practice or on the exam.
+
+| Data Type | Sub-Type | Order? | Equal Intervals? | True Zero? | Valid Statistics | Examples |
+|---|---|---|---|---|---|---|
+| Qualitative | Nominal | No | No | No | Count, mode, frequency | Color, zip code, category |
+| Qualitative | Ordinal | Yes | No | No | Median, percentile, mode | Survey ratings, letter grades, rank |
+| Quantitative | Interval | Yes | Yes | No | Mean, std dev, range | Temperature (C/F), calendar year |
+| Quantitative | Ratio | Yes | Yes | Yes | All operations, ratios | Height, income, weight, duration |
+| Quantitative | Discrete | Yes | Yes | Yes | Count, mean, mode | Units sold, ticket count |
+| Quantitative | Continuous | Yes | Yes | Yes | Mean, median, std dev, percentile | Revenue, temperature, elapsed time |
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Classify raw data inputs as qualitative or quantitative**: Given a sample dataset, identify each column's variable type and justify your classification.
-*   **Identify structured vs. unstructured datasets**: Examine three different data sources (CSV, JSON, image folder) and categorize each with an explanation.
-*   **Map the steps of the analytics lifecycle**: Take a provided business scenario and annotate which analytics lifecycle stage each task belongs to.
+## Section 3 — Analytics Type Reference
+
+| Analytics Type | Business Question | Complexity | Common Techniques | Example |
+|---|---|---|---|---|
+| Descriptive | What happened? | Low | Aggregation, summarization | Monthly revenue report |
+| Diagnostic | Why did it happen? | Medium | Drill-down, correlation | Q3 sales drop investigation |
+| Predictive | What will happen? | High | Regression, classification | Customer churn forecast |
+| Prescriptive | What should we do? | Highest | Optimization, simulation | Supply chain routing recommendation |
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read the introductory chapters on data types in [Introduction to Data Science by Rafael A. Irizarry](https://rafalab.github.io/dsbook/).
-- [ ] Watch the [Data Analysis with Python Course by freeCodeCamp](https://www.youtube.com/watch?v=GPVsHOl2238).
-- [ ] Review the lab instructions and understand what each task requires.
-- [ ] Proceed to the weekly hands-on lab activity.
+## Section 4 — Data Structure Comparison
+
+| Characteristic | Structured | Semi-Structured | Unstructured |
+|---|---|---|---|
+| Schema | Predefined, rigid | Partial (tags/keys) | None |
+| Examples | Relational database tables, CSV | JSON, XML, log files | Email text, images, video, PDFs |
+| Query method | SQL | XPath, JSONPath, SQL variants | NLP, computer vision, manual review |
+| Storage | RDBMS, data warehouse | Document stores, NoSQL | Object storage, data lakes |
+| Approx. share of enterprise data | 20% | — | 80% |
+| Ease of analysis | High | Medium | Low without preprocessing |
+
+---
+
+## Section 5 — Common File Formats Reference
+
+| Format | Type | Structure | Best For | Limitations |
+|---|---|---|---|---|
+| CSV | Text | Structured (flat) | Data exchange, simple tables | No schema enforcement, no nested data |
+| JSON | Text | Semi-structured | API responses, nested data | Verbose at large scale |
+| XML | Text | Semi-structured | Enterprise integration, config | Very verbose, complex parsing |
+| Parquet | Binary | Structured (columnar) | Big data analytics, Spark/Hadoop | Not human-readable |
+| Avro | Binary | Semi-structured | Kafka streaming, Hadoop | Requires schema registry |
+| Excel (.xlsx) | Binary | Structured | Business reporting | Not ideal for programmatic processing |
+| TSV | Text | Structured (flat) | Data with embedded commas | Less universal than CSV |
+
+---
+
+## Section 6 — Analytics Lifecycle Stage Reference
+
+| Stage | Key Activities | Common Tools | Exam Focus |
+|---|---|---|---|
+| 1. Define the question | Stakeholder interviews, scope definition | Whiteboarding, project briefs | Recognizing when scope is unclear |
+| 2. Collect data | ETL, API calls, web scraping, surveys | Python, SQL, Talend | Source classification, data types |
+| 3. Clean and transform | Deduplication, null handling, normalization | Python/pandas, OpenRefine | Data quality dimensions |
+| 4. Analyze | Statistical testing, aggregation, modeling | Python, R, SQL | Choosing appropriate methods |
+| 5. Visualize and communicate | Charts, dashboards, narratives | Power BI, Tableau, matplotlib | Chart type selection |
+| 6. Act and monitor | Deployment, KPI tracking, iteration | Dashboards, alerting | Outcome measurement |
+
+---
+
+## Section 7 — Scales of Measurement Decision Guide
+
+When you encounter a variable, ask these questions in order.
+
+1. Do the values represent named categories with no meaningful order?
+   - Yes: **Nominal**
+2. Are the categories ordered, but intervals between them are unequal or unknown?
+   - Yes: **Ordinal**
+3. Are the intervals equal, but there is no true zero point?
+   - Yes: **Interval**
+4. Are the intervals equal and is zero meaningful (absence of the quantity)?
+   - Yes: **Ratio**
+
+---
+
+## Section 8 — Data+ Exam Tips
+
+The following eight tips directly address how these concepts appear on the CompTIA Data+ DA0-001 exam.
+
+1. **The Likert trap.** A five-point satisfaction scale uses numbers, but it is ordinal, not quantitative. The intervals between points are not guaranteed equal. Computing a mean is technically inappropriate, though common in practice. On the exam, classify these as ordinal.
+
+2. **CSV is not always structured.** A CSV exported from a clean relational database is structured. A raw CSV scrape of a web page with inconsistent columns is closer to semi-structured. Context matters — read the question carefully.
+
+3. **Zip codes are nominal.** Even though zip codes are numbers, you cannot average or rank them meaningfully. They are nominal categorical values.
+
+4. **Descriptive vs. diagnostic.** Exam scenarios will describe an analyst activity and ask you to name the analytics type. "Reviewing last quarter's sales figures" is descriptive. "Investigating why last quarter's sales fell short" is diagnostic.
+
+5. **Temperature scale distinction.** The exam may ask whether temperature in Celsius is interval or ratio. The correct answer is interval — 0 degrees Celsius does not mean "no temperature." Temperature in Kelvin is ratio because 0 Kelvin means absolute zero.
+
+6. **Unstructured data requires preprocessing.** Any question involving text mining, NLP, or image analysis begins with an unstructured data source. The first step in the lifecycle for unstructured data is always preprocessing or feature extraction.
+
+7. **Domain 1 is not just definitions.** Expect scenario-based questions that ask you to apply these classifications to business situations — not just recite definitions.
+
+8. **Know the exam blueprint.** The official objectives are publicly available at comptia.org. Domain 1 (Data Concepts and Environments) is approximately 15 percent of the exam. Review the subdomain headings to prioritize study time.
+
+---
+
+## Section 9 — Python Pandas Quick Reference (Preview)
+
+Module 09 covers pandas in depth. This preview introduces the data type concepts in a Python context.
+
+```python
+import pandas as pd
+
+# Load a CSV dataset
+df = pd.read_csv("sales_data.csv")
+
+# Inspect data types — pandas infers Python types, not measurement scales
+print(df.dtypes)
+
+# Common dtype mappings:
+# int64   → likely discrete quantitative
+# float64 → likely continuous quantitative
+# object  → likely nominal or ordinal qualitative
+# bool    → binary nominal
+
+# Convert a column to categorical (ordinal) type
+df["satisfaction"] = pd.Categorical(
+    df["satisfaction"],
+    categories=["Poor", "Fair", "Good", "Excellent"],
+    ordered=True
+)
+
+# Count frequencies for a qualitative variable
+print(df["region"].value_counts())
+```
+
+---
+
+## Section 10 — Study Checklist
+
+Work through each item before moving to the Lab and Quiz.
+
+- [ ] Memorize all 16 core vocabulary terms in Section 1
+- [ ] Practice classifying variables using the Section 2 table
+- [ ] Distinguish all four analytics types and supply one example of each
+- [ ] Correctly classify at least five file formats by structure type
+- [ ] Work through the Scales of Measurement decision guide in Section 7 with five practice variables
+- [ ] Review all eight Data+ exam tips in Section 8
+- [ ] Review the official CompTIA Data+ exam objectives at comptia.org
+- [ ] Explore Professor Messer's Data+ study resources at professormesser.com
+- [ ] Complete Lab 01
+- [ ] Complete Quiz 01
+
+---
+
+## Additional Resources
+
+- Official exam objectives: comptia.org (search "Data+ DA0-001 exam objectives")
+- Professor Messer's free study guides and practice questions: professormesser.com

@@ -1,51 +1,217 @@
-# Reading Guide: Module 08 - Storage Management – Partitions, LVM, RAID
-## Course: CIS-3325_OS_Admin (CompTIA Linux+ XK0-005)
+# Reading Guide: Module 08 - Storage Management: Partitions, LVM, RAID
+
+## CIS-3325 OS Administration | Texas Wesleyan University
+
+**Certification Alignment:** CompTIA Linux+ (XK0-005)
+**Exam Domain:** Domain 1.0 - System Management
 
 ---
 
-### Introduction
-Welcome to **Module 08 – Storage Management: Partitions, LVM, and RAID**! This week covers the full Linux storage stack — from raw disk partitioning with `fdisk` and `parted`, through filesystem creation with `mkfs`, to Logical Volume Management (LVM) and software RAID with `mdadm`. Storage management is one of the most exam-dense topics on CompTIA Linux+ XK0-005, appearing in Domain 1.0 (System Management).
+### Glossary
 
-As you work through this material you will learn how to partition disks, create and mount filesystems, manage volume groups and logical volumes, and configure RAID arrays for redundancy and performance.
+**Block Device** - A hardware device (disk, partition, RAID array, logical volume) that stores data in fixed-size blocks and supports random access. Represented in /dev as /dev/sda, /dev/md0, etc.
 
----
+**Partition Table** - Metadata at the start of a disk that describes the number, type, start, and end positions of partitions. Two formats: MBR (legacy) and GPT (modern).
 
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
+**MBR (Master Boot Record)** - Legacy partition table format. Maximum 4 primary partitions, maximum disk size 2 TB. Used with BIOS firmware.
 
-*   **`fdisk` and `parted`**: Command-line tools for creating and managing disk partitions. `fdisk` works with MBR (legacy) partition tables and is interactive. `parted` supports both MBR and GPT and can be scripted non-interactively. `gdisk` is the GPT-specific equivalent of `fdisk`. After partitioning, run `partprobe` to notify the kernel of partition table changes without rebooting.
-*   **`mkfs` (make filesystem)**: Creates a filesystem on a partition or logical volume. Common variants: `mkfs.ext4 /dev/sdb1`, `mkfs.xfs /dev/sdb1`, `mkfs.vfat /dev/sdb1`. XFS is the default on RHEL; ext4 is common on Debian/Ubuntu. Filesystem type affects performance, maximum file size, and journaling behavior.
-*   **`/etc/fstab`**: The filesystem table — controls what gets mounted at boot and where. Each line contains: device (UUID or path), mount point, filesystem type, mount options, dump field, fsck order. Using UUID instead of device names (`/dev/sdb1`) prevents mount failures when disk device names change. The `mount -a` command mounts all entries in fstab that are not currently mounted.
-*   **LVM (Logical Volume Manager)**: A three-layer abstraction for flexible storage management. Physical Volumes (PVs) → Volume Groups (VGs) → Logical Volumes (LVs). Key commands: `pvcreate`, `vgcreate`, `lvcreate -L 10G -n lv_data vg_data`, `lvextend -L +5G /dev/vg_data/lv_data`, then `resize2fs` (ext4) or `xfs_growfs` (XFS) to resize the filesystem to match. LVM allows resizing volumes without unmounting (on most filesystems).
-*   **RAID levels**: RAID 0 (striping — performance, no redundancy), RAID 1 (mirroring — full redundancy, 50% capacity), RAID 5 (striping with distributed parity — requires 3+ disks, tolerates 1 disk failure), RAID 6 (tolerates 2 disk failures), RAID 10 (mirror of stripes — performance + redundancy, requires 4+ disks). Software RAID on Linux uses `mdadm`. Check array status with `cat /proc/mdstat`.
-*   **`mount` and `umount`**: `mount /dev/sdb1 /mnt/data` mounts a partition at a directory. `mount -t ext4` specifies filesystem type. `umount /mnt/data` unmounts (device must not be busy — check with `lsof +D /mnt/data`). `df -h` shows mounted filesystems and their usage. `lsblk` shows the block device hierarchy including mount points.
+**GPT (GUID Partition Table)** - Modern partition table format. Up to 128 partitions, no practical size limit. Required for UEFI systems and disks larger than 2 TB.
 
----
+**Filesystem** - A data structure that organizes files and directories on a partition. Common types: ext4 (standard Linux), XFS (RHEL default, large files), vfat (compatibility).
 
-### 2. Certification Exam Tips
-*   **Domain alignment:** Storage management maps to Linux+ Domain 1.0 (System Management). Expect 6–8 questions covering partitioning, LVM operations, filesystem creation, and fstab syntax.
-*   **LVM sequence to memorize:** The exam tests the correct order: `pvcreate` → `vgcreate` → `lvcreate` → `mkfs` → `mount`. Reversing any step causes failure. After `lvextend`, you must still run `resize2fs` or `xfs_growfs` or the filesystem will not see the new space.
-*   **RAID level trap:** RAID 0 provides *no* redundancy — a common distractor. Questions describe "maximum read/write performance with no fault tolerance" — answer is RAID 0. "Fault tolerance with minimum capacity loss using 3 disks" — answer is RAID 5.
-*   **`/etc/fstab` UUID vs device name:** The exam presents fstab entries and asks which form is most reliable after adding a new disk. Always answer UUID — device names like `/dev/sdb` can change when disks are added or removed.
-*   **Study Resource:** [The Linux Command Line by William Shotts](https://linuxcommand.org/tlcl.php) covers storage and filesystems in chapters 15–16. [Linux Essentials Course by LearnLinuxTV](https://www.youtube.com/playlist?list=PLT98CRl2KxEG0QLjR-8t7k3S4I15Z1A78) includes video demonstrations of disk partitioning, LVM setup, and filesystem management in a live environment.
+**UUID (Universally Unique Identifier)** - A 128-bit identifier assigned to a filesystem when it is formatted. Stable across disk additions and removals. Used in /etc/fstab.
+
+**Physical Volume (PV)** - A disk or partition initialized for LVM use with pvcreate.
+
+**Volume Group (VG)** - A storage pool created from one or more physical volumes. The fundamental LVM allocation unit.
+
+**Logical Volume (LV)** - A virtual partition carved from a volume group. Holds a filesystem and can be resized online.
+
+**RAID (Redundant Array of Independent Disks)** - A technique that combines multiple disks for performance, redundancy, or both.
+
+**Degraded Mode** - A RAID array state where one or more member disks have failed but the array continues operating within its fault tolerance limits.
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read chapters 15–16 of the free OER textbook [The Linux Command Line by William Shotts](https://linuxcommand.org/tlcl.php), covering storage media, filesystems, and device management on Linux.
-*   **Required Video:** Watch the storage and LVM videos in the [Linux Essentials Course by LearnLinuxTV](https://www.youtube.com/playlist?list=PLT98CRl2KxEG0QLjR-8t7k3S4I15Z1A78), a free YouTube playlist with live demonstrations of partitioning, filesystem creation, and LVM configuration.
+### Partition Table Comparison
+
+| Feature | MBR | GPT |
+|---------|-----|-----|
+| Maximum partitions | 4 primary (or 3+1 extended) | 128 |
+| Maximum disk size | 2 TB | 9.4 ZB (practical: no limit) |
+| Firmware compatibility | BIOS | UEFI (also works with BIOS on modern systems) |
+| Redundancy | Single copy at sector 0 | Backup copy at end of disk |
+| Linux tool | fdisk | gdisk or parted |
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab you will partition a virtual disk with `fdisk`, create an ext4 filesystem with `mkfs.ext4`, mount it and add a persistent entry to `/etc/fstab` using UUID, then create an LVM volume group and logical volume, format it, and extend it.
+### Filesystem Comparison
+
+| Feature | ext4 | XFS |
+|---------|------|-----|
+| Default on | Debian/Ubuntu | RHEL/CentOS |
+| Shrinkable | Yes (resize2fs) | No |
+| Growable | Yes (resize2fs) | Yes (xfs_growfs) |
+| Maximum file size | 16 TB | 8 EB |
+| Journaling | Yes | Yes |
+| Best for | General purpose | Large files, high throughput |
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read chapters 15–16 in [The Linux Command Line by William Shotts](https://linuxcommand.org/tlcl.php).
-- [ ] Watch the storage management videos in [Linux Essentials Course by LearnLinuxTV](https://www.youtube.com/playlist?list=PLT98CRl2KxEG0QLjR-8t7k3S4I15Z1A78).
-- [ ] Review the commands outlined in the lab instructions.
-- [ ] Proceed to the weekly hands-on lab activity.
+### Key Storage Commands
+
+| Command | Purpose |
+|---------|---------|
+| lsblk | List all block devices and their partitions |
+| lsblk -f | List block devices with filesystem type and UUID |
+| blkid | Show UUID, label, and filesystem type of block devices |
+| fdisk /dev/sdX | Interactive MBR partition editor |
+| gdisk /dev/sdX | Interactive GPT partition editor |
+| parted /dev/sdX | GPT and MBR partition editor with scripting support |
+| partprobe /dev/sdX | Notify kernel of partition table changes |
+| mkfs.ext4 /dev/sdX1 | Format partition with ext4 filesystem |
+| mkfs.xfs /dev/sdX1 | Format partition with XFS filesystem |
+| mount /dev/sdX1 /mnt | Mount a filesystem at a mount point |
+| umount /mnt | Unmount a filesystem |
+| mount -a | Mount all entries in /etc/fstab |
+| df -h | Show disk usage of mounted filesystems |
+| du -sh /path | Show disk usage of a specific directory |
+| e2label /dev/sdX1 NAME | Set a label on an ext4 filesystem |
+
+---
+
+### /etc/fstab Field Reference
+
+```
+DEVICE          MOUNT_POINT    FSTYPE    OPTIONS     DUMP   PASS
+UUID=a1b2c3d4   /mnt/data      ext4      defaults    0      2
+```
+
+| Field | Values | Notes |
+|-------|--------|-------|
+| DEVICE | UUID=, LABEL=, /dev/name | UUID strongly preferred |
+| MOUNT_POINT | Directory path | Must exist before mounting |
+| FSTYPE | ext4, xfs, vfat, nfs, swap | |
+| OPTIONS | defaults, ro, noexec, nosuid, nofail | Comma-separated |
+| DUMP | 0 or 1 | Almost always 0 |
+| PASS | 0, 1, or 2 | 1=root, 2=others, 0=skip fsck |
+
+---
+
+### LVM Command Reference
+
+| Command | Purpose |
+|---------|---------|
+| pvcreate /dev/sdX | Initialize a disk or partition as a physical volume |
+| pvs | List all physical volumes |
+| pvdisplay /dev/sdX | Detailed PV information |
+| vgcreate NAME PV... | Create a volume group from one or more PVs |
+| vgs | List all volume groups |
+| vgdisplay NAME | Detailed VG information |
+| vgextend NAME /dev/sdX | Add a new PV to an existing VG |
+| lvcreate -L SIZE -n NAME VG | Create a logical volume |
+| lvs | List all logical volumes |
+| lvdisplay /dev/VG/LV | Detailed LV information |
+| lvextend -L +SIZE /dev/VG/LV | Extend an LV by SIZE |
+| lvextend -l +100%FREE /dev/VG/LV | Extend an LV using all VG free space |
+| resize2fs /dev/VG/LV | Grow an ext4 filesystem to fill the LV |
+| xfs_growfs /mount/point | Grow an XFS filesystem to fill the LV |
+| lvcreate -L SIZE -s -n SNAP /dev/VG/LV | Create a snapshot of an LV |
+| lvremove /dev/VG/LV | Remove a logical volume |
+
+LVM workflow:
+1. pvcreate on raw devices
+2. vgcreate to pool them
+3. lvcreate to carve logical volumes
+4. mkfs to create filesystem
+5. mount and add to /etc/fstab
+
+---
+
+### RAID Level Reference
+
+| Level | Min Disks | Disk Failures Tolerated | Usable Space | Read Performance | Write Performance |
+|-------|-----------|------------------------|-------------|-----------------|------------------|
+| RAID 0 | 2 | 0 | 100% | High | High |
+| RAID 1 | 2 | 1 | 50% | Good | Moderate |
+| RAID 5 | 3 | 1 | (n-1)/n | Good | Moderate |
+| RAID 6 | 4 | 2 | (n-2)/n | Good | Lower |
+| RAID 10 | 4 | 1 per mirror pair | 50% | High | High |
+
+---
+
+### mdadm Command Reference
+
+| Command | Purpose |
+|---------|---------|
+| mdadm --create /dev/md0 --level=N --raid-devices=N /dev/sdX... | Create a new RAID array |
+| mdadm --detail /dev/md0 | Show detailed array status |
+| cat /proc/mdstat | Quick array status (U=active, _=failed) |
+| mdadm --manage /dev/md0 --add /dev/sdX | Add a disk to an existing array (rebuild trigger) |
+| mdadm --manage /dev/md0 --fail /dev/sdX | Mark a disk as failed (for testing) |
+| mdadm --manage /dev/md0 --remove /dev/sdX | Remove a disk from the array |
+| mdadm --detail --scan >> /etc/mdadm/mdadm.conf | Save array config for persistence |
+| update-initramfs -u | Rebuild initrd to include RAID configuration |
+
+---
+
+### LV Extension Workflow (Most Tested Scenario)
+
+The complete workflow to extend a logical volume and its filesystem:
+
+```bash
+# Step 1: Add new disk to VG (if needed)
+sudo pvcreate /dev/sdd
+sudo vgextend vg_data /dev/sdd
+
+# Step 2: Extend the logical volume
+sudo lvextend -L +10G /dev/vg_data/lv_data
+
+# Step 3: Resize the filesystem (ext4)
+sudo resize2fs /dev/vg_data/lv_data
+
+# Step 3 (alternative for XFS):
+sudo xfs_growfs /data
+```
+
+Common mistake: stopping after lvextend. The filesystem is still the old size until resize2fs
+or xfs_growfs is run.
+
+---
+
+### Exam Tips
+
+1. MBR supports maximum 4 primary partitions and 2 TB disks. GPT supports 128 partitions and has no practical size limit.
+
+2. After lvextend, always run resize2fs (ext4) or xfs_growfs (XFS) to grow the filesystem into the new space. This is the most tested LVM scenario.
+
+3. XFS cannot be shrunk; it can only grow. ext4 can be both grown and shrunk.
+
+4. RAID 5 needs exactly n-1 disks worth of usable space (one disk of space is used for parity distributed across all disks). Minimum 3 disks.
+
+5. In /proc/mdstat, U = active array member, _ = failed or missing member. [UU_] means one disk in a 3-disk array has failed.
+
+6. UUID in /etc/fstab is mandatory best practice. Device names like /dev/sdb1 can change when disks are added, causing boot failures.
+
+7. mount -a tests all fstab entries. Always run it after editing fstab before rebooting.
+
+8. PASS value of 1 = root filesystem (checked first at boot). PASS 2 = other filesystems. PASS 0 = skip fsck.
+
+---
+
+### Study Checklist
+
+Before the quiz and lab, confirm you can do all of the following without looking them up:
+
+- Explain the difference between MBR and GPT partition tables
+- List the steps to create a partition, format it with ext4, and mount it persistently
+- Explain all six fields in an /etc/fstab entry
+- Explain why UUID is preferred over device names in /etc/fstab
+- Use blkid to find a partition's UUID
+- Explain the LVM three-layer hierarchy: PV, VG, LV
+- Execute the full LVM creation workflow (pvcreate through mount)
+- Extend a logical volume and resize the filesystem (two-step process)
+- Compare RAID 0, 1, 5, 6, and 10 by minimum disks and fault tolerance
+- Create a RAID 5 array with mdadm
+- Interpret /proc/mdstat output and identify a failed disk
+- Add a replacement disk to a degraded RAID array

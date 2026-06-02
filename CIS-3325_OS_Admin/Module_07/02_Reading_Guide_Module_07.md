@@ -1,51 +1,237 @@
 # Reading Guide: Module 07 - Shell Scripting Fundamentals
-## Course: CIS-3325_OS_Admin (CompTIA Linux+ XK0-005)
+
+## CIS-3325 OS Administration | Texas Wesleyan University
+
+**Certification Alignment:** CompTIA Linux+ (XK0-005)
+**Exam Domain:** Domain 4.0 - Automation and Scripting
 
 ---
 
-### Introduction
-Welcome to **Module 07 – Shell Scripting Fundamentals**! This week covers the essentials of bash scripting: variables, control flow, functions, and automation patterns used daily by Linux system administrators. Shell scripting is tested under CompTIA Linux+ XK0-005 Domain 4.0 (Scripting, Containers, and Automation) and appears in scenario-based questions throughout the exam.
+### Glossary
 
-As you work through this material you will learn how to write scripts that automate repetitive tasks, validate input with conditionals, iterate with loops, and produce reusable functions — skills that directly translate to real-world administration.
+**Shebang** - The #! character sequence at the very first line of a script that specifies the interpreter path (e.g., #!/bin/bash).
 
----
+**Positional Parameter** - A variable that holds a command-line argument passed to a script or function. $1 is the first argument, $2 is the second, and so on.
 
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
+**Exit Code** - An integer returned by every command and script. 0 means success. Any non-zero value indicates an error. Captured in the special variable $?.
 
-*   **Shebang line (`#!/bin/bash`)**: The first line of a bash script, telling the kernel which interpreter to use. Without it, the script may execute under the default shell (which could be `sh`, `dash`, or another shell with different syntax). Always include `#!/bin/bash` for scripts that use bash-specific syntax. Make the script executable with `chmod +x script.sh` before running it as `./script.sh`.
-*   **Variables and quoting**: Variables are assigned without spaces: `NAME="Alice"`. Referenced with `$NAME` or `${NAME}`. Double quotes preserve whitespace and allow variable expansion: `"Hello $NAME"`. Single quotes treat everything literally: `'Hello $NAME'` prints `$NAME` as text. Always quote variable references in conditionals to avoid word-splitting errors when the variable is empty.
-*   **Conditionals (`if`/`elif`/`else`)**: Bash conditionals test exit codes. The `[[ ]]` construct is bash-specific and safer than `[ ]`. Common tests: `-f file` (file exists and is a regular file), `-d dir` (directory exists), `-z "$VAR"` (string is empty), `-n "$VAR"` (string is non-empty), `-eq`, `-ne`, `-lt`, `-gt` (integer comparisons). String comparisons use `==` and `!=` inside `[[ ]]`.
-*   **Loops (`for`, `while`, `until`)**: `for item in list; do ... done` iterates over a list. `while [ condition ]; do ... done` runs while condition is true. `until [ condition ]; do ... done` runs until condition is true. Use `break` to exit a loop early and `continue` to skip to the next iteration.
-*   **Exit codes and `$?`**: Every command returns an exit code. `0` means success; any non-zero value means failure. `$?` holds the exit code of the last command. Proper scripts check exit codes: `if ! cp file dest; then echo "Copy failed"; exit 1; fi`. The `set -e` option causes a script to exit immediately if any command returns a non-zero exit code.
-*   **Functions**: Defined with `function_name() { commands; }` or `function function_name { commands; }`. Called by name without parentheses. Arguments passed to functions are accessed as `$1`, `$2`, etc. — just like script arguments. Local variables inside functions should use the `local` keyword to avoid polluting the global scope.
+**Command Substitution** - Capturing the output of a command into a variable using the $() syntax (e.g., TODAY=$(date +%Y-%m-%d)).
 
----
+**Here Document** - A multi-line string literal embedded in a script, delimited by a user-chosen word (typically EOF), used to pass multi-line input to commands.
 
-### 2. Certification Exam Tips
-*   **Domain alignment:** Scripting falls under Linux+ Domain 4.0 (Scripting, Containers, and Automation), worth approximately 15% of the exam. Expect 6–8 questions involving script reading, syntax identification, and debugging.
-*   **Know the special variables:** `$0` = script name, `$1`–`$9` = positional parameters, `$#` = number of arguments, `$@` = all arguments as separate words, `$*` = all arguments as a single word, `$$` = current PID, `$?` = last exit code. These appear directly in exam questions.
-*   **`test` vs `[[ ]]` trap:** The exam may show `[ $VAR == "value" ]` — this works but fails when `$VAR` is empty due to word-splitting. The exam-safe form is `[[ "$VAR" == "value" ]]`. Know the difference between `-eq` (integer) and `==` (string) comparisons.
-*   **`#!/bin/bash` vs `#!/bin/sh`:** `sh` scripts must avoid bash-specific syntax like `[[ ]]`, arrays, and `$( )` process substitution in some implementations. The exam tests whether you know that a script with `#!/bin/sh` that uses bash arrays will fail on systems where `/bin/sh` is `dash`.
-*   **Study Resource:** [The Linux Command Line by William Shotts](https://linuxcommand.org/tlcl.php) covers shell scripting comprehensively in chapters 24–36 — these are the most important chapters for this module. [Linux Essentials Course by LearnLinuxTV](https://www.youtube.com/playlist?list=PLT98CRl2KxEG0QLjR-8t7k3S4I15Z1A78) includes scripting walkthrough videos demonstrating variables, loops, and functions in practical automation examples.
+**set -e** - A shell option that causes a script to exit immediately when any command returns a non-zero exit code.
+
+**set -u** - A shell option that causes a script to exit when an undefined variable is referenced.
+
+**trap** - A bash built-in that defines a command to run when the script receives a specified signal or reaches a predefined condition (ERR, EXIT).
+
+**local** - A keyword used inside a function to restrict a variable's scope to that function. Without local, all script variables are global.
+
+**IFS (Internal Field Separator)** - A shell variable that determines how bash splits input into words. Default is whitespace. Changing it affects how read and loops parse input.
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read chapters 24–27 of the free OER textbook [The Linux Command Line by William Shotts](https://linuxcommand.org/tlcl.php), which introduce the concepts of writing, testing, and debugging bash scripts for system administration tasks.
-*   **Required Video:** Watch the shell scripting videos in the [Linux Essentials Course by LearnLinuxTV](https://www.youtube.com/playlist?list=PLT98CRl2KxEG0QLjR-8t7k3S4I15Z1A78), a free YouTube playlist that demonstrates practical bash scripting from basic variable use through loops and functions.
+### Special Variables Reference
+
+| Variable | Meaning |
+|----------|---------|
+| $0 | Name of the script |
+| $1 to $9 | Positional parameters (command-line arguments) |
+| $# | Count of positional parameters |
+| $@ | All positional parameters as separate quoted words |
+| $* | All positional parameters as a single word |
+| $? | Exit code of the most recently executed command |
+| $$ | PID of the current shell or script |
+| $! | PID of the most recently backgrounded process |
+| $LINENO | Current line number in the script |
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab you will write a bash script that accepts command-line arguments, uses an if/else conditional to validate input, iterates over a list with a for loop, defines and calls a function, and exits with an appropriate code. Use `bash -x script.sh` to enable trace debugging.
+### File Test Operators
+
+| Operator | Meaning |
+|----------|---------|
+| -f FILE | True if FILE exists and is a regular file |
+| -d DIR | True if DIR exists and is a directory |
+| -e PATH | True if PATH exists (file or directory) |
+| -r FILE | True if FILE is readable |
+| -w FILE | True if FILE is writable |
+| -x FILE | True if FILE is executable |
+| -s FILE | True if FILE exists and has size greater than zero |
+| -L FILE | True if FILE is a symbolic link |
+| -z STRING | True if STRING is empty (zero length) |
+| -n STRING | True if STRING is not empty |
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read chapters 24–27 in [The Linux Command Line by William Shotts](https://linuxcommand.org/tlcl.php).
-- [ ] Watch the shell scripting videos in [Linux Essentials Course by LearnLinuxTV](https://www.youtube.com/playlist?list=PLT98CRl2KxEG0QLjR-8t7k3S4I15Z1A78).
-- [ ] Review the commands outlined in the lab instructions.
-- [ ] Proceed to the weekly hands-on lab activity.
+### Comparison Operators
+
+Integer comparisons (used inside [ ] or [[ ]]):
+
+| Operator | Meaning |
+|----------|---------|
+| -eq | Equal to |
+| -ne | Not equal to |
+| -lt | Less than |
+| -le | Less than or equal to |
+| -gt | Greater than |
+| -ge | Greater than or equal to |
+
+String comparisons:
+
+| Operator | Meaning |
+|----------|---------|
+| = or == | Strings are equal |
+| != | Strings are not equal |
+| < | String is less than (alphabetical, inside [[]]) |
+| > | String is greater than (alphabetical, inside [[]]) |
+
+---
+
+### Loop Control
+
+| Statement | Effect |
+|-----------|--------|
+| break | Exit the current loop immediately |
+| continue | Skip the rest of the current iteration; go to the next |
+| exit N | Exit the entire script with exit code N |
+| return N | Exit the current function with return code N |
+
+---
+
+### set Options for Robust Scripts
+
+| Option | Effect |
+|--------|--------|
+| set -e | Exit immediately on any command failure |
+| set -u | Exit on reference to an undefined variable |
+| set -o pipefail | Pipeline returns exit code of first failing command |
+| set -x | Print each command before executing (debug mode) |
+| set -euo pipefail | Combined best-practice line for production scripts |
+
+---
+
+### trap Syntax Reference
+
+```bash
+trap 'COMMAND' SIGNAL
+trap 'COMMAND' ERR
+trap 'COMMAND' EXIT
+trap 'COMMAND' INT
+```
+
+Common trap targets:
+
+| Target | When it fires |
+|--------|--------------|
+| ERR | Any command exits with non-zero code (when set -e is active) |
+| EXIT | Script exits for any reason (normal, error, or signal) |
+| INT | User presses Ctrl+C (SIGINT) |
+| TERM | Process receives SIGTERM |
+
+---
+
+### Parameter Expansion Reference
+
+| Expression | Result |
+|------------|--------|
+| ${VAR} | Value of VAR |
+| ${VAR:-default} | Value of VAR, or default if VAR is unset or empty |
+| ${VAR:=default} | Value of VAR; sets VAR to default if unset or empty |
+| ${#VAR} | Length of VAR's value |
+| ${VAR#pattern} | Remove shortest prefix matching pattern |
+| ${VAR##pattern} | Remove longest prefix matching pattern |
+| ${VAR%pattern} | Remove shortest suffix matching pattern |
+| ${VAR%%pattern} | Remove longest suffix matching pattern |
+| ${VAR/old/new} | Replace first occurrence of old with new |
+| ${VAR//old/new} | Replace all occurrences of old with new |
+| ${VAR^^} | Convert to uppercase |
+| ${VAR,,} | Convert to lowercase |
+
+---
+
+### Script Execution Methods Compared
+
+| Method | Uses shebang | Execute permission needed | Runs in subshell | Variables persist to calling shell |
+|--------|-------------|--------------------------|-----------------|-----------------------------------|
+| ./script.sh | Yes | Yes | Yes | No |
+| bash script.sh | No | No | Yes | No |
+| source script.sh | No | No | No (same shell) | Yes |
+| . script.sh | No | No | No (same shell) | Yes |
+
+---
+
+### Logging Pattern
+
+A reliable logging function for production scripts:
+
+```bash
+LOG=/var/log/myscript.log
+
+log() {
+    echo "$(date '+%Y-%m-%d %H:%M:%S') [$1] ${*:2}" | tee -a "$LOG"
+}
+
+log INFO  "Starting backup"
+log ERROR "Backup failed: disk full"
+```
+
+tee -a writes to both stdout and the log file simultaneously. The -a flag appends.
+
+---
+
+### Cron Integration
+
+Scripts intended for cron should redirect all output to a log file. Cron emails uncaptured
+output to root, which fills inboxes on busy servers.
+
+```bash
+#!/bin/bash
+exec >> /var/log/myscript.log 2>&1
+```
+
+The exec redirection at the top of the script captures all subsequent stdout and stderr
+into the log file for the lifetime of the script execution.
+
+---
+
+### Exam Tips
+
+1. The shebang line must be on line 1, column 1 of the script. A blank line before it breaks it.
+
+2. $? must be checked immediately after the command whose exit code you want. Running any other command between the target command and the $? check will overwrite $? with the new command's exit code.
+
+3. set -e exits on error, but set -u exits on undefined variables. Both are recommended for production scripts. Combine with set -o pipefail.
+
+4. source (or .) runs the script in the current shell. Variables set inside the script affect the current session. Do not source scripts that cd or set variables you do not want to inherit.
+
+5. break exits the loop. continue skips to the next iteration. exit exits the script entirely. return exits only the current function.
+
+6. local in a function limits the variable to that function's scope. Without local, functions can accidentally modify global variables.
+
+7. $@ preserves argument quoting (each argument as a separate word). $* combines all arguments into one word. Use $@ when forwarding arguments to other commands.
+
+8. Use double quotes around variable references in test conditions: [ "$VAR" = "value" ]. Unquoted variables with spaces cause syntax errors in tests.
+
+---
+
+### Study Checklist
+
+Before the quiz and lab, confirm you can do all of the following without looking them up:
+
+- Write a correct shebang line
+- Explain the difference between ./script.sh and source script.sh
+- Assign and reference a variable correctly (no spaces around =)
+- Use $() for command substitution
+- List all special variables ($0, $1, $#, $@, $?, $$)
+- Write a complete if/then/else/fi block with file test and string comparison operators
+- Write a for loop over a list and over files with a glob pattern
+- Write a while loop with an arithmetic condition
+- Write a while read loop that processes a file line by line
+- Define a function with local variables and a return value
+- Use set -euo pipefail and explain what each flag does
+- Write a trap for ERR and EXIT
+- Use read with -p (prompt), -s (silent), and -t (timeout)
+- Write a here document that feeds multi-line input to a command
+- Use at least three parameter expansion operators from the reference table
+- Construct a logging function that writes timestamped output to a file and stdout

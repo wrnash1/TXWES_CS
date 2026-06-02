@@ -1,62 +1,235 @@
-# Reading Guide: Module 04 – Stacks and Queues
-## Course: CIS-2315 Data Structures & Algorithms (Technical Interview Readiness)
+# Reading Guide: Module 04 — Recursion & Backtracking
+
+## Course: CIS-2315 Data Structures & Algorithms
+
+**Certification Alignment:** Technical Interview Readiness (LeetCode / HackerRank)
 
 ---
 
-### Introduction
-Welcome to **Module 04 – Stacks and Queues**! Stacks and queues are abstract data types built on top of arrays or linked lists that enforce a specific access order. They appear constantly in technical interviews — stacks power bracket matching, expression evaluation, and DFS; queues power BFS, task scheduling, and sliding window maximum. Knowing both their interface and their internal implementation is essential.
+## Introduction
 
-This module covers LIFO/FIFO semantics, monotonic stacks, deques, and the interview problems these structures solve.
-
----
-
-### 1. High-Yield Glossary
-
-*   **Stack**: A Last-In-First-Out (LIFO) abstract data type supporting `push` (add to top), `pop` (remove from top), and `peek` (read top without removing). All three operations are O(1). Used for call stacks, undo history, DFS traversal, and bracket validation.
-
-*   **Queue**: A First-In-First-Out (FIFO) abstract data type supporting `enqueue` (add to back) and `dequeue` (remove from front). All operations are O(1) when implemented with a doubly linked list or circular array. Used for BFS traversal, task scheduling, and sliding window problems.
-
-*   **Deque (double-ended queue)**: A generalization of both stack and queue that supports O(1) insertion and deletion at both ends. Python's `collections.deque` is the standard interview tool — use it instead of a list when you need efficient operations at both ends.
-
-*   **Monotonic stack**: A stack that is maintained in strictly increasing or strictly decreasing order. When a new element violates the order, elements are popped until the constraint is satisfied. Used to find the next greater element, largest rectangle in histogram, and similar problems in O(n) time.
-
-*   **LIFO (Last-In-First-Out)**: The access order of a stack — the most recently added element is the first one removed. Analogous to a pile of plates: you always take from the top.
-
-*   **FIFO (First-In-First-Out)**: The access order of a queue — the first element added is the first one removed. Analogous to a line at a store: customers are served in the order they arrived.
-
-*   **Circular buffer (ring buffer)**: An array-based queue implementation where the front and back indices wrap around using modulo arithmetic, enabling O(1) enqueue and dequeue without shifting elements. Used in fixed-capacity queue implementations.
+Recursion is the technique of solving a problem by solving smaller instances of the same problem. Backtracking is recursion applied to decision search: you build a solution piece by piece, abandoning partial solutions as soon as a constraint is violated. Together, these two techniques solve almost every combinatorial interview problem — subsets, permutations, combinations, N-Queens, Sudoku — and form the basis of tree traversal, divide-and-conquer, and dynamic programming.
 
 ---
 
-### 2. Certification Exam Tips
-*   **Brackets and parentheses = stack:** Any problem involving matching pairs (valid parentheses, HTML tag matching, decode string) is solved with a stack. The pattern: push opening brackets, pop on closing, check for mismatch.
-*   **BFS always uses a queue:** When you see "shortest path," "level-order traversal," or "minimum steps," BFS is the algorithm and a queue is the data structure. Use `collections.deque` and `popleft()`.
-*   **Monotonic stack solves Next Greater Element in O(n):** Brute force is O(n²); a monotonic stack processes each element at most twice (pushed once, popped once), giving O(n).
-*   **Implement a queue using two stacks:** This is a classic interview question (LeetCode #232). Push always goes to stack1; pop moves all elements to stack2 if stack2 is empty. Amortized O(1) per operation.
-*   **Know Python's stack and queue tools:** Stack → `list` with `.append()` and `.pop()`. Queue → `collections.deque` with `.append()` and `.popleft()`. Priority queue → `heapq`.
-*   **Study Resource:** Work through [LeetCode Stack Explore Card](https://leetcode.com/explore/learn/card/queue-stack/) — a free structured module covering stack and queue fundamentals with progressively harder problems.
+## 1. Recursion Fundamentals
+
+### The Three Requirements
+
+Every correct recursive function satisfies three properties:
+
+1. **Base case** — an input small enough that the answer is known immediately, requiring no further recursion.
+2. **Progress** — each recursive call is made on a strictly smaller input, guaranteeing termination.
+3. **Correct assembly** — assuming the recursive call returns the correct answer for the smaller input, the expression around it assembles the correct answer for the current input.
+
+If all three hold, the function is correct by induction.
+
+### Factorial
+
+```python
+def factorial(n):
+    if n == 0:          # base case
+        return 1
+    return n * factorial(n - 1)   # recursive case; progress: n-1 < n
+```
+
+Call stack depth: n + 1 frames. Space: O(n).
+
+### Recursive Binary Search
+
+```python
+def binary_search(arr, target, lo, hi):
+    if lo > hi:                  # base case: search space empty
+        return -1
+    mid = (lo + hi) // 2
+    if arr[mid] == target:
+        return mid
+    elif arr[mid] < target:
+        return binary_search(arr, target, mid + 1, hi)
+    else:
+        return binary_search(arr, target, lo, mid - 1)
+```
+
+Time: O(log n). Space: O(log n) call stack depth.
 
 ---
 
-### Required Readings & Videos
-*   **Required Reading:** [Stacks and Queues – Open Data Structures (Pat Morin), Chapter 2.3–2.4](https://opendatastructures.org/ods-python/2_3_ArrayDeque.html) — covers array-based implementations of stacks, queues, and deques with code and complexity proofs.
-*   **Required Video:** [Stack & Queue – NeetCode on YouTube](https://www.youtube.com/watch?v=0Z5WWrME8bg) — a 25-minute walkthrough of stack and queue internals, the monotonic stack pattern, and LeetCode problem walkthroughs.
+## 2. Memoization
+
+### Naive Fibonacci — O(2ⁿ)
+
+```python
+def fib(n):
+    if n <= 1:
+        return n
+    return fib(n - 1) + fib(n - 2)
+```
+
+The call tree is a binary tree of depth n. Each node's computation is O(1) but there are O(2ⁿ) nodes. `fib(n-2)` is recomputed every time — exponential blowup.
+
+### Memoized Fibonacci — O(n)
+
+```python
+def fib(n, memo={}):
+    if n <= 1:
+        return n
+    if n in memo:
+        return memo[n]
+    memo[n] = fib(n - 1, memo) + fib(n - 2, memo)
+    return memo[n]
+```
+
+Each unique input from 0 to n is computed exactly once. Time: O(n). Space: O(n).
+
+**Warning:** Using a mutable default argument `memo={}` persists across calls in Python. For production code, use `memo=None` and initialize inside the function, or use `@lru_cache`.
+
+### `@lru_cache` Decorator
+
+```python
+from functools import lru_cache
+
+@lru_cache(maxsize=None)
+def fib(n):
+    if n <= 1:
+        return n
+    return fib(n - 1) + fib(n - 2)
+```
+
+`lru_cache` memoizes automatically. `maxsize=None` means unlimited cache size. This is the idiomatic Python approach for memoization.
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will:
-*   **Implement a stack using a Python list** and a queue using a singly linked list, verifying O(1) operations for both.
-*   **Solve LeetCode #20 (Valid Parentheses)** using a stack — the canonical bracket-matching problem.
-*   **Solve LeetCode #496 (Next Greater Element I)** using a monotonic stack, comparing your O(n) solution to a brute-force O(n²) approach.
-*   **Solve LeetCode #232 (Implement Queue Using Two Stacks)** and explain the amortized O(1) cost.
+## 3. Backtracking
+
+### The Template
+
+Backtracking builds a solution incrementally, exploring all possibilities and abandoning partial solutions that cannot lead to a valid result.
+
+```python
+def backtrack(state, choices):
+    if goal_reached(state):
+        record_solution(state)
+        return
+    for choice in choices:
+        if is_valid(state, choice):
+            make_choice(state, choice)      # choose
+            backtrack(state, next_choices)  # recurse
+            undo_choice(state, choice)      # unchoose
+```
+
+The `undo_choice` step is critical. It restores `state` to what it was before the choice, so the next iteration of the loop starts from the same clean state.
+
+### Subsets (LeetCode #78)
+
+```python
+def subsets(nums):
+    result = []
+
+    def backtrack(start, current):
+        result.append(list(current))
+        for i in range(start, len(nums)):
+            current.append(nums[i])    # choose
+            backtrack(i + 1, current)  # recurse
+            current.pop()              # unchoose
+
+    backtrack(0, [])
+    return result
+```
+
+Time: O(n · 2ⁿ) — 2ⁿ subsets, each copied in O(n).
+Space: O(n) call stack depth + O(n · 2ⁿ) for result storage.
+
+### Permutations (LeetCode #46)
+
+```python
+def permute(nums):
+    result = []
+
+    def backtrack(current, used):
+        if len(current) == len(nums):
+            result.append(list(current))
+            return
+        for i, num in enumerate(nums):
+            if i in used:
+                continue
+            current.append(num)       # choose
+            used.add(i)
+            backtrack(current, used)  # recurse
+            current.pop()             # unchoose
+            used.remove(i)
+
+    backtrack([], set())
+    return result
+```
+
+Time: O(n · n!) — n! permutations, each copied in O(n).
+
+### Generate Parentheses (LeetCode #22)
+
+```python
+def generate_parentheses(n):
+    result = []
+
+    def backtrack(s, open_count, close_count):
+        if len(s) == 2 * n:
+            result.append(s)
+            return
+        if open_count < n:
+            backtrack(s + '(', open_count + 1, close_count)
+        if close_count < open_count:
+            backtrack(s + ')', open_count, close_count + 1)
+
+    backtrack('', 0, 0)
+    return result
+```
+
+Constraints prune invalid paths: never add `)` when it would exceed `(` count. This is constraint-based pruning — the most powerful backtracking optimization.
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and be able to explain each in your own words.
-- [ ] Read Chapter 2.3–2.4 of Open Data Structures.
-- [ ] Watch the NeetCode Stack & Queue video.
-- [ ] Implement a stack and linked-list queue from scratch.
-- [ ] Solve LeetCode #20, #496, and #232.
-- [ ] Proceed to the Module 04 Quiz.
+## 4. Complexity Summary
+
+| Algorithm | Time | Space (call stack) | Notes |
+|---|---|---|---|
+| Factorial | O(n) | O(n) | Linear recursion |
+| Naive Fibonacci | O(2ⁿ) | O(n) | Each call branches twice |
+| Memoized Fibonacci | O(n) | O(n) | Each value computed once |
+| Recursive binary search | O(log n) | O(log n) | Halving eliminates half at each step |
+| Subsets | O(n · 2ⁿ) | O(n) | 2ⁿ choices, n depth |
+| Permutations | O(n · n!) | O(n) | n! arrangements, n depth |
+| Generate Parentheses | O(4ⁿ / √n) | O(n) | Catalan number of results |
+
+---
+
+## 5. Interview Exam Tips
+
+1. **Always write the base case first** — recursive functions without a base case cause infinite recursion and `RecursionError`. The base case is the contract that makes the function safe to call.
+
+2. **The unchoose step is mandatory in backtracking** — `current.pop()` after the recursive call restores state. Forgetting it means every recursive branch shares state, producing incorrect results.
+
+3. **Use `@lru_cache` in interviews** — Python's decorator handles memoization in one line. Always mention it as an optimization when naive recursion has overlapping subproblems.
+
+4. **Space complexity includes the call stack** — a recursion of depth n uses O(n) stack space even if no other data is stored. Mention this explicitly when asked about space complexity.
+
+5. **Draw the decision tree, not the code** — backtracking problems are understood by drawing the tree of choices at each step. Draw it first; the code follows naturally.
+
+6. **Constraint pruning reduces constant factors** — adding `if not is_valid(state, choice): continue` before recursing prunes branches early. This is the difference between LeetCode TLE and AC on hard backtracking problems.
+
+7. **Subsets vs combinations vs permutations** — subsets include all partial choices including the empty set; combinations choose k items without order; permutations choose all items with order. They use the same backtracking frame with different stopping conditions.
+
+8. **Recursive binary search has O(log n) space** — the iterative version uses O(1) space. On interviews, prefer iterative binary search unless recursion is explicitly required.
+
+---
+
+## 6. Study Checklist
+
+- [ ] Watch the Module 04 video lecture by Professor Nash.
+- [ ] Implement `factorial` and `binary_search` recursively.
+- [ ] Implement `fib` with and without memoization; compare performance.
+- [ ] Implement `@lru_cache` version of Fibonacci.
+- [ ] Solve LeetCode #78 (Subsets).
+- [ ] Solve LeetCode #46 (Permutations).
+- [ ] Solve LeetCode #22 (Generate Parentheses).
+- [ ] Attempt LeetCode #51 (N-Queens) as a stretch goal.
+- [ ] Complete the Module 04 Lab.
+- [ ] Complete the Module 04 Quiz.

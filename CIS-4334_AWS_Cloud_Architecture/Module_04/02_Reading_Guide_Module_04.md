@@ -1,68 +1,434 @@
-# Reading Guide: Module 04 - S3 – Storage Classes, Lifecycle Policies, and Security
-## Course: CIS-4334_AWS_Cloud_Architecture (AWS Certified Solutions Architect - Associate)
+# Reading Guide: Module 04 - S3: Storage Classes, Lifecycle Policies, and Security
+
+**Course:** CIS-4334 AWS Cloud Architecture
+**Certification Target:** AWS Solutions Architect Associate (SAA-C03)
 
 ---
 
-### Introduction
-Welcome to **Module 04 - S3 – Storage Classes, Lifecycle Policies, and Security**! Amazon Simple Storage Service (S3) is AWS's foundational object storage service and one of the most heavily tested topics on the SAA-C03 exam. This module covers how to select the appropriate storage class for different access patterns, how to automate cost reduction through Lifecycle policies, and how to secure bucket data using Block Public Access, bucket policies, ACLs, and encryption. S3 knowledge is tested both directly and as a dependency of services like CloudFront, Lambda, and Athena.
+## Introduction
+
+Amazon S3 is the primary object storage service in AWS and one of the most frequently tested services on the SAA-C03 exam. S3 questions appear in every exam domain: cost optimization (storage class selection), resilience (replication and versioning), security (bucket policies, encryption, Block Public Access), and performance (Transfer Acceleration, multipart upload). This reading guide provides the complete reference tables, policy examples, and configuration patterns needed to answer those questions accurately.
 
 ---
 
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
+## Section 1: S3 Storage Classes Reference
 
-*   **S3 Storage Classes**: Tiered pricing tiers that trade retrieval speed and frequency for cost. S3 Standard is for frequently accessed data (millisecond latency, 99.99% availability). S3 Standard-IA (Infrequent Access) costs less per GB stored but charges a per-retrieval fee, suitable for data accessed monthly. S3 One Zone-IA stores data in a single AZ for 20% less than Standard-IA but with lower durability. S3 Glacier Instant Retrieval and S3 Glacier Flexible Retrieval are for archival data. S3 Glacier Deep Archive is the lowest-cost tier with retrieval times of 12–48 hours. S3 Intelligent-Tiering automatically moves objects between tiers based on access patterns.
+### 1.1 Complete Storage Class Comparison Table
 
-*   **S3 Lifecycle Policies**: Rules attached to a bucket or prefix that automatically transition objects between storage classes or expire (delete) objects after a defined number of days. For example, transition objects to Standard-IA after 30 days, to Glacier Flexible Retrieval after 90 days, and delete after 365 days. Lifecycle policies eliminate manual cost management and are a key cost optimization pattern on the exam.
+| Storage Class | Min Duration | Availability Zones | Availability SLA | Retrieval Fee | Best Use Case |
+|---|---|---|---|---|---|
+| S3 Standard | None | 3+ | 99.99% | None | Frequently accessed data, web assets |
+| S3 Intelligent-Tiering | None | 3+ | 99.9% | None (auto-tiered) | Unknown or changing access patterns |
+| S3 Standard-IA | 30 days | 3+ | 99.9% | Per-GB | Infrequent access, backups, DR data |
+| S3 One Zone-IA | 30 days | 1 | 99.5% | Per-GB | Reproducible data, secondary backups |
+| S3 Glacier Instant Retrieval | 90 days | 3+ | 99.9% | Per-GB | Quarterly access, medical images, news archives |
+| S3 Glacier Flexible Retrieval | 90 days | 3+ | 99.99% | Per-GB + retrieval tier | Annual archives, compliance backups |
+| S3 Glacier Deep Archive | 180 days | 3+ | 99.99% | Per-GB (highest) | 7+ year retention, regulatory compliance |
 
-*   **S3 Versioning**: A bucket-level setting that retains all versions of every object, including deleted objects (via delete markers). Versioning is a prerequisite for S3 Replication, MFA Delete, and S3 Object Lock. Once enabled, versioning cannot be fully disabled — it can only be suspended, leaving existing versions intact.
+All storage classes share the same 11 nines (99.999999999%) durability — this is because durability is about data not being lost, while availability is about data being accessible. AWS achieves 11 nines by storing objects redundantly across multiple devices within a single AZ and, for multi-AZ classes, across multiple AZs.
 
-*   **S3 Block Public Access**: A set of four account-level and bucket-level settings that prevent objects from becoming publicly accessible regardless of individual object ACLs or bucket policy statements. AWS enables Block Public Access at the account level by default for new accounts. It is the primary safeguard against accidental data exposure.
+### 1.2 Retrieval Time Comparison for Glacier Classes
 
-*   **S3 Encryption**: S3 supports server-side encryption (SSE) with three key management options: SSE-S3 (AWS-managed keys, enabled by default), SSE-KMS (AWS Key Management Service — provides audit logs via CloudTrail and customer-managed key rotation), and SSE-C (customer-provided keys managed entirely by the customer). Client-side encryption is also supported for data encrypted before upload. SSE-KMS is the exam answer whenever key management auditing or compliance is required.
+| Storage Class | Expedited | Standard | Bulk |
+|---|---|---|---|
+| Glacier Instant Retrieval | Milliseconds | Milliseconds | N/A |
+| Glacier Flexible Retrieval | 1-5 minutes | 3-5 hours | 5-12 hours |
+| Glacier Deep Archive | N/A | 12 hours | 48 hours |
 
----
+### 1.3 S3 Intelligent-Tiering Access Tiers
 
-### 2. Certification Exam Tips
+Intelligent-Tiering automatically moves objects between tiers based on access history:
 
-*   **SAA-C03 Domain Relevance:** S3 questions appear in all four domains. Cost questions involve storage class selection and Lifecycle policies. Security questions involve Block Public Access, bucket policies, ACLs, and encryption. Resilience questions involve versioning, replication, and Cross-Region Replication.
+| Tier | Activation | Cost Relative to Standard |
+|---|---|---|
+| Frequent Access | Default | Same as Standard |
+| Infrequent Access | 30 days without access | ~40% less than Standard |
+| Archive Instant Access | 90 days without access | ~68% less than Standard |
+| Archive Access (optional) | 90-180 days (configurable) | Similar to Glacier Flexible |
+| Deep Archive Access (optional) | 180+ days (configurable) | Similar to Glacier Deep Archive |
 
-*   **Storage Class Selection Trap:** The exam will describe an access frequency and ask which storage class is cheapest. The key rule: if data is accessed less than once a month, Standard-IA or One Zone-IA saves money. If data is accessed less than once a year, Glacier. If the access pattern is unknown, Intelligent-Tiering avoids retrieval charges and optimizes automatically.
-
-*   **S3 vs. EBS vs. EFS:** S3 is object storage — ideal for static files, backups, data lakes, and media. EBS is block storage attached to a single EC2 instance for databases and boot volumes. EFS is network file storage mountable by multiple EC2 instances. Choosing the wrong storage type is the most common distractor in S3 questions.
-
-*   **Bucket Policy vs. ACL:** Bucket policies are JSON-based resource policies that grant cross-account access and are the preferred access control mechanism. ACLs are legacy object-level access controls that AWS recommends disabling in favor of policies. The exam answer is almost always to use a bucket policy or IAM policy, not ACLs.
-
-*   **Presigned URLs for Temporary Access:** When a question asks how to give an external user temporary access to a private S3 object without making it public, the answer is a presigned URL — a time-limited URL generated with the uploader's credentials that grants access for a specific duration.
-
-*   **Study Resource:** The S3 documentation covers all storage classes, Lifecycle rules, and security features: [Amazon S3 User Guide](https://docs.aws.amazon.com/s3/index.html). The "Amazon S3 Security Best Practices" section is directly exam-relevant.
-
----
-
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-
-*   **Required Reading:** Read the S3 chapters in the AWS Solutions Architect study materials, focusing on storage class comparison and the security model. The [Amazon S3 FAQs page](https://aws.amazon.com/s3/faqs/) is a concise exam preparation resource. Also review the [AWS Whitepapers & Guides](https://aws.amazon.com/whitepapers/) for the "AWS Storage Services Overview" whitepaper.
-
-*   **Required Video:** Watch the S3 module in the official course playlist, paying particular attention to the storage class transition waterfall, Lifecycle policy configuration, and the interaction between Block Public Access and bucket policies: [AWS Certified Solutions Architect Associate Course](https://www.youtube.com/watch?v=Ia-UEYYR44s).
-
----
-
-### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-
-*   **Create an S3 bucket with versioning and Block Public Access enabled:** Use the AWS CLI: `aws s3api create-bucket --bucket my-lab-bucket --region us-east-1` followed by `aws s3api put-bucket-versioning --bucket my-lab-bucket --versioning-configuration Status=Enabled`.
-
-*   **Configure a Lifecycle policy:** Create a Lifecycle rule that transitions objects to Standard-IA after 30 days and to Glacier Flexible Retrieval after 90 days using the S3 console Lifecycle management tab or the `aws s3api put-bucket-lifecycle-configuration` CLI command.
-
-*   **Generate and test a presigned URL:** Upload a private object and generate a presigned URL with a 1-hour expiration: `aws s3 presign s3://my-lab-bucket/myfile.txt --expires-in 3600`. Test access in a browser and verify expiration.
+Objects returned to frequent access automatically when accessed in lower tiers. No retrieval fee between tiers, but a per-object monitoring fee applies.
 
 ---
 
-### 3. Study Checklist
-- [ ] Read and be able to define all five glossary terms in your own words.
-- [ ] Compare all S3 storage classes and their use cases at [https://aws.amazon.com/s3/storage-classes/](https://aws.amazon.com/s3/storage-classes/).
-- [ ] Review S3 security best practices at [https://docs.aws.amazon.com/AmazonS3/latest/userguide/security-best-practices.html](https://docs.aws.amazon.com/AmazonS3/latest/userguide/security-best-practices.html).
-- [ ] Watch the S3 video lecture in [AWS Certified Solutions Architect Associate Course](https://www.youtube.com/watch?v=Ia-UEYYR44s).
-- [ ] Complete the hands-on lab creating buckets, Lifecycle policies, and presigned URLs.
-- [ ] Proceed to the weekly quiz.
+## Section 2: S3 Lifecycle Policy Design
+
+### 2.1 Lifecycle Policy Transition Rules
+
+Valid transition order (can only go down the hierarchy):
+
+```text
+Standard
+  -> Standard-IA (minimum 30 days in Standard)
+  -> Intelligent-Tiering
+  -> Glacier Instant Retrieval
+  -> Glacier Flexible Retrieval
+  -> Glacier Deep Archive
+```
+
+Minimum days between transitions: Standard → Standard-IA requires at least 30 days. Standard-IA → Glacier requires at least 30 more days (60 days total from creation).
+
+### 2.2 Lifecycle Policy for a Three-Stage Data Retention Strategy
+
+This policy applies a common three-stage retention model to application logs:
+
+```json
+{
+  "Rules": [
+    {
+      "ID": "AppLogsRetentionPolicy",
+      "Filter": {
+        "Prefix": "app-logs/"
+      },
+      "Status": "Enabled",
+      "Transitions": [
+        {
+          "Days": 30,
+          "StorageClass": "STANDARD_IA"
+        },
+        {
+          "Days": 90,
+          "StorageClass": "GLACIER"
+        },
+        {
+          "Days": 365,
+          "StorageClass": "DEEP_ARCHIVE"
+        }
+      ],
+      "Expiration": {
+        "Days": 2555
+      }
+    }
+  ]
+}
+```
+
+This keeps logs in Standard for the first 30 days (frequent operational access), moves to Standard-IA for days 30-90 (occasional reference), to Glacier for days 90-365 (rare access), to Deep Archive for years 1-7 (compliance retention), and deletes after 7 years (2,555 days).
+
+### 2.3 Lifecycle Policy for Version Cleanup
+
+When versioning is enabled, previous versions accumulate. This policy automatically expires noncurrent versions and removes incomplete multipart uploads:
+
+```json
+{
+  "Rules": [
+    {
+      "ID": "CleanupOldVersions",
+      "Filter": {},
+      "Status": "Enabled",
+      "NoncurrentVersionTransitions": [
+        {
+          "NoncurrentDays": 30,
+          "StorageClass": "STANDARD_IA"
+        }
+      ],
+      "NoncurrentVersionExpiration": {
+        "NoncurrentDays": 90
+      },
+      "AbortIncompleteMultipartUpload": {
+        "DaysAfterInitiation": 7
+      }
+    }
+  ]
+}
+```
+
+The empty Filter object `{}` applies the rule to all objects in the bucket.
+
+---
+
+## Section 3: S3 Security Controls
+
+### 3.1 Security Control Hierarchy
+
+When AWS evaluates an S3 request, controls are applied in this order:
+
+1. Block Public Access settings — override any ACL or bucket policy that would grant public access
+2. Bucket policy — resource-based policy evaluated alongside identity policies
+3. IAM identity policy — the requesting principal's identity-based policy
+4. Object ACL — legacy per-object access control (AWS recommends disabling ACLs)
+
+### 3.2 Block Public Access Settings
+
+| Setting | What It Blocks |
+|---|---|
+| BlockPublicAcls | Prevents adding ACLs that grant public access |
+| IgnorePublicAcls | Ignores any existing public ACLs |
+| BlockPublicPolicy | Prevents bucket policies that grant public access |
+| RestrictPublicBuckets | Restricts access to only AWS service principals and authorized accounts when a public policy exists |
+
+AWS recommends enabling all four settings at the account level unless you intentionally need public S3 content. This is set in the S3 console under Block Public Access settings for the account.
+
+### 3.3 Encryption Options Compared
+
+| Encryption Type | Key Management | Audit Trail | Compliance Use Case |
+|---|---|---|---|
+| SSE-S3 (AES-256) | AWS-managed, transparent | None | Basic encryption, no compliance requirement |
+| SSE-KMS | AWS KMS, customer-controlled policy | CloudTrail logs key usage | PCI DSS, HIPAA, SOC 2 requiring key audit |
+| SSE-C | Customer-managed, never stored in AWS | None (key not in AWS) | Strict key custody requirements |
+| Client-side encryption | Customer-managed | None (done before upload) | Maximum control — AWS never sees plaintext |
+| DSSE-KMS | Dual-layer SSE-KMS | CloudTrail (dual) | Highest regulatory compliance (SEC, GovCloud) |
+
+### 3.4 Bucket Policy Examples
+
+Enforce HTTPS-only access (deny all HTTP requests):
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "DenyNonHTTPS",
+      "Effect": "Deny",
+      "Principal": "*",
+      "Action": "s3:*",
+      "Resource": [
+        "arn:aws:s3:::example-bucket",
+        "arn:aws:s3:::example-bucket/*"
+      ],
+      "Condition": {
+        "Bool": {
+          "aws:SecureTransport": "false"
+        }
+      }
+    }
+  ]
+}
+```
+
+Restrict access to a specific VPC endpoint only (traffic must come through the VPC endpoint):
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "RestrictToVPCEndpoint",
+      "Effect": "Deny",
+      "Principal": "*",
+      "Action": "s3:*",
+      "Resource": [
+        "arn:aws:s3:::example-bucket",
+        "arn:aws:s3:::example-bucket/*"
+      ],
+      "Condition": {
+        "StringNotEquals": {
+          "aws:sourceVpce": "vpce-1234567890abcdef0"
+        }
+      }
+    }
+  ]
+}
+```
+
+### 3.5 VPC Endpoints for S3
+
+S3 Gateway VPC Endpoints allow EC2 instances in a VPC to access S3 without traversing the public internet. Key characteristics:
+
+- No additional charge for the endpoint or for data transfer through it
+- Route table entry is added to direct S3 traffic through the endpoint
+- Does not require an internet gateway, NAT gateway, or VPN
+- Works with S3 and DynamoDB only (other services use Interface VPC Endpoints which have a cost)
+
+For the exam: if a scenario requires EC2 instances in a private subnet to access S3 without internet access or NAT gateway, the answer is an S3 Gateway VPC Endpoint.
+
+---
+
+## Section 4: S3 Versioning, Replication, and Object Lock
+
+### 4.1 Versioning Behavior
+
+| Action | Versioning Disabled | Versioning Enabled | Versioning Suspended |
+|---|---|---|---|
+| PUT object | Replaces existing | Creates new version | Creates new version with null ID |
+| DELETE object | Deletes the object | Creates delete marker (object preserved) | Creates delete marker |
+| GET object | Returns current | Returns latest version | Returns null-version or latest |
+| Recover from delete | Not possible | Delete the delete marker | Limited recovery |
+
+Versioning cannot be disabled once enabled — it can only be suspended. Suspended versioning stops creating new versions but preserves existing versions.
+
+### 4.2 Replication Comparison
+
+| Feature | Cross-Region Replication | Same-Region Replication |
+|---|---|---|
+| Source and destination | Different Regions | Same Region, different bucket |
+| Requirement | Versioning on both buckets | Versioning on both buckets |
+| Replicates existing objects | No (only new objects by default) | No (only new objects by default) |
+| Replicates delete markers | Optional (configurable) | Optional |
+| Common use case | DR, compliance, global access | Log aggregation, cross-account copy, test/prod sync |
+| Replication Time Control | Optional (15-minute SLA) | Optional |
+
+### 4.3 Object Lock Retention Modes
+
+| Mode | Who Can Delete | Override Possible | Use Case |
+|---|---|---|---|
+| Governance | Must have s3:BypassGovernanceRetention | Yes, with permission | Testing WORM, internal compliance |
+| Compliance | Nobody (including root) | No | SEC 17a-4, financial records, legal hold |
+
+Legal Hold is a separate Object Lock feature — it prevents deletion without a retention period expiry. It can be removed by any user with s3:PutObjectLegalHold permission.
+
+---
+
+## Section 5: S3 Access Patterns
+
+### 5.1 Presigned URLs
+
+A presigned URL embeds temporary, time-limited credentials that allow the bearer to perform a specific S3 action on a specific object without needing AWS credentials. Key characteristics:
+
+- Generated using the IAM credentials of the creator
+- Expires at a configurable time (up to 7 days for IAM user credentials; up to 1 hour for IAM role temporary credentials)
+- Scope is limited to a single object and a single action (GET or PUT)
+- No bucket policy change required
+
+CLI generation example:
+
+```bash
+aws s3 presign s3://my-bucket/report.pdf \
+  --expires-in 3600
+```
+
+This generates a URL valid for 3600 seconds (1 hour). Anyone with this URL can GET the object.
+
+### 5.2 S3 Multipart Upload
+
+For objects larger than 100 MB, AWS recommends using multipart upload. For objects larger than 5 GB, multipart upload is required. Multipart upload:
+
+- Uploads object in parts (minimum 5 MB per part except the last)
+- Allows parallel upload of parts for improved throughput
+- Allows resuming failed uploads without restarting from zero
+- Incomplete multipart uploads incur storage costs until completed or aborted — use lifecycle rules to abort after N days
+
+### 5.3 S3 Transfer Acceleration
+
+Transfer Acceleration uses CloudFront Edge Locations as upload entry points. The client uploads to the nearest Edge Location, and AWS routes the data across its optimized backbone network to the S3 bucket. Most effective for:
+
+- Uploads from geographically distant clients
+- Large file uploads where reduced round-trip time per TCP packet matters
+- Distributed applications uploading to a central bucket from global locations
+
+---
+
+## Section 6: S3 Additional Features
+
+### 6.1 S3 Event Notifications
+
+S3 can publish event notifications when objects are created, deleted, or restored. Destinations:
+
+- Amazon SQS queue
+- Amazon SNS topic
+- AWS Lambda function
+- Amazon EventBridge (for all events)
+
+Common exam pattern: trigger a Lambda function to process an uploaded image, file, or CSV when it arrives in an S3 bucket. This is a serverless event-driven architecture pattern.
+
+### 6.2 S3 Static Website Hosting
+
+S3 buckets can host static websites (HTML, CSS, JavaScript, images). Requirements:
+
+- Bucket must be publicly accessible (Block Public Access must allow public bucket policies)
+- Static website hosting must be enabled in bucket properties
+- An index document (typically index.html) must be specified
+- Custom error documents optional
+
+The bucket website endpoint format is: `http://bucket-name.s3-website-region.amazonaws.com`
+
+For HTTPS, use CloudFront with an SSL certificate in front of the S3 bucket. CloudFront can serve S3 website content over HTTPS even though S3 website endpoints are HTTP-only.
+
+### 6.3 S3 Storage Lens
+
+S3 Storage Lens provides account-wide visibility into object storage usage and activity trends. It generates metrics across buckets and Regions including total storage, object count, cost efficiency metrics, and activity metrics. Use Storage Lens to identify underutilized buckets, buckets without versioning, and buckets without server-side encryption.
+
+---
+
+## Section 7: SAA-C03 Exam Tips for Module 04
+
+**Exam Tip 1 — Storage class selection by access pattern:**
+Frequently accessed = Standard. Unknown patterns = Intelligent-Tiering. Monthly access, data must be in multiple AZs = Standard-IA. Monthly access, single AZ acceptable = One Zone-IA. Quarterly access, instant retrieval = Glacier Instant. Annual access, can wait hours = Glacier Flexible. Multi-year compliance archive = Deep Archive.
+
+**Exam Tip 2 — One Zone-IA risk:**
+One Zone-IA stores data in only one AZ. If the AZ fails, data is lost. Only use One Zone-IA for data that can be recreated from another source or that is a secondary copy.
+
+**Exam Tip 3 — Block Public Access is the strongest public prevention control:**
+If a question asks how to ensure no object in a bucket can ever be made public regardless of future policy changes, Block Public Access is the answer. Bucket policies can be changed; Block Public Access prevents those changes from granting public access.
+
+**Exam Tip 4 — SSE-KMS for compliance and audit:**
+When a question mentions auditing, compliance, key rotation, or the need to see which principals accessed which encryption keys, SSE-KMS is correct. SSE-S3 provides encryption but no audit capability.
+
+**Exam Tip 5 — VPC Endpoint for private S3 access:**
+When a scenario has EC2 instances in a private subnet that need S3 access without internet connectivity, the answer is an S3 Gateway VPC Endpoint. It is free and does not require a NAT gateway.
+
+**Exam Tip 6 — CRR requires versioning:**
+Cross-Region Replication requires versioning to be enabled on both the source and destination buckets. If a question mentions CRR and does not mention versioning, enabling versioning is a prerequisite step.
+
+**Exam Tip 7 — Compliance WORM = Object Lock Compliance mode:**
+If the scenario mentions SEC 17a-4, HIPAA immutable records, or "no one including root can delete," the answer is S3 Object Lock in Compliance mode. Governance mode allows privileged users to bypass retention.
+
+**Exam Tip 8 — Presigned URLs for temporary private object access:**
+When a scenario asks how to give an external user temporary access to a private object without making the bucket public or creating IAM credentials, presigned URLs are the answer.
+
+---
+
+## Section 8: Key CLI Commands for Module 04
+
+List S3 buckets in your account:
+
+```bash
+aws s3 ls
+```
+
+Get bucket encryption configuration:
+
+```bash
+aws s3api get-bucket-encryption \
+  --bucket my-bucket-name
+```
+
+Get bucket versioning status:
+
+```bash
+aws s3api get-bucket-versioning \
+  --bucket my-bucket-name
+```
+
+Get bucket lifecycle configuration:
+
+```bash
+aws s3api get-bucket-lifecycle-configuration \
+  --bucket my-bucket-name
+```
+
+Get Block Public Access settings for a bucket:
+
+```bash
+aws s3api get-public-access-block \
+  --bucket my-bucket-name
+```
+
+Generate a presigned URL (valid for 1 hour):
+
+```bash
+aws s3 presign s3://my-bucket/myfile.pdf \
+  --expires-in 3600
+```
+
+---
+
+## Section 9: Study Checklist
+
+- [ ] Name all seven S3 storage classes, their minimum storage durations, and their primary use cases without referencing notes
+- [ ] Explain the 11-nines durability guarantee and the difference between durability and availability
+- [ ] Write a lifecycle policy JSON that transitions objects through three classes over 12 months and deletes them after 7 years
+- [ ] Describe all four Block Public Access settings and explain why AWS recommends enabling all of them by default
+- [ ] Compare SSE-S3, SSE-KMS, and SSE-C on key management, audit capability, and compliance use case
+- [ ] Write a bucket policy that enforces HTTPS-only access
+- [ ] Explain the difference between S3 Object Lock Governance mode and Compliance mode
+- [ ] Describe the prerequisite for enabling Cross-Region Replication
+- [ ] Run the CLI commands in Section 8 and record the output
+- [ ] Complete the Module 04 quiz with a score of at least 80 percent
+- [ ] Post your initial response in the Module 04 discussion forum by the Wednesday deadline
+
+---
+
+## References
+
+All certification study materials and exam registration: aws.amazon.com/certification

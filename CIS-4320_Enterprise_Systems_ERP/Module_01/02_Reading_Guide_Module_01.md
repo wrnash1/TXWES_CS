@@ -1,60 +1,244 @@
 # Reading Guide: Module 01 - Enterprise Systems Concepts
 
-## Course: CIS-4320_Enterprise_Systems_ERP (Salesforce Certified Associate / SAP Certified Associate)
+## Course: CIS-4320 Enterprise Systems and ERP | Texas Wesleyan University
+
+## Instructor: Professor Nash
+
+## Certification Alignment: Salesforce Certified Associate | SAP Certified Associate
 
 ---
 
-### Introduction
+## Introduction
 
-Welcome to **Module 01 - Enterprise Systems Concepts**! This module introduces the foundational ideas behind enterprise-wide information systems: how large organizations use integrated software platforms to replace disconnected departmental tools, eliminate data silos, and create a single authoritative source of business truth.
+Module 01 introduces the foundational concepts behind enterprise-wide information systems. Large organizations face a persistent challenge: dozens of departments generate and consume data every day, but when each department runs its own disconnected software, that data becomes fragmented, inconsistent, and slow to act on. Enterprise Resource Planning (ERP) and Customer Relationship Management (CRM) platforms were designed specifically to solve this problem.
 
-You will examine why companies adopt ERP and CRM platforms, how those systems connect business functions (finance, HR, supply chain, sales), and what distinguishes enterprise-grade systems from standard desktop applications. These concepts underpin every topic covered in the rest of this course and appear on both the Salesforce Certified Associate and SAP Certified Associate exams.
+This reading guide prepares you for the module quiz, the lab, and the discussion forum. It also maps directly to the knowledge tested on the Salesforce Certified Associate exam (specifically the "Salesforce Ecosystem and Terminology" domain) and the SAP Certified Associate exam (specifically the "Enterprise Structure and Basic Settings" domain).
 
----
-
-### 1. High-Yield Glossary
-
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-* **Enterprise Resource Planning (ERP)**: A category of integrated business-management software that consolidates core company functions — such as finance, procurement, manufacturing, and HR — into a single database and unified process model. ERP systems eliminate redundant data entry and give decision-makers a real-time view of the entire organization.
-* **Functional silos**: Isolated departmental systems (e.g., a standalone spreadsheet for sales and a separate database for finance) that store data independently and cannot share information automatically. Silos cause inconsistent reporting, duplicated effort, and delayed decision-making.
-* **Integrated data**: A design principle in which all business transactions write to and read from one shared data repository, so that a sales order automatically updates inventory counts, financial commitments, and shipping schedules without manual re-entry.
-* **Modular architecture**: The design approach used by SAP, Oracle, and Salesforce in which the platform is divided into specialized modules (Finance, HR, Sales, Supply Chain) that can be licensed and activated independently but share a common data layer and business logic engine.
+Work through each section in order. Complete the study checklist before you attempt the quiz.
 
 ---
 
-### 2. Certification Exam Tips
+## Section 1: High-Yield Glossary
 
-* **Salesforce Certified Associate focus:** The exam tests your understanding of *why* businesses use CRM platforms — specifically how Salesforce helps companies manage customer relationships, unify data, and automate workflows. Know the difference between a CRM (customer-facing) and an ERP (back-office operations).
-* **SAP focus:** Expect scenario questions that ask you to identify which SAP module handles a given business function (e.g., General Ledger belongs to FI; material replenishment belongs to MM). Being able to map a business need to the correct module is a core competency.
-* **Common exam trap:** Questions often contrast "functional silo" behavior with integrated ERP behavior. If a question describes a scenario where two departments have conflicting data about the same transaction, the correct answer almost always involves the integrated ERP eliminating that discrepancy.
-* **Study Resource:** Start with the free Salesforce Trailhead module [Salesforce Platform Basics](https://trailhead.salesforce.com/content/learn/modules/starting_force_com) — a hands-on introduction to how a cloud platform unifies apps, data, and processes across an entire organization.
+Memorize these definitions. Each term appears in certification exam questions.
+
+**Enterprise Resource Planning (ERP)**
+An integrated business-management software platform that consolidates core company functions — finance, procurement, manufacturing, HR, and logistics — into a single shared database and unified process model. ERP eliminates redundant data entry and provides decision-makers with a real-time view of the entire organization. Major vendors: SAP, Oracle, Microsoft Dynamics 365.
+
+**Functional Silo**
+An isolated departmental system that stores and processes data independently, with no automatic data sharing with other departments. Silos cause inconsistent reporting, duplicated effort, delayed decision-making, and the need for manual reconciliation between departments. The functional silo problem is the primary business driver for ERP adoption.
+
+**Integrated Data**
+A design principle in which all business transactions write to and read from one shared data repository. A sales order created in the Sales module automatically updates inventory counts in Materials Management, creates a financial commitment in Finance, and schedules a production order in Manufacturing — with no manual re-entry required. Integrated data produces a single source of truth.
+
+**Modular Architecture**
+The design structure used by SAP, Oracle, and Salesforce in which the platform is divided into specialized, independently activatable modules. Each module handles a distinct business function but shares a common underlying database and business logic engine with all other modules. This allows companies to implement modules incrementally and license only what they need.
+
+**Single Source of Truth**
+The organizational principle that all business decisions are based on one authoritative, shared data record. ERP achieves this through its shared database: there is only one vendor master record, one customer record, one inventory balance — not multiple copies in different departmental systems that can diverge.
+
+**Customer Relationship Management (CRM)**
+A category of enterprise software focused on managing customer-facing processes: sales pipeline management, marketing campaigns, and customer service. The leading CRM vendor is Salesforce. CRM systems manage the "front office" (customer interactions), whereas ERP manages the "back office" (internal operations).
+
+**Back Office vs. Front Office**
+Back-office functions are internal business operations invisible to customers: accounting, payroll, procurement, inventory management, and manufacturing. Front-office functions are customer-facing: sales, marketing, and support. ERP primarily handles back-office; CRM primarily handles front-office. Many enterprises run both platforms, integrated through middleware.
+
+**Master Data**
+The core reference data shared across multiple business processes. Examples: vendor master records (used by Purchasing, Finance, and Receiving), material master records (used by Inventory, Manufacturing, and Sales), and customer master records (used by Sales, Billing, and Service). Master data quality is critical to ERP function — corrupted master data cascades errors across every process that references it.
+
+**Transactional Data**
+The records generated by executing business processes: purchase orders, invoices, delivery notes, payroll runs. Transactional data references master data (e.g., a purchase order references a vendor master and a material master) and accumulates over time to form the historical record of all business activity.
+
+**Total Cost of Ownership (TCO)**
+The full financial cost of an ERP system over its useful life, including software licenses, implementation labor, hardware or cloud infrastructure, customization, training, annual maintenance and support fees, and internal IT staffing. TCO is the correct basis for comparing SaaS versus on-premise deployment models — the upfront license price is only one component.
 
 ---
 
-### Required Readings & Videos
+## Section 2: ERP Module Comparison Table
 
-To prepare for this module's topics, you must complete the following readings and videos:
+The three most common platforms you will encounter in certification questions are SAP S/4HANA, Oracle Cloud ERP, and Salesforce. This table summarizes how each handles core business domains.
 
-* **Required Reading:** Complete the Salesforce Trailhead unit [Salesforce Platform Basics](https://trailhead.salesforce.com/content/learn/modules/starting_force_com) — a free module that explains how a cloud platform unifies apps, data, and processes for an entire organization.
-* **Required Video:** Watch the video lecture on **Enterprise Systems Concepts** in the official course playlist: [Salesforce & SAP ERP Fundamentals Tutorial](https://www.youtube.com/playlist?list=PLD2549A0D756627C1).
+| Business Domain | SAP S/4HANA Module | Oracle Cloud ERP Module | Salesforce Equivalent |
+|---|---|---|---|
+| Financial Accounting | FI (Financial Accounting) | Oracle Financials Cloud | Not a core ERP function; integrates via middleware |
+| Management Accounting | CO (Controlling) | Oracle Financials — Costing | Not applicable |
+| Procurement | MM (Materials Management) | Oracle Procurement Cloud | Not applicable |
+| Sales Order Management | SD (Sales and Distribution) | Oracle Order Management | Sales Cloud (Opportunities/Orders) |
+| Inventory Management | MM — Inventory Management | Oracle Inventory Management | Not applicable |
+| Human Resources | HCM (Human Capital Mgmt) / SuccessFactors | Oracle HCM Cloud | Not applicable |
+| Customer Service | SAP Service Cloud | Oracle Service Cloud | Service Cloud (Cases) |
+| Manufacturing | PP (Production Planning) | Oracle Manufacturing Cloud | Not applicable |
+| Analytics and Reporting | SAP Analytics Cloud | Oracle Analytics Cloud | Salesforce Reports and Dashboards |
+| Platform Development | SAP BTP (ABAP / Low-Code) | Oracle VBCS | Salesforce Platform (Apex / Flow) |
 
 ---
 
-### Lab & Command Integration
+## Section 3: Business Process Diagram — The Silo Problem vs. Integrated ERP
 
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
+### The Functional Silo Architecture (Pre-ERP)
 
-* **Map business functional silos**: Diagram a retail company that uses separate spreadsheets for inventory, sales orders, and billing — then identify where data duplication and errors would occur.
-* **Evaluate database data redundancy patterns**: Compare the same customer record stored in three different departmental systems and explain how integrated ERP collapses these into one authoritative record.
-* **Identify ERP business integration components**: Review an ERP system diagram and label each module (FI, MM, SD, HR) and the shared database layer they all connect to.
+```text
+[Sales System]        [Finance System]       [Warehouse System]
+  Customer Order          Invoice Database       Inventory Ledger
+       |                       |                      |
+  Manual Email           Manual Entry           Manual Update
+       |                       |                      |
+ (3-day delay)          (data mismatch)        (out-of-sync)
+```
+
+Result: A customer order placed Monday may not reach the warehouse until Wednesday. The finance system may carry a different customer address than the sales system. Inventory counts may not reflect last week's shipments.
+
+### The Integrated ERP Architecture
+
+```text
+        [Shared Central Database]
+               |
+    +----------+----------+----------+----------+
+    |          |          |          |          |
+ [Sales]   [Finance]  [Warehouse]  [HR]   [Procurement]
+  Module     Module     Module    Module    Module
+    |          |          |          |          |
+    +----------+----------+----------+----------+
+               |
+    One record. One update. Visible to all modules instantly.
+```
+
+Result: A customer order entered in Sales is visible in the Warehouse within seconds, triggers a financial commitment in Finance, and can trigger a procurement proposal if inventory is insufficient.
 
 ---
 
-### 3. Study Checklist
+## Section 4: The ERP Market Landscape
 
-* [ ] Read the glossary terms and write your own paraphrase of each definition.
-* [ ] Complete [Salesforce Platform Basics](https://trailhead.salesforce.com/content/learn/modules/starting_force_com) on Trailhead (earn the badge).
-* [ ] Watch the video lecture on **Enterprise Systems Concepts** in [Salesforce & SAP ERP Fundamentals Tutorial](https://www.youtube.com/playlist?list=PLD2549A0D756627C1).
-* [ ] Complete the lab activity mapping functional silos and integration points.
-* [ ] Proceed to the weekly quiz.
+### Major Vendors and Their Target Markets
+
+| Vendor | Primary Product | Primary Market | Core Strength |
+|---|---|---|---|
+| SAP SE | S/4HANA | Large Enterprise | Finance, Manufacturing, Supply Chain |
+| Oracle | Oracle Cloud ERP | Large Enterprise | Finance, HR, SCM |
+| Microsoft | Dynamics 365 | Mid-Market to Enterprise | Microsoft ecosystem integration |
+| Salesforce | Sales/Service/Marketing Cloud | SMB to Enterprise | CRM, customer engagement |
+| NetSuite (Oracle) | NetSuite ERP | SMB to Mid-Market | Cloud-first ERP for growing companies |
+| Workday | Workday HCM/Finance | Enterprise | HR and Financial Planning |
+| Infor | Infor LN / CloudSuite | Manufacturing/Distribution | Industry-specific ERP |
+
+### SAP S/4HANA vs. Salesforce: A Side-by-Side Comparison
+
+| Dimension | SAP S/4HANA | Salesforce |
+|---|---|---|
+| Primary focus | Back-office ERP | Front-office CRM |
+| Deployment model | Cloud (public/private) or on-premise | SaaS (cloud only) |
+| Primary programming language | ABAP | Apex (server), LWC (front-end) |
+| Low-code/no-code tools | SAP Fiori / BTP AppGyver | Flow Builder, Process Builder |
+| Database | SAP HANA (in-memory columnar) | Proprietary multi-tenant database |
+| Release cadence (cloud) | Quarterly updates | 3 releases/year (Spring, Summer, Winter) |
+| Certification entry level | SAP Certified Associate — S/4HANA Cloud | Salesforce Certified Associate |
+| Key business processes | O2C, P2P, R2R, HCM | Lead-to-cash, Case management, Marketing |
+
+---
+
+## Section 5: Implementation Lifecycle Overview
+
+ERP implementations follow structured phases. Understanding these phases is tested on both SAP and Salesforce certifications. The diagram below shows the high-level flow:
+
+```text
+[1. Project Preparation]
+      Project charter, team formation, infrastructure setup
+            |
+[2. Business Process Analysis]
+      AS-IS process mapping, gap analysis, requirements
+            |
+[3. System Configuration]
+      Fit-to-standard workshops, configuration, customization
+            |
+[4. Data Migration]
+      Extract, transform, load master and transactional data
+            |
+[5. Testing]
+      Unit, integration, and User Acceptance Testing (UAT)
+            |
+[6. Go-Live and Cutover]
+      Production deployment, data cutover, legacy system freeze
+            |
+[7. Hypercare and Stabilization]
+      Intensive post-go-live support, issue resolution
+            |
+[8. Business as Usual]
+      Ongoing operations, optimization, upgrades
+```
+
+We will explore each phase in depth in Module 04. For now, understand that ERP projects are long (12-24 months for large companies), expensive, and high-risk — which is precisely why pre-implementation planning is so critical.
+
+---
+
+## Section 6: Integration Architecture Overview
+
+When enterprises run both SAP (ERP) and Salesforce (CRM), they need integration middleware to keep data synchronized between the two systems.
+
+```text
+[Salesforce CRM]                    [SAP S/4HANA ERP]
+  Accounts/Contacts       <-->        Customer Master (FI-AR)
+  Opportunities           <-->        Sales Orders (SD)
+  Cases                   <-->        Service Notifications
+  Invoices (read-only)    <-->        FI Invoice Documents
+
+         Integration Middleware (e.g., MuleSoft, SAP BTP)
+         Handles: data mapping, transformation, error handling,
+                  retry logic, authentication
+```
+
+Key integration patterns:
+
+- **Real-time**: A closed Opportunity in Salesforce immediately creates a Sales Order in SAP
+- **Batch/scheduled**: Customer account data syncs nightly from SAP to Salesforce
+- **Event-driven**: A shipped delivery in SAP triggers a case update in Salesforce Service Cloud
+
+---
+
+## Section 7: Certification Exam Tips
+
+1. **Know the ERP vs. CRM distinction cold.** Both the Salesforce Associate and SAP Associate exams test whether you can categorize a business process as belonging to ERP (back-office) or CRM (front-office). When a question involves accounts payable, inventory, or payroll — that is ERP. When it involves sales pipeline, customer cases, or marketing — that is CRM.
+
+2. **Integrated data means one database, one record.** When an exam question describes a scenario where two departments have conflicting data about the same transaction, the correct answer almost always involves ERP's shared database eliminating the discrepancy. "A shared central database" is usually the correct answer for data-consistency scenario questions.
+
+3. **Modular architecture does not mean disconnected.** Modules are specialized, but they share one database. Do not confuse modular design with silos — they are opposites. Modules coordinate through shared data; silos are isolated by definition.
+
+4. **Master data quality matters.** Exam questions on data migration (Module 12) and implementation (Module 04) frequently test whether you understand that bad master data flowing into a new ERP system causes cascading errors. Clean master data is a prerequisite for a successful go-live.
+
+5. **TCO includes much more than the license fee.** On questions about vendor selection and ERP investment decisions, Total Cost of Ownership always includes implementation, training, customization, support, and infrastructure — not just the software purchase price.
+
+6. **Salesforce is SaaS only.** Unlike SAP, which has on-premise, private cloud, and public cloud options, Salesforce has no on-premise deployment option. This is a frequently tested distinction.
+
+7. **SAP module codes are tested.** Memorize: FI = Financial Accounting, CO = Controlling, MM = Materials Management, SD = Sales and Distribution, HCM = Human Capital Management, PP = Production Planning. These abbreviations appear in questions throughout the SAP exam.
+
+8. **The role hierarchy and shared database are the same concept at different levels.** Organizational hierarchy in SAP (Client → Company Code → Plant → Storage Location) mirrors the database scoping logic. Understanding hierarchical data scoping will help you answer questions about multi-company reporting.
+
+---
+
+## Section 8: Required Trailhead and Study Resources
+
+Complete these before attempting the quiz:
+
+- **Salesforce Trailhead — Salesforce Platform Basics**
+  URL: trailhead.salesforce.com — search "Salesforce Platform Basics"
+  This free module explains the Salesforce platform architecture, multi-tenancy, and the app/object/field/record data model. Estimated time: 45 minutes. Earn the badge.
+
+- **Salesforce Trailhead — CRM for Lightning Experience**
+  URL: trailhead.salesforce.com — search "CRM for Lightning Experience"
+  Reviews the core CRM objects and business processes managed in Salesforce.
+
+---
+
+## Section 9: Study Checklist
+
+Work through each item before submitting the quiz.
+
+- Read all glossary terms in Section 1 and write your own one-sentence paraphrase of each.
+- Review the ERP module comparison table in Section 2 and be able to match a business domain to the correct SAP module code.
+- Study the silo vs. integrated architecture diagrams in Section 3 and be able to explain the difference verbally.
+- Review the vendor comparison table in Section 4. Know which vendor is the market leader in ERP vs. CRM.
+- Trace the implementation lifecycle diagram in Section 5. Know the sequence of phases.
+- Complete the Salesforce Trailhead "Salesforce Platform Basics" module and earn the badge.
+- Watch the Module 01 video lecture.
+- Complete Lab 01.
+- Post your initial response to Discussion Forum 01 by Wednesday at 11:59 PM.
+- Complete Quiz 01 (10 questions).

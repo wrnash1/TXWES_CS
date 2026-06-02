@@ -1,77 +1,207 @@
 # Quiz: Module 02 - File System Hierarchy and Navigation Commands
-## Course: CIS-3325_OS_Admin (CompTIA Linux+ XK0-005)
+
+## CIS-3325 OS Administration | Texas Wesleyan University
+
+**Certification Alignment:** CompTIA Linux+ (XK0-005)
+**Total Questions:** 10
+**Points:** 10 (1 point per question)
 
 ---
 
 **Question 1**
-Which directory in the Linux Filesystem Hierarchy Standard (FHS) is specifically designated to hold system-wide configuration files?
-A) /bin
-B) /var
-C) /etc
-D) /home
-*   **Correct Answer:** C) /etc
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* `/bin` contains essential user command binaries (like `ls` and `cp`), not configuration files.
-    *   *Why B is incorrect:* `/var` contains variable data that changes frequently during operation, such as system logs and print spools.
-    *   *Why D is incorrect:* `/home` contains the personal directories and files for individual user accounts, not system-wide configurations.
 
----
+Which directory in the Linux Filesystem Hierarchy Standard (FHS) is specifically designated to
+hold system-wide configuration files?
+
+- A) /bin
+- B) /var
+- C) /etc
+- D) /home
+
+Correct Answer: C) /etc
+
+Distractor Analysis:
+
+- Why A is incorrect: /bin contains essential user command binaries (like ls and cp), not configuration files.
+- Why B is incorrect: /var contains variable data that changes frequently during operation, such as system logs and print spools.
+- Why D is incorrect: /home contains the personal directories and files for individual user accounts, not system-wide configurations.
 
 ---
 
 **Question 2**
-You are currently in the directory `/home/user/documents/`. You want to navigate directly to the `/var/log/` directory using an absolute path. Which command should you use?
-A) cd ../../var/log
-B) cd /var/log
-C) cd var/log
-D) cd ~/log
-*   **Correct Answer:** B) cd /var/log
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* This is a relative path using `../` to traverse upward. While it may reach the correct destination, it is not an absolute path as the question requires.
-    *   *Why C is incorrect:* Without the leading `/`, this is a relative path; the shell will look for a `var` subdirectory inside the current `documents` directory and fail.
-    *   *Why D is incorrect:* The tilde `~` expands to the current user's home directory (`/home/user`). This command would attempt to navigate to `/home/user/log`, which does not exist.
 
----
+You are currently in the directory /home/user/documents/. You want to navigate directly to
+the /var/log/ directory using an absolute path. Which command should you use?
+
+- A) cd ../../var/log
+- B) cd /var/log
+- C) cd var/log
+- D) cd ~/log
+
+Correct Answer: B) cd /var/log
+
+Distractor Analysis:
+
+- Why A is incorrect: This is a relative path using ../ to traverse upward. It may reach the correct destination, but it is not an absolute path as the question requires.
+- Why C is incorrect: Without the leading /, this is a relative path. The shell will look for a var subdirectory inside the current documents directory and fail.
+- Why D is incorrect: The tilde ~ expands to the current user's home directory (/home/user). This command would attempt to navigate to /home/user/log, which does not exist.
 
 ---
 
 **Question 3**
-An administrator needs to search for all files named `sshd_config` anywhere on the filesystem in real time, without relying on a pre-built index database. Which command is most appropriate?
-A) locate sshd_config
-B) grep sshd_config /etc
-C) find / -name sshd_config
-D) ls -R / | grep sshd_config
-*   **Correct Answer:** C) find / -name sshd_config
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* `locate` searches a pre-built index database (`/var/lib/mlocate/mlocate.db`). If the database has not been updated with `updatedb` since the file was created, `locate` will miss it.
-    *   *Why B is incorrect:* `grep` searches file contents for a pattern, not filenames. Passing `/etc` as the only path also limits the search to that directory.
-    *   *Why D is incorrect:* While this would eventually list the filename, piping `ls -R` to `grep` is unreliable, extremely slow, and can miss files with spaces in their names. `find` is the correct tool.
+
+An administrator needs to search for all files named sshd_config anywhere on the filesystem
+in real time, without relying on a pre-built index database. Which command is most appropriate?
+
+- A) locate sshd_config
+- B) grep sshd_config /etc
+- C) find / -name sshd_config
+- D) ls -R / | grep sshd_config
+
+Correct Answer: C) find / -name sshd_config
+
+Distractor Analysis:
+
+- Why A is incorrect: locate searches a pre-built index database. If the database has not been updated with updatedb since the file was created, locate will miss it.
+- Why B is incorrect: grep searches file contents for a pattern, not filenames. Passing /etc as the only path also limits the search to that directory.
+- Why D is incorrect: Piping ls -R to grep is unreliable, extremely slow, and can miss files with spaces in their names. find is the correct tool.
 
 ---
 
 **Question 4**
-A junior administrator tries to run `cat /var/log/auth.log` and receives a "No such file or directory" error. The senior administrator reminds them that on RHEL-based systems this log has a different path. What is the correct path on a Red Hat Enterprise Linux system?
-A) /etc/log/secure
-B) /var/log/secure
-C) /proc/log/auth
-D) /home/logs/auth.log
-*   **Correct Answer:** B) /var/log/secure
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* `/etc` holds configuration files, not log files. There is no standard `/etc/log/` directory.
-    *   *Why C is incorrect:* `/proc` is a virtual filesystem exposing kernel and process data; it does not contain traditional log files.
-    *   *Why D is incorrect:* Log files are never stored under `/home`; that directory is reserved for user home directories.
+
+A junior administrator tries to run cat /var/log/auth.log and receives a "No such file or
+directory" error. The senior administrator reminds them that on RHEL-based systems this log
+has a different path. What is the correct path on a Red Hat Enterprise Linux system?
+
+- A) /etc/log/secure
+- B) /var/log/secure
+- C) /proc/log/auth
+- D) /home/logs/auth.log
+
+Correct Answer: B) /var/log/secure
+
+Distractor Analysis:
+
+- Why A is incorrect: /etc holds configuration files, not log files. There is no standard /etc/log/ directory.
+- Why C is incorrect: /proc is a virtual filesystem exposing kernel and process data. It does not contain traditional log files.
+- Why D is incorrect: Log files are never stored under /home. That directory is reserved for user home directories.
 
 ---
 
 **Question 5**
-Which of the following correctly describes the purpose of the `/proc` directory on a Linux system?
-A) It stores compiled program binaries that are protected from modification by standard users.
-B) It is a virtual filesystem generated by the kernel in memory, providing real-time information about running processes and hardware.
-C) It holds temporary files created during package installations that are cleared automatically after each reboot.
-D) It contains the process configuration files used by systemd to start and stop background services.
-*   **Correct Answer:** B) It is a virtual filesystem generated by the kernel in memory, providing real-time information about running processes and hardware.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Compiled binaries are stored in `/bin`, `/usr/bin`, `/sbin`, or `/usr/local/bin` depending on their role; `/proc` contains no executable program files.
-    *   *Why C is incorrect:* Temporary files cleared on reboot are stored in `/tmp`, not `/proc`.
-    *   *Why D is incorrect:* systemd service unit files are stored in `/lib/systemd/system/` and `/etc/systemd/system/`, not in `/proc`.
 
+Which of the following correctly describes the purpose of the /proc directory on a Linux system?
+
+- A) It stores compiled program binaries that are protected from modification by standard users.
+- B) It is a virtual filesystem generated by the kernel in memory, providing real-time information about running processes and hardware.
+- C) It holds temporary files created during package installations that are cleared automatically after each reboot.
+- D) It contains the process configuration files used by systemd to start and stop background services.
+
+Correct Answer: B) It is a virtual filesystem generated by the kernel in memory, providing real-time information about running processes and hardware.
+
+Distractor Analysis:
+
+- Why A is incorrect: Compiled binaries are stored in /bin, /usr/bin, /sbin, or /usr/local/bin. /proc contains no executable program files.
+- Why C is incorrect: Temporary files cleared on reboot are stored in /tmp, not /proc.
+- Why D is incorrect: systemd service unit files are stored in /lib/systemd/system/ and /etc/systemd/system/, not in /proc.
+
+---
+
+**Question 6**
+
+An administrator runs a script and wants to redirect both standard output and standard error
+to a single log file called output.log. Which command achieves this?
+
+- A) ./script.sh > output.log
+- B) ./script.sh 2> output.log
+- C) ./script.sh > output.log 2>&1
+- D) ./script.sh >> output.log 2>errors.log
+
+Correct Answer: C) ./script.sh > output.log 2>&1
+
+Distractor Analysis:
+
+- Why A is incorrect: The > operator redirects only stdout (fd 1). Error messages on stderr (fd 2) still print to the terminal.
+- Why B is incorrect: 2> output.log redirects only stderr to the file. Standard output still goes to the terminal.
+- Why D is incorrect: This redirects stdout to output.log and stderr to a separate errors.log. Both files exist, but they are not combined into a single log file as the question requires.
+
+---
+
+**Question 7**
+
+An administrator creates a hard link with the command ln /etc/hosts hosts_hardlink. The
+original /etc/hosts file is then deleted with rm /etc/hosts. What happens to hosts_hardlink?
+
+- A) hosts_hardlink becomes a broken link and shows an error when read.
+- B) hosts_hardlink still contains the complete original data because both entries shared the same inode, and the data is only removed when all hard links are deleted.
+- C) hosts_hardlink is automatically deleted because it was linked to a deleted file.
+- D) hosts_hardlink is converted to a symbolic link automatically by the kernel.
+
+Correct Answer: B) hosts_hardlink still contains the complete original data because both entries shared the same inode, and the data is only removed when all hard links are deleted.
+
+Distractor Analysis:
+
+- Why A is incorrect: Broken links occur with symbolic links when the target is deleted. Hard links are not pointers to another file - they are separate directory entries sharing the same inode. Deleting one entry does not affect others.
+- Why C is incorrect: Hard links are independent directory entries. Deleting the original name does not cascade to other hard links. The filesystem only removes the data blocks when the inode's link count reaches zero.
+- Why D is incorrect: The kernel never automatically converts link types. Hard links and symbolic links are created explicitly and behave differently. No conversion occurs automatically.
+
+---
+
+**Question 8**
+
+An administrator needs to display all files in the current directory, including hidden files,
+sorted by modification time with the newest file listed first. Which ls command achieves this?
+
+- A) ls -la
+- B) ls -lat
+- C) ls -lar
+- D) ls -laS
+
+Correct Answer: B) ls -lat
+
+Distractor Analysis:
+
+- Why A is incorrect: ls -la shows all files in long format but sorts alphabetically by default. It does not sort by modification time.
+- Why C is incorrect: ls -lar shows all files in long format with reverse alphabetical sorting. The -r flag reverses the default sort, not specifically time sort.
+- Why D is incorrect: ls -laS sorts by file size (largest first), not by modification time. The -S flag is a size sort.
+
+---
+
+**Question 9**
+
+An administrator wants to find all files under /home that are larger than 500 megabytes to
+identify students who may be storing large files on a shared server. Which command is correct?
+
+- A) find /home -size +500k
+- B) find /home -size +500M
+- C) find /home -ls +500
+- D) locate /home -size 500M
+
+Correct Answer: B) find /home -size +500M
+
+Distractor Analysis:
+
+- Why A is incorrect: The k suffix means kilobytes. +500k would find files larger than 500 kilobytes, which is only 0.5 MB - far too small and would return thousands of results.
+- Why C is incorrect: find -ls is a valid action flag that formats output like ls -dils, but it does not filter by size. This syntax is incorrect and would produce an error or unexpected results.
+- Why D is incorrect: locate does not support -size or any file attribute filters. It searches only by filename pattern using its pre-built database.
+
+---
+
+**Question 10**
+
+An administrator uses the command grep -v "^#" /etc/ssh/sshd_config to review the SSH
+configuration. What does this command display?
+
+- A) All lines in sshd_config that begin with the # comment character.
+- B) All lines in sshd_config that do not begin with the # comment character, showing only active configuration directives.
+- C) All lines in sshd_config that contain the word "ssh" anywhere in the line.
+- D) All lines in sshd_config that are blank or empty.
+
+Correct Answer: B) All lines in sshd_config that do not begin with the # comment character, showing only active configuration directives.
+
+Distractor Analysis:
+
+- Why A is incorrect: The -v flag inverts the match. Without -v, grep "^#" would show comment lines. With -v, it shows everything except comment lines.
+- Why C is incorrect: The pattern ^# matches lines starting with a hash. It has nothing to do with the word "ssh." The ^ is a regex anchor meaning "start of line."
+- Why D is incorrect: Blank lines do not start with # so they would be included in the output. This command does not specifically target blank lines. To exclude blank lines you would use grep -v "^$".

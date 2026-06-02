@@ -1,63 +1,283 @@
-# Reading Guide: Module 16 – Final Exam Prep & Coding Interview Practice
-## Course: CIS-2315 Data Structures & Algorithms (Technical Interview Readiness)
+# Reading Guide: Module 16 — Final Exam Prep & Coding Interview Practice
+
+## Course: CIS-2315 Data Structures & Algorithms
+
+**Certification Alignment:** Technical Interview Readiness (LeetCode / HackerRank)
 
 ---
 
-### Introduction
-Welcome to **Module 16 – Final Exam Prep & Coding Interview Practice**! This module does not introduce new data structures or algorithms — it consolidates everything from Modules 1–15 and applies it to the full technical interview experience. A coding interview tests not just correctness but communication, problem decomposition, edge case handling, and time/space complexity analysis. This module is your structured preparation for the final coding interview assessment and for real technical screens.
+## Introduction
 
-By the end of this module, you should be able to receive an unfamiliar problem, work through it methodically in front of an interviewer, produce a working solution, and discuss its complexity — all within 30–45 minutes.
-
----
-
-### 1. High-Yield Glossary
-
-*   **FAANG-style technical interview**: A structured coding interview format used by major technology companies (Meta, Amazon, Apple, Netflix, Google and others) consisting of one or more 30–60 minute sessions where a candidate solves algorithmic problems while communicating their reasoning aloud.
-
-*   **Problem decomposition**: The process of breaking a novel interview problem into sub-problems you recognize from prior study. Steps: understand the input/output, identify the data structure, recognize the algorithmic pattern, write a brute-force, then optimize.
-
-*   **Edge case analysis**: Explicitly identifying and testing inputs that could cause incorrect or unexpected behavior: empty arrays, single-element inputs, negative numbers, very large values, sorted/reverse-sorted inputs, and inputs at constraint boundaries.
-
-*   **Time-space tradeoff**: The engineering decision to use additional memory (e.g., a hash map or memo table) to reduce computation time. Common in interviews: use O(n) space to reduce O(n²) time to O(n).
-
-*   **Behavioral interview (STAR format)**: A structured response format for non-technical interview questions: Situation → Task → Action → Result. Used to answer questions like "Tell me about a time you dealt with a technical challenge."
-
-*   **Mock interview**: A simulated coding interview conducted with a partner or through a platform (LeetCode Mock Interview, Pramp, interviewing.io) to practice the full experience including time pressure and verbal communication.
-
-*   **Blind 75 / NeetCode 150**: Curated lists of the most important LeetCode problems for interview preparation, organized by topic. Completing these lists covers the majority of patterns seen in real technical screens at top companies.
+This reading guide consolidates the entire CIS-2315 curriculum into a single reference document. It is organized by algorithm family, with the canonical LeetCode problem for each family, the key implementation insight, and the complexity. Use this guide as a study checklist before the certification exam.
 
 ---
 
-### 2. Certification Exam Tips
-*   **Verbalize your thought process from the start:** Interviewers care as much about how you think as what you produce. Say "I'm going to try a brute force first" before coding, then "I can optimize this with a hash map because..." Silence is the biggest red flag.
-*   **Write brute force, then optimize:** For any unfamiliar problem, write the O(n²) or O(2ⁿ) brute force first. This proves you understand the problem. Then optimize iteratively — it is better to have a slow correct solution than to stall searching for the optimal approach.
-*   **State complexity after every solution:** Always follow your solution with "This is O(n) time and O(1) space because..." before being asked. This signals senior-level thinking.
-*   **Use the 7-step interview framework:** (1) Clarify constraints and edge cases. (2) State and walk through an example. (3) Propose a brute force. (4) Optimize. (5) Write the code. (6) Trace through your code with the example. (7) State time and space complexity.
-*   **Review the NeetCode 150 by pattern, not randomly:** Work through arrays, two-pointer, sliding window, stack, binary search, trees, graphs, DP in that order. Solving by pattern builds transferable templates.
-*   **Study Resource:** [NeetCode 150 Practice List](https://neetcode.io/practice) — the 150-problem curated list organized by topic with video solutions for every problem. This is the primary preparation resource for the final assessment.
+## 1. Sorting and Searching
+
+### Sorting Complexity Reference
+
+| Algorithm | Best | Average | Worst | Space | Stable |
+|---|---|---|---|---|---|
+| Merge sort | O(n log n) | O(n log n) | O(n log n) | O(n) | Yes |
+| Quicksort | O(n log n) | O(n log n) | O(n²) | O(log n) | No |
+| Heap sort | O(n log n) | O(n log n) | O(n log n) | O(1) | No |
+| Insertion sort | O(n) | O(n²) | O(n²) | O(1) | Yes |
+| Python Timsort | O(n) | O(n log n) | O(n log n) | O(n) | Yes |
+
+Choose merge sort when stability or worst-case guarantee matters. Use Python's built-in `sorted()` in interviews unless asked to implement.
+
+### Binary Search (Module 12)
+
+Three variants — memorize all three:
+
+```python
+# Standard: find index or -1
+left, right = 0, len(arr) - 1
+while left <= right:
+    mid = left + (right - left) // 2
+    ...
+
+# Leftmost occurrence
+left, right = 0, len(arr)
+while left < right:
+    mid = left + (right - left) // 2
+    if arr[mid] < target: left = mid + 1
+    else: right = mid
+
+# Binary search on answer (monotone feasible)
+while left < right:
+    mid = left + (right - left) // 2
+    if feasible(mid): right = mid
+    else: left = mid + 1
+```
 
 ---
 
-### Required Readings & Videos
-*   **Required Reading:** Review your notes and completed labs from all previous modules. Focus on the Certification Exam Tips sections for the 3 topics you feel least confident about.
-*   **Required Video:** [How to: Work at Google — Example Coding Interview](https://www.youtube.com/watch?v=XKu_SEDAykw) — a 30-minute mock interview by a Google engineer demonstrating exactly how to think aloud, handle hints, and communicate during a live coding interview.
-*   **Additional Reading:** [LeetCode Patterns – Sean Prashad's Curated Problem List](https://seanprashad.com/leetcode-patterns/) — a free resource organizing 200+ LeetCode problems by pattern (sliding window, two pointer, tree DFS, etc.) so you study templates rather than individual problems.
+## 2. Heaps and Priority Queues (Module 7)
+
+- `heapq` is a min-heap. For max-heap: push `-val`, pop and negate.
+- K-th largest: maintain a size-K min-heap. If `val > heap[0]`, replace.
+- K-way merge: push `(val, list_index, element_index)` tuples.
+- Heapify: O(n). Push/pop: O(log n). Peek: O(1).
+
+```python
+import heapq
+heap = []
+heapq.heappush(heap, val)
+smallest = heapq.heappop(heap)
+heapq.heapify(arr)        # O(n) in-place
+```
 
 ---
 
-### Lab & Command Integration
-In this week's final assessment lab, you will:
-*   **Complete two timed mock interviews (45 minutes each)** on LeetCode's Interview Simulation mode or with a classmate — one easy + one medium problem per session.
-*   **Solve at least 5 LeetCode problems you have not seen before**, one from each of: arrays/hashing, trees, graphs, DP, and your weakest topic from this course.
-*   **Write a 1-page complexity analysis** for any two problems you solved this semester: state the brute force, the optimized approach, and the time/space complexity of each with justification.
-*   **Complete the Final Coding Interview Assessment** — a timed, proctored session with unseen problems drawn from the full course curriculum.
+## 3. Hash Tables (Module 8)
+
+- Python `dict`: O(1) average insert/lookup/delete. Load factor ~2/3, rehash when exceeded.
+- `collections.Counter(iterable)` — frequency map; missing keys return 0.
+- `collections.defaultdict(list)` — missing keys create default value.
+- Canonical patterns:
+
+| Pattern | Technique |
+|---|---|
+| Two Sum | Store complement in dict |
+| Group Anagrams | `tuple(sorted(word))` as key |
+| Longest Consecutive Sequence | Set membership; start only at sequence head |
+| Contains Duplicate | `len(set(nums)) < len(nums)` |
 
 ---
 
-### 3. Study Checklist
-- [ ] Review Certification Exam Tips from Modules 1–15.
-- [ ] Complete at least two timed mock interview sessions.
-- [ ] Solve 5 new unseen LeetCode problems across 5 different topics.
-- [ ] Write a complexity analysis document for two course problems.
-- [ ] Review the NeetCode 150 list and mark problems you have not yet attempted.
-- [ ] Complete the Final Coding Interview Assessment.
+## 4. Graph Representations (Module 9)
+
+- **Adjacency list:** `defaultdict(list)`. O(V+E) space. Standard for interviews.
+- **Adjacency matrix:** V×V array. O(V²) space. O(1) edge check. Good for dense graphs.
+- For directed graphs: `graph[u].append(v)` only. For undirected: both directions.
+- Weighted graph: `graph[u].append((v, weight))`.
+
+---
+
+## 5. BFS and DFS (Module 10)
+
+### BFS
+
+Use `deque`. Mark visited on **enqueue** (not dequeue). BFS gives shortest path in unweighted graphs.
+
+```python
+from collections import deque
+visited = {start}
+queue = deque([start])
+while queue:
+    node = queue.popleft()
+    for neighbor in graph[node]:
+        if neighbor not in visited:
+            visited.add(neighbor)
+            queue.append(neighbor)
+```
+
+### DFS
+
+Recursive (uses call stack) or iterative (explicit stack). Three-color DFS for directed cycle detection:
+
+```python
+color = {node: 0 for node in graph}    # 0=unvisited, 1=active, 2=done
+def dfs(node):
+    color[node] = 1
+    for neighbor in graph[node]:
+        if color[neighbor] == 1: return False    # cycle
+        if color[neighbor] == 0:
+            if not dfs(neighbor): return False
+    color[node] = 2
+    return True
+```
+
+### Topological Sort
+
+Kahn's algorithm: find zero-in-degree nodes, BFS, reduce neighbors' in-degrees.
+DFS post-order: append node to result after all neighbors finish; reverse at end.
+
+### Grid Problems
+
+Mark visited in-place. 4-directional neighbors: `[(0,1),(0,-1),(1,0),(-1,0)]`.
+
+---
+
+## 6. Dijkstra's Algorithm (Module 11)
+
+Shortest path in weighted non-negative graphs. Lazy deletion with stale-entry check.
+
+```python
+dist = {node: float('inf') for node in graph}
+dist[start] = 0
+heap = [(0, start)]
+while heap:
+    d, node = heapq.heappop(heap)
+    if d > dist[node]: continue    # stale — skip
+    for neighbor, weight in graph[node]:
+        if dist[node] + weight < dist[neighbor]:
+            dist[neighbor] = dist[node] + weight
+            heapq.heappush(heap, (dist[neighbor], neighbor))
+```
+
+Time: O((V+E) log V). Negative weights: Bellman-Ford O(V·E).
+
+Path reconstruction: `prev` dict; trace back from destination, reverse.
+
+---
+
+## 7. Divide & Conquer (Module 12)
+
+**Master Theorem:** T(n) = aT(n/b) + f(n), c = log_b(a).
+
+- Case 1: f(n) = O(n^(c-ε)) → T(n) = Θ(n^c)
+- Case 2: f(n) = Θ(n^c) → T(n) = Θ(n^c log n)
+- Case 3: f(n) = Ω(n^(c+ε)) → T(n) = Θ(f(n))
+
+Merge sort and binary search both fall under Case 2.
+
+**Counting inversions:** modified merge sort; when right-half element placed before remaining left elements, `inversions += len(left) - i`.
+
+---
+
+## 8. Greedy Algorithms (Module 13)
+
+Correctness requires the exchange argument: any optimal solution can be modified to agree with the greedy choice without reducing quality.
+
+| Problem | Greedy Criterion | Complexity |
+|---|---|---|
+| Activity Selection | Earliest finish time | O(n log n) |
+| Jump Game I | Track max_reach | O(n) |
+| Jump Game II | BFS-level: current_end, farthest | O(n) |
+| Gas Station | Reset start on negative tank | O(n) |
+| Fractional Knapsack | Value/weight ratio | O(n log n) |
+
+Greedy fails for 0/1 Knapsack — requires DP.
+
+---
+
+## 9. Dynamic Programming (Module 14)
+
+**Three-step setup:** define subproblem → write recurrence → establish base cases.
+
+### 1D DP Reference
+
+| Problem | dp[i] means | Recurrence | Base |
+|---|---|---|---|
+| Fibonacci | ith Fibonacci | dp[i] = dp[i-1] + dp[i-2] | dp[0]=0, dp[1]=1 |
+| Coin Change | min coins for amount i | dp[i] = min(dp[i-c]+1) | dp[0]=0 |
+| Climbing Stairs | ways to reach step i | dp[i] = dp[i-1] + dp[i-2] | dp[1]=1, dp[2]=2 |
+| House Robber | max robbery first i houses | dp[i] = max(dp[i-1], dp[i-2]+nums[i]) | dp[0]=0, dp[1]=nums[0] |
+
+### 2D DP Reference
+
+**LCS:** `dp[i][j]` = LCS of text1[0..i-1] and text2[0..j-1].
+Match: `dp[i][j] = dp[i-1][j-1] + 1`. No match: `dp[i][j] = max(dp[i-1][j], dp[i][j-1])`.
+
+**0/1 Knapsack:** `dp[i][w]` = max value, first i items, capacity w.
+`dp[i][w] = max(dp[i-1][w], dp[i-1][w-weight]+value)` if weight ≤ w, else `dp[i-1][w]`.
+
+---
+
+## 10. String Algorithms (Module 15)
+
+### Trie
+
+O(L) insert/search. `is_end` flag distinguishes `search` from `starts_with`. Space: O(N×L×A).
+
+### Sliding Window
+
+Expand right pointer; contract left when constraint violated. Key guard: `char_index[char] >= left`.
+
+### Minimum Window Substring
+
+`formed` / `required` pattern. Expand until `formed == required`; shrink while valid.
+
+### Palindromes
+
+Expand-around-center: `expand(i,i)` for odd, `expand(i,i+1)` for even. Slice: `s[left+1:right]` after loop exits (overshoot correction).
+
+---
+
+## 11. Complexity Quick Reference
+
+| Operation / Problem | Time | Space |
+|---|---|---|
+| Hash table lookup | O(1) avg | O(n) |
+| Binary search | O(log n) | O(1) |
+| Heap push/pop | O(log n) | — |
+| BFS / DFS | O(V+E) | O(V) |
+| Dijkstra | O((V+E) log V) | O(V) |
+| Merge sort | O(n log n) | O(n) |
+| Coin Change | O(amount × coins) | O(amount) |
+| LCS | O(m×n) | O(m×n) |
+| 0/1 Knapsack | O(n×W) | O(n×W) |
+| Trie insert/search | O(L) | O(N×L×A) |
+| Sliding window | O(n) | O(A) |
+
+---
+
+## 12. Pattern Recognition Guide
+
+| Problem hint | Pattern / Algorithm |
+|---|---|
+| "Shortest path", unweighted | BFS |
+| "Shortest path", weighted non-negative | Dijkstra |
+| "Shortest path", negative weights | Bellman-Ford |
+| "Minimum/maximum satisfying condition" in a range | Binary search on answer |
+| "Contiguous subarray/substring" | Sliding window |
+| "All combinations/subsets" | Backtracking (recursion) |
+| "Count ways / minimum cost / maximum value" | Dynamic programming |
+| "Locally optimal → globally optimal" | Greedy |
+| "Prefix query / autocomplete" | Trie |
+| "Cycle detection, connectivity, ordering" | DFS (three-color for directed) |
+
+---
+
+## 13. Study Checklist
+
+- [ ] Watch the Module 16 video lecture by Professor Nash.
+- [ ] Complete the Module 16 Final Practice Quiz (10 cross-module questions).
+- [ ] Solve one LeetCode problem from each module's canonical list (Modules 7–15).
+- [ ] Implement binary search, BFS, Dijkstra, and Coin Change from scratch without reference.
+- [ ] Practice explaining the exchange argument for activity selection aloud.
+- [ ] Practice explaining the DP subproblem definition for Coin Change and LCS aloud.
+- [ ] Register for the Technical Interview Readiness certification exam.
+- [ ] Submit certification score report to Canvas (Module 16 Lab assignment).

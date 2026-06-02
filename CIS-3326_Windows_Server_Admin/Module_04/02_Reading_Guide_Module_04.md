@@ -1,58 +1,369 @@
 # Reading Guide: Module 04 - User, Group, and Computer Accounts in AD
 
-## Course: CIS-3326_Windows_Server_Admin (3326_Windows_Server_Admin - Microsoft Windows Server Administration (Active Directory))
+## Course: CIS-3326 Windows Server Administration
+
+## Texas Wesleyan University | Professor Nash
 
 ---
 
 ### Introduction
 
-Welcome to **Module 04 – User, Group, and Computer Accounts in Active Directory**! This week's study material covers how to create, manage, and organize the three core object types in AD DS: user accounts, security groups, and computer accounts. Managing these objects correctly is both an everyday administrative task and a core competency on the AZ-800 exam.
-
-As a student, you will learn the difference between security groups and distribution groups, how group scope affects permission assignment across domains, and how to automate account management with PowerShell. Make sure to complete the checklist and review the glossary terms before beginning the lab activity.
+Module 04 covers the day-to-day administrative objects in Active Directory: user accounts, group accounts, and computer accounts. These three object types are foundational to everything else in a Windows domain — Group Policy applies to them, permissions are assigned through them, and authentication depends on them. This module is heavily tested on AZ-800 both conceptually and through PowerShell syntax questions.
 
 ---
 
-### 1. High-Yield Glossary
+### 1. User Accounts
 
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
+#### 1.1 Account Identifiers
 
-* **User Account (AD)**: A directory object that represents a person or service and contains credentials (username/password hash), profile settings, and group memberships. User accounts are authenticated by Kerberos during logon and are the foundation of access control in a Windows domain.
-* **Group Scope — Domain Local, Global, Universal**: Domain Local groups are used to assign permissions to resources within the same domain; they can contain members from any domain. Global groups contain members only from the same domain and are used to organize users by role. Universal groups can contain members from any domain in the forest and are used to assign permissions across domains — their membership is stored in the Global Catalog.
-* **Security Group vs. Distribution Group**: Security groups are used to assign permissions to resources (NTFS, Share, etc.) and can also be used as email distribution lists. Distribution groups are mail-only and cannot be used to assign permissions.
-* **Managed Service Account (MSA) / Group Managed Service Account (gMSA)**: Special account types for running Windows services. gMSAs automatically rotate their passwords and can be used across multiple servers, eliminating the need to manually manage service account passwords.
-* **Computer Account**: A directory object representing a domain-joined machine. It has its own password (rotated automatically every 30 days by default) and is used to apply Computer Configuration GPO settings and enforce machine-level security policies.
-* **New-ADUser / Get-ADUser**: Core Active Directory PowerShell cmdlets for creating and querying user accounts. Part of the RSAT ActiveDirectory module, these cmdlets are essential for bulk account creation and automation.
+Every AD user account has two login identifiers:
+
+| Identifier | Format | Example | Usage |
+|---|---|---|---|
+| User Principal Name (UPN) | `username@domain` | `jdoe@corp.local` | Modern logon, Azure AD, email |
+| SAM Account Name | `DOMAIN\username` | `CORP\jdoe` | Legacy logon, pre-Windows 2000 apps |
+
+Both can be used at the Windows login screen. UPN is preferred for modern environments.
+
+#### 1.2 Key Account Properties
+
+| Property | Description | Common Use |
+|---|---|---|
+| Account Expiration | Date after which account auto-disables | Contractors, temporary workers |
+| Logon Hours | Days/hours during which logon is permitted | Shift workers, security restrictions |
+| Logon Workstations | Specific computers user can log in from | Kiosk accounts, restricted users |
+| Account Disabled | Manually disabled; no logon allowed | Departing employees, pre-provisioned accounts |
+| Account Locked Out | Disabled after exceeding lockout threshold | Password attacks, forgotten passwords |
+| Must Change Password | Forces password change at next logon | New accounts, reset accounts |
+| Password Never Expires | Override domain password policy | Service accounts (prefer MSA instead) |
+
+#### 1.3 Disabled vs. Locked Out
+
+These are different conditions and require different remediation:
+
+- Disabled: manually set by an administrator. Remedy: `Enable-ADAccount`
+- Locked out: automatic after exceeding lockout threshold. Remedy: `Unlock-ADAccount`
+
+```powershell
+# Unlock a locked-out account
+Unlock-ADAccount -Identity "jdoe"
+
+# Find all locked-out accounts
+Search-ADAccount -LockedOut | Select-Object Name, SamAccountName
+
+# Enable a disabled account
+Enable-ADAccount -Identity "jdoe"
+
+# Find all disabled accounts
+Search-ADAccount -AccountDisabled | Select-Object Name, SamAccountName
+```
+
+#### 1.4 Core User Management Cmdlets
+
+| Cmdlet | Purpose |
+|---|---|
+| `New-ADUser` | Create a user account |
+| `Get-ADUser` | Query user accounts and properties |
+| `Set-ADUser` | Modify user properties |
+| `Remove-ADUser` | Delete a user account |
+| `Disable-ADAccount` | Disable a user or computer account |
+| `Enable-ADAccount` | Enable a disabled account |
+| `Unlock-ADAccount` | Unlock a locked-out account |
+| `Set-ADAccountExpiration` | Set or clear account expiration |
+| `Search-ADAccount` | Find accounts by state (locked, disabled, expired) |
 
 ---
 
-### 2. Certification Exam Tips
+### 2. Group Accounts
 
-* **Group scope nesting (AGDLP)**: The recommended Microsoft best practice for assigning permissions is Accounts → Global groups → Domain Local groups → Permissions (AGDLP). AZ-800 scenario questions often describe a permission problem that is solved by correctly nesting groups in this order.
-* **Universal groups and the Global Catalog**: Because universal group membership is cached in the Global Catalog, placing many user accounts directly in a universal group causes GC replication traffic every time membership changes. Best practice is to put global groups inside universal groups.
-* **Stale computer accounts**: A computer account that has not contacted the DC in 30+ days may have a broken secure channel. Use `Test-ComputerSecureChannel` and `Reset-ComputerMachinePassword` to diagnose and repair this. This is a common AZ-800 troubleshooting scenario.
-* **Microsoft Learn Reference**: Review account management documentation at [Microsoft Learn – Active Directory Accounts](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/component-updates/active-directory-domain-services-component-updates) and the [AD PowerShell module reference](https://learn.microsoft.com/en-us/powershell/module/activedirectory/).
+#### 2.1 Group Types
+
+| Type | Can Assign Permissions | Email-Capable | Use Case |
+|---|---|---|---|
+| Security | Yes | Yes | Resource permission assignment |
+| Distribution | No | Yes | Email distribution lists only |
+
+Default choice: always Security. Security groups are more flexible — they work for both permissions and email.
+
+#### 2.2 Group Scopes
+
+| Scope | Who Can Be Members | Where Permissions Apply | GC Stored |
+|---|---|---|---|
+| Domain Local | Any domain, any forest | Same domain only | No |
+| Global | Same domain only | Any domain in forest | No |
+| Universal | Any domain in forest | Any domain in forest | Yes |
+| Local (Machine) | Domain users, global groups | Single computer | No |
+
+#### 2.3 Group Scope Nesting Rules
+
+```text
+Valid nesting (within same forest):
+  Universal can contain: Universal, Global
+  Global can contain: Global (same domain only)
+  Domain Local can contain: Universal, Global, Domain Local (any domain)
+
+Invalid nesting:
+  Global cannot contain members from other domains
+  Domain Local cannot be nested inside Global
+```
+
+#### 2.4 AGDLP Best Practice
+
+AGDLP = Accounts → Global → Domain Local → Permissions
+
+The pattern in practice:
+
+1. Create Global groups named for job roles: `G_Accountants`, `G_FinanceMgrs`
+2. Add user accounts to the appropriate Global group
+3. Create Domain Local groups named for resource access: `DL_Finance_Read`, `DL_Finance_Write`
+4. Nest the Global groups into Domain Local groups
+5. Assign NTFS or Share permissions to the Domain Local groups
+
+Benefits:
+
+- Adding a new employee: add to one Global group → inherits all resource access
+- Removing an employee: remove from one Global group → loses all resource access
+- Adding a new resource: create a Domain Local group → nest existing role groups → done
+- Multi-domain: use AGUDLP — Universal group layer enables cross-domain role assignment
+
+#### 2.5 Group Management Cmdlets
+
+| Cmdlet | Purpose |
+|---|---|
+| `New-ADGroup` | Create a group |
+| `Get-ADGroup` | Query groups |
+| `Add-ADGroupMember` | Add members to a group |
+| `Remove-ADGroupMember` | Remove members from a group |
+| `Get-ADGroupMember` | List members of a group |
+| `Get-ADPrincipalGroupMembership` | List all groups a user or computer belongs to |
 
 ---
 
-### Required Readings & Videos
+### 3. Computer Accounts
 
-To prepare for this module's topics, you must complete the following readings and videos:
+#### 3.1 What a Computer Account Is
 
-* **Required Reading:** Review the user and group management documentation at [Microsoft Learn: Windows Server Active Directory](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/how-to-configure-protected-accounts) and the AD PowerShell cmdlet reference at [Microsoft Learn: ActiveDirectory Module](https://learn.microsoft.com/en-us/powershell/module/activedirectory/).
-* **Required Video:** Watch the video lecture on **User, Group, and Computer Accounts** in the official course playlist: [Windows Server Administration Course](https://www.youtube.com/playlist?list=PLvG40H4sL3h0n72gQJ_m8N7xN61tL6d5H).
+Every domain-joined Windows computer has a computer account in AD. It:
+
+- Has its own SID and password (rotated every 30 days automatically)
+- Is subject to Computer Configuration Group Policy
+- Can be a member of security groups
+- Has a Distinguished Name in the directory (e.g., `CN=WS-IT-001,OU=Workstations,DC=corp,DC=local`)
+
+#### 3.2 Machine Account Password Rotation
+
+The computer account password is negotiated between the workstation and the DC every 30 days. If a computer is offline for more than 30 days:
+
+- The DC's copy of the password may advance while the computer's local copy stays at the old value
+- Result: "The trust relationship between this workstation and the primary domain failed" error on logon
+
+Fix options:
+
+```powershell
+# Non-destructive: reset the secure channel without rejoining
+# Run on the affected workstation with local admin rights
+Test-ComputerSecureChannel -Repair -Credential (Get-Credential "CORP\Administrator")
+
+# Alternative: reset machine password directly
+Reset-ComputerMachinePassword -Server "DC1.corp.local" -Credential (Get-Credential "CORP\Administrator")
+```
+
+Rejoining the domain also fixes it but changes the computer's SID, which can break user profile associations and break local group memberships. Avoid rejoining unless `Test-ComputerSecureChannel -Repair` fails.
+
+#### 3.3 Pre-staging Computer Accounts
+
+Administrators can create computer accounts in advance before a machine is joined, placing them in the correct OU:
+
+```powershell
+New-ADComputer -Name "WS-IT-001" `
+    -Path "OU=Workstations,DC=corp,DC=local" `
+    -Enabled $true
+```
+
+When the computer is later joined, it claims the pre-staged account and inherits any GPO links already targeting that OU.
+
+#### 3.4 Computer Account Cmdlets
+
+| Cmdlet | Purpose |
+|---|---|
+| `New-ADComputer` | Pre-stage a computer account |
+| `Get-ADComputer` | Query computer accounts |
+| `Set-ADComputer` | Modify computer account properties |
+| `Remove-ADComputer` | Delete a computer account |
+| `Test-ComputerSecureChannel` | Test and repair the machine account secure channel |
+| `Reset-ComputerMachinePassword` | Reset the machine account password |
 
 ---
 
-### Lab & Command Integration
+### 4. Service Accounts
 
-In this week's hands-on lab, you will create user accounts and security groups using both Active Directory Users and Computers (ADUC) and PowerShell (`New-ADUser`, `New-ADGroup`, `Add-ADGroupMember`). You will also join a workstation to the domain and verify the resulting computer account object.
+#### 4.1 Why Managed Service Accounts Exist
+
+Traditional service accounts are standard user accounts configured with non-expiring passwords. Problems:
+
+- Password changes require manual updates to every service using the account
+- Forgotten password changes cause service outages
+- Privileged credentials stored in service configurations create security risk
+
+#### 4.2 Managed Service Account (MSA)
+
+- Tied to a single computer — cannot be used on multiple machines
+- Password rotates automatically every 30 days (managed by AD and the OS)
+- No administrator manages the password
+- Requires Windows Server 2008 R2+ DC
+
+```powershell
+# Create an MSA
+New-ADServiceAccount -Name "SVC_SQLAgent" -RestrictToSingleComputer
+
+# Install the MSA on the target server (run on target server)
+Install-ADServiceAccount -Identity "SVC_SQLAgent"
+
+# Verify the MSA is installed correctly
+Test-ADServiceAccount -Identity "SVC_SQLAgent"
+```
+
+#### 4.3 Group Managed Service Account (gMSA)
+
+- Can be used on multiple servers simultaneously (web farms, clusters)
+- Password rotates automatically
+- Requires a KDS Root Key to exist in the forest (created once)
+- Requires Windows Server 2012+ DC
+
+```powershell
+# Create KDS Root Key (one time per forest)
+# -EffectiveImmediately waits 10 hours in production; use for lab only
+Add-KdsRootKey -EffectiveImmediately
+
+# Create a gMSA
+New-ADServiceAccount -Name "SVC_WebApp" `
+    -DNSHostName "webapp.corp.local" `
+    -PrincipalsAllowedToRetrieveManagedPassword "WebServers_Group"
+
+# Install the gMSA on each web server (run on each server)
+Install-ADServiceAccount -Identity "SVC_WebApp"
+```
+
+#### 4.4 MSA vs. gMSA Decision
+
+| Feature | MSA | gMSA |
+|---|---|---|
+| Servers | Single server only | Multiple servers |
+| Auto password rotation | Yes | Yes |
+| KDS Root Key required | No | Yes |
+| Minimum DC version | 2008 R2 | 2012 |
+| Multi-server load balance | No | Yes |
 
 ---
 
-### 3. Study Checklist
+### 5. Fine-Grained Password Policies
 
-* [ ] Read the glossary terms and memorize their definitions.
-* [ ] Read the user and group documentation at [Microsoft Learn: ActiveDirectory Module](https://learn.microsoft.com/en-us/powershell/module/activedirectory/).
-* [ ] Watch the video lecture on **User, Group, and Computer Accounts** in [Windows Server Administration Course](https://www.youtube.com/playlist?list=PLvG40H4sL3h0n72gQJ_m8N7xN61tL6d5H).
-* [ ] Review the commands outlined in the lab instructions.
-* [ ] Proceed to the weekly hands-on lab activity.
+By default, a domain has one password policy that applies to all users. Fine-Grained Password Policies (FGPPs) allow different password policies for different groups. They were introduced with Windows Server 2008 DFL.
+
+```powershell
+# Create a strict password policy for IT Admins
+New-ADFineGrainedPasswordPolicy `
+    -Name "IT_Admin_Policy" `
+    -Precedence 10 `
+    -MinPasswordLength 16 `
+    -PasswordHistoryCount 24 `
+    -LockoutThreshold 3 `
+    -LockoutDuration "00:30:00" `
+    -ComplexityEnabled $true
+
+# Apply the policy to a group
+Add-ADFineGrainedPasswordPolicySubject `
+    -Identity "IT_Admin_Policy" `
+    -Subjects "G_ITAdmins"
+```
+
+Lower `Precedence` number = higher priority. If a user belongs to multiple groups with FGPPs, the lowest-precedence-number policy wins.
+
+---
+
+### 6. AGDLP Architecture Reference
+
+```text
+RESOURCE: \\SRV-FS01\HR_Files (NTFS + Share permissions)
+    |
+    +-- DL_HR_Read (Domain Local, Security) [NTFS: Read]
+    |       |
+    |       +-- G_HRUsers (Global, Security)
+    |               |
+    |               +-- jsmith (User Account)
+    |               +-- cevans (User Account)
+    |
+    +-- DL_HR_Write (Domain Local, Security) [NTFS: Modify]
+            |
+            +-- G_HRManagers (Global, Security)
+                    |
+                    +-- mjones (User Account)
+
+MANAGEMENT OPERATION:
+  New HR employee hired → Add-ADGroupMember G_HRUsers → auto-inherits Read access
+  HR employee promoted → Add-ADGroupMember G_HRManagers → gains Write access
+  HR employee leaves → Disable-ADAccount → Remove-ADGroupMember (all groups) → loses all access
+```
+
+---
+
+### 7. Exam Tips for Module 04
+
+**Tip 1 — Group scope rules:** Domain Local = can hold members from anywhere, assigns permissions locally. Global = holds only local-domain members, assigns permissions anywhere. Universal = both — at GC replication cost.
+
+**Tip 2 — AGDLP nesting order:** Accounts inside Global groups, Global groups inside Domain Local groups, permissions on Domain Local groups. Reversing the nesting (DL inside Global) is a common exam distractor.
+
+**Tip 3 — Secure channel repair:** "Trust relationship failed" = stale machine account. Use `Test-ComputerSecureChannel -Repair` first. Rejoin only as a last resort — it changes the SID.
+
+**Tip 4 — MSA vs. gMSA:** Single server = MSA. Multiple servers = gMSA. gMSA requires `Add-KdsRootKey` first. Both rotate passwords automatically.
+
+**Tip 5 — Disable vs. delete:** Always disable departing employee accounts. Deletion loses the SID and all associated permissions. Disabling preserves everything for audits and potential reactivation.
+
+**Tip 6 — Fine-Grained Password Policies:** Applied to groups (or specific users) via PSOs. Lower precedence number = wins. Requires 2008 DFL minimum.
+
+**Tip 7 — Distribution groups:** Cannot be used to assign permissions. Security groups can be used for both permissions and distribution. If in doubt, create a Security group.
+
+**Tip 8 — Universal groups and GC:** Universal Group membership is stored in the Global Catalog. Putting large numbers of users directly in Universal Groups creates high GC replication volume when membership changes. Nest Global groups into Universal groups to minimize GC replication traffic.
+
+---
+
+### 8. Key Terms Glossary
+
+| Term | Definition |
+|---|---|
+| UPN | User Principal Name — modern domain account login in email format |
+| SAM Account Name | Legacy logon name, max 20 characters, `DOMAIN\username` format |
+| Domain Local Group | Group scope for resource permission assignment within one domain |
+| Global Group | Group scope for role membership, usable for permissions across domains |
+| Universal Group | Group scope for cross-domain membership and permissions; stored in GC |
+| AGDLP | Account, Global, Domain Local, Permissions — best-practice nesting model |
+| MSA | Managed Service Account — auto-rotating password, single-server scope |
+| gMSA | Group Managed Service Account — auto-rotating password, multi-server scope |
+| KDS Root Key | Key Distribution Services root key required for gMSA password distribution |
+| FGPP | Fine-Grained Password Policy — per-group password policy |
+| PSO | Password Settings Object — the AD object that stores an FGPP |
+| Secure Channel | The machine account trust relationship between a workstation and DC |
+
+---
+
+### 9. Study Checklist
+
+- Read Section 1 (User Accounts) and memorize all account property types and cmdlets
+- Read Section 2 (Groups) and memorize the scope matrix and AGDLP pattern
+- Read Section 3 (Computer Accounts) and understand machine password rotation and repair
+- Read Section 4 (Service Accounts) and distinguish MSA from gMSA
+- Read Section 5 (Fine-Grained Password Policies) and understand PSO application
+- Review the AGDLP Architecture Reference in Section 6
+- Review all 8 Exam Tips in Section 7
+- Complete the Lab for Module 04
+- Complete the Quiz for Module 04
+- Post your initial Discussion response by Wednesday 11:59 PM
+
+---
+
+### Additional Reading
+
+- [ActiveDirectory PowerShell module reference](https://learn.microsoft.com/en-us/powershell/module/activedirectory/)
+- [Understanding AD security groups](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-groups)
+- [Group Managed Service Accounts overview](https://learn.microsoft.com/en-us/windows-server/security/group-managed-service-accounts/group-managed-service-accounts-overview)
+- [Fine-Grained Password Policies](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/get-started/adac/introduction-to-active-directory-administrative-center-enhancements--level-100-#fine_grained_pswd_policy_mgmt)

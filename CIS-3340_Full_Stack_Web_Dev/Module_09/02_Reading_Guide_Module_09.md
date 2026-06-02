@@ -1,49 +1,367 @@
 # Reading Guide: Module 09 - Relational Databases with PostgreSQL
-## Course: CIS-3340_Full_Stack_Web_Dev (AWS Certified Developer - Associate)
+
+**Course:** CIS-3340 Full Stack Web Development
+**Certification Alignment:** AWS Certified Developer - Associate (DVA-C02)
+**Texas Wesleyan University | Professor Nash**
 
 ---
 
-### Introduction
-Welcome to **Module 09 - Relational Databases with PostgreSQL**! This module covers relational database design and SQL — the query language used to create, read, update, and delete structured data stored in tables with defined relationships. You will learn how to design schemas with primary and foreign keys, enforce data integrity with constraints, and write JOIN queries to combine related data across tables. PostgreSQL is one of the most widely used relational databases in full-stack development. On AWS, Amazon RDS for PostgreSQL provides a managed hosting service that is directly relevant to the DVA-C02 exam.
+## Introduction
+
+This module introduces PostgreSQL — a relational database — and the `pg` (node-postgres) driver for connecting a Node.js/Express application to it. You will design a database schema, write SQL queries, implement CRUD operations with parameterized queries, and handle transactions. These skills apply directly to Module 14 (AWS RDS deployment) and the DVA-C02 certification.
 
 ---
 
-### 1. High-Yield Glossary
-Review these essential definitions carefully before beginning the lab and quiz:
+## 1. Relational Database Concepts
 
-*   **SQL schema structure**: The formal definition of a database's tables, columns, data types, constraints, and relationships — typically created with `CREATE TABLE` statements. A well-designed schema normalizes data to eliminate redundancy, defines appropriate data types for each column (`INTEGER`, `TEXT`, `BOOLEAN`, `TIMESTAMP`), and applies constraints to enforce data integrity before records are inserted.
-*   **Relational tables**: The core data storage unit in a relational database — a two-dimensional structure of rows (records) and columns (attributes). Each table represents one entity (e.g., `users`, `orders`, `products`), and relationships between entities are expressed through foreign key references rather than embedding data. The relational model, invented by E.F. Codd, ensures data consistency and enables flexible querying via SQL.
-*   **PRIMARY KEY**: A column (or combination of columns) that uniquely identifies every row in a table. Primary key values must be unique and non-null. Typically implemented as an auto-incrementing integer (`SERIAL PRIMARY KEY` in PostgreSQL) or a UUID. Every table should have a primary key — it is the target of foreign key references from other tables.
-*   **FOREIGN KEY constraints**: Column constraints that enforce referential integrity by requiring that a value in one table's column must match an existing value in another table's primary key column. For example, `FOREIGN KEY (user_id) REFERENCES users(id)` ensures that every `order` record references a valid, existing `user`. `ON DELETE CASCADE` automatically deletes child records when the parent is deleted.
-*   **JOIN queries**: SQL clauses that combine rows from two or more tables based on a related column value. `INNER JOIN` returns only rows where the join condition matches in both tables. `LEFT JOIN` returns all rows from the left table plus matching rows from the right (nulls for non-matches). `RIGHT JOIN` and `FULL OUTER JOIN` extend this pattern. Joins are the mechanism for querying relational data that spans multiple tables.
+A relational database organizes data into tables. Each table has:
 
----
+- Columns (fields) with defined data types and constraints
+- Rows (records) containing one entry per row
+- A primary key column that uniquely identifies each row
+- Optional foreign key columns that reference rows in other tables
 
-### 2. Certification Exam Tips
-*   **DVA-C02 Tests Amazon RDS:** The exam tests scenarios involving Amazon RDS for relational databases — including Multi-AZ deployments for high availability, Read Replicas for scaling read workloads, automated backups, and connection management. Knowing the difference between RDS PostgreSQL and Amazon Aurora PostgreSQL (compatible but distributed) is useful for DVA-C02 scenario questions.
-*   **SQL Injection is the Top Web Vulnerability:** The DVA-C02 exam tests AWS WAF and security best practices for APIs backed by relational databases. SQL injection — where malicious input is injected into a SQL query string — is mitigated by using parameterized queries (prepared statements). Know that AWS WAF can provide additional protection at the API Gateway level, but parameterized queries in application code are the primary defense.
-*   **Study Resource:** The PostgreSQL official documentation is the most complete reference. [PostgreSQL Tutorial — SQL JOIN Types](https://www.postgresqltutorial.com/postgresql-joins/) provides clear diagrams and examples for INNER, LEFT, RIGHT, and FULL OUTER JOINs with practice datasets.
+### Key Constraints
 
----
-
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read Part 13 covering **Relational Databases** in the OER Textbook: [Full Stack Open by University of Helsinki](https://fullstackopen.com/en/part13) — this section covers PostgreSQL integration with Node.js using the `pg` library and Sequelize ORM.
-*   **Required Video:** Watch the SQL and PostgreSQL section of the [Full Stack Web Development Course by freeCodeCamp on YouTube](https://www.youtube.com/watch?v=nu_pCVPKzTk) — covering schema design, CRUD queries, and JOIN operations.
+| Constraint | Purpose |
+|---|---|
+| `PRIMARY KEY` | Uniquely identifies each row; implies NOT NULL and UNIQUE |
+| `NOT NULL` | Column cannot be null |
+| `UNIQUE` | No two rows may have the same value in this column |
+| `FOREIGN KEY REFERENCES` | Value must exist as a primary key in the referenced table |
+| `CHECK` | Value must satisfy a boolean expression |
+| `DEFAULT` | Provides a fallback value when no value is supplied |
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will design and query a relational database:
-*   **Write raw SQL scripts to create tables**: Write `CREATE TABLE` statements for a `users` table (with `id SERIAL PRIMARY KEY`, `email TEXT UNIQUE NOT NULL`, `created_at TIMESTAMP DEFAULT NOW()`) and an `orders` table with a `user_id FOREIGN KEY` reference.
-*   **Insert mock data records using INSERT queries**: Use `INSERT INTO users (email) VALUES ('alice@example.com'), ('bob@example.com')` and insert corresponding orders for each user.
-*   **Perform INNER JOIN queries to return relational records**: Write a `SELECT u.email, o.total FROM users u INNER JOIN orders o ON o.user_id = u.id` query to retrieve each user's orders and verify the result against your inserted test data.
+## 2. PostgreSQL Data Types
+
+| Type | Use Case |
+|---|---|
+| `SERIAL` | Auto-incrementing integer (use for primary keys) |
+| `INTEGER` | Whole numbers |
+| `NUMERIC(p, s)` | Exact decimal (use for money — never `FLOAT`) |
+| `VARCHAR(n)` | Variable-length string up to n characters |
+| `TEXT` | Unlimited-length string |
+| `BOOLEAN` | True/false |
+| `TIMESTAMPTZ` | Timestamp with timezone (use this — not `TIMESTAMP`) |
+| `DATE` | Date without time |
+| `JSONB` | Binary JSON (indexable; preferred over `JSON`) |
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and understand their definitions in context.
-- [ ] Read Part 13 covering **Relational Databases** in [Full Stack Open by University of Helsinki](https://fullstackopen.com/en/part13).
-- [ ] Watch the SQL and PostgreSQL section of the [Full Stack Web Development Course by freeCodeCamp](https://www.youtube.com/watch?v=nu_pCVPKzTk).
-- [ ] Install [PostgreSQL](https://www.postgresql.org/download/) locally or use a free cloud database (Render, Supabase) to practice SQL queries before the lab.
-- [ ] Proceed to the weekly hands-on lab activity.
+## 3. Schema Design
+
+### Creating Tables
+
+```sql
+CREATE TABLE authors (
+  id          SERIAL PRIMARY KEY,
+  name        VARCHAR(255) NOT NULL,
+  country     VARCHAR(100),
+  created_at  TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE books (
+  id          SERIAL PRIMARY KEY,
+  title       VARCHAR(255) NOT NULL,
+  author_id   INTEGER NOT NULL REFERENCES authors(id) ON DELETE CASCADE,
+  year        INTEGER CHECK (year BETWEEN 1000 AND 2100),
+  genre       VARCHAR(100),
+  created_at  TIMESTAMPTZ DEFAULT NOW()
+);
+```
+
+### ON DELETE Behavior
+
+| Option | Behavior when referenced row is deleted |
+|---|---|
+| `ON DELETE CASCADE` | Child rows are automatically deleted |
+| `ON DELETE SET NULL` | Foreign key column is set to NULL |
+| `ON DELETE RESTRICT` | Deletion is blocked if child rows exist (default) |
+
+### Indexes
+
+```sql
+CREATE INDEX idx_books_author_id ON books(author_id);
+CREATE INDEX idx_books_genre ON books(genre);
+```
+
+Indexes speed up `WHERE`, `JOIN ON`, and `ORDER BY` operations on the indexed column. They slightly slow down INSERT/UPDATE/DELETE.
+
+---
+
+## 4. SQL CRUD Operations
+
+### SELECT
+
+```sql
+-- All rows
+SELECT * FROM books;
+
+-- Specific columns with alias
+SELECT b.id, b.title, b.year, a.name AS author
+FROM books b
+INNER JOIN authors a ON a.id = b.author_id;
+
+-- Filter and sort
+SELECT * FROM books WHERE genre = 'JavaScript' ORDER BY year DESC;
+
+-- Aggregate
+SELECT genre, COUNT(*) AS book_count FROM books GROUP BY genre;
+```
+
+### INSERT with RETURNING
+
+```sql
+-- Insert and return the new row
+INSERT INTO books (title, author_id, year)
+VALUES ('Refactoring', 1, 1999)
+RETURNING *;
+```
+
+### UPDATE
+
+```sql
+UPDATE books SET genre = 'Software Engineering' WHERE id = 3;
+
+-- Update and return the result
+UPDATE books SET title = $1, year = $2 WHERE id = $3 RETURNING *;
+```
+
+### DELETE
+
+```sql
+DELETE FROM books WHERE id = 5;
+```
+
+---
+
+## 5. JOIN Types
+
+| JOIN Type | Returns |
+|---|---|
+| `INNER JOIN` | Rows where the join condition matches in both tables |
+| `LEFT JOIN` | All left table rows; NULL for unmatched right table columns |
+| `RIGHT JOIN` | All right table rows; NULL for unmatched left table columns |
+| `FULL OUTER JOIN` | All rows from both tables; NULL where no match |
+
+```sql
+-- INNER JOIN: books with their author name
+SELECT b.title, a.name
+FROM books b
+INNER JOIN authors a ON a.id = b.author_id;
+
+-- LEFT JOIN: all authors, including those with no books
+SELECT a.name, b.title
+FROM authors a
+LEFT JOIN books b ON b.author_id = a.id;
+```
+
+---
+
+## 6. Connecting Node.js to PostgreSQL
+
+### Installation
+
+```bash
+npm install pg dotenv
+```
+
+### Connection Pool (db.js)
+
+```javascript
+const { Pool } = require('pg');
+require('dotenv').config();
+
+const pool = new Pool({
+  host:     process.env.DB_HOST,
+  port:     parseInt(process.env.DB_PORT) || 5432,
+  database: process.env.DB_NAME,
+  user:     process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  max: 10,
+  idleTimeoutMillis: 30000
+});
+
+module.exports = pool;
+```
+
+### .env File
+
+```text
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=bookstore
+DB_USER=postgres
+DB_PASSWORD=yourpassword
+```
+
+Add `.env` to `.gitignore`. Never commit credentials.
+
+### Pool vs. Client
+
+| Approach | When to Use |
+|---|---|
+| `pool.query(sql, params)` | Single queries — pool manages the connection |
+| `pool.connect()` + `client` | Transactions — hold one connection across multiple queries |
+
+---
+
+## 7. Parameterized Queries
+
+Always use parameterized queries with user input. Never concatenate strings.
+
+```javascript
+// CORRECT — parameterized
+const { rows } = await pool.query(
+  'SELECT * FROM books WHERE id = $1',
+  [req.params.id]
+);
+
+// WRONG — SQL injection vulnerability
+const { rows } = await pool.query(
+  `SELECT * FROM books WHERE id = ${req.params.id}`
+);
+```
+
+The `pg` driver replaces `$1`, `$2`, etc. with the values from the second argument array, treating them as data and never as SQL syntax.
+
+### Node-postgres Result Object
+
+```javascript
+const result = await pool.query('SELECT * FROM books');
+
+result.rows        // array of row objects
+result.rowCount    // number of rows affected or returned
+result.fields      // column metadata
+```
+
+---
+
+## 8. Async Route Handlers
+
+```javascript
+router.get('/', async (req, res, next) => {
+  try {
+    const { rows } = await pool.query('SELECT * FROM books ORDER BY title');
+    res.status(200).json(rows);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// POST with RETURNING
+router.post('/', requireFields(['title', 'author_id']), async (req, res, next) => {
+  try {
+    const { title, author_id, year, genre } = req.body;
+    const { rows } = await pool.query(
+      'INSERT INTO books (title, author_id, year, genre) VALUES ($1, $2, $3, $4) RETURNING *',
+      [title, author_id, year, genre]
+    );
+    res.status(201).set('Location', `/api/books/${rows[0].id}`).json(rows[0]);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// DELETE with rowCount check
+router.delete('/:id', async (req, res, next) => {
+  try {
+    const { rowCount } = await pool.query(
+      'DELETE FROM books WHERE id = $1',
+      [req.params.id]
+    );
+    if (rowCount === 0) return res.status(404).json({ error: 'Book not found' });
+    res.status(204).send();
+  } catch (err) {
+    next(err);
+  }
+});
+```
+
+---
+
+## 9. Transactions
+
+Use transactions when multiple queries must all succeed or all fail together.
+
+```javascript
+const transferFunds = async (fromId, toId, amount) => {
+  const client = await pool.connect();
+  try {
+    await client.query('BEGIN');
+    await client.query(
+      'UPDATE accounts SET balance = balance - $1 WHERE id = $2',
+      [amount, fromId]
+    );
+    await client.query(
+      'UPDATE accounts SET balance = balance + $1 WHERE id = $2',
+      [amount, toId]
+    );
+    await client.query('COMMIT');
+  } catch (err) {
+    await client.query('ROLLBACK');
+    throw err;
+  } finally {
+    client.release(); // always release back to the pool
+  }
+};
+```
+
+---
+
+## 10. AWS RDS for PostgreSQL
+
+Amazon RDS for PostgreSQL is a managed database service:
+
+- Automated backups with configurable retention
+- Multi-AZ deployment for high availability
+- Read replicas for horizontal read scaling
+- VPC network isolation (not publicly accessible by default)
+
+### RDS Proxy
+
+Lambda functions create new connections on cold starts. At scale, this exhausts the database connection limit. RDS Proxy sits between Lambda and RDS, maintaining a connection pool:
+
+```text
+Lambda (many instances) → RDS Proxy (pools connections) → RDS (limited connections)
+```
+
+RDS Proxy is configured in AWS — no application code changes are required.
+
+---
+
+## 11. Exam and Interview Tips
+
+1. `SERIAL` is shorthand for an auto-incrementing integer primary key. PostgreSQL 10+ also supports `GENERATED ALWAYS AS IDENTITY`.
+
+2. `RETURNING *` in INSERT/UPDATE returns the affected row without a second query. This is a PostgreSQL extension.
+
+3. Parameterized queries (`$1`, `$2`) are the required SQL injection prevention mechanism. String concatenation with user input is always wrong.
+
+4. Use `pool.query()` for single queries and `pool.connect()` for transactions. Always call `client.release()` in `finally`.
+
+5. `rowCount === 0` after DELETE means the row did not exist — return `404`. `rows.length === 0` after SELECT means not found.
+
+6. `TIMESTAMPTZ` stores timestamps in UTC. Always use it instead of `TIMESTAMP` for application data.
+
+7. Amazon RDS is for relational (SQL) workloads. DynamoDB is for NoSQL workloads. DVA-C02 tests this distinction frequently.
+
+8. RDS Proxy prevents connection exhaustion when Lambda scales. This is a tested DVA-C02 pattern.
+
+---
+
+## 12. Study Checklist
+
+- [ ] Create a PostgreSQL database and tables with psql
+- [ ] Define a schema with PRIMARY KEY, FOREIGN KEY, NOT NULL, and CHECK constraints
+- [ ] Write SELECT, INSERT, UPDATE, and DELETE queries
+- [ ] Write a JOIN query combining two tables
+- [ ] Connect Node.js to PostgreSQL using `pg` Pool
+- [ ] Store credentials in `.env` and add `.env` to `.gitignore`
+- [ ] Use parameterized queries for all user-supplied values
+- [ ] Write async route handlers with `try/catch` and `next(err)`
+- [ ] Use `RETURNING *` to retrieve the inserted row
+- [ ] Implement a transaction with BEGIN/COMMIT/ROLLBACK
+- [ ] Explain when to use RDS versus DynamoDB and what RDS Proxy solves

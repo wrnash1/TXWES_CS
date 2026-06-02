@@ -1,56 +1,252 @@
-# Reading Guide: Module 05 - Service Value Chain Activities
-## Course: CIS-4335_IT_Service_Management (ITIL 4 Foundation)
+# Reading Guide: Module 05 — Service Value Chain Activities
+
+**Course:** CIS-4335 IT Service Management — Texas Wesleyan University
+**Instructor:** Professor Nash
+**Certification Alignment:** ITIL 4 Foundation
 
 ---
 
-### Introduction
-Welcome to **Module 05 - Service Value Chain Activities**! The Service Value Chain (SVC) is the operating model at the heart of the ITIL 4 Service Value System. It defines six interconnected activities that an organization combines and sequences to create and deliver services. Understanding the SVC is critical for the Foundation exam — questions will ask you to identify which activity applies in a given scenario and how activities interact.
+## Purpose of This Guide
 
-As a student, you will learn each activity's purpose, the inputs and outputs that connect them, and how real-world workflows (like incident management or a new service deployment) flow through the chain. Make sure to complete the checklist and review the glossary terms before beginning the lab activity.
-
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The ITIL 4 Foundation exam expects you to know these concepts precisely:
-
-*   **Plan**: The SVC activity that ensures a shared understanding of the vision, current status, and improvement direction for all four dimensions and all products and services across the organization. Planning produces strategies, portfolios, policies, and architectures. It is not just project planning — it applies continuously at all levels.
-*   **Improve**: The SVC activity that ensures continual improvement of products, services, and practices across all value chain activities and the four dimensions. Every value chain activity contributes to and benefits from Improve. This directly connects the SVC to the Continual Improvement component of the SVS.
-*   **Engage**: The SVC activity that provides a good understanding of stakeholder needs, enables transparency, and ensures continual engagement with stakeholders. It handles demand and opportunities from customers and users, and manages ongoing relationships. Engage is the primary touchpoint between the organization and its stakeholders.
-*   **Design and Transition**: The SVC activity that ensures products and services continually meet stakeholder expectations for quality, cost, and time to market. It covers the design, building, testing, and transitioning of new or changed services into the live environment.
-*   **Obtain/Build**: The SVC activity that ensures service components are available when and where they are needed and meet agreed specifications. It covers acquiring components from external suppliers or building them internally — hardware, software, documentation, or any other service component.
-*   **Deliver and Support**: The SVC activity that ensures services are delivered and supported according to agreed specifications and stakeholder expectations. It covers the day-to-day operation of services, incident resolution, and fulfillment of service requests. This activity is where most service desk work occurs.
+This reading guide supports Module 05 of CIS-4335. The six Service Value Chain activities are core exam content. You must know the purpose, key inputs, and key outputs of each activity, and you must be able to map scenarios and practices to activities.
 
 ---
 
-### 2. Certification Exam Tips
-*   **Six Activities, Not Stages:** The SVC activities are not a linear sequence like a lifecycle — they are interconnected activities that can be combined in many different ways depending on the value stream. Do not confuse them with ITIL v3's five lifecycle stages.
-*   **Engage Is the Stakeholder Interface:** For any scenario involving customer contact, capturing demand, or managing ongoing relationships, Engage is almost always the relevant activity.
-*   **Obtain/Build vs. Design and Transition:** A common trap: Obtain/Build is about acquiring or building components; Design and Transition is about designing and moving the complete service into live operation. You obtain the parts, then transition the assembled service.
-*   **Deliver and Support Is Operational:** Day-to-day service operation, incident handling, and request fulfillment happen in Deliver and Support — not in Design and Transition.
-*   **Every Activity Connects to Improve:** The exam tests that Improve is not isolated — it receives inputs from every other activity and feeds improvement actions back into them.
-*   **Study Resource:** The Axelos ITIL 4 Foundation resources at [https://www.axelos.com/certifications/itil-service-management/itil-4-foundation](https://www.axelos.com/certifications/itil-service-management/itil-4-foundation) include the official glossary with precise definitions of each SVC activity.
-*   **Video Resource:** The [ITIL 4 Foundation Certification Complete Course Playlist](https://www.youtube.com/playlist?list=PLK-tWc9i-GZ5V68tH3pB2rWn3Bv-yP85W) on YouTube includes videos explaining how value streams flow through the SVC activities using real scenarios.
+## 1. SVC Architecture Overview
+
+The Service Value Chain is the operational core of the ITIL 4 Service Value System. It converts demand and opportunity into delivered value through six interconnected activities. These activities do not execute in a fixed linear sequence — they are combined in flexible patterns called value streams, appropriate to the type of work being done.
+
+All six activities have a bidirectional relationship with the Improve activity. Every activity contributes improvement data to Improve, and every activity receives improvement guidance from Improve.
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the chapter covering **Service Value Chain Activities** in the OER Textbook: [ITIL 4 Foundation Study Notes & Overviews](https://www.axelos.com/). Focus on the purpose of each of the six activities and how they connect.
-*   **Required Video:** Watch the video lecture on **Service Value Chain Activities** in the official course playlist: [ITIL 4 Foundation Certification Complete Course Playlist](https://www.youtube.com/playlist?list=PLK-tWc9i-GZ5V68tH3pB2rWn3Bv-yP85W).
+## 2. The Six SVC Activities — Complete Reference
+
+### Plan
+
+Purpose: Ensure a shared understanding of the vision, current status, and improvement direction for all four dimensions and all products and services across the organization.
+
+Plan is the alignment mechanism of the SVC. It produces the strategic direction that all other activities rely on.
+
+| Inputs | Outputs |
+|---|---|
+| Stakeholder demand and opportunities | Strategic plans and portfolios |
+| Policies from governance | Architectural decisions |
+| Performance reports from Deliver and Support | Policies for other SVC activities |
+| Improvement status from Improve | Product and service portfolio updates |
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will apply these concepts in the following activities:
-*   **Map a release deployment through all value chain activities**: Trace how a new software release moves through Plan, Engage, Design and Transition, Obtain/Build, and Deliver and Support, identifying what happens at each activity.
-*   **Trace Incident Management from Engage to Deliver and Support**: Follow a user-reported incident through the SVC, identifying which activities are involved and what each one contributes to restoring service.
-*   **Document build criteria**: For a given service component, define the acceptance criteria that the Obtain/Build activity must verify before the component can be handed to Design and Transition.
+### Improve
+
+Purpose: Ensure continual improvement of products, services, and practices across all value chain activities and the four dimensions of service management.
+
+Improve is the only activity that connects bidirectionally to all other activities simultaneously. It is both an activity and a practice (covered in Module 06).
+
+| Inputs | Outputs |
+|---|---|
+| Performance data from all SVC activities | Improvement initiatives and plans |
+| Customer and stakeholder feedback | Performance evaluation reports |
+| Audit results and assessments | Updates to all other SVC activities |
+| Continual Improvement Register entries | Improvement status reports |
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and memorize the purpose of all six SVC activities.
-- [ ] Read the chapter covering **Service Value Chain Activities** in [ITIL 4 Foundation Study Notes & Overviews](https://www.axelos.com/).
-- [ ] Watch the video lecture on **Service Value Chain Activities** in [ITIL 4 Foundation Certification Complete Course Playlist](https://www.youtube.com/playlist?list=PLK-tWc9i-GZ5V68tH3pB2rWn3Bv-yP85W).
-- [ ] Review the activities outlined in the lab instructions.
-- [ ] Proceed to the weekly hands-on lab activity.
+### Engage
+
+Purpose: Provide a good understanding of stakeholder needs, set the direction for service delivery and continuous engagement, and establish good relationships with all stakeholders.
+
+Engage is the voice of the consumer inside the SVC. It translates external demand into actionable requirements.
+
+| Inputs | Outputs |
+|---|---|
+| Demand and opportunities from consumers | Stakeholder requirements and expectations |
+| Service performance data | Change and service requests |
+| Market intelligence | Customer feedback and satisfaction data |
+| Third-party service information | Contracts and agreements |
+
+---
+
+### Design and Transition
+
+Purpose: Ensure that products and services continually meet stakeholder expectations for quality, costs, and time to market.
+
+Design and Transition covers the full arc of designing, testing, and transitioning new or changed services into live operation.
+
+| Inputs | Outputs |
+|---|---|
+| Requirements from Engage | Service designs and architectures |
+| Architectural decisions from Plan | Tested service components |
+| Service components from Obtain/Build | Transition plans and documentation |
+| Improvement initiatives from Improve | New and changed service documentation |
+
+---
+
+### Obtain/Build
+
+Purpose: Ensure that service components are available when and where they are needed and meet agreed specifications.
+
+Obtain/Build is where service components are acquired from external sources or built internally.
+
+| Inputs | Outputs |
+|---|---|
+| Architectures from Design and Transition | Service components (acquired or built) |
+| Specifications from Plan | Evaluation reports |
+| Contracts and agreements from Engage | Updated asset and configuration records |
+| Improvement initiatives from Improve | Knowledge articles and documentation |
+
+---
+
+### Deliver and Support
+
+Purpose: Ensure that services are delivered and supported according to agreed specifications and stakeholders' expectations.
+
+Deliver and Support is where day-to-day service operation occurs — service desk, incident resolution, request fulfillment, monitoring, and ongoing support.
+
+| Inputs | Outputs |
+|---|---|
+| New and changed services from Design and Transition | Delivered services |
+| Service components from Obtain/Build | Resolved incidents and fulfilled requests |
+| User and stakeholder requests via Engage | Service performance data |
+| Policies and plans from Plan | Improvement opportunities for Improve |
+
+---
+
+## 3. SVC Activities Quick Reference
+
+| Activity | Core Purpose | Key Output | Primary Practices Enabled |
+|---|---|---|---|
+| Plan | Strategic alignment and direction | Plans, portfolios, policies | Strategy Management, Portfolio Management |
+| Improve | Continual improvement across all activities | Improvement plans and initiatives | Continual Improvement |
+| Engage | Stakeholder understanding and relationship management | Requirements, contracts, feedback | Relationship Management, Service Level Management |
+| Design and Transition | Quality services ready for deployment | Tested components, transition plans | Change Enablement, Service Design, Service Validation |
+| Obtain/Build | Available, specification-compliant service components | Built or acquired components | Deployment Management, Software Development |
+| Deliver and Support | Live service delivery and user support | Delivered services, resolved incidents | Incident Management, Service Desk, Service Request Management |
+
+---
+
+## 4. The Improve Activity — Special Role
+
+The Improve activity is unique among the six because it connects bidirectionally to all others. This means:
+
+* Every other activity produces outputs that feed into Improve (performance data, incidents, user feedback, lessons learned).
+* Improve produces outputs that feed back into every other activity (improvement plans, updated policies, performance evaluations).
+
+No activity is exempt from contributing to improvement, and no activity is exempt from being improved. This is how ITIL 4 embeds continual improvement throughout the entire operating model rather than treating it as a separate phase.
+
+---
+
+## 5. Value Streams — How Activities Combine
+
+A value stream is a series of steps (SVC activities) combined to create and deliver a specific product or service to a consumer. Organizations have multiple value streams serving different purposes.
+
+### Common Value Stream Patterns
+
+| Scenario | Typical Activity Sequence |
+|---|---|
+| New service deployment | Plan → Engage → Design and Transition → Obtain/Build → Deliver and Support → Improve |
+| Incident resolution | Engage → Deliver and Support → Improve |
+| Service request fulfillment | Engage → Obtain/Build → Deliver and Support |
+| Service improvement initiative | Improve → Plan → Design and Transition → Obtain/Build → Deliver and Support |
+| Vendor contract renewal | Engage → Plan → Obtain/Build |
+
+Note: These are typical patterns, not mandatory sequences. Organizations adapt value streams to their specific context.
+
+---
+
+## 6. Practices Connected to SVC Activities
+
+Practices provide the organizational capability that enables SVC activities. Most practices contribute to multiple activities.
+
+### Practice-to-Activity Connections
+
+| Practice | Primary SVC Activity | Secondary Activities |
+|---|---|---|
+| Incident Management | Deliver and Support | Improve, Engage |
+| Service Desk | Deliver and Support | Engage |
+| Service Request Management | Deliver and Support | Obtain/Build |
+| Change Enablement | Design and Transition | Plan, Obtain/Build |
+| Deployment Management | Obtain/Build | Design and Transition, Deliver and Support |
+| Service Level Management | Engage | Deliver and Support, Plan |
+| Continual Improvement | Improve | All activities |
+| Knowledge Management | Deliver and Support | Improve, Design and Transition |
+| Problem Management | Improve | Deliver and Support |
+
+---
+
+## 7. ITIL v3 SVC vs. ITIL 4 SVC
+
+Students with prior ITIL v3 knowledge should note the differences between the ITIL v3 lifecycle phases and the ITIL 4 SVC activities.
+
+| ITIL v3 Phase | ITIL 4 Closest Equivalent | Key Difference |
+|---|---|---|
+| Service Strategy | Plan | Plan is ongoing, not a one-time phase |
+| Service Design | Design and Transition | Combined with transition; not a separate phase |
+| Service Transition | Design and Transition | Combined with design; not a separate phase |
+| Service Operation | Deliver and Support | More focused; does not contain design activities |
+| Continual Service Improvement | Improve | Embedded throughout the SVC, not a final phase |
+
+The ITIL 4 SVC is explicitly non-linear and non-sequential. This is the single most important structural difference from the ITIL v3 lifecycle.
+
+---
+
+## 8. ITIL 4 Foundation Exam Tips
+
+1. **Know the purpose of each activity in one sentence.** Exam questions will describe an activity's output or purpose and ask you to name the activity.
+
+2. **Improve connects to everything.** Any question asking which activity applies to "ensuring improvement across all activities" has one answer: Improve.
+
+3. **Engage captures demand.** Any question describing collecting stakeholder requirements, managing customer relationships, or responding to user feedback involves Engage.
+
+4. **Deliver and Support is day-to-day operation.** Incident resolution, request fulfillment, and monitoring all happen in Deliver and Support.
+
+5. **Design and Transition covers both design and testing.** In ITIL 4 these are a single activity, not separate phases.
+
+6. **Value streams are not the same as the SVC.** The SVC defines the six activities; a value stream is a specific combination of those activities for a particular purpose.
+
+7. **Practices enable activities — they do not replace them.** Incident Management enables Deliver and Support; it does not substitute for it.
+
+8. **The SVC is non-linear.** No exam answer describing a required sequential order for SVC activities is correct.
+
+---
+
+## 9. Key Terms Glossary
+
+**Deliver and Support** — The SVC activity ensuring services are delivered and supported according to agreed specifications.
+
+**Design and Transition** — The SVC activity ensuring products and services meet stakeholder expectations for quality, cost, and time to market.
+
+**Engage** — The SVC activity providing a good understanding of stakeholder needs and maintaining good relationships with all stakeholders.
+
+**Improve** — The SVC activity ensuring continual improvement of products, services, and practices across all activities and dimensions.
+
+**Obtain/Build** — The SVC activity ensuring service components are available and meet agreed specifications.
+
+**Plan** — The SVC activity ensuring a shared understanding of vision, current status, and improvement direction across the organization.
+
+**Service Value Chain (SVC)** — The operating model at the heart of the SVS; six interconnected activities combined in value streams to convert demand into value.
+
+**Value stream** — A series of steps combining SVC activities to create and deliver a specific product or service to a consumer.
+
+---
+
+## 10. Required Resources
+
+* Official ITIL 4 SVC documentation and Foundation exam resources: axelos.com
+* Module 05 video lecture (Professor Nash, approximately 20–24 minutes)
+
+---
+
+## 11. Study Checklist
+
+* [ ] Watch the Module 05 video lecture in full.
+* [ ] Write the purpose of each of the six SVC activities from memory.
+* [ ] For each activity, write two key inputs and two key outputs.
+* [ ] Draw the SVC showing all six activities and their connections to Improve.
+* [ ] Map three different scenarios to their value stream activity sequences.
+* [ ] Match at least six practices to their primary SVC activity.
+* [ ] Review the exam tips and identify which concepts need more reinforcement.
+* [ ] Complete the Module 05 Lab Activity.
+* [ ] Take the Module 05 Quiz.
+* [ ] Post your initial discussion response by Wednesday at 11:59 PM.
+* [ ] Reply to at least two classmates by Sunday at 11:59 PM.

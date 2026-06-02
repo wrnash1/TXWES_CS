@@ -1,66 +1,149 @@
 # Reading Guide: Module 02 – Agile Manifesto and the 12 Principles
 
-## Course: CIS-3350_Software_Engineering_Agile (Professional Scrum Master (PSM I))
+**Course:** CIS-3350 Software Engineering and Agile
+**Certification Alignment:** PSM I (Professional Scrum Master I) – Scrum.org
+**Instructor:** Professor Nash | Texas Wesleyan University
 
 ---
 
-### Introduction
+## Introduction
 
-Welcome to **Module 02 – Agile Manifesto and the 12 Principles**! This module is the philosophical core of the entire course. The Agile Manifesto (2001) and its 12 supporting principles are the direct source material for PSM I exam questions on values, mindset, and the "why" behind Scrum practices.
-
-Unlike Module 01's broad SDLC survey, this week drills into the exact language of the Manifesto. PSM I scenario questions frequently embed a Manifesto principle and ask which team behavior best embodies it. You need to recognize the principles by paraphrase, not just by headline.
+The Agile Manifesto is the philosophical foundation of every Agile framework, including Scrum. Written in 2001 by seventeen experienced software practitioners, it distills decades of hard-won lessons about what makes software teams succeed or fail into four concise values and twelve operational principles. The PSM I certification exam tests these values and principles directly — not as trivia, but as the reasoning framework you apply to scenario-based questions. This guide gives you the deep understanding you need.
 
 ---
 
-### 1. High-Yield Glossary
+## 1. Historical Context — Why 2001 Mattered
 
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
+By the late 1990s, the software industry had developed a set of process frameworks — including RUP, CMM, and various ISO standards — that were designed to bring engineering rigor to software development. In practice, many of these processes had become so documentation-heavy and bureaucratic that teams spent more time managing the process than writing software. The Standish Group's CHAOS Report of 1994 had found that only 16 percent of software projects were completed on time and within budget — a damning indictment of the status quo.
 
-* **Agile Manifesto:** A 2001 declaration signed by 17 software practitioners that articulates four value pairs and 12 supporting principles forming the philosophical foundation of all Agile methods. It prioritizes individuals and interactions, working software, customer collaboration, and responding to change over their respective counterparts.
+Meanwhile, a set of practitioners were independently developing lighter-weight methods — Kent Beck's Extreme Programming (XP), Ken Schwaber and Jeff Sutherland's Scrum, Alistair Cockburn's Crystal methods, and others. These methods shared a common intuition: software development is a creative, collaborative activity that cannot be reduced to a predictable manufacturing process. They arranged a meeting at the Snowbird ski resort in Utah in February 2001 and produced the Agile Manifesto.
 
-* **Agile values (four pairs):** The Manifesto's four statements of priority — Individuals and Interactions over Processes and Tools; Working Software over Comprehensive Documentation; Customer Collaboration over Contract Negotiation; Responding to Change over Following a Plan. Both sides have value; the left side is weighted more heavily.
-
-* **12 Agile Principles:** The operational elaboration of the four values, covering topics including early and continuous delivery, welcoming changing requirements, frequent delivery of working software, daily collaboration between business and developers, motivated individuals, face-to-face conversation, working software as the primary measure of progress, sustainable pace, technical excellence, simplicity, self-organizing teams, and regular reflection.
-
-* **Customer collaboration:** The Agile emphasis on continuous, ongoing dialogue with customers or stakeholders throughout development, rather than locking requirements in a contract at the start and only engaging the customer at delivery. Scrum embodies this through Sprint Reviews and frequent Product Backlog refinement.
-
-* **Sustainable pace:** The Agile Principle that teams should be able to maintain a constant development pace indefinitely. Sprints with consistent velocity, avoiding crunch culture, and protecting team capacity are practical Scrum applications of this principle.
+The seventeen signatories were not revolutionaries — they were experienced, pragmatic practitioners who had observed what actually works in software teams. The Manifesto is empirical in the best sense: it reflects observed reality, not ideological preference.
 
 ---
 
-### 2. Certification Exam Tips
+## 2. The Four Values — Full Analysis
 
-* **PSM I Focus:** Memorize the exact language of all four Manifesto value pairs. The exam often presents a paraphrase and asks which value it reflects, or asks which team behavior violates a specific value. The phrase "over" is critical — both sides have value, but one is prioritized.
-* **Scenario Trap:** A common trap asks what to do when a customer requests a major scope change mid-Sprint. The Agile answer (and Scrum answer) is to add the item to the Product Backlog for future Sprint consideration — not to immediately stop the Sprint and re-plan, unless the Sprint Goal becomes obsolete.
-* **Principle 1 to Know:** "Our highest priority is to satisfy the customer through early and continuous delivery of valuable software." This principle underpins why Scrum uses Sprints of 1–4 weeks rather than waiting months to deliver.
-* **Principle 12 to Know:** "At regular intervals, the team reflects on how to become more effective, then tunes and adjusts its behavior accordingly." This directly maps to the Sprint Retrospective event in Scrum.
-* **Study Resource:** Read every word of the [Agile Manifesto](https://agilemanifesto.org/) and its [12 Principles](https://agilemanifesto.org/principles.html) — both are free and short. Then read the "Scrum Values" section of [The Scrum Guide (2020)](https://scrumguides.org/) to see how Scrum operationalizes Agile values.
+The Manifesto's core statement: "We are uncovering better ways of developing software by doing it and helping others do it. Through this work we have come to value..."
+
+### Value 1: Individuals and Interactions over Processes and Tools
+
+Meaning: The quality of a software team is determined primarily by the quality of its people and communication, not by the sophistication of its tools or the rigor of its processes. A mediocre team using excellent tools produces mediocre software. An excellent team using modest tools can produce excellent software.
+
+In practice: When a Scrum Master sees communication problems on the team, the response is not to add more process or buy better tools — it is to facilitate better human interaction. Daily Scrums are short because they are meant to enable team synchronization, not to generate status reports for management.
+
+Misunderstanding to avoid: This value does not say "ignore processes and tools." It says that when choosing between investing in people/communication versus investing in processes/tools, choose people.
+
+### Value 2: Working Software over Comprehensive Documentation
+
+Meaning: The primary deliverable of a software team is software that works — not specifications, design documents, project plans, or status reports. Documentation has value when it helps teams build, understand, or maintain software; it does not have value when it exists to satisfy a process requirement that nobody actually uses.
+
+In practice: In Scrum, the Definition of Done ensures that each Sprint produces a genuine increment of working, tested software — not partially built features or documentation about features that will be built later.
+
+Misunderstanding to avoid: This value does not prohibit documentation. The Scrum Guide itself requires a Product Backlog (written), Sprint Backlog (written), and Increment (demonstrated). What it prohibits is treating documentation as a substitute for working software.
+
+### Value 3: Customer Collaboration over Contract Negotiation
+
+Meaning: The relationship between a software team and its customer should be collaborative — both parties working together toward a shared goal — rather than adversarial, where the contract defines what is owed and disputes are won by lawyering.
+
+In practice: The Product Owner role in Scrum is the organizational expression of this value. The Product Owner is not a requirements clerk — they are an active collaborator who continuously negotiates value, priorities, and trade-offs with the Developers and stakeholders.
+
+Misunderstanding to avoid: This value does not say "never write contracts." It says that within a contractual relationship, both parties should collaborate rather than fight. Many organizations use Agile-friendly contract structures (time-and-materials, not fixed-price-fixed-scope) to support this value.
+
+### Value 4: Responding to Change over Following a Plan
+
+Meaning: Plans are valuable as current best thinking, but new information should cause plans to change. The cost of following an outdated plan is higher than the cost of updating the plan. Agile teams treat their plans as hypotheses to be tested, not commitments to be honored regardless of new evidence.
+
+In practice: The Product Backlog is never "frozen." Sprint Planning produces a Sprint Goal and Sprint Backlog, but if during the Sprint the team learns something that makes the Sprint Goal obsolete, the Sprint can be cancelled and a new Sprint started. Product Backlog refinement happens continuously.
+
+Misunderstanding to avoid: This value does not say "plans are useless" or "we never plan." Sprint Planning, Release Planning, and Quarterly Planning are all legitimate Agile activities. What this value prohibits is treating plans as immutable once written.
 
 ---
 
-### Required Readings & Videos
+## 3. The 12 Principles — Reference Table
 
-To prepare for this module's topics, you must complete the following readings and videos:
-
-* **Required Reading:** [Agile Manifesto and 12 Principles](https://agilemanifesto.org/) — the original 2001 document, freely available. Both the values page and the principles page are required.
-* **Required Video:** [Agile Manifesto Explained – Visual explanation of all 4 values and 12 principles](https://www.youtube.com/watch?v=rf8Gi2RLKWQ) — covers each principle with practical team examples. (~10 min)
+| No. | Principle (paraphrased) | PSM I Relevance |
+|---|---|---|
+| 1 | Highest priority: satisfy customer through early and continuous delivery of valuable software | Justifies short Sprints and the Sprint Goal |
+| 2 | Welcome changing requirements, even late in development | Justifies dynamic Product Backlog management |
+| 3 | Deliver working software frequently; prefer shorter timescales | Sets the Sprint cadence expectation |
+| 4 | Business and developers work together daily | Justifies the Daily Scrum and PO availability |
+| 5 | Build around motivated individuals; trust them | Justifies self-managing teams and servant leadership |
+| 6 | Face-to-face conversation is most efficient | Justifies co-located teams and real-time collaboration |
+| 7 | Working software is the primary measure of progress | Justifies the Increment and Definition of Done |
+| 8 | Agile promotes sustainable development at constant pace | Justifies protection from unreasonable overtime demands |
+| 9 | Continuous attention to technical excellence enhances agility | Justifies refactoring, clean code, and Definition of Done quality standards |
+| 10 | Simplicity — maximize work not done — is essential | Justifies saying no to scope creep and gold-plating |
+| 11 | Best architectures emerge from self-organizing teams | Justifies no prescribed technical roles within Scrum team |
+| 12 | Teams reflect regularly and tune their behavior | Directly justifies the Sprint Retrospective |
 
 ---
 
-### Lab & Command Integration
+## 4. Mapping Manifesto Principles to Scrum Events
 
-In this week's hands-on lab, you will:
+Every Scrum event can be traced back to one or more Manifesto principles:
 
-* **Map the 12 Principles to Scrum events and artifacts:** For each of the 12 principles, identify which Scrum event, role, or artifact most directly implements it, and explain the connection in one sentence.
-* **Analyze real team scenarios against Manifesto values:** Read three provided team behavior vignettes and identify which Manifesto value each either upholds or violates, citing specific value language.
-* **Draft a team working agreement:** Using Agile principles as a foundation, draft a five-item team working agreement that operationalizes sustainable pace, collaboration, and continuous improvement for a hypothetical Scrum team.
+| Scrum Event | Primary Principles |
+|---|---|
+| Sprint (the container) | 1, 3 — continuous, frequent delivery |
+| Sprint Planning | 1, 5 — team-driven commitment to valuable work |
+| Daily Scrum | 4, 6 — daily collaboration and face-to-face sync |
+| Sprint Review | 1, 7 — demonstrate working software to stakeholders |
+| Sprint Retrospective | 12 — regular reflection and adaptation |
+
+Understanding this mapping allows you to answer "why does Scrum do X?" questions from first principles, which is exactly how PSM I scenario questions are framed.
 
 ---
 
-### 3. Study Checklist
+## 5. Common Manifesto Misinterpretations
 
-* [ ] Read the four Agile values at [agilemanifesto.org](https://agilemanifesto.org/) and be able to state each value pair from memory.
-* [ ] Read all 12 Principles at [agilemanifesto.org/principles](https://agilemanifesto.org/principles.html) and paraphrase each one.
-* [ ] Read the "Scrum Values" section of [The Scrum Guide](https://scrumguides.org/) and identify where each of Scrum's five values (Commitment, Courage, Focus, Openness, Respect) appears in the Manifesto principles.
-* [ ] Watch the required video and note which principles are most frequently misapplied in practice.
-* [ ] Proceed to the weekly hands-on lab activity.
+Misinterpretation 1: "Agile means no documentation." The Manifesto says working software is valued over comprehensive documentation, not instead of all documentation. The Scrum Guide requires several written artifacts.
+
+Misinterpretation 2: "Agile means no planning." Agile teams plan constantly — Sprint Planning, backlog refinement, release planning. The difference is that plans are treated as adaptive, not contractual.
+
+Misinterpretation 3: "Agile means the customer can change everything anytime." Scrum protects Sprint integrity. Changes to the current Sprint require a conversation between the Product Owner and Developers, and in extreme cases can cause a Sprint cancellation. Random scope injection into a running Sprint is not Agile — it is chaos.
+
+Misinterpretation 4: "Agile means no processes." Value 1 says individuals and interactions over processes and tools — not no processes. Scrum itself is a process framework. The principle is that people and communication take priority when the two conflict.
+
+---
+
+## 6. The Manifesto's Self-Description — "Uncovering Better Ways"
+
+The opening phrase of the Manifesto — "We are uncovering better ways of developing software by doing it and helping others do it" — is itself significant. The word "uncovering" implies empiricism: you discover truth through experience, not through reasoning from first principles. This is the same epistemological commitment that underlies Scrum's empirical pillars of Transparency, Inspection, and Adaptation.
+
+The Manifesto authors did not claim to have invented a complete, final answer. They claimed to be engaged in an ongoing discovery process. This is why Agile frameworks continue to evolve — Scrum has been revised, XP has been updated, new frameworks have emerged. The Manifesto is a living philosophical commitment, not a closed specification.
+
+---
+
+## 7. PSM I Exam Tips
+
+Tip 1: Memorize all four Agile Manifesto values with exact "over" language. The exam will present slight misquotations as wrong answers. For example, "documentation over working software" is incorrect (the values are reversed); "working software over all documentation" is incorrect (the Manifesto says "comprehensive documentation," not "all documentation").
+
+Tip 2: The twelve principles are not numbered or labeled by the Manifesto itself — they are presented as a continuous list. On the PSM I exam, they will be referenced by content, not number. Study them by meaning, not by memorizing position.
+
+Tip 3: When a PSM I question describes a team ignoring customer feedback because it contradicts the documented requirements, this violates Value 3 (customer collaboration over contract negotiation) and Principle 2 (welcome changing requirements).
+
+Tip 4: When a PSM I question describes a team working overtime consistently to meet deadlines, this violates Principle 8 (sustainable pace). The Scrum Master should address this, not celebrate it.
+
+Tip 5: Principle 11 (best architectures emerge from self-organizing teams) is why Scrum assigns no specific technical roles within the Developer accountability. The team decides how to organize its technical work.
+
+Tip 6: Principle 10 (simplicity — maximize work not done) is the Manifesto's expression of the Lean concept of waste elimination. This principle connects Module 02 directly to Module 09 (Kanban and Lean Principles).
+
+Tip 7: PSM I questions sometimes describe a Scrum Master who is enforcing Agile practices rigidly even when they are not helping. This violates Value 1 (individuals and interactions over processes) and Principle 5 (trust motivated individuals). Scrum is a framework that enables inspection and adaptation — including adaptation of the process itself.
+
+Tip 8: The Manifesto was written specifically about software development. The Scrum Guide notes that Scrum has been used beyond software. PSM I questions focus on software contexts, but the principles apply more broadly.
+
+---
+
+## 8. Study Checklist
+
+- [ ] Write out all four Agile Manifesto values from memory, including the "over" language and the closing sentence about items on the right
+- [ ] For each value, write one concrete example of a team behavior that embodies it and one that violates it
+- [ ] Write a one-sentence plain-language summary of each of the 12 Principles
+- [ ] Complete the Manifesto-to-Scrum event mapping table from memory
+- [ ] Identify which principle(s) justify each of the five Scrum events
+- [ ] Explain the three most common Manifesto misinterpretations in your own words
+- [ ] Read the Agile Manifesto (both values and principles) at the official source referenced in the Scrum Guide
+- [ ] Complete this module's Quiz and Discussion Forum
+
+---

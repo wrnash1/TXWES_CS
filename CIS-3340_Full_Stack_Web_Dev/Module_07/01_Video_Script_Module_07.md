@@ -1,27 +1,348 @@
-# Video Script: CIS-3340_Full_Stack_Web_Dev (AWS Certified Developer - Associate)
-## Module 07 - Node.js & Express Server
-**Estimated Duration:** 12-15 minutes
+# Video Script: Module 07 - Node.js & Express Server
+
+**Course:** CIS-3340 Full Stack Web Development
+**Estimated Duration:** 22 minutes
+**Certification Alignment:** AWS Certified Developer - Associate (DVA-C02)
+**Recorded by:** Professor Nash | Texas Wesleyan University
 
 ---
 
-### [00:00 - 02:30] Introduction and Certification Alignment
-*   **Visual:** Instructor on camera with a title card displaying: **Node.js & Express Server**.
-*   **Audio:** "Hello class! Today we are digging into a vital topic for the **AWS Certified Developer - Associate** exam: **Node.js & Express Server**. If you are new to this concept, don't worry. We will break it down step-by-step. Understanding how these systems communicate and operate is fundamental for passing your certification exam and configuring systems in a real-world enterprise environment."
-*   **Study Link:** [Full Stack Web Development Course by freeCodeCamp - Node.js & Express Server](https://www.youtube.com/watch?v=nu_pCVPKzTk)
+## Production Notes
+
+- Camera: Professor Nash on-screen for introductions and transitions
+- Screen capture: VS Code terminal, browser, Postman or Thunder Client
+- Use [SHOW CODE] for VS Code; [SHOW BROWSER] for Postman/browser; [SHOW TERMINAL] for command-line output
+- Run all live demos against a local Express server started in the integrated terminal
+- Show `package.json` scripts and `node_modules` structure in the file explorer panel
 
 ---
 
-### [02:30 - 09:30] Conceptual Deep-Dive
-*   **Visual:** Split screen showing slides and a diagram mapping the key configurations.
-*   **[Alt-text: A diagram illustrating the operational relationships of Node.js & Express Server components, highlighting data paths and connection rules.]**
-*   **Audio:** "Let's review the terms you need to master for this week's unit:
-    Node event loop, package manager (NPM), Express framework, server setup, listening sockets.
-    
-    Let's think of this like a real-world analogy. When configuring this setup, we must maintain strict order and safety protocols to ensure our networks and databases remain secure and performant."
+## Section 1: Introduction - Node.js and the Server Side [00:00 - 04:00]
+
+Welcome to Module 07. I am Professor Nash. Last module we designed REST APIs on paper — specified endpoints, methods, status codes, and error formats. This module we build the server that implements those designs.
+
+Node.js is a JavaScript runtime built on Chrome's V8 engine. It lets you run JavaScript outside the browser — on a server, in a terminal, or inside an AWS Lambda function. Before Node.js, the back end was a different language: PHP, Ruby, Java, Python. Node brought JavaScript to the full stack.
+
+Express is the most widely used Node.js web framework. It provides routing, middleware, and HTTP utilities without enforcing a rigid application structure. Express is minimal by design — you add exactly what you need.
+
+[SHOW TERMINAL]
+
+Let me show you what we are building today. I will open an integrated terminal in VS Code and start a server we will build together.
+
+```text
+node index.js
+Server running on port 3000
+```
+
+Then in a new terminal tab, I will send it a request:
+
+```bash
+curl http://localhost:3000/api/books
+```
+
+And the server responds with JSON. By the end of this module you will be able to build this from scratch.
+
+**AWS Exam Tip:** Lambda functions are single-purpose Express-like handlers — they receive an event object and return a response object. Understanding how Express routes work directly prepares you to write well-structured Lambda handlers. DVA-C02 tests whether Lambda response objects include the required `statusCode` field — the same field you return from every Express route.
 
 ---
 
-### [09:30 - End] Walkthrough and Lab Prep
-*   **Visual:** Live terminal showing command executions.
-*   **[Alt-text: Command line console output showing the verification runs for Node.js & Express Server.]**
-*   **Audio:** "Now, let's step through the commands you will run in this week's lab. We will check statuses, run configurations, and log the completion metadata using the submit utility. Let's get started!"
+## Section 2: Setting Up a Node.js Project [04:00 - 08:30]
+
+[SHOW TERMINAL]
+
+Every Node.js project starts with a `package.json` file. This file describes the project, lists dependencies, and defines scripts.
+
+```bash
+mkdir express-server
+cd express-server
+npm init -y
+```
+
+The `-y` flag accepts all defaults. Open `package.json` and look at the structure — name, version, scripts, dependencies. We will add to this file throughout the module.
+
+Now install Express:
+
+```bash
+npm install express
+```
+
+This creates a `node_modules` folder containing Express and all its dependencies, and adds `"express"` to the `dependencies` section of `package.json`. Never edit `node_modules` — it is regenerated by running `npm install`.
+
+Install nodemon as a development dependency:
+
+```bash
+npm install --save-dev nodemon
+```
+
+The `--save-dev` flag adds it to `devDependencies` — tools needed during development but not in production. AWS Lambda does not include `devDependencies` in its deployment package.
+
+[SHOW CODE]
+
+Update the scripts section of `package.json`:
+
+```json
+{
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  }
+}
+```
+
+`npm start` launches the server for production. `npm run dev` launches it with nodemon for development — the server restarts automatically whenever you save a file.
+
+Create `index.js` — this is the entry point:
+
+```javascript
+const express = require('express');
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Middleware
+app.use(express.json());
+
+// Routes
+app.get('/', (req, res) => {
+  res.json({ message: 'Express server is running' });
+});
+
+// Start server
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+```
+
+Run `npm run dev`. The terminal shows `Server running on port 3000`. Open Postman and send `GET http://localhost:3000/` — you get back JSON.
+
+**AWS Exam Tip:** `process.env.PORT` is the correct way to read the port number. On Elastic Beanstalk and EC2, the platform sets the PORT environment variable. Hard-coding port 3000 works locally but will silently bind to the wrong port in some AWS deployment environments.
+
+---
+
+## Section 3: Routing - GET, POST, PUT, DELETE [08:30 - 14:00]
+
+[SHOW CODE]
+
+Let us build a complete in-memory REST API for books. We will implement all four primary HTTP methods.
+
+Start with the data — an in-memory array (no database yet; we add PostgreSQL in Module 09):
+
+```javascript
+let books = [
+  { id: 1, title: 'Clean Code', author: 'Robert C. Martin', year: 2008 },
+  { id: 2, title: 'The Pragmatic Programmer', author: 'Hunt & Thomas', year: 1999 },
+  { id: 3, title: 'You Don\'t Know JS', author: 'Kyle Simpson', year: 2015 }
+];
+let nextId = 4;
+```
+
+`GET /api/books` — list all books:
+
+```javascript
+app.get('/api/books', (req, res) => {
+  res.status(200).json(books);
+});
+```
+
+`GET /api/books/:id` — get one book:
+
+```javascript
+app.get('/api/books/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+  const book = books.find(b => b.id === id);
+
+  if (!book) {
+    return res.status(404).json({
+      error: 'Book not found',
+      code: 'BOOK_NOT_FOUND'
+    });
+  }
+
+  res.status(200).json(book);
+});
+```
+
+`POST /api/books` — create a book:
+
+```javascript
+app.post('/api/books', (req, res) => {
+  const { title, author, year } = req.body;
+
+  if (!title || !author) {
+    return res.status(400).json({
+      error: 'title and author are required',
+      code: 'MISSING_REQUIRED_FIELDS'
+    });
+  }
+
+  const newBook = { id: nextId++, title, author, year };
+  books.push(newBook);
+
+  res.status(201)
+    .set('Location', `/api/books/${newBook.id}`)
+    .json(newBook);
+});
+```
+
+`PUT /api/books/:id` — replace a book:
+
+```javascript
+app.put('/api/books/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+  const index = books.findIndex(b => b.id === id);
+
+  if (index === -1) {
+    return res.status(404).json({ error: 'Book not found', code: 'BOOK_NOT_FOUND' });
+  }
+
+  const { title, author, year } = req.body;
+  books[index] = { id, title, author, year };
+  res.status(200).json(books[index]);
+});
+```
+
+`DELETE /api/books/:id` — remove a book:
+
+```javascript
+app.delete('/api/books/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+  const index = books.findIndex(b => b.id === id);
+
+  if (index === -1) {
+    return res.status(404).json({ error: 'Book not found', code: 'BOOK_NOT_FOUND' });
+  }
+
+  books.splice(index, 1);
+  res.status(204).send();
+});
+```
+
+[SHOW BROWSER]
+
+Let me test each route in Postman. I will show you the status codes, the Location header on the POST response, and the empty body on the DELETE.
+
+Notice the pattern: every route handler follows the same structure — validate input, find the resource, return the appropriate status code and body.
+
+---
+
+## Section 4: Request Object, Response Object, and Middleware [14:00 - 18:30]
+
+[SHOW CODE]
+
+The two objects passed to every route handler — `req` and `res` — contain everything you need.
+
+The request object `req`:
+
+```javascript
+app.post('/api/books', (req, res) => {
+  console.log(req.method);       // 'POST'
+  console.log(req.path);         // '/api/books'
+  console.log(req.params);       // { id: '42' } — from URL path params
+  console.log(req.query);        // { sort: 'title' } — from ?sort=title
+  console.log(req.body);         // parsed JSON body (requires express.json())
+  console.log(req.headers);      // all request headers
+  console.log(req.headers['authorization']); // Bearer token
+});
+```
+
+The response object `res`:
+
+```javascript
+app.get('/api/example', (req, res) => {
+  res.status(200);           // set status code
+  res.set('X-Request-Id', '123'); // set a header
+  res.json({ ok: true });    // send JSON body (sets Content-Type automatically)
+
+  // Common shortcuts:
+  // res.status(404).json({ error: 'Not found' })
+  // res.status(201).set('Location', '/api/books/5').json(newBook)
+  // res.status(204).send()   // empty body
+});
+```
+
+Middleware functions run before route handlers. They have access to `req`, `res`, and a `next` function. Call `next()` to pass control to the next middleware or route handler.
+
+```javascript
+// Request logging middleware
+const requestLogger = (req, res, next) => {
+  const timestamp = new Date().toISOString();
+  console.log(`[${timestamp}] ${req.method} ${req.path}`);
+  next(); // MUST call next() or the request hangs
+};
+
+app.use(requestLogger);
+```
+
+Order matters: `app.use()` registers middleware in the order it is called. Middleware registered before routes runs before routes; middleware registered after runs after (or never, if the route already sent a response).
+
+[SHOW TERMINAL]
+
+Watch the terminal as I make requests — the logger prints every incoming request with a timestamp. This is the foundation of how request logging works in Express, and it mirrors how Lambda logs are written to CloudWatch.
+
+**AWS Exam Tip:** AWS Lambda execution context is stateless between cold starts. Variables declared outside the handler function (like our `books` array) persist across warm invocations in the same container but are reset on cold starts. In-memory state is never reliable in Lambda — always use a database like DynamoDB or RDS.
+
+---
+
+## Section 5: Error Handling and Lab Preview [18:30 - 22:00]
+
+[SHOW CODE]
+
+Express has a built-in mechanism for centralized error handling: a middleware function with four parameters `(err, req, res, next)`.
+
+```javascript
+// 404 handler — catches all unmatched routes
+app.use((req, res) => {
+  res.status(404).json({
+    error: `Route ${req.method} ${req.path} not found`,
+    code: 'ROUTE_NOT_FOUND'
+  });
+});
+
+// Global error handler — must have four parameters
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(err.status || 500).json({
+    error: err.message || 'Internal server error',
+    code: err.code || 'INTERNAL_ERROR'
+  });
+});
+```
+
+To send an error to the global handler from a route, call `next(err)`:
+
+```javascript
+app.get('/api/books/:id', (req, res, next) => {
+  try {
+    const id = parseInt(req.params.id);
+    if (isNaN(id)) throw Object.assign(new Error('Invalid ID'), { status: 400 });
+    // ...
+  } catch (err) {
+    next(err); // passes to global error handler
+  }
+});
+```
+
+A complete Express server structure (the pattern you will use for the rest of this course):
+
+```text
+express-server/
+├── index.js          (entry point — starts the server)
+├── package.json
+├── routes/
+│   └── books.js      (route handlers — we add this in Module 08)
+└── middleware/
+    └── logger.js     (reusable middleware)
+```
+
+In Module 08 we refactor this flat file into the organized router structure. For this module, keep everything in `index.js`.
+
+In the lab this week you will build this complete Express server from scratch: initialize the project, install dependencies, implement all five routes for a books API, add the request logger middleware, and test every endpoint with Thunder Client. You will verify status codes, request bodies, path parameters, and the `Location` header on POST responses.
+
+Thank you for watching. See you in Module 08 where we break a monolithic `index.js` into Express Router modules.
+
+---
+
+## Additional Resources
+
+- developer.mozilla.org — search "Node.js HTTP module" and "Express.js routing" for deep reference
+- aws.amazon.com/certification — review Lambda programming model documentation for Node.js

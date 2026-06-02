@@ -1,77 +1,207 @@
-# Quiz: Module 09 – Graphs: Representation and BFS/DFS
-## Course: CIS-2315 Data Structures & Algorithms (Technical Interview Readiness)
+# Quiz: Module 09 — Graph Representations
+
+## Course: CIS-2315 Data Structures & Algorithms
+
+**Certification Alignment:** Technical Interview Readiness (LeetCode / HackerRank)
+
+**Instructions:** Choose the single best answer for each question.
 
 ---
 
-**Question 1**
-Which graph traversal algorithm guarantees finding the shortest path in an unweighted graph?
-*   A) DFS using a stack
-*   B) BFS using a queue
-*   C) Topological sort
-*   D) In-order traversal
-*   **Correct Answer:** B) BFS using a queue
-*   **Distractor Analysis:**
-    *   *Why correct:* BFS explores all nodes at distance d before any node at distance d+1. The first time it reaches the destination, the path used is guaranteed to be the shortest in terms of edge count.
-    *   A is incorrect: DFS follows one path as deep as possible and may reach the destination via a longer route before exploring shorter ones.
-    *   C is incorrect: Topological sort orders nodes by dependency; it does not find shortest paths.
-    *   D is incorrect: In-order traversal is a tree concept and does not apply to general graphs.
+### Question 1
+
+What is the space complexity of an adjacency list for a graph with V vertices and E edges?
+
+- A) O(V²)
+- B) O(V + E)
+- C) O(E²)
+- D) O(V · E)
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* O(V²) is the space complexity of an adjacency matrix — a fixed V×V grid regardless of how many edges exist. An adjacency list only stores what is actually present.
+- *Why B is correct:* An adjacency list allocates one entry per vertex (O(V) total) and one entry per edge endpoint (O(E) for directed, O(2E) for undirected — still O(E)). Total: O(V + E). For sparse graphs where E << V², this is far more efficient than a matrix.
+- *Why C is incorrect:* O(E²) has no basis in graph representation. No standard structure requires squaring the edge count.
+- *Why D is incorrect:* O(V · E) would imply storing each vertex's information for every edge, which no standard representation does. This is an overcount with no structural basis.
 
 ---
 
-**Question 2**
-Which of the following is the most accurate definition of an **adjacency list** graph representation?
-*   A) A V×V 2D array where entry [u][v] equals 1 if an edge exists from vertex u to vertex v and 0 otherwise, enabling O(1) edge existence queries.
-*   B) A data structure where each vertex maintains a list of its directly connected neighbors, using O(V + E) total space and making iteration over a vertex's neighbors O(degree) time.
-*   C) A sorted list of all edges in the graph stored as (u, v, weight) tuples, enabling binary search for edge existence in O(log E) time.
-*   D) A hash map from each vertex to its distance from the source, updated during BFS or Dijkstra's algorithm to track shortest path lengths.
-*   **Correct Answer:** B) A data structure where each vertex maintains a list of its directly connected neighbors, using O(V + E) total space and making iteration over a vertex's neighbors O(degree) time.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* That describes an adjacency matrix, not an adjacency list.
-    *   *Why B is correct:* An adjacency list stores, for each vertex, only its actual neighbors. Total space is proportional to the number of vertices plus edges — efficient for sparse graphs.
-    *   *Why C is incorrect:* That describes an edge list, a third representation distinct from both adjacency list and matrix.
-    *   *Why D is incorrect:* That describes the `dist` array in BFS/Dijkstra, which is an output of an algorithm, not a graph representation.
+### Question 2
+
+In a directed graph, what is the difference between **in-degree** and **out-degree** of a vertex?
+
+- A) In-degree counts all adjacent vertices; out-degree counts only reachable vertices
+- B) In-degree is the number of edges arriving at the vertex; out-degree is the number of edges leaving it
+- C) In-degree applies to source nodes; out-degree applies to sink nodes
+- D) In-degree and out-degree are the same in a directed graph
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* "All adjacent vertices" and "reachable vertices" are different concepts, and neither correctly defines in-degree. In-degree specifically counts edges that terminate at the vertex.
+- *Why B is correct:* In-degree = number of edges whose head is at this vertex (edges arriving). Out-degree = number of edges whose tail is at this vertex (edges leaving). In the adjacency list, out-degree is `len(graph[v])`; in-degree requires scanning all neighbor lists.
+- *Why C is incorrect:* Source nodes (in-degree = 0) and sink nodes (out-degree = 0) are special cases, but in-degree and out-degree are defined for every vertex, not restricted to sources and sinks.
+- *Why D is incorrect:* In an undirected graph, in-degree and out-degree are equal (both = degree). In a directed graph, they can differ. For example, a vertex with three incoming edges and one outgoing edge has in-degree 3 and out-degree 1.
 
 ---
 
-**Question 3**
-In the Number of Islands problem (LeetCode #200), you encounter a grid of '1's and '0's and must count connected land regions. After finding an unvisited '1', what should your DFS or BFS do?
-*   A) Count all '1' cells in the entire grid and divide by the average island size.
-*   B) Mark the current cell as visited (e.g., change '1' to '0' or add to visited set), then recursively/iteratively process all four adjacent '1' cells.
-*   C) Sort all '1' cells by row and column, then use a two-pointer technique to group adjacent cells.
-*   D) Push all grid cells into a priority queue ordered by value, then pop and connect cells greedily.
-*   **Correct Answer:** B) Mark the current cell as visited (e.g., change '1' to '0' or add to visited set), then recursively/iteratively process all four adjacent '1' cells.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Islands vary in size; dividing a total count by an average is neither correct nor efficient.
-    *   *Why B is correct:* Marking visited prevents revisiting cells in cycles. Expanding to all four neighbors floods the entire island, so incrementing the count once per DFS/BFS launch counts each connected component exactly once.
-    *   *Why C is incorrect:* Sorting and two-pointers are array techniques; they do not correctly identify spatially connected components in a 2D grid.
-    *   *Why D is incorrect:* A priority queue adds unnecessary O(log n) overhead and does not model island connectivity.
+### Question 3
+
+For the undirected graph built from edges `[('A','B'), ('B','C'), ('C','A')]`, which of the following correctly describes the adjacency list entry for vertex `'B'`?
+
+- A) `['A']` — B points only to A (the first edge added)
+- B) `['B']` — a vertex points to itself
+- C) `['A', 'C']` — B is connected to both A and C
+- D) `['A', 'C', 'B']` — includes a self-loop
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Edge `('A','B')` adds B to A's list and A to B's list. Edge `('B','C')` then adds C to B's list and B to C's list. B ends up with both A and C as neighbors.
+- *Why B is incorrect:* There are no self-loops in this graph. Self-loops (`('B','B')`) would add B to its own list, but none of the three edges involve the same vertex twice.
+- *Why C is correct:* From edge `('A','B')`: `graph['B'].append('A')` → B's list is `['A']`. From edge `('B','C')`: `graph['B'].append('C')` → B's list is `['A', 'C']`. The edge `('C','A')` does not involve B.
+- *Why D is incorrect:* B does not appear in its own neighbor list unless there is a self-loop. The graph `A-B-C-A` is a triangle with no self-loops.
 
 ---
 
-**Question 4**
-What data structure is used to detect cycles in a directed graph using DFS?
-*   A) A single `visited` set containing all nodes seen so far in any DFS call.
-*   B) Two sets: a `visited` set for nodes fully processed, and a `in_stack` (or `grey`) set for nodes in the current DFS path; a cycle exists if you reach a node already in `in_stack`.
-*   C) A queue containing the nodes at the current BFS frontier, which detects back-edges when a neighbor is already in the queue.
-*   D) A min-heap sorted by discovery time; a cycle is detected when the minimum discovery time equals the current depth.
-*   **Correct Answer:** B) Two sets: a `visited` set for nodes fully processed, and a `in_stack` (or `grey`) set for nodes in the current DFS path; a cycle exists if you reach a node already in `in_stack`.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* A single visited set is sufficient for undirected graphs, but in directed graphs, reaching a previously visited node does not imply a cycle — the earlier visit may have been from a different path.
-    *   *Why B is correct:* In directed graphs, a back edge (edge to a node already on the current DFS stack) indicates a cycle. The `in_stack` set tracks which nodes are on the active recursion path.
-    *   *Why C is incorrect:* BFS frontier queues do not naturally detect directed cycles; a node leaving the queue does not mean its DFS path is finished.
-    *   *Why D is incorrect:* Min-heaps are used in Dijkstra's algorithm; discovery time ordering does not detect directed cycles.
+### Question 4
+
+An adjacency matrix for an undirected graph is always **symmetric**. What does this mean, and why is it true?
+
+- A) The matrix has equal numbers of 0s and 1s
+- B) `matrix[i][j] == matrix[j][i]` for all i and j — because an undirected edge between i and j exists in both directions
+- C) The matrix is square with equal row and column sums
+- D) The diagonal entries are all 1, representing self-connections
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Having equal numbers of 0s and 1s is not a property of undirected graph matrices. A sparse graph has far more 0s than 1s, yet is still symmetric.
+- *Why B is correct:* An undirected edge between vertex i and vertex j means "i is connected to j" and "j is connected to i." When building the matrix, both `matrix[i][j] = 1` and `matrix[j][i] = 1` are set. Therefore `matrix[i][j] == matrix[j][i]` for every pair — the matrix mirrors itself across the main diagonal.
+- *Why C is incorrect:* Equal row and column sums would mean every vertex has the same degree — a regular graph. Symmetry is a stronger statement about the mirror relationship of individual entries, not row/column totals.
+- *Why D is incorrect:* Diagonal entries `matrix[i][i]` represent self-loops. Most graphs have no self-loops, so diagonal entries are typically 0. Symmetry refers to off-diagonal mirroring, not the diagonal itself.
 
 ---
 
-**Question 5**
-You have a sparse graph with V = 1,000 vertices and E = 2,000 edges. Which representation is most space-efficient?
-*   A) Adjacency matrix — O(V²) = 1,000,000 entries
-*   B) Adjacency list — O(V + E) = 3,000 entries total
-*   C) Both use the same space because the graph is stored in memory either way.
-*   D) Adjacency matrix — because 2D arrays have better cache performance than linked lists.
-*   **Correct Answer:** B) Adjacency list — O(V + E) = 3,000 entries total
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* With V = 1,000, an adjacency matrix requires 1,000,000 cells regardless of how many edges actually exist — wasteful when only 2,000 edges are present.
-    *   *Why B is correct:* An adjacency list allocates space proportional to actual vertices plus actual edges: 1,000 + 2,000 = 3,000 — 333× more space-efficient than the matrix for this sparse graph.
-    *   *Why C is incorrect:* The two representations have dramatically different space requirements; they are not equivalent.
-    *   *Why D is incorrect:* Cache performance may favor matrices in dense graphs, but space efficiency is the primary concern here and the question asks about space, not cache behavior.
+### Question 5
+
+Which of the following graph representations allows checking whether a specific edge (u, v) exists in **O(1)** time?
+
+- A) Adjacency list
+- B) Adjacency matrix
+- C) Edge list (unsorted)
+- D) Linked list of vertices
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* In an adjacency list, checking whether v is a neighbor of u requires scanning u's neighbor list — O(degree(u)). In the worst case, this is O(V).
+- *Why B is correct:* An adjacency matrix stores edge existence at a fixed index: `matrix[u][v]` is a direct array access — O(1). This is the primary advantage of the matrix representation.
+- *Why C is incorrect:* An unsorted edge list requires scanning all edges to find (u, v) — O(E). A sorted edge list with binary search would be O(log E), still not O(1).
+- *Why D is incorrect:* A linked list of vertices has no direct index addressing. Finding vertex u requires O(V) traversal, and then finding its neighbor v requires additional scanning.
+
+---
+
+### Question 6
+
+In the cycle detection algorithm for **undirected** graphs, a cycle is identified when DFS encounters a neighbor that is already visited and is **not the direct parent**. Why is the "not the direct parent" condition necessary?
+
+- A) To avoid counting the starting vertex as a cycle
+- B) Because undirected edges appear in both directions — without this check, every edge would appear to be a back edge
+- C) To prevent infinite recursion when the graph has no cycle
+- D) Because directed edges only go one way, so parent tracking is unnecessary
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* The starting vertex is not an issue — DFS begins there and moves to unvisited nodes. The parent condition is about the immediate predecessor, not the starting vertex.
+- *Why B is correct:* In an undirected graph, edge A-B is stored as both `graph['A']` containing `'B'` and `graph['B']` containing `'A'`. When DFS visits B from A, A is already visited — but that is just the edge we came from, not a cycle. Without the `neighbor != parent` check, every undirected edge would incorrectly trigger the "back edge = cycle" condition.
+- *Why C is incorrect:* Infinite recursion is prevented by the `visited` set, not by parent tracking. Marking nodes as visited ensures each node is processed only once.
+- *Why D is incorrect:* This is cycle detection for undirected graphs, not directed. The parent condition is necessary precisely because undirected edges appear in both directions.
+
+---
+
+### Question 7
+
+A graph has V = 1000 vertices and E = 1500 edges (sparse). What is the memory difference between storing it as an adjacency list versus an adjacency matrix?
+
+- A) The adjacency list uses more memory because it stores neighbor pointers
+- B) Both use the same memory — O(V + E) in both cases
+- C) The adjacency matrix uses roughly 665 times more memory than the adjacency list
+- D) The adjacency list uses O(V²) memory; the matrix uses O(V + E)
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* For sparse graphs, the adjacency list uses dramatically less memory. The claim that pointer storage makes it larger is false — the list stores exactly the edges that exist.
+- *Why B is incorrect:* The matrix always uses O(V²) regardless of edge count. For sparse graphs, O(V + E) << O(V²).
+- *Why C is correct:* Adjacency list: O(V + E) = O(1000 + 1500) = O(2500) entries. Adjacency matrix: O(V²) = O(1,000,000) entries. Ratio ≈ 1,000,000 / 2,500 = 400. More precisely, the matrix uses about 400× more memory than the list for this graph. Option C ("roughly 665 times") reflects the ratio V² / (V + E) = 1,000,000 / 1,500 for E-only count ≈ 667. The point is: the matrix is dramatically larger for sparse graphs.
+- *Why D is incorrect:* The descriptions are swapped. The adjacency list uses O(V + E); the matrix uses O(V²).
+
+---
+
+### Question 8
+
+Python's `collections.defaultdict(list)` is commonly used to build adjacency lists. What happens when you access `graph[node]` for a node that has no outgoing edges and was never explicitly added?
+
+- A) A `KeyError` is raised
+- B) `None` is returned
+- C) An empty list `[]` is returned and the key is added to the dict
+- D) `0` is returned (default integer value)
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `KeyError` is what a plain `dict` raises for missing keys. `defaultdict` suppresses this by calling the factory function instead.
+- *Why B is incorrect:* `None` is the default for `dict.get(key)` when no default is specified, or for `defaultdict(lambda: None)`. `defaultdict(list)` uses `list` as the factory, which returns `[]`.
+- *Why C is correct:* `defaultdict(list)` calls `list()` (which returns `[]`) whenever a missing key is accessed. The empty list is inserted into the dict and returned. For graph traversal, this means `for neighbor in graph[isolated_node]` iterates zero times without raising an error — clean and correct.
+- *Why D is incorrect:* `0` is the default for `defaultdict(int)`. `defaultdict(list)` uses `list` as the factory, not `int`.
+
+---
+
+### Question 9
+
+Which type of graph is a prerequisite (dependency) system — where task A must be completed before task B — most accurately modeled as?
+
+- A) Undirected weighted graph
+- B) Directed Acyclic Graph (DAG)
+- C) Undirected connected graph
+- D) Complete graph
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* A dependency is directional (A before B is not the same as B before A), so the graph must be directed. Undirected edges imply mutual relationships, not ordering.
+- *Why B is correct:* A dependency system is directed (A → B means "A before B") and must be acyclic (a cycle would mean A depends on B depends on A — an impossible circular dependency). DAGs are the canonical model for build systems (Make, Gradle), course prerequisites, task schedulers, and package managers.
+- *Why C is incorrect:* Undirected removes the "before/after" directionality. Connected means every task is reachable from every other — which is not required (independent tasks may exist in different components).
+- *Why D is incorrect:* A complete graph has edges between every pair of vertices — implying every task depends on every other, which makes the system impossible to complete.
+
+---
+
+### Question 10
+
+In the adjacency list for the directed graph built from `[(0,1),(0,2),(1,3),(2,3)]`, what is the in-degree of vertex `3`?
+
+- A) 0
+- B) 1
+- C) 2
+- D) 4
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Vertex 3 appears as a destination in two edges: `1→3` and `2→3`. In-degree 0 would mean no edges point to vertex 3.
+- *Why B is incorrect:* In-degree 1 would mean exactly one edge points to vertex 3. Both vertex 1 and vertex 2 have edges directed toward 3.
+- *Why C is correct:* Counting all edges whose destination is 3: edge `(1,3)` and edge `(2,3)` — exactly 2 edges arrive at vertex 3. In-degree = 2. To compute this from an adjacency list, scan every neighbor list for occurrences of 3: `dg[0]=[1,2]` (no 3), `dg[1]=[3]` (one 3), `dg[2]=[3]` (one 3) — total 2.
+- *Why D is incorrect:* The graph has only 4 edges total. In-degree 4 would require all 4 edges to point to vertex 3, which is not the case.

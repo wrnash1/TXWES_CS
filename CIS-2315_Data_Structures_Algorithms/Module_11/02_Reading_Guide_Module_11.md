@@ -1,62 +1,200 @@
-# Reading Guide: Module 11 – Searching: Binary Search and Variants
-## Course: CIS-2315 Data Structures & Algorithms (Technical Interview Readiness)
+# Reading Guide: Module 11 — Dijkstra's Shortest Path Algorithm
+
+## Course: CIS-2315 Data Structures & Algorithms
+
+**Certification Alignment:** Technical Interview Readiness (LeetCode / HackerRank)
 
 ---
 
-### Introduction
-Welcome to **Module 11 – Searching: Binary Search and Variants**! Binary search is one of the most deceptively difficult topics in technical interviews. The core idea is simple — halve the search space each step — but the off-by-one bugs in boundary conditions trip up even experienced engineers. More importantly, binary search applies far beyond sorted arrays: it solves problems on rotated arrays, 2D matrices, and even abstract "search spaces" where you binary search on the answer value rather than an array index.
+## Introduction
 
-This module covers the standard binary search template, left/right boundary variants, and the generalized "binary search on answer" pattern.
-
----
-
-### 1. High-Yield Glossary
-
-*   **Binary search**: An algorithm for finding a target in a sorted collection by repeatedly comparing the target to the middle element and eliminating half the remaining search space. Time complexity O(log n); requires a sorted (or monotonically ordered) input.
-
-*   **Search space**: The set of candidate values or indices that binary search considers at any point. Each iteration divides the search space in half by updating `lo` or `hi` based on the comparison result.
-
-*   **Left boundary (lower bound) search**: A variant of binary search that finds the leftmost position where a target could be inserted while maintaining sorted order (the first index where `arr[i] >= target`). Used in `bisect_left` in Python.
-
-*   **Right boundary (upper bound) search**: A variant that finds the rightmost valid position — the first index where `arr[i] > target`. Used in `bisect_right`. Together with left boundary, enables counting occurrences of a target in O(log n).
-
-*   **Binary search on answer**: A technique where instead of searching an array for a value, you binary search over the range of possible answer values and use a feasibility check function `f(mid)` to determine which half contains the optimal answer. Applied when the answer space is monotonically ordered.
-
-*   **Rotated sorted array**: A sorted array that has been rotated at some pivot index (e.g., `[4,5,6,7,0,1,2]`). Binary search still applies by checking which half is sorted and whether the target falls within it.
-
-*   **Off-by-one error in binary search**: The most common bug in binary search implementations, caused by incorrect update rules for `lo` and `hi` (e.g., using `mid` vs. `mid+1` or `mid-1`). The standard template uses `lo = mid + 1` and `hi = mid – 1` for a classic search, but boundary variants require careful adjustment.
+Dijkstra's algorithm finds the shortest path from a single source vertex to all other vertices in a weighted graph with non-negative edge weights. It extends BFS by replacing the FIFO queue with a min-heap (priority queue), always expanding the unvisited vertex with the smallest known distance. This greedy strategy guarantees that when a vertex is popped from the heap, its distance is final.
 
 ---
 
-### 2. Certification Exam Tips
-*   **Memorize one binary search template and stick to it:** Use `lo, hi = 0, len(arr)-1`; `while lo <= hi:`; `mid = lo + (hi-lo)//2`; update `lo = mid+1` or `hi = mid-1`. The `lo + (hi-lo)//2` form avoids integer overflow (relevant in Java/C++).
-*   **Left/right boundary variants are their own templates:** For "first true" (leftmost), keep going right even when found: `hi = mid - 1` on match. For "last true" (rightmost), keep going left: `lo = mid + 1` on match. Practice both.
-*   **"Binary search on answer" recognizes monotone feasibility:** If the problem asks "find the minimum X such that condition Y is satisfied" and Y has a monotone structure (once true, stays true as X increases), binary search on X with a check function.
-*   **Rotated array — identify which half is sorted:** `if arr[lo] <= arr[mid]` means the left half is sorted; otherwise the right half is sorted. Then determine which side contains the target.
-*   **LeetCode #704, #35, #33, #153, #875 are the core problems:** Solve them in this order. #704 is basic; #35 is lower bound; #33 is rotated; #153 is minimum in rotated; #875 is binary search on answer.
-*   **Study Resource:** [Binary Search – LeetCode Explore Card](https://leetcode.com/explore/learn/card/binary-search/) — a structured progression of binary search problems with template explanations, covering all variants discussed in this module.
+## 1. Algorithm
+
+### Core Implementation
+
+```python
+import heapq
+from collections import defaultdict
+
+def dijkstra(graph, start):
+    """
+    Shortest distances from start to all reachable nodes.
+    graph: {node: [(neighbor, weight), ...]}
+    Returns dict {node: shortest_distance}.
+    Time: O((V + E) log V), Space: O(V + E)
+    """
+    dist = {node: float('inf') for node in graph}
+    dist[start] = 0
+    heap = [(0, start)]    # (distance, node)
+
+    while heap:
+        d, node = heapq.heappop(heap)
+        if d > dist[node]:
+            continue    # stale entry — skip
+        for neighbor, weight in graph[node]:
+            new_dist = dist[node] + weight
+            if new_dist < dist[neighbor]:
+                dist[neighbor] = new_dist
+                heapq.heappush(heap, (new_dist, neighbor))
+
+    return dist
+```
+
+### Step-by-Step Logic
+
+1. Initialize all distances to `float('inf')`, source distance to 0.
+2. Push `(0, source)` onto the min-heap.
+3. Pop the pair with the smallest distance.
+4. If the popped distance is greater than the current best for that node, it is a stale entry — skip it.
+5. For each neighbor, compute the candidate distance through the current node. If it improves the known best, update and push the new pair.
+
+### Stale Entry Pattern
+
+Dijkstra with a binary heap uses "lazy deletion": when a shorter path to a node is found, the old (larger) distance is not removed from the heap — it remains as a stale entry. The stale entry is detected and skipped at step 4. This is the standard interview implementation.
 
 ---
 
-### Required Readings & Videos
-*   **Required Reading:** [Binary Search – Open Data Structures (Pat Morin), Chapter 1.4 and Chapter 4](https://opendatastructures.org/ods-python/1_4_The_Queue_Stack_Deque.html) — covers the binary search algorithm in the context of sorted arrays and the SortedArray structure.
-*   **Required Video:** [Binary Search – NeetCode on YouTube](https://www.youtube.com/watch?v=s4DPM8ct1pI) — a 25-minute interview-focused video covering the standard template, left/right boundary searches, and rotated array binary search with worked examples.
+## 2. Path Reconstruction
+
+To recover the actual shortest path (not just the distance), maintain a `prev` dictionary tracking which node each node was reached from:
+
+```python
+def dijkstra_path(graph, start, end):
+    dist = {node: float('inf') for node in graph}
+    prev = {node: None for node in graph}
+    dist[start] = 0
+    heap = [(0, start)]
+
+    while heap:
+        d, node = heapq.heappop(heap)
+        if d > dist[node]:
+            continue
+        if node == end:
+            break
+        for neighbor, weight in graph[node]:
+            new_dist = dist[node] + weight
+            if new_dist < dist[neighbor]:
+                dist[neighbor] = new_dist
+                prev[neighbor] = node
+                heapq.heappush(heap, (new_dist, neighbor))
+
+    path = []
+    node = end
+    while node is not None:
+        path.append(node)
+        node = prev[node]
+    path.reverse()
+    return path, dist[end]
+```
+
+Reconstruction walks `prev` pointers from `end` back to `start`, then reverses to get the forward path.
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will:
-*   **Implement binary search three ways:** standard (find exact), lower bound (first occurrence), and upper bound (last occurrence), and verify on arrays with duplicates.
-*   **Solve LeetCode #704 (Binary Search)** — canonical implementation verification.
-*   **Solve LeetCode #33 (Search in Rotated Sorted Array)** — binary search with rotated-half identification.
-*   **Solve LeetCode #875 (Koko Eating Bananas)** — binary search on the answer value, not an array index.
+## 3. Why Non-Negative Weights?
+
+Dijkstra's greedy property: when a node is popped from the heap, its distance is final. This holds only if all edge weights are ≥ 0.
+
+With a negative-weight edge, a node popped early (with a seemingly small distance) might have a shorter path discovered later through a negative edge. Example:
+
+```text
+A → B (weight 1)
+A → C (weight 3)
+C → B (weight -3)   ← negative edge
+```
+
+Dijkstra finalizes `dist[B] = 1` (via A→B) before processing C. The shorter path A→C→B = 3 + (-3) = 0 is never discovered.
+
+**For negative weights: use Bellman-Ford.**
+Bellman-Ford iterates V-1 times over all edges, guaranteeing correct results even with negative weights. It also detects negative cycles. Time: O(V · E).
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and be able to explain each in your own words.
-- [ ] Read Chapter 1.4 and Chapter 4 of Open Data Structures.
-- [ ] Watch the NeetCode Binary Search video.
-- [ ] Implement all three binary search variants from scratch.
-- [ ] Solve LeetCode #704, #33, and #875.
-- [ ] Proceed to the Module 11 Quiz.
+## 4. Network Delay Time (LeetCode #743)
+
+Given a directed weighted graph and source k, find the time for a signal to reach all n nodes. Return -1 if any node is unreachable.
+
+```python
+def network_delay_time(times, n, k):
+    graph = defaultdict(list)
+    for u, v, w in times:
+        graph[u].append((v, w))
+
+    dist = {i: float('inf') for i in range(1, n+1)}
+    dist[k] = 0
+    heap = [(0, k)]
+
+    while heap:
+        d, node = heapq.heappop(heap)
+        if d > dist[node]:
+            continue
+        for neighbor, weight in graph[node]:
+            new_dist = dist[node] + weight
+            if new_dist < dist[neighbor]:
+                dist[neighbor] = new_dist
+                heapq.heappush(heap, (new_dist, neighbor))
+
+    max_dist = max(dist.values())
+    return max_dist if max_dist < float('inf') else -1
+```
+
+The answer is the maximum distance across all nodes — the last node to receive the signal determines the total delay.
+
+---
+
+## 5. Complexity
+
+| Operation | Time | Notes |
+|---|---|---|
+| Dijkstra (binary heap) | O((V + E) log V) | Standard implementation |
+| Dijkstra (Fibonacci heap) | O(E + V log V) | Theoretical optimum; not in Python stdlib |
+| Bellman-Ford | O(V · E) | Handles negative weights |
+| Path reconstruction | O(V) | Follow prev pointers |
+
+---
+
+## 6. Dijkstra vs. BFS vs. Bellman-Ford
+
+| Algorithm | Edge Weights | Guarantee | When to Use |
+|---|---|---|---|
+| BFS | Unweighted (all = 1) | Shortest hops | Unweighted graphs |
+| Dijkstra | Non-negative | Shortest weighted path | Weighted, non-negative edges |
+| Bellman-Ford | Any (including negative) | Shortest path + negative cycle detection | Negative weights present |
+
+---
+
+## 7. Interview Exam Tips
+
+1. **Dijkstra = BFS + priority queue** — state this analogy. The only change from BFS is replacing the FIFO queue with a min-heap on `(distance, node)` tuples.
+
+2. **Initialize with `float('inf')`** — not 0, not -1. Unvisited distances start at infinity so any real distance improves them.
+
+3. **Always skip stale entries** — `if d > dist[node]: continue` is required. Without this, stale entries cause incorrect relaxations.
+
+4. **Tuple comparison in heapq** — Python compares `(d1, node1) < (d2, node2)` lexicographically: first by `d`, then by `node` if distances are equal. For string or object nodes, ensure the node type is comparable or use an index.
+
+5. **Dijkstra does not work with negative edges** — if the problem has negative weights, mention Bellman-Ford. For negative cycles, standard shortest path is undefined.
+
+6. **`max(dist.values())` for Network Delay Time** — the answer to "when does the last signal arrive" is the maximum shortest distance.
+
+7. **Early exit** — if only the distance to a single target is needed, add `if node == end: break` after popping. No early exit is needed if distances to all nodes are required.
+
+8. **Nodes not in the initial graph dict** — use `defaultdict(list)` or ensure all nodes are keys. If a node appears only as a destination, it needs a key in `graph` for `dist` initialization.
+
+---
+
+## 8. Study Checklist
+
+- [ ] Watch the Module 11 video lecture by Professor Nash.
+- [ ] Implement `dijkstra(graph, start)` returning distances to all nodes.
+- [ ] Add path reconstruction with a `prev` dictionary.
+- [ ] Trace Dijkstra step-by-step on a 5-node weighted graph.
+- [ ] Verify that negative-weight edges produce incorrect results with Dijkstra.
+- [ ] Solve LeetCode #743 (Network Delay Time).
+- [ ] Attempt LeetCode #1631 (Path With Minimum Effort) as a stretch goal.
+- [ ] Complete the Module 11 Lab.
+- [ ] Complete the Module 11 Quiz.

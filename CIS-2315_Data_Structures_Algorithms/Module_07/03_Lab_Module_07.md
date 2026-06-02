@@ -1,37 +1,338 @@
-# Lab Activity: Module 07 - Heaps & Priority Queues
-## Course: CIS-2315_Data_Structures_Algorithms (Technical Interview Readiness (LeetCode / HackerRank))
+# Lab Activity: Module 07 — Heaps & Priority Queues
+
+## Course: CIS-2315 Data Structures & Algorithms
+
+**Certification Alignment:** Technical Interview Readiness (LeetCode / HackerRank)
 
 ---
 
-## Objective
-Configure and verify systems matching the operational parameters of **Heaps & Priority Queues**.
+## Overview
+
+This lab has three parts:
+
+- **Part 1** — Implement a min-heap from scratch with push and pop
+- **Part 2** — Use Python's `heapq` for the K-th largest pattern
+- **Part 3** — LeetCode interview patterns: Kth Largest in Stream and Array
+
+**Lab environment:** Python 3 (VS Code terminal or any Python REPL).
 
 ---
 
-## Prerequisites
-*   Ensure you have access to a terminal or a runtime environment matching the course requirements (e.g., Linux, macOS, Windows, or a cloud/web terminal).
-*   Ensure you have administrative privileges if required to install packages or configure system services.
+## Part 1 — Min-Heap from Scratch
+
+**File:** `lab07_heap.py`
+
+### 1.1 — Index Formula Verification
+
+```python
+# Array index formulas for a 0-indexed heap:
+# Left child of node at index i:  2*i + 1
+# Right child of node at index i: 2*i + 2
+# Parent of node at index i:      (i - 1) // 2
+
+def parent(i):
+    return (i - 1) // 2
+
+def left_child(i):
+    return 2 * i + 1
+
+def right_child(i):
+    return 2 * i + 2
+```
+
+Test:
+
+```python
+# For the heap [1, 3, 5, 4, 8, 7, 6]:
+#          1 (i=0)
+#         / \
+#        3   5  (i=1, i=2)
+#       / \ / \
+#      4  8 7  6  (i=3, i=4, i=5, i=6)
+
+print(left_child(0))   # 1 — left child of root
+print(right_child(0))  # 2 — right child of root
+print(parent(3))       # 1 — parent of index 3
+print(parent(4))       # 1 — parent of index 4
+print(parent(1))       # 0 — parent of index 1 is root
+```
+
+**Checkpoint:** All outputs match expected values.
 
 ---
 
-## Step-by-Step Instructions
-1. **Build a min-heap array index mapper**
-   * *Instruction:* Execute this step inside your terminal environment. Verify the command completes without errors.
-2. **Use Python heapq module to sort a list**
-   * *Instruction:* Execute this step inside your terminal environment. Verify the command completes without errors.
-3. **Find top K elements using heaps**
-   * *Instruction:* Execute this step inside your terminal environment. Verify the command completes without errors.
+### 1.2 — Heap Push (Sift Up)
+
+```python
+def heap_push(heap, val):
+    """
+    Insert val into the heap.
+    Append to end, then sift up.
+    Time: O(log n)
+    """
+    heap.append(val)
+    i = len(heap) - 1
+    while i > 0:
+        p = parent(i)
+        if heap[p] > heap[i]:      # min-heap violation: parent > child
+            heap[p], heap[i] = heap[i], heap[p]
+            i = p
+        else:
+            break
+```
+
+Test:
+
+```python
+h = []
+for v in [5, 3, 8, 1, 9, 2, 7]:
+    heap_push(h, v)
+
+print(h)        # Min at h[0]; exact array order depends on insertion
+print(h[0])     # 1 — always the minimum
+```
+
+**Checkpoint:** `h[0]` is `1` (the minimum). The array satisfies the heap property.
 
 ---
 
-## Troubleshooting Guide
-*   *Error:* `Permission Denied`
-    * *Fix:* Remember to run administrative command sequences using `sudo` or execute with administrative privileges (e.g., Run as Administrator on Windows).
-*   *Error:* `Command Not Found`
-    * *Fix:* Verify your environmental path settings, or double-check if the utility package is installed.
+### 1.3 — Heap Pop (Extract-Min, Sift Down)
+
+```python
+def heap_pop(heap):
+    """
+    Remove and return the minimum element.
+    Swap root with last, remove last, sift down.
+    Time: O(log n)
+    """
+    if not heap:
+        raise IndexError('pop from empty heap')
+    if len(heap) == 1:
+        return heap.pop()
+
+    min_val = heap[0]
+    heap[0] = heap.pop()    # last element becomes new root
+    i = 0
+    n = len(heap)
+
+    while True:
+        lc = left_child(i)
+        rc = right_child(i)
+        smallest = i
+
+        if lc < n and heap[lc] < heap[smallest]:
+            smallest = lc
+        if rc < n and heap[rc] < heap[smallest]:
+            smallest = rc
+
+        if smallest == i:
+            break     # heap property restored
+
+        heap[i], heap[smallest] = heap[smallest], heap[i]
+        i = smallest
+
+    return min_val
+```
+
+Test:
+
+```python
+h = []
+for v in [5, 3, 8, 1, 9, 2, 7]:
+    heap_push(h, v)
+
+print(heap_pop(h))  # 1
+print(heap_pop(h))  # 2
+print(heap_pop(h))  # 3
+print(heap_pop(h))  # 5
+print(heap_pop(h))  # 7
+print(heap_pop(h))  # 8
+print(heap_pop(h))  # 9
+```
+
+**Checkpoint:** Values pop in ascending order: `1, 2, 3, 5, 7, 8, 9`.
+
+---
+
+### 1.4 — Max-Heap Using Negation
+
+```python
+def max_heap_push(heap, val):
+    heap_push(heap, -val)    # negate on push
+
+def max_heap_pop(heap):
+    return -heap_pop(heap)   # negate on pop
+```
+
+Test:
+
+```python
+mh = []
+for v in [5, 3, 8, 1, 9, 2, 7]:
+    max_heap_push(mh, v)
+
+print(max_heap_pop(mh))  # 9 — largest first
+print(max_heap_pop(mh))  # 8
+print(max_heap_pop(mh))  # 7
+```
+
+**Checkpoint:** Values pop in descending order.
+
+---
+
+## Part 2 — Python heapq Patterns
+
+**File:** `lab07_heapq.py`
+
+### 2.1 — heapq Basics
+
+```python
+import heapq
+
+# Build heap from list
+data = [5, 3, 8, 1, 9, 2, 7]
+heapq.heapify(data)          # O(n) — modifies in place
+print(data[0])               # 1 — minimum
+
+# Push and pop
+heapq.heappush(data, 0)      # O(log n)
+print(heapq.heappop(data))   # 0 — new minimum
+
+# heapreplace: pop min and push new value in one O(log n) call
+print(heapq.heapreplace(data, 100))  # returns old min, inserts 100
+print(data[0])               # new minimum after replacement
+```
+
+---
+
+### 2.2 — K-th Largest Element (LeetCode #215)
+
+```python
+def kth_largest(nums, k):
+    """
+    Return the k-th largest element in nums.
+    Maintain a min-heap of size k.
+    Time: O(n log k), Space: O(k)
+    """
+    heap = nums[:k]
+    heapq.heapify(heap)           # min-heap of first k elements
+
+    for num in nums[k:]:
+        if num > heap[0]:         # larger than k-th largest so far
+            heapq.heapreplace(heap, num)   # discard k-th, add new
+
+    return heap[0]                # k-th largest is the heap minimum
+```
+
+Test:
+
+```python
+print(kth_largest([3, 2, 1, 5, 6, 4], 2))   # 5
+print(kth_largest([3, 2, 3, 1, 2, 4, 5, 5, 6], 4))  # 4
+```
+
+Trace the heap for `[3, 2, 1, 5, 6, 4]`, k=2:
+
+```python
+# Initial heap: heapify([3, 2]) → [2, 3]  (min-heap of size 2)
+# num=1:  1 < heap[0]=2 → skip
+# num=5:  5 > heap[0]=2 → heapreplace → heap=[3,5]
+# num=6:  6 > heap[0]=3 → heapreplace → heap=[5,6]
+# num=4:  4 < heap[0]=5 → skip
+# Return heap[0] = 5 ✓
+```
+
+**Checkpoint:** Both tests pass. Submit to LeetCode #215.
+
+---
+
+### 2.3 — K-th Largest in a Stream (LeetCode #703)
+
+```python
+class KthLargest:
+    """
+    Maintains a min-heap of size k.
+    add() inserts a new value and returns the k-th largest seen so far.
+    """
+    def __init__(self, k, nums):
+        self.k = k
+        self.heap = []
+        for num in nums:
+            self.add(num)
+
+    def add(self, val):
+        heapq.heappush(self.heap, val)
+        if len(self.heap) > self.k:
+            heapq.heappop(self.heap)   # discard smallest — not in top k
+        return self.heap[0]
+```
+
+Test:
+
+```python
+obj = KthLargest(3, [4, 5, 8, 2])
+print(obj.add(3))    # 4 — stream: [2,3,4,5,8], k=3, 3rd largest = 4
+print(obj.add(5))    # 5
+print(obj.add(10))   # 5
+print(obj.add(9))    # 8
+print(obj.add(4))    # 8
+```
+
+**Checkpoint:** Outputs match expected values. Submit to LeetCode #703.
+
+---
+
+## Part 3 — Integration Test
+
+**File:** (add to `lab07_heapq.py`)
+
+```python
+def test_all():
+    # Custom heap
+    h = []
+    for v in [5, 3, 8, 1]:
+        heap_push(h, v)
+    assert heap_pop(h) == 1
+    assert heap_pop(h) == 3
+
+    # heapq nlargest / nsmallest
+    data = [5, 3, 8, 1, 9, 2, 7]
+    assert heapq.nlargest(3, data) == [9, 8, 7]
+    assert heapq.nsmallest(3, data) == [1, 2, 3]
+
+    # K-th largest
+    assert kth_largest([3, 2, 1, 5, 6, 4], 2) == 5
+    assert kth_largest([3, 2, 3, 1, 2, 4, 5, 5, 6], 4) == 4
+
+    print('All assertions passed.')
+
+test_all()
+```
+
+**Checkpoint:** All assertions pass. LeetCode #215 and #703 submitted.
 
 ---
 
 ## Deliverables
-1. Document your completed steps with screenshots or terminal output logs showing successful execution.
-2. Submit your completion report to your Canvas LMS assignment portal for grading.
+
+Submit to Canvas:
+
+1. `lab07_heap.py` — custom heap_push, heap_pop, max-heap tests
+2. `lab07_heapq.py` — heapq patterns, K-th largest, KthLargest class, integration test
+3. LeetCode submission screenshots for #703 and #215
+
+---
+
+## Summary
+
+| Concept | Key Point |
+|---|---|
+| Min-heap property | Parent ≤ children at every node |
+| Array indices | Left: 2i+1, Right: 2i+2, Parent: (i-1)//2 |
+| Push (sift up) | Append, swap with parent while violation — O(log n) |
+| Pop (sift down) | Swap root with last, remove, swap with smaller child — O(log n) |
+| heapify | Bottom-up sift-down — O(n) |
+| Max-heap in Python | Negate values: push `-val`, negate on pop |
+| K-th largest | Min-heap of size K; discard elements ≤ heap[0] |
+| heapreplace | Pop + push in one O(log n) call — use for K-th largest |
+| Peek | heap[0] — O(1), no pop needed |

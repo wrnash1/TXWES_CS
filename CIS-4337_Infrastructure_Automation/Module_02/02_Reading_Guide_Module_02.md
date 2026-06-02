@@ -1,53 +1,300 @@
-# Reading Guide: Module 02 - Terraform Workflow
-## Course: CIS-4337_Infrastructure_Automation (HashiCorp Certified: Terraform Associate)
+# CIS-4337 Infrastructure Automation
+
+## Reading Guide — Module 02: Terraform Workflow
+
+### Course Alignment: HashiCorp Terraform Associate 003
 
 ---
 
-### Introduction
-Welcome to **Module 02 - Terraform Workflow**! This week's study material focuses on the core operational commands of the **Terraform CLI workflow — Init, Plan, Apply, and Destroy** — as aligned with the **HashiCorp Certified: Terraform Associate** certification framework. Understanding these topics is essential not only for passing the certification exam but also for operating Terraform confidently in real-world environments.
+## Overview
 
-As a student, you will learn the precise purpose and sequence of each Terraform CLI command, understand what happens inside the `.terraform/` directory after initialization, and practice reading plan output to predict infrastructure changes before they are applied. Make sure to complete the checklists and review the glossary terms in detail before beginning the lab activity.
-
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **Terraform Core**: The open-source binary (`terraform`) that reads HCL configuration files, communicates with provider plugins via RPC, and manages the state file. Terraform Core is distinct from provider plugins — it orchestrates the workflow but does not itself understand any specific cloud API. The exam tests whether you know Core is separate from providers.
-*   **Plugins / Providers**: Provider plugins are separate executables (e.g., `terraform-provider-aws`) downloaded into `.terraform/providers/` during `terraform init`. They translate HCL resource declarations into the correct API calls for a specific platform (AWS, Azure, GCP, etc.). The Terraform Registry at [registry.terraform.io](https://registry.terraform.io) is the default source for providers. Exam tip: providers are NOT part of Terraform Core.
-*   **HCL (HashiCorp Configuration Language)**: The human-readable, declarative language used to write Terraform configuration files (`.tf`). HCL uses blocks (`resource`, `provider`, `variable`, `output`, `locals`, `terraform`) with attribute-value pairs. It supports expressions, functions, and references between resources. The exam tests basic HCL syntax and block types extensively.
-*   **`terraform init`**: The first command run in any Terraform project directory. It downloads provider plugins, sets up the `.terraform/` directory, initializes the backend (local or remote), and fetches any referenced modules. You must re-run `init` after adding new providers or modules. This command is safe to run multiple times — it is idempotent.
-*   **`terraform plan`**: Generates an execution plan by comparing the current state to the desired configuration. It shows what will be created (`+`), updated (`~`), or destroyed (`-`). Plan does not make any changes to real infrastructure; it is a dry-run. The `-out` flag saves the plan to a file that can be passed to `apply` for deterministic deployments.
+This reading guide covers the complete Terraform CLI workflow: init, validate, plan, apply, and destroy. These commands are tested on every section of the Terraform Associate 003 exam and are used in every lab activity for the remainder of the course. Work through this guide carefully before beginning the lab.
 
 ---
 
-### 2. Certification Exam Tips
-*   **Exam Domain — Understand Terraform's Purpose and Workflow (Domain 1 & 2):** The Terraform Associate 003 exam tests the four core workflow commands in detail. Know the exact sequence: `init` → `plan` → `apply` → `destroy`. Know what each command does and what it does NOT do (e.g., `plan` never modifies resources).
-*   **`terraform init` Traps:** The exam frequently asks what `init` does: it downloads providers AND modules AND sets up backends. It does NOT apply configuration or create resources. If a new provider is added to a config that was already initialized, you must re-run `init` to download it.
-*   **Reading Plan Output:** Know how to interpret plan symbols: `+` (create), `-` (destroy), `~` (update in-place), `-/+` (destroy then recreate). The exam presents plan output snippets and asks what will happen. Pay special attention to `-/+` — it means forced replacement, not just an update.
-*   **`terraform apply` vs `terraform plan -out`:** `apply` without a saved plan does a fresh plan first; `apply <planfile>` executes the exact saved plan with no additional prompt. In automated pipelines, use `plan -out=tfplan` followed by `apply tfplan` to guarantee what runs matches what was reviewed.
-*   **Study Resource:** The official HashiCorp documentation covers the CLI workflow in detail: [HashiCorp Terraform Documentation — The Core Terraform Workflow](https://developer.hashicorp.com/terraform/intro/core-workflow). This page is the authoritative reference for workflow-related exam questions.
+## 1. Core Vocabulary
+
+**Working Directory**
+The filesystem directory containing your Terraform configuration files. All `.tf` files in a working directory are processed together as a single configuration unit. Terraform also creates a `.terraform/` subdirectory here during initialization to store provider plugins and module downloads.
+
+**Terraform Core**
+The main Terraform CLI binary. It reads HCL configuration, loads state, computes execution plans, and orchestrates provider calls. It does not know how to communicate with any cloud platform directly — that is the job of providers.
+
+**Provider Plugin**
+A separate binary that Terraform Core downloads and invokes to communicate with a specific platform API. Providers translate HCL resource declarations into API calls. Each provider is versioned independently and declared in the `required_providers` block.
+
+**Execution Plan**
+The output of `terraform plan`. A detailed description of every resource action (create, update, destroy, replace) that Terraform will take to reconcile the current state with the desired state. No changes are made when generating a plan.
+
+**Saved Plan File**
+A binary artifact produced by `terraform plan -out=<filename>`. Contains the exact planned changes. When passed to `terraform apply <filename>`, Terraform executes those changes without re-planning. Used in CI/CD pipelines to ensure the reviewed plan is exactly what gets applied.
+
+**Dependency Lock File**
+The `.terraform.lock.hcl` file created by `terraform init`. Records the exact provider versions and checksums selected during initialization. Should be committed to version control to ensure reproducible provider installs.
+
+**Forced Replacement**
+A situation where an attribute that cannot be changed on an existing resource needs a new value. Terraform must destroy the old resource and create a new one. Indicated by `-/+` in plan output.
+
+**In-Place Update**
+A resource change that can be applied without destroying and recreating the resource. Indicated by `~` in plan output.
+
+**Backend**
+The storage location for Terraform state. The local backend (default) stores state in `terraform.tfstate` in the working directory. Remote backends (S3, Terraform Cloud, Azure Blob) store state externally and support team collaboration and state locking.
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the core workflow documentation at [HashiCorp Terraform Documentation & Tutorials](https://developer.hashicorp.com/terraform/intro/core-workflow). This free OER resource explains the Write → Plan → Apply workflow with diagrams.
-*   **Required Video:** Watch the video lecture on **Terraform Workflow** in the official course playlist: [HashiCorp Terraform Associate Complete Course](https://www.youtube.com/watch?v=V53S9wB5SgA). Focus on the section demonstrating each CLI command and its terminal output.
+## 2. The Terraform Workflow — Step by Step
+
+### Step 1: Write
+
+Create or modify `.tf` configuration files in your working directory. The standard file organization is:
+
+```text
+project/
+├── main.tf          # provider and resource blocks
+├── variables.tf     # variable declarations
+├── outputs.tf       # output blocks
+├── terraform.tfvars # variable value assignments
+└── versions.tf      # terraform block with required_version
+```
+
+All files in the directory are merged at runtime. The split is for human readability, not technical necessity.
+
+### Step 2: terraform init
+
+```bash
+terraform init
+```
+
+Always run first. Performs three jobs:
+
+1. Initializes the configured backend (or local backend if none specified).
+2. Downloads provider plugins declared in `required_providers` into `.terraform/providers/`.
+3. Downloads modules referenced in `module` blocks into `.terraform/modules/`.
+
+Safe to re-run: if everything is already initialized, `init` does nothing harmful. Re-run whenever you add a new provider or change the backend configuration.
+
+Key flag: `terraform init -upgrade` forces re-download of all providers to their latest versions within the declared version constraints.
+
+### Step 3: terraform validate
+
+```bash
+terraform validate
+```
+
+Checks HCL syntax and internal configuration consistency. Does not query provider APIs. Useful as a fast pre-check before running plan. Catches problems like missing required attributes, incorrect argument names, and invalid references.
+
+### Step 4: terraform plan
+
+```bash
+terraform plan
+terraform plan -out=tfplan
+```
+
+The most important workflow command. Refreshes state, computes the diff, and displays the execution plan. No changes are applied.
+
+Use `-out=tfplan` to save the plan for use in CI/CD pipelines. The saved file is binary; inspect it with `terraform show tfplan`.
+
+### Step 5: terraform apply
+
+```bash
+terraform apply           # re-plans and prompts for confirmation
+terraform apply tfplan    # executes saved plan, no confirmation needed
+terraform apply -auto-approve  # skips confirmation, use only in pipelines
+```
+
+Executes planned changes. Creates, modifies, or destroys resources. Updates the state file after each resource operation.
+
+### Step 6: terraform destroy
+
+```bash
+terraform destroy
+terraform destroy -auto-approve
+```
+
+Destroys all resources managed by the current configuration and state file. Equivalent to `terraform apply -destroy`. Review the destroy plan before confirming in production environments.
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Install Terraform CLI and verify the binary**: Run `terraform version` after installation to confirm the binary is accessible on your PATH and note the version number. The exam may reference CLI version compatibility.
-*   **Create a minimal `main.tf` and run `terraform init`**: Observe the `.terraform/` directory created, the `.terraform.lock.hcl` file generated, and the provider plugin downloaded. Note which registry URL the provider was fetched from.
-*   **Run `terraform plan` and interpret the output**: Read each line of the plan carefully. Identify `+`, `~`, and `-` symbols. Then run `terraform apply` to execute the plan and observe real resource creation.
+## 3. HCL Syntax Reference
+
+### Terraform Settings Block
+
+```hcl
+terraform {
+  required_version = ">= 1.6.0"
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+    null = {
+      source  = "hashicorp/null"
+      version = "~> 3.0"
+    }
+  }
+}
+```
+
+### Provider Block
+
+```hcl
+provider "aws" {
+  region  = "us-east-1"
+  profile = "default"
+}
+```
+
+### Resource Block
+
+```hcl
+resource "aws_instance" "web" {
+  ami           = "ami-0c55b159cbfafe1f0"
+  instance_type = "t3.micro"
+
+  tags = {
+    Name = "web-server"
+  }
+}
+```
+
+### Variable Block
+
+```hcl
+variable "instance_type" {
+  description = "EC2 instance type"
+  type        = string
+  default     = "t3.micro"
+
+  validation {
+    condition     = contains(["t3.micro", "t3.small"], var.instance_type)
+    error_message = "Instance type must be t3.micro or t3.small."
+  }
+}
+```
+
+### Output Block
+
+```hcl
+output "instance_public_ip" {
+  description = "Public IP address of the web server"
+  value       = aws_instance.web.public_ip
+}
+```
+
+### Referencing Resources
+
+Within a configuration, reference another resource's attribute using `<type>.<name>.<attribute>`:
+
+```hcl
+resource "aws_eip" "web" {
+  instance = aws_instance.web.id
+}
+```
+
+This reference creates an implicit dependency: Terraform creates `aws_instance.web` before `aws_eip.web`.
 
 ---
 
-### 3. Study Checklist
-*   [ ] Read the glossary terms and understand each definition well enough to explain it in your own words.
-*   [ ] Read the core workflow documentation at [HashiCorp Terraform Documentation & Tutorials](https://developer.hashicorp.com/terraform/intro/core-workflow).
-*   [ ] Watch the video lecture on **Terraform Workflow** in [HashiCorp Terraform Associate Complete Course](https://www.youtube.com/watch?v=V53S9wB5SgA).
-*   [ ] Review the commands outlined in the lab instructions.
-*   [ ] Proceed to the weekly hands-on lab activity.
+## 4. Plan Output Symbols Reference
+
+| Symbol | Meaning |
+|---|---|
+| `+` | Resource will be created |
+| `-` | Resource will be destroyed |
+| `~` | Resource will be updated in place |
+| `-/+` | Resource will be destroyed and recreated (forced replacement) |
+| `<=` | Data source will be read |
+| `+/-` | Resource will be recreated (create before destroy) |
+
+---
+
+## 5. Version Constraint Syntax
+
+Provider version constraints use a specific syntax tested on the exam:
+
+| Constraint | Meaning |
+|---|---|
+| `= 5.0.0` | Exactly version 5.0.0 |
+| `>= 5.0.0` | Version 5.0.0 or higher |
+| `~> 5.0` | Any version in the 5.x range (pessimistic constraint) |
+| `~> 5.0.0` | Any version in the 5.0.x range |
+| `>= 5.0, < 6.0` | Any version from 5.0 up to but not including 6.0 |
+
+The `~>` operator (pessimistic constraint operator) is the most commonly used pattern in production configurations.
+
+---
+
+## 6. The .terraform Directory and .gitignore
+
+After `terraform init`, your working directory contains:
+
+```text
+.terraform/
+├── providers/
+│   └── registry.terraform.io/hashicorp/null/3.2.2/linux_amd64/
+│       └── terraform-provider-null_v3.2.2_x5
+└── modules/
+    (module downloads if any)
+.terraform.lock.hcl
+```
+
+Add the following to `.gitignore`:
+
+```text
+.terraform/
+terraform.tfstate
+terraform.tfstate.backup
+*.tfvars
+tfplan
+```
+
+Do commit: `.terraform.lock.hcl`, all `.tf` files, and `terraform.tfvars` in environments where it contains no credentials.
+
+---
+
+## 7. Required Reading
+
+- Read the CLI workflow overview at developer.hashicorp.com/terraform/intro/core-workflow
+- Read the `terraform init` command reference at developer.hashicorp.com/terraform/cli/commands/init
+- Read the `terraform plan` command reference at developer.hashicorp.com/terraform/cli/commands/plan
+- Read the `terraform apply` command reference at developer.hashicorp.com/terraform/cli/commands/apply
+
+---
+
+## 8. Terraform Associate 003 Exam Tips
+
+**Tip 1.** The correct workflow sequence is: `init` then `validate` then `plan` then `apply`. The exam tests that `init` must precede `plan`. Running `plan` before `init` fails because provider plugins are not installed.
+
+**Tip 2.** Know all five plan output symbols. The exam presents a plan snippet and asks you to interpret what will happen to a specific resource.
+
+**Tip 3.** `-/+` (forced replacement) is heavily tested. Understand that it means destroy-then-create, not in-place update, and that the resulting resource will have a new ID.
+
+**Tip 4.** `terraform plan -out=tfplan` followed by `terraform apply tfplan` is the CI/CD-safe pattern. The saved plan guarantees that exactly the reviewed changes are applied.
+
+**Tip 5.** `terraform validate` does not check whether resource configurations are valid against the provider's API. It only checks HCL syntax and internal references. A configuration can pass validate but fail during apply if, for example, an AMI ID does not exist.
+
+**Tip 6.** The `.terraform.lock.hcl` file should be committed to version control. The `.terraform/` directory should not. The exam distinguishes between these two.
+
+**Tip 7.** `terraform init -upgrade` updates provider versions to the latest within constraints. This is different from plain `terraform init`, which uses cached versions when possible.
+
+**Tip 8.** `terraform fmt` formats `.tf` files to canonical HCL style. It does not affect functionality, only readability. The exam may ask about the purpose of this command.
+
+---
+
+## 9. Study Checklist
+
+- [ ] List the six Terraform CLI commands in the workflow in correct order from memory.
+- [ ] Explain what `terraform init` does to the working directory.
+- [ ] Describe the difference between `terraform validate` and `terraform plan`.
+- [ ] Identify all five plan output symbols and state what action each represents.
+- [ ] Explain what a saved plan file is and why it is used in CI/CD pipelines.
+- [ ] List the files that should and should not be committed to Git.
+- [ ] Read all four required documentation pages.
+- [ ] Complete the Module 02 lab.
+- [ ] Complete the Module 02 quiz.
+- [ ] Submit your initial discussion post.
+
+---
+
+Module 02 Reading Guide — CIS-4337 Infrastructure Automation — Texas Wesleyan University

@@ -1,66 +1,189 @@
 # Reading Guide: Module 07 – User Stories and Acceptance Criteria
 
-## Course: CIS-3350_Software_Engineering_Agile (Professional Scrum Master (PSM I))
+**Course:** CIS-3350 Software Engineering and Agile
+**Certification Alignment:** PSM I (Professional Scrum Master I) – Scrum.org
+**Instructor:** Professor Nash | Texas Wesleyan University
 
 ---
 
-### Introduction
+## Introduction
 
-Welcome to **Module 07 – User Stories and Acceptance Criteria**! User stories are the most widely used format for expressing Product Backlog items in Agile teams. While the Scrum Guide does not mandate user stories specifically, the PSM I exam environment assumes familiarity with them as a common Scrum practice.
-
-This module covers the anatomy of a well-formed user story, the role of acceptance criteria in defining "done" at the story level, and the INVEST criteria for evaluating story quality. These skills bridge the gap between Scrum theory and the practical day-to-day work of a Scrum team.
+User stories are the most common way of expressing Product Backlog items in Agile teams. They capture requirements from a user perspective, keep conversations focused on value, and — when combined with well-written acceptance criteria — create a testable, shared understanding of Done. This guide covers user story format, the Three Cs model, acceptance criteria in Given/When/Then format, the work item hierarchy (epics, stories, tasks), and the most common user story quality problems.
 
 ---
 
-### 1. High-Yield Glossary
+## 1. What a User Story Is
 
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
+A user story is a short, simple description of a feature told from the perspective of the person who desires the new capability, usually a user or customer of the system. User stories emerged from the Extreme Programming (XP) community, popularized by Ron Jeffries' Three Cs model, and have become the standard way of describing Product Backlog items in Scrum teams worldwide.
 
-* **User story:** A short, informal description of a software feature written from the perspective of an end user, following the format: "As a [type of user], I want [some goal] so that [some reason]." User stories encourage conversation between the Product Owner, stakeholders, and Developers rather than serving as a complete specification.
+User stories are deliberately not comprehensive specifications. They are promises for a conversation — lightweight records that prompt discussion between the Product Owner, Developers, and stakeholders during refinement and Sprint Planning.
 
-* **Acceptance criteria:** Specific, testable conditions that a user story must satisfy to be considered complete. Acceptance criteria define the boundary of a story's scope and are agreed upon between the Product Owner and Developers before work begins. They are distinct from the Definition of Done, which applies to all Increments.
+### The Standard User Story Format
 
-* **INVEST criteria:** A checklist for evaluating user story quality, where each letter represents a quality attribute: Independent (can be developed without depending on other stories), Negotiable (details are open to discussion), Valuable (delivers value to the user or business), Estimable (the team can size it), Small (fits within a Sprint), Testable (acceptance criteria can be verified). Stories that fail INVEST criteria should be refined or split.
+As a [user type], I can [action] so that [benefit].
 
-* **Story splitting:** The practice of decomposing a large user story (an "epic") into smaller, independently deliverable stories that each fit within a Sprint. Common splitting patterns include splitting by workflow steps, data variations, user roles, happy/unhappy paths, and operational boundaries.
+- As a [user type]: identifies who needs the capability. Should be specific — not just "user," but "registered customer," "system administrator," "first-time visitor," or a named persona.
+- I can [action]: describes what the user wants to do. Written from the user's perspective, not the system's. Focuses on behavior, not implementation.
+- So that [benefit]: explains why the user needs this capability — the value it creates. This clause is critical for understanding priority and validating that the story is worth building.
 
-* **Epic:** A large user story or feature too big to complete in a single Sprint that must be broken down into smaller stories before it can be selected for Sprint Planning. Epics are valid Product Backlog items but are not ready for a Sprint until split into appropriately sized stories.
+### Full User Story Example
 
----
-
-### 2. Certification Exam Tips
-
-* **PSM I Focus — User stories are not required by the Scrum Guide:** A common trap presents user stories as a Scrum requirement. They are not. The Scrum Guide says Product Backlog items should have a description, order, and estimate — but does not prescribe format. User stories are a widely adopted practice, not a Scrum rule.
-* **Scenario Trap — Acceptance criteria vs. Definition of Done:** Acceptance criteria are story-specific conditions agreed between the Product Owner and Developers. The Definition of Done applies to all Increments as a quality floor. A story can meet its acceptance criteria but still not meet the DoD — in which case it is not done.
-* **INVEST — Negotiable does not mean changeable at will:** The "N" in INVEST means the details of a story should be open for conversation before the Sprint begins — not that scope can be changed mid-Sprint. Once a story is in the Sprint Backlog, it is committed to the Sprint Goal.
-* **"As a user" is not enough:** A vague actor in a user story (e.g., "as a user") produces vague acceptance criteria. Good stories name a specific role with specific needs, leading to more testable acceptance criteria.
-* **Study Resource:** [The Scrum Guide (2020)](https://scrumguides.org/) does not cover user stories directly. Supplement with the [Agile Alliance user story guide](https://www.agilealliance.org/glossary/user-stories/) and Mike Cohn's *User Stories Applied* (available via library or OpenLibrary).
+As a small business owner, I can generate a monthly expense summary report in PDF format so that I can share financial summaries with my accountant without manual data entry.
 
 ---
 
-### Required Readings & Videos
+## 2. The Three Cs Model
 
-To prepare for this module's topics, you must complete the following readings and videos:
+Ron Jeffries described user stories using three components that together constitute what a story really is:
 
-* **Required Reading:** [User Stories — Agile Alliance Glossary](https://www.agilealliance.org/glossary/user-stories/) — the Agile Alliance's free definition covering story format, INVEST criteria, and the relationship between stories and acceptance criteria.
-* **Required Video:** [Writing Good User Stories and Acceptance Criteria – Agile for Humans](https://www.youtube.com/watch?v=tKSUokG3a0g) — practical examples of strong vs. weak user stories and how to write acceptance criteria using Given-When-Then format. (~14 min)
+### Card
+
+The Card is the written representation of the story — the brief text recorded on an index card, sticky note, or in a project management tool. The Card is not a specification; it is a reminder of what needs to be discussed. Its brevity is intentional: it invites conversation rather than substituting for it.
+
+### Conversation
+
+The Conversation is the real content of the user story. It is the dialogue between the Product Owner, Developers, and stakeholders that fills in the details, resolves ambiguities, and surfaces constraints. The Conversation happens during Product Backlog Refinement and Sprint Planning. The Card exists to prompt and guide this conversation.
+
+A story that has never been discussed is a story that is not ready for development. Developers who start work on a story they have not discussed with the Product Owner frequently discover mid-Sprint that their assumptions were wrong.
+
+### Confirmation
+
+The Confirmation is the acceptance criteria — the written agreement about what Done means for this story. Acceptance criteria transform a vague story into a testable commitment. They are the record of the key points from the Conversation that the team wants to formalize as quality expectations.
 
 ---
 
-### Lab & Command Integration
+## 3. Acceptance Criteria and Given/When/Then
 
-In this week's hands-on lab, you will:
+### What Acceptance Criteria Are
 
-* **Write user stories from a product brief:** Given a one-paragraph product description, write five user stories in the standard "As a / I want / So that" format, each targeting a distinct user role and delivering specific value.
-* **Add acceptance criteria using Given-When-Then:** For each of your five user stories, write at least two acceptance criteria using the Gherkin Given-When-Then format, ensuring each criterion is independently testable.
-* **Apply INVEST to evaluate story quality:** Score each of your five stories against the INVEST criteria and identify any that need to be split, refined, or clarified before they would be ready for Sprint Planning.
+Acceptance criteria are specific conditions that a user story must satisfy to be considered complete. They define the boundaries of the story — what is in scope and what is out — and provide the basis for testing.
+
+Quality acceptance criteria are:
+
+- Specific: they describe exact, observable behavior
+- Testable: a test can be written that definitively passes or fails
+- Unambiguous: both the Product Owner and Developers interpret them the same way
+- Covering the happy path and key edge cases: the main scenario and important failure/edge scenarios
+
+### Given/When/Then Format
+
+The most common format for acceptance criteria in Agile teams is Given/When/Then, also known as Gherkin format or BDD (Behavior-Driven Development) format.
+
+Structure:
+
+- Given [initial context or precondition]: what state is the system in before the behavior occurs?
+- When [action or trigger]: what does the user do, or what event occurs?
+- Then [expected outcome]: what observable result does the user or system produce?
+
+### Complete Example
+
+User story: As a registered customer, I can reset my password so that I can regain access to my account when I forget my credentials.
+
+Acceptance Criterion 1 — Happy path:
+
+Given a registered customer is on the login page and clicks "Forgot Password,"
+When they enter their registered email address and click Submit,
+Then they receive an email with a secure password reset link within two minutes.
+
+Acceptance Criterion 2 — Successful reset:
+
+Given a customer has received a valid password reset link,
+When they click the link within 24 hours and enter a new password meeting complexity requirements (minimum 8 characters, one uppercase, one number),
+Then their password is updated and they are redirected to their dashboard with a success message.
+
+Acceptance Criterion 3 — Expired link:
+
+Given a customer has received a password reset link,
+When they click the link after 24 hours have elapsed,
+Then the link is expired, a clear error message is displayed, and they are prompted to request a new link.
+
+Acceptance Criterion 4 — Unregistered email:
+
+Given a visitor is on the Forgot Password page,
+When they enter an email address that is not associated with any account and click Submit,
+Then they see a generic confirmation message (to prevent email enumeration attacks) without revealing whether the address is registered.
 
 ---
 
-### 3. Study Checklist
+## 4. User Stories vs. Acceptance Criteria vs. Definition of Done
 
-* [ ] Read the Agile Alliance user story glossary entry and memorize the INVEST criteria.
-* [ ] Be able to write a user story in the standard format without referring to notes.
-* [ ] Understand the difference between acceptance criteria (story-level) and the Definition of Done (increment-level).
-* [ ] Watch the required video and practice writing at least two Given-When-Then acceptance criteria.
-* [ ] Proceed to the weekly hands-on lab activity.
+This distinction is frequently tested on PSM I:
+
+| Item | What It Defines | Scope | Owner |
+|---|---|---|---|
+| User Story | The feature need from the user's perspective | One backlog item | Product Owner (with team input) |
+| Acceptance Criteria | The specific conditions for this story to be Done | One backlog item | Product Owner (confirmed with Developers) |
+| Definition of Done | The quality standards every Increment must meet | All Increments | Scrum Team (Developers primarily) |
+
+The Definition of Done applies universally — every Increment, regardless of which stories it contains, must meet the DoD. Acceptance criteria are item-specific — they apply only to the story they belong to. A story may meet all its acceptance criteria but still fail the Definition of Done if, for example, the DoD requires code review and code review was not performed.
+
+---
+
+## 5. Work Item Hierarchy: Epics, Stories, and Tasks
+
+### Epics
+
+An Epic is a large user story that is too big to complete in one Sprint. Epics represent high-level features or capabilities that will require multiple stories to implement fully. They sit at the top of the Product Backlog when a product is new or a major capability is first being described.
+
+Epics must be decomposed into user stories through Product Backlog Refinement before they are ready for Sprint Planning. A story that takes more than one Sprint to complete is too large and should be treated as an epic until it is split.
+
+Example Epic: "As a customer, I can manage my subscription." This encompasses billing management, plan changes, cancellation, payment method updates, and invoice history — multiple Sprints of work.
+
+### User Stories (Sprint-ready)
+
+User stories are refined, Sprint-sized items that meet the INVEST criteria. They are the unit of work the team commits to during Sprint Planning and the items that are demonstrated at Sprint Review.
+
+### Tasks
+
+Tasks are the technical activities Developers create during Sprint Planning to plan how they will implement a user story. Tasks live in the Sprint Backlog, not the Product Backlog. They are created by the Developers and are at a finer grain than stories — typically one to eight hours of work each.
+
+Tasks are not user-facing; they are implementation activities. "Write unit tests for the password reset endpoint" is a task, not a user story.
+
+---
+
+## 6. Common User Story Mistakes
+
+Mistake 1 — Missing "so that" clause: "As a user, I can search for products" omits the benefit. Why do they want to search? The benefit clause is what enables the team to evaluate priority and test whether the feature actually delivers value.
+
+Mistake 2 — System-centric stories: "The system shall implement Redis caching for product pages" is a technical decision written in system-specification language. Rewrite as a user story with a user benefit, then let the implementation approach emerge from the team's conversation.
+
+Mistake 3 — Acceptance criteria as UI specifications: "The submit button will be blue with a 16px Helvetica font" is a design spec. Acceptance criteria should describe behavior and outcome, not visual design details.
+
+Mistake 4 — Stories too large for one Sprint: Stories that cannot be completed in one Sprint must be split. Common splitting patterns include splitting by user type, by workflow step, by data type, or by happy path vs. edge cases.
+
+Mistake 5 — No acceptance criteria: Stories without acceptance criteria have no confirmation — the "C" in the Three Cs is missing. The team does not know when they are done, leading to ambiguous Sprint Reviews and Definition of Done disputes.
+
+---
+
+## 7. PSM I Exam Tips
+
+Tip 1: User stories are not mandated by the Scrum Guide. The Scrum Guide does not prescribe how Product Backlog items are written. User stories are a common practice, not a Scrum rule. PSM I questions that ask about mandatory formats for PBIs are testing this knowledge.
+
+Tip 2: Acceptance criteria are item-specific; the Definition of Done applies to all Increments. Both must be satisfied for a story to be truly Done.
+
+Tip 3: The "so that" clause is the most important part of a user story from a value perspective. Stories without it cannot be prioritized by value because value is unstated.
+
+Tip 4: The Three Cs — Card, Conversation, Confirmation — describe what a user story actually is. Know these terms and what each represents.
+
+Tip 5: An epic is a large user story, not a Scrum framework element. The Scrum Guide does not use the word "epic." It is a common practice term, not an official Scrum term.
+
+Tip 6: Tasks are created by Developers during Sprint Planning and live in the Sprint Backlog. They are not Product Backlog items.
+
+Tip 7: Given/When/Then acceptance criteria format is a BDD (Behavior-Driven Development) practice. It is widely used with Scrum but is not mandated by the Scrum Guide.
+
+Tip 8: PSM I questions about user stories often present poorly written stories and ask what is wrong with them. Apply the INVEST criteria and look for missing "so that" clauses, overly large stories, and non-testable acceptance criteria.
+
+---
+
+## 8. Study Checklist
+
+- [ ] Write five user stories in the standard format for an app of your choice
+- [ ] For each story, write 2–3 acceptance criteria in Given/When/Then format
+- [ ] Explain the Three Cs model: what is the Card, what is the Conversation, and what is the Confirmation?
+- [ ] Explain the difference between acceptance criteria and the Definition of Done
+- [ ] Define Epic, User Story, and Task and explain how they differ in scope and ownership
+- [ ] Identify five common user story mistakes and rewrite one poorly written story to fix all five
+- [ ] State whether user stories are required by the Scrum Guide (they are not)
+- [ ] Complete this module's Lab and Quiz
+
+---

@@ -1,64 +1,399 @@
 # Reading Guide: Module 06 - Azure Storage Services
 
-## Course: CIS-4331_Azure_Cloud (Microsoft Azure Fundamentals (AZ-900))
+**Course:** CIS-4331 Azure Cloud | Texas Wesleyan University
+**Instructor:** Professor Nash
+**AZ-900 Domain:** Describe Azure Architecture and Services (35-40% of exam)
 
 ---
 
-### Introduction
+## Introduction
 
-Welcome to **Module 06 - Azure Storage Services**! This module covers Azure's core storage offerings as tested on the **Microsoft Azure Fundamentals (AZ-900)** exam. Azure Storage is one of the most heavily tested topic areas in AZ-900 — you will need to know the storage types, blob access tiers, replication options, and appropriate use cases for each service.
-
-You will learn how Blob Storage access tiers (Hot, Cool, Cold, Archive) balance cost against retrieval speed, how Azure Files provides SMB-compatible file shares, and how storage redundancy options protect against data loss at different geographic scales. Complete the checklist and glossary before beginning the lab.
+Azure Storage is the foundational data persistence layer for cloud workloads. Every application deployed in Azure — from a simple web app to a large-scale analytics pipeline — relies on storage services. AZ-900 tests storage concepts thoroughly, particularly Blob Storage service types, redundancy options, and access tiers. This reading guide provides the depth required for both the exam and real-world storage architecture decisions.
 
 ---
 
-### 1. High-Yield Glossary
+## Section 1: Azure Storage Account
 
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
+### 1.1 Storage Account as a Namespace
 
-* **Blob Storage (Hot, Cool, Cold, Archive)**: Azure Blob Storage stores unstructured data as objects (blobs). Access tiers trade storage cost for retrieval cost and speed: Hot tier is optimized for frequently accessed data (highest storage cost, lowest retrieval cost); Cool tier is for infrequently accessed data stored at least 30 days; Cold tier is for data stored at least 90 days; Archive tier stores rarely accessed data for at least 180 days at the lowest storage cost but requires hours of rehydration before data can be read.
+An Azure Storage Account is the top-level management resource for Azure Storage. Creating a storage account establishes a unique namespace under `[account-name].core.windows.net` that serves as the endpoint for all storage services within that account.
 
-* **Azure Files**: A fully managed cloud file share service accessible via the SMB (Server Message Block) and NFS protocols, making it mountable by Windows, Linux, and macOS clients. Azure Files is used to replace or augment on-premises file servers, support lift-and-shift scenarios, and provide shared storage for applications running on multiple VMs.
+A single storage account can host:
 
-* **Disk Storage**: Managed disk volumes for Azure Virtual Machines, available in four performance tiers: Ultra Disk (highest IOPS), Premium SSD, Standard SSD, and Standard HDD. Disk Storage is IaaS storage — it is attached to and managed with VMs. AZ-900 tests the difference between unmanaged and managed disks (managed disks are Microsoft-recommended).
+- Blob containers (Blob Storage)
+- File shares (Azure Files)
+- Queues (Azure Queue Storage)
+- Tables (Azure Table Storage)
 
-* **Storage Replication Types**: Azure offers multiple redundancy levels — Locally Redundant Storage (LRS) stores 3 copies in a single datacenter; Zone-Redundant Storage (ZRS) stores copies across 3 Availability Zones in the same region; Geo-Redundant Storage (GRS) replicates to a secondary region; Geo-Zone-Redundant Storage (GZRS) combines ZRS in the primary region with geo-replication. AZ-900 tests which redundancy option protects against specific failure scenarios.
+### 1.2 Storage Account Types
 
----
+| Account Type | Supported Services | Performance | Use Case |
+|---|---|---|---|
+| General Purpose v2 (GPv2) | Blobs, Files, Queues, Tables | Standard | Recommended for most scenarios |
+| General Purpose v1 (GPv1) | Blobs, Files, Queues, Tables | Standard | Legacy — migrate to GPv2 |
+| BlockBlobStorage | Block blobs and append blobs only | Premium (SSD) | High-transaction, low-latency blob workloads |
+| FileStorage | File shares only | Premium (SSD) | High-performance file share workloads |
+| BlobStorage | Blobs only (block and append) | Standard | Legacy blob-only accounts |
 
-### 2. Certification Exam Tips
+GPv2 is the recommended account type for new deployments. It supports all services and provides access to the latest features including all access tiers.
 
-* **Blob Access Tier Trade-offs**: AZ-900 presents scenarios and asks which tier is appropriate. Key rule: the more frequently data is accessed, the hotter the tier should be. Archive tier data must be "rehydrated" (a process taking up to 15 hours) before it can be read — it is not suitable for data needing fast access.
-* **Archive Rehydration Trap**: The exam may describe a scenario where data in Archive tier is needed urgently. Remember that retrieval from Archive is not instant — it requires rehydration. For data that may be needed quickly, Cool or Cold tier is more appropriate.
-* **LRS vs. GRS**: LRS is cheapest but protects only against hardware failure within one datacenter — a datacenter fire destroys all copies. GRS protects against regional disasters. AZ-900 tests which redundancy protects against regional outages — the answer is GRS or GZRS.
-* **Azure Files vs. Blob Storage**: Files = structured file-share accessed via SMB/NFS (mount as a drive). Blob = object storage accessed via HTTP/REST (for unstructured data like images, backups, and logs). AZ-900 may ask which service lets users map a network drive — the answer is Azure Files.
-* **Study Resource**: The Microsoft Learn storage module covers all storage types, blob tiers, and redundancy with interactive exercises. Access it at [Microsoft Learn – AZ-900 Azure Architecture](https://learn.microsoft.com/en-us/training/paths/azure-fundamentals-describe-azure-architecture-services/).
+### 1.3 Storage Account Naming Rules
 
----
-
-### Required Readings & Videos
-
-To prepare for this module's topics, you must complete the following readings and videos:
-
-* **Required Reading:** The Microsoft Learn path for AZ-900 covers Azure storage services including Blob tiers, Azure Files, and redundancy options. Access it at [Microsoft Learn – AZ-900 Azure Architecture](https://learn.microsoft.com/en-us/training/paths/azure-fundamentals-describe-azure-architecture-services/).
-* **Required Video:** This free freeCodeCamp course covers Azure storage for AZ-900 — watch the storage section: [Microsoft Azure Fundamentals Full Course by freeCodeCamp](https://www.youtube.com/watch?v=NPEsD6n9A_I).
-
----
-
-### Lab & Command Integration
-
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-
-* **Create an Azure Storage Account**: In the Azure portal, create a storage account, selecting a redundancy option (e.g., LRS) and observing how the region selection affects data residency.
-* **Upload a blob to a container**: Create a blob container, upload a file, and set the blob's access level (private vs. public). Observe the blob URL structure and access behavior.
-* **Modify blob access tier from Hot to Archive**: Change an uploaded blob's access tier from Hot to Archive in the portal. Observe the warning that the blob will not be immediately readable and that rehydration is required for retrieval.
+- 3-24 characters
+- Lowercase letters and numbers only
+- Must be globally unique across all Azure storage accounts worldwide
+- No hyphens or special characters
 
 ---
 
-### 3. Study Checklist
+## Section 2: Azure Blob Storage
 
-* [ ] Read the glossary terms and memorize their definitions.
-* [ ] Complete the Azure storage unit in [Microsoft Learn – AZ-900 Azure Architecture](https://learn.microsoft.com/en-us/training/paths/azure-fundamentals-describe-azure-architecture-services/).
-* [ ] Watch the storage section of [Microsoft Azure Fundamentals Full Course by freeCodeCamp](https://www.youtube.com/watch?v=NPEsD6n9A_I).
-* [ ] Review the lab instructions for storage account creation, blob upload, and access tier modification.
-* [ ] Proceed to the weekly hands-on lab activity.
+### 2.1 What Is Blob Storage?
+
+Azure Blob Storage is a massively scalable object storage service for unstructured data. It stores data as blobs (objects) within containers, accessible via HTTP/HTTPS using REST API.
+
+Blobs are organized in containers (analogous to folders, but there is no true folder hierarchy — only flat namespace with `/` delimiter simulating paths).
+
+### 2.2 Blob Types
+
+| Blob Type | Max Size | Optimized For | Use Cases |
+|---|---|---|---|
+| Block blob | ~190.7 TB | Sequential read/write | Documents, images, video, backups |
+| Append blob | ~195 GB | Append-only operations | Log files, audit data, streaming data |
+| Page blob | 8 TB | Random read/write | Virtual machine disks (VHDs), database files |
+
+### 2.3 Blob Access Tiers
+
+Access tiers balance storage cost against data access cost. Choose based on how frequently your data is accessed.
+
+| Tier | Storage Cost | Access Cost | Minimum Retention | Retrieval Time | Use Case |
+|---|---|---|---|---|---|
+| Hot | Highest | Lowest | None | Immediate | Actively accessed data |
+| Cool | Lower | Higher | 30 days | Immediate | Monthly access, backups |
+| Cold | Very Low | Higher | 90 days | Immediate | Quarterly access |
+| Archive | Lowest | Highest | 180 days | 1-15 hours (rehydration) | Regulatory archives, long-term backups |
+
+Early deletion penalty: If data in Cool, Cold, or Archive tier is deleted before the minimum retention period, a prorated early deletion fee applies.
+
+Archive tier behavior: Blobs in Archive tier are stored offline. To read an archived blob, you must first rehydrate it — either move it to Hot or Cool tier, or copy it to a new blob in a higher tier. Standard rehydration priority takes up to 15 hours. High rehydration priority takes under 1 hour (higher cost).
+
+### 2.4 Lifecycle Management Policies
+
+Azure Blob Storage supports lifecycle management policies — rules that automatically transition blobs between tiers or delete them based on age:
+
+Example policy rule: "Move blobs that have not been modified for 30 days from Hot to Cool. Move blobs that have not been modified for 90 days from Cool to Archive. Delete blobs that have not been modified for 365 days."
+
+This automates cost optimization without requiring manual blob management.
+
+### 2.5 Blob Storage Use Cases
+
+- Static website hosting (HTML, CSS, JS files served directly from Blob Storage)
+- Video and audio streaming
+- Backup and disaster recovery data storage
+- Log and telemetry data collection
+- Data lake foundation (Azure Data Lake Storage Gen2 is built on Blob Storage)
+- VM disk images and snapshots
+
+---
+
+## Section 3: Azure Files
+
+### 3.1 What Is Azure Files?
+
+Azure Files provides fully managed cloud file shares accessible using the industry-standard Server Message Block (SMB) 2.1, 3.0, and 3.1.1 protocols and the NFS 4.1 protocol. Windows, Linux, and macOS clients can mount Azure file shares without any special Azure client software — the share appears as a standard network drive.
+
+### 3.2 Azure Files vs. Blob Storage
+
+| Characteristic | Azure Files | Blob Storage |
+|---|---|---|
+| Protocol | SMB, NFS | HTTP/HTTPS (REST) |
+| Access model | File system (directory/file hierarchy) | Object store (flat namespace) |
+| Mount as drive | Yes (like a network drive) | No |
+| POSIX compliance | Partial (NFS shares) | No |
+| Max file size | 4 TB per file | ~190 TB per block blob |
+| Use case | File server replacement, shared app config | Unstructured data at massive scale |
+
+### 3.3 Azure Files Tiers
+
+| Tier | Storage Type | IOPS | Use Case |
+|---|---|---|---|
+| Premium | SSD | High | Latency-sensitive applications, databases |
+| Transaction optimized | HDD | Moderate | High-transaction but latency-tolerant |
+| Hot | HDD | Moderate | General-purpose shares accessed frequently |
+| Cool | HDD | Lower | Archives, backups with occasional access |
+
+---
+
+## Section 4: Azure Queue Storage
+
+### 4.1 What Is Queue Storage?
+
+Azure Queue Storage is a service for storing large numbers of messages that can be accessed from anywhere via HTTP or HTTPS. A queue can contain millions of messages. Each message can be up to 64 KB. Messages have a configurable visibility timeout — after a consumer retrieves a message, it becomes invisible to other consumers for the timeout period, allowing time to process and delete it.
+
+### 4.2 Queue Storage Use Cases
+
+Queue Storage enables decoupled, asynchronous application architectures:
+
+- **Order processing:** Web frontend writes orders to queue; backend order processor reads queue independently
+- **Email notification pipeline:** Application writes notification requests; email service reads and sends
+- **Image thumbnail generation:** Upload service writes new image paths; thumbnail generator reads queue and processes
+- **Rate limiting:** Control the pace at which messages are consumed regardless of producer speed
+
+### 4.3 Queue Storage vs. Azure Service Bus
+
+| Feature | Queue Storage | Azure Service Bus |
+|---|---|---|
+| Message size | 64 KB | 256 KB (Standard), 100 MB (Premium) |
+| Message ordering | Approximate (not guaranteed) | Guaranteed (FIFO queues) |
+| Duplicate detection | No | Yes |
+| Dead-letter queue | No | Yes |
+| Topics/subscriptions | No | Yes (pub/sub) |
+| Cost | Very low | Moderate |
+| Best for | Simple decoupling at scale | Enterprise messaging, complex routing |
+
+---
+
+## Section 5: Azure Table Storage
+
+### 5.1 What Is Table Storage?
+
+Azure Table Storage is a NoSQL key-value store for structured, non-relational data. Data is stored as entities (rows) in tables, with each entity identified by a composite key: PartitionKey + RowKey. There is no enforced schema — different entities in the same table can have different sets of properties.
+
+### 5.2 Table Storage Characteristics
+
+- Highly scalable: stores hundreds of terabytes
+- Very low cost per GB
+- Fast read/write for key-based lookups
+- No support for complex queries, joins, or transactions across partitions
+- No built-in relationships
+
+### 5.3 When to Use Table Storage vs. Cosmos DB
+
+| Factor | Table Storage | Azure Cosmos DB (Table API) |
+|---|---|---|
+| Global distribution | No | Yes |
+| SLA | 99.9% | 99.99% read, 99.999% write |
+| Performance guarantee | Best effort | Guaranteed throughput (RU/s) |
+| Cost | Very low | Higher |
+| Consistency models | Eventual | 5 consistency models |
+| Best for | Simple, low-cost key-value storage | Global, mission-critical NoSQL |
+
+---
+
+## Section 6: Storage Redundancy Options
+
+### 6.1 Redundancy Overview
+
+Azure Storage always keeps multiple copies of your data to protect against hardware failures, datacenter outages, and regional disasters. The redundancy option you select determines how many copies are kept, where they are stored, and the durability guarantee.
+
+### 6.2 Locally Redundant Storage (LRS)
+
+LRS stores three synchronous copies of data within a single physical datacenter in a single Azure region.
+
+- Protects against: single disk failure, server failure, rack failure
+- Does not protect against: datacenter-level failure (fire, flood, power grid)
+- Durability: 99.999999999% (11 nines) per year
+- Cost: Lowest
+- Use case: Non-critical data, dev/test, reproducible data, data with regional compliance requirements
+
+### 6.3 Zone-Redundant Storage (ZRS)
+
+ZRS stores three synchronous copies of data, one in each of three Availability Zones within a single region. Each zone has independent power, cooling, and networking.
+
+- Protects against: datacenter failure (zone-level)
+- Does not protect against: entire region going offline
+- Durability: 99.9999999999% (12 nines) per year
+- Cost: Slightly higher than LRS
+- Use case: High-availability applications that must remain online during zone failure, regulated workloads requiring regional data residency
+
+### 6.4 Geo-Redundant Storage (GRS)
+
+GRS stores three LRS copies in the primary region plus asynchronously replicates to a secondary (paired) region where three additional LRS copies are stored. Total: six copies.
+
+Secondary region is not readable by default (failover only). With RA-GRS (Read-Access GRS), the secondary region is readable at all times.
+
+- Protects against: regional failure
+- Data replication to secondary is asynchronous — small amount of data may be lost during failover (RPO)
+- Durability: 99.99999999999999% (16 nines)
+- Cost: Higher than ZRS
+- Use case: Disaster recovery, business continuity, data that must survive regional failures
+
+### 6.5 Geo-Zone-Redundant Storage (GZRS)
+
+GZRS combines ZRS in the primary region with async replication to a secondary region. It provides both zone-level and regional failure protection.
+
+- Protects against: zone failure AND regional failure
+- Durability: Highest available (16 nines)
+- Cost: Highest
+- RA-GZRS adds read access to secondary region
+- Use case: Maximum durability and availability for mission-critical data
+
+### 6.6 Redundancy Comparison Table
+
+| Option | Copies | Primary Region | Secondary Region | Readable Secondary | Durability |
+|---|---|---|---|---|---|
+| LRS | 3 | 1 datacenter | None | N/A | 11 nines |
+| ZRS | 3 | 3 zones | None | N/A | 12 nines |
+| GRS | 6 | 1 datacenter (LRS) | 1 datacenter (LRS) | No (RA-GRS: Yes) | 16 nines |
+| GZRS | 6 | 3 zones (ZRS) | 1 datacenter (LRS) | No (RA-GZRS: Yes) | 16 nines |
+
+---
+
+## Section 7: Storage Access Control
+
+### 7.1 Storage Account Keys
+
+Two primary access keys (key1 and key2) provide full administrative access to all data in a storage account. Keys should be treated like passwords:
+
+- Store in Azure Key Vault, not in code or configuration files
+- Rotate regularly (Azure supports rotating one key while the other remains active)
+- Never share with end users — use SAS tokens for delegated access
+
+### 7.2 Shared Access Signatures (SAS)
+
+A Shared Access Signature is a URI that grants restricted access to a storage resource for a defined period. SAS tokens specify:
+
+- Which resources can be accessed (account, service, container, or individual blob)
+- What operations are permitted (read, write, delete, list)
+- Start and expiry time
+- Allowed IP addresses
+- Required protocol (HTTPS only recommended)
+
+SAS types:
+
+| Type | Scope | Best For |
+|---|---|---|
+| Account SAS | Entire storage account | Administrative delegation |
+| Service SAS | Single service (blob, file, queue, table) | Service-level access |
+| User delegation SAS | Blob or data lake storage, signed with Entra ID credential | Most secure — no account key needed |
+
+### 7.3 Azure AD Authorization (Recommended)
+
+Using Entra ID (Azure AD) for storage access is the recommended approach. Entra ID-based access assigns storage data roles to users, groups, or managed identities:
+
+- Storage Blob Data Reader: Read blobs
+- Storage Blob Data Contributor: Read, write, delete blobs
+- Storage Blob Data Owner: Full access including POSIX permissions
+
+Managed identities (system-assigned or user-assigned) allow Azure services (VMs, Functions, App Service) to access storage without storing credentials in code.
+
+---
+
+## Section 8: Azure CLI Commands for Storage
+
+```bash
+# Create a storage account
+az storage account create \
+  --name "lab06sa[initials]" \
+  --resource-group "lab06-rg" \
+  --location "eastus" \
+  --sku "Standard_LRS" \
+  --kind "StorageV2"
+
+# Show storage account details
+az storage account show \
+  --name "lab06sa[initials]" \
+  --resource-group "lab06-rg"
+
+# Get storage account connection string
+az storage account show-connection-string \
+  --name "lab06sa[initials]" \
+  --resource-group "lab06-rg" \
+  --output tsv
+
+# Create a blob container
+az storage container create \
+  --name "mycontainer" \
+  --account-name "lab06sa[initials]" \
+  --public-access off
+
+# Upload a blob
+az storage blob upload \
+  --container-name "mycontainer" \
+  --name "example.txt" \
+  --file "./example.txt" \
+  --account-name "lab06sa[initials]"
+
+# List blobs in a container
+az storage blob list \
+  --container-name "mycontainer" \
+  --account-name "lab06sa[initials]" \
+  --output table
+
+# Download a blob
+az storage blob download \
+  --container-name "mycontainer" \
+  --name "example.txt" \
+  --file "./downloaded.txt" \
+  --account-name "lab06sa[initials]"
+
+# Set blob access tier
+az storage blob set-tier \
+  --container-name "mycontainer" \
+  --name "example.txt" \
+  --tier Cool \
+  --account-name "lab06sa[initials]"
+
+# Delete a blob
+az storage blob delete \
+  --container-name "mycontainer" \
+  --name "example.txt" \
+  --account-name "lab06sa[initials]"
+```
+
+Reference: learn.microsoft.com/en-us/cli/azure/storage
+
+---
+
+## Section 9: Storage Services Comparison
+
+| Service | Data Type | Protocol | Max Object Size | Use Case |
+|---|---|---|---|---|
+| Blob Storage | Unstructured (files, media, backups) | HTTP/HTTPS REST | ~190 TB | Object storage, data lake, CDN origin |
+| Azure Files | Structured file system | SMB, NFS | 4 TB per file | File server replacement, shared config |
+| Queue Storage | Messages | HTTP/HTTPS | 64 KB per message | Decoupled async messaging |
+| Table Storage | Structured NoSQL | HTTP/HTTPS REST | 1 MB per entity | Key-value NoSQL, device telemetry |
+
+---
+
+## Section 10: AZ-900 Exam Tips
+
+1. **Blob type selection:** Block blobs for general file storage (most common). Append blobs for log files (append-only). Page blobs for VM disk images (random I/O). These are three separate things — do not confuse them.
+
+2. **Archive tier retrieval time:** Archive tier data takes 1-15 hours to retrieve (rehydrate). The exam may give a scenario requiring immediate data access and ask which tier is inappropriate — Archive is the answer when immediate access is needed.
+
+3. **GRS vs. ZRS:** GRS replicates to a second region (regional failure protection). ZRS replicates across zones within one region (datacenter failure protection within a region). The geographic scope is the key differentiator.
+
+4. **Azure Files vs. Blob Storage:** Azure Files mounts as a network drive using SMB or NFS. Blob Storage is accessed via HTTP REST API. If a scenario describes "mounting a drive" or "SMB file access," the answer is Azure Files.
+
+5. **SAS token security:** SAS tokens should be time-limited and use HTTPS only. Do not store account keys in application code — use managed identities or Key Vault instead.
+
+6. **Redundancy and cost:** LRS is cheapest but offers no regional protection. GZRS is most expensive but provides the highest durability. For the exam, match the redundancy to the scenario's stated requirement (regional failure protection = GRS or GZRS; zone protection only = ZRS).
+
+7. **Queue Storage for decoupling:** When a scenario describes two application components that need to communicate asynchronously without tight coupling, and one component may be slower than the other, the answer is Queue Storage (or Azure Service Bus for more advanced scenarios).
+
+8. **Cool/Archive early deletion fees:** If data is deleted from Cool tier before 30 days, or Archive tier before 180 days, early deletion fees apply. The exam may test awareness of this cost consideration.
+
+---
+
+## Section 11: Required Resources
+
+- Azure Storage introduction: learn.microsoft.com/en-us/azure/storage/common/storage-introduction
+- Blob Storage overview: learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-introduction
+- Storage redundancy: learn.microsoft.com/en-us/azure/storage/common/storage-redundancy
+- Azure Files: learn.microsoft.com/en-us/azure/storage/files/storage-files-introduction
+- Microsoft Learn AZ-900 storage module: learn.microsoft.com/en-us/training/modules/describe-azure-storage-services/
+
+---
+
+## Section 12: Study Checklist
+
+- [ ] Read all sections of this guide
+- [ ] Memorize the blob access tier table (Section 2.3)
+- [ ] Memorize the redundancy comparison table (Section 6.6)
+- [ ] Know the four storage service types and one use case for each
+- [ ] Understand all CLI commands in Section 8
+- [ ] Complete Lab Activity Module 06
+- [ ] Take Quiz Module 06
+- [ ] Post Discussion Module 06 initial post by Wednesday 11:59 PM
+- [ ] Respond to two classmates by Sunday 11:59 PM

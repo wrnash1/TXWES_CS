@@ -1,57 +1,171 @@
 # Reading Guide: Module 02 - Business Analysis Planning and Monitoring
-## Course: CIS-3312 Systems Analysis & Design (IIBA ECBA)
+
+**Course:** CIS-3312 Systems Analysis and Design
+**Certification Alignment:** IIBA ECBA (Entry Certificate in Business Analysis)
+**Prepared by:** Professor Nash | Texas Wesleyan University
 
 ---
 
-### Introduction
-Welcome to **Module 02 – Business Analysis Planning and Monitoring**! Before a business analyst begins eliciting requirements, they must plan *how* they will conduct business analysis on the project. This module covers BABOK® Guide v3 Knowledge Area 2: Business Analysis Planning and Monitoring — arguably the most foundational knowledge area on the ECBA exam because it governs how all other activities are organized and governed.
+## Introduction
 
-You will learn how to select a BA approach, identify and analyze stakeholders, choose the right elicitation and collaboration techniques, define governance processes, and measure whether your BA work is on track. These planning decisions directly affect the quality of requirements produced and the success of the delivered solution.
-
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **Business Analysis Plan**: A business analysis plan is a documented description of how a business analyst will conduct BA activities on a specific project or initiative, including the tasks to be performed, the techniques to be used, the stakeholders to engage, and the timeline for delivery. It is tailored to the project context — a complex enterprise system requires a more detailed plan than a simple process improvement. The BA plan is a deliverable of the "Plan Business Analysis Approach" task in BABOK® KA 2.
-
-*   **Stakeholder Engagement Approach**: The stakeholder engagement approach documents how the BA will identify, analyze, and collaborate with stakeholders throughout the initiative. It includes stakeholder lists, their roles, their level of authority, their communication preferences, and their likely attitudes toward the change. A thorough engagement approach prevents the common failure mode of discovering critical stakeholders after requirements are baselined.
-
-*   **Predictive (Waterfall) Approach**: In a predictive BA approach, requirements are fully defined, analyzed, and documented before design and construction begin. The scope is fixed early, changes go through formal change control, and deliverables are produced in sequential phases. This approach suits projects with stable, well-understood requirements and low tolerance for mid-project scope changes.
-
-*   **Adaptive (Agile) Approach**: In an adaptive BA approach, requirements are progressively elaborated across iterations or sprints rather than defined entirely upfront. The BA works closely with the team during each iteration to refine user stories and acceptance criteria. This approach suits projects where requirements are expected to evolve, stakeholders are highly available, and delivering incremental value is prioritized over comprehensive upfront documentation.
-
-*   **BA Governance**: BA governance defines the processes for how decisions about requirements will be made, how changes will be reviewed and approved, and how conflicts between stakeholders will be resolved. It typically includes a defined change control process, a requirements review board or approval authority, and escalation paths. Without governance, requirements scope creep is nearly inevitable.
-
-*   **Performance Analysis (BA Monitoring)**: BA performance analysis is the ongoing activity of comparing actual BA work against the BA plan to identify variances, assess their impact, and take corrective action. Metrics might include the number of requirements approved vs. outstanding, the rate of requirement changes, elicitation session completion, and stakeholder satisfaction. Monitoring ensures the BA approach remains aligned with project goals as conditions change.
+Module 02 covers BABOK Guide v3 Knowledge Area 2: Business Analysis Planning and Monitoring. This Knowledge Area defines what a BA must plan before elicitation begins — who to engage, how to work, how requirements will be governed, and how BA performance will be measured. KA 2 is among the most heavily tested areas on the ECBA exam because it defines the professional discipline of business analysis rather than just the techniques.
 
 ---
 
-### 2. Certification Exam Tips
-*   **ECBA KA 2 Weight**: BABOK® KA 2 (Business Analysis Planning and Monitoring) is one of the highest-weighted knowledge areas on the ECBA exam. Expect scenario-based questions that describe a project situation and ask which planning task or technique is most appropriate. Practice recognizing the difference between planning *for* BA (KA 2) versus actually *doing* elicitation (KA 4).
-*   **Approach Selection**: A very common ECBA question presents a project scenario and asks whether a predictive or adaptive approach is most suitable. Key signals for predictive: regulatory environment, fixed contracts, stable requirements, large distributed team. Key signals for adaptive: evolving requirements, engaged product owner, iterative delivery expected.
-*   **Stakeholder Analysis Matrix**: Know the two-by-two stakeholder matrix (power vs. interest or influence vs. impact). The ECBA exam may describe a stakeholder's characteristics and ask where they fall on the matrix and what the appropriate engagement strategy is (e.g., high power/low interest = Keep Satisfied; high power/high interest = Manage Closely).
-*   **Study Resource**: The IIBA Agile Extension to the BABOK® Guide is freely downloadable for IIBA members at [https://www.iiba.org/](https://www.iiba.org/) — its Chapter 2 on planning in agile contexts directly tests the adaptive approach topics you will see on the ECBA exam.
+## 1. Core Vocabulary
+
+### 1.1 Business Analysis Approach
+
+The business analysis approach is the overall strategy the BA selects for conducting BA activities on a specific project. It includes decisions about methodology (predictive vs. adaptive), documentation level, formality of reviews, and collaboration frequency. The approach is tailored to the project context — its size, complexity, stability of requirements, and organizational culture.
+
+### 1.2 Stakeholder Engagement Approach
+
+The stakeholder engagement approach documents who the stakeholders are, their roles and authority, their attitudes toward the proposed change, how the BA will collaborate with each stakeholder or group, and the frequency and format of communications. It is the BA's plan for managing every human relationship that affects requirements quality.
+
+### 1.3 Governance
+
+In the BA context, governance defines who has the authority to approve, reject, or change requirements, and what process is followed when a requirement change is proposed after baseline approval. A governance plan prevents requirements from being changed informally — a major source of scope creep and project failure.
+
+### 1.4 Predictive Approach
+
+A predictive approach (often called Waterfall) defines all requirements before design begins, uses formal documentation and change control, and works best when scope is stable, requirements are well-understood, or regulatory compliance demands complete specification before construction.
+
+### 1.5 Adaptive Approach
+
+An adaptive approach (Agile, Scrum, Kanban) elaborates requirements incrementally through iterations or sprints. Requirements evolve through frequent stakeholder feedback. This works best when scope is expected to change, when delivering incremental value is prioritized, and when key stakeholders are highly available.
+
+### 1.6 Business Analysis Performance Metrics
+
+These are measures the BA uses to evaluate whether BA activities are producing high-quality results on schedule. Common metrics include: number of requirement defects discovered per review cycle, stakeholder satisfaction ratings, percentage of planned elicitation sessions completed on schedule, and the ratio of post-baseline change requests to original requirements.
 
 ---
 
-### Required Readings & Videos
-*   **Required Reading**: BABOK® Guide v3 Chapter 3 — "Business Analysis Planning and Monitoring." Focus on all six tasks: Plan BA Approach, Plan Stakeholder Engagement, Plan BA Governance, Plan BA Information Management, Identify BA Performance Improvements, and the associated techniques (stakeholder list matrix, interviews, lessons learned).
-*   **Supplemental Reading**: Review the PMI vs. IIBA role comparison article on the IIBA website at [https://www.iiba.org/professional-development/career-centre/business-analysis-vs-project-management/](https://www.iiba.org/professional-development/career-centre/business-analysis-vs-project-management/) — understanding the boundary between PM planning and BA planning is a recurring exam theme.
+## 2. The Five Tasks of BABOK KA 2
+
+| Task | Purpose | Key Output |
+|---|---|---|
+| Plan Business Analysis Approach | Select methodology, formality, and collaboration model | BA Approach document |
+| Plan Stakeholder Engagement | Identify and analyze all stakeholders | Stakeholder Register, Engagement Approach |
+| Plan Business Analysis Governance | Define decision-making authority and change control | Governance Approach |
+| Plan Business Analysis Information Management | Decide how requirements are stored, versioned, and shared | Information Management Approach |
+| Identify Business Analysis Performance Improvements | Monitor BA work quality and take corrective action | Updated BA plan, performance improvements |
+
+These five tasks are not a rigid sequence — they interact and feed each other. The chosen approach influences how information is managed, and the stakeholder analysis shapes governance structure.
 
 ---
 
-### Lab & Activity Integration
-In this week's lab, you will:
-*   Create a one-page stakeholder register for a provided case study, documenting role, influence level, interest level, and preferred communication channel for at least five stakeholders.
-*   Write a brief BA approach statement (one paragraph) recommending predictive or adaptive and justifying the choice based on the project context provided.
-*   Identify two governance rules for requirements changes (who approves, what triggers a review) for the same case study.
+## 3. The Power-Interest Grid
+
+The Power-Interest Grid (also called the Stakeholder Analysis Matrix) classifies stakeholders on two dimensions: organizational power and level of interest in the project outcome.
+
+| Quadrant | Power | Interest | Engagement Strategy |
+|---|---|---|---|
+| Manage Closely | High | High | Frequent involvement, real-time updates, direct access for decisions |
+| Keep Satisfied | High | Low | Executive summaries at milestones, escalate only key decisions |
+| Keep Informed | Low | High | Regular updates, involve in reviews and UAT |
+| Monitor | Low | Low | Periodic briefings only; avoid over-communicating |
+
+Stakeholder attitudes toward the change also matter. A resistant high-power stakeholder requires a different strategy than an enthusiastic one. Document attitudes as "Champion," "Neutral," or "Resistant" in the Stakeholder Register.
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and write your own one-sentence version of each definition.
-- [ ] Read BABOK® Guide v3 Chapter 3 (Business Analysis Planning and Monitoring).
+## 4. Stakeholder Register Columns
+
+The Stakeholder Register is the BA's living document. It should capture at minimum:
+
+- Full name and job title
+- Organizational unit
+- Stakeholder type (user, sponsor, SME, regulator, etc.)
+- Power level: High, Medium, Low
+- Interest level: High, Medium, Low
+- Grid quadrant classification
+- Attitude toward change: Champion, Neutral, Resistant
+- Preferred communication channel and frequency
+- Known concerns or constraints
+
+The register is updated throughout the project whenever stakeholders join, leave, or change posture.
+
+---
+
+## 5. Predictive vs. Adaptive Approach Comparison
+
+| Factor | Predictive Approach | Adaptive Approach |
+|---|---|---|
+| Requirements stability | Stable, well-understood | Evolving, emerging |
+| Documentation level | High formality, full SRS | Just-enough; user stories and acceptance criteria |
+| Change management | Formal change control board | Product backlog reprioritization |
+| Stakeholder availability | Limited or batched review cycles | Continuous collaboration |
+| Best suited for | Regulatory, fixed-scope, long-horizon projects | Innovation, fast-moving, high-feedback environments |
+| BA role | Requirements gatekeeper, specification author | Backlog partner, sprint collaborator |
+
+---
+
+## 6. SDLC Phase Positioning of KA 2
+
+KA 2 activities are most intense at the beginning of a project, before elicitation begins, because their outputs are prerequisites for all subsequent BA work. However, KA 2 activities recur throughout:
+
+- Planning phase: Initial stakeholder identification, feasibility input, approach selection
+- Analysis phase: Full stakeholder engagement, governance in operation, continuous monitoring
+- Design phase: Governance manages post-baseline change requests
+- Implementation phase: Monitoring BA performance on requirements traceability and defect rates
+
+---
+
+## 7. BABOK Knowledge Area Reference
+
+| Knowledge Area | Number | Core Question |
+|---|---|---|
+| Business Analysis Planning and Monitoring | KA 2 | How will BA work be conducted? |
+| Strategy Analysis | KA 3 | What is the need and what future state do we want? |
+| Elicitation and Collaboration | KA 4 | How do we gather information from stakeholders? |
+| Requirements Analysis and Design Definition | KA 5 | How do we specify, model, and validate requirements? |
+| Requirements Life Cycle Management | KA 6 | How do we maintain, trace, and approve requirements? |
+| Solution Evaluation | KA 7 | Is the deployed solution delivering expected value? |
+
+---
+
+## 8. Certification Exam Tips
+
+1. The five tasks of KA 2 are frequently tested as a group. Be able to name them all and describe what each one produces. "Plan Stakeholder Engagement" produces the Stakeholder Register — do not confuse it with the elicitation activities in KA 4 that actually interview those stakeholders.
+
+2. The Power-Interest Grid quadrant names are tested directly. Know all four: Manage Closely (high/high), Keep Satisfied (high/low), Keep Informed (low/high), Monitor (low/low). The exam will describe a stakeholder and ask which strategy applies.
+
+3. A common trap question places a high-power, low-interest stakeholder (senior VP) and asks how the BA should engage them. "Meet frequently and involve in all decisions" is wrong. The correct answer is "Keep Satisfied" — high-level summaries at milestones, escalate only key decisions.
+
+4. "BA performance monitoring" is KA 2's final task. When a scenario describes a BA noticing that elicitation is falling behind, the correct response is: analyze the variance, identify root cause, update the BA plan. Immediately escalating to the sponsor or skipping remaining sessions are both wrong.
+
+5. When a scenario describes stable, regulatory-driven scope with a fixed deadline, select the predictive approach. When it describes innovative products with evolving stakeholder feedback, select the adaptive approach.
+
+6. Governance in BA planning means defining who approves requirements changes — not who writes requirements or who builds the system. Governance prevents scope creep by requiring formal approval for any post-baseline change.
+
+7. The BA approach is always tailored to the project. BABOK does not prescribe one methodology — it describes factors the BA should consider. This "it depends" philosophy is characteristic of BABOK and appears throughout the ECBA exam.
+
+8. Stakeholder identification is the first step in stakeholder planning. You cannot plan engagement for stakeholders you have not yet identified. A scenario where a stakeholder is discovered late and raises a new requirement is a KA 2 failure — insufficient early identification.
+
+---
+
+## 9. Required and Supplemental Reading
+
+Required reading:
+
+- BABOK Guide v3, Knowledge Area 2 — all five tasks, inputs, outputs, and techniques
+- BABOK Guide v3, Chapter 9 (Techniques) — review: Stakeholder List/Map/Personas, Interviews, Organizational Modeling, Lessons Learned
+
+Supplemental reading:
+
+- PMI PMBOK Guide section on Stakeholder Management — compare PM and BA perspectives on stakeholder analysis
+- iiba.org — ECBA Certification Handbook for experience and exam eligibility requirements
+
+---
+
+## 10. Study Checklist
+
+- [ ] Name and describe all five KA 2 tasks from memory.
+- [ ] Draw the Power-Interest Grid and write the engagement strategy for each quadrant.
+- [ ] List the standard columns of a Stakeholder Register.
+- [ ] Explain the difference between predictive and adaptive BA approaches with one example context each.
+- [ ] Define governance in the BA context and explain why it prevents scope creep.
+- [ ] Read BABOK Guide v3 KA 2 (all five tasks).
 - [ ] Watch the Module 02 video lecture.
-- [ ] Download and skim the IIBA Agile Extension Chapter 2 from [https://www.iiba.org/](https://www.iiba.org/).
-- [ ] Complete the stakeholder register lab activity before taking the quiz.
+- [ ] Complete the Module 02 lab activity.
+- [ ] Post your initial discussion response by Wednesday at 11:59 PM.

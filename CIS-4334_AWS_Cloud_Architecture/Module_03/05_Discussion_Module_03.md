@@ -1,28 +1,50 @@
-# Discussion Forum: Module 03 - Amazon VPC Virtual Networks
-## Course: CIS-4334_AWS_Cloud_Architecture (AWS Certified Solutions Architect - Associate)
+# Discussion Forum: Module 03 - EC2: Instance Types, Auto Scaling, and Load Balancing
+
+**Course:** CIS-4334 AWS Cloud Architecture
+**Certification Target:** AWS Solutions Architect Associate (SAA-C03)
 
 ---
 
-## Discussion Prompt
-Consider the following real-world scenario or technical concept:
-*   **Topic Focus:** **Amazon VPC Virtual Networks** (specifically focusing on: `VPC, public vs private subnets, Internet Gateways (IGWs), route tables.`)
+## Instructions
 
-**Your Tasks:**
-1.  **Initial Post (Due Wednesday at 11:59 PM):** In 150-200 words, explain how you would apply Amazon VPC Virtual Networks in an enterprise system. Address the following:
-    *   What is the primary benefit of utilizing this configuration or standard in a production environment?
-    *   Identify one common security concern or operational challenge related to this topic, and suggest a best-practice mitigation strategy.
-2.  **Peer Responses (Due Sunday at 11:59 PM):** Read through your classmates' posts and write constructive replies (at least 50 words each) to at least two peers. In your replies:
-    *   Provide feedback on their proposed mitigation strategy.
-    *   Share an alternative approach or add context from your own research or lab exercises.
+Read all three scenarios below and select one to address in your initial post. Your initial post must be 175-225 words, technically precise, and reference specific EC2, Auto Scaling, or load balancing concepts from this module. Respond to at least two classmates who chose different scenarios from yours.
+
+Initial post due: Wednesday at 11:59 PM
+Peer responses due: Sunday at 11:59 PM
 
 ---
 
-## Discussion Rubric (10 Points Total)
-*   **Initial Post (6 Points):**
-    *   *5-6 pts:* Thoroughly addresses all prompt questions with technical accuracy, clear explanations, and appropriate terminology. Meets the word count.
-    *   *3-4 pts:* Addresses some prompt questions, but lacks detail or technical accuracy.
-    *   *0-2 pts:* Incomplete or missing initial post.
-*   **Peer Responses (4 Points):**
-    *   *4 pts:* Responds constructively to at least two peers, contributing meaningful additions to the conversation.
-    *   *2 pts:* Responds to only one peer, or comments are superficial (e.g., "Good post!").
-    *   *0 pts:* No peer responses submitted.
+## Scenario A - Scaling Policy Failure Post-Mortem
+
+A SaaS company experienced a major outage during a product launch event. Their Auto Scaling Group was configured with a target tracking policy at 80% CPU, EC2 health checks only, and a minimum capacity of 1 instance. When the launch generated 100x normal traffic, the single instance became completely unresponsive. New instances were being launched but took 8 minutes to reach InService state, during which users saw errors. Analyze the architectural failures in this configuration. For each failure, identify the specific configuration element, explain how it contributed to the outage, and recommend a specific corrective action. Your response should address at least three separate failures and propose a post-launch architecture that would handle this scenario without user-visible errors.
+
+---
+
+## Scenario B - Load Balancer Architecture Decision
+
+A financial services company is building two new systems simultaneously. System 1 is a customer-facing REST API that routes requests to different microservices based on URL path. System 2 is a real-time trading platform that processes 500,000 TCP connections per second, requires sub-millisecond latency, and must expose a static IP address that client firms can whitelist through their firewalls. The team lead proposes using a single Application Load Balancer for both systems to simplify the infrastructure. Evaluate this proposal. Explain why one load balancer type cannot satisfy both requirements, identify which load balancer type is correct for each system and why, and describe any additional architectural consideration for the trading platform related to IP addressing.
+
+---
+
+## Scenario C - Purchasing Model Optimization
+
+A retail company currently runs 100% of their workload on On-Demand EC2 instances. Their workload profile is: 40 M5.xlarge web servers running continuously 24/7 all year, 20 C5.2xlarge batch processing servers that run nightly jobs from 11 PM to 5 AM, and a variable fleet of up to 60 R5.4xlarge analytics instances that process end-of-quarter reports for 5 days per quarter. Design a purchasing strategy that minimizes cost while meeting availability requirements. For each fleet, specify the purchasing model you recommend, justify it based on the usage pattern, and explain the risk or tradeoff. Your response should reference at least two different purchasing models.
+
+---
+
+## Discussion Rubric
+
+| Criteria | Points | Description |
+|---|---|---|
+| Initial post — technical accuracy | 3 | Correctly identifies failure modes, load balancer capabilities, or purchasing model tradeoffs; no factual errors |
+| Initial post — depth and completeness | 2 | Addresses all parts of the chosen scenario; 175-225 words; uses specific AWS service names and configuration parameters |
+| Initial post — clarity | 1 | Well-organized, professional tone, correct technical terminology |
+| Peer response 1 — substantive engagement | 2 | Adds alternative solution, identifies a gap in the peer's analysis, or extends the scenario; minimum 50 words |
+| Peer response 2 — substantive engagement | 2 | Adds alternative solution, identifies a gap in the peer's analysis, or extends the scenario; minimum 50 words |
+| **Total** | **10** | |
+
+---
+
+## Professor Nash Note
+
+Strong posts in this module will include specific numbers and configuration values — not just "increase the minimum capacity" but "increase minimum capacity to 2, one per Availability Zone, to survive a single AZ failure." Vague architectural advice is not sufficient. Peer responses that simply agree are not sufficient. Challenge or extend the thinking in the post you are responding to.

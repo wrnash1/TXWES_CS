@@ -1,78 +1,225 @@
-# Quiz: Module 06 - RDS and Aurora – Managed Relational Databases
-## Course: CIS-4334_AWS_Cloud_Architecture (AWS Certified Solutions Architect - Associate)
+# Quiz: Module 06 - RDS and Aurora: Managed Relational Databases
+
+**Course:** CIS-4334 AWS Cloud Architecture
+**Certification Target:** AWS Solutions Architect Associate (SAA-C03)
+**Total Questions:** 10
 
 ---
 
-**Question 1**
-A company's MySQL database on RDS experiences slow query performance during business hours due to high read traffic from reporting workloads. Writes are minimal. Which RDS feature should the solutions architect implement to improve read performance without impacting the primary instance?
-*   A) Enable RDS Multi-AZ to distribute read queries to the standby instance.
-*   B) Create one or more RDS Read Replicas and direct reporting traffic to the Read Replica endpoint.
-*   C) Increase the RDS instance type to a larger size to handle more concurrent connections.
-*   D) Enable RDS automated backups to free up I/O on the primary instance.
-*   **Correct Answer:** B) RDS Read Replicas are asynchronous copies of the primary designed to serve read traffic, directly offloading read queries from the primary instance.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* The Multi-AZ standby instance does NOT serve read traffic. It is a passive failover target only. Directing queries to it is not possible through the standard endpoint configuration. This is the most common RDS exam trap.
-    *   *Why B is correct:* Read Replicas have a separate endpoint that accepts SELECT queries. The reporting application connects to the Read Replica endpoint, distributing the read load. Asynchronous replication means minimal impact on the primary write performance.
-    *   *Why C is incorrect:* Scaling up (vertical scaling) improves throughput for the primary but does not distribute the read load. The same primary instance still handles all queries, and vertical scaling increases cost linearly. Read Replicas scale horizontally for reads specifically.
-    *   *Why D is incorrect:* Automated backups use transaction log streaming to S3 and can create some I/O overhead, but disabling them does not meaningfully address read query bottlenecks and is inadvisable from a durability standpoint.
+## Question 1
+
+A solutions architect is designing a database tier for an application that runs heavy reporting queries. The reporting queries are causing performance problems for the transactional workload. Which RDS feature should the architect implement to offload the reporting queries?
+
+- A) Enable RDS Multi-AZ to distribute read traffic to the standby instance
+- B) Increase the DB instance class to a larger size to handle both workloads
+- C) Create one or more Read Replicas and direct reporting queries to the Read Replica endpoint
+- D) Enable RDS storage autoscaling to automatically increase IOPS for the queries
+
+### Answer 1
+
+Correct Answer: C
+
+### Explanation 1
+
+- A is incorrect: The Multi-AZ standby instance does not serve any read traffic. It exists only as a hot standby for automatic failover and is completely invisible to the application.
+- B is incorrect: Scaling up the DB instance class increases capacity but does not architecturally separate the workloads. The reporting queries still compete with transactions for the same CPU, I/O, and memory resources.
+- C is correct: Read Replicas receive asynchronous replication from the primary and can serve SELECT queries. Directing the reporting team to use the Read Replica endpoint offloads read traffic from the primary, freeing its resources for transactional workloads.
+- D is incorrect: Storage autoscaling adjusts storage capacity (size) not IOPS allocation. It does not address the resource contention between reporting and transactional workloads.
 
 ---
 
-**Question 2**
-Which of the following is the most accurate description of **Amazon Aurora's storage architecture** compared to standard Amazon RDS?
-*   A) Aurora uses EBS volumes attached to a single EC2-backed database server, identical to how standard RDS engines store data.
-*   B) Aurora stores data across three Availability Zones with six copies of every data page, uses a distributed self-healing storage layer that automatically grows up to 128 TB, and does not require manual storage provisioning.
-*   C) Aurora replicates data synchronously to a standby replica in one additional AZ, identical to RDS Multi-AZ, providing high availability at the cost of higher write latency.
-*   D) Aurora uses S3 as its primary storage backend, storing all data as objects and using SQL-to-S3 translation layers to execute queries.
-*   **Correct Answer:** B) Aurora's distributed storage layer writes to six copies across three AZs, automatically scales storage, and provides faster recovery than traditional RDS because the storage is decoupled from compute.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Aurora does not use EBS volumes attached to a single server. Its storage is a purpose-built distributed shared storage layer, fundamentally different from standard RDS engine storage.
-    *   *Why B is correct:* Aurora's log-structured distributed storage is one of its key differentiators. Six copies across three AZs means Aurora can tolerate two AZ failures without data loss. Auto-grow to 128 TB eliminates manual storage provisioning. This architecture enables Aurora's faster failover (30 seconds vs. 60–120 seconds for RDS Multi-AZ).
-    *   *Why C is incorrect:* Aurora's storage redundancy is built into the storage layer itself, not a Multi-AZ standby compute instance. Aurora Replicas (read replicas) share the same underlying storage rather than replicating data separately — this is architecturally different from RDS Multi-AZ.
-    *   *Why D is incorrect:* Aurora does not use S3 as its primary query storage. Aurora exports backups to S3 and integrates with S3 for some features, but query data resides in Aurora's proprietary distributed storage cluster, not S3 objects.
+## Question 2
+
+An RDS for MySQL database is currently unencrypted. A security audit requires all production databases to be encrypted at rest using AWS KMS. What is the correct process to encrypt the existing database?
+
+- A) Modify the DB instance in the console to enable encryption — the change takes effect during the next maintenance window
+- B) Take a snapshot of the unencrypted instance, copy the snapshot with encryption enabled, and restore a new DB instance from the encrypted snapshot
+- C) Enable encryption in the RDS parameter group — it applies to all new data written after the change
+- D) Stop the DB instance, enable encryption via the AWS CLI, then restart the instance
+
+### Answer 2
+
+Correct Answer: B
+
+### Explanation 2
+
+- A is incorrect: RDS does not support enabling encryption on an existing unencrypted DB instance through a modify operation. The encryption setting cannot be changed after instance creation.
+- B is correct: The only supported process to encrypt an existing unencrypted RDS instance is the three-step snapshot process: (1) create a snapshot of the unencrypted instance, (2) copy the snapshot and enable encryption during the copy operation, (3) restore a new DB instance from the encrypted snapshot. All automated backups, snapshots, and Read Replicas of the new instance will also be encrypted.
+- C is incorrect: There is no RDS parameter group setting that enables encryption at rest. Encryption must be enabled at the instance level during creation.
+- D is incorrect: Stopping and restarting an RDS instance does not enable encryption. Encryption cannot be enabled on an instance that was created without it.
 
 ---
 
-**Question 3**
-A company is designing a disaster recovery strategy for a critical RDS PostgreSQL database. Their RPO (Recovery Point Objective) is 5 minutes and their RTO (Recovery Time Objective) is 30 minutes. Which configuration best meets these requirements?
-*   A) Enable automated backups with a 7-day retention period and rely on point-in-time recovery for all disaster scenarios.
-*   B) Enable RDS Multi-AZ for automatic synchronous replication and failover, combined with automated backups for point-in-time recovery.
-*   C) Create a nightly manual snapshot and restore from it during a disaster event.
-*   D) Enable Cross-Region Read Replicas in a secondary Region and rely on asynchronous replication lag for recovery.
-*   **Correct Answer:** B) Multi-AZ provides automatic failover within 60–120 seconds (meeting the 30-minute RTO) with synchronous replication (zero data loss, meeting the 5-minute RPO). Automated backups provide PITR for additional scenarios.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Point-in-time recovery restores to a new RDS instance, which takes time proportional to the database size — potentially hours. This cannot reliably meet a 30-minute RTO for a large database. Also, automated backups alone do not provide automatic failover.
-    *   *Why B is correct:* Multi-AZ synchronous replication means zero data loss (RPO = 0, which satisfies the 5-minute RPO requirement). Automatic failover to the standby completes in 60–120 seconds, well within the 30-minute RTO. This is the standard HA+DR configuration for RDS.
-    *   *Why C is incorrect:* A nightly snapshot has an RPO of up to 24 hours — far exceeding the 5-minute requirement. Restoring from a snapshot also takes time proportional to database size and likely exceeds the 30-minute RTO.
-    *   *Why D is incorrect:* Cross-Region Read Replicas use asynchronous replication with variable lag. For a 5-minute RPO guarantee, asynchronous replication is insufficient. Promoting a Read Replica is also a manual process that may take longer than 30 minutes depending on replication lag and database size.
+## Question 3
+
+A company requires their database to remain available during an Availability Zone failure with automatic failover and zero data loss. Which RDS configuration satisfies both requirements?
+
+- A) RDS with a Read Replica in a different AZ with automatic promotion
+- B) RDS Multi-AZ with a synchronous standby in a different AZ
+- C) RDS with automated daily backups and a 7-day retention period
+- D) RDS with a Read Replica in a different Region
+
+### Answer 3
+
+Correct Answer: B
+
+### Explanation 3
+
+- A is incorrect: Read Replicas use asynchronous replication, which means there can be replication lag and potential data loss during failover. Read Replica promotion is not automatic — it requires a manual action.
+- B is correct: RDS Multi-AZ uses synchronous replication — every transaction is committed on the primary AND the standby before the application receives acknowledgment. This guarantees zero data loss (RPO of 0). Failover is automatic when the primary fails.
+- C is incorrect: Automated backups enable point-in-time recovery but do not provide automatic failover or real-time standby capacity. Recovery from backup requires creating a new instance.
+- D is incorrect: Cross-region Read Replicas use asynchronous replication (with potential data loss) and require manual promotion. They are a DR strategy, not a same-Region HA solution.
 
 ---
 
-**Question 4**
-An operations team needs to enable encryption at rest for an existing unencrypted RDS MySQL database that is already in production. Which procedure is required?
-*   A) Enable encryption in the RDS console by toggling the "Encryption" setting on the running instance — it applies immediately without downtime.
-*   B) Create an encrypted Read Replica and promote it to a new primary after replication catches up.
-*   C) Take a snapshot of the unencrypted instance, copy the snapshot with the "Enable Encryption" option, restore a new encrypted RDS instance from the encrypted snapshot, and update the application's connection string.
-*   D) Modify the RDS parameter group to enable AES-256 encryption, then restart the instance to apply the setting.
-*   **Correct Answer:** C) RDS encryption can only be enabled at creation time; the supported migration path is snapshot → encrypted copy → restore as a new encrypted instance.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* AWS does not allow enabling encryption on an existing RDS instance in place. The encryption setting is immutable after instance creation. There is no toggle that enables encryption without data migration.
-    *   *Why B is incorrect:* You cannot create an encrypted Read Replica from an unencrypted primary. RDS requires the source to be encrypted if the Read Replica is to be encrypted. This path is not available for the described scenario.
-    *   *Why C is correct:* This is the AWS-documented procedure for encrypting an existing unencrypted RDS database. The key steps are: snapshot the source → copy snapshot with encryption → restore from the encrypted copy. The application connection string must be updated to point to the new endpoint.
-    *   *Why D is incorrect:* RDS parameter groups control engine-level settings (like `max_connections` or `innodb_buffer_pool_size`), not storage encryption. Storage-at-rest encryption is a host-level EBS encryption feature, not a database engine parameter.
+## Question 4
+
+A company's application uses AWS Lambda functions that open a new database connection to Amazon RDS for MySQL on every invocation. During peak traffic, the Lambda functions receive 5,000 concurrent invocations, causing RDS to hit its maximum connection limit and refusing new connections. Which solution resolves this problem?
+
+- A) Increase the RDS instance class to a larger size to support more connections
+- B) Enable RDS Multi-AZ to distribute connections between the primary and standby
+- C) Use Amazon RDS Proxy to pool database connections between Lambda and RDS
+- D) Create additional Read Replicas to distribute the Lambda connections
+
+### Answer 4
+
+Correct Answer: C
+
+### Explanation 4
+
+- A is incorrect: Increasing the instance class increases the maximum connection limit, but this is a temporary solution. As Lambda concurrency grows, any fixed limit will eventually be hit. The architectural problem is the connection-per-invocation pattern.
+- B is incorrect: The Multi-AZ standby does not serve connections. It exists only for failover.
+- C is correct: RDS Proxy maintains a pool of database connections and multiplexes many Lambda invocations over a smaller number of long-lived database connections. 5,000 Lambda invocations might use only 50-100 actual database connections through the proxy, well within RDS limits. RDS Proxy is the AWS-recommended solution specifically for Lambda-to-RDS connection management.
+- D is incorrect: Read Replicas can serve read queries but cannot accept write transactions. If the Lambda functions include writes (INSERT, UPDATE, DELETE), directing them to Read Replicas is not possible.
 
 ---
 
-**Question 5**
-A startup needs a relational database for a new application with unpredictable and variable traffic — ranging from zero activity overnight to thousands of connections during peak events. They want to minimize costs during idle periods and avoid managing database capacity manually. Which database option is most appropriate?
-*   A) RDS MySQL with Multi-AZ enabled in the largest available instance size to handle any peak load.
-*   B) RDS PostgreSQL with Auto Scaling enabled on Read Replicas to handle traffic spikes.
-*   C) Amazon Aurora Serverless v2, which automatically scales compute capacity from a minimum (including near-zero during idle) to a maximum based on actual load.
-*   D) Amazon DynamoDB with strong consistency reads and Global Tables for SQL compatibility.
-*   **Correct Answer:** C) Aurora Serverless v2 is purpose-built for variable and unpredictable workloads, scaling database compute capacity automatically and billing only for consumed capacity — ideal for cost minimization with zero idle waste.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Over-provisioning to the largest instance size wastes significant money during the overnight idle periods. Multi-AZ doubles the instance cost. This is the opposite of cost optimization for variable workloads.
-    *   *Why B is incorrect:* Auto Scaling on RDS Read Replicas scales read capacity, not the primary write instance capacity. The primary instance must still be statically sized. This does not address the idle-period cost problem.
-    *   *Why C is correct:* Aurora Serverless v2 adjusts Aurora Capacity Units (ACUs) in fine-grained increments and can scale to near-zero during idle periods. You pay per ACU-second consumed rather than per hour of provisioned capacity. This is the canonical answer for "relational database with variable/unpredictable workload."
-    *   *Why D is incorrect:* DynamoDB is a NoSQL key-value/document database — it does not support SQL, relational schemas, or JOIN operations. Suggesting it for an application requiring relational data with SQL queries is architecturally incorrect.
+## Question 5
 
+What is the primary architectural advantage of Amazon Aurora over standard Amazon RDS?
+
+- A) Aurora supports more database engines than RDS
+- B) Aurora uses a distributed shared storage layer that stores 6 copies of data across 3 AZs and enables faster failover by eliminating storage replication during failover
+- C) Aurora automatically encrypts all data without any configuration
+- D) Aurora supports larger instance sizes than standard RDS
+
+### Answer 5
+
+Correct Answer: B
+
+### Explanation 5
+
+- A is incorrect: Aurora supports fewer engines than RDS (MySQL-compatible and PostgreSQL-compatible only, versus six engines for RDS). Aurora's advantage is not in breadth of engine support.
+- B is correct: Aurora's defining architectural difference is its distributed shared storage layer, which stores 6 copies of data across 3 AZs automatically. During failover, a new primary instance simply takes over the shared storage without waiting for replication to catch up — enabling approximately 30-second failover compared to 60-120 seconds for standard RDS Multi-AZ.
+- C is incorrect: Aurora encryption requires explicit enablement at instance creation, just like standard RDS. Encryption is not automatic by default.
+- D is incorrect: Aurora and standard RDS support overlapping instance size ranges. Aurora's advantage is in architecture and performance, not maximum instance size.
+
+---
+
+## Question 6
+
+A solutions architect needs to design a database solution for a new SaaS application. The application has unpredictable traffic — sometimes receiving thousands of requests per minute, other times receiving no requests for hours. Cost must be minimized and the team does not want to pay for idle database capacity. Which database deployment option best meets these requirements?
+
+- A) RDS for MySQL with a large DB instance class to handle peak load
+- B) Amazon Aurora Serverless v2
+- C) RDS for MySQL with Read Replicas for scaling
+- D) Amazon Aurora with provisioned instances in a Multi-AZ cluster
+
+### Answer 6
+
+Correct Answer: B
+
+### Explanation 6
+
+- A is incorrect: A large RDS instance runs at full price 24/7 regardless of load. During idle periods, the company pays for capacity it is not using. This is not cost-efficient for variable workloads.
+- B is correct: Aurora Serverless v2 automatically scales database capacity in fine-grained ACU increments based on actual demand. During low-traffic periods, it scales down to minimum capacity (potentially 0 ACUs with a cold start delay). The company pays only for the capacity consumed, which matches the unpredictable traffic pattern perfectly.
+- C is incorrect: Read Replicas scale read throughput but do not scale compute capacity automatically. They also do not address the idle cost problem.
+- D is incorrect: A provisioned Aurora cluster runs continuously at a fixed cost regardless of load. It is more cost-effective than RDS for high-performance workloads but still wastes money during idle periods.
+
+---
+
+## Question 7
+
+An Aurora cluster experiences a failure of the primary (writer) instance. The cluster has two Aurora Replicas. What is the expected behavior?
+
+- A) The cluster becomes unavailable until the primary instance is manually replaced
+- B) Aurora automatically promotes one of the Aurora Replicas to the primary role in approximately 30 seconds
+- C) The cluster fails over to a standby instance in a different Region automatically
+- D) Traffic is automatically redirected to the Read Replicas, which now accept write traffic
+
+### Answer 7
+
+Correct Answer: B
+
+### Explanation 7
+
+- A is incorrect: Aurora failover is automatic and does not require manual intervention.
+- B is correct: When an Aurora primary fails, Aurora automatically selects the highest-priority (or highest-priority tier) Aurora Replica and promotes it to the writer role. This happens in approximately 30 seconds. The cluster writer endpoint is automatically updated to point to the new primary.
+- C is incorrect: Aurora Regional clusters do not automatically fail over to a different Region. Cross-region failover requires Aurora Global Database and is a manual or semi-manual operation.
+- D is incorrect: Aurora Replicas serve read-only traffic until promoted. They do not automatically accept write traffic without being promoted to primary. Writing to a Read Replica endpoint before promotion would result in an error.
+
+---
+
+## Question 8
+
+A company wants to enable automatic rotation of database passwords for their RDS for PostgreSQL instance. The passwords should rotate every 30 days without requiring application code changes. Which AWS service provides this capability?
+
+- A) AWS IAM with automated key rotation configured
+- B) AWS Systems Manager Parameter Store with a scheduled Lambda rotation function
+- C) AWS Secrets Manager with rotation enabled for RDS credentials
+- D) Amazon CloudWatch scheduled events triggering a Lambda function to update the password
+
+### Answer 8
+
+Correct Answer: C
+
+### Explanation 8
+
+- A is incorrect: IAM key rotation applies to IAM user access keys, not database passwords. IAM does not manage relational database credentials.
+- B is incorrect: Parameter Store can store passwords but does not have native RDS rotation built in. While you could build a rotation solution, it requires custom Lambda functions and is significantly more complex than Secrets Manager.
+- C is correct: AWS Secrets Manager natively integrates with Amazon RDS to automatically rotate database credentials. When rotation is enabled, Secrets Manager generates a new password, updates the RDS instance, and updates the secret — all transparently. Applications retrieve the current password by calling Secrets Manager; the rotation is invisible to application code.
+- D is incorrect: This is a custom solution that would require writing and maintaining a rotation Lambda function. Secrets Manager provides this capability as a managed native integration.
+
+---
+
+## Question 9
+
+A company uses Amazon Aurora MySQL with automated backups and a 7-day retention period. At 2:00 PM on a Wednesday, a developer accidentally drops the customer table. The error is discovered at 2:30 PM. Can the company recover the customer table to its state at 1:59 PM?
+
+- A) No — Aurora automated backups only capture the database at the daily backup window, so recovery is limited to the previous night's backup
+- B) Yes — Aurora's automated backup system captures both daily snapshots and continuous transaction logs, enabling point-in-time recovery to any second within the 7-day retention window
+- C) No — Aurora stores backups in Glacier, making retrieval take 3-5 hours
+- D) Yes — but only if a manual snapshot was taken before 2:00 PM that day
+
+### Answer 9
+
+Correct Answer: B
+
+### Explanation 9
+
+- A is incorrect: Aurora (and RDS) automated backups consist of both daily database snapshots AND continuous transaction log backups. The transaction logs are captured continuously and stored in S3, enabling recovery to any specific second within the retention window.
+- B is correct: Aurora automated backups capture transaction logs continuously in addition to daily snapshots. Point-in-time recovery allows restoring to any second within the retention period. Recovering to 1:59 PM (1 minute before the table drop) is possible.
+- C is incorrect: Aurora automated backups are stored in Amazon S3, not Glacier. Restore from automated backup creates a new DB instance and typically completes within minutes to tens of minutes depending on database size.
+- D is incorrect: Manual snapshots are not required for point-in-time recovery. Automated backups combined with transaction logs provide continuous recovery capability.
+
+---
+
+## Question 10
+
+A company needs a database solution for a global application that serves users in North America, Europe, and Asia Pacific. Users in each region should read data with the lowest possible latency, and the system must recover from a full regional failure of the primary region within 1 minute. Which solution meets all requirements?
+
+- A) RDS for MySQL with Multi-AZ enabled in the primary Region and Read Replicas in each secondary Region
+- B) Amazon Aurora Global Database with a primary Region and secondary Regions in Europe and Asia Pacific
+- C) Three separate RDS instances, one in each Region, synchronized using application-level replication
+- D) Amazon Aurora Multi-AZ cluster in the primary Region with CloudFront caching for global read performance
+
+### Answer 10
+
+Correct Answer: B
+
+### Explanation 10
+
+- A is incorrect: Cross-region Read Replicas for standard RDS use asynchronous replication. Promotion of a Read Replica to primary after a regional failure takes 30-60 minutes and requires manual intervention. This does not meet the 1-minute RTO requirement.
+- B is correct: Aurora Global Database provides sub-second cross-region replication and supports managed failover with RTO under 1 minute. Users in each Region can read from their local Aurora Replicas for low latency. In a regional failure, the secondary Region can be promoted to primary quickly.
+- C is incorrect: Application-level replication introduces significant complexity, potential data consistency issues, and operational overhead. It is not a best-practice AWS architecture for this requirement.
+- D is incorrect: CloudFront caches static content — it cannot serve dynamic database reads. A Multi-AZ cluster in a single Region provides HA within that Region but does not address the global latency or cross-region failover requirements.

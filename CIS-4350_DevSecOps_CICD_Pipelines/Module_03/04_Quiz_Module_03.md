@@ -1,83 +1,230 @@
-# Quiz: Module 03 - CI/CD Concepts – Jenkins, GitHub Actions, GitLab CI
+# Quiz: Module 03 - CI/CD Concepts: Jenkins, GitHub Actions, GitLab CI
 
-## Course: CIS-4350_DevSecOps_CICD_Pipelines (Certified DevSecOps Professional (CDP))
+## Course: CIS-4350 DevSecOps and CI/CD Pipelines
 
----
-
-**Question 1**
-Which file format is used to configure GitHub Actions workflow pipeline scripts?
-
-* A) JSON — JavaScript Object Notation, used for API payloads and package manifests
-* B) XML — Extensible Markup Language, used in Maven and Ant build configurations
-* C) YAML — Yet Another Markup Language, used for human-readable configuration files
-* D) TOML — Tom's Obvious Minimal Language, used in Rust and Python packaging configs
-* **Correct Answer:** C) GitHub Actions workflows are declared in YAML files located inside the `.github/workflows/` directory.
-* **Distractor Analysis:**
-  * *Why C is correct:* GitHub Actions, GitLab CI, and Kubernetes all use YAML for pipeline and configuration definitions because its indentation-based hierarchy is readable and tool-parseable.
-  * *Why A is incorrect:* JSON is used for GitHub API responses and `package.json` manifests but is not the format for GitHub Actions workflow files.
-  * *Why B is incorrect:* XML is used by Maven (`pom.xml`) and older Jenkins configurations but is not the format for GitHub Actions.
-  * *Why D is incorrect:* TOML is used in `pyproject.toml` and Cargo manifests but is not supported as a GitHub Actions workflow format.
+## Certification Alignment: DevSecOps Professional (DSOE)
 
 ---
 
-**Question 2**
-Which of the following most accurately describes a "job" in a GitHub Actions workflow?
+### Question 1
 
-* A) A single shell command that runs within a larger sequence of pipeline tasks
-* B) A logical grouping of sequential steps that execute on a single runner, which can run in parallel with other jobs in the same workflow
-* C) The YAML file that defines the entire pipeline, stored in `.github/workflows/`
-* D) A GitHub repository setting that controls which branches are protected from direct pushes
-* **Correct Answer:** B) Jobs are the top-level execution units in a workflow — each job runs on its own runner, and multiple jobs can execute in parallel unless dependencies are specified with `needs:`.
-* **Distractor Analysis:**
-  * *Why B is correct:* In GitHub Actions YAML, `jobs:` contains named job blocks; each job specifies a `runs-on` runner and a list of `steps`. Multiple jobs default to parallel execution, enabling simultaneous SAST and linting checks.
-  * *Why A is incorrect:* A single shell command is a `step` within a job, not a job itself. Jobs contain multiple steps.
-  * *Why C is incorrect:* The YAML file is the workflow file; a job is a subdivision within that file, not the file itself.
-  * *Why D is incorrect:* Branch protection is a GitHub repository configuration feature, not a concept within the workflow YAML structure.
+In a GitHub Actions workflow, a `deploy` job is configured with `needs: [test, security-scan]`. What is the security significance of this dependency configuration?
 
----
+- A) It ensures the deploy job runs at the same time as the test and security-scan jobs, reducing total pipeline duration
+- B) It prevents the deploy job from running unless both the test and security-scan jobs complete successfully, making security checks mandatory on the critical path to deployment
+- C) It causes the deploy job to skip if either the test or security-scan job fails, but the workflow still reports an overall success
+- D) It copies the artifacts produced by the test and security-scan jobs into the deploy job's workspace automatically
 
-**Question 3**
-A DevSecOps engineer wants security scans in a GitHub Actions workflow to run only when a developer opens or updates a pull request targeting the `main` branch. Which trigger configuration achieves this?
+#### Q1 Correct Answer
 
-* A) `on: push` — fires on every push to any branch in the repository
-* B) `on: schedule` with a cron expression — fires at a defined time interval
-* C) `on: pull_request` with `branches: [main]` — fires only when a PR targets the `main` branch
-* D) `on: release` — fires only when a GitHub Release is published
-* **Correct Answer:** C) The `on: pull_request` trigger with a branch filter ensures security scans gate every proposed merge to `main` without running on unrelated branches.
-* **Distractor Analysis:**
-  * *Why C is correct:* `on: pull_request` fires on PR open, synchronize, and reopen events; adding `branches: [main]` limits it to PRs targeting `main`, making it the standard gate for protecting the primary branch.
-  * *Why A is incorrect:* `on: push` fires on direct pushes to branches, not on pull request events, and applies to all branches without a filter.
-  * *Why B is incorrect:* A scheduled trigger runs at fixed time intervals regardless of code changes — it cannot enforce a merge gate.
-  * *Why D is incorrect:* `on: release` fires after a release is published, which is too late to gate code quality before merge.
+B — `needs:` in GitHub Actions creates a dependency requiring that listed jobs complete successfully. If `security-scan` fails, the `deploy` job is skipped and the workflow fails, preventing deployment of insecure code.
+
+#### Q1 Distractor Analysis
+
+- *Why A is incorrect:* `needs:` creates sequential dependencies, not parallelism. Jobs listed in `needs:` must complete before the dependent job starts.
+- *Why C is incorrect:* When a job in `needs:` fails, the dependent job is not merely skipped — the workflow run reports a failure status, which blocks PR merges if the workflow is a required status check.
+- *Why D is incorrect:* Artifact sharing between jobs requires explicit `actions/upload-artifact` and `actions/download-artifact` steps. `needs:` alone does not transfer artifacts.
 
 ---
 
-**Question 4**
-In a Jenkins declarative pipeline, which block defines the sequence of stages (Build, Test, Security Scan) and the steps within each stage?
+### Question 2
 
-* A) The `Jenkinsfile` `environment {}` block, which sets pipeline-wide environment variables
-* B) The `pipeline { stages { stage('Name') { steps { ... } } } }` structure in the `Jenkinsfile`
-* C) The Jenkins global configuration page under "Manage Jenkins > Configure System"
-* D) The `triggers {}` block, which defines when the pipeline runs automatically
-* **Correct Answer:** B) Jenkins declarative pipelines use a nested `pipeline > stages > stage > steps` structure in the `Jenkinsfile` to define what executes at each phase.
-* **Distractor Analysis:**
-  * *Why B is correct:* The declarative `pipeline` block contains a `stages` section; each `stage` has a name and a `steps` block with shell commands or plugin calls — this is where SAST scans, builds, and tests are defined.
-  * *Why A is incorrect:* The `environment {}` block declares key-value environment variables available to all steps; it does not define execution stages or steps.
-  * *Why C is incorrect:* The Jenkins global configuration controls system-level settings like JDK installations and credentials; pipeline logic lives in the `Jenkinsfile`.
-  * *Why D is incorrect:* The `triggers {}` block defines scheduling (like a cron) or SCM polling; it controls when the pipeline runs, not what it does when it runs.
+Where is a GitLab CI pipeline definition file stored in a repository?
+
+- A) `.github/workflows/pipeline.yml` at any path in the repository
+- B) `Jenkinsfile` in the root of the repository
+- C) `.gitlab-ci.yml` in the root of the repository
+- D) `pipeline/ci-config.yaml` in a dedicated subdirectory
+
+#### Q2 Correct Answer
+
+C — GitLab CI always reads `.gitlab-ci.yml` from the repository root by default. This is a fixed location, unlike GitHub Actions where workflow files can be any `.yml` file under `.github/workflows/`.
+
+#### Q2 Distractor Analysis
+
+- *Why A is incorrect:* `.github/workflows/` is the GitHub Actions convention. GitLab CI uses a different file path.
+- *Why B is incorrect:* `Jenkinsfile` is the Jenkins pipeline definition file, not GitLab CI.
+- *Why D is incorrect:* GitLab CI does not look in a `pipeline/` subdirectory by default. The file must be at the repository root (though the path is configurable in project settings).
 
 ---
 
-**Question 5**
-A team using GitLab CI wants to ensure that a DAST scan runs only after the application has been successfully deployed to a staging environment. Which GitLab CI feature enforces this sequencing?
+### Question 3
 
-* A) Define both jobs with the same `stage:` name so they run in parallel
-* B) Use the `needs:` keyword to create a direct dependency from the DAST job to the staging deploy job
-* C) Set the DAST job's `when: manual` so a human must trigger it after deployment
-* D) Place both jobs in `.gitlab-ci.yml` and rely on alphabetical execution order
-* **Correct Answer:** B) The `needs:` keyword in GitLab CI creates an explicit dependency — the DAST job will not start until all jobs listed in its `needs:` array have completed successfully.
-* **Distractor Analysis:**
-  * *Why B is correct:* `needs:` allows DAG (directed acyclic graph) ordering in GitLab CI pipelines, ensuring the DAST job waits for a successful staging deploy before probing live endpoints.
-  * *Why A is incorrect:* Jobs sharing the same `stage:` name run in parallel, not sequentially — a DAST scan would attempt to run at the same time as the deploy, before the environment is ready.
-  * *Why C is incorrect:* `when: manual` requires a human to click "Run" in the GitLab UI; while this ensures the deploy happened, it breaks the automated pipeline and is not a recommended DevSecOps pattern.
-  * *Why D is incorrect:* GitLab CI does not execute jobs in alphabetical order; execution order is determined by `stage:` and `needs:` configuration.
+In a GitLab CI pipeline, two jobs are assigned to the same stage. How do they execute relative to each other?
+
+- A) They execute sequentially in alphabetical order by job name
+- B) They execute in parallel, and both must succeed before the next stage begins
+- C) The first job defined in the YAML file runs, and the second job runs only if the first fails
+- D) GitLab CI does not support multiple jobs in the same stage
+
+#### Q3 Correct Answer
+
+B — Jobs within the same GitLab CI stage run in parallel. All jobs in a stage must succeed before GitLab advances to the next stage. This allows multiple security scans (SAST, SCA, secrets detection) to run simultaneously within a `security` stage.
+
+#### Q3 Distractor Analysis
+
+- *Why A is incorrect:* GitLab CI does not execute same-stage jobs sequentially by name. Parallelism is the default.
+- *Why C is incorrect:* There is no fallback-on-failure sequencing between jobs in the same stage. Both run simultaneously.
+- *Why D is incorrect:* Multiple jobs in the same stage is a core GitLab CI feature used extensively for parallel security scans.
+
+---
+
+### Question 4
+
+A Jenkins Declarative pipeline stores a database password directly in the `environment {}` block as a plaintext string. What is the primary security risk of this configuration?
+
+- A) The password will be printed in plaintext to the Jenkins build log, making it visible to anyone with log access
+- B) Jenkins will refuse to start the pipeline because plaintext values in environment blocks are blocked by default
+- C) The password will be automatically rotated by Jenkins every 24 hours, causing authentication failures
+- D) The password will only be accessible to the first stage in the pipeline and unavailable to subsequent stages
+
+#### Q4 Correct Answer
+
+A — Jenkins environment block variables are echoed to the build log during step execution. Anyone with access to the build log — which may include all Jenkins users — can see the plaintext credential. The correct pattern is `withCredentials()`, which masks the value in logs.
+
+#### Q4 Distractor Analysis
+
+- *Why B is incorrect:* Jenkins does not block plaintext values in environment blocks. It will run the pipeline without error, creating the security exposure.
+- *Why C is incorrect:* Jenkins does not perform credential rotation. Rotation must be configured through an external secrets management system.
+- *Why D is incorrect:* Environment block variables are available to all stages in the pipeline. The problem is visibility in logs, not scope.
+
+---
+
+### Question 5
+
+A DevSecOps engineer wants to add SAST scanning to an existing GitLab CI pipeline with minimal configuration. Which approach requires the least custom code?
+
+- A) Write a custom Docker-based job that installs Semgrep and runs it against the source code in every pipeline
+- B) Include the GitLab-provided SAST template using `include: template: Security/SAST.gitlab-ci.yml` in the pipeline file
+- C) Add a shell script to the repository that runs SAST locally and commit the results as an artifact
+- D) Configure a GitHub Actions workflow to run SAST and post results to the GitLab merge request
+
+#### Q5 Correct Answer
+
+B — GitLab provides pre-built security scanning templates that can be included with a single line. The SAST template automatically adds language-appropriate SAST scanning to the pipeline without custom job definitions.
+
+#### Q5 Distractor Analysis
+
+- *Why A is incorrect:* Writing a custom Docker-based SAST job is valid but requires significantly more configuration than using the built-in template. The question asks for minimal configuration.
+- *Why C is incorrect:* Running SAST locally and committing results as an artifact is not a pipeline integration — it does not block merges on finding vulnerabilities.
+- *Why D is incorrect:* Using GitHub Actions to scan a GitLab repository is an architecturally complex cross-platform integration, not the minimal approach.
+
+---
+
+### Question 6
+
+Which GitHub Actions `if:` condition correctly restricts a deploy job to run only when a commit is pushed to the main branch, and not when a pull request is opened?
+
+- A) `if: github.event_name == 'pull_request'`
+- B) `if: github.ref == 'refs/heads/main' && github.event_name == 'push'`
+- C) `if: github.branch == 'main'`
+- D) `if: github.event.action == 'deploy'`
+
+#### Q6 Correct Answer
+
+B — This condition checks both the ref (the branch must be main) and the event type (must be a push, not a pull_request). Both conditions together ensure deployment happens only on direct merges to main.
+
+#### Q6 Distractor Analysis
+
+- *Why A is incorrect:* This condition is true when the event IS a pull request — the opposite of the intended restriction.
+- *Why C is incorrect:* `github.branch` is not a valid GitHub Actions expression context. The correct property is `github.ref`, which contains `refs/heads/main` for main branch pushes.
+- *Why D is incorrect:* `github.event.action == 'deploy'` is not a valid GitHub event type for code push pipelines. Deploy is not a standard GitHub event action name.
+
+---
+
+### Question 7
+
+A security team discovers that a malicious GitHub Actions action in the Actions Marketplace was updated by its maintainer to exfiltrate repository secrets. The team's pipeline uses this action pinned to a version tag `@v2`. What remediation best prevents this attack vector going forward?
+
+- A) Stop using GitHub Actions entirely and migrate to Jenkins, which does not use third-party actions
+- B) Pin all third-party actions to a specific commit SHA instead of a mutable version tag
+- C) Disable GitHub Secrets and use environment variables to store credentials instead
+- D) Set the workflow trigger to `on: schedule` so it runs at night when fewer attackers are active
+
+#### Q7 Correct Answer
+
+B — Version tags like `@v2` are mutable — a malicious maintainer can update what the tag points to. Commit SHAs are immutable — once pinned to a specific SHA, the action code cannot be changed without changing the SHA. Pinning to a SHA prevents a tag update from delivering malicious code.
+
+#### Q7 Distractor Analysis
+
+- *Why A is incorrect:* Jenkins has its own supply chain risks through plugins. Migrating platforms does not eliminate supply chain risk; it shifts it to a different attack surface.
+- *Why C is incorrect:* Using environment variables instead of GitHub Secrets reduces security by making credentials visible in workflow logs. It does not address the third-party action supply chain risk.
+- *Why D is incorrect:* Scheduled execution time has no effect on what code runs when the action executes. The malicious action runs regardless of when the workflow is triggered.
+
+---
+
+### Question 8
+
+In a Jenkins pipeline, what does the `parallel {}` block accomplish within a stage?
+
+- A) It runs the stage on multiple Jenkins agents simultaneously, distributing the load across the cluster
+- B) It executes multiple nested stages at the same time within the parent stage, reducing total pipeline duration
+- C) It runs the same stage multiple times with different parameter sets for matrix testing
+- D) It creates a backup execution path that runs if the primary stage step fails
+
+#### Q8 Correct Answer
+
+B — The `parallel {}` block in a Jenkins Declarative pipeline creates nested stages that execute concurrently. This is commonly used to run multiple security scans (SAST, SCA, secrets detection) at the same time within a single Security Scan stage.
+
+#### Q8 Distractor Analysis
+
+- *Why A is incorrect:* Running on multiple agents requires the `agent` directive within each parallel stage. `parallel {}` alone defines concurrent execution within one stage but uses the declared agent.
+- *Why C is incorrect:* Matrix builds in Jenkins use the `matrix {}` directive, not `parallel {}`.
+- *Why D is incorrect:* Fallback execution on failure uses the `post { failure {} }` block, not `parallel {}`.
+
+---
+
+### Question 9
+
+A GitHub Actions workflow has the following structure. What is the execution order of the jobs?
+
+```yaml
+jobs:
+  build:
+    runs-on: ubuntu-latest
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+  security-scan:
+    needs: build
+    runs-on: ubuntu-latest
+  deploy:
+    needs: [test, security-scan]
+    runs-on: ubuntu-latest
+```
+
+- A) build, then test, then security-scan, then deploy — all sequential
+- B) build runs first; then test and security-scan run in parallel; then deploy runs after both complete
+- C) All four jobs run simultaneously in parallel
+- D) build and security-scan run in parallel first, then test runs, then deploy runs last
+
+#### Q9 Correct Answer
+
+B — `build` has no `needs:` so it runs first. Both `test` and `security-scan` need only `build`, so they both start as soon as `build` succeeds and run in parallel. `deploy` needs both `test` and `security-scan`, so it waits until both complete.
+
+#### Q9 Distractor Analysis
+
+- *Why A is incorrect:* `test` and `security-scan` both depend only on `build`, not on each other. There is no sequential dependency between them — they run in parallel.
+- *Why C is incorrect:* `build` must complete before `test` and `security-scan` can start, and both must complete before `deploy` can start. All four cannot run simultaneously.
+- *Why D is incorrect:* `build` and `security-scan` do not share a parallel relationship. `security-scan` depends on `build`, so it runs after `build`, alongside `test`.
+
+---
+
+### Question 10
+
+A team is migrating from a scripted Jenkins pipeline to a declarative Jenkins pipeline. What is the primary security advantage of the declarative format?
+
+- A) Declarative pipelines execute faster because they skip the Groovy compilation step
+- B) Declarative pipelines cannot access Jenkins environment variables, reducing the risk of credential leakage
+- C) Declarative pipelines use a constrained, auditable structure that limits arbitrary Groovy code execution, reducing the attack surface for malicious pipeline modifications
+- D) Declarative pipelines automatically encrypt all credential values stored in the environment block
+
+#### Q10 Correct Answer
+
+C — Declarative pipelines enforce a structured schema (`pipeline {}`, `stages {}`, `steps {}`). Arbitrary Groovy code execution is sandboxed or requires explicit approval. Scripted pipelines allow unrestricted Groovy execution, which can be exploited to exfiltrate credentials or modify pipeline behavior.
+
+#### Q10 Distractor Analysis
+
+- *Why A is incorrect:* Both pipeline types ultimately compile to Groovy internally. There is no meaningful execution speed difference from format choice.
+- *Why B is incorrect:* Declarative pipelines can access environment variables. The difference is in code execution restrictions, not variable access.
+- *Why D is incorrect:* Declarative pipelines do not automatically encrypt environment block values. Encryption requires using `withCredentials()` or the Jenkins Credentials Manager — regardless of pipeline type.

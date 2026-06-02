@@ -1,66 +1,199 @@
 # Reading Guide: Module 06 – Product Backlog: Creation and Refinement
 
-## Course: CIS-3350_Software_Engineering_Agile (Professional Scrum Master (PSM I))
+**Course:** CIS-3350 Software Engineering and Agile
+**Certification Alignment:** PSM I (Professional Scrum Master I) – Scrum.org
+**Instructor:** Professor Nash | Texas Wesleyan University
 
 ---
 
-### Introduction
+## Introduction
 
-Welcome to **Module 06 – Product Backlog: Creation and Refinement**! The Product Backlog is the single authoritative source of work for the Scrum Team. This module covers how it is created, maintained, ordered, and refined — all critical knowledge for the PSM I exam and for anyone working with or coaching a Scrum Team.
-
-Backlog refinement (formerly called grooming) is one of the most misunderstood Scrum activities. The Scrum Guide treats it as an ongoing activity rather than a formal event, yet it is essential for ensuring Sprint Planning is productive. Understanding the Product Backlog's dynamic nature — continuously emerging, never "complete" — is key to Scrum fluency.
+The Product Backlog is Scrum's primary planning artifact. It is the single source of truth for what the team will build, in what order, and why. Understanding the Product Backlog deeply — its structure, ownership, refinement process, and quality criteria — is essential for the PSM I exam and for effective Agile practice. This guide covers the Product Backlog from definition through maintenance, including the INVEST criteria and common failure modes.
 
 ---
 
-### 1. High-Yield Glossary
+## 1. Product Backlog Fundamentals
 
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
+### Definition
 
-* **Product Backlog:** An emergent, ordered list of everything that is known to be needed in the product. It is the single source of work for the Scrum Team. It is never complete — as new information is learned, it is added and reprioritized. The Product Owner is accountable for its content, availability, and ordering.
+The Scrum Guide defines the Product Backlog as an emergent, ordered list of what is needed to improve the product. It is the single source of work undertaken by the Scrum Team.
 
-* **Product Goal:** The long-term objective the Scrum Team is working toward, embedded in and communicated through the Product Backlog. The Product Backlog exists to describe how the Scrum Team will achieve the Product Goal. Only one Product Goal is pursued at a time; achieving or abandoning one is required before adopting the next.
+### Key Characteristics
 
-* **Product Backlog refinement:** The ongoing activity in which the Product Owner and Developers collaborate to add detail, estimates, and ordering to Product Backlog items. It is not a formal Scrum event but typically consumes no more than 10% of the Developers' capacity. Refined items are described well enough to be selected in Sprint Planning.
+The Product Backlog is never complete: it is dynamic and evolves as long as the product exists.
 
-* **Product Backlog item (PBI):** Any unit of work in the Product Backlog — often expressed as user stories, features, bug fixes, or technical improvements. PBIs near the top of the backlog are more detailed and estimated; items lower on the backlog are coarser and less refined.
+The Product Backlog is emergent: it grows, changes, and becomes more detailed over time as the team learns more about the product and its users.
 
-* **Backlog ordering:** The Product Owner's responsibility to sequence Product Backlog items by value, risk, dependency, and strategic priority. "Priority" is commonly used informally, but the Scrum Guide uses "ordered" — implying a clear sequence where one item is worked before another, not just groupings by tier.
+The Product Backlog is ordered: items are arranged in a complete ranking, with the highest-value, most-ready items at the top.
 
----
+The Product Backlog is the single source: there is one Product Backlog per product. Multiple teams working on the same product share one Product Backlog.
 
-### 2. Certification Exam Tips
+### Product Backlog Item (PBI) Attributes
 
-* **PSM I Focus — Who orders the backlog:** The Product Owner is solely accountable for Product Backlog ordering. Developers do not set the order. Stakeholders can influence it through the Product Owner, but the Product Owner makes the final decision.
-* **Scenario Trap — Backlog refinement as a formal event:** The Scrum Guide does not define backlog refinement as one of the five Scrum events. Questions that list "Backlog Refinement" as the sixth Scrum event are wrong. It is an ongoing activity, not a timeboxed event.
-* **"Ready" for Sprint Planning:** Items are considered ready for selection when they are small enough to complete in a Sprint, estimated, and described clearly enough for Developers to plan work. While the Scrum Guide does not mandate a formal "Definition of Ready," this concept is commonly referenced in practice.
-* **Product Backlog is never "done":** A common trap describes a team "finishing" the Product Backlog. A Product Backlog exists as long as the product exists. If it is empty, the product is retired.
-* **Study Resource:** Read the "Product Backlog" and "Product Goal" sections of [The Scrum Guide (2020)](https://scrumguides.org/). Also review the [Scrum.org Professional Scrum Product Owner learning path](https://www.scrum.org/pathway/product-owner-learning-path) for supplemental backlog management guidance.
+Each Product Backlog item has four standard attributes:
 
----
+| Attribute | Owner | Description |
+|---|---|---|
+| Description | Product Owner | What the item is and why it is valuable |
+| Order | Product Owner | Position in the ordered list relative to other items |
+| Estimate (size) | Developers | Relative effort required to complete the item |
+| Value | Product Owner | Business or user value delivered by completing the item |
 
-### Required Readings & Videos
-
-To prepare for this module's topics, you must complete the following readings and videos:
-
-* **Required Reading:** [The Scrum Guide (2020)](https://scrumguides.org/) — read the "Product Backlog" and "Product Goal" sections thoroughly. Note who owns the backlog, what refinement means, and the role of the Product Goal.
-* **Required Video:** [Product Backlog Refinement Best Practices – Mountain Goat Software](https://www.youtube.com/watch?v=b_WeHcZcx1w) — practical guidance on running effective refinement sessions and identifying when items are ready for Sprint Planning. (~12 min)
+Additional attributes commonly added by teams: acceptance criteria, definition of done compliance notes, dependencies, and technical notes.
 
 ---
 
-### Lab & Command Integration
+## 2. The Product Goal
 
-In this week's hands-on lab, you will:
+The Product Goal is the commitment associated with the Product Backlog. It is a long-term objective that describes the future state of the product and serves as the target for the Scrum Team to plan against.
 
-* **Build an initial Product Backlog:** Given a product vision statement, create a Product Backlog with at least 15 items, ordered by value and urgency, with higher-priority items decomposed into more detail than lower-priority items.
-* **Conduct a refinement session:** Using a provided backlog and scenario, facilitate a refinement activity — add acceptance criteria to the top five items, split any items too large for a single Sprint, and re-order based on new information introduced in the scenario.
-* **Write a Product Goal:** Craft a Product Goal statement for a provided product vision that is concrete enough to evaluate whether the backlog is progressing toward it.
+The Product Backlog defines all the work needed to achieve the Product Goal. When the Product Goal is achieved — or abandoned as no longer valuable — the team may set a new Product Goal and build a new Product Backlog around it.
+
+A Scrum Team pursues one Product Goal at a time. The Product Goal gives the Product Backlog coherence: items in the backlog should contribute to achieving the Product Goal; items that do not should be removed or deferred.
 
 ---
 
-### 3. Study Checklist
+## 3. Product Backlog Ownership
 
-* [ ] Read the "Product Backlog" and "Product Goal" sections of [The Scrum Guide](https://scrumguides.org/).
-* [ ] Be able to explain the difference between Product Backlog refinement (activity) and a Scrum event.
-* [ ] Confirm you know that the Product Owner is solely accountable for backlog ordering.
-* [ ] Watch the required video and note two practices that improve the quality of backlog items before Sprint Planning.
-* [ ] Proceed to the weekly hands-on lab activity.
+The Product Owner is fully accountable for the Product Backlog. Their four key responsibilities:
+
+Responsibility 1 — Developing and communicating the Product Goal: The Product Owner is responsible for defining a clear, meaningful Product Goal that the entire organization understands.
+
+Responsibility 2 — Creating and communicating Product Backlog items: The Product Owner writes or facilitates the writing of PBIs, ensuring each item is clear enough to be understood by stakeholders, Developers, and other Product Owners.
+
+Responsibility 3 — Ordering the Product Backlog: The Product Owner makes the hard trade-off decisions about which items to prioritize. Order reflects value, dependency, risk, learning opportunity, or any other factor the Product Owner deems relevant.
+
+Responsibility 4 — Ensuring transparency: The Product Backlog should be visible, understandable, and accessible to the entire Scrum Team and relevant stakeholders.
+
+### Delegation vs. Accountability
+
+The Product Owner may delegate any of these activities to Developers, business analysts, or other team members. However, delegation does not transfer accountability. The Product Owner remains accountable for the outcomes of all Product Backlog decisions.
+
+Stakeholders who want to influence the Product Backlog must go through the Product Owner. They cannot directly add, order, or modify items in the backlog without the Product Owner's involvement.
+
+---
+
+## 4. Product Backlog Refinement
+
+### What Refinement Is
+
+Product Backlog Refinement is the ongoing activity in which the Product Owner and Developers collaboratively decompose large Product Backlog items into smaller, more precise items and add details such as estimates and acceptance criteria.
+
+Refinement is not a Scrum event — it does not appear in the list of the five official Scrum events. It is an ongoing activity that happens throughout the Sprint at whatever frequency the team finds useful.
+
+### Refinement Capacity
+
+The Scrum Guide states that Product Backlog Refinement typically consumes no more than 10% of the Developers' capacity. For a two-week Sprint with five Developers at 8 hours per day, 10% is approximately 4 hours per Developer per Sprint.
+
+### Participants in Refinement
+
+The Product Owner and Developers conduct refinement together. The Scrum Master may participate to facilitate or coach, but refinement is primarily a collaborative conversation between the Product Owner (who brings business context and value information) and the Developers (who bring technical feasibility knowledge and size estimates).
+
+### What Happens During Refinement
+
+During refinement sessions, the team:
+
+- Reviews upcoming Product Backlog items to evaluate whether they are ready for Sprint Planning
+- Breaks large items (epics) into smaller stories or tasks
+- Adds acceptance criteria to items
+- Adds or updates size estimates
+- Removes items that are no longer relevant
+- Re-orders items as business context changes
+- Identifies and documents dependencies between items
+
+### The Gradient of Backlog Detail
+
+A well-refined backlog has a gradient of detail:
+
+- Top of backlog (next 1–2 Sprints): items are small, well-defined, estimated, and ready for Sprint Planning
+- Middle of backlog (3–10 Sprints out): items are medium-sized, partially defined, with rough estimates
+- Bottom of backlog (more than 10 Sprints out): items are large, vague epics with minimal detail
+
+This gradient reflects the Agile principle of "just enough" planning — detailed specification is done only when the work is close enough to matter.
+
+---
+
+## 5. INVEST Criteria for Product Backlog Items
+
+INVEST is a quality checklist for evaluating whether a Product Backlog item is well-written and ready for Sprint-level work.
+
+| Letter | Criterion | What It Means |
+|---|---|---|
+| I | Independent | The item can be delivered without requiring another item to be Done first |
+| N | Negotiable | The implementation approach is not locked; the team has room for judgment |
+| V | Valuable | The item delivers clear value to a user, customer, or the business |
+| E | Estimable | The team has enough information to estimate the item's size |
+| S | Small | The item can be completed within one Sprint |
+| T | Testable | Acceptance criteria exist so the team can confirm when the item is Done |
+
+Items that fail multiple INVEST criteria need more refinement before they are suitable for Sprint Planning. A common PSM I exam question will present a PBI and ask whether it is ready for Sprint Planning — applying INVEST is the evaluation framework.
+
+---
+
+## 6. Ordering the Product Backlog
+
+Ordering is more precise than prioritization. Prioritization groups items into categories (high/medium/low). Ordering creates a complete sequence — item 1 before item 2 before item 3. The Product Owner makes explicit trade-off decisions through ordering.
+
+Factors that influence ordering decisions:
+
+- Value to users and the business: higher-value items generally rank higher
+- Risk and uncertainty: high-risk items may be ordered early to learn fast (fail early rather than fail late)
+- Dependencies: item B that depends on item A must be ordered after A
+- Learning value: items that will teach the team something important about the product or technology
+- Market timing: items needed for a specific release window
+- Cost of delay: the business cost of not delivering an item sooner
+
+The Product Owner owns ordering decisions. Stakeholders, managers, and Developers may provide input, but the Product Owner makes the final call.
+
+---
+
+## 7. Common Product Backlog Problems
+
+Problem 1 — Backlog too large: A Product Backlog with hundreds of items is difficult to maintain and likely contains items that will never be built. Regularly reviewing and pruning low-value, stale items is a healthy practice.
+
+Problem 2 — No ordering: All items marked "high priority" means the Product Owner has not made the hard sequencing decisions that are their core responsibility.
+
+Problem 3 — Items too large for Sprint Planning: If most items require multiple Sprints, the backlog needs more refinement. Large epics must be decomposed into Sprint-sized stories.
+
+Problem 4 — Missing acceptance criteria: Items without acceptance criteria produce ambiguous Done states at Sprint end. Acceptance criteria make the Definition of Done item-specific and testable.
+
+Problem 5 — Backlog managed by committee: When multiple stakeholders add and order items without going through the Product Owner, the backlog loses coherence and the Product Owner loses accountability.
+
+Problem 6 — Backlog as a wish list: A backlog that includes every possible feature idea without ordering or value assessment is not a planning tool — it is a wish list. The Product Owner must make hard choices about what to include and in what order.
+
+---
+
+## 8. PSM I Exam Tips
+
+Tip 1: The Product Backlog is never complete. If an exam question describes a completed or frozen backlog, it is describing non-Scrum behavior.
+
+Tip 2: The Product Owner orders the backlog; Developers estimate the items. These two responsibilities belong to different people and are not interchangeable on the exam.
+
+Tip 3: Product Backlog Refinement is not a Scrum event. It does not appear in the five official events. When exam questions ask how many Scrum events there are, the answer is five, and refinement is not one of them.
+
+Tip 4: The INVEST criteria — Independent, Negotiable, Valuable, Estimable, Small, Testable — are the standard framework for evaluating PBI readiness. Know all six.
+
+Tip 5: Stakeholders influence the Product Backlog through the Product Owner, not directly. Any question that puts stakeholders in direct control of the backlog is describing incorrect Scrum behavior.
+
+Tip 6: The Product Goal is the commitment associated with the Product Backlog. Know this pairing: Product Backlog → Product Goal; Sprint Backlog → Sprint Goal; Increment → Definition of Done.
+
+Tip 7: There is one Product Backlog per product. Multiple Scrum Teams working on the same product share one Product Backlog. This is tested on PSM I.
+
+Tip 8: Refinement consumes no more than 10% of Developers' capacity. This is the Scrum Guide's guidance — know the percentage.
+
+---
+
+## 9. Study Checklist
+
+- [ ] Define the Product Backlog in the Scrum Guide's exact language and explain what "emergent" means in this context
+- [ ] List the four attributes of a Product Backlog item and state who is responsible for each
+- [ ] Explain what the Product Goal is and how it relates to the Product Backlog
+- [ ] Describe the four Product Owner responsibilities for the Product Backlog
+- [ ] Explain the difference between delegation and accountability in the context of Product Backlog management
+- [ ] Define Product Backlog Refinement: what it is, who participates, and how much capacity it consumes
+- [ ] Recite the INVEST criteria from memory and give one example of a PBI that fails each criterion
+- [ ] Explain the difference between ordering and prioritization
+- [ ] Describe four common Product Backlog problems and how to address each
+- [ ] Complete this module's Lab (write a 10-item Product Backlog for a hypothetical product) and Quiz
+
+---

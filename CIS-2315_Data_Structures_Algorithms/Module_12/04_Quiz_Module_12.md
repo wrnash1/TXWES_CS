@@ -1,77 +1,226 @@
-# Quiz: Module 12 – Recursion and Backtracking
-## Course: CIS-2315 Data Structures & Algorithms (Technical Interview Readiness)
+# Quiz: Module 12 — Divide & Conquer
+
+## Course: CIS-2315 Data Structures & Algorithms
+
+**Certification Alignment:** Technical Interview Readiness (LeetCode / HackerRank)
+
+**Instructions:** Choose the single best answer for each question.
 
 ---
 
-**Question 1**
-What is the space complexity of a recursive function with n levels of recursion and O(1) work per call frame?
-*   A) O(1) — recursion uses no extra memory.
-*   B) O(n) — each active call frame occupies stack space proportional to recursion depth.
-*   C) O(n²) — each call frame stores all previous results.
-*   D) O(log n) — the call stack shrinks as calls return.
-*   **Correct Answer:** B) O(n) — each active call frame occupies stack space proportional to recursion depth.
-*   **Distractor Analysis:**
-    *   *Why correct:* Each recursive call pushes a new frame onto the call stack. With n levels of recursion simultaneously active, O(n) stack frames are held in memory at peak depth.
-    *   A is incorrect: Recursion does use memory — the call stack grows with each nested call. A tail-recursive function optimized by the compiler might use O(1) space, but Python does not perform tail call optimization.
-    *   C is incorrect: O(n²) would require each frame to store O(n) data. With O(1) data per frame, depth n gives O(n) total.
-    *   D is incorrect: O(log n) stack depth applies to recursion that halves its input (like binary search or merge sort recursion), not to recursion that decrements by 1.
+### Question 1
+
+What is the time complexity of merge sort on an array of n elements?
+
+- A) O(n)
+- B) O(n log n)
+- C) O(n²)
+- D) O(log n)
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* O(n) would require examining each element only once. Merge sort processes O(n) elements at each of O(log n) levels — one pass through the data is insufficient.
+- *Why B is correct:* The recursion tree has log n levels (each level halves the problem size). At each level, all merge calls together examine every element exactly once — O(n) work per level. Total: O(n) × O(log n) = O(n log n). This is confirmed by the Master Theorem: T(n) = 2T(n/2) + O(n) → Case 2 → O(n log n).
+- *Why C is incorrect:* O(n²) is the complexity of bubble sort and insertion sort on unsorted data. Merge sort avoids the pairwise comparison of all elements by dividing and conquering.
+- *Why D is incorrect:* O(log n) is the complexity of binary search — a search algorithm, not a sort algorithm. Sorting must examine every element at least once, making sub-linear time impossible.
 
 ---
 
-**Question 2**
-Which of the following most accurately describes the **backtracking technique**?
-*   A) A dynamic programming approach that stores previously computed subproblem results in a table to avoid recomputation, reducing exponential recursive time to polynomial.
-*   B) A recursive strategy that builds a solution incrementally by making one choice at a time, checks if the partial solution can still lead to a valid result, and undoes the last choice (backtracks) when a constraint is violated — then tries the next alternative.
-*   C) A divide-and-conquer method that splits the problem into independent halves, solves each recursively, and combines their results — discarding partial solutions that are smaller than the current best.
-*   D) A greedy approach that always makes the locally optimal choice at each step without reconsidering earlier decisions, building the solution in a single forward pass.
-*   **Correct Answer:** B) A recursive strategy that builds a solution incrementally by making one choice at a time, checks if the partial solution can still lead to a valid result, and undoes the last choice (backtracks) when a constraint is violated — then tries the next alternative.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* That describes memoization (top-down dynamic programming). Backtracking does not cache subproblem results.
-    *   *Why B is correct:* The "choose → recurse → undo" cycle is the defining structure of backtracking. Pruning (checking constraints before recursing deeper) is what separates backtracking from brute-force enumeration.
-    *   *Why C is incorrect:* That describes divide-and-conquer (e.g., merge sort, quick sort). Divide-and-conquer produces and combines partial results; it does not "undo" choices.
-    *   *Why D is incorrect:* That describes greedy algorithms. Greedy never revisits choices; backtracking explicitly does.
+### Question 2
+
+Why is merge sort considered a **stable** sort, and why does stability matter?
+
+- A) Stable means merge sort never uses more than O(1) extra space
+- B) Stable means equal elements maintain their relative order from the original array — this matters when sorting objects that were previously sorted by a different key
+- C) Stable means merge sort produces the same output regardless of input order
+- D) Stable means merge sort runs in O(n log n) in all cases, unlike unstable sorts
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Stability has nothing to do with space. Merge sort actually uses O(n) extra space for the merge step — it is not space-efficient. Stability is about element ordering.
+- *Why B is correct:* A stable sort preserves the relative order of equal elements. In the `merge` function, `left[i] <= right[j]` takes from the left half first when equal, preserving original order. Stability matters when you need a multi-key sort: sort by last name, then sort by first name stably — the result is sorted by first name within each last-name group.
+- *Why C is incorrect:* All correct sorting algorithms produce the same output for the same input, regardless of stability. Stability is specifically about what happens to equal elements.
+- *Why D is incorrect:* Quicksort (unstable) also guarantees O(n log n) average case. Worst-case guarantees and stability are independent properties.
 
 ---
 
-**Question 3**
-In generating all permutations of `[1, 2, 3]` using backtracking, you maintain a `used` boolean array. When is the result array appended to the output?
-*   A) Every time any element is added to the current partial permutation.
-*   B) Only when the partial permutation's length equals the input array length (all elements have been placed).
-*   C) Only when the first element of the partial permutation is the smallest available element.
-*   D) When the recursive call stack depth reaches n/2, indicating the halfway point of the search.
-*   **Correct Answer:** B) Only when the partial permutation's length equals the input array length (all elements have been placed).
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Appending at every step would add incomplete (partial) permutations to the result, producing wrong output.
-    *   *Why B is correct:* A permutation is complete only when every element has been placed. The base case is `len(current) == len(nums)` — at this point the complete permutation is copied and added to results.
-    *   *Why C is incorrect:* The order of the first element has no bearing on when to record a result; all complete permutations are valid regardless of the first element's value.
-    *   *Why D is incorrect:* Recursion depth n/2 means only half the elements have been placed — the permutation is incomplete and should not be recorded.
+### Question 3
+
+In the standard binary search implementation:
+
+```python
+mid = left + (right - left) // 2
+```
+
+Why is this formula preferred over `mid = (left + right) // 2`?
+
+- A) The first formula is faster because it avoids a division operation
+- B) The first formula prevents integer overflow when `left + right` exceeds the maximum integer value — critical in C++ and Java, good practice in Python
+- C) The second formula gives a different `mid` value that would produce wrong results
+- D) The `//` operator behaves differently on the two expressions in Python
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Both formulas perform the same number of operations. The preferred formula is about correctness, not speed.
+- *Why B is correct:* In C++ and Java, `int` has a maximum value (~2 billion). If `left = 1.5B` and `right = 1.5B`, `left + right` overflows to a negative number, producing a wrong `mid`. `left + (right - left) // 2` computes `right - left` first (a small number), then adds to `left`, avoiding overflow. Python integers are arbitrary precision (no overflow), but using this formula shows interviewers that you understand the pitfall.
+- *Why C is incorrect:* Both formulas produce the same `mid` value mathematically: `(left + right) / 2 = left + (right - left) / 2`. There is no correctness difference in Python.
+- *Why D is incorrect:* `//` is floor division in Python and applies identically to both expressions. The difference is about numerical overflow, not operator behavior.
 
 ---
 
-**Question 4**
-What is the key difference between generating **subsets** (LeetCode #78) and generating **permutations** (LeetCode #46) using backtracking?
-*   A) Subsets use a stack while permutations use a queue.
-*   B) Subsets record every partial state (including empty and intermediate results) and use an index to avoid re-including earlier elements; permutations record only complete results and use a `used` array to track which elements have been included regardless of position.
-*   C) Subsets require sorting the input; permutations do not.
-*   D) Subsets use memoization to avoid recomputing identical subsets; permutations avoid memoization because permutations of the same elements are distinct.
-*   **Correct Answer:** B) Subsets record every partial state (including empty and intermediate results) and use an index to avoid re-including earlier elements; permutations record only complete results and use a `used` array to track which elements have been included regardless of position.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Both subset and permutation backtracking use the call stack via recursion, not explicit stack/queue data structures.
-    *   *Why B is correct:* In subsets, order does not matter and each element can appear at most once — controlled by a start index. In permutations, order matters and each element must appear exactly once — controlled by a `used` boolean array.
-    *   *Why C is incorrect:* Sorting helps with deduplication (for problems with duplicate input), but it is not required for the fundamental subset or permutation generation.
-    *   *Why D is incorrect:* Neither standard subsets nor permutations use memoization because their subproblems are not overlapping in the DP sense.
+### Question 4
+
+Binary search requires the input array to be sorted. A student uses binary search on an unsorted array. Which of the following best describes what happens?
+
+- A) Python raises an `IndexError` because unsorted arrays cannot be indexed
+- B) The algorithm may return -1 (not found) even when the target is present, because the invariant "target is in arr[left..right]" is violated by unsorted data
+- C) Binary search always finds the target — it just takes longer on unsorted data
+- D) The algorithm returns the wrong index but never misses a present target
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Python can index any list. There is no error at the language level — the issue is algorithmic correctness.
+- *Why B is correct:* Binary search's correctness depends on the invariant: "if target is in the array, it is in `arr[left..right]`." In a sorted array, comparing `arr[mid]` to `target` correctly shrinks the search space. In an unsorted array, moving `left = mid + 1` or `right = mid - 1` may exclude the range containing the target, causing a false "not found" result.
+- *Why C is incorrect:* Binary search does not take "longer" — it takes exactly O(log n) steps regardless. But on unsorted data, those steps may eliminate the portion of the array where the target actually resides.
+- *Why D is incorrect:* A present target can easily be missed. For example, searching for 3 in `[5, 2, 4, 3, 1]`: mid=2 (value 4 > 3), set right=1; mid=0 (value 5 > 3), set right=-1; return -1. But 3 is at index 3.
 
 ---
 
-**Question 5**
-In a word search backtracking problem (LeetCode #79), you mark a cell as visited before recursing into it and unmark it after returning. What goes wrong if you forget the "unmark" step?
-*   A) The algorithm runs faster because it skips cells it has already seen.
-*   B) The algorithm incorrectly treats cells used in one search path as permanently unavailable, causing it to miss valid words that reuse those cells in a different path.
-*   C) The algorithm produces duplicate results because the same cell is counted multiple times.
-*   D) Nothing — cells in a grid are never revisited, so the unmark step is optional.
-*   **Correct Answer:** B) The algorithm incorrectly treats cells used in one search path as permanently unavailable, causing it to miss valid words that reuse those cells in a different path.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Forgetting to unmark does not speed up the algorithm; it produces incorrect results, not performance gains.
-    *   *Why B is correct:* The "unmark" step is the undo of backtracking. Without it, a cell visited on one recursive branch is marked used forever, so other branches that need that cell cannot use it — producing missed valid paths (false negatives).
-    *   *Why C is incorrect:* Forgetting to unmark causes missed results (false negatives), not duplicates. Duplicates would occur if marking were skipped entirely so cells could be revisited in the same path.
-    *   *Why D is incorrect:* Grid cells absolutely can be revisited across different search paths (though not within the same path). The unmark step restores availability for sibling branches.
+### Question 5
+
+In the binary search on answer template:
+
+```python
+left, right = lower_bound, upper_bound
+while left < right:
+    mid = left + (right - left) // 2
+    if feasible(mid):
+        right = mid
+    else:
+        left = mid + 1
+return left
+```
+
+What is the invariant maintained by this loop, and what does `left` equal when the loop terminates?
+
+- A) `left` is the maximum value for which `feasible` is False; `right` converges to `left`
+- B) All values `< left` are infeasible; all values `>= left` are feasible. `left` equals the minimum value for which `feasible` is True
+- C) `left` and `right` alternate — the answer is their midpoint at termination
+- D) The loop maintains `feasible(left) == True` at all times
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* The invariant is about feasibility, not infeasibility being maximized. `left` converges to the minimum feasible value, not the maximum infeasible one.
+- *Why B is correct:* When `feasible(mid)` is True, `right = mid` because mid could be the answer (try smaller). When False, `left = mid + 1` because mid is definitely not the answer (search higher). This maintains: everything below `left` is infeasible, everything at or above `left` is feasible. At termination, `left == right` = the minimum feasible value.
+- *Why C is incorrect:* `left` and `right` both converge monotonically (left increases, right decreases) until they meet. The answer is `left` (or equivalently `right`) at that point, not a midpoint.
+- *Why D is incorrect:* The loop does not ensure `feasible(left) == True` during execution — `left` may point to infeasible values during intermediate steps. The invariant holds at termination, not throughout.
+
+---
+
+### Question 6
+
+Apply the Master Theorem to binary search: T(n) = T(n/2) + O(1). What is a, b, and the resulting complexity?
+
+- A) a=2, b=2, c=log₂(2)=1, Case 2 → O(n log n)
+- B) a=1, b=2, c=log₂(1)=0, Case 2 with f(n)=O(n⁰)=O(1) → O(log n)
+- C) a=1, b=2, c=log₂(1)=0, Case 1 with f(n)=O(1) dominating → O(1)
+- D) a=2, b=2, c=log₂(2)=1, Case 1 → O(n)
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* a=2 would mean two recursive calls per level. Binary search makes only one call (halving the remaining range). T(n)=2T(n/2)+O(n) is merge sort, not binary search.
+- *Why B is correct:* Binary search: a=1 (one subproblem), b=2 (half the size), f(n)=O(1) (comparison at each level). c = log₂(1) = 0. f(n) = O(1) = O(n⁰) = Θ(n^c). This is Case 2: T(n) = Θ(n^c · log n) = Θ(n⁰ · log n) = Θ(log n).
+- *Why C is incorrect:* Case 1 applies when f(n) grows slower than n^c. Here f(n) = Θ(n^c) — exactly equal — which is Case 2, not Case 1.
+- *Why D is incorrect:* a=2, b=2 describes merge sort, not binary search. O(n) from the Master Theorem with these values would apply to a different case.
+
+---
+
+### Question 7
+
+In the counting inversions algorithm, when a right-half element `right[j]` is placed before remaining left-half elements, the inversion count increases by `len(left) - i`. Why is this the correct count?
+
+- A) Because `i` elements in the left half have already been processed and cannot form inversions
+- B) All remaining left-half elements (indices i through end) are greater than `right[j]` — since left is sorted, every one of them forms an inversion with `right[j]`
+- C) `len(left) - i` counts the total number of elements in both halves
+- D) It counts the inversions between the two halves that were already discovered in previous recursive calls
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Elements already placed (indices 0..i-1) have already been accounted for. The count `len(left) - i` counts the newly discovered inversions from `right[j]` with unplaced left elements.
+- *Why B is correct:* The left half is sorted. If `left[i] > right[j]` (causing us to place `right[j]` first), then `left[i+1] > left[i] > right[j]`, `left[i+2] > right[j]`, ..., all the way to `left[len(left)-1] > right[j]`. There are exactly `len(left) - i` such elements. Each forms an inversion pair with `right[j]` because they have smaller index in the original array (they came from the left half) but larger value.
+- *Why C is incorrect:* `len(left) - i` counts remaining elements in the left half only, not in both halves.
+- *Why D is incorrect:* Previous recursive calls counted inversions within each half. The merge step counts cross-inversions between the two halves — new information discovered during the combine phase.
+
+---
+
+### Question 8
+
+Search in Rotated Sorted Array (LeetCode #33) requires binary search on a rotated array. The key insight is:
+
+- A) The array must be un-rotated before applying binary search — sort first, then search
+- B) At any `mid` point, exactly one half of the array is fully sorted — use the sorted half to determine which side contains the target
+- C) Binary search cannot work on rotated arrays — use linear search
+- D) The rotation point must be found first with O(n) scan, then binary search the correct half
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Sorting first costs O(n log n), making the search O(n log n) total — wasteful when O(log n) is achievable.
+- *Why B is correct:* In a rotated sorted array, when `mid` splits the array, one of the two halves (left or right of `mid`) is guaranteed to be fully sorted. Check if `nums[left] <= nums[mid]` — if True, the left half is sorted. If the target is within the sorted half's range, search there; otherwise search the other half. This maintains O(log n) by halving the search space each step.
+- *Why C is incorrect:* Binary search can work on rotated arrays with the modification described in B. O(log n) is achievable.
+- *Why D is incorrect:* Finding the rotation point with O(n) scan defeats the purpose. A single binary search pass simultaneously finds the rotation structure and the target.
+
+---
+
+### Question 9
+
+What is the space complexity of merge sort?
+
+- A) O(1) — sorting is done in place
+- B) O(log n) — only the recursion stack is used
+- C) O(n) — the merge step requires an auxiliary array proportional to input size
+- D) O(n log n) — a new array is allocated at every level of the recursion tree
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Merge sort is not in-place. The `merge` function creates a new `result` list for each merge, requiring extra space proportional to the number of elements being merged.
+- *Why B is incorrect:* O(log n) describes only the recursion stack depth. The dominant space cost is the auxiliary arrays created during merging.
+- *Why C is correct:* At any given time, the merge step at the top level creates one array of size n. Lower levels create smaller arrays, but those are discarded before the top-level merge begins. The peak extra space is O(n) for the final merge of two n/2 arrays.
+- *Why D is incorrect:* O(n log n) would require keeping all intermediate arrays alive simultaneously. In practice, each level's temporary arrays are garbage-collected before the next level allocates. The peak usage is O(n), not O(n log n).
+
+---
+
+### Question 10
+
+The binary search on answer template finds the minimum capacity for the ship packages problem. The search range is `[max(weights), sum(weights)]`. Why are these the correct bounds?
+
+- A) `max(weights)` is the answer when the ship has only one day; `sum(weights)` is the answer when each package gets its own day
+- B) `max(weights)` is the minimum possible capacity (a single package must fit); `sum(weights)` is the maximum needed capacity (everything ships in one day)
+- C) These bounds minimize the number of binary search iterations
+- D) The bounds represent the number of packages and the total weight, used as array indices
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `max(weights)` represents the minimum capacity, not the answer for one day. The answer for one day is `sum(weights)`, but framing it as "one day" vs "one package per day" confuses the bound semantics.
+- *Why B is correct:* The ship's capacity must be at least `max(weights)` — otherwise the heaviest single package cannot be loaded on any day. The capacity never needs to exceed `sum(weights)` — at that capacity, all packages fit in one trip. The answer lies somewhere in this range: the minimum capacity where `feasible(capacity)` is True.
+- *Why C is incorrect:* The bounds are chosen for correctness, not efficiency. A tighter range would reduce iterations by a constant factor, but the bounds must contain the correct answer.
+- *Why D is incorrect:* The bounds are weight values (capacity units), not array indices or package counts. Using them as indices would make no sense in context.

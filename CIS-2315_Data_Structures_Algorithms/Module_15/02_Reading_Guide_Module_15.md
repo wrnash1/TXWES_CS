@@ -1,63 +1,292 @@
-# Reading Guide: Module 15 – Advanced Topics: Tries and Segment Trees
-## Course: CIS-2315 Data Structures & Algorithms (Technical Interview Readiness)
+# Reading Guide: Module 15 — String Algorithms & Trie
+
+## Course: CIS-2315 Data Structures & Algorithms
+
+**Certification Alignment:** Technical Interview Readiness (LeetCode / HackerRank)
 
 ---
 
-### Introduction
-Welcome to **Module 15 – Advanced Topics: Tries and Segment Trees**! This module covers two specialized data structures that appear in harder interview problems and in-depth system design discussions. Tries are the essential structure behind autocomplete, spell checking, and word prefix problems. Segment trees power range query problems in competitive programming and sometimes appear in advanced interview rounds at top companies. Mastering both structures demonstrates the depth expected for senior and staff-level roles.
+## Introduction
 
-This module covers Trie construction and search, prefix/suffix operations, and segment tree range query and point update patterns.
-
----
-
-### 1. High-Yield Glossary
-
-*   **Trie (prefix tree)**: A tree data structure where each node represents a single character, and paths from the root to marked nodes represent complete words or prefixes. Insertion and search are O(L) where L is the word length, independent of the number of stored words.
-
-*   **TrieNode**: The building block of a trie, typically containing an array or dictionary of 26 (or more) child pointers (one per possible character) and a boolean `is_end` flag marking whether the node represents the end of a valid word.
-
-*   **Prefix search**: One of the primary use cases for a trie — determining whether any stored word starts with a given prefix in O(L) time, where L is the prefix length. This is O(n·L) with a linear scan over n strings.
-
-*   **Segment tree**: A binary tree data structure built over an array, where each node stores the result of a range query (sum, min, max) for a contiguous subarray. Supports both range queries and point updates in O(log n) time.
-
-*   **Range query**: A query that asks for an aggregated value (sum, minimum, maximum, GCD) over all elements in a specified index range [l, r]. Segment trees answer these in O(log n) versus O(n) for brute force.
-
-*   **Point update**: Changing the value of a single element in an array and reflecting that change in all range query results. Segment trees propagate point updates in O(log n) by updating only the nodes on the root-to-leaf path.
-
-*   **Lazy propagation**: An optimization for segment trees where range updates (update all elements in [l, r] simultaneously) are deferred using "lazy" markers, allowing both range updates and range queries in O(log n). Without lazy propagation, range updates cost O(n).
+Strings are the most common data type in technical interviews. Most string problems can be solved with a small set of patterns: the sliding window, two pointers, hash maps, and the Trie data structure. This module covers four core topics: the Trie (for prefix-based operations), the sliding window (for contiguous substring problems), expand-around-center (for palindromes), and the Minimum Window Substring. Mastering these patterns gives you the tools to approach the majority of string interview questions.
 
 ---
 
-### 2. Certification Exam Tips
-*   **Implement a Trie from scratch — it is a common interview question:** Build a `TrieNode` class with `children = {}` and `is_end = False`. Then build a `Trie` class with `insert`, `search`, and `startsWith` methods. LeetCode #208 is the canonical problem.
-*   **Trie solves "word dictionary with wildcards":** LeetCode #211 (Design Add and Search Words Data Structure) uses a trie where `.` matches any character — implement DFS over children for the wildcard case.
-*   **Segment tree is O(log n) for both update and query:** Brute force is O(1) update / O(n) query; prefix sum is O(n) update / O(1) query; segment tree achieves O(log n) for both simultaneously.
-*   **Know the segment tree array indexing:** Store the tree in an array of size 4n. Left child of index i is at 2i; right child at 2i+1. Build recursively, query and update with range partitioning.
-*   **Fenwick Tree (Binary Indexed Tree) is an O(log n) alternative:** Simpler to code than a segment tree for prefix-sum queries and point updates. Useful as an alternative to segment trees when only prefix operations are needed.
-*   **Study Resource:** [Trie Data Structure — LeetCode Explore Card](https://leetcode.com/explore/learn/card/trie/) — a structured progression of trie problems with implementation guidance, from basic insert/search through word search II.
+## 1. Trie (Prefix Tree)
+
+### Structure
+
+A Trie stores strings by sharing common prefixes. Each node represents a single character. The path from the root to any `is_end = True` node spells a complete stored word.
+
+```python
+class TrieNode:
+    def __init__(self):
+        self.children = {}    # char → TrieNode
+        self.is_end = False
+
+class Trie:
+    def __init__(self):
+        self.root = TrieNode()
+
+    def insert(self, word):
+        node = self.root
+        for char in word:
+            if char not in node.children:
+                node.children[char] = TrieNode()
+            node = node.children[char]
+        node.is_end = True
+
+    def search(self, word):
+        """Exact match — requires is_end = True at the last character."""
+        node = self.root
+        for char in word:
+            if char not in node.children:
+                return False
+            node = node.children[char]
+        return node.is_end
+
+    def starts_with(self, prefix):
+        """Prefix match — path must exist, is_end not required."""
+        node = self.root
+        for char in prefix:
+            if char not in node.children:
+                return False
+            node = node.children[char]
+        return True
+```
+
+### Complexity
+
+| Operation | Time | Space |
+|---|---|---|
+| Insert | O(L) | O(L) per new word |
+| Search (exact) | O(L) | O(1) |
+| Starts_with | O(L) | O(1) |
+| Total space | — | O(N × L × A) |
+
+L = word length, N = number of words, A = alphabet size (26 for lowercase English).
+
+### Why Trie over Hash Set?
+
+A hash set supports O(1) exact lookup but cannot efficiently answer prefix queries. The Trie answers "does any stored word start with 'pre'?" in O(L) without scanning all words. This matters for autocomplete, spell-check, and IP routing.
 
 ---
 
-### Required Readings & Videos
-*   **Required Reading:** [Tries – Open Data Structures (Pat Morin), Chapter 13](https://opendatastructures.org/ods-python/13_Data_Structures_for_Strings.html) — covers trie construction, prefix operations, and time complexity analysis with Python implementations.
-*   **Required Video:** [Trie – NeetCode on YouTube](https://www.youtube.com/watch?v=oobqoCJlHA0) — a 15-minute video implementing a Trie from scratch with the LeetCode #208 and #211 problems, covering the `children` dict approach and `is_end` flag.
-*   **Additional Video:** [Segment Tree – NeetCode on YouTube](https://www.youtube.com/watch?v=2bSS8rtFym4) — a 20-minute segment tree implementation video covering the array-based build, range sum query, and point update with LeetCode #307.
+## 2. Sliding Window
+
+### Pattern
+
+Two pointers: `left` and `right` delimit a window (contiguous substring). Expand `right` to grow the window; advance `left` when the window violates a constraint.
+
+```python
+# Template: find the longest window satisfying a condition
+left = 0
+state = {}    # window state (character counts, etc.)
+
+for right, char in enumerate(s):
+    # add char to state
+    while state_is_invalid():
+        # remove s[left] from state
+        left += 1
+    # update answer using current window [left..right]
+```
+
+### Longest Substring Without Repeating Characters (LeetCode #3)
+
+```python
+def length_of_longest_substring(s):
+    """Time: O(n), Space: O(A)"""
+    char_index = {}
+    left = 0
+    max_len = 0
+    for right, char in enumerate(s):
+        if char in char_index and char_index[char] >= left:
+            left = char_index[char] + 1
+        char_index[char] = right
+        max_len = max(max_len, right - left + 1)
+    return max_len
+```
+
+**Key insight:** `char_index[char] >= left` — only move `left` if the duplicate is inside the current window. A duplicate seen before the window started is harmless.
+
+**Alternative:** maintain a `seen` set; remove characters from the set as `left` advances.
+
+### Minimum Window Substring (LeetCode #76)
+
+```python
+from collections import Counter
+
+def min_window(s, t):
+    """
+    Shortest window in s containing all characters of t.
+    Time: O(|s| + |t|), Space: O(|s| + |t|)
+    """
+    if not t or not s:
+        return ''
+    need = Counter(t)
+    have = {}
+    required = len(need)
+    formed = 0
+    left = 0
+    min_len = float('inf')
+    min_start = 0
+
+    for right, char in enumerate(s):
+        have[char] = have.get(char, 0) + 1
+        if char in need and have[char] == need[char]:
+            formed += 1
+        while formed == required:
+            if right - left + 1 < min_len:
+                min_len = right - left + 1
+                min_start = left
+            lc = s[left]
+            have[lc] -= 1
+            if lc in need and have[lc] < need[lc]:
+                formed -= 1
+            left += 1
+
+    return s[min_start : min_start + min_len] if min_len != float('inf') else ''
+```
+
+**Two counters pattern:** `required` = number of distinct characters needed. `formed` = number satisfied. When `formed == required`, shrink from the left. This avoids O(A) comparison of `have` and `need` on every step.
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will:
-*   **Implement a Trie class from scratch** with `insert`, `search`, and `startsWith` — verify on LeetCode #208.
-*   **Solve LeetCode #211 (Design Add and Search Words)** — extend the Trie to handle `.` wildcard characters using DFS.
-*   **Solve LeetCode #212 (Word Search II)** — combine a Trie with backtracking on a 2D grid.
-*   **Implement a Segment Tree** supporting range sum query and point update — verify on LeetCode #307 (Range Sum Query — Mutable).
+## 3. Longest Palindromic Substring (LeetCode #5)
+
+### Expand-Around-Center
+
+Every palindrome has a center. For n characters, there are n odd-length centers (each character) and n-1 even-length centers (each gap between adjacent characters). Expand outward while the characters match.
+
+```python
+def longest_palindrome(s):
+    """Time: O(n²), Space: O(1)"""
+    def expand(left, right):
+        while left >= 0 and right < len(s) and s[left] == s[right]:
+            left -= 1
+            right += 1
+        return s[left+1 : right]    # left and right overshot by one
+
+    result = ''
+    for i in range(len(s)):
+        odd  = expand(i, i)
+        even = expand(i, i+1)
+        if len(odd)  > len(result): result = odd
+        if len(even) > len(result): result = even
+    return result
+```
+
+**Slice explanation:** After the while loop, `left` is one position to the left of the palindrome boundary, and `right` is one position to the right. `s[left+1 : right]` extracts exactly the palindrome (Python slice: inclusive start, exclusive end).
+
+### Valid Palindrome (LeetCode #125)
+
+```python
+def is_palindrome(s):
+    """Check if s (alphanumeric only, case-insensitive) is a palindrome."""
+    filtered = [c.lower() for c in s if c.isalnum()]
+    return filtered == filtered[::-1]
+```
+
+Two-pointer approach (O(1) space): `left=0`, `right=len-1`; skip non-alphanumeric; compare `s[left].lower()` and `s[right].lower()`.
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and be able to explain each in your own words.
-- [ ] Read Chapter 13 of Open Data Structures.
-- [ ] Watch the NeetCode Trie and Segment Tree videos.
-- [ ] Implement a Trie from scratch.
-- [ ] Solve LeetCode #208, #211, and #307.
-- [ ] Proceed to the Module 15 Quiz.
+## 4. Additional String Patterns
+
+### Anagram Check
+
+```python
+from collections import Counter
+
+def is_anagram(s, t):
+    return Counter(s) == Counter(t)
+
+def find_anagrams(s, p):
+    """LeetCode #438: indices where p's anagram starts in s."""
+    need = Counter(p)
+    have = Counter(s[:len(p)])
+    result = [0] if have == need else []
+    for i in range(1, len(s) - len(p) + 1):
+        have[s[i-1]] -= 1
+        if have[s[i-1]] == 0:
+            del have[s[i-1]]
+        have[s[i + len(p) - 1]] += 1
+        if have == need:
+            result.append(i)
+    return result
+```
+
+### Valid Parentheses
+
+```python
+def is_valid(s):
+    """LeetCode #20: check balanced brackets."""
+    stack = []
+    pairs = {')': '(', '}': '{', ']': '['}
+    for char in s:
+        if char in '({[':
+            stack.append(char)
+        elif not stack or stack[-1] != pairs[char]:
+            return False
+        else:
+            stack.pop()
+    return len(stack) == 0
+```
+
+---
+
+## 5. Trie vs. Hash Set vs. Sorted List
+
+| Use case | Best structure |
+|---|---|
+| Exact string lookup | Hash set — O(1) |
+| Prefix queries | Trie — O(L) |
+| Alphabetical order | Sorted list / BST — O(log n) |
+| Autocomplete | Trie — O(L + output) |
+| Anagram grouping | Hash map with sorted key — O(L log L) |
+
+---
+
+## 6. Interview Exam Tips
+
+1. **Sliding window = expand right, contract left** — the two operations are always this way. Expanding left or contracting right would move in the wrong direction.
+
+2. **`char_index[char] >= left` is essential** — without this guard, you might move `left` backward (to before the current window start), which would be wrong. The duplicate only matters if it's inside the current window.
+
+3. **Trie `search` vs. `starts_with`** — `search` requires `is_end = True`; `starts_with` does not. A common interview mistake: returning `True` from `search` when only the path exists but the word is not complete (e.g., stored 'apple', searching 'app' without inserting 'app').
+
+4. **Even-length palindromes** — a common off-by-one: only calling `expand(i, i)` misses all even-length palindromes. Always call `expand(i, i+1)` as well.
+
+5. **`formed == required` pattern** — for Minimum Window Substring, counting distinct satisfied characters with `formed` is cleaner and faster than comparing full dictionaries at every step.
+
+6. **Trie space is O(N × L × A) in the worst case** — mention this in interviews. For large alphabets or very long words, a hash-map-based Trie is standard. For fixed alphabets (26 lowercase letters), a 26-element array per node is an optimization.
+
+7. **Palindrome check with two pointers** — for LeetCode #125 (valid palindrome with non-alphanumeric filtering), cleaning the string first is cleaner in Python. For space-constrained languages, use two pointers that skip non-alphanumeric characters.
+
+8. **Minimum Window Substring is hard** — it is a sliding window problem with two counters, but the shrinking logic is subtle. In interviews, draw the window on the string before coding.
+
+---
+
+## 7. Complexity Summary
+
+| Problem | Pattern | Time | Space |
+|---|---|---|---|
+| Implement Trie (insert/search) | Trie | O(L) per op | O(N×L×A) |
+| Longest substring no repeat | Sliding window | O(n) | O(A) |
+| Minimum Window Substring | Sliding window | O(n+m) | O(n+m) |
+| Longest Palindromic Substring | Expand center | O(n²) | O(1) |
+| Valid Palindrome | Two pointers | O(n) | O(1) |
+| Find Anagrams | Sliding window + Counter | O(n) | O(A) |
+
+---
+
+## 8. Study Checklist
+
+- [ ] Watch the Module 15 video lecture by Professor Nash.
+- [ ] Implement `Trie` with `insert`, `search`, `starts_with` from scratch.
+- [ ] Implement `length_of_longest_substring` and trace `'abcabcbb'`.
+- [ ] Implement `min_window` and trace `min_window('ADOBECODEBANC', 'ABC')`.
+- [ ] Implement `longest_palindrome` and verify both odd and even center cases.
+- [ ] Complete the Module 15 Lab.
+- [ ] Complete the Module 15 Quiz.
+- [ ] Solve LeetCode #208, #3, #76, #5.

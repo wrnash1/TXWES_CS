@@ -1,53 +1,179 @@
-# Reading Guide: Module 08 - OSPFv2 Routing Concepts & Setup
-## Course: CIS-3322_Advanced_Networking (Cisco CCNA (200-301))
+# Reading Guide: Module 08 - OSPFv2 Routing Concepts and Setup
+
+**Course:** CIS-3322 Advanced Networking
+**Certification Alignment:** Cisco CCNA 200-301 (Domain 3: IP Connectivity - 25%)
+**Prepared by:** Professor Nash | Texas Wesleyan University
 
 ---
 
-### Introduction
-Welcome to **Module 08 - OSPFv2 Routing Concepts & Setup**! This week's study material focuses on the core foundations and configuration mechanics of **OSPFv2 Routing Concepts & Setup** as aligned with the **Cisco CCNA (200-301)** certification framework. Understanding these topics is essential not only for passing the certification exam but also for administering enterprise systems in real-world environments.
+## Overview
 
-As a student, you will learn the primary operational roles, command syntaxes, and troubleshooting parameters needed to design, configure, and maintain these services. We will explore how different protocols establish connections, how configurations manage resource allocation, and how security controls prevent access breaches. Make sure to complete the checklists and review the glossary terms in detail before beginning the lab activity.
-
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **OSPF states**: OSPF routers progress through a sequence of neighbor states before forming a full adjacency: Down → Init → 2-Way → Exstart → Exchange → Loading → Full. The **2-Way** state is where DR/BDR election occurs on broadcast segments. **Full** state indicates a complete synchronized link-state database between two neighbors. The exam frequently tests which state OSPF neighbors should be in under various conditions.
-*   **Link-State Advertisement (LSA)**: The fundamental unit of OSPF topology information. Each router generates LSAs describing its connected links, costs, and neighbors, then floods them throughout the OSPF area. All routers in an area build an identical Link-State Database (LSDB) from LSAs, then independently run the Dijkstra Shortest Path First (SPF) algorithm to compute the best routes.
-*   **Area boundaries**: OSPF organizes routers into areas to limit LSA flooding and reduce routing table size. All areas must connect to **Area 0 (backbone area)**. An **ABR (Area Border Router)** connects non-backbone areas to Area 0 and summarizes LSAs between areas. An **ASBR (Autonomous System Boundary Router)** redistributes external routes into OSPF.
-*   **Wildcard masks**: The inverse of a subnet mask used in the OSPF `network` command to specify which interfaces to include in an OSPF process. A wildcard mask of 0.0.0.255 matches any address in a /24 network. Calculated by subtracting the subnet mask from 255.255.255.255 (e.g., 255.255.255.252 → wildcard 0.0.0.3).
+OSPFv2 is the most heavily tested routing protocol on the CCNA 200-301 exam, accounting for a significant portion of the IP Connectivity domain (25% of the exam). Expect configuration scenarios, neighbor state analysis, and troubleshooting questions. This guide covers all testable OSPF concepts for single-area and introductory multi-area configurations.
 
 ---
 
-### 2. Certification Exam Tips
-*   **CCNA Domain:** OSPF falls under **IP Connectivity (25%)** of the CCNA 200-301 exam — one of the highest-weight domains. Expect 5–8 OSPF questions covering configuration, verification, and troubleshooting.
-*   **Router ID selection order:** (1) Manually configured with `router-id [x.x.x.x]`, (2) Highest loopback IP address, (3) Highest active physical interface IP. The exam presents scenarios where you must determine what Router ID a device will use.
-*   **DR/BDR election:** On multi-access networks (Ethernet), OSPF elects a Designated Router (DR) and Backup DR (BDR). The router with the highest OSPF interface priority wins (default 1). Ties broken by highest Router ID. Changing priority with `ip ospf priority [0-255]` — priority 0 means "never become DR/BDR."
-*   **Common Trap:** OSPF neighbors will not form adjacency if: mismatched Hello/Dead timers, mismatched area IDs, mismatched authentication, mismatched subnet masks, or MTU mismatch. The exam shows `show ip ospf neighbor` with no neighbors listed and asks you to identify the cause.
-*   **Study Resource:** Watch the OSPF episodes in the Jeremy's IT Lab CCNA free playlist, which cover OSPF neighbor states, DR/BDR election, and configuration with wildcard masks: [Jeremy's IT Lab CCNA Complete Course on YouTube](https://www.youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ). Look for the multi-part "OSPF" series.
+## 1. High-Yield Glossary
+
+- **OSPFv2:** Open Shortest Path First version 2 — a link-state interior gateway routing protocol (IGP) defined in RFC 2328. Uses Dijkstra's SPF algorithm to compute loop-free shortest paths. Suitable for IPv4 networks; OSPFv3 is the IPv6 equivalent.
+
+- **Link-State Advertisement (LSA):** The fundamental unit of OSPF topology information. Each router generates LSAs describing its connected links, costs, and neighbors, then floods them throughout the OSPF area. All routers in the area build an identical LSDB from received LSAs.
+
+- **Link-State Database (LSDB):** The complete collection of LSAs from all routers in an OSPF area. All routers in the same area maintain identical LSDBs. Routers in different areas have different LSDBs.
+
+- **SPF algorithm:** Dijkstra's Shortest Path First algorithm. Each router runs SPF independently against its LSDB to compute the lowest-cost path tree to all destinations. The result populates the routing table.
+
+- **Router ID (RID):** A 32-bit value formatted like an IP address that uniquely identifies each OSPF router. Selection order: (1) manually configured, (2) highest loopback IP, (3) highest active physical interface IP.
+
+- **Area:** A logical grouping of OSPF routers and links. LSAs are flooded only within an area, reducing LSDB size. All areas must connect to Area 0 (backbone).
+
+- **Area 0:** The OSPF backbone area. All non-zero areas must connect to Area 0 directly or via virtual links.
+
+- **Area Border Router (ABR):** A router with interfaces in two or more OSPF areas. Maintains separate LSDBs for each area and summarizes routing information between areas.
+
+- **Autonomous System Boundary Router (ASBR):** A router that redistributes routes from external routing protocols (EIGRP, BGP, static) into OSPF. Generates Type 5 LSAs for external routes.
+
+- **Designated Router (DR):** On a multi-access network (Ethernet), the OSPF router elected to manage LSA flooding. All routers on the segment form Full adjacency with the DR and BDR only. Elected by highest interface priority, then highest Router ID.
+
+- **Backup Designated Router (BDR):** Takes over if the DR fails. The router with the second-highest priority (or Router ID if tied) becomes the BDR.
+
+- **Wildcard mask:** The inverse of a subnet mask, used in the OSPF `network` command to match interface IP addresses. Calculated by subtracting the subnet mask from 255.255.255.255.
+
+- **Passive interface:** An OSPF interface that advertises its connected subnet but does not send or receive OSPF hello packets. Used on LAN interfaces facing end devices where no OSPF neighbor exists.
+
+- **OSPF cost:** The metric OSPF uses to select best paths. Calculated as reference bandwidth / interface bandwidth (default reference: 100 Mbps). Lower cost is preferred.
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the section covering **OSPFv2** in the Cisco Skills for All CCNA course. The content includes OSPF neighbor state diagrams, LSA type descriptions, and Packet Tracer labs: [Cisco Skills for All Portal - CCNA Guides](https://skillsforall.com/). Navigate to "CCNA: Enterprise Networking, Security, and Automation" — the OSPF chapter.
-*   **Required Video:** Watch the OSPF series in the Jeremy's IT Lab CCNA complete playlist. These videos cover single-area and multi-area OSPF, wildcard mask calculation, Router ID selection, and `show ip ospf neighbor` interpretation: [Jeremy's IT Lab CCNA Complete Course](https://www.youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ).
+## 2. OSPF Neighbor State Reference
+
+| State | Description |
+|---|---|
+| Down | No hello packets received from the neighbor |
+| Init | Hello received; local Router ID not yet in the neighbor's hello |
+| 2-Way | Bidirectional communication confirmed; DR/BDR election occurs here |
+| Exstart | Master/slave negotiation for database exchange |
+| Exchange | Database Description (DBD) packets exchanged |
+| Loading | Missing LSAs requested and received |
+| Full | LSDB synchronized; adjacency complete |
+
+Key rule: on point-to-point links, all neighbors reach Full. On broadcast (Ethernet) segments, DROther-to-DROther neighbor relationships stop at 2-Way — this is expected and not a failure.
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Configure OSPF instance: `router ospf 1`**: Enter OSPF routing process configuration. The number (1) is a locally significant process ID — it does not need to match on neighboring routers. Configure the Router ID with `router-id [x.x.x.x]` for predictable results.
-*   **Publish subnet to area 0: `network 10.0.0.0 0.0.0.3 area 0`**: This command enables OSPF on the interface whose IP falls within the 10.0.0.0 /30 range and places it in Area 0. Verify that the correct interfaces are running OSPF with `show ip ospf interface brief`.
-*   **Verify neighbors: `show ip ospf neighbor`**: Confirm that neighbors have reached the Full state (or 2-Way for DROTHER relationships). Check for the neighbor's Router ID, priority, state, and dead-time countdown.
+## 3. OSPF Neighbor Failure Causes
 
+| Cause | Effect | Fix |
+|---|---|---|
+| Mismatched Hello timer | Neighbor not seen as alive | Match timers with `ip ospf hello-interval` |
+| Mismatched Dead timer | Neighbor declared dead prematurely | Match timers with `ip ospf dead-interval` |
+| Mismatched area ID | Routers cannot form adjacency | Ensure both ends use same area number |
+| Mismatched subnet mask | OSPF rejects the neighbor | Verify interface masks match on both ends |
+| Authentication mismatch | Adjacency rejected | Match authentication type and key |
+| MTU mismatch | Stuck in Exstart/Exchange | Match MTU or use `ip ospf mtu-ignore` |
+| `passive-interface` on link | No hellos sent or accepted | Remove passive from neighbor-facing interfaces |
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read the section covering **OSPFv2** in [Cisco Skills for All Portal - CCNA Guides](https://skillsforall.com/).
-- [ ] Watch the OSPF series in [Jeremy's IT Lab CCNA Complete Course](https://www.youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ).
-- [ ] Review the commands outlined in the lab instructions.
-- [ ] Proceed to the weekly hands-on lab activity.
+## 4. Wildcard Mask Quick Reference
+
+| Prefix Length | Subnet Mask | Wildcard Mask |
+|---|---|---|
+| /8 | 255.0.0.0 | 0.255.255.255 |
+| /16 | 255.255.0.0 | 0.0.255.255 |
+| /24 | 255.255.255.0 | 0.0.0.255 |
+| /25 | 255.255.255.128 | 0.0.0.127 |
+| /26 | 255.255.255.192 | 0.0.0.63 |
+| /27 | 255.255.255.224 | 0.0.0.31 |
+| /28 | 255.255.255.240 | 0.0.0.15 |
+| /29 | 255.255.255.248 | 0.0.0.7 |
+| /30 | 255.255.255.252 | 0.0.0.3 |
+| /32 | 255.255.255.255 | 0.0.0.0 |
+
+---
+
+## 5. OSPFv2 IOS Command Reference
+
+| Task | Command | Mode |
+|---|---|---|
+| Enter OSPF routing process | `router ospf 1` | Global config |
+| Configure Router ID | `router-id 1.1.1.1` | Router config |
+| Advertise network (wildcard method) | `network 10.0.0.0 0.0.0.3 area 0` | Router config |
+| Enable OSPF on interface (direct) | `ip ospf 1 area 0` | Interface config |
+| Configure passive interface | `passive-interface GigabitEthernet0/1` | Router config |
+| Set all interfaces passive by default | `passive-interface default` | Router config |
+| Remove passive from specific interface | `no passive-interface GigabitEthernet0/0` | Router config |
+| Set interface priority | `ip ospf priority 100` | Interface config |
+| Set interface cost | `ip ospf cost 10` | Interface config |
+| View neighbor adjacencies | `show ip ospf neighbor` | Privileged EXEC |
+| View OSPF-enabled interfaces | `show ip ospf interface brief` | Privileged EXEC |
+| View OSPF routes in routing table | `show ip route ospf` | Privileged EXEC |
+| View full routing table | `show ip route` | Privileged EXEC |
+| View OSPF process details | `show ip protocols` | Privileged EXEC |
+| View LSDB contents | `show ip ospf database` | Privileged EXEC |
+| Reset OSPF process | `clear ip ospf process` | Privileged EXEC |
+
+---
+
+## 6. Router ID Selection Rules
+
+OSPF selects the Router ID in this priority order:
+
+1. Manually configured with `router-id [x.x.x.x]` — always use this method
+2. Highest IP address on any loopback interface (loopbacks never go down)
+3. Highest IP address on any active physical interface at the time OSPF starts
+
+If the Router ID is changed after OSPF has already started, the new ID does not take effect until the OSPF process is cleared with `clear ip ospf process` or the router is reloaded.
+
+---
+
+## 7. DR and BDR Election Reference
+
+| Priority | Behavior |
+|---|---|
+| Highest (1-255) | Wins DR election |
+| Second highest | Wins BDR election |
+| 0 | Never becomes DR or BDR |
+
+DR/BDR election is non-preemptive. Once a DR is elected, it retains the role even if a router with a higher priority later comes online. To force re-election, both routers must reset their OSPF process.
+
+---
+
+## 8. CCNA Exam Tips
+
+1. The OSPF `network` command does not specify which network to advertise — it specifies which interfaces to enable OSPF on. Any interface whose IP address falls within the range defined by the network address and wildcard mask is included in OSPF.
+
+2. Two OSPF routers whose interfaces are in different subnets will not form a neighbor relationship. The subnet mask mismatch causes OSPF to reject the neighbor even if Hello and Dead timers match.
+
+3. DROther routers on a broadcast segment show 2-WAY state with other DROthers. This is correct behavior. The exam may present this as a failure scenario — recognize it as expected.
+
+4. Passive interface prevents OSPF hellos from being sent or received on that interface. The connected subnet is still advertised to OSPF neighbors through other interfaces. Always configure passive interface on LAN segments with no OSPF neighbors.
+
+5. The OSPF process ID (the number after `router ospf`) is locally significant. It does not need to match on neighboring routers. Two routers using `router ospf 1` and `router ospf 99` will still form an adjacency.
+
+6. OSPF cost is calculated as: reference bandwidth (100 Mbps by default) / interface bandwidth. A FastEthernet interface (100 Mbps) has a cost of 1. A GigabitEthernet interface (1000 Mbps) also rounds to 1 with the default reference bandwidth. Use `auto-cost reference-bandwidth` to adjust the reference and differentiate high-speed interfaces.
+
+7. When `show ip ospf neighbor` shows no output, OSPF neighbors have not formed. Check: correct network statements, no passive interface on the neighbor-facing link, matching area IDs, and matching subnet masks.
+
+8. The `ip ospf [process-id] area [area-id]` interface command is an alternative to the `network` command. It directly places that interface in OSPF for that process and area. Many network engineers prefer this method because it avoids wildcard mask errors.
+
+---
+
+## 9. Study Checklist
+
+Work through each item before taking the quiz.
+
+- [ ] Write the OSPF neighbor state progression from memory (all seven states)
+- [ ] Calculate the wildcard mask for /30, /28, /27, /25, and /24
+- [ ] Write the full OSPF configuration for a two-router topology using both the network command and the ip ospf interface command methods
+- [ ] Explain DR/BDR election rules and which state DROthers reach with each other
+- [ ] Identify five reasons OSPF neighbors fail to form and the fix for each
+- [ ] Explain why passive-interface is used and what it does (and does not) affect
+- [ ] Complete the Module 08 Packet Tracer lab activity
+- [ ] Post your Module 08 discussion response by Wednesday at 11:59 PM
+
+---
+
+## Required Study Resources
+
+- Cisco CCNA certification training information: cisco.com/c/en/us/training-events/training-certifications
+- Free CCNA study notes and video summaries: professormesser.com

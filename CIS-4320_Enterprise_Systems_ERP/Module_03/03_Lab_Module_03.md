@@ -1,37 +1,186 @@
-# Lab Activity: Module 03 - ERP Selection & Vendor Landscape
-## Course: CIS-4320_Enterprise_Systems_ERP (Salesforce Certified Associate / SAP Certified Associate)
+# Lab Activity: Module 03 - ERP Selection and Vendor Landscape
+
+## Course: CIS-4320 Enterprise Systems and ERP | Texas Wesleyan University
+
+## Instructor: Professor Nash
+
+## Certification Alignment: Salesforce Certified Associate | SAP Certified Associate
 
 ---
 
-## Objective
-Configure and verify systems matching the operational parameters of **ERP Selection & Vendor Landscape**.
+## Lab Overview
+
+This lab places you in the role of a junior business systems analyst assisting a company through the ERP vendor selection process. You will define selection criteria, build a vendor scoring matrix, calculate a simplified TCO comparison, and draft a vendor recommendation memo. All work is analytical and document-based.
+
+**Estimated Time:** 90 minutes
+
+**Submission:** Upload to Canvas under "Lab 03 — ERP Selection and Vendor Landscape."
 
 ---
 
-## Prerequisites
-*   Ensure you have access to a terminal or a runtime environment matching the course requirements (e.g., Linux, macOS, Windows, or a cloud/web terminal).
-*   Ensure you have administrative privileges if required to install packages or configure system services.
+## Learning Objectives
+
+By completing this lab you will be able to:
+
+- Define weighted ERP selection criteria appropriate to a given company profile
+- Apply a structured vendor scoring matrix to compare ERP candidates
+- Calculate a simplified 5-year TCO comparison between SaaS and on-premise deployment
+- Distinguish between RFI, RFP, SOW, and SLA in a procurement scenario
+- Justify a vendor recommendation in writing using selection criteria evidence
 
 ---
 
-## Step-by-Step Instructions
-1. **Compare ERP hosting scenarios (SaaS vs On-premise)**
-   * *Instruction:* Execute this step inside your terminal environment. Verify the command completes without errors.
-2. **Calculate TCO parameters for ERP proposals**
-   * *Instruction:* Execute this step inside your terminal environment. Verify the command completes without errors.
-3. **Draft vendor evaluation forms**
-   * *Instruction:* Execute this step inside your terminal environment. Verify the command completes without errors.
+## Scenario Background
+
+**Company:** Cornerstone Textile Group
+**Industry:** Apparel manufacturing and wholesale distribution
+**Size:** 1,200 employees; $220 million annual revenue
+**Locations:** Fort Worth (HQ, manufacturing), Dallas (distribution), Austin (sales office)
+**Current systems:** QuickBooks for finance, a custom Access database for inventory, a standalone HR system, and Salesforce Sales Cloud for the sales team
+
+Cornerstone's CEO has approved a budget of $3.5 million over the first two years for ERP implementation. The company is growing at 18% annually and expects to add two distribution centers in the next 3 years. Leadership priorities are:
+
+1. Real-time inventory visibility across all locations
+2. Integration with the existing Salesforce Sales Cloud instance
+3. Automated financial consolidation for the parent company's board reporting
+4. Scalability for rapid geographic expansion
+5. Minimize disruption to the sales team's Salesforce workflow
+
+The IT director wants a cloud-first solution to avoid new server infrastructure. The CFO is concerned about long-term costs and wants a clear 5-year TCO comparison.
 
 ---
 
-## Troubleshooting Guide
-*   *Error:* `Permission Denied`
-    * *Fix:* Remember to run administrative command sequences using `sudo` or execute with administrative privileges (e.g., Run as Administrator on Windows).
-*   *Error:* `Command Not Found`
-    * *Fix:* Verify your environmental path settings, or double-check if the utility package is installed.
+## Part A: Selection Criteria Definition (20 points)
+
+### A-1: Weighted Criteria Matrix
+
+Based on Cornerstone's profile and priorities above, define six selection criteria, assign a percentage weight to each (must total 100%), and justify each weight.
+
+Complete this table:
+
+| Criterion | Weight (%) | Justification for This Weight Given Cornerstone's Priorities |
+|---|---|---|
+| Functional fit — Inventory Management | | |
+| Functional fit — Financial Accounting | | |
+| Salesforce Integration Capability | | |
+| Total Cost of Ownership (5-year) | | |
+| Cloud/SaaS Deployment Availability | | |
+| Scalability for Multi-Location Growth | | |
+| **Total** | **100%** | |
+
+Explain your weighting rationale in 75-100 words beneath the table.
+
+### A-2: Procurement Document Sequence
+
+List the five procurement documents from this module (RFI, RFP, SOW, MSA, SLA) in the order Cornerstone should use them. For each, write one sentence describing what Cornerstone would include in that document specific to their situation.
 
 ---
 
-## Deliverables
-1. Document your completed steps with screenshots or terminal output logs showing successful execution.
-2. Submit your completion report to your Canvas LMS assignment portal for grading.
+## Part B: Vendor Scoring (30 points)
+
+### B-1: Score Three Vendors
+
+Score the following three vendors against Cornerstone's six criteria using a 1-100 scale. You must justify each score with 1-2 sentences of reasoning based on the vendor's known market strengths and weaknesses relative to Cornerstone's needs.
+
+The three vendors to score:
+
+- **Vendor A:** SAP S/4HANA Cloud Public Edition (SaaS, multi-tenant)
+- **Vendor B:** Microsoft Dynamics 365 Finance and Supply Chain (SaaS on Azure)
+- **Vendor C:** Oracle Cloud ERP (SaaS)
+
+Use this table. Show your weighted score calculation for each vendor.
+
+| Criterion | Weight | Vendor A Raw Score | Vendor A Weighted | Vendor B Raw Score | Vendor B Weighted | Vendor C Raw Score | Vendor C Weighted |
+|---|---|---|---|---|---|---|---|
+| Inventory Management Fit | | | | | | | |
+| Financial Accounting Fit | | | | | | | |
+| Salesforce Integration | | | | | | | |
+| 5-Year TCO | | | | | | | |
+| SaaS Deployment | | | | | | | |
+| Scalability | | | | | | | |
+| **Weighted Total** | **100%** | | | | | | |
+
+For each vendor score, write your reasoning in a separate section below the table (one sentence per criterion per vendor).
+
+### B-2: Scoring Sensitivity Check
+
+Choose the criterion where you are least confident in your scoring. Explain what information you would seek from each vendor (via RFP response or demo) to improve confidence in that score.
+
+---
+
+## Part C: TCO Analysis (30 points)
+
+### C-1: Five-Year TCO Comparison
+
+Complete a simplified 5-year TCO comparison for SAP S/4HANA Cloud Public Edition (SaaS) versus a hypothetical on-premise alternative. Use the following assumptions (you may adjust with justification):
+
+**SaaS (S/4HANA Cloud Public Edition):**
+
+- Year 1 subscription: $240,000 (1,200 users at $200/user/year average)
+- Implementation labor (one-time): $1,800,000
+- Training (one-time): $120,000
+- Years 2-5 subscription: $240,000/year each
+- Infrastructure: $0 (vendor-managed)
+- Upgrade projects: $0 (automatic)
+
+**On-Premise (hypothetical):**
+
+- Perpetual license (one-time): $900,000
+- Implementation labor (one-time): $2,100,000
+- Hardware procurement (one-time): $350,000
+- Annual maintenance (18% of license): $162,000/year
+- DBA and IT staffing (annual): $180,000/year
+- Major upgrade project in Year 4: $600,000
+- Training (one-time): $150,000
+
+Build a year-by-year table for both options (Year 0 through Year 5). Calculate:
+
+- Annual cost for each option each year
+- Running cumulative total for each option each year
+- The year in which SaaS cumulative cost becomes lower than on-premise cumulative cost
+
+### C-2: TCO Narrative
+
+In 150-200 words, summarize what the TCO analysis reveals for Cornerstone's CFO. Address:
+
+- What year does the break-even point occur?
+- What factors drive the on-premise cost higher over time?
+- Given Cornerstone's cloud-first preference and growth trajectory, which model do you recommend and why?
+
+---
+
+## Part D: Recommendation Memo (20 points)
+
+### D-1: Vendor Recommendation
+
+Write a 250-300 word executive memo addressed to Cornerstone's CEO recommending one of the three vendors from Part B. Your memo must:
+
+- State the recommended vendor and the top two reasons for the recommendation
+- Reference the weighted score from your matrix
+- Address the CFO's TCO concern with one specific point from Part C
+- Identify one risk of your recommendation and how it should be mitigated
+- Use formal business writing (no informal language, no bullet points in the memo body)
+
+---
+
+## Grading Rubric
+
+| Section | Points | Criteria |
+|---|---|---|
+| A-1: Criteria matrix completed with weights and justifications | 12 | Weights sum to 100%, each weight justified with reference to company priorities |
+| A-2: Procurement document sequence | 8 | Correct order, scenario-specific sentence for each document |
+| B-1: Vendor scoring table with reasoning | 20 | Scores defensible, reasoning references vendor strengths/weaknesses, weighted totals calculated correctly |
+| B-2: Sensitivity check | 10 | Identifies uncertain criterion, specifies information to seek from RFP/demo |
+| C-1: Year-by-year TCO table | 18 | Both models correctly built, cumulative totals accurate, break-even year identified |
+| C-2: TCO narrative | 12 | 150-200 words, addresses break-even, cost drivers, and recommendation with rationale |
+| D-1: Executive recommendation memo | 20 | 250-300 words, formal register, references matrix score and TCO, identifies and mitigates one risk |
+| **Total** | **100** | |
+
+---
+
+## Submission Instructions
+
+1. Compile all responses into a single document.
+2. Name your file: `Lab03_LastName_FirstName.pdf`
+3. Upload to Canvas under "Lab 03 — ERP Selection and Vendor Landscape."
+4. Deadline: See course schedule in Canvas. Late submissions lose 10 points per day.

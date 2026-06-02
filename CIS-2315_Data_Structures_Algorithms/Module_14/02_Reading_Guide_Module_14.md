@@ -1,62 +1,297 @@
-# Reading Guide: Module 14 – Greedy Algorithms
-## Course: CIS-2315 Data Structures & Algorithms (Technical Interview Readiness)
+# Reading Guide: Module 14 — Dynamic Programming Basics
+
+## Course: CIS-2315 Data Structures & Algorithms
+
+**Certification Alignment:** Technical Interview Readiness (LeetCode / HackerRank)
 
 ---
 
-### Introduction
-Welcome to **Module 14 – Greedy Algorithms**! A greedy algorithm makes the locally optimal choice at each step with the hope that this leads to a globally optimal solution. Greedy algorithms are elegant and efficient when they work — but they fail silently when they do not, and the critical skill is proving (or disproving) that a greedy strategy is correct for a specific problem. Interviews test your ability to propose a greedy solution and justify it, not just code it.
+## Introduction
 
-This module covers the conditions that make greedy algorithms correct (exchange argument, matroid structure), the most common greedy interview problems, and the key contrast between greedy and DP.
-
----
-
-### 1. High-Yield Glossary
-
-*   **Greedy algorithm**: An algorithm that builds a solution by making the choice that looks best at the current step, never reconsidering past decisions. Runs in a single forward pass, typically O(n log n) after an initial sort or O(n) without sorting.
-
-*   **Greedy choice property**: A problem has this property if a globally optimal solution can always be constructed by making locally optimal (greedy) choices. Proving this property is what justifies using a greedy algorithm over DP.
-
-*   **Exchange argument**: A common proof technique for greedy correctness: assume a non-greedy optimal solution exists, then show that swapping its choice for the greedy choice does not make it worse — eventually converting it to the greedy solution while maintaining optimality.
-
-*   **Activity selection problem**: A classic greedy problem: given intervals with start and end times, find the maximum number of non-overlapping intervals. The greedy strategy — always select the interval with the earliest end time — is provably optimal.
-
-*   **Interval scheduling / merging**: Problems involving intervals often have greedy solutions. Key pattern: sort by start time (for merging) or end time (for maximizing non-overlapping count), then make one-pass decisions.
-
-*   **Fractional knapsack**: A variant of the knapsack problem where items can be divided into fractions. The greedy strategy (sort by value-to-weight ratio, take as much as possible of the highest-ratio item) gives the optimal solution. The 0/1 knapsack (no fractions) requires DP.
-
-*   **Greedy vs. DP**: Greedy makes one irrevocable choice per step; DP explores all possibilities by storing subproblem solutions. Use greedy when the greedy choice property holds; use DP when it does not.
+Dynamic programming (DP) is a method for solving optimization and counting problems by breaking them into overlapping subproblems, solving each subproblem once, and combining the results. It is the correct approach when two structural properties hold: **optimal substructure** and **overlapping subproblems**. Where greedy makes one local choice and never revisits it, DP considers all choices and picks the best via stored subproblem answers. This module covers the foundations of DP: the two required properties, memoization versus tabulation, and four canonical problems — Fibonacci, Coin Change, House Robber, and Longest Common Subsequence — plus the 0/1 knapsack problem that greedy (Module 13) cannot solve.
 
 ---
 
-### 2. Certification Exam Tips
-*   **Always justify your greedy:** In an interview, state which greedy property you're using and why. "I sort by X because taking the smallest/earliest/cheapest first is always optimal because..." — an unjustified greedy answer looks like guessing.
-*   **Sorting first is the most common greedy setup:** Jump Game, Merge Intervals, Meeting Rooms, Task Scheduler — nearly all interval and scheduling greedy problems start with sorting.
-*   **The classic trap: Greedy fails for 0/1 knapsack:** If you cannot break items, greedy by value/weight ratio does not work. This is a common interview trap — mention DP is required when items are indivisible.
-*   **Jump Game (LeetCode #55) is the canonical greedy problem:** Track the maximum reachable index as you iterate. O(n) time, O(1) space — much simpler than a DP solution and provably equivalent.
-*   **Huffman coding = greedy on a priority queue:** Build an optimal prefix-free code by always merging the two lowest-frequency symbols first using a min-heap. The correctness proof is an exchange argument.
-*   **Study Resource:** [Greedy Algorithms – Algorithms by Jeff Erickson, Chapter 4](https://jeffe.cs.illinois.edu/teaching/algorithms/book/04-greedy.pdf) — a free open-access chapter with formal greedy proofs for interval scheduling, Huffman coding, and MST algorithms.
+## 1. Two Properties Required for DP
+
+### Optimal Substructure
+
+The optimal solution to the problem contains optimal solutions to its subproblems.
+
+- Shortest path: the shortest path A→C through B consists of the shortest A→B path and the shortest B→C path.
+- Coin change: the minimum coins for amount `i` using coin `c` is `1 + minimum coins for amount i-c`.
+
+If optimal substructure does not hold, DP cannot be applied.
+
+### Overlapping Subproblems
+
+The same subproblems recur multiple times in a naive recursive solution.
+
+- Fibonacci: `fib(5)` calls `fib(4)` and `fib(3)`; `fib(4)` calls `fib(3)` again. Without caching, `fib(3)` is recomputed.
+- Merge sort does NOT have overlapping subproblems — each recursive call operates on a distinct subarray.
+
+DP stores subproblem answers (memoization or tabulation) to avoid recomputation.
 
 ---
 
-### Required Readings & Videos
-*   **Required Reading:** [Greedy Algorithms – Algorithms (Jeff Erickson), Chapter 4](https://jeffe.cs.illinois.edu/teaching/algorithms/book/04-greedy.pdf) — covers the exchange argument proof technique, activity selection, fractional knapsack, and Huffman coding with rigorous analysis.
-*   **Required Video:** [Greedy – NeetCode on YouTube](https://www.youtube.com/watch?v=lfQvPHGtu6Q) — a 20-minute interview-focused video covering Jump Game, Merge Intervals, and Gas Station with greedy justification and LeetCode solutions.
+## 2. Two DP Styles: Memoization and Tabulation
+
+### Memoization (Top-Down)
+
+Write the natural recursive solution, then add a cache. Check the cache before computing; store the result after computing.
+
+```python
+def fib_memo(n, memo={}):
+    if n in memo:
+        return memo[n]
+    if n <= 1:
+        return n
+    memo[n] = fib_memo(n-1, memo) + fib_memo(n-2, memo)
+    return memo[n]
+```
+
+- Computes only the subproblems that are actually needed.
+- Preserves the recursive structure — easier to write from the recurrence.
+- Risk: deep recursion may hit Python's default limit (~1000 calls).
+
+### Tabulation (Bottom-Up)
+
+Fill a table iteratively from the smallest subproblems to the largest.
+
+```python
+def fib_tab(n):
+    if n <= 1:
+        return n
+    dp = [0] * (n + 1)
+    dp[1] = 1
+    for i in range(2, n + 1):
+        dp[i] = dp[i-1] + dp[i-2]
+    return dp[n]
+```
+
+- No recursion — no stack depth limit.
+- Slightly less intuitive but preferred for production code and large inputs.
+- Can often be space-optimized by keeping only the last few values.
+
+### Comparison
+
+| Property | Memoization | Tabulation |
+|---|---|---|
+| Approach | Top-down, recursive | Bottom-up, iterative |
+| Cache | Dictionary or array | Array (dp table) |
+| Subproblems computed | Only needed ones | All subproblems |
+| Recursion depth risk | Yes (Python limit) | No |
+| Space optimization | Harder | Usually straightforward |
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will:
-*   **Solve LeetCode #55 (Jump Game)** using the greedy max-reach approach — track the farthest reachable index in O(n).
-*   **Solve LeetCode #56 (Merge Intervals)** — sort by start time, then make greedy merge decisions in one pass.
-*   **Solve LeetCode #435 (Non-overlapping Intervals)** — minimum removals to eliminate overlaps (greedy: sort by end time, keep intervals with earliest end).
-*   **Compare LeetCode #322 (Coin Change)** using greedy vs. DP: demonstrate with a counterexample (coins = [1, 3, 4], amount = 6) that greedy fails and DP is required.
+## 3. Fibonacci
+
+```python
+# Space-optimized tabulation — O(n) time, O(1) space
+def fib(n):
+    if n <= 1:
+        return n
+    prev2, prev1 = 0, 1
+    for _ in range(2, n + 1):
+        curr = prev1 + prev2
+        prev2, prev1 = prev1, curr
+    return prev1
+```
+
+**Recurrence:** `fib(n) = fib(n-1) + fib(n-2)`, base cases `fib(0)=0`, `fib(1)=1`.
+
+Naive recursion is O(2^n). Memoization reduces it to O(n) by caching. Tabulation is O(n) time, O(n) space. Space-optimized tabulation is O(n) time, O(1) space — keep only the previous two values.
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and be able to explain each in your own words.
-- [ ] Read Chapter 4 of Algorithms by Jeff Erickson.
-- [ ] Watch the NeetCode Greedy video.
-- [ ] Solve LeetCode #55, #56, and #435.
-- [ ] Construct and document a counterexample showing greedy fails for 0/1 knapsack.
-- [ ] Proceed to the Module 14 Quiz.
+## 4. Coin Change (LeetCode #322)
+
+**Problem:** Minimum number of coins to make a target amount. Return -1 if impossible.
+
+**Recurrence:** `dp[i] = min(dp[i-c] + 1)` for each coin `c ≤ i`.
+
+**Base case:** `dp[0] = 0`.
+
+```python
+def coin_change(coins, amount):
+    """
+    Time: O(amount * len(coins)), Space: O(amount)
+    """
+    dp = [float('inf')] * (amount + 1)
+    dp[0] = 0
+    for i in range(1, amount + 1):
+        for coin in coins:
+            if coin <= i:
+                dp[i] = min(dp[i], dp[i - coin] + 1)
+    return dp[amount] if dp[amount] != float('inf') else -1
+```
+
+**Key insight:** For each amount `i`, we try every coin and take the minimum. The table is built left to right — by the time we compute `dp[i]`, `dp[i-c]` for all coins `c` is already computed.
+
+**Coin Change II (LeetCode #518):** Number of ways (not minimum count) to make the amount. Different recurrence: `dp[i] += dp[i-c]`. Initialize `dp[0] = 1`.
+
+---
+
+## 5. Climbing Stairs (LeetCode #70)
+
+**Problem:** `n` stairs; each step can climb 1 or 2. How many distinct ways to reach the top?
+
+**Recurrence:** `dp[i] = dp[i-1] + dp[i-2]` (Fibonacci variant).
+
+```python
+def climb_stairs(n):
+    """Time: O(n), Space: O(1)"""
+    if n <= 2:
+        return n
+    prev2, prev1 = 1, 2
+    for _ in range(3, n + 1):
+        curr = prev1 + prev2
+        prev2, prev1 = prev1, curr
+    return prev1
+```
+
+This is identical to Fibonacci with `dp[1]=1, dp[2]=2`. Every distinct way to reach stair `i` either comes from stair `i-1` (one step) or stair `i-2` (two steps).
+
+---
+
+## 6. House Robber (LeetCode #198)
+
+**Problem:** Houses in a line with amounts. Cannot rob adjacent houses. Maximize total.
+
+**Recurrence:** `dp[i] = max(dp[i-1], dp[i-2] + nums[i])`.
+
+At each house: either skip it (best result without this house) or rob it (best result from two houses back, plus this house's value).
+
+```python
+def rob(nums):
+    """Time: O(n), Space: O(1)"""
+    prev2, prev1 = 0, 0
+    for num in nums:
+        curr = max(prev1, prev2 + num)
+        prev2, prev1 = prev1, curr
+    return prev1
+```
+
+**House Robber II (LeetCode #213):** Houses arranged in a circle — first and last are adjacent. Solution: run House Robber I twice: once on `nums[:-1]` and once on `nums[1:]`, take the max.
+
+---
+
+## 7. Longest Common Subsequence (LeetCode #1143)
+
+**Problem:** Length of the longest subsequence common to two strings (maintains order, not necessarily contiguous).
+
+**Recurrence:**
+
+```text
+dp[i][j] = dp[i-1][j-1] + 1        if text1[i-1] == text2[j-1]
+dp[i][j] = max(dp[i-1][j], dp[i][j-1])    otherwise
+```
+
+```python
+def longest_common_subsequence(text1, text2):
+    """Time: O(m*n), Space: O(m*n)"""
+    m, n = len(text1), len(text2)
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if text1[i-1] == text2[j-1]:
+                dp[i][j] = dp[i-1][j-1] + 1
+            else:
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+    return dp[m][n]
+```
+
+**Table for `'abcde'` / `'ace'`:**
+
+```text
+    ''  a  c  e
+''   0  0  0  0
+a    0  1  1  1
+b    0  1  1  1
+c    0  1  2  2
+d    0  1  2  2
+e    0  1  2  3
+```
+
+LCS length = 3 (`'ace'`).
+
+---
+
+## 8. 0/1 Knapsack
+
+**Subproblem:** `dp[i][w]` = maximum value using the first `i` items with weight capacity `w`.
+
+**Recurrence:**
+
+```text
+dp[i][w] = dp[i-1][w]                                   if items[i-1].weight > w
+dp[i][w] = max(dp[i-1][w], dp[i-1][w-weight] + value)   otherwise
+```
+
+```python
+def knapsack_01(items, capacity):
+    """
+    items: list of (value, weight) tuples.
+    Time: O(n * capacity), Space: O(n * capacity)
+    """
+    n = len(items)
+    dp = [[0] * (capacity + 1) for _ in range(n + 1)]
+    for i in range(1, n + 1):
+        value, weight = items[i-1]
+        for w in range(capacity + 1):
+            dp[i][w] = dp[i-1][w]
+            if weight <= w:
+                dp[i][w] = max(dp[i][w], dp[i-1][w - weight] + value)
+    return dp[n][capacity]
+```
+
+This correctly finds B+C = 220 for the Module 13 counterexample (capacity=50, items A(60,10), B(100,20), C(120,30)).
+
+---
+
+## 9. Interview Exam Tips
+
+1. **Identify the subproblem first** — define `dp[i]` (or `dp[i][j]`) precisely before writing code. "dp[i] = minimum coins to make amount i" is a complete definition. "dp[i] = something about coins" is not.
+
+2. **State the recurrence explicitly** — write `dp[i] = ...` as a formula before coding. If you cannot state the recurrence, you do not yet understand the problem.
+
+3. **Base cases are not optional** — missing a base case is the single most common DP bug. For 1D DP: `dp[0]`. For 2D DP: the entire first row and first column.
+
+4. **Memoization for interviews, tabulation for production** — in an interview, memoization is faster to write and easier to explain from the recurrence. In production code, tabulation avoids recursion depth issues.
+
+5. **Coin Change vs Climbing Stairs** — both are 1D DP, but different recurrences. Coin Change minimizes count: `dp[i] = min(dp[i-c]+1)`. Climbing Stairs counts ways: `dp[i] = dp[i-1] + dp[i-2]`. Don't conflate them.
+
+6. **LCS is the canonical 2D DP problem** — interviewers use it to test whether candidates can build a 2D table and trace the recurrence correctly. Practice filling the table by hand.
+
+7. **Space optimization** — most 1D DP can be reduced to O(1) (Fibonacci, House Robber, Climbing Stairs). 2D DP can often be reduced to O(n) (LCS: keep only two rows). Mention this in interviews.
+
+8. **DP vs. greedy** — when you see "minimum," "maximum," or "number of ways" with interdependent choices, think DP. When you see "schedule," "select maximum non-overlapping," or "first fit," think greedy first. If greedy has a simple correctness argument, use it. If not, use DP.
+
+---
+
+## 10. Complexity Summary
+
+| Problem | Time | Space | Notes |
+|---|---|---|---|
+| Fibonacci | O(n) | O(1) | Space-optimized tabulation |
+| Coin Change | O(amount × coins) | O(amount) | LeetCode #322 |
+| Climbing Stairs | O(n) | O(1) | Fibonacci variant |
+| House Robber | O(n) | O(1) | Two-variable rolling |
+| LCS | O(m×n) | O(m×n) | Reducible to O(n) rows |
+| 0/1 Knapsack | O(n × W) | O(n × W) | Reducible to O(W) one row |
+
+---
+
+## 11. Study Checklist
+
+- [ ] Watch the Module 14 video lecture by Professor Nash.
+- [ ] Implement `fib_memo` and `fib_tab` from scratch. Verify `fib(10) = 55`.
+- [ ] Implement `coin_change` and trace `coin_change([1,5,6,9], 11)`.
+- [ ] Implement `climb_stairs` and verify `climb_stairs(5) = 8`.
+- [ ] Implement `rob` and trace `rob([2,7,9,3,1]) = 12`.
+- [ ] Implement `longest_common_subsequence` and fill the table for `'abcde'`/`'ace'`.
+- [ ] Implement `knapsack_01` and verify it returns 220 for the Module 13 counterexample.
+- [ ] Complete the Module 14 Lab.
+- [ ] Complete the Module 14 Quiz.
+- [ ] Solve LeetCode #70, #322, #198, #1143.

@@ -1,57 +1,182 @@
-# Reading Guide: Module 06 - Data Flow Diagrams (DFDs) and Entity-Relationship Diagrams (ERDs)
-## Course: CIS-3312 Systems Analysis & Design (IIBA ECBA)
+# Reading Guide: Module 06 - Data Flow Diagrams and Entity-Relationship Diagrams
+
+**Course:** CIS-3312 Systems Analysis and Design
+**Certification Alignment:** IIBA ECBA (Entry Certificate in Business Analysis)
+**Prepared by:** Professor Nash | Texas Wesleyan University
 
 ---
 
-### Introduction
-Welcome to **Module 06 – Data Flow Diagrams and Entity-Relationship Diagrams**! This module covers two of the most foundational visual modeling techniques in systems analysis: DFDs, which model how data moves through a system, and ERDs, which model the structure of data the system stores.
+## Introduction
 
-Together, these diagrams bridge the requirements and design phases. DFDs help analysts understand and communicate current and future-state processes from a data-movement perspective. ERDs lay the conceptual groundwork for database design. Both are frequently tested on the IIBA ECBA exam and are practical tools you will use throughout your BA career.
-
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **Data Flow Diagram (DFD)**: A Data Flow Diagram is a graphical representation showing how data enters, moves through, is transformed within, and exits a system. DFDs use four symbols: external entities (rectangles — sources/sinks of data outside the system), processes (circles or rounded rectangles — transformations that act on data), data stores (open-ended rectangles — repositories where data is held at rest), and data flows (arrows — paths along which data moves). DFDs are leveled: a Context Diagram (Level 0) shows the entire system as one process; Level 1 decomposes it into major sub-processes; Level 2 further decomposes each Level 1 process.
-
-*   **Context Diagram (Level 0 DFD)**: A context diagram is the highest-level DFD, showing the entire system as a single process bubble, all external entities that interact with it, and the data flows between them. It defines the system boundary and scope without showing any internal details. Context diagrams are excellent for stakeholder communication because they are simple and immediately show what data comes into and out of the system.
-
-*   **Entity-Relationship Diagram (ERD)**: An Entity-Relationship Diagram is a data modeling technique that shows the entities (objects or concepts) in a system's domain, the attributes of each entity, and the relationships between entities. ERDs are the conceptual blueprint from which database schemas are derived. The Chen notation uses diamonds for relationships; the Crow's Foot notation uses line endings to indicate cardinality, and is most common in database design practice.
-
-*   **Entity**: In an ERD, an entity is a distinct, real-world object or concept about which the system stores data. Entities become tables in a relational database. Examples include Customer, Order, Product, and Employee. A *strong entity* can be uniquely identified by its own attributes; a *weak entity* depends on a related strong entity for its unique identification.
-
-*   **Cardinality**: Cardinality describes the numerical relationship between instances of two related entities — specifically, how many instances of one entity can be associated with how many instances of another. Common cardinalities include one-to-one (1:1), one-to-many (1:N), and many-to-many (M:N). Correctly identifying cardinality is essential because it drives the physical database design (which table holds the foreign key, and when a junction/bridge table is needed).
-
-*   **Data Dictionary**: A data dictionary (also called a data repository) is a structured catalog that defines every data element referenced in a system, including its name, data type, format, acceptable values, and the processes or data stores that use it. A data dictionary complements DFDs by formally defining what each data flow and data store contains, removing ambiguity about data definitions.
+Module 06 covers two foundational visual modeling techniques in systems analysis and design: Data Flow Diagrams (DFDs) and Entity-Relationship Diagrams (ERDs). DFDs model how data moves through a system — the processes, stores, and flows that make up system behavior. ERDs model the structure of data the system stores — the entities, attributes, and relationships that will become the database schema. Both techniques appear on the IIBA ECBA exam and are used throughout professional BA practice.
 
 ---
 
-### 2. Certification Exam Tips
-*   **DFD Rules**: The ECBA exam tests whether you can identify violations of DFD rules. Key rules: (1) No data flow can go directly from one data store to another — a process must transform it. (2) No data flow can go directly from one external entity to another — it must pass through the system. (3) Every process must have at least one input data flow and at least one output data flow. A question may show a diagram with a rule violation and ask you to identify the error.
-*   **Level Balancing**: When a DFD is decomposed from Level 0 to Level 1, the inputs and outputs to/from the Level 0 process must match exactly the inputs and outputs in the Level 1 diagram. This is called "balancing" — the ECBA exam may present a pair of diagrams and ask whether they are correctly balanced.
-*   **ERD Cardinality Notation**: Know both Chen notation (1, N, M inside diamonds) and Crow's Foot notation (lines with crow's foot symbols for many, single lines for one, circle for optional/zero). The ECBA exam uses BABOK® terminology; Crow's Foot is more common in database design courses and tools like draw.io and Lucidchart.
-*   **Study Resource**: draw.io (free at [https://www.drawio.com/](https://www.drawio.com/)) supports both DFD and ERD diagram types with built-in shape libraries — use it to practice drawing diagrams for the lab and to build muscle memory for the notation before the exam.
+## 1. Core Vocabulary
+
+### 1.1 Data Flow Diagram (DFD)
+
+A DFD is a graphical model showing how data enters, moves through, is transformed within, and exits a system. DFDs use four symbols: external entities (rectangles), processes (circles or rounded rectangles), data stores (open-ended rectangles), and data flows (labeled arrows). DFDs are leveled — the Context Diagram (Level 0) shows the whole system; Level 1 decomposes it into major sub-processes; Level 2 decomposes each Level 1 process.
+
+### 1.2 Context Diagram
+
+A Context Diagram (Level 0 DFD) shows the entire system as a single process bubble, all external entities, and all data flows between them. It establishes system scope without revealing internal detail. Context Diagrams are ideal for stakeholder scope alignment.
+
+### 1.3 External Entity
+
+An external entity is a person, organization, or system outside the system boundary that sends data to or receives data from the system. External entities are shown as rectangles. A source sends data into the system; a sink receives data from it. An entity can be both.
+
+### 1.4 Process
+
+A process represents a transformation — the system acts on data and produces output. Every process must have at least one input data flow and at least one output data flow. A process with input but no output is a "black hole"; a process with output but no input is a "miracle" — both are DFD rule violations.
+
+### 1.5 Data Store
+
+A data store is a repository where data is held at rest within the system boundary — a database table, file, or information repository. Data stores are shown as open-ended rectangles. Data cannot flow directly between two data stores without passing through a process.
+
+### 1.6 Data Flow
+
+A data flow is a labeled arrow showing data moving between DFD symbols. Every data flow must be named with a description of the data it carries ("Customer Order," "Validated Payment"). Data cannot flow directly between two external entities.
+
+### 1.7 Level Balancing
+
+Level balancing means the inputs and outputs of a Level 0 process must match exactly the inputs and outputs shown in the Level 1 diagram. Every data flow crossing the system boundary at Level 0 must appear at Level 1. Unbalanced DFDs are a common exam trap.
+
+### 1.8 Entity-Relationship Diagram (ERD)
+
+An ERD is a data modeling diagram showing the entities (things the system stores data about), their attributes (descriptive data elements), and the relationships between entities. ERDs are the conceptual blueprint from which relational database schemas are derived.
+
+### 1.9 Entity
+
+An entity is a distinct real-world person, place, object, event, or concept about which the system stores data. Entities become tables. A strong entity has its own primary key; a weak entity depends on a related strong entity for unique identification.
+
+### 1.10 Cardinality
+
+Cardinality describes the numerical relationship between instances of two related entities: how many of one can be associated with how many of another. The three cardinalities are one-to-one (1:1), one-to-many (1:N), and many-to-many (M:N). Cardinality drives database design decisions: which table holds the foreign key and when a junction table is needed.
+
+### 1.11 Junction Table
+
+A junction table (also called an associative entity or bridge table) resolves a many-to-many relationship in a relational database by creating a new table that holds the primary keys of both related entities as foreign keys. Example: OrderLine resolves the M:N relationship between Order and Product.
+
+### 1.12 Data Dictionary
+
+A data dictionary catalogs every data element referenced in a system — name, data type, format, acceptable values, and the processes or data stores that use it. It removes ambiguity about data definitions and complements both DFDs and ERDs.
 
 ---
 
-### Required Readings & Videos
-*   **Required Reading**: BABOK® Guide v3 Techniques section — "Data Flow Diagrams" and "Data Modeling." These entries describe both techniques within the BA context. Also review the Lucidchart tutorial on ERD notation at [https://www.lucidchart.com/pages/er-diagrams](https://www.lucidchart.com/pages/er-diagrams) for a clear visual explanation of Crow's Foot notation.
-*   **Supplemental Reading**: Review the draw.io DFD and ERD shape libraries documentation at [https://www.drawio.com/](https://www.drawio.com/) — understanding the tool you will use for labs makes the notation practice more efficient.
+## 2. DFD Symbol Reference
+
+| Symbol | Shape | Represents | Rules |
+|---|---|---|---|
+| External Entity | Rectangle | Source or sink outside system boundary | Cannot connect directly to another external entity |
+| Process | Circle or rounded rectangle | Data transformation inside system | Must have at least one input and one output |
+| Data Store | Open-ended rectangle | Data at rest inside system | Cannot connect directly to another data store |
+| Data Flow | Labeled arrow | Data moving between symbols | Must be named; cannot skip symbols |
 
 ---
 
-### Lab & Activity Integration
-In this week's lab, you will:
-*   Draw a Context Diagram (Level 0 DFD) for a provided scenario (online book ordering system), identifying all external entities and major data flows.
-*   Decompose the context diagram into a Level 1 DFD with at least three internal processes and two data stores.
-*   Draw an ERD for the same scenario using Crow's Foot notation, identifying at least four entities, their key attributes, and the cardinality of each relationship.
+## 3. DFD Leveling Structure
+
+| Level | Name | Content |
+|---|---|---|
+| Level 0 | Context Diagram | One process bubble (entire system), all external entities, all system boundary data flows |
+| Level 1 | System DFD | Major sub-processes, data stores, internal data flows; must balance with Level 0 |
+| Level 2 | Process DFD | Decomposition of one Level 1 process; must balance with parent Level 1 process |
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and write your own one-sentence version of each definition.
-- [ ] Read BABOK® Guide v3 Techniques — "Data Flow Diagrams" and "Data Modeling."
-- [ ] Review the Lucidchart ERD tutorial at [https://www.lucidchart.com/pages/er-diagrams](https://www.lucidchart.com/pages/er-diagrams).
+## 4. DFD Rule Violations (Commonly Tested)
+
+| Violation Name | Description | Fix |
+|---|---|---|
+| Data store to data store | Arrow goes directly between two data stores | Add a process in between |
+| External entity to external entity | Arrow goes directly between two external entities | Route through system processes |
+| Black hole | Process has input but no output | Add output data flow or data store |
+| Miracle | Process has output but no input | Add input data flow |
+| Unnamed data flow | Arrow carries no label | Name the data being carried |
+| Unbalanced diagram | Level 1 inputs/outputs do not match Level 0 | Add or remove flows to restore balance |
+
+---
+
+## 5. ERD Crow's Foot Notation Reference
+
+| Symbol | Meaning | Example |
+|---|---|---|
+| Single vertical line (\|) | Exactly one (mandatory) | Each Order belongs to exactly one Customer |
+| Circle (O) | Zero (optional) | A Customer may have zero or more Orders |
+| Crow's foot (three-pronged) | Many | One Customer places many Orders |
+| Crow's foot + circle | Zero or many (optional many) | Order may contain zero or many OrderLines |
+| Crow's foot + line | One or many (mandatory many) | Invoice must have one or many LineItems |
+| Single line + line | Exactly one (mandatory one) | OrderLine belongs to exactly one Order |
+
+---
+
+## 6. Cardinality Comparison and Database Design Impact
+
+| Cardinality | Definition | Database Implementation |
+|---|---|---|
+| 1:1 | One instance of A associates with exactly one instance of B | Foreign key in either table; often merged into one table |
+| 1:N | One instance of A associates with many instances of B; each B associates with exactly one A | Foreign key on the "many" (N) side |
+| M:N | Many instances of A associate with many instances of B | Requires a junction table with foreign keys from both A and B |
+
+---
+
+## 7. DFD vs. ERD Comparison
+
+| Dimension | DFD | ERD |
+|---|---|---|
+| Models | Data in motion — how data moves and transforms | Data at rest — what data is stored and how it is related |
+| Primary symbols | External entity, process, data store, data flow | Entity, attribute, relationship, cardinality notation |
+| Levels | Leveled hierarchy (0, 1, 2) | Conceptual, logical, physical stages |
+| Primary audience | Business analysts, process stakeholders | Database designers, developers |
+| BABOK technique | Data Flow Diagrams (KA 5) | Data Modeling (KA 5) |
+| Output feeds into | System design, process specifications | Database schema design |
+
+---
+
+## 8. Certification Exam Tips
+
+1. The three DFD symbols that cannot connect directly to each other are: data store to data store, external entity to external entity. Any direct connection between these must pass through a process. This rule is tested by showing a diagram with a direct connection and asking you to identify the violation.
+
+2. Level balancing is tested by showing a Level 0 and Level 1 DFD pair and asking whether they are balanced. Check: every data flow crossing the system boundary at Level 0 must appear at Level 1. Count inputs and outputs on both sides.
+
+3. Cardinality identification is tested with scenario descriptions. Practice mapping relationship descriptions to 1:1, 1:N, or M:N immediately upon reading. "One X can have many Y; each Y belongs to exactly one X" = 1:N every time.
+
+4. The M:N resolution pattern is tested. Whenever you see an M:N relationship, know that it requires a junction table. Know that the junction table holds the primary keys of both entities as foreign keys. Know common examples: Student-Course resolved by Enrollment; Order-Product resolved by OrderLine.
+
+5. The Context Diagram shows only one process bubble. If a Level 0 diagram shows more than one process, it is actually a Level 1 diagram. This distinction is directly tested.
+
+6. Crow's Foot notation uses specific line endings. The crow's foot (three prongs) means "many." A single vertical tick means "exactly one." A circle means "zero (optional)." These are combined: a crow's foot with a circle = "zero or many"; a crow's foot with a tick = "one or many."
+
+7. A data dictionary is a complement to DFDs and ERDs — it formally defines every data element referenced in the diagrams. When a question asks how to remove ambiguity about a named data flow or attribute, the answer is the data dictionary.
+
+8. Both DFD and ERD techniques appear in BABOK Guide v3 KA 5 (Requirements Analysis and Design Definition) under the Techniques section. When the exam references a "data modeling technique," it includes both. Know that the ERD is a data modeling technique and the DFD is a process/data flow modeling technique.
+
+---
+
+## 9. Required and Supplemental Reading
+
+Required reading:
+
+- BABOK Guide v3, Chapter 10 (Techniques) — Data Flow Diagrams; Data Modeling
+- BABOK Guide v3, KA 5: Requirements Analysis and Design Definition — Model Requirements task
+
+Supplemental reading:
+
+- Crow's Foot ERD notation reference at any major diagramming tool documentation (draw.io, Lucidchart)
+- Yourdon-DeMarco DFD notation reference (the standard used in most systems analysis textbooks)
+
+---
+
+## 10. Study Checklist
+
+- [ ] Draw a Context Diagram from memory for a simple scenario (3 external entities, 5 data flows).
+- [ ] Draw a Level 1 DFD from the same scenario with at least 3 processes and 2 data stores, balanced with the Level 0.
+- [ ] Identify all four DFD symbols by shape and explain the rule associated with each.
+- [ ] List the three DFD rule violations that appear most on the ECBA exam.
+- [ ] Draw an ERD using Crow's Foot notation with at least 4 entities including one M:N relationship resolved with a junction table.
+- [ ] Explain the difference between 1:N and M:N cardinality and describe the database implementation of each.
+- [ ] Define data dictionary and explain its relationship to DFDs and ERDs.
 - [ ] Watch the Module 06 video lecture.
-- [ ] Open draw.io at [https://www.drawio.com/](https://www.drawio.com/) and practice creating a simple DFD and ERD before the lab submission.
+- [ ] Complete the Module 06 lab activity.
+- [ ] Post your initial discussion response by Wednesday at 11:59 PM.

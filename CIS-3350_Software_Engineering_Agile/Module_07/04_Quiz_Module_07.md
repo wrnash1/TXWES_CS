@@ -1,103 +1,198 @@
 # Quiz: Module 07 – User Stories and Acceptance Criteria
 
-## Course: CIS-3350_Software_Engineering_Agile (Professional Scrum Master (PSM I))
+**Course:** CIS-3350 Software Engineering and Agile
+**Certification Alignment:** PSM I (Professional Scrum Master I) – Scrum.org
+**Instructor:** Professor Nash | Texas Wesleyan University
+**Total Questions:** 10 | **Points:** 10 (1 point each)
 
 ---
 
-### Question 1
+## Question 1
 
-A user story reads: "As a registered customer, I want to reset my password via email so that I can regain access to my account if I forget my credentials." Which INVEST criterion does this story most clearly demonstrate?
+Which of the following is the correct format for a user story?
 
-* A) Independent — it can be developed without relying on other stories
-* B) Valuable — it delivers clear, specific value to a named user type
-* C) Estimable — the team can size it accurately because it has acceptance criteria
-* D) Small — it will fit within a single Sprint without further splitting
+- A) The system shall allow users to reset their password via email
+- B) As a registered user, I can reset my password so that I can regain account access when I forget my credentials
+- C) Reset password feature — high priority, due Sprint 4
+- D) User password reset: CRUD operations for the auth service
 
-Correct Answer: B) The story explicitly names a user type (registered customer) and states why the feature has value (regaining account access), satisfying the Valuable criterion.
+Correct Answer: B — The correct format is "As a [user type], I can [action] so that [benefit]." It identifies the user, the capability, and the value delivered.
 
 Distractor Analysis:
 
-* *Why B is correct:* A "Valuable" story must clearly identify who benefits and why. This story does both — specifying the user role and the business/user outcome of the feature.
-* *Why A is incorrect:* Independence cannot be assessed from the story text alone; password reset likely depends on authentication infrastructure.
-* *Why C is incorrect:* Estimability requires knowing technical complexity — having acceptance criteria helps but is not shown in the story text above.
-* *Why D is incorrect:* Whether the story fits a Sprint depends on team velocity and technical complexity — not determinable from the story text alone.
+- Why A is incorrect: This is system-specification language ("the system shall"), not a user story. It lacks a user perspective and a benefit statement.
+- Why C is incorrect: This is a task title or backlog item label, not a user story. It has no format, no user, no action, and no benefit.
+- Why D is incorrect: This is a technical description of implementation work, not a user story written from the user's perspective.
 
 ---
 
-### Question 2
+## Question 2
 
-Which of the following is the most accurate definition of acceptance criteria?
+In Ron Jeffries' Three Cs model, what does "Confirmation" represent?
 
-* A) The organization-wide quality standard all Increments must meet to be considered releasable.
-* B) Specific, testable conditions agreed between the Product Owner and Developers that define when a particular user story is complete.
-* C) A list of all features the Product Owner wants delivered by the end of the product's development.
-* D) The Scrum Master's checklist used to verify that the team followed Scrum processes during the Sprint.
+- A) The Product Owner's signature approving the story for development
+- B) The acceptance criteria that define when the story is Done
+- C) The Scrum Master's confirmation that the story meets INVEST criteria
+- D) The stakeholder's verbal agreement that the story is needed
 
-Correct Answer: B)
+Correct Answer: B — "Confirmation" is the acceptance criteria — the written record of what Done means for the story, converted from the Conversation between the team and Product Owner.
 
 Distractor Analysis:
 
-* *Why B is correct:* Acceptance criteria are story-specific — they define the boundaries of a single user story and are agreed upon before work begins so both parties share a definition of done for that story.
-* *Why A is incorrect:* This describes the Definition of Done, which is an increment-level standard applied to all work — not story-specific acceptance criteria.
-* *Why C is incorrect:* This describes a feature list or product roadmap, not acceptance criteria for individual stories.
-* *Why D is incorrect:* The Scrum Master coaches process adherence but does not use a checklist to "verify" Scrum rule compliance — and acceptance criteria are about product functionality, not process.
+- Why A is incorrect: The Scrum Guide does not require Product Owner sign-off on individual stories before development; stories enter Sprints through Sprint Planning.
+- Why C is incorrect: INVEST criteria evaluation is a refinement quality tool, not the definition of Confirmation in the Three Cs model.
+- Why D is incorrect: Verbal agreement during refinement is the "Conversation" C, not the "Confirmation" C.
 
 ---
 
-### Question 3
+## Question 3
 
-A team has the following user story: "As a user, I want the system to be fast." Which INVEST criterion does this story fail most critically?
+Which of the following is the best example of an acceptance criterion written in Given/When/Then format?
 
-* A) Independent — it cannot be developed in isolation from other stories
-* B) Negotiable — the Product Owner refuses to discuss scope changes
-* C) Testable — there is no objective, verifiable condition to confirm the story is complete
-* D) Small — the story is too large to complete in a single Sprint
+- A) The login button must be blue with a 14px font and rounded corners
+- B) Users should be able to log in easily and quickly
+- C) Given a registered user is on the login page, When they enter valid credentials and click Submit, Then they are redirected to the dashboard within two seconds
+- D) The authentication service must implement JWT tokens and refresh logic
 
-Correct Answer: C)
+Correct Answer: C — This criterion uses the correct Given/When/Then structure, describes observable behavior, and is specific and testable.
 
 Distractor Analysis:
 
-* *Why C is correct:* "Fast" is subjective and not measurable. Without a specific performance threshold (e.g., "page loads in under 2 seconds for 95% of requests"), the story cannot be verified as complete — it fails the Testable criterion.
-* *Why A is incorrect:* Performance improvements typically do depend on other work, but the most critical failure here is testability — not independence.
-* *Why B is incorrect:* Negotiability refers to whether story details are open for discussion before the Sprint; the problem here is vague scope, not a Product Owner refusing to negotiate.
-* *Why D is incorrect:* The story may or may not be too large — that is indeterminate without a specific scope. The primary failure is that it cannot be tested as written.
+- Why A is incorrect: This is a UI design specification, not a behavioral acceptance criterion. It describes visual appearance, not user-observable behavior.
+- Why B is incorrect: "Easily and quickly" are subjective and untestable. A good acceptance criterion must be specific enough to write a test against.
+- Why D is incorrect: This is a technical implementation decision, not a user-facing acceptance criterion.
 
 ---
 
-### Question 4
+## Question 4
 
-What is the key difference between a user story's acceptance criteria and the team's Definition of Done?
+What is the key difference between acceptance criteria and the Definition of Done?
 
-* A) Acceptance criteria are written by the Scrum Master; the Definition of Done is written by the Product Owner.
-* B) Acceptance criteria define story-specific conditions; the Definition of Done is a quality standard applied to every Increment the team produces.
-* C) The Definition of Done is optional; acceptance criteria are mandatory for all backlog items.
-* D) Acceptance criteria are set by stakeholders after Sprint Review; the Definition of Done is set before Sprint Planning.
+- A) Acceptance criteria are written by Developers; the Definition of Done is written by the Product Owner
+- B) Acceptance criteria are specific to one Product Backlog item; the Definition of Done applies to every Increment
+- C) Acceptance criteria are optional in Scrum; the Definition of Done is mandatory
+- D) Acceptance criteria cover functional requirements; the Definition of Done covers non-functional requirements
 
-Correct Answer: B)
+Correct Answer: B — Acceptance criteria define Done for a specific user story. The Definition of Done is a quality standard that every Increment must meet regardless of which stories it contains.
 
 Distractor Analysis:
 
-* *Why B is correct:* Acceptance criteria vary per story and define what makes that specific story complete. The Definition of Done is a fixed quality bar that every Increment must meet, regardless of which stories it contains.
-* *Why A is incorrect:* Acceptance criteria are collaboratively agreed between the Product Owner and Developers; the Definition of Done is created by Developers (or the organization). Neither is written by the Scrum Master alone.
-* *Why C is incorrect:* The Scrum Guide does not make the Definition of Done optional — every Increment must meet it. Acceptance criteria are also typically required for stories to be ready for Sprint Planning.
-* *Why D is incorrect:* Acceptance criteria are agreed before Sprint work begins, not set after the Sprint Review. The Definition of Done is established before Sprint Planning, not "after" anything.
+- Why A is incorrect: Acceptance criteria are developed collaboratively by the Product Owner and Developers; the DoD is primarily owned by the Developers with Scrum Team input.
+- Why C is incorrect: While the Scrum Guide does not mandate a specific format for acceptance criteria, stories without them lack the "Confirmation" needed for a clear Done state.
+- Why D is incorrect: The DoD can include both functional quality criteria (e.g., all acceptance criteria met) and non-functional criteria (e.g., code reviewed, tested). The distinction is scope (item vs. all Increments), not functional vs. non-functional.
 
 ---
 
-### Question 5
+## Question 5
 
-A large user story (epic) is estimated at 40 story points and the team's Sprint velocity is 20 points. What is the most appropriate action?
+A user story reads: "As a user, I can manage my account." Why is this problematic?
 
-* A) Extend the Sprint length to two months so the epic can be completed in a single Sprint.
-* B) Ask the Scrum Master to break the epic into sub-tasks and assign them to individual Developers.
-* C) Split the epic into smaller, independently deliverable stories that each fit within a Sprint's capacity.
-* D) Keep the epic as a single backlog item and carry it across multiple Sprints without splitting.
+- A) It uses the word "manage," which is not permitted in Scrum user stories
+- B) It is too large (an epic) to complete in one Sprint and needs to be decomposed
+- C) It does not specify the user type precisely enough
+- D) It is missing the user's name as a required field
 
-Correct Answer: C)
+Correct Answer: B — "Manage my account" encompasses profile editing, password changes, payment methods, notification preferences, and more — potentially months of work. This is an epic that must be decomposed into Sprint-sized stories.
 
 Distractor Analysis:
 
-* *Why C is correct:* Story splitting is the standard practice for making an oversized story Sprint-ready. Each resulting story should independently deliver value and be completable within a single Sprint.
-* *Why A is incorrect:* Sprints are timeboxed to one month or less — extending to two months violates the Scrum Guide's Sprint definition and removes the fast feedback loop.
-* *Why B is incorrect:* The Scrum Master does not break down stories or assign tasks to Developers. Story decomposition is a collaborative responsibility of the Product Owner and Developers.
-* *Why D is incorrect:* Carrying a single story across multiple Sprints means no Increment is delivered from that story until the end — violating the principle of delivering potentially releasable value each Sprint.
+- Why A is incorrect: There is no vocabulary restriction on user story language.
+- Why C is incorrect: While "user" is generic, the primary problem here is the story's size, not the user type specificity.
+- Why D is incorrect: User stories do not include the user's personal name; they identify a user type or role.
+
+---
+
+## Question 6
+
+Does the Scrum Guide require Product Backlog items to be written as user stories?
+
+- A) Yes — the Scrum Guide mandates the "As a / I can / so that" format for all PBIs
+- B) Yes — user stories are required, but the format is flexible
+- C) No — the Scrum Guide does not prescribe how Product Backlog items are written; user stories are a common practice, not a Scrum rule
+- D) No — the Scrum Guide prohibits user stories and requires formal use case specifications instead
+
+Correct Answer: C — The Scrum Guide makes no prescription about the format of Product Backlog items. User stories are a widely adopted practice from the XP community, but they are not a Scrum requirement.
+
+Distractor Analysis:
+
+- Why A is incorrect: The Scrum Guide does not mandate any specific format for PBIs.
+- Why B is incorrect: The Scrum Guide does not mandate user stories at all, flexible format or otherwise.
+- Why D is incorrect: The Scrum Guide neither prohibits user stories nor requires use cases.
+
+---
+
+## Question 7
+
+What is a "task" in the context of Scrum, and where does it live?
+
+- A) A task is a user story with fewer than 3 story points; it lives in the Product Backlog
+- B) A task is a specific technical activity created by Developers to implement a story; it lives in the Sprint Backlog
+- C) A task is a stakeholder request added to the backlog outside of Sprint Planning
+- D) A task is any item assigned to a specific Developer by the Scrum Master
+
+Correct Answer: B — Tasks are the implementation-level activities that Developers create during Sprint Planning to plan how they will complete a user story. They belong in the Sprint Backlog and are created and owned by the Developers.
+
+Distractor Analysis:
+
+- Why A is incorrect: Story point size does not determine whether something is a task; tasks are implementation activities, not smaller versions of user stories.
+- Why C is incorrect: Stakeholder requests enter the Product Backlog through the Product Owner, not as tasks; tasks are plan-level items within the Sprint.
+- Why D is incorrect: The Scrum Master does not assign tasks to individuals; Developers self-manage and self-assign work.
+
+---
+
+## Question 8
+
+Which story-splitting pattern is being used when an epic about "managing customer orders" is split into separate stories for creating an order, viewing order history, cancelling an order, and updating a shipping address?
+
+- A) Split by user type
+- B) Split by workflow step
+- C) Split by CRUD operations
+- D) Split by happy path vs. edge cases
+
+Correct Answer: C — Create, Read/View, Cancel (Delete), and Update are the classic CRUD operations. Splitting an epic into Create, Read, Update, and Delete stories is the CRUD splitting pattern.
+
+Distractor Analysis:
+
+- Why A is incorrect: All four stories involve the same user type (the customer); no user type distinction is being made.
+- Why B is incorrect: Workflow step splitting divides a sequential process (e.g., browse → select → add to cart → checkout); these stories are distinct operations on the same object, not sequential steps.
+- Why D is incorrect: Happy path vs. edge case splitting separates the main success scenario from error/exception handling; these four stories are not that pattern.
+
+---
+
+## Question 9
+
+A user story reads: "As a customer, I can filter search results by price range so that I can find products within my budget without scrolling through irrelevant results." A Developer proposes writing the acceptance criteria as: "The filter UI component uses a dual-handle range slider with 16px handle size and a blue color scheme." What is wrong with this acceptance criterion?
+
+- A) It is written in Given/When/Then format, which is not compatible with this story
+- B) It describes a UI implementation detail rather than a user-observable behavior, making it a design specification rather than an acceptance criterion
+- C) It does not include a "so that" clause
+- D) Acceptance criteria must be written by the Product Owner, not by Developers
+
+Correct Answer: B — Acceptance criteria should describe what the user experiences and whether the feature works correctly, not how the UI is implemented. UI design specifics belong in a design specification or wireframe, not in acceptance criteria.
+
+Distractor Analysis:
+
+- Why A is incorrect: Given/When/Then format is compatible with any story; this criterion simply is not written in any behavioral format at all.
+- Why C is incorrect: Acceptance criteria do not require a "so that" clause; that belongs in the user story itself.
+- Why D is incorrect: Acceptance criteria are developed collaboratively by the Product Owner and Developers; either party can draft them.
+
+---
+
+## Question 10
+
+Which of the following best illustrates the "Conversation" component of the Three Cs model?
+
+- A) The Product Owner writes a detailed user story on a sticky note and posts it to the Sprint Backlog
+- B) The Product Owner and Developers discuss a story during refinement to clarify edge cases, dependencies, and constraints
+- C) The Scrum Master reads the user stories aloud at Sprint Planning for the team to estimate
+- D) A stakeholder emails a list of features to the Product Owner for the next Sprint
+
+Correct Answer: B — The "Conversation" is the collaborative discussion that fills in the details of a user story beyond what the Card captures. This discussion happens during refinement and Sprint Planning and produces the understanding that the Confirmation (acceptance criteria) records.
+
+Distractor Analysis:
+
+- Why A is incorrect: Writing the story is the "Card" C — the written representation of the need.
+- Why C is incorrect: Reading stories aloud for estimation is part of Sprint Planning, not the rich Conversation that a story is meant to prompt during refinement.
+- Why D is incorrect: A stakeholder email is an input to the Product Owner's backlog management process, not the team's Conversation about a specific story.
+
+---

@@ -1,53 +1,191 @@
 # Reading Guide: Module 03 - IPv6 Addressing and Configuration
-## Course: CIS-3322_Advanced_Networking (Cisco CCNA (200-301))
+
+**Course:** CIS-3322 Advanced Networking
+**Certification Alignment:** Cisco CCNA 200-301 (Domain 1: Network Fundamentals - 20%)
+**Prepared by:** Professor Nash | Texas Wesleyan University
 
 ---
 
-### Introduction
-Welcome to **Module 03 - IPv6 Addressing and Configuration**! This week's study material focuses on the core foundations and configuration mechanics of **IPv6 Addressing and Configuration** as aligned with the **Cisco CCNA (200-301)** certification framework. Understanding these topics is essential not only for passing the certification exam but also for administering enterprise systems in real-world environments.
+## Overview
 
-As a student, you will learn the primary operational roles, command syntaxes, and troubleshooting parameters needed to design, configure, and maintain these services. We will explore how different protocols establish connections, how configurations manage resource allocation, and how security controls prevent access breaches. Make sure to complete the checklists and review the glossary terms in detail before beginning the lab activity.
-
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **IPv6 link-local vs global unicast**: Link-local addresses (FE80::/10) are automatically generated on every IPv6-enabled interface and are used only for communication within a single network segment — they are never routed. Global unicast addresses (2000::/3) are publicly routable IPv6 addresses equivalent to public IPv4 addresses, assigned either statically, through SLAAC, or via DHCPv6.
-*   **SLAAC (Stateless Address Autoconfiguration)**: A mechanism that allows IPv6 hosts to automatically configure their own global unicast address without a DHCP server. The host combines the /64 network prefix received in a Router Advertisement (RA) message with an interface identifier (derived from the MAC address via EUI-64 or randomly generated) to form a complete 128-bit address.
-*   **EUI-64 configuration**: A method of deriving a 64-bit interface identifier from a device's 48-bit MAC address. The process inserts the hex value FFFE in the middle of the MAC address and inverts the seventh bit (the universal/local bit). On Cisco routers, `ipv6 address 2001:db8::/64 eui-64` instructs the interface to generate its host portion using this method.
-*   **Static routing in IPv6**: The manual configuration of IPv6 routes using the command `ipv6 route [destination/prefix-length] [next-hop | exit-interface]`. IPv6 static routes require `ipv6 unicast-routing` to be enabled globally, and next-hop link-local addresses must specify the exit interface (e.g., `ipv6 route ::/0 GigabitEthernet0/0 FE80::1`).
+IPv6 is a mandatory topic on the CCNA 200-301 exam. This guide covers IPv6 address format, all address types tested on the exam, SLAAC, EUI-64 conversion, and the complete set of Cisco IOS configuration and verification commands. Work through the EUI-64 conversion examples by hand before the quiz.
 
 ---
 
-### 2. Certification Exam Tips
-*   **CCNA Domain:** IP Services and IP Connectivity together cover a large portion of the exam. IPv6 falls primarily under **IP Connectivity (25%)** and **Network Fundamentals (20%)**. Expect 3–5 IPv6 questions.
-*   **Common Trap:** The exam frequently confuses students between link-local (FE80::/10), unique local (FC00::/7), and global unicast (2000::/3) address types. Memorize these ranges — questions will describe an address and ask you to identify its type or valid scope.
-*   **Must-know commands:** `ipv6 unicast-routing` (global config, enables IPv6 routing), `ipv6 address [addr/prefix]` (interface config), `show ipv6 interface brief`, `show ipv6 route`, `show ipv6 neighbors` (IPv6 equivalent of ARP table).
-*   **EUI-64 trap:** The exam may give you a MAC address and ask you to compute the EUI-64 interface ID. Practice inserting FFFE and flipping bit 7. MAC 00:1A:2B:3C:4D:5E becomes 021A:2BFF:FE3C:4D5E.
-*   **Study Resource:** Watch the IPv6 addressing and configuration episodes in the Jeremy's IT Lab CCNA free playlist, which include visual breakdowns of EUI-64 conversion and SLAAC operation: [Jeremy's IT Lab CCNA Complete Course on YouTube](https://www.youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ). Search for "Jeremy's IT Lab IPv6" episodes 32–34.
+## 1. High-Yield Glossary
+
+- **IPv6:** Internet Protocol version 6. Uses 128-bit addresses written as eight groups of four hexadecimal digits. Provides approximately 3.4 x 10^38 unique addresses.
+
+- **Link-local address:** An IPv6 address in the FE80::/10 range that is automatically generated on every IPv6-enabled interface. Valid only on the local link segment — never routed. Used for Neighbor Discovery and Router Advertisement messages.
+
+- **Global unicast address:** A publicly routable IPv6 address in the 2000::/3 range. Equivalent to a public IPv4 address. Assigned statically, via SLAAC, or via DHCPv6.
+
+- **Unique local address:** An IPv6 address in the FC00::/7 range (FD00::/8 in practice) that is private and not routed on the public internet. Equivalent to RFC 1918 private IPv4 addresses.
+
+- **Multicast address:** An IPv6 address in the FF00::/8 range used to send traffic to a group of devices simultaneously. IPv6 replaces broadcast with multicast.
+
+- **SLAAC (Stateless Address Autoconfiguration):** A mechanism allowing IPv6 hosts to self-configure global unicast addresses using network prefix information received in Router Advertisement messages, without requiring a DHCPv6 server.
+
+- **Router Advertisement (RA):** An ICMPv6 message sent by routers to advertise the IPv6 prefix, default gateway, and autoconfiguration flags. Hosts use RA information to perform SLAAC.
+
+- **Router Solicitation (RS):** An ICMPv6 message sent by a host to request an immediate Router Advertisement rather than waiting for the periodic RA interval.
+
+- **EUI-64:** A method to derive a 64-bit interface identifier from a 48-bit MAC address. Steps: split the MAC at byte 3, insert FF:FE in the middle, invert bit 7 of the first byte.
+
+- **Duplicate Address Detection (DAD):** An NDP process where a host sends a Neighbor Solicitation to its own tentative address before using it. If no reply is received, the address is confirmed unique.
+
+- **NDP (Neighbor Discovery Protocol):** The IPv6 replacement for ARP. Uses ICMPv6 messages (Neighbor Solicitation and Neighbor Advertisement) to resolve IPv6 addresses to MAC addresses. Also handles Router Discovery and DAD.
+
+- **DHCPv6:** Stateful IPv6 address assignment, similar to DHCPv4. Used when SLAAC is insufficient (for example, when DNS server addresses must be distributed to hosts).
+
+- **ipv6 unicast-routing:** The Cisco IOS global configuration command that enables a router to forward IPv6 packets. Without it, the router silently drops all IPv6 traffic destined for other interfaces.
+
+- **Interface identifier:** The 64-bit right portion of a /64 IPv6 address that identifies a specific interface within the subnet. Can be derived from EUI-64, randomly generated (privacy extensions), or manually configured.
+
+- **Solicited-node multicast address:** An automatically derived multicast address used in NDP address resolution. Formed by appending the last 24 bits of an IPv6 address to the prefix FF02::1:FF00:0/104.
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the section covering **IPv6 Addressing and Configuration** in the Cisco Skills for All CCNA course. The module includes interactive address-type identification exercises and EUI-64 calculation walkthroughs: [Cisco Skills for All Portal - CCNA Guides](https://skillsforall.com/). Navigate to "CCNA: Introduction to Networks" — the IPv6 Addressing chapter.
-*   **Required Video:** Watch the IPv6 addressing and static routing episodes in the Jeremy's IT Lab CCNA complete playlist. These videos cover all address types, SLAAC, EUI-64, and Cisco IOS CLI configuration: [Jeremy's IT Lab CCNA Complete Course](https://www.youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ).
+## 2. IPv6 Address Type Reference Table
+
+| Type | Prefix | Scope | Equivalent | Notes |
+|---|---|---|---|---|
+| Global Unicast | 2000::/3 | Public internet | Public IPv4 | Routable everywhere; starts with 2 or 3 |
+| Link-Local | FE80::/10 | Single link | N/A | Auto-generated; never routed; always present |
+| Unique Local | FC00::/7 (FD::/8 common) | Organization-wide | RFC 1918 private | Not routed publicly |
+| Multicast | FF00::/8 | Various | IPv4 multicast | Replaces IPv4 broadcast |
+| Loopback | ::1/128 | Local device | 127.0.0.1 | Used for local testing |
+| Unspecified | ::/128 | N/A | 0.0.0.0 | Source address before assignment |
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Enable IPv6 routing globally: `ipv6 unicast-routing`**: Enter this command in global configuration mode on a Cisco router. Without it, the router discards IPv6 packets rather than forwarding them, even if interfaces have IPv6 addresses assigned.
-*   **Configure interface with IPv6: `ipv6 address 2001:db8::1/64`**: Assign a static global unicast address to a router interface. Verify the assignment and confirm the auto-generated link-local address using `show ipv6 interface [interface-id]`.
-*   **Verify IPv6 neighbor discovery tables**: Use `show ipv6 neighbors` to view the IPv6 neighbor cache (equivalent of the IPv4 ARP table). Confirm that the router has learned neighbor addresses via Neighbor Discovery Protocol (NDP) after successful pings.
+## 3. Key Multicast Addresses
 
+| Address | Name | Purpose |
+|---|---|---|
+| FF02::1 | All-nodes multicast | Reaches all IPv6-enabled nodes on the link |
+| FF02::2 | All-routers multicast | Used by Router Solicitation messages |
+| FF02::5 | OSPFv3 all routers | Used by OSPFv3 hello messages |
+| FF02::6 | OSPFv3 DR/BDR | Used by OSPFv3 DR/BDR communication |
+| FF02::9 | RIPng all routers | Used by RIPng routing updates |
+| FF02::1:FF/104 | Solicited-node | Used by NDP for address resolution |
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read the section covering **IPv6 Addressing and Configuration** in [Cisco Skills for All Portal - CCNA Guides](https://skillsforall.com/).
-- [ ] Watch the IPv6 episodes in [Jeremy's IT Lab CCNA Complete Course](https://www.youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ).
-- [ ] Review the commands outlined in the lab instructions.
-- [ ] Proceed to the weekly hands-on lab activity.
+## 4. EUI-64 Conversion Reference
+
+Converting a MAC address to an EUI-64 interface identifier:
+
+Step 1: Write the MAC address in colon notation.
+Example MAC: `00:1A:2B:3C:4D:5E`
+
+Step 2: Split the MAC in half at byte 3 and insert FFFE.
+Result: `00:1A:2B:FF:FE:3C:4D:5E`
+
+Step 3: Convert the first byte to binary and invert bit 7 (second bit from left, 0-indexed).
+First byte `00` = `0000 0000`. Bit 7 inverted: `0000 0010` = `02`.
+Result: `02:1A:2B:FF:FE:3C:4D:5E`
+
+Step 4: Write as IPv6 groups of 4 hex digits.
+Interface ID: `021A:2BFF:FE3C:4D5E`
+
+Full address with prefix 2001:DB8:1::/64:
+`2001:DB8:1::021A:2BFF:FE3C:4D5E`
+
+Bit 7 inversion quick reference:
+
+| First Byte (hex) | Binary | Bit 7 Inverted | Result (hex) |
+|---|---|---|---|
+| 00 | 0000 0000 | 0000 0010 | 02 |
+| 02 | 0000 0010 | 0000 0000 | 00 |
+| 04 | 0000 0100 | 0000 0110 | 06 |
+| 0C | 0000 1100 | 0000 1110 | 0E |
+
+---
+
+## 5. Cisco IOS IPv6 Configuration Command Reference
+
+| Task | Command | Mode |
+|---|---|---|
+| Enable IPv6 routing | `ipv6 unicast-routing` | Global config |
+| Assign static IPv6 address | `ipv6 address 2001:DB8::1/64` | Interface config |
+| Assign IPv6 with EUI-64 | `ipv6 address 2001:DB8::/64 eui-64` | Interface config |
+| Enable SLAAC on interface | `ipv6 address autoconfig` | Interface config |
+| Configure IPv6 static route | `ipv6 route 2001:DB8:1::/64 2001:DB8:2::2` | Global config |
+| Configure IPv6 default route | `ipv6 route ::/0 Gi0/0 FE80::1` | Global config |
+| Show IPv6 interface summary | `show ipv6 interface brief` | Privileged EXEC |
+| Show detailed IPv6 interface | `show ipv6 interface Gi0/0` | Privileged EXEC |
+| Show IPv6 routing table | `show ipv6 route` | Privileged EXEC |
+| Show IPv6 neighbor cache | `show ipv6 neighbors` | Privileged EXEC |
+| Ping over IPv6 | `ping ipv6 2001:DB8::1` | Privileged EXEC |
+
+---
+
+## 6. IPv6 Static Route Types
+
+| Route Type | Command Syntax | When to Use |
+|---|---|---|
+| Directly connected (exit interface only) | `ipv6 route prefix/len Gi0/0` | Point-to-point links where exit interface uniquely identifies next hop |
+| Recursive (global unicast next-hop) | `ipv6 route prefix/len 2001:DB8::2` | When next-hop is a routable global unicast address |
+| Fully specified (link-local + interface) | `ipv6 route prefix/len Gi0/0 FE80::2` | Required when next-hop is a link-local address; must specify exit interface |
+| Default route | `ipv6 route ::/0 Gi0/0 FE80::1` | Upstream default gateway |
+
+---
+
+## 7. IPv6 vs IPv4 Comparison Reference
+
+| Feature | IPv4 | IPv6 |
+|---|---|---|
+| Address length | 32 bits | 128 bits |
+| Address notation | Dotted decimal | Colon-hexadecimal |
+| Subnet mask | Dotted decimal or prefix | Prefix only |
+| ARP | Yes (broadcast) | No — replaced by NDP (multicast) |
+| Broadcast | Yes | No — replaced by multicast |
+| Address autoconfiguration | DHCP only | SLAAC or DHCPv6 |
+| Fragmentation | Routers and hosts | Hosts only (routers do not fragment) |
+| Header checksum | Yes | No (removed for efficiency) |
+| Flow label | No | Yes (20-bit field in header) |
+| Private addresses | RFC 1918 | Unique local (FC00::/7) |
+
+---
+
+## 8. CCNA Exam Tips
+
+1. `ipv6 unicast-routing` is required on Cisco routers to forward IPv6 traffic. Forgetting this command is the most common IPv6 lab error. Without it, the router acts as an IPv6 host, not a router.
+
+2. Know the three main address type prefixes: FE80::/10 (link-local), 2000::/3 (global unicast), FC00::/7 (unique local). The exam gives you an address and asks its type.
+
+3. EUI-64 exam questions give you a MAC and ask for the interface identifier. Practice: split at byte 3, insert FFFE, invert bit 7. The most missed step is bit 7 inversion.
+
+4. When configuring an IPv6 static route with a link-local next-hop, you must include the exit interface. `ipv6 route ::/0 FE80::1` will be rejected — you need `ipv6 route ::/0 Gi0/0 FE80::1`.
+
+5. IPv6 does not have broadcast. It uses multicast instead. Solicited-node multicast replaces ARP. All-nodes multicast (FF02::1) replaces the IPv4 limited broadcast (255.255.255.255).
+
+6. The 2001:DB8::/32 prefix is reserved for documentation. You will see it in every CCNA lab and study guide. It is never routed on the public internet.
+
+7. `show ipv6 neighbors` is the IPv6 equivalent of `show ip arp`. The exam sometimes asks for the command to view the IPv6 address-to-MAC mapping table.
+
+8. IPv6 headers are simpler than IPv4 headers. IPv6 removed the checksum field (offloaded to transport layer) and fragmentation at routers (only hosts fragment in IPv6). The fixed 40-byte header improves router forwarding performance.
+
+---
+
+## 9. Study Checklist
+
+Work through each item before taking the quiz.
+
+- [ ] Write out the full expanded form of `2001:DB8::1` from memory
+- [ ] Identify the type of each address: FE80::1, 2001:DB8:1::1, FD00::1, FF02::2, ::1
+- [ ] Convert MAC address `A4:BB:CC:DD:EE:FF` to its EUI-64 interface ID by hand
+- [ ] Write the three commands to enable IPv6 routing, assign an address, and bring up the interface
+- [ ] Explain SLAAC in four sentences: what it does, what triggers it, what the host combines, and what DAD confirms
+- [ ] Write a fully specified static route for 2001:DB8:2::/64 via interface Gi0/1 and link-local FE80::2
+- [ ] Review the IPv6 vs IPv4 comparison table and note three key differences you could be tested on
+- [ ] Complete the Module 03 Packet Tracer lab activity
+- [ ] Post your Module 03 discussion response by Wednesday at 11:59 PM
+
+---
+
+## Required Study Resources
+
+- Cisco CCNA certification training information: cisco.com/c/en/us/training-events/training-certifications
+- Free CCNA study notes and video summaries: professormesser.com

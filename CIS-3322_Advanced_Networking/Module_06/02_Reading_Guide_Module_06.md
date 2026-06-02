@@ -1,52 +1,188 @@
 # Reading Guide: Module 06 - EtherChannel Link Aggregation
-## Course: CIS-3322_Advanced_Networking (Cisco CCNA (200-301))
+
+**Course:** CIS-3322 Advanced Networking
+**Certification Alignment:** Cisco CCNA 200-301 (Domain 2: Network Access - 20%)
+**Prepared by:** Professor Nash | Texas Wesleyan University
 
 ---
 
-### Introduction
-Welcome to **Module 06 - EtherChannel Link Aggregation**! This week's study material focuses on the core foundations and configuration mechanics of **EtherChannel Link Aggregation** as aligned with the **Cisco CCNA (200-301)** certification framework. Understanding these topics is essential not only for passing the certification exam but also for administering enterprise systems in real-world environments.
+## Overview
 
-As a student, you will learn the primary operational roles, command syntaxes, and troubleshooting parameters needed to design, configure, and maintain these services. We will explore how different protocols establish connections, how configurations manage resource allocation, and how security controls prevent access breaches. Make sure to complete the checklists and review the glossary terms in detail before beginning the lab activity.
-
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **LACP vs PAgP**: LACP (Link Aggregation Control Protocol, IEEE 802.3ad) is the open-standard protocol for dynamically negotiating EtherChannel bundles between any vendor's equipment. PAgP (Port Aggregation Protocol) is Cisco-proprietary and only works between Cisco devices. Both protocols have an active/passive (LACP) or desirable/auto (PAgP) negotiation mode — two passive or two auto ports will not form a channel. LACP is preferred in multi-vendor environments.
-*   **Port channel configuration**: A logical bundle interface (`interface port-channel [number]`) that represents all physical member ports in an EtherChannel. Configuration applied to the port-channel interface (VLAN membership, trunk settings, IP address) automatically applies to all member physical ports. Member ports are added with `channel-group [number] mode [mode]` in interface configuration.
-*   **Load balancing algorithms**: EtherChannel distributes traffic across member links using a hashing algorithm based on configurable parameters. Options include source MAC, destination MAC, source-destination MAC (default on most Cisco platforms), source IP, destination IP, or source-destination IP. The hash is computed per-flow, so individual flows are not split across links — bandwidth aggregation is across multiple concurrent flows.
+EtherChannel is tested on the CCNA 200-301 primarily through configuration scenario questions and show-command interpretation. The exam frequently presents an EtherChannel that has failed to form and asks you to identify the cause. This guide covers the protocol options, mode negotiation matrix, configuration requirements, and all verification commands you need.
 
 ---
 
-### 2. Certification Exam Tips
-*   **CCNA Domain:** EtherChannel falls under **Network Access (20%)** of the CCNA 200-301 exam. Expect configuration scenario questions and questions asking why an EtherChannel fails to form.
-*   **Common Trap:** EtherChannel member ports must have matching configuration — same speed, duplex, VLAN membership, trunk settings, and STP settings. A mismatch in any parameter causes the channel to fail. The exam frequently presents `show etherchannel summary` output with a suspended (S) status and asks you to identify the cause.
-*   **Mode compatibility:** LACP: `active + active = forms`, `active + passive = forms`, `passive + passive = NO`. PAgP: `desirable + desirable = forms`, `desirable + auto = forms`, `auto + auto = NO`. Static (on/on) always forms but has no negotiation. The exam tests all six combinations.
-*   **`show etherchannel summary` flags:** Know what P (bundled), S (suspended), I (individual/not bundled), D (down) mean. An (S) flag means a port is suspended due to a configuration mismatch.
-*   **Study Resource:** Watch the EtherChannel episodes in the Jeremy's IT Lab CCNA free playlist, which demonstrate LACP and PAgP mode combinations and the port-channel verification commands: [Jeremy's IT Lab CCNA Complete Course on YouTube](https://www.youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ). Look for the "EtherChannel" episode.
+## 1. High-Yield Glossary
+
+- **EtherChannel:** Cisco's link aggregation technology that bundles two to eight physical Ethernet links into one logical port-channel interface. STP sees the bundle as a single link, preventing blocking of member ports.
+
+- **Port-channel interface:** The logical interface that represents an EtherChannel bundle. Configuration (VLANs, trunking, IP address) applied to the port-channel automatically applies to all member physical ports.
+
+- **LACP (Link Aggregation Control Protocol):** IEEE 802.3ad (802.1AX) open standard for dynamic EtherChannel negotiation. Works between any vendor's equipment. Modes: active and passive.
+
+- **PAgP (Port Aggregation Protocol):** Cisco-proprietary EtherChannel negotiation protocol. Works only between Cisco switches. Modes: desirable and auto.
+
+- **Active mode (LACP):** The port actively sends LACP negotiation frames and attempts to form a bundle with the neighbor.
+
+- **Passive mode (LACP):** The port waits for LACP frames from the neighbor. Forms a bundle only if the neighbor is in active mode.
+
+- **Desirable mode (PAgP):** Actively sends PAgP frames and attempts to form a bundle. Equivalent to LACP active.
+
+- **Auto mode (PAgP):** Waits for PAgP frames from the neighbor. Forms a bundle only if the neighbor is in desirable mode. Equivalent to LACP passive.
+
+- **On mode (static):** Forces the ports into a bundle without any negotiation protocol. Both sides must be set to on. No mismatch detection — misconfigurations may not be detected automatically.
+
+- **Load-balance method:** The hashing algorithm EtherChannel uses to distribute traffic across member links. Based on source MAC, destination MAC, source-destination MAC, source IP, destination IP, or source-destination IP.
+
+- **Suspended port (s):** A member port that has been suspended from the EtherChannel bundle due to a configuration mismatch with other member ports. Visible as lowercase s in `show etherchannel summary` output.
+
+- **channel-group:** The IOS command used on physical interfaces to add them to an EtherChannel bundle. Syntax: `channel-group [number] mode [mode]`.
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the section covering **EtherChannel Link Aggregation** in the Cisco Skills for All CCNA course. The labs include Packet Tracer activities where you configure LACP and PAgP channels and verify their status: [Cisco Skills for All Portal - CCNA Guides](https://skillsforall.com/). Navigate to "CCNA: Switching, Routing and Wireless Essentials" — the EtherChannel chapter.
-*   **Required Video:** Watch the EtherChannel episode in the Jeremy's IT Lab CCNA complete playlist. This video covers LACP vs PAgP, mode combinations, load-balancing options, and common configuration mistakes: [Jeremy's IT Lab CCNA Complete Course](https://www.youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ).
+## 2. EtherChannel Negotiation Mode Matrix
+
+| SW1 Mode | SW2 Mode | Protocol | Result |
+|---|---|---|---|
+| active | active | LACP | Forms EtherChannel |
+| active | passive | LACP | Forms EtherChannel |
+| passive | passive | LACP | Does NOT form (both passive) |
+| desirable | desirable | PAgP | Forms EtherChannel |
+| desirable | auto | PAgP | Forms EtherChannel |
+| auto | auto | PAgP | Does NOT form (both auto) |
+| on | on | None (static) | Forms EtherChannel |
+| on | active | Mixed | Does NOT form |
+| on | passive | Mixed | Does NOT form |
+| active | desirable | Mixed (incompatible) | Does NOT form |
+
+Key exam combinations to memorize: passive + passive fails, auto + auto fails, on + on always works.
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Configure ports for active negotiation: `channel-group 1 mode active`**: On each member interface (e.g., `interface range g0/0-1`), enter `channel-group 1 mode active` to use LACP active mode. Both sides must be active or one active + one passive. This creates the port-channel interface automatically.
-*   **Verify port-channel interface state: `show etherchannel summary`**: Review the output for channel group number, protocol (LACP/PAgP/static), and port status flags. Confirm member ports show (P) for bundled and the port-channel shows (SU) — layer 2 in use.
-*   **Configure EtherChannel load-balancing method**: Enter `port-channel load-balance [method]` in global configuration mode to set the hashing algorithm (e.g., `src-dst-mac`). Verify with `show etherchannel load-balance`.
+## 3. EtherChannel Member Port Requirements
 
+All physical ports in an EtherChannel bundle must have identical configurations. Mismatches cause individual ports to be suspended (s flag in `show etherchannel summary`).
+
+| Parameter | Requirement |
+|---|---|
+| Speed | All member ports must operate at the same speed |
+| Duplex | All member ports must be full-duplex |
+| Mode | All member ports must be either all access or all trunk |
+| Access VLAN | If access mode, all ports must be in the same VLAN |
+| Trunk allowed VLANs | If trunk mode, allowed VLAN lists must match |
+| Native VLAN | If trunk mode, native VLANs must match |
+| STP port cost | Should match; mismatches can cause unexpected STP behavior |
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read the section covering **EtherChannel Link Aggregation** in [Cisco Skills for All Portal - CCNA Guides](https://skillsforall.com/).
-- [ ] Watch the EtherChannel episode in [Jeremy's IT Lab CCNA Complete Course](https://www.youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ).
-- [ ] Review the commands outlined in the lab instructions.
-- [ ] Proceed to the weekly hands-on lab activity.
+## 4. Cisco IOS EtherChannel Command Reference
+
+| Task | Command | Mode |
+|---|---|---|
+| Add physical ports to channel group | `channel-group 1 mode active` | Interface config |
+| Configure range of interfaces | `interface range Gi0/0 - 1` | Global config |
+| Set load-balance method | `port-channel load-balance src-dst-ip` | Global config |
+| Configure port-channel as trunk | `switchport mode trunk` (on port-channel) | Interface config |
+| Set allowed VLANs on port-channel | `switchport trunk allowed vlan 10,20` | Interface config |
+| View EtherChannel summary | `show etherchannel summary` | Privileged EXEC |
+| View detailed channel information | `show etherchannel 1 detail` | Privileged EXEC |
+| View port-channel interface status | `show interfaces port-channel 1` | Privileged EXEC |
+| View load-balance method | `show etherchannel load-balance` | Privileged EXEC |
+| View LACP neighbor info | `show lacp neighbor` | Privileged EXEC |
+| View PAgP neighbor info | `show pagp neighbor` | Privileged EXEC |
+
+---
+
+## 5. Interpreting show etherchannel summary Output
+
+Sample output:
+
+```text
+Flags:  D - down        P - bundled in port-channel
+        I - stand-alone s - suspended
+        H - Hot-standby (LACP only)
+        R - Layer3      S - Layer2
+        U - in use      f - failed to allocate aggregator
+
+        M - not in use, minimum links not met
+        u - unsuitable for bundling
+        w - waiting to be aggregated
+        d - default port
+
+        A - formed by Auto LAG
+
+Number of channel-groups in use: 1
+Number of aggregators:           1
+
+Group  Port-channel  Protocol    Ports
+------+-------------+-----------+-----------------------------------------------
+1      Po1(SU)         LACP      Gi0/0(P)    Gi0/1(P)
+```
+
+Key flag interpretations:
+
+- `SU` on port-channel: S = Layer 2, U = in use (active and passing traffic)
+- `P` on member ports: bundled in port-channel (operating normally)
+- `s` on a member port: suspended due to configuration mismatch
+- `I` on a member port: standalone — not bundled (EtherChannel not formed)
+- `D` on port-channel: down (no active members)
+
+---
+
+## 6. EtherChannel Benefits and Limitations
+
+Benefits:
+
+- Bandwidth aggregation: 2 x 1G links provide 2 Gbps total throughput across multiple flows
+- Redundancy: if one physical member link fails, traffic continues on remaining links without STP reconvergence
+- STP sees one logical link: no port blocking, full use of all member physical links
+- Single management interface: configure once on port-channel, applies to all members
+
+Limitations:
+
+- Maximum 8 active links per EtherChannel on Cisco Catalyst switches (16 standby with LACP)
+- All member links must be same speed and connect to same neighboring device
+- Individual flows are not split: a single TCP connection uses only one physical link
+- Misconfigurations are not always visually obvious without running show commands
+
+---
+
+## 7. CCNA Exam Tips
+
+1. Two passive LACP ports will NOT form a channel. Two auto PAgP ports will NOT form a channel. The exam always tests at least one of these failure combinations.
+
+2. EtherChannel configuration belongs on the port-channel interface, not on individual physical member ports. Applying trunk or VLAN settings directly to physical member ports (instead of port-channel) is a common misconfiguration.
+
+3. A suspended `s` flag on a member port in `show etherchannel summary` means a configuration mismatch. Compare the member port's settings to those on the port-channel interface and other member ports.
+
+4. Static EtherChannel (mode on + on) does not use any negotiation protocol. There is no automatic detection of misconfiguration. If the other side is not `on`, the channel may appear up locally but pass no traffic.
+
+5. Load balancing distributes traffic per-flow, not per-packet. Each flow (identified by its src/dst IP or MAC pair) always uses the same physical link. A single file transfer will not exceed one link's speed.
+
+6. EtherChannel and STP work together. STP treats the port-channel as a single logical interface. If STP needs to block a link between two switches, it blocks the entire port-channel, not just one physical member.
+
+7. The `show etherchannel summary` flag SU on the port-channel means Layer 2 in-use. RU means Layer 3 in-use (when the port-channel has an IP address instead of being a Layer 2 trunk).
+
+8. PAgP and LACP modes cannot be mixed on the same channel group. If one side uses LACP active and the other uses PAgP desirable, the channel will not form.
+
+---
+
+## 8. Study Checklist
+
+Work through each item before taking the quiz.
+
+- [ ] Complete the negotiation mode matrix from memory and check it against the reference table
+- [ ] Write the full configuration to create a two-port LACP EtherChannel trunk between two switches (all commands including port-channel configuration)
+- [ ] Interpret a sample `show etherchannel summary` output and identify which ports are bundled, suspended, and down
+- [ ] Explain why two passive LACP ports do not form a channel
+- [ ] Describe EtherChannel load balancing and explain why a single file download cannot exceed one link's bandwidth
+- [ ] List five parameters that must match on all EtherChannel member ports
+- [ ] Complete the Module 06 Packet Tracer lab activity
+- [ ] Post your Module 06 discussion response by Wednesday at 11:59 PM
+
+---
+
+## Required Study Resources
+
+- Cisco CCNA certification training information: cisco.com/c/en/us/training-events/training-certifications
+- Free CCNA study notes and video summaries: professormesser.com

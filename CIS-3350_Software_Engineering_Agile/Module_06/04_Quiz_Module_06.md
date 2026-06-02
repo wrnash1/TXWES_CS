@@ -1,103 +1,198 @@
 # Quiz: Module 06 – Product Backlog: Creation and Refinement
 
-## Course: CIS-3350_Software_Engineering_Agile (Professional Scrum Master (PSM I))
+**Course:** CIS-3350 Software Engineering and Agile
+**Certification Alignment:** PSM I (Professional Scrum Master I) – Scrum.org
+**Instructor:** Professor Nash | Texas Wesleyan University
+**Total Questions:** 10 | **Points:** 10 (1 point each)
 
 ---
 
-### Question 1
+## Question 1
 
-Who is accountable for ordering the Product Backlog?
+According to the Scrum Guide, who is accountable for ordering the Product Backlog?
 
-* A) The Scrum Master, who prioritizes based on team capacity
-* B) The Developers, who know which items are technically easiest to implement
-* C) The Product Owner, who sequences items by value, risk, and strategic priority
-* D) The stakeholders collectively, through a voting process
+- A) The Scrum Master
+- B) The Developers
+- C) The Product Owner
+- D) The stakeholders collectively
 
-Correct Answer: C) The Product Owner is solely accountable for ordering the Product Backlog, representing stakeholder value and strategic direction.
+Correct Answer: C — The Scrum Guide explicitly states that ordering Product Backlog items is one of the Product Owner's four key accountabilities for the Product Backlog.
 
 Distractor Analysis:
 
-* *Why C is correct:* The Scrum Guide states the Product Owner is accountable for "Ordering Product Backlog items in order to best achieve goals and missions." This authority belongs to the Product Owner alone.
-* *Why A is incorrect:* The Scrum Master coaches the process but does not make product priority decisions. Capacity is a Developer concern for Sprint Planning, not a backlog ordering criterion.
-* *Why B is incorrect:* Developers contribute technical input (effort, risk, dependencies) that informs ordering, but the decision authority rests with the Product Owner.
-* *Why D is incorrect:* Stakeholders can provide input through the Product Owner, but backlog ordering is not decided by stakeholder vote — the Product Owner is accountable for the final order.
+- Why A is incorrect: The Scrum Master is accountable for team effectiveness, not for Product Backlog ordering decisions.
+- Why B is incorrect: Developers add estimates to Product Backlog items but do not order them.
+- Why D is incorrect: Stakeholders influence the Product Backlog through the Product Owner; they cannot directly order items.
 
 ---
 
-### Question 2
+## Question 2
 
-Which of the following is the most accurate definition of Product Backlog refinement?
+How does the Scrum Guide describe the Product Backlog?
 
-* A) The sixth official Scrum event, timeboxed to two hours per Sprint, where the team adds items to the backlog.
-* B) An ongoing activity in which the Product Owner and Developers collaborate to add detail, estimates, and ordering to Product Backlog items.
-* C) A formal sign-off process where the Scrum Master certifies that backlog items meet the Definition of Ready before Sprint Planning.
-* D) A quarterly planning ceremony where the organization sets the next four Sprints' worth of backlog items in advance.
+- A) A complete, finalized specification of all features to be built
+- B) A phase gate document reviewed and approved before each Sprint begins
+- C) An emergent, ordered list of what is needed to improve the product
+- D) A static project plan created at product launch and maintained until release
 
-Correct Answer: B)
+Correct Answer: C — The Scrum Guide defines the Product Backlog as "an emergent, ordered list of what is needed to improve the product." The word "emergent" is key — it evolves continuously.
 
 Distractor Analysis:
 
-* *Why B is correct:* The Scrum Guide defines refinement as an ongoing activity — not a formal event — that typically consumes no more than 10% of Developers' capacity, adding detail and ordering so items are ready for Sprint Planning.
-* *Why A is incorrect:* There are exactly five Scrum events. Backlog refinement is not one of them. Describing it as the "sixth event" is a common incorrect answer on the PSM I.
-* *Why C is incorrect:* The Scrum Guide does not define a formal "Definition of Ready" as a required Scrum artifact, and the Scrum Master does not certify backlog items.
-* *Why D is incorrect:* Quarterly planning of four Sprints in advance is a characteristic of frameworks like SAFe's Program Increment planning — not a Scrum-prescribed backlog refinement practice.
+- Why A is incorrect: The Product Backlog is never complete or finalized; calling it a "complete specification" describes a Waterfall requirements document.
+- Why B is incorrect: Phase gates are a Waterfall mechanism; the Product Backlog is not a gate document.
+- Why D is incorrect: The Product Backlog is explicitly not static — it changes throughout the product's life.
 
 ---
 
-### Question 3
+## Question 3
 
-A team's Product Backlog has grown to 300 items. The Product Owner states that all items are equally important and refuses to order them. What problem does this create for the Scrum Team?
+Who adds size estimates to Product Backlog items?
 
-* A) The Scrum Master cannot assign tasks to Developers without a prioritized list.
-* B) Developers cannot select items for Sprint Planning without knowing which items deliver the most value first.
-* C) The Scrum Guide requires the Product Backlog to contain exactly 20 items per Sprint.
-* D) Stakeholders will not be allowed to attend the Sprint Review without a prioritized backlog.
+- A) The Product Owner, based on business complexity
+- B) The Scrum Master, based on historical velocity data
+- C) The Developers, based on their technical understanding of the work
+- D) The project sponsor, based on budget and timeline constraints
 
-Correct Answer: B)
+Correct Answer: C — The Scrum Guide assigns responsibility for estimates to the Developers. They add size estimates based on their technical understanding of what the work requires.
 
 Distractor Analysis:
 
-* *Why B is correct:* Sprint Planning requires the Developers to select the most valuable items from the top of the backlog. Without ordering, the Scrum Team cannot make value-driven decisions about what to work on next.
-* *Why A is incorrect:* The Scrum Master does not assign tasks to Developers regardless of backlog state. Task assignment by the Scrum Master would violate Developers' self-management.
-* *Why C is incorrect:* The Scrum Guide specifies no required number of backlog items. The backlog size is determined by product needs, not a rule.
-* *Why D is incorrect:* Stakeholder attendance at Sprint Reviews is not contingent on backlog ordering. These are unrelated Scrum concerns.
+- Why A is incorrect: The Product Owner manages value, order, and description — not technical estimates.
+- Why B is incorrect: The Scrum Master coaches and facilitates; they do not estimate work.
+- Why D is incorrect: Project sponsor is not a Scrum accountability, and budget-based estimates are not how Scrum sizing works.
 
 ---
 
-### Question 4
+## Question 4
 
-What does the Scrum Guide identify as the commitment associated with the Product Backlog?
+Product Backlog Refinement is:
 
-* A) The Definition of Done
-* B) The Sprint Goal
-* C) The Product Goal
-* D) The Release Plan
+- A) A mandatory Scrum event that occurs at the end of each Sprint
+- B) An ongoing activity that consumes no more than 10% of the Developers' capacity
+- C) The responsibility of the Scrum Master alone, conducted between Sprints
+- D) A one-time activity performed before the first Sprint begins
 
-Correct Answer: C)
+Correct Answer: B — The Scrum Guide describes Product Backlog Refinement as an ongoing activity — not a formal event — that typically consumes no more than 10% of Developers' capacity per Sprint.
 
 Distractor Analysis:
 
-* *Why C is correct:* The Scrum Guide maps three artifact-commitment pairs: Product Backlog → Product Goal; Sprint Backlog → Sprint Goal; Increment → Definition of Done.
-* *Why A is incorrect:* The Definition of Done is the commitment for the Increment, not the Product Backlog.
-* *Why B is incorrect:* The Sprint Goal is the commitment for the Sprint Backlog, not the Product Backlog.
-* *Why D is incorrect:* A Release Plan is an optional planning tool used outside of core Scrum; it is not a Scrum Guide-defined artifact or commitment.
+- Why A is incorrect: Refinement is not one of the five Scrum events; listing it as a mandatory event misrepresents the Scrum framework.
+- Why C is incorrect: Refinement is conducted collaboratively by the Product Owner and Developers, not the Scrum Master alone.
+- Why D is incorrect: Refinement is continuous throughout the product's development, not a one-time pre-Sprint activity.
 
 ---
 
-### Question 5
+## Question 5
 
-How detailed should Product Backlog items be at the bottom (lowest priority) of the backlog compared to items at the top?
+A stakeholder approaches a Developer directly and asks them to add a new feature request to the top of the Sprint Backlog. According to Scrum, what should the Developer do?
 
-* A) Bottom items should be fully specified with acceptance criteria, because the team may need to start them at any time.
-* B) All items should have equal levels of detail to ensure the team has complete information at all times.
-* C) Bottom items are typically coarser and less detailed; detail is added as items are refined and move toward the top.
-* D) Bottom items should be deleted if they cannot be fully specified within the current Sprint.
+- A) Add the feature to the Sprint Backlog immediately if the stakeholder is a senior executive
+- B) Evaluate the feature and add it to the Sprint Backlog if the team has capacity
+- C) Refer the stakeholder to the Product Owner, who manages the Product Backlog
+- D) Add the feature to the Sprint Backlog after getting Scrum Master approval
 
-Correct Answer: C)
+Correct Answer: C — Stakeholders influence the Product Backlog through the Product Owner. The Developer should direct the stakeholder to the Product Owner, who will evaluate the request and add it to the Product Backlog if appropriate.
 
 Distractor Analysis:
 
-* *Why C is correct:* The Scrum Guide describes the Product Backlog as having items of varying granularity — items that will be done soon are more detailed and estimated; distant items are intentionally left coarse to avoid wasted effort on work that may change or never be done.
-* *Why A is incorrect:* Specifying low-priority items in detail wastes effort, as those items may change significantly or be removed before the team ever reaches them.
-* *Why B is incorrect:* Equal detail at all levels is inefficient. The "just enough, just in time" approach to refinement is a Scrum principle.
-* *Why D is incorrect:* The Scrum Guide does not prescribe deleting items that cannot be immediately specified. Low-detail items are a normal and expected part of a healthy Product Backlog.
+- Why A is incorrect: Senior executive status does not bypass the Product Owner's accountability for the Product Backlog.
+- Why B is incorrect: The Developer does not make Product Backlog ordering decisions; that is the Product Owner's accountability.
+- Why D is incorrect: The Scrum Master does not approve Product Backlog changes; that is the Product Owner's role.
+
+---
+
+## Question 6
+
+The INVEST criteria include "Negotiable." In the context of Product Backlog items, what does "Negotiable" mean?
+
+- A) The story point estimate can be changed by the Product Owner at any time
+- B) The release date of the feature can be negotiated with stakeholders
+- C) The implementation approach is not locked; the team has flexibility in how they fulfill the item
+- D) The acceptance criteria can be removed if the team needs more time
+
+Correct Answer: C — "Negotiable" means the PBI describes the what and why but not the how. The team has room to apply their expertise and judgment in deciding how to implement the item.
+
+Distractor Analysis:
+
+- Why A is incorrect: Estimates belong to the Developers and are not "negotiated" by the Product Owner changing them unilaterally.
+- Why B is incorrect: Release dates are a business decision separate from whether a story is negotiable at the implementation level.
+- Why D is incorrect: Acceptance criteria are a quality commitment; removing them to save time violates the "Testable" criterion and Definition of Done principles.
+
+---
+
+## Question 7
+
+Two Scrum Teams are working on the same product. How many Product Backlogs should they have?
+
+- A) One per Scrum Team, so each team can manage their own work independently
+- B) One per Sprint, updated at each Sprint Planning session
+- C) One shared Product Backlog for the entire product, managed by the Product Owner
+- D) Two Product Backlogs: one for features and one for technical improvements
+
+Correct Answer: C — The Scrum Guide states that there is one Product Backlog per product. Multiple Scrum Teams working on the same product share one Product Backlog with one Product Owner.
+
+Distractor Analysis:
+
+- Why A is incorrect: Multiple Product Backlogs for the same product create coordination problems and risk divergent product visions.
+- Why B is incorrect: The Product Backlog is a persistent artifact that spans multiple Sprints; creating a new one each Sprint discards valuable ordering and learning history.
+- Why D is incorrect: The Scrum Guide does not separate feature and technical backlogs; all types of work appear in one Product Backlog.
+
+---
+
+## Question 8
+
+Which of the following best illustrates the INVEST criterion "Valuable"?
+
+- A) "As a developer, I will refactor the UserService class to reduce cyclomatic complexity"
+- B) "As a customer, I can filter search results by price range so that I find products within my budget faster"
+- C) "As a system, the database will be migrated from MySQL to PostgreSQL"
+- D) "The team will update all API documentation to match the v2 schema"
+
+Correct Answer: B — This story is written from a user perspective with a clear benefit ("find products within my budget faster"), demonstrating that completing the item delivers direct value to a user.
+
+Distractor Analysis:
+
+- Why A is incorrect: This is a technical improvement written from a developer perspective with no stated user or business value — it may be necessary but fails the "Valuable" criterion as written.
+- Why C is incorrect: This is a system-level technical migration with no user-facing value stated. It may have value (performance, cost), but that value must be made explicit.
+- Why D is incorrect: Documentation updates are typically support tasks; as written, this has no stated user or business value.
+
+---
+
+## Question 9
+
+The Product Owner wants to add acceptance criteria to all upcoming Product Backlog items before the next Sprint Planning. Who should help write these acceptance criteria?
+
+- A) The Product Owner alone, since they are accountable for the Product Backlog
+- B) The Scrum Master alone, to ensure quality standards are met
+- C) The Product Owner and Developers collaboratively during refinement
+- D) External stakeholders, since they best know what they want
+
+Correct Answer: C — Acceptance criteria are developed collaboratively by the Product Owner (who brings business and user context) and Developers (who bring technical feasibility knowledge) during Product Backlog Refinement.
+
+Distractor Analysis:
+
+- Why A is incorrect: While the Product Owner is accountable, writing acceptance criteria without Developer input risks creating criteria that are technically unrealistic or that miss important implementation considerations.
+- Why B is incorrect: The Scrum Master does not write acceptance criteria; they coach and facilitate.
+- Why D is incorrect: Stakeholder input is valuable but should be channeled through the Product Owner, not directly written into the backlog by stakeholders.
+
+---
+
+## Question 10
+
+A Product Backlog has 400 items, most of which have been on the list for over a year without being selected for a Sprint. What should the Product Owner do?
+
+- A) Keep all items to preserve the team's options for future development
+- B) Transfer all 400 items to a separate "archive" backlog managed by the Scrum Master
+- C) Regularly review and prune items that are no longer relevant, too old, or clearly lower in value than new opportunities
+- D) Ask the Developers to estimate all 400 items before the next Sprint Planning
+
+Correct Answer: C — The Product Owner is responsible for ensuring the Product Backlog is a useful planning tool. Items that have been on the backlog for a long time without being selected should be reviewed and removed if they are no longer valuable or relevant.
+
+Distractor Analysis:
+
+- Why A is incorrect: Keeping everything "to preserve options" creates an unmanageable backlog and obscures genuine priorities.
+- Why B is incorrect: Creating a second backlog managed by the Scrum Master splits ownership and undermines the "single source" principle.
+- Why D is incorrect: Estimating 400 items consumes massive Developer capacity and is a waste if most items will never be built.
+
+---

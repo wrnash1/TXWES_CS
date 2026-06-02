@@ -1,66 +1,187 @@
 # Reading Guide: Module 08 – Estimation: Story Points and Planning Poker
 
-## Course: CIS-3350_Software_Engineering_Agile (Professional Scrum Master (PSM I))
+**Course:** CIS-3350 Software Engineering and Agile
+**Certification Alignment:** PSM I (Professional Scrum Master I) – Scrum.org
+**Instructor:** Professor Nash | Texas Wesleyan University
 
 ---
 
-### Introduction
+## Introduction
 
-Welcome to **Module 08 – Estimation: Story Points and Planning Poker**! Estimation is one of the most practical skills in Agile and Scrum, and it is regularly tested on the PSM I through scenario questions about how teams should forecast Sprint capacity and backlog item size.
-
-This module covers relative estimation using story points, the Fibonacci scale, and Planning Poker — the most widely used consensus-based estimation technique. The key insight is that Agile estimation is about *relative size and complexity*, not about committing to a specific number of hours. This distinction drives the entire approach.
+Agile estimation is a tool for making better planning decisions under uncertainty, not for predicting the future with precision. This module covers the theory and practice of story point estimation, the Planning Poker technique, velocity as a planning tool, and the most common estimation anti-patterns that undermine team effectiveness. Understanding these concepts prepares you for PSM I exam questions and for productive participation in real Agile team planning sessions.
 
 ---
 
-### 1. High-Yield Glossary
+## 1. Why Agile Estimation Differs from Traditional Estimation
 
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
+Traditional project management uses hour-based or day-based estimates to build project schedules with specific completion dates. This approach has a fundamental problem: software estimation is notoriously inaccurate for absolute durations, particularly for complex, novel work.
 
-* **Story points:** A unit of relative estimation used to express the overall size of a user story in terms of effort, complexity, and uncertainty — not hours. Because story points are relative, the same team is consistent across estimates even if their absolute effort varies. Story points are not comparable across different teams.
+The software industry has extensively studied this problem:
 
-* **Planning Poker:** A consensus-based estimation technique where each Developer independently selects a card representing their estimate, all cards are revealed simultaneously, and the team discusses outliers until consensus is reached. The simultaneous reveal prevents anchoring bias — the tendency to be influenced by hearing someone else's estimate first.
+- Developers consistently underestimate time for novel tasks by a factor of 2–3x (the "planning fallacy")
+- External factors (interruptions, dependency delays, technical surprises) are difficult to predict
+- Hour estimates create false precision — an estimate of "16 hours" implies a level of certainty that rarely exists
 
-* **Fibonacci sequence in estimation:** Story point scales typically use a modified Fibonacci sequence (1, 2, 3, 5, 8, 13, 20, 40, 100) rather than a linear scale, because the gaps between numbers grow as stories grow larger — reflecting the increasing uncertainty in estimating bigger items. A 13-point story has more uncertainty relative to an 8-point story than a 2-point story has relative to a 1-point story.
-
-* **Velocity:** The average number of story points a Scrum Team completes per Sprint over recent Sprints. Velocity is a planning tool — used by the team to forecast what they can take on in future Sprints. It is not a performance metric and should not be compared across teams or used by management to rank teams.
-
-* **Relative estimation:** The practice of sizing backlog items in relation to each other rather than in absolute time units. For example, a story rated 8 points is roughly twice the size of a 4-point story for this team, even if the 4-point story takes 2 days and the 8-point story takes 5 days in reality. The ratio matters more than the absolute number.
+Agile estimation addresses this by shifting from absolute estimates to relative estimates. Relative estimation asks: is this story more or less complex than that story? Teams are generally more accurate at relative comparisons than at absolute duration predictions.
 
 ---
 
-### 2. Certification Exam Tips
+## 2. Story Points — Full Definition
 
-* **PSM I Focus — Story points are not hours:** Questions that ask whether story points should be converted to hours or used to measure individual Developer productivity are testing this principle. Story points measure relative complexity for the team — they are not a time commitment and should not be used to evaluate individuals.
-* **Scenario Trap — Velocity as a performance standard:** A common trap presents management using velocity to compare two teams or reward the highest-velocity team. This misuses velocity. Velocity is a planning tool internal to the team, not a cross-team performance benchmark.
-* **Planning Poker and anchoring:** PSM I questions sometimes describe a scenario where the senior Developer announces their estimate before the team votes. This introduces anchoring bias and defeats the purpose of Planning Poker. Cards must be revealed simultaneously.
-* **Estimates belong to the Developers:** Only the people doing the work estimate the work. The Product Owner can provide clarification but does not set or override story point estimates. The Scrum Master facilitates but does not estimate.
-* **Study Resource:** [The Scrum Guide (2020)](https://scrumguides.org/) does not cover story points or Planning Poker specifically — these are complementary practices. Supplement with the [Agile Alliance glossary on story points](https://www.agilealliance.org/glossary/story-points/) and [Mike Cohn's Planning Poker guide](https://www.mountaingoatsoftware.com/agile/planning-poker).
+Story points are a unit of measure for expressing the overall effort required to implement a Product Backlog item, accounting for:
+
+- Complexity: how technically difficult is the work?
+- Effort: how much work is involved, regardless of complexity?
+- Uncertainty: how much is unknown that could affect the outcome?
+
+Story points are relative and team-specific. A "5-point story" means this story is roughly the same size as the team's agreed reference story for 5 points. It does not mean "5 hours" or "5 days" — it means "5 units of this team's experience-calibrated complexity scale."
+
+### The Fibonacci Sequence
+
+The most common story point scale uses Fibonacci numbers: 1, 2, 3, 5, 8, 13, 21, and often 34, 55, 89 for very large items.
+
+Why Fibonacci? The increasing gaps between consecutive numbers prevent false precision:
+
+| Consecutive Numbers | Gap | Meaning |
+|---|---|---|
+| 1 vs. 2 | Small | These stories are similar in size |
+| 5 vs. 8 | Medium | Noticeably different; worth discussing |
+| 13 vs. 21 | Large | Significantly different; often signals the story needs splitting |
+
+A modified Fibonacci scale (1, 2, 3, 5, 8, 13, 20, 40, 100) is also commonly used in Planning Poker decks.
+
+### The Reference Story
+
+Teams often calibrate their story point scale by agreeing on a reference story — a story everyone knows well from past work, assigned a specific point value (often 3 or 5 points). New stories are estimated relative to the reference story: "Is this bigger or smaller than our reference 3-point story?"
 
 ---
 
-### Required Readings & Videos
+## 3. Planning Poker — Step-by-Step
 
-To prepare for this module's topics, you must complete the following readings and videos:
+Planning Poker is a consensus-based, gamified estimation technique that combines the wisdom of the team with a structured process to prevent anchoring bias.
 
-* **Required Reading:** [Story Points — Agile Alliance Glossary](https://www.agilealliance.org/glossary/story-points/) — free overview of relative estimation, the origins of story points, and common misuses. Also read [Planning Poker — Mountain Goat Software](https://www.mountaingoatsoftware.com/agile/planning-poker).
-* **Required Video:** [Story Points and Velocity Explained – Agile Coach](https://www.youtube.com/watch?v=VsSaolMtkKU) — practical walkthrough of Planning Poker, Fibonacci scale selection, and how to use velocity for Sprint forecasting. (~10 min)
+### Materials
+
+- A Planning Poker deck for each Developer (cards: 0, 1, 2, 3, 5, 8, 13, 20, 40, 100, ?, infinity)
+- The Product Backlog item being estimated (on screen or printed)
+- A facilitator (typically the Scrum Master, but any team member can facilitate)
+
+### Process
+
+Step 1 — Story presentation: The Product Owner reads the user story and provides any necessary context. Developers ask clarifying questions.
+
+Step 2 — Individual estimation: Each Developer privately selects a card representing their estimate. No discussion of estimates yet.
+
+Step 3 — Simultaneous reveal: On the facilitator's signal, all Developers reveal their cards at the same time. Simultaneous reveal prevents anchoring.
+
+Step 4 — Discussion: If estimates are close (adjacent Fibonacci values), the team notes the consensus and moves on. If there is significant divergence, the highest and lowest estimators explain their reasoning.
+
+Step 5 — Re-estimation: After the discussion, each Developer re-estimates privately and reveals simultaneously again. This continues until consensus is reached or the team agrees to use the higher estimate due to unresolved uncertainty.
+
+Step 6 — Record and continue: The agreed estimate is recorded against the story in the Product Backlog. The team moves to the next story.
+
+### Special Cards
+
+- Question mark (?): "I don't understand this story well enough to estimate. We need more information before I can give a meaningful number."
+- Infinity: "This story is too large to estimate. It needs to be split before we can assess its size."
+- 0: "This story is trivial — effectively no effort required."
+
+### Why Simultaneous Reveal Matters
+
+If one Developer reveals their estimate first, they anchor the group. The other Developers' estimates converge on the first number revealed — not because that number is most accurate, but because of the well-documented cognitive bias toward the first number heard. Simultaneous reveal eliminates this bias and allows each Developer's independent assessment to be heard.
 
 ---
 
-### Lab & Command Integration
+## 4. Velocity
 
-In this week's hands-on lab, you will:
+Velocity is the sum of story points for all Product Backlog items that are Done — meeting the Definition of Done — at the end of a Sprint.
 
-* **Run a Planning Poker session:** Using a provided set of five user stories and a reference story rated at 5 points, conduct Planning Poker — assign individual estimates, identify outliers, discuss, and reach consensus on each story's point value.
-* **Calculate team velocity:** Given three Sprints of completed story point totals, calculate the team's average velocity and use it to forecast how many items from a provided backlog can be committed to in the next Sprint.
-* **Identify estimation anti-patterns:** Review three provided estimation scenarios and identify which anti-pattern each represents (anchoring, individual performance tracking, cross-team velocity comparison), and state how each should be corrected.
+### Using Velocity for Capacity Planning
+
+After a few Sprints, a team's velocity stabilizes within a range. This range is used in Sprint Planning to guide how many story points to select. If the team's last three Sprints yielded 28, 33, and 31 points, selecting 30–33 points for the next Sprint is reasonable.
+
+Velocity is a trailing average, not a target. It tells you what the team accomplished recently, not what they will accomplish next Sprint.
+
+### Velocity Reference Table
+
+| Sprint | Velocity | Notes |
+|---|---|---|
+| Sprint 1 | 22 | New team, calibrating estimates |
+| Sprint 2 | 28 | More familiar with codebase |
+| Sprint 3 | 31 | Stable team composition |
+| Sprint 4 | 18 | Two Developers out sick |
+| Sprint 5 | 33 | Back to full capacity |
+| Average (3–5) | 27 | Use ~27 as planning guide |
+
+### What Velocity Is Not
+
+Velocity is not a productivity metric. Comparing velocity across teams, using velocity to evaluate Developers, or setting velocity targets corrupts the measure. Teams will inflate estimates to hit higher numbers — velocity gaming — destroying its planning value.
+
+Velocity is not a commitment. The team's velocity suggests how much they can reasonably take on; it does not guarantee delivery of exactly that number of points.
+
+Velocity is not in the Scrum Guide. The Scrum Guide does not mention velocity by name. It is a widely used practice but not a Scrum framework element. PSM I may test this distinction.
 
 ---
 
-### 3. Study Checklist
+## 5. Estimation Scales Comparison
 
-* [ ] Read the Agile Alliance glossary entries on story points and Planning Poker.
-* [ ] Be able to explain why story points use a Fibonacci scale rather than a linear 1–10 scale.
-* [ ] Understand that velocity is a planning tool, not a performance metric.
-* [ ] Watch the required video and confirm your understanding of the simultaneous card reveal in Planning Poker.
-* [ ] Proceed to the weekly hands-on lab activity.
+| Scale | Format | Best For |
+|---|---|---|
+| Story Points (Fibonacci) | 1, 2, 3, 5, 8, 13, 21 | Standard Agile teams; Sprint Planning |
+| T-Shirt Sizes | XS, S, M, L, XL, XXL | Early product vision conversations; executives |
+| Ideal Days | Number of ideal working days | Teams transitioning from hour estimates |
+| #NoEstimates | No estimates; count stories | Highly mature teams with consistent story size |
+
+The Scrum Guide does not mandate any of these. Teams choose what works for their context.
+
+---
+
+## 6. Common Estimation Anti-Patterns
+
+Anti-pattern 1 — Anchoring: An estimate is announced before everyone reveals, pulling all estimates toward that number. Fix: enforce simultaneous reveal.
+
+Anti-pattern 2 — Pressure-based deflation: Developers lower estimates under management or Product Owner pressure to show progress faster. Fix: estimates are owned by the Developers alone; external pressure is not legitimate input.
+
+Anti-pattern 3 — Converting story points to hours: Once you convert to hours in a report, you lose all the benefits of relative estimation. Fix: report velocity in story points; never convert to hours for external communication.
+
+Anti-pattern 4 — Estimating without understanding: Teams rush through estimation without reading stories or asking questions. Fix: require the "Conversation" component of the Three Cs before estimating; use '?' cards when clarity is missing.
+
+Anti-pattern 5 — Velocity as a goal: Management sets a velocity target (e.g., "you must hit 50 points per Sprint"). Fix: educate stakeholders that velocity is a measurement, not a lever; the way to increase output is to reduce impediments and technical debt.
+
+Anti-pattern 6 — Single-person estimation: A manager or senior developer estimates all stories alone. Fix: Planning Poker explicitly requires all Developers to estimate; solo estimation loses the crowd wisdom that makes group estimates more accurate.
+
+---
+
+## 7. PSM I Exam Tips
+
+Tip 1: The Scrum Guide does not mandate story points. It says Developers add size estimates to PBIs but does not specify the format. Questions that say "Scrum requires story points" are incorrect.
+
+Tip 2: Velocity is not in the Scrum Guide. It is a common practice but not a Scrum rule.
+
+Tip 3: Velocity is team-specific and cannot be compared across teams. Two teams with different story point calibrations cannot be compared by velocity.
+
+Tip 4: Only Developers estimate story points. The Product Owner and Scrum Master do not override or modify estimates. The Scrum Guide is explicit: the Developers who will do the work determine how much effort is required.
+
+Tip 5: Velocity should never be used as a performance metric. If a PSM I question describes management using velocity to evaluate Developer performance, the correct response is to explain why this is problematic.
+
+Tip 6: Planning Poker's value is in the discussion, not the cards. The technique surfaces disagreements and hidden knowledge that improve team understanding.
+
+Tip 7: A story that gets the infinity card in Planning Poker needs to be decomposed before it can be selected for a Sprint. This is a refinement signal, not a failure.
+
+Tip 8: The Scrum Guide says estimates belong to the Developers and cannot be overridden by anyone. This is tested on PSM I in scenarios where managers pressure teams to commit to more than they believe they can accomplish.
+
+---
+
+## 8. Study Checklist
+
+- [ ] Explain why relative estimation (story points) is more accurate than absolute estimation (hours) for complex software work
+- [ ] Explain what story points measure: complexity, effort, and uncertainty
+- [ ] Explain why the Fibonacci sequence is used rather than a 1–10 scale
+- [ ] Describe all six steps of Planning Poker and explain why simultaneous reveal prevents anchoring
+- [ ] Define velocity and explain how it is used for Sprint capacity planning
+- [ ] State three things velocity is NOT (not a target, not a commitment, not in the Scrum Guide)
+- [ ] Describe five estimation anti-patterns and how to address each
+- [ ] State whether the Scrum Guide mandates story points (it does not)
+- [ ] Complete this module's Lab (Planning Poker simulation) and Quiz
+
+---

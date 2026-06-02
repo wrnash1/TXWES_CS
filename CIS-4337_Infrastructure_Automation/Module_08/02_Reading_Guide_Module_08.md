@@ -1,53 +1,336 @@
-# Reading Guide: Module 08 - Provisioners and Null Resources
-## Course: CIS-4337_Infrastructure_Automation (HashiCorp Certified: Terraform Associate)
+# CIS-4337 Infrastructure Automation
+
+## Module 08: Provisioners and Null Resources
+
+### Reading Guide
+
+### Course Alignment: HashiCorp Terraform Associate 003
 
 ---
 
-### Introduction
-Welcome to **Module 08 - Provisioners and Null Resources**! This week's study material covers **Terraform provisioners**, which allow you to execute scripts or commands on local or remote machines as part of resource creation and destruction, and the **null_resource**, which lets you attach provisioners to an arbitrary trigger without creating real infrastructure. Both topics are tested on the **HashiCorp Certified: Terraform Associate** exam as part of understanding the full Terraform resource lifecycle.
+## Overview
 
-As a student, you will learn when provisioners are appropriate, how `local-exec` and `remote-exec` differ, why HashiCorp considers provisioners a last resort, and how `null_resource` combined with `triggers` provides a flexible mechanism for running arbitrary side-effects. Make sure to complete the checklists and review the glossary terms before beginning the lab activity.
-
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **Terraform provisioner**: A special block that runs scripts or commands on a local machine (`local-exec`) or on a remote resource (`remote-exec`) during resource creation or destruction. Provisioners are attached inside a `resource` block and run after the resource is created. HashiCorp recommends treating provisioners as a last resort because they introduce external side-effects that Terraform cannot model in its plan or track in state.
-*   **`local-exec` provisioner**: Executes a command on the machine running `terraform apply`, not on the provisioned resource. It is used for tasks such as calling an external API, writing a local file, or triggering a configuration management tool like Ansible from the Terraform runner. Example: `command = "echo ${self.public_ip} >> inventory.txt"`.
-*   **`remote-exec` provisioner**: Connects to the newly created resource over SSH or WinRM and runs a list of commands or a script on that machine. It requires a `connection` block specifying the protocol, host, user, and authentication method. It is commonly used for bootstrapping software before a configuration management tool takes over.
-*   **`null_resource`**: A special resource from the `hashicorp/null` provider that does not create any real infrastructure. It exists solely to attach provisioners to arbitrary triggers. The `triggers` argument accepts a map of values — whenever any trigger value changes, the `null_resource` is re-created, causing its provisioners to re-run. This is the primary use case for `null_resource` on the exam.
-*   **`on_failure` provisioner setting**: Controls what Terraform does when a provisioner command exits with a non-zero status. The two values are `continue` (log the error and proceed) and `fail` (the default — mark the resource as tainted and halt the apply). A tainted resource will be destroyed and re-created on the next `terraform apply`.
+This module covers Terraform provisioners — escape hatches that execute scripts during resource lifecycle operations — and the `null_resource` type, which decouples provisioner execution from specific infrastructure resources. Provisioner behavior, failure modes, and the `null_resource` triggers pattern are tested on the Terraform Associate 003 exam in Domain 8 (Read, generate, and modify configuration).
 
 ---
 
-### 2. Certification Exam Tips
-*   **Exam Domain — Use Terraform Outside the Core Workflow (Domain 6):** Provisioners and the null provider appear in exam questions focused on resource lifecycle and side-effects. Know the difference between `local-exec` and `remote-exec`, and know when each is used.
-*   **Provisioners are a last resort:** The exam may present a scenario asking the best practice for bootstrapping a VM. The correct answer will favor cloud-native mechanisms like `user_data` (AWS) or `custom_data` (Azure) over provisioners wherever possible. Only choose a provisioner when no provider attribute accomplishes the same task.
-*   **`null_resource` + `triggers` pattern:** The exam tests that `triggers` is a map of arbitrary key-value pairs. When any value in the map changes between applies, Terraform destroys and re-creates the `null_resource`, causing its provisioners to re-run. This is the standard pattern for re-running a `local-exec` script when an upstream resource changes.
-*   **Tainted resources:** When a `remote-exec` provisioner fails with the default `on_failure = fail`, Terraform marks the resource as tainted in state. A tainted resource is destroyed and re-created on the next apply. The exam tests what "tainted" means and how to manually taint or untaint a resource using `terraform taint` and `terraform untaint` (or `terraform apply -replace`).
-*   **Study Resource:** The official provisioner documentation explains all provisioner types, the `connection` block syntax, and the recommended alternatives: [HashiCorp Terraform Documentation — Provisioners](https://developer.hashicorp.com/terraform/language/resources/provisioners/syntax). Pay particular attention to the "Provisioners are a Last Resort" section, which the exam directly references.
+## 1. Core Vocabulary
+
+### Provisioner
+
+A block nested inside a resource block that executes a command or script at a specific point in the resource lifecycle: after creation or before destruction.
+
+### local-exec Provisioner
+
+A provisioner that runs a command on the machine where Terraform is executing. The command runs in a local shell and has no connection to the provisioned resource.
+
+### remote-exec Provisioner
+
+A provisioner that connects to a newly created resource over SSH or WinRM and runs commands on that machine. Requires a `connection` block.
+
+### file Provisioner
+
+A provisioner that copies a local file or directory to the remote resource over SSH or WinRM. Does not execute the copied file.
+
+#### connection Block
+
+A block nested inside a resource or provisioner that specifies how Terraform connects to a remote resource. Required by both `remote-exec` and `file` provisioners.
+
+#### on_failure
+
+A provisioner argument that controls behavior when the provisioner command exits with a non-zero status. Values: `fail` (default — taint and halt) or `continue` (log and proceed).
+
+#### Tainted Resource
+
+A resource marked in state as requiring replacement. On the next apply, Terraform plans to destroy and recreate it. Provisioner failures produce tainted resources by default.
+
+#### null_resource
+
+A resource from the `hashicorp/null` provider that creates no infrastructure. Used to attach provisioners and lifecycle rules to arbitrary trigger conditions.
+
+#### triggers
+
+An argument on `null_resource` that accepts a map of key-value pairs. When any value changes, Terraform destroys and recreates the `null_resource`, re-running its provisioners.
+
+#### self
+
+A reference available inside provisioner blocks that refers to the attributes of the containing resource. Example: `self.public_ip`.
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the provisioners documentation at [HashiCorp Terraform Documentation — Provisioners](https://developer.hashicorp.com/terraform/language/resources/provisioners/syntax). This page covers `local-exec`, `remote-exec`, the `connection` block, `on_failure` behavior, and the null provider. The "Last Resort" guidance is exam-critical.
-*   **Required Video:** Watch the video lecture on **Provisioners and Null Resources** in the official course playlist: [HashiCorp Terraform Associate Complete Course](https://www.youtube.com/watch?v=V53S9wB5SgA). Focus on the sections demonstrating `local-exec` vs. `remote-exec`, the `connection` block configuration, and the `null_resource` with `triggers` pattern.
+## 2. When to Use Provisioners
+
+HashiCorp describes provisioners as a "last resort." Use cloud-native alternatives whenever they exist.
+
+| Task | Preferred Approach | When Provisioner Is Needed |
+|---|---|---|
+| Bootstrap an EC2 instance | `user_data` argument on `aws_instance` | No native attribute exists for the task |
+| Bootstrap an Azure VM | `custom_data` argument on `azurerm_linux_virtual_machine` | No native attribute exists |
+| Initialize a Kubernetes pod | Init containers | No native attribute exists |
+| Register instance in external system | `local-exec` provisioner | External system has no Terraform provider |
+
+Two reasons provisioners are problematic:
+
+- Provisioner execution is opaque to `terraform plan`. The plan shows the resource will be created but says nothing about what the provisioner will do or whether it will succeed.
+- Provisioner execution is not retryable. Failure taints the resource rather than retrying the command.
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Attach a `local-exec` provisioner to a resource**: Add a `provisioner "local-exec"` block inside a resource and use `self.id` to reference the created resource's attribute. Run `terraform apply` and confirm the command executes on the local machine after resource creation.
-*   **Use `null_resource` with `triggers`**: Declare a `null_resource` with a `triggers` map referencing another resource's attribute. Apply, then change the upstream resource and re-apply to observe the `null_resource` being re-created and its provisioner re-running.
-*   **Observe tainted resource behavior**: Intentionally fail a provisioner command and observe Terraform marking the resource as tainted in state output. Run `terraform apply` again to see Terraform destroy and re-create the tainted resource.
+## 3. local-exec Provisioner
+
+The `local-exec` provisioner runs a command on the Terraform runner.
+
+```hcl
+resource "aws_instance" "web" {
+  ami           = data.aws_ami.amazon_linux.id
+  instance_type = "t3.micro"
+
+  provisioner "local-exec" {
+    command = "echo 'Instance ${self.id} created' >> deployment.log"
+  }
+
+  provisioner "local-exec" {
+    when    = destroy
+    command = "echo 'Instance ${self.id} destroyed' >> deployment.log"
+  }
+}
+```
+
+Key arguments:
+
+- `command` — the shell command to execute. Required.
+- `when = destroy` — runs before destruction instead of after creation.
+- `working_dir` — directory in which to run the command.
+- `interpreter` — shell interpreter. Default: `["/bin/sh", "-c"]` on Linux/macOS, `["cmd", "/C"]` on Windows.
+- `environment` — map of environment variables for the command.
+
+The `self` reference accesses the containing resource's computed attributes.
+
+Common use case — triggering Ansible after EC2 creation:
+
+```hcl
+resource "aws_instance" "app" {
+  ami           = data.aws_ami.amazon_linux.id
+  instance_type = "t3.micro"
+
+  provisioner "local-exec" {
+    command = "ansible-playbook -i '${self.public_ip},' ./playbooks/configure.yml"
+    environment = {
+      ANSIBLE_HOST_KEY_CHECKING = "False"
+    }
+  }
+}
+```
 
 ---
 
-### 3. Study Checklist
-*   [ ] Read the glossary terms and understand each definition well enough to explain it in your own words.
-*   [ ] Read the provisioners documentation at [HashiCorp Terraform Documentation — Provisioners](https://developer.hashicorp.com/terraform/language/resources/provisioners/syntax).
-*   [ ] Watch the video lecture on **Provisioners and Null Resources** in [HashiCorp Terraform Associate Complete Course](https://www.youtube.com/watch?v=V53S9wB5SgA).
-*   [ ] Review the commands outlined in the lab instructions.
-*   [ ] Proceed to the weekly hands-on lab activity.
+## 4. remote-exec Provisioner
+
+The `remote-exec` provisioner connects to the resource and runs commands on it. A `connection` block is required.
+
+```hcl
+resource "aws_instance" "web" {
+  ami                    = data.aws_ami.amazon_linux.id
+  instance_type          = "t3.micro"
+  key_name               = aws_key_pair.deployer.key_name
+  vpc_security_group_ids = [aws_security_group.ssh.id]
+
+  connection {
+    type        = "ssh"
+    host        = self.public_ip
+    user        = "ec2-user"
+    private_key = file("~/.ssh/id_rsa")
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo yum update -y",
+      "sudo yum install -y httpd",
+      "sudo systemctl start httpd",
+      "sudo systemctl enable httpd"
+    ]
+  }
+}
+```
+
+Three argument forms for `remote-exec`:
+
+- `inline` — list of commands executed sequentially on the remote host.
+- `script` — path to a local script file that is uploaded and executed.
+- `scripts` — list of local script paths uploaded and executed in order.
+
+```hcl
+provisioner "remote-exec" {
+  script = "./bootstrap.sh"
+}
+```
+
+The `connection` block arguments:
+
+- `type` — `"ssh"` (default) or `"winrm"`.
+- `host` — IP address or hostname of the resource.
+- `user` — login user.
+- `private_key` — SSH private key content.
+- `password` — password for WinRM or SSH password authentication.
+- `port` — connection port. Default: 22 for SSH, 5985 for WinRM.
+
+---
+
+## 5. file Provisioner
+
+The `file` provisioner copies a local file or directory to the remote resource. It does not execute the file.
+
+```hcl
+resource "aws_instance" "app" {
+  # ... instance config ...
+
+  connection {
+    type        = "ssh"
+    host        = self.public_ip
+    user        = "ec2-user"
+    private_key = file("~/.ssh/id_rsa")
+  }
+
+  provisioner "file" {
+    source      = "configs/app.conf"
+    destination = "/etc/app/app.conf"
+  }
+
+  provisioner "remote-exec" {
+    inline = ["sudo systemctl restart app"]
+  }
+}
+```
+
+Arguments:
+
+- `source` — local path to the file or directory to copy.
+- `destination` — path on the remote resource where the file is placed.
+- `content` — inline string content to write to the destination file (alternative to `source`).
+
+---
+
+## 6. Provisioner Failure Behavior
+
+Default behavior when a provisioner exits non-zero:
+
+1. The resource is marked as **tainted** in state.
+2. The current apply halts.
+3. On the next `terraform apply`, Terraform plans to destroy and recreate the tainted resource, then re-run the provisioner.
+
+Override with `on_failure`:
+
+```hcl
+provisioner "local-exec" {
+  command    = "notify-external-system.sh ${self.id}"
+  on_failure = continue
+}
+```
+
+| Value | Behavior |
+|---|---|
+| `fail` | Default. Taint resource, halt apply. |
+| `continue` | Log error, proceed with apply. Resource is not tainted. |
+
+Use `on_failure = continue` for non-critical side-effects where failure must not block the deployment.
+
+---
+
+## 7. null_resource
+
+The `null_resource` is a resource from the `hashicorp/null` provider that manages no real infrastructure.
+
+```hcl
+terraform {
+  required_providers {
+    null = {
+      source  = "hashicorp/null"
+      version = "~> 3.0"
+    }
+  }
+}
+
+resource "null_resource" "ansible_provisioner" {
+  triggers = {
+    instance_id = aws_instance.web.id
+    script_hash = filemd5("./playbooks/configure.yml")
+  }
+
+  provisioner "local-exec" {
+    command = "ansible-playbook -i '${aws_instance.web.public_ip},' ./playbooks/configure.yml"
+    environment = {
+      ANSIBLE_HOST_KEY_CHECKING = "False"
+    }
+  }
+}
+```
+
+The `triggers` map controls when the `null_resource` is recreated:
+
+- Any value in the map changes → Terraform destroys and recreates the `null_resource` → provisioners re-run.
+- `instance_id` trigger: re-runs when the EC2 instance is replaced.
+- `script_hash` trigger: re-runs when the Ansible playbook file content changes.
+
+Using `timestamp()` as a trigger forces the `null_resource` to re-run on every apply:
+
+```hcl
+resource "null_resource" "always_run" {
+  triggers = {
+    always_run = timestamp()
+  }
+
+  provisioner "local-exec" {
+    command = "date >> run-log.txt"
+  }
+}
+```
+
+This pattern is useful for side-effects that must always execute, such as cache invalidation or external notification.
+
+---
+
+## 8. Required Reading
+
+- Read the provisioners overview at developer.hashicorp.com/terraform/language/resources/provisioners/syntax
+- Read the local-exec provisioner reference at developer.hashicorp.com/terraform/language/resources/provisioners/local-exec
+- Read the remote-exec provisioner reference at developer.hashicorp.com/terraform/language/resources/provisioners/remote-exec
+- Read the null provider documentation at registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource
+
+---
+
+## 9. Terraform Associate 003 Exam Tips
+
+**Tip 1.** Provisioners are a last resort. The exam presents scenarios asking for the best way to bootstrap a VM. Always prefer `user_data` (AWS) or `custom_data` (Azure) over a provisioner.
+
+**Tip 2.** `local-exec` runs on the Terraform runner. `remote-exec` runs on the provisioned resource. Know which is which.
+
+**Tip 3.** Default `on_failure` behavior is `fail` — taints the resource and halts the apply. `on_failure = continue` logs the error and proceeds.
+
+**Tip 4.** A tainted resource is destroyed and recreated on the next apply. Know what "tainted" means and how it is produced.
+
+**Tip 5.** The `null_resource` creates no infrastructure. It exists to run provisioners when upstream values change.
+
+**Tip 6.** The `triggers` map on `null_resource` causes destruction and recreation whenever any trigger value changes between applies.
+
+**Tip 7.** `filemd5()` in a trigger detects script content changes. This is the standard pattern for re-running Ansible when a playbook file is modified.
+
+**Tip 8.** `self` inside a provisioner block references the containing resource's attributes. You cannot use `self` outside of a provisioner.
+
+---
+
+## 10. Study Checklist
+
+- [ ] Explain the difference between `local-exec` and `remote-exec` from memory.
+- [ ] List the three provisioner types and one use case for each.
+- [ ] Write a `connection` block with `type`, `host`, `user`, and `private_key` arguments.
+- [ ] Explain what happens when a provisioner exits with a non-zero status code.
+- [ ] Describe what `on_failure = continue` does and when to use it.
+- [ ] Write a `null_resource` block with a `triggers` map referencing another resource's ID.
+- [ ] Explain why `filemd5()` is used in a `null_resource` trigger.
+- [ ] List two cloud-native alternatives to using provisioners for VM bootstrapping.
+- [ ] Read all four required documentation pages.
+- [ ] Complete the Module 08 lab, quiz, and discussion post.
+
+---
+
+Module 08 Reading Guide — CIS-4337 Infrastructure Automation — Texas Wesleyan University

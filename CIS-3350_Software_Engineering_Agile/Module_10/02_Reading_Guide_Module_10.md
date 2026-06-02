@@ -1,66 +1,151 @@
 # Reading Guide: Module 10 – Requirements Engineering and Use Cases
 
-## Course: CIS-3350_Software_Engineering_Agile (Professional Scrum Master (PSM I))
+**Course:** CIS-3350 Software Engineering and Agile
+
+**Certification Alignment:** PSM I (Professional Scrum Master I) – Scrum.org
+
+**Instructor:** Professor Nash | Texas Wesleyan University
 
 ---
 
-### Introduction
+## Introduction
 
-Welcome to **Module 10 – Requirements Engineering and Use Cases**! Requirements engineering bridges the gap between stakeholder needs and what software systems actually do. This module covers classical requirements elicitation, analysis, and specification techniques — including use cases — and how these practices map to Agile and Scrum's iterative approach to requirements.
-
-The PSM I tests understanding of how Scrum handles requirements differently from traditional waterfall approaches: in Scrum, requirements emerge progressively through the Product Backlog, Sprint Reviews, and stakeholder collaboration, rather than being fully specified upfront. Understanding both approaches equips you to work in mixed-method environments.
+Requirements engineering is the process of discovering, analyzing, documenting, and managing what a software system must do and how well it must do it. This module examines the full requirements engineering discipline — from classical techniques (use cases, functional/non-functional specification) to the Scrum approach (Product Backlog as living requirements repository). Understanding both prepares you for PSM I exam questions about how Scrum handles requirements differently from traditional methods, and for professional environments where both approaches coexist.
 
 ---
 
-### 1. High-Yield Glossary
+## 1. Requirements Engineering Core Concepts
 
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
+### What Requirements Engineering Does
 
-* **Requirements engineering:** The systematic process of eliciting, analyzing, documenting, validating, and managing the needs and constraints that a software system must satisfy. It encompasses both functional requirements (what the system must do) and non-functional requirements (how well it must do it — performance, security, usability).
+Requirements engineering encompasses five activities that apply whether a team is using Waterfall or Agile:
 
-* **Functional requirements:** Specifications of the behaviors, functions, or services a system must provide — what the system does in response to specific inputs or conditions. Example: "The system must allow registered users to reset their password via email confirmation."
+| Activity | Description | Waterfall Application | Scrum Application |
+|---|---|---|---|
+| Elicitation | Discovering stakeholder needs | Workshops, interviews, observation before design | Ongoing — Sprint Reviews, refinement, user research |
+| Analysis | Examining for conflicts, ambiguity, feasibility | Before specification document is written | Part of Product Backlog refinement |
+| Specification | Documenting requirements in usable form | Formal SRS document | Product Backlog Items (user stories, use cases) |
+| Validation | Confirming requirements match actual needs | Stakeholder sign-off on specification | Sprint Review feedback loop |
+| Management | Tracking changes to requirements over time | Change control board | Product Owner maintains and reorders Product Backlog |
 
-* **Non-functional requirements (NFRs):** Constraints on the system's operation and quality attributes — how the system performs rather than what it does. Examples include response time, availability, security standards, and scalability. In Scrum, NFRs are often captured in the Definition of Done or as backlog items.
+### Functional vs. Non-Functional Requirements
 
-* **Use case:** A behavioral description of how an actor (a user or external system) interacts with a system to achieve a specific goal, expressed as a sequence of steps. Use cases identify actors, preconditions, main success scenarios, and alternative flows. They are more detailed than user stories and are common in traditional requirements documentation.
+| Type | Definition | Examples | Scrum Home |
+|---|---|---|---|
+| Functional | What the system must do — specific behaviors triggered by inputs or conditions | User login, password reset, data export, report generation | Product Backlog Items (user stories) |
+| Non-Functional (NFR) | How well the system must operate — quality attributes | Page load time < 2 seconds; 99.9% uptime; AES-256 encryption; WCAG 2.1 accessibility | Definition of Done (system-wide) or Product Backlog Items (significant development work) |
 
-* **Requirements traceability:** The ability to link each requirement back to its source (stakeholder need) and forward to its implementation and test cases. Traceability ensures that all stakeholder needs are implemented and that no implementation exists without a corresponding requirement — critical for regulated industries.
-
----
-
-### 2. Certification Exam Tips
-
-* **PSM I Focus — Requirements in Scrum are the Product Backlog:** Scrum does not use a formal requirements specification document. The Product Backlog is the living, ordered list of all known requirements. Questions that ask where requirements "live" in Scrum — the answer is the Product Backlog, with the Product Goal providing overall direction.
-* **Scenario Trap — "Frozen" requirements:** A common trap presents a scenario where a stakeholder wants to freeze all requirements before Sprint 1 begins. In Scrum, the Product Backlog is always open to change — the Product Owner can add, modify, or re-order items at any time (with the caveat that Sprint-committed items are protected by the Sprint Goal).
-* **Non-functional requirements in Scrum:** NFRs are most commonly handled through the Definition of Done — ensuring every Increment meets baseline quality, performance, and security standards — rather than as separate backlog items. However, significant NFR work (e.g., adding HTTPS) can also appear as backlog items.
-* **Use cases vs. user stories:** Use cases are more formal, actor-driven narratives popular in traditional software engineering. User stories are lighter, conversation-starting placeholders common in Agile. Both can coexist, but Scrum teams typically prefer user stories for backlog items because of their simplicity and emphasis on dialogue.
-* **Study Resource:** [The Scrum Guide (2020)](https://scrumguides.org/) covers how the Product Backlog replaces traditional requirements documents. Supplement with the [IEEE 830 Requirements Specification Standard overview](https://www.computer.org/education/bodies-of-knowledge/software-engineering) and the [Agile Alliance use case glossary](https://www.agilealliance.org/glossary/use-case/).
-
----
-
-### Required Readings & Videos
-
-To prepare for this module's topics, you must complete the following readings and videos:
-
-* **Required Reading:** [Use Cases — Agile Alliance Glossary](https://www.agilealliance.org/glossary/use-case/) — free, concise definition covering use case components, their relationship to user stories, and when to use each in practice.
-* **Required Video:** [Requirements Engineering Overview – Software Engineering Institute](https://www.youtube.com/watch?v=0MthdTSYnxM) — explains elicitation, analysis, and specification techniques with comparisons between Waterfall and Agile requirements approaches. (~11 min)
+The key diagnostic question: can I describe the requirement as "the system shall do X when Y" (functional) or "the system shall operate with quality attribute Z" (non-functional)?
 
 ---
 
-### Lab & Command Integration
+## 2. Use Cases
 
-In this week's hands-on lab, you will:
+### Use Case Structure
 
-* **Elicit requirements from a stakeholder brief:** Given a two-paragraph product description, identify and categorize at least eight requirements — distinguishing functional from non-functional requirements and noting which NFRs would belong in a Definition of Done.
-* **Write a use case:** For one of the functional requirements you identified, write a full use case including actor, preconditions, main success scenario (numbered steps), and at least one alternative flow.
-* **Map requirements to a Product Backlog:** Convert five of your identified requirements into Product Backlog items (user story format), ordering them by value, and flag any that are NFRs suitable for inclusion in the Definition of Done.
+A use case describes how a specific actor (human user or external system) interacts with the system to achieve a specific goal. Use cases are more formal than user stories and are common in regulated industries and enterprise environments.
+
+| Component | Description | Example |
+|---|---|---|
+| Use case name | Brief goal statement | "Reset Password" |
+| Actor | Who initiates the interaction | Registered User |
+| Preconditions | What must be true before the use case begins | User has a registered account; user is on login page |
+| Main success scenario | Numbered steps when everything goes right | 1. User clicks Forgot Password 2. System shows email form... |
+| Alternative flows | Valid deviations from the main path | If email not recognized, show generic message |
+| Exception flows | Error conditions the system must handle | If reset link expired, prompt user to request a new one |
+| Postconditions | What is true after success | User password updated; user redirected to login |
+
+### Use Case vs. User Story
+
+| Dimension | Use Case | User Story |
+|---|---|---|
+| Format | Structured table with numbered steps | One sentence: As a / I can / so that |
+| Detail level | High — all paths documented | Low — conversation starter |
+| Primary purpose | Specification and testing | Dialogue and shared understanding |
+| Acceptance criteria | Embedded in alternative/exception flows | Written separately (Given/When/Then) |
+| Best fit | Regulated industries, detailed upfront spec needed | Agile teams, iterative discovery |
+| Scrum compatibility | Both are valid PBI formats | Preferred Scrum format |
+
+Both formats document the same underlying system behavior. Neither is prohibited in Scrum. Teams often use user stories for everyday features and use cases for complex, regulated, or safety-critical behaviors.
 
 ---
 
-### 3. Study Checklist
+## 3. Requirements in Scrum
 
-* [ ] Read the Agile Alliance use case glossary entry.
-* [ ] Be able to distinguish functional requirements from non-functional requirements with examples.
-* [ ] Understand how non-functional requirements map to the Definition of Done in Scrum.
-* [ ] Watch the required video and note how requirements evolve differently in Agile vs. Waterfall projects.
-* [ ] Proceed to the weekly hands-on lab activity.
+### The Product Backlog as Requirements Repository
+
+The Scrum Guide does not use the phrase "requirements document." The Product Backlog is the Scrum team's complete, living, ordered list of what needs to be done on the product. It replaces the traditional requirements specification by distributing requirements discovery across the project rather than front-loading it.
+
+Product Backlog characteristics that mirror good requirements practices:
+
+- Emergent: new requirements are discovered and added as the team learns
+- Ordered: the most valuable and best-understood items are at the top
+- Transparent: visible to all stakeholders at all times
+- Refined: items are analyzed and detailed before they enter a Sprint (equivalent to requirements analysis)
+
+### Non-Functional Requirements in Scrum
+
+| NFR Type | Where It Lives in Scrum | Rationale |
+|---|---|---|
+| System-wide quality standard (e.g., all pages < 2 seconds) | Definition of Done | Applies to every Increment — must be verified on every item |
+| Specific infrastructure work (e.g., add TLS to legacy API) | Product Backlog Item | Requires dedicated development effort; should be planned and estimated |
+| Regulatory compliance (e.g., HIPAA audit logging) | Definition of Done + possibly Product Backlog Items | Compliance applies to everything; remediation is specific work |
+
+### Requirements Traceability in Scrum
+
+Traditional requirements traceability links each requirement to its source and forward to its implementation and tests. Agile teams achieve traceability through:
+
+- Acceptance criteria: each user story's Given/When/Then criteria are directly testable
+- Definition of Done: quality standards verified on every story
+- Backlog management tools: linking stories to test cases and sprint outcomes
+- Sprint Reviews: stakeholders validate that implemented items match their needs
+
+Formal traceability matrices are not prescribed in Scrum but are not prohibited. Teams in regulated industries (healthcare, finance, aerospace) often maintain them as required artifacts alongside their Scrum workflow.
+
+---
+
+## 4. Traditional vs. Agile Requirements: Key Differences
+
+| Dimension | Traditional (Waterfall) | Scrum |
+|---|---|---|
+| When requirements are captured | Before development begins | Progressively throughout the project |
+| Format | Formal specification document | Product Backlog Items (user stories, use cases) |
+| Completeness assumption | Requirements can be fully known upfront | Requirements emerge; full specification upfront is waste |
+| Change management | Change control board; changes are expensive | Product Backlog is always open; changes welcome |
+| Stakeholder involvement | Heavy at the beginning, light during development | Continuous — Sprint Reviews, refinement sessions |
+| Validation | Document sign-off before build | Working software demonstrated at Sprint Review |
+| Non-functional requirements | Separate NFR section in specification | Definition of Done + select backlog items |
+
+---
+
+## 5. PSM I Exam Tips
+
+Tip 1: The Product Backlog is Scrum's requirements document. Any question that asks where requirements "live" in Scrum points to the Product Backlog (and its commitment, the Product Goal, for strategic direction).
+
+Tip 2: Non-functional requirements that apply system-wide belong in the Definition of Done. This is one of the most tested NFR concepts on PSM I — "where should performance standards be captured?" → Definition of Done.
+
+Tip 3: The Product Backlog is never frozen. A common exam scenario presents a stakeholder who wants to sign off on a complete requirements list before Sprint 1. The correct Scrum response: the Product Backlog supports progressive elaboration and is always open to change.
+
+Tip 4: The Scrum Guide does not specify the format of Product Backlog Items. User stories are common practice, not a Scrum rule. Use cases, job stories, or plain descriptions are all valid PBI formats.
+
+Tip 5: Agile Manifesto Principle 2 — "Welcome changing requirements, even late in development. Agile processes harness change for the customer's competitive advantage." This principle directly contrasts with Waterfall requirements freezing.
+
+Tip 6: Scrum does not define a requirements analyst role. The Product Owner is responsible for the Product Backlog, including eliciting and ordering requirements. Developers and stakeholders contribute knowledge during refinement.
+
+Tip 7: Use cases and user stories document the same underlying behavior differently. Neither format is prohibited in Scrum. Teams choose the format that best serves their context.
+
+Tip 8: Acceptance criteria (whether in Given/When/Then or use case format) serve as the bridge between requirements and testing — they make requirements testable and provide the basis for the Definition of Done verification.
+
+---
+
+## 6. Study Checklist
+
+- [ ] Define requirements engineering and state its five core activities
+- [ ] Distinguish functional from non-functional requirements and give two examples of each
+- [ ] Write a complete use case with all required components for a common system behavior
+- [ ] Explain how the Product Backlog replaces a traditional requirements specification in Scrum
+- [ ] Describe two ways non-functional requirements are handled in Scrum
+- [ ] Explain what requirements traceability is and how Agile teams achieve it without a formal matrix
+- [ ] Complete this module's Lab and Quiz
+
+---

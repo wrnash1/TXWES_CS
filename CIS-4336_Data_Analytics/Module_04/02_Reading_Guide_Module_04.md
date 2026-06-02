@@ -1,53 +1,266 @@
-# Reading Guide: Module 04 - Relational Databases and SQL for Analytics
-## Course: CIS-4336_Data_Analytics (CompTIA Data+)
+# Reading Guide — Module 04: Relational Databases and SQL for Analytics
+
+**Course:** CIS-4336 Data Analytics — Texas Wesleyan University
+**Instructor:** Professor Nash
+**Certification Alignment:** CompTIA Data+ DA0-001 — Domain 2: Data Mining; Domain 3: Data Analysis
 
 ---
 
-### Introduction
-Welcome to **Module 04 - Relational Databases and SQL for Analytics**! SQL is the universal language of data — every data analyst, regardless of their tool stack, must be able to query, filter, join, and aggregate relational data. This module covers the SQL statements and database concepts that appear most frequently on the **CompTIA Data+** exam and in real-world analytics roles.
+## Overview
 
-You will learn how to retrieve data with SELECT, filter it with WHERE, combine tables with JOINs, group and summarize with GROUP BY and aggregate functions, and understand how indexes affect query performance.
-
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **SELECT and WHERE**: SELECT specifies which columns to return from a query; WHERE filters which rows are included based on one or more conditions. Together they form the most fundamental query pattern in SQL. The Data+ exam tests your ability to read a SQL statement and predict its output.
-*   **JOIN types (INNER, LEFT, RIGHT)**: An INNER JOIN returns only rows where the join condition matches in both tables. A LEFT JOIN returns all rows from the left table and matching rows from the right — unmatched right-table rows appear as NULL. A RIGHT JOIN is the mirror image. Understanding which rows are included or excluded by each join type is a frequent exam topic.
-*   **GROUP BY and HAVING**: GROUP BY collapses rows that share the same value in one or more columns into a single summary row. Aggregate functions (COUNT, SUM, AVG, MIN, MAX) are then applied to each group. HAVING filters the resulting groups — it is the equivalent of WHERE but operates after aggregation, not before.
-*   **Aggregation functions**: COUNT() counts rows (or non-null values in a column), SUM() adds numeric values, AVG() computes the arithmetic mean, MIN() and MAX() return the smallest and largest values. These functions are central to every analytics SQL query.
-*   **Indexes**: A database index is a data structure (typically a B-tree) that allows the database engine to locate rows matching a condition without scanning every row in the table. Indexes dramatically speed up SELECT queries with WHERE clauses on indexed columns but add overhead to INSERT, UPDATE, and DELETE operations.
+SQL is the foundational tool of data analytics. This guide provides a complete analytical SQL reference — from SELECT basics through window functions and CTEs. Study each section carefully; the lab and quiz require writing SQL, not just recognizing it.
 
 ---
 
-### 2. Certification Exam Tips
-*   **Domain weight:** SQL and relational database concepts appear across multiple Data+ domains. Data Mining (Domain 3, ~23%) heavily tests SELECT, JOIN, GROUP BY, and HAVING in scenario questions.
-*   **Exam trap — WHERE vs. HAVING:** This is one of the most commonly tested distinctions. WHERE filters individual rows before grouping; HAVING filters groups after aggregation. If a question asks you to "show only departments with more than 10 employees," the answer requires HAVING COUNT(*) > 10, not WHERE.
-*   **Exam trap — INNER vs. LEFT JOIN:** When a scenario says "show all customers including those who have never placed an order," the answer is a LEFT JOIN from Customers to Orders, not INNER JOIN. INNER JOIN would exclude customers with no orders.
-*   **Exam trap — COUNT(*) vs. COUNT(column):** COUNT(*) counts all rows including NULLs. COUNT(column_name) counts only non-null values in that column. The exam uses this distinction in scenario-based aggregation questions.
-*   **Study Resource:** The SQL chapters of [Introduction to Data Science by Rafael A. Irizarry](https://rafalab.github.io/dsbook/) cover database querying with worked examples. The [Data Analysis with Python Course by freeCodeCamp](https://www.youtube.com/watch?v=GPVsHOl2238) covers SQL integration with Pandas for end-to-end analytics workflows.
+## Section 1 — Core Vocabulary
+
+| Term | Definition |
+|---|---|
+| SQL | Structured Query Language — the standard language for querying and manipulating relational databases |
+| SELECT | The SQL clause that specifies which columns to return |
+| FROM | Identifies the table or subquery to retrieve data from |
+| WHERE | Filters rows before any grouping or aggregation |
+| GROUP BY | Groups rows by one or more columns so aggregate functions can be applied per group |
+| HAVING | Filters groups after aggregation — applies to aggregate results, not individual rows |
+| ORDER BY | Sorts the result set; ASC (default) or DESC |
+| JOIN | Combines rows from two or more tables based on a matching condition |
+| INNER JOIN | Returns only rows with a match in both joined tables |
+| LEFT JOIN | Returns all rows from the left table; NULLs for non-matching right-table columns |
+| FULL OUTER JOIN | Returns all rows from both tables; NULLs fill unmatched sides |
+| Aggregate function | A function that computes a single result from a group of rows: COUNT, SUM, AVG, MIN, MAX |
+| Window function | A function that computes over a defined "window" of rows while keeping all rows visible |
+| OVER | Introduces the window definition for a window function |
+| PARTITION BY | Divides data into groups within a window function (similar to GROUP BY but without collapsing rows) |
+| CTE | Common Table Expression — a named temporary result defined with the WITH keyword |
+| Subquery | A SELECT statement nested inside another query |
+| COALESCE | Returns the first non-null argument in a list |
+| ALIAS | A temporary name given to a column, expression, or table using the AS keyword |
+| NULL | Represents a missing or unknown value in SQL |
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the relational databases and SQL chapters in the OER Textbook: [Introduction to Data Science by Rafael A. Irizarry](https://rafalab.github.io/dsbook/). Focus on SELECT, JOIN, GROUP BY, and aggregation function examples.
-*   **Required Video:** Watch the database query sections of the [Data Analysis with Python Course by freeCodeCamp](https://www.youtube.com/watch?v=GPVsHOl2238), which demonstrates how SQL queries connect to Python-based analytics pipelines.
+## Section 2 — SQL Query Execution Order
+
+SQL clauses are processed in a specific order that differs from how they are written. Understanding this order explains why certain references are invalid in certain clauses.
+
+| Execution Step | Clause | What Happens |
+|---|---|---|
+| 1 | FROM | Identify the source table(s) |
+| 2 | JOIN | Combine tables based on join conditions |
+| 3 | WHERE | Filter individual rows (before aggregation) |
+| 4 | GROUP BY | Group filtered rows |
+| 5 | HAVING | Filter groups (after aggregation) |
+| 6 | SELECT | Compute output columns and expressions |
+| 7 | DISTINCT | Remove duplicate output rows |
+| 8 | ORDER BY | Sort the final result |
+| 9 | LIMIT / TOP | Restrict the number of output rows |
+
+Key implication: You cannot reference a SELECT alias in a WHERE clause, because WHERE is evaluated before SELECT. You cannot use an aggregate function in a WHERE clause — aggregation has not happened yet when WHERE runs. That is what HAVING is for.
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Write a SQL query using SELECT, WHERE, and ORDER BY**: Retrieve student records with a grade of 90 or higher, sorted descending by grade.
-*   **Write a query joining students and courses tables**: Use an INNER JOIN to list every student with their enrolled course name, and then modify it to a LEFT JOIN to include students not yet enrolled in any course.
-*   **Group results by course and calculate average grade**: Use GROUP BY on the course column and AVG() on the grade column, then use HAVING to show only courses with an average above 75.
+## Section 3 — Aggregate Functions Reference
+
+| Function | Syntax | Returns | Handles NULLs |
+|---|---|---|---|
+| COUNT(*) | `COUNT(*)` | Number of rows in group | Counts all rows including NULLs |
+| COUNT(col) | `COUNT(column)` | Number of non-null values in column | Ignores NULLs |
+| SUM | `SUM(column)` | Sum of all non-null values | Ignores NULLs |
+| AVG | `AVG(column)` | Mean of all non-null values | Ignores NULLs — denominator is non-null count |
+| MIN | `MIN(column)` | Smallest value | Ignores NULLs |
+| MAX | `MAX(column)` | Largest value | Ignores NULLs |
+
+### GROUP BY Query Template
+
+```sql
+SELECT grouping_column,
+       COUNT(*) AS row_count,
+       SUM(measure) AS total,
+       AVG(measure) AS average
+FROM table_name
+WHERE row_filter_condition
+GROUP BY grouping_column
+HAVING SUM(measure) > threshold
+ORDER BY total DESC;
+```
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read the SQL and relational database chapters in [Introduction to Data Science by Rafael A. Irizarry](https://rafalab.github.io/dsbook/).
-- [ ] Watch the [Data Analysis with Python Course by freeCodeCamp](https://www.youtube.com/watch?v=GPVsHOl2238).
-- [ ] Review the lab instructions and understand what each task requires.
-- [ ] Proceed to the weekly hands-on lab activity.
+## Section 4 — JOIN Types Reference
+
+| JOIN Type | Rows Returned | Use Case |
+|---|---|---|
+| INNER JOIN | Only rows matched in both tables | Find related records that exist in both tables |
+| LEFT JOIN | All left-table rows; NULLs for unmatched right rows | Include all entities with or without related records |
+| RIGHT JOIN | All right-table rows; NULLs for unmatched left rows | Rarely used; rewrite as LEFT JOIN by swapping tables |
+| FULL OUTER JOIN | All rows from both tables; NULLs fill both sides | Compare two lists; find records only in one set |
+
+### Finding Records with No Match (Anti-Join Pattern)
+
+```sql
+-- Customers who have never placed an order
+SELECT c.CUSTOMER_ID, c.FIRST_NAME
+FROM CUSTOMERS c
+LEFT JOIN ORDERS o ON c.CUSTOMER_ID = o.CUSTOMER_ID
+WHERE o.ORDER_ID IS NULL;
+```
+
+The LEFT JOIN returns NULL for all ORDERS columns when there is no match. Filtering for `WHERE o.ORDER_ID IS NULL` isolates the customers with no orders.
+
+---
+
+## Section 5 — Window Function Reference
+
+Window functions require an OVER clause. PARTITION BY and ORDER BY within OVER are both optional but critical for controlling behavior.
+
+| Function | Description | Requires ORDER BY in OVER? |
+|---|---|---|
+| ROW_NUMBER() | Unique sequential integer for each row within partition | Yes |
+| RANK() | Rank with gaps after ties (1, 2, 2, 4) | Yes |
+| DENSE_RANK() | Rank without gaps after ties (1, 2, 2, 3) | Yes |
+| SUM() OVER | Running or partitioned sum | Optional (running total requires ORDER BY) |
+| AVG() OVER | Running or partitioned average | Optional |
+| LAG(col, n) | Value of col from n rows prior | Yes |
+| LEAD(col, n) | Value of col from n rows ahead | Yes |
+| NTILE(n) | Divides rows into n equal buckets | Yes |
+
+### Window Function Examples
+
+```sql
+-- Rank customers by total spend, highest first
+SELECT CUSTOMER_ID,
+       SUM(TOTAL_AMOUNT) AS total_spent,
+       RANK() OVER (ORDER BY SUM(TOTAL_AMOUNT) DESC) AS spend_rank
+FROM ORDERS
+GROUP BY CUSTOMER_ID;
+
+-- Running total of daily revenue
+SELECT ORDER_DATE,
+       TOTAL_AMOUNT,
+       SUM(TOTAL_AMOUNT) OVER (ORDER BY ORDER_DATE) AS running_total
+FROM ORDERS;
+
+-- Compare each order to the previous order amount for the same customer
+SELECT CUSTOMER_ID, ORDER_DATE, TOTAL_AMOUNT,
+       LAG(TOTAL_AMOUNT, 1) OVER (
+           PARTITION BY CUSTOMER_ID
+           ORDER BY ORDER_DATE
+       ) AS previous_order_amount
+FROM ORDERS;
+```
+
+---
+
+## Section 6 — Analytical SQL Query Reference
+
+### Sales by Region with HAVING Filter
+
+```sql
+SELECT REGION,
+       COUNT(*)            AS order_count,
+       SUM(TOTAL_AMOUNT)   AS total_revenue,
+       AVG(TOTAL_AMOUNT)   AS avg_order_value
+FROM ORDERS
+GROUP BY REGION
+HAVING SUM(TOTAL_AMOUNT) > 100000
+ORDER BY total_revenue DESC;
+```
+
+### Year-over-Year Comparison
+
+```sql
+SELECT EXTRACT(YEAR FROM ORDER_DATE) AS order_year,
+       REGION,
+       SUM(TOTAL_AMOUNT) AS annual_revenue
+FROM ORDERS
+GROUP BY order_year, REGION
+ORDER BY order_year, REGION;
+```
+
+### Top N Per Group Using Window Function
+
+```sql
+WITH ranked_orders AS (
+    SELECT *,
+           ROW_NUMBER() OVER (
+               PARTITION BY REGION
+               ORDER BY TOTAL_AMOUNT DESC
+           ) AS rn
+    FROM ORDERS
+)
+SELECT REGION, ORDER_ID, TOTAL_AMOUNT
+FROM ranked_orders
+WHERE rn <= 3;
+```
+
+### Monthly Revenue Trend
+
+```sql
+SELECT EXTRACT(YEAR FROM ORDER_DATE)  AS yr,
+       EXTRACT(MONTH FROM ORDER_DATE) AS mo,
+       COUNT(*)                       AS order_count,
+       SUM(TOTAL_AMOUNT)              AS monthly_revenue
+FROM ORDERS
+GROUP BY yr, mo
+ORDER BY yr, mo;
+```
+
+---
+
+## Section 7 — WHERE vs. HAVING Decision Guide
+
+| Scenario | Use |
+|---|---|
+| Filter rows before any aggregation | WHERE |
+| Filter rows where a column equals a specific value | WHERE |
+| Filter groups where an aggregate meets a condition | HAVING |
+| Exclude groups with fewer than N records | HAVING COUNT(*) >= N |
+| Filter on a date range | WHERE |
+| Keep only groups where the sum exceeds a threshold | HAVING SUM(col) > threshold |
+
+Key rule: You cannot use an aggregate function (SUM, COUNT, AVG, etc.) in a WHERE clause. You must use HAVING.
+
+---
+
+## Section 8 — Data+ Exam Tips
+
+1. **WHERE vs. HAVING.** This distinction is guaranteed on the exam. WHERE filters rows before grouping. HAVING filters groups after aggregation. Memorize this.
+
+2. **GROUP BY column rule.** Every non-aggregated column in SELECT must appear in GROUP BY. The exam may show a query with a missing GROUP BY column and ask you to identify the error.
+
+3. **NULL behavior in aggregates.** COUNT(*) counts all rows. COUNT(col) counts non-null values. AVG ignores nulls — the denominator is the non-null count, not total row count.
+
+4. **LEFT JOIN for "include all" scenarios.** When an exam scenario says "list all customers, even those with no orders," the answer involves a LEFT JOIN. INNER JOIN would exclude customers with no orders.
+
+5. **Window functions keep all rows.** GROUP BY collapses rows into one per group. Window functions compute group-level values while keeping every individual row. This is a key conceptual distinction the exam tests.
+
+6. **RANK vs. ROW_NUMBER.** RANK skips ranks after ties: 1, 2, 2, 4. ROW_NUMBER assigns unique integers always: 1, 2, 3, 4. Know which to use when the requirement specifies "no ties allowed."
+
+7. **CTEs improve readability.** The exam may ask you to identify the purpose of a WITH clause. CTEs define named temporary result sets that can be referenced in the main query, improving readability and enabling reuse.
+
+8. **COALESCE for null handling.** When a LEFT JOIN produces NULLs for unmatched rows, COALESCE replaces them with a default value. `COALESCE(o.total, 0)` replaces null totals with zero.
+
+---
+
+## Section 9 — Study Checklist
+
+- [ ] Memorize all vocabulary terms in Section 1
+- [ ] Reproduce the SQL execution order table from memory
+- [ ] Write a GROUP BY query with at least two aggregate functions
+- [ ] Write a query using HAVING to filter aggregate results
+- [ ] Write an INNER JOIN and LEFT JOIN on the same two tables and explain the difference in results
+- [ ] Write a window function using SUM OVER with ORDER BY for a running total
+- [ ] Write a window function using RANK OVER for ranking within a partition
+- [ ] Explain the difference between WHERE and HAVING without looking at notes
+- [ ] Review all eight exam tips
+- [ ] Review official CompTIA Data+ objectives at comptia.org
+- [ ] Review Professor Messer's free study materials at professormesser.com
+- [ ] Complete Lab 04
+- [ ] Complete Quiz 04
+
+---
+
+## Additional Resources
+
+- Official exam objectives: comptia.org (search "Data+ DA0-001 exam objectives")
+- Professor Messer's free study guides: professormesser.com

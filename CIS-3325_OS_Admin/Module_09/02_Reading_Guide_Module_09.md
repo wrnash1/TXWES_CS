@@ -1,52 +1,220 @@
 # Reading Guide: Module 09 - Networking Configuration
-## Course: CIS-3325_OS_Admin (CompTIA Linux+ XK0-005)
+
+## CIS-3325 OS Administration | Texas Wesleyan University
+
+**Certification Alignment:** CompTIA Linux+ (XK0-005)
+**Exam Domain:** Domain 2.0 - Security and Domain 1.0 - System Management
 
 ---
 
-### Introduction
-Welcome to **Module 09 – Networking Configuration**! This week covers Linux network stack fundamentals — from IP address assignment and interface management with `ip` and `nmcli`, through hostname resolution with `/etc/hosts` and `/etc/resolv.conf`, to testing connectivity with `ping`, `traceroute`, and `ss`. Networking is heavily tested on CompTIA Linux+ XK0-005 under Domain 1.0 (System Management) and Domain 2.0 (Security).
+### Glossary
 
-As you work through this material you will learn how to view and configure network interfaces, set static and DHCP addresses, troubleshoot connectivity, and configure DNS name resolution — skills essential for both the exam and daily Linux administration.
+**Network Interface** - A hardware or virtual device that connects a system to a network. Named eth0 (legacy), ens33, enp2s0 (predictable naming), or lo (loopback).
 
----
+**CIDR Notation** - A way of expressing an IP address and subnet mask together, such as 192.168.1.100/24 where /24 indicates the first 24 bits are the network portion.
 
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
+**Default Gateway** - The router that a system sends traffic to when the destination IP is not on any locally connected network.
 
-*   **`ip` command**: The modern replacement for the deprecated `ifconfig`. Used to display and configure network interfaces, routes, and addresses. Key subcommands: `ip addr show` (list interfaces and IPs), `ip link set eth0 up/down` (bring interface up or down), `ip route show` (display routing table), `ip addr add 192.168.1.10/24 dev eth0` (assign an IP address temporarily). Changes made with `ip` are not persistent across reboots.
-*   **`nmcli` (NetworkManager CLI)**: A command-line interface to NetworkManager, the service that manages network connections persistently on most modern Linux distributions. `nmcli con show` lists connections; `nmcli con up <name>` activates a connection; `nmcli dev status` shows interface states; `nmcli con mod <name> ipv4.addresses 192.168.1.10/24` modifies a connection persistently. Configuration is stored in `/etc/NetworkManager/system-connections/`.
-*   **`/etc/hosts`**: A static hostname-to-IP mapping file processed before DNS. Each line contains an IP address followed by one or more hostnames: `192.168.1.5  webserver webserver.local`. Useful for local name resolution without a DNS server. On Linux, the resolution order is controlled by `/etc/nsswitch.conf` — typically `files dns`, meaning `/etc/hosts` is checked first.
-*   **`/etc/resolv.conf`**: Configures DNS resolver behavior. The `nameserver` directive specifies the DNS server IP (e.g., `nameserver 8.8.8.8`). The `search` directive appends domain suffixes for short hostnames. On systems using NetworkManager or systemd-resolved, this file may be a symlink managed automatically — manual edits may be overwritten.
-*   **`ss` and `netstat`**: Tools for displaying socket and connection information. `ss -tuln` shows all TCP and UDP listening ports without resolving names — the modern replacement for `netstat -tuln`. `ss -tp` shows TCP connections with the associated process. `netstat` is deprecated on modern systems but still appears on the CompTIA Linux+ exam.
-*   **`ping`, `traceroute`, `dig`**: Connectivity testing and DNS diagnostic tools. `ping -c 4 hostname` sends 4 ICMP echo requests to test reachability. `traceroute hostname` (or `tracepath`) shows each network hop to a destination. `dig hostname` performs a detailed DNS lookup showing the full query/response; `dig @8.8.8.8 hostname` queries a specific nameserver directly.
+**NetworkManager** - A Linux service that manages network connections. Controlled with nmcli (CLI) or nmtui (text UI). Stores persistent configuration in connection profiles.
 
----
+**nmcli** - The command-line interface for NetworkManager. Used for making persistent network configuration changes.
 
-### 2. Certification Exam Tips
-*   **Domain alignment:** Networking maps to Linux+ Domain 1.0 (System Management) and Domain 2.0 (Security). Expect 5–7 questions on interface configuration, name resolution, and connectivity testing.
-*   **`ip` vs `ifconfig` trap:** The exam presents both commands — know that `ifconfig` is deprecated and not installed by default on RHEL 8+/Ubuntu 20.04+. The exam-preferred answer for interface management is `ip addr show` or `ip link`. If both appear as options, choose `ip`.
-*   **Persistent vs temporary configuration:** `ip addr add` changes are lost at reboot. For persistence use `nmcli con mod` or edit `/etc/sysconfig/network-scripts/ifcfg-<name>` (RHEL) or Netplan YAML (Ubuntu 18.04+). The exam tests whether you know the difference between a live change and a persistent one.
-*   **`/etc/hosts` vs DNS resolution order:** Know that `/etc/nsswitch.conf` controls resolution order. The default `hosts: files dns` means `/etc/hosts` is checked first. A question may ask how to make `webserver` resolve to a private IP on a single machine — the answer is to add an entry to `/etc/hosts`, not to configure DNS.
-*   **`ss -tuln` vs `netstat`:** The exam may ask which command shows listening TCP/UDP ports. `ss -tuln` is the modern answer. Know the flags: `-t` TCP, `-u` UDP, `-l` listening only, `-n` numeric (no name resolution).
-*   **Study Resource:** [The Linux Command Line by William Shotts](https://linuxcommand.org/tlcl.php) covers networking utilities in chapter 17. [Linux Essentials Course by LearnLinuxTV](https://www.youtube.com/playlist?list=PLT98CRl2KxEG0QLjR-8t7k3S4I15Z1A78) includes video demonstrations of `ip`, `nmcli`, and network troubleshooting workflows in a live environment.
+**Loopback Interface** - The lo interface, always 127.0.0.1/8. Used by applications to communicate with other processes on the same system without using the network.
+
+**/etc/hosts** - A local file mapping hostnames to IP addresses. Checked before DNS when the nsswitch.conf hosts: line starts with files.
+
+**/etc/resolv.conf** - Contains the IP addresses of DNS servers the system queries. Managed by NetworkManager or systemd-resolved on modern systems.
+
+**/etc/nsswitch.conf** - The Name Service Switch configuration file. The hosts: line controls the order in which /etc/hosts (files) and DNS (dns) are consulted for hostname resolution.
+
+**ss** - The socket statistics command. Modern replacement for netstat. Shows listening ports and active connections.
+
+**dig** - A DNS query tool that returns detailed DNS responses including query time and the nameserver consulted.
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read chapter 17 of the free OER textbook [The Linux Command Line by William Shotts](https://linuxcommand.org/tlcl.php), covering networking tools including `ping`, `traceroute`, `netstat`, and remote access utilities on Linux.
-*   **Required Video:** Watch the networking configuration videos in the [Linux Essentials Course by LearnLinuxTV](https://www.youtube.com/playlist?list=PLT98CRl2KxEG0QLjR-8t7k3S4I15Z1A78), a free YouTube playlist that demonstrates interface management, IP assignment, and DNS configuration with live examples.
+### ip Command Reference
+
+| Command | Purpose |
+|---------|---------|
+| ip addr show | Show all interfaces with IP addresses |
+| ip addr show IFACE | Show a specific interface |
+| ip addr add IP/PREFIX dev IFACE | Add an IP address (temporary) |
+| ip addr del IP/PREFIX dev IFACE | Remove an IP address (temporary) |
+| ip link show | Show link-layer status of all interfaces |
+| ip link set IFACE up | Bring an interface up (temporary) |
+| ip link set IFACE down | Bring an interface down (temporary) |
+| ip route show | Show the routing table |
+| ip route add NETWORK via GATEWAY | Add a static route (temporary) |
+| ip route del NETWORK | Remove a static route (temporary) |
+| ip route get IP | Show which route is used to reach a specific IP |
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab you will use `ip addr show` to identify interfaces, assign a temporary IP with `ip addr add`, verify routing with `ip route show`, add a host entry to `/etc/hosts`, test connectivity with `ping`, and view listening ports with `ss -tuln`.
+### nmcli Command Reference
+
+| Command | Purpose |
+|---------|---------|
+| nmcli con show | List all connection profiles |
+| nmcli dev status | Show device state and connected profile |
+| nmcli con show NAME | Show all settings for a connection profile |
+| nmcli con mod NAME ipv4.addresses IP/PREFIX | Set a static IP |
+| nmcli con mod NAME ipv4.gateway IP | Set the default gateway |
+| nmcli con mod NAME ipv4.dns IP | Set DNS server |
+| nmcli con mod NAME ipv4.method manual | Set static (non-DHCP) mode |
+| nmcli con mod NAME ipv4.method auto | Set DHCP mode |
+| nmcli con up NAME | Apply connection profile changes |
+| nmcli con reload | Reload all connection profiles |
+| nmcli con mod NAME +ipv4.routes "NET via GW" | Add a persistent static route |
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read chapter 17 in [The Linux Command Line by William Shotts](https://linuxcommand.org/tlcl.php).
-- [ ] Watch the networking videos in [Linux Essentials Course by LearnLinuxTV](https://www.youtube.com/playlist?list=PLT98CRl2KxEG0QLjR-8t7k3S4I15Z1A78).
-- [ ] Review the commands outlined in the lab instructions.
-- [ ] Proceed to the weekly hands-on lab activity.
+### DNS Resolution Chain
+
+When an application resolves a hostname, the system follows the order in /etc/nsswitch.conf:
+
+```
+hosts: files dns
+```
+
+This means:
+1. Check /etc/hosts for a matching entry
+2. If not found, query the DNS servers in /etc/resolv.conf
+
+If the line read hosts: dns files, DNS would be queried first and /etc/hosts would only be
+consulted as a fallback.
+
+Key DNS configuration files:
+
+| File | Purpose |
+|------|---------|
+| /etc/hosts | Static hostname-to-IP mappings |
+| /etc/resolv.conf | DNS server IP addresses |
+| /etc/nsswitch.conf | Resolution order (files, dns) |
+| /etc/hostname | Persistent system hostname |
+
+---
+
+### DNS Query Tools
+
+| Command | Use Case |
+|---------|---------|
+| dig HOSTNAME | Full DNS query with detailed output |
+| dig HOSTNAME TYPE | Query a specific record type (A, MX, NS, TXT) |
+| dig @SERVER HOSTNAME | Query a specific DNS server directly |
+| dig -x IP | Reverse DNS lookup (IP to hostname) |
+| nslookup HOSTNAME | Legacy DNS query tool, simpler output |
+| host HOSTNAME | Simple forward and reverse DNS lookups |
+| resolvectl status | Show DNS configuration managed by systemd-resolved |
+
+---
+
+### Network Diagnostic Tools
+
+| Command | Purpose |
+|---------|---------|
+| ping -c N IP | Send N ICMP packets; test basic connectivity |
+| traceroute -n IP | Show path hops to destination (-n = no DNS) |
+| ss -tuln | List listening TCP/UDP ports (numeric) |
+| ss -tulnp | Same, with process name and PID (requires root) |
+| ss -tan | All TCP connections in all states |
+| tcpdump -i IFACE -n | Capture packets on interface (numeric IPs) |
+| tcpdump -i IFACE port N | Capture packets for a specific port |
+| tcpdump -i IFACE host IP | Capture packets for a specific host |
+| tcpdump -i IFACE -w FILE | Save capture to file |
+
+---
+
+### ss Output Interpretation
+
+The ss -tulnp command produces columns:
+
+| Column | Meaning |
+|--------|---------|
+| Netid | tcp or udp |
+| State | LISTEN, ESTAB, TIME-WAIT, etc. |
+| Recv-Q | Bytes in receive queue |
+| Send-Q | Bytes in send queue |
+| Local Address:Port | Interface IP and port on this system |
+| Peer Address:Port | Remote IP and port (0.0.0.0:* for listeners) |
+| Process | Command name and PID (with -p) |
+
+An entry with Local Address 0.0.0.0:22 means sshd is listening on all interfaces.
+An entry with 127.0.0.1:PORT means the service is only accessible locally.
+
+---
+
+### Troubleshooting Methodology
+
+Test layer by layer from the bottom up:
+
+1. Physical layer: ip link show — is the interface state UP?
+2. IP layer: ip addr show — is an IP address assigned?
+3. Routing: ip route show — is there a default route?
+4. Gateway: ping GATEWAY_IP — can you reach the local gateway?
+5. Internet: ping 8.8.8.8 — can you reach a public IP?
+6. DNS: dig google.com — does hostname resolution work?
+7. Service: ss -tulnp | grep PORT — is the service listening?
+
+If step 5 works but step 6 fails, the problem is DNS.
+If step 4 fails, the problem is on the local network.
+If step 3 shows no default route, run ip route add default via GATEWAY.
+
+---
+
+### Hostname Configuration
+
+| Command | Purpose |
+|---------|---------|
+| hostname | Show current hostname |
+| hostnamectl | Show detailed hostname information |
+| sudo hostnamectl set-hostname NAME | Set hostname persistently |
+| cat /etc/hostname | View the stored hostname file |
+
+The hostname in /etc/hosts should match /etc/hostname. On Ubuntu, the convention is:
+
+```
+127.0.1.1   hostname.domain.example.com  hostname
+```
+
+This entry is separate from the 127.0.0.1 localhost entry.
+
+---
+
+### Exam Tips
+
+1. ip replaces ifconfig. ip addr show, ip link show, ip route show are the exam-current commands.
+
+2. nmcli con mod makes persistent changes; ip addr add makes temporary (lost at reboot) changes. This distinction is a common exam scenario.
+
+3. /etc/nsswitch.conf hosts: line controls resolution order. files = /etc/hosts, dns = DNS servers. The default is files dns (local file first).
+
+4. /etc/hosts is checked before DNS when nsswitch.conf has files before dns. A wrong entry in /etc/hosts can override DNS and cause connection failures.
+
+5. ss -tuln shows listening ports. ss -tulnp adds process names. Both require the -n flag to suppress slow DNS lookups.
+
+6. dig @IP HOSTNAME queries a specific DNS server, bypassing /etc/resolv.conf. Use this to isolate whether the problem is your DNS server or the authoritative server.
+
+7. ping the gateway first, then 8.8.8.8, then a hostname. This three-step test isolates physical, routing, and DNS issues.
+
+8. traceroute * * * at a hop means the router does not respond to TTL-exceeded messages. This does not necessarily mean the network path is broken.
+
+---
+
+### Study Checklist
+
+Before the quiz and lab, confirm you can do all of the following without looking them up:
+
+- Show interface IP addresses with ip addr show
+- Show the routing table with ip route show
+- Add a temporary IP address with ip addr add
+- Add a persistent static IP with nmcli con mod and nmcli con up
+- Explain the difference between ipv4.method manual and auto in nmcli
+- Explain the purpose of /etc/hosts, /etc/resolv.conf, and /etc/nsswitch.conf
+- Describe the DNS resolution chain and how to change it
+- Query a specific DNS server with dig @IP hostname
+- List listening ports with ss -tuln
+- Identify which process is listening on a port with ss -tulnp
+- Use ping to test connectivity at each layer (loopback, gateway, internet, DNS)
+- Use traceroute to identify where a network path fails
+- Set a hostname persistently with hostnamectl

@@ -1,52 +1,171 @@
-# Reading Guide: Module 05 - IoT Networking – Wi-Fi, Bluetooth, LoRaWAN, NB-IoT
-## Course: CIS-4355_IoT_Embedded_Systems (IoT & Embedded Security (General Principles))
+# Reading Guide – Module 05: IoT Networking – Wi-Fi, Bluetooth, LoRaWAN, NB-IoT
+
+**Course:** CIS-4355 IoT and Embedded Systems
+**Instructor:** Professor Nash
+**Certification Target:** CompTIA IoT+ Domain 3
 
 ---
 
-### Introduction
-Welcome to **Module 05 – IoT Networking: Wi-Fi, Bluetooth, LoRaWAN, NB-IoT**! This module compares the four dominant wireless technologies used in IoT deployments, analyzing each on the dimensions that matter most for design decisions: range, power consumption, data rate, topology, and security model. Choosing the wrong radio technology is one of the most common and costly mistakes in IoT product design.
+## Introduction
 
-You will learn why LoRaWAN can send a sensor reading kilometers with a coin-cell battery while Wi-Fi drains the same battery in hours, why Bluetooth Low Energy is ideal for wearables but impractical for outdoor industrial sensors, and where NB-IoT fills the gap between cellular and LPWAN technologies. Security considerations — from WPA3 Wi-Fi hardening to LoRaWAN session key management — are woven throughout.
-
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **Bluetooth Low Energy (BLE)**: A short-range (typically 10–100 m) wireless personal area network technology optimized for intermittent, low-volume data exchange at minimal power. BLE operates in the 2.4 GHz ISM band using frequency-hopping spread spectrum across 40 channels. It is commonly used in wearables, asset tracking beacons, and health monitors. Security uses AES-128 encryption; pairing modes range from "Just Works" (no authentication — vulnerable to MITM attacks) to Numeric Comparison and Passkey Entry.
-*   **Zigbee Mesh Networking**: A self-forming, self-healing mesh network built on the IEEE 802.15.4 standard, operating at 2.4 GHz with a typical range of 10–100 m per hop. Zigbee devices are classified as Coordinator (one per network, manages keys), Router (relays messages), or End Device (leaf node, may sleep). AES-128 encryption protects the network layer. Dense mesh networks extend effective range by multi-hop relaying, making Zigbee practical for building automation with hundreds of nodes.
-*   **LoRaWAN Long-Range**: A low-power wide-area network (LPWAN) protocol stack built on the LoRa chirp spread-spectrum radio modulation. LoRaWAN devices transmit at very low data rates (0.3–50 kbps) but achieve ranges of 2–15 km in urban environments and up to 40 km in line-of-sight rural settings, with battery life measured in years. The LoRaWAN specification defines security using two 128-bit AES session keys — one for network authentication (NwkSKey) and one for application payload encryption (AppSKey).
-*   **Wi-Fi Constraints for IoT**: IEEE 802.11 Wi-Fi provides high bandwidth (tens to hundreds of Mbps) and ubiquitous infrastructure integration but consumes 50–300 mA during active transmission — prohibitive for battery-powered IoT nodes. Security best practices for IoT Wi-Fi devices include WPA3-Personal or WPA3-Enterprise, disabling WPS (Wi-Fi Protected Setup, which has known PIN brute-force vulnerabilities), using unique per-device credentials, and placing IoT devices on a dedicated VLAN isolated from corporate networks.
-*   **Energy Harvesting and Duty Cycling**: Techniques used to extend the operational life of battery-powered IoT nodes. Duty cycling wakes the radio only for the minimum time needed to transmit, then returns to deep sleep. Energy harvesting captures ambient energy (solar, vibration, RF) to supplement or replace batteries. Understanding duty cycle math — e.g., a node transmitting 10 ms every 60 s has a duty cycle of 0.017% — is essential for battery-life estimation questions.
+Module 05 compares the four dominant wireless technologies in IoT deployments: Wi-Fi, Bluetooth Low Energy, LoRaWAN, and NB-IoT. Protocol selection at this layer determines battery life, deployment cost, coverage area, and the security controls available. All four technologies appear on the CompTIA IoT+ exam — expect scenario questions asking you to select the appropriate technology and justify the choice.
 
 ---
 
-### 2. Certification Exam Tips
-*   **Range vs. power trade-off matrix:** Memorize: BLE = short range, ultra-low power; Wi-Fi = short-medium range, high power, high throughput; Zigbee = short range per hop but mesh extends coverage, low power; LoRaWAN = very long range, ultra-low power, very low data rate; NB-IoT = cellular coverage, low power, licensed spectrum. Exam scenarios test protocol selection given range and power constraints.
-*   **Security weaknesses by protocol:** BLE "Just Works" pairing = MITM vulnerability; Wi-Fi WPS PIN = brute-force vulnerability; LoRaWAN replay attacks if frame counters are not validated; Zigbee key transport in the clear during joining = network key exposure risk.
-*   **LoRaWAN class types:** Class A (baseline, lowest power — uplink-triggered downlink window); Class B (scheduled receive windows using beacon); Class C (always-on receive — highest power). Know which class suits which application.
-*   **Study Resource:** The [OWASP IoT Security Project Guides & Embedded Systems Wiki](https://owasp.org/www-project-internet-of-things/) covers insecure network services and weak ecosystem interfaces — both directly relevant to improperly secured Wi-Fi, BLE, and LoRaWAN deployments discussed in this module.
+## 1. Core Glossary
+
+- **Wi-Fi (IEEE 802.11):** Wireless LAN standard family. IoT-relevant versions: 802.11n (2.4/5 GHz, up to 600 Mbps), 802.11ac/Wi-Fi 5 (5 GHz, up to 3.5 Gbps), 802.11ax/Wi-Fi 6 (2.4/5/6 GHz, up to 9.6 Gbps). High bandwidth, high power consumption, 30–100 m indoor range.
+
+- **WPA3 (Wi-Fi Protected Access 3):** The current recommended Wi-Fi security standard. WPA3-Personal uses SAE (Simultaneous Authentication of Equals) replacing PSK, providing forward secrecy. WPA3-Enterprise uses 192-bit cryptographic suite for high-security environments. Resists offline dictionary attacks that compromised WPA2-Personal.
+
+- **VLAN (Virtual LAN):** A logical network segment configured at the switch/access point level. IoT devices should be placed on a dedicated VLAN, isolated from corporate IT devices by firewall rules. Prevents lateral movement if a device is compromised.
+
+- **Bluetooth Low Energy (BLE):** Low-power Bluetooth mode in the Bluetooth Core Specification. Operates at 2.4 GHz. Uses 40 channels with adaptive frequency hopping. Optimized for short-burst transmissions with long sleep intervals. Range: 10–100 m (Long Range mode: up to 400 m at reduced data rate).
+
+- **BLE Advertising:** The mechanism by which a BLE peripheral broadcasts its presence to nearby central devices. Advertising packets are transmitted on three dedicated advertising channels at regular intervals. Beacons use advertising exclusively — they never form a connected session.
+
+- **BLE Pairing Modes:** Methods for establishing an encrypted BLE connection. Just Works (no authentication, MITM-vulnerable), Passkey Entry (6-digit PIN), Numeric Comparison (both sides confirm same number), Out-of-Band/OOB (exchange via NFC or QR code).
+
+- **LoRa:** Semtech's proprietary chirp spread spectrum (CSS) modulation technique used at the physical layer for long-range, low-power transmission. Spreading factor (SF7–SF12) controls the range/data-rate tradeoff — higher spreading factor means longer range but lower data rate.
+
+- **LoRaWAN:** The MAC and network layer protocol built on top of LoRa modulation. Defines three device classes (A, B, C), security architecture (two AES-128 session keys), and network architecture (end devices, gateways, network server, application server). Managed by the LoRa Alliance.
+
+- **LoRaWAN Device Classes:** Class A (lowest power): device-initiated transmissions only, two downlink windows after each uplink. Class B: synchronized downlink slots in addition to Class A behavior. Class C (lowest latency): device listens continuously except when transmitting; highest power.
+
+- **Spreading Factor (SF):** In LoRa, higher SF = more time on air per bit = longer range but lower data rate and higher energy per bit. SF7 is fastest and shortest range; SF12 is slowest and longest range. The network server performs adaptive data rate (ADR) to select the appropriate SF for each device.
+
+- **NB-IoT (Narrowband IoT):** 3GPP LTE Release 13 cellular IoT standard. Uses 200 kHz licensed LTE spectrum. Supports Power Saving Mode (PSM) and extended Discontinuous Reception (eDRX) for multi-year battery life. Provides superior indoor penetration and carrier-grade SLA compared to LoRaWAN.
+
+- **PSM (Power Saving Mode):** An NB-IoT and LTE-M feature where the device negotiates with the network to sleep for extended periods (minutes to hours) with no network registration, then wake up, transmit, and sleep again. Eliminates the power cost of periodic network keepalives.
+
+- **LPWAN (Low Power Wide Area Network):** A class of wireless technologies designed for long-range, low-power, low-data-rate IoT communications. Includes LoRaWAN, NB-IoT, LTE-M, Sigfox, and RPMA. Fills the gap between short-range personal area networks and power-intensive cellular data.
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** The [OWASP IoT Security Project Guides & Embedded Systems Wiki](https://owasp.org/www-project-internet-of-things/) — focus on the insecure network services and ecosystem interface sections, which cover vulnerabilities arising from misconfigured Wi-Fi, unprotected BLE pairing, and exposed LoRaWAN join procedures.
-*   **Required Video:** The [IoT Course & Embedded Systems Tutorials by freeCodeCamp](https://www.youtube.com/watch?v=h0J8f60LdB0) includes a comparative walkthrough of IoT wireless technologies covering range, power profiles, and typical deployment scenarios for BLE, Wi-Fi, Zigbee, and LoRaWAN.
+## 2. IoT Protocol Comparison Table
+
+| Attribute | MQTT | CoAP | HTTP/REST | AMQP |
+|---|---|---|---|---|
+| Transport | TCP | UDP | TCP | TCP |
+| Pattern | Publish/subscribe | Request/response | Request/response | Queue + pub/sub |
+| Overhead | Very low | Very low | High | Medium |
+| Suitable for constrained devices | Yes | Yes | No | No |
+| Broker required | Yes | No | No | Yes |
+| Security | TLS (port 8883) | DTLS (port 5684) | TLS (port 443) | TLS/SASL |
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Compare wireless parameters (range, power, bandwidth) for IoT**: Build a comparison table for BLE, Wi-Fi (802.11n), Zigbee, and LoRaWAN covering frequency band, typical range, peak current draw, maximum data rate, and security mechanism; then map each to two real-world IoT use cases.
-*   **Analyze mesh routing topologies**: Using a Zigbee or Thread simulation tool (e.g., the TI Z-Stack simulator or Wireshark with a Zigbee sniffer), capture a multi-hop message transmission and trace the source, intermediate router, and destination node addresses in the captured frames.
-*   **Verify network link ranges**: Use an RSSI (Received Signal Strength Indicator) measurement script on a Raspberry Pi with a BLE or Wi-Fi adapter to log signal strength at 1 m intervals from an access point, and plot the path loss curve to identify the effective range boundary at –80 dBm.
+## 3. Wireless Technology Comparison Table
+
+| Technology | Range | Max Bandwidth | Idle Power | Freq. | Spectrum | Topology | Best Use Case |
+|---|---|---|---|---|---|---|---|
+| Wi-Fi 802.11n | 30–100 m | 600 Mbps | High (~500 mA) | 2.4/5 GHz | Unlicensed | Star | Gateways, cameras, edge nodes |
+| BLE 5.0 | 10–100 m | 2 Mbps | Very low (<10 µA sleep) | 2.4 GHz | Unlicensed | Star / mesh | Wearables, beacons, sensors |
+| Zigbee | 10–100 m | 250 kbps | Very low | 2.4 GHz | Unlicensed | Mesh | Smart home, building automation |
+| Z-Wave | 30–100 m | 100 kbps | Low | 908 MHz (US) | Unlicensed | Mesh | Smart home |
+| LoRaWAN | 2–15 km | 50 kbps | Extremely low (<1 µA avg) | 915 MHz (US) | Unlicensed | Star-of-stars | Agriculture, smart city, remote |
+| NB-IoT | 1–10 km | 200 kbps | Very low (PSM) | Licensed LTE | Licensed | Cellular | Urban, indoor, carrier SLA |
+| LTE-M | Wide area | 1 Mbps | Low | Licensed LTE | Licensed | Cellular | Wearables, vehicle tracking |
+| 6LoWPAN | 10–100 m | 250 kbps | Very low | 2.4 GHz | Unlicensed | Mesh | IPv6 sensor mesh |
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read the insecure network services section at [OWASP IoT Security Project Guides & Embedded Systems Wiki](https://owasp.org/www-project-internet-of-things/).
-- [ ] Watch the wireless technology comparison sections of [IoT Course & Embedded Systems Tutorials by freeCodeCamp](https://www.youtube.com/watch?v=h0J8f60LdB0).
-- [ ] Build the wireless parameter comparison table before starting the lab.
-- [ ] Proceed to the weekly hands-on lab activity.
+## 4. LoRaWAN Network Architecture Reference
+
+The LoRaWAN architecture has four layers:
+
+- **End Devices:** Sensors and actuators with LoRa radios. Transmit uplink packets. Receive downlink commands in receive windows after uplink.
+- **Gateways:** Receive all LoRa signals in range and forward packets over IP to the network server. Simple packet forwarders — no message interpretation. Multiple gateways can receive the same uplink for redundancy.
+- **Network Server:** Deduplicates packets received by multiple gateways. Manages device addresses, frame counters, and ADR. Routes decrypted MAC commands. Forwards application payloads to the application server.
+- **Application Server:** Decrypts and processes application payloads using the AppSKey. Interfaces with business applications and dashboards.
+
+LoRaWAN security keys:
+
+- **NwkSKey (Network Session Key):** Shared between end device and network server. Authenticates MAC messages and encrypts MAC commands.
+- **AppSKey (Application Session Key):** Shared between end device and application server. Encrypts application payload. Network server never sees plaintext payload.
+
+---
+
+## 5. OWASP IoT Top 10 Reference
+
+Items most relevant to Module 05 networking topics:
+
+1. **OWASP IoT #1 – Weak, Guessable, or Hardcoded Passwords:** Wi-Fi SSID and password hardcoded in firmware. Exposed via `strings` on firmware binary or physical UART access. Mitigation: provision credentials via secure manufacturing process or secure element.
+
+2. **OWASP IoT #2 – Insecure Network Services:** Devices on the same network segment as corporate IT. Lack of VLAN segmentation allows lateral movement. Mitigation: dedicated IoT VLAN with firewall rules.
+
+3. **OWASP IoT #9 – Insecure Default Settings:** WPS enabled by default on access points. BLE Just Works pairing enabled by default on door locks. Mitigation: establish and enforce a secure baseline configuration at deployment.
+
+4. **OWASP IoT #10 – Lack of Physical Hardening:** NB-IoT SIM cards accessible via open device enclosures. LoRaWAN root keys extractable from unprotected flash. Mitigation: tamper-evident enclosures, secure element for key storage.
+
+---
+
+## 6. Sensor Types Reference
+
+| Sensor | Typical Wireless Radio | Power Requirement | Notes |
+|---|---|---|---|
+| Temperature/humidity (indoor) | BLE or Wi-Fi | Battery or USB | Short range sufficient |
+| Soil moisture (outdoor, rural) | LoRaWAN | Battery (multi-year) | Long-range, low-rate |
+| Smart meter (utility) | NB-IoT or Zigbee | Mains (utility) | Urban, carrier SLA |
+| Asset tracker (vehicle) | LTE-M | Vehicle power | Mobility, wide area |
+| Smart lock (residential) | Zigbee or BLE | Battery | Short range, mesh |
+| Industrial vibration | Wi-Fi or wired | Mains | High data rate |
+
+---
+
+## 7. IIoT Purdue Model Reference
+
+- Level 0: Physical sensors. End nodes using LoRaWAN, BLE, or Zigbee.
+- Level 1: PLCs and RTUs. Local gateways converting local radio to IP.
+- Level 2: SCADA HMI. Wi-Fi or wired Ethernet to control room.
+- Level 3: MES. IP network with IT-style firewall rules.
+- Level 3.5: Industrial DMZ. Strict protocol filtering between OT and IT.
+- Level 4–5: Corporate IT. Separate from OT by the DMZ.
+
+Network segmentation between Purdue levels is the industrial equivalent of IoT VLAN isolation.
+
+---
+
+## 8. Exam Tips for Module 05
+
+1. LoRaWAN uses unlicensed ISM spectrum (915 MHz US, 868 MHz EU). NB-IoT uses licensed cellular spectrum. This is the most commonly tested distinguishing attribute.
+
+2. BLE Just Works pairing is vulnerable to man-in-the-middle attacks because there is no user confirmation step. Use Numeric Comparison or OOB for any security-sensitive BLE application.
+
+3. Wi-Fi IoT devices require network segmentation via VLAN. Never place IoT devices on the same VLAN as corporate laptops or servers.
+
+4. LoRaWAN spreading factor (SF) tradeoff: higher SF = longer range + lower data rate. SF12 reaches the farthest but sends data slowest.
+
+5. LoRaWAN has two AES-128 session keys: NwkSKey (network layer) and AppSKey (application layer). The network server never decrypts application payloads.
+
+6. NB-IoT Power Saving Mode (PSM) allows the device to sleep for extended periods without network keepalives, enabling multi-year battery life on a cellular connection.
+
+7. WPS should be disabled on any access point serving IoT devices. WPS PIN brute-force attacks can recover the network key in hours.
+
+8. The key distinguisher between LoRaWAN and Zigbee is range. Zigbee is 10–100 m per hop. LoRaWAN is 2–15 km. For deployments spanning kilometers, Zigbee is not viable regardless of its mesh relay capability.
+
+---
+
+## 9. Study Checklist
+
+- [ ] Memorize all 12 glossary terms, especially spreading factor, PSM, VLAN, and BLE pairing modes.
+- [ ] Study the wireless technology comparison table — know range, bandwidth, spectrum type, and power for all 8 technologies.
+- [ ] Draw the LoRaWAN network architecture (end device to gateway to network server to application server) from memory.
+- [ ] Review all four OWASP items and connect each to a specific wireless technology vulnerability.
+- [ ] Review the sensor types table and match each sensor to its appropriate radio technology.
+- [ ] Review all 8 exam tips.
+- [ ] Complete the Module 05 Lab.
+- [ ] Post your initial discussion response by Wednesday at 11:59 PM.
+
+---
+
+## 10. Official References
+
+- Wi-Fi Alliance at wi-fi.org
+- Bluetooth specification at bluetooth.com/specifications
+- LoRa Alliance and LoRaWAN specification at lora-alliance.org
+- OWASP IoT Security Project at owasp.org/www-project-internet-of-things
+
+---
+
+End of Reading Guide – Module 05

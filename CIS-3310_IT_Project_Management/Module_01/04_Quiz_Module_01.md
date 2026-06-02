@@ -1,77 +1,205 @@
-# Quiz: Module 01 - Introduction to Project Management and PMI Framework
-## Course: CIS-3310_IT_Project_Management (CompTIA Project+ / PMI CAPM)
+# Quiz: Module 01 – Introduction to Project Management and PMI Framework
+
+**Course:** CIS-3310 IT Project Management
+**Certification Alignment:** CompTIA Project+ (PK0-005)
+**Prepared by:** Professor Nash | Texas Wesleyan University
 
 ---
 
-**Question 1**
+## Question 1
+
 What are the three pillars of the Project Management Triple Constraint?
-*   A) Scope, Time, Cost
-*   B) Quality, Speed, Safety
-*   C) Staff, Hardware, Software
-*   D) Planning, Execution, Closure
-*   **Correct Answer:** A) Scope, Time, Cost — any change to one variable forces trade-offs in the other two, directly affecting overall quality.
-*   **Distractor Analysis:**
-    *   *Why A is correct:* The triple constraint (also called the iron triangle) defines the three boundaries every project manager must balance: the work to be done (scope), the schedule (time), and the budget (cost).
-    *   *Why B is incorrect:* Quality, speed, and safety are important project concerns but are not the three formal constraint dimensions defined by PMI.
-    *   *Why C is incorrect:* Staff, hardware, and software are resource categories, not the core constraint variables.
-    *   *Why D is incorrect:* Planning, Execution, and Closure are process group phases, not project constraints.
+
+- A) Scope, Time, Cost
+- B) Quality, Speed, Safety
+- C) Staff, Hardware, Software
+- D) Planning, Execution, Closure
+
+Correct Answer: A) Scope, Time, Cost — any change to one variable forces trade-offs in the other two, directly affecting overall quality.
+
+Distractor Analysis:
+
+- *Why A is correct:* The Triple Constraint (also called the Iron Triangle) defines the three boundaries every project manager must balance: the work to be done (scope), the schedule (time), and the budget (cost). Quality sits at the center as the outcome these three constraints determine.
+- *Why B is incorrect:* Quality, speed, and safety are important project concerns but are not the three formal constraint dimensions defined by PMI.
+- *Why C is incorrect:* Staff, hardware, and software are resource categories, not the core constraint variables.
+- *Why D is incorrect:* Planning, Execution, and Closure are process group phases, not project constraints.
 
 ---
 
-**Question 2**
-Which of the following best defines the term **Triple Constraint** in project management?
-*   A) The three factors—scope, time, and cost—that bound a project and must be balanced because changing one affects the others.
-*   B) The three mandatory documents every project must produce: a charter, a WBS, and a risk register.
-*   C) A rule requiring three levels of management approval before a project can begin.
-*   D) The three types of project stakeholders: sponsors, users, and vendors.
-*   **Correct Answer:** A) The three factors—scope, time, and cost—that bound a project and must be balanced because changing one affects the others.
-*   **Distractor Analysis:**
-    *   *Why A is correct:* The triple constraint is the foundational model describing how scope, schedule, and budget are interdependent. It is one of the most heavily tested concepts on the Project+ and CAPM exams.
-    *   *Why B is incorrect:* There is no PMI rule that mandates exactly three documents; this confuses documents with constraints.
-    *   *Why C is incorrect:* Approval levels relate to governance structure, not the constraint model.
-    *   *Why D is incorrect:* Stakeholder categories are part of stakeholder management, a separate knowledge area.
+## Question 2
+
+Which of the following best defines the term Triple Constraint in project management?
+
+- A) The three factors — scope, time, and cost — that bound a project and must be balanced because changing one affects the others.
+- B) The three mandatory documents every project must produce: a charter, a WBS, and a risk register.
+- C) A rule requiring three levels of management approval before a project can begin.
+- D) The three types of project stakeholders: sponsors, users, and vendors.
+
+Correct Answer: A) The three factors — scope, time, and cost — that bound a project and must be balanced because changing one affects the others.
+
+Distractor Analysis:
+
+- *Why A is correct:* The Triple Constraint is the foundational model describing how scope, schedule, and budget are interdependent. It is one of the most heavily tested concepts on the Project+ exam.
+- *Why B is incorrect:* There is no PMI rule that mandates exactly three documents; this confuses documents with constraints.
+- *Why C is incorrect:* Approval levels relate to governance structure, not the constraint model.
+- *Why D is incorrect:* Stakeholder categories are part of stakeholder management, a separate knowledge area.
 
 ---
 
-**Question 3**
+## Question 3
+
 A project manager is told the delivery deadline for a new IT system cannot move, but the client just added three new feature requirements. According to the Triple Constraint model, what must the project manager address?
-*   A) Request more budget and/or reduce quality standards to absorb the added scope within the fixed schedule
-*   B) Accept all new features without adjusting any other constraint
-*   C) Close the project immediately because the baseline is invalid
-*   D) Transfer the project to a different project manager
-*   **Correct Answer:** A) Request more budget and/or reduce quality standards to absorb the added scope within the fixed schedule.
-*   **Distractor Analysis:**
-    *   *Why A is correct:* When scope increases and schedule is fixed, the PM must negotiate an increase in cost (more resources) or accept a reduction in quality—this is the core trade-off logic of the triple constraint.
-    *   *Why B is incorrect:* Accepting scope changes without adjusting any constraint is the definition of scope creep, a major project risk.
-    *   *Why C is incorrect:* Re-baselining may be appropriate, but closing the project is not the correct response to a scope change.
-    *   *Why D is incorrect:* Transferring project ownership does not resolve the constraint conflict.
+
+- A) Request more budget and/or reduce other scope to absorb the added scope within the fixed schedule
+- B) Accept all new features without adjusting any other constraint
+- C) Close the project immediately because the baseline is invalid
+- D) Transfer the project to a different project manager
+
+Correct Answer: A) Request more budget and/or reduce other scope to absorb the added scope within the fixed schedule.
+
+Distractor Analysis:
+
+- *Why A is correct:* When scope increases and schedule is fixed, the PM must negotiate an increase in cost (more resources) or a reduction in other scope. This is the core trade-off logic of the Triple Constraint.
+- *Why B is incorrect:* Accepting scope changes without adjusting any constraint is the definition of scope creep — a major project risk.
+- *Why C is incorrect:* Re-baselining may be appropriate, but closing the project is not the correct response to a scope change request.
+- *Why D is incorrect:* Transferring project ownership does not resolve the constraint conflict.
 
 ---
 
-**Question 4**
+## Question 4
+
 Which PMI Process Group authorizes the project and grants the project manager the authority to apply organizational resources?
-*   A) Planning
-*   B) Executing
-*   C) Initiating
-*   D) Monitoring & Controlling
-*   **Correct Answer:** C) Initiating — the Project Charter is created during the Initiating process group, formally authorizing the project.
-*   **Distractor Analysis:**
-    *   *Why C is correct:* The Initiating process group produces the Project Charter and identifies stakeholders, giving the project manager official authority to proceed.
-    *   *Why A is incorrect:* Planning develops the detailed project management plan but does not formally authorize the project.
-    *   *Why B is incorrect:* Executing is where the work is performed, after the project has already been authorized.
-    *   *Why D is incorrect:* Monitoring & Controlling tracks progress against the plan; it does not grant initial authorization.
+
+- A) Planning
+- B) Executing
+- C) Initiating
+- D) Monitoring and Controlling
+
+Correct Answer: C) Initiating — the Project Charter is created during the Initiating Process Group, formally authorizing the project.
+
+Distractor Analysis:
+
+- *Why C is correct:* The Initiating Process Group produces the Project Charter and identifies stakeholders, giving the project manager official authority to proceed and commit organizational resources.
+- *Why A is incorrect:* Planning develops the detailed Project Management Plan but does not formally authorize the project.
+- *Why B is incorrect:* Executing is where the work is performed, after the project has already been authorized.
+- *Why D is incorrect:* Monitoring and Controlling tracks progress against the plan; it does not grant initial authorization.
 
 ---
 
-**Question 5**
+## Question 5
+
 A company's IT department runs daily backups, patches servers every Tuesday, and staffs a 24/7 help desk. Which statement best describes these activities?
-*   A) They are projects because they use IT resources and require skilled staff.
-*   B) They are operations because they are ongoing, repetitive activities with no defined end date.
-*   C) They are projects because they contribute to organizational goals.
-*   D) They are projects because they involve technology and require planning.
-*   **Correct Answer:** B) They are operations because they are ongoing, repetitive activities with no defined end date.
-*   **Distractor Analysis:**
-    *   *Why B is correct:* Operations are continuous, routine activities that sustain the business. A project, by definition, is temporary and produces a unique result. Daily backups and help desk support repeat indefinitely and are therefore operational.
-    *   *Why A is incorrect:* Using resources and requiring skilled staff is true of both projects and operations; it does not distinguish between them.
-    *   *Why C is incorrect:* Contributing to organizational goals applies to both projects and operations.
-    *   *Why D is incorrect:* Involving technology and requiring planning also applies to both categories; the defining characteristic of a project is its temporary, unique nature.
+
+- A) They are projects because they use IT resources and require skilled staff.
+- B) They are operations because they are ongoing, repetitive activities with no defined end date.
+- C) They are projects because they contribute to organizational goals.
+- D) They are projects because they involve technology and require planning.
+
+Correct Answer: B) They are operations because they are ongoing, repetitive activities with no defined end date.
+
+Distractor Analysis:
+
+- *Why B is correct:* Operations are continuous, routine activities that sustain the business. A project, by definition, is temporary and produces a unique result. Daily backups and help desk support repeat indefinitely and are therefore operational.
+- *Why A is incorrect:* Using resources and requiring skilled staff is true of both projects and operations; it does not distinguish between them.
+- *Why C is incorrect:* Contributing to organizational goals applies to both projects and operations.
+- *Why D is incorrect:* Involving technology and requiring planning also applies to both categories; the defining characteristic of a project is its temporary, unique nature.
+
+---
+
+## Question 6
+
+Which PMI Knowledge Area is responsible for the development of the Project Charter and the Project Management Plan?
+
+- A) Scope Management
+- B) Schedule Management
+- C) Integration Management
+- D) Stakeholder Management
+
+Correct Answer: C) Integration Management — developing the Project Charter and the Project Management Plan are both processes within Integration Management.
+
+Distractor Analysis:
+
+- *Why C is correct:* Integration Management is the umbrella knowledge area that coordinates all other areas. The "Develop Project Charter" and "Develop Project Management Plan" processes belong here. Students commonly and incorrectly answer Scope Management.
+- *Why A is incorrect:* Scope Management contains the processes for defining, validating, and controlling project scope — not for producing the charter or the overall management plan.
+- *Why B is incorrect:* Schedule Management covers activity sequencing, duration estimating, and schedule development — not integration-level planning documents.
+- *Why D is incorrect:* Stakeholder Management covers identifying stakeholders and planning engagement strategies — important but separate from the Project Charter process.
+
+---
+
+## Question 7
+
+What term describes the gradual refinement of project details as the team learns more about the work throughout the project lifecycle?
+
+- A) Scope creep
+- B) Progressive elaboration
+- C) Change control
+- D) Rolling wave planning
+
+Correct Answer: B) Progressive elaboration — the process of developing project plans with increasing detail as more information becomes available.
+
+Distractor Analysis:
+
+- *Why B is correct:* Progressive elaboration is a core PMI concept. Because projects are unique and not everything is known at the start, the PM expects to refine the plan continuously. It is why planning is iterative, not a one-time event.
+- *Why A is incorrect:* Scope creep is the uncontrolled addition of work outside the approved scope — a problem to avoid, not a planning technique.
+- *Why C is incorrect:* Change control is the formal process for evaluating and approving scope, schedule, or cost modifications — not a term describing how plans evolve with increasing detail.
+- *Why D is incorrect:* Rolling wave planning is a specific scheduling technique where near-term work is planned in detail and future work is planned at a high level — it is an application of progressive elaboration but is not the definition of the concept itself.
+
+---
+
+## Question 8
+
+A project manager is assigned to lead the rollout of a new enterprise resource planning (ERP) system. She receives a signed document from the VP of IT that names her as the project manager and authorizes her to allocate staff and budget. What document has she received?
+
+- A) Project Scope Statement
+- B) Project Management Plan
+- C) Project Charter
+- D) Statement of Work
+
+Correct Answer: C) Project Charter — the document that formally authorizes the project and grants the project manager authority to apply organizational resources.
+
+Distractor Analysis:
+
+- *Why C is correct:* The Project Charter is the only PMI document that formally names the PM and authorizes them to use organizational resources. It is produced in the Initiating Process Group and signed by the project sponsor.
+- *Why A is incorrect:* The Project Scope Statement defines what the project will and will not deliver. It is produced in Planning, does not name the PM, and does not grant resource authority.
+- *Why B is incorrect:* The Project Management Plan is the comprehensive guide for executing the project. It is produced in Planning and presupposes that the PM has already been authorized.
+- *Why D is incorrect:* A Statement of Work describes the work to be performed, typically used in a procurement context. It does not formally authorize the project or grant PM authority over organizational resources.
+
+---
+
+## Question 9
+
+Which of the following is the best example of an Enterprise Environmental Factor (EEF) that could influence an IT project?
+
+- A) A project charter template used by the organization
+- B) A risk register created for a previous project
+- C) Government data privacy regulations that apply to the system being built
+- D) The lessons learned repository from past ERP implementations
+
+Correct Answer: C) Government data privacy regulations that apply to the system being built.
+
+Distractor Analysis:
+
+- *Why C is correct:* EEFs are conditions that exist outside the project team's control but influence how the project must be managed. Government regulations are an external EEF — the team must comply but cannot change the regulation.
+- *Why A is incorrect:* A project charter template is an Organizational Process Asset (OPA) — an internal tool the organization provides. OPAs are different from EEFs.
+- *Why B is incorrect:* A risk register from a previous project is also an OPA — historical project documentation that can be consulted and reused.
+- *Why D is incorrect:* A lessons learned repository is an OPA — part of the organization's knowledge base. Internal assets owned by the organization are OPAs, not EEFs.
+
+---
+
+## Question 10
+
+On a large IT project, the project team includes 12 people. The sponsor approves adding 3 more team members. Which statement correctly describes the impact on communication complexity?
+
+- A) Communication channels increase from 66 to 105, adding 39 new channels.
+- B) Communication channels increase from 78 to 120, adding 42 new channels.
+- C) Communication channels double because the team size increased by 25%.
+- D) Communication channels are unaffected because the new members report to a team lead.
+
+Correct Answer: A) Communication channels increase from 66 to 105, adding 39 new channels.
+
+Distractor Analysis:
+
+- *Why A is correct:* Using N(N-1)/2: with 12 members, channels = 12 × 11 / 2 = 66. With 15 members, channels = 15 × 14 / 2 = 105. The increase is 105 - 66 = 39 new channels. This formula is directly tested on the Project+ exam.
+- *Why B is incorrect:* 78 and 120 do not result from the standard formula applied to 12 and 15 team members respectively.
+- *Why C is incorrect:* Communication channels grow combinatorially (quadratically), not proportionally. A 25% increase in team size produces a much larger percentage increase in channels.
+- *Why D is incorrect:* The communication channels formula counts all unique pairings regardless of reporting structure. Reporting hierarchy does not eliminate the need for communication between members.

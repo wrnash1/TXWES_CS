@@ -1,58 +1,194 @@
 # Reading Guide: Module 01 - ML Fundamentals
-## Course: CIS-4345_Machine_Learning_Deep_Learning (TensorFlow Developer Certificate)
+
+**Course:** CIS-4345 Machine Learning and Deep Learning
+
+**Institution:** Texas Wesleyan University
+
+**Instructor:** Professor Nash
+
+**TensorFlow Developer Certificate Alignment:** Foundation Concepts — Learning Paradigms, ML Pipeline, Bias-Variance Tradeoff
 
 ---
 
-### Introduction
-Welcome to **Module 01 - ML Fundamentals**! This week you will build the foundational vocabulary and conceptual framework needed for the entire course. Understanding the three core learning paradigms — supervised, unsupervised, and reinforcement learning — is essential context for every TensorFlow model you will build throughout this course and on the TensorFlow Developer Certificate exam.
+## Introduction
 
-As a student, you will learn how machine learning differs from traditional rule-based programming, how data flows through an ML pipeline from raw collection to trained model, and how to reason about when each learning paradigm applies. These concepts underpin every Keras model architecture you will encounter.
+Welcome to Module 01. This reading guide builds the foundational vocabulary and conceptual framework that every subsequent module depends on. Machine learning is not a collection of independent tricks — it is a disciplined engineering practice with consistent patterns, vocabulary, and failure modes that repeat across every domain. Mastering the foundations in this module will make every future topic easier to learn and every future debugging session faster to resolve.
 
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **Supervised learning**: A machine learning paradigm in which a model is trained on labeled input-output pairs. The model learns a mapping function from features (X) to target labels (y), and is evaluated on how well it predicts labels for unseen examples. Classification and regression are both supervised tasks.
-
-*   **Unsupervised learning**: A machine learning paradigm in which the model receives only input features with no corresponding labels. The algorithm discovers hidden structure in the data on its own, such as natural groupings (clustering) or reduced representations (dimensionality reduction).
-
-*   **Reinforcement learning**: A learning paradigm in which an agent takes actions in an environment to maximize a cumulative reward signal. Unlike supervised learning, there is no fixed dataset of correct answers — the agent learns from trial and error feedback.
-
-*   **Train-test split**: The practice of dividing a labeled dataset into a training partition (used to fit the model) and a held-out test partition (used only for final evaluation). A common ratio is 80% train / 20% test. This prevents the model from simply memorizing training data, and gives an unbiased performance estimate on genuinely unseen examples.
-
-*   **Feature engineering**: The process of transforming raw input variables into a representation more suitable for a machine learning model. Examples include normalizing numerical values, one-hot encoding categorical variables, and creating polynomial interaction terms. High-quality features often matter more than the choice of algorithm.
-
-*   **Overfitting**: When a model learns the training data too precisely — including its noise — and loses the ability to generalize to new examples. Overfitting is diagnosed by a large gap between training accuracy and validation accuracy.
+The TensorFlow Developer Certificate exam tests practical coding ability, but that ability rests on conceptual foundations. Examiners expect you to recognize which learning paradigm applies to a problem, know why you split data the way you do, and understand the diagnostic meaning of your training and validation curves. This guide prepares you for both the conceptual knowledge and the practical application.
 
 ---
 
-### 2. Certification Exam Tips
-*   **TF Exam Scope:** The TensorFlow Developer Certificate exam requires you to build, train, and evaluate Keras models in a timed Google Colab or local environment. The exam tests practical coding ability, not multiple-choice recall — expect to write real `tf.keras` model definitions, compile steps, and `model.fit()` calls.
-*   **Key Exam Tasks:** The four main task categories on the exam are (1) image classification with CNNs, (2) NLP/text classification, (3) time-series regression, and (4) basic dense networks. Knowing which learning paradigm applies to each task is foundational.
-*   **Keras API Pattern:** The exam consistently uses the Sequential API: `model = tf.keras.Sequential([...])`, followed by `model.compile(optimizer=, loss=, metrics=)`, then `model.fit(X_train, y_train, epochs=, validation_data=)`. Memorize this three-step pattern.
-*   **Study Resource:** The official TensorFlow Developer Certificate candidate handbook describes the exam format in detail. The free [TensorFlow tutorials at tensorflow.org](https://www.tensorflow.org/tutorials) cover all four task categories tested on the exam.
+## Section 1: Core Vocabulary
+
+### Learning Paradigms
+
+**Supervised learning** is a training paradigm in which the model receives labeled input-output pairs (X, y) and learns a mapping function f such that f(X) approximates y. Classification and regression are both supervised tasks. The defining characteristic is the presence of ground-truth labels for every training example.
+
+**Unsupervised learning** is a training paradigm in which the model receives only input features X with no labels. The algorithm discovers hidden structure — clusters, latent representations, or density estimates — entirely from the data distribution. Clustering, dimensionality reduction, and generative modeling are unsupervised tasks.
+
+**Self-supervised learning** is a variant of unsupervised learning in which the model generates its own supervision signal from the input data. Large language models and contrastive image models use self-supervision. You will encounter this concept in Module 09.
+
+**Reinforcement learning** is a paradigm in which an agent interacts with an environment, selects actions, and receives scalar reward signals. The agent learns a policy that maximizes expected cumulative reward. No labeled dataset is required. RL is out of scope for the TensorFlow Developer Certificate exam.
+
+**Semi-supervised learning** combines a small labeled dataset with a large unlabeled dataset. The model uses the unlabeled data to improve its representations while the labeled data provides the supervision signal. Useful when labeling is expensive.
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Review the [TensorFlow Core Concepts overview](https://www.tensorflow.org/guide) at tensorflow.org/guide — specifically the sections on tensors, variables, and the overall computation model. This free official documentation is one of the primary study materials for the certification exam.
-*   **Required Video:** Watch the introductory video lecture on ML Fundamentals in the official course playlist: [Machine Learning with Python & TensorFlow Course](https://www.youtube.com/watch?v=cKzgMFG5HpU). This playlist from freeCodeCamp covers the full ML pipeline from data loading through model evaluation using scikit-learn and TensorFlow.
+## Section 2: The ML Pipeline — Stage by Stage
+
+### Problem Definition
+
+Every ML project begins with a precise problem statement: What is the target variable? What type of output is required (class label, continuous value, probability)? What performance threshold is acceptable? What are the consequences of false positives versus false negatives? Answering these questions before touching data prevents wasted work.
+
+### Data Collection and Storage
+
+Training data quality dominates model performance. Sources include: relational databases, flat CSV files, image archives, streaming logs, web APIs, and public benchmark datasets. Common public datasets used throughout this course include MNIST (handwritten digits), CIFAR-10 (color images), IMDb (movie reviews), and Fashion-MNIST (clothing images).
+
+### Data Preprocessing
+
+Preprocessing transforms raw data into a form the model can process. Critical steps:
+
+- **Missing value handling:** Drop rows, impute with mean/median/mode, or use model-based imputation.
+- **Outlier treatment:** Cap at percentiles, remove, or apply robust scaling.
+- **Categorical encoding:** One-hot encoding for nominal variables; label encoding for ordinal variables.
+- **Numerical scaling:** Standardization (zero mean, unit variance) or min-max normalization to 0-1.
+- **Train/validation/test splitting:** Typically 70/15/15 or 80/10/10. The test set is never examined until final evaluation.
+
+### Feature Engineering
+
+Feature engineering creates new input representations that expose signal the model would otherwise struggle to find. For tabular data: polynomial features, interaction terms, binning. For images: pixel normalization, channel standardization. For text: tokenization, vocabulary indexing, TF-IDF, word embeddings. Well-engineered features regularly outperform more complex models on raw features.
+
+### Model Training
+
+Model training adjusts the model's parameters (weights and biases) to minimize a loss function over the training set. Gradient descent and its variants (SGD, Adam, RMSProp) are the standard optimization algorithms. Training loops in Keras are handled internally by `model.fit()`, which manages forward passes, loss computation, backpropagation, and weight updates.
+
+### Model Evaluation
+
+Evaluation quantifies how well the trained model generalizes to unseen data. The evaluation set must be entirely held out during training. Using the test set for any hyperparameter tuning decisions introduces data leakage and inflates reported performance. A separate validation set is used during training for hyperparameter decisions; the test set is used only once.
+
+### Deployment
+
+Trained models are serialized and served through APIs, mobile apps, edge devices, or embedded systems. TensorFlow's deployment ecosystem includes TF Serving (gRPC/REST server), TFLite (mobile/edge), and TF.js (browser). Module 15 covers deployment in detail.
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Set up the ML project environment**: Install TensorFlow, scikit-learn, NumPy, and Pandas in a Google Colab notebook. Verify installations with `import tensorflow as tf; print(tf.__version__)`.
-*   **Load and inspect a dataset**: Use `sklearn.datasets.load_iris()` or a CSV file loaded with `pd.read_csv()` to examine feature shapes, data types, and class distributions.
-*   **Perform a train-test split**: Apply `sklearn.model_selection.train_test_split(X, y, test_size=0.2, random_state=42)` and verify the resulting partition sizes.
+## Section 3: Algorithm Comparison Table
+
+| Algorithm | Type | Supervised | Use Case | Strengths | Weaknesses |
+|---|---|---|---|---|---|
+| Linear Regression | Parametric | Yes | Continuous target | Interpretable, fast | Assumes linearity |
+| Logistic Regression | Parametric | Yes | Binary classification | Probabilistic output | Linear decision boundary |
+| Decision Tree | Non-parametric | Yes | Classification/Regression | Interpretable, handles mixed types | Prone to overfitting |
+| Random Forest | Ensemble | Yes | Classification/Regression | Robust, handles nonlinearity | Less interpretable |
+| k-Nearest Neighbors | Instance-based | Yes | Classification | Simple, no training phase | Slow inference, sensitive to scale |
+| k-Means | Centroid-based | No | Clustering | Simple, scalable | Requires k, assumes spherical clusters |
+| PCA | Dimensionality reduction | No | Feature compression | Removes redundancy | Linear transformation only |
+| Neural Network (Dense) | Deep learning | Yes | General-purpose | Universal approximator | Needs large data, opaque |
+| CNN | Deep learning | Yes | Image tasks | Spatial invariance | Computationally intensive |
+| RNN / LSTM | Deep learning | Yes | Sequence tasks | Handles temporal dependencies | Vanishing gradient (LSTM mitigates) |
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and write your own one-sentence explanation of each.
-- [ ] Review the [TensorFlow Guide](https://www.tensorflow.org/guide) introduction and [Keras overview](https://www.tensorflow.org/guide/keras).
-- [ ] Watch the ML Fundamentals lecture in the [Machine Learning with Python & TensorFlow Course](https://www.youtube.com/watch?v=cKzgMFG5HpU).
-- [ ] Complete the Module 01 lab: environment setup and train-test split exercise.
-- [ ] Proceed to the Module 01 quiz.
+## Section 4: Bias-Variance Tradeoff
+
+The total prediction error of a supervised model can be decomposed into three components:
+
+### Total Error = Bias^2 + Variance + Irreducible Noise
+
+**Bias** is the systematic gap between the model's average prediction and the true value. High bias means the model's assumptions are too strong — it cannot capture the real pattern in the data. Manifestation: low training accuracy AND low validation accuracy (underfitting).
+
+**Variance** is the model's sensitivity to fluctuations in training data. High variance means the model has memorized training noise and fails on new data. Manifestation: high training accuracy BUT low validation accuracy (overfitting).
+
+**Irreducible noise** is inherent randomness in the data-generating process that no model can eliminate.
+
+The bias-variance tradeoff states that strategies which reduce bias tend to increase variance, and vice versa. The optimal model minimizes total error by balancing the two. Common bias-reduction strategies: more complex model, additional features, removing regularization. Common variance-reduction strategies: regularization (L1/L2), dropout, more training data, simpler architecture, early stopping.
+
+### Diagnostic Rules
+
+| Training Accuracy | Validation Accuracy | Diagnosis | Action |
+|---|---|---|---|
+| Low | Low | Underfitting (high bias) | More capacity, more features, fewer constraints |
+| High | Low | Overfitting (high variance) | Regularize, more data, simpler model |
+| High | High | Good generalization | Proceed to test evaluation |
+| Low | High | Data issue or split error | Audit data pipeline |
+
+---
+
+## Section 5: Key TensorFlow and Keras Concepts Introduced
+
+### Tensors
+
+A tensor is the fundamental data structure in TensorFlow. It is a multidimensional array — a generalization of scalars, vectors, and matrices. A scalar is a rank-0 tensor, a vector is rank-1, a matrix is rank-2, and a batch of images is typically a rank-4 tensor with shape (batch, height, width, channels).
+
+### The Keras Sequential API
+
+```python
+model = tf.keras.Sequential([
+    tf.keras.layers.Dense(64, activation='relu', input_shape=(n_features,)),
+    tf.keras.layers.Dense(1, activation='sigmoid')
+])
+model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+model.fit(X_train, y_train, epochs=20, validation_data=(X_val, y_val))
+```
+
+The three-step pattern — define, compile, fit — appears on every TensorFlow Developer Certificate exam problem. Memorize it.
+
+### Train-Test Split with scikit-learn
+
+```python
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y
+)
+```
+
+The `stratify=y` argument ensures class proportions are preserved in both splits — essential for imbalanced datasets.
+
+---
+
+## Section 6: Evaluation Metrics Reference
+
+| Metric | Formula | Task | Notes |
+|---|---|---|---|
+| Accuracy | Correct / Total | Classification | Misleading on imbalanced data |
+| Precision | TP / (TP + FP) | Classification | Penalizes false positives |
+| Recall | TP / (TP + FN) | Classification | Penalizes false negatives |
+| F1-Score | 2 x P x R / (P + R) | Classification | Harmonic mean of precision and recall |
+| MAE | Mean abs(y - y_hat) | Regression | Robust to outliers |
+| MSE | Mean (y - y_hat)^2 | Regression | Penalizes large errors more |
+| RMSE | sqrt(MSE) | Regression | Same units as target variable |
+
+---
+
+## Section 7: TensorFlow Developer Certificate Exam Tips
+
+**Tip 1 — Know the exam format.** The exam is five hours, open-book, and run in a local Python environment (PyCharm + TensorFlow plugin). You are evaluated on whether your model achieves a target accuracy threshold, not on code style. Read the candidate handbook at tensorflow.org/certificate before attempting any exam task.
+
+**Tip 2 — Master the three-step Keras pattern.** Define, compile, fit. Every exam problem uses this pattern. Practice it until it is automatic. You should be able to write a complete model definition and training call in under two minutes without referring to documentation.
+
+**Tip 3 — Know your loss functions.** Binary classification uses `binary_crossentropy`. Multi-class classification with integer labels uses `sparse_categorical_crossentropy`. Multi-class with one-hot labels uses `categorical_crossentropy`. Regression uses `mse` or `mae`. Getting the wrong loss function will cause your model to fail to train.
+
+**Tip 4 — Normalize your inputs.** Neural networks train much faster and more reliably when input features are normalized to similar scales. For image data, divide pixel values by 255.0. For tabular data, apply `StandardScaler` or `MinMaxScaler` from scikit-learn.
+
+**Tip 5 — Use callbacks.** `tf.keras.callbacks.EarlyStopping(patience=3, restore_best_weights=True)` prevents overfitting and saves training time. The exam rewards models that hit the accuracy threshold, not models that train for the maximum number of epochs.
+
+**Tip 6 — Understand the data pipeline.** The exam gives you data in various forms: NumPy arrays, `tf.data.Dataset` objects, or `ImageDataGenerator` output. Know how to load and feed each format to `model.fit()`.
+
+**Tip 7 — Validation split vs. validation data.** `model.fit(X, y, validation_split=0.1)` carves off 10% of the training data. `model.fit(X_train, y_train, validation_data=(X_val, y_val))` uses a pre-split validation set. Both monitor overfitting; prefer the latter for reproducibility.
+
+**Tip 8 — Check your output layer.** The output layer activation and number of units must match the task. Single-neuron sigmoid for binary classification. N-neuron softmax for N-class classification. Single-neuron linear (no activation) for regression.
+
+---
+
+## Section 8: Study Checklist
+
+- Read every definition in Section 1 and write your own one-sentence version of each.
+- Draw the ML pipeline from memory as a 7-stage flowchart.
+- Reproduce the bias-variance diagnostic table from memory.
+- Confirm Python environment is working: `import tensorflow as tf; print(tf.__version__)`.
+- Confirm scikit-learn is working: `from sklearn.model_selection import train_test_split`.
+- Complete the Module 01 lab: environment setup, data loading, train-test split.
+- Read the TensorFlow Developer Certificate candidate handbook at tensorflow.org/certificate.
+- Take the Module 01 quiz.
+- Post to the Module 01 discussion board by Wednesday at 11:59 PM.
+- Respond to at least two classmates by Sunday at 11:59 PM.

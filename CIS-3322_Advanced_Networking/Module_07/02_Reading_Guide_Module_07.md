@@ -1,52 +1,232 @@
 # Reading Guide: Module 07 - Inter-VLAN Routing Solutions
-## Course: CIS-3322_Advanced_Networking (Cisco CCNA (200-301))
+
+**Course:** CIS-3322 Advanced Networking
+**Certification Alignment:** Cisco CCNA 200-301 (Domain 3: IP Connectivity - 25%)
+**Prepared by:** Professor Nash | Texas Wesleyan University
 
 ---
 
-### Introduction
-Welcome to **Module 07 - Inter-VLAN Routing Solutions**! This week's study material focuses on the core foundations and configuration mechanics of **Inter-VLAN Routing Solutions** as aligned with the **Cisco CCNA (200-301)** certification framework. Understanding these topics is essential not only for passing the certification exam but also for administering enterprise systems in real-world environments.
+## Overview
 
-As a student, you will learn the primary operational roles, command syntaxes, and troubleshooting parameters needed to design, configure, and maintain these services. We will explore how different protocols establish connections, how configurations manage resource allocation, and how security controls prevent access breaches. Make sure to complete the checklists and review the glossary terms in detail before beginning the lab activity.
-
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **Router-on-a-stick**: An inter-VLAN routing method that uses a single physical router interface connected to a switch trunk port. The router interface is divided into logical subinterfaces, one per VLAN, each configured with `encapsulation dot1Q [vlan-id]` and an IP address in that VLAN's subnet. Traffic between VLANs exits the switch tagged, hits the router subinterface, gets re-tagged (or de-tagged), and returns via the same physical link.
-*   **Subinterfaces**: Logical divisions of a physical router interface, created with commands like `interface g0/0.10`. Each subinterface is independently configured with a VLAN encapsulation and IP address. Subinterfaces share the physical bandwidth of the parent interface but appear to connected switches as separate Layer 3 routed interfaces.
-*   **Layer 3 Switch SVI configuration**: A Switched Virtual Interface (SVI) is a virtual Layer 3 interface on a multilayer switch that represents a VLAN. Creating `interface vlan 10` and assigning an IP address effectively makes the switch the default gateway for all hosts in VLAN 10. SVIs require `ip routing` to be enabled globally on the switch and are more efficient than router-on-a-stick for high-traffic inter-VLAN routing.
+Inter-VLAN routing is tested on the CCNA 200-301 through configuration scenarios and troubleshooting questions. The exam frequently presents a topology where hosts in different VLANs cannot communicate and asks you to identify the missing or incorrect configuration. This guide covers both router-on-a-stick and Layer 3 switch SVI methods with full command references and common failure analysis.
 
 ---
 
-### 2. Certification Exam Tips
-*   **CCNA Domain:** Inter-VLAN routing falls under **IP Connectivity (25%)** and **Network Access (20%)** of the CCNA 200-301 exam. Expect configuration scenarios requiring you to choose between router-on-a-stick and Layer 3 switch SVIs.
-*   **Router-on-a-stick critical detail:** The physical interface (parent) must be up/up with `no shutdown` and typically has no IP address itself. The subinterface must have `encapsulation dot1Q [vlan-id]` configured **before** the IP address. Forgetting the encapsulation command is a common configuration mistake.
-*   **Legacy vs current methods:** The exam may reference legacy "multi-layer switch with routed ports" vs. SVI. Know that SVIs require the `ip routing` command and that the SVI must be in an `up/up` state (which requires at least one active access port in that VLAN).
-*   **Exam trap on native VLAN:** For the native VLAN subinterface in router-on-a-stick, use `encapsulation dot1Q [vlan-id] native`. Omitting `native` can cause duplicate IP/routing issues.
-*   **Study Resource:** Watch the inter-VLAN routing episodes in the Jeremy's IT Lab CCNA free playlist, which demonstrate both router-on-a-stick and Layer 3 switch SVI configurations in Packet Tracer: [Jeremy's IT Lab CCNA Complete Course on YouTube](https://www.youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ). Look for "Inter-VLAN Routing" episodes.
+## 1. High-Yield Glossary
+
+- **Inter-VLAN routing:** The process of forwarding IP traffic between different VLANs using a Layer 3 device. Required because VLANs are separate Layer 2 broadcast domains and cannot exchange traffic without a router or Layer 3 switch.
+
+- **Router-on-a-stick (ROAS):** An inter-VLAN routing method using a single physical router interface connected to a trunk port. Logical subinterfaces are created on the physical interface — one per VLAN — each configured with an IP address serving as the default gateway for that VLAN.
+
+- **Subinterface:** A logical division of a physical router interface. Created using the syntax `interface [type][slot/port].[number]`. Each subinterface is independently configured with 802.1Q encapsulation and an IP address.
+
+- **encapsulation dot1Q:** The IOS command applied to a router subinterface to associate it with a specific VLAN. Syntax: `encapsulation dot1Q [vlan-id]`. Must be entered before the IP address command.
+
+- **Switched Virtual Interface (SVI):** A virtual Layer 3 interface on a multilayer switch that represents an entire VLAN. Configured with `interface vlan [vlan-id]` and assigned an IP address. Hosts in that VLAN use the SVI IP address as their default gateway.
+
+- **Multilayer switch:** A switch capable of both Layer 2 switching and Layer 3 routing. Also called a Layer 3 switch. Requires the global command `ip routing` to enable the routing function.
+
+- **ip routing:** The global Cisco IOS command that enables Layer 3 routing on a multilayer switch. Without this command, SVIs are created but do not route traffic between VLANs.
+
+- **Default gateway:** The IP address that a host sends traffic to when the destination is in a different subnet. In inter-VLAN routing, the default gateway for each VLAN is the IP address of the router subinterface or SVI assigned to that VLAN.
+
+- **up/down SVI state:** The condition of an SVI when the interface itself is administratively up but has no active access ports assigned to its VLAN. The SVI will not pass traffic until at least one port in that VLAN is connected and active.
+
+- **Native VLAN subinterface:** On a ROAS configuration, the subinterface handling the native VLAN is configured with `encapsulation dot1Q [vlan-id] native` to accept untagged frames from the switch trunk port.
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the section covering **Inter-VLAN Routing** in the Cisco Skills for All CCNA course. The labs walk through router-on-a-stick configuration and Layer 3 switch SVI setup with verification commands: [Cisco Skills for All Portal - CCNA Guides](https://skillsforall.com/). Navigate to "CCNA: Switching, Routing and Wireless Essentials" — the Inter-VLAN Routing chapter.
-*   **Required Video:** Watch the inter-VLAN routing episodes in the Jeremy's IT Lab CCNA complete playlist. The videos compare all three methods and demonstrate which `show` commands to use for verification: [Jeremy's IT Lab CCNA Complete Course](https://www.youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ).
+## 2. Inter-VLAN Routing Method Comparison
+
+| Criteria | Router-on-a-Stick | Layer 3 Switch SVIs |
+|---|---|---|
+| Hardware required | External router + Layer 2 switch | Multilayer (Layer 3) switch only |
+| Traffic path | Exits switch, traverses physical router, returns | Stays entirely within switch hardware |
+| Bandwidth bottleneck | Single trunk uplink shared by all inter-VLAN traffic | No external bottleneck — hardware-assisted routing |
+| Scalability | Limited — one physical link carries all routed traffic | High — suitable for campus enterprise deployments |
+| Configuration complexity | Moderate — subinterfaces, encapsulation, trunk required | Moderate — ip routing, SVIs, VLANs required |
+| Best use case | Small networks, labs, CCNA practice | Enterprise campus distribution and core layer |
+| CCNA exam frequency | Frequently tested — configuration and troubleshooting | Frequently tested — SVI state and ip routing requirement |
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Configure router subinterface: `interface g0/0.10`**: Create a subinterface on the router's physical interface. The number after the dot (.10) is a convention — it typically matches the VLAN ID for clarity, though any number is technically valid.
-*   **Set encapsulation: `encapsulation dot1Q 10`**: This mandatory subinterface command tags all outbound frames with VLAN 10 and maps inbound 802.1Q-tagged frames from VLAN 10 to this subinterface. Follow immediately with `ip address [address] [mask]`.
-*   **Configure IP address on SVI on L3 Switch: `interface vlan 10`**: On a multilayer switch, create the SVI for VLAN 10. Assign an IP address and bring it up with `no shutdown`. Verify with `show ip interface brief` and confirm the SVI state is up/up.
+## 3. Router-on-a-Stick Configuration Reference
 
+### Switch Trunk Port Configuration
+
+```ios
+SW1(config)# interface GigabitEthernet0/1
+SW1(config-if)# switchport mode trunk
+SW1(config-if)# switchport trunk allowed vlan 10,20,30
+SW1(config-if)# end
+```
+
+### Router Subinterface Configuration
+
+```ios
+R1(config)# interface GigabitEthernet0/0
+R1(config-if)# no shutdown
+
+R1(config)# interface GigabitEthernet0/0.10
+R1(config-subif)# encapsulation dot1Q 10
+R1(config-subif)# ip address 192.168.10.1 255.255.255.0
+
+R1(config)# interface GigabitEthernet0/0.20
+R1(config-subif)# encapsulation dot1Q 20
+R1(config-subif)# ip address 192.168.20.1 255.255.255.0
+
+R1(config)# interface GigabitEthernet0/0.30
+R1(config-subif)# encapsulation dot1Q 30
+R1(config-subif)# ip address 192.168.30.1 255.255.255.0
+R1(config)# end
+```
+
+Key rules:
+
+- The parent physical interface must be up (`no shutdown`) but receives no IP address
+- `encapsulation dot1Q` must be entered before `ip address` on each subinterface
+- The subinterface number does not need to match the VLAN ID, but matching is universal best practice
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read the section covering **Inter-VLAN Routing** in [Cisco Skills for All Portal - CCNA Guides](https://skillsforall.com/).
-- [ ] Watch the inter-VLAN routing episodes in [Jeremy's IT Lab CCNA Complete Course](https://www.youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ).
-- [ ] Review the commands outlined in the lab instructions.
-- [ ] Proceed to the weekly hands-on lab activity.
+## 4. Layer 3 Switch SVI Configuration Reference
+
+### Enable Routing and Create VLANs
+
+```ios
+MLS1(config)# ip routing
+
+MLS1(config)# vlan 10
+MLS1(config-vlan)# name ENGINEERING
+MLS1(config-vlan)# vlan 20
+MLS1(config-vlan)# name SALES
+MLS1(config-vlan)# vlan 30
+MLS1(config-vlan)# name MANAGEMENT
+MLS1(config-vlan)# exit
+```
+
+### Create SVIs
+
+```ios
+MLS1(config)# interface vlan 10
+MLS1(config-if)# ip address 192.168.10.1 255.255.255.0
+MLS1(config-if)# no shutdown
+
+MLS1(config)# interface vlan 20
+MLS1(config-if)# ip address 192.168.20.1 255.255.255.0
+MLS1(config-if)# no shutdown
+
+MLS1(config)# interface vlan 30
+MLS1(config-if)# ip address 192.168.30.1 255.255.255.0
+MLS1(config-if)# no shutdown
+```
+
+### Assign Access Ports to VLANs
+
+```ios
+MLS1(config)# interface FastEthernet0/1
+MLS1(config-if)# switchport mode access
+MLS1(config-if)# switchport access vlan 10
+
+MLS1(config)# interface FastEthernet0/2
+MLS1(config-if)# switchport mode access
+MLS1(config-if)# switchport access vlan 20
+```
+
+---
+
+## 5. IOS Command Reference
+
+| Task | Command | Mode |
+|---|---|---|
+| Enable IP routing on multilayer switch | `ip routing` | Global config |
+| Create subinterface on router | `interface Gi0/0.10` | Global config |
+| Set 802.1Q encapsulation on subinterface | `encapsulation dot1Q 10` | Subinterface config |
+| Assign IP to subinterface or SVI | `ip address 192.168.10.1 255.255.255.0` | Interface config |
+| Enable parent physical interface | `no shutdown` | Interface config |
+| Create SVI for a VLAN | `interface vlan 10` | Global config |
+| Verify interface states and IPs | `show ip interface brief` | Privileged EXEC |
+| Verify SVI state and counters | `show interfaces vlan 10` | Privileged EXEC |
+| Verify routing table | `show ip route` | Privileged EXEC |
+| Verify subinterface encapsulation | `show interfaces GigabitEthernet0/0.10` | Privileged EXEC |
+| Verify VLAN-to-port mapping | `show vlan brief` | Privileged EXEC |
+| Verify trunk configuration | `show interfaces trunk` | Privileged EXEC |
+| Verify running configuration | `show running-config` | Privileged EXEC |
+
+---
+
+## 6. SVI State Reference
+
+| SVI State | Meaning | Common Cause |
+|---|---|---|
+| up / up | SVI is active and routing | At least one access port in the VLAN is connected and up |
+| up / down | Administratively up but no active port in VLAN | No ports assigned to VLAN, or all assigned ports are down |
+| administratively down / down | SVI manually shut down | `shutdown` command applied to the SVI |
+
+The most common exam trap: an SVI is configured with an IP address but no port in that VLAN is active. The SVI shows `up/down` and does not route. Run `show vlan brief` to confirm port assignment, and `show ip interface brief` to confirm SVI state.
+
+---
+
+## 7. Troubleshooting Reference
+
+### Router-on-a-Stick Common Issues
+
+| Symptom | Likely Cause | Fix |
+|---|---|---|
+| Subinterface is down/down | Parent physical interface is administratively down | `no shutdown` on the parent interface (not the subinterface) |
+| Hosts cannot ping router subinterface | `encapsulation dot1Q` missing or wrong VLAN ID | Add correct `encapsulation dot1Q [vlan-id]` before ip address |
+| Only one VLAN can reach the router | Switch port not configured as trunk | `switchport mode trunk` on the switch port facing the router |
+| One VLAN cannot reach the router | VLAN missing from trunk allowed list | `switchport trunk allowed vlan add [vlan-id]` |
+| Native VLAN hosts cannot route | Subinterface does not handle untagged frames | `encapsulation dot1Q [vlan-id] native` on native VLAN subinterface |
+
+### Layer 3 SVI Common Issues
+
+| Symptom | Likely Cause | Fix |
+|---|---|---|
+| SVIs exist but traffic is not routed | `ip routing` not enabled | Add `ip routing` in global config |
+| SVI is up/down | No active access ports in the VLAN | Assign at least one port to the VLAN and confirm it is up |
+| SVI shows up/up but hosts cannot reach other VLANs | Host default gateway is wrong | Set host gateway to the SVI IP address of its own VLAN |
+| SVI shows up/down despite port being connected | VLAN not created in VLAN database | Create the VLAN with `vlan [id]` in global config |
+
+---
+
+## 8. CCNA Exam Tips
+
+1. On a router-on-a-stick configuration, `encapsulation dot1Q [vlan-id]` must come before `ip address` on the subinterface. The IOS rejects the IP address command if encapsulation is not configured first.
+
+2. The parent physical interface in ROAS receives `no shutdown` but no IP address. Only subinterfaces receive IP addresses. A common distractor shows an IP address on the parent interface.
+
+3. `ip routing` is the single most important command for Layer 3 switch SVI routing. Without it, the switch operates as a pure Layer 2 device regardless of how many SVIs are configured.
+
+4. An SVI is `up/down` when no active access ports exist in that VLAN. This is not a misconfiguration on the SVI itself — it is a Layer 1 or VLAN membership issue on the access ports.
+
+5. In ROAS, all inter-VLAN traffic physically travels out the trunk link to the router and returns on the same trunk. This creates a bottleneck at the single physical link. SVIs route internally and have no such bottleneck.
+
+6. The subinterface number does not need to match the VLAN ID, but matching them is best practice and all exam examples use matching numbers.
+
+7. When a VLAN is deleted from the VLAN database, its SVI goes `up/down`. Recreating the VLAN and ensuring at least one port is in it brings the SVI back up.
+
+8. A Layer 3 switch can also use routed ports (`no switchport` on a physical interface) instead of SVIs for point-to-point Layer 3 links. SVIs are used for VLAN-to-VLAN routing; routed ports are used for uplinks.
+
+---
+
+## 9. Study Checklist
+
+Work through each item before taking the quiz.
+
+- [ ] Write the complete ROAS configuration from memory for three VLANs on R1 Gi0/0
+- [ ] Write the complete SVI configuration from memory for three VLANs on MLS1
+- [ ] Explain why `ip routing` is required and what happens without it
+- [ ] Describe the three possible SVI states and what causes each
+- [ ] Explain why the parent physical interface in ROAS does not get an IP address
+- [ ] List the two most common ROAS configuration failures and how to fix each
+- [ ] Compare the traffic path for inter-VLAN routing via ROAS versus SVIs
+- [ ] Complete the Module 07 Packet Tracer lab activity
+- [ ] Post your Module 07 discussion response by Wednesday at 11:59 PM
+
+---
+
+## Required Study Resources
+
+- Cisco CCNA certification training information: cisco.com/c/en/us/training-events/training-certifications
+- Free CCNA study notes and video summaries: professormesser.com

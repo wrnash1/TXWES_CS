@@ -1,62 +1,224 @@
-# Reading Guide: Module 06 – Binary Trees and Tree Traversal
-## Course: CIS-2315 Data Structures & Algorithms (Technical Interview Readiness)
+# Reading Guide: Module 06 — AVL Trees & Red-Black Trees
+
+## Course: CIS-2315 Data Structures & Algorithms
+
+**Certification Alignment:** Technical Interview Readiness (LeetCode / HackerRank)
 
 ---
 
-### Introduction
-Welcome to **Module 06 – Binary Trees and Tree Traversal**! Trees are the most heavily tested non-linear data structure in technical interviews. Problems involving maximum depth, path sums, lowest common ancestor, and level-order traversal appear at every company from Amazon to Meta. The recursive structure of trees makes them a natural testing ground for recursive thinking, and mastering tree traversal patterns unlocks solutions to a large fraction of medium-difficulty interview problems.
+## Introduction
 
-This module covers binary tree structure, the four traversal orders (inorder, preorder, postorder, level-order), and recursion patterns for tree problems.
-
----
-
-### 1. High-Yield Glossary
-
-*   **Binary tree**: A hierarchical data structure where each node has at most two children, referred to as the left child and right child. A node with no children is a leaf. The topmost node is the root.
-
-*   **Height of a tree**: The length of the longest path from the root to any leaf, measured in edges. A tree with a single root node has height 0. An empty tree has height –1 by convention.
-
-*   **Depth of a node**: The number of edges from the root to that node. The root is at depth 0. Height and depth are often confused in interviews — be explicit about which definition you are using.
-
-*   **Inorder traversal (Left–Root–Right)**: Recursively visit the left subtree, then the root, then the right subtree. On a Binary Search Tree, inorder traversal produces elements in sorted order.
-
-*   **Preorder traversal (Root–Left–Right)**: Visit the root first, then recursively traverse left and right subtrees. Used to serialize/copy a tree and in expression tree evaluation.
-
-*   **Postorder traversal (Left–Right–Root)**: Recursively traverse left and right subtrees before visiting the root. Used to delete or free a tree, and to compute subtree properties that depend on both children.
-
-*   **Level-order traversal (BFS)**: Visit all nodes at depth 0, then depth 1, then depth 2, etc., using a queue. Produces the tree level by level. Used for minimum depth, level averages, and right-side view problems.
+A plain BST has O(log n) average-case operations but degrades to O(n) when insertions create a skewed tree. Self-balancing trees eliminate this worst case by automatically maintaining O(log n) height after every mutation. This module covers two families: AVL trees (strict balance via rotation) and Red-Black trees (relaxed color-based balance). Both guarantee O(log n) for search, insert, and delete in all cases.
 
 ---
 
-### 2. Certification Exam Tips
-*   **Recursive DFS is the default for tree problems:** Most binary tree problems (max depth, path sum, symmetric check, LCA) are solved with a simple DFS recursion that returns a value from each subtree. The pattern: base case (null node returns 0/False/None), then combine left and right results.
-*   **Level-order = BFS with a queue:** Any problem asking "for each level" or "minimum depth" uses BFS. Use `collections.deque`; process all nodes at current level before enqueuing the next level's nodes.
-*   **Height vs. balanced:** A tree is balanced if every subtree's left and right heights differ by at most 1. LeetCode #110 (Balanced Binary Tree) requires computing height bottom-up and short-circuiting on imbalance.
-*   **Serialize/deserialize trees:** LeetCode #297 uses preorder traversal with null markers. If you can serialize (preorder DFS) and deserialize (reconstruct from the string), you deeply understand tree structure.
-*   **LCA (Lowest Common Ancestor) pattern:** Post-order DFS — return a node if you find p or q; if both subtrees return non-null, current node is the LCA.
-*   **Study Resource:** Use [Visualgo Binary Tree](https://visualgo.net/en/bst) to animate all four traversal orders interactively, which makes the recursive call order concrete and easier to memorize.
+## 1. The Balance Problem
+
+Inserting sorted values into a BST produces a chain — height O(n), making every operation O(n). The fix is to detect and correct imbalance after every insert or delete.
+
+**Balance factor** of a node = height(right subtree) - height(left subtree).
+
+- -1, 0, +1: balanced
+- -2 or +2: unbalanced — a rotation is required
+
+```python
+class AVLNode:
+    def __init__(self, key):
+        self.key = key
+        self.left = None
+        self.right = None
+        self.height = 1  # leaf starts at height 1
+
+def height(node):
+    return node.height if node else 0
+
+def get_balance(node):
+    return height(node.right) - height(node.left) if node else 0
+```
 
 ---
 
-### Required Readings & Videos
-*   **Required Reading:** [Binary Trees – Open Data Structures (Pat Morin), Chapter 6](https://opendatastructures.org/ods-python/6_Binary_Trees.html) — covers tree structure, traversal implementations, and recursive pattern analysis with Python code.
-*   **Required Video:** [Trees – NeetCode on YouTube](https://www.youtube.com/watch?v=oSWTXtMglKE) — a 30-minute interview-focused video covering tree structure, all traversal orders, and essential recursive DFS patterns with LeetCode walkthroughs.
+## 2. AVL Rotations
+
+Four cases, identified by the direction of the imbalance:
+
+### LL — Right Rotation
+
+Left-heavy node (balance = -2), inserted into left child's left subtree.
+
+```python
+def right_rotate(z):
+    y = z.left
+    T3 = y.right
+
+    y.right = z
+    z.left = T3
+
+    z.height = 1 + max(height(z.left), height(z.right))
+    y.height = 1 + max(height(y.left), height(y.right))
+    return y
+```
+
+### RR — Left Rotation
+
+Right-heavy node (balance = +2), inserted into right child's right subtree.
+
+```python
+def left_rotate(z):
+    y = z.right
+    T2 = y.left
+
+    y.left = z
+    z.right = T2
+
+    z.height = 1 + max(height(z.left), height(z.right))
+    y.height = 1 + max(height(y.left), height(y.right))
+    return y
+```
+
+### LR — Double Rotation (Left then Right)
+
+Left-heavy node (balance = -2), inserted into left child's right subtree. Fix: left rotate the left child, then right rotate the root.
+
+```python
+# Applied in avl_insert when: balance < -1 and key > root.left.key
+root.left = left_rotate(root.left)
+return right_rotate(root)
+```
+
+### RL — Double Rotation (Right then Left)
+
+Right-heavy node (balance = +2), inserted into right child's left subtree. Fix: right rotate the right child, then left rotate the root.
+
+```python
+# Applied in avl_insert when: balance > 1 and key < root.right.key
+root.right = right_rotate(root.right)
+return left_rotate(root)
+```
+
+**Memory aid:** The case name (LL, LR, RL, RR) describes the path to the imbalance. Single-rotation cases (LL, RR) use one rotation in the opposite direction. Double-rotation cases (LR, RL) use two rotations.
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will:
-*   **Implement a `BinaryTree` class** with recursive `inorder`, `preorder`, `postorder`, and `level_order` methods.
-*   **Solve LeetCode #104 (Maximum Depth of Binary Tree)** using recursive DFS.
-*   **Solve LeetCode #102 (Binary Tree Level Order Traversal)** using BFS with a deque.
-*   **Solve LeetCode #226 (Invert Binary Tree)** to practice the recursive bottom-up DFS pattern.
+## 3. Complete AVL Insert
+
+```python
+def avl_insert(root, key):
+    # Step 1: Standard BST insert
+    if not root:
+        return AVLNode(key)
+    if key < root.key:
+        root.left = avl_insert(root.left, key)
+    elif key > root.key:
+        root.right = avl_insert(root.right, key)
+    else:
+        return root  # duplicate
+
+    # Step 2: Update height
+    root.height = 1 + max(height(root.left), height(root.right))
+
+    # Step 3: Balance and rotate
+    balance = get_balance(root)
+
+    if balance < -1 and key < root.left.key:       # LL
+        return right_rotate(root)
+    if balance > 1 and key > root.right.key:        # RR
+        return left_rotate(root)
+    if balance < -1 and key > root.left.key:        # LR
+        root.left = left_rotate(root.left)
+        return right_rotate(root)
+    if balance > 1 and key < root.right.key:        # RL
+        root.right = right_rotate(root.right)
+        return left_rotate(root)
+
+    return root
+```
+
+Rotations per insert: at most 2 (one for LR or RL). After a rotation, the subtree height decreases by 1, restoring the balance of all ancestor nodes without further action.
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and be able to explain each in your own words.
-- [ ] Read Chapter 6 of Open Data Structures.
-- [ ] Watch the NeetCode Trees video.
-- [ ] Implement all four traversals recursively and iteratively.
-- [ ] Solve LeetCode #104, #102, and #226.
-- [ ] Proceed to the Module 06 Quiz.
+## 4. Red-Black Trees
+
+### The Five Properties
+
+1. Every node is **red** or **black**.
+2. The **root** is always black.
+3. Every **NIL leaf** (sentinel node at the end of every chain) is black.
+4. If a node is **red**, both its children are black. (No two consecutive red nodes on any path.)
+5. Every path from any node to its descendant NIL leaves contains the same number of **black nodes** (the node's black-height).
+
+### Why This Guarantees O(log n) Height
+
+- Property 5: all root-to-NIL paths have the same black-height bh.
+- Property 4: no path can have two consecutive red nodes.
+- Therefore the longest possible path (alternating red and black) is at most 2× the shortest path (all black).
+- Since the tree has at least 2^bh - 1 nodes, bh = O(log n), so height ≤ 2·bh = O(log n).
+
+### Violations
+
+**Property 2 violation:** Root is red — fix by recoloring root to black.
+
+**Property 4 violation:** Red node has a red child — fix by recoloring and/or rotation (uncle recolor or rotate-recolor depending on uncle's color).
+
+**Property 5 violation:** Paths to NIL have unequal black-heights — fix by rotation and recoloring.
+
+---
+
+## 5. AVL vs Red-Black Comparison
+
+| Property | AVL Tree | Red-Black Tree |
+|---|---|---|
+| Balance condition | Balance factor at most ±1 everywhere | Equal black-heights; no consecutive reds |
+| Height guarantee | Strictly O(log n) — height ≤ 1.44 log n | O(log n) — height ≤ 2 log n |
+| Rotations per insert | At most 2 | At most 2 |
+| Rotations per delete | O(log n) | At most 3 |
+| Lookup speed | Slightly faster (shorter tree) | Slightly slower (taller tree) |
+| Insert/delete speed | Slightly slower (more rebalancing) | Slightly faster (fewer rotations on delete) |
+| Used in | Database indexes (read-heavy) | Java `TreeMap`, C++ `std::map`, Linux kernel |
+
+**Rule of thumb:** When mutations are frequent, prefer Red-Black. When reads dominate, AVL may be preferred.
+
+---
+
+## 6. Complexity Summary
+
+| Operation | Plain BST (worst) | AVL (worst) | Red-Black (worst) |
+|---|---|---|---|
+| Search | O(n) | O(log n) | O(log n) |
+| Insert | O(n) | O(log n) | O(log n) |
+| Delete | O(n) | O(log n) | O(log n) |
+| Space | O(n) | O(n) | O(n) |
+
+---
+
+## 7. Interview Exam Tips
+
+1. **Know all four rotation cases by name** — LL, RR (single rotations), LR, RL (double rotations). Interviewers ask "what rotation fires when you insert X into this tree?"
+
+2. **Balance factor sign convention** — define it consistently: `height(right) - height(left)`. Positive means right-heavy, negative means left-heavy.
+
+3. **Update heights bottom-up** — in every rotation, update the lower node's height before the upper node's height. Skipping this produces incorrect balance factors.
+
+4. **Red-Black properties 4 and 5 are the testable ones** — property 4 (no consecutive reds) and property 5 (equal black-height) are the most frequently tested in quizzes and interviews.
+
+5. **AVL insert fires at most 2 rotations; delete may fire O(log n)** — this is why Red-Black is preferred for write-heavy workloads.
+
+6. **Python's `sortedcontainers.SortedList` is O(log n) sorted** — it is implemented with a list-of-sorted-lists approach, not a pure AVL/RB tree, but provides the same complexity guarantee and is the practical Python tool for sorted sets.
+
+7. **`bisect` module for sorted arrays** — Python's `bisect.insort` provides O(log n) search + O(n) insert in a sorted list. For O(log n) insert, use `sortedcontainers`.
+
+8. **Height invariant after rotation** — after any rotation, the new subtree root has the same height as the old subtree root had before the offending insertion. This is why only a constant number of rotations propagates up.
+
+---
+
+## 8. Study Checklist
+
+- [ ] Watch the Module 06 video lecture by Professor Nash.
+- [ ] Implement `right_rotate` and `left_rotate` for AVL.
+- [ ] Implement `avl_insert` with all four rotation cases.
+- [ ] Test AVL insert on sorted input `[1, 2, 3, 4, 5]` — verify height stays at 3.
+- [ ] State all five Red-Black properties from memory.
+- [ ] Identify which Red-Black property is violated in a given example tree.
+- [ ] Complete the Module 06 Lab.
+- [ ] Complete the Module 06 Quiz.

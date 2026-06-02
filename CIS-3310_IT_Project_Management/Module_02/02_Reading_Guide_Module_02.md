@@ -1,51 +1,165 @@
-# Reading Guide: Module 02 - Project Lifecycle and Process Groups
-## Course: CIS-3310_IT_Project_Management (CompTIA Project+ / PMI CAPM)
+# Reading Guide: Module 02 – Project Lifecycle and Process Groups
+
+**Course:** CIS-3310 IT Project Management
+**Certification Alignment:** CompTIA Project+ (PK0-005) | PMBOK 6th and 7th Editions
+**Prepared by:** Professor Nash | Texas Wesleyan University
 
 ---
 
-### Introduction
-Welcome to **Module 02 - Project Lifecycle and Process Groups**! This module builds directly on the Module 01 foundation by diving into *how* a project progresses from idea to completion. You will learn the five PMI Process Groups, understand how they overlap (they are not strictly sequential phases), and discover the key documents and decisions that anchor each stage. This content is among the most heavily tested on both CompTIA Project+ and PMI CAPM exams.
+## Introduction
 
-As you study, pay attention to the difference between a *project lifecycle* (the unique phases chosen for a specific project, such as design-build-test) and the *Process Groups* (a standardized management framework applied across all projects regardless of industry).
-
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **Project Charter Purpose**: The project charter is the formal document that authorizes a project's existence and grants the project manager the authority to apply organizational resources. It is produced during the Initiating process group and must be signed by the project sponsor. Without a charter, a project has no official standing in the organization.
-*   **Business Case**: A formal document that justifies the investment in a project by analyzing the problem or opportunity, evaluating options, and recommending a course of action based on expected costs, benefits, and risks. The business case is typically prepared before the project is officially approved and is the sponsor's tool for securing funding.
-*   **Project Objectives**: Clear, measurable statements that describe what the project must accomplish by the end. Good objectives follow the SMART criteria (Specific, Measurable, Achievable, Relevant, Time-bound) and are documented in the project charter as the basis for measuring success.
-*   **Stakeholder Register**: A project document that records information about all identified stakeholders, including their names, roles, contact information, interests, influence levels, and engagement strategies. It is created during initiating and updated continuously throughout the project lifecycle.
+Module 02 builds directly on Module 01 by showing how a project progresses from authorization to closure. The five PMI Process Groups are the backbone of the PMBOK framework and among the most frequently tested topics on the CompTIA Project+ exam. Pay close attention to which documents belong in which Process Group — this distinction drives a significant portion of exam questions.
 
 ---
 
-### 2. Certification Exam Tips
-*   **Project+ Tip – Know which documents belong in Initiating**: The Project+ exam frequently presents scenarios asking what should be created "first" or "during project initiation." The Project Charter and Stakeholder Register are both Initiating outputs. Do not confuse them with the Project Management Plan (a Planning output) or the Scope Statement (also a Planning output).
-*   **CAPM Tip – Process Groups vs. Phases**: A common CAPM trap question describes a "phase" and asks which Process Group it belongs to. Remember: Process Groups can repeat across phases. A multi-phase project (e.g., Phase 1: Design, Phase 2: Build) will have its own Initiating, Planning, and Executing activities within each phase.
-*   **Scenario Trap**: Watch for questions describing a project where work has started but no project charter has been signed. The correct PM response is always to obtain formal authorization before continuing—unauthorized work creates scope, legal, and financial risks.
-*   **Study Resource**: The [Project Management Open Textbook – BC Campus](https://opentextbc.ca/projectmanagement/) has a dedicated chapter on project initiation and the project charter that directly aligns with this module's exam objectives. Reading it before the lab will give you the vocabulary you need.
+## 1. High-Yield Glossary
+
+### Project Lifecycle
+
+The sequence of phases a specific project moves through from start to finish. Lifecycles are tailored to the project type, industry, and organization. A software project lifecycle might be: Requirements → Design → Development → Testing → Deployment. The lifecycle is project-specific; the Process Groups are universal.
+
+### Process Group
+
+A PMI-defined category of management activities applied to every project. The five Process Groups are Initiating, Planning, Executing, Monitoring and Controlling, and Closing. They are not sequential phases — they can overlap, and some (like Monitoring and Controlling) run continuously.
+
+### Project Charter
+
+The formal document that authorizes the project's existence, names the project manager, and grants the PM authority to apply organizational resources. Produced in the Initiating Process Group. Signed by the project sponsor, not the PM. The charter does not contain detailed schedules or WBS — those belong in Planning.
+
+### Business Case
+
+The document that justifies the investment in a project by analyzing the problem or opportunity, evaluating options, and recommending a course of action based on expected costs, benefits, and risks. Typically prepared before the project is formally authorized. The Business Case is the sponsor's tool for securing organizational funding.
+
+### Project Objectives
+
+Clear, measurable statements describing what the project must accomplish. Strong objectives follow SMART criteria: Specific, Measurable, Achievable, Relevant, and Time-bound. Objectives are documented in the Project Charter and serve as the primary measure of project success.
+
+### Stakeholder Register
+
+A project document that records all identified stakeholders with their roles, contact information, interests, influence levels, and initial engagement strategies. Created during Initiating, updated continuously. The Stakeholder Register is a living document — it should never be treated as final.
+
+### Project Management Plan
+
+The master planning document produced during the Planning Process Group. It integrates all subsidiary management plans (Scope, Schedule, Cost, Quality, Resource, Communications, Risk, Procurement, Stakeholder) into a single coherent guide for executing and controlling the project.
+
+### Predictive Lifecycle
+
+A lifecycle model in which all scope is defined upfront and the project proceeds through phases in sequence with minimal change. Also called Waterfall. Best suited for stable, well-understood requirements.
+
+### Adaptive Lifecycle
+
+A lifecycle model in which requirements and solutions evolve through iterative collaboration with customers. Work is done in short time-boxed cycles (sprints). Best suited for complex, fast-changing environments. Covered in depth in Module 12.
+
+### Lessons Learned Register
+
+A Closing Process Group output that captures knowledge gained during the project — what worked, what failed, and what should change on future projects. Stored as an Organizational Process Asset for future teams to consult.
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the chapter covering project initiation and the project charter in the OER Textbook: [Project Management Open Textbook – BC Campus](https://opentextbc.ca/projectmanagement/). Pay particular attention to the sections on business cases, stakeholder identification, and charter components.
-*   **Required Video:** Watch the lecture on the Project Lifecycle and PMI Process Groups in the course playlist: [CompTIA Project+ PK0-005 Playlist by Joseph Phillips](https://www.youtube.com/results?search_query=comptia+project%2B+PK0-005+joseph+phillips).
+## 2. The Five Process Groups — Inputs, Activities, and Key Outputs
+
+| Process Group | Primary Purpose | Key Inputs | Key Outputs |
+|---|---|---|---|
+| Initiating | Authorize the project; identify stakeholders | Business Case, Agreements, EEFs, OPAs | Project Charter, Stakeholder Register |
+| Planning | Develop the comprehensive project roadmap | Project Charter, EEFs, OPAs | Project Management Plan, Scope Baseline, Schedule Baseline, Cost Baseline, Risk Register |
+| Executing | Perform the work defined in the plan | Project Management Plan, approved change requests | Deliverables, Work Performance Data, Change Requests |
+| Monitoring and Controlling | Track performance; manage changes | Work Performance Data, Project Management Plan | Work Performance Reports, Change Requests, Updates to PM Plan |
+| Closing | Formally end the project or phase | Project Management Plan, accepted deliverables | Final product/service/result transition, Lessons Learned Register |
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Write a project charter for a server migration project**: Using the charter template introduced in Module 01, complete all sections for a fictional data center server migration, including project title, sponsor, objectives, high-level scope, milestones, and sign-off.
-*   **Identify project sponsors and key stakeholders**: Create a stakeholder register table identifying at least five stakeholders for your server migration project, including their roles, levels of influence (High/Medium/Low), and initial engagement strategies.
-*   **Document business benefits**: Write a brief business case summary (half-page) explaining the cost savings, risk reduction, or capability improvements that justify the server migration project.
+## 3. Process Groups vs. Project Lifecycle Phases
+
+| Attribute | Process Groups | Lifecycle Phases |
+|---|---|---|
+| Defined by | PMI (universal) | Project team (tailored) |
+| How many | Always 5 | Varies by project type |
+| Can repeat? | Yes — across phases | Generally sequential |
+| Overlap? | Yes — M&C overlaps Executing | Generally sequential |
+| Exam relevance | Heavily tested | Context for scenario questions |
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and be able to distinguish the charter from the business case and the scope statement.
-- [ ] Read the project initiation chapter in the [Project Management Open Textbook](https://opentextbc.ca/projectmanagement/).
-- [ ] Watch the Process Groups lecture in the [CompTIA Project+ PK0-005 Playlist by Joseph Phillips](https://www.youtube.com/results?search_query=comptia+project%2B+PK0-005+joseph+phillips).
-- [ ] Complete the Module 02 Lab activity.
-- [ ] Take the Module 02 Quiz.
+## 4. Lifecycle Model Comparison
+
+| Attribute | Predictive (Waterfall) | Iterative/Incremental | Adaptive (Agile) |
+|---|---|---|---|
+| Requirements | Defined upfront | Partially defined, refined per cycle | Emerge through collaboration |
+| Change tolerance | Low (formal change control) | Moderate | High (welcomed) |
+| Delivery | Single final delivery | Incremental deliveries | Continuous delivery each sprint |
+| Best for | Stable, regulated, well-defined scope | Complex products with some unknowns | Rapidly changing, customer-driven scope |
+| Example IT projects | Network migration, hardware rollout | ERP implementation in phases | Custom software, mobile apps |
+
+---
+
+## 5. Project Charter Components Reference
+
+A complete Project Charter should contain the following elements:
+
+- Project title and description
+- Business need or problem being addressed (Business Case summary)
+- Project objectives (SMART format)
+- High-level scope (in-scope and out-of-scope items)
+- High-level milestones and target dates
+- Approved budget summary
+- Key stakeholders and their roles
+- Known risks and constraints
+- Project manager name and authority level
+- Sponsor signature and date
+
+The charter does NOT include detailed WBS breakdowns, detailed risk registers, or full project schedules — those are Planning outputs.
+
+---
+
+## 6. Certification Exam Tips
+
+**Tip 1 — Charter vs. Management Plan:**
+The Project Charter is an Initiating output. The Project Management Plan is a Planning output. On scenario questions asking what to produce "first" or "during initiation," the answer is the charter or the Stakeholder Register — never the management plan.
+
+**Tip 2 — M&C runs in parallel:**
+Monitoring and Controlling does not happen after Executing. It runs throughout the project alongside Executing. Questions describing a PM "checking performance and adjusting the plan" during execution describe M&C activities — not a separate phase.
+
+**Tip 3 — Closing is NOT optional:**
+Even if deliverables are accepted and the work is done, the project is not complete until contracts are closed, documents are archived, and the team is formally released. Exam questions about skipping formal closure always test whether students know this.
+
+**Tip 4 — Who signs the charter:**
+The project sponsor signs the Project Charter. The PM does not sign it — the PM is named in it. This distinction appears on exam questions about charter authorization.
+
+**Tip 5 — Multi-phase project Process Groups:**
+In a multi-phase project, Process Groups repeat in each phase. Phase 1 has its own Initiating, Planning, Executing, M&C, and Closing. Phase 2 starts again with Initiating. Students who think Initiating only happens once will miss scenario questions about phased projects.
+
+**Tip 6 — Business Case vs. Project Charter:**
+The Business Case justifies whether to invest. The Project Charter formally authorizes the investment. The Business Case is an input to the charter — it comes first. Do not confuse them.
+
+**Tip 7 — Stakeholder Register vs. Stakeholder Engagement Plan:**
+The Stakeholder Register (Initiating) records who the stakeholders are. The Stakeholder Engagement Plan (Planning) defines how the PM will engage them. Both documents are frequently confused on exam questions.
+
+**Tip 8 — Lessons learned timing:**
+Lessons Learned should be captured throughout the project, not only at closure. However, the formal Lessons Learned Register is a Closing output. If a question asks "when are lessons learned documented?" the correct answer is "throughout the project but formalized during Closing."
+
+---
+
+## 7. Required Reading and Study Resources
+
+Complete the following before the lab and quiz:
+
+- Read the project initiation and lifecycle chapters in the course OER textbook (linked in Canvas).
+- Review the CompTIA Project+ PK0-005 exam objectives at comptia.org, focusing on the Process Groups domain.
+- For supplemental video study, visit professormesser.com for Project+ coverage of the project lifecycle.
+
+---
+
+## 8. Study Checklist
+
+- [ ] Define each of the five Process Groups and state its primary purpose
+- [ ] List the two key outputs of the Initiating Process Group
+- [ ] List at least five outputs of the Planning Process Group
+- [ ] Explain why Monitoring and Controlling runs in parallel with Executing
+- [ ] Identify the three SMART components most commonly omitted from poorly written objectives
+- [ ] Explain the difference between a project lifecycle phase and a Process Group using an original example
+- [ ] Compare predictive and adaptive lifecycle models using at least two distinguishing attributes
+- [ ] State who signs the Project Charter and what authority it grants
+- [ ] Explain the difference between the Business Case and the Project Charter
+- [ ] Complete the Module 02 Lab activity
+- [ ] Take the Module 02 Quiz
+- [ ] Post Module 02 Discussion initial response by Wednesday at 11:59 PM

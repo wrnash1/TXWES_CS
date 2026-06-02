@@ -1,28 +1,50 @@
-# Discussion Forum: Module 02 - Amazon EC2 Compute Instances
-## Course: CIS-4334_AWS_Cloud_Architecture (AWS Certified Solutions Architect - Associate)
+# Discussion Forum: Module 02 - IAM: Users, Roles, Policies, and Best Practices
+
+**Course:** CIS-4334 AWS Cloud Architecture
+**Certification Target:** AWS Solutions Architect Associate (SAA-C03)
 
 ---
 
-## Discussion Prompt
-Consider the following real-world scenario or technical concept:
-*   **Topic Focus:** **Amazon EC2 Compute Instances** (specifically focusing on: `EC2 instance types, Amazon Machine Images (AMIs), storage options (EBS), security keys.`)
+## Instructions
 
-**Your Tasks:**
-1.  **Initial Post (Due Wednesday at 11:59 PM):** In 150-200 words, explain how you would apply Amazon EC2 Compute Instances in an enterprise system. Address the following:
-    *   What is the primary benefit of utilizing this configuration or standard in a production environment?
-    *   Identify one common security concern or operational challenge related to this topic, and suggest a best-practice mitigation strategy.
-2.  **Peer Responses (Due Sunday at 11:59 PM):** Read through your classmates' posts and write constructive replies (at least 50 words each) to at least two peers. In your replies:
-    *   Provide feedback on their proposed mitigation strategy.
-    *   Share an alternative approach or add context from your own research or lab exercises.
+Read all three scenarios below and select one to address in your initial post. Your initial post must be 175-225 words, technically precise, and reference specific IAM concepts from the module. Respond to at least two classmates who chose different scenarios from yours.
+
+Initial post due: Wednesday at 11:59 PM
+Peer responses due: Sunday at 11:59 PM
 
 ---
 
-## Discussion Rubric (10 Points Total)
-*   **Initial Post (6 Points):**
-    *   *5-6 pts:* Thoroughly addresses all prompt questions with technical accuracy, clear explanations, and appropriate terminology. Meets the word count.
-    *   *3-4 pts:* Addresses some prompt questions, but lacks detail or technical accuracy.
-    *   *0-2 pts:* Incomplete or missing initial post.
-*   **Peer Responses (4 Points):**
-    *   *4 pts:* Responds constructively to at least two peers, contributing meaningful additions to the conversation.
-    *   *2 pts:* Responds to only one peer, or comments are superficial (e.g., "Good post!").
-    *   *0 pts:* No peer responses submitted.
+## Scenario A - Credential Exposure Incident
+
+A startup's backend application is running on Amazon EC2. A developer accidentally committed the application's AWS access keys to a public GitHub repository. Within four hours, an attacker used the keys to create new IAM users, launch EC2 instances in multiple Regions, and attempt to exfiltrate data from S3 buckets. The company is now cleaning up the incident and redesigning their IAM architecture. Describe the root cause of this incident from an IAM design perspective, explain what architectural change would have prevented the credential exposure, and outline at least three specific IAM remediation steps the team should take after the incident. Reference the IAM best practices from this module and explain how each recommendation directly addresses the conditions that made this breach possible.
+
+---
+
+## Scenario B - Over-Permissioned Application Role
+
+A QA engineer is reviewing IAM roles for a new microservices application before it goes to production. She finds that the order-processing service's IAM role has the following policy attached: `Action: "*"` and `Resource: "*"` with Effect Allow. The engineering team defends this by saying "it is just temporary — we will restrict it later." Evaluate the risk of deploying this role to production even temporarily. Explain at least three specific harmful actions an attacker or compromised process could take with this permission set. Then propose a process the team could follow to quickly determine the minimum necessary permissions for the role before deployment — referencing any AWS tools that could assist in building a least-privilege policy.
+
+---
+
+## Scenario C - Multi-Account Access Design
+
+A financial services company is migrating to a multi-account AWS Organizations structure with separate accounts for Production, Development, and Security. The security team in the Security account needs read-only access to CloudTrail logs and Config findings in both the Production and Development accounts. The CISO insists that no long-term credentials should exist in the Security account and that access must require MFA. Design the IAM architecture that satisfies these requirements. Identify all IAM components that must be created (roles, policies, trust relationships), explain which account each component lives in, and describe how the MFA requirement is enforced. Explain why this design is more secure than creating an IAM user in each account for the security team.
+
+---
+
+## Discussion Rubric
+
+| Criteria | Points | Description |
+|---|---|---|
+| Initial post — technical accuracy | 3 | Correctly applies IAM concepts (roles, policies, evaluation logic, best practices); no factual errors |
+| Initial post — depth and completeness | 2 | Addresses all parts of the chosen scenario; 175-225 words; uses specific AWS service and IAM term names |
+| Initial post — clarity | 1 | Well-organized, professional tone, correct IAM terminology |
+| Peer response 1 — substantive engagement | 2 | Adds new technical detail, a different design approach, or a real-world extension; minimum 50 words |
+| Peer response 2 — substantive engagement | 2 | Adds new technical detail, a different design approach, or a real-world extension; minimum 50 words |
+| **Total** | **10** | |
+
+---
+
+## Professor Nash Note
+
+IAM is where most real-world cloud security failures originate. Posts that engage with the specific IAM mechanisms — policy evaluation logic, role trust relationships, permission scoping — will earn full credit. Responses that only describe the problem without proposing a technically specific solution will not. When responding to peers, engage with the design they proposed: would it work? What edge cases does it miss? What would you do differently?

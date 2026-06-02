@@ -1,50 +1,164 @@
-# Reading Guide: Module 11 - Stakeholder Management
-## Course: CIS-3310_IT_Project_Management (CompTIA Project+ / PMI CAPM)
+# Reading Guide: Module 11 – Stakeholder Management
+
+**Course:** CIS-3310 IT Project Management
+**Certification Alignment:** CompTIA Project+ (PK0-005) | PMBOK 6th and 7th Editions
+**Prepared by:** Professor Nash | Texas Wesleyan University
 
 ---
 
-### Introduction
-Welcome to **Module 11 - Stakeholder Management**! Stakeholder management extends beyond simply identifying who is involved in a project. It requires understanding stakeholder expectations, analyzing their power and interest, developing strategies to engage them appropriately, and monitoring engagement levels throughout the project. Unmanaged stakeholder expectations are one of the most common causes of project failure—even technically successful projects can be deemed failures if key stakeholders are not satisfied.
+## Introduction
 
-This module aligns with PMI CAPM Knowledge Area 13 (Stakeholder Management) and CompTIA Project+ Domain 4 (Project Communication and Stakeholder Engagement).
-
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **Request for Proposal (RFP)**: A formal procurement document issued by the buying organization to invite potential sellers to submit proposals describing their approach, qualifications, and pricing for completing a defined scope of work. RFPs are used for complex or non-standard acquisitions where the buyer wants to evaluate methodology and not just price. Responses to an RFP are called proposals.
-*   **Contract Types (Fixed-Price, Time & Materials, Cost-Reimbursable)**: The three primary contract families in project procurement. Fixed-Price locks in a price regardless of actual seller costs, putting cost risk on the seller. Time & Materials pays for actual hours and materials used, creating a shared and potentially uncapped cost risk. Cost-Reimbursable reimburses the seller for all legitimate actual costs plus an agreed fee, putting cost risk entirely on the buyer. Choosing the right contract type is a key PM decision.
-*   **SLA Terms (Service Level Agreement)**: Contractual commitments between a buyer and a vendor (or between an IT department and its customers) that define the minimum acceptable performance standards for a service, such as uptime percentage, response time, resolution time, and penalty clauses for non-performance. SLAs are typically negotiated and included in vendor contracts during the procurement process.
+Stakeholder Management addresses the systematic identification, analysis, and engagement of all individuals and groups who have an interest in or are affected by the project. The Project+ exam tests stakeholder identification timing, the Power/Interest Grid, engagement level definitions, and the distinction between the Stakeholder Register and the Stakeholder Engagement Plan. This reading guide provides the reference tables and exam tips you need.
 
 ---
 
-### 2. Certification Exam Tips
-*   **Project+ Tip – Contract Type Risk**: Memorize this rule: Fixed-Price = seller bears cost risk; Cost-Reimbursable = buyer bears cost risk; T&M = shared risk. The Project+ exam presents procurement scenarios and asks which contract type the buyer should prefer. If budget certainty is the goal: use Fixed-Price. If the scope is unclear and the seller needs flexibility: use Cost-Reimbursable.
-*   **CAPM Tip – Procurement Closure**: CAPM tests the close procurement process. All open contracts must be formally closed before the project can be administratively closed. Closed procurement includes verifying all deliverables were accepted, resolving all claims, and archiving contract records. Failure to close contracts properly is a project governance error.
-*   **Scenario Trap**: An SLA that "guarantees 99.9% uptime" is a contractual performance standard, not a risk mitigation technique in itself. If the vendor fails to meet the SLA, the penalty clause compensates the buyer—but the downtime still occurred. Recognize that SLAs define accountability, not risk elimination.
-*   **Study Resource**: For a practical overview of vendor management and SLA negotiation in IT projects, search [YouTube: IT Procurement Vendor Management SLA Contract Types Project Management](https://www.youtube.com/results?search_query=IT+procurement+vendor+management+SLA+contract+types+project+management). Understanding real-world procurement decisions will help you interpret scenario-based exam questions.
+## 1. High-Yield Glossary
+
+### Stakeholder
+
+An individual, group, or organization that may affect, be affected by, or perceive itself to be affected by a decision, activity, or outcome of the project. Stakeholders include both internal parties (team members, sponsors, functional managers) and external parties (customers, vendors, regulators, affected communities).
+
+### Stakeholder Register
+
+The primary output of Identify Stakeholders. A document that records information about identified stakeholders, including their role, interests, influence, current engagement level, desired engagement level, and communication preferences.
+
+### Power/Interest Grid
+
+A stakeholder analysis tool that plots stakeholders on a two-dimensional matrix based on their authority (power) and their level of concern about project outcomes (interest). The quadrant position determines the management strategy.
+
+### Stakeholder Engagement Plan
+
+A component of the Project Management Plan that documents strategies and actions to promote stakeholder involvement and maintain appropriate engagement levels throughout the project. Documents current (C) and desired (D) engagement levels.
+
+### Engagement Assessment Matrix
+
+A tool within the Stakeholder Engagement Plan that compares current (C) and desired (D) engagement levels for each stakeholder. Gaps between C and D drive engagement strategies.
+
+### Identify Stakeholders
+
+The Initiating process that determines all individuals, groups, and organizations involved in or affected by the project and documents their interests, involvement, and potential impact on project success.
+
+### Manage Stakeholder Engagement
+
+The Executing process that communicates and works with stakeholders to meet their needs, address issues, and foster appropriate involvement in project decisions and activities.
+
+### Monitor Stakeholder Engagement
+
+The Monitoring and Controlling process that evaluates stakeholder relationships, monitors engagement level changes, and adjusts engagement strategies as needed.
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the procurement management chapter in the OER Textbook: [Project Management Open Textbook – BC Campus](https://opentextbc.ca/projectmanagement/). Focus on contract types, the procurement planning process, and vendor selection criteria.
-*   **Required Video:** Watch the procurement management lecture in the course playlist: [CompTIA Project+ PK0-005 Playlist by Joseph Phillips](https://www.youtube.com/results?search_query=comptia+project%2B+PK0-005+joseph+phillips).
+## 2. Stakeholder Management Process Reference
+
+| Process | Process Group | Key Output | Purpose |
+|---|---|---|---|
+| Identify Stakeholders | Initiating | Stakeholder Register | Identify all stakeholders and their characteristics |
+| Plan Stakeholder Engagement | Planning | Stakeholder Engagement Plan | Define strategies to achieve desired engagement levels |
+| Manage Stakeholder Engagement | Executing | Issue log updates, change requests | Implement engagement strategies; address concerns |
+| Monitor Stakeholder Engagement | Monitoring and Controlling | Work performance info, change requests | Evaluate and adjust engagement strategies |
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Review a vendor service level agreement (SLA)**: Analyze a provided sample SLA document and identify the key performance metrics, penalty clauses, and reporting requirements. Write a one-paragraph summary of whether the SLA adequately protects the buyer's interests.
-*   **Compare contract scenarios for procurement pricing**: Given three IT vendor scenarios (well-defined scope, partially defined scope, highly uncertain scope), recommend the most appropriate contract type for each and justify your recommendation in one to two sentences per scenario.
-*   **Draft contract parameters**: For your IT deployment project, draft a bulleted list of contract parameters (scope of work, deliverables, payment terms, SLA requirements, acceptance criteria, and penalty clauses) that should be included in any vendor agreement.
+## 3. Power/Interest Grid Reference
+
+| Power | Interest | Quadrant | Management Strategy |
+|---|---|---|---|
+| High | High | Upper Right | Manage Closely — frequent communication, involve in decisions |
+| High | Low | Upper Left | Keep Satisfied — periodic high-level updates; engage on major changes |
+| Low | High | Lower Right | Keep Informed — regular updates; provide feedback channel |
+| Low | Low | Lower Left | Monitor — minimal engagement; watch for changes in influence |
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and be able to match contract types to buyer risk levels.
-- [ ] Read the procurement chapter in the [Project Management Open Textbook](https://opentextbc.ca/projectmanagement/).
-- [ ] Watch the procurement management video in the [CompTIA Project+ PK0-005 Playlist by Joseph Phillips](https://www.youtube.com/results?search_query=comptia+project%2B+PK0-005+joseph+phillips).
-- [ ] Complete the Module 11 Lab activity.
-- [ ] Take the Module 11 Quiz.
+## 4. Stakeholder Engagement Level Continuum
+
+| Level | Description | Typical Indicators |
+|---|---|---|
+| Unaware | Stakeholder does not know about the project | No awareness; no response to communications |
+| Resistant | Stakeholder is aware but opposed to the project or its outcomes | Active pushback; raising objections; seeking to block progress |
+| Neutral | Stakeholder is aware but neither supportive nor opposed | Passive; acknowledges project; no active support or opposition |
+| Supportive | Stakeholder is aware and actively supports the project | Provides input; endorses decisions; helps remove obstacles |
+| Leading | Stakeholder is actively engaged and championing success | Advocates for the project; drives others toward support |
+
+---
+
+## 5. Engagement Assessment Matrix Format
+
+| Stakeholder | Current (C) | Desired (D) | Gap | Engagement Strategy |
+|---|---|---|---|---|
+| (name) | Resistant | Supportive | Yes — gap exists | Briefing sessions; one-on-one meetings |
+| (name) | Supportive | Supportive | No gap | Maintain regular communication |
+| (name) | Unaware | Neutral | Yes — gap exists | Initial project overview; information distribution |
+
+---
+
+## 6. Stakeholder Register Components
+
+A complete Stakeholder Register includes:
+
+- Stakeholder name and title
+- Contact information
+- Organization or department
+- Project role (sponsor, user, approver, regulator, etc.)
+- Stakeholder interests (what they care about)
+- Level of influence (power)
+- Level of interest
+- Current engagement level
+- Desired engagement level
+- Preferred communication channel and frequency
+- Constraints or special considerations
+
+---
+
+## 7. Stakeholder Register vs. Stakeholder Engagement Plan
+
+| Document | Purpose | Contains |
+|---|---|---|
+| Stakeholder Register | Who the stakeholders are and what they care about | Names, roles, interests, influence, current and desired engagement levels |
+| Stakeholder Engagement Plan | How to move stakeholders to desired engagement levels | Strategies, actions, engagement assessment matrix, communication approaches |
+| Communications Management Plan | How information will be delivered to stakeholders | Who gets what, when, format, channel, responsible sender |
+
+All three are distinct documents that work together. They are not interchangeable.
+
+---
+
+## 8. Certification Exam Tips
+
+**Tip 1 — Identify Stakeholders is Initiating:**
+Stakeholder identification happens in Initiating, alongside developing the project charter. It is one of the first activities on a project. Students who place it in Planning are marking incorrect exam answers.
+
+**Tip 2 — Power/Interest Grid quadrant strategies:**
+Memorize the four quadrant strategies: Manage Closely (High/High), Keep Satisfied (High/Low), Keep Informed (Low/High), Monitor (Low/Low). Exam questions present scenarios and ask which strategy applies.
+
+**Tip 3 — Register is not the Engagement Plan:**
+The Stakeholder Register documents who stakeholders are. The Stakeholder Engagement Plan documents how to engage them. An exam question describing strategies to move a Resistant stakeholder to Supportive is referencing the Engagement Plan, not the Register.
+
+**Tip 4 — Engagement is iterative:**
+Stakeholder engagement is ongoing throughout the project. New stakeholders may be discovered. Existing stakeholders may change their engagement level as the project progresses. The register and engagement plan should be updated continuously.
+
+**Tip 5 — C vs. D in the engagement matrix:**
+The engagement assessment matrix uses C for current engagement level and D for desired engagement level. When C = D, no action is needed. When D is higher than C, the PM must close the gap. When C is higher than D (over-engaged or over-active), the PM may need to manage expectations.
+
+**Tip 6 — High Power/Low Interest stakeholders are dangerous if ignored:**
+These stakeholders have authority to block or change the project but may not be paying attention. If a significant change arises, the PM must engage them immediately — they cannot be left out of decisions that fall within their authority.
+
+**Tip 7 — Resistant is not automatically bad:**
+A Resistant stakeholder is not necessarily an enemy of the project. Resistance often signals unaddressed concerns, misinformation, or perceived threats to the stakeholder's interests. The correct PM response is engagement and communication — not avoidance.
+
+**Tip 8 — Stakeholder identification includes external parties:**
+Students sometimes list only internal team members as stakeholders. External stakeholders — regulators, customers, affected communities, vendors — are equally important and must be included in the Stakeholder Register.
+
+---
+
+## 9. Study Checklist
+
+- [ ] Name the four Stakeholder Management processes and their process groups
+- [ ] Draw and label the four quadrants of the Power/Interest Grid with management strategies
+- [ ] Define all five stakeholder engagement levels in order from Unaware to Leading
+- [ ] Describe the difference between the Stakeholder Register and the Stakeholder Engagement Plan
+- [ ] Explain what C and D represent in the engagement assessment matrix
+- [ ] Identify at least five types of external stakeholders a PM should consider
+- [ ] Explain why Identify Stakeholders belongs in Initiating
+- [ ] Complete the Module 11 Lab activity
+- [ ] Take the Module 11 Quiz
+- [ ] Post Module 11 Discussion initial response by Wednesday at 11:59 PM

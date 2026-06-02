@@ -1,49 +1,335 @@
 # Reading Guide: Module 04 - JavaScript DOM Manipulation
-## Course: CIS-3340_Full_Stack_Web_Dev (AWS Certified Developer - Associate)
+
+**Course:** CIS-3340 Full Stack Web Development
+**Certification Alignment:** AWS Certified Developer - Associate (DVA-C02)
+**Texas Wesleyan University | Professor Nash**
 
 ---
 
-### Introduction
-Welcome to **Module 04 - JavaScript DOM Manipulation**! This module introduces the Document Object Model (DOM) — the browser's in-memory tree representation of an HTML document — and the JavaScript APIs that read, modify, create, and delete its nodes at runtime. You will learn how to select elements with query selectors, attach event listeners for user interactions, and update page content dynamically without a full page reload. DOM manipulation is the foundation of every interactive web interface, and understanding it deeply will help you write more efficient React components later in the course.
+## Introduction
+
+This module covers the Document Object Model API — the programming interface that lets JavaScript read and modify the HTML structure, content, and styles of a live page. You will learn query methods, property manipulation, event listeners, event propagation, creating and removing elements, event delegation, and the `DOMContentLoaded` event. These skills are prerequisites for Module 05 (async JavaScript and Fetch), Module 11 (React), and Module 15 (WebSockets).
 
 ---
 
-### 1. High-Yield Glossary
-Review these essential definitions carefully before beginning the lab and quiz:
+## 1. The Document Object Model
 
-*   **Document Object Model (DOM)**: A programming interface that represents an HTML (or XML) document as a hierarchical tree of node objects — including element nodes, text nodes, and attribute nodes. Browsers parse HTML into the DOM on page load, and JavaScript can traverse, modify, add, and remove nodes in this tree to dynamically change what the user sees without fetching a new page from the server.
-*   **Query selectors**: JavaScript methods that search the DOM tree and return matching element nodes using CSS selector syntax. `document.querySelector(selector)` returns the first matching element; `document.querySelectorAll(selector)` returns a static `NodeList` of all matches. These methods replaced older approaches like `getElementById` and `getElementsByClassName` for most use cases because they accept any valid CSS selector string.
-*   **Event listeners**: Functions registered on DOM elements via `element.addEventListener(type, handler)` that execute in response to user or browser events — such as `'click'`, `'keydown'`, `'submit'`, `'mouseover'`, or `'DOMContentLoaded'`. Event listeners decouple the UI interaction logic from the HTML markup and allow multiple handlers to be registered on the same element without overwriting each other.
-*   **Bubbling and capturing**: The two phases of DOM event propagation. During the **capturing phase**, an event travels down the DOM tree from the `window` to the target element. During the **bubbling phase**, it travels back up from the target to the `window`. By default, `addEventListener` registers handlers in the bubbling phase; passing `true` as the third argument enables capturing. `event.stopPropagation()` halts further propagation in either phase.
-*   **Dynamic DOM trees**: The ability to programmatically create, insert, modify, and remove DOM nodes at runtime using methods like `document.createElement()`, `element.appendChild()`, `element.insertBefore()`, `element.remove()`, and `element.innerHTML`. Dynamic DOM updates enable Single Page Application behavior — new content appears without navigating to a new URL or triggering a full page reload.
+When a browser loads an HTML document, it parses the markup and constructs an in-memory tree called the DOM. Each HTML element becomes a node object with properties and methods. JavaScript interacts with this tree through the `document` global object.
 
----
+```
+document
+ └── html
+      ├── head
+      │    ├── title
+      │    └── meta
+      └── body
+           ├── header
+           │    └── h1
+           ├── main
+           │    ├── article
+           │    └── aside
+           └── footer
+```
 
-### 2. Certification Exam Tips
-*   **DOM Knowledge Supports AWS Lambda Front-End Integration:** The DVA-C02 exam includes scenarios where a front-end application fetches data from an AWS Lambda-backed API Gateway endpoint using `fetch()` and updates the UI. The fetch call returns a Promise, and the resolved data is rendered by manipulating the DOM — this is exactly the DOM + async pattern you are building here.
-*   **Event Delegation Reduces Memory Overhead:** When rendering large dynamic lists (e.g., a table of 500 API results), attaching individual click listeners to each row is inefficient. Event delegation — attaching a single listener to the parent container and checking `event.target` — is the scalable pattern. Know this for both front-end performance questions and full-stack architecture scenarios.
-*   **Study Resource:** The MDN JavaScript DOM guide is the authoritative reference. [MDN — Introduction to the DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction) explains the node tree structure, traversal methods, and manipulation APIs with interactive examples.
+Key node types:
 
----
-
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the section covering **JavaScript DOM Manipulation** in the OER Textbook: [Full Stack Open by University of Helsinki](https://fullstackopen.com/en/) — the primary free textbook for this course.
-*   **Required Video:** Watch the JavaScript DOM section of the [Full Stack Web Development Course by freeCodeCamp on YouTube](https://www.youtube.com/watch?v=nu_pCVPKzTk) — an open-access walkthrough covering query selectors, events, and dynamic element creation.
-
----
-
-### Lab & Command Integration
-In this week's hands-on lab, you will apply DOM manipulation concepts directly:
-*   **Implement DOM selector query loops**: Use `document.querySelectorAll()` to select a collection of list items, iterate over the resulting `NodeList` with `forEach()`, and log or transform each element's text content.
-*   **Add keydown/click event listeners to forms**: Attach `addEventListener('submit', handler)` to a form element and `addEventListener('keydown', handler)` to a text input — calling `event.preventDefault()` to stop the default form submission and instead handle the input data in JavaScript.
-*   **Dynamically append list elements using JavaScript**: Use `document.createElement('li')`, set its `textContent`, and call `parentElement.appendChild()` to add new items to an unordered list at runtime based on user input.
+| Type | Description | Example |
+|---|---|---|
+| Element node | Represents an HTML tag | `<div>`, `<p>`, `<button>` |
+| Text node | Text content inside an element | `"Hello world"` |
+| Attribute node | HTML attribute on an element | `href`, `class`, `id` |
+| Document node | The root of the tree | `document` |
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and understand their definitions in context.
-- [ ] Read the section covering **JavaScript DOM Manipulation** in [Full Stack Open by University of Helsinki](https://fullstackopen.com/en/).
-- [ ] Watch the JavaScript DOM section of the [Full Stack Web Development Course by freeCodeCamp](https://www.youtube.com/watch?v=nu_pCVPKzTk).
-- [ ] Open the browser Console (F12) and practice running DOM queries on a live webpage before starting the lab.
-- [ ] Proceed to the weekly hands-on lab activity.
+## 2. DOM Query Methods
+
+```javascript
+// getElementById — most performant for single ID lookups
+const hero = document.getElementById('hero-section');
+
+// querySelector — first match, any CSS selector
+const btn      = document.querySelector('#submit-btn');
+const firstNav = document.querySelector('nav a');
+const active   = document.querySelector('.card.active');
+
+// querySelectorAll — all matches, returns NodeList
+const cards    = document.querySelectorAll('.card');
+const inputs   = document.querySelectorAll('input[type="text"]');
+
+// Iterating NodeList
+cards.forEach(card => console.log(card.id));
+
+// Convert NodeList to Array for full Array methods
+const cardArray = Array.from(cards);
+const titles    = cardArray.map(card => card.querySelector('h4').textContent);
+
+// Query within an element (scoped query)
+const article = document.querySelector('article');
+const heading = article.querySelector('h2'); // only searches inside article
+```
+
+---
+
+## 3. Reading and Writing DOM Properties
+
+```javascript
+const el = document.querySelector('.card');
+
+// Text content — safe, treats all content as literal text
+el.textContent = 'Updated text';              // write
+const text = el.textContent;                  // read
+
+// innerHTML — parses HTML markup; never use with unsanitized user input
+el.innerHTML = '<strong>Bold</strong> text';  // write
+const html = el.innerHTML;                    // read
+
+// Attributes
+el.getAttribute('data-id');                   // read any attribute
+el.setAttribute('data-status', 'active');     // set any attribute
+el.removeAttribute('data-status');            // remove
+el.hasAttribute('hidden');                    // boolean check
+
+// Dataset (data-* attributes via JS property names)
+el.dataset.id       = '42';                   // sets data-id="42"
+console.log(el.dataset.category);            // reads data-category
+
+// classList API
+el.classList.add('selected');
+el.classList.remove('selected');
+el.classList.toggle('selected');              // add if absent, remove if present
+el.classList.contains('selected');           // returns boolean
+el.classList.replace('old-class', 'new-class');
+
+// Inline styles (camelCase property names)
+el.style.backgroundColor = '#f0f4ff';
+el.style.fontSize        = '1.125rem';
+el.style.display         = 'none';
+el.style.display         = '';               // restore default (remove inline style)
+```
+
+---
+
+## 4. Creating and Modifying Elements
+
+```javascript
+// Create a new element
+const newCard = document.createElement('div');
+newCard.className = 'card';
+newCard.dataset.id = '5';
+newCard.innerHTML = `
+  <h4>New Program</h4>
+  <p>Description text here.</p>
+`;
+
+// Append to a parent
+const grid = document.querySelector('.card-grid');
+grid.appendChild(newCard);     // adds at the end
+grid.prepend(newCard);         // adds at the beginning
+
+// Insert adjacent to a reference element
+const ref = document.querySelector('.card:nth-child(2)');
+ref.insertAdjacentElement('beforebegin', newCard); // before ref
+ref.insertAdjacentElement('afterend', newCard);    // after ref
+
+// insertAdjacentHTML — insert HTML string at a position
+grid.insertAdjacentHTML('beforeend', '<div class="card"><h4>Quick Add</h4></div>');
+
+// Clone an existing element
+const clone = newCard.cloneNode(true); // deep clone (true = include children)
+
+// Remove an element
+newCard.remove();
+
+// Replace an element
+const old = document.querySelector('.card.outdated');
+grid.replaceChild(newCard, old);
+```
+
+---
+
+## 5. Event Listeners and the Event Object
+
+```javascript
+const btn = document.querySelector('#action-btn');
+
+// addEventListener signature: (eventType, handler, options)
+btn.addEventListener('click', handleClick);
+btn.removeEventListener('click', handleClick); // must pass same reference
+
+function handleClick(event) {
+  event.preventDefault();     // cancel default browser action
+  event.stopPropagation();    // stop bubbling to parent elements
+
+  console.log(event.type);         // 'click'
+  console.log(event.target);       // element that was clicked
+  console.log(event.currentTarget);// element the listener is on
+  console.log(event.clientX, event.clientY); // mouse coordinates
+}
+
+// once option — fires once then automatically removes itself
+btn.addEventListener('click', handleClick, { once: true });
+
+// capture option — handle event during capture phase (before bubbling)
+document.addEventListener('click', handler, { capture: true });
+```
+
+Common event types:
+
+| Category | Events |
+|---|---|
+| Mouse | `click`, `dblclick`, `mouseenter`, `mouseleave`, `mousemove` |
+| Keyboard | `keydown`, `keyup`, `keypress` (deprecated) |
+| Form | `submit`, `input`, `change`, `focus`, `blur`, `reset` |
+| Document | `DOMContentLoaded`, `load`, `resize`, `scroll` |
+| Drag | `dragstart`, `dragend`, `dragover`, `drop` |
+
+---
+
+## 6. Event Propagation and Event Delegation
+
+### Propagation Phases
+
+When an event fires on an element, it travels through three phases:
+
+1. Capture phase — event travels from `document` down to the target
+2. Target phase — event fires on the target element
+3. Bubble phase — event travels back up from the target through ancestors
+
+By default, `addEventListener` registers handlers in the bubble phase.
+
+```javascript
+// This logs in order: button → div → body → html → document
+document.addEventListener('click', e => console.log('document'));
+document.body.addEventListener('click', e => console.log('body'));
+document.querySelector('div').addEventListener('click', e => console.log('div'));
+document.querySelector('button').addEventListener('click', e => console.log('button'));
+// Click the button: logs button, div, body, document
+```
+
+### Event Delegation
+
+Attach one listener to a parent instead of many listeners to each child. Uses event bubbling.
+
+```javascript
+// INEFFICIENT: 200 listeners for 200 rows
+document.querySelectorAll('tr').forEach(row => {
+  row.addEventListener('click', handleRowClick);
+});
+
+// EFFICIENT: one listener on the table, check target
+const table = document.querySelector('tbody');
+table.addEventListener('click', function(event) {
+  const row = event.target.closest('tr');
+  if (row) handleRowClick(row);
+});
+```
+
+Event delegation benefits:
+
+- One listener in memory instead of N listeners
+- Automatically handles dynamically added rows (no re-registration)
+- Easier to remove — remove one listener, not N
+
+---
+
+## 7. DOMContentLoaded and Script Placement
+
+```javascript
+// Safe pattern: wait for DOM to be fully parsed before querying
+document.addEventListener('DOMContentLoaded', function() {
+  const btn = document.querySelector('#my-btn');
+  btn.addEventListener('click', handleClick);
+});
+```
+
+Script placement alternatives:
+
+```html
+<!-- Option 1: Place script at end of <body> — DOM parsed before script runs -->
+<body>
+  <!-- content -->
+  <script src="app.js"></script>
+</body>
+
+<!-- Option 2: defer — downloads in parallel, executes after DOM parsing -->
+<head>
+  <script src="app.js" defer></script>
+</head>
+
+<!-- Option 3: async — downloads in parallel, executes immediately when ready -->
+<!-- async does not guarantee execution order for multiple scripts -->
+<head>
+  <script src="app.js" async></script>
+</head>
+```
+
+---
+
+## 8. localStorage — Persisting State Between Sessions
+
+```javascript
+// Store a value
+localStorage.setItem('theme', 'dark');
+localStorage.setItem('searchQuery', JSON.stringify({ term: 'security', date: Date.now() }));
+
+// Read a value
+const theme = localStorage.getItem('theme');                 // 'dark'
+const query = JSON.parse(localStorage.getItem('searchQuery'));
+
+// Remove a value
+localStorage.removeItem('theme');
+
+// Clear all values
+localStorage.clear();
+
+// Persist dark mode preference
+const toggleBtn = document.querySelector('#theme-toggle');
+toggleBtn.addEventListener('click', function() {
+  document.body.classList.toggle('dark-mode');
+  const isDark = document.body.classList.contains('dark-mode');
+  localStorage.setItem('theme', isDark ? 'dark' : 'light');
+});
+
+// Restore on page load
+document.addEventListener('DOMContentLoaded', function() {
+  if (localStorage.getItem('theme') === 'dark') {
+    document.body.classList.add('dark-mode');
+  }
+});
+```
+
+---
+
+## 9. Exam and Interview Tips
+
+1. `querySelector` returns the first match or `null`. `querySelectorAll` returns all matches as a NodeList. Never confuse them — calling `.forEach()` on the `null` return of `querySelector` throws a TypeError.
+
+2. `event.preventDefault()` stops the browser's default behavior (form submission, link navigation). `event.stopPropagation()` stops the event from bubbling to parent elements. They are independent — calling one does not imply the other.
+
+3. `textContent` is always safe to write user-supplied data to — it treats all input as literal text and does not parse HTML. `innerHTML` parses HTML — never use it with user-supplied content without sanitization.
+
+4. Event delegation is the standard pattern for dynamic lists. One listener on the parent handles all children, including dynamically added ones. Use `event.target.closest('.selector')` to identify which child was clicked.
+
+5. `DOMContentLoaded` fires when HTML is fully parsed. `window.load` fires after all resources (images, stylesheets) have loaded. Use `DOMContentLoaded` for initialization code.
+
+6. In the DVA-C02 exam: when a question asks how a React app deployed on S3 updates the page after fetching data from API Gateway, the answer involves the Virtual DOM (React's abstraction over the raw DOM API) — but understanding the raw DOM makes this concept clear.
+
+7. `localStorage` stores strings only. Always use `JSON.stringify()` before storing objects and `JSON.parse()` after reading them.
+
+8. The `closest()` method traverses up the DOM tree from the target element, returning the first ancestor that matches a given CSS selector. It is the correct tool in event delegation handlers.
+
+---
+
+## 10. Study Checklist
+
+- [ ] Know all four DOM query methods and when to use each
+- [ ] Be able to read and write `textContent`, `innerHTML`, attributes, `classList`, and inline styles
+- [ ] Write an `addEventListener` for click, input, keydown, and submit events
+- [ ] Understand the difference between `event.target` and `event.currentTarget`
+- [ ] Understand `event.preventDefault()` vs. `event.stopPropagation()`
+- [ ] Explain event bubbling and draw the propagation order for a nested click
+- [ ] Implement event delegation for a dynamic list
+- [ ] Build a DOM element with `createElement` and `innerHTML` from a data object
+- [ ] Persist user preferences with `localStorage`
+- [ ] Complete Lab 04 and Discussion 04 before the module deadline

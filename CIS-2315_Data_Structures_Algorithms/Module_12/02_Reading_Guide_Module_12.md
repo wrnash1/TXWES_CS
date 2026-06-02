@@ -1,62 +1,221 @@
-# Reading Guide: Module 12 – Recursion and Backtracking
-## Course: CIS-2315 Data Structures & Algorithms (Technical Interview Readiness)
+# Reading Guide: Module 12 — Divide & Conquer
+
+## Course: CIS-2315 Data Structures & Algorithms
+
+**Certification Alignment:** Technical Interview Readiness (LeetCode / HackerRank)
 
 ---
 
-### Introduction
-Welcome to **Module 12 – Recursion and Backtracking**! Recursion is the fundamental technique underlying tree traversal, divide-and-conquer, dynamic programming, and backtracking. Many candidates struggle with recursion in interviews because they try to trace every call mentally instead of trusting the inductive assumption. Backtracking is recursion applied to constraint-satisfaction problems: build a solution step by step, abandon ("backtrack") as soon as a constraint is violated, and explore the next candidate.
+## Introduction
 
-This module covers the recursion mental model, call stack mechanics, and the backtracking template used in permutations, subsets, N-queens, and Sudoku problems.
-
----
-
-### 1. High-Yield Glossary
-
-*   **Recursion**: A function that calls itself with a smaller or simpler version of its input, progressing toward a base case that stops further calls. Correct recursive thinking requires identifying: (1) the base case, (2) the recursive case, and (3) the inductive hypothesis (what the recursive call is trusted to return).
-
-*   **Base case**: The condition under which a recursive function returns a direct result without making further recursive calls. Every recursive function must have at least one base case to prevent infinite recursion and stack overflow.
-
-*   **Call stack**: The region of memory that stores each active function call frame, including local variables and the return address. Each recursive call pushes a new frame; returning pops it. Deep recursion with no base case causes a stack overflow.
-
-*   **Backtracking**: A recursive problem-solving strategy that builds a solution incrementally and abandons partial solutions that violate constraints, "backtracking" to the last valid state to try the next option. Used for permutations, subsets, N-queens, and word search problems.
-
-*   **State space tree**: The implicit tree of all partial solutions that backtracking explores. Each node is a partial solution; each edge is a choice. Backtracking prunes subtrees that cannot lead to valid complete solutions.
-
-*   **Pruning**: Detecting early that a partial solution cannot lead to a valid complete solution and abandoning it without exploring further. Pruning is what makes backtracking efficient — it avoids the exhaustive O(n!) search of all possibilities.
-
-*   **Memoization in recursion**: Caching the return value of a recursive call indexed by its arguments, so repeated calls with the same arguments return immediately from cache. Transforms overlapping-subproblem recursion from exponential to polynomial time. (Covered deeply in Module 13.)
+Divide and conquer splits a problem into independent subproblems of the same type, solves each recursively, and combines the results. The independence of subproblems (unlike overlapping subproblems in dynamic programming) means the combination step is the primary source of algorithmic insight. Merge sort, binary search, and the fast Fourier transform all use this pattern. The Master Theorem provides a systematic way to analyze divide-and-conquer recurrences without drawing full recursion trees.
 
 ---
 
-### 2. Certification Exam Tips
-*   **Trust the inductive hypothesis:** When writing a recursive function, assume the recursive call returns the correct answer for its smaller input. Do not trace through it mentally — write the base case, write what the recursive call should return, combine results. This is how experts think about recursion.
-*   **Backtracking template: choose → recurse → undo:** Every backtracking solution follows: add the current choice to your partial solution, recurse deeper, remove the choice (undo) after returning. The "undo" step is what makes backtracking correct.
-*   **LeetCode #78 (Subsets), #46 (Permutations), #39 (Combination Sum) are the canonical trio:** Learn these three problem types. Each uses a slightly different backtracking variant (with/without reuse, with/without duplicates).
-*   **Recognize exponential without pruning:** The full state space for permutations is O(n!) and for subsets O(2^n). Without pruning, backtracking is not faster than brute force. Always ask: what constraint can I check early to prune invalid branches?
-*   **Draw the recursion tree on paper:** For interviews, sketching the first two levels of the recursion tree clarifies base cases, reduces bugs, and demonstrates structured thinking to the interviewer.
-*   **Study Resource:** [Backtracking – NeetCode.io Roadmap](https://neetcode.io/roadmap) — the backtracking section lists the 10 most common interview backtracking problems with video solutions, organized by difficulty.
+## 1. The Pattern
+
+Every divide-and-conquer algorithm has three steps:
+
+1. **Divide:** split the problem into smaller subproblems.
+2. **Conquer:** recursively solve each subproblem (base case: subproblem small enough to solve directly).
+3. **Combine:** merge the results of the subproblems into the answer for the original problem.
+
+The recurrence T(n) = a·T(n/b) + f(n) captures this structure: `a` subproblems of size `n/b`, combined at cost `f(n)`.
 
 ---
 
-### Required Readings & Videos
-*   **Required Reading:** [Recursion – How to Think Like a Computer Scientist (Allen Downey), Chapter 5](https://greenteapress.com/wp/think-python-2e/) — free open-access textbook covering recursive function design, the three-step model, and classic recursive problems.
-*   **Required Video:** [Backtracking – NeetCode on YouTube](https://www.youtube.com/watch?v=A80YzvNwqXA) — a 30-minute interview-focused video covering the backtracking template, state space trees, and solving Subsets, Permutations, and Combination Sum from scratch.
+## 2. Merge Sort
+
+### Implementation
+
+```python
+def merge_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    mid = len(arr) // 2
+    left = merge_sort(arr[:mid])
+    right = merge_sort(arr[mid:])
+    return merge(left, right)
+
+def merge(left, right):
+    result = []
+    i = j = 0
+    while i < len(left) and j < len(right):
+        if left[i] <= right[j]:
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j += 1
+    result.extend(left[i:])
+    result.extend(right[j:])
+    return result
+```
+
+### Properties
+
+- **Time:** O(n log n) — log n levels, O(n) merge work per level.
+- **Space:** O(n) — the merged arrays require linear extra space.
+- **Stable:** equal elements maintain their relative order.
+- **Recurrence:** T(n) = 2T(n/2) + O(n) → O(n log n) by Master Theorem Case 2.
+
+### Merge Sort vs. Quicksort
+
+| Property | Merge Sort | Quicksort |
+|---|---|---|
+| Worst case | O(n log n) | O(n²) |
+| Average case | O(n log n) | O(n log n) |
+| Space | O(n) | O(log n) avg |
+| Stable | Yes | No (standard) |
+| Cache behavior | Poor (splits to new arrays) | Good (in-place) |
+
+Choose merge sort when stability or worst-case guarantees matter.
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will:
-*   **Implement recursive solutions** for factorial, Fibonacci, and power(x, n) — tracing call stacks and identifying base cases.
-*   **Solve LeetCode #78 (Subsets)** using backtracking — generate all 2^n subsets of an integer set.
-*   **Solve LeetCode #46 (Permutations)** — generate all n! permutations with a `used` boolean array to track which elements have been added.
-*   **Solve LeetCode #79 (Word Search)** — 2D grid backtracking with in-place visited marking.
+## 3. Binary Search
+
+### Standard Implementation
+
+```python
+def binary_search(arr, target):
+    left, right = 0, len(arr) - 1
+    while left <= right:
+        mid = left + (right - left) // 2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return -1
+```
+
+**Invariant:** `target`, if present, is always within `[left, right]`.
+
+### Off-by-One Guide
+
+| Condition | Use case |
+|---|---|
+| `while left <= right` | Standard search — return index when found |
+| `while left < right` | Finding boundary — left and right converge to the answer |
+
+### Leftmost Occurrence
+
+```python
+def search_leftmost(arr, target):
+    left, right = 0, len(arr)
+    while left < right:
+        mid = left + (right - left) // 2
+        if arr[mid] < target:
+            left = mid + 1
+        else:
+            right = mid
+    return left if left < len(arr) and arr[left] == target else -1
+```
+
+### Binary Search on Answer
+
+When the answer lies in a numeric range and a monotone `feasible(x)` function determines if x is sufficient, binary search the range:
+
+```python
+# Template
+left, right = lower_bound, upper_bound
+while left < right:
+    mid = left + (right - left) // 2
+    if feasible(mid):
+        right = mid       # mid works, try smaller
+    else:
+        left = mid + 1    # mid too small, increase
+return left
+```
+
+**Time:** O(log(range) × cost of feasible).
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and be able to explain each in your own words.
-- [ ] Read Chapter 5 of Think Python (How to Think Like a Computer Scientist).
-- [ ] Watch the NeetCode Backtracking video.
-- [ ] Implement factorial, Fibonacci, and power(x, n) recursively.
-- [ ] Solve LeetCode #78, #46, and #79.
-- [ ] Proceed to the Module 12 Quiz.
+## 4. Master Theorem
+
+For T(n) = a·T(n/b) + f(n) where a ≥ 1, b > 1:
+
+Let `c = log_b(a)` (the critical exponent).
+
+- **Case 1:** `f(n) = O(n^(c-ε))` → T(n) = Θ(n^c) — recursion dominates
+- **Case 2:** `f(n) = Θ(n^c)` → T(n) = Θ(n^c · log n) — equal work per level
+- **Case 3:** `f(n) = Ω(n^(c+ε))` → T(n) = Θ(f(n)) — combine step dominates
+
+### Common Applications
+
+| Algorithm | Recurrence | Case | Result |
+|---|---|---|---|
+| Merge sort | T(n)=2T(n/2)+O(n) | 2 | O(n log n) |
+| Binary search | T(n)=T(n/2)+O(1) | 2 | O(log n) |
+| Naive integer multiply | T(n)=4T(n/2)+O(n) | 1 | O(n²) |
+| Karatsuba multiply | T(n)=3T(n/2)+O(n) | 1 | O(n^1.585) |
+
+---
+
+## 5. Counting Inversions
+
+An inversion in array `arr` is a pair (i, j) where i < j but `arr[i] > arr[j]`. Brute force: O(n²). Modified merge sort: O(n log n).
+
+```python
+def count_inversions(arr):
+    if len(arr) <= 1:
+        return arr, 0
+    mid = len(arr) // 2
+    left, left_inv = count_inversions(arr[:mid])
+    right, right_inv = count_inversions(arr[mid:])
+
+    merged = []
+    inversions = left_inv + right_inv
+    i = j = 0
+
+    while i < len(left) and j < len(right):
+        if left[i] <= right[j]:
+            merged.append(left[i])
+            i += 1
+        else:
+            merged.append(right[j])
+            inversions += len(left) - i    # all remaining left elements > right[j]
+            j += 1
+
+    merged.extend(left[i:])
+    merged.extend(right[j:])
+    return merged, inversions
+```
+
+---
+
+## 6. Interview Exam Tips
+
+1. **`mid = left + (right - left) // 2`** — not `(left + right) // 2`. In Python, integers don't overflow, but this is good practice for C++/Java interviews and shows you know the classic bug.
+
+2. **Always state the loop invariant** — for binary search: "target, if present, is always in `[left, right]`." This instantly communicates correctness to an interviewer.
+
+3. **Binary search on answer vs. binary search on array** — recognize when the problem asks you to find a minimum/maximum value satisfying a condition. If the feasible function is monotone, binary search applies.
+
+4. **Merge sort is O(n) space** — the merge step requires creating new arrays. In-place merge exists but is complex. State the space cost in interviews.
+
+5. **Stable sort matters** — when sorting objects by one key that may have equal values, a stable sort preserves the relative order from a previous sort. Merge sort is stable; Python's built-in `sort` is also stable (Timsort).
+
+6. **Master Theorem Case 2 applies to both merge sort and binary search** — memorize: T(n)=2T(n/2)+O(n) → O(n log n), and T(n)=T(n/2)+O(1) → O(log n).
+
+7. **Counting inversions extends merge sort** — recognizing that merge sort's merge step naturally reveals inversion count is a frequently asked "insight" question. The answer: every time a right-half element is placed before a remaining left-half element, those pairs are inversions.
+
+8. **Off-by-one in binary search** — the most common binary search bug. When in doubt: for a "find if exists" search, use `left <= right`. For a "find the boundary" search, use `left < right` and the answer is `left` after the loop.
+
+---
+
+## 7. Study Checklist
+
+- [ ] Watch the Module 12 video lecture by Professor Nash.
+- [ ] Implement `merge_sort` and `merge` from scratch and test on several inputs.
+- [ ] Implement binary search with `while left <= right`.
+- [ ] Implement `search_leftmost` for the leftmost occurrence.
+- [ ] Trace the binary search on answer template for ship_within_days.
+- [ ] Implement `count_inversions` and verify on `[3,1,2]` (2 inversions).
+- [ ] Apply the Master Theorem to merge sort and binary search recurrences.
+- [ ] Solve LeetCode #33 (Search in Rotated Sorted Array).
+- [ ] Complete the Module 12 Lab.
+- [ ] Complete the Module 12 Quiz.

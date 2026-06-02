@@ -1,50 +1,346 @@
 # Reading Guide: Module 05 - Asynchronous JavaScript
-## Course: CIS-3340_Full_Stack_Web_Dev (AWS Certified Developer - Associate)
+
+**Course:** CIS-3340 Full Stack Web Development
+**Certification Alignment:** AWS Certified Developer - Associate (DVA-C02)
+**Texas Wesleyan University | Professor Nash**
 
 ---
 
-### Introduction
-Welcome to **Module 05 - Asynchronous JavaScript**! This module covers how JavaScript manages operations that take time to complete — such as network requests, file reads, and timers — without freezing the browser UI. You will learn the call stack, the event loop, callback patterns, Promises, and the modern `async`/`await` syntax that makes asynchronous code readable and maintainable. Asynchronous programming is central to every full-stack application: your React front-end will use `fetch()` with async/await to call AWS API Gateway endpoints, and your Node.js server will use async patterns for database queries and S3 operations.
+## Introduction
+
+This module covers the asynchronous programming model in JavaScript — the foundation of all network communication in web applications. You will learn the event loop and call stack, callbacks, Promises, async/await, the Fetch API, error handling patterns, and CORS. These skills are required for all remaining back-end and full-stack modules.
 
 ---
 
-### 1. High-Yield Glossary
-Review these essential definitions carefully before beginning the lab and quiz:
+## 1. JavaScript's Single-Threaded Execution Model
 
-*   **Call stack**: The LIFO (Last In, First Out) data structure that the JavaScript engine uses to track the execution context of currently running functions. When a function is invoked, a new frame is pushed onto the stack; when it returns, its frame is popped. Because JavaScript is single-threaded, only one function executes at a time — whatever is on top of the call stack.
-*   **Event loop**: The browser mechanism that continuously monitors both the call stack and the callback queue (also called the task queue). When the call stack is empty, the event loop picks the next callback from the queue and pushes it onto the stack for execution. This is how asynchronous callbacks (from `setTimeout`, `fetch`, DOM events, etc.) are eventually executed without blocking synchronous code.
-*   **Callback queue**: The queue where asynchronous callback functions wait until the call stack is empty and the event loop can schedule them. `setTimeout` callbacks, `setInterval` handlers, and resolved I/O callbacks are placed in this queue (or the microtask queue, in the case of Promises) after their triggering condition is met.
-*   **Promises**: Objects that represent the eventual result (or failure) of an asynchronous operation. A Promise can be in one of three states: **Pending** (operation in progress), **Fulfilled** (operation completed successfully with a value), or **Rejected** (operation failed with a reason/error). Promises are chained with `.then()` for success handlers and `.catch()` for error handlers, enabling sequential async operations without deeply nested callbacks.
-*   **async/await constructs**: Syntactic sugar built on top of Promises that allows asynchronous code to be written in a synchronous-looking style. An `async` function always returns a Promise. Inside it, `await` pauses execution of that function until the awaited Promise settles, then resumes with the resolved value. `try`/`catch` blocks handle rejections, making error handling clean and readable.
-*   **Error handling**: The practice of anticipating and gracefully managing failures in asynchronous operations using `.catch()` on Promise chains or `try`/`catch` blocks inside `async` functions. Unhandled Promise rejections cause silent failures in production applications — always attach error handling to every asynchronous operation.
+JavaScript has one call stack and processes one instruction at a time. When an asynchronous operation (network request, timer, DOM event) is initiated, it is handed off to the browser's Web APIs. When the operation completes, its callback is placed in a queue. The event loop moves callbacks from the queue to the call stack only when the stack is empty.
 
----
+### Execution Order Example
 
-### 2. Certification Exam Tips
-*   **Async Patterns in AWS SDK Calls:** The DVA-C02 exam frequently presents scenarios involving the AWS SDK for JavaScript (v3), which uses Promises and async/await for all service calls — including `S3Client.send()`, `DynamoDBClient.send()`, and `LambdaClient.send()`. Understanding how async/await works is required to write and debug Lambda functions that call other AWS services.
-*   **Lambda Execution Context and the Event Loop:** AWS Lambda functions are executed synchronously from the runtime's perspective — a Lambda handler that returns before all async operations complete will silently drop results. Always `await` all async operations inside a Lambda handler, or return a Promise that resolves only after all work is complete.
-*   **Study Resource:** The MDN guide on Promises is the most thorough free reference. [MDN — Using Promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises) covers chaining, error handling, and common pitfalls like forgetting to `return` a Promise inside `.then()`.
+```javascript
+console.log('1 — sync');
 
----
+setTimeout(() => console.log('4 — setTimeout'), 0);
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the section covering **Asynchronous JavaScript** in the OER Textbook: [Full Stack Open by University of Helsinki](https://fullstackopen.com/en/) — Parts 2 and 3 cover fetching data and Node.js async patterns extensively.
-*   **Required Video:** Watch the async JavaScript section of the [Full Stack Web Development Course by freeCodeCamp on YouTube](https://www.youtube.com/watch?v=nu_pCVPKzTk) — covering callbacks, Promises, and async/await with practical examples.
+Promise.resolve().then(() => console.log('3 — Promise microtask'));
 
----
+console.log('2 — sync');
 
-### Lab & Command Integration
-In this week's hands-on lab, you will apply asynchronous JavaScript concepts directly:
-*   **Write callback loops**: Implement `setTimeout`-based delayed callbacks and nested callbacks to observe callback sequencing — then identify the "callback hell" problem that Promises solve.
-*   **Write fetch calls returning Promises**: Use `fetch('https://jsonplaceholder.typicode.com/todos/1')` to make an HTTP GET request, chain `.then(res => res.json())` to parse the JSON response, and chain a second `.then()` to render the data to the DOM.
-*   **Refactor promises using async/await syntax and try-catch blocks**: Convert your `.then()` Promise chain into an `async` function using `await` for each asynchronous step, and wrap the entire function body in a `try`/`catch` block to handle network errors gracefully.
+// Output: 1, 2, 3, 4
+```
+
+Why: synchronous code runs first (1, 2). Then the microtask queue (Promise .then) runs (3). Then the macrotask queue (setTimeout) runs (4).
+
+### Queue Priority
+
+| Queue | Contents | Priority |
+|---|---|---|
+| Call stack | Currently executing synchronous code | Runs first — blocks all queues |
+| Microtask queue | Promise `.then`, `catch`, `finally` callbacks | Drains completely before macrotasks |
+| Macrotask queue | `setTimeout`, `setInterval`, DOM events, Fetch callbacks | Runs one task per event loop iteration |
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and understand their definitions in context.
-- [ ] Read the section covering **Asynchronous JavaScript** in [Full Stack Open by University of Helsinki](https://fullstackopen.com/en/).
-- [ ] Watch the async JavaScript section of the [Full Stack Web Development Course by freeCodeCamp](https://www.youtube.com/watch?v=nu_pCVPKzTk).
-- [ ] Experiment with `fetch()` in the browser Console against a public API (e.g., `https://api.github.com/users/github`) before starting the lab.
-- [ ] Proceed to the weekly hands-on lab activity.
+## 2. Callbacks
+
+Callbacks are functions passed as arguments to async functions, called when the operation completes. They are the original async pattern in JavaScript.
+
+```javascript
+// Timer callback
+setTimeout(function() {
+  console.log('Timer fired after 2 seconds');
+}, 2000);
+
+// Simulated async data fetch with callback
+function getUser(id, callback) {
+  setTimeout(function() {
+    const user = { id, name: 'Alice', email: 'alice@example.com' };
+    callback(null, user);  // convention: error-first callback (err, data)
+  }, 500);
+}
+
+getUser(1, function(err, user) {
+  if (err) {
+    console.error('Error:', err);
+    return;
+  }
+  console.log('User:', user.name);
+});
+```
+
+Callback hell — deeply nested callbacks become unreadable:
+
+```javascript
+getUser(1, function(err, user) {
+  if (err) return handleError(err);
+  getOrders(user.id, function(err, orders) {
+    if (err) return handleError(err);
+    getOrderDetails(orders[0].id, function(err, details) {
+      if (err) return handleError(err);
+      renderPage(user, orders, details); // three levels deep
+    });
+  });
+});
+```
+
+Promises and async/await solve the callback hell problem.
+
+---
+
+## 3. Promises
+
+A Promise represents the eventual completion or failure of an asynchronous operation. It has three states: pending, fulfilled (resolved with a value), and rejected (failed with a reason).
+
+```javascript
+// Creating a Promise
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+// Consuming with .then/.catch/.finally
+delay(1000)
+  .then(() => {
+    console.log('1 second elapsed');
+    return 'done';
+  })
+  .then(result => console.log('Result:', result))
+  .catch(error => console.error('Error:', error))
+  .finally(() => console.log('Always runs'));
+
+// Chaining — each .then can return a new value or Promise
+fetch('/api/users')
+  .then(response => response.json())          // returns Promise<data>
+  .then(users => users.filter(u => u.active)) // returns Array
+  .then(active => renderUsers(active))
+  .catch(error => showError(error));
+```
+
+### Promise Combinators
+
+```javascript
+// Promise.all — all must succeed; one failure rejects all
+const [users, products] = await Promise.all([
+  fetch('/api/users').then(r => r.json()),
+  fetch('/api/products').then(r => r.json())
+]);
+
+// Promise.allSettled — waits for all, never rejects; reports each status
+const results = await Promise.allSettled([
+  fetch('/api/endpoint1').then(r => r.json()),
+  fetch('/api/endpoint2').then(r => r.json())
+]);
+results.forEach(result => {
+  if (result.status === 'fulfilled') console.log(result.value);
+  if (result.status === 'rejected')  console.error(result.reason);
+});
+
+// Promise.race — resolves/rejects with the first settler
+const fastest = await Promise.race([fetch('/api/1'), fetch('/api/2')]);
+
+// Promise.any — resolves with first fulfillment; rejects only if all reject
+const first = await Promise.any([fetch('/api/mirror1'), fetch('/api/mirror2')]);
+```
+
+---
+
+## 4. Async/Await
+
+`async/await` is syntactic sugar over Promises that makes asynchronous code read like synchronous code.
+
+```javascript
+// Rules:
+// 1. async functions always return a Promise
+// 2. await can only be used inside an async function
+// 3. await pauses execution until the awaited Promise settles
+
+async function fetchUser(id) {
+  const response = await fetch(`/api/users/${id}`);
+
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+  }
+
+  const user = await response.json();
+  return user;
+}
+
+// Error handling with try/catch
+async function loadUser(id) {
+  try {
+    const user = await fetchUser(id);
+    displayUser(user);
+  } catch (error) {
+    console.error('Failed to load user:', error.message);
+    showErrorBanner(error.message);
+  }
+}
+
+// Parallel fetching — do NOT await sequentially when requests are independent
+// SLOW — sequential (each awaits before starting the next):
+const users    = await fetchUsers();
+const products = await fetchProducts();
+
+// FAST — parallel (both start simultaneously):
+const [users, products] = await Promise.all([fetchUsers(), fetchProducts()]);
+```
+
+---
+
+## 5. The Fetch API
+
+The Fetch API is the browser's standard HTTP client. It replaces the older `XMLHttpRequest` API.
+
+```javascript
+// GET request
+async function getItems() {
+  const response = await fetch('https://api.example.com/items');
+  if (!response.ok) throw new Error(`GET failed: ${response.status}`);
+  return response.json();
+}
+
+// POST with JSON body
+async function createItem(item) {
+  const response = await fetch('https://api.example.com/items', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(item)
+  });
+  if (!response.ok) throw new Error(`POST failed: ${response.status}`);
+  return response.json();
+}
+
+// PUT — full replacement
+async function updateItem(id, item) {
+  const response = await fetch(`https://api.example.com/items/${id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(item)
+  });
+  if (!response.ok) throw new Error(`PUT failed: ${response.status}`);
+  return response.json();
+}
+
+// DELETE
+async function deleteItem(id) {
+  const response = await fetch(`https://api.example.com/items/${id}`, {
+    method: 'DELETE'
+  });
+  if (!response.ok) throw new Error(`DELETE failed: ${response.status}`);
+  // 204 No Content — do not parse body
+}
+```
+
+### Response Methods
+
+| Method | Returns | Use for |
+|---|---|---|
+| `response.json()` | Promise resolving to parsed JSON | JSON API responses |
+| `response.text()` | Promise resolving to string | HTML, plain text, CSV |
+| `response.blob()` | Promise resolving to Blob | Binary data, images |
+| `response.ok` | Boolean | `true` if status is 200-299 |
+| `response.status` | Number | The HTTP status code |
+| `response.statusText` | String | The HTTP status message |
+| `response.headers.get('key')` | String or null | Read a response header |
+
+---
+
+## 6. CORS and AWS API Gateway
+
+Cross-Origin Resource Sharing (CORS) is a browser security mechanism. A browser-side `fetch()` call to a different origin is blocked unless the server's response includes an `Access-Control-Allow-Origin` header.
+
+```
+Browser origin: https://myapp.com
+API origin:     https://api.myapp.com  ← different subdomain = different origin
+```
+
+When the API Gateway endpoint is missing CORS configuration, the request succeeds on the server (you can see it in CloudWatch logs) but the browser blocks the response — this confuses many developers who check the server and see no errors.
+
+To enable CORS in an Express API (Module 07 and Module 08):
+
+```javascript
+const cors = require('cors');
+app.use(cors({ origin: 'https://myapp.com' }));
+```
+
+In API Gateway (Module 14), enable CORS on the resource and ensure your Lambda function returns the headers:
+
+```javascript
+return {
+  statusCode: 200,
+  headers: {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(data)
+};
+```
+
+---
+
+## 7. Loading States and Error Handling Patterns
+
+```javascript
+async function loadPageContent() {
+  const loadingEl  = document.querySelector('#loading');
+  const errorEl    = document.querySelector('#error');
+  const contentEl  = document.querySelector('#content');
+
+  loadingEl.hidden = false;
+  errorEl.hidden   = true;
+  contentEl.hidden = true;
+
+  try {
+    const data = await fetchJSON('/api/content');
+    renderContent(data);
+    contentEl.hidden = false;
+  } catch (error) {
+    errorEl.textContent = `Error: ${error.message}. Please try again.`;
+    errorEl.hidden      = false;
+  } finally {
+    loadingEl.hidden = true;
+  }
+}
+
+async function fetchJSON(url) {
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`${response.status} ${response.statusText}`);
+  }
+  return response.json();
+}
+```
+
+---
+
+## 8. Exam and Interview Tips
+
+1. Even a `setTimeout` with a 0ms delay is asynchronous. The callback always runs after the current synchronous code completes, because it is placed in the callback queue.
+
+2. Promise `.then` callbacks are microtasks. `setTimeout` callbacks are macrotasks. The microtask queue drains completely before any macrotask runs.
+
+3. An `async` function always returns a Promise. If the function body returns a non-Promise value, that value is wrapped in `Promise.resolve(value)` automatically.
+
+4. Missing `await` before a `fetch()` call is the most common bug in async code. Without `await`, the variable holds an unresolved Promise object, not the data.
+
+5. Always check `response.ok` before calling `response.json()`. A 404 or 500 response still resolves the `fetch()` Promise — Fetch only rejects for network failures, not HTTP error statuses.
+
+6. In the DVA-C02 exam: when a question describes a Lambda function that "sometimes returns before the async work completes," the root cause is a Lambda handler that does not properly return a Promise or use async/await. Lambda waits for the returned Promise to settle.
+
+7. `Promise.all` rejects as soon as any Promise rejects. `Promise.allSettled` always fulfills with an array of result objects. Use `allSettled` when you want results from all requests even if some fail.
+
+8. CORS errors are server-side misconfigurations. The browser blocks the response — not the request. The request reaches the server. Check CloudWatch logs to confirm the request arrived, then fix the CORS headers in API Gateway or the Express server.
+
+---
+
+## 9. Study Checklist
+
+- [ ] Explain the event loop, call stack, microtask queue, and macrotask queue
+- [ ] Draw the execution order for mixed synchronous, Promise, and setTimeout code
+- [ ] Create a Promise manually with `new Promise(resolve, reject)`
+- [ ] Chain `.then()`, `.catch()`, and `.finally()` on a Promise
+- [ ] Use `Promise.all` and `Promise.allSettled`
+- [ ] Write an `async` function with `try/catch` error handling
+- [ ] Write `fetch()` calls for GET, POST, PUT, and DELETE
+- [ ] Check `response.ok` before parsing the response body
+- [ ] Explain the CORS error mechanism and how to fix it in Express and API Gateway
+- [ ] Complete Lab 05 and Discussion 05 before the module deadline

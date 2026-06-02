@@ -1,37 +1,188 @@
 # Lab Activity: Module 02 - Business Process Management
-## Course: CIS-4320_Enterprise_Systems_ERP (Salesforce Certified Associate / SAP Certified Associate)
+
+## Course: CIS-4320 Enterprise Systems and ERP | Texas Wesleyan University
+
+## Instructor: Professor Nash
+
+## Certification Alignment: Salesforce Certified Associate | SAP Certified Associate
 
 ---
 
-## Objective
-Configure and verify systems matching the operational parameters of **Business Process Management**.
+## Lab Overview
+
+This lab develops your BPMN process modeling skills and your ability to design TO-BE process improvements for ERP implementation. You will analyze a described business scenario, draw BPMN diagrams, perform a gap analysis, and propose automation solutions using both SAP and Salesforce concepts.
+
+**Estimated Time:** 90 minutes
+
+**Submission:** Upload your completed lab document to Canvas under "Lab 02 — Business Process Management."
 
 ---
 
-## Prerequisites
-*   Ensure you have access to a terminal or a runtime environment matching the course requirements (e.g., Linux, macOS, Windows, or a cloud/web terminal).
-*   Ensure you have administrative privileges if required to install packages or configure system services.
+## Learning Objectives
+
+By completing this lab you will be able to:
+
+- Read a business scenario and extract the sequence of process steps, actors, and decision points
+- Draw a valid BPMN 2.0 AS-IS process diagram with correct element types and swimlane assignments
+- Identify bottlenecks and inefficiencies in a current-state process
+- Design a TO-BE BPMN diagram that incorporates ERP automation, escalation rules, and workflow routing
+- Map BPMN gateway types to their Salesforce Flow or SAP workflow equivalents
+- Perform a structured gap analysis and classify each gap as process change, configuration, or customization
 
 ---
 
-## Step-by-Step Instructions
-1. **Draft a procurement process map using BPMN 2.0 swimlanes**
-   * *Instruction:* Execute this step inside your terminal environment. Verify the command completes without errors.
-2. **Analyze bottlenecks in a fulfillment pipeline**
-   * *Instruction:* Execute this step inside your terminal environment. Verify the command completes without errors.
-3. **Define event gateways**
-   * *Instruction:* Execute this step inside your terminal environment. Verify the command completes without errors.
+## Scenario Background
+
+**Company:** Pinnacle Health Services
+**Industry:** Healthcare administration
+**Size:** 800 employees across four clinics
+**Finance and HR system:** QuickBooks + manual HR folder
+
+Pinnacle processes employee expense reports submitted by clinical and administrative staff. The current process operates as follows:
+
+1. An employee fills out a paper expense form and hands it to their department supervisor.
+2. The supervisor reviews the form, signs it if approved, and places it in the out-box on their desk.
+3. The HR coordinator picks up the out-box daily at 4:00 PM and manually enters approved amounts into QuickBooks.
+4. The HR coordinator also checks whether any required receipts are attached. If missing, the form is returned to the employee — by internal mail.
+5. QuickBooks generates a check on Fridays for all approved expenses.
+6. If an expense is over $500, it requires additional approval from the Finance Director. The supervisor must email the Finance Director separately, attaching a scanned copy of the form.
+7. The Finance Director responds by email. If approved, the email is printed, attached to the paper form, and the cycle continues. If denied, the employee is notified by phone.
+8. There is no tracking system. Neither employees nor supervisors know the status of submitted forms until a check arrives — or does not.
 
 ---
 
-## Troubleshooting Guide
-*   *Error:* `Permission Denied`
-    * *Fix:* Remember to run administrative command sequences using `sudo` or execute with administrative privileges (e.g., Run as Administrator on Windows).
-*   *Error:* `Command Not Found`
-    * *Fix:* Verify your environmental path settings, or double-check if the utility package is installed.
+## Part A: AS-IS Process Analysis (25 points)
+
+### A-1: Process Step Inventory
+
+List every distinct step in Pinnacle's current expense process. For each step, identify:
+
+- The step description
+- The actor responsible
+- Whether the step is manual or automated
+- The average cycle time if estimable from the scenario
+- Whether the step creates or relies on a physical document
+
+Present your answer in a table with these five columns.
+
+### A-2: AS-IS BPMN Diagram
+
+Draw the complete AS-IS process using BPMN 2.0 notation. Your diagram must include:
+
+- A start event and at least one end event
+- All tasks from your Step Inventory in A-1
+- Swimlanes for each actor: Employee, Supervisor, HR Coordinator, Finance Director
+- Correct gateway types at each decision point (identify whether each decision is XOR, AND, or OR and justify your choice)
+- Sequence flows connecting all elements in the correct order
+
+You may draw by hand (photograph and attach) or use a diagramming tool. Label all elements clearly.
+
+### A-3: Bottleneck Identification
+
+Identify at least three specific bottlenecks in the current process. For each, state:
+
+- Where in the process it occurs (which step)
+- What type of bottleneck it is (resource constraint, time-gated step, information gap, or handoff delay)
+- The estimated business impact (cost, delay, employee frustration, compliance risk)
 
 ---
 
-## Deliverables
-1. Document your completed steps with screenshots or terminal output logs showing successful execution.
-2. Submit your completion report to your Canvas LMS assignment portal for grading.
+## Part B: Gap Analysis (25 points)
+
+### B-1: Fit-to-Standard Assessment
+
+Pinnacle is evaluating two options for replacing their paper expense process:
+
+- **Option A:** SAP SuccessFactors Employee Central with integrated expense workflow
+- **Option B:** A Salesforce-based custom expense process using Salesforce Flow and Approval Processes
+
+For each of the following requirements, indicate whether the standard tool meets the requirement, requires configuration, or would require customization. Briefly explain each classification.
+
+| Requirement | SAP SuccessFactors | Salesforce Flow/Approvals | Classification Justification |
+|---|---|---|---|
+| Employee submits expense request digitally | | | |
+| Supervisor receives immediate notification | | | |
+| Automatic escalation to Finance Director over $500 | | | |
+| Employee can check status in real time | | | |
+| Receipts attached digitally at submission | | | |
+| System generates payment on Friday automatically | | | |
+| Full audit trail of all approvals with timestamps | | | |
+
+### B-2: Gap Decision Matrix
+
+For each gap you identified (where the standard system does not meet the requirement out of the box), complete the following decision:
+
+- Recommended action: adapt the process, configure the system, or customize with code
+- Reasoning for your recommendation
+- Risk if customization is chosen instead of process adaptation
+
+---
+
+## Part C: TO-BE Process Design (35 points)
+
+### C-1: TO-BE BPMN Diagram
+
+Design the TO-BE process for Pinnacle's expense management after ERP implementation. Your TO-BE diagram must:
+
+- Reduce the number of manual steps by at least 50% compared to AS-IS
+- Eliminate the paper form entirely
+- Include automated notifications at appropriate steps
+- Include an escalation path for expenses over $500 using an event-based or timer intermediate event
+- Use at least one parallel gateway where multiple actions should fire simultaneously
+- Show the correct gateway types for all decision points
+
+Label your diagram with the platform tool used at each automated step (e.g., "SAP Workflow Notification" or "Salesforce Flow Email Action").
+
+### C-2: Bottleneck Resolution Summary
+
+For each of the three bottlenecks you identified in A-3, describe specifically how the TO-BE process eliminates or reduces it. Reference the specific ERP feature (workflow automation, escalation rule, delegation rule, real-time notification, or system validation) that resolves each bottleneck.
+
+### C-3: Time-Savings Estimate
+
+Based on your AS-IS and TO-BE analysis:
+
+- Estimate the current average total cycle time for a standard expense report (no escalation needed) from submission to payment
+- Estimate the TO-BE cycle time with automation
+- Calculate the reduction in days
+- Multiply by 800 employees submitting an average of 1 expense per month to estimate the annual hours saved across the organization
+
+Show your work and state your assumptions.
+
+---
+
+## Part D: Reflection (15 points)
+
+### D-1: Certification Connection
+
+In 100-150 words, explain how the tasks in this lab connect to at least one specific concept tested on either the Salesforce Certified Associate or SAP Certified Associate exam. Name the concept and describe why a certification candidate needs to understand it.
+
+### D-2: Real-World Process Challenge
+
+In 100-150 words, describe a real or hypothetical business process from a field you are interested in (healthcare, retail, finance, technology, education) that has at least one significant bottleneck. Explain what type of bottleneck it is and what ERP feature could resolve it.
+
+---
+
+## Grading Rubric
+
+| Section | Points | Criteria |
+|---|---|---|
+| A-1: Step inventory table | 8 | All steps listed with actor, manual/auto, timing, document fields |
+| A-2: AS-IS BPMN diagram | 10 | Correct element types, swimlanes, gateways, sequence flows |
+| A-3: Bottleneck identification | 7 | 3 bottlenecks identified with type, location, and business impact |
+| B-1: Fit-to-standard assessment | 12 | All 7 requirements assessed for both platforms with justification |
+| B-2: Gap decision matrix | 13 | Each gap has recommended action, reasoning, and customization risk |
+| C-1: TO-BE BPMN diagram | 15 | Reduces manual steps 50%+, includes escalation, parallel gateway, platform labels |
+| C-2: Bottleneck resolution | 10 | Each bottleneck addressed with specific ERP feature |
+| C-3: Time-savings estimate | 10 | Calculation shown, assumptions stated, result reasonable |
+| D-1: Certification connection | 8 | Named concept, exam context, clear reasoning |
+| D-2: Real-world challenge | 7 | Industry-specific bottleneck with ERP resolution |
+| **Total** | **100** | |
+
+---
+
+## Submission Instructions
+
+1. Compile responses into a single document. Include both BPMN diagrams as embedded images or clearly labeled sketches.
+2. Name your file: `Lab02_LastName_FirstName.pdf`
+3. Upload to Canvas under "Lab 02 — Business Process Management."
+4. Deadline: See course schedule in Canvas. Late submissions lose 10 points per day unless an extension is approved by Professor Nash in advance.
