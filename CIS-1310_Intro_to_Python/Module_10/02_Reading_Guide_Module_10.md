@@ -1,52 +1,399 @@
-# Reading Guide: Module 10 - Tuples and Dictionaries
-## Course: CIS-1310_Intro_to_Python (PCAP (Certified Associate in Python Programming))
+# Reading Guide: Module 10 — Dictionaries
+
+## Course: CIS-1310 Introduction to Python
+
+**Certification Alignment:** PCAP — Certified Associate in Python Programming (Python Institute)
 
 ---
 
-### Introduction
-Welcome to **Module 10 - Tuples and Dictionaries**! This week's study material focuses on the core foundations and configuration mechanics of **Tuples and Dictionaries** as aligned with the **PCAP (Certified Associate in Python Programming)** certification framework. Understanding these topics is essential not only for passing the certification exam but also for administering enterprise systems in real-world environments.
+## Introduction
 
-As a student, you will learn the primary operational roles, command syntaxes, and troubleshooting parameters needed to design, configure, and maintain these services. We will explore how different protocols establish connections, how configurations manage resource allocation, and how security controls prevent access breaches. Make sure to complete the checklists and review the glossary terms in detail before beginning the lab activity.
+Welcome to **Module 10 — Dictionaries**. The dictionary is Python's most versatile and widely used data structure. Every time you work with JSON data from a web API, parse a configuration file, count word frequencies, or look up any value by a label rather than a position, you are using dictionary patterns.
 
----
+The PCAP exam tests dictionaries extensively — more than any other data structure. You will need to know dictionary creation, key access (safe and unsafe), all major methods, all three iteration patterns, membership testing, comprehensions, and the word-frequency accumulator pattern.
 
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **Tuple immutability**: A tuple is an ordered, immutable sequence created with parentheses (e.g., `(1, 2, 3)`) or by separating values with commas; once created, its elements cannot be reassigned, appended, or removed. Because tuples are immutable, they are hashable and can be used as dictionary keys or set members, unlike lists. A frequent PCAP trap is a single-element tuple — `(5,)` is a tuple but `(5)` is just an integer in parentheses; the trailing comma is required.
-*   **key-value pairs in dictionaries**: A dictionary (`dict`) stores data as unordered key-value pairs enclosed in curly braces, e.g., `{"name": "Alice", "score": 95}`; keys must be unique and of a hashable type (strings, numbers, tuples), while values can be any object. Accessing a key that does not exist raises a `KeyError`; use `dict.get(key, default)` to return a fallback value safely instead. The PCAP exam tests whether you can read and write dictionary literals correctly and distinguish `keys()`, `values()`, and `items()` views.
-*   **dictionary methods**: The primary dictionary methods tested on the PCAP exam are `.keys()` (returns all keys), `.values()` (returns all values), `.items()` (returns key-value pairs as tuples), `.get(key, default)` (safe lookup), `.update(other)` (merges another dict), and `.pop(key)` (removes and returns a value). All three view objects — `keys()`, `values()`, `items()` — are dynamic: they reflect changes made to the dictionary after they were created.
-*   **iterating over dicts**: Iterating over a dictionary with a plain `for k in d:` loop yields only the keys. To iterate over values use `for v in d.values():`, and to iterate over key-value pairs together use `for k, v in d.items():` — the PCAP exam frequently asks which loop variable pattern is needed for each type of iteration.
+This module builds directly on your knowledge of tuples (Module 07). Tuples appear inside dictionaries as both keys and as the pairs returned by `.items()`. Understanding both data structures together is essential for the exam.
 
 ---
 
-### 2. Certification Exam Tips
-*   **Focus Area:** The PCAP exam heavily tests dictionary access patterns — know that `d[key]` raises `KeyError` for a missing key while `d.get(key)` returns `None` and `d.get(key, default)` returns the specified default. Also expect questions on tuple packing and unpacking: `a, b = (1, 2)` assigns 1 to `a` and 2 to `b`, and function return values that look like multiple values are actually tuples.
-*   **Scenario Trap:** Watch out for code that assigns a single-element tuple without the trailing comma — `t = (42)` makes `t` an integer, not a tuple. Also watch for code that tries to modify a tuple element (e.g., `t[0] = 99`), which raises `TypeError: 'tuple' object does not support item assignment` — a classic PCAP exception question.
-*   **Study Resource:** To reinforce these concepts visually, review this targeted playlist: [Python for Everybody Course Playlist - Tuples and Dictionaries](https://www.youtube.com/playlist?list=PLlRFEj9H3Oj7Bp8-DfGPQAfUMERODyTGp) — Dr. Severance covers dictionary iteration patterns extensively; supplement with the official Python docs on [data structures — dictionaries](https://docs.python.org/3/tutorial/datastructures.html#dictionaries) for the complete method reference used on the PCAP exam.
+## 1. High-Yield Glossary
+
+### Dictionary
+
+A **mutable**, **unordered** mapping that stores **key-value pairs**. Each key maps to exactly one value. Dictionaries are defined with curly braces and colons:
+
+```python
+person = {'name': 'Alice', 'age': 30, 'city': 'Dallas'}
+```
+
+Since Python 3.7, dictionaries maintain insertion order — keys come back in the order they were added. The PCAP exam does not test insertion-order behavior, but it is useful to know.
+
+### Key
+
+The identifier used to look up a value in a dictionary. Keys must be **unique** — you cannot have two entries with the same key. If you assign to an existing key, the old value is replaced.
+
+Keys must be **hashable**:
+
+| Type | Can be a key? | Why |
+|---|---|---|
+| `str` | Yes | Immutable and hashable |
+| `int`, `float` | Yes | Immutable and hashable |
+| `tuple` | Yes (if contents are hashable) | Immutable |
+| `bool` | Yes (`True`/`False` are ints 1/0) | Immutable |
+| `list` | **No** | Mutable — not hashable |
+| `dict` | **No** | Mutable — not hashable |
+| `set` | **No** | Mutable — not hashable |
+
+```python
+d = {(1, 2): 'tuple key works'}    # valid
+d = {[1, 2]: 'list key fails'}     # TypeError: unhashable type: 'list'
+```
+
+### Value
+
+The data associated with a key. Values have no restrictions — they can be any Python object: strings, numbers, lists, other dictionaries, functions, or any custom object.
+
+### Key-Value Pair
+
+A single entry in a dictionary — one key bound to one value. The `.items()` method returns an iterable of key-value pairs as tuples:
+
+```python
+grades = {'Alice': 92, 'Bob': 85}
+list(grades.items())    # [('Alice', 92), ('Bob', 85)]
+```
+
+### Dictionary Creation
+
+Three ways to create a dictionary:
+
+```python
+# Literal
+d1 = {'a': 1, 'b': 2}
+
+# dict() constructor with keyword arguments
+d2 = dict(a=1, b=2)
+
+# dict() from a list of key-value pairs
+d3 = dict([('a', 1), ('b', 2)])
+```
+
+All three produce the same dictionary.
+
+### Bracket Access — d[key]
+
+The primary way to read a value. Raises `KeyError` if the key does not exist.
+
+```python
+grades = {'Alice': 92, 'Bob': 85}
+print(grades['Alice'])    # 92
+print(grades['Dave'])     # KeyError: 'Dave'
+```
+
+Use bracket access when you **expect** the key to exist and want an error if it does not.
+
+### .get(key) and .get(key, default)
+
+Safe lookup method. Returns `None` if the key is missing (never raises `KeyError`). Returns the default value if one is provided.
+
+```python
+print(grades.get('Dave'))          # None
+print(grades.get('Dave', 0))       # 0
+print(grades.get('Alice', 0))      # 92
+```
+
+Use `.get()` when the key might not exist and you want to handle that case gracefully.
+
+**PCAP exam rule:** `d[key]` → `KeyError` if missing. `d.get(key)` → `None` if missing. `d.get(key, x)` → `x` if missing.
+
+### Adding and Updating Entries
+
+Assignment handles both:
+
+```python
+d = {'a': 1}
+d['b'] = 2        # adds new key 'b'
+d['a'] = 99       # updates existing key 'a'
+```
+
+There is no separate "insert" or "set" method for basic assignment.
+
+### del d[key] and .pop()
+
+```python
+d = {'a': 1, 'b': 2, 'c': 3}
+
+del d['a']              # removes 'a', raises KeyError if missing
+val = d.pop('b')        # removes 'b' and RETURNS its value (2)
+val = d.pop('z', -1)    # returns -1 if 'z' is missing — no KeyError
+```
+
+`.pop(key)` removes and returns. `.pop(key, default)` is safe for missing keys.
+
+### .keys(), .values(), .items() — View Objects
+
+These three methods return **view objects** — live, dynamic windows into the dictionary. They reflect any changes made to the dictionary after they were created.
+
+```python
+d = {'x': 10, 'y': 20}
+k = d.keys()     # dict_keys(['x', 'y'])
+d['z'] = 30
+print(k)         # dict_keys(['x', 'y', 'z']) — automatically updated
+```
+
+| Method | Returns | Type |
+|---|---|---|
+| `.keys()` | All keys | `dict_keys` view |
+| `.values()` | All values | `dict_values` view |
+| `.items()` | All (key, value) tuples | `dict_items` view |
+
+To get a plain list, wrap in `list()`: `list(d.keys())`.
+
+### Iterating Over a Dictionary
+
+Three standard patterns — memorize all three:
+
+```python
+d = {'name': 'Alice', 'grade': 92}
+
+# Pattern 1 — keys only (default iteration)
+for key in d:
+    print(key)
+
+# Pattern 2 — values only
+for value in d.values():
+    print(value)
+
+# Pattern 3 — key-value pairs
+for key, value in d.items():
+    print(f'{key}: {value}')
+```
+
+The PCAP exam will show one of these patterns and ask what it prints.
+
+### Membership Testing with in
+
+`in` on a dictionary tests for membership in the **keys**:
+
+```python
+d = {'name': 'Alice', 'age': 30}
+print('name' in d)          # True — key exists
+print('Alice' in d)         # False — 'Alice' is a value, not a key
+print('Alice' in d.values()) # True
+```
+
+This is a frequent exam trap. `'x' in d` tests keys. `'x' in d.values()` tests values.
+
+### .update(other)
+
+Merges `other` dictionary into the target dictionary in place. Existing keys are overwritten; new keys are added.
+
+```python
+config = {'color': 'blue', 'size': 'small'}
+config.update({'color': 'red', 'weight': 10})
+print(config)    # {'color': 'red', 'size': 'small', 'weight': 10}
+```
+
+### .setdefault(key, default)
+
+Returns the value for a key. If the key does not exist, it **inserts** the key with the default value and returns the default. Useful for building dictionaries where missing keys should be initialized automatically.
+
+```python
+d = {}
+d.setdefault('count', 0)    # inserts 'count': 0
+d['count'] += 1
+print(d)    # {'count': 1}
+```
+
+### Dictionary Comprehension
+
+A concise way to build a dictionary from an iterable:
+
+```python
+{key_expr: value_expr for item in iterable}
+{key_expr: value_expr for item in iterable if condition}
+```
+
+```python
+squares = {n: n**2 for n in range(1, 6)}
+# {1: 1, 2: 4, 3: 9, 4: 16, 5: 25}
+
+passing = {name: score for name, score in grades.items() if score >= 70}
+```
+
+### Nested Dictionary
+
+A dictionary whose values are themselves dictionaries. This is how JSON data from APIs is typically structured.
+
+```python
+students = {
+    'Alice': {'grade': 92, 'city': 'Dallas'},
+    'Bob':   {'grade': 85, 'city': 'Austin'},
+}
+
+print(students['Alice']['grade'])    # 92 — double bracket access
+```
+
+### Word Frequency Counter (Accumulator Pattern)
+
+The classic dictionary pattern on the PCAP exam:
+
+```python
+text = 'the fox the fox the dog'
+words = text.split()
+
+# Version 1 — explicit if/else
+freq = {}
+for word in words:
+    if word in freq:
+        freq[word] += 1
+    else:
+        freq[word] = 1
+
+# Version 2 — using .get() (more Pythonic)
+freq = {}
+for word in words:
+    freq[word] = freq.get(word, 0) + 1
+
+print(freq)    # {'the': 3, 'fox': 2, 'dog': 1}
+```
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read Chapters 9 and 10 covering **Tuples and Dictionaries** in the OER Textbook: [Python for Everybody by Dr. Charles Severance](https://www.py4e.com/book) — a free OER textbook; focus on the sections covering dictionary creation and lookup, how to iterate over keys versus key-value pairs, and the distinction between mutable lists and immutable tuples.
-*   **Required Video:** Watch the video lecture on **Tuples and Dictionaries** in the official course playlist: [Python for Everybody Course Playlist](https://www.youtube.com/playlist?list=PLlRFEj9H3Oj7Bp8-DfGPQAfUMERODyTGp) — work through the dictionary-counting examples (word frequency counters) in the REPL; these patterns are the most common dictionary application on the PCAP exam.
+## 2. Dictionary Methods — Complete Reference Table
+
+| Method | Description | Returns | Raises |
+|---|---|---|---|
+| `d[key]` | Read value | Value | `KeyError` if missing |
+| `d[key] = v` | Add or update | Nothing | — |
+| `d.get(key)` | Safe read | Value or `None` | Never |
+| `d.get(key, x)` | Safe read with default | Value or `x` | Never |
+| `del d[key]` | Delete key | Nothing | `KeyError` if missing |
+| `d.pop(key)` | Remove and return | Value | `KeyError` if missing |
+| `d.pop(key, x)` | Remove and return, safe | Value or `x` | Never |
+| `d.keys()` | All keys (view) | `dict_keys` | — |
+| `d.values()` | All values (view) | `dict_values` | — |
+| `d.items()` | All (key, value) pairs (view) | `dict_items` | — |
+| `d.update(other)` | Merge `other` into `d` | Nothing | — |
+| `d.setdefault(key, x)` | Get or insert default | Value or `x` | — |
+| `d.clear()` | Remove all entries | Nothing | — |
+| `d.copy()` | Shallow copy | New dict | — |
+| `len(d)` | Number of key-value pairs | `int` | — |
+| `key in d` | Membership test (keys) | `bool` | — |
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Create a dictionary storing student names and grades**: Build `grades = {"Alice": 92, "Bob": 85, "Carol": 78}` and use bracket notation to retrieve individual grades; then add a new student with `grades["Dave"] = 90` and confirm the dictionary length.
-*   **Retrieve grades using student names**: Use `grades.get("Eve", "Not found")` to safely look up a student who does not exist; verify the result is the default string rather than a `KeyError`.
-*   **Iterate through keys and values using `.items()`**: Write a `for name, score in grades.items():` loop that prints each student's name and grade; then rewrite using only `.keys()` to show the difference.
-*   **Verify tuples cannot be modified**: Create `point = (3, 7)`, then attempt `point[0] = 10` inside a try-except block; confirm a `TypeError` is raised and explain why.
+## 3. Common Error Patterns to Memorize
 
+**Pattern 1 — KeyError from bracket access on missing key:**
+
+```python
+d = {'a': 1}
+print(d['b'])    # KeyError: 'b'
+```
+
+Fix: Use `d.get('b')` or `d.get('b', default)`.
+
+**Pattern 2 — Testing a value with `in` instead of a key:**
+
+```python
+d = {'name': 'Alice'}
+print('Alice' in d)    # False — 'Alice' is a value, not a key
+```
+
+Fix: Use `'Alice' in d.values()` to test values.
+
+**Pattern 3 — Using a list as a dictionary key:**
+
+```python
+d = {[1, 2]: 'value'}    # TypeError: unhashable type: 'list'
+```
+
+Fix: Use a tuple instead: `d = {(1, 2): 'value'}`.
+
+**Pattern 4 — Modifying a dictionary while iterating over it:**
+
+```python
+d = {'a': 1, 'b': 2, 'c': 3}
+for key in d:
+    if d[key] < 2:
+        del d[key]    # RuntimeError: dictionary changed size during iteration
+```
+
+Fix: Iterate over a copy of the keys: `for key in list(d.keys()):`.
+
+**Pattern 5 — Confusing `{}` with `set()`:**
+
+```python
+empty = {}
+print(type(empty))    # <class 'dict'> — NOT a set
+```
+
+Fix: Use `set()` for an empty set.
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read the section/chapter covering **Tuples and Dictionaries** in [Python for Everybody](https://www.py4e.com/book).
-- [ ] Watch the video lecture on **Tuples and Dictionaries** in [Python for Everybody Course Playlist](https://www.youtube.com/playlist?list=PLlRFEj9H3Oj7Bp8-DfGPQAfUMERODyTGp).
-- [ ] Review the commands outlined in the lab instructions.
-- [ ] Proceed to the weekly hands-on lab activity.
+## 4. Certification Exam Tips
+
+**Tip 1 — KeyError vs None vs custom default.**
+Three behaviors, one concept: `d['x']` → `KeyError` if missing; `d.get('x')` → `None` if missing; `d.get('x', 0)` → `0` if missing. Exam questions often ask which behavior a specific method produces.
+
+**Tip 2 — `for k in d` iterates over keys, not key-value pairs.**
+A common exam trap shows `for item in d:` and asks what `item` contains. The answer is a key, not a tuple. To get tuples, you must use `d.items()`.
+
+**Tip 3 — `in` tests keys by default.**
+`'x' in d` is equivalent to `'x' in d.keys()`. To test values, you must write `'x' in d.values()`. This distinction appears frequently on the exam.
+
+**Tip 4 — `.items()` returns `(key, value)` tuples.**
+When you write `for k, v in d.items():`, the unpacking happens because each item is a tuple. You could also write `for pair in d.items(): print(pair[0], pair[1])` — same result, less readable.
+
+**Tip 5 — Dictionary comprehension produces a dict, not a list.**
+`{k: v for ...}` produces a `dict`. `[x for ...]` produces a `list`. The curly braces with a colon in the expression make it a dict comprehension.
+
+**Tip 6 — `.pop(key)` raises `KeyError` if key is missing, but `.pop(key, default)` does not.**
+The two-argument form of `pop()` is the safe alternative — analogous to `.get()` for reading.
+
+**Tip 7 — Word frequency counter is the classic PCAP dictionary question.**
+Know both versions: the `if key in d` version and the `.get(key, 0) + 1` version. The exam may show either and ask for the output for a given input string.
+
+---
+
+## 5. Beyond the Exam — Real-World Context
+
+**Dictionaries and JSON.**
+The `json` module converts between Python dictionaries and JSON text in both directions. `json.loads(text)` parses a JSON string into a Python dict. `json.dumps(d)` converts a dict back to a JSON string. Every REST API interaction you will ever do in Python involves this conversion.
+
+**Counting with collections.Counter.**
+Python's `collections` module provides `Counter`, a specialized dictionary subclass that counts hashable objects automatically. `Counter(words)` builds a frequency dictionary in one call. This is the production-ready version of the manual word-counter loop — but the manual version is what the PCAP exam tests, and understanding the Counter requires understanding the pattern it replaces.
+
+**Dictionaries as dispatch tables.**
+You saw dispatch tables in Module 08's `calculator.py` — a dictionary where keys are operator symbols and values are function objects. This pattern replaces `if-elif` chains and is used extensively in parsers, state machines, and command routers.
+
+**Configuration management.**
+Real applications store settings in dictionaries loaded from `.json`, `.yaml`, or `.toml` config files. Understanding dictionary access patterns is not optional — it is the foundation of how Python applications are configured.
+
+---
+
+## 6. Required Readings and Videos
+
+**Required Reading — Chapter 9:**
+Read Chapter 9 of [Python for Everybody by Dr. Charles Severance](https://www.py4e.com/book). This chapter covers dictionaries with word-counting examples that directly mirror PCAP exam questions.
+
+**Required Reading — Official Python Docs:**
+Read [Data Structures — Dictionaries](https://docs.python.org/3/tutorial/datastructures.html#dictionaries) and the [Mapping Types](https://docs.python.org/3/library/stdtypes.html#mapping-types-dict) reference for a complete list of all dictionary methods.
+
+**Supplemental Video:**
+Watch Episodes 9 and 10 of the [Python for Everybody Course Playlist](https://www.youtube.com/playlist?list=PLlRFEj9H3Oj7Bp8-DfGPQAfUMERODyTGp). Dr. Severance builds word-counting programs that are the exact pattern tested on the PCAP exam.
+
+---
+
+## 7. Study Checklist
+
+- [ ] Watch the Module 10 video lecture by Professor Nash.
+- [ ] Read the High-Yield Glossary — especially `.get()` vs bracket access, iteration patterns, and `in` membership testing.
+- [ ] Work through the Dictionary Methods reference table — know what each method returns and when it raises errors.
+- [ ] Memorize both versions of the word frequency counter.
+- [ ] Work through the 5 Common Error Patterns — run each one in the REPL and observe the error.
+- [ ] Read Chapter 9 of *Python for Everybody* at py4e.com.
+- [ ] Read the Data Structures — Dictionaries page in the official Python 3 docs.
+- [ ] Review all 7 Certification Exam Tips in Section 4.
+- [ ] Proceed to the Module 10 Lab Activity.

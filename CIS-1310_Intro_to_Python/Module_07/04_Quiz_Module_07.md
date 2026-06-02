@@ -1,78 +1,212 @@
-# Quiz: Module 07 - Advanced List Operations
-## Course: CIS-1310_Intro_to_Python (PCAP (Certified Associate in Python Programming))
+# Quiz: Module 07 — Tuples, Sets, and Advanced Sorting
+
+## Course: CIS-1310 Introduction to Python
+
+**Certification Alignment:** PCAP — Certified Associate in Python Programming (Python Institute)
+
+**Instructions:** Choose the single best answer for each question. All questions are specific to Module 07 topics.
 
 ---
 
-**Question 1**
-Which method adds an item to the end of a Python list?
-*   A) add()
-*   B) append()
-*   C) push()
-*   D) insert()
-*   **Correct Answer:** B) The `.append()` method inserts the passed element at the end of the list.
-*   **Distractor Analysis:**
-    *   *Why correct:* The `.append()` method inserts the passed element at the end of the list.
-    *   add() is for sets. push() is not a list method. insert() requires a specific index.
+### Question 1
+
+What is the type of `t = (42)`?
+
+- A) `tuple`
+- B) `int`
+- C) `list`
+- D) `SyntaxError` — parentheses cannot be used around a literal
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `(42)` is NOT a tuple. Python treats parentheses around a single value as a grouping operator (like in arithmetic), not a tuple constructor.
+- *Why B is correct:* `(42)` evaluates to the integer `42`. To create a single-element tuple, you must include a trailing comma: `(42,)`.
+- *Why C is incorrect:* List syntax requires square brackets: `[42]`. Parentheses alone do not create a list.
+- *Why D is incorrect:* `(42)` is valid Python — it is simply a parenthesized integer expression, not a `SyntaxError`.
 
 ---
 
-**Question 2**
-Which of the following best describes **list copying vs. referencing** in Python?
-*   A) Assigning a list to a new variable creates an independent copy; any changes to the new variable leave the original list unchanged
-*   B) Assigning a list to a new variable creates a reference to the same object; to get an independent copy you must explicitly use `.copy()`, `list()`, or a full slice `[:]`
-*   C) Python automatically deep-copies all nested structures when you use `.copy()`, so changes to inner objects in the copy will never affect the original
-*   D) List references only apply to global variables; local variables always receive their own independent copy when assigned from another list
-*   **Correct Answer:** B) Assigning a list to a new variable creates a reference to the same object; to get an independent copy you must explicitly use `.copy()`, `list()`, or a full slice `[:]`.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Python assignment does not copy by default — `b = a` makes both names point to the same list object in memory, so modifying `b` also changes `a`.
-    *   *Why B is correct:* List assignment is reference semantics; `.copy()` creates a shallow copy where the new list is a separate object, though nested mutable objects inside it are still shared.
-    *   *Why C is incorrect:* `.copy()` produces a shallow copy, not a deep copy; nested lists or objects inside the list are still shared. Use `copy.deepcopy()` from the `copy` module for full independence.
-    *   *Why D is incorrect:* Python's reference semantics apply equally to local and global variables; scope does not change copy vs. reference behavior.
+### Question 2
 
+What happens when you attempt `t[0] = 99` on a tuple `t = (1, 2, 3)`?
 
----
+- A) The tuple is modified — tuples support item assignment
+- B) Python silently ignores the assignment
+- C) `TypeError: 'tuple' object does not support item assignment`
+- D) `ValueError: invalid assignment to immutable type`
 
-**Question 3**
-A systems administrator or developer needs to **record staged code modifications into the repository version history**. Which of the following commands is the most appropriate to execute?
-A) git commit -m 'update'
-B) python3 -m venv .venv
-D) pip install -r requirements.txt
-C) pytest
-*   **Correct Answer:** A) git commit -m 'update'
-*   **Distractor Analysis:**
-    * *Why A is correct:* The `git commit -m 'update'` command is directly designed to record staged code modifications into the repository version history.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
+**Correct Answer:** C
 
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Tuples are immutable. They do not support item assignment, insertion, deletion, or any other modification.
+- *Why B is incorrect:* Python does not silently ignore invalid operations — it raises an exception.
+- *Why C is correct:* Attempting to assign to a tuple index raises `TypeError: 'tuple' object does not support item assignment`. This error message is specific and frequently tested on the PCAP exam.
+- *Why D is incorrect:* The error is `TypeError`, not `ValueError`. `ValueError` typically means a value is inappropriate for a function, not that an immutable object was modified.
 
 ---
 
-**Question 4**
-While working on **Advanced List Operations** in a production environment, you encounter a system alert indicating a **TypeError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-C) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
-D) Reboot the physical machine and wait for services to reload.
-B) Verify that the index is within the valid range of 0 to len(list)-1.
-A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-*   **Correct Answer:** A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-*   **Distractor Analysis:**
-    * *Why C is incorrect:* This action does not resolve the root cause of TypeError.
-    * *Why D is incorrect:* This action does not resolve the root cause of TypeError.
-    * *Why B is incorrect:* This action does not resolve the root cause of TypeError.
-    * *Why A is correct:* Because An operation or function was applied to an object of an inappropriate data type. The appropriate fix is to Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types..
+### Question 3
 
+What does `set([1, 2, 2, 3, 3, 3, 4])` produce?
+
+- A) `[1, 2, 3, 4]`
+- B) `{1, 2, 3, 4}`
+- C) `{1, 2, 2, 3, 3, 3, 4}`
+- D) `ValueError` — duplicate values are not allowed
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `set()` returns a set object, not a list. Although the content is similar, the type is `set`.
+- *Why B is correct:* `set()` removes all duplicate values. `{1, 2, 3, 4}` is the result — a set containing the four unique values. No error is raised.
+- *Why C is incorrect:* Duplicates are silently dropped when creating a set. The duplicates `2`, `3`, and `3` are not preserved.
+- *Why D is incorrect:* `set()` handles duplicates by discarding them, not by raising an error. The constructor is designed to deduplicate.
 
 ---
 
-**Question 5**
-When designing a system for **Advanced List Operations**, you must mitigate the risk of **Storing user credentials in plain text, making them vulnerable to database breaches.**. Which of the following security configurations or controls represents the best practice to implement?
-C) Enable full disk encryption on all client endpoints.
-A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-B) Implement parameterized queries and prepared statements rather than raw string concatenation.
-D) Store passwords in a Python list in memory and delete the list variable with `del` immediately after login verification.
-*   **Correct Answer:** A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-*   **Distractor Analysis:**
-    * *Why C is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-    * *Why A is correct:* Implementing Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt. mitigates the risk of Storing user credentials in plain text, making them vulnerable to database breaches..
-    * *Why B is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-    * *Why D is incorrect:* Deleting an in-memory list with `del` removes the reference but does not guarantee memory is wiped immediately, and it does not protect credentials stored in a database; proper hashing at storage time is the correct control.
+### Question 4
+
+What does `{1, 2, 3} & {2, 3, 4, 5}` return?
+
+- A) `{1, 2, 3, 4, 5}`
+- B) `{1}`
+- C) `{2, 3}`
+- D) `{1, 4, 5}`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `{1, 2, 3, 4, 5}` is the union (`|`), not the intersection. Union includes all elements in either set.
+- *Why B is incorrect:* `{1}` is the difference `{1, 2, 3} - {2, 3, 4, 5}` — elements in the first set but not the second.
+- *Why C is correct:* `&` is the intersection operator — it returns elements present in both sets. The elements `2` and `3` appear in both `{1, 2, 3}` and `{2, 3, 4, 5}`.
+- *Why D is incorrect:* `{1, 4, 5}` is the symmetric difference (`^`) — elements in one set but not both.
+
+---
+
+### Question 5
+
+What type does `{}` create in Python?
+
+- A) An empty `set`
+- B) An empty `tuple`
+- C) An empty `dict`
+- D) `SyntaxError` — empty braces are not valid
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* An empty set requires `set()` — the empty-brace literal `{}` is already taken by the empty dict syntax.
+- *Why B is incorrect:* An empty tuple is `()`, not `{}`.
+- *Why C is correct:* `{}` creates an empty `dict` (dictionary). This is because the dict literal syntax `{key: value, ...}` was established before set literals were added to Python. To create an empty set, you must use `set()`.
+- *Why D is incorrect:* `{}` is perfectly valid Python — it simply creates an empty dictionary, not a set.
+
+---
+
+### Question 6
+
+What does `sorted(['banana', 'fig', 'apple'], key=len)` return?
+
+- A) `['apple', 'banana', 'fig']`
+- B) `['fig', 'apple', 'banana']`
+- C) `['banana', 'fig', 'apple']`
+- D) `[6, 3, 5]`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* This is alphabetical order — the default `sorted()` behavior without a `key`.
+- *Why B is correct:* `key=len` sorts elements by their length. `'fig'` has length 3, `'apple'` has length 5, `'banana'` has length 6. Sorted ascending by length: `['fig', 'apple', 'banana']`.
+- *Why C is incorrect:* This is the original unsorted order — no sorting was applied.
+- *Why D is incorrect:* `sorted()` returns the original elements sorted by their keys — not the key values themselves. The strings appear in the output, sorted by length.
+
+---
+
+### Question 7
+
+What does the lambda `lambda x: x * 2` return when called with argument `7`?
+
+- A) `7`
+- B) `14`
+- C) `SyntaxError` — lambda requires a `return` statement
+- D) `None`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `x * 2` with `x = 7` evaluates to `14`, not `7`.
+- *Why B is correct:* A lambda evaluates and returns its expression. `lambda x: x * 2` called with `7` returns `7 * 2 = 14`.
+- *Why C is incorrect:* Lambda functions do NOT use `return`. The expression after the colon is implicitly returned. Writing `return` inside a lambda is a `SyntaxError` — but a lambda without `return` is valid and correct.
+- *Why D is incorrect:* A lambda returns the value of its expression, not `None`. `None` would result only if the expression evaluated to `None`.
+
+---
+
+### Question 8
+
+What does the following code print?
+
+```python
+x, y, z = (10, 20, 30)
+print(y)
+```
+
+- A) `(10, 20, 30)`
+- B) `10`
+- C) `20`
+- D) `TypeError` — cannot unpack a tuple
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `print(y)` prints only `y`, not the entire tuple.
+- *Why B is incorrect:* `x` is `10`. The question asks for `y`.
+- *Why C is correct:* Tuple unpacking assigns the first value to `x`, second to `y`, third to `z`. `y` receives the value at position 1, which is `20`.
+- *Why D is incorrect:* Tuple unpacking is a core Python feature. `x, y, z = (10, 20, 30)` is valid Python that assigns each element to the corresponding variable.
+
+---
+
+### Question 9
+
+Which statement about sets is correct?
+
+- A) Sets are ordered — elements are stored in insertion order
+- B) Sets can contain duplicate elements
+- C) Sets can be indexed with `s[0]`
+- D) Sets support the `in` operator for membership testing
+
+**Correct Answer:** D
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Sets are unordered. Elements have no guaranteed position or insertion-order preservation. (Python 3.7+ dicts preserve insertion order, but sets never do.)
+- *Why B is incorrect:* Sets enforce uniqueness — duplicates are silently dropped. A set can never contain two equal elements.
+- *Why C is incorrect:* Sets cannot be indexed. `s[0]` raises `TypeError: 'set' object is not subscriptable`. To access elements, iterate over the set or convert it to a sorted list.
+- *Why D is correct:* `in` works with sets and is very efficient (average O(1) time). `5 in {1, 3, 5, 7}` returns `True`.
+
+---
+
+### Question 10
+
+What does `a - b` produce if `a = {1, 2, 3, 4}` and `b = {3, 4, 5}`?
+
+- A) `{5}`
+- B) `{1, 2}`
+- C) `{1, 2, 5}`
+- D) `{3, 4}`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `{5}` is what `b - a` (difference in the other direction) would produce — elements in `b` that are not in `a`.
+- *Why B is correct:* The set difference `a - b` gives elements that are in `a` but not in `b`. From `a = {1, 2, 3, 4}`, the elements `3` and `4` are also in `b`, so they are excluded. The result is `{1, 2}`.
+- *Why C is incorrect:* `{1, 2, 5}` is the symmetric difference (`a ^ b`) — elements in either set but not both.
+- *Why D is incorrect:* `{3, 4}` is the intersection (`a & b`) — elements in both sets.

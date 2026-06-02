@@ -1,78 +1,215 @@
-# Quiz: Module 01 - Python Basics & Local Environment
-## Course: CIS-1310_Intro_to_Python (PCAP (Certified Associate in Python Programming))
+# Quiz: Module 01 — Python Basics & Local Environment
+
+## Course: CIS-1310 Introduction to Python
+
+**Certification Alignment:** PCAP — Certified Associate in Python Programming (Python Institute)
+
+**Instructions:** Choose the single best answer for each question. These questions are written at or above the difficulty level of the PCAP exam. Read every answer choice carefully before selecting.
 
 ---
 
-**Question 1**
-What is Python's execution model?
-*   A) Compiled before running
-*   B) Interpreted line-by-line
-*   C) Assembled to machine code
-*   D) None of the above
-*   **Correct Answer:** B) Python is executed by an interpreter that reads and processes code line-by-line.
-*   **Distractor Analysis:**
-    *   *Why correct:* Python is executed by an interpreter that reads and processes code line-by-line.
-    *   Compiled languages compile source code all at once. Python reads and executes code dynamically.
+### Question 1
+
+What correctly describes the internal execution pipeline of CPython when you run `python3 script.py`?
+
+- A) The source code is passed directly to the CPU as machine code with no intermediate step
+- B) The source code is compiled to bytecode, which is then interpreted by the Python Virtual Machine
+- C) The source code is compiled to a native binary executable, which runs without needing Python installed
+- D) The source code is translated line-by-line to machine code and executed simultaneously
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Python source code is never passed directly to the CPU. It goes through a compilation step to bytecode first.
+- *Why B is correct:* CPython compiles your `.py` source code to `.pyc` bytecode (stored in `__pycache__`), then the Python Virtual Machine (PVM) interprets and executes that bytecode.
+- *Why C is incorrect:* Python does not produce a native binary executable. The `.pyc` bytecode still requires Python to be installed and running the PVM to execute.
+- *Why D is incorrect:* That describes a pure interpreter with no compilation step. CPython does compile to bytecode first — it does not translate to machine code line-by-line simultaneously.
 
 ---
 
-**Question 2**
+### Question 2
+
 Which of the following best describes **script mode** in Python?
-*   A) Running Python statements one at a time in an interactive session that immediately prints results
-*   B) Executing a saved `.py` file from top to bottom through the interpreter
-*   C) A special debugging mode that pauses execution after every line
-*   D) A mode that compiles Python code into bytecode and stores it as a standalone executable
-*   **Correct Answer:** B) Executing a saved `.py` file from top to bottom through the interpreter.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* That describes the REPL (interactive shell), not script mode — in script mode you run a complete file, not one statement at a time.
-    *   *Why B is correct:* Script mode means passing a `.py` file to the interpreter (e.g., `python3 myscript.py`), which executes all statements sequentially.
-    *   *Why C is incorrect:* Python has no built-in "pause after every line" mode by default; that would require a debugger like `pdb`.
-    *   *Why D is incorrect:* Python does compile to `.pyc` bytecode internally, but that is transparent to the user and does not produce a standalone executable.
 
+- A) Running Python statements one at a time in an interactive session that immediately prints results
+- B) Executing a saved `.py` file from top to bottom through the interpreter
+- C) A special debugging mode that pauses execution after every line
+- D) A mode that compiles Python code into bytecode and stores it as a standalone executable
 
----
+**Correct Answer:** B
 
-**Question 3**
-A systems administrator or developer needs to **run the automated unit testing suite to verify system functionality**. Which of the following commands is the most appropriate to execute?
-D) python3 -m venv .venv
-C) git commit -m 'update'
-B) pip install -r requirements.txt
-A) pytest
-*   **Correct Answer:** A) pytest
-*   **Distractor Analysis:**
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `pytest` command is directly designed to run the automated unit testing suite to verify system functionality.
+**Distractor Analysis:**
 
+- *Why A is incorrect:* That describes the REPL (interactive shell). In script mode you run a complete file, not one statement at a time.
+- *Why B is correct:* Script mode means passing a `.py` file to the interpreter (`python3 myscript.py`), which executes all statements sequentially from top to bottom.
+- *Why C is incorrect:* Python has no built-in "pause after every line" mode. That would require an explicit debugger such as `pdb`.
+- *Why D is incorrect:* Python compiles to `.pyc` bytecode internally, but that bytecode is not a standalone executable — it still requires the PVM to run.
 
 ---
 
-**Question 4**
-While working on **Python Basics & Local Environment** in a production environment, you encounter a system alert indicating a **IndexError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-D) Reboot the physical machine and wait for services to reload.
-C) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
-B) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-A) Verify that the index is within the valid range of 0 to len(list)-1.
-*   **Correct Answer:** A) Verify that the index is within the valid range of 0 to len(list)-1.
-*   **Distractor Analysis:**
-    * *Why D is incorrect:* This action does not resolve the root cause of IndexError.
-    * *Why C is incorrect:* This action does not resolve the root cause of IndexError.
-    * *Why B is incorrect:* This action does not resolve the root cause of IndexError.
-    * *Why A is correct:* Because The code attempted to access an element of a sequence using an out-of-bounds index. The appropriate fix is to Verify that the index is within the valid range of 0 to len(list)-1..
+### Question 3
 
+A student opens a terminal and types `python3` then presses Enter. They then type `100 / 4` and press Enter. What appears on the screen?
+
+- A) Nothing — expressions are not printed in the REPL without a `print()` call
+- B) `25`
+- C) `25.0`
+- D) `SyntaxError: invalid syntax`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* In the REPL, expressions are automatically evaluated and their results displayed — no `print()` is needed.
+- *Why B is incorrect:* The `/` operator in Python 3 always performs true (float) division, not integer division. `100 / 4` returns `25.0`, not `25`.
+- *Why C is correct:* Python 3's `/` operator always returns a `float`. `100 / 4 = 25.0`. To get the integer `25`, you would use `//` (floor division): `100 // 4`.
+- *Why D is incorrect:* `100 / 4` is valid Python 3 syntax. No error occurs.
 
 ---
 
-**Question 5**
-When designing a system for **Python Basics & Local Environment**, you must mitigate the risk of **Storing user credentials in plain text, making them vulnerable to database breaches.**. Which of the following security configurations or controls represents the best practice to implement?
-B) Implement parameterized queries and prepared statements rather than raw string concatenation.
-A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-C) Enable full disk encryption on all client endpoints.
-D) Store passwords using reversible symmetric encryption so they can be recovered if needed.
-*   **Correct Answer:** A) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-*   **Distractor Analysis:**
-    * *Why B is incorrect:* This does not address the security vulnerability of Sensitive Data Exposure.
-    * *Why A is correct:* Implementing Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt. mitigates the risk of Storing user credentials in plain text, making them vulnerable to database breaches..
-    * *Why C is incorrect:* Full disk encryption protects data at rest on the physical drive but does not prevent a running application from reading plain-text credentials from a database.
-    * *Why D is incorrect:* Reversible encryption is dangerous for passwords because if the encryption key is compromised, all passwords are exposed; one-way hashing with bcrypt is the correct approach.
+### Question 4
+
+Examine the following Python script saved as `output.py`:
+
+```python
+name = 'Alice'
+name
+print('Done')
+```
+
+What is displayed when you run `python3 output.py`?
+
+- A) `Alice` followed by `Done`
+- B) `Done` only
+- C) `name` followed by `Done`
+- D) Nothing — the script has a syntax error
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* The line `name` alone in a script file does NOT print anything. In the REPL it would display `'Alice'`, but in script mode, expressions must be wrapped in `print()` to produce output.
+- *Why B is correct:* In script mode, bare expressions produce no output. Only `print('Done')` generates visible output.
+- *Why C is incorrect:* `name` on a line by itself evaluates the variable — it does not print the literal string `'name'`. And even the evaluation produces no output in script mode.
+- *Why D is incorrect:* `name` on a line by itself is syntactically valid Python — it is an expression statement. It simply has no side effects.
+
+---
+
+### Question 5
+
+What error does Python raise when it encounters inconsistent indentation in a source file?
+
+- A) `SyntaxError`
+- B) `ValueError`
+- C) `IndentationError`
+- D) `RuntimeError`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* A `SyntaxError` covers general grammar violations (missing colons, unmatched parentheses, etc.), but inconsistent indentation specifically raises `IndentationError`, which is actually a subclass of `SyntaxError`.
+- *Why B is incorrect:* `ValueError` is raised when a function receives an argument of the correct type but an inappropriate value (e.g., `int('hello')`). It has nothing to do with code structure.
+- *Why C is correct:* `IndentationError` is the specific exception Python raises when indentation is inconsistent — such as mixing tabs and spaces, or changing indent levels in a way that doesn't match any enclosing block.
+- *Why D is incorrect:* `RuntimeError` is a generic exception raised during execution, not during parsing. Indentation is checked at parse time — before any code runs.
+
+---
+
+### Question 6
+
+Which of the following statements about Python's indentation rules is **FALSE**?
+
+- A) Python uses indentation to define code blocks instead of curly braces
+- B) The PEP 8 style guide recommends 4 spaces per indentation level
+- C) Mixing tabs and spaces in the same Python 3 file causes a `TabError`
+- D) Indentation in Python is optional and only affects code readability
+
+**Correct Answer:** D
+
+**Distractor Analysis:**
+
+- *Why A is true (not the answer):* Python definitively uses indentation to define blocks. This is core language syntax, not a style choice.
+- *Why B is true (not the answer):* PEP 8 — the official Python style guide — explicitly recommends 4 spaces per indentation level. This is the universal standard in professional Python code.
+- *Why C is true (not the answer):* Python 3 raises a `TabError` (a subclass of `IndentationError`) specifically when tabs and spaces are mixed inconsistently.
+- *Why D is FALSE and is the correct answer:* Indentation in Python is **mandatory syntax**, not optional. A block with incorrect indentation causes an `IndentationError` and the program will not run. This is the opposite of languages like C or JavaScript where indentation is purely cosmetic.
+
+---
+
+### Question 7
+
+Where does CPython store compiled bytecode files after running a Python script?
+
+- A) In the same directory as the `.py` file, with a `.pyc` extension and the same base name
+- B) In a directory called `__pycache__` inside the project folder
+- C) In the system's temporary files directory (e.g., `/tmp` on Linux)
+- D) In the Python installation directory under `lib/bytecode/`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* In Python 3, `.pyc` files are not placed in the same directory as the source file. They are organized inside `__pycache__` with a naming convention that includes the Python version (e.g., `script.cpython-310.pyc`).
+- *Why B is correct:* CPython creates a `__pycache__` subdirectory in the same folder as the source file and stores all `.pyc` bytecode files there. The filename includes the CPython version to allow multiple Python versions to coexist.
+- *Why C is incorrect:* Bytecode files are project-specific and stored alongside the source files, not in system temp directories.
+- *Why D is incorrect:* Bytecode files for user scripts are never stored in the Python installation directory. They are stored relative to the project's source location.
+
+---
+
+### Question 8
+
+Which command verifies that Python 3 is installed and shows the version number in a Linux or macOS terminal?
+
+- A) `python --version`
+- B) `python3 --version`
+- C) `py3 -version`
+- D) `python3 -v`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* On many Linux systems, `python` still points to Python 2.x. Always use `python3` to target Python 3 explicitly.
+- *Why B is correct:* `python3 --version` prints the Python 3 version string (e.g., `Python 3.10.12`) and is the standard command on Linux and macOS.
+- *Why C is incorrect:* `py3` is not a standard command on Linux or macOS. `py` (without `3`) is a Windows-specific Python Launcher utility.
+- *Why D is incorrect:* `python3 -v` runs Python in verbose mode, which prints a flood of import messages — it does not simply display the version number cleanly.
+
+---
+
+### Question 9
+
+A classmate tells you they installed Python on their computer, but when they type `print 'Hello'` in the REPL, they get a `SyntaxError`. What is the most likely cause?
+
+- A) They have Python 2 installed, not Python 3 — `print` is a statement in Python 2 but a function in Python 3
+- B) They forgot to launch the REPL first — this command must be run from a `.py` file
+- C) They used single quotes instead of double quotes, which Python 3 does not allow
+- D) The `print` function must be imported before it can be used in Python 3
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- *Why A is correct:* In Python 2, `print` was a statement: `print 'Hello'`. In Python 3, `print` is a built-in function and requires parentheses: `print('Hello')`. The `SyntaxError` is the classic symptom of accidentally running Python 2 syntax in a Python 3 interpreter.
+- *Why B is incorrect:* The REPL executes statements — there is no requirement that `print` be in a `.py` file. The REPL is a perfectly valid place to use `print()`.
+- *Why C is incorrect:* Python 3 accepts both single quotes and double quotes for strings interchangeably. `print('Hello')` and `print("Hello")` are both valid.
+- *Why D is incorrect:* `print` is a Python 3 built-in function — it is always available without any import statement.
+
+---
+
+### Question 10
+
+What is the correct way to exit the Python interactive REPL on a Linux system?
+
+- A) Type `quit` and press Enter
+- B) Press `Ctrl+C`
+- C) Type `exit()` and press Enter, or press `Ctrl+D`
+- D) Close the terminal window — there is no graceful exit command
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Typing `quit` alone (without parentheses) in Python 3 displays a hint message saying to use `quit()`, but does not actually exit. The parentheses are required.
+- *Why B is incorrect:* `Ctrl+C` sends a `KeyboardInterrupt` signal, which interrupts the current operation and drops back to the `>>>` prompt — it does not exit the REPL.
+- *Why C is correct:* Both `exit()` (with parentheses) and `Ctrl+D` (end-of-file signal on Linux/macOS) are correct ways to gracefully exit the Python REPL. On Windows, `Ctrl+Z` followed by Enter also works.
+- *Why D is incorrect:* There are multiple graceful ways to exit the REPL. Closing the terminal window is unnecessary and would also terminate any other work in that terminal session.

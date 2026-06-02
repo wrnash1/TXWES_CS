@@ -1,51 +1,468 @@
-# Reading Guide: Module 14 - Object-Oriented Programming (OOP) Basics
-## Course: CIS-1310_Intro_to_Python (PCAP (Certified Associate in Python Programming))
+# Reading Guide: Module 14 — Object-Oriented Programming: Basics
+
+## Course: CIS-1310 Introduction to Python
+
+**Certification Alignment:** PCAP — Certified Associate in Python Programming (Python Institute)
 
 ---
 
-### Introduction
-Welcome to **Module 14 - Object-Oriented Programming (OOP) Basics**! This week's study material focuses on the core foundations and configuration mechanics of **Object-Oriented Programming (OOP) Basics** as aligned with the **PCAP (Certified Associate in Python Programming)** certification framework. Understanding these topics is essential not only for passing the certification exam but also for administering enterprise systems in real-world environments.
+## Introduction
 
-As a student, you will learn the primary operational roles, command syntaxes, and troubleshooting parameters needed to design, configure, and maintain these services. We will explore how different protocols establish connections, how configurations manage resource allocation, and how security controls prevent access breaches. Make sure to complete the checklists and review the glossary terms in detail before beginning the lab activity.
-
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **Classes and objects**: A class is a blueprint that defines the structure and behavior shared by all objects of that type; an object (also called an instance) is a concrete realization of the class created with the class call syntax, e.g., `s = Student()`. Each object has its own independent namespace for instance variables, so changing `s1.name` does not affect `s2.name`. The PCAP exam tests that you understand the difference between the class definition (the blueprint) and instantiation (creating an object from it).
-*   **constructors (__init__)**: The `__init__` method is called automatically when a new object is created; it receives the new instance as its first argument (`self`) followed by any arguments passed to the class call. Use `__init__` to initialize instance variables: `self.name = name` binds the attribute to the specific object being constructed. If `__init__` is omitted, Python uses the inherited version from `object`, which does nothing — the PCAP exam may ask what happens when a class has no `__init__`.
-*   **instance variables vs class variables**: An instance variable is defined by assigning to `self.attribute` inside a method — each object gets its own copy. A class variable is defined in the class body outside any method — it is shared by all instances until overridden on a specific object. The PCAP exam presents code where a class variable is mutated through an instance (`obj.class_var = new_value`) and asks whether the class-level variable changed — the answer is no; the assignment creates a new instance variable that shadows the class variable for that object only.
-*   **methods**: A method is a function defined inside a class body; instance methods receive the object as the first parameter conventionally named `self`, which Python passes automatically when called on an instance (`obj.method()` is equivalent to `ClassName.method(obj)`). The PCAP exam tests that `self` is a convention, not a keyword, and that omitting it as the first parameter causes a `TypeError` when the method is called on an instance.
+Welcome to **Module 14 — Object-Oriented Programming: Basics**. Every value in Python — integers, strings, lists, dictionaries — is already an object, an instance of a class. Now you will define your own classes and create your own types with custom data and behavior. This module covers the class definition syntax, the `__init__` constructor, `self`, instance variables, instance methods, the `__str__` dunder method, class variables, and the `isinstance()` / `type()` built-ins. These concepts are among the most heavily tested on the PCAP exam and form the foundation for Module 15 (inheritance and polymorphism).
 
 ---
 
-### 2. Certification Exam Tips
-*   **Focus Area:** The PCAP exam tests the distinction between instance variables and class variables — know that modifying a mutable class variable (like a list) through one instance affects all instances, but reassigning the name on an instance creates a shadow variable and leaves the class variable unchanged. Also know that `__init__` is not called a "constructor" in all Python documentation but functions as one; it does not return a value (returning anything other than `None` raises `TypeError`).
-*   **Scenario Trap:** Watch for code that defines a class variable as a mutable default (e.g., `class Foo: items = []`) and then calls `foo.items.append(x)` on an instance — this mutates the shared class-level list, so all instances see the change. This is the OOP equivalent of the mutable default argument trap from Module 08. Also watch for calls that forget `self` in the method signature — the error message (`takes 0 positional arguments but 1 was given`) is a classic PCAP distractor.
-*   **Study Resource:** To reinforce these concepts visually, review this targeted playlist: [Python for Everybody Course Playlist - Object-Oriented Programming (OOP) Basics](https://www.youtube.com/playlist?list=PLlRFEj9H3Oj7Bp8-DfGPQAfUMERODyTGp) — Dr. Severance introduces classes through practical examples; supplement with the official Python docs on [classes](https://docs.python.org/3/tutorial/classes.html) for the authoritative treatment of instance vs class variables and method binding tested on the PCAP exam.
+## 1. High-Yield Glossary
+
+### Class
+
+A user-defined blueprint for creating objects. A class defines the attributes (data) and methods (behaviors) that every instance of that class will have.
+
+```python
+class Dog:
+    pass    # minimal valid class definition
+```
+
+Class names use **PascalCase** by convention — `Dog`, `BankAccount`, `StudentGrade`. This distinguishes them from variables and functions (which use snake_case).
+
+### Object / Instance
+
+An individual object built from a class blueprint. Creating an object is called **instantiation**. Each instance has its own copy of instance variables.
+
+```python
+d1 = Dog()    # d1 is an instance of Dog
+d2 = Dog()    # d2 is a separate instance of Dog
+```
+
+`d1` and `d2` are different objects in memory even though they were created from the same class.
+
+### `__init__` — The Constructor
+
+A special method that Python calls automatically when you create a new instance. Its purpose is to initialize the instance's attributes.
+
+```python
+class Dog:
+    def __init__(self, name, breed, age):
+        self.name = name
+        self.breed = breed
+        self.age = age
+```
+
+```python
+d = Dog('Rex', 'German Shepherd', 4)
+# Python automatically calls: Dog.__init__(d, 'Rex', 'German Shepherd', 4)
+```
+
+**`__init__` must not contain a `return` statement with a value.** It implicitly returns `None`. Returning anything else raises `TypeError: __init__() should return None`.
+
+### self
+
+The first parameter of every instance method. It is a reference to the specific instance on which the method was called. Python passes it automatically — you never supply `self` when calling a method.
+
+```python
+class Dog:
+    def __init__(self, name):
+        self.name = name       # self refers to the new instance
+
+    def bark(self):
+        return f'{self.name} says: Woof!'
+
+d = Dog('Rex')
+d.bark()    # Python translates this to: Dog.bark(d)
+            # self = d inside the method
+```
+
+`self` is a convention, not a keyword. You could name it anything, but you must always name it `self` — any other name will confuse every Python programmer reading your code and will fail the PCAP exam.
+
+### Instance Variable
+
+A variable that belongs to a specific instance. Defined by assigning to `self.variable_name` inside a method. Each instance has its own independent copy.
+
+```python
+d1 = Dog('Rex', 'German Shepherd', 4)
+d2 = Dog('Luna', 'Labrador', 2)
+
+d1.name = 'Max'    # changes only d1's name
+print(d1.name)     # Max
+print(d2.name)     # Luna — unchanged
+```
+
+### Class Variable
+
+A variable defined directly on the class body (not inside any method). Shared by all instances. Accessed as `ClassName.variable` or `instance.variable`.
+
+```python
+class Dog:
+    species = 'Canis lupus familiaris'    # class variable
+
+    def __init__(self, name):
+        self.name = name                  # instance variable
+```
+
+```python
+d1 = Dog('Rex')
+d2 = Dog('Luna')
+print(d1.species)    # Canis lupus familiaris
+print(d2.species)    # Canis lupus familiaris
+print(Dog.species)   # Canis lupus familiaris
+```
+
+**Critical distinction — instance assignment shadows class variable:**
+
+```python
+d1.species = 'Override'     # creates a NEW instance variable on d1
+print(d1.species)           # Override — reads d1's own instance variable
+print(d2.species)           # Canis lupus familiaris — d2 still reads class variable
+print(Dog.species)          # Canis lupus familiaris — class variable unchanged
+```
+
+Assigning through an instance does not modify the class variable. It creates a new instance variable that shadows the class variable for that instance only.
+
+### Instance Method
+
+A function defined inside a class that operates on an instance. Always takes `self` as the first parameter.
+
+```python
+class Dog:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def bark(self):                    # instance method
+        return f'{self.name}: Woof!'
+
+    def birthday(self):                # method that modifies state
+        self.age += 1
+        return self.age
+
+    def describe(self):
+        return f'{self.name}, age {self.age}'
+```
+
+### `__str__` — String Representation
+
+A dunder method (double-underscore on each side) called by `print()` and `str()` to get a human-readable string representation of an object.
+
+```python
+class Dog:
+    def __init__(self, name, breed, age):
+        self.name = name
+        self.breed = breed
+        self.age = age
+
+    def __str__(self):
+        return f'Dog({self.name!r}, {self.breed!r}, age={self.age})'
+```
+
+```python
+d = Dog('Rex', 'German Shepherd', 4)
+print(d)         # Dog('Rex', 'German Shepherd', age=4)
+print(str(d))    # Dog('Rex', 'German Shepherd', age=4)
+```
+
+Without `__str__`, `print(d)` outputs `<__main__.Dog object at 0x7f4a2b3c1d50>` — the memory address, which is not useful to end users.
+
+`__str__` must return a **string**. If it returns anything else, Python raises `TypeError`.
+
+### `__repr__` — Developer Representation
+
+A dunder method called by `repr()` and used in the REPL when you evaluate an expression. Intended to be an unambiguous developer-facing representation — ideally something that could be passed to `eval()` to recreate the object.
+
+```python
+def __repr__(self):
+    return f'Dog(name={self.name!r}, breed={self.breed!r}, age={self.age!r})'
+```
+
+**`__str__` vs `__repr__` fallback rule:**
+
+| Method defined | `print(obj)` uses | REPL uses |
+|---|---|---|
+| Both `__str__` and `__repr__` | `__str__` | `__repr__` |
+| Only `__repr__` | `__repr__` | `__repr__` |
+| Only `__str__` | `__str__` | default memory address |
+| Neither | default memory address | default memory address |
+
+### Dunder Methods (Magic Methods)
+
+Methods whose names start and end with double underscores: `__init__`, `__str__`, `__repr__`, `__len__`, `__eq__`, etc. Python calls these automatically in specific situations. You define them to customize how your objects behave with built-in functions and operators.
+
+| Dunder | Called by |
+|---|---|
+| `__init__(self, ...)` | `ClassName(args)` — construction |
+| `__str__(self)` | `print(obj)`, `str(obj)` |
+| `__repr__(self)` | `repr(obj)`, REPL display |
+| `__len__(self)` | `len(obj)` |
+| `__eq__(self, other)` | `obj1 == obj2` |
+| `__lt__(self, other)` | `obj1 < obj2` |
+| `__add__(self, other)` | `obj1 + obj2` |
+
+### Encapsulation
+
+The practice of bundling data (attributes) and the methods that operate on that data together in a class, and controlling access to the internal state. Python uses naming conventions rather than strict access modifiers:
+
+| Convention | Name format | Meaning |
+|---|---|---|
+| Public | `name` | Anyone can access |
+| Protected | `_name` | "Internal use" — accessible but don't touch from outside |
+| Private (name-mangled) | `__name` | Name-mangled to `_ClassName__name` — harder to access accidentally |
+
+```python
+class BankAccount:
+    def __init__(self, balance):
+        self._balance = balance       # protected — internal use
+        self.__pin = '1234'           # name-mangled — private
+
+    def deposit(self, amount):
+        if amount > 0:
+            self._balance += amount
+
+    def get_balance(self):
+        return self._balance
+```
+
+```python
+acc = BankAccount(100)
+acc._balance        # accessible but discouraged
+acc.__pin           # AttributeError — name-mangled to _BankAccount__pin
+acc._BankAccount__pin    # accessible if you know the mangled name
+```
+
+### isinstance() and type()
+
+```python
+d = Dog('Rex', 'German Shepherd', 4)
+
+type(d)                    # <class '__main__.Dog'>
+type(d) == Dog             # True — strict type check
+isinstance(d, Dog)         # True — preferred check
+isinstance(d, object)      # True — all Python objects are instances of object
+isinstance(42, (int, float))   # True — checks against tuple of types
+```
+
+**Prefer `isinstance()` over `type() ==` in production code.** `isinstance()` returns `True` for subclasses, which is almost always the desired behavior. `type() ==` is a strict identity check that fails for subclasses.
+
+### `hasattr()`, `getattr()`, `setattr()`
+
+Built-in functions for dynamic attribute access.
+
+```python
+d = Dog('Rex', 'German Shepherd', 4)
+
+hasattr(d, 'name')           # True
+hasattr(d, 'weight')         # False — attribute does not exist
+
+getattr(d, 'name')           # 'Rex'
+getattr(d, 'weight', 0)      # 0 — default if attribute missing
+
+setattr(d, 'weight', 32.5)   # creates d.weight = 32.5
+print(d.weight)              # 32.5
+```
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read Chapter 14 covering **Object-Oriented Programming (OOP) Basics** in the OER Textbook: [Python for Everybody by Dr. Charles Severance](https://www.py4e.com/book) — a free OER textbook; focus on the sections covering class definition syntax, `__init__`, the role of `self`, and the difference between instance and class variables with examples showing what changes when you modify one versus the other.
-*   **Required Video:** Watch the video lecture on **Object-Oriented Programming (OOP) Basics** in the official course playlist: [Python for Everybody Course Playlist](https://www.youtube.com/playlist?list=PLlRFEj9H3Oj7Bp8-DfGPQAfUMERODyTGp) — build the `Student` class from the lab yourself, adding attributes and methods step by step, and use `print(vars(obj))` to inspect an instance's namespace after each change.
+## 2. Complete Class Example
+
+```python
+class BankAccount:
+    '''A simple bank account with deposit, withdraw, and balance inquiry.'''
+
+    bank_name = 'Python National Bank'    # class variable
+
+    def __init__(self, owner, balance=0.0):
+        '''Create a new account for owner with optional initial balance.'''
+        self.owner = owner
+        self._balance = float(balance)    # protected — use methods to access
+        self._transactions = []
+
+    def deposit(self, amount):
+        '''Add amount to balance. Raises ValueError for non-positive amount.'''
+        if amount <= 0:
+            raise ValueError(f'Deposit amount must be positive: {amount}')
+        self._balance += amount
+        self._transactions.append(f'+{amount:.2f}')
+        return self._balance
+
+    def withdraw(self, amount):
+        '''Subtract amount from balance. Raises ValueError if insufficient.'''
+        if amount <= 0:
+            raise ValueError(f'Withdrawal amount must be positive: {amount}')
+        if amount > self._balance:
+            raise ValueError(f'Insufficient funds: balance is {self._balance:.2f}')
+        self._balance -= amount
+        self._transactions.append(f'-{amount:.2f}')
+        return self._balance
+
+    def get_balance(self):
+        return self._balance
+
+    def transaction_count(self):
+        return len(self._transactions)
+
+    def __str__(self):
+        return f'BankAccount({self.owner!r}, balance={self._balance:.2f})'
+
+    def __repr__(self):
+        return f'BankAccount(owner={self.owner!r}, balance={self._balance!r})'
+```
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Define a class `Student` with attributes name and grade**: Write `class Student:` with an `__init__(self, name, grade)` method that assigns `self.name = name` and `self.grade = grade`; confirm that the class definition does not print anything on its own.
-*   **Create multiple instances of the class**: Instantiate at least two students, e.g., `s1 = Student("Alice", 92)` and `s2 = Student("Bob", 85)`; verify that `s1.name` and `s2.name` hold independent values by printing both.
-*   **Implement a method to print student details**: Add a `display(self)` method that prints the student's name and grade; call `s1.display()` and `s2.display()` and confirm each prints its own data.
+## 3. Common Error Patterns to Memorize
 
+**Pattern 1 — Forgetting `self` as first parameter raises TypeError:**
+
+```python
+class Dog:
+    def bark():     # WRONG — missing self
+        return 'Woof'
+
+d = Dog()
+d.bark()    # TypeError: bark() takes 0 positional arguments but 1 was given
+```
+
+When you call `d.bark()`, Python passes `d` as the first argument. If the method has no parameters, there is nowhere for `d` to go — hence the error.
+
+**Pattern 2 — Returning a value from `__init__`:**
+
+```python
+class Dog:
+    def __init__(self, name):
+        self.name = name
+        return self    # TypeError: __init__() should return None (not 'Dog')
+```
+
+`__init__` must not return anything other than `None`.
+
+**Pattern 3 — Accessing instance variable as class variable:**
+
+```python
+class Dog:
+    def __init__(self, name):
+        self.name = name
+
+Dog.name    # AttributeError — name is an instance variable, not a class variable
+```
+
+`Dog.name` does not exist. You must access instance variables through an instance: `d.name`.
+
+**Pattern 4 — Class variable mutation through instance:**
+
+```python
+class Counter:
+    count = 0
+
+c1 = Counter()
+c2 = Counter()
+c1.count = 99     # creates instance variable on c1 — does NOT change Counter.count
+print(Counter.count)    # 0 — class variable unchanged
+print(c2.count)         # 0 — c2 still reads class variable
+```
+
+**Pattern 5 — `__str__` returning a non-string:**
+
+```python
+class Dog:
+    def __str__(self):
+        return self.age    # TypeError: __str__ returned non-string (type int)
+```
+
+`__str__` must return a string. Use `str(self.age)` or an f-string.
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read the section/chapter covering **Object-Oriented Programming (OOP) Basics** in [Python for Everybody](https://www.py4e.com/book).
-- [ ] Watch the video lecture on **Object-Oriented Programming (OOP) Basics** in [Python for Everybody Course Playlist](https://www.youtube.com/playlist?list=PLlRFEj9H3Oj7Bp8-DfGPQAfUMERODyTGp).
-- [ ] Review the commands outlined in the lab instructions.
-- [ ] Proceed to the weekly hands-on lab activity.
+## 4. Certification Exam Tips
+
+**Tip 1 — `self` must be the first parameter of every instance method.**
+The PCAP exam frequently shows a class definition where `self` is missing or in the wrong position. Missing `self` raises `TypeError` when the method is called — Python passes the instance automatically, but there is no parameter to receive it.
+
+**Tip 2 — `__init__` does not return a value.**
+`__init__` initializes the object. It must not have a `return` statement with a value. Returning `None` explicitly is allowed but unnecessary.
+
+**Tip 3 — Instance variable assignment in `__init__` uses `self.name = value`.**
+Without `self.`, you are creating a local variable inside `__init__` that disappears when `__init__` returns. The attribute will not exist on the object.
+
+**Tip 4 — Assigning to `instance.class_var` does not modify the class variable.**
+It creates a new instance variable that shadows the class variable for that instance only. The class variable and all other instances are unchanged.
+
+**Tip 5 — `__str__` is called by `print()`. It must return a string.**
+If `__str__` is missing, Python falls back to `__repr__`. If neither is defined, you get the unhelpful memory address output.
+
+**Tip 6 — `isinstance(obj, cls)` is True for subclasses.**
+`isinstance` handles inheritance correctly. `type(obj) == cls` does not — it fails for subclass instances.
+
+**Tip 7 — `type(obj)` returns the class object, not a string.**
+`type(d)` returns `<class '__main__.Dog'>`, not the string `'Dog'`. To get the name as a string, use `type(d).__name__`.
+
+---
+
+## 5. Beyond the Exam — Real-World Context
+
+**Properties — controlled attribute access.**
+The `@property` decorator lets you define getter, setter, and deleter methods that look like attribute access. This is the Pythonic way to validate data when setting an attribute:
+
+```python
+class Dog:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age    # calls the setter below
+
+    @property
+    def age(self):
+        return self._age
+
+    @age.setter
+    def age(self, value):
+        if value < 0:
+            raise ValueError('Age cannot be negative')
+        self._age = value
+```
+
+```python
+d = Dog('Rex', 4)
+d.age = -1    # ValueError: Age cannot be negative
+```
+
+**Dataclasses — less boilerplate.**
+Python 3.7+ includes `@dataclass` which auto-generates `__init__`, `__repr__`, and `__eq__` from class-level type annotations:
+
+```python
+from dataclasses import dataclass
+
+@dataclass
+class Dog:
+    name: str
+    breed: str
+    age: int
+```
+
+This is equivalent to writing `__init__`, `__repr__`, and `__eq__` by hand.
+
+**Everything is an object.**
+In Python, functions, classes, modules, and even `None` are all objects — instances of `function`, `type`, `module`, and `NoneType` respectively. `type(print)` is `<class 'builtin_function_or_method'>`. This is why functions can be passed as arguments and stored in variables.
+
+---
+
+## 6. Required Readings and Videos
+
+**Required Reading — Chapter 14:**
+Read Chapter 14 of [Python for Everybody by Dr. Charles Severance](https://www.py4e.com/book). This chapter introduces object-oriented programming with real-world examples.
+
+**Required Reading — Official Python Docs:**
+Read [Classes](https://docs.python.org/3/tutorial/classes.html) in the official Python 3 tutorial — the authoritative source for class syntax and the data model tested on the PCAP exam.
+
+**Supplemental Video:**
+Watch Episode 14 of the [Python for Everybody Course Playlist](https://www.youtube.com/playlist?list=PLlRFEj9H3Oj7Bp8-DfGPQAfUMERODyTGp). Dr. Severance covers OOP concepts with worked examples.
+
+---
+
+## 7. Study Checklist
+
+- [ ] Watch the Module 14 video lecture by Professor Nash.
+- [ ] Read the High-Yield Glossary — especially the instance variable vs class variable distinction.
+- [ ] Draw the class/instance diagram: class = blueprint, instance = individual object with its own data.
+- [ ] Write a `Dog` class from scratch with `__init__`, three instance methods, and `__str__`. Test it in the REPL.
+- [ ] Deliberately make the TypeError error: define a method without `self` and call it — read the error message.
+- [ ] Demonstrate the class variable shadowing behavior: modify through an instance, confirm the class variable is unchanged.
+- [ ] Practice `isinstance()` and `type()` on built-in types and your own class.
+- [ ] Review all 7 Certification Exam Tips in Section 4.
+- [ ] Proceed to the Module 14 Lab Activity.

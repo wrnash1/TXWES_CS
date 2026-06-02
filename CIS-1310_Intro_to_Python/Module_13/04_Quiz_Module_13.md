@@ -1,78 +1,245 @@
-# Quiz: Module 13 - Modules and Packages
-## Course: CIS-1310_Intro_to_Python (PCAP (Certified Associate in Python Programming))
+# Quiz: Module 13 — Modules and Packages
+
+## Course: CIS-1310 Introduction to Python
+
+**Certification Alignment:** PCAP — Certified Associate in Python Programming (Python Institute)
+
+**Instructions:** Choose the single best answer for each question. All questions are specific to Module 13 topics.
 
 ---
 
-**Question 1**
-What does `import math` do?
-*   A) Copies math functions directly into your file
-*   B) Imports the math module namespace
-*   C) Exposes all functions without the math prefix
-*   D) Compiles the math module
-*   **Correct Answer:** B) It imports the module, keeping its functions under the `math.` namespace to avoid name collisions.
-*   **Distractor Analysis:**
-    *   *Why correct:* It imports the module, keeping its functions under the `math.` namespace to avoid name collisions.
-    *   from math import * exposes functions without prefix, which can overwrite existing names.
+### Question 1
+
+After executing `import math`, which of the following calls is correct?
+
+- A) `sqrt(16)`
+- B) `math.sqrt(16)`
+- C) `math::sqrt(16)`
+- D) `Math.sqrt(16)`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `import math` puts the name `math` in the namespace, not `sqrt`. Calling `sqrt(16)` raises `NameError: name 'sqrt' is not defined`. You would need `from math import sqrt` to call it without a prefix.
+- *Why B is correct:* `import math` makes `math` available as a module object. All of its contents are accessed with the dot notation `math.sqrt`.
+- *Why C is incorrect:* Python uses `.` for attribute access, not `::`. The `::` operator does not exist in Python (it is used in C++ and Ruby).
+- *Why D is incorrect:* Module names in Python are case-sensitive. The module is named `math` (lowercase), not `Math`. Using the wrong case raises `NameError`.
 
 ---
 
-**Question 2**
-Which of the following best describes **creating custom modules** in Python?
-*   A) A custom module must be registered with pip and installed into the virtual environment before it can be imported; Python does not search the current directory for unregistered modules
-*   B) Any `.py` file saved in the same directory as the importing script (or on `sys.path`) can be imported as a module; the `__name__` variable equals `"__main__"` when run directly and the module name when imported
-*   C) A custom module must contain a class with the same name as the file; Python raises `ImportError` if no matching class is found when the module is imported
-*   D) Importing a custom module re-executes all its top-level code every time it is imported in the same program, so module-level side effects occur once per import statement
-*   **Correct Answer:** B) Any `.py` file saved in the same directory as the importing script (or on `sys.path`) can be imported as a module; the `__name__` variable equals `"__main__"` when run directly and the module name when imported.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Python searches `sys.path` automatically, which includes the current directory by default; local `.py` files are importable without pip registration — pip is only needed for third-party packages not already on the path.
-    *   *Why B is correct:* Any `.py` file is a valid module; the `__name__ == "__main__"` guard is the standard pattern to prevent test or script code from running when the file is used as a library by another script.
-    *   *Why C is incorrect:* A module does not need to contain any class at all — it can contain functions, constants, or any Python code; there is no requirement for a class matching the filename.
-    *   *Why D is incorrect:* Python caches imported modules in `sys.modules` and executes their top-level code only once per interpreter session, regardless of how many times `import` is called — subsequent imports return the cached module object.
+### Question 2
 
+What is the output of this code?
 
----
+```python
+from math import sqrt as sq
+print(sq(49))
+print(math.sqrt(49))
+```
 
-**Question 3**
-A systems administrator or developer needs to **install all external project dependencies specified in the requirements manifest**. Which of the following commands is the most appropriate to execute?
-B) pytest
-C) git commit -m 'update'
-D) python3 -m venv .venv
-A) pip install -r requirements.txt
-*   **Correct Answer:** A) pip install -r requirements.txt
-*   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `pip install -r requirements.txt` command is directly designed to install all external project dependencies specified in the requirements manifest.
+- A) `7.0` then `7.0`
+- B) `7.0` then `NameError`
+- C) `NameError` then `7.0`
+- D) `49` then `49`
 
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `from math import sqrt as sq` imports `sqrt` under the alias `sq` — it does NOT import `math` itself into the namespace. The second line `math.sqrt(49)` raises `NameError`.
+- *Why B is correct:* `sq(49)` succeeds because `sq` is the alias for `sqrt`. The second line fails because `math` was never imported — only `sqrt` was, renamed to `sq`.
+- *Why C is incorrect:* The first line succeeds — `sq` is a valid alias for `sqrt`. The error occurs on the second line, not the first.
+- *Why D is incorrect:* `sq(49)` calls `math.sqrt(49)` which returns `7.0` (a float), not `49`. The square root of 49 is 7.0.
 
 ---
 
-**Question 4**
-While working on **Modules and Packages** in a production environment, you encounter a system alert indicating a **TypeError** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-D) Reboot the physical machine and wait for services to reload.
-B) Ensure the requested key exists in the dictionary, or use the .get() method to return a default value.
-A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-C) Verify that the index is within the valid range of 0 to len(list)-1.
-*   **Correct Answer:** A) Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types.
-*   **Distractor Analysis:**
-    * *Why D is incorrect:* This action does not resolve the root cause of TypeError.
-    * *Why B is incorrect:* This action does not resolve the root cause of TypeError.
-    * *Why A is correct:* Because An operation or function was applied to an object of an inappropriate data type. The appropriate fix is to Perform explicit type casting (e.g. str() or int()) before executing operations on mixed data types..
-    * *Why C is incorrect:* This action does not resolve the root cause of TypeError.
+### Question 3
 
+What value does `__name__` have inside a module file when that file is **imported** by another script?
+
+- A) `'__main__'`
+- B) `None`
+- C) The module's filename including `.py`
+- D) The module's filename without `.py`
+
+**Correct Answer:** D
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `__name__` equals `'__main__'` only when the file is run directly with `python3 filename.py`. When imported, `__name__` is the module name, not `'__main__'`.
+- *Why B is incorrect:* `__name__` is never `None`. It is always a string — either `'__main__'` or the module name.
+- *Why C is incorrect:* The module name does not include the `.py` extension. `greetings.py` has `__name__ == 'greetings'` when imported, not `'greetings.py'`.
+- *Why D is correct:* When `greetings.py` is imported, `__name__` inside that file equals `'greetings'` — the filename without the `.py` extension. This is how Python identifies modules.
 
 ---
 
-**Question 5**
-When designing a system for **Modules and Packages**, you must mitigate the risk of **Allowing attackers to execute arbitrary SQL commands on the backend database via input forms.**. Which of the following security configurations or controls represents the best practice to implement?
-A) Implement parameterized queries and prepared statements rather than raw string concatenation.
-C) Enable full disk encryption on all client endpoints.
-B) Encrypt sensitive variables and user passwords using high-entropy hashing algorithms like bcrypt.
-D) Use `from config import *` to load database credentials into module-level variables so all modules share a single connection string.
-*   **Correct Answer:** A) Implement parameterized queries and prepared statements rather than raw string concatenation.
-*   **Distractor Analysis:**
-    * *Why A is correct:* Implementing parameterized queries and prepared statements rather than raw string concatenation mitigates the risk of allowing attackers to execute arbitrary SQL commands on the backend database via input forms.
-    * *Why C is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why B is incorrect:* This does not address the security vulnerability of SQL Injection Prevention.
-    * *Why D is incorrect:* Sharing database credentials via a wildcard module import makes them globally accessible throughout the application, increasing the attack surface; it does not prevent SQL injection and is itself a security anti-pattern that exposes credentials to any module that performs the import.
+### Question 4
+
+What is the output of this code?
+
+```python
+# utils.py
+def greet(name):
+    return f'Hi, {name}!'
+
+print(greet('World'))
+```
+
+```python
+# main.py
+import utils
+print(utils.greet('Alice'))
+```
+
+Running `python3 main.py` produces:
+
+- A) `Hi, Alice!`
+- B) `Hi, World!` then `Hi, Alice!`
+- C) `Hi, Alice!` then `Hi, World!`
+- D) `Hi, World!`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `utils.py` has a top-level `print(greet('World'))` that is NOT inside a `if __name__ == '__main__':` guard. When `import utils` executes, Python runs the entire `utils.py` file — including that print — before returning control to `main.py`.
+- *Why B is correct:* Importing `utils` runs the entire module file. The `print(greet('World'))` runs first during import, printing `Hi, World!`. Then `main.py` calls `utils.greet('Alice')` and prints `Hi, Alice!`.
+- *Why C is incorrect:* The import runs first, before `main.py`'s own code. The output order is `Hi, World!` then `Hi, Alice!`, not the reverse.
+- *Why D is incorrect:* `print(utils.greet('Alice'))` also runs — the import side effect and the explicit call both execute.
+
+---
+
+### Question 5
+
+What does `random.shuffle(items)` return?
+
+- A) A new shuffled list
+- B) The original list, shuffled in place
+- C) `None`
+- D) The first element of the shuffled list
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `random.shuffle()` does not create a new list. It modifies the existing list in place.
+- *Why B is incorrect:* While `shuffle` does modify the list in place, the return value is `None`, not the list. Assigning `result = random.shuffle(items)` gives `result` the value `None`, not the shuffled list.
+- *Why C is correct:* `random.shuffle()` is an in-place operation that returns `None`. To get the shuffled list, use the variable you passed in — not the return value.
+- *Why D is incorrect:* `shuffle` does not return any element. Its return value is always `None`.
+
+---
+
+### Question 6
+
+Which command installs a third-party package named `requests` using pip?
+
+- A) `python3 install requests`
+- B) `import requests`
+- C) `pip3 install requests`
+- D) `python3 -m install requests`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `python3 install` is not a valid command. Python's interpreter does not have an `install` subcommand. You use the `pip3` tool, not the `python3` interpreter directly for installation.
+- *Why B is incorrect:* `import requests` imports a package that is already installed. It does not install anything. Running this before installation raises `ModuleNotFoundError`.
+- *Why C is correct:* `pip3 install requests` is the correct command to download `requests` from PyPI and install it for your Python 3 environment.
+- *Why D is incorrect:* The correct pip invocation through the Python interpreter is `python3 -m pip install requests` (using `-m pip`, not `-m install`). Option D is not valid syntax.
+
+---
+
+### Question 7
+
+What is the purpose of `if __name__ == '__main__':` at the bottom of a module file?
+
+- A) To define the main function that Python always calls first
+- B) To prevent the code inside from running when the file is imported
+- C) To mark the file as the entry point for the entire program
+- D) To import the module into itself
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Python does not have a mandatory `main()` function like Java or C. Python files execute top to bottom from line 1. There is no automatic call to any `main` function.
+- *Why B is correct:* The block inside `if __name__ == '__main__':` only runs when the file is executed directly. When the file is imported, `__name__` is the module's name (not `'__main__'`), so the condition is `False` and the block is skipped. This separates reusable library code from startup/test code.
+- *Why C is incorrect:* There is no formal "entry point" designation in Python's module system. Any `.py` file can be run directly. The guard does not mark a file as special to the interpreter — it just conditionally executes code.
+- *Why D is incorrect:* A module importing itself would create a circular import. `if __name__ == '__main__':` does not perform any import.
+
+---
+
+### Question 8
+
+What is the output of this code?
+
+```python
+import random
+random.seed(0)
+print(random.randint(1, 6))
+print(random.randint(1, 6))
+```
+
+- A) `1` then `1` (seed makes all values identical)
+- B) Two unpredictable values that change on every run
+- C) Two specific values that are the same every run because seed is fixed
+- D) `0` then `0` (seed value is returned)
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `random.seed(0)` initializes the random number generator to a fixed starting state. Subsequent calls produce a deterministic sequence — but each call produces a different value in that sequence. They are not all the same.
+- *Why B is incorrect:* With `random.seed(0)`, the sequence is fully deterministic. Running this code a thousand times always produces the same two values.
+- *Why C is correct:* `random.seed(0)` makes the random sequence reproducible. With seed 0, `random.randint(1, 6)` produces the same specific sequence every run. The values are not the same as each other, but the sequence is identical across runs.
+- *Why D is incorrect:* `random.seed()` returns `None`. It does not return the seed value, and the subsequent `randint` calls return values in the range 1–6, not 0.
+
+---
+
+### Question 9
+
+Which of the following correctly creates a virtual environment named `myenv` and activates it on Linux?
+
+- A) `python3 venv myenv` then `activate myenv`
+- B) `python3 -m venv myenv` then `source myenv/bin/activate`
+- C) `pip3 venv myenv` then `source myenv/activate`
+- D) `virtualenv myenv` then `myenv/activate`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `python3 venv myenv` is missing the `-m` flag. The correct command runs the `venv` module with `-m`. Also, `activate myenv` is not the correct activation syntax — you `source` the activate script.
+- *Why B is correct:* `python3 -m venv myenv` creates the virtual environment directory. `source myenv/bin/activate` runs the activation script in the current shell, modifying the `PATH` so `python3` and `pip3` point to the environment's copies.
+- *Why C is incorrect:* `pip3 venv myenv` is not a valid pip subcommand. Also, the activate script is at `myenv/bin/activate`, not `myenv/activate`.
+- *Why D is incorrect:* `virtualenv` is a third-party tool that is not part of the standard library. The standard built-in tool is `python3 -m venv`. Also, you `source` the activate script — you do not run it directly as a path.
+
+---
+
+### Question 10
+
+What is the output of this code?
+
+```python
+import math
+
+print(math.ceil(4.0))
+print(math.ceil(4.1))
+print(math.floor(4.9))
+print(math.floor(-4.1))
+```
+
+- A) `4` then `4` then `4` then `-4`
+- B) `4` then `5` then `4` then `-5`
+- C) `5` then `5` then `5` then `-4`
+- D) `4.0` then `5.0` then `4.0` then `-5.0`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `math.ceil(4.1)` rounds **up** to the nearest integer, giving `5`, not `4`. Ceiling always rounds toward positive infinity.
+- *Why B is correct:* `ceil(4.0)` → `4` (already integer). `ceil(4.1)` → `5` (round up). `floor(4.9)` → `4` (round down). `floor(-4.1)` → `-5` (round toward negative infinity — `-4.1` rounded down is `-5`, not `-4`).
+- *Why C is incorrect:* `math.ceil(4.0)` is `4`, not `5`. An exact integer has no fractional part, so ceiling and floor both return the integer itself.
+- *Why D is incorrect:* `math.ceil` and `math.floor` return Python `int`, not `float`. The results are `4`, `5`, `4`, `-5` — not `4.0`, `5.0`, etc.

@@ -1,51 +1,320 @@
-# Reading Guide: Module 03 - Variables and Basic I/O
-## Course: CIS-1310_Intro_to_Python (PCAP (Certified Associate in Python Programming))
+# Reading Guide: Module 03 — Variables and Basic I/O
+
+## Course: CIS-1310 Introduction to Python
+
+**Certification Alignment:** PCAP — Certified Associate in Python Programming (Python Institute)
 
 ---
 
-### Introduction
-Welcome to **Module 03 - Variables and Basic I/O**! This week's study material focuses on the core foundations and configuration mechanics of **Variables and Basic I/O** as aligned with the **PCAP (Certified Associate in Python Programming)** certification framework. Understanding these topics is essential not only for passing the certification exam but also for administering enterprise systems in real-world environments.
+## Introduction
 
-As a student, you will learn the primary operational roles, command syntaxes, and troubleshooting parameters needed to design, configure, and maintain these services. We will explore how different protocols establish connections, how configurations manage resource allocation, and how security controls prevent access breaches. Make sure to complete the checklists and review the glossary terms in detail before beginning the lab activity.
+Welcome to **Module 03 — Variables and Basic I/O**. This module connects the literal values and operators from Module 02 to real, interactive programs. Variables let you store and reuse data. The `input()` function lets your programs talk to users. f-strings let you produce clean, readable output. Together, these skills make every program from this point forward possible.
 
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **Variable naming rules**: In Python, variable names must start with a letter or underscore, can contain letters, digits, and underscores, and are case-sensitive (`age` and `Age` are different variables). Reserved keywords like `if`, `for`, `return`, and `class` cannot be used as variable names. The PCAP exam tests whether you can identify valid vs. invalid identifiers.
-*   **dynamic typing**: Python is dynamically typed, meaning a variable's type is determined at runtime by the value assigned to it, not by a declared type. The same variable can hold an `int` and later be reassigned a `str` — Python will not raise an error until an incompatible operation is attempted. This is distinct from statically typed languages like Java where types are declared at compile time.
-*   **input() function**: The built-in `input()` function pauses program execution, displays an optional prompt string to the user, reads one line of text from standard input, and always returns that text as a `str`. If you need to perform arithmetic with the result, you must explicitly convert it with `int()` or `float()`.
-*   **type casting (int, float, str)**: Type casting is the explicit conversion of a value from one type to another using constructor functions: `int()` converts a string of digits or a float to an integer (truncating the decimal part), `float()` converts an integer or numeric string to a float, and `str()` converts any value to its string representation. Passing a non-numeric string to `int()` raises a `ValueError`, which is a common PCAP exam scenario.
+The PCAP exam tests variable naming rules, the behavior of `input()`, type conversion patterns, and f-string syntax extensively. Work through every glossary entry and trace through every example before starting the lab.
 
 ---
 
-### 2. Certification Exam Tips
-*   **Focus Area:** The PCAP exam frequently presents code that reads input, performs arithmetic, and prints output — you must know that `input()` always returns a string. A classic trap is code like `result = input("Enter a number: ") + 5`, which raises a `TypeError` because you cannot add `str` and `int` without casting.
-*   **Scenario Trap:** Watch out for `int()` vs. `float()` conversion traps. `int("3.14")` raises a `ValueError` because `int()` does not accept a string with a decimal point; you would need `int(float("3.14"))` to convert it safely. Know the order of these conversions.
-*   **Study Resource:** To reinforce these concepts visually, review this targeted playlist: [Python for Everybody Course Playlist - Variables and Basic I/O](https://www.youtube.com/playlist?list=PLlRFEj9H3Oj7Bp8-DfGPQAfUMERODyTGp) — pay special attention to the segments on `input()` and type conversion, which Dr. Severance demonstrates with live interactive examples.
+## 1. High-Yield Glossary
+
+### Variable
+
+A named label that references a value stored in memory. Created with an assignment statement: `name = value`. Variables can be reassigned at any time to new values of any type.
+
+### Assignment Operator (`=`)
+
+The single `=` symbol assigns the value on the right to the name on the left. It is NOT equality comparison — that is `==`. Writing `x = 5` stores `5` under the name `x`. Writing `x == 5` tests whether `x` equals `5` and returns `True` or `False`.
+
+### Identifier
+
+The technical term for a variable name (also applies to function names, class names, etc.). Python has strict rules for valid identifiers — see the naming rules section below.
+
+### Python Naming Rules (PCAP exam critical)
+
+A valid Python identifier must:
+
+1. Start with a letter (`a`–`z`, `A`–`Z`) or an underscore (`_`)
+2. Contain only letters, digits (`0`–`9`), and underscores after the first character
+3. Not be a Python reserved keyword
+
+Invalid examples and why:
+
+| Name | Problem |
+|---|---|
+| `2fast` | Starts with a digit |
+| `user-name` | Hyphen is not allowed |
+| `my var` | Space is not allowed |
+| `class` | Reserved keyword |
+| `for` | Reserved keyword |
+
+Valid examples: `name`, `_private`, `user_age`, `firstName`, `MAX_SIZE`, `x2`
+
+### Python Reserved Keywords
+
+The 35 words Python reserves for its own syntax — cannot be used as variable names:
+
+```text
+False    None     True     and      as       assert
+async    await    break    class    continue def
+del      elif     else     except   finally  for
+from     global   if       import   in       is
+lambda   nonlocal not      or       pass     raise
+return   try      while    with     yield
+```
+
+### Case Sensitivity
+
+Python variable names are case-sensitive. `age`, `Age`, and `AGE` are three distinct variables. A common bug is referring to a variable with the wrong capitalization — Python raises `NameError: name 'X' is not defined`.
+
+### PEP 8 Naming Conventions
+
+| Use | Convention | Example |
+|---|---|---|
+| Variables and functions | `snake_case` | `user_age`, `total_price` |
+| Constants | `UPPER_SNAKE_CASE` | `MAX_SIZE`, `PI` |
+| Classes | `PascalCase` | `StudentRecord`, `BankAccount` |
+
+These are conventions, not rules — Python won't error on `userName`, but `user_name` is the professional standard.
+
+### Dynamic Typing
+
+Python determines a variable's type at runtime based on the assigned value. No type declaration is needed or allowed. The same variable can hold different types at different times. Contrast with **static typing** (Java, C) where the type is declared at compile time and cannot change.
+
+### Multiple Assignment
+
+Assigning multiple variables in a single statement:
+
+```python
+a, b, c = 1, 2, 3          # tuple unpacking
+x = y = z = 0              # assign same value to multiple names
+a, b = b, a                # swap two variables
+```
+
+### Augmented Assignment Operators
+
+Shorthand operators that combine arithmetic with assignment:
+
+| Operator | Equivalent | Example |
+|---|---|---|
+| `+=` | `x = x + n` | `count += 1` |
+| `-=` | `x = x - n` | `score -= 5` |
+| `*=` | `x = x * n` | `total *= 2` |
+| `/=` | `x = x / n` | `avg /= count` |
+| `//=` | `x = x // n` | `pages //= 2` |
+| `%=` | `x = x % n` | `n %= 10` |
+| `**=` | `x = x ** n` | `area **= 2` |
+
+### print() Function
+
+Outputs values to the terminal. Key parameters:
+
+- `sep` — separator between multiple arguments (default: `' '` a space)
+- `end` — appended after the last argument (default: `'\n'` newline)
+
+Examples:
+
+```python
+print('A', 'B', 'C')              # A B C
+print('A', 'B', 'C', sep='-')     # A-B-C
+print('Loading', end='...')       # Loading... (no newline)
+```
+
+### f-string (Formatted String Literal)
+
+A string prefixed with `f` that allows embedding expressions directly inside `{}` placeholders. Available since Python 3.6.
+
+```python
+name = 'Alice'
+age = 30
+print(f'Hello, {name}! You are {age} years old.')
+# Hello, Alice! You are 30 years old.
+```
+
+Expressions inside `{}` are evaluated at runtime. You can use format specs after a colon:
+
+- `:.2f` — float with 2 decimal places
+- `:d` — integer
+- `:>10` — right-align in 10-character field
+- `:.0f` — float rounded to 0 decimal places
+
+### input() Function
+
+Pauses program execution, displays an optional prompt to the user, reads one line of text from the keyboard, and returns it as a `str`.
+
+**Critical rule: `input()` ALWAYS returns `str` — no exceptions.**
+
+```python
+name = input('Enter your name: ')   # always str
+age = input('Enter your age: ')     # '25' — a string, not int 25
+```
+
+To use the result for arithmetic, convert immediately:
+
+```python
+age = int(input('Enter your age: '))
+```
+
+### TypeError
+
+Error raised when an operation is applied to a value of an incompatible type. Classic cause in this module: trying to add an `int` to the `str` returned by `input()`.
+
+```python
+age = input('Enter age: ')   # returns str
+print(age + 1)               # TypeError: can only concatenate str (not "int") to str
+```
+
+### ValueError
+
+Error raised when a function receives an argument of the right type but an inappropriate value. Classic cause: passing a non-numeric string to `int()` or `float()`.
+
+```python
+int('hello')     # ValueError: invalid literal for int() with base 10: 'hello'
+int('3.14')      # ValueError: invalid literal for int() with base 10: '3.14'
+```
+
+To convert a float-formatted string to int, chain the calls:
+
+```python
+int(float('3.14'))   # 3 — float() first, then int()
+```
+
+### NameError
+
+Error raised when a variable is referenced before it has been assigned a value. Common cause: typo in a variable name, or using a variable outside the scope where it was defined.
+
+```python
+print(userage)    # NameError if the variable is actually named user_age
+```
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read Chapters 2–3 covering **Variables and Basic I/O** in the OER Textbook: [Python for Everybody by Dr. Charles Severance](https://www.py4e.com/book) — a free OER textbook; focus on naming rules, variable assignment, and the sections explaining how `input()` works with type conversion.
-*   **Required Video:** Watch the video lecture on **Variables and Basic I/O** in the official course playlist: [Python for Everybody Course Playlist](https://www.youtube.com/playlist?list=PLlRFEj9H3Oj7Bp8-DfGPQAfUMERODyTGp) — Dr. Severance demonstrates building interactive programs that prompt users and process their input.
+## 2. The input() Function — Complete Behavior Reference
+
+| Behavior | Detail |
+|---|---|
+| Return type | Always `str` |
+| With no argument | `input()` — shows no prompt, just waits |
+| With a prompt | `input('Enter name: ')` — displays the prompt |
+| Empty input | Returns empty string `''` if user presses Enter without typing |
+| Numeric input | User types `42` → you receive string `'42'` |
+| Conversion pattern | `int(input('...'))` or `float(input('...'))` |
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Write a script to prompt the user for their name and age**: Use `input()` with descriptive prompt strings; observe that both values are returned as strings before any conversion.
-*   **Convert age from string to integer using `int()`**: Apply `age = int(input("Enter your age: "))` and verify you can now perform arithmetic with `age`; test what happens if you type a non-numeric value.
-*   **Output a formatted string: f'Hello {name}, you are {age} years old'**: Practice f-string syntax, which embeds variable values directly inside curly braces within a string literal — this is tested on the PCAP exam.
+## 3. Common Error Patterns to Memorize
 
+These patterns appear directly on the PCAP exam:
+
+**Pattern 1 — The `input()` + arithmetic trap:**
+
+```python
+x = input('Number: ')
+print(x * 2)             # '55' if user entered '5' — string repetition, not multiplication
+```
+
+`str * int` does NOT multiply — it repeats the string. `'5' * 2` = `'55'`, not `10`.
+
+**Pattern 2 — The `int()` on a float string:**
+
+```python
+int('3.14')    # ValueError — int() cannot parse a decimal point
+```
+
+**Pattern 3 — The `NameError` typo:**
+
+```python
+user_name = 'Alice'
+print(username)    # NameError — underscore missing
+```
+
+**Pattern 4 — The keyword as variable name:**
+
+```python
+class = 'CIS-1310'    # SyntaxError — class is a reserved keyword
+```
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read the section/chapter covering **Variables and Basic I/O** in [Python for Everybody](https://www.py4e.com/book).
-- [ ] Watch the video lecture on **Variables and Basic I/O** in [Python for Everybody Course Playlist](https://www.youtube.com/playlist?list=PLlRFEj9H3Oj7Bp8-DfGPQAfUMERODyTGp).
-- [ ] Review the commands outlined in the lab instructions.
-- [ ] Proceed to the weekly hands-on lab activity.
+## 4. Certification Exam Tips
+
+**Tip 1 — `input()` always returns `str`.**
+The #1 most tested `input()` fact. If you see code that calls `input()` and immediately uses the result in arithmetic without conversion, that code raises `TypeError`.
+
+**Tip 2 — `str * int` repeats the string, does not multiply.**
+`'5' * 2` = `'55'`. If a student forgets to convert `input()` to `int`, their multiplication code won't crash — it'll silently produce wrong results by repeating the string.
+
+**Tip 3 — `int('3.14')` raises `ValueError`.**
+`int()` accepts integer-format strings only. A decimal string must go through `float()` first: `int(float('3.14'))` = `3`.
+
+**Tip 4 — Know all identifier rules.**
+The PCAP exam shows four options for variable names and asks which are valid. Know that digits cannot start a name, hyphens are never valid, and all 35 keywords are off-limits.
+
+**Tip 5 — f-string syntax.**
+The PCAP tests f-string syntax. An f-string must have `f` or `F` before the opening quote. Variables go inside `{}`. Any Python expression is valid inside `{}`.
+
+**Tip 6 — Case sensitivity.**
+`Count`, `count`, and `COUNT` are different variables. A `NameError` that seems puzzling on an exam question is often a capitalization mismatch.
+
+---
+
+## 5. Beyond the Exam — Real-World Context
+
+**Why does `input()` always return a string?**
+From Python's perspective, it has no way to know what the user will type. The user might type `42`, or `"hello"`, or nothing, or `"3.14"`. Since Python can't predict the type of input at parse time, it always returns the safest, most general type — `str`. You as the programmer know what you expect, so you apply the appropriate conversion.
+
+**Why do professional developers prefer f-strings over string concatenation?**
+Compare these two equivalent lines:
+
+```python
+# Old style — hard to read, error-prone
+print('Hello, ' + name + '! You are ' + str(age) + ' years old.')
+
+# f-string — clean, readable, no type conversion needed
+print(f'Hello, {name}! You are {age} years old.')
+```
+
+f-strings are more readable, require no manual type conversion to `str`, and are faster at runtime than string concatenation. They have been the preferred style since Python 3.6.
+
+**Why does dynamic typing help in real projects?**
+A function that computes something useful doesn't need to be written twice — once for integers and once for floats. In Python, the same function works on both because types are determined at runtime. This is one reason Python is so productive for rapid prototyping and data exploration.
+
+---
+
+## 6. Required Readings & Videos
+
+**Required Reading — Chapters 2–3:**
+Read Chapters 2 and 3 of [Python for Everybody by Dr. Charles Severance](https://www.py4e.com/book). Chapter 2 covers variables and expressions. Chapter 3 covers conditional execution — but the `input()` examples in Chapter 3 are directly relevant to this module.
+
+**Required Reading — Official Python Docs:**
+Read [Built-in Functions: input()](https://docs.python.org/3/library/functions.html#input) and [Formatted String Literals (f-strings)](https://docs.python.org/3/reference/lexical_analysis.html#f-strings) in the official Python 3 documentation.
+
+**Required Video:**
+Watch Episodes 5–6 of the [Python for Everybody Course Playlist](https://www.youtube.com/playlist?list=PLlRFEj9H3Oj7Bp8-DfGPQAfUMERODyTGp). Dr. Severance walks through building interactive programs that prompt users, convert input, and produce formatted output.
+
+---
+
+## 7. Lab & Command Preview
+
+| Task | What You Will Do |
+|---|---|
+| Variable naming experiments | Test valid and invalid names in REPL, observe `SyntaxError` and `NameError` |
+| Multiple assignment | Practice `a, b = 1, 2` and swap pattern `a, b = b, a` |
+| Augmented assignment | Use `+=`, `-=`, `*=` in short accumulator scripts |
+| `print()` parameters | Test `sep` and `end` with multiple arguments |
+| f-string practice | Write f-strings with variables, expressions, and format specs |
+| `greeting.py` | Prompt for name and age, display personalized formatted greeting |
+| `unit_converter.py` | Prompt for miles, convert to km, feet, meters |
+| Error triggering | Intentionally cause `TypeError`, `ValueError`, `NameError` |
+
+---
+
+## 8. Study Checklist
+
+- [ ] Watch the Module 03 video lecture by Professor Nash.
+- [ ] Read the High-Yield Glossary — especially the naming rules table and error patterns.
+- [ ] Work through the Common Error Patterns in Section 3 — predict each error before reading the explanation.
+- [ ] Read Chapters 2–3 of *Python for Everybody* at py4e.com.
+- [ ] Read the `input()` and f-string sections of the Official Python 3 Docs.
+- [ ] Watch Episodes 5–6 of the Python for Everybody playlist.
+- [ ] Review the Certification Exam Tips in Section 4.
+- [ ] Preview the lab tasks in Section 7.
+- [ ] Proceed to the Module 03 Lab Activity.
