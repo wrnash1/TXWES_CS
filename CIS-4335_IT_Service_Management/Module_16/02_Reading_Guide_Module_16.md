@@ -1,59 +1,318 @@
-# Reading Guide: Module 16 - Final Exam Preparation and ITIL 4 Foundation Certification Review
-## Course: CIS-4335_IT_Service_Management (ITIL 4 Foundation)
+# Reading Guide: Module 16 — ITIL 4 Foundation Exam Preparation
+
+## Course: CIS-4335 IT Service Management
+
+## Texas Wesleyan University | Professor Nash
+
+**Certification Alignment:** ITIL 4 Foundation
 
 ---
 
-### Introduction
-Welcome to **Module 16 - Final Exam Preparation and ITIL 4 Foundation Certification Review**! This module is your comprehensive review of every major topic tested on the ITIL 4 Foundation exam. Rather than introducing new material, it synthesizes the key concepts, distinctions, and scenario patterns from all previous modules into a focused preparation guide for the certification exam and the course final.
+## Overview
 
-As a student, you will review the Service Value System and its five components, the four dimensions of service management, the seven guiding principles, the service value chain activities, and the key practices covered throughout the course. The ITIL 4 Foundation exam is forty questions in sixty minutes — every question tests your ability to apply definitions in realistic service management scenarios. Make sure to complete the checklist and review all glossary terms before attempting the practice exam.
+This guide is your comprehensive exam preparation reference. It consolidates the key concepts, terminology, and practice knowledge from all sixteen modules into a single organized review document. Use it alongside the Module 16 video lecture, the practice quiz, and the official Axelos ITIL 4 Foundation study resources.
 
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The ITIL 4 Foundation exam expects you to know these concepts precisely:
-
-*   **ITIL 4 Service Value System (SVS)**: The overarching model describing how all components and activities of an organization work together to enable value creation. The SVS has five components: the guiding principles, governance, the service value chain, practices, and continual improvement. The SVS takes opportunity and demand as inputs and produces value as output.
-*   **Service Value Chain (SVC)**: The set of six interconnected activities within the SVS that an organization performs to create and deliver services. The six activities are: Plan, Improve, Engage, Design and Transition, Obtain/Build, and Deliver and Support. These activities are not a fixed sequence — they combine into flexible value streams depending on the scenario.
-*   **ITIL 4 Practice**: An ITIL 4 organizational resource consisting of people, processes, tools, and information for performing work or accomplishing an objective. ITIL 4 uses the term "practice" (not "process") to emphasize that practices involve more than just procedures — they include culture, capabilities, and resources. ITIL 4 defines 34 practices across three categories: general management, service management, and technical management.
-*   **Guiding Principles**: Seven recommendations in ITIL 4 that guide organizations in their decisions and actions regardless of changes in goals, strategies, or structures. The seven guiding principles are: Focus on value; Start where you are; Progress iteratively with feedback; Collaborate and promote visibility; Think and work holistically; Keep it simple and practical; Optimize and automate.
-*   **Four Dimensions of Service Management**: The four perspectives that must be considered for every service and practice to ensure a balanced and effective approach. The four dimensions are: Organizations and People; Information and Technology; Partners and Suppliers; Value Streams and Processes. External PESTLE factors (political, economic, social, technological, legal, environmental) constrain and shape all four dimensions.
-*   **Continual Improvement Model**: The ITIL 4 seven-step framework for structuring improvement efforts at any level. The steps are: What is the vision? Where are we now? Where do we want to be? How do we get there? Take action; Did we get there? How do we keep the momentum going?
-*   **Value Co-Creation**: The ITIL 4 principle that value is not created by the service provider alone and delivered to a passive consumer — it is co-created through an active relationship between the provider and the consumer. Both parties contribute to outcomes, costs, and risks.
+The ITIL 4 Foundation exam consists of 40 multiple-choice questions, requires 26 correct answers (65%) to pass, and must be completed in 60 minutes. There is no negative marking.
 
 ---
 
-### 2. Certification Exam Tips
-*   **Know the SVS Components Cold:** The exam tests the five components of the SVS by name — guiding principles, governance, service value chain, practices, and continual improvement. A common trap asks whether "processes" is an SVS component. It is not — ITIL 4 uses "practices."
-*   **Service Value Chain Activities vs. Processes:** The six SVC activities (Plan, Improve, Engage, Design and Transition, Obtain/Build, Deliver and Support) are activities within the SVS — not a linear process. The exam tests that they operate flexibly and combine into value streams, not a fixed sequential flow.
-*   **Guiding Principles Are Universal:** The seven guiding principles apply universally — they guide decisions regardless of circumstance. The exam tests specific principles by scenario: "Focus on value" when asked what to prioritize; "Start where you are" when asked about assessing current state; "Progress iteratively with feedback" when asked about improvement cadence.
-*   **Practice vs. Process Distinction:** This is one of the highest-frequency exam traps. ITIL 4 explicitly replaces "process" with "practice" to reflect the full range of organizational resources involved. Never select an answer that describes ITIL 4 as having "26 processes" — ITIL 4 has 34 practices.
-*   **Know the Three Practice Categories:** The 34 ITIL 4 practices are grouped into three categories: general management practices (14, such as Continual Improvement and Service Level Management), service management practices (17, such as Incident Management and Change Enablement), and technical management practices (3: Deployment Management, Infrastructure and Platform Management, and Software Development and Management). Monitoring and Event Management is a technical management practice.
-*   **Study Resource:** The official ITIL 4 Foundation certification page from Axelos at [https://www.axelos.com/certifications/itil-service-management/itil-4-foundation](https://www.axelos.com/certifications/itil-service-management/itil-4-foundation) provides the official syllabus, exam objectives, and a link to the official candidate guidance document. Review the official Candidate Guidance PDF before your exam.
-*   **Video Resource:** The [ITIL 4 Foundation Certification Complete Course Playlist](https://www.youtube.com/playlist?list=PLK-tWc9i-GZ5V68tH3pB2rWn3Bv-yP85W) on YouTube covers all exam topics sequentially. For final exam preparation, focus on the SVS overview, the guiding principles, and the practice-specific videos for Change Enablement, Incident Management, Problem Management, and Service Level Management — the practices most frequently tested through scenario questions.
+## Exam Format Summary
+
+| Attribute | Detail |
+|---|---|
+| Number of questions | 40 |
+| Pass mark | 26 correct (65%) |
+| Time limit | 60 minutes |
+| Question format | Multiple choice, one correct answer per question |
+| Closed book | Yes — no materials permitted |
+| Negative marking | No — always answer every question |
+| Delivery | Online proctored (PeopleCert) or test center |
+| Certification body | Axelos / PeopleCert |
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Review all chapters in the OER Textbook: [ITIL 4 Foundation Study Notes & Overviews](https://www.axelos.com/). Pay particular attention to the SVS overview, the four dimensions, the guiding principles, and the practice summaries. Use the official ITIL 4 glossary to confirm definitions for any term you are uncertain about.
-*   **Required Video:** Watch the review and exam prep videos in the official course playlist: [ITIL 4 Foundation Certification Complete Course Playlist](https://www.youtube.com/playlist?list=PLK-tWc9i-GZ5V68tH3pB2rWn3Bv-yP85W). Focus especially on videos covering the SVS, guiding principles, and high-frequency practices.
+## Part 1: The Service Value System
+
+### Five Components of the SVS
+
+The ITIL 4 Service Value System (SVS) describes how all components and activities of an organization work together to enable value creation. The five components are:
+
+1. **Guiding Principles** — seven principles that guide decisions and actions in any circumstances
+2. **Governance** — how the organization is directed and controlled
+3. **Service Value Chain** — six interconnected activities that combine to create value
+4. **Practices** — 34 sets of organizational resources for performing work
+5. **Continual Improvement** — ongoing effort to improve all aspects of products, services, and practices
+
+### The Seven Guiding Principles
+
+Memorize all seven — they are tested directly and in scenario questions.
+
+| Principle | Core Message |
+|---|---|
+| Focus on Value | Everything the organization does should link, directly or indirectly, to value for stakeholders |
+| Start Where You Are | Do not start from scratch; assess and build on what exists |
+| Progress Iteratively with Feedback | Work in iterations; use feedback to adapt |
+| Collaborate and Promote Visibility | Work together; make information accessible |
+| Think and Work Holistically | No service or practice operates in isolation |
+| Keep It Simple and Practical | Eliminate what adds no value; use minimum necessary steps |
+| Optimize and Automate | First optimize, then automate what remains |
+
+### The Service Value Chain
+
+Six activities that combine in flexible sequences (value streams) to deliver value:
+
+- **Plan** — ensure shared understanding of vision, status, and improvement directions
+- **Improve** — ensure continual improvement across products, services, and practices
+- **Engage** — provide good understanding of stakeholder needs and facilitate transparency
+- **Design and Transition** — ensure products and services continually meet stakeholder expectations
+- **Obtain/Build** — ensure service components are available when needed
+- **Deliver and Support** — ensure services are delivered and supported to meet agreed specifications
+
+### The Four Dimensions of Service Management
+
+The four dimensions must be considered for every service and practice. PESTLE factors form the external environment surrounding all four dimensions.
+
+1. **Organizations and People** — roles, responsibilities, culture, and skills
+2. **Information and Technology** — data, knowledge, and technology tools
+3. **Partners and Suppliers** — relationships with other organizations supporting service delivery
+4. **Value Streams and Processes** — how work flows from demand to value
 
 ---
 
-### Lab & Command Integration
-In this week's final exam preparation activities, you will apply and synthesize concepts from all previous modules:
-*   **Complete the practice exam**: Attempt all forty questions in the course practice exam under timed conditions (sixty minutes). For each question you answer incorrectly, identify the module the topic belongs to and review the relevant reading guide glossary before retaking.
-*   **Build a concept map**: Create a visual diagram connecting the five SVS components, the six service value chain activities, and at least eight practices covered in this course. For each practice, identify which SVC activity or activities it most directly supports.
-*   **Scenario classification exercise**: Given a set of ten IT service management scenarios (covering incidents, problems, changes, service requests, events, and assets), identify the correct practice for each scenario and explain why other practices do not apply. Focus on distinguishing Incident Management from Problem Management, Change Enablement from Deployment Management and Release Management, and Service Request Management from Incident Management.
+## Part 2: Key Value Terminology
+
+These definitions are among the most tested items on the Foundation exam.
+
+| Term | Definition |
+|---|---|
+| Service | Means of enabling value co-creation by facilitating outcomes customers want to achieve without managing specific costs and risks |
+| Value | Perceived benefits, usefulness, and importance of something — co-created by provider and customer |
+| Product | Configuration of resources designed to offer value to a consumer |
+| Utility | Functionality offered to meet a particular need — "fit for purpose" |
+| Warranty | Assurance that a product or service will meet agreed requirements — "fit for use" |
+| Output | Tangible or intangible deliverable of an activity |
+| Outcome | Result for a stakeholder enabled by outputs |
+| Cost | Amount of money spent on a specific activity or resource |
+| Risk | Possible event that could cause harm or loss or affect the ability to achieve objectives |
+| Customer | Person who defines service requirements and takes responsibility for outcomes |
+| User | Person who uses services |
+| Sponsor | Person who authorizes budget for service consumption |
+
+### Utility vs. Warranty
+
+This distinction is directly tested. A service has utility if it does what the customer needs (fit for purpose). A service has warranty if it is available when needed, with sufficient capacity, in a secure manner, and continuously (fit for use). Both are required for a service to deliver value.
 
 ---
 
-### 3. Study Checklist
-- [ ] Review all glossary terms from Modules 1–15 and confirm you can define each from memory.
-- [ ] Read the SVS overview chapter and confirm you can name all five SVS components and all six service value chain activities.
-- [ ] Review the seven guiding principles and associate each with a scenario or exam trap where it is tested.
-- [ ] Review all practice-specific reading guides from Modules 6–15 and identify the purpose of each practice.
-- [ ] Complete the practice exam under timed conditions and review all incorrect answers.
-- [ ] Watch the review videos in [ITIL 4 Foundation Certification Complete Course Playlist](https://www.youtube.com/playlist?list=PLK-tWc9i-GZ5V68tH3pB2rWn3Bv-yP85W).
-- [ ] Proceed to the course final exam.
+## Part 3: Most Tested Practices
+
+### Incident Management
+
+**Purpose:** Minimize the negative impact of incidents by restoring normal service operation as quickly as possible.
+
+**Incident:** An unplanned interruption to or reduction in the quality of a service.
+
+**Major incident:** Incident requiring a dedicated team with a separate response procedure due to highest-category impact.
+
+**Priority:** Determined by combining impact (breadth of effect) and urgency (speed required). Priority determines response and resolution targets.
+
+**Exam distinctions:**
+
+- Incident Management restores service; Problem Management finds root causes — do not confuse these.
+- Incidents are reactive; problems are proactive and reactive.
+
+### Problem Management
+
+**Purpose:** Reduce the likelihood and impact of incidents by identifying actual and potential causes and managing workarounds and known errors.
+
+**Problem:** Cause, or potential cause, of one or more incidents. Root cause is not yet known when a problem is identified.
+
+**Known error:** Problem where the root cause has been identified and a workaround exists. The known error is managed until a permanent fix is implemented.
+
+**Workaround:** Temporary solution that reduces or eliminates the impact of a problem without resolving it.
+
+**Three phases:** Problem identification → Problem control → Error control.
+
+### Change Enablement
+
+**Purpose:** Maximize the number of successful IT changes by ensuring risks are properly assessed, authorized changes are prioritized, and the change schedule is managed.
+
+| Change Type | Description | Authorization |
+|---|---|---|
+| Standard | Pre-authorized, low-risk, follows documented procedure | Pre-authorized as a class — no individual CAB review |
+| Normal | Requires individual risk assessment before authorization | Assessed and authorized through defined process; CAB may be consulted |
+| Emergency | Requires immediate action; expedited authorization | Expedited process; may be reviewed by ECAB or post-hoc |
+
+**Change Advisory Board (CAB):** Body that advises the change authority on the assessment, prioritization, and scheduling of changes. Not every change goes to the CAB — only those that warrant advisory input.
+
+### Service Request Management
+
+**Purpose:** Support agreed quality by handling all pre-defined, user-initiated service requests effectively and in a user-friendly manner.
+
+**Service request:** A formal request from a user for something to be provided. Examples: password reset, access request, request for information, hardware request.
+
+**Exam trap:** Service requests are NOT incidents. A password reset is a service request; an account locked due to a system error is an incident.
+
+### Service Level Management
+
+**Purpose:** Set clear, business-based targets for service levels and ensure delivery is assessed, monitored, and managed against those targets.
+
+| Agreement | Parties | Nature |
+|---|---|---|
+| SLA | Service provider and customer | Documented service targets |
+| OLA | Service provider and internal support team | Internal commitments underpinning SLA |
+| UC (Underpinning Contract) | Service provider and external supplier | Legally binding contract |
+
+**Watermelon SLA:** All metrics green but customer satisfaction is low — the measured metrics do not reflect what customers actually care about.
+
+### Service Desk
+
+**Purpose:** Capture demand for incident resolution and service requests.
+
+**Shift-left:** Moving resolution capability closer to users — self-service, knowledge articles, automated resolution. Reduces cost and improves speed.
+
+**Omnichannel:** Multiple contact channels (phone, chat, email, portal, walk-in) that provide a seamless, integrated user experience.
+
+### IT Asset Management
+
+**Purpose:** Plan and manage the full lifecycle of all IT assets to maximize value, control costs, manage risks, support decision-making, and meet regulatory requirements.
+
+**Asset lifecycle:** Planning → Procurement → Deployment → Maintenance/Operation → Retirement → Disposal.
+
+**SAM risks:** Under-licensing (compliance risk) and over-licensing (financial waste).
+
+**Secure disposal:** Hardware containing data requires sanitization (physical destruction, cryptographic erasure, or software overwrite) before disposal.
+
+### Release and Deployment Management
+
+**Purpose:** Make new and changed services and features available for use.
+
+**Deployment approaches:** Big bang (all at once), Phased (staged by group/region), Canary (small percentage first), Blue-green (two environments, instant traffic switch).
+
+**Rollback planning** is required for every deployment. Database schema rollbacks are most complex.
+
+**Post-implementation review (PIR):** Evaluates whether the release achieved its intended outcomes; feeds Continual Improvement.
+
+### Continual Improvement
+
+**Purpose:** Align practices and services with changing business needs through ongoing improvement.
+
+**Continual Improvement Model (7 steps):** What is the vision? → Where are we now? → Where do we want to be? → How do we get there? → Take action → Did we get there? → How do we keep the momentum going?
+
+**Continual Improvement Register:** Document tracking all improvement opportunities across the organization.
+
+---
+
+## Part 4: Additional Practices — High-Level Purpose Statements
+
+Know the purpose of every practice at the Foundation level.
+
+| Practice | Purpose |
+|---|---|
+| Availability Management | Ensure services deliver agreed levels of availability |
+| Capacity and Performance Management | Ensure services achieve agreed and expected performance |
+| IT Asset Management | Plan and manage full IT asset lifecycle |
+| Monitoring and Event Management | Observe services and CI states; record and report events |
+| Service Configuration Management | Ensure accurate CI information is available |
+| Service Continuity Management | Ensure service availability at required levels in major disruption events |
+| Information Security Management | Protect organizational information assets |
+| Supplier Management | Ensure supplier performance supports agreed service levels |
+| Service Design | Design products and services fit for purpose, use, and continued improvement |
+| Service Catalogue Management | Provide single source of consistent information about all services |
+
+---
+
+## Part 5: Relationships Between Practices
+
+The exam frequently tests relationships between practices. Key relationships to know:
+
+**Incident Management → Problem Management:** Major incidents and recurring incidents trigger problem investigations. Problem Management identifies root causes that Incident Management cannot address.
+
+**Change Enablement → Release and Deployment Management:** Changes are authorized by Change Enablement; Release and Deployment Management executes the deployment of authorized releases.
+
+**IT Asset Management → Service Configuration Management:** Assets are tracked in CMDB as configuration items. The two practices share data but have different purposes — Asset Management focuses on value/lifecycle; Configuration Management focuses on CI attributes and relationships.
+
+**Service Level Management → Service Desk:** SLM sets the targets (response time, resolution time) that the Service Desk must meet in day-to-day operations.
+
+**Continual Improvement → All Practices:** Continual Improvement draws inputs from PIRs, incident patterns, problem investigations, and service reviews across all practices.
+
+---
+
+## Part 6: Exam Strategy
+
+### Before the Exam
+
+- Complete all module quizzes and review any questions answered incorrectly
+- Practice timed sessions with 40-question practice exams — simulate exam conditions
+- Review purpose statements for all practices until you can state them from memory
+- Know all seven guiding principles and be able to apply them to scenarios
+
+### During the Exam
+
+1. Read each question and scenario carefully before looking at the answer choices
+2. Identify what the question is testing (purpose, definition, relationship, or application)
+3. Eliminate the two obviously wrong answers first
+4. If stuck between two answers, return to purpose statements — the correct answer aligns with the stated purpose of the practice
+5. Answer every question — no negative marking means a guess is always better than a blank
+6. Use remaining time to review flagged questions, not to second-guess confident answers
+
+### Common Exam Traps
+
+- Confusing Incident Management (restore service) with Problem Management (find root cause)
+- Confusing service requests with incidents
+- Reversing the SLA/OLA/UC relationships
+- Selecting an answer that describes a reasonable-sounding practice that does not exist in ITIL 4
+- Confusing utility (fit for purpose) with warranty (fit for use)
+
+---
+
+## Part 7: Career Pathways in ITSM
+
+### ITIL 4 Certification Levels
+
+| Level | Modules | Target Audience |
+|---|---|---|
+| Foundation | This course | Anyone entering ITSM |
+| Managing Professional | CDS, DSV, HVIT, DPI | Practitioners in IT operations and delivery |
+| Strategic Leader | DPI, DITS | Senior managers and executives |
+| Master | Demonstrated application | Experienced ITSM leaders |
+
+### ITSM Career Roles
+
+Entry-level roles that benefit directly from ITIL 4 Foundation certification:
+
+- Service Desk Analyst / Agent
+- IT Support Specialist
+- Change Management Coordinator
+- Incident Manager (Associate)
+
+Mid-level roles:
+
+- Service Delivery Manager
+- ITSM Process Owner
+- IT Operations Manager
+- Problem Manager
+
+Senior roles:
+
+- ITSM Director
+- Chief Information Officer (CIO)
+- Chief Information Security Officer (CISO)
+- IT Governance Manager
+
+---
+
+## Exam Day Checklist
+
+- [ ] Know all seven guiding principles and their core messages
+- [ ] Know the five components of the SVS
+- [ ] Know the six Service Value Chain activities
+- [ ] Know the four dimensions of service management
+- [ ] Know the purpose of every practice tested in this course
+- [ ] Know the utility vs. warranty distinction
+- [ ] Know all three change types and their authorization models
+- [ ] Know the SLA/OLA/UC distinction
+- [ ] Know the watermelon SLA concept
+- [ ] Know the continual improvement model (7 steps)
+- [ ] Have reviewed all module quizzes and practice questions
+- [ ] Have completed at least one timed 40-question practice exam

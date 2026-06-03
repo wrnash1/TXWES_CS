@@ -1,78 +1,237 @@
-# Quiz: Module 13 - Quality of Service (QoS) Fundamentals
-## Course: CIS-3322_Advanced_Networking (Cisco CCNA (200-301))
+# Quiz: Module 13 — Network Security Fundamentals
+
+## Course: CIS-3322 Advanced Networking
+
+## Texas Wesleyan University | Professor Nash
+
+**Certification Alignment:** Cisco CCNA 200-301
 
 ---
 
-**Question 1**
-Which Layer 3 marking field in the IP header is used for configuring Quality of Service (QoS)?
-*   A) Class of Service (CoS)
-*   B) Differentiated Services Code Point (DSCP)
-*   C) MAC Priority
-*   D) VLAN Tag
-*   **Correct Answer:** B) DSCP uses 6 bits in the Type of Service (ToS) field of the IPv4 header (Layer 3) to mark packets.
-*   **Distractor Analysis:**
-    *   *Why correct:* DSCP uses 6 bits in the Type of Service (ToS) field of the IPv4 header (Layer 3) to mark packets.
-    *   CoS is a Layer 2 marking found inside 802.1Q tags.
+## Instructions
+
+Select the single best answer for each question. Each question is worth 10 points.
 
 ---
 
-**Question 2**
-Which of the following most accurately describes **queuing mechanisms** in a network QoS context?
-*   A) Algorithms that manage which packets are transmitted next when a network interface is congested, ranging from simple first-in-first-out delivery to priority-based and weighted scheduling that protects delay-sensitive traffic.
-*   B) The process of examining packet headers to identify traffic types and assign DSCP or CoS markings that downstream devices will use to apply appropriate forwarding treatment.
-*   C) A proactive packet-drop mechanism that randomly discards lower-priority packets as a queue fills, triggering TCP senders to reduce their transmission rate before the queue overflows completely.
-*   D) A three-step Cisco IOS policy framework consisting of class-maps, policy-maps, and service-policies used to classify, mark, queue, and police traffic on a per-interface basis.
-*   **Correct Answer:** A) Algorithms that manage which packets are transmitted next when a network interface is congested, ranging from simple first-in-first-out delivery to priority-based and weighted scheduling that protects delay-sensitive traffic.
-*   **Distractor Analysis:**
-    * *Why A is correct:* Queuing mechanisms specifically address how packets are ordered and scheduled for transmission during congestion — FIFO, WFQ, PQ, CBWFQ, and LLQ are all queuing algorithms.
-    * *Why B is incorrect:* This describes traffic classification and marking, which is a separate QoS function that occurs before queuing.
-    * *Why C is incorrect:* This describes WRED (Weighted Random Early Detection), which is a congestion avoidance mechanism — distinct from queuing.
-    * *Why D is incorrect:* This describes Cisco's MQC (Modular QoS CLI) framework, which is the configuration model for QoS — not queuing itself.
+## Question 1
 
+A network administrator needs to implement device administration AAA with command-level authorization on Cisco routers. Which protocol best meets this requirement?
 
----
+A. RADIUS using UDP port 1812
 
-**Question 3**
-A systems administrator or developer needs to **verify basic network connectivity and latency to a remote host using ICMP Echo Requests**. Which of the following commands is the most appropriate to execute?
-B) netstat -ano
-A) ping
-C) nslookup
-D) traceroute
-*   **Correct Answer:** A) ping
-*   **Distractor Analysis:**
-    * *Why B is incorrect:* This command handles alternative administrative tasks.
-    * *Why A is correct:* The `ping` command is directly designed to verify basic network connectivity and latency to a remote host using ICMP Echo Requests.
-    * *Why C is incorrect:* This command handles alternative administrative tasks.
-    * *Why D is incorrect:* This command handles alternative administrative tasks.
+B. TACACS+ using TCP port 49
 
+C. RADIUS using TCP port 49
+
+D. TACACS+ using UDP port 1813
+
+Correct Answer: B — TACACS+ uses TCP port 49 and supports granular command-level authorization, making it the preferred choice for device administration. RADIUS combines authentication and authorization and does not support per-command authorization.
+
+Distractor Analysis:
+
+* A — RADIUS does use UDP 1812 for authentication, but it cannot authorize individual commands.
+* C — RADIUS uses UDP, not TCP. This is a common exam trap.
+* D — TACACS+ uses TCP, not UDP. Port 1813 belongs to RADIUS accounting.
 
 ---
 
-**Question 4**
-While working on **Quality of Service (QoS) Fundamentals** in a production environment, you encounter a system alert indicating a **DNS Failure** error. Which of the following is the most effective troubleshooting action to resolve this issue?
-B) Release and renew the DHCP lease, or configure a unique static IP address outside the DHCP pool range.
-A) Change the local network interface settings to use a public DNS resolver like 8.8.8.8 or 1.1.1.1.
-D) Reboot the physical machine and wait for services to reload.
-C) Correct the subnet mask configuration on the interface to match the network segment parameters.
-*   **Correct Answer:** A) Change the local network interface settings to use a public DNS resolver like 8.8.8.8 or 1.1.1.1.
-*   **Distractor Analysis:**
-    * *Why B is incorrect:* This action does not resolve the root cause of DNS Failure.
-    * *Why A is correct:* Because The configured DNS server is offline, misconfigured, or unreachable, preventing host name resolution. The appropriate fix is to Change the local network interface settings to use a public DNS resolver like 8.8.8.8 or 1.1.1.1.
-    * *Why D is incorrect:* This action does not resolve the root cause of DNS Failure.
-    * *Why C is incorrect:* This action does not resolve the root cause of DNS Failure.
+## Question 2
 
+Which statement correctly describes the encryption behavior of RADIUS compared to TACACS+?
+
+A. RADIUS encrypts the entire packet; TACACS+ encrypts only the password.
+
+B. RADIUS encrypts only the password field; TACACS+ encrypts the entire packet body.
+
+C. Both protocols encrypt only the username and password.
+
+D. Neither protocol uses encryption; both rely on TLS for security.
+
+Correct Answer: B — RADIUS encrypts only the password in the Access-Request packet using MD5. The username and other attributes travel in cleartext. TACACS+ encrypts the entire packet payload, providing stronger confidentiality.
+
+Distractor Analysis:
+
+* A — This reverses the correct behavior of each protocol.
+* C — RADIUS does not encrypt the username; only the password is protected.
+* D — Both protocols have built-in encryption mechanisms; TACACS+ is the more comprehensive of the two.
 
 ---
 
-**Question 5**
-When configuring **Quality of Service (QoS)**, you must mitigate the risk of **Attackers capturing plaintext management passwords or session data using network sniffers.**. Which of the following security configurations or controls represents the best practice to implement?
-C) Apply DSCP marking to management traffic and place it in a high-priority queue to ensure management sessions receive preferential treatment over user data flows.
-D) Use a dedicated management VLAN with an SVI, applying QoS policies to limit bandwidth available to the management VLAN to reduce exposure.
-B) Implement switch Port Security to restrict access to switch ports based on approved MAC addresses.
-A) Configure SSH (port 22) for terminal access and HTTPS (port 443) for web interfaces, disabling Telnet and HTTP.
-*   **Correct Answer:** A) Configure SSH (port 22) for terminal access and HTTPS (port 443) for web interfaces, disabling Telnet and HTTP.
-*   **Distractor Analysis:**
-    * *Why A is correct:* SSH and HTTPS encrypt interactive management sessions, preventing plaintext credential capture regardless of network path or QoS configuration.
-    * *Why C is incorrect:* Prioritizing management traffic with DSCP improves availability but does not encrypt session data — Telnet traffic in a high-priority queue is still readable in plaintext.
-    * *Why D is incorrect:* A dedicated management VLAN adds isolation, but limiting bandwidth to that VLAN does not prevent credential sniffing if Telnet is still in use.
-    * *Why B is incorrect:* Port Security restricts MAC-based physical access but has no effect on encrypting management session credentials transmitted over the network.
+## Question 3
+
+A switch port is configured with `switchport port-security violation restrict`. What happens when a frame from an unknown MAC address arrives and the maximum MAC count has already been reached?
+
+A. The port shuts down and enters err-disabled state.
+
+B. The frame is forwarded and a log message is generated.
+
+C. The frame is dropped and a syslog message is generated; the port remains up.
+
+D. The frame is dropped silently with no log entry; the port remains up.
+
+Correct Answer: C — In restrict mode, frames from violating MAC addresses are dropped, the violation counter increments, and a syslog message is sent. The port remains operational. This differentiates restrict from protect (silent drop, no log) and shutdown (port goes err-disabled).
+
+Distractor Analysis:
+
+* A — Describes the shutdown violation mode, not restrict.
+* B — Frames are never forwarded during a violation; they are dropped in all three modes.
+* D — Describes the protect violation mode, which drops silently without logging.
+
+---
+
+## Question 4
+
+An administrator configures port security with `switchport port-security mac-address sticky`. Which of the following is true?
+
+A. The switch learns MAC addresses dynamically and stores them only in RAM; they are lost on reboot.
+
+B. The switch learns MAC addresses dynamically and saves them to the running-configuration.
+
+C. The administrator must manually enter all allowed MAC addresses in the configuration.
+
+D. The switch broadcasts a query to learn which MAC addresses are authorized.
+
+Correct Answer: B — Sticky MAC learning is a hybrid approach: the switch learns MAC addresses dynamically from incoming frames and immediately writes them to the running-configuration as static entries. They persist through reboots only if the config is saved with `copy running-config startup-config`.
+
+Distractor Analysis:
+
+* A — Describes dynamic MAC learning without sticky. Dynamic entries are volatile.
+* C — Describes static MAC address configuration, which requires manual entry.
+* D — No such broadcast mechanism exists in port security.
+
+---
+
+## Question 5
+
+DHCP snooping is enabled on a switch. A DHCP OFFER packet arrives on a port that has NOT been configured as a trusted port. What action does the switch take?
+
+A. The switch forwards the OFFER to the requesting client.
+
+B. The switch drops the OFFER packet and increments the snooping statistics counter.
+
+C. The switch forwards the OFFER but generates a warning log message.
+
+D. The switch places the port in err-disabled state.
+
+Correct Answer: B — DHCP snooping drops DHCP server messages (OFFER, ACK, NAK) arriving on untrusted ports. This is the core mechanism that blocks rogue DHCP servers. The packet is dropped and the statistics counter increments. The port is not err-disabled.
+
+Distractor Analysis:
+
+* A — Forwarding the OFFER would defeat the purpose of DHCP snooping entirely.
+* C — The packet is dropped, not forwarded with a warning.
+* D — DHCP snooping does not place ports into err-disabled state; it only drops offending packets.
+
+---
+
+## Question 6
+
+Which command enables DHCP snooping on VLAN 20 only?
+
+A. `ip dhcp snooping vlan 20`
+
+B. `ip dhcp snooping enable vlan 20`
+
+C. `dhcp snooping vlan 20`
+
+D. `ip dhcp snooping trusted vlan 20`
+
+Correct Answer: A — The correct syntax is `ip dhcp snooping vlan 20`. DHCP snooping must also be enabled globally with `ip dhcp snooping` before the per-VLAN command takes effect. The other options use incorrect syntax that Cisco IOS does not recognize.
+
+Distractor Analysis:
+
+* B — `enable` is not part of the DHCP snooping command syntax.
+* C — Missing the `ip` prefix; IOS will not accept this command.
+* D — `trusted` is not a keyword here; trust is configured per interface with `ip dhcp snooping trust`.
+
+---
+
+## Question 7
+
+Dynamic ARP Inspection (DAI) is configured on VLAN 30. A host with a statically assigned IP address sends an ARP request, but there is no entry in the DHCP snooping binding table for this host. What happens?
+
+A. The ARP packet is forwarded because static hosts are always trusted.
+
+B. The ARP packet is dropped because no binding table entry exists.
+
+C. The ARP packet is forwarded only if an ARP ACL explicitly permits the IP-MAC binding.
+
+D. The ARP packet triggers creation of a new DHCP binding table entry.
+
+Correct Answer: C — DAI validates ARP packets against the DHCP snooping binding table. Hosts with static IPs have no DHCP binding. For these hosts, the administrator must create an ARP ACL that explicitly permits their IP-MAC binding and apply it to the VLAN with `ip arp inspection filter ACL-NAME vlan X`. Without the ACL, the ARP is dropped.
+
+Distractor Analysis:
+
+* A — DAI does not automatically trust static hosts; they must be explicitly permitted via ARP ACL.
+* B — Technically correct that the ARP is dropped without a binding, but C is the more actionable and complete answer.
+* D — DAI does not create DHCP bindings; those come from actual DHCP exchanges only.
+
+---
+
+## Question 8
+
+In an 802.1X deployment, which device is responsible for relaying EAP messages between the supplicant and the authentication server?
+
+A. The RADIUS server
+
+B. The supplicant
+
+C. The authenticator
+
+D. The DHCP server
+
+Correct Answer: C — The authenticator (typically a switch port or wireless access point) relays EAP messages transparently between the supplicant and the authentication server. It does not interpret the EAP payload — it encapsulates EAP frames in RADIUS packets and forwards them to the authentication server.
+
+Distractor Analysis:
+
+* A — The RADIUS server is the authentication server, not the relay; it terminates the EAP exchange.
+* B — The supplicant is the end device requesting access; it initiates EAP but does not relay it.
+* D — The DHCP server has no role in 802.1X authentication.
+
+---
+
+## Question 9
+
+Which global command is required on a Cisco switch before per-interface 802.1X configuration will take effect?
+
+A. `aaa new-model`
+
+B. `dot1x system-auth-control`
+
+C. `authentication port-control auto`
+
+D. `radius-server host 10.0.0.50`
+
+Correct Answer: B — `dot1x system-auth-control` is the global command that enables 802.1X authentication on the switch. Without it, per-interface 802.1X commands are accepted but have no effect. Note that `aaa new-model` is also a prerequisite, but the question asks specifically which command enables the 802.1X system globally.
+
+Distractor Analysis:
+
+* A — `aaa new-model` enables the AAA framework and is a prerequisite, but it does not specifically enable the 802.1X subsystem.
+* C — `authentication port-control auto` is a per-interface command, not a global enabler.
+* D — `radius-server host` is an older deprecated syntax and addresses server connectivity, not 802.1X enablement.
+
+---
+
+## Question 10
+
+A switch port is in err-disabled state due to a port-security violation. The administrator wants the port to recover automatically after 5 minutes. Which configuration achieves this?
+
+A. `switchport port-security violation recover 300`
+
+B. `errdisable recovery cause psecure-violation` and `errdisable recovery interval 300`
+
+C. `spanning-tree portfast` and `errdisable recovery interval 300`
+
+D. `no switchport port-security violation shutdown`
+
+Correct Answer: B — Automatic err-disable recovery requires two commands: `errdisable recovery cause psecure-violation` specifies that port-security violations are subject to automatic recovery, and `errdisable recovery interval 300` sets the recovery timer to 300 seconds (5 minutes). Both commands are required together.
+
+Distractor Analysis:
+
+* A — `switchport port-security violation recover` is not valid IOS syntax.
+* C — PortFast is a spanning-tree feature unrelated to err-disable recovery from port-security violations.
+* D — Changing the violation mode does not recover a port already in err-disabled state; it only affects future violations.
+
+---
+
+End of Quiz — Module 13

@@ -1,78 +1,243 @@
-# Quiz: Module 09 - CloudFront, Route 53, and Global Acceleration
-## Course: CIS-4334_AWS_Cloud_Architecture (AWS Certified Solutions Architect - Associate)
+# Quiz: Module 09 — AWS Databases
+
+## Course: CIS-4334 AWS Cloud Architecture
+
+## Texas Wesleyan University | Professor Nash
+
+## Certification Alignment: AWS Solutions Architect — Associate (SAA-C03)
+
+**Instructions:** Select the single best answer for each question. Each question is worth 10 points.
 
 ---
 
-**Question 1**
-A global e-commerce company stores product images in an S3 bucket in us-east-1. Customers in Europe and Asia-Pacific report slow image load times. Which solution most effectively reduces latency for global users?
-*   A) Enable S3 Transfer Acceleration on the bucket so users upload and download via CloudFront edge locations.
-*   B) Create a CloudFront distribution with the S3 bucket as the origin; CloudFront caches images at edge locations worldwide, serving subsequent requests from the nearest edge.
-*   C) Deploy S3 Cross-Region Replication to create bucket copies in EU and APAC Regions, then update the application to detect user location and query the nearest bucket.
-*   D) Use AWS Global Accelerator to route image download requests through AWS's private network backbone to the us-east-1 bucket.
-*   **Correct Answer:** B) CloudFront caches static content (images) at over 400 edge locations globally, serving users from the nearest PoP rather than the origin in us-east-1, dramatically reducing latency.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* S3 Transfer Acceleration improves upload performance by routing multipart upload requests through CloudFront edge infrastructure. It does not cache content for download — each download still goes back to the origin S3 bucket, providing minimal read latency improvement.
-    *   *Why B is correct:* CloudFront is purpose-built for caching and delivering static assets like images. After the first request from any edge location, subsequent requests for the same image are served from the edge cache within that geographic area — eliminating round trips to us-east-1 for the vast majority of traffic.
-    *   *Why C is incorrect:* Cross-Region Replication copies data to additional Regions but requires the application to implement geolocation detection and multi-bucket routing logic. This is operationally complex and still doesn't cache at the edge. CloudFront achieves the same result with zero application code changes.
-    *   *Why D is incorrect:* AWS Global Accelerator routes TCP/UDP traffic through AWS's private backbone to the origin without caching. For static images, Global Accelerator improves routing but does not cache at the edge. CloudFront's caching is more effective for static content because cached responses are served locally without any origin traversal.
+### Question 1
+
+A company runs an RDS MySQL database with Multi-AZ enabled. Business analysts are running complex reporting queries that are causing performance degradation for the production application. The operations team suggests directing the reporting queries to the Multi-AZ standby instance to reduce primary load. What is WRONG with this suggestion?
+
+A. The standby instance runs a different version of MySQL than the primary
+
+B. The standby instance is not accessible for read traffic — it is a passive hot standby for failover only
+
+C. Directing read traffic to the standby would cause the Multi-AZ replication to fail
+
+D. The standby instance only stores the last 24 hours of data
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. The standby runs the same MySQL version and stays in sync with the primary via synchronous replication.
+- B is correct. The Multi-AZ standby is a passive instance maintained exclusively for automated failover. It does not accept any client connections for read or write traffic. To add read capacity, you must create one or more Read Replicas.
+- C is incorrect. Multi-AZ replication is synchronous and operates independently of whether a client could theoretically connect to the standby. The suggestion is wrong because the standby is inaccessible, not because it would break replication.
+- D is incorrect. The standby maintains a complete, fully synchronized copy of the database. It stores all data, not a rolling 24-hour window.
 
 ---
 
-**Question 2**
-Which of the following is the most accurate description of **Route 53 Latency-Based Routing**?
-*   A) A routing policy that directs all traffic to a primary endpoint and automatically switches to a secondary endpoint when health checks detect the primary is down.
-*   B) A routing policy that measures network latency between the client's DNS resolver and multiple AWS Regions, directing each query to the Region with the lowest observed latency for that resolver.
-*   C) A routing policy that assigns weighted traffic percentages to multiple endpoints, enabling gradual traffic migration during blue/green deployments.
-*   D) A routing policy that routes users to different endpoints based on the country or continent from which the DNS query originates.
-*   **Correct Answer:** B) Latency-Based Routing directs each DNS query to the AWS Region that has the lowest measured network latency for the resolver making the query.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* This describes Failover Routing — the active-passive HA pattern with health-check-driven failover. Latency-Based Routing does not inherently do health-check failover (though it can be combined with health checks).
-    *   *Why B is correct:* Route 53 maintains a database of latency measurements from DNS resolver locations to AWS Regions. Latency-Based Routing returns the record pointing to the Region with the lowest latency for each resolver. This is performance-driven routing, not geography-driven.
-    *   *Why C is incorrect:* This describes Weighted Routing, where traffic percentages are explicitly configured (e.g., 90%/10% split). Weighted routing is used for canary deployments, A/B testing, and gradual migrations — not latency optimization.
-    *   *Why D is incorrect:* This describes Geolocation Routing, which routes based on the geographic location of the DNS query (country or continent). Geolocation is compliance-driven or locale-content-driven; Latency-Based is performance-driven.
+### Question 2
+
+A startup needs a MySQL-compatible relational database. Requirements include: automatic storage growth from 10 GB to multiple terabytes, more than 5 read replicas, failover in under 60 seconds, and performance higher than standard community MySQL. Which AWS service meets ALL these requirements?
+
+A. Amazon RDS for MySQL with Multi-AZ
+
+B. Amazon Aurora MySQL
+
+C. Amazon RDS for MySQL with Read Replicas
+
+D. Amazon DynamoDB
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. RDS MySQL Multi-AZ provides failover but not within 60 seconds reliably, does not auto-grow storage, and supports only up to 5 read replicas. Multi-AZ failover typically takes 60–120 seconds.
+- B is correct. Aurora MySQL is MySQL-compatible and provides: automatic storage growth (10 GB to 128 TB), up to 15 read replicas, failover in approximately 30 seconds (replica promotion with shared storage), and up to 5x better performance than community MySQL.
+- C is incorrect. RDS MySQL with Read Replicas addresses read scaling but not the storage auto-growth, 15-replica, or sub-60-second failover requirements.
+- D is incorrect. DynamoDB is a NoSQL key-value/document database, not a MySQL-compatible relational database. Applications requiring SQL and relational joins cannot use DynamoDB as a drop-in replacement.
 
 ---
 
-**Question 3**
-A company hosts a static website on S3 behind CloudFront. They update the website's JavaScript bundle but discover that CloudFront continues to serve the old cached version. The cache TTL is 24 hours. Users need access to the updated file immediately. Which action forces CloudFront to serve the new version without waiting for TTL expiration?
-*   A) Re-upload the JavaScript file to S3 with the same file name — CloudFront automatically detects content changes on the origin.
-*   B) Create a CloudFront invalidation for the specific file path (e.g., `/static/app.js`) to remove it from all edge caches immediately.
-*   C) Disable the CloudFront distribution, wait 5 minutes, and re-enable it to clear all cached objects.
-*   D) Change the S3 bucket's CORS configuration to prevent CloudFront from caching `.js` files.
-*   **Correct Answer:** B) A CloudFront cache invalidation removes the specified path from all edge caches, forcing the next request to fetch the updated file from the S3 origin.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* CloudFront does not monitor S3 for content changes. It caches objects based on the request URL and TTL. Re-uploading the same file to S3 with the same name does not cause CloudFront to invalidate its cached copy — the edge cache continues serving the old version until TTL expires.
-    *   *Why B is correct:* Cache invalidation is the standard CloudFront mechanism for forcing immediate cache updates. Submitting an invalidation for `/static/app.js` removes it from all edge caches within approximately 60 seconds. The first request after invalidation fetches the latest version from S3 and re-caches it. Note: the best long-term practice is versioned file names (e.g., `app.v2.js`) to avoid needing invalidations.
-    *   *Why C is incorrect:* Disabling a CloudFront distribution stops serving all traffic through CloudFront — this is not a cache management operation. Disabling and re-enabling would cause an outage and does not specifically clear cached content.
-    *   *Why D is incorrect:* CORS configuration controls cross-origin HTTP access policies for browsers — it has no effect on CloudFront's internal caching behavior. Modifying CORS does not cause cache invalidation.
+### Question 3
+
+A company's DynamoDB Orders table has a partition key of CustomerId and a sort key of OrderId. The e-commerce team now needs to query all orders for a specific ProductId across all customers. What is the MINIMUM change required to support this new access pattern?
+
+A. Recreate the table with ProductId as the partition key
+
+B. Create a Local Secondary Index with ProductId as the sort key
+
+C. Create a Global Secondary Index with ProductId as the partition key
+
+D. Enable DynamoDB Streams and process the stream with Lambda to build a separate lookup table
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- A is incorrect. Recreating the table changes the base access pattern. Queries by CustomerId would no longer be efficient, breaking the existing access patterns that the current design supports.
+- B is incorrect. An LSI must share the same partition key as the base table (CustomerId). It can only provide an alternate sort key within a customer's partition. An LSI cannot support querying across all customers by ProductId. Additionally, LSIs cannot be added to existing tables.
+- C is correct. A GSI can have any attribute as its partition key — ProductId in this case. The GSI replicates data with ProductId as the hash key, enabling efficient queries across all customers by product. GSIs can be added to existing tables at any time.
+- D is incorrect. While technically possible, maintaining a separate lookup table via Streams is operationally complex, introduces replication lag, and requires custom code to build and maintain. A GSI accomplishes the same goal natively within DynamoDB.
 
 ---
 
-**Question 4**
-A financial services company runs a real-time trading application accessible from offices in North America, Europe, and Asia. The application requires the lowest possible network latency for dynamic, non-cacheable API requests. Which service best improves global network performance for this use case?
-*   A) Amazon CloudFront with API Gateway as the origin and aggressive cache TTLs for all API responses.
-*   B) AWS Global Accelerator, which routes user traffic through AWS edge locations to the nearest AWS endpoint over the AWS private global network, bypassing the unpredictable public internet.
-*   C) Amazon Route 53 with Simple Routing returning the IP address of the primary application server in us-east-1.
-*   D) S3 Transfer Acceleration to speed up data transfer between regional offices and the application's S3 data lake.
-*   **Correct Answer:** B) AWS Global Accelerator routes traffic through AWS's private, optimized network backbone — avoiding public internet congestion and unpredictable routing — providing consistent low latency for dynamic TCP/UDP applications.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* CloudFront caches responses at edge locations. For dynamic, non-cacheable trading API requests, aggressive caching is both impossible (stale data would be financially dangerous) and ineffective (cache misses still traverse the public internet to the origin). CloudFront is the wrong tool for non-cacheable dynamic content at scale.
-    *   *Why B is correct:* Global Accelerator provides two static Anycast IPs. User traffic is directed to the nearest AWS edge PoP and then routed over AWS's high-performance private network backbone to the application, avoiding the latency and variability of the public internet. This is the SAA-C03 answer for "improve latency for dynamic, non-cacheable global traffic."
-    *   *Why C is incorrect:* Route 53 Simple Routing returns a single IP and does not route traffic through the AWS network. Users still connect to the origin via the public internet, experiencing full public internet routing variability.
-    *   *Why D is incorrect:* S3 Transfer Acceleration improves upload throughput to S3 by routing through CloudFront edge infrastructure. It applies to S3 operations only and has nothing to do with trading application API latency.
+### Question 4
+
+An application makes identical DynamoDB GetItem calls for the same product catalog items thousands of times per second. Response times are in single-digit milliseconds but the team needs sub-millisecond response times for a new interactive feature. What is the SIMPLEST solution?
+
+A. Switch DynamoDB from provisioned to on-demand capacity mode
+
+B. Enable DynamoDB global tables for multi-region distribution
+
+C. Add DynamoDB Accelerator (DAX) between the application and DynamoDB
+
+D. Increase the provisioned read capacity units (RCUs) on the table
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- A is incorrect. On-demand capacity mode changes how you pay for DynamoDB but does not reduce read latency. It does not add a cache layer.
+- B is incorrect. Global Tables add multi-region replication for global active-active writes. They do not reduce read latency for a single-region application below what DynamoDB already provides.
+- C is correct. DAX is an in-memory cache that is DynamoDB API-compatible. It caches frequently accessed items and serves them in microseconds — orders of magnitude faster than single-digit millisecond DynamoDB reads. For read-heavy workloads with repeated access to the same items, DAX is the direct solution.
+- D is incorrect. Increasing RCUs increases throughput capacity and reduces throttling but does not reduce per-request read latency. DynamoDB already delivers single-digit milliseconds; more RCUs cannot push this to sub-millisecond.
 
 ---
 
-**Question 5**
-A company's primary application in us-east-1 must automatically redirect traffic to a secondary deployment in us-west-2 when the primary becomes unhealthy. The DNS failover must be transparent to end users, who always use the same domain name. Which Route 53 configuration achieves this?
-*   A) Configure Weighted Routing with 100% weight on us-east-1 and 0% on us-west-2 records. Manually change the weights to 0%/100% when the primary fails.
-*   B) Configure Failover Routing with a health check on the us-east-1 endpoint. Route 53 automatically returns the us-west-2 record when the health check fails.
-*   C) Configure Latency-Based Routing and let Route 53 automatically route to us-west-2 when us-east-1 has higher latency due to partial failure.
-*   D) Use Route 53 Resolver to detect health issues and trigger a Lambda function that updates DNS records programmatically.
-*   **Correct Answer:** B) Route 53 Failover Routing with a health check on the primary endpoint automatically serves the secondary record when the primary fails, with no manual intervention required.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Weighted Routing with manual weight changes requires human intervention during an outage — violating the "automatic" requirement. During the time it takes someone to notice the failure and change the weights, users experience downtime. This is not automated failover.
-    *   *Why B is correct:* Route 53 Failover Routing is purpose-designed for this use case. Health checks continuously monitor the primary endpoint. When the health check fails, Route 53 stops returning the primary record and returns the secondary record instead — automatically, within the DNS TTL period. This is the active-passive DR pattern the SAA-C03 exam tests most commonly.
-    *   *Why C is incorrect:* Latency-Based Routing selects the lowest-latency Region but does not guarantee failover when the primary is unhealthy. A partially-down us-east-1 that still responds (but incorrectly) may still have lower measured latency than us-west-2. Latency-Based Routing without health checks is not a failover mechanism.
-    *   *Why D is incorrect:* Using Route 53 Resolver and Lambda for DNS updates is a custom, complex solution that introduces Lambda cold start latency, operational overhead, and potential failure modes in the failover path itself. Route 53 Failover Routing provides the same capability natively without custom code.
+### Question 5
 
+A company needs to add a session management feature to their web application. Sessions must expire automatically after 30 minutes of inactivity. The session store must remain available if a single AZ fails. The application also needs to implement a real-time leaderboard for a gaming feature. Which AWS service and configuration BEST satisfies both requirements?
+
+A. Amazon DynamoDB with TTL enabled
+
+B. Amazon ElastiCache for Memcached in a multi-AZ configuration
+
+C. Amazon ElastiCache for Redis with Multi-AZ enabled
+
+D. Amazon RDS for PostgreSQL with Multi-AZ enabled
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- A is incorrect. DynamoDB with TTL can handle session expiration and is highly available, but DynamoDB does not natively support sorted sets for leaderboards at microsecond latency, and TTL expiration is not guaranteed to the exact minute.
+- B is incorrect. Memcached does not support Multi-AZ failover (no replication). If an AZ fails, Memcached data in that AZ is lost. Memcached also does not support sorted sets needed for leaderboards.
+- C is correct. Redis supports TTL-based key expiration (for session management), Multi-AZ with automatic failover (for AZ resilience), and sorted sets (the native Redis data structure for real-time leaderboards with efficient rank queries). Redis satisfies all three requirements natively.
+- D is incorrect. RDS is a relational database — using it for session management introduces unnecessary complexity and latency. RDS does not provide sub-millisecond session reads at high concurrency.
+
+---
+
+### Question 6
+
+A company is building a fraud detection system that analyzes financial transactions. The system needs to identify patterns such as "accounts that sent money to an account that received money from a known fraud account within 24 hours." This requires traversing chains of financial relationships across millions of transactions. Which AWS database service is MOST appropriate?
+
+A. Amazon RDS for PostgreSQL
+
+B. Amazon DynamoDB
+
+C. Amazon Redshift
+
+D. Amazon Neptune
+
+**Correct Answer: D**
+
+**Distractor Analysis:**
+
+- A is incorrect. While PostgreSQL can model relationships in a relational schema, multi-hop relationship traversals (A → B → C → D) using SQL JOINs become exponentially complex and slow as chain depth increases. Relational databases are not optimized for graph traversal.
+- B is incorrect. DynamoDB is a key-value/document database. Multi-hop relationship traversal is not a supported query pattern. Each hop would require a separate query, making deep traversal extremely inefficient.
+- C is incorrect. Redshift is optimized for historical analytical queries over large datasets (OLAP). It is not designed for real-time graph traversal across relationship chains.
+- D is correct. Neptune is AWS's purpose-built graph database. Graph traversal queries (find all accounts within 2 hops of a fraud account) are natively supported by Neptune's Gremlin and SPARQL query languages. Neptune is specifically designed for relationship-centric analysis at scale.
+
+---
+
+### Question 7
+
+A data analytics company needs to run complex SQL queries joining tables with billions of rows for business intelligence dashboards. Query results are displayed in a BI tool. The data is historical and updated daily via batch loads. Which database service is MOST appropriate?
+
+A. Amazon Aurora MySQL
+
+B. Amazon RDS for PostgreSQL
+
+C. Amazon DynamoDB
+
+D. Amazon Redshift
+
+**Correct Answer: D**
+
+**Distractor Analysis:**
+
+- A is incorrect. Aurora is optimized for OLTP (frequent small transactional reads and writes). Complex analytical queries joining billions of rows would be slow and expensive on Aurora, which uses row-based storage rather than columnar storage.
+- B is incorrect. Same reasoning as A — RDS PostgreSQL uses row-based storage optimized for transactional workloads, not analytical aggregations across billions of rows.
+- C is incorrect. DynamoDB is a NoSQL database that does not support SQL JOIN operations or complex aggregations across the entire dataset. It is optimized for single-item reads and simple range queries.
+- D is correct. Redshift is a columnar, massively parallel processing (MPP) data warehouse designed specifically for OLAP workloads. It executes complex analytical SQL queries across petabytes of historical data efficiently. Daily batch loads are the standard Redshift ingestion pattern.
+
+---
+
+### Question 8
+
+An RDS PostgreSQL database in us-east-1 has Multi-AZ enabled. A solutions architect wants to add disaster recovery capability that allows failing over to a different AWS Region during a regional outage. What is the correct approach?
+
+A. Enable a second Multi-AZ standby in us-west-2
+
+B. Create a cross-region Read Replica in us-west-2
+
+C. Enable automated backups and restore to us-west-2 during a disaster
+
+D. Enable RDS Global Database
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. Multi-AZ is a single-region feature. You cannot configure a Multi-AZ standby in a different region. Multi-AZ only protects against AZ-level failures within a region.
+- B is correct. Cross-region Read Replicas replicate data from the primary in us-east-1 to a Read Replica in us-west-2. During a regional disaster, the cross-region Read Replica can be promoted to a standalone primary database. This provides regional DR capability for RDS (non-Aurora) databases.
+- C is incorrect. Restoring from automated backups involves downloading backup files from S3 and provisioning a new RDS instance, which takes significant time (potentially hours). This provides a high RTO that may not be acceptable for disaster recovery.
+- D is incorrect. RDS Global Database is an Aurora-specific feature, not available for standard RDS PostgreSQL. For Aurora, Global Database is the correct DR approach, but for standard RDS, cross-region Read Replicas is the answer.
+
+---
+
+### Question 9
+
+A company's DynamoDB table uses `UserId` as the partition key and `Timestamp` as the sort key. A new requirement needs to query the table for all items where `Category = 'Electronics'` regardless of which user created them. Which solution BEST addresses this WITHOUT recreating the table?
+
+A. Enable DynamoDB Streams and build a secondary table sorted by Category
+
+B. Add a Local Secondary Index using Category as the sort key
+
+C. Add a Global Secondary Index using Category as the partition key
+
+D. Run a DynamoDB Scan with a FilterExpression on Category
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- A is incorrect. Building a secondary table via Streams is operationally complex, introduces replication lag, and requires custom code. It is the wrong solution when a native GSI can accomplish the same thing.
+- B is incorrect. LSIs cannot be added after a table is created — they must be defined at table creation time. Additionally, an LSI shares the same partition key (UserId), which means it cannot support cross-user queries on Category.
+- C is correct. A GSI with Category as the partition key enables efficient queries across all users by category. GSIs can be added to existing tables at any time and have their own partition key independent of the base table.
+- D is incorrect. A Scan reads every item in the table and applies a filter after reading. For a large table, this is expensive (consumes RCUs proportional to table size) and slow. It is functionally correct but architecturally wrong for a recurring query pattern.
+
+---
+
+### Question 10
+
+A company has an Amazon Aurora MySQL cluster with one primary instance and three read replicas. The primary instance fails. What happens next?
+
+A. The cluster is unavailable until a new primary is manually provisioned
+
+B. One of the read replicas is automatically promoted to primary in approximately 30 seconds
+
+C. The Multi-AZ standby takes over as the primary in 60–120 seconds
+
+D. Aurora performs a point-in-time restore from the most recent automated backup
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. Aurora does not require manual intervention for primary instance failover when read replicas are present. Automatic promotion is a core Aurora feature.
+- B is correct. Aurora's shared distributed storage architecture means that when the primary fails, any read replica already has access to all committed data. Aurora automatically promotes one of the read replicas to primary in approximately 30 seconds, minimizing downtime without replaying transaction logs.
+- C is incorrect. There is no separate "Multi-AZ standby" in Aurora. Aurora achieves high availability through its shared storage layer and read replica promotion, not through the same standby mechanism as standard RDS Multi-AZ.
+- D is incorrect. Point-in-time restore from backup is a manual data recovery operation used when data corruption occurs, not for instance failover. It would take significantly longer than automatic promotion and would result in data loss up to the last backup point.
+
+---
+
+*Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University.*

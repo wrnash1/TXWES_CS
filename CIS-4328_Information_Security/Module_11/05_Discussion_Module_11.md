@@ -1,28 +1,96 @@
-# Discussion Forum: Module 11 - Cloud/MDM
-## Course: CIS-4328_Information_Security (CompTIA Security+ (SY0-701))
+# Discussion: Module 11 — Incident Response
+
+## Course: CIS-4328 Information Security
+
+**Certification Alignment:** CompTIA Security+ (SY0-701)
+
+---
+
+## Overview
+
+This discussion focuses on the human and organizational dimensions of incident response — the decisions, trade-offs, and communication challenges that technical frameworks cannot fully anticipate. Incident response is not purely a technical exercise. It is also a test of organizational culture, leadership decision-making, and communication under pressure.
 
 ---
 
 ## Discussion Prompt
-Consider the following real-world scenario or technical concept:
-*   **Topic Focus:** **Cloud/MDM**
 
-**Your Tasks:**
-1.  **Initial Post (Due Wednesday at 11:59 PM):** In 150-200 words, explain how you would apply Cloud/MDM in an enterprise system. Address the following:
-    *   What is the primary benefit of utilizing this configuration or standard in a production environment?
-    *   Identify one common security concern or operational challenge related to this topic, and suggest a best-practice mitigation strategy.
-2.  **Peer Responses (Due Sunday at 11:59 PM):** Read through your classmates' posts and write constructive replies (at least 50 words each) to at least two peers. In your replies:
-    *   Provide feedback on their proposed mitigation strategy.
-    *   Share an alternative approach or add context from your own research or lab exercises.
+Read the following scenario, then respond to all three parts.
+
+### Scenario
+
+A regional bank is hit with ransomware on a Friday afternoon. The ransomware encrypts 23 servers across three branches, including the loan processing system, internal email, and a file server containing HR records including employee SSNs.
+
+The CISO, who has been with the company for 18 months, calls the first IR meeting at 5:00 PM. Three tensions immediately surface:
+
+**Tension 1 — Pay or don't pay:** The ransomware operator demands 45 BTC (approximately $2.7 million). The COO argues that paying is cheaper and faster than rebuilding. The CISO argues that paying funds criminal organizations, does not guarantee data recovery, and may violate OFAC sanctions if the attacker is on a prohibited list.
+
+**Tension 2 — Notify or wait:** The bank's legal team says state breach notification law requires notifying customers within 30 days of discovering a breach, but recommends waiting until the scope is fully known before notifying. The CISO's security team believes employee SSNs were accessed. The CFO wants to wait until Monday's business review before making any notifications.
+
+**Tension 3 — Internal vs. external IR firm:** The CISO wants to bring in an external IR firm with ransomware experience immediately. The IT Director argues that bringing in outsiders creates reputational risk and they can handle it internally. The external firm quoted $150,000 for the engagement.
 
 ---
 
-## Discussion Rubric (10 Points Total)
-*   **Initial Post (6 Points):**
-    *   *5-6 pts:* Thoroughly addresses all prompt questions with technical accuracy, clear explanations, and appropriate terminology. Meets the word count.
-    *   *3-4 pts:* Addresses some prompt questions, but lacks detail or technical accuracy.
-    *   *0-2 pts:* Incomplete or missing initial post.
-*   **Peer Responses (4 Points):**
-    *   *4 pts:* Responds constructively to at least two peers, contributing meaningful additions to the conversation.
-    *   *2 pts:* Responds to only one peer, or comments are superficial (e.g., "Good post!").
-    *   *0 pts:* No peer responses submitted.
+## Part 1 — Framework Application (Required)
+
+Map the situation described in the scenario to the NIST SP 800-61 IR lifecycle. For each of the four phases, describe:
+
+1. What has already occurred in this phase (based on the scenario).
+2. What should happen next in this phase that has not yet happened.
+
+Organize your response by phase.
+
+---
+
+## Part 2 — Stakeholder Tensions (Required)
+
+Choose one of the three tensions described in the scenario (pay vs. don't pay, notify vs. wait, or internal vs. external IR) and write a structured recommendation to the CISO.
+
+Your recommendation should:
+
+- State a clear position.
+- Provide at least two specific reasons grounded in module content (NIST guidelines, regulatory requirements, security principles).
+- Acknowledge the strongest counter-argument and explain why your recommendation still holds.
+
+Your response should be 200 to 250 words.
+
+---
+
+## Part 3 — Peer Response (Required)
+
+Read at least two classmates' posts. Ideally, respond to classmates who chose a different tension than you.
+
+For each response:
+
+- Identify one aspect of their recommendation you agree with and explain why.
+- Identify one aspect you would modify or challenge, with a specific reason.
+- Your reply to each classmate should be 80 to 100 words.
+
+---
+
+## Initial Post Guidelines
+
+- Post your initial response (Parts 1 and 2) by the date listed in the course schedule.
+- Peer responses (Part 3) are due 48 hours after the initial post deadline.
+- Your initial post should be approximately 450 to 550 words.
+- Cite at least one external source — a published breach report, NIST document, CISA guidance, or legal analysis.
+
+---
+
+## Grading Criteria
+
+| Criterion | Points |
+|---|---|
+| Part 1 — Accurate mapping of all four NIST phases | 30 |
+| Part 2 — Clear, well-supported recommendation | 40 |
+| Part 3 — Two substantive peer replies with agreement and challenge | 30 |
+| **Total** | **100** |
+
+---
+
+## Instructor Note
+
+All three tensions in this scenario reflect real decisions that real organizations face. There is rarely a clean answer that satisfies all stakeholders simultaneously. The goal of this discussion is to practice reasoned decision-making under uncertainty and incomplete information — a core skill for any security professional. A well-reasoned answer that acknowledges trade-offs is valued more than a confident answer that ignores them.
+
+---
+
+*End of Discussion — Module 11*

@@ -290,4 +290,4 @@ aws elbv2 describe-target-health \
 
 ## References
 
-All certification study materials and exam registration: aws.amazon.com/certification
+All certification study materials and exam registration: <aws.amazon.com/certification>

@@ -1,222 +1,207 @@
-# Quiz: Module 02 - Version Control with Git and GitHub
+# Quiz: Module 02 — Version Control Security and Git Best Practices
 
 ## Course: CIS-4350 DevSecOps and CI/CD Pipelines
+
+## Texas Wesleyan University | Professor Nash
 
 ## Certification Alignment: DevSecOps Professional (DSOE)
 
 ---
 
-### Question 1
+## Instructions
 
-What is the primary security purpose of a pre-commit hook in a DevSecOps workflow?
-
-- A) To compile source code into a deployable artifact before it is committed
-- B) To detect and block commits containing hardcoded secrets or insecure patterns before they enter Git history
-- C) To push the committed code automatically to the remote repository and trigger CI/CD pipelines
-- D) To enforce code style formatting rules so all developers follow the same indentation standard
-
-#### Q1 Correct Answer
-
-B — Pre-commit hooks run on the developer's local machine before `git commit` finalizes. If the hook detects a secret or insecure pattern and exits non-zero, the commit is aborted and the content never enters Git history.
-
-#### Q1 Distractor Analysis
-
-- *Why A is incorrect:* Compilation is a build-stage concern. Pre-commit hooks run analysis against staged files, not compilation.
-- *Why C is incorrect:* Pushing to remote and triggering pipelines happens after the commit is created. Pre-commit hooks run before the commit exists.
-- *Why D is incorrect:* While some pre-commit hooks do enforce style, the primary security purpose is detecting vulnerabilities and secrets — not formatting.
+Select the single best answer for each question. Each question is worth 10 points. Submit answers through the Canvas quiz interface.
 
 ---
 
-### Question 2
+## Question 1
 
-A developer discovers that a teammate bypassed the pre-commit secrets hook using `git commit --no-verify` and pushed an API key to a feature branch on GitHub. What is the correct immediate response?
+Which branching strategy is most likely to minimize security patch propagation delay across all developers?
 
-- A) Delete the feature branch — this removes the API key from GitHub
-- B) Rotate the compromised API key immediately, then remove it from the branch and rewrite history
-- C) Add a comment to the commit explaining the key is no longer valid
-- D) Enable two-factor authentication on the developer's GitHub account
+- A) GitFlow with long-lived feature branches
+- B) Trunk-based development with short-lived branches
+- C) Release branching with quarterly merges
+- D) Forking workflow with upstream sync once per sprint
 
-#### Q2 Correct Answer
+### Q1 — Correct Answer: B
 
-B — Once a secret is pushed to any remote branch, it must be treated as compromised regardless of whether the branch is deleted. Rotation is the only safe remediation. History rewrite removes the secret from the repository.
+### Q1 — Distractor Analysis
 
-#### Q2 Distractor Analysis
-
-- *Why A is incorrect:* Deleting a branch does not delete the objects from GitHub's backend. Anyone who cloned or forked the repository before deletion may already have the key.
-- *Why C is incorrect:* Adding a comment does not revoke the credential. The key remains valid and accessible in history until rotated.
-- *Why D is incorrect:* 2FA protects account login but does not revoke an already-exposed API key or prevent its misuse.
+- A) GitFlow's long-lived branches create drift — security patches merged to develop may not reach feature branches for days or weeks.
+- C) Quarterly merges create extreme drift and are incompatible with continuous security patching.
+- D) Forking with sprint-level sync creates the same drift problem as infrequent feature branch merges.
 
 ---
 
-### Question 3
+## Question 2
 
-In a GitHub Actions workflow, what does setting `fetch-depth: 0` on the `actions/checkout` step accomplish?
+A developer commits code with `git commit --no-verify`. What security control does this bypass?
 
-- A) It limits the checkout to only the files changed in the current pull request, improving performance
-- B) It fetches the complete Git history, enabling secrets scanners to inspect all commits in the pull request rather than just the latest file state
-- C) It forces the workflow to run on a fresh runner with no cached data from previous workflow runs
-- D) It disables shallow cloning and downloads all repository branches including remote-tracking branches
+- A) Branch protection rules on the remote server
+- B) GPG commit signature requirement
+- C) Client-side pre-commit and commit-msg hooks
+- D) CI pipeline status check requirements
 
-#### Q3 Correct Answer
+### Q2 — Correct Answer: C
 
-B — By default, `actions/checkout` performs a shallow clone (depth 1), fetching only the latest commit. `fetch-depth: 0` fetches the full history, which secrets scanners like Gitleaks require to check every commit in the PR — a secret added in commit 1 and deleted in commit 3 is still accessible in history.
+### Q2 — Distractor Analysis
 
-#### Q3 Distractor Analysis
-
-- *Why A is incorrect:* Limiting to only changed files would be a different parameter. `fetch-depth: 0` fetches more history, not less.
-- *Why C is incorrect:* Runner cache behavior is controlled by the `cache:` action, not `fetch-depth`.
-- *Why D is incorrect:* `fetch-depth: 0` fetches the full history of the checked-out branch; fetching all remote branches requires additional configuration.
+- A) Branch protection rules are server-side and cannot be bypassed by client-side git flags.
+- B) GPG signing is configured globally in git config — `--no-verify` does not affect it.
+- D) CI pipeline status checks run on the server after a push — `--no-verify` only affects local hooks.
 
 ---
 
-### Question 4
+## Question 3
 
-A GitHub Actions workflow is configured with `on: pull_request` targeting the main branch. When exactly does this workflow trigger?
+What is the primary advantage of managing git hooks via the pre-commit framework rather than placing scripts directly in `.git/hooks/`?
 
-- A) Once per day on a scheduled timer, regardless of code activity
-- B) Every time any developer pushes commits to any branch in the repository
-- C) When a pull request targeting main is opened, updated with new commits, or reopened
-- D) Only when a pull request is approved by a required reviewer and is ready to merge
+- A) The pre-commit framework runs faster than native git hooks
+- B) Hook configuration is version-controlled and shared across all team members automatically
+- C) The pre-commit framework bypasses branch protection rules
+- D) Native `.git/hooks/` scripts cannot run secrets scanning tools
 
-#### Q4 Correct Answer
+### Q3 — Correct Answer: B
 
-C — The `pull_request` event fires on PR open, synchronize (new commits pushed to the PR branch), and reopen actions. This makes it the standard trigger for security checks that must pass before merging.
+### Q3 — Distractor Analysis
 
-#### Q4 Distractor Analysis
-
-- *Why A is incorrect:* Scheduled triggers use `on: schedule` with a cron expression. `pull_request` is event-driven, not time-driven.
-- *Why B is incorrect:* The `on: push` trigger fires on all branch pushes. `on: pull_request` is scoped to PR lifecycle events, not all pushes.
-- *Why D is incorrect:* Pull request approval is a separate human action. The `pull_request` event does not wait for reviewer approval — it fires immediately on PR open or update.
+- A) Performance difference is negligible — this is not the primary advantage.
+- C) The pre-commit framework does not interact with branch protection rules at all.
+- D) Native git hooks can run any executable — the limitation is sharing and versioning, not capability.
 
 ---
 
-### Question 5
+## Question 4
 
-Which GitHub branch protection setting most directly enforces that CI pipeline security scan jobs must succeed before a pull request can merge?
+You discover that an AWS access key was committed to a public GitHub repository 3 days ago. After running git-filter-repo to remove it from history, what is the most critical next step?
 
-- A) Require signed commits
-- B) Require status checks to pass before merging, with the security scan job names listed as required checks
-- C) Require a minimum number of approving reviews
-- D) Restrict who can push to the branch
+- A) Create a new branch to separate the clean history from the old history
+- B) Immediately rotate and revoke the compromised AWS access key
+- C) Change the repository visibility from public to private
+- D) Notify all team members to run `git pull` to get the clean history
 
-#### Q5 Correct Answer
+### Q4 — Correct Answer: B
 
-B — Listing specific CI job names as required status checks means GitHub will not enable the merge button until those jobs have reported a passing result. This is the mechanism that makes automated pipeline scans mandatory rather than advisory.
+### Q4 — Distractor Analysis
 
-#### Q5 Distractor Analysis
-
-- *Why A is incorrect:* Signed commits verify committer identity cryptographically. They do not enforce CI job results.
-- *Why C is incorrect:* Required reviews enforce human approval. They do not enforce automated pipeline job results.
-- *Why D is incorrect:* Restricting push access prevents direct pushes to the branch but does not enforce pipeline status checks on PRs.
+- A) Branching does not address the fact that the secret was already exposed and may have been used.
+- C) Making the repo private does not revoke the already-exposed credential.
+- D) Team notification is necessary but secondary — the credential is already compromised and must be rotated immediately.
 
 ---
 
-### Question 6
+## Question 5
 
-A team wants to prevent any developer — including repository administrators — from bypassing branch protection rules and pushing directly to main. Which setting achieves this?
+Which file must you commit to a repository to document required environment variables without exposing their values?
 
-- A) Set the repository to private so only team members have access
-- B) Enable "Do not allow bypassing the above settings" (or "Include administrators") in the branch protection rule
-- C) Require all developers to use SSH keys instead of HTTPS for Git authentication
-- D) Enable two-factor authentication for all organization members
+- A) `.env`
+- B) `.env.secret`
+- C) `.env.example`
+- D) `env_config.json`
 
-#### Q6 Correct Answer
+### Q5 — Correct Answer: C
 
-B — By default, repository administrators can bypass branch protection rules. The "Include administrators" or "Do not allow bypassing" option applies the rules to everyone including admins, eliminating this privileged bypass path.
+### Q5 — Distractor Analysis
 
-#### Q6 Distractor Analysis
-
-- *Why A is incorrect:* Repository visibility (public vs. private) controls who can see the code. It does not change who can bypass branch protection rules.
-- *Why C is incorrect:* SSH vs. HTTPS is an authentication method for Git operations. It does not affect branch protection bypass capabilities.
-- *Why D is incorrect:* 2FA strengthens account login security but does not affect the ability to bypass branch protection rules after authentication.
+- A) `.env` contains actual secret values and must never be committed.
+- B) `.env.secret` is not a standard pattern and the name implies it contains secrets.
+- D) A JSON config file is not the standard pattern and may accidentally contain real values.
 
 ---
 
-### Question 7
+## Question 6
 
-A GitHub Actions workflow posts a failing SAST scan result to a pull request, but the developer is still able to merge the PR. What is the most likely cause?
+What does a GPG-signed commit prove that an unsigned commit does not?
 
-- A) The SAST scan found only informational findings, which GitHub automatically ignores
-- B) The SAST job name is not listed as a required status check in the branch protection rules
-- C) The workflow is using `on: push` instead of `on: pull_request` as its trigger
-- D) The developer used `git commit --no-verify` to skip the pre-commit hooks
+- A) That the code is free of security vulnerabilities
+- B) That the commit passed all CI pipeline checks
+- C) That the commit was made by someone possessing a specific private key
+- D) That the commit message follows the team's convention
 
-#### Q7 Correct Answer
+### Q6 — Correct Answer: C
 
-B — A CI job result is only a merge blocker if its job name is listed under required status checks in the branch protection rule. Without that listing, the failing result is visible but does not prevent merging.
+### Q6 — Distractor Analysis
 
-#### Q7 Distractor Analysis
-
-- *Why A is incorrect:* GitHub does not automatically classify SAST findings by severity. All status check results — pass or fail — are shown. The issue is whether the check is required, not the finding severity.
-- *Why C is incorrect:* If the workflow uses `on: push`, the scan runs on the push to the feature branch, not on the PR. This is a separate problem (wrong trigger) but does not explain why a failing check can be bypassed.
-- *Why D is incorrect:* `--no-verify` bypasses pre-commit hooks on the local machine. It has no effect on CI pipeline jobs running on GitHub runners.
+- A) GPG signing proves authorship only — it makes no claim about code quality or security.
+- B) CI pipeline checks are separate from commit signing — the two are independent.
+- D) Commit message conventions are enforced by commit-msg hooks, not GPG signing.
 
 ---
 
-### Question 8
+## Question 7
 
-Which of the following is a correct security practice when storing credentials needed by a GitHub Actions workflow?
+Which GitHub feature automatically revokes secrets such as AWS access keys when they are detected in a public repository, in coordination with the cloud provider?
 
-- A) Hardcode the credential in the workflow YAML file and mark it with a comment indicating it is sensitive
-- B) Store the credential as a GitHub Secret and reference it using `${{ secrets.SECRET_NAME }}` in the workflow
-- C) Base64-encode the credential and store it in a public environment variable in the workflow YAML
-- D) Store the credential in a `.env` file committed to the repository and load it at runtime
+- A) Dependabot
+- B) GitHub Advanced Security secret scanning partner patterns
+- C) GitHub Actions security hardening
+- D) CodeQL analysis
 
-#### Q8 Correct Answer
+### Q7 — Correct Answer: B
 
-B — GitHub Secrets are encrypted at rest and masked in workflow logs. The `${{ secrets.SECRET_NAME }}` syntax injects the value at runtime without exposing it in the YAML file or in log output.
+### Q7 — Distractor Analysis
 
-#### Q8 Distractor Analysis
-
-- *Why A is incorrect:* Hardcoding credentials in the workflow YAML makes them visible to anyone with read access to the repository — including in public repositories, the entire internet.
-- *Why C is incorrect:* Base64 encoding is not encryption. Encoded values can be decoded trivially. Storing them in public environment variables exposes them in the workflow YAML.
-- *Why D is incorrect:* Committing a `.env` file to the repository exposes credentials in Git history and to anyone with repository access.
+- A) Dependabot monitors dependency vulnerabilities (CVEs), not secrets in source code.
+- C) GitHub Actions security hardening relates to workflow permissions, not secret detection.
+- D) CodeQL is a SAST tool for code vulnerabilities, not credential scanning.
 
 ---
 
-### Question 9
+## Question 8
 
-What does the `permissions: contents: read` block in a GitHub Actions workflow accomplish?
+A CODEOWNERS file serves which security purpose?
 
-- A) It grants the workflow read access to all repositories in the GitHub organization
-- B) It restricts the workflow's GITHUB_TOKEN to read-only access on the current repository, following the principle of least privilege
-- C) It allows the workflow to read encrypted secrets stored in GitHub Secrets
-- D) It gives the workflow permission to read environment variables defined in the repository settings
+- A) It lists all files that should be added to `.gitignore`
+- B) It maps file paths to required reviewers, ensuring security-sensitive code always gets expert review
+- C) It defines which GPG keys are authorized to sign commits
+- D) It specifies which branches are protected from direct pushes
 
-#### Q9 Correct Answer
+### Q8 — Correct Answer: B
 
-B — The `permissions:` block scopes the automatically-generated `GITHUB_TOKEN` for that workflow run. Setting `contents: read` grants only repository content read access, preventing a compromised or malicious action from writing to the repository, creating releases, or modifying settings.
+### Q8 — Distractor Analysis
 
-#### Q9 Distractor Analysis
-
-- *Why A is incorrect:* `permissions:` scopes the token for the current repository only. Cross-repository access requires a personal access token or GitHub App token with separate configuration.
-- *Why C is incorrect:* Access to GitHub Secrets is controlled separately by the secrets configuration, not by the `permissions:` block.
-- *Why D is incorrect:* Environment variable access is not controlled by the `permissions:` block. Secrets access and variable access have separate configuration mechanisms.
+- A) `.gitignore` has no relationship to CODEOWNERS — they are entirely separate files.
+- C) GPG key authorization is configured in platform settings, not CODEOWNERS.
+- D) Branch protection rules handle push restrictions, not CODEOWNERS.
 
 ---
 
-### Question 10
+## Question 9
 
-A DevSecOps team is reviewing their GitHub Actions workflow and notices the following trigger configuration. What security gap does this create?
+truffleHog's entropy-based detection capability solves which limitation of regex-only secrets scanners like gitleaks?
 
-```yaml
-on:
-  push:
-    branches:
-      - main
-```
+- A) Entropy detection is faster than regex matching for large repositories
+- B) Entropy detection can identify high-entropy strings that may be secrets even without a matching known pattern
+- C) Entropy detection eliminates false positives entirely
+- D) Entropy detection works on binary files while regex scanning only works on text
 
-- A) The workflow runs too frequently, creating unnecessary compute costs and noise in the Actions log
-- B) The workflow runs only after code has already been merged to main, meaning insecure code can reach main before being scanned
-- C) The workflow cannot access GitHub Secrets because push triggers are restricted from secrets access
-- D) The workflow will fail because push triggers require a `paths:` filter to be valid
+### Q9 — Correct Answer: B
 
-#### Q10 Correct Answer
+### Q9 — Distractor Analysis
 
-B — A `push` to main trigger fires after the merge has already occurred. Any vulnerability the scan finds is already in the main branch. The correct DevSecOps pattern is `on: pull_request` so the scan runs before merge and can block insecure code from entering main.
+- A) Entropy analysis is computationally more expensive than regex, not faster.
+- C) Entropy detection actually tends to produce more false positives than regex-based detection.
+- D) Both tools operate primarily on text content in Git objects — binary file handling is unrelated to entropy detection.
 
-#### Q10 Distractor Analysis
+---
 
-- *Why A is incorrect:* Workflow frequency and compute cost are operational concerns, not security gaps. The core issue is timing — post-merge vs. pre-merge.
-- *Why C is incorrect:* GitHub Secrets are accessible to workflows triggered by push events. There is no restriction based on trigger type for secrets access (with appropriate configuration).
-- *Why D is incorrect:* `paths:` is an optional filter for push triggers. A push trigger without `paths:` is valid and fires on all pushes to the specified branch.
+## Question 10
+
+Which statement about the `--no-allow-bypass` branch protection setting in GitHub is correct?
+
+- A) It prevents external contributors from forking the repository
+- B) It prevents repository administrators from overriding the branch protection rules
+- C) It disables all CI/CD pipelines for the protected branch
+- D) It requires two-factor authentication for all push operations
+
+### Q10 — Correct Answer: B
+
+### Q10 — Distractor Analysis
+
+- A) Forking controls are separate repository-level settings unrelated to branch protection bypass.
+- C) Branch protection does not affect CI/CD pipeline execution — pipelines still run.
+- D) Two-factor authentication is an account-level security setting, not a branch protection parameter.
+
+---
+
+Quiz — Module 02 | CIS-4350 | Texas Wesleyan University | Professor Nash

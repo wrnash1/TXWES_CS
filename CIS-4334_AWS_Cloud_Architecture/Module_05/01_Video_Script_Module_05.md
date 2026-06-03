@@ -173,7 +173,7 @@ VPC connectivity: peering for small numbers of VPCs (non-transitive); Transit Ga
 
 In the lab this week you will design a complete VPC CIDR block layout for a three-tier architecture. In the Reading Guide you have complete subnet planning tables, security group vs. NACL reference, and connectivity option comparisons.
 
-For your certification study: aws.amazon.com/certification.
+For your certification study: <aws.amazon.com/certification>
 
 ---
 

@@ -1,81 +1,167 @@
-# Quiz: Module 15 - Database Cost Optimization on GCP
-## Course: CIS-4327_Database_Admin (4327_Database_Admin - Google Cloud Professional Cloud Database Engineer)
+# Quiz: Module 15 — Database Automation and Monitoring
+
+## Course: CIS-4327 Database Administration
+
+## Texas Wesleyan University — Professor Nash
+
+## Google Cloud Professional Cloud Database Engineer Alignment
 
 ---
 
-**Question 1**
-A data analytics team runs approximately 500 TB of BigQuery queries per month. The queries are distributed evenly throughout the month with no significant peaks. Comparing on-demand pricing ($5/TB) and flat-rate pricing (a 100-slot reservation costs approximately $2,000/month), which pricing model is more cost-effective?
-A) On-demand pricing, because 500 TB × $5 = $2,500/month, which is more than a 100-slot flat-rate at $2,000/month.
-B) Flat-rate pricing, because it provides unlimited query slots regardless of how many TB are processed.
-C) On-demand pricing, because flat-rate reservations are only available for BigQuery Enterprise editions.
-D) Both pricing models cost the same, so the team should choose flat-rate for more predictable billing.
-*   **Correct Answer:** A) On-demand pricing, because 500 TB × $5 = $2,500/month, which is more than a 100-slot flat-rate at $2,000/month.
-*   **Distractor Analysis:**
-    *   *Why A is correct:* At $5/TB on-demand, 500 TB = $2,500/month. A flat-rate reservation at $2,000/month costs $500 less. For consistent monthly volumes exceeding approximately 400 TB, flat-rate reservations are more economical. The team should purchase slot reservations.
-    *   *Why B is incorrect:* Flat-rate reservations do not provide unlimited slots; you reserve a fixed number of slots (compute capacity). Queries that require more capacity than reserved slots will queue. The cost benefit is predictability and savings on consistent high-volume workloads.
-    *   *Why C is incorrect:* BigQuery flat-rate slot reservations are available through BigQuery Reservations and do not require a specific "Enterprise edition." They are a billing model available to any BigQuery project.
-    *   *Why D is incorrect:* The two pricing models produce different costs for this workload ($2,500 on-demand vs. $2,000 flat-rate). They are not equal.
+### Instructions
+
+This quiz contains 10 questions. Each question is worth 10 points. Select the single best answer. Distractor analysis follows each question.
 
 ---
 
----
+### Question 1
 
-**Question 2**
-A Cloud SQL for PostgreSQL instance has been running in production for 6 months. Cloud Monitoring shows that average CPU utilization is consistently 8% and memory utilization is 15%. The instance is currently configured as a `db-custom-8-32768` (8 vCPUs, 32 GB RAM). Which cost optimization action should be taken?
-A) Right-size the instance by downgrading to a smaller machine type such as `db-custom-2-7680` (2 vCPUs, 7.5 GB RAM) during a maintenance window, after verifying the application can handle the reduced capacity.
-B) Enable Cloud SQL HA to allow load balancing between the primary and standby to improve utilization.
-C) Add read replicas to distribute the low utilization across multiple instances.
-D) Enable Committed Use Discounts on the current instance without changing the machine type.
-*   **Correct Answer:** A) Right-size the instance by downgrading to a smaller machine type during a maintenance window, after verifying the application can handle the reduced capacity.
-*   **Distractor Analysis:**
-    *   *Why A is correct:* Consistently 8% CPU and 15% memory utilization on an 8-vCPU, 32 GB instance means the workload is significantly over-provisioned. Downgrading to a smaller machine type reduces the per-hour compute cost substantially (potentially 60–75% reduction). Right-sizing is the most impactful cost optimization action when metrics show chronic under-utilization.
-    *   *Why B is incorrect:* HA adds a standby instance in a second zone, which doubles the compute cost — the opposite of cost optimization. HA standby instances do not serve read traffic and cannot balance load.
-    *   *Why C is incorrect:* Adding read replicas when the primary is at 8% utilization increases cost by adding additional instance hours without solving any capacity problem.
-    *   *Why D is incorrect:* Committed Use Discounts reduce the per-hour rate of the current machine type but do not reduce the over-provisioning problem. CUDs are most valuable when the machine type is already correctly sized; applying them to an oversized instance still wastes money, just at a discounted rate.
+A Cloud SQL for PostgreSQL instance has `max_connections = 100`. The monitoring team wants an alert when active connections exceed 80% of capacity. Which Cloud Monitoring metric and threshold correctly implements this alerting policy?
+
+- A) Metric: `database/cpu/utilization`; Threshold: 0.80
+- B) Metric: `database/postgresql/num_backends`; Threshold: 80 (absolute count)
+- C) Metric: `database/memory/utilization`; Threshold: 0.80
+- D) Metric: `database/disk/utilization`; Threshold: 0.80
+
+Correct Answer: B — `database/postgresql/num_backends` reports the current number of active database connections (backends). With `max_connections = 100`, setting the threshold at 80 represents exactly 80% of capacity. This metric is specific to PostgreSQL connections and is the correct one to alert on connection pool pressure.
+
+Distractor analysis: A is incorrect because `database/cpu/utilization` measures CPU consumption as a fraction of available CPU, not connection count. High CPU does not necessarily correlate with high connection count, and 0.80 CPU utilization would not alert at 80% of connection capacity. C is incorrect because `database/memory/utilization` measures RAM usage, not connection count. D is incorrect because `database/disk/utilization` measures disk space consumption, not connections.
 
 ---
 
----
+### Question 2
 
-**Question 3**
-A database cost analyst needs to **estimate the cost of a BigQuery query before running it, to ensure it will not exceed the project's monthly budget**. Which tool or command provides the estimated bytes scanned before query execution?
-A) Use the `--dry_run` flag with the `bq query` command or click "Validate" in the BigQuery console to get the bytes estimate without executing the query.
-B) Run `EXPLAIN ANALYZE` on the BigQuery query to view the estimated cost in the execution plan.
-C) Check the `cloudbilling.googleapis.com/billing_export` metric in Cloud Monitoring before running the query.
-D) Create a Cloud Monitoring budget alert set to $0, which will notify immediately when the query begins processing.
-*   **Correct Answer:** A) Use the `--dry_run` flag with the `bq query` command or click "Validate" in the BigQuery console to get the bytes estimate without executing the query.
-*   **Distractor Analysis:**
-    *   *Why A is correct:* The `bq query --dry_run` command submits the query to the BigQuery planner without executing it and returns the estimated bytes that would be processed. The BigQuery console's "Validate" button provides the same estimate. This allows cost-checking queries before they incur charges.
-    *   *Why B is incorrect:* `EXPLAIN ANALYZE` is a PostgreSQL/MySQL command that executes a query and shows its execution plan. BigQuery does not have an `EXPLAIN ANALYZE` command; it uses `bq query --dry_run` for pre-execution cost estimation.
-    *   *Why C is incorrect:* The Cloud Billing export metric in Cloud Monitoring shows historical billed costs after queries have already been executed; it does not provide pre-execution estimates for individual queries.
-    *   *Why D is incorrect:* A budget alert at $0 would trigger every time any billable BigQuery usage occurs, generating constant alerts that are not actionable. It does not provide a per-query cost estimate before execution.
+A DBA needs to understand which specific SQL queries are consuming the most CPU time on a Cloud SQL for PostgreSQL instance. Which GCP feature provides this query-level breakdown directly in the Cloud Console without requiring additional configuration or extensions?
+
+- A) Cloud SQL Audit Logs in Cloud Logging — captures all executed SQL with resource consumption
+- B) Cloud SQL Query Insights — continuously samples and aggregates database queries ranked by CPU time and latency
+- C) Cloud Monitoring custom metrics with a pgaudit filter configuration
+- D) BigQuery `INFORMATION_SCHEMA.JOBS_BY_PROJECT` — the GCP-standard query performance view
+
+Correct Answer: B — Cloud SQL Query Insights is built into the Cloud SQL service. It automatically samples active queries, aggregates them by normalized query text, and ranks them by CPU time, execution count, average latency, and bytes processed — all viewable in the Cloud Console without modifying application code or enabling extensions.
+
+Distractor analysis: A is incorrect because Cloud SQL Audit Logs record who executed what action (access events) but do not provide CPU consumption or latency breakdown per query pattern. C is incorrect because pgaudit logs SQL statements for audit purposes and Cloud Monitoring custom metrics require manual configuration; this approach is significantly more complex than Query Insights and does not provide the same aggregated performance view. D is incorrect because `INFORMATION_SCHEMA.JOBS_BY_PROJECT` is a BigQuery-specific system view for BigQuery job analysis, not a Cloud SQL feature.
 
 ---
 
-**Question 4**
-A company runs a Cloud Spanner instance with 5 nodes for a global e-commerce workload. After a seasonal peak, Cloud Monitoring shows that Spanner CPU utilization has dropped to 15% for the past 30 days and is expected to remain low for the next 3 months. What is the most appropriate cost optimization action?
-A) Reduce the Spanner instance's node count to 2 or 3 nodes to better match the current workload, saving approximately 40–60% on compute costs for the period.
-B) Migrate the Spanner database to Cloud SQL to reduce costs permanently.
-C) Purchase a 1-year Committed Use Discount for the current 5-node configuration to lock in a discounted rate.
-D) Enable Spanner's autoscaling feature to scale down to 1 node and back up to 5 nodes within seconds when traffic increases.
-*   **Correct Answer:** A) Reduce the Spanner instance's node count to 2 or 3 nodes to better match the current workload.
-*   **Distractor Analysis:**
-    *   *Why A is correct:* Cloud Spanner nodes can be added or removed through the Cloud Console or API without downtime. At 15% CPU utilization, the workload needs 2–3 nodes (leaving headroom for bursts). Reducing from 5 to 2 nodes saves 60% on compute costs. You can scale back up before the next peak.
-    *   *Why B is incorrect:* Migrating from Spanner to Cloud SQL is a major architectural change that requires re-evaluating schema design, global distribution needs, and consistency requirements. This is not an appropriate response to a temporary post-peak utilization drop.
-    *   *Why C is incorrect:* Purchasing a 1-year CUD for 5 nodes when the current workload only needs 2–3 nodes locks in payment for excess capacity. CUDs should be applied after right-sizing, not instead of it.
-    *   *Why D is incorrect:* Cloud Spanner does have an autoscaler, but it does not scale down to 1 node instantaneously; scaling operations take several minutes and Spanner requires a minimum of 1 node (or 100 processing units). The autoscaler is a helpful tool but is not a substitute for manual right-sizing after a sustained utilization change.
+### Question 3
+
+A production Terraform configuration for a Cloud SQL instance does not include `deletion_protection = true`. A junior engineer accidentally runs `terraform destroy` against the production environment. What is the result?
+
+- A) Terraform warns but does not destroy the instance because Cloud SQL has built-in protection against accidental deletion
+- B) Terraform destroys the instance, deleting all databases and data permanently
+- C) Terraform creates an automated backup before destroying the instance as a safety measure
+- D) The GCP console blocks the destroy operation because the instance has active connections
+
+Correct Answer: B — Without `deletion_protection = true` in the Terraform resource definition (or equivalently without `--deletion-protection` set on the Cloud SQL instance), `terraform destroy` submits the delete API call to Cloud SQL and the instance is permanently deleted along with all its databases, data, and backups. There is no automatic safety net.
+
+Distractor analysis: A is incorrect because Cloud SQL does not have built-in protection against Terraform-initiated deletes. Cloud SQL's `deletion-protection` flag must be explicitly enabled. Without it, the instance is deleted when Terraform destroys it. C is incorrect because Terraform does not automatically create backups before destructive operations. On-demand backup creation would require a separate Terraform resource or manual intervention. D is incorrect because active connections do not prevent Cloud SQL instance deletion via the API or Terraform.
 
 ---
 
-**Question 5**
-When reviewing the cost of a GCP database project, you discover that a Cloud SQL for PostgreSQL instance is storing 2 TB of unused historical data from 2 years ago that is never queried. The compliance team confirms the data must be retained but does not need to be queryable within 1 second. Which action reduces cost while maintaining compliance?
-A) Export the historical data to a Cloud Storage nearline or coldline bucket, then delete it from Cloud SQL to reduce database storage costs; retrieve it from Cloud Storage when needed for compliance audits.
-B) Enable Cloud SQL storage auto-increase to handle the current 2 TB and future data growth at no additional cost.
-C) Create a BigQuery dataset and move the 2 TB to BigQuery, then immediately query it to verify completeness.
-D) Apply a Committed Use Discount to the Cloud SQL storage to reduce the per-GB storage rate for the 2 TB.
-*   **Correct Answer:** A) Export the historical data to a Cloud Storage nearline or coldline bucket, then delete it from Cloud SQL to reduce database storage costs; retrieve it from Cloud Storage when needed for compliance audits.
-*   **Distractor Analysis:**
-    *   *Why A is correct:* Cloud SQL storage costs approximately $0.17/GB/month for SSD. Cloud Storage Nearline costs $0.01/GB/month and Coldline costs $0.004/GB/month. Moving 2 TB (2,048 GB) from Cloud SQL to Coldline reduces storage cost from ~$348/month to ~$8/month — a 97% reduction. Since the data only needs to be accessible for compliance audits (not sub-second queries), the retrieval latency of Cloud Storage is acceptable.
-    *   *Why B is incorrect:* Storage auto-increase means the Cloud SQL instance will pay for the full 2 TB of storage at Cloud SQL SSD rates indefinitely. Enabling auto-increase does not reduce cost; it adds cost as storage grows.
-    *   *Why C is incorrect:* Moving data to BigQuery does reduce the storage to BigQuery's lower rate ($0.02/GB/month for active storage), which is better than Cloud SQL but more expensive than Cloud Storage Coldline. Additionally, if the data will never be queried operationally, BigQuery's query-optimized storage is unnecessary overhead.
-    *   *Why D is incorrect:* Committed Use Discounts apply to Cloud SQL compute costs (vCPU and RAM), not to storage costs. Cloud SQL storage is charged separately and cannot be discounted with CUDs.
+### Question 4
+
+A DBA needs to prevent Cloud SQL automatic maintenance from occurring during the company's peak sales period from December 20 through January 5. Which Cloud SQL feature accomplishes this?
+
+- A) Configure the maintenance window to a 1-hour daily window during this period to limit disruption
+- B) Create a deny maintenance period covering December 20 to January 5, which blocks all maintenance during that range
+- C) Pause the Cloud SQL instance for the duration of the peak period
+- D) Disable automatic backups during the period, which also suppresses maintenance operations
+
+Correct Answer: B — Cloud SQL supports deny maintenance periods — configurable date ranges during which Cloud SQL will not perform any maintenance operations (version updates, patches). Any pending maintenance is deferred until after the deny period ends.
+
+Distractor analysis: A is incorrect because a maintenance window specifies when maintenance can occur, not when it cannot. Setting a 1-hour window still allows maintenance to run during peak season. C is incorrect because Cloud SQL instances cannot be "paused" — they are running or stopped, and stopping an instance makes it unavailable to the application, which defeats the purpose. D is incorrect because disabling automated backups does not suppress maintenance operations; backups and maintenance are independent features with separate configuration.
+
+---
+
+### Question 5
+
+A Cloud SQL HA Regional instance failover is triggered. How long does the application typically need to wait before successfully reconnecting to the new primary?
+
+- A) 0–5 seconds — Cloud SQL uses a virtual IP that switches instantaneously
+- B) 30–120 seconds — the standby is promoted and the connection endpoint DNS is updated
+- C) 5–15 minutes — data must be fully synchronized from the primary to the standby before promotion can occur
+- D) No wait is required — the application needs only to retry the connection once and it immediately succeeds
+
+Correct Answer: B — Cloud SQL HA failover typically takes 30–120 seconds from the time of failover trigger to when the new primary (former standby) is accepting connections. This includes time for standby promotion, connection endpoint update, and the TCP reset that causes clients to drop and retry connections.
+
+Distractor analysis: A is incorrect because Cloud SQL HA does not use a virtual IP (VIP) with sub-second failover. The failover involves actual standby promotion and DNS update, which takes tens of seconds. C is incorrect because Cloud SQL HA uses synchronous replication — the standby is always current. No data synchronization is needed before promotion because the standby already has all committed data. D is incorrect because the application must wait for the failover process to complete (30–120 seconds) before connections succeed. A single immediate retry will fail if issued during the failover window.
+
+---
+
+### Question 6
+
+Which Terraform resource configuration block prevents a Cloud SQL instance from being destroyed, causing `terraform destroy` and any `terraform apply` that would delete the resource to produce an error?
+
+- A) `depends_on = [google_project_service.sql_api]`
+- B) `lifecycle { prevent_destroy = true }`
+- C) `deletion_protection = false` inside the resource settings block
+- D) `lifecycle { ignore_changes = [all] }` inside the resource block
+
+Correct Answer: B — The `lifecycle { prevent_destroy = true }` meta-argument in a Terraform resource block causes Terraform to return an error if any plan would destroy that resource. This applies to both explicit `terraform destroy` and `terraform apply` operations that would delete the resource as a side effect.
+
+Distractor analysis: A is incorrect because `depends_on` establishes an ordering dependency between resources but does not prevent destruction. C is incorrect because `deletion_protection = false` is the Cloud SQL resource argument that explicitly allows deletion; setting it to `false` means deletion is permitted. The correct Terraform protection is `lifecycle { prevent_destroy = true }`. D is incorrect because `ignore_changes = [all]` instructs Terraform to ignore any configuration drift for the resource (not update it when changes are detected), but it does not prevent the resource from being deleted.
+
+---
+
+### Question 7
+
+A data engineering team stores their Terraform state in a local file on each developer's laptop. A developer's laptop is stolen. What is the primary operational risk to the Terraform-managed infrastructure?
+
+- A) Terraform cannot manage, update, or destroy the GCP resources that were in the stolen state file without state recovery
+- B) Local state files are automatically synchronized to GCP; the state on the stolen laptop is just a cached copy
+- C) Terraform will automatically rebuild the state from the actual GCP resources using `terraform refresh`
+- D) Only the stolen developer's resources are affected; other developers' Terraform state files are independent and unaffected
+
+Correct Answer: A — Terraform state records the mapping between Terraform resource definitions and actual GCP resource IDs. Without the state file, Terraform does not know that its configuration corresponds to existing GCP resources and will attempt to create new resources rather than modify the existing ones. State recovery requires importing existing resources with `terraform import`, which is time-consuming and error-prone.
+
+Distractor analysis: B is incorrect because Terraform local state files are not automatically synced to GCP. Local state is a plain file on disk with no built-in sync mechanism. This is why remote state backends (Cloud Storage, Terraform Cloud) are recommended for teams. C is incorrect because `terraform refresh` reads current GCP resource attributes into the existing state file but cannot rebuild a state file from scratch if the file is missing — it requires an existing state to update. D is incorrect because team infrastructure typically shares a single state file or uses a remote backend. If the stolen laptop had the only copy of shared state, the entire team's infrastructure management is compromised.
+
+---
+
+### Question 8
+
+A Cloud Monitoring alerting policy is configured for Cloud SQL CPU utilization with a threshold of 80% and an alert duration of 5 minutes (meaning the condition must be true for 5 continuous minutes to fire). The CPU spikes to 95% for 3 minutes and then drops to 40%. Does the alert fire?
+
+- A) Yes — the CPU exceeded 80%, which triggers the alert immediately when the threshold is crossed
+- B) No — the 5-minute sustained condition was not met because the CPU was only above 80% for 3 minutes
+- C) Yes — any spike above 80% triggers an alert regardless of the duration setting
+- D) No — 3 minutes of high CPU is within the normal operating range and Cloud Monitoring suppresses brief spikes
+
+Correct Answer: B — Cloud Monitoring alerting policies with a duration condition (also called an alignment period condition) require the metric to continuously exceed the threshold for the full configured duration before the alert fires. A 3-minute spike that resolves before reaching the 5-minute requirement does not trigger the alert. This design prevents alert storms from transient spikes.
+
+Distractor analysis: A is incorrect because the alert duration setting exists precisely to prevent immediate-fire behavior on threshold crossings. The policy is configured with a 5-minute duration requirement, so threshold crossings that last fewer than 5 minutes are suppressed. C is incorrect because the duration parameter explicitly overrides the "fire immediately on threshold crossing" behavior. D is incorrect because Cloud Monitoring does not have a built-in "normal operating range" concept for CPU — the suppression in this case is due to the 5-minute duration condition, not automatic spike filtering.
+
+---
+
+### Question 9
+
+A database reliability engineer wants to create an alert when PostgreSQL lock wait events appear in Cloud SQL logs. Cloud Monitoring does not have a built-in metric for lock waits. Which feature creates an alertable metric from this log data?
+
+- A) Cloud SQL Insights with lock event tracking enabled in the Query Insights configuration
+- B) A log-based metric in Cloud Monitoring derived from Cloud Logging log entries that match the lock wait log pattern
+- C) The pgaudit extension with `pgaudit.log_lock_waits = on` that publishes metrics automatically to Cloud Monitoring
+- D) Cloud Trace with PostgreSQL span-level lock tracking enabled via the Cloud SQL flag
+
+Correct Answer: B — Cloud Monitoring log-based metrics allow you to create a custom metric from any log entry pattern in Cloud Logging. By defining a filter that matches the PostgreSQL lock wait log pattern (e.g., `LOG: process acquired lock waits`), you create a metric that counts matching log entries over time. This metric can then be used in an alerting policy like any other Cloud Monitoring metric.
+
+Distractor analysis: A is incorrect because Cloud SQL Query Insights does not have a separate lock event tracking feature; it focuses on query latency and CPU, not wait event monitoring at the lock level. C is incorrect because pgaudit logs SQL statements for audit purposes and does not publish custom metrics to Cloud Monitoring; a log-based metric is still required to convert log entries into alertable metrics. D is incorrect because Cloud Trace is used for distributed tracing of application requests, not for PostgreSQL lock event monitoring; it does not integrate with Cloud SQL lock waits.
+
+---
+
+### Question 10
+
+After a Cloud SQL HA failover completes (75 seconds), the application takes an additional 3 minutes to successfully reconnect. The application uses HikariCP connection pooling. What is the most likely cause of the 3-minute gap?
+
+- A) The new primary requires 3 minutes to load the database schema and buffer pool into memory before accepting queries
+- B) HikariCP's connection pool holds stale connections from the old primary until the `connectionTimeout` or `keepaliveTime` period expires, causing reconnection retries to fail until the pool evicts dead connections
+- C) Cloud SQL requires a 3-minute warm-up period after every HA failover before it accepts new connections
+- D) The DNS TTL for the Cloud SQL private IP connection endpoint is 3 minutes by default
+
+Correct Answer: B — After failover, connections in the HikariCP pool point to the old primary, which is no longer accepting connections. HikariCP does not immediately detect dead connections unless `keepaliveTime` and `connectionTestQuery` are configured. Stale connections are held in the pool and returned to the application, which then fails. The pool only evicts dead connections and reconnects after `connectionTimeout` or `keepaliveTime` fires, which can take minutes with default settings.
+
+Distractor analysis: A is incorrect because Cloud SQL instances do not require a warm-up period for schema or buffer pool loading; the promoted standby is already running and ready to accept connections as soon as promotion completes (within the 75 seconds). C is incorrect because Cloud SQL has no built-in 3-minute post-failover warm-up requirement; the instance is ready immediately after promotion. D is incorrect because the Cloud SQL connection name resolves through Cloud SQL's proxy infrastructure, which updates the routing at promotion time; the application delay is in the connection pool behavior, not in DNS TTL.
+
+---
+
+Reference: cloud.google.com/learn

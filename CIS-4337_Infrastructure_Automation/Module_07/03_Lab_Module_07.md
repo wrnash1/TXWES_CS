@@ -1,302 +1,428 @@
-# CIS-4337 Infrastructure Automation
+# Lab: Module 07 — Terraform Variables, Outputs, and Locals
 
-## Lab — Module 07: Terraform Workspaces and Environments
+## Course: CIS-4337 Infrastructure Automation
 
-### Course Alignment: HashiCorp Terraform Associate 003
+## Texas Wesleyan University | Professor Nash
 
----
-
-## Objectives
-
-By the end of this lab you will be able to:
-
-- Create and switch between Terraform workspaces.
-- Use `terraform.workspace` to create environment-aware resource names and tags.
-- Verify that each workspace maintains independent state.
-- Inspect workspace state storage paths on the local filesystem.
-- Apply the recommended multi-environment directory pattern.
+## Certification Alignment: HashiCorp Terraform Associate (003)
 
 ---
 
-## Prerequisites
+## Lab Overview
 
-- Terraform CLI 1.6.0 or later.
-- No cloud provider credentials required for Parts 1–3 (uses null provider).
-- AWS credentials required for Part 4 (optional extension).
+In this lab you will build a fully parameterized Terraform configuration that provisions a simulated web application environment using the `local` provider (no cloud credentials required). You will practice declaring typed variables with validation, using `.tfvars` files, setting environment variables, working with local values, and querying outputs.
+
+**Estimated time**: 60–75 minutes
+
+**Prerequisites**:
+
+- Terraform >= 1.5 installed and on your PATH
+- A text editor (VS Code recommended)
+- A Unix/Linux shell or Git Bash on Windows
 
 ---
 
-## Part 1: Create and Explore Workspaces
+## Part 1: Project Setup (10 minutes)
 
-### Step 1.1 — Create the working directory and configuration
+### Step 1.1 — Create the Lab Directory
 
 ```bash
-mkdir ~/tf-lab-07
-cd ~/tf-lab-07
+mkdir -p ~/tf-lab-07 && cd ~/tf-lab-07
 ```
+
+### Step 1.2 — Create the Provider Configuration
 
 Create `main.tf`:
 
 ```hcl
 terraform {
-  required_version = ">= 1.6.0"
+  required_version = ">= 1.5"
   required_providers {
-    null = {
-      source  = "hashicorp/null"
-      version = "~> 3.0"
+    local = {
+      source  = "hashicorp/local"
+      version = "~> 2.4"
     }
   }
 }
 
-resource "null_resource" "env_marker" {
-  triggers = {
-    workspace   = terraform.workspace
-    deployed_at = "2024-01-01"
-  }
-}
+provider "local" {}
 ```
+
+Initialize the configuration:
 
 ```bash
 terraform init
 ```
 
-### Step 1.2 — Inspect the default workspace
-
-```bash
-terraform workspace list
-terraform workspace show
-```
-
-Record in `lab_notes.txt`:
-
-1. What is the name of the active workspace?
-2. What symbol indicates the active workspace in `workspace list` output?
-
-### Step 1.3 — Apply in the default workspace
-
-```bash
-terraform apply -auto-approve
-```
-
-Confirm the state file location:
-
-```bash
-ls -la terraform.tfstate
-cat terraform.tfstate | grep workspace
-```
-
-Record: Does the default workspace state file contain a workspace name in its contents? (Hint: the state file does not store a workspace name — it is implicit from the file location.)
+Expected output includes: `Terraform has been successfully initialized!`
 
 ---
 
-## Part 2: Create Named Workspaces and Verify State Isolation
+## Part 2: Declare Input Variables (15 minutes)
 
-### Step 2.1 — Create a dev workspace
-
-```bash
-terraform workspace new dev
-terraform workspace show
-```
-
-Confirm you are now in the `dev` workspace.
-
-### Step 2.2 — Apply in dev workspace
-
-```bash
-terraform apply -auto-approve
-```
-
-### Step 2.3 — Inspect the workspace state storage structure
-
-```bash
-ls -la terraform.tfstate.d/
-ls -la terraform.tfstate.d/dev/
-cat terraform.tfstate.d/dev/terraform.tfstate
-```
-
-Record in `lab_notes.txt`:
-
-1. What is the full path to the dev workspace state file?
-2. What is the `triggers.workspace` value in the dev state file?
-
-### Step 2.4 — Create a staging workspace
-
-```bash
-terraform workspace new staging
-terraform apply -auto-approve
-```
-
-### Step 2.5 — List all workspaces
-
-```bash
-terraform workspace list
-```
-
-Record: How many workspaces exist? Which is active?
-
-### Step 2.6 — Verify state isolation
-
-Switch back to default and verify its state still shows the default workspace value:
-
-```bash
-terraform workspace select default
-cat terraform.tfstate | python3 -m json.tool | grep -A2 triggers
-```
-
-Then check the staging state:
-
-```bash
-cat terraform.tfstate.d/staging/terraform.tfstate | python3 -m json.tool | grep -A2 triggers
-```
-
-Record: Do the two state files contain different values for `triggers.workspace`? What does this demonstrate about state isolation?
-
----
-
-## Part 3: Workspace-Aware Configuration
-
-### Step 3.1 — Update main.tf to use terraform.workspace
-
-Replace the content of `main.tf` with:
+### Step 2.1 — Create variables.tf
 
 ```hcl
-terraform {
-  required_version = ">= 1.6.0"
-  required_providers {
-    null = {
-      source  = "hashicorp/null"
-      version = "~> 3.0"
-    }
+# variables.tf
+
+variable "app_name" {
+  type        = string
+  description = "Name of the application"
+
+  validation {
+    condition     = length(var.app_name) >= 3 && length(var.app_name) <= 20
+    error_message = "app_name must be between 3 and 20 characters."
   }
 }
 
-locals {
-  environment = terraform.workspace
+variable "environment" {
+  type        = string
+  description = "Deployment environment"
 
-  instance_config = {
-    default = { replicas = 1, tier = "small"  }
-    dev     = { replicas = 1, tier = "small"  }
-    staging = { replicas = 2, tier = "medium" }
-    prod    = { replicas = 4, tier = "large"  }
-  }
-
-  config = lookup(local.instance_config, local.environment, local.instance_config["default"])
-}
-
-resource "null_resource" "app_server" {
-  count = local.config.replicas
-
-  triggers = {
-    name      = "app-${local.environment}-${count.index}"
-    tier      = local.config.tier
-    workspace = terraform.workspace
+  validation {
+    condition     = contains(["dev", "staging", "prod"], var.environment)
+    error_message = "environment must be one of: dev, staging, prod."
   }
 }
 
-output "environment_name" {
-  value = local.environment
+variable "port" {
+  type        = number
+  description = "Application listening port"
+  default     = 8080
+
+  validation {
+    condition     = var.port >= 1024 && var.port <= 65535
+    error_message = "port must be between 1024 and 65535."
+  }
 }
 
-output "replica_count" {
-  value = local.config.replicas
+variable "enable_https" {
+  type        = bool
+  description = "Enable HTTPS configuration"
+  default     = false
 }
 
-output "server_names" {
-  value = [for r in null_resource.app_server : r.triggers.name]
+variable "allowed_origins" {
+  type        = list(string)
+  description = "List of allowed CORS origins"
+  default     = ["https://example.com"]
+}
+
+variable "app_config" {
+  type = object({
+    max_connections = number
+    log_level       = string
+    debug_mode      = bool
+  })
+  description = "Application configuration object"
+  default = {
+    max_connections = 100
+    log_level       = "info"
+    debug_mode      = false
+  }
+}
+
+variable "secret_api_key" {
+  type        = string
+  description = "API key for external service"
+  sensitive   = true
+  default     = "placeholder-not-real"
 }
 ```
 
-### Step 3.2 — Apply in each workspace and compare outputs
+### Step 2.2 — Test Validation
+
+Run a plan with an invalid environment value:
 
 ```bash
-terraform workspace select dev
-terraform apply -auto-approve
-terraform output
+terraform plan -var="app_name=myapp" -var="environment=qa"
 ```
 
-Record the output values for dev. Then repeat for staging and a new `prod` workspace:
+Confirm that Terraform rejects the value with the custom error message.
+
+Now test with a valid value:
 
 ```bash
-terraform workspace new prod
-terraform apply -auto-approve
-terraform output
+terraform plan -var="app_name=myapp" -var="environment=dev"
 ```
-
-Record in `lab_notes.txt`:
-
-1. How many `null_resource.app_server` instances were created in dev? In prod?
-2. What are the server names in each workspace?
-3. Could you achieve this behavior without `terraform.workspace`? If yes, how?
 
 ---
 
-## Part 4: Clean Up All Workspaces
+## Part 3: Define Local Values (10 minutes)
 
-Destroy resources and delete workspaces one at a time:
+### Step 3.1 — Create locals.tf
 
-```bash
-terraform workspace select prod
-terraform destroy -auto-approve
-terraform workspace select default
-terraform workspace delete prod
+```hcl
+# locals.tf
 
-terraform workspace select staging
-terraform destroy -auto-approve
-terraform workspace select default
-terraform workspace delete staging
+locals {
+  name_prefix = "${var.app_name}-${var.environment}"
 
-terraform workspace select dev
-terraform destroy -auto-approve
-terraform workspace select default
-terraform workspace delete dev
+  config_filename = "${local.name_prefix}-config.json"
 
-terraform destroy -auto-approve
+  protocol = var.enable_https ? "https" : "http"
+
+  base_url = "${local.protocol}://localhost:${var.port}"
+
+  app_metadata = {
+    name        = var.app_name
+    environment = var.environment
+    version     = "1.0.0"
+    managed_by  = "Terraform"
+    base_url    = local.base_url
+  }
+}
 ```
 
-Confirm all workspace directories are removed:
+---
+
+## Part 4: Create Resources Using Variables and Locals (15 minutes)
+
+### Step 4.1 — Add Resources to main.tf
+
+Append the following to `main.tf`:
+
+```hcl
+resource "local_file" "app_config" {
+  filename = "${path.module}/output/${local.config_filename}"
+  content  = jsonencode({
+    app_name        = var.app_name
+    environment     = var.environment
+    port            = var.port
+    enable_https    = var.enable_https
+    base_url        = local.base_url
+    allowed_origins = var.allowed_origins
+    max_connections = var.app_config.max_connections
+    log_level       = var.app_config.log_level
+    debug_mode      = var.app_config.debug_mode
+  })
+  file_permission = "0644"
+}
+
+resource "local_file" "env_file" {
+  filename = "${path.module}/output/${local.name_prefix}.env"
+  content  = <<-EOT
+    APP_NAME=${var.app_name}
+    ENVIRONMENT=${var.environment}
+    PORT=${var.port}
+    ENABLE_HTTPS=${var.enable_https}
+    BASE_URL=${local.base_url}
+    LOG_LEVEL=${var.app_config.log_level}
+  EOT
+  file_permission = "0600"
+}
+```
+
+### Step 4.2 — Create the Output Directory
 
 ```bash
-ls -la terraform.tfstate.d/
+mkdir -p output
+```
+
+---
+
+## Part 5: Define Outputs (10 minutes)
+
+### Step 5.1 — Create outputs.tf
+
+```hcl
+# outputs.tf
+
+output "app_name" {
+  description = "The application name"
+  value       = var.app_name
+}
+
+output "environment" {
+  description = "The deployment environment"
+  value       = var.environment
+}
+
+output "base_url" {
+  description = "The application base URL"
+  value       = local.base_url
+}
+
+output "config_file_path" {
+  description = "Path to the generated configuration file"
+  value       = local_file.app_config.filename
+}
+
+output "env_file_path" {
+  description = "Path to the generated environment file"
+  value       = local_file.env_file.filename
+}
+
+output "app_metadata" {
+  description = "Full application metadata map"
+  value       = local.app_metadata
+}
+
+output "api_key_length" {
+  description = "Length of the API key (sensitive value masked)"
+  value       = length(var.secret_api_key)
+}
+```
+
+---
+
+## Part 6: Create tfvars Files (10 minutes)
+
+### Step 6.1 — Create dev.tfvars
+
+```hcl
+# dev.tfvars
+app_name     = "webapp"
+environment  = "dev"
+port         = 3000
+enable_https = false
+
+allowed_origins = [
+  "http://localhost:3000",
+  "http://localhost:8080",
+]
+
+app_config = {
+  max_connections = 50
+  log_level       = "debug"
+  debug_mode      = true
+}
+```
+
+### Step 6.2 — Create prod.tfvars
+
+```hcl
+# prod.tfvars
+app_name     = "webapp"
+environment  = "prod"
+port         = 443
+enable_https = true
+
+allowed_origins = [
+  "https://webapp.example.com",
+  "https://api.example.com",
+]
+
+app_config = {
+  max_connections = 500
+  log_level       = "warn"
+  debug_mode      = false
+}
+```
+
+### Step 6.3 — Apply the Dev Configuration
+
+```bash
+terraform apply -var-file="dev.tfvars" -auto-approve
+```
+
+Verify the output files were created:
+
+```bash
+ls output/
+cat output/webapp-dev-config.json
+```
+
+---
+
+## Part 7: Variable Precedence Exercise (10 minutes)
+
+### Step 7.1 — Test Environment Variable Override
+
+Set an environment variable and observe it overrides the tfvars value:
+
+```bash
+export TF_VAR_port=9090
+terraform plan -var-file="dev.tfvars"
+```
+
+Look at the plan output — `port` should show `9090` rather than `3000` from `dev.tfvars`.
+
+### Step 7.2 — Test CLI Override
+
+The `-var` flag overrides even `TF_VAR_`:
+
+```bash
+terraform plan -var-file="dev.tfvars" -var="port=7777"
+```
+
+Verify that `port` is `7777`.
+
+### Step 7.3 — Clean Up Environment Variable
+
+```bash
+unset TF_VAR_port
+```
+
+### Step 7.4 — Apply Prod Configuration
+
+```bash
+terraform apply -var-file="prod.tfvars" -auto-approve
+```
+
+Inspect the new output files:
+
+```bash
+cat output/webapp-prod-config.json
+cat output/webapp-prod.env
+```
+
+---
+
+## Part 8: Query Outputs (5 minutes)
+
+```bash
+# List all outputs
+terraform output
+
+# Query a single output
+terraform output base_url
+
+# Get raw value for use in a shell script
+terraform output -raw base_url
+
+# Get all outputs as JSON
+terraform output -json
+```
+
+---
+
+## Cleanup
+
+```bash
+terraform destroy -var-file="prod.tfvars" -auto-approve
+rm -rf output/
 ```
 
 ---
 
 ## Deliverables
 
-Submit to Canvas:
+Submit the following to the course LMS:
 
-1. Screenshot of `terraform workspace list` showing all four workspaces (default, dev, staging, prod).
-2. Screenshot of the `terraform.tfstate.d/` directory structure.
-3. Screenshot of `terraform output` from the dev workspace.
-4. Screenshot of `terraform output` from the prod workspace showing 4 replicas.
-5. Completed `lab_notes.txt` with all recorded answers.
+1. `variables.tf` — complete with all variable declarations
+2. `locals.tf` — with all local value definitions
+3. `outputs.tf` — with all output declarations
+4. `dev.tfvars` and `prod.tfvars`
+5. A screenshot of `terraform output -json` after applying `prod.tfvars`
+6. A screenshot showing the validation error when `environment=qa` is passed
 
 ---
 
-## Grading Rubric — 100 Points
+## Grading Rubric
 
 | Criterion | Points |
 |---|---|
-| Workspaces created and listed correctly; active workspace identified | 15 |
-| State isolation verified: different workspace names in separate state files | 20 |
-| Local state storage paths identified correctly | 15 |
-| Workspace-aware configuration: `terraform.workspace` used in locals and resources | 20 |
-| Different replica counts confirmed across dev and prod workspaces | 20 |
-| All workspaces cleaned up; `terraform.tfstate.d/` empty | 10 |
+| All variables declared with correct types | 20 |
+| Validation blocks function correctly | 20 |
+| Locals defined and referenced properly | 15 |
+| Outputs defined and queryable | 15 |
+| Both `.tfvars` files produce correct output files | 15 |
+| Precedence exercise completed correctly | 10 |
+| Clean destroy with no errors | 5 |
+| **Total** | **100** |
 
 ---
 
-## Troubleshooting
-
-**Error: workspace already exists**
-If `terraform workspace new dev` fails, the workspace may already exist. Use `terraform workspace select dev` to switch to it.
-
-**The prod workspace shows 1 replica instead of 4**
-Ensure the `local.instance_config` map in your `main.tf` contains a `prod` key. The `lookup` function uses the `"default"` key as a fallback if the current workspace name is not in the map.
-
-**Error: terraform.tfstate.d: No such file or directory**
-You must create at least one named workspace before the `terraform.tfstate.d/` directory is created. The default workspace uses only the root `terraform.tfstate` file.
-
----
-
-Module 07 Lab — CIS-4337 Infrastructure Automation — Texas Wesleyan University
+*Texas Wesleyan University — CIS-4337 Infrastructure Automation*
+*Proprietary and Confidential. Not for disclosure outside of authorized course participants.*

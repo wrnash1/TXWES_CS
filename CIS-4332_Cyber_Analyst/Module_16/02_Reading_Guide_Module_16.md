@@ -1,51 +1,206 @@
-# Reading Guide: Module 16 - Final Exam Preparation & CompTIA CySA+ CS0-003 Certification
-## Course: CIS-4332_Cyber_Analyst (CompTIA CySA+)
+# Reading Guide: Module 16 — CySA+ CS0-003 Exam Preparation and Capstone
+
+## Course: CIS-4332 Cyber Security Analysis
+
+## Texas Wesleyan University | Professor Nash
+
+**Certification Alignment:** CompTIA CySA+ (CS0-003)
 
 ---
 
-### Introduction
-Welcome to **Module 16 - Final Exam Preparation & CompTIA CySA+ CS0-003 Certification**! This final module is your comprehensive review of all four exam domains covered across the course. You will consolidate your knowledge of security operations, vulnerability management, incident response, and security reporting — the four pillars tested on the CompTIA CySA+ CS0-003 exam. This module aligns with all four domains: **Domain 1: Security Operations (33%)**, **Domain 2: Vulnerability Management (30%)**, **Domain 3: Incident Response and Management (20%)**, and **Domain 4: Reporting and Communication (17%)**.
+## Introduction
 
-As a student, you will review high-yield concepts from all prior modules, identify your weakest domain areas for targeted study, practice applying the CySA+ scenario-question decision framework, and complete a final comprehensive practice assessment before sitting for the certification exam. Complete the glossary review and study checklist before beginning the final lab activity.
+Module 16 is the capstone of CIS-4332. This reading guide provides a comprehensive review of all four CySA+ CS0-003 exam domains, exam strategy guidance, and a high-yield terms reference spanning the entire course.
 
----
+Use this guide as your primary study document for the two weeks before your exam. Work through each domain section systematically, self-test on the study checklists, and use the practice questions in the Module 16 Quiz to assess your readiness.
 
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **CySA+ Scenario Question Framework**: CompTIA CySA+ CS0-003 is scenario-heavy — most questions describe a specific situation (a SIEM alert, a log excerpt, a vulnerability finding, an incident timeline) and ask what an analyst should do next, what the root cause is, or which control best addresses the problem. The exam tests application of knowledge, not memorization. The correct approach: (1) identify the domain (Security Operations, Vulnerability Management, IR, or Reporting), (2) identify the phase within that domain (e.g., which NIST IR phase), (3) eliminate clearly wrong answers, and (4) select the answer that matches both the correct technical concept and the appropriate analyst action at that phase.
-*   **Cross-Domain Integration**: Real-world security analyst work crosses all four CySA+ domains simultaneously. A complete analyst action sequence for a ransomware incident, for example, involves Domain 1 (SIEM correlation, alert triage), Domain 2 (vulnerability that enabled initial access), Domain 3 (containment, eradication, recovery), and Domain 4 (lessons-learned report, executive briefing). CySA+ tests whether you understand how these domains connect — not each domain in isolation. Review the full incident lifecycle from detection through reporting as an integrated workflow.
-*   **Exam Domain Weighting and Study Priority**: Domain 1 (Security Operations, 33%) is the largest domain and includes threat intelligence, SIEM operations, EDR, log analysis, and threat hunting — topics covered in Modules 1–6, 13, and 14. Domain 2 (Vulnerability Management, 30%) covers CVSS scoring, scan interpretation, remediation prioritization, and web application vulnerabilities — Modules 7–9 and 13. Domain 3 (Incident Response, 20%) covers NIST IR phases, containment, forensics, and cloud incident response — Modules 8–11. Domain 4 (Reporting and Communication, 17%) covers vulnerability reports, executive summaries, lessons-learned, and risk communication — Module 15. Allocate final study time proportional to domain weight.
+The CySA+ CS0-003 exam is scenario-based. You will be given situations and asked what to do — not asked to recite definitions. The goal of this guide is to ensure you can apply concepts, not just recall them.
 
 ---
 
-### 2. Certification Exam Tips
-*   **Focus Area – Scenario Questions Require Phase Identification (All Domains):** The single most common CySA+ mistake is selecting the right action at the wrong phase. Example: isolating a compromised host is correct during Containment (Domain 3), but performing forensic imaging is correct during Evidence Collection — not before containment. When you read a scenario, identify the phase first, then select the action appropriate to that phase.
-*   **Scenario Trap – "Best" vs. "First" Action:** CySA+ frequently asks what an analyst should do "first" versus "best." These are different questions. "First" tests sequence knowledge (containment before eradication, evidence collection before remediation). "Best" tests which control is most effective for a stated goal. Never apply a "best practice" answer to a "first action" question — they test different things.
-*   **High-Yield Cross-Domain Connections to Review:** (1) CVSS score vs. organizational risk rating — CVSS measures technical severity; business context changes the risk decision. (2) True/false positive/negative classification — know all four, including which is worse (false negative = missed threat). (3) EDR host isolation vs. shutdown — isolate, never shut down, to preserve volatile memory. (4) Order of volatility — RAM first, then swap, then disk, then remote logs. (5) DNS sinkholing — containment AND host identification simultaneously. (6) Shared responsibility model — customers always own data classification and IAM governance regardless of cloud deployment model.
-*   **Study Resource:** The CertifyBreakfast CySA+ playlist covers all four domains with scenario walkthroughs mapped directly to CS0-003 exam objectives: [CertifyBreakfast CompTIA CySA+ Complete Playlist](https://www.youtube.com/playlist?list=PL1Y3F-rCypPM3S7PjJvHjTqP684FwJd0W). This free resource is the recommended final review — watch the domain summary videos for each of the four exam domains in the week before the exam.
+## Section 1 — Exam Structure Reference
+
+The CySA+ CS0-003 exam:
+
+- Maximum 85 questions
+- 165-minute time limit
+- Passing score: 750 out of 900
+- Question types: multiple choice (single answer), multiple select (multiple correct), performance-based (PBQ)
+- Performance-based questions appear first and carry more point weight
+
+Domain weights:
+
+- Domain 1 — Security Operations: 33%
+- Domain 2 — Vulnerability Management: 30%
+- Domain 3 — Incident Response and Digital Forensics: 20%
+- Domain 4 — Reporting and Communication: 17%
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Complete a full review of all four domain sections in the OER Textbook: [CompTIA CySA+ CS0-003 Exam Reference Library](https://www.comptia.org/). The official CompTIA reference is the authoritative source for all exam objectives — review any domain section where you scored below 80% on module quizzes throughout the course.
-*   **Required Video:** Watch the domain summary lectures for all four CySA+ domains in the official course playlist: [CertifyBreakfast CompTIA CySA+ Complete Playlist](https://www.youtube.com/playlist?list=PL1Y3F-rCypPM3S7PjJvHjTqP684FwJd0W). The playlist includes dedicated exam prep segments with practice scenario walkthroughs that simulate the CS0-003 question format.
+## Section 2 — Domain 1: Security Operations
+
+### Key Topics
+
+**Network and System Architecture** — Analysts must understand how data flows through environments to know where to place monitoring sensors and what log sources exist. Key concepts: DMZ, segmented networks, cloud shared responsibility, east-west versus north-south traffic.
+
+**Log Analysis and Monitoring** — Know these log types and what each captures: Windows Security event logs (authentication, process creation, service installation), syslog (Linux/Unix systems and network devices), firewall logs (allow/deny, source/destination), proxy logs (URLs, user agents, response codes), DNS logs (queries, responses, NXDOMAIN). Know how SIEM correlation rules combine these sources.
+
+**SIEM Operations** — Know true positive vs. false positive vs. false negative vs. benign true positive. Know alert triage workflow. Know how to tune correlation rules to reduce false positives without creating false negatives.
+
+**Threat Intelligence** — Know the four types of intelligence: strategic (for executives, risk trends), operational (for management, current campaigns), tactical (for analysts, IoCs for immediate use), technical (machine-readable data, STIX/TAXII). Know the intelligence lifecycle: direction, collection, processing, analysis, dissemination, feedback.
+
+**Security Tools** — Know the function and distinction between: SIEM, SOAR, EDR, XDR, IDS/IPS, vulnerability scanner, threat intelligence platform, DLP, WAF.
+
+**Threat Hunting** — Know the hunting loop (hypothesis → investigate → uncover → inform), MITRE ATT&CK structure (tactics vs. techniques), and key ATT&CK technique IDs for common attack patterns.
+
+**Automation** — Know what SOAR does, how it differs from SIEM, Python scripting use cases for analysts, regex for log parsing, and REST API integration patterns.
+
+### Domain 1 High-Yield Question Triggers
+
+Questions will often describe an analyst workflow and ask which tool is most appropriate. Map tools to functions precisely. Questions about log analysis will show a log excerpt and ask what it means. Know key event IDs (4624, 4625, 4648, 4688, 4720, 7045, 1102). Questions about threat intelligence will describe a type of intelligence and ask how it is used.
 
 ---
 
-### Lab & Command Integration
-In this week's final lab, you will perform the following steps to consolidate your exam readiness:
-*   **Complete a cross-domain scenario practice set**: Using the provided 20-question final practice assessment (covering all four domains), answer each question without reference materials, document your reasoning for each answer, review your incorrect answers against the domain-specific explanations, and identify which domain you need to prioritize for final review before the exam.
-*   **Build a personal exam cheat sheet (study artifact)**: Create a one-page reference (for study use only, not permitted in the exam room) listing: the NIST IR lifecycle phases in order with one key analyst action per phase; the CVSS metric groups (Base, Temporal, Environmental) with one key metric from each; five ATT&CK technique IDs covered in the course with their associated data sources; the three web vulnerability types (SQLi, XSS, SSRF) with their primary preventive controls; and the four components of a complete vulnerability report.
-*   **Simulate an exam scenario and apply the decision framework**: Read the following scenario and document your analysis: "A SIEM alert fires indicating a workstation is sending DNS queries to a domain registered 48 hours ago with a high-entropy name. The workstation is used by a member of the finance team. No other hosts are affected. The alert was generated by a new threat intelligence feed integration, not a custom rule. What should the analyst do first?" Apply the scenario question framework — identify the domain, identify the phase, eliminate wrong answers, and write a 3-sentence justification for your answer.
+## Section 3 — Domain 2: Vulnerability Management
+
+### Key Topics
+
+**Vulnerability Scanning** — Know the difference between: agent-based (installed on endpoint, continuous collection) vs. agentless (network-based, periodic); credentialed (uses authentication, sees OS-level detail) vs. non-credentialed (sees only network-exposed services). Credentialed scans find significantly more vulnerabilities.
+
+**CVSS Scoring** — Know the CVSS v3.1 Base Score components: Attack Vector (Network, Adjacent, Local, Physical), Attack Complexity (Low, High), Privileges Required (None, Low, High), User Interaction (None, Required), Scope (Unchanged, Changed), Confidentiality/Integrity/Availability Impact (None, Low, High). Know that EPSS provides probability of exploitation within 30 days.
+
+**Vulnerability Prioritization** — Risk = Likelihood × Impact. CVSSv3 base score measures severity. EPSS measures exploitation probability. Business context (asset criticality, data classification, internet-facing status) further modifies priority. A Critical CVSS score on an internal test server is lower priority than a High score on an internet-facing production server.
+
+**Remediation Tracking** — Know patching SLAs by severity tier. Know that not all vulnerabilities can be patched — compensating controls (network segmentation, WAF rules, enhanced monitoring) address vulnerabilities that cannot be remediated.
+
+**Special Environment Scanning** — Cloud: shared responsibility model determines scan scope. OT/ICS: scanning can disrupt industrial processes; passive monitoring preferred. IoT: may lack agent support; network-based identification required.
+
+**Penetration Testing vs. Vulnerability Assessment** — Vulnerability assessment identifies weaknesses. Penetration testing actively exploits them to prove impact. Pen tests require written authorization (rules of engagement). Vulnerability assessments are less intrusive and run more frequently.
+
+### Domain 2 High-Yield Question Triggers
+
+Questions about scan type selection: identify whether the scenario requires internal visibility (credentialed) or external visibility (non-credentialed). Questions about prioritization: apply CVSS and business context together — never prioritize on CVSS score alone. Questions about remediation: distinguish patching, configuration changes, and compensating controls.
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Complete a full review of all four domain sections in the [CompTIA CySA+ CS0-003 Exam Reference Library](https://www.comptia.org/).
-- [ ] Watch the domain summary lectures for all four CySA+ domains in the [CertifyBreakfast CompTIA CySA+ Complete Playlist](https://www.youtube.com/playlist?list=PL1Y3F-rCypPM3S7PjJvHjTqP684FwJd0W).
-- [ ] Complete the 20-question final practice assessment and review all incorrect answers by domain.
-- [ ] Build your personal one-page exam study reference covering all high-yield cross-domain connections.
-- [ ] Proceed to the final hands-on lab activity.
+## Section 4 — Domain 3: Incident Response and Digital Forensics
+
+### Key Topics
+
+**NIST SP 800-61 Phases** — Know all four phases in order and what analysts do in each. Preparation: policies, playbooks, tools, training. Detection and Analysis: triage, scoping, IoC extraction, severity classification. Containment/Eradication/Recovery: short-term vs. long-term containment, persistence removal, restoration. Post-Incident Activity: lessons learned, action items, metrics.
+
+**Severity Classification** — NIST 800-61 uses three dimensions: functional impact (None/Minimal/Significant/Severe), information impact (None/Privacy Breach/Proprietary Breach/Integrity Loss), recoverability (Regular/Supplemented/Extended/Not Recoverable).
+
+**Digital Forensics Principles** — Order of volatility (RAM most volatile, disk least). Chain of custody (documented, unbroken, hashed). Working from forensic copies, not originals. Documentation of every action taken.
+
+**Memory Forensics** — Volatility key plugins: `pslist` (process list), `pstree` (process tree), `netscan` (network connections), `malfind` (code injection), `cmdline` (command-line arguments), `dlllist` (loaded DLLs).
+
+**Disk Forensics** — Key Windows artifacts: registry (persistence keys), prefetch files (execution history), event logs (authentication and process events), shellbags (folder navigation history), MFT (file system metadata including deleted files), Amcache/ShimCache (execution evidence).
+
+**Network Forensics** — Wireshark display filters, TCP stream reconstruction, protocol anomaly identification, beaconing detection.
+
+**Anti-Forensics** — Timestomping (MACB timestamp manipulation, detectable via MFT attribute comparison), log clearing (Event ID 1102), living-off-the-land (LOLBins), secure file deletion.
+
+### Domain 3 High-Yield Question Triggers
+
+Questions about what to do FIRST will almost always want you to follow volatility order or the correct IR phase sequence. Questions about evidence will test chain of custody requirements. Questions about forensic artifacts will ask what artifact proves a specific action occurred.
+
+---
+
+## Section 5 — Domain 4: Reporting and Communication
+
+### Key Topics
+
+**Metrics** — Know precise definitions: MTTD (detection time), MTTR (response time), MTTC (contain time). Know that these metrics feed IR program investment decisions.
+
+**Vulnerability Report Structure** — Executive summary (risk language, business impact, no jargon), technical findings (CVE IDs, CVSS scores, affected assets, reproduction steps), remediation recommendations (specific, prioritized, with responsible owners).
+
+**Incident Report Structure** — Executive summary, incident timeline, scope and affected systems, root cause analysis, containment and eradication actions taken, lessons learned, remediation recommendations, appendices (evidence, IoC list).
+
+**Communicating to Executives** — Translate technical risk into business language. "We have 47 critical vulnerabilities" means nothing to an executive. "Three of our customer-facing web applications have remotely exploitable vulnerabilities that could expose customer payment data" is actionable.
+
+**Compliance Reporting** — Know the difference between: gap reports (current vs. target state), audit evidence packages (proof of control operation), compliance dashboards (real-time posture metrics), and remediation plans (prioritized action items with owners and timelines).
+
+### Domain 4 High-Yield Question Triggers
+
+Questions about who receives which type of report: executives get summaries and risk language; technical teams get findings and remediation detail. Questions about metrics: apply the precise definition — do not confuse MTTD (detection) with MTTR (response). Questions about compliance: match the report type to the stakeholder and purpose.
+
+---
+
+## Section 6 — All-Course High-Yield Term Reference
+
+This section lists the highest-frequency terms across all 16 modules, organized alphabetically within domain. Quiz yourself: cover the right column and state the definition from memory.
+
+**Security Operations:**
+
+- ATT&CK Tactic — The "why" of adversary behavior (high-level goal)
+- ATT&CK Technique — The "how" of adversary behavior (specific method)
+- Beaconing — Regular, timed C2 check-in connections
+- DGA — Domain Generation Algorithm malware for C2 resilience
+- Dwell Time — Gap between compromise and detection
+- EDR — Endpoint telemetry collection and detection platform
+- Hunting Loop — Hypothesis → Investigate → Uncover → Inform → Repeat
+- IoC — Observable evidence of compromise (IP, hash, domain, registry key)
+- SIEM — Log aggregation, correlation, and alerting platform
+- SOAR — Alert enrichment, orchestration, and automated response platform
+- STIX/TAXII — IoC sharing format and transport protocol
+- XDR — Cross-domain telemetry integration platform
+
+**Vulnerability Management:**
+
+- CVSS — Common Vulnerability Scoring System (base score 0–10)
+- EPSS — Exploit Prediction Scoring System (probability of exploitation)
+- False Negative — Missed vulnerability that the scanner should have found
+- False Positive — Reported vulnerability that does not actually exist
+- Patch Tuesday — Microsoft's second Tuesday monthly patching cycle
+- Remediation SLA — Maximum allowed days to patch by severity tier
+- Risk-based Prioritization — Combining CVSS, EPSS, and business context
+
+**Incident Response:**
+
+- Chain of Custody — Documented unbroken evidence handling record
+- Containment — Stopping incident spread without full remediation
+- Eradication — Removing root cause including all persistence mechanisms
+- MTTC — Mean Time to Contain
+- MTTD — Mean Time to Detect
+- MTTR — Mean Time to Respond
+- Order of Volatility — Evidence collection sequence: RAM → Network → Disk
+- Playbook — Step-by-step IR procedure for a specific incident type
+- Triage — Initial alert classification for severity and scope
+
+**Digital Forensics:**
+
+- MACB Timestamps — Modified, Accessed, Changed, Born file system timestamps
+- Malfind — Volatility plugin detecting process injection via RWX memory regions
+- MFT — Master File Table (NTFS index including deleted file records)
+- Prefetch File — Windows execution history artifact (proves a program ran)
+- Shellbag — Registry artifact recording folder navigation history
+- Timestomping — Anti-forensic MACB timestamp manipulation
+
+---
+
+## Study Checklist — Final Exam Preparation
+
+- [ ] State all four CySA+ CS0-003 domains and their percentage weights from memory
+- [ ] Describe what analysts do in each NIST 800-61 phase
+- [ ] Explain the difference between SIEM and SOAR with a concrete example
+- [ ] Define MTTD, MTTR, and MTTC precisely
+- [ ] List five Volatility plugins and what each reveals
+- [ ] Name six key Windows disk artifacts and what each proves
+- [ ] Explain the CVSS + EPSS + business context prioritization model
+- [ ] Describe the hunting loop in four steps
+- [ ] State the key difference between a vulnerability assessment and a penetration test
+- [ ] Explain what breaks chain of custody and why it matters
+- [ ] Complete the Module 16 Capstone Lab (20-question practice exam)
+- [ ] Complete the Module 16 Quiz
+- [ ] Post your Module 16 Discussion initial post by Wednesday
+
+---
+
+## Required Resources
+
+- CompTIA CySA+ CS0-003 Official Exam Objectives — comptia.org (free)
+- NIST SP 800-61 Rev. 2 — nvlpubs.nist.gov (free)
+- MITRE ATT&CK Enterprise Matrix — attack.mitre.org (free)
+- CompTIA CertMaster Learn or Professor Messer's CySA+ course (recommended supplemental)
+- Module 16 Video Lecture (Professor Nash)

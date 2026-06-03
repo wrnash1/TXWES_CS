@@ -1,250 +1,349 @@
-# Reading Guide — Module 07: Data Visualization Principles and Chart Types
+# Reading Guide: Module 07 — Statistical Analysis and Visualization
 
-**Course:** CIS-4336 Data Analytics — Texas Wesleyan University
-**Instructor:** Professor Nash
-**Certification Alignment:** CompTIA Data+ DA0-001 — Domain 4: Visualization
+## Course: CIS-4336 Data Analytics
+
+## Texas Wesleyan University | Professor Nash
+
+## Certification Alignment: CompTIA Data+ (DA0-001) — Domain 2: Data Analysis
 
 ---
 
 ## Overview
 
-Domain 4 — Visualization — is the largest domain on the Data+ exam at approximately 21 percent. This guide provides chart selection rules, visualization mistake reference, color usage guidelines, and Python matplotlib code for every chart type covered in Module 07.
+This reading guide accompanies the Module 07 video lecture. Work through each section in order, complete the practice problems, and pay close attention to the Data+ Exam Tips before your quiz. Statistical analysis and visualization are tested heavily on the CompTIA Data+ exam — typically 15–20% of total questions.
 
 ---
 
-## Section 1 — Core Vocabulary
+## Section 1: Descriptive Statistics
 
-| Term | Definition |
-|---|---|
-| Data visualization | The representation of data in a graphical or pictorial format to communicate patterns and insights |
-| Chart type | The specific form of a visualization (bar, line, scatter, histogram, etc.) |
-| Data-to-ink ratio | Tufte's principle: every mark on a chart should represent data; remove non-data decoration |
-| Categorical axis | An axis displaying discrete named categories |
-| Continuous axis | An axis displaying a numeric range |
-| Legend | A chart key explaining what colors, shapes, or line styles represent |
-| Annotation | Text or markers added directly to a chart to highlight specific data points or findings |
-| Truncated axis | An axis that does not start at zero, potentially exaggerating differences |
-| Color encoding | Using color variation to represent data values or categories |
-| Sequential color scale | A single-hue gradient from light to dark, used for numeric magnitude |
-| Diverging color scale | A two-hue gradient through a neutral center, used for data with a meaningful midpoint |
-| 3D chart | A chart using three-dimensional rendering — generally avoided in analytical work because it distorts perception |
-| Sparkline | A small, word-sized chart embedded in a table or text to show trend compactly |
-| Heatmap | A matrix visualization where cell color encodes a numeric value |
-| Dashboard | A collection of multiple visualizations on a single screen, providing a summary view |
+Descriptive statistics summarize a dataset's main characteristics without making predictions or inferences about a larger population. They answer the question: "What does this data look like?"
+
+### The Three Pillars
+
+- **Central tendency** — where the data is centered
+- **Spread (dispersion)** — how spread out the data is
+- **Shape** — whether the distribution is symmetric or skewed
 
 ---
 
-## Section 2 — Chart Selection Guide
+## Section 2: Measures of Central Tendency
 
-### By Analytical Question
+### Mean
 
-| Question Type | Recommended Chart(s) | Avoid |
-|---|---|---|
-| Compare values across categories | Bar chart (vertical or horizontal) | Pie chart with many categories |
-| Show trend over time | Line chart, area chart | Bar chart for time series |
-| Show distribution shape | Histogram, box plot, violin plot | Bar chart for continuous data |
-| Show relationship between two numeric variables | Scatter plot | Line chart (implies order/trend) |
-| Show part-to-whole composition | Bar chart (stacked), pie chart (few categories only), treemap | Pie chart with 6+ categories |
-| Show change over time with composition | Stacked area chart | 3D anything |
-| Show financial bridge / sequential changes | Waterfall chart | Pie chart |
-| Show two variables plus a third magnitude | Bubble chart | Pie chart |
-| Show correlation matrix or grid values | Heatmap | 3D surface chart |
+The arithmetic mean sums all values and divides by the count.
 
-### By Number of Variables
+`mean = sum(x) / n`
 
-| Variables | Best Charts |
-|---|---|
-| 1 categorical | Bar chart, pie chart (few categories) |
-| 1 continuous | Histogram, box plot |
-| 2 categorical | Grouped bar, stacked bar, heatmap |
-| 1 categorical + 1 continuous | Bar chart, box plot |
-| 2 continuous | Scatter plot |
-| Time + 1 continuous | Line chart |
-| Time + 2+ continuous series | Multi-line chart |
+**Example:** Scores of 85, 90, 78, 92, 88
 
----
+`mean = (85 + 90 + 78 + 92 + 88) / 5 = 433 / 5 = 86.6`
 
-## Section 3 — Visualization Mistake Reference
+The mean is the most commonly used average but is pulled toward outliers.
 
-| Mistake | Why It Misleads | Correct Approach |
-|---|---|---|
-| Y-axis not starting at zero (bar charts) | Makes small differences look proportionally large | Always start bar chart y-axis at zero |
-| 3D chart effects | Depth perception distorts bar heights and pie slice areas | Use flat 2D charts |
-| Pie chart with 7+ categories | Human perception cannot accurately compare angles | Use a bar chart instead |
-| Too many colors | Creates visual noise; reader cannot track meaning | Use maximum 6–7 distinct colors; use one color for emphasis |
-| Missing axis labels | Reader cannot interpret scale or units | Always label both axes with variable name and unit |
-| Missing chart title | Reader must infer the analytical finding | Use a descriptive title stating the finding, not just the topic |
-| Dual y-axes | Different scales on the same chart invite false impressions of correlation | Use two separate charts; or use index-normalized values on one axis |
-| Sorting by name instead of value | Alphabetical sorting hides rank order information | Sort bar charts by value (descending) unless category order has meaning |
-| Using line chart for non-continuous categories | Implies continuity between unrelated categories | Use bar chart for discrete unordered categories |
-| Cherry-picked date range | Selecting only the favorable portion of a time series distorts trend | Show the full relevant time period |
+### Median
+
+Sort values in ascending order. The median is the middle value (odd n) or the average of the two middle values (even n).
+
+**Example (odd n=5):** `78, 85, 88, 90, 92` → median = 88
+
+**Example (even n=6):** `78, 85, 88, 90, 92, 95` → `median = (88 + 90) / 2 = 89`
+
+The median is robust to outliers — preferred for skewed distributions such as income or housing prices.
+
+### Mode
+
+The mode is the most frequently occurring value. A dataset can have:
+
+- **No mode** — all values unique
+- **One mode** — unimodal
+- **Two modes** — bimodal
+- **More than two modes** — multimodal
+
+The mode is the only central tendency measure that works for categorical (nominal) data.
+
+### Comparison Table
+
+| Measure | Best For | Sensitive to Outliers? | Works on Categorical? |
+|---------|----------|------------------------|----------------------|
+| Mean | Symmetric, numeric data | Yes | No |
+| Median | Skewed or ordinal data | No | No |
+| Mode | Any data type, categorical | No | Yes |
 
 ---
 
-## Section 4 — Chart Type Reference with Python Code
+## Section 3: Measures of Spread
 
-### Bar Chart
+Two datasets can share the same mean but be completely different in character. Spread measures capture this difference.
+
+### Range
+
+`range = max - min`
+
+Simple and fast, but one extreme value distorts it significantly.
+
+### Variance
+
+Variance calculates the average of squared deviations from the mean.
+
+**Population variance:**
+
+`sigma_sq = sum((x - mu)^2) / N`
+
+**Sample variance (Bessel's correction — divide by n-1):**
+
+`s_sq = sum((x - x_bar)^2) / (n - 1)`
+
+Dividing by `n - 1` corrects for the bias introduced when estimating population variance from a sample.
+
+### Standard Deviation
+
+Standard deviation is the square root of variance — returning the value to original units.
+
+`sigma = sqrt(sigma_sq)` (population)
+
+`s = sqrt(s_sq)` (sample)
+
+**Example:** Exam scores `{70, 75, 80, 85, 90}`, mean = 80
+
+Deviations: `-10, -5, 0, +5, +10`
+
+Squared deviations: `100, 25, 0, 25, 100` → sum = 250
+
+`s_sq = 250 / (5 - 1) = 62.5`
+
+`s = sqrt(62.5) ≈ 7.91`
+
+### The Empirical Rule (68-95-99.7 Rule)
+
+For normally distributed data:
+
+- Approximately 68% of values fall within `mean ± 1 * std_dev`
+- Approximately 95% of values fall within `mean ± 2 * std_dev`
+- Approximately 99.7% of values fall within `mean ± 3 * std_dev`
+
+This rule is directly tested on the Data+ exam. Memorize all three percentages.
+
+### Interquartile Range (IQR)
+
+The IQR spans from Q1 (25th percentile) to Q3 (75th percentile).
+
+`IQR = Q3 - Q1`
+
+Outlier thresholds:
+
+`lower_fence = Q1 - (1.5 * IQR)`
+
+`upper_fence = Q3 + (1.5 * IQR)`
+
+Values outside these fences are flagged as potential outliers and displayed as individual points on a box plot.
+
+---
+
+## Section 4: Measures of Shape
+
+### Skewness
+
+Skewness measures the asymmetry of a distribution.
+
+- **Symmetric (skewness ≈ 0):** mean ≈ median ≈ mode
+- **Right-skewed (positive skewness):** long tail to the right; mean > median
+- **Left-skewed (negative skewness):** long tail to the left; mean < median
+
+Real-world right-skewed examples: income data, response times, housing prices.
+
+### Kurtosis
+
+Kurtosis measures the "tail heaviness" of a distribution. High kurtosis means more extreme outliers are likely.
+
+- **Leptokurtic** — heavy tails, sharp peak (kurtosis > 3)
+- **Mesokurtic** — normal distribution (kurtosis = 3)
+- **Platykurtic** — light tails, flat peak (kurtosis < 3)
+
+---
+
+## Section 5: Correlation
+
+### Pearson Correlation Coefficient
+
+The Pearson coefficient `r` measures the strength and direction of the linear relationship between two numeric variables.
+
+`r = sum((x - mean_x)(y - mean_y)) / sqrt(sum((x - mean_x)^2) * sum((y - mean_y)^2))`
+
+Range: `-1 <= r <= +1`
+
+### Interpretation Scale
+
+| r Value | Interpretation |
+|---------|----------------|
+| `0.9 to 1.0` | Very strong positive |
+| `0.7 to 0.9` | Strong positive |
+| `0.5 to 0.7` | Moderate positive |
+| `0.3 to 0.5` | Weak positive |
+| `0.0 to 0.3` | Negligible |
+| `-0.3 to 0.0` | Negligible negative |
+| `-0.5 to -0.3` | Weak negative |
+| `-0.7 to -0.5` | Moderate negative |
+| `-0.9 to -0.7` | Strong negative |
+| `-1.0 to -0.9` | Very strong negative |
+
+### Pearson vs. Spearman
+
+Use **Spearman rank correlation** when:
+
+- Data is ordinal (ranked categories)
+- The relationship is monotonic but not linear
+- Data has significant outliers
+- Data is not normally distributed
+
+Spearman ranks each variable first, then applies the Pearson formula to the ranks.
+
+### Correlation vs. Causation
+
+Correlation describes a relationship. It does not establish cause and effect. Always ask:
+
+1. Could a third variable (confounding variable) explain the relationship?
+2. Could the relationship be coincidental?
+3. Is there a logical mechanism linking the two variables?
+
+---
+
+## Section 6: Data Visualization Selection
+
+### Bar Charts
+
+Use to compare values across discrete categories.
+
+Variants:
+
+- **Vertical (column):** standard category comparison
+- **Horizontal:** long category labels or many categories
+- **Grouped:** multiple series side-by-side
+- **Stacked:** part-to-whole within each category
+
+### Line Charts
+
+Use to show trends over time with continuous data on both axes or when the x-axis is ordered.
+
+Avoid for unordered categorical x-axes — the lines imply false ordering.
+
+### Scatter Plots
+
+Use to show the relationship between two continuous variables. Add a regression (trend) line to highlight the direction of the relationship.
+
+### Histograms
+
+Use to show the frequency distribution of a single continuous variable. Adjacent bars (no gaps) indicate continuous data. Bin width affects the visual — too few bins hides detail; too many bins creates noise.
+
+### Additional Chart Types
+
+| Chart Type | Best Use Case |
+|------------|---------------|
+| Pie chart | Part-to-whole, few categories (max 5–6) |
+| Box plot | Distribution, quartiles, outliers |
+| Heatmap | Patterns across two categorical dimensions |
+| Bubble chart | Three-variable relationship (x, y, size) |
+| Waterfall chart | Incremental change (gains/losses) |
+| Gantt chart | Project timelines and scheduling |
+
+---
+
+## Section 7: SQL for Descriptive Statistics
+
+### Core Aggregate Functions
+
+```sql
+SELECT
+    COUNT(*)             AS total_rows,
+    COUNT(sales_amount)  AS non_null_count,
+    AVG(sales_amount)    AS mean_value,
+    MIN(sales_amount)    AS minimum,
+    MAX(sales_amount)    AS maximum,
+    STDDEV(sales_amount) AS std_deviation,
+    VARIANCE(sales_amount) AS variance_val
+FROM sales;
+```
+
+### Percentile Functions
+
+```sql
+-- ANSI SQL percentile functions
+SELECT
+    PERCENTILE_CONT(0.25) WITHIN GROUP (ORDER BY score) AS q1,
+    PERCENTILE_CONT(0.50) WITHIN GROUP (ORDER BY score) AS median_val,
+    PERCENTILE_CONT(0.75) WITHIN GROUP (ORDER BY score) AS q3
+FROM exam_scores;
+```
+
+### Python Equivalent (pandas)
 
 ```python
-import matplotlib.pyplot as plt
 import pandas as pd
 
-data = {"Region": ["North","South","East","West"],
-        "Revenue": [420000, 310000, 385000, 270000]}
-df = pd.DataFrame(data).sort_values("Revenue", ascending=False)
+df = pd.read_csv('sales_data.csv')
 
-fig, ax = plt.subplots(figsize=(8, 5))
-ax.bar(df["Region"], df["Revenue"], color="steelblue", edgecolor="white")
-ax.set_title("Total Revenue by Region (2024)")
-ax.set_xlabel("Region")
-ax.set_ylabel("Revenue ($)")
-ax.yaxis.set_major_formatter(
-    plt.FuncFormatter(lambda x, _: f"${x/1000:.0f}K")
-)
-plt.tight_layout()
-plt.savefig("bar_chart.png", dpi=100)
-plt.show()
-```
+# Summary statistics
+print(df['sales_amount'].describe())
 
-### Line Chart (Time Series)
+# Individual statistics
+mean_val  = df['sales_amount'].mean()
+median_val = df['sales_amount'].median()
+std_val   = df['sales_amount'].std()
+iqr_val   = df['sales_amount'].quantile(0.75) - df['sales_amount'].quantile(0.25)
 
-```python
-months = ["Jan","Feb","Mar","Apr","May","Jun",
-          "Jul","Aug","Sep","Oct","Nov","Dec"]
-revenue = [310,285,340,365,390,420,410,445,400,460,490,510]
+print(f"Mean: {mean_val:.2f}")
+print(f"Median: {median_val:.2f}")
+print(f"Std Dev: {std_val:.2f}")
+print(f"IQR: {iqr_val:.2f}")
 
-fig, ax = plt.subplots(figsize=(10, 5))
-ax.plot(months, revenue, marker="o", color="steelblue", linewidth=2)
-ax.set_title("Monthly Revenue Trend (2024)")
-ax.set_xlabel("Month")
-ax.set_ylabel("Revenue ($K)")
-ax.grid(axis="y", linestyle="--", alpha=0.5)
-plt.tight_layout()
-plt.savefig("line_chart.png", dpi=100)
-plt.show()
-```
-
-### Histogram
-
-```python
-import numpy as np
-
-salaries = np.random.normal(loc=65000, scale=15000, size=200)
-
-fig, ax = plt.subplots(figsize=(8, 5))
-ax.hist(salaries, bins=15, color="steelblue", edgecolor="white")
-ax.set_title("Distribution of Employee Salaries")
-ax.set_xlabel("Salary ($)")
-ax.set_ylabel("Frequency")
-plt.tight_layout()
-plt.savefig("histogram.png", dpi=100)
-plt.show()
-```
-
-### Scatter Plot
-
-```python
-x = np.random.normal(20, 5, 80)
-y = x * 3000 + np.random.normal(0, 8000, 80) + 50000
-
-fig, ax = plt.subplots(figsize=(8, 5))
-ax.scatter(x, y, alpha=0.7, color="steelblue")
-m, b = np.polyfit(x, y, 1)
-ax.plot(x, m*x + b, color="red", linewidth=1.5, label="Trend")
-ax.set_title("Training Hours vs. Quarterly Sales")
-ax.set_xlabel("Training Hours")
-ax.set_ylabel("Quarterly Sales ($)")
-ax.legend()
-plt.tight_layout()
-plt.savefig("scatter.png", dpi=100)
-plt.show()
-```
-
-### Box Plot (Multiple Groups)
-
-```python
-data_groups = {
-    "North": np.random.normal(55000, 8000, 40),
-    "South": np.random.normal(48000, 12000, 40),
-    "East":  np.random.normal(61000, 7000, 40),
-    "West":  np.random.normal(52000, 9000, 40)
-}
-
-fig, ax = plt.subplots(figsize=(8, 5))
-ax.boxplot(data_groups.values(), labels=data_groups.keys(),
-           patch_artist=True,
-           boxprops=dict(facecolor="lightblue"))
-ax.set_title("Salary Distribution by Region")
-ax.set_ylabel("Salary ($)")
-plt.tight_layout()
-plt.savefig("boxplot.png", dpi=100)
-plt.show()
+# Correlation
+corr = df['sales_amount'].corr(df['ad_spend'])
+print(f"Pearson r: {corr:.4f}")
 ```
 
 ---
 
-## Section 5 — Color Usage Guidelines
+## Section 8: Data+ Exam Tips
 
-| Color Purpose | Scale Type | Example |
-|---|---|---|
-| Distinguish categories | Qualitative (distinct hues) | Four regions: blue, orange, green, red |
-| Show numeric magnitude (one direction) | Sequential (single hue, light to dark) | Sales volume: light blue to dark blue |
-| Show divergence from a center value | Diverging (two hues through neutral) | Profit vs. loss: red — white — green |
-| Emphasize a single category | Single accent color | Highlight one bar in red; all others gray |
-| Accessibility | Color-blind safe palette | Blue-orange or blue-red (avoid red-green) |
+**Tip 1 — Mean vs. Median:** When a question describes skewed data or mentions outliers, the correct measure of central tendency is the **median**, not the mean.
 
-Rule of thumb: Never use color as the only encoding. Add labels, patterns, or shapes for accessibility.
+**Tip 2 — Empirical Rule:** Commit `68 / 95 / 99.7` to memory. Questions frequently ask what percentage of data falls within 1, 2, or 3 standard deviations.
 
----
+**Tip 3 — Sample vs. Population:** Sample variance divides by `n - 1`. Population variance divides by `N`. Exam questions may explicitly state which to use.
 
-## Section 6 — Visualization Principles Reference Card
+**Tip 4 — Correlation Range:** The Pearson `r` always falls between -1 and +1. If an answer choice shows a value outside this range, eliminate it immediately.
 
-The five principles every analyst must apply:
+**Tip 5 — Chart Selection:** Match the chart to the data type and question type. Key rules: line charts for time trends, bar charts for categories, scatter plots for relationships, histograms for distributions.
 
-1. Match the chart to the analytical question — what relationship, comparison, or pattern does the viewer need to see?
-2. Maximize the data-to-ink ratio — remove all chart elements that do not represent data
-3. Use honest scales — start bar chart axes at zero; document any truncation explicitly
-4. Use color purposefully and accessibly — color encodes information, not decoration
-5. Reduce cognitive load — label data directly, write descriptive titles, annotate key findings
+**Tip 6 — Correlation ≠ Causation:** Any exam question about inferring cause from a correlation coefficient is a trap. Correlation alone never establishes causation.
 
 ---
 
-## Section 7 — Data+ Exam Tips
+## Practice Problems
 
-1. **Domain 4 is 21 percent of the exam.** This is the highest-weight domain. Chart type selection, visualization mistakes, and dashboard design questions are high-frequency.
+**Problem 1:** A dataset has values `{10, 12, 11, 13, 100}`. Calculate the mean and median. Which is a better measure of center and why?
 
-2. **Pie charts fail with many categories.** The exam will show a scenario with 8–10 categories and ask which chart is appropriate. The answer is a bar chart, not a pie chart.
+**Problem 2:** For a normally distributed dataset with `mean = 50` and `std_dev = 5`, what percentage of values fall between 40 and 60?
 
-3. **Bar charts must start at zero.** A truncated y-axis on a bar chart is a common exam trap — the question describes or shows a chart and asks what is wrong with it.
+**Problem 3:** Two variables have `r = -0.82`. Describe the relationship in plain language.
 
-4. **Line chart implies temporal or ordered sequence.** Using a line chart for non-ordered discrete categories (like product names) is a visualization error.
+**Problem 4:** You are analyzing monthly revenue data over 24 months. A stakeholder asks to see the trend. What chart type do you use?
 
-5. **Scatter plot for two numeric variables.** When the question involves showing the relationship between two continuous numeric variables, the scatter plot is the answer.
-
-6. **3D charts are always wrong on the exam.** 3D effects distort perception. Any exam answer offering a 3D chart type is incorrect.
-
-7. **Box plots are for distribution comparison.** When the scenario asks to compare distributions across multiple groups, box plot is usually the correct answer.
-
-8. **Color encoding: sequential vs. diverging.** Know when to use each. Sequential: one direction of magnitude (revenue amount). Diverging: meaningful center (profit positive vs. negative).
+**Problem 5:** A dataset has `Q1 = 25` and `Q3 = 45`. Calculate the IQR, the lower outlier fence, and the upper outlier fence.
 
 ---
 
-## Section 8 — Study Checklist
+## Key Formulas Reference
 
-- [ ] Memorize all vocabulary terms in Section 1
-- [ ] Reproduce the chart selection guide from memory for all five question types
-- [ ] List five common visualization mistakes and their corrections
-- [ ] Run all five Python code blocks in Section 4 and save the output charts
-- [ ] Practice the chart selection decision process on five invented scenarios
-- [ ] Review all eight exam tips
-- [ ] Review official CompTIA Data+ objectives at comptia.org
-- [ ] Review Professor Messer's free study materials at professormesser.com
-- [ ] Complete Lab 07
-- [ ] Complete Quiz 07
+| Formula | Expression |
+|---------|-----------|
+| Mean | `mean = sum(x) / n` |
+| Sample variance | `s_sq = sum((x - x_bar)^2) / (n - 1)` |
+| Standard deviation | `s = sqrt(s_sq)` |
+| IQR | `IQR = Q3 - Q1` |
+| Lower outlier fence | `Q1 - (1.5 * IQR)` |
+| Upper outlier fence | `Q3 + (1.5 * IQR)` |
+| Pearson r range | `-1 <= r <= +1` |
 
 ---
 
-## Additional Resources
-
-- Official exam objectives: comptia.org (search "Data+ DA0-001 exam objectives")
-- Professor Messer's free study guides: professormesser.com
+End of Module 07 Reading Guide

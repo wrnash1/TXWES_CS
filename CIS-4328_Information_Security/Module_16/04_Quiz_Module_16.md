@@ -1,5 +1,16 @@
-# Quiz: Module 16 - Final Exam Prep and CompTIA Security+ SY0-701 Certification
-## Course: CIS-4328_Information_Security (CompTIA Security+ SY0-701)
+# Quiz: Module 16 — Security+ SY0-701 Exam Preparation and Capstone
+
+## Course: CIS-4328 Information Security
+
+## Texas Wesleyan University | Professor Nash
+
+## Certification Alignment: CompTIA Security+ (SY0-701)
+
+---
+
+Instructions: Select the single best answer for each question. All ten questions use the scenario-based format of the actual SY0-701 exam. Full distractor analysis is provided after each question.
+
+---
 
 ---
 

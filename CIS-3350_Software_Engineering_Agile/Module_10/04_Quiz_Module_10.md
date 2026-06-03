@@ -137,7 +137,7 @@ Correct Answer: B — User stories are intentionally lightweight to prompt conve
 
 Distractor Analysis:
 
-- Why A is incorrect: There is no rule about who writes which format. Product Owners, Business Analysts, and even Developers can write either user stories or use cases depending on team practice.
+- Why A is incorrect: There is no rule about who writes which format. Product Owners, Business Analysts, and Developers can write either format depending on team practice.
 - Why C is incorrect: This reverses the formats. User stories use the "As a / I can / so that" format; use cases use numbered steps for the main success scenario.
 - Why D is incorrect: Both formats are used in both regulated and Agile environments. The choice depends on team context and the level of specification detail needed, not a prohibition.
 
@@ -176,7 +176,7 @@ Correct Answer: B — The Product Owner maintains the Product Backlog and can up
 Distractor Analysis:
 
 - Why A is incorrect: The Scrum Guide explicitly states the Product Backlog is emergent — it is never locked. Only the Sprint Backlog (for the current Sprint) has protected scope.
-- Why C is incorrect: While Developers can suggest additions and do technical refinement, the Product Owner owns the Product Backlog and makes final ordering and content decisions.
+- Why C is incorrect: While Developers can suggest additions during refinement, the Product Owner owns the Product Backlog and makes final ordering and content decisions.
 - Why D is incorrect: The Sprint Backlog is protected from scope changes that would endanger the Sprint Goal. New requirements go to the Product Backlog for future Sprints, not into the current Sprint.
 
 ---
@@ -190,12 +190,12 @@ A software team at a hospital is building a patient medication tracking system. 
 - C) Maintain traceability within the Scrum framework by writing acceptance criteria that reference regulatory standards and linking backlog items to test cases in the team's tooling
 - D) Use traceability only for non-functional requirements; user stories for functional requirements do not require regulatory linking
 
-Correct Answer: C — Scrum is flexible enough to accommodate regulatory traceability. Teams can write acceptance criteria that reference specific regulatory requirements, use backlog management and testing tools to link stories to test cases, and satisfy regulatory audits without abandoning Scrum's iterative approach. The Scrum Guide does not prohibit regulatory artifacts.
+Correct Answer: C — Scrum is flexible enough to accommodate regulatory traceability. Teams can write acceptance criteria that reference specific regulatory requirements, use backlog management and testing tools to link stories to test cases, and satisfy regulatory audits without abandoning Scrum's iterative approach.
 
 Distractor Analysis:
 
 - Why A is incorrect: Scrum is used successfully in healthcare, finance, and aerospace — regulated industries with strict traceability requirements. The framework accommodates additional compliance practices.
-- Why B is incorrect: Abandoning user stories removes the benefits of the Agile format (dialogue, emergence, lightweight specification) without being required. User stories with good acceptance criteria can satisfy traceability needs.
-- Why D is incorrect: Regulatory traceability typically applies to all safety-relevant requirements, whether functional or non-functional. Exempting functional requirements from traceability would likely fail a regulatory audit.
+- Why B is incorrect: Abandoning user stories removes the benefits of Agile format without being required. User stories with good acceptance criteria can satisfy traceability needs.
+- Why D is incorrect: Regulatory traceability typically applies to all safety-relevant requirements. Exempting functional requirements from traceability would likely fail a regulatory audit.
 
 ---

@@ -1,49 +1,407 @@
-# Reading Guide: Module 10 - NoSQL Databases with MongoDB
-## Course: CIS-3340_Full_Stack_Web_Dev (AWS Certified Developer - Associate)
+# Reading Guide: Module 10 — State Management with React
+
+## Course: CIS-3340 Full Stack Web Development
+
+## Texas Wesleyan University | Professor Nash
+
+## Certification Alignment: AWS Certified Developer — Associate (DVA-C02)
 
 ---
 
-### Introduction
-Welcome to **Module 10 - NoSQL Databases with MongoDB**! This module covers document-oriented NoSQL databases with MongoDB as the primary example. Unlike relational databases with rigid schemas, MongoDB stores data as flexible JSON-like BSON documents in collections, allowing the document structure to evolve without schema migrations. You will learn how to connect to MongoDB using the Mongoose ODM (Object Document Mapper), define schemas and models, and perform CRUD operations. On AWS, Amazon DocumentDB provides MongoDB-compatible managed hosting, and DynamoDB provides a related key-value/document NoSQL model that is heavily tested on the DVA-C02 exam.
+## Overview
+
+This guide covers state management patterns beyond `useState`: the Context API for global state, `useReducer` for complex transitions, React Query for server state, and the decision between Context and Redux. Work through every code example in your editor.
 
 ---
 
-### 1. High-Yield Glossary
-Review these essential definitions carefully before beginning the lab and quiz:
+## 1. Understanding State Categories
 
-*   **Document database**: A type of NoSQL database that stores each record as a self-describing, semi-structured document — typically in JSON or BSON format — rather than as rows in a fixed-schema table. Document databases like MongoDB are well-suited for hierarchical, variable-structure data (e.g., user profiles with different optional fields) that would require many nullable columns or complex joins in a relational model.
-*   **Collections**: The MongoDB equivalent of a relational database table — a grouping of related BSON documents. Unlike SQL tables, collections do not enforce a schema by default; documents in the same collection can have different fields and nested structures. Collections are created implicitly when the first document is inserted.
-*   **BSON (Binary JSON)**: The binary-encoded serialization format MongoDB uses internally to store documents. BSON extends JSON with additional data types including `Date`, `ObjectId`, `Binary`, `Decimal128`, and `Int32`/`Int64` integers. When you work with Mongoose or the MongoDB driver, BSON is handled transparently — you write plain JavaScript objects, and the driver serializes them to BSON automatically.
-*   **Schema design**: In MongoDB and Mongoose, the deliberate modeling of document structures including field names, data types, validation rules, and relationships (embedding vs. referencing). Mongoose schemas are defined with `new Schema({ field: type })` and enforce structure at the application layer. Good NoSQL schema design considers query patterns first — embed related data when it is always read together and use references when data is shared across many documents.
-*   **Mongoose model operations**: The CRUD API provided by Mongoose models compiled from schemas. Key methods include `Model.create()` (insert), `Model.find()` (query all matching), `Model.findById()` (query by `_id`), `Model.findByIdAndUpdate()` (update by `_id`), and `Model.findByIdAndDelete()` (delete by `_id`). All Mongoose operations are asynchronous and return Promises, making them compatible with `async/await`.
+React applications deal with two fundamentally different types of state.
+
+### 1.1 Client State vs Server State
+
+| Category | Description | Examples | Best Tool |
+|---|---|---|---|
+| **Client state** | Lives in the browser, owned by the app | UI open/close, current tab, form input, cart | `useState`, `useReducer`, Context |
+| **Server state** | Originates on a server, can be stale | API data, user profiles, product lists | React Query (TanStack Query) |
+
+A very common mistake is managing server state with `useState` and `useEffect`. This works but requires you to manually handle caching, loading, errors, refetching, and synchronization. React Query handles all of this automatically.
+
+### 1.2 Prop Drilling
+
+Prop drilling occurs when a value must be passed through multiple layers of components that do not use it directly, only forwarding it further down.
+
+```
+App (user state)
+  └── Layout (passes user down, doesn't use it)
+        └── Sidebar (passes user down, doesn't use it)
+              └── UserMenu (finally uses user)
+```
+
+Signs that prop drilling is hurting you:
+
+- A component receives a prop only to pass it to a child.
+- Adding a field to a shared object requires touching 4+ files.
+- Refactoring a component requires updating every parent in the chain.
 
 ---
 
-### 2. Certification Exam Tips
-*   **DynamoDB vs. MongoDB on DVA-C02:** The DVA-C02 exam focuses on Amazon DynamoDB — AWS's proprietary NoSQL key-value and document database — not MongoDB. However, the document model concepts you learn here (flexible schemas, document embedding, query patterns) apply directly to DynamoDB. Key DVA-C02 DynamoDB topics: partition keys, sort keys, Global Secondary Indexes (GSI), on-demand vs. provisioned capacity, and DynamoDB Streams.
-*   **Amazon DocumentDB for MongoDB Workloads:** The exam may present scenarios asking which AWS service is most appropriate for a MongoDB application migrating to AWS. Amazon DocumentDB is the MongoDB-compatible managed service. Know that DocumentDB is API-compatible with MongoDB 3.6/4.0/5.0 but uses Aurora's storage engine internally.
-*   **Study Resource:** The official Mongoose documentation is the most practical reference for MongoDB with Node.js. [Mongoose — Getting Started](https://mongoosejs.com/docs/index.html) covers schema definition, model creation, and CRUD operations with working code examples relevant to this module's lab.
+## 2. Context API Deep Dive
+
+### 2.1 createContext and Provider Pattern
+
+```jsx
+// src/context/ThemeContext.jsx
+import { createContext, useContext, useState } from 'react';
+
+const ThemeContext = createContext(null);
+
+export function ThemeProvider({ children }) {
+  const [theme, setTheme] = useState('light');
+  const toggleTheme = () => setTheme(t => t === 'light' ? 'dark' : 'light');
+
+  return (
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+}
+
+// Custom hook — validates usage and provides named API
+export function useTheme() {
+  const ctx = useContext(ThemeContext);
+  if (!ctx) throw new Error('useTheme must be used within a ThemeProvider');
+  return ctx;
+}
+```
+
+### 2.2 Context Default Value
+
+The `createContext(defaultValue)` argument is used only when a component consumes the context without a matching Provider above it in the tree. In production code, set it to `null` and throw an error in the custom hook — this surfaces misconfigured trees immediately during development.
+
+### 2.3 Nesting Multiple Providers
+
+Compose multiple providers at the app root. Order matters only when providers depend on each other.
+
+```jsx
+// main.jsx
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <QueryClientProvider client={queryClient}>
+    <AuthProvider>
+      <ThemeProvider>
+        <CartProvider>
+          <App />
+        </CartProvider>
+      </ThemeProvider>
+    </AuthProvider>
+  </QueryClientProvider>
+);
+```
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read Part 3 section covering **MongoDB and Mongoose** in the OER Textbook: [Full Stack Open by University of Helsinki](https://fullstackopen.com/en/part3) — this section integrates MongoDB into the REST API built in earlier parts of the course.
-*   **Required Video:** Watch the MongoDB and Mongoose section of the [Full Stack Web Development Course by freeCodeCamp on YouTube](https://www.youtube.com/watch?v=nu_pCVPKzTk) — covering database connection, schema definition, and CRUD operations.
+## 3. useReducer Reference
+
+### 3.1 Reducer Function Rules
+
+A reducer must be a pure function:
+
+- Same inputs always produce the same output.
+- No side effects (no API calls, no `console.log`, no `localStorage` writes).
+- Never mutate the state argument — always return a new object.
+
+```jsx
+// CORRECT — new object each time
+case 'INCREMENT':
+  return { ...state, count: state.count + 1 };
+
+// WRONG — mutates state directly
+case 'INCREMENT':
+  state.count++;
+  return state;
+```
+
+### 3.2 Action Shape Convention
+
+```jsx
+// Standard Flux Standard Action shape
+const action = {
+  type: 'ADD_ITEM',     // required: string, usually SCREAMING_SNAKE_CASE
+  payload: { ... },     // optional: data needed to process the action
+  error: false,         // optional: true if payload is an Error
+  meta: { ... },        // optional: metadata (timestamps, request IDs)
+};
+```
+
+### 3.3 useReducer vs useState Comparison
+
+| Scenario | Prefer |
+|---|---|
+| Single boolean toggle | `useState` |
+| Single string / number | `useState` |
+| Object with 2–3 related fields | Either |
+| Object with many fields and complex transitions | `useReducer` |
+| Multiple event handlers updating the same state | `useReducer` |
+| State machine (defined set of valid transitions) | `useReducer` |
+| Need to test state logic in isolation | `useReducer` |
+
+### 3.4 Context + useReducer Pattern
+
+This combination creates a lightweight global store.
+
+```jsx
+// src/context/CartContext.jsx
+import { createContext, useContext, useReducer } from 'react';
+
+const CartContext = createContext(null);
+
+function cartReducer(state, action) {
+  switch (action.type) {
+    case 'ADD': {
+      const existing = state.items.find(i => i.id === action.payload.id);
+      if (existing) {
+        return {
+          ...state,
+          items: state.items.map(i =>
+            i.id === action.payload.id ? { ...i, qty: i.qty + 1 } : i
+          ),
+        };
+      }
+      return { ...state, items: [...state.items, { ...action.payload, qty: 1 }] };
+    }
+    case 'REMOVE':
+      return { ...state, items: state.items.filter(i => i.id !== action.payload) };
+    case 'CLEAR':
+      return { items: [] };
+    default:
+      return state;
+  }
+}
+
+export function CartProvider({ children }) {
+  const [state, dispatch] = useReducer(cartReducer, { items: [] });
+
+  const total = state.items.reduce((sum, i) => sum + i.price * i.qty, 0);
+
+  return (
+    <CartContext.Provider value={{ items: state.items, total, dispatch }}>
+      {children}
+    </CartContext.Provider>
+  );
+}
+
+export const useCart = () => {
+  const ctx = useContext(CartContext);
+  if (!ctx) throw new Error('useCart must be used within a CartProvider');
+  return ctx;
+};
+```
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will connect a Node.js application to MongoDB:
-*   **Establish a Mongoose server connection profile**: Call `mongoose.connect(process.env.MONGODB_URI)` in your Express app's entry file and handle the resulting Promise to log a success message or throw an error on connection failure.
-*   **Define user models with schema validation**: Create a `User` schema using `new mongoose.Schema({ name: { type: String, required: true }, email: { type: String, required: true, unique: true } })` and compile it with `mongoose.model('User', userSchema)`.
-*   **Write CRUD queries to write records**: Use `User.create({ name, email })` to insert a document and `User.find()` to retrieve all users — test both operations with Postman and verify the data appears in MongoDB Atlas (free tier cloud database).
+## 4. React Query (TanStack Query) Reference
+
+### 4.1 Setup
+
+```bash
+npm install @tanstack/react-query @tanstack/react-query-devtools
+```
+
+```jsx
+// main.jsx
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 60 * 1000, // 1 minute default
+      retry: 2,
+    },
+  },
+});
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <QueryClientProvider client={queryClient}>
+    <App />
+    <ReactQueryDevtools initialIsOpen={false} />
+  </QueryClientProvider>
+);
+```
+
+### 4.2 useQuery Options Reference
+
+| Option | Default | Description |
+|---|---|---|
+| `queryKey` | required | Array used as cache key; changes trigger refetch |
+| `queryFn` | required | Async function that returns data or throws |
+| `staleTime` | 0 | How long (ms) data is considered fresh |
+| `gcTime` | 5 min | How long unused data stays in cache |
+| `refetchOnWindowFocus` | `true` | Refetch when user returns to tab |
+| `enabled` | `true` | Set to `false` to disable automatic fetching |
+| `retry` | 3 | Number of retries on failure |
+
+### 4.3 Dynamic Query Keys
+
+When your query depends on a variable, include it in the `queryKey` array. React Query re-fetches whenever the key changes.
+
+```jsx
+// Fetches /api/students/42 when studentId is 42
+const { data: student } = useQuery({
+  queryKey: ['student', studentId],
+  queryFn: () => fetch(`/api/students/${studentId}`).then(r => r.json()),
+  enabled: !!studentId,  // don't fetch if studentId is null
+});
+```
+
+### 4.4 useMutation and Cache Invalidation
+
+```jsx
+const queryClient = useQueryClient();
+
+const deleteMutation = useMutation({
+  mutationFn: (id) =>
+    fetch(`/api/students/${id}`, { method: 'DELETE' }).then(r => {
+      if (!r.ok) throw new Error('Delete failed');
+    }),
+
+  // Optimistic update — remove from cache before server confirms
+  onMutate: async (id) => {
+    await queryClient.cancelQueries({ queryKey: ['students'] });
+    const previous = queryClient.getQueryData(['students']);
+    queryClient.setQueryData(['students'], (old) =>
+      old.filter(s => s.id !== id)
+    );
+    return { previous };
+  },
+
+  // Rollback on error
+  onError: (_err, _id, context) => {
+    queryClient.setQueryData(['students'], context.previous);
+  },
+
+  // Refetch to confirm server state
+  onSettled: () => {
+    queryClient.invalidateQueries({ queryKey: ['students'] });
+  },
+});
+```
+
+### 4.5 React Query vs Manual Fetch Comparison
+
+| Feature | Manual (useEffect + useState) | React Query |
+|---|---|---|
+| Loading state | Manual `useState(true)` | `isLoading` built-in |
+| Error state | Manual `useState(null)` | `isError` / `error` built-in |
+| Caching | None by default | Automatic with `staleTime` |
+| Deduplication | None | Automatic for same `queryKey` |
+| Background refetch | Manual | `refetchOnWindowFocus` etc. |
+| Pagination | Manual | `useInfiniteQuery` built-in |
+| Optimistic updates | Complex manual implementation | `onMutate` / rollback pattern |
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and understand their definitions in context.
-- [ ] Read Part 3 covering **MongoDB and Mongoose** in [Full Stack Open by University of Helsinki](https://fullstackopen.com/en/part3).
-- [ ] Watch the MongoDB and Mongoose section of the [Full Stack Web Development Course by freeCodeCamp](https://www.youtube.com/watch?v=nu_pCVPKzTk).
-- [ ] Create a free [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) cluster and obtain a connection string before starting the lab.
-- [ ] Proceed to the weekly hands-on lab activity.
+## 5. Redux vs Context — Decision Guide
+
+### 5.1 When Context + useReducer Is Enough
+
+- Application has fewer than 10–15 components sharing global state.
+- State shape is well-understood and changes infrequently.
+- No complex async side effects that need middleware.
+- Team size is 1–3 developers.
+
+### 5.2 When to Reach for Redux Toolkit
+
+- Large team where strict action contracts prevent coordination problems.
+- Complex async flows (RTK Query, saga, thunk chains).
+- Need for time-travel debugging in production.
+- Existing codebase already uses Redux.
+
+### 5.3 Redux Toolkit Quick Comparison
+
+```jsx
+// Context + useReducer version
+const AuthContext = createContext(null);
+export function AuthProvider({ children }) { ... }
+export const useAuth = () => useContext(AuthContext);
+
+// Redux Toolkit equivalent
+import { createSlice } from '@reduxjs/toolkit';
+
+const authSlice = createSlice({
+  name: 'auth',
+  initialState: { user: null, isAuthenticated: false },
+  reducers: {
+    login: (state, action) => {
+      state.user = action.payload;
+      state.isAuthenticated = true;
+    },
+    logout: (state) => {
+      state.user = null;
+      state.isAuthenticated = false;
+    },
+  },
+});
+
+export const { login, logout } = authSlice.actions;
+export default authSlice.reducer;
+```
+
+RTK uses Immer under the hood, so the "mutation" syntax in reducers is safe — Immer converts it to immutable updates.
+
+---
+
+## 6. Performance Optimization Reference
+
+### 6.1 Context Re-render Problem
+
+Every component that calls `useContext(MyContext)` re-renders when the context value changes, even if the part of the value it uses did not change.
+
+**Solutions:**
+
+1. Split into multiple focused contexts (most common).
+2. Use `React.memo` on consumer components.
+3. Use `useMemo` to stabilize the context value object.
+
+```jsx
+// Stabilize context value with useMemo
+export function CartProvider({ children }) {
+  const [state, dispatch] = useReducer(cartReducer, { items: [] });
+
+  const value = useMemo(() => ({ items: state.items, dispatch }), [state.items]);
+
+  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
+}
+```
+
+### 6.2 Memoization Quick Reference
+
+| Hook | Purpose | Use When |
+|---|---|---|
+| `React.memo(Component)` | Skip re-render if props unchanged | Expensive component that often receives same props |
+| `useMemo(fn, deps)` | Cache computed value | Expensive calculation; new array/object reference each render |
+| `useCallback(fn, deps)` | Cache function reference | Passing callbacks to `React.memo` children |
+
+---
+
+## 7. AWS DVA-C02 Exam Connections
+
+- **Caching and stale data**: React Query's `staleTime` / `gcTime` mirrors CloudFront TTL and cache invalidation logic tested on the exam.
+- **Optimistic updates**: Similar to DynamoDB conditional writes and error rollback patterns.
+- **Context API for auth**: AWS Amplify and Cognito SDKs expose user state through a React context-like pattern.
+- **Redux middleware (Thunk/Saga)**: Conceptually similar to Lambda function chaining and Step Functions for async workflows.
+
+---
+
+## 8. Study Checklist
+
+- [ ] Explain what prop drilling is and when it becomes a problem
+- [ ] Create a context with `createContext`, a Provider, and a custom `use` hook
+- [ ] Wrap an app tree with multiple providers in the correct order
+- [ ] Write a `useReducer` reducer with at least 3 action types
+- [ ] Combine Context and `useReducer` into a global store pattern
+- [ ] Use `useQuery` to fetch and display data with loading and error states
+- [ ] Use `useMutation` with `invalidateQueries` to create or delete data
+- [ ] Explain when to use Redux Toolkit instead of Context
+- [ ] Apply `React.memo`, `useMemo`, and `useCallback` to prevent unnecessary re-renders
+- [ ] Split a single large context into multiple focused contexts

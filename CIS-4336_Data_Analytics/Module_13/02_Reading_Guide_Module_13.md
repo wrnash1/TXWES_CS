@@ -1,53 +1,291 @@
-# Reading Guide: Module 13 - Data Governance, Quality, and Privacy
-## Course: CIS-4336_Data_Analytics (CompTIA Data+)
+# Reading Guide: Module 13 — Reporting and Dashboard Design
+
+## Course: CIS-4336 Data Analytics
+
+## Texas Wesleyan University | Professor Nash
+
+**Certification Alignment:** CompTIA Data+ (DA0-001)
 
 ---
 
 ### Introduction
-Welcome to **Module 13 - Data Governance, Quality, and Privacy**! Data governance is the framework of policies, roles, and processes that ensures an organization's data is accurate, accessible to the right people, and protected from misuse. This module covers the governance and privacy concepts that appear throughout the **CompTIA Data+** exam: data privacy regulations (GDPR and CCPA), the definition and handling of personally identifiable information (PII), data masking and anonymization techniques, access control frameworks, and data stewardship roles.
 
-As data analytics expands into every business function, the analyst's responsibility extends beyond computing correct answers. Analysts must understand what data they are permitted to access, how to protect sensitive information in their outputs, and what legal obligations govern the data they handle. These topics are heavily tested on the Data+ exam in scenario format.
+Welcome to **Module 13 — Reporting and Dashboard Design**. Data analysis produces value only when findings reach decision-makers in a form they can understand and act on. This module bridges the technical work of Modules 11 and 12 with the communication skills that define a professional analyst. You will learn how business intelligence platforms work, how to design dashboards that serve their audience, how to select meaningful KPIs, and how to structure data-driven narratives for different stakeholder types.
 
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **Data privacy regulations (GDPR and CCPA)**: The General Data Protection Regulation (GDPR) is a European Union law that requires organizations to obtain explicit consent before collecting personal data, give individuals the right to access and delete their data, and report breaches within 72 hours. The California Consumer Privacy Act (CCPA) gives California residents similar rights — to know what data is collected, to opt out of its sale, and to request deletion. Both regulations impose significant fines for non-compliance.
-*   **Personally identifiable information (PII)**: Any data that can be used, alone or in combination, to identify a specific individual. Direct PII includes name, Social Security number, email address, phone number, and date of birth. Indirect PII includes data that could identify someone when combined with other information — such as ZIP code, employer, and age together. Analysts must recognize PII in datasets and handle it according to organizational policy and applicable law.
-*   **Data masking and anonymization**: Data masking replaces sensitive values with realistic but fictional substitutes — for example, replacing a real credit card number with `****-****-****-1234` in a test environment. Anonymization permanently removes or transforms identifiers so the data can no longer be linked to an individual. Pseudonymization replaces direct identifiers with a code, with the mapping stored separately — it is reversible, so pseudonymized data is still considered personal data under GDPR.
-*   **Access control and the principle of least privilege**: Access control determines who can read, write, or delete data assets. Role-based access control (RBAC) assigns permissions to roles rather than individuals — users inherit permissions by being assigned to a role. The principle of least privilege dictates that users and systems should have only the minimum access required to perform their function — nothing more. This limits the damage from both insider threats and external breaches.
-*   **Data stewardship and data catalog**: A data steward is a person responsible for the quality, governance, and appropriate use of a specific data domain (e.g., customer data, financial data). A data catalog is a searchable inventory of an organization's data assets — documenting what data exists, where it lives, who owns it, and what policies govern it. Data catalogs enable analysts to find trusted datasets and understand their lineage and sensitivity classification.
+The CompTIA Data+ exam allocates approximately 20–24% of its questions to Domain 4, Data Visualization. This is the largest single domain. Understanding dashboard design principles, chart selection, and KPI definitions is not optional preparation — it is the core of the exam.
 
 ---
 
-### 2. Certification Exam Tips
-*   **Domain weight:** Data governance, quality, and privacy questions span Domain 1 (Data Concepts and Environments, ~15%) and Domain 2 (Data Collection and Management, ~25%) of the Data+ DA0-001 exam. Scenario questions frequently present a data handling situation and ask which governance control or privacy technique is most appropriate.
-*   **Exam trap — anonymization vs. pseudonymization:** Anonymization is irreversible — the link to the individual is permanently destroyed. Pseudonymization is reversible — the key to re-identify the person is stored separately. GDPR treats pseudonymized data as still personal data. The exam may ask which technique produces data that is no longer subject to GDPR — the answer is anonymization, not pseudonymization.
-*   **Exam trap — GDPR vs. CCPA scope:** GDPR applies to any organization processing data of EU residents, regardless of where the organization is based. CCPA applies to businesses meeting certain thresholds that collect personal information of California residents. An exam scenario involving a U.S. company with European customers falls under GDPR, not just domestic law.
-*   **Exam trap — data masking in production vs. non-production:** Data masking is used to protect sensitive data in non-production environments (development, testing, analytics) where production-realistic data is needed but actual PII must not be exposed. Using real PII in a test environment is a governance violation.
-*   **Study Resource:** The data ethics and governance chapters of [Introduction to Data Science by Rafael A. Irizarry](https://rafalab.github.io/dsbook/) address responsible data handling, bias, and privacy considerations in analytics. The [Data Analysis with Python Course by freeCodeCamp](https://www.youtube.com/watch?v=GPVsHOl2238) demonstrates practical data handling techniques including column selection, filtering, and masking that relate directly to protecting sensitive data in analytical workflows.
+### Learning Objectives
+
+By the end of this module you will be able to:
+
+* Compare Tableau, Power BI, and Looker on architecture, use case, and deployment model
+* Apply five dashboard design principles to evaluate and improve a dashboard
+* Distinguish between a metric, a KPI, and a benchmark
+* Select the appropriate chart type for a given data relationship and audience
+* Structure a data finding as a four-part narrative: context, finding, evidence, implication
+* Match communication format and detail level to stakeholder role
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the data ethics, privacy, and governance chapters in the OER Textbook: [Introduction to Data Science by Rafael A. Irizarry](https://rafalab.github.io/dsbook/). Focus on the sections covering responsible data use, privacy considerations in analysis, and the ethical obligations of data professionals.
-*   **Required Video:** Watch the data handling and analysis sections of the [Data Analysis with Python Course by freeCodeCamp](https://www.youtube.com/watch?v=GPVsHOl2238), paying particular attention to column selection, data filtering, and transformation techniques that relate to managing sensitive data fields in analytical outputs.
+### Section 1: Business Intelligence Platforms
+
+#### What Is a BI Platform?
+
+A business intelligence platform is a software environment that connects to data sources, transforms and models that data, and enables users to create visualizations, reports, and dashboards without writing SQL or code for every request. Modern BI platforms sit between the raw data store (database, data warehouse, or data lake) and the business user.
+
+The core components of a BI platform are:
+
+* A data connector layer that queries databases, APIs, flat files, and cloud services
+* A semantic model that maps raw tables and columns to business-friendly names and calculated measures
+* A visualization layer where users build charts and dashboards
+* A distribution layer for publishing and sharing content with controlled access
+
+#### Tableau
+
+Tableau was founded in 2003 and acquired by Salesforce in 2019. Its core product is Tableau Desktop, a Windows and macOS application that uses a drag-and-drop canvas called a workbook. Users connect to data sources, build visualizations on sheets, and combine sheets into dashboards.
+
+Key Tableau concepts for the Data+ exam:
+
+* **Dimension** — a categorical field used for grouping (Region, Product, Date)
+* **Measure** — a numeric field used for aggregation (Revenue, Units, Profit)
+* **Calculated field** — a custom formula added to a data source
+* **Tableau Public** — free hosting for public dashboards; no account required to view
+* **Tableau Server / Tableau Cloud** — enterprise publishing with access controls
+
+Tableau's strength is speed of visual exploration. Its limitation for organizations is that individual analysts can define the same metric differently, producing inconsistent numbers across teams.
+
+#### Power BI
+
+Power BI is Microsoft's BI platform, available as a free desktop application (Power BI Desktop) and a cloud service (Power BI Service). Its tight integration with Excel means most Excel users can transition to Power BI without learning an entirely new interface.
+
+Key Power BI components:
+
+* **Power Query** — an ETL editor inside Power BI for transforming and shaping data before it reaches the visualization layer
+* **Data Model** — a relational model where tables are connected by relationships, similar to a star schema
+* **DAX (Data Analysis Expressions)** — a formula language for calculated columns and measures; more powerful than Excel formulas, less flexible than SQL
+* **Report** — a collection of visuals on one or more pages
+* **Dashboard** — a single-page collection of pinned tiles from one or more reports
+
+Power BI's strength is deep Microsoft ecosystem integration. Its limitation is that DAX has a steep learning curve.
+
+#### Looker
+
+Looker, acquired by Google in 2020, takes a fundamentally different architecture. Instead of each analyst connecting directly to data and building their own calculations, Looker uses **LookML** — a YAML-like modeling language — to define all metrics, dimensions, and relationships in a central Git repository.
+
+Key Looker concepts:
+
+* **LookML model** — defines which database tables exist and how they join
+* **Explore** — a self-service query interface where business users build queries from the model
+* **Look** — a saved query with a visualization
+* **Dashboard** — a collection of Looks or inline tiles
+* **Derived table** — a custom SQL query defined in LookML and treated as a virtual table
+
+Looker's strength is metric governance — every team uses the same revenue definition because it is defined once in LookML. Its limitation is that setting up LookML requires technical data modeling expertise.
+
+#### Choosing a BI Tool — Exam Context
+
+For the Data+ exam you will not be tested on tool-specific syntax. You will be asked to identify which type of tool or feature matches a described scenario.
+
+| Scenario | Tool feature |
+|---|---|
+| Self-service drag-and-drop exploration without writing code | Tableau or Power BI canvas |
+| Central metric definitions to prevent inconsistency across teams | Looker LookML |
+| Transforming raw data before visualization without a separate ETL tool | Power BI Power Query |
+| Publishing a dashboard publicly with no login required | Tableau Public |
+| Building reports in an organization standardized on Microsoft Azure | Power BI |
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Identify and classify PII columns in a customer dataset**: Review a dataset schema and label each column as PII, indirect PII, or non-sensitive, citing the specific attribute (name, email, SSN, ZIP code) that determines the classification.
-*   **Apply data masking to sensitive columns**: Replace credit card numbers with masked values (retain last 4 digits only) and replace full names with initials, then verify the masked dataset cannot be used to re-identify individuals without external data.
-*   **Document role-based access control assignments**: Define three roles (analyst, data engineer, executive) and specify which tables and columns each role can access based on the principle of least privilege, justifying each restriction.
+### Section 2: Dashboard Design Principles
+
+#### Principle 1 — Single Audience, Single Purpose
+
+A dashboard designed for multiple audiences typically fails all of them. Before designing any dashboard, answer two questions: Who is the primary user? What single question does this dashboard answer? All design decisions flow from those answers.
+
+Executive dashboards answer: "How is the business performing against targets this period?" They use large KPI tiles, trend sparklines, and one or two supporting charts. They do not contain drill-down tables or raw data exports.
+
+Operational dashboards answer: "What needs my attention right now?" They update frequently (hourly or daily), show current-state metrics, and include thresholds that color-code status. They often contain filters for region, team, or product.
+
+Analytical dashboards answer: "Why is this happening?" They are more exploratory, include more charts, and are used by analysts rather than executives.
+
+#### Principle 2 — Limit the KPI Count
+
+Research on working memory (Miller's Law) supports limiting dashboards to five to seven primary KPIs. More than that creates cognitive overload where the viewer cannot identify what is most important. Place the three to five most critical KPIs at the top of the dashboard in large, clearly labeled tiles before any charts appear.
+
+#### Principle 3 — Consistent Color Encoding
+
+Color carries meaning. Establish a color legend and apply it consistently:
+
+* Use green for on-target or positive trend
+* Use red for below-target or negative trend
+* Use gray or neutral for in-progress or informational
+* Use one accent color for the primary data series in charts; use a second only when two series must be compared
+
+Never use the same color to mean two different things in the same dashboard.
+
+#### Principle 4 — Remove Chart Junk
+
+Chart junk is any visual element that does not encode data. Common examples are:
+
+* 3D effects on bar or pie charts (distort proportions)
+* Decorative gridlines (replace with subtle gray or remove entirely)
+* Redundant legends when direct labels on bars or lines are clearer
+* Drop shadows, borders, and gradients on chart backgrounds
+* Pie charts with more than five slices (use a bar chart instead)
+
+Every pixel not encoding data is competing with the data for the viewer's attention.
+
+#### Principle 5 — Proximity and Grouping
+
+The Gestalt principle of proximity states that elements placed near each other are perceived as related. Group revenue metrics together, cost metrics together, and customer metrics together. Separate groups with whitespace rather than dividing lines. The eye reads whitespace as a boundary without adding visual clutter.
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read the data ethics chapters in [Introduction to Data Science by Rafael A. Irizarry](https://rafalab.github.io/dsbook/).
-- [ ] Watch the [Data Analysis with Python Course by freeCodeCamp](https://www.youtube.com/watch?v=GPVsHOl2238).
-- [ ] Review the lab instructions and understand what each task requires.
-- [ ] Proceed to the weekly hands-on lab activity.
+### Section 3: KPIs, Metrics, and Benchmarks
+
+#### Definitions
+
+* **Metric** — any quantitative measurement derived from data. Metrics have no inherent strategic meaning.
+* **KPI (Key Performance Indicator)** — a metric that is tied to a specific strategic objective, has a defined target, and has a direction (higher is better or lower is better).
+* **Benchmark** — a reference value against which a metric is evaluated. Benchmarks may be internal (last year's value), external (industry average), or aspirational (target).
+* **Leading indicator** — a metric that predicts future performance (e.g., new leads added this week predicts sales next month).
+* **Lagging indicator** — a metric that reflects outcomes already achieved (e.g., revenue closed this month).
+
+#### Vanity Metrics vs. Actionable KPIs
+
+A vanity metric looks impressive but does not tell you what to do. An actionable KPI reveals a gap between current state and target that prompts a specific response.
+
+| Vanity metric | Actionable KPI |
+|---|---|
+| Total page views | Bounce rate by landing page |
+| Total registered users | Monthly active users / total registered (activation rate) |
+| Total support tickets closed | Average first-response time |
+| Total sales calls made | Lead-to-opportunity conversion rate |
+
+#### KPI Properties
+
+A well-defined KPI has:
+
+* A clear name and definition (including which data source and calculation)
+* A unit of measurement (dollars, percentage, count, days)
+* A target value or range
+* A direction (increase is good, decrease is good, maintain range)
+* A reporting frequency (daily, weekly, monthly, quarterly)
+* An owner (the role responsible for moving this metric)
+
+---
+
+### Section 4: Chart Type Selection
+
+Selecting the right chart type is a core Data+ exam skill. The rule is simple: match the chart to the relationship in the data.
+
+| Relationship | Recommended chart | Avoid |
+|---|---|---|
+| Trend over time (continuous) | Line chart | Bar chart for many time points |
+| Comparison across categories | Bar or column chart | Pie chart for more than 5 categories |
+| Part-to-whole (few parts) | Pie or donut chart | Pie chart for more than 5 slices |
+| Distribution of one variable | Histogram or box plot | Line chart |
+| Relationship between two numeric variables | Scatter plot | Bar chart |
+| Geographic distribution | Choropleth map or bubble map | Bar chart (loses geographic context) |
+| Correlation matrix | Heatmap | Table of numbers |
+| Composition change over time | Stacked area chart | Pie chart |
+| Ranking with magnitude | Horizontal bar chart | Vertical bar with many labels |
+| Performance vs. target | Bullet chart or gauge | Speedometer (distorts perception) |
+
+---
+
+### Section 5: Data Storytelling
+
+#### The Four-Part Narrative Structure
+
+Professional data communication follows a consistent four-part structure regardless of the format:
+
+1. **Context** — establish what was known before the analysis and what decision depends on the finding
+2. **Finding** — state the most important result in one sentence using plain language
+3. **Evidence** — present the supporting visualization with annotation pointing to the key data point
+4. **Implication** — state what the finding means for the decision at hand
+
+#### Annotation on Charts
+
+A chart without annotation forces the viewer to find the insight themselves. An annotated chart guides them directly to it. Effective annotations:
+
+* Use a callout arrow or circle to point to the key data point
+* Include one sentence of plain-language explanation at the annotation location
+* Never annotate more than two points per chart — more than two annotations signal that the wrong chart or the wrong data is being shown
+
+#### Avoiding Common Storytelling Errors
+
+* Truncated y-axes that exaggerate small differences
+* Dual y-axes that imply a relationship between two unrelated variables
+* Cherry-picking the time range to make a trend look better than it is
+* Using color to imply causation (red for one series, green for another, when both are neutral)
+
+---
+
+### Section 6: Stakeholder Communication
+
+#### Audience Analysis
+
+Before preparing any report or dashboard, identify:
+
+* The stakeholder's role (executive, manager, analyst, board)
+* Their primary question (performance, diagnosis, compliance)
+* Their data literacy level (technical, intermediate, non-technical)
+* Their preferred format (slide deck, email, live dashboard, printed report)
+
+#### Communication Format by Role
+
+| Role | Format | Detail level | Update frequency |
+|---|---|---|---|
+| Board / C-suite | Single slide or one-pager | 3–5 KPIs, no raw data | Monthly or quarterly |
+| VP / Director | Dashboard with filters | 10–15 KPIs, summary tables | Weekly or daily |
+| Manager | Operational dashboard | Full detail with drill-down | Daily or real-time |
+| Analyst | Report with data export | All columns, full history | On demand |
+
+#### Data Definitions and Transparency
+
+Always include a footnote or tooltip that defines how each metric is calculated. Ambiguous metric names — "revenue," "active users," "cost" — mean different things in different departments. A data definition prevents the meeting where two people argue about whose number is right and neither is wrong; they are just measuring different things.
+
+---
+
+### Key Terms
+
+* **business intelligence (BI)** — the technologies, processes, and practices for collecting, integrating, analyzing, and presenting business data to support decision-making.
+* **KPI (Key Performance Indicator)** — a metric tied to a strategic objective with a defined target and direction.
+* **metric** — any quantitative measurement; not all metrics are KPIs.
+* **benchmark** — a reference value against which a metric is evaluated; may be internal or external.
+* **vanity metric** — a measurement that looks impressive but does not drive actionable decisions.
+* **leading indicator** — a metric that predicts future performance.
+* **lagging indicator** — a metric that reflects outcomes already achieved.
+* **chart junk** — visual elements on a chart that do not encode data and reduce clarity.
+* **LookML** — Looker's YAML-based modeling language for defining metrics centrally.
+* **DAX (Data Analysis Expressions)** — Power BI's formula language for calculated measures.
+* **data storytelling** — combining data, visualization, and narrative to communicate findings that drive action.
+* **annotation** — text or a graphic element added to a chart to highlight a key data point.
+* **choropleth map** — a map in which geographic regions are shaded in proportion to a data value.
+
+---
+
+### Review Questions
+
+1. What is the difference between a metric, a KPI, and a benchmark? Give one example of each.
+
+2. A colleague wants to show quarterly revenue for 12 product categories over four years. They propose a pie chart. What would you recommend instead and why?
+
+3. Explain Looker's LookML approach and why it addresses a limitation of tools like Tableau.
+
+4. You are building a dashboard for a Chief Operating Officer. What are the three design decisions you would make first?
+
+5. What is the four-part narrative structure for data storytelling? Give a brief example applying it to a real business scenario.
+
+---
+
+### OER Resources
+
+* **Storytelling with Data (free blog and examples)** — [storytellingwithdata.com](https://www.storytellingwithdata.com/)
+* **Tableau Public Gallery** — [public.tableau.com/gallery](https://public.tableau.com/en-us/gallery/)
+* **Microsoft Power BI documentation** — [learn.microsoft.com/power-bi](https://learn.microsoft.com/en-us/power-bi/)
+* **Google Looker documentation** — [cloud.google.com/looker/docs](https://cloud.google.com/looker/docs)
+* **DataViz Project — chart type reference** — [datavizproject.com](https://datavizproject.com/)

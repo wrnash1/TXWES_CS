@@ -1,75 +1,179 @@
-# Quiz: Module 09 - Python for Data Analytics – Pandas and NumPy
-## Course: CIS-4336_Data_Analytics (CompTIA Data+)
+# Quiz: Module 09 — Big Data Technologies
+
+## Course: CIS-4336 Data Analytics
+
+## Texas Wesleyan University | Professor Nash
+
+## Points: 20 (2 points each)
+
+## Certification Alignment: CompTIA Data+ (DA0-001) — Domain 1: Data Concepts and Environments
 
 ---
 
-**Question 1**
-An analyst loads a CSV file into Python and needs to check how many rows and columns the dataset contains, confirm each column's data type, and count null values per column before beginning any analysis. Which Pandas methods accomplish this profiling step?
-*   A) `df.head()`, `df.tail()`, and `df.sample()`
-*   B) `df.shape`, `df.dtypes`, and `df.isnull().sum()`
-*   C) `df.sort_values()`, `df.dropna()`, and `df.reset_index()`
-*   D) `df.merge()`, `df.concat()`, and `df.pivot_table()`
-*   **Correct Answer:** B) `df.shape`, `df.dtypes`, and `df.isnull().sum()`
-*   **Distractor Analysis:**
-    *   *Why correct:* `df.shape` returns the (rows, columns) tuple; `df.dtypes` lists each column's data type; `df.isnull().sum()` counts NaN values per column. Together these three calls form a standard initial data profile.
-    *   A) `head()`, `tail()`, and `sample()` preview row content but do not report dimensions, types, or null counts. C) These are cleaning and reshaping methods, not profiling methods. D) These are merging and aggregation methods unrelated to basic profiling.
+## Instructions
+
+Select the single best answer for each question. Each question is worth 2 points. No partial credit.
 
 ---
 
-**Question 2**
-In Python data analytics, which of the following most accurately defines a **Pandas DataFrame**?
-*   A) A one-dimensional labeled array representing a single column of data, with an index and a uniform data type, used as the building block for tabular structures.
-*   B) A fixed-type multi-dimensional array provided by NumPy that supports vectorized arithmetic operations across entire arrays without Python loops.
-*   C) A two-dimensional, labeled tabular data structure where each column is a named Series, each row is an indexed observation, and operations such as filtering, grouping, and merging are available.
-*   D) A connection object that links a Python script to an external database and executes SQL queries, returning results as rows and columns.
-*   **Correct Answer:** C) A two-dimensional, labeled tabular data structure where each column is a named Series, each row is an indexed observation, and operations such as filtering, grouping, and merging are available.
-*   **Distractor Analysis:**
-    *   *Why C is correct:* A DataFrame is Pandas' core tabular structure — the Python equivalent of a database table or spreadsheet, with named columns, row indices, and a rich API for data manipulation.
-    *   *Why A is incorrect:* A one-dimensional labeled array describes a Pandas Series, which is a single column extracted from a DataFrame — not the DataFrame itself.
-    *   *Why B is incorrect:* A fixed-type multi-dimensional array for vectorized arithmetic describes a NumPy ndarray, not a Pandas DataFrame.
-    *   *Why D is incorrect:* A connection object for executing SQL queries describes a database connector (such as SQLAlchemy or psycopg2), not a DataFrame.
+## Question 1
+
+Which of the 5 V's of big data refers to the speed at which data is generated and must be processed?
+
+A. Volume
+
+B. Veracity
+
+C. Velocity
+
+D. Variety
+
+**Correct Answer:** C — Velocity describes the rate of data generation and the speed required for processing (e.g., millions of sensor events per second). Volume refers to data scale (A). Veracity refers to data trustworthiness (B). Variety refers to the diversity of data formats (D).
 
 ---
 
-**Question 3**
-A data analyst is working with a customer dataset where 42% of values in the `annual_income` column are missing. The income distribution is heavily right-skewed due to a small number of high earners. Which missing-value strategy is most appropriate?
-*   A) Use `df.dropna(subset=['annual_income'])` to remove all rows with missing income, accepting the significant reduction in sample size.
-*   B) Use `df.fillna(df['annual_income'].mean())` to replace missing values with the column mean.
-*   C) Use `df.fillna(df['annual_income'].median())` to replace missing values with the column median, which is more resistant to the skewed distribution.
-*   D) Leave the missing values as NaN and proceed with analysis, since Pandas handles NaN automatically in all operations.
-*   **Correct Answer:** C) Use `df.fillna(df['annual_income'].median())` to replace missing values with the column median, which is more resistant to the skewed distribution.
-*   **Distractor Analysis:**
-    *   *Why C is correct:* With 42% missing and a right-skewed distribution, dropping rows would remove nearly half the dataset, introducing bias. The median is preferred over the mean for imputation because it is not pulled toward the high-earning outliers that cause the skew.
-    *   *Why A is incorrect:* Dropping 42% of rows is a severe reduction that would likely bias the remaining sample toward lower-income customers, distorting any analysis.
-    *   *Why B is incorrect:* In a right-skewed income distribution, the mean is significantly higher than the typical value due to high outliers. Imputing with the mean would inflate artificially the incomes of missing-value rows.
-    *   *Why D is incorrect:* While Pandas skips NaNs in some aggregate functions, other operations (comparisons, machine learning inputs, exports) fail or produce incorrect results with NaNs present. Leaving them unresolved is not a valid strategy.
+## Question 2
+
+In HDFS, which node is responsible for tracking where each data block is stored across the cluster?
+
+A. DataNode
+
+B. NameNode
+
+C. Secondary NameNode
+
+D. JobTracker
+
+**Correct Answer:** B — The NameNode is the HDFS master node that maintains all filesystem metadata, including which blocks make up each file and which DataNodes hold each block. DataNodes store the actual data blocks (A). The Secondary NameNode merges edit logs but is not a failover master (C). JobTracker is a MapReduce component, not an HDFS component (D).
 
 ---
 
-**Question 4**
-An analyst needs to compute the total revenue and average order value for each product category in a Pandas DataFrame with columns `category`, `revenue`, and `order_value`. Which code correctly produces these grouped statistics?
-*   A) `df.sort_values('category')[['revenue', 'order_value']].sum()`
-*   B) `df.groupby('category')[['revenue', 'order_value']].agg({'revenue': 'sum', 'order_value': 'mean'})`
-*   C) `df.pivot('category', 'revenue', 'order_value')`
-*   D) `df.merge(df, on='category')[['revenue', 'order_value']].describe()`
-*   **Correct Answer:** B) `df.groupby('category')[['revenue', 'order_value']].agg({'revenue': 'sum', 'order_value': 'mean'})`
-*   **Distractor Analysis:**
-    *   *Why B is correct:* `groupby('category')` splits the DataFrame by category, and `.agg()` applies different aggregation functions to each column — sum for revenue, mean for order_value. This is the direct Pandas equivalent of `SELECT category, SUM(revenue), AVG(order_value) FROM table GROUP BY category`.
-    *   *Why A is incorrect:* `sort_values` orders rows alphabetically by category but does not group them. The `.sum()` call would then sum all rows, not per-category totals.
-    *   *Why C is incorrect:* `df.pivot()` reshapes a DataFrame by spreading one column's values into new columns — it is a pivoting operation, not a grouped aggregation.
-    *   *Why D is incorrect:* `df.merge(df, on='category')` performs a self-join, multiplying rows. `describe()` returns distribution statistics for the whole result, not per-category aggregations.
+## Question 3
+
+What is the default block size in HDFS and the default replication factor?
+
+A. 64 MB block size, 2 replicas
+
+B. 128 MB block size, 3 replicas
+
+C. 256 MB block size, 3 replicas
+
+D. 128 MB block size, 5 replicas
+
+**Correct Answer:** B — HDFS uses 128 MB as the default block size and replicates each block 3 times across different DataNodes. These specific values are frequently tested on the Data+ exam.
 
 ---
 
-**Question 5**
-A NumPy array `prices` contains 10,000 product prices. An analyst needs to add a 10% tax to every price and find the maximum taxed price. Which approach is most efficient in NumPy?
-*   A) Write a Python `for` loop that iterates over each element, multiplies it by 1.10, appends it to a new list, then calls `max()` on the list.
-*   B) Use `prices * 1.10` to apply the tax via vectorized multiplication, then call `(prices * 1.10).max()` to find the maximum.
-*   C) Convert the array to a Pandas DataFrame, use `df['prices'].apply(lambda x: x * 1.10)`, then call `.max()` on the result.
-*   D) Use `numpy.sort(prices)` to sort the array in descending order, multiply the first element by 1.10 to get the maximum taxed price.
-*   **Correct Answer:** B) Use `prices * 1.10` to apply the tax via vectorized multiplication, then call `(prices * 1.10).max()` to find the maximum.
-*   **Distractor Analysis:**
-    *   *Why B is correct:* NumPy's vectorized operations apply the multiplication to every element in the array simultaneously using optimized C-level code — no Python loop is needed. This is both the idiomatic and the most performant approach for array-wide arithmetic.
-    *   *Why A is incorrect:* A Python for loop achieves the same result but is orders of magnitude slower on 10,000 elements because it executes in interpreted Python rather than compiled code. It also produces a list, not a NumPy array.
-    *   *Why C is incorrect:* Converting to a DataFrame and using `.apply()` introduces unnecessary overhead. `.apply()` with a lambda also iterates row by row in Python, losing the performance benefit of NumPy vectorization.
-    *   *Why D is incorrect:* Sorting the entire array to find the maximum is an O(n log n) operation when `.max()` is O(n). More critically, sorting first and then multiplying only the first element does not apply the tax to the whole array.
+## Question 4
+
+In MapReduce, what does the Map phase produce?
+
+A. Final aggregated results written to HDFS
+
+B. Key-value pairs emitted from processing local data blocks
+
+C. Sorted and grouped data ready for output
+
+D. A list of available DataNodes for task assignment
+
+**Correct Answer:** B — The Map function processes data on local nodes and emits intermediate key-value pairs (e.g., `(word, 1)` in word count). The Reduce phase produces final aggregated results (A). The Shuffle/Sort phase groups key-value pairs (C). DataNode assignment is handled by YARN/the resource manager (D).
+
+---
+
+## Question 5
+
+What is the primary reason Apache Spark is significantly faster than MapReduce for iterative workloads?
+
+A. Spark uses more powerful hardware nodes than MapReduce
+
+B. Spark processes data in memory rather than writing intermediate results to disk between stages
+
+C. Spark uses a smaller block size than HDFS, reducing data transfer overhead
+
+D. Spark automatically increases the replication factor for frequently accessed data
+
+**Correct Answer:** B — Spark keeps intermediate computation results in RAM across stages, avoiding the disk I/O that MapReduce requires between every Map and Reduce phase. This in-memory processing is the fundamental architectural advantage. The other options describe hardware choices or HDFS behaviors unrelated to Spark's processing model.
+
+---
+
+## Question 6
+
+Which Spark abstraction is an immutable, partitioned collection of data distributed across a cluster that can be reconstructed from its transformation lineage if a partition is lost?
+
+A. DataFrame
+
+B. Dataset
+
+C. Resilient Distributed Dataset (RDD)
+
+D. Spark SQL table
+
+**Correct Answer:** C — The RDD is the foundational Spark abstraction with the lineage-based fault tolerance mechanism. DataFrames and Datasets are higher-level structured abstractions built on top of RDDs (A, B). Spark SQL tables are a query interface, not the underlying distributed data structure (D).
+
+---
+
+## Question 7
+
+An organization needs to store structured, cleaned, and modeled data optimized for SQL-based BI reporting with strong data governance. Which storage architecture is most appropriate?
+
+A. Data lake
+
+B. Data warehouse
+
+C. HDFS raw storage
+
+D. Apache Kafka topic
+
+**Correct Answer:** B — A data warehouse stores structured, governed, schema-on-write data optimized for SQL analytics and BI reporting. A data lake stores raw unstructured data with schema-on-read (A). HDFS is raw distributed storage without query optimization or governance (C). Kafka is a streaming message platform, not a storage architecture for BI queries (D).
+
+---
+
+## Question 8
+
+Which term describes the risk that a data lake becomes difficult to use because data is stored without catalogs, quality controls, or governance — making it impossible to find or trust data?
+
+A. Data latency
+
+B. Schema drift
+
+C. Data swamp
+
+D. Data skew
+
+**Correct Answer:** C — A data swamp is a data lake that has become unusable due to lack of governance, metadata management, and data quality controls. Data latency refers to processing delay (A). Schema drift refers to source schema changes over time (B). Data skew describes uneven data distribution across partitions (D).
+
+---
+
+## Question 9
+
+A credit card company needs to detect and block fraudulent transactions within 200 milliseconds of a transaction occurring. Which processing approach is required?
+
+A. Batch processing with nightly reconciliation
+
+B. Weekly scheduled aggregation jobs
+
+C. Real-time streaming processing
+
+D. Monthly MapReduce reporting jobs
+
+**Correct Answer:** C — Detecting fraud within 200 milliseconds requires event-driven streaming processing (e.g., Apache Kafka plus Spark Streaming or Apache Flink). Batch and scheduled jobs (A, B, D) all have latency measured in minutes to hours — far too slow to block a transaction in real time.
+
+---
+
+## Question 10
+
+Which architecture combines a batch layer for historical accuracy with a speed layer for real-time low-latency processing, merging both in a serving layer?
+
+A. Kappa architecture
+
+B. Lambda architecture
+
+C. Medallion architecture
+
+D. Star schema architecture
+
+**Correct Answer:** B — The lambda architecture uses three layers: a batch layer (high accuracy, high latency), a speed layer (low latency, approximate), and a serving layer that merges both for queries. The kappa architecture eliminates the batch layer and uses only a streaming layer (A). Medallion is a data organization pattern for data lakes (C). Star schema is a dimensional modeling pattern for data warehouses (D).
+
+---
+
+End of Module 09 Quiz

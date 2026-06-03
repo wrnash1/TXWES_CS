@@ -1,203 +1,292 @@
-# Lab Activity: Module 08 - Feasibility Analysis and Cost-Benefit Analysis
+# Lab Activity: Module 08 — Use Case and User Story Development
 
-**Course:** CIS-3312 Systems Analysis and Design
-**Certification Alignment:** IIBA ECBA (Entry Certificate in Business Analysis)
-**Prepared by:** Professor Nash | Texas Wesleyan University
-**Total Points:** 100
+## Course: CIS-3312 Systems Analysis and Design
 
----
+## Texas Wesleyan University | Professor Nash
 
-## Overview
-
-This lab gives you hands-on practice conducting a feasibility analysis and building a cost-benefit model. You will evaluate a proposed system from all four feasibility dimensions and calculate ROI, payback period, and NPV from a provided data set. No software installation or terminal commands are required. All work is document-based.
+## Certification Alignment: IIBA ECBA — Requirements Analysis and Design Definition
 
 ---
 
-## Case Study: Maplewood County Clerk's Office — Digital Permit Management System
+### Lab Overview
 
-Maplewood County currently processes building, zoning, and contractor permits through a paper-based workflow. Applicants visit the office in person, complete paper forms, submit supporting documents, pay fees by check or cash, and wait for mailed approval letters. The current process takes an average of 18 business days per permit.
+In this lab you will apply use case modeling and user story techniques to the Lakewood
+Community Library Management System (LMS). You will produce a use case diagram, two fully
+dressed specifications, a user story backlog with acceptance criteria, and a story map. This
+set of deliverables mirrors what a business analyst produces during the requirements analysis
+phase of a real project.
 
-The County Clerk has proposed replacing this process with a Digital Permit Management System (DPMS). The new system would allow applicants to submit permit applications online, upload supporting documents digitally, pay fees electronically, and receive automatic status updates and approvals by email. Internal staff would use a web-based portal to review, comment on, and approve applications.
+**Estimated time:** 2.5–3 hours
 
-The IT Director has provided the following cost and benefit data for analysis:
-
-Development Costs (one-time):
-
-- Software development and customization: $280,000
-- Hardware and infrastructure: $45,000
-- Data migration from paper records: $30,000
-- Staff training: $20,000
-- Project management: $25,000
-- Total Development Cost: $400,000
-
-Annual Operating Costs (ongoing, per year):
-
-- Software maintenance and support: $35,000
-- Infrastructure and hosting: $12,000
-- Annual training for new staff: $3,000
-- Total Annual Operating Cost: $50,000
-
-Projected Annual Benefits (per year, beginning Year 1):
-
-- Reduced staff labor (3 FTE positions redirected): $120,000
-- Eliminated paper, postage, and storage: $18,000
-- Faster permit processing (economic development fees attracted): $45,000
-- Reduced error correction and rework: $22,000
-- Total Annual Tangible Benefit: $205,000
-
-Intangible Benefits (qualitative, not included in financial model):
-
-- Improved applicant experience and satisfaction
-- Reduced in-person lobby traffic and associated facility costs
-- Improved regulatory compliance tracking
-- Environmental benefit from eliminating paper forms
-
-The organization uses a discount rate of 6% for NPV calculations. The system's expected useful life is 5 years.
+**Tools allowed:** Draw.io (free), Lucidchart free tier, Microsoft Visio, or hand-drawn and
+photographed. All story documents may be submitted as plain text or formatted Word/Google
+Docs.
 
 ---
 
-## Part 1: Feasibility Assessment — 40 Points
+### Case Study: Lakewood Community Library Management System
 
-### Part 1 Instructions
+The Lakewood Community Library serves approximately 4,200 active members. The library
+director, Ms. Chen, has commissioned a new Library Management System to replace a legacy
+desktop application that cannot support online catalog access or self-service renewal.
 
-Evaluate the Maplewood County DPMS proposal from all four feasibility dimensions. For each dimension, write a 3–5 sentence analysis that identifies relevant factors from the case study, makes a clear determination (feasible, conditionally feasible, or not feasible), and explains your reasoning.
+The following stakeholders have been interviewed:
 
-Then answer the three analysis questions at the end.
+- **Library Patrons** want to search the catalog online, place holds on checked-out items,
+  renew loans without visiting the library, and receive reminders before due dates.
+- **Librarians** want to manage check-out and return transactions efficiently, view a
+  dashboard of overdue items, and process reservations with minimal manual steps.
+- **The System Administrator** wants to add, update, and deactivate member accounts and
+  configure loan period rules.
+- **An Email Notification Service** (third-party integration) sends automated emails for
+  confirmations, reminders, and overdue notices.
 
-Dimension 1 — Technical Feasibility
+Business rules:
 
-Evaluate whether the technology exists and whether Maplewood County can build or acquire the system within reasonable constraints. Consider the standard nature of the technology, the IT Director's involvement (implying internal technical capacity), and any risks related to data migration.
-
-Dimension 2 — Economic Feasibility
-
-Note: Do not calculate financial metrics here — you will do that in Part 2. Instead, make a preliminary qualitative assessment: do annual benefits appear to significantly exceed annual operating costs? Does the development investment appear proportionate to the size of the organization and its budget?
-
-Dimension 3 — Operational Feasibility
-
-Evaluate whether staff and applicants will adopt the system and whether it fits the county's operational context. Consider that some applicants may prefer in-person service, that staff require training, and that the system requires behavior change from both internal and external users.
-
-Dimension 4 — Legal and Ethical Feasibility
-
-Evaluate whether any legal, regulatory, or privacy constraints apply. Consider that the system will process applicant personal information and payment data, that government systems may be subject to state public records laws, and that digital payment processing involves financial compliance requirements.
-
-Analysis Questions (answer each in 2–3 sentences):
-
-Question 1: Which feasibility dimension presents the greatest risk for this project? Justify your answer with specific evidence from the case study.
-
-Question 2: The case study lists four intangible benefits but excludes them from the financial model. Explain why intangible benefits are excluded from the financial model, and describe how a BA should document them.
-
-Question 3: The data migration cost ($30,000) is classified as a development cost. Explain why this is the correct classification rather than an operating cost.
-
-### Grading Rubric — Part 1
-
-| Criterion | Points |
-|---|---|
-| Technical feasibility analysis: relevant factors identified, clear determination, reasoning explained (5 pts each) | 5 |
-| Economic feasibility analysis: qualitative assessment with supporting reasoning (5 pts) | 5 |
-| Operational feasibility analysis: adoption factors identified, determination explained (5 pts) | 5 |
-| Legal feasibility analysis: relevant constraints identified, determination explained (5 pts) | 5 |
-| Analysis Question 1: greatest risk dimension identified with evidence (5 pts) | 5 |
-| Analysis Question 2: intangible exclusion explained, documentation approach described (5 pts) | 5 |
-| Analysis Question 3: classification of data migration correctly explained (5 pts) | 5 |
-| Written quality: complete sentences, clear reasoning throughout all analyses (5 pts) | 5 |
-
-Part 1 Total: 40 points
+- Members may borrow up to 10 items at one time.
+- Standard loan period is 21 days; reference materials are 7 days.
+- Members with 3 or more overdue items are suspended and cannot borrow.
+- Late fees accrue at $0.25 per day per item.
+- Holds expire after 7 days if the member does not collect the reserved item.
 
 ---
 
-## Part 2: Cost-Benefit Calculations — 35 Points
+### Task 1: Use Case Diagram (35 points)
 
-### Part 2 Instructions
+Using the case study above, create a use case diagram for the Lakewood LMS.
 
-Using the data provided in the case study, perform the following calculations. Show all work for each calculation (formula, substituted values, result). Express each answer in the correct unit (percentage, years, or dollars).
+#### Step 1 — Identify All Actors
 
-Calculation 1 — Annual Net Benefit
+List every actor before opening your drawing tool. For each actor, identify whether they are
+primary or secondary and note at least one goal they bring to the system.
 
-Calculate the Annual Net Benefit.
+Minimum actors to include:
 
-Show: Total Annual Tangible Benefit minus Total Annual Operating Cost = Annual Net Benefit.
+- Library Patron
+- Librarian
+- System Administrator
+- Email Notification Service
 
-Calculation 2 — Five-Year Total Benefits and Total Costs
+#### Step 2 — Identify All Use Cases
 
-Calculate Total Benefits over the 5-year useful life.
+List at least 10 use cases. Each use case name must be a verb-noun phrase. Do not use
+generic names like "Process Transaction" — be specific to the LMS domain.
 
-Calculate Total Costs (Development Cost + 5 years of Operating Costs) over the 5-year useful life.
+Required use cases (at minimum):
 
-Calculation 3 — Return on Investment (ROI)
+- Search Catalog
+- Check Out Book
+- Return Book
+- Reserve Book
+- Renew Loan
+- View Member Account
+- Manage Member Account
+- Generate Overdue Report
+- Authenticate Member
+- Send Notification
+- Apply Late Fee
 
-Using your five-year totals: ROI = (Net Benefit / Total Cost) x 100%, where Net Benefit = Total Benefits - Total Costs.
+#### Step 3 — Draw the Diagram
 
-Calculation 4 — Payback Period
+Draw the use case diagram following UML notation:
 
-Using the Annual Net Benefit from Calculation 1: Payback Period = Total Development Cost / Annual Net Benefit.
+- System boundary rectangle labeled "Library Management System"
+- Actors as stick figures outside the boundary
+- Use cases as ellipses inside the boundary
+- Association lines between actors and the use cases they participate in
+- At least two include relationships (dashed arrows, labeled include)
+- At least one extend relationship (dashed arrow, labeled extend, arrow points TO base)
+- At least one generalization relationship if appropriate
 
-Note: Use only the development cost (not operating costs) in this formula — the payback period measures recovery of the initial investment.
+#### Step 4 — Annotate Your Diagram
 
-Calculation 5 — Net Present Value (NPV)
+Add a legend identifying which relationships are include, extend, and generalization. Label
+primary actors with a P and secondary actors with an S.
 
-Calculate the NPV over the 5-year useful life using a 6% discount rate. Use the following discount factors:
+#### Diagram Deliverable
 
-- Year 0 (initial investment): 1.000
-- Year 1: 0.943
-- Year 2: 0.890
-- Year 3: 0.840
-- Year 4: 0.792
-- Year 5: 0.747
-
-For each year: Discounted Cash Flow = Net Cash Flow x Discount Factor.
-
-Year 0 net cash flow = negative $400,000 (development investment).
-
-Years 1 through 5 net cash flow = Annual Net Benefit (from Calculation 1) each year.
-
-NPV = sum of all discounted cash flows.
-
-After completing all calculations, answer this question in 3–5 sentences: Based on your ROI, payback period, and NPV results, does the DPMS project pass economic feasibility? Explain which metric you find most persuasive for this specific type of public-sector investment and why.
-
-### Grading Rubric — Part 2
-
-| Criterion | Points |
-|---|---|
-| Calculation 1 (Annual Net Benefit): correct formula, substitution, and result (4 pts) | 4 |
-| Calculation 2 (5-year totals): correct benefit and cost totals shown (4 pts) | 4 |
-| Calculation 3 (ROI): correct formula, substitution, result in percentage (6 pts) | 6 |
-| Calculation 4 (Payback Period): correct formula, substitution, result in years (6 pts) | 6 |
-| Calculation 5 (NPV): all 6 discounted cash flows shown, correct sum (10 pts) | 10 |
-| Written economic feasibility assessment (3–5 sentences) (5 pts) | 5 |
-
-Part 2 Total: 35 points
+Submit your diagram as an exported PNG or PDF. Name the file: LastName_LMS_UseCaseDiagram.
 
 ---
 
-## Part 3: Recommendation Memo — 25 Points
+### Task 2: Fully Dressed Use Case Specifications (30 points)
 
-### Part 3 Instructions
+Write fully dressed use case specifications for two use cases from your diagram. You must
+include one use case that uses the include relationship and one that uses the extend
+relationship.
 
-Write a professional recommendation memo (250–350 words) to the Maplewood County Clerk, summarizing the results of your feasibility study and making a clear recommendation to proceed or not proceed with the DPMS project.
+#### Suggested Pairs
 
-Your memo must include all of the following:
+Option A: Check Out Book (uses include) + Apply Late Fee (uses extend via Return Book)
 
-- A brief summary of the project and the purpose of the feasibility study (1–2 sentences)
-- A summary of findings for each of the four feasibility dimensions (one sentence each)
-- Your calculated financial results (ROI, payback period, NPV values)
-- A clear recommendation (proceed, proceed with conditions, or do not proceed) supported by specific evidence from your analysis
-- At least one risk or condition you would attach to a "proceed" recommendation, or one remediation step you would recommend before proceeding if your recommendation is conditional
+Option B: Reserve Book (uses include) + Send Overdue Notice (uses extend via notification)
 
-The memo should be written in professional business language appropriate for a government official audience.
+#### Required Fields for Each Specification
 
-### Grading Rubric — Part 3
+For each use case, complete all fields listed below:
 
-| Criterion | Points |
-|---|---|
-| All four feasibility dimensions summarized accurately | 8 |
-| Financial results (ROI, payback period, NPV) correctly stated | 6 |
-| Clear recommendation with specific supporting evidence | 7 |
-| At least one risk or condition attached to the recommendation | 4 |
+- **Use Case ID**: Assign UC-01 through UC-11 based on your diagram
+- **Use Case Name**: Verb-noun phrase matching your diagram ellipse
+- **Goal in Context**: One complete sentence describing the actor's goal
+- **Scope**: Library Management System
+- **Level**: User Goal
+- **Primary Actor**: Name the actor who initiates the use case
+- **Stakeholders and Interests**: List at least two stakeholders and what each needs
+- **Preconditions**: At least two conditions that must be true before the use case begins
+- **Minimal Guarantees**: What the system ensures even if the use case fails
+- **Success Guarantees**: What the system ensures when the use case completes
+- **Main Success Scenario**: Numbered steps, minimum 6 steps, alternating actor/system
+- **Extensions**: At least two extensions with step-letter reference and resolution steps
+- **Technology Variations**: At least one technology-neutral alternative at a specific step
 
-Part 3 Total: 25 points
+#### Specification Format Example
+
+```text
+Use Case ID:       UC-03
+Use Case Name:     Return Book
+Goal in Context:   The Librarian processes the physical return of a borrowed item and
+                   updates the loan record to release the member's borrowing quota.
+Primary Actor:     Librarian
+Preconditions:
+  1. The book barcode is scannable.
+  2. The member has an active loan record for this item.
+Main Success Scenario:
+  1. Librarian scans the book barcode.
+  2. System retrieves the active loan record.
+  3. System checks the return date against the due date.
+  4. System marks the loan as returned and updates inventory.
+  5. System checks for pending holds on this title.
+  6. System confirms return and prints receipt.
+Extensions:
+  3a. Return date is after due date:
+      3a.1 System calculates late fee.
+      3a.2 Apply Late Fee extends: system posts fee to member account.
+      3a.3 Use case continues at step 4.
+  5a. Pending hold exists for this title:
+      5a.1 System flags item as hold-reserved.
+      5a.2 System notifies hold-requesting member via Email Service.
+```
 
 ---
 
-## Submission Instructions
+### Task 3: User Story Backlog with Acceptance Criteria (25 points)
 
-Combine all three parts into one document with clearly labeled sections. For Part 2 calculations, show your work — do not enter only the final answer. Submit to the Canvas Module 08 Lab assignment by the due date shown in the course calendar.
+Write a user story backlog for the LMS MVP release. Your backlog must contain at least eight
+user stories covering at least three different actor types.
+
+#### Step 1 — Write the User Stories
+
+Use the standard format for all stories:
+
+As a [actor], I want [capability], so that [business value].
+
+Evaluate each story against INVEST. If a story fails any INVEST criterion, revise it until
+it passes all six.
+
+#### Step 2 — Add Acceptance Criteria
+
+For each user story, write at least three acceptance criteria in Given-When-Then format.
+
+Each criterion must follow this structure:
+
+- Given [initial context or precondition]
+- When [action or event]
+- Then [observable, verifiable outcome]
+
+#### Step 3 — Identify Epics
+
+Mark any story in your backlog that is too large for a single sprint as an Epic. For each
+Epic, write at least two child stories that decompose the Epic into implementable pieces.
+
+#### Backlog Deliverable Format
+
+Submit your backlog as a numbered list. For each item include: story number, story text,
+INVEST pass/fail for each letter, and three or more acceptance criteria.
+
+---
+
+### Task 4: Story Map (10 points)
+
+Create a story map for the LMS MVP release using the stories from Task 3.
+
+#### Step 1 — Define the Backbone
+
+List the major user activities in left-to-right sequence representing a typical patron
+journey through a single library visit: Join, Browse, Borrow, Return, Manage Account.
+
+#### Step 2 — Map Stories to Activities
+
+Place each user story from your backlog in the column under the activity it supports. If a
+story supports multiple activities, choose the primary one.
+
+#### Step 3 — Define Release Slices
+
+Draw two horizontal lines to define three releases:
+
+- **MVP (Release 1)**: The minimum set of stories that supports end-to-end patron borrowing
+- **Release 2**: Adds self-service features (online renewal, email reminders)
+- **Release 3**: Adds advanced features (recommendations, mobile app)
+
+#### Story Map Deliverable
+
+Submit your story map as a table, spreadsheet, or drawn diagram. Clearly label rows as MVP,
+Release 2, and Release 3.
+
+---
+
+### Submission Checklist
+
+Before submitting, verify:
+
+- [ ] Use case diagram includes all required actors, at least 10 use cases, 2 include
+      relationships, and 1 extend relationship
+- [ ] Both fully dressed specifications include all required fields
+- [ ] Extensions in specifications use correct step-letter numbering
+- [ ] Each user story uses As a / I want / so that format
+- [ ] Each story includes at least 3 Given-When-Then acceptance criteria
+- [ ] At least one Epic is identified and decomposed
+- [ ] Story map has backbone across top and release slices as horizontal rows
+- [ ] All files are named with LastName prefix
+
+---
+
+### Grading Rubric
+
+| Task | Criteria | Points |
+|---|---|---|
+| Task 1 — Use Case Diagram | All actors correctly identified and placed (5) | 5 |
+| | All use cases named with verb-noun phrases (5) | 5 |
+| | Include relationships correct direction and label (8) | 8 |
+| | Extend relationships correct direction and label (8) | 8 |
+| | Diagram is legible and uses UML notation (5) | 5 |
+| | Subtotal | **35** |
+| Task 2 — Fully Dressed Specs | All required fields present in both specs (10) | 10 |
+| | Main success scenario has 6+ numbered steps (8) | 8 |
+| | Extensions use correct numbering convention (7) | 7 |
+| | Stakeholders and interests clearly stated (5) | 5 |
+| | Subtotal | **30** |
+| Task 3 — User Stories | Stories use correct format; 8 or more stories (8) | 8 |
+| | Each story passes INVEST evaluation (7) | 7 |
+| | Acceptance criteria use Given-When-Then format (7) | 7 |
+| | At least one Epic decomposed into child stories (3) | 3 |
+| | Subtotal | **25** |
+| Task 4 — Story Map | Backbone in correct activity sequence (3) | 3 |
+| | Stories correctly placed under activities (4) | 4 |
+| | Release slices clearly defined (3) | 3 |
+| | Subtotal | **10** |
+| **Total** | | **100** |
+
+---
+
+### Professor Nash Note
+
+The most common mistake in this lab is drawing the extend arrow in the wrong direction.
+Remember: the arrow points FROM the extending use case TO the base use case. If you drew it
+the other way, fix it before submitting — it is an automatic 4-point deduction. The second
+most common mistake is writing acceptance criteria that describe implementation details
+instead of observable outcomes. Your Given-When-Then criteria should describe what a user
+sees or experiences, not how the database updates internally.
+
+---
+
+*Lab Activity — Module 08 | CIS-3312 Systems Analysis and Design | Texas Wesleyan University*

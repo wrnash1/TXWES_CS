@@ -1,83 +1,206 @@
-# Quiz: Module 15 - Terraform Security & Secrets Management
+# Quiz: Module 15 — Advanced Terraform Patterns
 
-## Course: CIS-4337_Infrastructure_Automation (HashiCorp Certified: Terraform Associate)
+## Course: CIS-4337 Infrastructure Automation
 
----
+## Texas Wesleyan University | Professor Nash
 
-**Question 1**
-Which HCL attribute, when added to a `variable` or `output` block, prevents the value from being printed to the console during `terraform plan` and `terraform apply`?
-
-* A) `write = false`
-* B) `sensitive = true`
-* C) `hidden = true`
-* D) `redact = true`
-* **Correct Answer:** B) Declaring `sensitive = true` on a `variable` or `output` block instructs Terraform to mask the value as `(sensitive value)` in all plan, apply, and output console displays.
-* **Distractor Analysis:**
-  * *Why B is correct:* `sensitive = true` is the documented Terraform attribute for controlling console output masking. It is set inside `variable` or `output` blocks and causes Terraform to suppress the actual value in CLI output. Note that the value is still stored in plaintext in `terraform.tfstate`.
-  * *Why A is incorrect:* `write = false` is not a valid attribute on Terraform `variable` or `output` blocks. No such attribute exists in the Terraform language specification.
-  * *Why C is incorrect:* `hidden = true` is not a valid Terraform attribute. This option is a plausible-sounding distractor but does not correspond to any real Terraform language feature.
-  * *Why D is incorrect:* `redact = true` is not a valid Terraform attribute. The correct attribute name is `sensitive`, not `redact`.
+**Certification Alignment:** HashiCorp Terraform Associate (003)
 
 ---
 
-**Question 2**
-Which of the following most accurately describes **sensitive outputs** in Terraform?
+## Instructions
 
-* A) Output values that are automatically encrypted using AES-256 before being written to the state file, ensuring they cannot be read without the encryption key
-* B) Output values declared with `sensitive = true` that are masked in CLI display but are still written to the state file in plaintext, requiring secure backend access controls as the primary protection mechanism
-* C) Output values that are never written to the state file and exist only in memory during the `terraform apply` run, disappearing after the process exits
-* D) Output values that trigger a Terraform error if referenced by any downstream module, enforcing that sensitive data never propagates through module composition
-* **Correct Answer:** B) Sensitive outputs are masked in console output but are not encrypted in state. The `sensitive = true` declaration is a display control, not a cryptographic protection. The state backend must be independently secured with encryption and access controls.
-* **Distractor Analysis:**
-  * *Why B is correct:* This is the precise, exam-tested behavior of sensitive outputs. The most critical point is that `sensitive = true` only affects what is shown in the terminal — the actual value is always persisted to state in plaintext. This is why the exam emphasizes encrypting state backends (e.g., S3 with `encrypt = true`, Terraform Cloud's built-in encryption).
-  * *Why A is incorrect:* Terraform does not encrypt individual output values before writing them to state. State file encryption (if any) is handled at the backend level (e.g., S3 server-side encryption) and applies to the entire file, not to individual sensitive values.
-  * *Why C is incorrect:* All output values — sensitive or not — are written to the state file. Sensitive outputs are not held only in memory; they persist to state just like non-sensitive outputs.
-  * *Why D is incorrect:* Sensitive outputs can be referenced by downstream configurations, but when a sensitive output is referenced in a non-sensitive context, Terraform raises an error requiring explicit acknowledgment. This is a referencing guard, not a blanket prohibition on propagation.
+Select the best answer for each question. Each question is worth 1 point. Distractor analysis follows each question to explain why incorrect options are wrong.
 
 ---
 
-**Question 3**
-A practitioner runs `terraform output db_password` and the terminal displays `(sensitive value)`. Where can the actual plaintext value of `db_password` be found?
+## Questions
 
-* A) It cannot be retrieved; marking an output as sensitive permanently destroys the underlying value after apply completes
-* B) In the `terraform.tfstate` file, where all output values including sensitive ones are stored in plaintext
-* C) In a Vault secret automatically created by Terraform when a sensitive output is declared
-* D) Only in Terraform Cloud's encrypted secrets store, which requires an API token to access
-* **Correct Answer:** B) Sensitive outputs are masked only in CLI display. The actual value is stored without encryption in the `terraform.tfstate` file under the `outputs` section and can be read by anyone with file-system access to state.
-* **Distractor Analysis:**
-  * *Why B is correct:* This is the key security implication that the exam tests repeatedly. The `(sensitive value)` display is purely cosmetic protection. Direct state file inspection — `cat terraform.tfstate` or `terraform state pull` — reveals the plaintext value. This is why backend security is critical.
-  * *Why A is incorrect:* `sensitive = true` does not destroy or discard the value. It only controls display output. The value is preserved in state to support future plan/apply operations that need to compare current and desired state.
-  * *Why C is incorrect:* Terraform does not automatically create Vault secrets when sensitive outputs are declared. Vault integration requires explicit configuration of the Vault provider and resource blocks. Sensitive outputs have no relationship to Vault unless the practitioner explicitly wires them together.
-  * *Why D is incorrect:* Terraform Cloud's secrets store holds workspace variables, not Terraform output values. Output values are stored in the workspace's state, which Terraform Cloud does encrypt — but this is a backend-level protection, not a separate secrets store that requires an API token to read outputs.
+### Question 1 — Answer: D
 
----
+A `dynamic "ingress"` block has `for_each = var.ingress_rules` and no `iterator` argument. Inside the `content` block, how do you reference the current element's `from_port` field?
 
-**Question 4**
-A team discovers that a Terraform configuration file contains a hardcoded database password: `password = "Sup3rS3cr3t!"`. Which remediation correctly removes the secret from the configuration while keeping the Terraform workflow functional?
+A. `var.ingress_rules.from_port`
 
-* A) Wrap the password in a `nonsensitive()` function call: `password = nonsensitive("Sup3rS3cr3t!")` — this encrypts the value before storing it in state
-* B) Declare a `variable "db_password" { sensitive = true }` block, replace the hardcoded value with `var.db_password`, and supply the value via the `TF_VAR_db_password` environment variable at runtime
-* C) Move the password to a `locals` block: `locals { db_password = "Sup3rS3cr3t!" }` and reference it as `local.db_password` — locals are not written to state
-* D) Store the password in `terraform.tfvars` and add `terraform.tfvars` to `.gitignore` so it is not committed to version control
-* **Correct Answer:** B) Declaring the variable with `sensitive = true`, replacing the hardcoded value with a variable reference, and injecting the value via `TF_VAR_db_password` removes the secret from all source files and provides it only at runtime in a controlled way.
-* **Distractor Analysis:**
-  * *Why B is correct:* This is the complete, correct remediation. The secret no longer appears in any `.tf` file. The `TF_VAR_` environment variable is set in the pipeline's secrets store or the operator's shell and is never written to disk. The `sensitive = true` declaration ensures the value is masked in all CLI output.
-  * *Why A is incorrect:* `nonsensitive()` is a Terraform function that removes the sensitive marking from a value so it can be used in non-sensitive contexts. It does not encrypt anything. Using it on a hardcoded string still leaves the plaintext credential in the source file.
-  * *Why C is incorrect:* Local values are evaluated during plan and apply and their resolved values — including secrets — are written to the state file. Moving a secret to a `locals` block does not protect it; it remains in source code and state.
-  * *Why D is incorrect:* While `.gitignore` prevents future commits of `terraform.tfvars`, it does not remove the file from the working directory or protect it on developer machines. It also does not solve the root problem if the file has already been committed historically. Environment variable injection is the more robust solution.
+B. `each.value.from_port`
+
+C. `content.from_port`
+
+D. `ingress.value.from_port`
+
+Why the distractors are wrong: **A** is wrong because `var.ingress_rules` is the full collection — inside the dynamic block you reference the current element through the iterator, not the original variable. **B** is wrong because `each.value` is the syntax used inside `for_each` on a resource block, not inside a `dynamic` block's content. **C** is wrong because `content` is the keyword that wraps the block definition — it is not an iterator variable.
 
 ---
 
-**Question 5**
-Which of the following best describes the security advantage of using HashiCorp Vault's dynamic secrets feature over injecting static credentials via environment variables in a Terraform pipeline?
+### Question 2 — Answer: C
 
-* A) Vault dynamic secrets are automatically added to the Terraform state file with `sensitive = true`, preventing them from appearing in plan output
-* B) Vault generates short-lived, automatically expiring credentials for each Terraform run, reducing the window of exposure if credentials are leaked compared to long-lived static keys
-* C) Vault encrypts the Terraform state file at the block level, ensuring each resource's attributes are independently encrypted with separate keys
-* D) Vault dynamic secrets bypass the need to declare `variable` blocks in Terraform configuration, simplifying the credential injection process
-* **Correct Answer:** B) Vault's dynamic secrets engine generates credentials on demand with a configurable TTL (e.g., 15 minutes). Even if these credentials are captured from logs or state, they expire quickly and cannot be reused after their TTL, drastically reducing the blast radius of a credential leak compared to long-lived static access keys.
-* **Distractor Analysis:**
-  * *Why B is correct:* This is the primary security advantage of dynamic secrets over static injection. Exam questions on Vault focus on the concept of short-lived, just-in-time credentials that are revoked automatically. A static AWS access key may remain valid for months or years if not manually rotated; a Vault-issued credential expires in minutes.
-  * *Why A is incorrect:* Vault does not automatically add `sensitive = true` to state values. Whether a Vault-sourced credential appears as sensitive in state depends entirely on how the Terraform configuration declares the relevant `variable` or `output` blocks — it is not automatic.
-  * *Why C is incorrect:* Vault does not encrypt the Terraform state file. State encryption is a backend responsibility (S3 server-side encryption, Terraform Cloud's built-in encryption). Vault manages secrets access and dynamic credential issuance; it does not touch state files.
-  * *Why D is incorrect:* The Vault provider still requires `variable` or `data` blocks in Terraform configuration to receive and use Vault-sourced values. Dynamic secrets do not eliminate the need for standard HCL declarations; they change where the secret value originates, not how it is consumed by Terraform.
+You have four EC2 instances created with `count = 4`. You remove the second element from the list used to drive the count. What does Terraform plan?
+
+A. Terraform plans no changes because the count is still 3 instances.
+
+B. Terraform plans to destroy only the second instance (index 1).
+
+C. Terraform plans to destroy the fourth instance and modify the third instance because their indices shift down by one.
+
+D. Terraform plans to destroy all four instances and recreate three of them.
+
+Why the distractors are wrong: **A** is wrong because removing an element changes the values at each index, which Terraform detects as changes. **B** is wrong because count-indexed resources are identified by position — removing position 1 renumbers subsequent resources, not just deletes the specific one. **D** is wrong because only the affected instances (those whose index content changed) are impacted — the first instance at index 0 is unchanged if the first element was not modified.
+
+---
+
+### Question 3 — Answer: B
+
+Which of the following collections can be passed to `for_each` on a resource block? Select all that apply.
+
+A. A list of strings
+
+B. A map of objects
+
+C. A set of strings
+
+D. A list of numbers
+
+The question asks you to identify the valid options. Which answer correctly identifies both valid choices?
+
+A. Only option A (list of strings)
+
+B. Options B and C (map of objects and set of strings)
+
+C. Options A, B, and C (lists, maps, and sets)
+
+D. Options A and D (lists only)
+
+Why the distractors are wrong: **A** is wrong because lists are not valid for_each inputs — `for_each` requires a map or a set. **C** is wrong because lists (A and D) are not directly supported — they must be converted with `toset()` first. **D** is wrong for the same reason — lists of numbers cannot be used directly with for_each.
+
+---
+
+### Question 4 — Answer: A
+
+A resource uses `for_each = var.environments` where `var.environments` is a map. How is the instance for the key `"production"` addressed in Terraform state and in references from other resources?
+
+A. `aws_instance.app["production"]`
+
+B. `aws_instance.app.production`
+
+C. `aws_instance.app[production]`
+
+D. `aws_instance.app.for_each.production`
+
+Why the distractors are wrong: **B** is wrong because Terraform uses bracket notation with a quoted string key for for_each instances, not dot notation. **C** is wrong because the key must be quoted inside the brackets — unquoted `production` is not valid HCL. **D** is wrong because `for_each` is a meta-argument keyword, not part of the resource address.
+
+---
+
+### Question 5 — Answer: C
+
+What is the correct Terraform syntax for a conditional expression that sets `instance_type` to `"t3.large"` when `var.is_production` is true and `"t3.micro"` when false?
+
+A. `instance_type = if var.is_production then "t3.large" else "t3.micro"`
+
+B. `instance_type = var.is_production == true { "t3.large" } else { "t3.micro" }`
+
+C. `instance_type = var.is_production ? "t3.large" : "t3.micro"`
+
+D. `instance_type = switch(var.is_production, true, "t3.large", "t3.micro")`
+
+Why the distractors are wrong: **A** is wrong because Terraform does not support `if/then/else` keyword syntax — it uses the ternary operator. **B** is wrong because this syntax is not valid HCL. **D** is wrong because Terraform has no `switch()` function — conditional logic uses the ternary operator or `lookup()` for map-based dispatch.
+
+---
+
+### Question 6 — Answer: B
+
+What does the `moved` block do when you run `terraform apply`?
+
+A. It destroys the resource at the `from` address and creates a new resource at the `to` address.
+
+B. It updates the state file to record the resource at the new `to` address without modifying the underlying infrastructure.
+
+C. It copies the resource configuration to the new address and keeps both the old and new resources active.
+
+D. It marks the resource at the `from` address as tainted so it is replaced on the next apply.
+
+Why the distractors are wrong: **A** is wrong because this describes what Terraform would do without a `moved` block — the whole purpose of `moved` is to avoid this destroy/create cycle. **C** is wrong because `moved` does not duplicate resources — it updates the state reference. **D** is wrong because tainting is a separate concept (marking a resource for forced replacement) and has nothing to do with `moved` blocks.
+
+---
+
+### Question 7 — Answer: D
+
+You run `terraform import aws_s3_bucket.my_bucket my-existing-bucket`. What must be true before running this command?
+
+A. The S3 bucket must be empty and have no bucket policy.
+
+B. The `terraform.tfstate` file must not yet exist so import can create it fresh.
+
+C. The Terraform workspace must have `TF_WORKSPACE=default` set in the environment.
+
+D. A `resource "aws_s3_bucket" "my_bucket" {}` block must already exist in the configuration.
+
+Why the distractors are wrong: **A** is wrong because import works on buckets with any content and any policy — it reads the current state and does not modify the resource. **B** is wrong because import adds to an existing state file or creates one if absent — an existing state file is fine. **C** is wrong because workspace selection is independent of the import command.
+
+---
+
+### Question 8 — Answer: A
+
+The `terraform plan -generate-config-out=generated.tf` command is run after adding an `import` block. What does the generated file contain?
+
+A. A resource block for the imported resource with its current attribute values populated from the live cloud resource.
+
+B. A complete Terraform module with variables, outputs, and the resource block.
+
+C. A `.tfvars` file with the current attribute values formatted as variable assignments.
+
+D. A JSON representation of the current state of the imported resource.
+
+Why the distractors are wrong: **B** is wrong because the generated output is only the resource block — not a full module with variables and outputs. **C** is wrong because the output is HCL resource block syntax, not tfvars format. **D** is wrong because the generated output is HCL configuration, not the JSON state format produced by `terraform show -json`.
+
+---
+
+### Question 9 — Answer: C
+
+A Terraform configuration has `resource "aws_cloudwatch_log_group" "app" { count = var.enable_logging ? 1 : 0 }`. Another resource needs to reference the log group ARN only when logging is enabled. Which expression correctly handles this?
+
+A. `aws_cloudwatch_log_group.app.arn`
+
+B. `aws_cloudwatch_log_group.app[*].arn`
+
+C. `var.enable_logging ? aws_cloudwatch_log_group.app[0].arn : ""`
+
+D. `try(aws_cloudwatch_log_group.app.arn, "")`
+
+Why the distractors are wrong: **A** is wrong because `aws_cloudwatch_log_group.app` without an index is ambiguous when count is used — Terraform requires an explicit index. **B** is wrong because the splat expression `[*]` returns a list, not a single string value — it cannot be used where a single string is required. **D** is wrong because `try()` catches type conversion errors, not missing count instances — Terraform would raise a plan-time error about the missing index before try could catch it.
+
+---
+
+### Question 10 — Answer: B
+
+You want to change a resource created with `count` to use `for_each` without destroying and recreating the resources. You have two instances: `aws_subnet.public[0]` and `aws_subnet.public[1]`. You want them to become `aws_subnet.public["subnet-a"]` and `aws_subnet.public["subnet-b"]`. What is the correct approach?
+
+A. Delete the resource from the state file with `terraform state rm` and re-import it using the new for_each keys.
+
+B. Add two `moved` blocks mapping each count-indexed instance to its corresponding for_each key, then change the resource to use `for_each`.
+
+C. Run `terraform taint aws_subnet.public[0]` and `terraform taint aws_subnet.public[1]` to force recreation with new addresses.
+
+D. Change `count` to `for_each` directly in the configuration and run `terraform apply -refresh-only` to update the state.
+
+Why the distractors are wrong: **A** is wrong because removing from state and re-importing is unnecessary — `moved` blocks handle this cleanly without risking data loss. **C** is wrong because tainting forces replacement (destroy and recreate), which is exactly what you are trying to avoid for production subnets. **D** is wrong because changing count to for_each without moved blocks would cause Terraform to plan destroying the count-indexed instances and creating the for_each-keyed instances.
+
+---
+
+## Answer Key
+
+| Question | Answer |
+|----------|--------|
+| 1 | D |
+| 2 | C |
+| 3 | B |
+| 4 | A |
+| 5 | C |
+| 6 | B |
+| 7 | D |
+| 8 | A |
+| 9 | C |
+| 10 | B |
+
+---
+
+End of Module 15 Quiz

@@ -1,49 +1,323 @@
-# Reading Guide: Module 13 - Digital Forensics and Threat Intelligence
-## Course: CIS-4328_Information_Security (CompTIA Security+ SY0-701)
+# Reading Guide: Module 13 — Risk Management
+
+## Course: CIS-4328 Information Security
+
+**Certification Alignment:** CompTIA Security+ (SY0-701)
 
 ---
 
-### Introduction
-Welcome to **Module 13 – Digital Forensics and Threat Intelligence**! Digital forensics is the science of collecting, preserving, and analyzing digital evidence to support incident investigations and legal proceedings. Threat intelligence transforms raw data about adversaries into actionable knowledge. SY0-701 tests both disciplines in Domain 4 (Security Operations, 28%).
+## Overview
+
+This reading guide supports Module 13: Risk Management. You will study the risk vocabulary, qualitative and quantitative risk analysis frameworks, risk response strategies, the risk register, and Business Impact Analysis. These topics map to Security+ Domain 5 (Governance, Risk, and Compliance) and are essential for any security role that involves advising leadership, managing a security program, or producing documentation for audits or compliance.
+
+**Estimated reading and study time:** 2.5 to 3 hours
 
 ---
 
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
+## Learning Objectives
 
-*   **Order of Volatility**: The forensic principle that evidence collection must prioritize the most volatile (short-lived) data sources first, because they will be lost when power is removed or time passes. The standard order from most to least volatile: CPU registers and cache → RAM (running processes, network connections, clipboard) → Swap/pagefile → Disk storage → Remote logging/SIEM data → Archived/backup media. SY0-701 tests order of volatility in scenarios where an analyst must decide what to collect first from a live compromised system.
-*   **Chain of Custody**: The documented, unbroken record of who collected, handled, transferred, and had access to digital evidence from the moment of collection through final disposition. A broken chain of custody can render evidence inadmissible in legal proceedings. Every transfer of evidence must be logged with date, time, identity of the handler, and the condition of the evidence.
-*   **Forensic Imaging**: The process of creating a bit-for-bit exact copy (forensic image) of a storage device, including deleted files, unallocated space, and file system metadata — everything on the drive, not just active files. Write blockers are used to prevent any writes to the original media during imaging, preserving the original evidence. Hash values (MD5, SHA-256) are computed for both the original and the image to verify integrity.
-*   **Threat Intelligence**: Processed and analyzed information about threat actors, their tactics, techniques, and procedures (TTPs), and indicators of compromise (IOCs) — structured to support defensive decision-making. Sources include commercial threat intelligence feeds, government sharing programs (ISACs), and open-source repositories. STIX (Structured Threat Information eXpression) is the data format; TAXII (Trusted Automated eXchange of Intelligence Information) is the transport protocol.
-*   **MITRE ATT&CK Framework**: A publicly available knowledge base that catalogs adversary tactics and techniques observed in real-world attacks, organized by attack phase (Initial Access, Execution, Persistence, Privilege Escalation, etc.). Security teams use ATT&CK to map detected activity to known adversary behaviors, identify defensive gaps, and build detection rules. SY0-701 tests ATT&CK as a threat intelligence and detection engineering resource.
-*   **Threat Hunting**: A proactive security practice in which analysts actively search through network and endpoint data for signs of adversary activity that has evaded existing automated detections — as opposed to reactively responding to SIEM alerts. Threat hunters form a hypothesis (e.g., "an attacker is using living-off-the-land techniques with PowerShell") and then query data to confirm or refute it. IOCs and ATT&CK TTPs are key inputs to hunting hypotheses.
+By the end of this module you should be able to:
 
----
-
-### 2. Certification Exam Tips
-*   **Domain Weight:** Digital forensics and threat intelligence fall under **Domain 4 – Security Operations (28%)** of SY0-701. Order of volatility and chain of custody are the most frequently tested forensics concepts on the exam.
-*   **Order of Volatility Memory Aid:** "RAM before disk, disk before remote." The most volatile data (CPU registers, RAM) disappears when power is cut. Disk data persists after shutdown. Remote/SIEM logs are the most durable. If a question asks what to collect first from a live system, the answer involves RAM (running processes, open connections) before disk imaging.
-*   **Write Blocker Purpose:** Write blockers prevent the forensic examiner's workstation from writing to the evidence drive during imaging. Without a write blocker, the act of connecting the drive to a computer modifies timestamps and metadata — compromising evidence integrity. SY0-701 tests write blockers as the correct tool when imaging original media.
-*   **STIX vs. TAXII:** STIX is the language/format used to describe threat intelligence (what the threat looks like). TAXII is the protocol used to share/transport that intelligence between organizations (how it moves). Think: STIX = the data, TAXII = the delivery mechanism.
-*   **Study Resource:** Professor Messer's free [CompTIA Security+ SY0-701 study notes and video course](https://www.professormesser.com/) include order of volatility tables, chain of custody documentation examples, and MITRE ATT&CK framework walkthroughs aligned to SY0-701 exam objectives.
+- Define and distinguish threat, vulnerability, exploit, risk, likelihood, and impact.
+- Perform quantitative risk calculations using the AV/EF/SLE/ARO/ALE formulas.
+- Apply a qualitative risk matrix to prioritize risks.
+- Identify and select the appropriate risk response strategy for a given scenario.
+- Describe the structure and purpose of a risk register.
+- Explain what a Business Impact Analysis produces and how it supports continuity planning.
+- Distinguish between inherent risk and residual risk.
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the "Digital Forensics" and "Threat Intelligence" sections in the OER Textbook: [Professor Messer's CompTIA Security+ SY0-701 Study Notes](https://www.professormesser.com/). Focus on the order of volatility, chain of custody requirements, and threat intelligence sharing formats.
-*   **Required Video:** Watch the digital forensics and threat intelligence video lectures in [Professor Messer's SY0-701 Course Playlist on YouTube](https://www.youtube.com/playlist?list=PLG49S3nxzAnl4Q7y9umx51bbtILyD4Syy). The videos include forensic acquisition workflow diagrams and ATT&CK framework navigation tutorials.
+## Required Reading
+
+- **NIST SP 800-30 Revision 1** — Guide for Conducting Risk Assessments (free at csrc.nist.gov)
+- **NIST SP 800-34 Revision 1** — Contingency Planning Guide, Section 3 (BIA)
+- **ISO/IEC 27005** — Information security risk management overview (summary available via free NIST summaries)
+- **Professor Messer Security+ SY0-701 Study Guide** — Domain 5 sections on risk management
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will practice collecting volatile evidence from a simulated live system in the correct order of volatility, verify forensic image integrity using hash values, and map a sample set of IOCs to MITRE ATT&CK techniques. These are direct SY0-701 performance-based question skills.
+## Section A — Risk Vocabulary
+
+### Core Terms
+
+**Threat**
+
+Any potential event or action that could cause harm to an organizational asset. Threats are classified by source:
+
+- **Environmental**: Natural disasters, power outages, HVAC failure.
+- **Human — unintentional**: Employee error, accidental deletion, misconfiguration.
+- **Human — intentional**: Cyberattacks, insider theft, sabotage.
+
+**Vulnerability**
+
+A weakness in a system, process, or control that reduces its ability to withstand a threat. Vulnerabilities exist in software (unpatched code), configurations (default passwords), processes (no MFA requirement), and physical controls (unlocked server rooms).
+
+A vulnerability does not cause harm by itself. It requires a threat to exploit it.
+
+**Exploit**
+
+The mechanism by which a threat actor takes advantage of a vulnerability. Exploits may be publicly known (listed in CVE databases) or zero-day (unknown to the vendor).
+
+**Risk**
+
+The probability that a threat will exploit a vulnerability to cause harm to an asset, combined with the magnitude of that harm. Risk is not the threat itself, not the vulnerability itself — it is the intersection of both with their potential impact.
+
+**Asset**
+
+Anything of organizational value that requires protection. The Security+ exam tests five asset categories:
+
+- **Tangible**: Hardware, infrastructure.
+- **Intangible**: Intellectual property, brand, customer trust.
+- **Data**: Customer records, financial data, proprietary algorithms.
+- **People**: Employees with specialized knowledge.
+- **Processes**: Business operations and workflows.
+
+**Impact**
+
+The consequence of a successful threat exploitation. Impact dimensions include:
+
+- **Financial**: Direct losses, fines, remediation costs, litigation.
+- **Reputational**: Customer trust loss, brand damage.
+- **Operational**: Downtime, productivity loss.
+- **Regulatory**: Compliance penalties, license revocation.
+- **Safety**: Physical harm to people or critical infrastructure.
+
+**Likelihood**
+
+The probability that a given threat will successfully exploit a given vulnerability in a defined time period. In qualitative analysis, expressed as High/Medium/Low. In quantitative analysis, expressed as Annual Rate of Occurrence (ARO).
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms above and be able to apply the order of volatility to any evidence collection scenario.
-- [ ] Read the "Digital Forensics" and "Threat Intelligence" sections in [Professor Messer's SY0-701 Study Notes](https://www.professormesser.com/).
-- [ ] Watch the forensics and threat intelligence video lectures in [Professor Messer's SY0-701 Course Playlist](https://www.youtube.com/playlist?list=PLG49S3nxzAnl4Q7y9umx51bbtILyD4Syy).
-- [ ] Memorize order of volatility: CPU/RAM first, disk second, remote logs last. STIX = format; TAXII = transport.
-- [ ] Proceed to the weekly hands-on lab activity.
+## Section B — Qualitative Risk Analysis
+
+Qualitative risk analysis uses descriptive scales rather than financial figures. It is faster, requires less data, and is more accessible to non-technical stakeholders.
+
+### Risk Matrix
+
+A risk matrix plots likelihood against impact. A 5×5 matrix is common.
+
+| Likelihood / Impact | Negligible (1) | Minor (2) | Moderate (3) | Major (4) | Catastrophic (5) |
+|---|---|---|---|---|---|
+| Almost Certain (5) | 5 | 10 | 15 | 20 | 25 |
+| Likely (4) | 4 | 8 | 12 | 16 | 20 |
+| Possible (3) | 3 | 6 | 9 | 12 | 15 |
+| Unlikely (2) | 2 | 4 | 6 | 8 | 10 |
+| Rare (1) | 1 | 2 | 3 | 4 | 5 |
+
+Scores above a defined threshold (e.g., 15) receive priority treatment. Scores below a lower threshold (e.g., 5) may be accepted without treatment.
+
+**Advantages**: Fast, no financial data required, communicates relative priority.
+
+**Disadvantages**: Subjective, does not support cost-benefit analysis for specific controls.
+
+---
+
+## Section C — Quantitative Risk Analysis
+
+Quantitative risk analysis expresses risk in monetary terms, enabling direct comparison of control cost to risk reduction value.
+
+### Formulas
+
+**Asset Value (AV)**: Total value of the asset, including replacement cost, revenue impact of loss, and regulatory/reputational consequences.
+
+**Exposure Factor (EF)**: The percentage of asset value lost if the threat occurs. Expressed as a decimal (0.0 to 1.0).
+
+**Single Loss Expectancy (SLE)**: Expected loss from one occurrence.
+
+```
+SLE = AV × EF
+```
+
+**Annual Rate of Occurrence (ARO)**: Expected number of occurrences per year.
+
+**Annual Loss Expectancy (ALE)**: Expected annual loss from the threat.
+
+```
+ALE = SLE × ARO
+```
+
+### Worked Example
+
+A healthcare organization has a database of patient records with an asset value of $2,000,000. A ransomware attack would render 70% of the data inaccessible until recovered. The organization estimates ransomware attacks occur approximately once every two years.
+
+- AV = $2,000,000
+- EF = 0.70
+- SLE = $2,000,000 × 0.70 = $1,400,000
+- ARO = 0.5 (once every two years)
+- ALE = $1,400,000 × 0.5 = $700,000
+
+If an immutable backup solution costs $80,000 per year and would reduce EF from 70% to 10%:
+
+- New SLE = $2,000,000 × 0.10 = $200,000
+- New ALE = $200,000 × 0.5 = $100,000
+- ALE reduction = $700,000 − $100,000 = $600,000 per year
+- Annual control cost = $80,000
+- Net benefit = $520,000 per year
+
+The control is strongly justified.
+
+### Value of a Safeguard Formula
+
+```
+Value of Safeguard = (Pre-control ALE) − (Post-control ALE) − (Annual cost of safeguard)
+```
+
+A positive value means the safeguard is economically justified.
+
+---
+
+## Section D — Risk Response Strategies
+
+The four NIST-defined risk response strategies are tested extensively on Security+.
+
+### Risk Avoidance
+
+Eliminating the activity that creates the risk. The risk is removed entirely because the organization stops doing whatever creates the exposure.
+
+- **Example**: Discontinuing an unencrypted FTP server and replacing it with SFTP.
+- **Trade-off**: Losing the business capability the activity provided.
+- **When to use**: When no treatment can reduce residual risk to within tolerance and the activity is not essential.
+
+### Risk Transference
+
+Shifting the financial consequence of a risk to a third party.
+
+- **Cyber insurance**: Pays out in the event of covered incidents. Does not prevent the incident — only compensates the financial loss.
+- **Contractual transfer**: Contracts that assign liability to vendors for breaches resulting from their negligence.
+- **When to use**: When the risk cannot be fully mitigated but financial exposure can be shared or shifted.
+
+### Risk Mitigation
+
+Reducing the likelihood and/or impact of a risk through the application of controls.
+
+- **Reducing likelihood**: Patching vulnerabilities, implementing MFA, network segmentation.
+- **Reducing impact**: Backups, incident response plan, data encryption (reduces impact of exfiltration).
+- **Residual risk**: Mitigation never eliminates all risk. The remaining risk after controls are applied is residual risk.
+- **When to use**: The most common response — applied to risks within the control of the organization.
+
+### Risk Acceptance
+
+Acknowledging a risk and deciding not to take additional action.
+
+- **Formal acceptance**: Documented decision by an authorized executive that the residual risk is within tolerance.
+- **When to use**: When the cost of treatment exceeds the value of the asset or when risk is within tolerance.
+- **Risk acceptance is not ignorance**: Acceptance requires awareness. Undocumented tolerance of risk is not acceptance — it is a control failure.
+
+---
+
+## Section E — Inherent Risk vs. Residual Risk
+
+**Inherent risk**: The risk level before any controls are applied. Raw exposure.
+
+**Residual risk**: The risk level remaining after controls are applied.
+
+```
+Residual Risk = Inherent Risk − Risk Reduction from Controls
+```
+
+The goal of a security program is to reduce inherent risk to residual risk that falls within the organization's risk tolerance through appropriate mitigation, with formal acceptance of whatever remains.
+
+**Control risk** is the additional risk introduced when a control fails. A backup that has never been tested has control risk — it may not work when needed.
+
+---
+
+## Section F — Risk Register
+
+A risk register is the central artifact of a risk management program.
+
+### Key Fields
+
+- **Risk ID**: Unique identifier.
+- **Risk Description**: What could happen and why.
+- **Category**: Technical, operational, regulatory, reputational.
+- **Likelihood**: H/M/L or ARO value.
+- **Impact**: H/M/L or ALE value.
+- **Risk Score**: Likelihood × Impact.
+- **Risk Response**: Avoid/Transfer/Mitigate/Accept.
+- **Controls in Place**: Existing mitigating controls.
+- **Residual Risk Score**: After-control risk level.
+- **Risk Owner**: Accountable person.
+- **Treatment Deadline**: When treatment is due.
+- **Status**: Open/In Progress/Closed.
+
+The risk register enables consistent tracking, executive reporting, and audit evidence. It is reviewed and updated on a defined schedule.
+
+---
+
+## Section G — Business Impact Analysis
+
+The BIA identifies critical business functions and determines the impact of their disruption. It produces the input parameters for business continuity and disaster recovery planning.
+
+### BIA Key Terms
+
+**MTD (Maximum Tolerable Downtime)**: The maximum time a business function can be disrupted before the organization suffers unacceptable harm. Recovery targets must be set shorter than MTD.
+
+**RTO (Recovery Time Objective)**: The target time to restore a function after a disruption. RTO must be less than MTD.
+
+**RPO (Recovery Point Objective)**: The maximum acceptable data loss measured in time. If RPO is 2 hours, backups must occur at least every 2 hours.
+
+**MTBF (Mean Time Between Failures)**: Average time between system failures.
+
+**MTTF (Mean Time to Failure)**: Average lifespan of a non-repairable component.
+
+**MTTR (Mean Time to Repair/Recover)**: Average time to restore a failed system.
+
+### BIA Process
+
+1. Identify business functions and supporting systems.
+2. Assign criticality ratings.
+3. Establish MTD, RTO, and RPO for each critical function.
+4. Identify dependencies and single points of failure.
+5. Document minimum resource requirements for each function during disruption.
+
+---
+
+## Key Terms
+
+- **Threat**: Potential event causing harm to assets
+- **Vulnerability**: Weakness exploitable by a threat
+- **Exploit**: Mechanism that takes advantage of a vulnerability
+- **Risk**: Probability of harm × magnitude of harm
+- **Asset Value (AV)**: Dollar value of an asset
+- **Exposure Factor (EF)**: Percentage of asset value lost per incident
+- **SLE (Single Loss Expectancy)**: AV × EF
+- **ARO (Annual Rate of Occurrence)**: Expected incidents per year
+- **ALE (Annual Loss Expectancy)**: SLE × ARO
+- **Risk matrix**: Qualitative grid of likelihood vs. impact
+- **Risk avoidance**: Eliminating the risky activity
+- **Risk transference**: Shifting financial impact (e.g., cyber insurance)
+- **Risk mitigation**: Reducing likelihood or impact with controls
+- **Risk acceptance**: Formal decision to accept residual risk
+- **Inherent risk**: Risk before controls
+- **Residual risk**: Risk remaining after controls
+- **Risk register**: Central document tracking all identified risks
+- **BIA (Business Impact Analysis)**: Analysis of business function criticality
+- **MTD**: Maximum Tolerable Downtime
+- **RTO**: Recovery Time Objective
+- **RPO**: Recovery Point Objective
+
+---
+
+## Review Questions
+
+1. What is the formula for ALE, and what does each variable represent?
+2. An asset is worth $400,000. A flood would destroy 40% of its value. Floods occur on average once every five years. Calculate SLE and ALE.
+3. A $50,000 per year flood control system would reduce EF from 40% to 5%. Using your ALE from Question 2, calculate the value of the safeguard.
+4. What is the difference between qualitative and quantitative risk analysis? Give one advantage of each.
+5. Describe the four risk response strategies. Give a real-world example of each.
+6. What is the difference between inherent risk and residual risk?
+7. What is the purpose of formal risk acceptance documentation?
+8. What is the relationship between MTD and RTO?
+9. What does a risk register contain, and how often should it be updated?
+10. What is the difference between risk tolerance and risk appetite?
+
+---
+
+## Certification Exam Tip
+
+Security+ SY0-701 heavily tests risk calculations. You must be able to compute SLE, ALE, and value of a safeguard from provided values without a formula sheet. Practice working through calculation scenarios until the formulas are automatic. For risk response, expect scenario questions like "The organization purchases cyber insurance to cover financial losses from a data breach — which risk strategy is this?" (transference). Know the specific definitions cold.
+
+---
+
+*End of Reading Guide — Module 13*

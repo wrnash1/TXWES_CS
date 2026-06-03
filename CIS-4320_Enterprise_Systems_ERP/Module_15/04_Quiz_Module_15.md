@@ -1,93 +1,251 @@
-# Quiz: Module 15 - ERP Post-Implementation
+# Quiz: Module 15 — ERP Implementation Methodology
 
-## Course: CIS-4320_Enterprise_Systems_ERP (Salesforce Certified Associate / SAP Certified Associate)
+## Course: CIS-4320 Enterprise Systems and ERP
+
+## Texas Wesleyan University | Professor Nash
+
+**Certification Alignment:** Salesforce Administrator / SAP S/4HANA Essentials
 
 ---
 
+## Instructions
+
+Select the single best answer for each question. Each question is worth 10 points. Questions are drawn from the video lecture, reading guide, and lab activity for Module 15.
+
+---
+
+## Questions
+
 ### Question 1
 
-Why is post-implementation auditing critical for ERP deployments?
+During which phase of the SAP ASAP methodology are business process workshops conducted, and the fit-gap log is produced?
 
-* A) To write code comments for all custom programs developed during the project
-* B) To evaluate whether the system met the business objectives defined in the project charter and to address operational defects before they compound
-* C) To configure DNS records for the new application server domain names
-* D) To purge hard drive logs from the decommissioned legacy system
+A) Project Preparation
 
-* **Correct Answer:** B) Post-implementation audits verify that the system delivered projected ROI, resolved the target business bottlenecks, and is being used correctly — catching problems before they become entrenched.
-* **Distractor Analysis:**
-  * *Why B is correct:* A formal post-implementation review (PIR) — typically conducted 3–6 months after go-live — compares actual system performance and user adoption against the objectives stated in the original business case, and documents lessons learned.
-  * *Why A is incorrect:* Code commenting is a development quality practice performed during development, not a post-go-live audit activity.
-  * *Why C is incorrect:* DNS configuration is an infrastructure task completed before go-live; it is not related to evaluating business value after deployment.
-  * *Why D is incorrect:* Legacy system decommissioning is a data management task; purging old server logs does not constitute an ERP post-implementation audit.
+B) Business Blueprint
+
+C) Realization
+
+D) Final Preparation
+
+**Correct Answer:** B
+
+#### Distractor Analysis
+
+- **A — Project Preparation** is incorrect. Project Preparation establishes scope, team structure, project governance, and the system landscape. Business process workshops have not yet started.
+- **B — Business Blueprint** is correct. Business Blueprint is explicitly the phase where current-state and future-state processes are documented through workshops, and the fit-gap log is produced identifying where SAP standard functionality meets or does not meet requirements.
+- **C — Realization** is incorrect. Realization is the configuration and development phase. It builds the system based on decisions made during Business Blueprint; workshops were already completed.
+- **D — Final Preparation** is incorrect. Final Preparation covers end-user training, UAT, and cutover rehearsal — not requirements documentation.
 
 ---
 
 ### Question 2
 
-Which of the following best describes **upgrading modules** in the context of on-premise SAP ERP post-implementation management?
+A company implementing SAP S/4HANA discovers that their custom vendor approval workflow cannot be replicated through standard SAP configuration. The process change option is considered impractical because of regulatory requirements. Which resolution approach should be selected?
 
-* A) Importing new Salesforce Flow versions from a sandbox to production using a change set
-* B) Applying vendor-delivered enhancement packages, support packages, and kernel patches to the on-premise SAP system, which requires a project-managed testing and cutover cycle
-* C) Updating user training documentation to reflect interface changes from the most recent Salesforce seasonal release
-* D) Re-running the initial data migration load to add records missed during the original go-live cutover
+A) Full fit — use standard SAP functionality as-is
 
-* **Correct Answer:** B) On-premise SAP module upgrades are significant projects — applying SAP Enhancement Packages or moving to S/4HANA requires regression testing, configuration adjustments, and a formal cutover, unlike the automatic SaaS release model.
-* **Distractor Analysis:**
-  * *Why B is correct:* An on-premise SAP upgrade (e.g., from ECC 6.0 EHP7 to EHP8, or a migration to S/4HANA) involves months of planning, transport management, regression testing in development and QA systems, and a production cutover weekend. It is a major project, not a routine maintenance task.
-  * *Why A is incorrect:* Deploying Salesforce Flow changes via change sets is a configuration deployment activity for the SaaS platform, not an on-premise SAP module upgrade.
-  * *Why C is incorrect:* Updating training documentation is a change management activity; it is not the same as a technical module upgrade to the ERP software version.
-  * *Why D is incorrect:* Re-running data loads is a data quality remediation activity; it is not a software module upgrade.
+B) Process change — train users to adopt the SAP standard process
+
+C) Custom development — write ABAP code to build the required workflow
+
+D) Defer — remove the requirement from scope
+
+**Correct Answer:** C
+
+#### Distractor Analysis
+
+- **A — Full fit** is incorrect. The scenario explicitly states the requirement cannot be met through standard SAP configuration.
+- **B — Process change** is incorrect. The scenario explicitly states that a process change is impractical due to regulatory requirements, ruling out this option.
+- **C — Custom development** is correct. When standard configuration cannot meet the requirement and the process cannot be changed, custom ABAP development is the appropriate resolution. This is a legitimate gap resolution strategy, used when the other two options are unavailable.
+- **D — Defer** is not a standard gap resolution option in the fit-gap framework and would leave a regulatory requirement unaddressed.
 
 ---
 
 ### Question 3
 
-Three months after an ERP go-live, the finance director reports that 40% of the accounts payable team is still manually entering invoice data into spreadsheets instead of using the new ERP system. What does this pattern most directly indicate?
+In the Salesforce implementation lifecycle, which phase produces the Solution Design Document covering the object model, security model, automation model, and integration design?
 
-* A) The ERP system has a technical defect in the accounts payable module that prevents invoice entry
-* B) Low user adoption, most likely caused by insufficient training, change management, or usability issues that were not resolved before go-live
-* C) The implementation team selected the wrong ERP vendor for the organization's needs
-* D) The data migration was incomplete and the AP team cannot find vendor records in the new system
+A) Discover
 
-* **Correct Answer:** B) Manual workarounds three months after go-live are a classic indicator of low user adoption — employees defaulting to familiar tools because they were not adequately trained or motivated to use the new system.
-* **Distractor Analysis:**
-  * *Why B is correct:* User adoption tracking should detect this pattern early. The corrective actions include targeted re-training, floor support from super-users, management reinforcement, and possible usability improvements based on user feedback.
-  * *Why A is incorrect:* If the AP module had a technical defect preventing invoice entry, the entire AP team would be unable to use it; 60% partial adoption suggests the system works but users are choosing not to use it.
-  * *Why C is incorrect:* Vendor selection is a pre-implementation decision; by go-live, the question is about adoption and usage, not whether the right vendor was chosen.
-  * *Why D is incorrect:* If vendor records were missing, users would encounter errors when trying to use the system — the symptom would be error messages, not voluntary bypass of the system entirely.
+B) Define
+
+C) Design
+
+D) Build
+
+**Correct Answer:** B
+
+#### Distractor Analysis
+
+- **A — Discover** is incorrect. Discover produces requirements documentation and a prioritized feature list. Architectural decisions have not yet been made.
+- **B — Define** is correct. Define translates requirements into documented architectural decisions including the object model, security model, automation approach, and integration design. The Solution Design Document is the primary deliverable of this phase.
+- **C — Design** is incorrect. Design produces detailed field-level and element-level specifications. It follows Define and assumes architectural decisions have already been made.
+- **D — Build** is incorrect. Build is the configuration and development phase where specifications from Design are implemented.
 
 ---
 
 ### Question 4
 
-A Salesforce administrator receives a notification from Salesforce that the upcoming Winter release will deprecate a feature currently used in three active Flows. What is the correct post-implementation response?
+User Acceptance Testing (UAT) in an ERP implementation is best described as:
 
-* A) Ignore the notification because Salesforce handles all upgrade impacts automatically without administrator involvement
-* B) Review the release notes, test the affected Flows in a sandbox against the new release, update the Flows to use the replacement feature, and deploy to production before the release date
-* C) Submit a support ticket to Salesforce asking them to skip the Winter release for this org
-* D) Delete the three affected Flows and rebuild them from scratch after the release is deployed
+A) Testing performed by developers to verify individual code components function correctly
 
-* **Correct Answer:** B) Proactive release management — reading release notes, testing in sandbox, remediating affected customizations, and deploying fixes before the production release — is the standard Salesforce administrator post-implementation practice.
-* **Distractor Analysis:**
-  * *Why B is correct:* This is the exact workflow Salesforce recommends: review release notes (published weeks before the release), test in sandbox (Salesforce updates sandboxes before production), fix issues, then deploy. Sandboxes exist precisely to enable this pre-release testing cycle.
-  * *Why A is incorrect:* Salesforce does not automatically update customer Flows or custom configurations; deprecated features may simply stop working, and it is the administrator's responsibility to proactively remediate affected customizations.
-  * *Why C is incorrect:* In Salesforce's SaaS multi-tenant model, individual customers cannot opt out of or defer platform releases; all customers receive the same update on the same schedule.
-  * *Why D is incorrect:* Deleting and rebuilding Flows post-release is a reactive approach that causes downtime and user disruption; proactive testing and remediation before the release date is the correct practice.
+B) Performance testing that verifies the system handles production-level transaction volumes
+
+C) Business-user-driven testing where stakeholders execute their real workflows and formally sign off that the system meets requirements
+
+D) A security audit that verifies user permissions are correctly configured
+
+**Correct Answer:** C
+
+#### Distractor Analysis
+
+- **A — Developer unit testing** is incorrect. Unit testing is a developer activity. UAT is explicitly a business user activity, not a developer activity.
+- **B — Performance testing** is incorrect. Performance or load testing is a separate test type that measures system response under volume. UAT measures whether business processes work correctly.
+- **C — Business-user workflow validation** is correct. UAT is distinguished from all other test types by the fact that it is owned and executed by business users — not IT — and results in a formal sign-off that the system meets business requirements.
+- **D — Security audit** is incorrect. Security testing verifies permission configurations, which is a separate concern from UAT.
 
 ---
 
 ### Question 5
 
-Six months after go-live, a company's ERP system is running significantly slower than at launch. The Basis team reports that the primary FI document table has grown from 2 million to 18 million rows and nightly batch jobs are now taking 4 hours instead of 45 minutes. Which post-implementation action best addresses this?
+A global organization is implementing SAP S/4HANA across 18 countries. Rather than switching all countries to SAP simultaneously, they plan to go live in three groups of six countries, six months apart. This is an example of which cutover strategy?
 
-* A) Purchase additional user licenses to distribute the transaction load across more users
-* B) Implement data archiving to move closed historical FI documents to an archive store, rebuild table statistics, and review index health to restore query and batch performance
-* C) Reinstall the ERP system from scratch and re-migrate all data to restore original performance levels
-* D) Reduce the number of financial posting periods from 12 to 4 per year to limit document growth
+A) Big bang cutover
 
-* **Correct Answer:** B) Data archiving removes historical records from active tables (reducing scan time), refreshing database statistics and index health restores the query optimizer's accuracy, and together these actions address the performance degradation caused by table growth.
-* **Distractor Analysis:**
-  * *Why B is correct:* ERP database tables grow continuously with business transactions. SAP's data archiving objects (via transaction SARA) move completed documents to archive storage, keeping the active table small. Index maintenance and statistics updates are standard DBA tasks that restore performance after significant data growth.
-  * *Why A is incorrect:* Adding user licenses increases the number of people who can log in; it does not reduce table size or improve query performance for batch jobs running in the background.
-  * *Why C is incorrect:* Reinstalling and re-migrating is an extreme, high-risk, and time-consuming approach that would cause major business disruption; performance issues caused by data growth have targeted technical remedies.
-  * *Why D is incorrect:* Reducing posting periods from 12 to 4 would fundamentally break the accounting model (companies need monthly financial statements) and would not reduce the number of existing rows in the table.
+B) Parallel run
+
+C) Phased cutover
+
+D) Sandbox promotion
+
+**Correct Answer:** C
+
+#### Distractor Analysis
+
+- **A — Big bang** is incorrect. A big bang cutover moves the entire organization at once. Transitioning in three sequential groups is the opposite of big bang.
+- **B — Parallel run** is incorrect. A parallel run means operating both legacy and new systems simultaneously during transition. The scenario describes sequential geographic waves, not simultaneous dual-system operation.
+- **C — Phased cutover** is correct. Transitioning in defined groups (waves) separated by time — whether by geography, business unit, or process module — is the definition of a phased cutover strategy.
+- **D — Sandbox promotion** is incorrect. Sandbox promotion refers to moving Salesforce configuration from a sandbox environment to production. It is not a cutover strategy concept.
+
+---
+
+### Question 6
+
+According to Prosci research cited in the reading, projects with excellent change management are how many times more likely to meet their objectives compared to projects with poor change management?
+
+A) Twice as likely
+
+B) Three times as likely
+
+C) Six times as likely
+
+D) Ten times as likely
+
+**Correct Answer:** C
+
+#### Distractor Analysis
+
+- **A — Twice** is incorrect. The research finding is more significant than a 2x improvement factor.
+- **B — Three times** is incorrect. While this sounds plausible, it understates the research finding.
+- **C — Six times** is correct. The Prosci research finding, cited in the reading, is that projects with excellent change management are six times more likely to meet their objectives than those with poor change management.
+- **D — Ten times** is incorrect. This overstates the research finding.
+
+---
+
+### Question 7
+
+Which of the following activities belongs in the Final Preparation phase of ASAP rather than the Realization phase?
+
+A) Baseline system configuration
+
+B) Custom ABAP development for identified gaps
+
+C) Cutover plan rehearsal and end-user training
+
+D) Integration testing of end-to-end business processes
+
+**Correct Answer:** C
+
+#### Distractor Analysis
+
+- **A — Baseline configuration** is incorrect. Baseline system configuration is a Realization phase activity — it establishes core system settings (company code, chart of accounts, organizational structure) at the start of Realization.
+- **B — Custom ABAP development** is incorrect. ABAP development is a Realization phase activity. It occurs in parallel with configuration during Realization.
+- **C — Cutover rehearsal and training** is correct. Both cutover plan rehearsal and end-user training are explicitly Final Preparation activities. They occur in the weeks immediately before go-live, after Realization is complete.
+- **D — Integration testing** is incorrect. Integration testing is a Realization phase activity. It verifies end-to-end process flows across modules after configuration is complete.
+
+---
+
+### Question 8
+
+A sales representative who has used the same spreadsheet-based sales tracking system for 12 years tells her manager: "I don't need Salesforce — I know where all my deals are and I never lose track of anything." This represents which source of resistance to ERP change?
+
+A) Fear of job loss
+
+B) Distrust of management
+
+C) Loss of familiar processes and perceived competence with the current system
+
+D) Legitimate concern that the new system has a functional defect
+
+**Correct Answer:** C
+
+#### Distractor Analysis
+
+- **A — Fear of job loss** is incorrect. The rep's statement does not suggest concern about her position being eliminated; she is expressing confidence in her current method.
+- **B — Distrust of management** is incorrect. There is no indication of distrust toward leadership in the statement; the concern is about her personal workflow.
+- **C — Loss of familiar processes** is correct. The rep's resistance stems from comfort with and confidence in her existing approach. This is the "loss of familiar processes" source of resistance — people resist change when their current method feels effective to them personally, even if it is inferior at the organizational level.
+- **D — Legitimate functional concern** is incorrect. She has not identified a specific defect in Salesforce; she is simply expressing preference for her current tool.
+
+---
+
+### Question 9
+
+Which of the following best defines the hypercare exit criteria concept?
+
+A) The point at which the project sponsor formally approves the implementation budget
+
+B) The date on which UAT sign-off is obtained from all business process owners
+
+C) Defined stability thresholds — including issue backlog levels, ticket volume trends, and adoption metrics — that mark the official end of the intensive post-go-live support period
+
+D) The date on which all custom ABAP development is unit-tested and approved for transport to production
+
+**Correct Answer:** C
+
+#### Distractor Analysis
+
+- **A — Budget approval** is incorrect. Budget approval is a Project Preparation or steering committee activity, not a hypercare concept.
+- **B — UAT sign-off** is incorrect. UAT sign-off occurs during Final Preparation, before go-live. Hypercare begins after go-live.
+- **C — Stability thresholds** is correct. Hypercare exit criteria are measurable stability standards — no open P1 issues, P2 backlog below threshold, declining help desk ticket volume, system performance within targets, user adoption at target — that must be met before the project officially transitions to normal IT support operations.
+- **D — ABAP unit testing** is incorrect. ABAP unit testing is a Realization phase activity occurring long before go-live.
+
+---
+
+### Question 10
+
+The 1999 Hershey Foods ERP implementation failure resulted in $150 million in lost sales. Based on the module content, which combination of methodology failures best explains this outcome?
+
+A) Choosing SAP over Oracle and using ABAP custom development extensively
+
+B) Compressing testing and training timelines, implementing multiple systems simultaneously, and choosing a go-live date during peak season
+
+C) Failing to complete a Business Blueprint and launching directly into Realization
+
+D) Not using a dynamic dashboard for executive reporting and skipping the hypercare period
+
+**Correct Answer:** B
+
+#### Distractor Analysis
+
+- **A — Software choice and ABAP** is incorrect. The module explicitly states the software worked — the failure was methodological, not a product selection issue.
+- **B — Compressed timeline, multiple simultaneous systems, peak-season go-live** is correct. The module identifies these three factors: an overly compressed timeline that did not allow adequate testing and training, the decision to implement three major systems simultaneously rather than sequentially, and the choice to go live immediately before Halloween — the highest-volume period for a candy company.
+- **C — Skipping Business Blueprint** is incorrect. The module does not identify skipping the Blueprint as a cause; the issues were in testing, training, scope, and timing.
+- **D — Reporting and hypercare** is incorrect. The failure was an operational go-live disaster during transaction processing — reporting tools and hypercare structure were not identified causes.
+
+---
+
+*End of Quiz — Module 15*
+
+**Certification Alignment:** Salesforce Administrator / SAP S/4HANA Essentials

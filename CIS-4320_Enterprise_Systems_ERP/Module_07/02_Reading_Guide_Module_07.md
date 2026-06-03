@@ -71,7 +71,7 @@ A repository of documented solutions and troubleshooting guides in Service Cloud
 ### Front Office vs. Back Office
 
 ```text
-[Front Office — CRM]                    [Back Office — ERP]
+[Front Office -- CRM]                   [Back Office -- ERP]
   Marketing campaigns                     Financial accounting (FI)
   Sales pipeline management               Procurement and inventory (MM)
   Customer account records                Manufacturing and production (PP)
@@ -92,10 +92,10 @@ Example Platform: Salesforce             Example Platform: SAP S/4HANA
 | Function | Salesforce CRM | SAP S/4HANA ERP | Oracle Cloud |
 |---|---|---|---|
 | Customer master data | Account object | Customer master (SD) | Customer Master |
-| Sales pipeline | Opportunity stages | SD — Sales Orders (VA01) | Oracle Sales |
-| Sales quotes | Quote object with Products | SD — Quotations (VA21) | Oracle CPQ |
-| Order management | Salesforce Order Management | SD — Sales Orders (VA01) | Oracle Order Management |
-| Customer support | Service Cloud Cases | CS — Customer Service | Oracle Service |
+| Sales pipeline | Opportunity stages | SD -- Sales Orders (VA01) | Oracle Sales |
+| Sales quotes | Quote object with Products | SD -- Quotations (VA21) | Oracle CPQ |
+| Order management | Salesforce Order Management | SD -- Sales Orders (VA01) | Oracle Order Management |
+| Customer support | Service Cloud Cases | CS -- Customer Service | Oracle Service |
 | Marketing | Marketing Cloud | SAP Marketing Cloud | Oracle Marketing |
 | Field service | Field Service (optional) | SAP Field Service Mgmt | Oracle Field Service |
 | Revenue forecasting | Forecast object | CO-PA Profitability Analysis | Oracle Revenue Management |
@@ -108,7 +108,7 @@ Example Platform: Salesforce             Example Platform: SAP S/4HANA
 
 ```text
 [Lead]
-  (Unqualified prospect — staging record)
+  (Unqualified prospect -- staging record)
           |
           | Lead Conversion (qualified)
           |
@@ -151,7 +151,7 @@ Before Conversion:           After Conversion:
 
 ---
 
-## Section 4: Sales Cloud — Pipeline Management
+## Section 4: Sales Cloud -- Pipeline Management
 
 ### Opportunity Stage Sequence and Probability
 
@@ -168,30 +168,30 @@ Before Conversion:           After Conversion:
 ### Pipeline Forecast Formula
 
 ```text
-Forecasted Revenue = Opportunity Amount × Stage Probability
+Forecasted Revenue = Opportunity Amount x Stage Probability
 
 Example:
   Opportunity: Acme Software Deal
   Amount: $120,000
   Stage: Proposal (60%)
-  Forecasted Revenue: $120,000 × 0.60 = $72,000
+  Forecasted Revenue: $120,000 x 0.60 = $72,000
 
-Total Forecast = Sum of (Amount × Probability) for all open Opportunities
+Total Forecast = Sum of (Amount x Probability) for all open Opportunities
 ```
 
 ### Sales Cloud Automation Tools
 
 | Tool | Purpose | Requires Code? |
 |---|---|---|
-| Validation Rule | Prevents saving records that violate data quality rules | No — formula-based |
-| Flow Builder | Automates multi-step processes (create records, send emails, update fields) | No — point-and-click |
-| Approval Process | Routes records to approvers before actions are taken | No — wizard-based |
-| Assignment Rule | Automatically assigns new Leads or Cases to owners or queues | No — criteria-based |
-| Escalation Rule | Escalates Cases to new owners if not resolved within a time limit | No — criteria-based |
+| Validation Rule | Prevents saving records that violate data quality rules | No -- formula-based |
+| Flow Builder | Automates multi-step processes (create records, send emails, update fields) | No -- point-and-click |
+| Approval Process | Routes records to approvers before actions are taken | No -- wizard-based |
+| Assignment Rule | Automatically assigns new Leads or Cases to owners or queues | No -- criteria-based |
+| Escalation Rule | Escalates Cases to new owners if not resolved within a time limit | No -- criteria-based |
 
 ---
 
-## Section 5: Service Cloud — Case Management
+## Section 5: Service Cloud -- Case Management
 
 ### Case Lifecycle
 
@@ -216,7 +216,7 @@ Total Forecast = Sum of (Amount × Probability) for all open Opportunities
  CSAT survey triggered (optional)
 ```
 
-### SLA Management — Entitlements and Milestones
+### SLA Management -- Entitlements and Milestones
 
 | Concept | Description | Salesforce Object |
 |---|---|---|
@@ -243,13 +243,13 @@ Total Forecast = Sum of (Amount × Probability) for all open Opportunities
        |
   Order Record created
        |                 API/Middleware
-       +---------------->----------->[Sales Order (SD — VA01)]
+       +---------------->----------->[Sales Order (SD -- VA01)]
                                               |
                                       [Availability Check (MM)]
                                               |
                                       [Delivery + Goods Issue (MM)]
                                               |
-                                      [Invoice (SD — VF01)]
+                                      [Invoice (SD -- VF01)]
                                               |
                                       [Revenue Recognition (FI)]
                                               |
@@ -274,7 +274,7 @@ Total Forecast = Sum of (Amount × Probability) for all open Opportunities
 
 | Characteristic | Salesforce Detail |
 |---|---|
-| Deployment model | SaaS only — no on-premise option |
+| Deployment model | SaaS only -- no on-premise option |
 | Release schedule | Three releases per year: Spring, Summer, Winter |
 | Multi-tenancy | All customers share one platform; data is logically isolated |
 | Customization method | Clicks (configuration) before code (development) |
@@ -297,7 +297,7 @@ Total Forecast = Sum of (Amount × Probability) for all open Opportunities
 
 ## Section 8: Certification Exam Tips
 
-1. **Know the five standard Salesforce objects.** Lead, Account, Contact, Opportunity, Case — what each represents, who uses it, and what it relates to. This is foundational for every Salesforce Associate exam scenario.
+1. **Know the five standard Salesforce objects.** Lead, Account, Contact, Opportunity, Case -- what each represents, who uses it, and what it relates to. This is foundational for every Salesforce Associate exam scenario.
 
 2. **Lead conversion creates three records.** Account + Contact + Opportunity. If a scenario says "a prospect is qualified," the next step is Lead conversion.
 
@@ -307,7 +307,7 @@ Total Forecast = Sum of (Amount × Probability) for all open Opportunities
 
 5. **Salesforce is SaaS-only with three releases per year.** Spring, Summer, Winter. All customers receive the same update on the same schedule. This is a distinguishing characteristic vs. SAP on-premise.
 
-6. **Stage probability drives forecasting.** Forecast Amount = Opportunity Amount × Stage Probability. Know the formula and be able to apply it.
+6. **Stage probability drives forecasting.** Forecast Amount = Opportunity Amount x Stage Probability. Know the formula and be able to apply it.
 
 7. **CRM and ERP serve different audiences.** CRM serves sales, marketing, and service. ERP serves finance, operations, and HR. Both are required; neither replaces the other.
 
@@ -319,12 +319,12 @@ Total Forecast = Sum of (Amount × Probability) for all open Opportunities
 
 Complete before attempting the quiz:
 
-- **Salesforce Trailhead — Salesforce Associate Certification Prep**
-  URL: trailhead.salesforce.com — search "Salesforce Associate Certification Prep"
+- **Salesforce Trailhead -- Salesforce Associate Certification Prep**
+  URL: trailhead.salesforce.com -- search "Salesforce Associate Certification Prep"
   Covers all Salesforce Associate exam domains including the data model and platform features.
 
-- **Salesforce Trailhead — CRM for Lightning Experience**
-  URL: trailhead.salesforce.com — search "CRM for Lightning Experience"
+- **Salesforce Trailhead -- CRM for Lightning Experience**
+  URL: trailhead.salesforce.com -- search "CRM for Lightning Experience"
   Practical walkthrough of Leads, Accounts, Contacts, and Opportunities in the Lightning UI.
 
 ---

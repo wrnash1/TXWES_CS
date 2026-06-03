@@ -1,75 +1,226 @@
-# Quiz: Module 13 - Data Governance, Quality, and Privacy
-## Course: CIS-4336_Data_Analytics (CompTIA Data+)
+# Quiz: Module 13 — Reporting and Dashboard Design
+
+## Course: CIS-4336 Data Analytics
+
+## Texas Wesleyan University | Professor Nash
+
+**Certification Alignment:** CompTIA Data+ (DA0-001)
+
+**Instructions:** Select the single best answer for each question. Each question is worth 10 points.
 
 ---
 
-**Question 1**
-A data analyst is preparing a customer dataset for a machine learning project. The dataset contains customer name, email address, home ZIP code, and purchase history. Which of the following columns contains direct Personally Identifiable Information (PII)?
-*   A) Purchase history totals — aggregate spending amounts per customer.
-*   B) Home ZIP code — a geographic area containing thousands of residents.
-*   C) Email address — a unique identifier that directly links to a specific individual.
-*   D) Product category — the type of item purchased, with no link to an individual.
-*   **Correct Answer:** C) Email address — a unique identifier that directly links to a specific individual.
-*   **Distractor Analysis:**
-    *   *Why correct:* Direct PII uniquely identifies a specific individual without requiring combination with other data. An email address is assigned to one person and is therefore direct PII. Customer name is also direct PII and would be included in any complete PII inventory.
-    *   A) Purchase totals are aggregate financial data — they do not identify an individual without being linked to an account. B) A ZIP code alone covers thousands of residents and is indirect PII — it can contribute to re-identification when combined with other attributes, but is not direct PII on its own. D) Product category is non-sensitive transactional metadata with no direct link to an individual identity.
+### Question 1
+
+A sales director wants a dashboard that shows the total number of leads generated this month, total sales calls made, and total emails sent. An analyst reviewing the requirements argues that these are vanity metrics and should be replaced. Which replacement set best reflects actionable KPIs?
+
+A) Total leads, total calls, total emails — these are already KPIs because they are quantitative measurements.
+
+B) Lead-to-opportunity conversion rate, call-to-meeting booking rate, and email click-through rate — these tie activity to outcomes and reveal where the sales funnel is leaking.
+
+C) Average lead age in days, average call duration, and average email length — these add detail but still do not connect to revenue outcomes.
+
+D) Monthly active users, net promoter score, and churn rate — these are KPIs but for customer success, not sales activity.
+
+#### Q1 Correct Answer: B
+
+#### Q1 Distractor Analysis
+
+A is incorrect because raw counts without targets or outcome connections are vanity metrics. C adds granularity without strategic relevance. D are valid KPIs for a different function entirely.
 
 ---
 
-**Question 2**
-In data governance, which of the following most accurately defines **data masking**?
-*   A) The permanent removal or transformation of all identifying attributes in a dataset so that no individual can be re-identified, even by combining the data with external sources.
-*   B) The replacement of sensitive data values with realistic but fictional substitutes — such as replacing a real credit card number with a formatted placeholder — to protect PII in non-production environments while preserving data usability for development and testing.
-*   C) A reversible technique that replaces direct identifiers with a code or token, storing the mapping in a separate secure location so the original values can be recovered by authorized parties.
-*   D) An access control mechanism that restricts which columns of a database table are visible to a given user role, hiding sensitive fields from unauthorized queries.
-*   **Correct Answer:** B) The replacement of sensitive data values with realistic but fictional substitutes — such as replacing a real credit card number with a formatted placeholder — to protect PII in non-production environments while preserving data usability for development and testing.
-*   **Distractor Analysis:**
-    *   *Why B is correct:* Data masking produces substitute values that look realistic (preserving format and data type) while containing no real personal information. It is the standard technique for creating safe copies of production data for development, testing, and analytics use cases.
-    *   *Why A is incorrect:* Permanently removing or transforming all identifiers so re-identification is impossible describes anonymization, not masking. Anonymization is irreversible; masking may or may not be.
-    *   *Why C is incorrect:* Replacing identifiers with tokens and storing a recoverable mapping describes pseudonymization. The key difference from masking is that pseudonymized data can be re-linked to the individual by an authorized party.
-    *   *Why D is incorrect:* Restricting which table columns a user role can see describes column-level access control or column-level security — a permission management technique, not a data masking technique.
+### Question 2
+
+An analyst is designing a dashboard for a Chief Financial Officer who reviews business performance quarterly. Which combination of design decisions is most appropriate?
+
+A) Real-time data refresh; 15 KPI tiles; detailed drill-down tables with raw transaction data.
+
+B) Weekly refresh; 5 KPI tiles; one trend chart; one comparison chart; no raw data tables.
+
+C) Daily refresh; 10 KPI tiles; six charts; a data export button and a filter panel for every metric.
+
+D) Monthly refresh; 3 summary KPIs; one year-over-year chart; a two-sentence narrative summary.
+
+#### Q2 Correct Answer: D
+
+#### Q2 Distractor Analysis
+
+A gives a CFO real-time granularity they do not need and cognitive overload from 15 KPIs. B is reasonable but the weekly refresh and 5 KPI count are less optimal for a quarterly review context. C provides too much detail and too many KPIs for a strategic executive. D matches the CFO's quarterly cadence, limits KPIs, and adds a narrative — the most executive-appropriate format.
 
 ---
 
-**Question 3**
-A U.S.-based e-commerce company collects purchase data from customers in Germany, France, and Spain. The company's legal team asks whether GDPR applies. What is the correct answer?
-*   A) No — GDPR only applies to companies incorporated in EU member states, not to U.S.-based companies.
-*   B) No — the company is only subject to U.S. federal privacy law, regardless of where its customers are located.
-*   C) Yes — GDPR applies to any organization that processes personal data of individuals located in the EU, regardless of where the organization itself is based.
-*   D) Only partially — GDPR applies only to the company's EU-based servers and not to data processed on U.S. infrastructure.
-*   **Correct Answer:** C) Yes — GDPR applies to any organization that processes personal data of individuals located in the EU, regardless of where the organization itself is based.
-*   **Distractor Analysis:**
-    *   *Why C is correct:* GDPR's scope is defined by the location of the data subjects (the individuals), not the location of the organization. Any company that collects, stores, or processes personal data of EU residents — even a company headquartered in Texas — must comply with GDPR when handling that data.
-    *   *Why A is incorrect:* GDPR explicitly extends to non-EU organizations when they offer goods or services to EU residents or monitor their behavior. Country of incorporation is not the determining factor.
-    *   *Why B is incorrect:* U.S. federal privacy law does not preempt international obligations. The company is subject to both U.S. applicable law and GDPR for its EU customer data.
-    *   *Why D is incorrect:* GDPR compliance follows the data subject, not the server location. Processing EU resident data on U.S. infrastructure is still subject to GDPR and requires appropriate data transfer mechanisms (such as Standard Contractual Clauses).
+### Question 3
+
+Which of the following is the best example of a leading indicator?
+
+A) Total revenue closed this quarter — reflects outcomes already achieved.
+
+B) Average deal size for closed contracts — a lagging measure of past performance.
+
+C) Number of qualified leads added to the pipeline this week — predicts future revenue and can be acted on now.
+
+D) Customer satisfaction score for last month's support interactions — reflects past service quality.
+
+#### Q3 Correct Answer: C
+
+#### Q3 Distractor Analysis
+
+A, B, and D are all lagging indicators — they report on events that have already occurred. C measures new pipeline activity that has not yet converted, making it predictive of future sales performance.
 
 ---
 
-**Question 4**
-An organization follows the principle of least privilege for database access. An analyst in the marketing department needs to compute average order values by region for a campaign report. Which access configuration best follows this principle?
-*   A) Grant the analyst full administrative access to the database so they can query any table they need without requesting help from IT.
-*   B) Grant the analyst SELECT permission on the orders table and the regions lookup table only, scoped to the columns required for the report.
-*   C) Create a shared "analytics" login used by all analysts in the department, giving it read access to all tables in the database.
-*   D) Give the analyst a copy of the full production database exported to their laptop so they can work without requesting database access.
-*   **Correct Answer:** B) Grant the analyst SELECT permission on the orders table and the regions lookup table only, scoped to the columns required for the report.
-*   **Distractor Analysis:**
-    *   *Why B is correct:* The principle of least privilege requires granting only the minimum permissions necessary to perform the specific task. This means read-only (SELECT) access, limited to the specific tables and columns needed — no more.
-    *   *Why A is incorrect:* Full administrative access vastly exceeds what is needed for a read-only reporting task. Administrative privileges allow modifying or deleting production data, which creates unnecessary risk.
-    *   *Why C is incorrect:* A shared login violates accountability — it cannot be audited to determine which individual ran a query or accessed sensitive data. It also provides broader access than any single analyst needs.
-    *   *Why D is incorrect:* Exporting a full production database to a personal laptop introduces significant data governance and security risks — the data is outside organizational security controls, unencrypted, and could expose PII from unrelated business functions.
+### Question 4
+
+A data analyst is building a chart to show how monthly revenue has trended over the past three years (36 data points). Which chart type is most appropriate?
+
+A) Pie chart — shows part-to-whole relationships; inappropriate for continuous time-series data.
+
+B) Scatter plot — shows the relationship between two numeric variables; not suited for time-series trend display.
+
+C) Line chart — connects data points across a continuous time axis and is the standard choice for showing trends over time.
+
+D) Histogram — shows the distribution of a numeric variable; does not show change over time.
+
+#### Q4 Correct Answer: C
+
+#### Q4 Distractor Analysis
+
+A is for part-to-whole composition, not trends. B requires two numeric variables with no inherent time order. D shows frequency distribution, not chronological trend.
 
 ---
 
-**Question 5**
-A data engineer applies a transformation that replaces each customer's real name and email with a randomly generated code (e.g., Customer_A8F3), storing the mapping between the code and the real identity in a separate, encrypted key table accessible only to the data privacy officer. Which privacy technique is being used, and is this data still subject to GDPR?
-*   A) Anonymization — the real identities are stored separately, so the dataset itself is no longer personal data and is exempt from GDPR.
-*   B) Pseudonymization — the transformation is reversible using the key table, so the data is still considered personal data under GDPR and remains subject to its requirements.
-*   C) Data masking — the values are replaced with formatted placeholders, which constitutes full anonymization under GDPR.
-*   D) Encryption — the data is encoded and can only be read with the decryption key, which classifies it as anonymous under GDPR once the key is secured.
-*   **Correct Answer:** B) Pseudonymization — the transformation is reversible using the key table, so the data is still considered personal data under GDPR and remains subject to its requirements.
-*   **Distractor Analysis:**
-    *   *Why B is correct:* Pseudonymization replaces identifiers with codes while storing the re-identification mapping separately. GDPR explicitly defines pseudonymized data as still personal data because re-identification is possible by anyone with access to the key. It is a useful risk-reduction measure but does not remove GDPR obligations.
-    *   *Why A is incorrect:* The existence of the key table means re-identification is possible — therefore this is not anonymization. True anonymization requires that no party, including the organization, can re-identify the individual. The key table here preserves that possibility.
-    *   *Why C is incorrect:* Data masking replaces values with non-recoverable fictional substitutes for use in non-production environments. The scenario describes a reversible transformation with a stored key — that is pseudonymization, not masking.
-    *   *Why D is incorrect:* Encryption encodes data for confidentiality but the organization retains the decryption key. Encrypted personal data is still personal data under GDPR. Holding the key means the organization can still access the original values.
+### Question 5
+
+A Looker administrator defines all revenue calculations in a central LookML model. What problem does this architecture solve that Tableau and Power BI do not solve by default?
+
+A) It prevents analysts from building charts without SQL knowledge.
+
+B) It eliminates the need for a data warehouse by storing data inside Looker.
+
+C) It ensures every team calculates revenue using the same definition, preventing metric inconsistency across departments.
+
+D) It automatically generates dashboards without any analyst input.
+
+#### Q5 Correct Answer: C
+
+#### Q5 Distractor Analysis
+
+A is incorrect — Looker still requires technical setup; it does not prevent SQL use. B is wrong; Looker queries external databases and does not store data itself. D is incorrect; LookML defines data models, not finished dashboards.
+
+---
+
+### Question 6
+
+Which dashboard design principle is violated when a dashboard uses red to indicate both "below sales target" and "the product category Electronics" in separate charts?
+
+A) Single audience, single purpose — the dashboard is trying to serve multiple users.
+
+B) Limit the KPI count — too many metrics are being tracked.
+
+C) Consistent color encoding — the same color carries two different meanings in the same dashboard.
+
+D) Remove chart junk — decorative elements are distracting from the data.
+
+#### Q6 Correct Answer: C
+
+#### Q6 Distractor Analysis
+
+A is about scope, not color. B is about KPI count, not color usage. D is about unnecessary visual elements, not color meaning conflicts.
+
+---
+
+### Question 7
+
+An analyst presents a finding to an executive by showing 22 pages of methodology documentation, confidence intervals for every estimate, and a full data dictionary. The executive seems confused and disengaged. What is the most likely cause?
+
+A) The data is incorrect and the executive detected the error.
+
+B) The analyst communicated at the wrong level of detail for a strategic decision-maker who needs a clear finding and implication, not methodology.
+
+C) The executive does not understand data and needs a training course before reviewing the analysis.
+
+D) Confidence intervals should always be removed from executive presentations because they are mathematically incorrect.
+
+#### Q7 Correct Answer: B
+
+#### Q7 Distractor Analysis
+
+A is possible but not the most likely cause given the described scenario. C blames the audience rather than the communication format. D is incorrect — confidence intervals are valid but inappropriate at the level of detail for a strategic executive presentation.
+
+---
+
+### Question 8
+
+A product manager wants to compare how five product lines contribute to total annual revenue, where no single product line has an overwhelming share. Which chart type is most appropriate?
+
+A) Line chart — best for continuous time trends, not for comparing proportional shares.
+
+B) Stacked bar chart — shows the absolute value of each component over time or across categories while also displaying total magnitude.
+
+C) Pie chart with five slices — acceptable for five clear proportions; communicates part-to-whole cleanly when slices are distinct.
+
+D) Scatter plot — requires two numeric variables and no part-to-whole relationship.
+
+#### Q8 Correct Answer: C
+
+#### Q8 Distractor Analysis
+
+A does not show composition. B is better when time or sequence is involved — for a single period comparison, it adds unnecessary complexity. D requires two numeric variables and does not display proportional composition. C is the standard choice for five-category part-to-whole comparison with distinct proportions.
+
+---
+
+### Question 9
+
+Which of the following correctly defines a benchmark in the context of business intelligence reporting?
+
+A) A benchmark is a KPI whose target has been exceeded for three consecutive reporting periods.
+
+B) A benchmark is a reference value — internal, external, or aspirational — used to evaluate whether a metric's current value is acceptable.
+
+C) A benchmark is a chart annotation that marks the median value of a distribution.
+
+D) A benchmark is a Power BI DAX formula used to calculate a running total.
+
+#### Q9 Correct Answer: B
+
+#### Q9 Distractor Analysis
+
+A conflates benchmark with a performance milestone. C describes a chart annotation, not a data concept. D confuses benchmark with a specific tool formula unrelated to the definition.
+
+---
+
+### Question 10
+
+Which Data+ exam domain is most directly covered by the dashboard design, KPI selection, and data storytelling content in Module 13?
+
+A) Domain 1 — Data Concepts and Environments.
+
+B) Domain 2 — Data Mining.
+
+C) Domain 3 — Data Analysis and Statistics.
+
+D) Domain 4 — Data Visualization, which covers report types, chart selection, dashboard design, and communicating findings to stakeholders.
+
+#### Q10 Correct Answer: D
+
+#### Q10 Distractor Analysis
+
+A covers foundational data concepts and infrastructure. B covers data collection and transformation. C covers statistical analysis methods. D explicitly includes visualization types, design principles, and stakeholder communication — the exact content of Module 13.
+
+---
+
+### Answer Key
+
+| Question | Correct Answer |
+|---|---|
+| 1 | B |
+| 2 | D |
+| 3 | C |
+| 4 | C |
+| 5 | C |
+| 6 | C |
+| 7 | B |
+| 8 | C |
+| 9 | B |
+| 10 | D |

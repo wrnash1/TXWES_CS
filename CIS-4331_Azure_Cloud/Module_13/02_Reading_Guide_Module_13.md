@@ -1,64 +1,314 @@
 # Reading Guide: Module 13 - Azure Monitoring and Diagnostics
 
-## Course: CIS-4331_Azure_Cloud (Microsoft Azure Fundamentals (AZ-900))
+**Course:** CIS-4331 Azure Cloud | Texas Wesleyan University
+**Instructor:** Professor Nash
+**AZ-900 Domain:** Describe Azure management and governance (30-35% of exam)
 
 ---
 
-### Introduction
+## Overview
 
-Welcome to **Module 13 - Azure Monitoring and Diagnostics**! This module covers Azure's observability and monitoring services as tested on the **Microsoft Azure Fundamentals (AZ-900)** exam. You cannot manage what you cannot measure — Azure's monitoring tools provide visibility into the health, performance, and security of your cloud resources.
-
-You will learn how Azure Monitor collects and acts on telemetry data, how Log Analytics enables querying of diagnostic logs, how Azure Service Health communicates platform-level incidents, and how Azure Advisor provides proactive optimization recommendations. AZ-900 tests your ability to match a monitoring need to the correct service. Complete the checklist and glossary before beginning the lab.
+Monitoring is the foundation of operational visibility in cloud environments. Without it, problems go undetected until users report failures. With comprehensive monitoring, teams detect anomalies proactively, diagnose root causes quickly, and build performance baselines that inform capacity planning. This module covers Azure's monitoring stack: Azure Monitor, Log Analytics, Application Insights, Azure Alerts, and Azure Service Health.
 
 ---
 
-### 1. High-Yield Glossary
+## Section 1: Azure Monitor
 
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
+### What Azure Monitor Does
 
-* **Azure Monitor**: The unified monitoring platform for Azure that collects, analyzes, and acts on telemetry data from Azure resources, applications, and on-premises systems. Azure Monitor ingests metrics (numerical time-series data like CPU%) and logs (structured event data). It can trigger alerts, scale actions, and feed data to dashboards. Azure Monitor is the umbrella service that includes Log Analytics and Application Insights.
+Azure Monitor is the unified monitoring platform for Azure. It collects, stores, analyzes, and acts on telemetry data from Azure resources, guest operating systems, and applications. Almost every other Azure monitoring capability is built on or integrated with Azure Monitor.
 
-* **Log Analytics**: A service within Azure Monitor that collects and stores log and performance data, allowing you to query it using the Kusto Query Language (KQL). Log Analytics Workspaces are the storage containers for this data. AZ-900 tests that Log Analytics is used for querying diagnostic and activity logs from Azure resources.
+### Two Data Types: Metrics and Logs
 
-* **Azure Service Health**: A service that provides personalized alerts and guidance when Azure platform issues — such as planned maintenance, service incidents, or regional outages — affect the services and regions you use. Unlike Azure Monitor (which monitors your resources), Service Health monitors the Azure platform itself on your behalf.
+| Dimension | Metrics | Logs |
+|---|---|---|
+| Format | Numerical time-series values | Structured or unstructured event records |
+| Examples | CPU %, available memory bytes, requests/sec | Sign-in events, error messages, audit records |
+| Frequency | Collected every minute (default) | Collected when events occur |
+| Storage | Azure Monitor Metrics (time-series store) | Log Analytics workspace |
+| Query method | Metrics Explorer charts | KQL (Kusto Query Language) |
+| Best for | Real-time dashboards, threshold alerts | Investigation, root cause analysis, compliance |
+| Retention (default) | 93 days | 30 days (configurable to 2 years) |
 
-* **Azure Advisor**: A free, personalized recommendation engine that analyzes your Azure deployments and suggests improvements across five pillars: Cost (reduce spending), Security (improve security posture), Reliability (improve resilience), Performance (improve speed), and Operational Excellence (best practices). Advisor does not enforce anything — it advises.
+### What Azure Monitor Collects
+
+| Source | What Is Collected | Configuration Required? |
+|---|---|---|
+| Azure platform resources | Resource metrics (CPU, memory, I/O, requests) | No — sent automatically |
+| Azure platform logs | Activity log (control-plane events), resource logs | Activity log: auto; resource logs: diagnostic settings needed |
+| Guest OS (VMs) | OS metrics, event logs, performance counters, custom app logs | Yes — requires Azure Monitor Agent |
+| Applications | Request traces, exceptions, dependencies, user behavior | Yes — requires Application Insights SDK or agent |
+| Custom sources | Any data via Monitor REST API, custom logs | Yes — requires configuration |
+
+### Azure Monitor Data Destinations
+
+Collected telemetry can be routed to multiple destinations simultaneously:
+
+| Destination | Use Case |
+|---|---|
+| Log Analytics workspace | Query log data with KQL; alerts; Sentinel integration |
+| Azure Storage | Long-term archival (compliance, cost optimization) |
+| Azure Event Hubs | Stream to external SIEM or analytics platforms |
+| Azure Monitor Metrics | Near-real-time metric dashboards and alerts |
+| Partner solutions | Splunk, Elastic, Datadog via built-in integrations |
+
+### Diagnostic Settings
+
+Diagnostic settings configure where a resource's logs and metrics are sent. Each resource can have diagnostic settings that send data to Log Analytics, Storage, Event Hubs, or a partner solution. Without configuring diagnostic settings, resource-level logs are not collected (though platform metrics are).
 
 ---
 
-### 2. Certification Exam Tips
+## Section 2: Log Analytics
 
-* **Monitor vs. Advisor vs. Service Health**: AZ-900 frequently tests which monitoring service applies to which scenario. Azure Monitor = telemetry collection and alerting for your resources. Azure Advisor = proactive recommendations for optimization. Azure Service Health = Azure platform incident communication. Know all three and their distinct purposes.
-* **Alerts in Azure Monitor**: Azure Monitor can generate alerts when metrics cross thresholds (e.g., CPU > 90% for 5 minutes). Alerts can trigger notifications (email, SMS) or automated actions (VMSS scale-out, Azure Automation runbook). AZ-900 may ask which service creates alerts based on metric thresholds.
-* **Application Insights**: A feature of Azure Monitor for application performance monitoring (APM). It tracks request rates, response times, failure rates, and user behavior for web applications. AZ-900 may reference Application Insights as a subcomponent of Azure Monitor for application-level telemetry.
-* **Service Health vs. Resource Health**: Service Health reports on platform-wide Azure incidents. Resource Health reports on the health of your specific resource (e.g., is this VM currently impacted by a platform issue). Both are under the Service Health blade in the portal — know the distinction.
-* **Study Resource**: The Microsoft Learn monitoring module covers Azure Monitor, Log Analytics, Advisor, and Service Health with interactive exercises. Access it at [Microsoft Learn – AZ-900 Azure Management and Governance](https://learn.microsoft.com/en-us/training/paths/describe-azure-management-governance/).
+### Log Analytics Workspace
+
+A Log Analytics workspace is the managed database for log data within Azure Monitor. It is where:
+
+- Resource logs from Azure services land (when configured via diagnostic settings)
+- VM operating system logs arrive (when collected by the Azure Monitor Agent)
+- Application Insights data is stored (optionally, in workspace-based mode)
+- Microsoft Sentinel stores all security data
+
+Multiple resources across multiple subscriptions can send data to a single Log Analytics workspace, centralizing log data for unified analysis.
+
+### Kusto Query Language (KQL)
+
+KQL is the query language used to query Log Analytics workspaces. Key characteristics:
+
+- Read-only (cannot modify data)
+- Pipe-based syntax — each operation feeds into the next using the `|` character
+- Designed for large-scale time-series log data
+- Used by Log Analytics, Sentinel, Application Insights, Azure Resource Graph, and others
+
+Sample KQL queries (for context — AZ-900 does not require writing KQL):
+
+```kql
+// Count VM heartbeats by computer over the last 24 hours
+Heartbeat
+| where TimeGenerated > ago(24h)
+| summarize count() by Computer
+
+// Find failed sign-ins in Entra ID logs
+SigninLogs
+| where ResultType != "0"
+| project TimeGenerated, UserPrincipalName, ResultDescription, IPAddress
+| order by TimeGenerated desc
+
+// Average CPU usage per VM over the last hour
+Perf
+| where ObjectName == "Processor" and CounterName == "% Processor Time"
+| where TimeGenerated > ago(1h)
+| summarize avg(CounterValue) by Computer
+```
+
+### Common Log Analytics Tables
+
+| Table Name | Contains |
+|---|---|
+| Heartbeat | Periodic signals from VMs with Azure Monitor Agent (proves VM is alive) |
+| Perf | Performance counters from VMs (CPU, memory, disk) |
+| Event | Windows event log entries |
+| Syslog | Linux syslog entries |
+| AzureActivity | Azure control-plane activity (who created/deleted/changed what) |
+| SigninLogs | Entra ID user sign-in events |
+| SecurityEvent | Windows Security event log (login attempts, privilege escalations) |
+| AppRequests | Application Insights — HTTP requests |
+| AppExceptions | Application Insights — unhandled exceptions |
 
 ---
 
-### Required Readings & Videos
+## Section 3: Application Insights
 
-To prepare for this module's topics, you must complete the following readings and videos:
+### What Application Insights Monitors
 
-* **Required Reading:** The Microsoft Learn path for AZ-900 covers Azure monitoring tools including Monitor, Log Analytics, Advisor, and Service Health. Access it at [Microsoft Learn – AZ-900 Azure Management and Governance](https://learn.microsoft.com/en-us/training/paths/describe-azure-management-governance/).
-* **Required Video:** This free freeCodeCamp course covers Azure monitoring for AZ-900 — watch the monitoring and management section: [Microsoft Azure Fundamentals Full Course by freeCodeCamp](https://www.youtube.com/watch?v=NPEsD6n9A_I).
+Application Insights is the application performance monitoring (APM) capability within Azure Monitor. Where Azure Monitor monitors infrastructure (VMs, networks, storage), Application Insights monitors the application running on that infrastructure.
+
+### Data Collected by Application Insights
+
+| Data Type | Description | Example |
+|---|---|---|
+| Requests | Every inbound HTTP request to the application | GET /api/orders, 200 OK, 145ms |
+| Dependencies | Outbound calls the app makes | SQL query to database, 23ms; HTTP call to payment API, 340ms |
+| Exceptions | Unhandled errors with full stack traces | NullReferenceException in OrderController.cs line 47 |
+| Page views | Browser-side page load events (JavaScript SDK) | User loaded /checkout page, 2.3s load time |
+| Custom events | Application-defined business events | PaymentProcessed, UserRegistered, SearchPerformed |
+| Performance counters | Server CPU, memory, request queue depth | Server CPU 42%, available memory 1.2 GB |
+| Availability tests | Synthetic HTTP probes from multiple Azure regions | HTTP GET to homepage from 5 global locations every 5 min |
+
+### Key Application Insights Features
+
+| Feature | Description |
+|---|---|
+| Application Map | Visual topology of application components with health indicators |
+| Live Metrics | Real-time (sub-second latency) dashboard of requests, failures, server resources |
+| Transaction search | Find individual request traces by ID, URL, user, or time |
+| Failures blade | Aggregate view of exceptions and failed requests by operation |
+| Performance blade | Response time analysis by operation with dependency breakdown |
+| Availability tests | Proactive synthetic monitoring from global Azure regions |
+| Smart detection | Automatic anomaly detection with alerts — no threshold configuration required |
+| User analytics | User sessions, retention, funnel analysis, user flows |
+
+### Instrumentation Options
+
+| Method | Best For | Languages / Platforms |
+|---|---|---|
+| SDK (code-level) | Maximum telemetry control; custom events | .NET, Java, Node.js, Python, JavaScript |
+| Auto-instrumentation | Zero-code change for supported platforms | Azure App Service (.NET, Java, Node), Azure Functions, AKS |
+| Azure Monitor Agent | VM-based applications | Any application writing to OS logs |
+| OpenTelemetry | Standards-based instrumentation | Multi-language, multi-cloud |
+
+### Application Insights vs. Azure Monitor Metrics
+
+Application Insights data is stored in a Log Analytics workspace and queried with KQL — it is part of the Azure Monitor ecosystem. The distinction is that Application Insights provides application-layer telemetry (requests, dependencies, exceptions) while Azure Monitor infrastructure metrics provide resource-layer telemetry (CPU, memory, disk). Both are needed for comprehensive end-to-end observability.
 
 ---
 
-### Lab & Command Integration
+## Section 4: Azure Alerts
 
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
+### Alert Rule Components
 
-* **Examine Azure Advisor suggestions for cost and security**: In the Azure portal, navigate to Azure Advisor and review the current recommendations in the Cost and Security categories. Note the estimated monthly savings from cost recommendations.
-* **Configure an Azure Monitor metric alert**: Create a metric alert rule on a VM that triggers when CPU percentage exceeds 80% for 5 minutes. Configure an action group to send an email notification when the alert fires.
-* **Verify Service Health dashboard status**: Navigate to Azure Service Health and review the current health of Azure services in your region. Explore the Health History and Planned Maintenance sections to understand the types of platform events communicated here.
+Every Azure alert rule has three components:
+
+| Component | Description |
+|---|---|
+| Signal (condition) | What to monitor: metric threshold, log query result, activity log event, service health event |
+| Action group | What to do when the alert fires: send email/SMS, call webhook, run automation |
+| Severity | Priority level from 0 (Critical) to 4 (Verbose) |
+
+### Alert Rule Types
+
+| Type | Signal Source | Use Case | Latency |
+|---|---|---|---|
+| Metric alert | Azure Monitor Metrics | CPU > 90% for 5 min, memory < 1 GB | Near real-time (1 min) |
+| Log alert | Log Analytics KQL query | > 10 failed logins in 5 min, error count spike | 5+ minutes |
+| Activity log alert | Azure Activity log | Resource deleted, role assignment changed | Minutes |
+| Service health alert | Azure Service Health | Azure outage in your region | Minutes |
+| Smart detection (App Insights) | Application Insights ML | Unusual failure rate, dependency degradation | Automatic |
+
+### Action Groups
+
+An action group is a reusable collection of notification and automation actions. One action group can be attached to many alert rules.
+
+| Action Type | Description |
+|---|---|
+| Email | Send to specified email addresses |
+| SMS | Send text message to phone number |
+| Voice call | Automated phone call |
+| Azure app push notification | Notify via Azure mobile app |
+| Webhook | HTTP POST to external URL (Slack, PagerDuty, custom API) |
+| Azure Automation runbook | Execute automated remediation script |
+| Azure Functions | Run serverless function (custom response logic) |
+| ITSM | Create ticket in ServiceNow, Jira, or other tools |
+| Event Hub | Stream alert to Event Hub for external processing |
+
+### Alert States
+
+| State | Meaning |
+|---|---|
+| Fired | Alert condition was met; notification sent |
+| Resolved | Alert condition is no longer met (for stateful alerts) |
+| Acknowledged | Team member marked it as being investigated |
+
+### Dynamic Thresholds
+
+For metric alerts, Azure Monitor can use machine learning to automatically set alert thresholds based on historical data rather than requiring you to specify a fixed number. This is useful when "normal" varies by day of week or time of day — for example, a web application that naturally has higher traffic on weekday mornings.
 
 ---
 
-### 3. Study Checklist
+## Section 5: Azure Service Health
 
-* [ ] Read the glossary terms and memorize their definitions.
-* [ ] Complete the Azure monitoring unit in [Microsoft Learn – AZ-900 Azure Management and Governance](https://learn.microsoft.com/en-us/training/paths/describe-azure-management-governance/).
-* [ ] Watch the monitoring section of [Microsoft Azure Fundamentals Full Course by freeCodeCamp](https://www.youtube.com/watch?v=NPEsD6n9A_I).
-* [ ] Review the lab instructions for Advisor review, alert creation, and Service Health exploration.
-* [ ] Proceed to the weekly hands-on lab activity.
+### What Service Health Provides
+
+Azure Service Health provides personalized monitoring of Azure service incidents that affect your specific subscriptions and regions. Unlike the public Azure Status page (which shows global Azure status), Service Health filters to show only incidents that impact your resources.
+
+### Three Types of Service Health Notifications
+
+| Type | Description | Example |
+|---|---|---|
+| Service issues | Active outages or degradations in Azure services | "Azure SQL Database experiencing connectivity issues in East US" |
+| Planned maintenance | Scheduled maintenance activities by Microsoft | "VM host maintenance window: March 15, 2:00-4:00 AM UTC in West US 2" |
+| Health advisories | Actions you may need to take; deprecation notices | "Azure AD Graph API is being retired — migrate to Microsoft Graph by June 2024" |
+
+### Service Health + Azure Alerts
+
+You can create Azure Alerts that trigger on Service Health events. This means when Azure publishes an incident that affects your subscription, your team can receive automatic notifications via email, SMS, or webhook — without anyone having to monitor the Azure Status page manually.
+
+---
+
+## Section 6: Monitoring Service Selection Summary
+
+| Scenario | Correct Service |
+|---|---|
+| Collect CPU and memory metrics from all Azure VMs | Azure Monitor (metrics are collected automatically) |
+| Query 90 days of authentication logs to investigate an incident | Log Analytics workspace (KQL query on SigninLogs table) |
+| Get notified when a VM's CPU exceeds 90% for 5 minutes | Azure Alerts (metric alert + action group with email/SMS) |
+| Monitor request response times and exception rates in a web app | Application Insights |
+| Automatically notify the team when Azure has an outage in East US | Azure Service Health alert |
+| View application dependency topology to diagnose slow requests | Application Insights Application Map |
+| Stream security logs to an external SIEM | Azure Monitor with Event Hub destination |
+| Store 2 years of compliance audit logs cost-effectively | Azure Monitor logs to Azure Storage (long-term archival) |
+| Detect unusual failure rate spikes without setting explicit thresholds | Application Insights Smart Detection |
+
+---
+
+## Section 7: Azure CLI — Monitoring Commands
+
+```bash
+# List available metrics for a resource
+az monitor metrics list-definitions \
+  --resource "/subscriptions/<sub-id>/resourceGroups/<rg>/providers/Microsoft.Compute/virtualMachines/<vm-name>" \
+  --output table
+
+# Query recent metric values (last hour CPU average)
+az monitor metrics list \
+  --resource "/subscriptions/<sub-id>/resourceGroups/<rg>/providers/Microsoft.Compute/virtualMachines/<vm-name>" \
+  --metric "Percentage CPU" \
+  --interval PT1H \
+  --output table
+
+# Create an action group (email notification)
+az monitor action-group create \
+  --name "ops-team-alerts" \
+  --resource-group my-rg \
+  --short-name "OpsAlerts" \
+  --email-receiver name=ops-email email=ops@company.com
+
+# Create a metric alert rule (CPU > 90%)
+az monitor metrics alert create \
+  --name "high-cpu-alert" \
+  --resource-group my-rg \
+  --scopes "/subscriptions/<sub-id>/resourceGroups/<rg>/providers/Microsoft.Compute/virtualMachines/<vm-name>" \
+  --condition "avg Percentage CPU > 90" \
+  --window-size 5m \
+  --evaluation-frequency 1m \
+  --action "/subscriptions/<sub-id>/resourceGroups/<rg>/providers/microsoft.insights/actionGroups/ops-team-alerts"
+
+# List all alert rules
+az monitor metrics alert list \
+  --resource-group my-rg \
+  --output table
+```
+
+---
+
+## Section 8: AZ-900 Exam Tips
+
+1. **Azure Monitor is the platform, everything else builds on it.** Log Analytics, Application Insights, and Alerts are all part of or integrate with Azure Monitor. Azure Monitor is the umbrella.
+
+2. **Metrics vs. Logs — know the difference.** Metrics are numbers over time, fast to query, good for alerts. Logs are event records, richer content, queried with KQL, good for investigation.
+
+3. **Log Analytics uses KQL.** You do not need to write KQL for AZ-900, but you need to know that KQL is the query language for Log Analytics workspaces and that it is used in Sentinel, Application Insights, and Azure Resource Graph.
+
+4. **Application Insights is for applications.** When the scenario mentions request rates, response times, exceptions, dependency tracking, or user behavior — Application Insights is the answer.
+
+5. **Alerts = signal + action group.** An alert rule needs a signal (condition) and an action group (what to do). Action groups are reusable — one group can be shared by many alert rules.
+
+6. **Service Health is subscription-filtered.** The public Azure Status page shows all Azure issues globally. Service Health shows only the issues affecting your subscriptions and regions.
+
+7. **Diagnostic settings required for resource logs.** Platform metrics are automatically collected, but resource-level logs (SQL diagnostics, storage logs, etc.) require you to configure diagnostic settings to route them to a destination.
+
+8. **Application Insights availability tests** are synthetic probes — they test your application from outside by sending HTTP requests from multiple Azure regions on a schedule. Use them to detect outages before users do.
+
+---
+
+Module 13 Reading Guide | CIS-4331 Azure Cloud | Texas Wesleyan University

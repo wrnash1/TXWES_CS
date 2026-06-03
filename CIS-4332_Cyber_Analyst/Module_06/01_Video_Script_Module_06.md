@@ -1,157 +1,291 @@
-# Video Script: Module 06 - Endpoint Detection and Response
+# Video Script: Module 06 — SIEM and Log Analysis
 
-## Course: CIS-4332 Cyber Analyst | Texas Wesleyan University
+## Course: CIS-4332 Cyber Security Analysis
 
-## Instructor: Professor Nash
+## Texas Wesleyan University | Professor Nash
 
-## Estimated Duration: 20-24 minutes
+## Estimated Duration: 20–24 minutes
 
-## CySA+ CS0-003 Domain Alignment: Domain 1 - Security Operations (33%)
-
----
-
-### [00:00 - 01:30] Introduction
-
-Professor Nash on camera. Title card: Module 06 — Endpoint Detection and Response.
-
-"Welcome to Module 06. We have covered log analysis and network traffic analysis. Now we go to the endpoint — the workstation or server where the attack actually executes. This is where the attacker runs code, steals credentials, establishes persistence, and moves laterally.
-
-Endpoint Detection and Response — EDR — is the technology category that gives analysts deep, real-time visibility into what is happening at the process and file system level on individual endpoints. EDR has transformed the SOC over the past decade. It captures the data that traditional antivirus misses and gives responders the ability to investigate, contain, and remediate from a central console without physically touching the affected machine.
-
-In this module we cover what EDR is, how it works, the key telemetry it captures, how to use it for investigation, and the most important endpoint-based attack patterns the CySA+ exam tests. Let's get started."
+## Certification Alignment: CompTIA CySA+ (CS0-003)
 
 ---
 
-### [01:30 - 05:00] Traditional Antivirus vs. EDR
+## SEGMENT 1 — Introduction and Why SIEM Matters (0:00–3:00)
 
-"To understand what EDR offers, you need to understand what traditional antivirus does not.
+Welcome back to CIS-4332. I'm Professor Nash, and today we're tackling one of the most fundamental tools in a security operations center: the Security Information and Event Management system — SIEM.
 
-Traditional antivirus — AV — works primarily through signature-based detection. It compares files on disk or in memory against a database of known malicious file signatures (typically file hashes or byte sequence patterns). When a file matches a known signature, AV quarantines or deletes it.
+If you picture a modern SOC, the analysts are almost certainly staring at a SIEM dashboard. It is the central nervous system of security operations. It collects logs from across the environment, normalizes them into a common format, runs correlation logic to detect threats, and fires alerts that put analysts on the right targets.
 
-The limitations of traditional AV are well-known and well-exploited by attackers:
+Here is the core problem SIEM solves: scale. A mid-sized enterprise generates millions of log events every single day — from firewalls, domain controllers, web servers, cloud platforms, endpoints, and applications. No human can read that volume. SIEM exists to aggregate all of that data, find the signals that matter, and surface them to analysts at machine speed.
 
-Signature-based detection misses novel malware that has no existing signature. A new ransomware variant not yet in the database will execute freely.
+The CompTIA CySA+ CS0-003 exam tests SIEM extensively across Domain 1, Security Operations, and Domain 4, Reporting and Communication. By the end of this module you will understand SIEM architecture, log sources and normalization, correlation rules, alert tuning, and the basics of two platforms you will encounter in real SOCs: Splunk and Microsoft Sentinel.
 
-Fileless malware — attacks that execute entirely in memory using legitimate Windows tools, with no malicious file written to disk — are invisible to file-based AV scanning.
-
-Living-off-the-land techniques use Windows built-in tools like PowerShell, WMI, and certutil in ways that are difficult to distinguish from normal administrative activity.
-
-EDR addresses these limitations by shifting from file-based signature detection to behavioral telemetry. Instead of asking 'does this file match a known bad signature,' EDR asks 'what is this process actually doing — what files is it creating, what registry keys is it modifying, what network connections is it making, what other processes is it spawning?'
-
-EDR captures a continuous stream of behavioral telemetry from every monitored endpoint and sends that telemetry to a central management platform where analysts can query it, create detection rules, and initiate response actions remotely."
+Let's get into it.
 
 ---
 
-### [05:00 - 09:00] EDR Capabilities and Telemetry
+## SEGMENT 2 — SIEM Architecture (3:00–7:30)
 
-"Let me walk through the core capabilities of an EDR platform and the types of telemetry it captures.
+[SHOW TOOL: Architectural diagram with five labeled layers: Collection, Normalization, Correlation, Alerting/SOAR, Storage/Search]
 
-Process execution telemetry — every process that starts on the endpoint is recorded: the process name, the full path, the command line arguments, the parent process, the user, and the timestamp. This is equivalent to Sysmon Event ID 1 at much greater scale and fidelity. From this data, analysts can reconstruct a process tree — the parent-child relationship that shows how a malicious process was spawned.
+A SIEM has five architectural layers. Understanding how data flows through these layers is essential for the exam and for troubleshooting in production.
 
-File system telemetry — file creates, modifies, renames, and deletes are recorded. When malware drops a payload to disk, the EDR captures it. The hash of the dropped file is computed and can be compared against threat intelligence databases instantly.
+### Layer 1 — Log Collection and Ingestion
 
-Registry telemetry — registry key creates, modifies, and deletes. This is critical for detecting persistence mechanisms like T1547.001 Run Keys.
+The SIEM must first receive log data. It uses several mechanisms to do this.
 
-Network telemetry — outbound connections from each process. Not just the connection, but which specific process opened the socket. This directly answers the analyst's question: what is this process connecting to?
+Agents are lightweight software deployed on endpoints and servers. They collect local logs and forward them to the SIEM, typically over an encrypted channel. Agentless collection uses push protocols — syslog over UDP or TCP port 514, Windows Event Forwarding over WinRM, or SNMP from network devices.
 
-Memory operations — process injection (Sysmon equivalent to Event ID 10), thread injection, and other in-memory manipulation techniques that leave no file on disk.
+API-based connectors are increasingly important for cloud sources. AWS CloudTrail, Microsoft Entra ID (Azure AD), and Okta all expose APIs that SIEM connectors poll on a schedule to retrieve logs.
 
-User activity — logon events, privilege changes, and account activity at the endpoint level.
+The SIEM ingestion pipeline handles deduplication, buffering, and flow control to prevent log loss during traffic spikes.
 
-Response capabilities — beyond detection, EDR platforms allow analysts to take response actions remotely: isolate the host from the network (while maintaining the management connection for continued investigation), terminate a process, quarantine a file, collect a memory dump, or execute a script for remediation. These capabilities allow a Tier 2 analyst to fully investigate and contain an incident without physical access to the affected machine."
+### Layer 2 — Normalization and Parsing
 
----
+Raw logs from different sources look completely different. A Cisco ASA firewall log uses different field names, formats, and delimiters than a Windows Security event or an Apache web server log. Normalization translates these varied formats into a common schema so the SIEM can compare data across sources.
 
-### [09:00 - 13:00] Key Endpoint Attack Patterns
+[SHOW TOOL: Side-by-side of raw syslog vs. normalized event record — field mapping highlighted]
 
-"Let me walk through the most important endpoint attack patterns that an EDR analyst must recognize, all of which are tested on the CySA+ exam.
+This is where field mapping happens. A source IP might be labeled `src` in a firewall log, `RemoteAddress` in a Windows event, and `c-ip` in an IIS log. After normalization, all three map to the same field in the SIEM's data model. This is what makes cross-source correlation possible.
 
-Pattern 1: Malicious Office document execution chain. A user opens a Word document. The document contains a macro. The macro spawns winword.exe (the Word process) as a parent, which then spawns cmd.exe or powershell.exe as a child process. This parent-child relationship is highly suspicious — Microsoft Word should almost never be spawning command shells. The EDR process tree makes this immediately visible.
+### Layer 3 — Correlation Engine
 
-Pattern 2: PowerShell execution with encoded commands. An attacker uses PowerShell with the -EncodedCommand flag to pass a base64-encoded command, bypassing basic script block detection. EDR captures the full command line including the encoded argument. Sysmon Event ID 1 also captures this. The presence of -EncodedCommand or -enc in a PowerShell command line is a high-fidelity indicator.
+The correlation engine is where detection happens. It continuously evaluates incoming events against a library of rules — logical conditions that define suspicious patterns. When a rule's conditions are met, the engine generates an alert. We will spend significant time on correlation rules in Segment 5.
 
-Pattern 3: LOLBin abuse. Living Off the Land Binaries are legitimate Windows system tools repurposed by attackers. Common examples:
-certutil.exe used to decode base64 or download files from the internet
-mshta.exe used to execute HTA (HTML Application) payloads
-regsvr32.exe used to execute malicious DLLs
-rundll32.exe used to execute malicious DLLs
-wscript.exe or cscript.exe used to run VBScript or JScript payloads
-Detecting LOLBin abuse requires behavioral context — the tool itself is legitimate, but its use in a specific context (unexpected parent, unusual arguments, network connection) reveals the abuse.
+### Layer 4 — Alerting and SOAR Integration
 
-Pattern 4: Credential dumping. A process accessing lsass.exe memory (Sysmon Event ID 10), or the use of credential dumping tools like Mimikatz. EDR platforms often have specific detections for these patterns and can alert in real time.
+When a correlation rule fires, the SIEM creates a notable event or alert. Modern SIEMs integrate tightly with SOAR platforms — Security Orchestration, Automation, and Response. SOAR can automatically enrich an alert with threat intel lookups, asset data, and user context, create a ticket in ServiceNow or Jira, and trigger a response playbook — all without an analyst touching it.
 
-Pattern 5: Persistence establishment. Registry Run key modifications (T1547.001), scheduled task creation (T1053.005), or service installation (T1543.003). EDR captures all of these and can alert specifically when unexpected accounts modify persistence mechanisms."
+### Layer 5 — Storage and Search
 
-[SHOW DIAGRAM: Process tree visualization. Root node: explorer.exe (user session). Child node: WINWORD.EXE. Under WINWORD.EXE: cmd.exe (highlighted red — suspicious). Under cmd.exe: powershell.exe -enc [base64 string] (highlighted red — encoded command). Under powershell.exe: svchost32.exe at C:\Users\Public\ (highlighted red — suspicious path). Annotations pointing to each red node: "Word should not spawn cmd.exe," "Encoded command hides payload," "Executable in user-writable path — not a real svchost."]
+SIEMs store logs for both real-time investigation and long-term compliance. Retention requirements vary by regulation: PCI DSS requires one year, HIPAA commonly requires six years. Analysts search stored logs during threat hunting and post-incident forensics, sometimes looking back months into historical data.
 
 ---
 
-### [13:00 - 16:30] EDR Investigation Workflow
+## SEGMENT 3 — Log Sources (7:30–11:30)
 
-"When an EDR alert fires, the analyst follows an investigation workflow that leverages the platform's telemetry and response capabilities.
+[SHOW TOOL: Table of log source categories with examples and key security value]
 
-Step 1: Triage the alert. The EDR console shows the alert with the triggering event and the endpoint affected. The analyst reviews the alert type, severity, and the specific process or event that triggered it.
+The value of your SIEM is directly proportional to what you feed it. Let's walk through the most important log sources a security analyst works with.
 
-Step 2: Examine the process tree. For process-based detections, the process tree shows the parent-child execution chain. The analyst follows the tree up to find the root cause — what was the first suspicious process, and how did it get there?
+### Network Logs
 
-Step 3: Review the full timeline. The analyst pivots to the full event timeline for the affected host and the relevant time window. They look at file operations, network connections, and registry changes associated with the suspicious process.
+Firewall logs record every connection attempt — source IP, destination IP, port, protocol, and whether the traffic was allowed or denied. They are your first line of visibility into what is entering and leaving the network.
 
-Step 4: Check file hashes. If a suspicious file was created, the analyst hashes it and queries the threat intelligence database. A match to a known malware family immediately elevates the incident.
+Router and switch logs capture routing changes, interface events, and spanning tree activity — useful for detecting network-level anomalies and topology changes.
 
-Step 5: Scope the impact. Using the EDR query capabilities, the analyst searches across all endpoints for the same indicator — the same hash, the same process name, the same registry key modification. This determines whether the compromise is isolated to one host or has spread.
+NetFlow data is flow-level metadata: source, destination, protocol, bytes, and duration, without capturing full packet content. NetFlow is invaluable for detecting large data transfers, beaconing, and lateral movement patterns even when you cannot decrypt the traffic.
 
-Step 6: Contain if confirmed. If the investigation confirms a true positive, the analyst isolates the host via the EDR console (network isolation while maintaining management connectivity) and escalates to Tier 2 for full incident response.
+DNS logs record every query — what names were resolved, by whom, and when. Attackers use DNS for command and control, and DNS logs are the primary data source for detecting domain generation algorithm traffic and DNS tunneling.
 
-This workflow is tested on the CySA+ exam in scenario format. Know the order: triage, process tree, timeline, hash check, scope, contain."
+### Endpoint Logs
+
+Windows Security Event Log is one of the most important sources in most enterprise environments. Key event IDs you must know for the exam:
+
+- 4624 — Successful logon
+- 4625 — Failed logon
+- 4648 — Logon using explicit credentials
+- 4672 — Special privileges assigned to new logon
+- 4688 — Process creation (requires audit policy enabled)
+- 4698 — Scheduled task created
+- 4720 — User account created
+- 4776 — NTLM authentication attempt
+
+On Linux endpoints, `/var/log/auth.log` captures authentication events. `/var/log/syslog` or `/var/log/messages` captures general system activity. Auditd provides detailed syscall-level logging when configured and is essential for compliance environments.
+
+### Application and Service Logs
+
+Web server logs — Apache, Nginx, IIS — record every HTTP request with client IP, URI, response code, and bytes transferred. These are the primary source for detecting web application attacks.
+
+Database logs capture queries, authentication events, schema changes, and privilege operations. Application-level logs from custom business applications capture business logic events that no network sensor can see.
+
+Authentication platform logs from Active Directory, Okta, Azure AD, and similar identity providers track logins, MFA results, password changes, and account lockouts — essential for detecting credential-based attacks.
+
+### Cloud Logs
+
+[SHOW TOOL: AWS CloudTrail event record — who, what action, what resource, from where]
+
+AWS CloudTrail records every API call made in an AWS account — CreateUser, AttachRolePolicy, DescribeInstances — with the caller identity, source IP, and timestamp. This is the equivalent of a Windows Security Event Log for your cloud infrastructure.
+
+Azure Monitor and Azure Activity Logs serve the same function in Microsoft environments. Google Cloud Audit Logs in GCP. These logs are non-negotiable for cloud security visibility and are increasingly tested on CySA+.
 
 ---
 
-### [16:30 - 19:30] UEBA and Host-Based Indicators
+## SEGMENT 4 — Log Normalization and Standards (11:30–13:30)
 
-"Modern EDR platforms often include or integrate with User and Entity Behavior Analytics — UEBA. UEBA builds a baseline of normal behavior for each user and entity (host) and alerts when behavior deviates significantly from the baseline.
+[SHOW TOOL: CEF log format example — header and extension fields labeled]
 
-For example, if a user's account has never logged in outside business hours and never accessed sensitive file shares, a sudden 2 AM login combined with large file share access would be anomalous for that specific user's profile — even if it would not trigger a rule-based alert.
+Since logs look different from every source, the industry has developed normalization standards that SIEMs use internally and that vendors use for log formatting.
 
-UEBA is particularly valuable for detecting insider threats and account compromise scenarios where the attacker is using legitimate credentials. Rules-based detection struggles with these cases because the credentials and access are technically authorized.
+Common Event Format, or CEF, was developed by ArcSight and is widely used by security products. A CEF log has a header section with vendor, product, severity, and a message string, followed by key-value extension fields.
 
-On the CySA+ exam, the distinction between SIEM correlation rules (rule-based detection) and UEBA (behavior-baseline detection) is tested. Know that UEBA detects anomalies specific to individual baselines; SIEM rules detect patterns that match predefined thresholds."
+The Elastic Common Schema, or ECS, is used by Elastic SIEM. It defines standard field names for common data types — `source.ip`, `destination.port`, `process.name` — so that logs from any source can be queried with the same field names after parsing.
 
----
+Microsoft Sentinel uses the Advanced Security Information Model, or ASIM, which provides normalization parsers that translate logs from dozens of sources into standardized tables. An ASIM query written against the `NetworkSession` table works regardless of whether the underlying data came from a Palo Alto firewall or an Azure NSG.
 
-### [19:30 - 22:00] XDR — Extended Detection and Response
-
-"Before we close, let me introduce Extended Detection and Response — XDR — because it appears on the CySA+ exam and is increasingly discussed in enterprise security programs.
-
-XDR is an evolution of EDR. While EDR focuses exclusively on endpoint telemetry, XDR integrates telemetry from multiple security layers: endpoints, network, email, cloud, and identity. It correlates events across all of these sources in a unified detection and investigation platform.
-
-The benefit of XDR is a more complete picture of an attack. A phishing email that delivered a malicious attachment (email telemetry) that exploited a vulnerability and established a C2 connection (network telemetry) from a specific endpoint (EDR telemetry) using a compromised account (identity telemetry) is visible as one correlated incident in XDR, rather than separate alerts in separate tools.
-
-For the exam: EDR = endpoint only. XDR = cross-layer, integrates multiple security telemetry sources. Both support detection, investigation, and response. Neither is a replacement for a SIEM — they are complementary."
+Syslog itself is a transport standard — RFC 3164 and RFC 5424 define the format of the PRI (priority/facility), header (timestamp, hostname), and MSG (message content) sections. Understanding syslog structure helps analysts troubleshoot parsing failures and write custom parsers.
 
 ---
 
-### [22:00 - 24:00] Module Summary and Lab Preview
+## SEGMENT 5 — Correlation Rules and Use Case Development (13:30–17:30)
 
-"Let's bring it together.
+[SHOW TOOL: Correlation rule editor in Splunk ES or Sentinel Analytics rules blade]
 
-Traditional AV uses signature detection. EDR uses behavioral telemetry — process execution, file system, registry, network, memory.
+Correlation rules are the detection logic of the SIEM. Let's break down what they contain and walk through five concrete examples.
 
-Key EDR capabilities: process tree visualization, file hash checking, remote isolation, cross-endpoint searching.
+### Anatomy of a Correlation Rule
 
-Key malicious patterns: Office document macro chains, encoded PowerShell, LOLBin abuse, credential dumping, persistence mechanisms.
+Every rule has four components:
 
-EDR investigation workflow: triage, process tree, timeline, hash check, scope, contain.
+- A trigger condition — the events or pattern that must occur
+- A time window — how long the pattern can span
+- A threshold — how many occurrences trigger the rule
+- An action — what happens when the rule fires
 
-UEBA adds behavioral baseline analytics to detect anomalous individual behavior.
+### Use Case 1 — Brute Force Followed by Success
 
-XDR integrates EDR with network, email, cloud, and identity telemetry for unified cross-layer detection.
+Trigger: Five or more Windows Event ID 4625 (failed logon) for the same account within two minutes, followed by Event ID 4624 (successful logon) within five minutes.
 
-In the Module 06 lab, you will analyze simulated EDR telemetry — process trees, timeline events, and file operations — to identify attack patterns and classify the activity by ATT&CK technique. Read the Reading Guide first for the LOLBin reference table and process tree analysis examples.
+This detects credential stuffing and password spray attacks that ultimately succeed — the most dangerous kind.
 
-Study resources: professormesser.com and comptia.org. See you in Module 07."
+[SHOW TOOL: Splunk SPL query for brute force detection]
+
+```spl
+index=wineventlog EventCode=4625
+| bucket _time span=2m
+| stats count as failures by _time, Account_Name, src_ip
+| where failures >= 5
+| join type=inner Account_Name
+    [search index=wineventlog EventCode=4624 earliest=-7m | table Account_Name]
+| table _time, Account_Name, failures, src_ip
+```
+
+### Use Case 2 — Impossible Travel
+
+Trigger: A user authenticates successfully from two geographic locations that cannot be physically reached within the time between authentications.
+
+This detects credential compromise even when the password is correct, because the attacker's location is physically impossible.
+
+### Use Case 3 — Privilege Escalation
+
+Trigger: Event ID 4672 (Special Privileges Assigned) for an account not in the domain admin or privileged users group, following a standard-user logon.
+
+### Use Case 4 — Lateral Movement
+
+Trigger: A workstation-class endpoint (not a server) successfully authenticates to more than three other workstations within 15 minutes using NTLM authentication (Logon Type 3).
+
+### Use Case 5 — Data Exfiltration
+
+Trigger: Outbound traffic to a non-corporate IP exceeding 100 MB in one hour from a host whose 30-day average outbound transfer is under 10 MB per hour.
+
+[SHOW TOOL: Microsoft Sentinel KQL query for data exfiltration detection]
+
+```kql
+NetworkSessions
+| where TimeGenerated > ago(1h)
+| where Direction == "Outbound"
+| where not(ipv4_is_private(DestinationIp))
+| summarize TotalBytes = sum(SentBytes) by SourceIp, DestinationIp
+| where TotalBytes > 100000000
+| order by TotalBytes desc
+```
+
+---
+
+## SEGMENT 6 — Alert Tuning and Noise Reduction (17:30–20:30)
+
+[SHOW TOOL: Graph showing daily alert volume vs. analyst capacity — alert fatigue visualization]
+
+Here is a hard operational truth: most production SIEMs fire thousands of alerts per day. The majority are false positives. Alert fatigue is one of the leading causes of analyst burnout and, more critically, missed real detections. Tuning is not optional — it is a continuous maintenance responsibility.
+
+### The False Positive and False Negative Tradeoff
+
+A false positive is an alert that fires when no real threat exists. A false negative is a real threat that generates no alert. Every tuning decision moves you along this tradeoff curve. Lower your threshold and you catch more threats but generate more false positives. Raise your threshold and you reduce noise but risk missing lower-confidence attacks.
+
+### Tuning Strategies
+
+Allowlisting removes known-good activity from rules. Your vulnerability scanner generates port-scan-like traffic every night at 2 AM. Add the scanner's IP to an exception list so it does not trigger the port scan rule.
+
+Threshold adjustment raises the bar for noisy rules. If a rule fires after two failed logins and your help desk users frequently mistype passwords, raise the threshold to ten or fifteen.
+
+Contextual enrichment adds asset criticality and user risk scores to alerts. The same event from a critical financial server versus a developer sandbox should carry different severity levels.
+
+Suppression windows prevent alerts during scheduled maintenance activities when behavior patterns are abnormal by design.
+
+Scheduled rule review commits your team to a weekly report of the top-ten noisiest rules — adjust thresholds or retire rules that have produced zero true positives in 90 days.
+
+### Key Metrics to Track
+
+- Mean Time to Detect (MTTD) — time from compromise to detection
+- Mean Time to Respond (MTTR) — time from detection to containment
+- True positive rate per rule
+- False positive rate per rule
+- Alert-to-incident conversion rate
+
+---
+
+## SEGMENT 7 — Splunk and Microsoft Sentinel Basics (20:30–23:30)
+
+[SHOW TOOL: Splunk Web — Search and Reporting interface with SPL query entered]
+
+### Splunk
+
+Splunk is deployed in a large share of enterprise SOCs. Its query language is SPL — Search Processing Language. Every SPL query starts with a search against an index and then pipes data through transforming commands.
+
+Essential SPL commands to know for CySA+:
+
+- `index=` — which data index to search
+- `sourcetype=` — filter by log type
+- `stats count by field` — aggregate counts
+- `eval field=expression` — create calculated fields
+- `rex field=_raw "regex"` — extract fields with regex
+- `table field1, field2` — format output columns
+- `where condition` — filter results after aggregation
+- `timechart` — time-series aggregation for trending
+
+Splunk Enterprise Security adds a Common Information Model (CIM) that normalizes field names across data sources — `src_ip`, `dest_ip`, `user`, `action` — so correlation searches written against the CIM work regardless of the underlying sourcetype.
+
+[SHOW TOOL: Microsoft Sentinel — Analytics rules blade and Log Analytics workspace with KQL query]
+
+### Microsoft Sentinel
+
+Microsoft Sentinel is a cloud-native SIEM/SOAR built on Azure Log Analytics. Its query language is KQL — Kusto Query Language. KQL is a read-only, pipe-based language optimized for log data.
+
+A basic KQL detection query looks like this:
+
+```kql
+SecurityEvent
+| where EventID == 4625
+| where TimeGenerated > ago(24h)
+| summarize FailedAttempts = count() by Account, IpAddress
+| where FailedAttempts >= 5
+| order by FailedAttempts desc
+```
+
+Sentinel's strengths include native integration with Microsoft 365 Defender, Entra ID, and Azure Defender, hundreds of pre-built analytics rules mapped to MITRE ATT&CK, Workbooks for visualization, and Playbooks — Azure Logic Apps workflows — for automated response.
+
+---
+
+## SEGMENT 8 — Wrap-Up and CySA+ Alignment (23:30–24:00)
+
+For the CySA+ CS0-003 exam, focus on these key concepts from today.
+
+SIEM collects, normalizes, correlates, and alerts. The five architectural layers are collection, normalization, correlation, alerting/SOAR, and storage.
+
+Log sources: Windows Event IDs 4624, 4625, 4648, 4672, 4688, 4698. Firewall, DNS, NetFlow, cloud API logs. Know what each source provides.
+
+Correlation rules: trigger condition, time window, threshold, action. Know the five use case examples — brute force, impossible travel, privilege escalation, lateral movement, data exfiltration.
+
+Alert tuning: allowlisting, threshold adjustment, contextual enrichment, suppression, scheduled review. The false positive/negative tradeoff is a tested CySA+ concept.
+
+Platforms: Splunk uses SPL; Sentinel uses KQL. Know basic query structure for both.
+
+In the lab this week you will write SPL queries against a sample dataset and analyze a noisy correlation rule, proposing specific tuning changes. Next module we move into Threat Intelligence.
+
+See you there.
 
 ---
 
 End of Module 06 Video Script
 
-Study Resources: comptia.org | professormesser.com
+Total estimated runtime: 22–24 minutes

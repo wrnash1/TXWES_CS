@@ -1,28 +1,61 @@
-# Discussion Forum: Module 14 - Terraform in CI/CD Pipelines
-## Course: CIS-4337_Infrastructure_Automation (HashiCorp Certified: Terraform Associate)
+# Discussion Forum: Module 14 — Multi-Cloud Provisioning with Terraform
+
+## Course: CIS-4337 Infrastructure Automation
+
+## Texas Wesleyan University | Professor Nash
+
+**Certification Alignment:** HashiCorp Terraform Associate (003)
 
 ---
 
-## Discussion Prompt
-Consider the following real-world scenario or technical concept:
-*   **Topic Focus:** **Terraform in CI/CD Pipelines** (specifically focusing on: `GitHub Actions, GitLab CI, non-interactive execution (`-auto-approve`), linting/validation.`)
+## Instructions
 
-**Your Tasks:**
-1.  **Initial Post (Due Wednesday at 11:59 PM):** In 150-200 words, explain how you would apply Terraform in CI/CD Pipelines in an enterprise system. Address the following:
-    *   What is the primary benefit of utilizing this configuration or standard in a production environment?
-    *   Identify one common security concern or operational challenge related to this topic, and suggest a best-practice mitigation strategy.
-2.  **Peer Responses (Due Sunday at 11:59 PM):** Read through your classmates' posts and write constructive replies (at least 50 words each) to at least two peers. In your replies:
-    *   Provide feedback on their proposed mitigation strategy.
-    *   Share an alternative approach or add context from your own research or lab exercises.
+Choose one of the three scenarios below. Write an initial post of 175–225 words responding to the scenario prompt. Then write two peer responses of 75–100 words each that add substantive new information, ask a clarifying question, or respectfully challenge an assumption in the original post. Use the 10-point rubric at the bottom of this page to self-assess before submitting.
 
 ---
 
-## Discussion Rubric (10 Points Total)
-*   **Initial Post (6 Points):**
-    *   *5-6 pts:* Thoroughly addresses all prompt questions with technical accuracy, clear explanations, and appropriate terminology. Meets the word count.
-    *   *3-4 pts:* Addresses some prompt questions, but lacks detail or technical accuracy.
-    *   *0-2 pts:* Incomplete or missing initial post.
-*   **Peer Responses (4 Points):**
-    *   *4 pts:* Responds constructively to at least two peers, contributing meaningful additions to the conversation.
-    *   *2 pts:* Responds to only one peer, or comments are superficial (e.g., "Good post!").
-    *   *0 pts:* No peer responses submitted.
+## Scenario A: The Acquisition Integration
+
+Your company has acquired a startup that runs entirely on GCP. Your company's existing infrastructure runs on AWS. The CTO wants both environments integrated so engineers can deploy applications to either cloud from a single Terraform configuration. You have 60 days to propose an integration architecture.
+
+Discuss: What are the technical steps required to configure Terraform for cross-cloud integration? What authentication challenges arise when a single CI pipeline runner needs to provision in both AWS and GCP? What would the provider configuration look like, and what constraints would you place on the provider versions?
+
+---
+
+## Scenario B: Provider Version Drift Incident
+
+Your team has 8 engineers. Three months ago, no one committed the `.terraform.lock.hcl` file to the repository. When a new engineer joined and ran `terraform init`, they got AWS provider version 5.15.0 while the rest of the team is on 5.8.2. The new engineer's `terraform plan` output shows resource changes that no one else can reproduce. This causes confusion in code review and nearly results in an unintended apply.
+
+Discuss: How does this situation arise mechanically? What is the correct remediation? What processes or repository rules would prevent this from happening again? What are the risks of running `terraform init -upgrade` to align everyone to the latest version?
+
+---
+
+## Scenario C: Multi-Cloud Cost Analysis
+
+Your company's architecture team is evaluating whether to implement active-active multi-cloud for a high-traffic application that processes 10 TB of data per day. The primary data flows between an AWS compute tier and a GCP analytics tier. The team is excited about the resilience benefits but has not fully modeled the costs.
+
+Discuss: What cost factors must be included in a multi-cloud cost analysis that would not exist in a single-cloud architecture? How would you quantify egress costs at 10 TB/day? What architectural changes could reduce inter-cloud data transfer while preserving the analytics capability in GCP?
+
+---
+
+## Sample Peer Response Starters
+
+- "Your acquisition integration plan is practical. One additional complexity you may face is..."
+- "I agree the lock file incident is a process failure. I would add that the risk of `-upgrade` is..."
+- "Your egress cost estimate is on target. Another cost factor that is often overlooked is..."
+
+---
+
+## Discussion Rubric — 10 Points Total
+
+| Criterion | Points | Description |
+|-----------|--------|-------------|
+| Scenario accuracy | 2 | Initial post correctly identifies and addresses the core technical problem in the scenario |
+| Depth of analysis | 2 | Post goes beyond surface-level description and explains trade-offs or consequences |
+| Use of module concepts | 2 | Post accurately applies vocabulary and concepts from Module 14 (provider aliasing, lock file, version constraints, multi-cloud patterns, etc.) |
+| Peer response 1 | 2 | First peer response adds new information, asks a clarifying question, or substantively engages with the original post |
+| Peer response 2 | 2 | Second peer response meets the same standard and is not a simple agreement |
+
+---
+
+End of Module 14 Discussion

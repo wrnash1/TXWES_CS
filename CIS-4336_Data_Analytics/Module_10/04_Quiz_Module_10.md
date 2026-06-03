@@ -1,75 +1,179 @@
-# Quiz: Module 10 - Machine Learning Concepts for Analysts
-## Course: CIS-4336_Data_Analytics (CompTIA Data+)
+# Quiz: Module 10 — Data Quality and Governance
+
+## Course: CIS-4336 Data Analytics
+
+## Texas Wesleyan University | Professor Nash
+
+## Points: 20 (2 points each)
+
+## Certification Alignment: CompTIA Data+ (DA0-001) — Domain 5: Data Governance, Quality, and Controls
 
 ---
 
-**Question 1**
-A retail company wants to predict whether a customer will churn (cancel their subscription) in the next 30 days, using historical account data where each customer is labeled as "churned" or "retained." Which type of machine learning task is this?
-*   A) Unsupervised learning — clustering customers into groups based on behavior similarity.
-*   B) Supervised learning — classification, because the target variable is a known categorical label.
-*   C) Supervised learning — regression, because churn probability is a continuous numeric prediction.
-*   D) Unsupervised learning — anomaly detection, because churned customers are rare outliers.
-*   **Correct Answer:** B) Supervised learning — classification, because the target variable is a known categorical label.
-*   **Distractor Analysis:**
-    *   *Why correct:* The dataset has labeled outcomes ("churned" or "retained"), making this a supervised problem. The target is a discrete category, making it classification rather than regression.
-    *   A) Unsupervised clustering does not use labels — it discovers natural groupings. This problem has known labels. C) Regression predicts a continuous number. Churn is a binary category, not a continuous value, even though a probability score could be produced downstream. D) Anomaly detection identifies rare unexpected patterns in unlabeled data; this problem has explicit labeled examples of each class.
+## Instructions
+
+Select the single best answer for each question. Each question is worth 2 points. No partial credit.
 
 ---
 
-**Question 2**
-In machine learning, which of the following most accurately defines **overfitting**?
-*   A) A condition where the model is too simple to capture the underlying pattern in the data, resulting in poor performance on both training and test sets.
-*   B) A condition where the model learns the training data so precisely — including its noise and random variation — that it performs significantly worse on new, unseen data.
-*   C) A data preparation problem where information from the test set inadvertently influences the training process, producing an inflated estimate of model performance.
-*   D) A training technique that randomly drops a percentage of neurons in a neural network during each iteration to prevent any single pathway from dominating the learned representation.
-*   **Correct Answer:** B) A condition where the model learns the training data so precisely — including its noise and random variation — that it performs significantly worse on new, unseen data.
-*   **Distractor Analysis:**
-    *   *Why B is correct:* Overfitting is the failure to generalize. The model memorizes training examples rather than learning the underlying pattern, so it scores high on training data but poorly on the test set. A large gap between training accuracy and test accuracy is the telltale sign.
-    *   *Why A is incorrect:* A model too simple to capture any pattern describes underfitting, which is the opposite of overfitting. Underfitting results in poor performance on both the training and test sets.
-    *   *Why C is incorrect:* Information from the test set influencing training describes data leakage — a data preparation error that produces misleadingly optimistic performance estimates, distinct from overfitting.
-    *   *Why D is incorrect:* Randomly dropping neurons during training describes dropout regularization — a technique used to prevent overfitting, not the definition of overfitting itself.
+## Question 1
+
+A customer database contains a record showing a customer's city as "Austin" but the customer actually lives in San Antonio. Which data quality dimension is violated?
+
+A. Completeness
+
+B. Timeliness
+
+C. Accuracy
+
+D. Uniqueness
+
+**Correct Answer:** C — Accuracy is violated because the data value does not correctly reflect the real-world entity (the customer's actual city). Completeness concerns missing values (A). Timeliness concerns data currency (B). Uniqueness concerns duplicate records (D).
 
 ---
 
-**Question 3**
-A data science team builds a customer segmentation model to divide 50,000 customers into distinct behavioral groups. The customers have no pre-existing category labels — the team wants the data itself to reveal natural groupings. Which machine learning approach is most appropriate?
-*   A) Supervised classification using logistic regression with "customer tier" as the target label.
-*   B) Supervised regression using linear regression to predict each customer's lifetime value.
-*   C) Unsupervised clustering using k-means to discover natural groupings based on purchase behavior features.
-*   D) Supervised learning with a decision tree trained on a labeled training set of manually categorized customers.
-*   **Correct Answer:** C) Unsupervised clustering using k-means to discover natural groupings based on purchase behavior features.
-*   **Distractor Analysis:**
-    *   *Why C is correct:* The problem has no labels — the goal is to discover unknown structure. Unsupervised clustering is precisely designed for this. K-means partitions customers into k groups by minimizing the distance between each point and its cluster centroid.
-    *   *Why A is incorrect:* Logistic regression is a supervised classifier — it requires labeled training examples. The scenario explicitly states there are no pre-existing category labels.
-    *   *Why B is incorrect:* Linear regression is supervised and predicts a continuous value such as lifetime value, not group membership. The goal here is segmentation, not numeric prediction.
-    *   *Why D is incorrect:* A decision tree is a supervised model requiring a labeled training set. Without pre-existing labels, there is no target variable to train against.
+## Question 2
+
+A hospital patient records system shows that 22% of patient records have a null value in the date_of_birth field. Which data quality dimension does this represent?
+
+A. Validity
+
+B. Completeness
+
+C. Consistency
+
+D. Timeliness
+
+**Correct Answer:** B — Completeness measures whether all required values are present. A 22% null rate in a required field is a completeness problem. Validity concerns whether present values conform to rules (A). Consistency concerns disagreement across systems (C). Timeliness concerns data currency (D).
 
 ---
 
-**Question 4**
-After training a fraud detection model, an analyst reports 99.2% training accuracy and 71% test accuracy. What does this gap indicate, and what is the most appropriate remediation?
-*   A) The model is underfitting — the algorithm is too simple. The fix is to use a more complex model architecture.
-*   B) The model is overfitting — it has memorized training data rather than learning generalizable patterns. Remediation includes reducing model complexity, adding regularization, or obtaining more training data.
-*   C) The model has a data leakage problem — test data was used during training. The fix is to retrain without the test set.
-*   D) The accuracy metrics are computed incorrectly. The fix is to re-run evaluation using a different performance metric such as F1 score.
-*   **Correct Answer:** B) The model is overfitting — it has memorized training data rather than learning generalizable patterns. Remediation includes reducing model complexity, adding regularization, or obtaining more training data.
-*   **Distractor Analysis:**
-    *   *Why B is correct:* A 28-percentage-point gap between training accuracy (99.2%) and test accuracy (71%) is the defining symptom of overfitting. The model performs well on data it has seen but fails to generalize to new cases.
-    *   *Why A is incorrect:* Underfitting produces poor performance on both training and test sets. A 99.2% training accuracy is excellent, not poor — the model has more than enough capacity to fit the training data.
-    *   *Why C is incorrect:* Data leakage would cause the test accuracy to appear artificially high, not low. If test data contaminated training, the reported test accuracy would be inflated, not depressed.
-    *   *Why D is incorrect:* While F1 score is often more informative than accuracy for imbalanced fraud datasets, re-running with a different metric would not close the performance gap between training and test sets. The root cause is overfitting, not a metric choice.
+## Question 3
+
+An order management system stores customer addresses as "123 Main St" while the CRM stores the same address as "123 Main Street." Which data quality dimension is violated?
+
+A. Accuracy
+
+B. Uniqueness
+
+C. Validity
+
+D. Consistency
+
+**Correct Answer:** D — Consistency is violated because the same entity is represented differently across two systems. Both values may be factually correct (so accuracy is not violated). No duplicate records are involved (B). The format difference alone does not constitute a validity violation (C).
 
 ---
 
-**Question 5**
-A data analyst splits a 10,000-row labeled dataset into training, validation, and test sets before building a model. A colleague suggests skipping the validation set to give the model more training data. Why is the validation set important and why should it be kept?
-*   A) The validation set is used to measure final model performance and report accuracy to stakeholders — removing it means there is no way to evaluate the deployed model.
-*   B) The validation set is used to tune model hyperparameters and compare candidate models during development, without contaminating the test set that must remain unseen until final evaluation.
-*   C) The validation set prevents overfitting by automatically removing noisy training examples before the model sees them.
-*   D) The validation set is required by law for any model trained on personally identifiable information under data privacy regulations.
-*   **Correct Answer:** B) The validation set is used to tune model hyperparameters and compare candidate models during development, without contaminating the test set that must remain unseen until final evaluation.
-*   **Distractor Analysis:**
-    *   *Why B is correct:* Using the test set to make iterative modeling decisions is a form of data leakage — the model indirectly learns from the test set, inflating the final performance estimate. The validation set provides an independent benchmark for each iteration while preserving the test set's integrity as a truly held-out final evaluation.
-    *   *Why A is incorrect:* The test set, not the validation set, is used to report final model performance to stakeholders. The validation set is an internal development tool, not the final evaluation benchmark.
-    *   *Why C is incorrect:* The validation set does not filter or clean training data. It is a separate subset used to evaluate the model after training, not a preprocessing step applied before training.
-    *   *Why D is incorrect:* No data privacy regulation (GDPR, CCPA, HIPAA) mandates a train/validation/test split. This is a machine learning best practice for building reliable models, not a legal compliance requirement.
+## Question 4
+
+Which of the following best describes the role of a data steward?
+
+A. An executive who has ultimate accountability for a data domain and makes strategic decisions about data use
+
+B. An IT professional who manages database infrastructure, backups, and security implementations
+
+C. A person responsible for day-to-day data quality monitoring, standard definition, and issue resolution for a data domain
+
+D. A business analyst who consumes data to build reports and is responsible for following governance policies
+
+**Correct Answer:** C — A data steward handles operational data quality management: defining standards, monitoring metrics, and resolving issues. Option A describes a data owner. Option B describes a data custodian (DBA). Option D describes a data consumer.
+
+---
+
+## Question 5
+
+A product database contains three records for the same supplier — "Acme Corp," "ACME Corporation," and "Acme Corp, Inc." — each in a different source system. What solution is specifically designed to resolve this type of problem by creating a single authoritative record?
+
+A. Data catalog
+
+B. Data lineage tracking
+
+C. Master Data Management
+
+D. Data lake ingestion
+
+**Correct Answer:** C — Master Data Management (MDM) creates a golden record — a single authoritative representation of each business entity — and resolves conflicting representations across source systems. A data catalog helps discover and describe data but does not merge records (A). Lineage tracks data origin but does not deduplicate (B). Data lake ingestion stores raw data without deduplication (D).
+
+---
+
+## Question 6
+
+A date field in a customer database contains the value "February 30, 2024." Which data quality dimension is violated?
+
+A. Timeliness
+
+B. Completeness
+
+C. Accuracy
+
+D. Validity
+
+**Correct Answer:** D — Validity is violated because "February 30" does not exist — the value fails a basic business rule (valid calendar dates). Timeliness concerns how current data is (A). Completeness concerns nulls (B). Accuracy concerns whether a value correctly represents reality, but "February 30" is not a real date — it cannot even be assessed for accuracy because it is structurally invalid (D is the more precise answer than C).
+
+---
+
+## Question 7
+
+Contact data for a customer was last updated 5 years ago. A marketing team uses this data for a personalized email campaign and experiences a 40% bounce rate. Which data quality dimension caused this problem?
+
+A. Accuracy
+
+B. Uniqueness
+
+C. Timeliness
+
+D. Validity
+
+**Correct Answer:** C — Timeliness is violated because the contact data is not sufficiently current for its intended use (an active marketing campaign). The addresses and emails may have been accurate 5 years ago but are now outdated. Accuracy (A) refers to correctness at a point in time. Uniqueness (B) refers to duplicate records. Validity (D) refers to rule conformance.
+
+---
+
+## Question 8
+
+What is the primary purpose of a data catalog in an organization?
+
+A. To replace the data warehouse with a schema-on-read architecture
+
+B. To enable analysts to discover, understand, evaluate, and trust data assets through metadata management
+
+C. To enforce row-level security so that analysts only see data relevant to their role
+
+D. To store raw data from all source systems in a single centralized location
+
+**Correct Answer:** B — A data catalog is a metadata management tool that helps users find data, understand its meaning and quality, and evaluate whether it is appropriate for their use case. It does not replace the warehouse (A), enforce access security (C), or serve as a raw data store (D).
+
+---
+
+## Question 9
+
+In the DAMA framework, which knowledge area sits at the center of the DMBOK wheel because it provides the enabling policies and accountability structures for all other areas?
+
+A. Data Quality
+
+B. Metadata Management
+
+C. Data Security
+
+D. Data Governance
+
+**Correct Answer:** D — Data Governance is at the center of the DAMA DMBOK wheel. It provides the organizational structures, policies, and accountabilities that enable all other 10 knowledge areas to function effectively. Data Quality (A), Metadata Management (B), and Data Security (C) are all important knowledge areas but are positioned around the wheel, not at its center.
+
+---
+
+## Question 10
+
+A data analyst discovers that a sales report shows 18,400 active customers while the billing system shows 14,200. Both figures claim to represent the same metric. Which governance mechanism is most directly designed to prevent this discrepancy?
+
+A. Data lineage tracking
+
+B. Row-level security
+
+C. Certified datasets and MDM-based golden records
+
+D. Batch processing with nightly reconciliation
+
+**Correct Answer:** C — Certified datasets (official endorsed versions of metrics) and MDM golden records (single authoritative entity representations) directly prevent conflicting metric definitions by establishing organizational agreement on what "active customer" means and which system is authoritative. Lineage helps investigate after the fact (A). Row-level security controls access, not definitions (B). Batch reconciliation may aggregate but does not resolve definitional conflicts (D).
+
+---
+
+End of Module 10 Quiz

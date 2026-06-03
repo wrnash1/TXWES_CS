@@ -1,195 +1,374 @@
-# Video Script: Module 06 - SAST: Static Application Security Testing
+# Video Script: Module 06 — Infrastructure as Code Security
 
 ## Course: CIS-4350 DevSecOps and CI/CD Pipelines
 
+## Texas Wesleyan University | Professor Nash
+
+## Estimated Duration: 20–24 minutes
+
 ## Certification Alignment: DevSecOps Professional (DSOE)
 
-## Estimated Duration: 20-24 minutes
+---
 
-## Instructor: Professor Nash
+### SEGMENT 1 — Introduction (0:00–1:30)
+
+[SLIDE: Module 06 title card]
+
+Welcome to Module 06. We've secured our code, our containers, and our Kubernetes clusters. Now let's address the infrastructure that runs all of it. Infrastructure as Code — IaC — is the practice of managing cloud resources through version-controlled configuration files. Terraform, AWS CloudFormation, Azure Bicep, Pulumi — these tools provision servers, databases, networks, and security groups programmatically.
+
+The security problem: IaC files frequently contain misconfigurations — open S3 buckets, public security group rules, disabled encryption — that would be caught in an application code review but are often overlooked because infrastructure engineers may not have security training for cloud-specific risks.
+
+In this module we'll cover Terraform security scanning with tfsec and checkov, CloudFormation security, policy as code with OPA and HashiCorp Sentinel, drift detection, and the immutable infrastructure principle.
 
 ---
 
-### [00:00 - 01:30] Opening and Module Overview
+### SEGMENT 2 — IaC and the Security Problem (1:30–4:30)
 
-**Visual:** Instructor on camera, title card: "Module 06 — SAST: Static Application Security Testing"
+[SLIDE: Timeline — IaC misconfiguration to breach]
 
-**Audio:**
+Infrastructure misconfigurations are one of the most common causes of cloud data breaches. The Verizon Data Breach Investigations Report and the IBM Cost of a Data Breach Report both consistently list misconfiguration as a top breach cause alongside phishing and stolen credentials.
 
-"Welcome back to CIS-4350. I'm Professor Nash. This module covers SAST — Static Application Security Testing — which is the most widely integrated automated security control in DevSecOps pipelines.
+Why are IaC misconfigurations so common?
 
-SAST is the workhorse of the shift-left movement. It runs at the commit or pull request stage — before any code is deployed, before any tests run — and it analyzes your source code for vulnerability patterns. By the end of this video you'll be able to explain how SAST works mechanically, compare the major SAST tools, integrate Semgrep into a GitHub Actions pipeline, and — critically — analyze a real SAST finding and describe the vulnerability and its remediation. That analysis skill is directly tested in this module's lab and on the DevSecOps Professional exam."
+First, cloud APIs change rapidly. A Terraform resource that was secure when written may have new security options available a year later that are not enabled in the original configuration.
+
+Second, infrastructure developers often copy and paste from Stack Overflow or GitHub examples. Those examples prioritize "getting it working" over security. The `0.0.0.0/0` CIDR range in a security group is a classic example — it opens all traffic but is everywhere in examples.
+
+Third, IaC files are code reviewed less rigorously than application code. Security engineers rarely participate in infrastructure pull request reviews unless there is a specific process requirement.
+
+The solution is the same pattern we've applied throughout this course: automate the security check and embed it in the pipeline. IaC scanners analyze Terraform, CloudFormation, Kubernetes manifests, and other configuration formats for known-bad patterns before the infrastructure is ever provisioned.
 
 ---
 
-### [01:30 - 06:00] How SAST Works: Data Flow and Pattern Analysis
+### SEGMENT 3 — Terraform Security with tfsec (4:30–8:00)
 
-**Visual:** Code snippet with annotated taint flow from user input to SQL query
+[SLIDE: tfsec scan output on a Terraform file]
 
-**Audio:**
+tfsec is an open-source static analysis tool for Terraform code. It scans `.tf` files for security issues using a library of built-in rules covering AWS, Azure, GCP, and general Terraform practices.
 
-"Let's start with how SAST actually works under the hood, because understanding the mechanism helps you understand its strengths and limitations.
+Consider this Terraform configuration for an S3 bucket:
 
-SAST tools analyze source code — or compiled bytecode or binaries — without executing the program. They use two primary analysis techniques.
+```hcl
+# Insecure S3 bucket
+resource "aws_s3_bucket" "data" {
+  bucket = "my-app-data"
+}
 
-The first is pattern matching. Simple SAST tools use regular expressions or abstract syntax tree (AST) analysis to find known dangerous patterns: string concatenation in SQL queries, `eval()` calls with user input, `innerHTML` assignments, hardcoded password strings, and similar anti-patterns. Semgrep is primarily a pattern-matching tool with a rich, community-contributed rule library.
-
-The second and more powerful technique is taint analysis, also called data flow analysis. Taint analysis tracks the flow of untrusted data — 'tainted' data from user input, API parameters, database reads, file reads — through the code, looking for paths where that tainted data reaches a dangerous 'sink' — a SQL query, a shell command, a file write, an HTML output function — without being properly sanitized or validated along the way.
-
-**[SHOW CODE]**
-
-Here is a concrete example. Consider this Python Flask route:
-
-```python
-from flask import Flask, request
-import sqlite3
-
-app = Flask(__name__)
-
-@app.route('/user')
-def get_user():
-    user_id = request.args.get('id')
-    conn = sqlite3.connect('users.db')
-    cursor = conn.cursor()
-    # SQL Injection: untrusted user_id directly concatenated into query
-    query = f"SELECT * FROM users WHERE id = {user_id}"
-    cursor.execute(query)
-    return str(cursor.fetchall())
+resource "aws_s3_bucket_acl" "data_acl" {
+  bucket = aws_s3_bucket.data.id
+  acl    = "public-read"
+}
 ```
 
-A taint analysis SAST tool traces: `user_id` ← `request.args.get('id')` (source: HTTP request parameter — untrusted). Then: `query` ← f-string with `user_id` (taint propagates). Then: `cursor.execute(query)` (sink: SQL execution). No sanitization in between. Result: SQL injection finding, severity CRITICAL.
+Running tfsec against this configuration:
 
-A pattern-matching tool finds this by recognizing the `f"SELECT ... {variable}"` pattern as SQL string concatenation.
-
-The remediation: use parameterized queries.
-
-```python
-query = "SELECT * FROM users WHERE id = ?"
-cursor.execute(query, (user_id,))
+```bash
+tfsec .
 ```
 
-The `?` placeholder with a separate parameter tuple is handled by the database driver, which treats the parameter as data, not as SQL syntax. Injection is impossible."
-
----
-
-### [06:00 - 11:00] SAST Tools: Semgrep, SonarQube, Checkmarx
-
-**Visual:** Tool comparison table on screen
-
-**Audio:**
-
-"The three SAST tools you need to know for the DevSecOps Professional exam are Semgrep, SonarQube, and Checkmarx.
-
-**Semgrep** is an open-source, pattern-matching SAST tool that uses a simple, readable rule syntax. Rules are written in YAML and closely resemble the code patterns they detect, making them easy to understand and write. Semgrep has a large community registry of rules covering OWASP Top 10 vulnerabilities across dozens of languages. It integrates natively with GitHub Actions, GitLab CI, and Jenkins.
-
-**[SHOW CODE]**
-
-Running Semgrep in a GitHub Actions pipeline:
-
-```yaml
-- name: Run Semgrep SAST
-  uses: returntocorp/semgrep-action@v1
-  with:
-    config: >-
-      p/owasp-top-ten
-      p/python
-      p/secrets
-  env:
-    SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
-```
-
-`p/owasp-top-ten` uses the community rule pack for OWASP Top 10 vulnerabilities. `p/python` adds Python-specific rules. `p/secrets` detects hardcoded credentials.
-
-**SonarQube** is an enterprise-grade code quality and security platform with deeper semantic analysis than Semgrep. SonarQube integrates into CI pipelines via the SonarScanner and posts results to a SonarQube server. It supports quality gates — configurable thresholds (e.g., no new critical vulnerabilities, code coverage above 80%) that must pass before a PR can merge. SonarQube Community edition is free; Enterprise edition adds taint analysis and additional language support.
-
-**Checkmarx** is a commercial enterprise SAST platform used in highly regulated industries (banking, healthcare, government). Checkmarx performs deep interprocedural taint analysis — it follows data flow across function calls, class boundaries, and module imports. It is more accurate than pattern-based tools but requires more configuration and has higher false-positive rates. For the exam, know Checkmarx as the enterprise taint analysis SAST tool."
-
----
-
-### [11:00 - 16:00] Analyzing SAST Findings: The Lab Skill
-
-**Visual:** Semgrep output showing a finding with metadata
-
-**Audio:**
-
-"Now let's cover the skill this module's lab specifically tests: analyzing a SAST finding, identifying the vulnerability, and describing the remediation. This is directly tested on the DevSecOps Professional exam.
-
-**[SHOW CODE]**
-
-Here is representative Semgrep output for a finding:
+tfsec will report multiple findings:
 
 ```text
-/app/routes/auth.py
-  python.flask.security.audit.hardcoded-token.hardcoded-token
-  Hardcoded token `SECRET_KEY` detected. Avoid hardcoding sensitive values.
-  Use environment variables or a secrets management system instead.
+CRITICAL  aws-s3-no-public-buckets
+          Bucket has public access enabled via ACL
+          /main.tf:7
 
-  79  |  app.secret_key = "my-super-secret-key-12345"
-       |  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+HIGH      aws-s3-enable-versioning
+          Bucket does not have versioning enabled
+          /main.tf:1
 
-  Severity: ERROR
-  Rule: python.flask.security.audit.hardcoded-token.hardcoded-token
-  CWE: CWE-798 (Use of Hard-coded Credentials)
-  OWASP: A07:2021 - Identification and Authentication Failures
+HIGH      aws-s3-enable-bucket-encryption
+          Bucket does not have encryption enabled
+          /main.tf:1
+
+MEDIUM    aws-s3-enable-bucket-logging
+          Bucket does not have logging enabled
+          /main.tf:1
 ```
 
-Let me walk through how to analyze this finding.
+The remediated configuration:
 
-**Vulnerability identified:** Hardcoded Flask secret key. The string `"my-super-secret-key-12345"` is embedded directly in the source code.
+```hcl
+resource "aws_s3_bucket" "data" {
+  bucket = "my-app-data"
+}
 
-**Why it's a vulnerability:** Flask uses the secret key to sign session cookies and CSRF tokens. If the secret key is known, an attacker can forge valid session cookies, impersonating any user including administrators. Because it's hardcoded in source code, anyone with read access to the repository — including after the repository is made public or after a breach of the version control system — has the secret key permanently, even if the code is later changed.
+resource "aws_s3_bucket_public_access_block" "data" {
+  bucket                  = aws_s3_bucket.data.id
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
 
-**CWE and OWASP mapping:** CWE-798 (Use of Hard-coded Credentials). OWASP A07:2021 — Identification and Authentication Failures.
+resource "aws_s3_bucket_versioning" "data" {
+  bucket = aws_s3_bucket.data.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
 
-**Remediation:**
-
-```python
-import os
-# Read from environment variable — never hardcode
-app.secret_key = os.environ.get('FLASK_SECRET_KEY')
-if not app.secret_key:
-    raise RuntimeError('FLASK_SECRET_KEY environment variable is required')
+resource "aws_s3_bucket_server_side_encryption_configuration" "data" {
+  bucket = aws_s3_bucket.data.id
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm = "aws:kms"
+    }
+  }
+}
 ```
 
-Store `FLASK_SECRET_KEY` in your secrets management system (GitHub Secrets, HashiCorp Vault, AWS Secrets Manager) and inject it as an environment variable at runtime.
+tfsec can be integrated into GitHub Actions:
 
-This is the pattern for analyzing any SAST finding: identify the vulnerability type, explain why it is dangerous, cite the CWE/OWASP classification, and write the remediated code."
+```yaml
+- name: Run tfsec
+  uses: aquasecurity/tfsec-action@v1.0.0
+  with:
+    soft_fail: false
+    working_directory: infra/
+```
 
 ---
 
-### [16:00 - 20:00] SAST Integration Patterns and False Positives
+### SEGMENT 4 — Terraform Security with checkov (8:00–11:00)
 
-**Visual:** Pipeline diagram showing SAST placement and breaking vs. non-breaking modes
+[SLIDE: checkov multi-framework scan output]
 
-**Audio:**
+checkov, developed by Bridgecrew (now part of Palo Alto Prisma Cloud), supports a wider range of IaC frameworks than tfsec and includes both built-in checks and custom Python-based checks.
 
-"Let's talk about how SAST integrates into a real DevSecOps pipeline — including the challenge of false positives.
+```bash
+# Install checkov
+pip install checkov
 
-SAST tools run in two modes in a pipeline: breaking and non-breaking. In breaking mode, a finding at or above a configured severity threshold fails the pipeline job, blocking the merge. In non-breaking mode, findings are reported but do not block the pipeline — they appear as advisory results.
+# Scan Terraform files
+checkov -d infra/ --framework terraform
 
-The recommended DevSecOps pattern is: use non-breaking mode initially when introducing SAST to a codebase that has existing technical debt. Scan and triage existing findings without blocking the team. Then progressively tighten: first make CRITICAL findings breaking, then add HIGH, and so on, as the team works down the backlog.
+# Scan CloudFormation templates
+checkov -d templates/ --framework cloudformation
 
-False positives — SAST findings that are not actual vulnerabilities — are a real operational challenge. Every SAST tool has them. Too many false positives cause 'alert fatigue' and developers start ignoring all SAST output. Managing false positives requires: tuning rule configurations to disable rules that generate noise for your tech stack, adding suppression comments for confirmed false positives with documented justification, and establishing a triage process.
+# Scan Kubernetes manifests
+checkov -d k8s/ --framework kubernetes
 
-**[SHOW CODE]**
+# Scan Dockerfile
+checkov -f Dockerfile --framework dockerfile
 
-Semgrep suppression comment syntax — marking a specific line as a known false positive:
-
-```python
-# nosemgrep: python.flask.security.audit.debug-enabled.debug-enabled
-app.run(debug=True)  # Debug mode enabled only in development, gated by environment check
+# Output in SARIF for GitHub Security tab
+checkov -d infra/ --output sarif --output-file-path results/
 ```
 
-The `# nosemgrep:` comment with the specific rule ID suppresses that rule for that line only, without disabling the rule globally."
+checkov supports suppressing specific checks when there is a documented business reason:
+
+```hcl
+resource "aws_security_group_rule" "allow_http" {
+  type        = "ingress"
+  from_port   = 80
+  to_port     = 80
+  protocol    = "tcp"
+  cidr_blocks = ["0.0.0.0/0"]
+  #checkov:skip=CKV_AWS_25: Public HTTP access required for load balancer health checks
+}
+```
+
+The suppression comment is tracked in code review, providing an auditable record of accepted risk.
 
 ---
 
-### [20:00 - End] Closing and Exam Alignment
+### SEGMENT 5 — Policy as Code with OPA and Sentinel (11:00–14:30)
 
-**Visual:** Instructor on camera
+[SLIDE: OPA policy evaluation flow]
 
-**Audio:**
+Built-in scanner rules cover known patterns, but organizations need custom policies. Policy as Code tools allow security teams to write organization-specific rules in a machine-executable language.
 
-"For the exam: know that SAST analyzes source code without execution, using pattern matching and taint analysis. Know the three major tools: Semgrep (open-source, pattern-based), SonarQube (enterprise, quality gates), Checkmarx (enterprise, deep taint analysis). Know that SAST runs at the commit/PR stage. Know CWE-89 (SQL Injection), CWE-79 (XSS), and CWE-798 (Hardcoded Credentials) as the top SAST-detected vulnerability classes. Know the difference between breaking and non-breaking SAST integration modes.
+Open Policy Agent (OPA) with Conftest tests IaC files against Rego policies:
 
-Complete the lab, which requires analyzing a SAST finding and writing a remediation. The OWASP reference for SAST concepts is at [https://owasp.org/www-project-devsecops-guideline/](https://owasp.org/www-project-devsecops-guideline/). See you in Module 07."
+```rego
+# policies/terraform/deny_public_s3.rego
+package main
+
+deny[msg] {
+  resource := input.resource.aws_s3_bucket[name]
+  resource.bucket_acl == "public-read"
+  msg := sprintf("S3 bucket '%s' must not be publicly readable", [name])
+}
+
+deny[msg] {
+  resource := input.resource.aws_s3_bucket[name]
+  not resource.server_side_encryption_configuration
+  msg := sprintf("S3 bucket '%s' must have encryption enabled", [name])
+}
+```
+
+Running Conftest against a Terraform plan:
+
+```bash
+# Convert Terraform plan to JSON
+terraform init
+terraform plan -out=tfplan.binary
+terraform show -json tfplan.binary > tfplan.json
+
+# Run Conftest against the plan
+conftest test tfplan.json --policy policies/terraform/
+```
+
+HashiCorp Sentinel is an enterprise-grade policy as code framework integrated natively into Terraform Cloud and Terraform Enterprise. Sentinel policies run as part of the Terraform run workflow:
+
+```python
+# sentinel/restrict_instance_types.sentinel
+import "tfplan/v2" as tfplan
+
+allowed_types = ["t3.micro", "t3.small", "t3.medium"]
+
+instances = filter tfplan.resource_changes as _, rc {
+  rc.type is "aws_instance"
+  rc.mode is "managed"
+  (rc.change.actions contains "create") or (rc.change.actions contains "update")
+}
+
+violations = filter instances as _, instance {
+  not (instance.change.after.instance_type in allowed_types)
+}
+
+main = rule {
+  length(violations) is 0
+}
+```
+
+Sentinel has three enforcement levels: advisory (log only), soft mandatory (can be overridden with approval), and hard mandatory (cannot be overridden — the plan is rejected).
+
+---
+
+### SEGMENT 6 — Drift Detection and Immutable Infrastructure (14:30–17:00)
+
+[SLIDE: Drift detection timeline diagram]
+
+Configuration drift occurs when the actual state of deployed infrastructure diverges from the IaC-defined desired state. This happens when engineers make manual changes in the cloud console ("ClickOps") or when automated systems modify resources outside of IaC workflows.
+
+Drift is a security problem because manually applied changes bypass the security scanning and code review process. A security group opened manually in the AWS console is invisible to your IaC security gates.
+
+Terraform Cloud detects drift through continuous workspace runs:
+
+```hcl
+# Terraform Cloud workspace configuration
+resource "tfe_workspace" "production" {
+  name              = "production"
+  organization      = "my-org"
+  auto_apply        = false
+  speculative_plans = true
+
+  vcs_repo {
+    identifier = "org/infra-repo"
+    branch     = "main"
+  }
+}
+```
+
+When drift is detected, Terraform Cloud can alert the team and optionally auto-remediate by applying the IaC-defined state.
+
+Immutable infrastructure takes drift prevention further: instead of patching deployed instances, you replace them entirely with newly provisioned instances from updated IaC. No manual changes are ever made to running infrastructure. This eliminates drift by design.
+
+The immutable infrastructure workflow:
+
+1. Update IaC configuration
+2. CI pipeline scans and validates the change
+3. New infrastructure is provisioned from the updated config
+4. Traffic is shifted to the new infrastructure
+5. Old infrastructure is destroyed
+
+---
+
+### SEGMENT 7 — IaC Security in the Pipeline (17:00–20:00)
+
+[SLIDE: IaC security pipeline stages]
+
+A complete IaC security pipeline integrates scanning at multiple stages:
+
+```yaml
+name: Terraform Security Pipeline
+
+on:
+  pull_request:
+    paths: [infra/**]
+
+jobs:
+  terraform-validate:
+    name: Terraform Validate and Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.7.0
+      - run: terraform -chdir=infra/ init -backend=false
+      - run: terraform -chdir=infra/ validate
+      - run: terraform -chdir=infra/ fmt -check -recursive
+
+  tfsec-scan:
+    name: tfsec Security Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: aquasecurity/tfsec-action@v1.0.0
+        with:
+          working_directory: infra/
+          format: sarif
+          sarif_file: tfsec-results.sarif
+      - uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: tfsec-results.sarif
+
+  checkov-scan:
+    name: checkov Multi-Framework Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run checkov
+        uses: bridgecrewio/checkov-action@master
+        with:
+          directory: infra/
+          framework: terraform
+          output_format: sarif
+          output_file_path: checkov-results.sarif
+          soft_fail: false
+      - uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: checkov-results.sarif
+
+  conftest-policy:
+    name: OPA Policy Validation
+    runs-on: ubuntu-latest
+    needs: terraform-validate
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install conftest
+        run: |
+          wget https://github.com/open-policy-agent/conftest/releases/download/v0.50.0/conftest_0.50.0_linux_amd64.tar.gz
+          tar xzf conftest_*.tar.gz && mv conftest /usr/local/bin/
+      - name: Run Conftest policy checks
+        run: conftest test infra/ --policy policies/terraform/
+```
+
+---
+
+### SEGMENT 8 — Module Summary and Looking Ahead (20:00–22:00)
+
+[SLIDE: Module 06 key takeaways]
+
+Module 06 summary.
+
+Infrastructure as Code misconfigurations are a leading cause of cloud data breaches. IaC scanning automates detection before infrastructure is provisioned.
+
+tfsec is a fast, opinionated Terraform scanner. checkov supports multiple frameworks including Terraform, CloudFormation, Kubernetes, and Dockerfiles.
+
+Policy as Code with OPA Conftest and HashiCorp Sentinel enables organization-specific rules beyond built-in checks. Sentinel's enforcement levels — advisory, soft mandatory, hard mandatory — provide graduated policy enforcement.
+
+Drift detection identifies when deployed infrastructure diverges from IaC definitions. Immutable infrastructure eliminates drift by replacing rather than patching.
+
+The IaC security pipeline validates, lints, scans, and policy-checks every change before it reaches the cloud.
+
+In Module 07 we go deep on Application Security Testing — SAST with SonarQube and Semgrep, DAST integration with OWASP ZAP, dependency scanning with OWASP Dependency-Check, and SBOM generation. See you there.
+
+---
+
+*[END OF SCRIPT — Module 06]*

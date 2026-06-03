@@ -1,348 +1,365 @@
-# Lab — Module 03
+# Lab: Module 03 — Compute Engine
 
-## CIS-4329: Google Cloud Platform | Texas Wesleyan University
+## Course: CIS-4329 Google Cloud Computing
 
-### Topic: Compute Engine — VM Creation, Startup Scripts, Snapshots, and Custom Images
-
-### Points: 100
+**Certification Alignment:** Google Cloud Associate Cloud Engineer (ACE)
 
 ---
 
 ## Lab Overview
 
-In this lab you will create Compute Engine VM instances using both the Google Cloud Console and the gcloud CLI, deploy a web server using a startup script, take a persistent disk snapshot, and create a custom image. These skills are foundational for the ACE exam and for real-world GCP administration.
+In this lab you will create Compute Engine VMs, configure startup scripts,
+take disk snapshots, create an instance template, deploy a managed instance
+group with autoscaling, and work with preemptible VMs.
 
-All tasks use Cloud Shell unless otherwise noted. Complete this lab in your `txwes-gcp-lab-[your initials]` project.
+**Estimated Time:** 90 minutes
 
-Estimated completion time: 75–90 minutes.
+**Prerequisites:**
+
+- Completed Module 01 lab (project configured, Cloud Shell working)
+- Billing enabled on your project
+- Compute Engine API enabled
+
+**Learning Objectives:**
+
+By the end of this lab you will be able to:
+
+1. Create VMs with custom configurations and startup scripts
+2. Connect to VMs via SSH using gcloud
+3. Take persistent disk snapshots
+4. Create instance templates
+5. Deploy and scale a managed instance group
+6. Configure autoscaling
+7. Create and manage preemptible VMs
 
 ---
 
-## Prerequisites
+## Part 1 — Create a VM with a Startup Script (20 minutes)
 
-- Module 01 and 02 labs completed
-- Compute Engine API enabled:
+### Step 1.1 — Enable Required API
 
 ```bash
 gcloud services enable compute.googleapis.com
-```
 
-- Default region and zone configured:
-
-```bash
-gcloud config set compute/region us-central1
+export PROJECT_ID=$(gcloud config get-value project)
 gcloud config set compute/zone us-central1-a
+gcloud config set compute/region us-central1
 ```
 
----
-
-## Part 1: Create a VM via Console (15 points)
-
-### Task 1.1 — Create a VM Using the Console (15 points)
-
-1. Navigate to Compute Engine > VM Instances in the Console.
-2. Click Create Instance.
-3. Set the following values:
-
-   - Name: `console-vm-[your initials]`
-   - Region: `us-central1`
-   - Zone: `us-central1-a`
-   - Machine family: General-purpose
-   - Series: E2
-   - Machine type: `e2-micro`
-   - Boot disk: Debian GNU/Linux 11 (Bullseye), Standard persistent disk, 10 GB
-
-4. Expand "Advanced options" > "Security" and verify a service account is listed.
-5. Leave all other settings at default.
-6. Click Create.
-
-Wait for the VM to show status "Running" (green checkmark).
-
-Deliverable: Screenshot of the VM Instances page showing `console-vm-[your initials]` with status RUNNING. Label it "Task 1.1".
-
----
-
-## Part 2: Create a VM via gcloud CLI with Startup Script (25 points)
-
-### Task 2.1 — Create a Web Server VM with Startup Script (15 points)
-
-Open Cloud Shell and run the following command. This creates a VM and uses a startup script to install and configure Nginx:
+### Step 1.2 — Create a Startup Script File
 
 ```bash
-gcloud compute instances create web-server-1 \
+cat > startup.sh << 'EOF'
+#!/bin/bash
+apt-get update -y
+apt-get install -y apache2
+systemctl enable apache2
+systemctl start apache2
+echo "<h1>Hello from $(hostname) — CIS-4329 Lab 03</h1>" \
+  > /var/www/html/index.html
+EOF
+```
+
+### Step 1.3 — Create the VM
+
+```bash
+gcloud compute instances create lab03-web-vm \
   --zone=us-central1-a \
-  --machine-type=e2-micro \
-  --tags=http-server \
-  --metadata=startup-script='#!/bin/bash
-apt-get update
-apt-get install -y nginx
-echo "Hello from Texas Wesleyan - $(hostname)" > /var/www/html/index.html
-systemctl enable nginx
-systemctl start nginx'
-```
-
-Wait about 60 seconds for the startup script to complete, then confirm the VM is running:
-
-```bash
-gcloud compute instances list
-```
-
-Deliverable: Screenshot of `gcloud compute instances list` showing `web-server-1` with status RUNNING. Label it "Task 2.1".
-
-### Task 2.2 — Create a Firewall Rule and Test the Web Server (10 points)
-
-Create a firewall rule to allow HTTP traffic to VMs tagged `http-server`:
-
-```bash
-gcloud compute firewall-rules create allow-http-lab \
-  --direction=INGRESS \
-  --priority=1000 \
-  --network=default \
-  --action=ALLOW \
-  --rules=tcp:80 \
-  --source-ranges=0.0.0.0/0 \
-  --target-tags=http-server
-```
-
-Get the external IP address of your web server:
-
-```bash
-gcloud compute instances describe web-server-1 \
-  --zone=us-central1-a \
-  --format="get(networkInterfaces[0].accessConfigs[0].natIP)"
-```
-
-Open a browser tab and navigate to `http://EXTERNAL_IP`. You should see the "Hello from Texas Wesleyan" message.
-
-Deliverable: Screenshot of the browser showing the web server response. Label it "Task 2.2".
-
----
-
-## Part 3: Manage Compute Engine Instances (15 points)
-
-### Task 3.1 — List and Filter VMs (5 points)
-
-List all VMs in your project:
-
-```bash
-gcloud compute instances list
-```
-
-List only running VMs:
-
-```bash
-gcloud compute instances list --filter="status=RUNNING"
-```
-
-List VMs in a specific zone:
-
-```bash
-gcloud compute instances list --filter="zone:(us-central1-a)"
-```
-
-Deliverable: Screenshot of the zone-filtered list output. Label it "Task 3.1".
-
-### Task 3.2 — Stop and Start a VM (5 points)
-
-Stop the `console-vm` you created in Task 1.1:
-
-```bash
-gcloud compute instances stop console-vm-[your initials] --zone=us-central1-a
-```
-
-Wait for the stop to complete, then list instances again to confirm it shows TERMINATED status:
-
-```bash
-gcloud compute instances list
-```
-
-Restart the VM:
-
-```bash
-gcloud compute instances start console-vm-[your initials] --zone=us-central1-a
-```
-
-Confirm it returns to RUNNING:
-
-```bash
-gcloud compute instances list
-```
-
-Deliverable: Screenshot showing the instance returning to RUNNING status. Label it "Task 3.2".
-
-### Task 3.3 — SSH into a VM (5 points)
-
-SSH into your `web-server-1` instance:
-
-```bash
-gcloud compute ssh web-server-1 --zone=us-central1-a
-```
-
-Once inside the VM, check that Nginx is running:
-
-```bash
-systemctl status nginx
-```
-
-Exit the SSH session:
-
-```bash
-exit
-```
-
-Deliverable: Screenshot of the `systemctl status nginx` output from inside the VM. Label it "Task 3.3".
-
----
-
-## Part 4: Snapshots and Custom Images (30 points)
-
-### Task 4.1 — Take a Snapshot of a Persistent Disk (15 points)
-
-First, stop `web-server-1` to take a consistent snapshot:
-
-```bash
-gcloud compute instances stop web-server-1 --zone=us-central1-a
-```
-
-Create a snapshot of its boot disk. In GCP, a VM's boot disk has the same name as the VM by default:
-
-```bash
-gcloud compute disks snapshot web-server-1 \
-  --snapshot-names=web-server-1-snap-$(date +%Y%m%d) \
-  --zone=us-central1-a
-```
-
-List snapshots to confirm creation:
-
-```bash
-gcloud compute snapshots list
-```
-
-Restart the VM after snapshotting:
-
-```bash
-gcloud compute instances start web-server-1 --zone=us-central1-a
-```
-
-Deliverable: Screenshot of `gcloud compute snapshots list` showing your snapshot. Label it "Task 4.1".
-
-### Task 4.2 — Create a Custom Image (15 points)
-
-Stop `web-server-1` again so the disk is in a clean state for imaging:
-
-```bash
-gcloud compute instances stop web-server-1 --zone=us-central1-a
-```
-
-Create a custom image from the boot disk:
-
-```bash
-gcloud compute images create txwes-nginx-image \
-  --source-disk=web-server-1 \
-  --source-disk-zone=us-central1-a \
-  --family=txwes-web \
-  --description="Nginx web server image for Texas Wesleyan labs"
-```
-
-Verify the image was created:
-
-```bash
-gcloud compute images list --filter="family:txwes-web"
-```
-
-Restart the VM:
-
-```bash
-gcloud compute instances start web-server-1 --zone=us-central1-a
-```
-
-Deliverable: Screenshot of `gcloud compute images list` output showing your `txwes-nginx-image`. Label it "Task 4.2".
-
----
-
-## Part 5: Deploy a VM from Custom Image (10 points)
-
-### Task 5.1 — Create a New VM Using Your Custom Image (10 points)
-
-Create a new VM using the custom image you built:
-
-```bash
-gcloud compute instances create web-server-2 \
-  --zone=us-central1-b \
-  --machine-type=e2-micro \
-  --image=txwes-nginx-image \
-  --image-project=$GOOGLE_CLOUD_PROJECT \
+  --machine-type=e2-medium \
+  --image-family=debian-11 \
+  --image-project=debian-cloud \
+  --boot-disk-size=20GB \
+  --boot-disk-type=pd-balanced \
+  --metadata-from-file=startup-script=startup.sh \
   --tags=http-server
 ```
 
-Note: this VM is in zone `us-central1-b` — a different zone than the original. This demonstrates that custom images are portable across zones.
-
-Get the external IP of the new VM:
+### Step 1.4 — Allow HTTP Traffic
 
 ```bash
-gcloud compute instances describe web-server-2 \
-  --zone=us-central1-b \
-  --format="get(networkInterfaces[0].accessConfigs[0].natIP)"
+gcloud compute firewall-rules create allow-http \
+  --allow=tcp:80 \
+  --target-tags=http-server \
+  --description="Allow HTTP traffic to web VMs"
 ```
 
-Open a browser and navigate to `http://EXTERNAL_IP`. The page should load because Nginx was baked into the image — no startup script needed.
+### Step 1.5 — Verify the VM and Startup Script
 
-Deliverable: Screenshot of the browser showing the Nginx page from `web-server-2`. Label it "Task 5.1".
+```bash
+# List instances and note the external IP
+gcloud compute instances list
+
+# Get the external IP
+EXTERNAL_IP=$(gcloud compute instances describe lab03-web-vm \
+  --zone=us-central1-a \
+  --format='value(networkInterfaces[0].accessConfigs[0].natIP)')
+echo "External IP: $EXTERNAL_IP"
+
+# Test the web server (wait 60-90 seconds after creation)
+curl http://$EXTERNAL_IP
+```
+
+### Step 1.6 — SSH and Check Startup Script Logs
+
+```bash
+gcloud compute ssh lab03-web-vm --zone=us-central1-a
+
+# Inside the VM:
+sudo journalctl -u google-startup-scripts.service --no-pager
+sudo systemctl status apache2
+exit
+```
 
 ---
 
-## Cleanup (5 points)
+## Part 2 — Disk Snapshots (15 minutes)
 
-Delete all VMs created in this lab to stop charges:
-
-```bash
-gcloud compute instances delete web-server-1 --zone=us-central1-a --quiet
-gcloud compute instances delete web-server-2 --zone=us-central1-b --quiet
-gcloud compute instances delete console-vm-[your initials] --zone=us-central1-a --quiet
-```
-
-Delete the firewall rule:
+### Step 2.1 — Create a Snapshot
 
 ```bash
-gcloud compute firewall-rules delete allow-http-lab --quiet
+# Get the boot disk name
+DISK_NAME=$(gcloud compute instances describe lab03-web-vm \
+  --zone=us-central1-a \
+  --format='value(disks[0].source)' | sed 's|.*/||')
+echo "Disk: $DISK_NAME"
+
+# Create a snapshot
+gcloud compute disks snapshot $DISK_NAME \
+  --zone=us-central1-a \
+  --snapshot-names=lab03-snapshot-$(date +%Y%m%d)
+
+# List snapshots
+gcloud compute snapshots list
 ```
 
-Deliverable: Screenshot of `gcloud compute instances list` showing no instances. Label it "Cleanup".
+### Step 2.2 — Create a New Disk from the Snapshot
 
-Note: Keep the snapshot and custom image — they will be referenced in reflection questions.
+```bash
+SNAPSHOT_NAME=$(gcloud compute snapshots list \
+  --format='value(name)' | grep lab03 | head -1)
+
+gcloud compute disks create lab03-restored-disk \
+  --source-snapshot=$SNAPSHOT_NAME \
+  --zone=us-central1-a \
+  --type=pd-balanced
+
+# Verify
+gcloud compute disks list --filter="name:lab03"
+```
+
+**Question 2.2:** After creating the restored disk, is the original snapshot
+still billable? What would you need to do to stop paying for it?
 
 ---
 
-## Reflection Questions
+## Part 3 — Instance Template and Managed Instance Group (35 minutes)
 
-Answer in your submission document (2–4 sentences each):
+### Step 3.1 — Create an Instance Template
 
-1. In Task 4.2, you stopped the VM before creating a custom image. Why is it best practice to stop the VM before imaging?
-2. In Task 5.1, the new VM from the custom image already had Nginx installed without running a startup script. Explain the advantage this provides over using a startup script for fleet deployments.
-3. If you needed to run 20 identical copies of `web-server-2` and automatically replace any that became unhealthy, which GCP feature would you use and how does it use your custom image?
+```bash
+gcloud compute instance-templates create lab03-web-template \
+  --machine-type=e2-medium \
+  --image-family=debian-11 \
+  --image-project=debian-cloud \
+  --boot-disk-size=20GB \
+  --boot-disk-type=pd-balanced \
+  --tags=http-server \
+  --metadata-from-file=startup-script=startup.sh
+
+# Describe the template
+gcloud compute instance-templates describe lab03-web-template
+```
+
+### Step 3.2 — Create a Health Check
+
+```bash
+gcloud compute health-checks create http lab03-health-check \
+  --port=80 \
+  --request-path=/ \
+  --check-interval=10 \
+  --timeout=5 \
+  --healthy-threshold=2 \
+  --unhealthy-threshold=3
+```
+
+### Step 3.3 — Create a Regional Managed Instance Group
+
+```bash
+gcloud compute instance-groups managed create lab03-web-mig \
+  --template=lab03-web-template \
+  --size=2 \
+  --region=us-central1 \
+  --health-check=lab03-health-check \
+  --initial-delay=120
+
+# Monitor the MIG — wait for all instances to be RUNNING
+gcloud compute instance-groups managed list-instances lab03-web-mig \
+  --region=us-central1
+```
+
+### Step 3.4 — Configure Autoscaling
+
+```bash
+gcloud compute instance-groups managed set-autoscaling lab03-web-mig \
+  --region=us-central1 \
+  --max-num-replicas=5 \
+  --min-num-replicas=2 \
+  --target-cpu-utilization=0.60 \
+  --cool-down-period=60
+
+# Verify autoscaling configuration
+gcloud compute instance-groups managed describe lab03-web-mig \
+  --region=us-central1 | grep -A 10 autoscaler
+```
+
+### Step 3.5 — Manually Scale the MIG
+
+```bash
+# Scale up to 4 instances
+gcloud compute instance-groups managed resize lab03-web-mig \
+  --size=4 \
+  --region=us-central1
+
+# Observe instances appearing
+gcloud compute instance-groups managed list-instances lab03-web-mig \
+  --region=us-central1
+
+# Scale back to 2
+gcloud compute instance-groups managed resize lab03-web-mig \
+  --size=2 \
+  --region=us-central1
+```
+
+### Step 3.6 — Update the Instance Template (Rolling Update)
+
+```bash
+# Create an updated startup script
+cat > startup-v2.sh << 'EOF'
+#!/bin/bash
+apt-get update -y
+apt-get install -y apache2
+systemctl enable apache2
+systemctl start apache2
+echo "<h1>Hello from $(hostname) — VERSION 2</h1>" \
+  > /var/www/html/index.html
+EOF
+
+# Create a new template
+gcloud compute instance-templates create lab03-web-template-v2 \
+  --machine-type=e2-medium \
+  --image-family=debian-11 \
+  --image-project=debian-cloud \
+  --boot-disk-size=20GB \
+  --tags=http-server \
+  --metadata-from-file=startup-script=startup-v2.sh
+
+# Perform a rolling update
+gcloud compute instance-groups managed rolling-action start-update lab03-web-mig \
+  --version=template=lab03-web-template-v2 \
+  --region=us-central1 \
+  --max-unavailable=1
+
+# Monitor the update
+gcloud compute instance-groups managed list-instances lab03-web-mig \
+  --region=us-central1
+```
 
 ---
 
-## Grading Rubric
+## Part 4 — Preemptible VM (10 minutes)
 
-| Task | Points | Criteria |
-|---|---|---|
-| 1.1 Console VM created and running | 15 | Screenshot shows VM with RUNNING status |
-| 2.1 gcloud VM created with startup script | 15 | instances list shows web-server-1 RUNNING |
-| 2.2 Firewall rule and browser test | 10 | Browser screenshot shows Hello from Texas Wesleyan |
-| 3.1 List and filter VMs | 5 | Filtered list output shown |
-| 3.2 Stop and start VM confirmed | 5 | RUNNING status confirmed after restart |
-| 3.3 SSH and nginx status | 5 | systemctl status nginx output visible |
-| 4.1 Snapshot created and listed | 15 | Snapshot in list with correct name |
-| 4.2 Custom image created and listed | 15 | txwes-nginx-image in images list |
-| 5.1 New VM from custom image works | 10 | Browser shows Nginx page from web-server-2 |
-| Cleanup | 5 | Empty instances list shown |
-| Total | 100 | |
+### Step 4.1 — Create a Preemptible VM
+
+```bash
+gcloud compute instances create lab03-preempt-vm \
+  --zone=us-central1-a \
+  --machine-type=e2-medium \
+  --image-family=debian-11 \
+  --image-project=debian-cloud \
+  --preemptible \
+  --no-restart-on-failure \
+  --maintenance-policy=TERMINATE
+
+# Verify preemptible status
+gcloud compute instances describe lab03-preempt-vm \
+  --zone=us-central1-a \
+  --format='value(scheduling.preemptible)'
+```
+
+### Step 4.2 — Create a Spot VM
+
+```bash
+gcloud compute instances create lab03-spot-vm \
+  --zone=us-central1-a \
+  --machine-type=e2-medium \
+  --image-family=debian-11 \
+  --image-project=debian-cloud \
+  --provisioning-model=SPOT \
+  --instance-termination-action=STOP
+
+gcloud compute instances describe lab03-spot-vm \
+  --zone=us-central1-a \
+  --format='value(scheduling.provisioningModel)'
+```
+
+---
+
+## Lab Deliverables
+
+Submit a lab report (PDF or Word) containing:
+
+1. Output of `curl http://EXTERNAL_IP` showing your web page.
+2. Screenshot of the startup script log showing apache2 installation.
+3. Output of `gcloud compute snapshots list`.
+4. Screenshot of the MIG instances list showing at least 2 RUNNING instances.
+5. Output of the rolling update command and post-update instance list.
+6. Output of `gcloud compute instances describe lab03-preempt-vm` showing
+   the `scheduling.preemptible: true` field.
+7. Answers to the lab questions.
+
+**Lab Questions:**
+
+1. What is the key difference between a zonal MIG and a regional MIG? When
+   would you choose each?
+2. Why is the `--initial-delay` parameter important when configuring
+   autohealing on a MIG?
+3. You need to run a data pipeline job that takes 4 hours, is fault-tolerant,
+   and must minimize cost. Would you use a preemptible VM or a Spot VM? Why?
+4. An instance template is immutable. Your team needs to add more memory to
+   all VMs in a MIG. Describe the steps required.
+5. What is the difference between stopping and deleting a Compute Engine VM
+   in terms of billing and resource state?
+
+---
+
+## Cleanup
+
+```bash
+# Delete MIG (also deletes MIG instances)
+gcloud compute instance-groups managed delete lab03-web-mig \
+  --region=us-central1 --quiet
+
+# Delete standalone VMs
+gcloud compute instances delete lab03-web-vm \
+  lab03-preempt-vm lab03-spot-vm \
+  --zone=us-central1-a --quiet
+
+# Delete instance templates
+gcloud compute instance-templates delete lab03-web-template \
+  lab03-web-template-v2 --quiet
+
+# Delete health check
+gcloud compute health-checks delete lab03-health-check --quiet
+
+# Delete snapshot and extra disk
+gcloud compute disks delete lab03-restored-disk \
+  --zone=us-central1-a --quiet
+gcloud compute snapshots delete $(gcloud compute snapshots list \
+  --format='value(name)' | grep lab03) --quiet
+```
 
 ---
 
 End of Lab — Module 03
 
-Course: CIS-4329 Google Cloud Platform | Texas Wesleyan University | Professor Nash
-
-Certification Target: Google Cloud Associate Cloud Engineer
+Course: CIS-4329 Google Cloud Computing | Texas Wesleyan University | Professor Nash

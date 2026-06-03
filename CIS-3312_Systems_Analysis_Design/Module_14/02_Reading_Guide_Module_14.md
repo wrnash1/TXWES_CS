@@ -1,57 +1,330 @@
-# Reading Guide: Module 14 - Agile BA: Scrum and Kanban in BA Context
-## Course: CIS-3312 Systems Analysis & Design (IIBA ECBA)
+# Reading Guide: Module 14 — Testing, Validation, and Quality Assurance
+
+## Course: CIS-3312 Systems Analysis and Design
+
+## Texas Wesleyan University | Professor Nash
+
+**Certification Alignment:** IIBA ECBA
 
 ---
 
-### Introduction
-Welcome to **Module 14 – Agile BA: Scrum and Kanban in BA Context**! Modern software development is dominated by Agile methodologies, and business analysts must understand how their role adapts in Agile environments. This module covers the two most widely used Agile frameworks — Scrum and Kanban — and explains how traditional BA activities (requirements elicitation, documentation, stakeholder engagement) are performed iteratively within these frameworks.
+## Overview
 
-The IIBA Agile Extension to the BABOK® Guide specifically addresses how BA practices adapt in adaptive contexts. For the ECBA exam, you need to understand the Scrum framework's ceremonies and artifacts, the Kanban flow management approach, and the BA's specific contributions at each stage.
+This reading guide supports Module 14's video lecture on testing, validation, and quality assurance. Testing is where requirements prove their quality. A BA who writes clear, specific, testable requirements produces a system that can be verified. A BA who writes vague requirements produces a system that cannot be proven to work. This module connects requirements quality directly to testing practice.
 
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **Scrum**: Scrum is an Agile framework for developing complex products through short, fixed-length iterations called sprints (typically 2–4 weeks). Scrum defines three roles (Product Owner, Scrum Master, Development Team), five events (Sprint, Sprint Planning, Daily Scrum, Sprint Review, Sprint Retrospective), and three artifacts (Product Backlog, Sprint Backlog, Increment). The framework emphasizes empirical process control — transparency, inspection, and adaptation based on working product delivery.
-
-*   **Product Owner (PO)**: The Product Owner is the Scrum role responsible for maximizing the value of the product by managing and prioritizing the product backlog. The PO represents stakeholder interests, makes final decisions on backlog priority and scope, writes or approves user stories and acceptance criteria, and accepts or rejects completed work at the Sprint Review. In many organizations, the BA either supports the PO role or performs PO responsibilities directly.
-
-*   **Sprint**: A sprint is a time-boxed iteration (typically 2–4 weeks) in Scrum during which the development team works to complete a set of backlog items committed to in Sprint Planning, producing a potentially releasable product increment by the end of the sprint. Sprints have fixed end dates; if work cannot be completed, scope is reduced rather than the sprint extended. Time-boxing creates a predictable cadence and forces prioritization.
-
-*   **Backlog Refinement (Grooming)**: Backlog refinement is the ongoing process of reviewing, clarifying, estimating, and reprioritizing product backlog items to ensure the backlog is ready for upcoming sprints. During refinement sessions, the BA and PO work with the development team to break down epics into sprint-sized user stories, add acceptance criteria, clarify business context, and remove ambiguity. Refinement typically consumes 10% or less of the team's sprint capacity.
-
-*   **Kanban**: Kanban is an Agile method for managing and improving work flow by visualizing work items on a board, limiting work-in-progress (WIP), and continuously improving throughput. Unlike Scrum, Kanban has no fixed sprints, no prescribed roles, and no sprint ceremonies — work items flow through defined stages (e.g., Backlog → In Progress → Review → Done) with WIP limits that prevent overloading any stage. Kanban is well-suited for continuous delivery and support/maintenance work.
-
-*   **Definition of Done (DoD)**: The Definition of Done is a shared, team-level checklist of criteria that every product increment must meet before it can be considered complete and releasable. DoD items typically include: code written and reviewed, unit tests passing, acceptance tests passing, documentation updated, and no known critical defects. The DoD ensures the team has a consistent, objective standard for "done" rather than subjective interpretations. BAs typically contribute to defining and maintaining the DoD.
+**Estimated reading and study time:** 90–120 minutes
 
 ---
 
-### 2. Certification Exam Tips
-*   **BA Role in Scrum**: The ECBA exam often asks where BA activities fit in Scrum. Key mapping: requirements elicitation → Sprint Planning and Refinement sessions; stakeholder management → ongoing, especially Sprint Reviews; acceptance test writing → before sprint starts (ready criteria); acceptance testing → Sprint Review acceptance. Know that "Scrum" does not have a "Business Analyst" role by name — the BA's work is distributed across PO support and team collaboration.
-*   **Scrum Events and BA Involvement**: Know which Scrum events the BA participates in and why: Sprint Planning (provide requirements clarity for selected stories), Sprint Review (facilitate stakeholder review of the increment), Sprint Retrospective (improvement of BA practices), Backlog Refinement (primary BA activity — refining stories with the team).
-*   **Kanban WIP Limits**: The defining feature of Kanban is WIP limits. The ECBA exam may ask why WIP limits are set — the answer is to reduce multitasking, expose bottlenecks, and improve flow throughput. If the WIP limit for "In Review" is 3, a fourth item cannot move to review until one completes.
-*   **Study Resource**: The Scrum Guide (the official definition of Scrum) is available free at [https://scrumguides.org/](https://scrumguides.org/) — it is only 13 pages and defines all Scrum roles, events, and artifacts precisely as they will appear on the ECBA exam.
+## Learning Objectives
+
+By the end of this module you will be able to:
+
+1. Construct a Requirements Traceability Matrix linking requirements to design and test artifacts.
+2. Write specific, testable test cases with clear preconditions and expected results.
+3. Distinguish between functional, negative, boundary, and regression test cases.
+4. Explain the purpose and process of User Acceptance Testing.
+5. Describe the defect lifecycle and the BA's role at each stage.
+6. Define entry and exit criteria for UAT.
+7. Identify sign-off criteria and the stakeholders responsible for authorizing go-live.
 
 ---
 
-### Required Readings & Videos
-*   **Required Reading**: The Scrum Guide (2020 version) at [https://scrumguides.org/](https://scrumguides.org/) — all 13 pages. Focus on the three roles, five events, and three artifacts. Also read the Agile Alliance's Kanban overview at [https://www.agilealliance.org/glossary/kanban/](https://www.agilealliance.org/glossary/kanban/).
-*   **Supplemental Reading**: The IIBA Agile Extension to the BABOK® Guide Chapter 3 ("Agile Practices") describes how BA techniques adapt within Scrum and Kanban. Available to IIBA members at [https://www.iiba.org/](https://www.iiba.org/).
+## Section 1 — Requirements Quality and Testability
+
+### 1.1 The Link Between Requirements and Testing
+
+Every test case begins with a requirement. If the requirement is ambiguous, the test case will be ambiguous. If the requirement is missing, the behavior goes untested. The quality of testing is bounded by the quality of requirements.
+
+The BABOK Guide lists testability as a core characteristic of well-formed requirements. A testable requirement:
+
+- Describes a specific, observable behavior
+- States conditions under which the behavior occurs
+- Defines a measurable outcome
+- Is free of subjective qualifiers like "user-friendly," "fast," or "appropriate"
+
+### 1.2 Converting Poor Requirements Into Testable Requirements
+
+Consider this requirement: "The system should respond quickly."
+
+This is not testable. "Quickly" has no agreed meaning. A tester cannot pass or fail this.
+
+A testable version: "The search results page shall load within 2.0 seconds for 95% of requests under a concurrent load of 500 users."
+
+Now a tester can define a specific test, execute it, measure the result, and make a definitive pass/fail determination.
+
+As a BA, reviewing requirements for testability is a quality gate before design begins. If you cannot write a test for a requirement, the requirement needs revision.
 
 ---
 
-### Lab & Activity Integration
-In this week's lab, you will:
-*   Given a product vision statement and 15 feature ideas, create a prioritized product backlog with user stories, grouping large items as epics and splitting two epics into sprint-sized stories with acceptance criteria.
-*   Design a Kanban board for a BA support team, defining the stages, WIP limits for each stage, and explaining the rationale for each WIP limit.
-*   Identify which of the five Scrum events a BA would most actively participate in and write a one-sentence description of the BA's contribution to each.
+## Section 2 — Requirements Traceability Matrix
+
+### 2.1 Purpose
+
+The Requirements Traceability Matrix (RTM) is a document that maps requirements to their origins, design artifacts, test cases, test results, and deployment status. It provides end-to-end traceability across the project lifecycle.
+
+The RTM answers questions like:
+
+- Is every requirement covered by at least one test case?
+- Which test cases are affected if Requirement FR-014 changes?
+- Which requirements had defects filed against them?
+- Are all requirements confirmed as implemented in the delivered system?
+
+### 2.2 RTM Structure
+
+A standard RTM includes the following columns, though organizations vary in their specific implementations:
+
+| Column | Description |
+|---|---|
+| Requirement ID | Unique identifier (e.g., FR-001, NFR-005) |
+| Requirement Type | Functional, non-functional, business rule, etc. |
+| Requirement Description | Brief statement of the requirement |
+| Priority | High / Medium / Low or MoSCoW classification |
+| Source | Stakeholder, document, or elicitation session where requirement originated |
+| Design Reference | Pointer to design artifact (screen, component, module) |
+| Test Case ID(s) | One or more test cases that verify this requirement |
+| Test Status | Not Tested / Pass / Fail / Blocked |
+| Defect ID(s) | Any defects raised against this requirement |
+| Deployment Status | In development / Deployed / Verified in production |
+
+### 2.3 Maintaining the RTM
+
+The RTM is a living document. It is created when requirements are baselined and updated throughout:
+
+- When new requirements are added
+- When requirements change (change control process)
+- When test cases are written or modified
+- When test execution produces pass/fail results
+- When defects are opened and closed
+- When requirements are confirmed deployed
+
+Stale RTMs provide false confidence. A BA who builds an RTM and never updates it has produced a document that actively misleads the project team.
+
+### 2.4 RTM in Regulated Environments
+
+In regulated industries such as healthcare, financial services, and government contracting, the RTM is a compliance artifact. Auditors and regulatory bodies may request the RTM to verify that requirements were formally tested. In FDA-regulated software environments, RTM maintenance is mandatory.
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and write your own one-sentence version of each definition.
-- [ ] Read the Scrum Guide (2020) in full at [https://scrumguides.org/](https://scrumguides.org/).
-- [ ] Read the Agile Alliance Kanban overview at [https://www.agilealliance.org/glossary/kanban/](https://www.agilealliance.org/glossary/kanban/).
-- [ ] Watch the Module 14 video lecture.
-- [ ] Complete the product backlog and Kanban board lab before taking the quiz.
+## Section 3 — Test Case Development
+
+### 3.1 Anatomy of a Test Case
+
+A complete test case includes the following elements.
+
+**Test Case ID:** Unique alphanumeric identifier.
+
+**Requirement Reference:** The ID of the requirement being verified.
+
+**Test Objective:** One sentence stating what the test is designed to confirm.
+
+**Test Type:** Functional, negative, boundary, integration, regression, performance, security, etc.
+
+**Preconditions:** All conditions that must be true before the test begins. Unmet preconditions invalidate the test result.
+
+**Test Data:** Specific input values to be used. "Amount: 500.00" not "enter an amount."
+
+**Test Steps:** Numbered sequence of specific actions.
+
+**Expected Result:** The exact, observable outcome that constitutes a pass. This is the most critical element — it must be specific enough that two different testers would agree on whether the test passed.
+
+**Actual Result:** Recorded during execution.
+
+**Pass/Fail:** Final determination.
+
+**Tester and Date:** Execution record for audit trail.
+
+### 3.2 Test Case Types
+
+Understanding test types helps BAs ensure complete coverage.
+
+**Functional test cases** verify that the system performs its intended functions. Each positive workflow scenario produces one or more functional test cases.
+
+**Negative test cases** verify that the system handles invalid inputs and error conditions correctly. For every field, a negative test should confirm that invalid input is rejected with an appropriate error message. For every required field, a negative test should confirm that submitting without a value is blocked.
+
+**Boundary test cases** test the limits of valid input ranges. The boundary value analysis technique tests the values just below, at, and just above each boundary. For a quantity field accepting 1–999: test 0, 1, 999, and 1000.
+
+**Integration test cases** verify that components developed separately interact correctly. They test the interfaces and data flows between modules.
+
+**Regression test cases** verify that previously working functionality still works after a change. A regression suite is re-executed whenever code is modified.
+
+**Performance test cases** verify non-functional requirements related to speed, capacity, and reliability under load.
+
+### 3.3 The BA's Role in Test Case Development
+
+On many projects, the BA writes test cases for business-logic requirements and hands technical test cases to QA analysts. On smaller projects, the BA may write all test cases. The BA's specific contribution:
+
+- Writing acceptance criteria that directly generate test cases
+- Ensuring test cases cover both positive and negative paths
+- Validating that expected results match documented requirements
+- Linking test cases to requirements in the RTM
+
+---
+
+## Section 4 — User Acceptance Testing
+
+### 4.1 Distinguishing UAT from System Testing
+
+System testing is conducted by the development or QA team to verify that the system works as specified. UAT is conducted by business users to verify that the system meets business needs.
+
+The critical difference: system testing validates the solution against requirements documents. UAT validates the solution against business reality. A system can pass system testing and still fail UAT if the requirements themselves were incomplete or misunderstood.
+
+### 4.2 UAT Participants
+
+UAT participants should be:
+
+- Representative end users from the affected business units
+- Subject matter experts for complex business rules
+- Key business stakeholders who will authorize go-live
+
+UAT participants should not be:
+
+- IT staff or developers (they have a conflict of interest in finding problems)
+- Managers who do not perform the actual work (they may not represent true end-user behavior)
+- People unfamiliar with the business process being automated
+
+### 4.3 UAT Entry Criteria
+
+Entry criteria define conditions that must be met before UAT begins. Starting UAT with an unstable system wastes participants' time and erodes confidence. Common entry criteria:
+
+- All functional and integration test cases have been executed
+- All critical and high-priority defects from system testing are resolved
+- Test environment is stable and loaded with representative test data
+- UAT test scenarios are written, reviewed, and approved
+- Participants are identified and oriented
+- A defect logging mechanism is in place
+
+### 4.4 UAT Test Scenarios
+
+UAT scenarios differ from technical test cases. They are business process scenarios — end-to-end workflows that represent real work, described in business language.
+
+A technical test case might say: "Verify that the POST /api/transfers endpoint returns HTTP 200 with the correct transaction ID."
+
+A UAT scenario says: "Process a payment to a new external vendor who has never been paid before, including the required two-approver authorization workflow, and confirm that the vendor receives a remittance email."
+
+The UAT scenario is what business users can understand and execute. The BA bridges the gap by ensuring that technical test cases cover the same ground as the business scenarios.
+
+### 4.5 UAT Exit Criteria
+
+Exit criteria define the conditions under which UAT is declared complete and sign-off can be obtained. Typical exit criteria:
+
+- All UAT scenarios have been executed
+- A defined pass rate has been achieved (commonly 95%+ for critical scenarios, 100% for highest-priority scenarios)
+- All critical and high-priority defects are resolved and retested
+- No critical defects remain open
+- Designated stakeholders have reviewed and accepted the results
+
+---
+
+## Section 5 — Defect Management
+
+### 5.1 Defect Definition
+
+A defect is any deviation between the actual behavior of a system and its expected behavior as defined by requirements or accepted test cases. Defects are not limited to code errors. They include:
+
+- Incorrect data displayed on screen
+- Missing functionality
+- Incorrect calculation results
+- Security vulnerabilities
+- Performance failures under load
+- Accessibility violations
+
+### 5.2 Defect Attributes
+
+A complete defect record includes:
+
+- Defect ID
+- Title (brief description)
+- Severity (impact on system functionality)
+- Priority (urgency of fix)
+- Environment (where the defect was found)
+- Steps to reproduce
+- Expected result
+- Actual result
+- Screenshot or evidence
+- Assigned to
+- Status
+- Resolution notes
+
+### 5.3 Severity vs. Priority
+
+Severity and priority are independent dimensions. Every combination is possible.
+
+| Severity | Priority | Example |
+|---|---|---|
+| High | High | Login fails for all users |
+| High | Low | Rarely used admin export crashes |
+| Low | High | CEO's name misspelled on the dashboard header |
+| Low | Low | Minor formatting inconsistency on help page |
+
+BAs participate in triage decisions to ensure that defects related to requirements are classified correctly and that the business impact is understood.
+
+### 5.4 Defect Lifecycle
+
+New → Assigned → In Progress → Fixed → Retesting → Closed (or Rejected / Deferred)
+
+The BA's role spans the lifecycle: ensuring defects are correctly described and linked to requirements, participating in triage, confirming that fixed defects are retested against original test cases, and tracking overall defect trends to inform release readiness decisions.
+
+---
+
+## Section 6 — Sign-Off and Release Readiness
+
+### 6.1 Sign-Off Criteria
+
+Sign-off criteria must be defined and agreed upon before testing begins. They make the go/no-go decision objective rather than political.
+
+Sign-off criteria typically include:
+
+- Defect thresholds by severity (e.g., zero open critical defects, no more than three open high-priority defects)
+- Test completion percentages
+- UAT sign-off from designated business stakeholders
+- Compliance testing pass confirmation (for regulated systems)
+- Performance benchmark confirmation
+- Data migration validation
+
+### 6.2 The BA's Role in Sign-Off
+
+The BA does not make the final go/no-go decision — that is an executive decision. The BA's role is to:
+
+- Ensure sign-off criteria are defined and documented before testing
+- Maintain accurate, current test status reporting
+- Communicate defect status and risk clearly to decision-makers
+- Ensure that any deferred defects have a documented remediation plan and stakeholder acknowledgment
+- Document the sign-off decision with appropriate signatures
+
+---
+
+## Key Terms
+
+| Term | Definition |
+|---|---|
+| Requirements Traceability Matrix | Document linking requirements to design, test cases, results, and deployment |
+| Test case | Documented procedure for verifying a specific requirement |
+| Precondition | State the system must be in before a test can be executed |
+| Expected result | Specific, observable outcome that constitutes a test pass |
+| Negative test | Test case verifying correct handling of invalid inputs or error conditions |
+| Boundary value analysis | Technique testing values at and around the edges of valid input ranges |
+| User Acceptance Testing | Final testing phase conducted by end users to confirm business readiness |
+| Entry criteria | Conditions that must be met before a test phase begins |
+| Exit criteria | Conditions that must be met before a test phase is declared complete |
+| Defect severity | Measure of a defect's impact on system functionality |
+| Defect priority | Measure of urgency for resolving a defect |
+| Sign-off | Formal stakeholder approval that testing is complete and the system is ready |
+
+---
+
+## Self-Check Questions
+
+Answer these before attempting the quiz.
+
+1. What is the purpose of the Requirements Traceability Matrix?
+2. What makes an expected result well-written vs. vague?
+3. What is the difference between system testing and UAT?
+4. Why should developers not conduct UAT?
+5. What are entry criteria, and why do they matter?
+6. Give an example of a high-severity, low-priority defect.
+7. What is the BA's role when a fixed defect is ready for retesting?
+
+---
+
+*Module 14 Reading Guide | CIS-3312 Systems Analysis and Design | Texas Wesleyan University*

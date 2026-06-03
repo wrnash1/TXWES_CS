@@ -1,11 +1,324 @@
-# Lab Activity: Module 16 - Final Exam Submission
-## Course: CIS-4332_Cyber_Analyst (CompTIA CySA+)
+# Lab Activity: Module 16 — CySA+ CS0-003 Capstone Practice Exam
 
-## Objective
-Schedule and complete the official **CompTIA CySA+** industry certification exam, and submit your score verification report to Professor Nash.
+## Course: CIS-4332 Cyber Security Analysis
+
+## Texas Wesleyan University | Professor Nash
+
+**Certification Alignment:** CompTIA CySA+ (CS0-003)
+
+---
+
+## Lab Overview
+
+This capstone lab is a 20-question practice exam covering all four CySA+ CS0-003 exam domains. Questions are scenario-based and written to match the format, difficulty, and reasoning style of the actual CompTIA CySA+ exam.
+
+Complete this practice exam under timed conditions: allow yourself 40 minutes (2 minutes per question). After completing it, review the answer key and distractor analysis carefully. For each question you answered incorrectly, note the domain and topic, then return to the relevant module reading guide for review.
+
+**Estimated Time:** 40 minutes for exam, 30–60 minutes for answer review
+
+**Tools Required:** No external tools needed. Complete on paper or in a word processor.
+
+---
 
 ## Instructions
-1.  Register for the exam at the on-campus testing center or an authorized provider.
-2.  Complete the exam.
-3.  Obtain your official score report PDF showing your name, passing status, and date.
-4.  Upload the official score report PDF to the Canvas LMS assignment box for this module to receive final credit.
+
+Read each question carefully. Identify what is being asked — the question stem often contains keywords like "first," "best," "most appropriate," and "most likely" that distinguish the correct answer from plausible distractors. Select one answer unless the question specifies multiple.
+
+Do not look up answers during the timed portion. Work from your knowledge.
+
+---
+
+## Practice Exam Questions
+
+### Question 1 — Domain 1: Security Operations
+
+An analyst receives a SIEM alert for 500 failed SSH login attempts against a Linux server from a single external IP in 10 minutes, followed by one successful login. Which term best describes the attack represented by this event sequence?
+
+- A) Credential stuffing — using a list of known username/password pairs
+- B) Password spraying — trying one password against many accounts
+- C) Brute force attack — systematically trying many passwords against one or more accounts until successful
+- D) Dictionary attack — using common word lists only, not random character sequences
+
+Submit answer: ______
+
+---
+
+### Question 2 — Domain 2: Vulnerability Management
+
+A vulnerability scanner reports a critical CVE with a CVSS v3 base score of 9.8 affecting a server in a development lab that is isolated from the production network and the internet, contains only synthetic test data, and is used by two developers for testing only. A separate High vulnerability (CVSS 7.5) affects an internet-facing web server handling customer payment transactions. Which vulnerability should be remediated first?
+
+- A) The CVSS 9.8 vulnerability, because critical vulnerabilities always take priority over high vulnerabilities
+- B) The CVSS 7.5 vulnerability on the internet-facing payment server, because business context (public exposure, payment data, customer risk) makes it higher actual risk
+- C) Both simultaneously, because SLAs require all critical and high vulnerabilities to be patched within the same window
+- D) Neither — isolated development servers and internet-facing servers are both out of scope for standard patching
+
+Submit answer: ______
+
+---
+
+### Question 3 — Domain 3: Incident Response
+
+An analyst has confirmed a malware infection on a workstation. The malware is actively exfiltrating data. Which is the correct sequence of actions?
+
+- A) Eradicate the malware → contain the host → recover the system → document the incident
+- B) Contain the host to stop exfiltration → eradicate the malware → recover the system → conduct post-incident review
+- C) Conduct post-incident review → contain the host → eradicate the malware → recover the system
+- D) Document the incident in full → contain the host → eradicate the malware → recover the system
+
+Submit answer: ______
+
+---
+
+### Question 4 — Domain 4: Reporting and Communication
+
+A CISO asks an analyst to produce a report for the board of directors summarizing the organization's vulnerability management program performance over the past quarter. Which metric is MOST appropriate as the primary performance indicator for a board-level audience?
+
+- A) A list of every vulnerability discovered during the quarter, sorted by CVSS score
+- B) The percentage of critical and high vulnerabilities remediated within the defined SLA, with trend comparison to the previous quarter
+- C) The number of vulnerability scans performed, broken down by scan type and target subnet
+- D) The CVE IDs of the top 10 unpatched vulnerabilities with their technical exploitation details
+
+Submit answer: ______
+
+---
+
+### Question 5 — Domain 1: Security Operations
+
+A security analyst reviews a network flow record showing repeated outbound HTTPS connections from an internal server to the same external IP every 58–62 seconds for 72 hours, including overnight and on weekends, with consistent 2–4 KB payloads. Which threat indicator does this most strongly suggest?
+
+- A) Brute force attack — the server is attempting to authenticate to an external service
+- B) Data exfiltration via large HTTP transfers
+- C) C2 beaconing — an automated, regularly timed connection consistent with malware check-in behavior
+- D) Port scanning — the server is probing external services
+
+Submit answer: ______
+
+---
+
+### Question 6 — Domain 3: Digital Forensics
+
+A forensic analyst acquires a disk image from a compromised Windows system and loads it in Autopsy. The analyst needs to determine whether a specific executable was run on the system before it was deleted. Which artifact in Autopsy is most directly useful for proving the executable was run?
+
+- A) The Windows Registry SOFTWARE hive
+- B) The Windows Prefetch file for the executable
+- C) The Windows Update log
+- D) Browser history files
+
+Submit answer: ______
+
+---
+
+### Question 7 — Domain 2: Vulnerability Management
+
+A vulnerability scan report shows that a web server has an SSL/TLS certificate using SHA-1 hashing, TLS 1.0 and 1.1 enabled, and a self-signed certificate. The CVSS score for each finding ranges from 4.0 to 6.5. However, the server handles authentication for the organization's customer portal. A separate server hosting internal documentation has a Critical CVSS 9.1 finding for an outdated CMS with known exploits. Which finding represents the higher business risk?
+
+- A) The internal documentation server — CVSS 9.1 is always higher priority than CVSS 4.0–6.5 findings
+- B) The customer portal SSL/TLS findings — weak cryptography on authentication-handling infrastructure poses direct risk to customer credentials even at lower CVSS scores
+- C) Both are equal risk because both affect production systems
+- D) Neither requires immediate remediation because neither has been actively exploited
+
+Submit answer: ______
+
+---
+
+### Question 8 — Domain 1: Threat Intelligence
+
+A threat intelligence team receives an intelligence report containing STIX-formatted data including a campaign object, associated threat actor TTPs, and a list of malicious IP addresses and file hashes currently used in active attacks against healthcare organizations. The IOC data needs to be automatically ingested into the organization's SIEM. Which component of the STIX/TAXII ecosystem handles this automated sharing and ingestion?
+
+- A) STIX — it handles both the data format and the transport mechanism
+- B) TAXII — it is the transport protocol that defines how STIX-formatted intelligence is shared between platforms
+- C) MISP — it replaces both STIX and TAXII for all intelligence sharing needs
+- D) OpenIOC — it is the standardized format for all machine-readable threat intelligence
+
+Submit answer: ______
+
+---
+
+### Question 9 — Domain 3: Incident Response
+
+During a ransomware incident, the IR team discovers that the attacker has been present for 11 days before the encryption event. Which IR performance metric most directly measures this gap, and which phase failure does it reflect?
+
+- A) MTTR — the Response function failed because analysts did not respond quickly enough
+- B) MTTC — the Containment function failed because the attacker was not isolated in time
+- C) MTTD — the Detection function failed because the attacker was present for 11 days before being identified
+- D) Mean Time Between Incidents — the Prevention function failed because the same incident type recurred
+
+Submit answer: ______
+
+---
+
+### Question 10 — Domain 2: Vulnerability Management
+
+An analyst performs a non-credentialed external vulnerability scan of the organization's public-facing web application and finds no critical vulnerabilities. A credentialed internal scan performed the same day finds 14 critical vulnerabilities on the same server. What is the most likely explanation for this discrepancy?
+
+- A) The external scanner is more accurate because it simulates real attacker perspective
+- B) The internal scan is malfunctioning — false positives are causing inflated findings
+- C) The non-credentialed scan can only see network-exposed services and lacks OS-level access, missing vulnerabilities in installed packages, services, and configurations only visible with authentication
+- D) The credentialed scan must have used a different scanner version, causing incompatible results
+
+Submit answer: ______
+
+---
+
+### Question 11 — Domain 1: Security Operations
+
+A Tier 1 analyst receives an alert for unusual PowerShell activity on a developer workstation. Investigation shows the developer ran `powershell.exe -ExecutionPolicy Bypass -File build_script.ps1` as part of an authorized development build process. The analyst closes the alert as a false positive. Which action should the analyst take beyond just closing the ticket?
+
+- A) Escalate to a Tier 3 analyst for secondary review before closing
+- B) Document the finding and submit a tuning request to reduce false positives from authorized developer build scripts by scoping the detection rule to exclude the known-good process and user context
+- C) Disable PowerShell monitoring entirely to prevent future alerts from developers
+- D) Delete the build script from the developer's workstation to prevent future alerts
+
+Submit answer: ______
+
+---
+
+### Question 12 — Domain 4: Reporting and Communication
+
+After a significant data breach, the organization's CISO asks the security team to produce a post-incident report for the executive leadership team. Which section is MOST important to include to support future investment decisions and program improvement?
+
+- A) A complete list of all IP addresses and domains associated with the attacker
+- B) The technical CVE IDs of every vulnerability exploited during the attack
+- C) Lessons learned — specific gaps identified, actions already taken, and concrete recommendations with cost estimates for preventing recurrence
+- D) Raw SIEM log output showing the timeline of attacker activity
+
+Submit answer: ______
+
+---
+
+### Question 13 — Domain 3: Digital Forensics
+
+An analyst uses Volatility's `malfind` plugin and finds a suspicious memory region in `explorer.exe` containing executable code. The analyst wants to determine what network connections this injected code is maintaining. Which Volatility plugin is most appropriate for this follow-on investigation?
+
+- A) `pslist` — to list all running processes
+- B) `netscan` — to list active and recently closed network connections, filterable by process
+- C) `dlllist` — to list DLLs loaded by explorer.exe
+- D) `cmdline` — to view command-line arguments for explorer.exe
+
+Submit answer: ______
+
+---
+
+### Question 14 — Domain 1: Security Operations
+
+An analyst is building a SOAR playbook for phishing alerts. The playbook should automatically quarantine the email across all inboxes if the sender domain is confirmed malicious, and create an IR ticket. Which design element ensures the playbook does not accidentally quarantine emails from a legitimate domain that is temporarily misclassified in the threat intelligence feed?
+
+- A) Set the playbook to run only on Tuesdays when the analyst team is at full staff
+- B) Require a confidence threshold — only auto-quarantine if the domain is classified as malicious by at least three independent threat intelligence sources
+- C) Disable the quarantine action entirely and route all phishing alerts to analyst review
+- D) Quarantine emails from all external senders to eliminate false positives
+
+Submit answer: ______
+
+---
+
+### Question 15 — Domain 2: Vulnerability Management
+
+A security team runs a vulnerability scan and finds that an application server is running OpenSSL 1.0.2 (end-of-life, no longer receiving security patches). The development team says updating OpenSSL would require six months of application testing before production deployment. Which approach best addresses the risk while the long-term remediation is in progress?
+
+- A) Do nothing — the server is internal and therefore low risk
+- B) Take the server offline until the update can be applied
+- C) Implement compensating controls such as network segmentation isolating the server, enhanced monitoring for exploitation attempts, and a WAF rule blocking known exploitation patterns for known OpenSSL vulnerabilities
+- D) Purchase a new server with a current OS version and migrate the application immediately
+
+Submit answer: ______
+
+---
+
+### Question 16 — Domain 1: Security Operations
+
+An analyst examines a Windows Security event log and finds repeated Event ID 4648 entries showing `jdoe` authenticating to 12 different servers using explicit credentials over a 4-minute period. Event ID 4624 for `jdoe` shows a normal workstation logon earlier that morning. What does this pattern most likely indicate?
+
+- A) The user jdoe is performing normal administrative tasks requiring authentication to multiple servers
+- B) Pass-the-hash or credential theft — an attacker using jdoe's harvested credentials to authenticate to multiple servers in rapid succession, consistent with lateral movement
+- C) A software deployment system running automated updates using jdoe's service account
+- D) A failed MFA enrollment causing repeated authentication prompts
+
+Submit answer: ______
+
+---
+
+### Question 17 — Domain 3: Incident Response
+
+During the lessons learned meeting following a ransomware incident, the IR team identifies that the attacker gained initial access through a phishing email that bypassed email filtering because the sender domain had a high reputation score (registered 3 years ago, previously used for legitimate email). The team recommends a new control. Which control MOST directly addresses this specific attack vector?
+
+- A) Deploy an EDR solution on all endpoints
+- B) Implement sandboxing for email attachments and links that detonates them in an isolated environment before delivery, regardless of sender reputation
+- C) Increase the frequency of vulnerability scans
+- D) Deploy a network intrusion detection system
+
+Submit answer: ______
+
+---
+
+### Question 18 — Domain 4: Reporting and Communication
+
+A security analyst has identified a critical vulnerability in the organization's public-facing login portal that allows authentication bypass. The analyst needs to brief the CTO (technical background, operational focus) and the CFO (financial background, risk focus) on the same finding. Which approach is most appropriate?
+
+- A) Give both executives identical technical briefing documents to ensure consistent messaging
+- B) For the CTO: describe the technical mechanism, affected systems, and specific remediation steps. For the CFO: describe business risk, potential regulatory fine exposure, customer trust impact, and cost of remediation vs. cost of breach
+- C) Escalate only to the CISO and let the CISO communicate to both executives
+- D) Send the full CVSS score report to both executives without additional context
+
+Submit answer: ______
+
+---
+
+### Question 19 — Domain 1: Threat Hunting
+
+A threat hunter has completed a hunt for evidence of T1136.001 (Create Account: Local Account) — attacker-created local user accounts — across all Windows endpoints. The hunt searched 30 days of Security event logs (Event ID 4720) and found no unauthorized account creation events. Which statement best represents how this finding should be recorded and used?
+
+- A) The negative finding should not be documented since nothing was discovered
+- B) The negative finding confirms the hypothesis was tested, establishes a 30-day baseline, and should be documented with the data sources, time range, and queries used — a new detection rule for Event ID 4720 on non-standard accounts should also be proposed if one does not exist
+- C) The negative finding means the organization has no insider threat risk and no further hunting for this technique is needed
+- D) The negative finding indicates the EDR platform is malfunctioning because it should have found something
+
+Submit answer: ______
+
+---
+
+### Question 20 — Domain 2: Vulnerability Management
+
+An organization's vulnerability management program has the following remediation SLAs: Critical: 15 days, High: 30 days, Medium: 90 days, Low: 180 days. A quarterly report shows that 78% of Critical vulnerabilities were remediated within SLA, 91% of High vulnerabilities were remediated within SLA, and 34% of Medium vulnerabilities were remediated within SLA. Which finding from this data most requires a program management response?
+
+- A) High vulnerability SLA compliance at 91% is too low and should be 100%
+- B) Critical vulnerability SLA compliance at 78% means that 22% of the most severe vulnerabilities exceeded the 15-day remediation window — this is the most important finding requiring immediate attention
+- C) Medium vulnerability SLA compliance at 34% indicates a significant backlog of medium vulnerabilities that requires resource allocation or SLA adjustment
+- D) The data is insufficient to draw any conclusions — the total number of vulnerabilities in each category is needed
+
+Submit answer: ______
+
+---
+
+## Answer Key
+
+Submit your answers before reviewing this section.
+
+1. C — Brute force (systematic trial until success)
+2. B — Business context overrides raw CVSS score
+3. B — Contain → Eradicate → Recover → Post-Incident (NIST phases)
+4. B — SLA compliance rate is the board-appropriate performance metric
+5. C — Consistent interval + consistent payload = C2 beaconing
+6. B — Prefetch files prove execution history
+7. B — Business context (customer auth, credential risk) elevates medium findings
+8. B — TAXII is the transport protocol; STIX is the format
+9. C — 11-day gap before detection = MTTD failure
+10. C — Non-credentialed scans lack OS-level visibility
+11. B — False positive → documentation + tuning request
+12. C — Lessons learned with recommendations supports investment decisions
+13. B — `netscan` reveals network connections by process
+14. B — Multi-source confidence threshold reduces false automation
+15. C — Compensating controls bridge the remediation gap
+16. B — Rapid multi-server auth = lateral movement via credential theft
+17. B — Sandbox detonation catches reputation-bypassing attachments
+18. B — Tailor communication to audience role and concern
+19. B — Negative findings require documentation and detection rule proposal
+20. B — Critical SLA breach is highest priority despite medium backlog size
+
+---
+
+## Answer Review Instructions
+
+For each incorrect answer: record the question number, the domain, and the topic in a study log. Return to the relevant module's reading guide section for that topic and re-read it. Then re-read this question and understand why the correct answer is right and why your answer was wrong.
+
+Target: 16 correct or higher before taking the actual CySA+ exam.

@@ -1,61 +1,163 @@
-# Reading Guide: Module 10 - Infrastructure as Code Security – Terraform Security Scanning
+# Reading Guide: Module 10 - Infrastructure as Code Security: Terraform Security Scanning
 
-## Course: CIS-4350_DevSecOps_CICD_Pipelines (Certified DevSecOps Professional (CDP))
+## Course: CIS-4350 DevSecOps and CI/CD Pipelines
 
----
-
-### Introduction
-
-Welcome to **Module 10 - Infrastructure as Code Security – Terraform Security Scanning**! This module covers IaC security scanning as the pipeline gate that prevents misconfigured cloud infrastructure from being provisioned. As organizations define their AWS, Azure, and GCP infrastructure in Terraform HCL files, those files become security artifacts that must be scanned for misconfigurations before `terraform apply` runs. You will learn how IaC scanning tools (Checkov, tfsec, tflint) detect security violations in Terraform code, how they integrate into CI/CD pipelines, and how IaC security connects to the broader DevSecOps shift-left principle. These are core CDP exam topics.
+## Certification Alignment: DevSecOps Professional (DSOE)
 
 ---
 
-### 1. High-Yield Glossary
+## Introduction
 
-Review these essential definitions carefully. The CDP certification exam expects you to recognize and apply these concepts in scenario-based questions:
-
-* **IaC validation**: The process of automatically checking Infrastructure as Code files (Terraform `.tf`, CloudFormation YAML, Ansible playbooks) for syntax errors, policy violations, and security misconfigurations before the infrastructure is provisioned. IaC validation is the shift-left equivalent for infrastructure — catching a misconfigured S3 bucket in a Terraform file before `terraform apply` is vastly cheaper than remediating a publicly exposed bucket after deployment.
-
-* **Linter checks (tflint)**: Static analysis of Terraform configuration files for syntax errors, deprecated syntax, invalid resource configurations, and provider-specific rule violations. Tflint runs before IaC security scanning and ensures the Terraform code is valid and correctly structured — a prerequisite for meaningful security analysis.
-
-* **Security scanning (Checkov, tfsec)**: Analysis of Terraform and other IaC files against a library of cloud security best-practice rules. Checkov (by Bridgecrew/Prisma Cloud) and tfsec both detect misconfigurations such as S3 buckets with public access enabled, security groups with overly permissive ingress rules (0.0.0.0/0), unencrypted EBS volumes, and missing CloudTrail logging. These tools map findings to CIS Benchmarks, SOC 2, and PCI-DSS control frameworks.
-
-* **Pipeline execution**: The automated sequence of IaC security steps in a CI/CD workflow: checkout → `terraform init` → `tflint` → `checkov -d .` → (if all pass) → `terraform plan` → `terraform apply`. Each step's exit code gates the next; a CRITICAL Checkov finding blocks the plan and apply steps, preventing misconfigured infrastructure from being provisioned.
+Module 10 covers IaC security — the DevSecOps control that prevents cloud infrastructure misconfigurations from reaching production. Infrastructure as Code means your cloud resources are defined in version-controlled configuration files. IaC security scanning tools analyze those files statically — before any infrastructure is provisioned — to identify misconfigurations against security benchmarks. This module covers Terraform as the primary IaC language and Checkov, tfsec, and Terrascan as the primary scanning tools.
 
 ---
 
-### 2. Certification Exam Tips
+## Section 1: High-Yield Glossary
 
-* **Shift-Left for Infrastructure**: IaC security scanning applies the same shift-left principle to infrastructure that SAST applies to application code. The CDP exam tests whether you understand that scanning Terraform files at the pull request stage (before `apply`) is the correct pipeline placement, not after provisioning.
-* **Checkov vs. tfsec**: Both tools scan Terraform for misconfigurations but differ in approach. Checkov is broader (supports Terraform, CloudFormation, Kubernetes, Dockerfile) and maps findings to compliance frameworks. tfsec is Terraform-focused with deeper HCL parsing. The CDP exam may ask you to identify which tool supports a specific platform or compliance framework.
-* **Common IaC Misconfigs**: Know the most common Terraform misconfigurations tested on CDP: public S3 buckets, security groups with `0.0.0.0/0` ingress on sensitive ports, unencrypted RDS instances, IAM roles with `*` actions, missing MFA delete on S3 versioning.
-* **Study Resource**: The [Checkov documentation](https://www.checkov.io/1.Welcome/What%20is%20Checkov.html) covers all supported checks, CLI usage, CI/CD integration (GitHub Actions, Jenkins), and custom policy writing — essential reference for CDP IaC security scanning questions.
+**IaC (Infrastructure as Code)** — The practice of defining cloud infrastructure resources (compute, storage, networking, IAM) in version-controlled configuration files rather than through manual console operations. Primary languages: Terraform (HCL), CloudFormation (JSON/YAML), Pulumi (Python/TypeScript), Bicep (Azure).
+
+**Terraform** — HashiCorp's open-source IaC tool that uses HCL (HashiCorp Configuration Language) to define cloud resources. Resources are declared in `.tf` files and applied via `terraform plan` / `terraform apply`.
+
+**HCL (HashiCorp Configuration Language)** — The configuration language used by Terraform. Human-readable, supports variables, modules, outputs, and data sources.
+
+**IaC security scanning** — Static analysis of IaC configuration files to detect security misconfigurations before infrastructure is provisioned. Equivalent to SAST for infrastructure code.
+
+**Checkov** — An open-source IaC security scanner from Bridgecrew/Palo Alto Networks. Supports the broadest framework set: Terraform, CloudFormation, Kubernetes manifests, Dockerfiles, ARM templates, Bicep, Helm charts. Maps checks to CIS benchmarks, NIST, and SOC2.
+
+**tfsec** — An open-source Terraform-focused static analysis tool from Aqua Security. Optimized for HCL analysis with detailed Terraform-specific context in findings.
+
+**Terrascan** — An open-source IaC scanner from Tenable. Uses Rego (the Open Policy Agent policy language) for defining security policies, enabling custom policy reuse across IaC scanning and Kubernetes admission control.
+
+**CIS Benchmarks** — Configuration security standards published by the Center for Internet Security. CIS AWS Foundations Benchmark defines secure configurations for S3, IAM, VPC, RDS, and other AWS services. Checkov maps its checks to CIS controls.
+
+**IMDSv2 (Instance Metadata Service v2)** — An AWS EC2 security improvement that requires session-oriented authentication for metadata API requests, preventing SSRF attacks from accessing instance credentials. Checkov check `CKV_AWS_79`.
+
+**Terraform state** — A file or remote backend that records the current state of provisioned infrastructure. State files can contain sensitive values (database passwords, private IPs). State should be stored in encrypted remote backends (S3 + DynamoDB), not in version control.
+
+**`terraform plan`** — A dry run that shows what changes `terraform apply` would make without provisioning anything. IaC scanners run before `terraform plan` to catch misconfigurations at the source code level.
+
+**Rego** — The policy language used by Open Policy Agent (OPA) and Terrascan. Declarative, logic-based language for expressing policy as code. Used in Kubernetes admission controllers and IaC policy enforcement.
+
+**Misconfiguration** — A cloud resource configuration that violates a security best practice — for example, an S3 bucket with public access enabled, a security group allowing inbound traffic from 0.0.0.0/0, or an RDS instance with encryption disabled.
+
+**SARIF (Static Analysis Results Interchange Format)** — A JSON-based standard format for security tool findings. Supported by GitHub Code Scanning for unified display of SAST, IaC, and container scan results in the Security tab.
 
 ---
 
-### Required Readings & Videos
+## Section 2: IaC Scanner Comparison
 
-To prepare for this module's topics, you must complete the following readings and videos:
-
-* **Required Reading**: Read the [Checkov documentation and getting started guide](https://www.checkov.io/1.Welcome/What%20is%20Checkov.html) — covers how Checkov scans Terraform, CloudFormation, and Kubernetes files, the `--check` and `--skip-check` CLI options, SARIF report output, and GitHub Actions integration. Focus on Terraform scanning and CI/CD pipeline integration examples.
-* **Required Video**: Watch the IaC security scanning segment of [CI/CD Pipeline & DevSecOps Course by freeCodeCamp](https://www.youtube.com/watch?v=scEDHsr3APg) — demonstrates writing Terraform code, running Checkov against it, interpreting failing checks, and integrating the scan into a GitHub Actions pipeline that gates `terraform apply`.
-
----
-
-### Lab & Command Integration
-
-In this week's hands-on lab, you will integrate IaC security scanning into a Terraform pipeline by:
-
-* **Write checkov scanning script for terraform files**: Add a `checkov -d . --framework terraform --output sarif` step to a GitHub Actions workflow that runs on pull requests to the Terraform configuration repository, configured to fail on HIGH and CRITICAL severity findings.
-* **Integrate tfsec scanner in pipeline**: Add a `tfsec . --format json` step that runs in parallel with Checkov, providing a second opinion on Terraform misconfigurations and producing a JSON report uploaded as a pipeline artifact.
-* **Analyze security failures in outputs**: Review the SARIF and JSON reports — identify at least two failing security checks, note the affected resource, the violated rule (e.g., `CKV_AWS_18`: Ensure the S3 bucket has access logging enabled), and the Terraform configuration change needed to pass the check.
+| Dimension | Checkov | tfsec | Terrascan |
+|---|---|---|---|
+| Maintainer | Bridgecrew / Palo Alto Networks | Aqua Security | Tenable |
+| License | Open-source (Apache 2.0) | Open-source (MIT) | Open-source (Apache 2.0) |
+| Framework support | Terraform, CloudFormation, K8s, Dockerfile, ARM, Bicep, Helm | Terraform (primary), some others | Terraform, CloudFormation, K8s, Helm |
+| Policy language | Python (built-in) | Go (built-in) | Rego (OPA) |
+| Custom policies | Python or YAML | YAML | Rego |
+| CIS benchmark mapping | Yes | Yes | Yes |
+| SARIF output | Yes | Yes | Yes |
+| GitHub Action | `bridgecrewio/checkov-action` | `aquasecurity/tfsec-action` | `tenable/terrascan-action` |
+| Pipeline exit code | `soft_fail: false` | `--minimum-severity` | `--severity` |
 
 ---
 
-### 3. Study Checklist
+## Section 3: Common Terraform Misconfigurations and Checkov Checks
 
-* [ ] Read the glossary terms and understand how IaC security scanning applies the shift-left principle to infrastructure provisioning.
-* [ ] Read the Checkov documentation at [https://www.checkov.io/1.Welcome/What%20is%20Checkov.html](https://www.checkov.io/1.Welcome/What%20is%20Checkov.html).
-* [ ] Watch the IaC security scanning segment of [CI/CD Pipeline & DevSecOps Course by freeCodeCamp](https://www.youtube.com/watch?v=scEDHsr3APg).
-* [ ] Complete the Checkov and tfsec pipeline integration and report analysis in the lab activity.
-* [ ] Proceed to the weekly hands-on lab activity.
+| Misconfiguration | Checkov Check ID | Risk | Remediation |
+|---|---|---|---|
+| S3 public access enabled | CKV_AWS_20, CKV_AWS_57 | Data exposure | Set all `block_public_*` to `true` |
+| S3 encryption disabled | CKV_AWS_19 | Data at rest exposure | Enable `server_side_encryption_configuration` |
+| S3 access logging disabled | CKV_AWS_18 | No audit trail | Enable `logging` block |
+| Security group ingress 0.0.0.0/0 | CKV_AWS_25 | Network exposure | Restrict `cidr_blocks` to known ranges |
+| RDS encryption disabled | CKV_AWS_17 | Data at rest exposure | Set `storage_encrypted = true` |
+| EC2 IMDSv2 not enforced | CKV_AWS_79 | SSRF to credential theft | Set `http_tokens = "required"` |
+| IAM wildcard permissions | CKV_AWS_40 | Excessive privilege | Replace `*` actions with specific permissions |
+| CloudTrail logging disabled | CKV_AWS_67 | No audit trail | Enable `enable_log_file_validation = true` |
+
+---
+
+## Section 4: IaC Security Pipeline Integration
+
+| Stage | Action | Tool |
+|---|---|---|
+| Pre-commit | Scan staged `.tf` files before commit | Checkov pre-commit hook |
+| Pull request | Run full IaC scan as PR status check | Checkov/tfsec GitHub Actions |
+| Merge to main | Block merge if HIGH/CRITICAL findings present | Branch protection + required status checks |
+| `terraform plan` | Review plan output for unexpected changes | `terraform plan` + policy check |
+| `terraform apply` | Automated apply gated by plan approval | Environment protection rules |
+
+---
+
+## Section 5: Terraform State Security
+
+Terraform state files record the current state of all provisioned resources and can contain sensitive values. Key security practices:
+
+- Store state in a remote backend with encryption at rest (S3 with SSE-KMS + DynamoDB state locking).
+- Never commit `terraform.tfstate` or `terraform.tfstate.backup` to version control.
+- Add `*.tfstate` and `*.tfstate.backup` to `.gitignore`.
+- Use IAM policies to restrict who can read the state backend.
+- Enable state versioning on S3 to allow rollback.
+
+---
+
+## Section 6: SAST vs. IaC Scanning Comparison
+
+| Dimension | SAST | IaC Security Scanning |
+|---|---|---|
+| Target | Application source code | Infrastructure configuration files |
+| Language | Python, Java, JavaScript, etc. | Terraform HCL, CloudFormation YAML, etc. |
+| Finds | CWEs, injection flaws, hardcoded secrets | Cloud misconfigurations, over-permissive policies |
+| Pipeline stage | Commit / PR | PR (before provisioning) |
+| Tools | Semgrep, SonarQube, Checkmarx | Checkov, tfsec, Terrascan |
+| Benchmark alignment | OWASP Top 10, CWE | CIS Benchmarks, NIST, SOC2 |
+
+---
+
+## Section 7: Kubernetes RBAC Model Reference
+
+The principle of least privilege in IaC mirrors RBAC least privilege.
+
+- Avoid wildcard IAM permissions in Terraform — `"Action": "*"` grants all AWS permissions.
+- Scope security group ingress rules to the minimum required CIDR ranges.
+- Use resource-level encryption for all data stores.
+- Apply the `CKV_AWS_*` checks as a minimum security baseline.
+
+---
+
+## Section 8: DevSecOps Professional Exam Tips
+
+1. **IaC scanning pipeline stage** — IaC security scanning runs at the PR stage, before `terraform plan` or `terraform apply`. This is the IaC equivalent of SAST — static analysis of configuration code before execution.
+
+2. **Checkov framework support** — Know that Checkov has the broadest framework support: Terraform, CloudFormation, Kubernetes manifests, Dockerfiles, ARM templates, Bicep, and Helm charts. This makes it the most versatile option for multi-cloud, multi-framework environments.
+
+3. **Terrascan and Rego** — Know that Terrascan uses Rego for policy definitions, the same language as OPA and Kubernetes admission controllers. This enables policy reuse between IaC scanning and admission control.
+
+4. **Three canonical misconfigurations** — Memorize: S3 public access (`block_public_acls = false`), security group `0.0.0.0/0` ingress, and RDS `storage_encrypted = false`. Know the Checkov check IDs for S3 public access (CKV_AWS_20) and RDS encryption (CKV_AWS_17).
+
+5. **`soft_fail: false`** — Know that `soft_fail: false` in the Checkov GitHub Action causes the job to exit non-zero on any FAILED check, acting as a pipeline gate. `soft_fail: true` allows the pipeline to continue despite findings.
+
+6. **Terraform state security** — Know that `terraform.tfstate` can contain sensitive values and must never be committed to version control. Know that the secure pattern is an S3 remote backend with encryption and DynamoDB state locking.
+
+7. **SARIF output** — All three IaC scanners (Checkov, tfsec, Terrascan) support SARIF output. Know that SARIF files are uploaded to GitHub Code Scanning using the `github/codeql-action/upload-sarif@v3` action.
+
+8. **Shift-left for infrastructure** — The core DevSecOps value of IaC scanning is catching misconfigurations before they reach production. A publicly exposed S3 bucket found in a PR is infinitely cheaper to fix than one found after a data breach.
+
+---
+
+## Section 9: Required Reading
+
+- Review the OWASP Infrastructure as Code Security Cheat Sheet at [https://cheatsheetseries.owasp.org/cheatsheets/Infrastructure_as_Code_Security_Cheat_Sheet.html](https://cheatsheetseries.owasp.org/cheatsheets/Infrastructure_as_Code_Security_Cheat_Sheet.html).
+
+---
+
+## Section 10: Study Checklist
+
+- [ ] Explain what IaC security scanning is and at which pipeline stage it runs.
+- [ ] Name the three primary Terraform security scanning tools and one distinguishing characteristic of each.
+- [ ] Identify the three canonical Terraform misconfigurations and their remediations.
+- [ ] Explain what `soft_fail: false` does in the Checkov GitHub Action.
+- [ ] Explain why Terraform state files must not be committed to version control.
+- [ ] Describe what Rego is and which IaC scanner uses it.
+- [ ] Explain what SARIF is and how IaC scan results are integrated into GitHub Code Scanning.
+- [ ] Review the OWASP IaC Security Cheat Sheet at [https://cheatsheetseries.owasp.org/cheatsheets/Infrastructure_as_Code_Security_Cheat_Sheet.html](https://cheatsheetseries.owasp.org/cheatsheets/Infrastructure_as_Code_Security_Cheat_Sheet.html).
+- [ ] Complete the Module 10 lab activity.
+- [ ] Attempt all 10 quiz questions and review distractor analysis for any incorrect answers.

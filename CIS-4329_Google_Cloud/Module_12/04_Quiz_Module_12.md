@@ -1,82 +1,190 @@
-# Quiz: Module 12 – Cloud Security: Security Command Center and Cloud KMS
-## Course: CIS-4329 – Google Cloud Administration (Google Cloud Associate Cloud Engineer)
+# Quiz: Module 12 — BigQuery and Data Analytics
+
+## Course: CIS-4329 Google Cloud Computing
+
+## Texas Wesleyan University | Professor Nash
+
+## Certification Alignment: Google Cloud Associate Cloud Engineer (ACE)
 
 ---
 
-**Question 1**
-Your security team runs a weekly manual audit of GCP project configurations to find publicly accessible Cloud Storage buckets, overly permissive firewall rules, and service accounts with the Owner role. This process takes several hours each week. Which GCP service continuously monitors for these misconfigurations and surfaces them as findings without manual effort?
+### Instructions
 
-A) Cloud Monitoring with custom alerting policies on IAM and firewall metrics
-B) Security Command Center Security Health Analytics
-C) Cloud Logging with log-based metrics on resource configuration changes
-D) Cloud Audit Logs exported to BigQuery with scheduled queries for policy violations
-
-*   **Correct Answer:** B) Security Command Center Security Health Analytics
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Cloud Monitoring alerting policies evaluate time-series metrics (CPU, latency, request rates). IAM policy bindings and firewall rule configurations are not exposed as numeric metrics — they are resource configurations that Security Health Analytics is specifically designed to evaluate against security best practices.
-    *   *Why C is incorrect:* Cloud Logging captures change events (e.g., a bucket was made public), but log-based metrics only count occurrences and require you to write specific filters for each misconfiguration type. Security Command Center provides a built-in library of detectors that continuously scan resource configurations without custom filter development.
-    *   *Why D is incorrect:* Exporting audit logs to BigQuery and writing scheduled queries is a valid custom solution, but it requires significant development effort, ongoing query maintenance, and only catches changes at the query schedule interval. SCC Security Health Analytics scans continuously and provides findings in a purpose-built security console.
+Select the single best answer for each question. Each question is worth 10 points.
+Total: 100 points.
 
 ---
 
-**Question 2**
-Your organization's compliance framework requires that encryption keys for a regulated Cloud Storage bucket be managed by your team — including the ability to rotate keys on a custom schedule and revoke data access by destroying the key. Which encryption model should you implement?
+### Question 1
 
-A) Google-managed encryption keys (the default) — Google handles all key management automatically.
-B) Customer-Managed Encryption Keys (CMEK) using a Cloud KMS key assigned to the bucket.
-C) Client-side encryption — encrypt all objects before uploading them to Cloud Storage using your own encryption library.
-D) Enable Cloud Storage uniform bucket-level access, which provides enhanced encryption for regulated data.
+A data engineering team has a BigQuery table containing 5 years of transaction records
+(approximately 2 TB). Most queries filter by transaction date within a 30-day window.
+The team wants to reduce query costs. What is the most effective optimization?
 
-*   **Correct Answer:** B) Customer-Managed Encryption Keys (CMEK) using a Cloud KMS key assigned to the bucket.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Google-managed encryption keys are controlled entirely by Google — your team has no ability to rotate them on a custom schedule or destroy them to revoke access. Google-managed keys are appropriate for most workloads but do not satisfy compliance requirements that mandate customer control over key lifecycle.
-    *   *Why C is incorrect:* Client-side encryption is technically viable but places the entire key management burden on your team, requires encrypting every object before upload, and means the data is opaque to GCP services (no server-side processing). CMEK provides customer control while keeping the data usable by GCP services.
-    *   *Why D is incorrect:* Uniform bucket-level access is an IAM configuration that simplifies access control by disabling object-level ACLs — it has no effect on the encryption model used. Enabling it does not change how objects are encrypted or who controls the encryption keys.
+- A) Add a secondary index on the transaction\_date column
+- B) Create a date-partitioned table using the transaction\_date column
+- C) Move the table to long-term storage
+- D) Convert the table to an external table in Cloud Storage
 
----
-
-**Question 3**
-Your application receives HTTP traffic from the public internet via a Global HTTP(S) Load Balancer. You need to block traffic from a known malicious IP range (`198.51.100.0/24`) and reject requests that contain SQL injection patterns in the query string. Which GCP service implements both of these controls?
-
-A) VPC firewall rules with a deny rule for the malicious IP range and a Cloud Function that inspects query strings
-B) Cloud Armor security policy attached to the load balancer's backend service, with an IP-based deny rule and a preconfigured WAF rule for SQL injection
-C) Security Command Center Event Threat Detection, which automatically blocks detected threats at the load balancer
-D) Identity-Aware Proxy (IAP) configured to restrict access to authenticated users only, which prevents unauthenticated malicious requests
-
-*   **Correct Answer:** B) Cloud Armor security policy attached to the load balancer's backend service, with an IP-based deny rule and a preconfigured WAF rule for SQL injection
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* VPC firewall rules operate at Layer 4 and can block IP ranges, but they cannot inspect HTTP request contents such as query string parameters for SQL injection patterns. A Cloud Function adds significant latency and complexity compared to Cloud Armor's native WAF rule evaluation at the load balancer edge.
-    *   *Why C is incorrect:* Security Command Center Event Threat Detection identifies threats and surfaces them as findings — it is a detection and alerting tool, not an inline traffic blocking mechanism. SCC does not automatically modify firewall rules or block load balancer traffic in response to findings.
-    *   *Why D is incorrect:* Identity-Aware Proxy restricts access to authenticated and authorized users — it provides application-level authentication, not request content inspection. IAP does not evaluate IP reputation or detect SQL injection patterns in query strings.
+Correct answer: B — Date partitioning divides the table into daily segments and enables
+partition pruning, so queries with a date range filter scan only the relevant partitions
+instead of the entire 2 TB table. BigQuery does not support traditional secondary indexes.
+Moving to long-term storage reduces storage costs but not query costs. External tables
+do not support partitioning as effectively as native tables.
 
 ---
 
-**Question 4**
-A developer accidentally committed a GCP Service Account key JSON file to a public GitHub repository. The key has `roles/editor` on a production project. You need to revoke the compromised key's access immediately. What is the fastest and most direct remediation step?
+### Question 2
 
-A) Rotate the Service Account key by creating a new key, then delete the compromised key from the Service Account in the IAM console.
-B) Remove the `roles/editor` binding from the Service Account in the project's IAM policy, then delete the compromised key.
-C) Disable or delete the compromised key immediately using `gcloud iam service-accounts keys delete`, then audit Cloud Audit Logs for any unauthorized API calls made with the key.
-D) Revoke the Service Account's OAuth token by navigating to `myaccount.google.com/permissions` and removing the application's access.
+A BigQuery query runs against a partitioned table but scans the full table instead of
+the relevant partitions. What is the most likely cause?
 
-*   **Correct Answer:** C) Disable or delete the compromised key immediately using `gcloud iam service-accounts keys delete`, then audit Cloud Audit Logs for any unauthorized API calls made with the key.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Creating a new key first does not revoke the compromised key — the attacker can still use the old key until it is explicitly deleted. The compromised key must be deleted or disabled immediately, not after creating a replacement.
-    *   *Why B is incorrect:* Removing the IAM role binding from the Service Account would revoke access, but it also breaks all legitimate workloads that use the same Service Account for the same role. Deleting only the specific compromised key is more targeted and does not disrupt legitimate operations.
-    *   *Why D is incorrect:* `myaccount.google.com/permissions` manages OAuth 2.0 user consent grants for applications — it is not relevant to Service Account keys. Service Account keys use long-lived JSON credentials that authenticate directly via the GCP API, not via OAuth user consent flows.
+- A) The table has too many partitions
+- B) The query does not include a filter on the partition column
+- C) Partitioning is not supported for this table's data type
+- D) The user lacks the bigquery.tables.getData permission
+
+Correct answer: B — Partition pruning only occurs when the WHERE clause includes a
+filter on the partition column. If the query omits the partition filter, BigQuery scans
+all partitions. This is the most common reason a partitioned table query costs as much
+as a full-table scan.
 
 ---
 
-**Question 5**
-You are designing a multi-project GCP environment where the analytics team's project needs read access to data in the finance team's Cloud Storage bucket. Your security team is concerned that a compromised analytics project credential could be used to exfiltrate the finance data to an external storage location outside your organization. Which security control specifically prevents this data exfiltration risk at the API level?
+### Question 3
 
-A) Grant the analytics Service Account `roles/storage.objectViewer` on the finance bucket using IAM conditional bindings restricted to the analytics project's VPC.
-B) Configure VPC Service Controls to create a service perimeter that includes both the analytics and finance projects, preventing API calls that move data outside the perimeter.
-C) Enable Cloud Armor on the finance project's load balancer to block requests from the analytics project's IP range.
-D) Use Cloud KMS CMEK on the finance bucket so that the analytics project's Service Account cannot decrypt the objects without an explicit KMS key grant.
+A team needs to share a subset of a sensitive customer table with an analytics team in
+a different GCP project. The analytics team should only see non-PII columns and no
+records for inactive accounts. Which BigQuery feature provides this without granting
+direct table access?
 
-*   **Correct Answer:** B) Configure VPC Service Controls to create a service perimeter that includes both the analytics and finance projects, preventing API calls that move data outside the perimeter.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* IAM controls whether a principal can access a resource — it does not restrict where the data can be copied after access is granted. A compromised analytics credential with `objectViewer` can still read the bucket and write the data to an external project's bucket or public location. VPC Service Controls prevent the copy operation itself.
-    *   *Why C is incorrect:* Cloud Armor protects HTTP(S) Load Balancer endpoints from external traffic — it does not protect Cloud Storage API calls made directly via `gsutil` or the Storage API. Cloud Storage does not use the HTTP(S) Load Balancer, so Cloud Armor has no visibility into these requests.
-    *   *Why D is incorrect:* CMEK controls who can decrypt data using the KMS key. If the analytics Service Account is granted `roles/cloudkms.cryptoKeyDecrypter` to perform its legitimate read operations, that same grant also allows a compromised credential to decrypt and exfiltrate the data. CMEK does not restrict the destination of decrypted data — VPC Service Controls does.
+- A) Dataset-level IAM binding granting the analytics team bigquery.dataViewer
+- B) An authorized view filtering columns and rows, shared with the analytics team
+- C) Export the filtered data to Cloud Storage and share the bucket
+- D) Create a copy of the table with sensitive columns removed
+
+Correct answer: B — An authorized view lets you define exactly which rows and columns
+are visible and share the view with the analytics team without granting direct table
+access. Dataset-level IAM would expose the full table. Exporting or copying creates
+redundancy and does not stay in sync with changes.
+
+---
+
+### Question 4
+
+Which BigQuery pricing model charges approximately $5.00 per terabyte of data scanned?
+
+- A) Flat-rate pricing (slot reservations)
+- B) Streaming insert pricing
+- C) On-demand pricing
+- D) Storage pricing
+
+Correct answer: C — On-demand pricing charges approximately $5.00 per TB processed by
+queries. The first 1 TB per month is free. Flat-rate pricing is a fixed monthly charge
+for reserved slots, independent of bytes scanned. Storage pricing is per GB stored.
+Streaming insert pricing is per row inserted.
+
+---
+
+### Question 5
+
+A developer runs the same BigQuery query twice within a few minutes against an unchanged
+table. What happens on the second execution?
+
+- A) BigQuery runs the query again and charges for the bytes scanned a second time
+- B) BigQuery returns the cached result from the first run at no charge
+- C) BigQuery denies the second query due to rate limiting
+- D) BigQuery automatically converts the second run to a dry\_run
+
+Correct answer: B — BigQuery caches query results for 24 hours. Running an identical
+query against an unchanged table within the cache window returns the cached result at
+no charge. The cache is automatically invalidated when the underlying table changes.
+
+---
+
+### Question 6
+
+A data analyst wants to estimate how much a BigQuery query will cost before running it.
+Which approach is correct?
+
+- A) Run the query with LIMIT 1 to test on a small sample
+- B) Use --dry\_run with the bq CLI or review the byte estimate in the Cloud Console
+- C) Manually estimate based on table size from the BigQuery pricing page
+- D) Run the query and check the bytes billed in query history
+
+Correct answer: B — `--dry_run` (or the automatic estimate in the Cloud Console query
+editor) processes the query plan and returns bytes that would be scanned without actually
+executing. Adding LIMIT 1 does NOT reduce bytes scanned in BigQuery — the optimizer still
+reads all matching rows before applying the limit.
+
+---
+
+### Question 7
+
+A team has a large BigQuery table partitioned by `order_date`. They frequently filter on
+both `order_date` and `customer_region`. What additional optimization reduces bytes
+scanned for queries that filter on `customer_region`?
+
+- A) Add a secondary index on customer\_region
+- B) Create a separate table for each region
+- C) Cluster the table by customer\_region
+- D) Use a materialized view with customer\_region as a partition column
+
+Correct answer: C — Clustering by `customer_region` sorts data within each partition so
+BigQuery skips blocks that do not match the filter. This reduces bytes scanned beyond
+what date partitioning alone achieves. BigQuery does not support secondary indexes, and
+separate per-region tables are an anti-pattern.
+
+---
+
+### Question 8
+
+A BigQuery dataset was created in the `us-central1` region. The team now needs the data
+in `europe-west1` for a compliance requirement. What is the correct approach?
+
+- A) Change the dataset location setting to the EU multi-region
+- B) Create a new dataset in europe-west1 and copy the tables using bq cp
+- C) Use BigQuery data replication to add a secondary region
+- D) Create cross-region read replicas in the existing dataset
+
+Correct answer: B — You cannot change a BigQuery dataset's location after creation.
+The correct approach is to create a new dataset in the target region and copy tables
+using `bq cp` or by exporting to Cloud Storage and reloading. BigQuery does not have
+built-in cross-region replication within a single dataset.
+
+---
+
+### Question 9
+
+What is the key difference between a BigQuery external table and a native BigQuery table?
+
+- A) External tables support partitioning; native tables do not
+- B) External tables store data inside BigQuery managed storage; native tables store data
+   in Cloud Storage
+- C) External tables reference data in Cloud Storage without ingesting it into BigQuery;
+   native tables store data in BigQuery's managed Colossus storage
+- D) External tables require a schema definition; native tables can be schemaless
+
+Correct answer: C — External tables reference files stored outside BigQuery (Cloud
+Storage, Google Sheets, etc.) without loading the data into BigQuery's internal storage.
+Native tables store data in BigQuery's Colossus distributed file system. External tables
+are useful for one-time analysis without ingestion cost, but are slower and less
+optimizable.
+
+---
+
+### Question 10
+
+A BigQuery table has not been modified for 95 days. Which pricing benefit applies
+automatically?
+
+- A) The table is automatically archived to Coldline storage
+- B) The table qualifies for long-term storage pricing at approximately half the active
+   storage rate
+- C) Query costs for the table are reduced by 50%
+- D) The table is automatically deleted after 90 days of inactivity
+
+Correct answer: B — BigQuery automatically applies long-term storage pricing to tables
+and partitions that have not been modified for 90 or more consecutive days. The storage
+cost drops to approximately half the active rate, with no configuration required. This
+applies to storage cost only, not query cost. Tables are not automatically deleted.

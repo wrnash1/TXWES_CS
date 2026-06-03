@@ -1,57 +1,330 @@
-# Reading Guide: Module 05 - Vulnerability Scanning – Nessus and OpenVAS
-## Course: CIS-4333_Penetration_Testing (CompTIA PenTest+)
+# Reading Guide: Module 05 — Reconnaissance and OSINT
+
+## Course: CIS-4333 Penetration Testing
+
+## Texas Wesleyan University | Professor Nash
+
+## Certification Alignment: CompTIA PenTest+ (PT0-002)
 
 ---
 
-### Introduction
-Welcome to **Module 05 - Vulnerability Scanning – Nessus and OpenVAS**! This module covers automated vulnerability scanning — the systematic process of probing target systems with credentialed or uncredentialed scans to identify known vulnerabilities, misconfigurations, default credentials, and missing patches. Vulnerability scanning sits at the intersection of the **Information Gathering and Vulnerability Scanning** domain (22% of PT0-002) and feeds directly into the exploitation phase. Understanding how to configure scanners, interpret results, and distinguish real vulnerabilities from noise is a core professional skill and an exam requirement.
+## Introduction
 
-Nessus (by Tenable) and OpenVAS (open-source) are the two most widely used vulnerability scanners and are explicitly referenced in PT0-002 exam objectives.
+Module 05 covers the reconnaissance phase of a penetration test — systematically gathering intelligence about a target before any active interaction. This phase is also called "information gathering" in the PT0-002 exam objectives and falls within Domain 2: Information Gathering and Vulnerability Scanning, which accounts for 22% of the exam.
 
----
+Reconnaissance is the phase where professional testers distinguish themselves. A well-executed recon phase produces a detailed map of the target's attack surface, enabling focused and efficient testing. A rushed recon phase leads to missed vulnerabilities and wasted effort in later phases.
 
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **Configuring Scanning Parameters**: The process of defining the scope, intensity, and credentials of a vulnerability scan before execution. Key parameters include: target IP range, scan policy (basic network scan vs. credentialed audit vs. web application scan), scan timing (to avoid disrupting production systems), and port range. Credentialed scans (authenticated scans) provide deeper visibility into patch levels and local configuration because the scanner logs into the target as a privileged user.
-
-*   **False Positives vs. False Negatives**: A false positive occurs when a scanner reports a vulnerability that does not actually exist on the target — often due to version string matching without confirming exploitability or due to scanner logic errors. A false negative occurs when a real vulnerability exists but the scanner fails to detect it — common with heavily customized systems, non-standard ports, or vulnerabilities requiring manual confirmation. Both types affect the quality of the assessment and require analyst judgment to resolve.
-
-*   **Analyzing Severity Levels (CVSS)**: The Common Vulnerability Scoring System (CVSS) assigns each vulnerability a score from 0.0 to 10.0 based on exploitability (attack vector, complexity, privileges required, user interaction) and impact (confidentiality, integrity, availability). PT0-002 tests the CVSS v3.1 severity ranges: Critical (9.0–10.0), High (7.0–8.9), Medium (4.0–6.9), Low (0.1–3.9). Testers prioritize remediation recommendations based on CVSS scores combined with environmental context (e.g., internet-facing vs. internal).
-
-*   **Credentialed vs. Uncredentialed Scans**: An uncredentialed (unauthenticated) scan probes services from the outside, limited to what is visible over the network. A credentialed scan provides the scanner with valid login credentials, allowing it to examine patch levels, installed software, registry settings, and local file permissions — producing far fewer false negatives. PT0-002 expects you to know when each type is appropriate and that credentialed scans are more accurate for patch assessment.
+**Legal and Ethical Reminder:** Reconnaissance — even passive techniques — must be conducted only against systems and organizations you are explicitly authorized to test. Written authorization defining scope is required before beginning any recon activity. Unauthorized reconnaissance may violate the Computer Fraud and Abuse Act (CFAA) and similar laws.
 
 ---
 
-### 2. Certification Exam Tips
-*   **Domain Weight:** Information Gathering and Vulnerability Scanning is **22% of PT0-002**. Vulnerability scanning questions focus on scanner selection, result interpretation, and CVSS scoring — not memorizing scanner menus.
-*   **Nessus vs. OpenVAS:** Both are vulnerability scanners. Nessus is commercial (Tenable); OpenVAS is the open-source alternative (maintained by Greenbone). PT0-002 may ask you to identify which tool is appropriate for a given scenario — know that both perform credentialed and uncredentialed scans, produce CVSS-scored results, and support compliance auditing.
-*   **Exam Trap — Vulnerability Scanner vs. Exploitation Tool:** PT0-002 distinguishes between tools that identify vulnerabilities (Nessus, OpenVAS, Nikto) and tools that exploit them (Metasploit, sqlmap). A scanner finding a vulnerability does not mean it has been exploited — they serve different phases.
-*   **Exam Trap — False Positive Handling:** When a scanner flags a vulnerability, the professional response is to manually verify before reporting it as confirmed. PT0-002 tests that testers validate scanner findings rather than reporting everything uncritically.
-*   **CVSS Components Tested:** Attack Vector (Network/Adjacent/Local/Physical), Attack Complexity (Low/High), Privileges Required, User Interaction, Scope, and the three impact metrics (C/I/A). Know that a CVSS 10.0 requires: network-accessible, low complexity, no privileges, no user interaction, scope change, full C/I/A impact.
-*   **Study Resource:** [TryHackMe Pentest Learning Path](https://tryhackme.com/path/outline/pentesting) — The "Vulnerability Scanning" rooms provide hands-on practice with Nessus and OpenVAS in a guided lab environment, covering scan configuration, result interpretation, and CVSS scoring.
-*   **Video Lecture:** [CompTIA PenTest+ Complete Course by freeCodeCamp](https://www.youtube.com/watch?v=3Kq1MIfC-4U) — Navigate to the Vulnerability Scanning section for PT0-002 domain 2 content covering Nessus, OpenVAS, scan types, and CVSS.
+## 1. Passive vs. Active Reconnaissance
+
+### Definitions
+
+**Passive Reconnaissance** collects intelligence without directly interacting with the target's systems. The target cannot detect you because you are not generating traffic against their infrastructure. Sources include public search engines, cached data, third-party databases, and public records.
+
+**Active Reconnaissance** involves direct interaction with target systems. DNS queries to target name servers, port scanning, banner grabbing, and web crawling are active techniques. These generate log entries on the target and can trigger IDS/IPS alerts. Active recon requires confirmed written authorization.
+
+### Comparison Table
+
+| Characteristic | Passive Recon | Active Recon |
+|----------------|--------------|-------------|
+| Target interaction | None | Direct |
+| Detectability | Undetectable | Generates logs |
+| Authorization required | Yes (for target) | Yes (explicitly) |
+| Example tools | Shodan, theHarvester | Nmap, Nikto |
+| Data freshness | May be cached/stale | Real-time |
+| PenTest+ domain | Info Gathering | Info Gathering + Scanning |
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Complete the Vulnerability Scanning rooms in the [TryHackMe Pentest Learning Path](https://tryhackme.com/path/outline/pentesting). These rooms walk through Nessus and OpenVAS configuration, scan execution, and result analysis with hands-on exercises against vulnerable lab targets.
-*   **Required Video:** Watch the Vulnerability Scanning segment of the [CompTIA PenTest+ Complete Course by freeCodeCamp](https://www.youtube.com/watch?v=3Kq1MIfC-4U). Use chapter markers to navigate to domain 2 content on scanner configuration, CVSS scoring, and result interpretation.
+## 2. OSINT Techniques and Tools
+
+### Google Dorking (Google Hacking)
+
+Google advanced search operators find publicly indexed but obscure information. The Google Hacking Database (GHDB) at Exploit-DB catalogs proven dorks by category.
+
+| Operator | Syntax | Use Case |
+|----------|--------|---------|
+| `site:` | `site:example.com` | Restrict to one domain |
+| `filetype:` | `filetype:pdf` | Find specific file types |
+| `inurl:` | `inurl:admin` | URL contains keyword |
+| `intitle:` | `intitle:"index of"` | Page title contains phrase |
+| `intext:` | `intext:"password"` | Page body contains text |
+| `cache:` | `cache:example.com` | Google's cached copy |
+
+### theHarvester
+
+Primary use: email harvesting and subdomain enumeration against multiple OSINT sources simultaneously.
+
+```bash
+# Single source
+theHarvester -d example.com -b google
+
+# Multiple sources with output file
+theHarvester -d example.com -b bing,linkedin,twitter -l 500 -f report.html
+
+# All available sources
+theHarvester -d example.com -b all -l 200
+```
+
+Key options:
+
+| Flag | Meaning |
+|------|---------|
+| `-d` | Target domain |
+| `-b` | Data source(s) |
+| `-l` | Limit number of results |
+| `-f` | Output file (html or xml) |
+| `-s` | Start result number |
+
+### Shodan
+
+Shodan indexes internet-connected device banners. It is passive from the tester's perspective — you query Shodan's database, not the target.
+
+```text
+hostname:example.com
+org:"Example Corp"
+net:203.0.113.0/24
+port:3389 country:US
+product:"Apache httpd" version:"2.4.49"
+vuln:CVE-2021-44228
+ssl:"example.com"
+```
+
+Shodan reveals: open ports, software versions, SSL certificates, geographic distribution, and Internet of Things devices with default credentials.
+
+### Maltego
+
+Maltego performs graphical link analysis using transforms. Each transform queries one data source and returns related entities.
+
+Common transform chains:
+
+- Domain → DNS → IP Addresses → Netblocks → Organizations
+- Domain → Email Addresses → People → Social Profiles
+- IP Address → Autonomous System → Organization
+
+Editions: Community (free, rate-limited), Pro, and Enterprise.
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Set up target scanning profiles**: You will configure a vulnerability scan policy in OpenVAS or Nessus, defining the target IP range, scan intensity, port range, and whether to use credentials — and explain the expected difference in result quality between credentialed and uncredentialed modes.
-*   **Filter scanning reports for critical CVE disclosures**: You will run a scan against a lab target, then filter results by CVSS severity to identify Critical and High findings, look up associated CVE numbers in the NVD, and document what each vulnerability would allow an attacker to do.
-*   **Review scan performance indicators**: You will analyze scan logs and timing data to assess whether the scan completed successfully, identify any timed-out or unreachable targets, and evaluate the trade-off between scan speed and detection accuracy.
+## 3. DNS Enumeration
+
+### DNS Record Types Reference
+
+| Record Type | Full Name | Information Revealed |
+|-------------|-----------|---------------------|
+| A | Address | Hostname to IPv4 mapping |
+| AAAA | IPv6 Address | Hostname to IPv6 mapping |
+| MX | Mail Exchange | Mail server hostnames and priority |
+| NS | Name Server | Authoritative DNS servers |
+| TXT | Text | SPF, DKIM, verification tokens, internal info |
+| CNAME | Canonical Name | Aliases; reveals internal naming conventions |
+| SOA | Start of Authority | Primary NS, admin email, zone serial |
+| PTR | Pointer | Reverse DNS — IP to hostname |
+| SRV | Service | Service location records (VoIP, LDAP, etc.) |
+
+### DNS Enumeration Commands
+
+```bash
+# Basic lookups
+nslookup example.com
+host example.com
+dig example.com ANY
+
+# Record-specific queries
+dig example.com MX
+dig example.com NS
+dig example.com TXT
+dig example.com SOA
+
+# Reverse lookup
+dig -x 203.0.113.10
+
+# Zone transfer (AXFR) — active, requires authorization
+dig axfr @ns1.example.com example.com
+host -t axfr example.com ns1.example.com
+```
+
+### Subdomain Enumeration Tools
+
+```bash
+# Sublist3r — passive subdomain discovery
+sublist3r -d example.com -o subs.txt
+
+# Amass — passive mode (no direct target contact)
+amass enum -passive -d example.com
+
+# Amass — active mode (DNS brute force — requires authorization)
+amass enum -active -d example.com -brute
+
+# DNSrecon
+dnsrecon -d example.com -t std
+dnsrecon -d example.com -t axfr
+```
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and be able to explain each in your own words.
-- [ ] Complete the Vulnerability Scanning rooms in [TryHackMe Pentest Learning Path](https://tryhackme.com/path/outline/pentesting).
-- [ ] Watch the Vulnerability Scanning section of the [CompTIA PenTest+ Complete Course by freeCodeCamp](https://www.youtube.com/watch?v=3Kq1MIfC-4U).
-- [ ] Review the lab instructions and understand the purpose of each step before starting.
-- [ ] Proceed to the weekly hands-on lab activity.
+## 4. WHOIS and Certificate Transparency
+
+### WHOIS Lookups
+
+```bash
+whois example.com
+whois 203.0.113.0
+```
+
+WHOIS reveals: registrar, registration and expiration dates, name servers, and sometimes registrant contact information. Historical WHOIS data is available through services such as ViewDNS.info and DomainTools.
+
+### Certificate Transparency Logs
+
+Every publicly trusted TLS certificate is logged in Certificate Transparency logs. Querying [crt.sh](https://crt.sh) reveals all subdomains that have had certificates issued:
+
+```text
+https://crt.sh/?q=%.example.com
+```
+
+This surfaces development, staging, and internal subdomains that were accidentally exposed, even if they are no longer in DNS.
+
+---
+
+## 5. Social Media and People OSINT
+
+### LinkedIn Intelligence
+
+LinkedIn provides:
+
+- Employee names, titles, and organizational hierarchy
+- Technology stack clues from job postings and skills sections
+- Contractor and vendor relationships
+- Recent organizational changes (hiring, departures)
+
+### GitHub and Source Code Repositories
+
+GitHub is a critical OSINT source because developers accidentally commit secrets.
+
+```bash
+# Trufflehog — scans git history for high-entropy strings and known patterns
+trufflehog github --org=examplecorp
+
+# gitleaks — secret detection
+gitleaks detect --source=/path/to/repo
+```
+
+Common accidental exposures: API keys, OAuth tokens, database connection strings, private keys, internal IP addresses, and architecture documentation.
+
+### Email Format Discovery
+
+Knowing one employee's email reveals the format for all employees. Common formats:
+
+```text
+firstname.lastname@company.com
+f.lastname@company.com
+firstnamelastname@company.com
+flastname@company.com
+```
+
+Tools: Hunter.io, Clearbit, and Phonebook.cz.
+
+---
+
+## 6. Passive DNS and Historical Intelligence
+
+### Passive DNS Sources
+
+| Tool | Type | Key Features |
+|------|------|-------------|
+| SecurityTrails | Commercial | Full WHOIS history, passive DNS, subdomains |
+| VirusTotal | Free/Commercial | Passive DNS, related domains, file/URL analysis |
+| RiskIQ PassiveTotal | Commercial | Professional passive DNS, threat intel |
+| Shodan | Free/Commercial | Banners, historical data, certificates |
+| Wayback Machine | Free | Historical website snapshots |
+
+Historical website snapshots at archive.org can reveal former technology stacks, employee information, and accidentally published internal content.
+
+---
+
+## 7. Reconnaissance Methodology Flowchart
+
+```text
+START: Confirm Written Authorization + Define Scope
+         |
+         v
+Passive OSINT Phase
+  - WHOIS + cert transparency
+  - Shodan + theHarvester
+  - LinkedIn + GitHub
+  - Google dorks
+  - Wayback Machine
+         |
+         v
+DNS Intelligence
+  - Record enumeration (A, MX, NS, TXT, CNAME)
+  - Subdomain discovery (passive)
+  - Zone transfer check (if authorized)
+         |
+         v
+People Intelligence
+  - Employee list + email format
+  - Org hierarchy
+  - Technology stack from job postings
+         |
+         v
+Document All Findings (Source + Timestamp)
+         |
+         v
+Reconnaissance Report → Input to Scanning Phase
+```
+
+---
+
+## 8. PenTest+ Exam Tips
+
+- **Domain weight**: Information Gathering is 22% of PT0-002. Expect multiple questions on recon tools and techniques.
+
+- **Passive vs. Active distinction**: The exam frequently presents scenarios and asks you to classify the technique. Key rule: if you touch the target's systems, it is active.
+
+- **Tool identification questions**: Know what each tool does — Shodan (internet device search), theHarvester (email/subdomain), Maltego (link analysis/visualization), Recon-ng (modular recon framework).
+
+- **DNS record types**: Expect questions asking which record type reveals mail servers (MX), which reveals aliases (CNAME), and which contains SPF data (TXT).
+
+- **Zone transfers**: AXFR is a misconfiguration; it returns the complete DNS zone. Know that this is active recon and requires authorization.
+
+- **Google dork operators**: `site:`, `filetype:`, `inurl:`, `intitle:`, `intext:` — know the syntax and use case for each.
+
+- **Legal boundary**: The exam tests that students know passive recon against unauthorized targets is still potentially illegal depending on jurisdiction and use of findings.
+
+- **Recon-ng**: A modular Python recon framework similar in concept to Metasploit. Modules gather OSINT from various sources. The exam may reference it as an alternative to theHarvester.
+
+---
+
+## 9. Legal and Ethical Framework
+
+All reconnaissance activities in this course occur within the following boundaries:
+
+- Written authorization defines the target scope before any activity begins
+- Passive recon tools used against live targets outside the course lab require explicit authorization
+- Data collected about individuals is handled per applicable privacy laws
+- Findings are disclosed responsibly per the engagement's rules of engagement
+- No reconnaissance tools are used against systems outside the authorized lab environment
+
+Unauthorized reconnaissance may violate: Computer Fraud and Abuse Act (18 U.S.C. § 1030), Electronic Communications Privacy Act, state computer crime laws, and foreign equivalents.
+
+---
+
+## 10. Study Checklist
+
+- [ ] Explain the difference between passive and active reconnaissance with examples of each
+- [ ] Demonstrate Google dork syntax for at least three operator types
+- [ ] Run theHarvester against an authorized domain and interpret the output
+- [ ] Perform DNS enumeration using `dig` and identify at least five record types
+- [ ] Describe what Shodan indexes and three types of information it reveals
+- [ ] Explain how Certificate Transparency logs enable subdomain discovery
+- [ ] Identify two risks of accidental GitHub exposure and the tools used to find them
+- [ ] Complete the Module 05 lab activity in the authorized lab environment
+- [ ] Review the PT0-002 exam objectives for Domain 2 prior to the quiz
+
+---
+
+**Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University course use.**

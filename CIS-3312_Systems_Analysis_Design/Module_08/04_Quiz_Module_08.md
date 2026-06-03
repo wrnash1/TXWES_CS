@@ -1,235 +1,290 @@
-# Quiz: Module 08 - Feasibility Analysis and Cost-Benefit Analysis
+# Quiz: Module 08 — Use Case and User Story Development
 
-**Course:** CIS-3312 Systems Analysis and Design
-**Certification Alignment:** IIBA ECBA (Entry Certificate in Business Analysis)
-**Prepared by:** Professor Nash | Texas Wesleyan University
+## Course: CIS-3312 Systems Analysis and Design
 
----
+## Texas Wesleyan University | Professor Nash
 
-## Question 1
-
-A proposed system requires a custom AI model that the organization's current development team has no experience building, and no vendor offering this capability can be contracted within the project timeline. Which type of feasibility is most at risk?
-
-A) Economic feasibility
-
-B) Operational feasibility
-
-C) Legal feasibility
-
-D) Technical feasibility
-
-Correct Answer: D
-
-Distractor Analysis:
-
-- Why A is incorrect: Economic feasibility concerns the financial return on investment; the scenario describes a skills and technology gap, not a cost-benefit problem.
-- Why B is incorrect: Operational feasibility concerns whether users will adopt the system and whether it fits organizational workflows, not whether it can be built.
-- Why C is incorrect: Legal feasibility concerns regulatory and compliance requirements; no legal issue is described in this scenario.
-- Why D is correct: Technical feasibility evaluates whether the required technology and expertise exist or can be acquired within the project's constraints. An AI capability gap with no available vendor within the timeline is a textbook technical feasibility failure.
+## Certification Alignment: IIBA ECBA — Requirements Analysis and Design Definition
 
 ---
 
-## Question 2
+### Instructions
 
-In the context of systems analysis investment decisions, which of the following is the most accurate definition of Net Present Value (NPV)?
-
-A) The percentage of net benefit relative to total cost, calculated as (Net Benefit / Total Cost) x 100%
-
-B) The number of years required for cumulative project benefits to equal the total investment cost
-
-C) The present-day value of all future costs and benefits discounted at the organization's cost of capital, indicating whether the project creates or destroys value
-
-D) The total sum of all project costs over its lifetime, including development, licensing, maintenance, and training
-
-Correct Answer: C
-
-Distractor Analysis:
-
-- Why A is incorrect: This is the definition of Return on Investment (ROI), not NPV.
-- Why B is incorrect: This is the definition of payback period, not NPV.
-- Why D is incorrect: This describes total cost of ownership (TCO), not NPV. NPV discounts future cash flows; it is not simply a sum of costs.
-- Why C is correct: NPV discounts all projected future cash inflows and outflows to their present-day equivalent using a discount rate. A positive NPV means the project is expected to generate more value than it costs, justifying investment.
+Select the single best answer for each question. Each question is worth 10 points.
+Total: 100 points.
 
 ---
 
-## Question 3
+### Question 1
 
-A project has total implementation costs of $200,000 and is projected to generate $50,000 in annual net benefits. What is the payback period?
+A business analyst is modeling a banking system. The use case "Transfer Funds" always
+requires the user to be authenticated before proceeding. The BA wants to factor the
+authentication logic into a shared use case. Which relationship should be used, and what
+is the correct direction of the arrow?
 
-A) 2 years
+A. Extend — dashed arrow from Transfer Funds to Authenticate User
 
-B) 4 years
+B. Include — dashed arrow from Transfer Funds to Authenticate User
 
-C) 25%
+C. Include — dashed arrow from Authenticate User to Transfer Funds
 
-D) $250,000
+D. Generalization — solid inheritance arrow from Authenticate User to Transfer Funds
 
-Correct Answer: B
+**Correct Answer: B**
 
-Distractor Analysis:
+**Distractor Analysis:**
 
-- Why A is incorrect: 2 years would require $100,000 in annual benefits; the project generates only $50,000 per year.
-- Why C is incorrect: 25% is the ROI ($50,000 / $200,000 x 100%), not the payback period.
-- Why D is incorrect: $250,000 is a dollar amount, not a payback period measurement; payback period is measured in time units (years or months).
-- Why B is correct: Payback Period = Total Cost / Annual Net Benefit = $200,000 / $50,000 = 4 years. The investment is fully recovered after four years of operation.
-
----
-
-## Question 4
-
-A BA is presenting a feasibility study to the executive committee. The NPV calculation shows a result of negative $85,000. What is the correct interpretation of this result?
-
-A) The project will cost $85,000 more than originally budgeted due to scope changes
-
-B) The project is financially unfavorable because the present value of costs exceeds the present value of benefits at the assumed discount rate
-
-C) The project will generate a net profit of $85,000 after all costs are recovered
-
-D) The payback period is 85,000 months, making the project extremely long-term
-
-Correct Answer: B
-
-Distractor Analysis:
-
-- Why A is incorrect: NPV is not a budget variance measure; it is a discounted cash flow measure comparing total benefits to total costs over the project horizon.
-- Why C is incorrect: A negative NPV does not indicate profit; it means the investment destroys value relative to the discount rate applied.
-- Why D is incorrect: NPV is expressed in currency, not time; interpreting a currency value as a payback period is a category error.
-- Why B is correct: A negative NPV means that when all future costs and benefits are discounted to present value, the costs outweigh the benefits — the project does not create sufficient financial value to justify the investment at the assumed rate.
+- A is incorrect because extend is conditional; authentication must always occur, making
+  include the right relationship.
+- C is incorrect because the include arrow points FROM the base use case TO the included
+  use case, not the reverse.
+- D is incorrect because generalization applies to actors or specialization of use case
+  behavior, not mandatory reuse of a shared subprocess.
 
 ---
 
-## Question 5
+### Question 2
 
-A project has a positive NPV and an ROI of 35%. However, the operations team reports that the new system will require users to completely change their daily workflows, and early feedback suggests strong resistance. Which feasibility dimension should the BA investigate further?
+In a use case diagram for an online shopping system, the use case "Apply Discount Code"
+only executes when a customer enters a valid promo code during checkout. "Apply Discount
+Code" should be modeled using which relationship to "Complete Purchase"?
 
-A) Technical feasibility — the development team may lack the skills to build the required interface
+A. Include, because the behavior is triggered from within the base use case
 
-B) Legal feasibility — workflow changes often trigger regulatory compliance reviews
+B. Generalization, because "Apply Discount Code" is a specialized version of "Complete Purchase"
 
-C) Economic feasibility — user resistance may increase the total cost of ownership
+C. Association, because both use cases involve the Customer actor
 
-D) Operational feasibility — user adoption and workflow fit must be assessed to ensure the system delivers its projected benefits
+D. Extend, because "Apply Discount Code" inserts optional behavior into "Complete Purchase"
+   only when a condition is met
 
-Correct Answer: D
+**Correct Answer: D**
 
-Distractor Analysis:
+**Distractor Analysis:**
 
-- Why A is incorrect: Technical feasibility concerns the ability to build the system; the question describes user resistance to using it, not a development capability problem.
-- Why B is incorrect: Workflow changes do not inherently trigger regulatory compliance reviews; no legal issue is indicated by the scenario.
-- Why C is incorrect: While user resistance could increase change management costs, the primary feasibility dimension being violated is whether the system will be operationally viable — economic feasibility is already confirmed positive.
-- Why D is correct: Operational feasibility assesses whether users will adopt the system and whether it fits the organization's processes and culture. Strong user resistance directly threatens operational feasibility and could prevent the system from delivering the projected benefits, undermining the positive NPV.
-
----
-
-## Question 6
-
-A BA calculates the following for a proposed HR system: Total Benefits over 5 years = $600,000. Total Costs over 5 years = $400,000. What is the ROI for this project?
-
-A) 33%
-
-B) 50%
-
-C) 150%
-
-D) $200,000
-
-Correct Answer: B
-
-Distractor Analysis:
-
-- Why A is incorrect: 33% would result from Net Benefit / Total Benefits (200/600), which is not the ROI formula.
-- Why C is incorrect: 150% would result from Total Benefits / Total Costs (600/400 x 100%), which does not apply the correct Net Benefit calculation.
-- Why D is incorrect: $200,000 is the Net Benefit in dollars, not the ROI percentage; ROI is always expressed as a percentage.
-- Why B is correct: ROI = (Net Benefit / Total Cost) x 100%. Net Benefit = $600,000 - $400,000 = $200,000. ROI = ($200,000 / $400,000) x 100% = 50%. The project returns $0.50 in net benefit for every $1.00 invested.
+- A is incorrect because include implies mandatory execution, but discount code entry is
+  optional and conditional.
+- B is incorrect because generalization models inheritance between actors or use case
+  hierarchies, not conditional behavior.
+- C is incorrect because association lines connect actors to use cases, not use cases to
+  each other.
 
 ---
 
-## Question 7
+### Question 3
 
-A new patient records system for a hospital is proposed. The IT department confirms the technology is available and the development team is qualified. The finance team confirms a positive NPV. However, the legal department raises a concern that the proposed system would store patient health data in a cloud environment that does not meet HIPAA Business Associate Agreement requirements. Which feasibility dimension does this concern represent?
+Which of the following best describes the purpose of the system boundary in a use case
+diagram?
 
-A) Technical feasibility — the cloud platform cannot support the required data storage volume
+A. It separates primary actors from secondary actors
 
-B) Operational feasibility — clinical staff may resist transitioning patient records to the cloud
+B. It defines which use cases are in scope for the system being built and which are external
 
-C) Economic feasibility — HIPAA compliance adds significant ongoing costs to the project
+C. It indicates the priority order in which use cases will be implemented
 
-D) Legal and ethical feasibility — the system as proposed would violate a federal healthcare regulation
+D. It groups use cases by the actor that initiates them
 
-Correct Answer: D
+**Correct Answer: B**
 
-Distractor Analysis:
+**Distractor Analysis:**
 
-- Why A is incorrect: The concern is about regulatory compliance, not the technical capability of the cloud platform to store data.
-- Why B is incorrect: Staff resistance is an operational concern; the legal department's concern is about regulatory non-compliance, not user adoption.
-- Why C is incorrect: While compliance may add costs, the scenario describes a regulatory violation, not a cost problem; the primary feasibility dimension at risk is legal.
-- Why D is correct: Legal and ethical feasibility evaluates whether the proposed system complies with applicable laws and regulations. HIPAA is a federal regulation governing protected health information; a system that violates BAA requirements fails legal feasibility regardless of its technical or economic merits.
-
----
-
-## Question 8
-
-Which of the following is classified as a development cost (one-time) rather than an operating cost (ongoing)?
-
-A) Annual software maintenance subscription fee
-
-B) Monthly cloud hosting charges
-
-C) One-time data migration from the legacy system to the new system
-
-D) Quarterly security audit fees paid after deployment
-
-Correct Answer: C
-
-Distractor Analysis:
-
-- Why A is incorrect: An annual maintenance subscription is a recurring charge — it is an operating cost that continues each year after deployment.
-- Why B is incorrect: Monthly hosting charges are ongoing recurring costs — they continue as long as the system is in operation.
-- Why D is incorrect: Quarterly audit fees that occur after deployment are ongoing operating costs, not one-time development costs.
-- Why C is correct: Data migration is a one-time activity that occurs during the initial deployment of the new system. It is not repeated annually and does not recur after go-live — it is a development cost that belongs in the initial investment calculation.
+- A is incorrect because actor placement relative to the boundary indicates inside/outside
+  the system, but the boundary itself does not categorize actors by type.
+- C is incorrect because priority is a backlog or project management concern, not a
+  function of the system boundary notation.
+- D is incorrect because use cases are grouped inside the boundary by scope, not by actor
+  ownership.
 
 ---
 
-## Question 9
+### Question 4
 
-A BA is documenting the benefits of a new customer service portal. The team has identified: (1) reduction in call center staff required — 4 agents at $55,000/year each; (2) improved customer satisfaction scores; (3) elimination of paper correspondence costs — $8,000/year; (4) stronger brand reputation. Which of these benefits are tangible and should be included in the financial model?
+A user story reads: "As a customer, I want the system to be fast." A teammate says this
+story fails the INVEST criteria. Which specific criterion does it fail, and why?
 
-A) Items 1 and 2 only — labor savings and customer satisfaction are the most important benefits
+A. Independent — the story depends on infrastructure decisions outside the team's control
 
-B) Items 2 and 4 only — intangible benefits are more persuasive to executives
+B. Valuable — system performance does not deliver direct business value to the customer
 
-C) Items 1 and 3 only — they are quantifiable in dollars and can be included in the financial model
+C. Testable — "fast" is not a measurable condition and cannot be verified by acceptance
+   criteria without a specific threshold
 
-D) All four items — every benefit must be included to produce an accurate NPV
+D. Small — performance improvements require too many development tasks to fit in one sprint
 
-Correct Answer: C
+**Correct Answer: C**
 
-Distractor Analysis:
+**Distractor Analysis:**
 
-- Why A is incorrect: Item 2 (customer satisfaction) is an intangible benefit that cannot be directly quantified; it should not be in the financial model.
-- Why B is incorrect: Including only intangibles in the financial model is incorrect; tangible benefits (quantifiable in dollars) are what populate the financial model.
-- Why D is incorrect: Intangible benefits (items 2 and 4) cannot be reliably quantified and should not be included in the financial model; including unquantifiable estimates inflates the NPV artificially.
-- Why C is correct: Tangible benefits are those directly measurable in dollars. Item 1 (4 agents x $55,000 = $220,000/year in labor savings) and Item 3 ($8,000/year in paper savings) are quantifiable and belong in the financial model. Items 2 and 4 are intangible and should be documented qualitatively as supporting rationale.
+- A is incorrect because while infrastructure may be involved, the primary failure is the
+  inability to write a pass/fail test without knowing what "fast" means numerically.
+- B is incorrect because performance does deliver value; the story fails on testability, not
+  value.
+- D is incorrect because the story is arguably too vague to estimate at all; its primary
+  problem is that it lacks a testable definition.
 
 ---
 
-## Question 10
+### Question 5
 
-A BA presents a feasibility study recommending that a proposed system proceed. The study includes only the $500,000 development cost and projects a 3-year payback period based on $167,000 in annual benefits. A financial reviewer points out that the analysis ignores $80,000 per year in ongoing maintenance, support, and infrastructure costs. What is the most significant error in the BA's analysis?
+A business analyst writes: "As a librarian, I want to generate an overdue items report,
+so that I can contact members who have not returned materials." This story satisfies which
+component of the INVEST model that is most often omitted from poorly written stories?
 
-A) The ROI percentage was calculated incorrectly because the formula was applied to the wrong values
+A. Independent — the story can be developed without dependencies on other stories
 
-B) The BA failed to include operating costs in the total cost of ownership, making the payback period optimistic
+B. Negotiable — the format of the report is open for discussion
 
-C) The BA used the wrong discount rate for the NPV calculation, producing an artificially positive result
+C. Valuable — the "so that" clause explicitly states the business value driving the need
 
-D) The development cost estimate of $500,000 is too low for a project of this scope
+D. Estimable — the story is specific enough for the team to estimate effort
 
-Correct Answer: B
+**Correct Answer: C**
 
-Distractor Analysis:
+**Distractor Analysis:**
 
-- Why A is incorrect: The scenario does not describe a formula error; it describes the omission of a cost category entirely.
-- Why C is incorrect: No NPV calculation is described in the scenario; the issue is about omitted operating costs, not discount rate selection.
-- Why D is incorrect: The scenario does not provide evidence that the development cost is underestimated; the identified error is about omitted operating costs.
-- Why B is correct: The BA calculated payback period using only the development cost while ignoring $80,000/year in operating costs. Annual Net Benefit should be $167,000 - $80,000 = $87,000, not $167,000. The actual payback period is $500,000 / $87,000 ≈ 5.7 years, not 3 years. Omitting operating costs from total cost of ownership is a fundamental CBA error.
+- A is incorrect because independence is about story-to-story sequencing dependencies, not
+  about what the story itself contains.
+- B is incorrect because negotiability is a team behavior, not a textual element of the
+  story.
+- D is incorrect because estimability is about sizing the work; the "so that" clause does
+  not primarily address estimation.
+
+---
+
+### Question 6
+
+In a fully dressed use case specification, Extensions are numbered using a step-letter
+convention. Which of the following correctly represents an alternate flow that branches from
+Step 4 of the main success scenario as the second alternate at that step?
+
+A. 4-b
+
+B. Extension 4.2
+
+C. 4b
+
+D. Alt-4b
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- A is incorrect because hyphens are not used in the standard Cockburn/UML extension
+  numbering convention.
+- B is incorrect because the period-number format (4.2) is used for sub-steps within an
+  extension, not for a second alternate at the same parent step.
+- D is incorrect because "Alt-" is not a standard use case notation prefix.
+
+---
+
+### Question 7
+
+A BA is reviewing a story map created by the project team. The top row lists: Register,
+Search, Borrow, Return, Renew, Manage Account. The first horizontal slice below that row
+is labeled "MVP." What does this top row represent?
+
+A. The acceptance criteria for the MVP release
+
+B. The product backlog items prioritized for the first sprint
+
+C. The backbone — the high-level user activities that form the user journey from left to right
+
+D. The Definition of Done applied across all user stories
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- A is incorrect because acceptance criteria are written at the individual story level
+  below the backbone, not in the top row.
+- B is incorrect because the top row represents activities, not individual sprint-ready
+  stories; those appear in the rows below.
+- D is incorrect because the Definition of Done is a team quality agreement, not a
+  structural element of a story map.
+
+---
+
+### Question 8
+
+Which of the following is the correct UML notation for an include relationship in a use
+case diagram?
+
+A. A solid line with a filled triangle arrowhead pointing from the base use case to the
+   included use case
+
+B. A dashed arrow with the stereotype label include pointing from the base use case to the
+   included use case
+
+C. A dashed arrow with the stereotype label include pointing from the included use case to
+   the base use case
+
+D. A solid line with an open arrowhead and no label between the two use cases
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect because a solid filled-triangle arrow represents UML generalization
+  (inheritance), not include.
+- C is incorrect because the include arrow points FROM the base use case TO the included
+  use case, not the reverse.
+- D is incorrect because unlabeled solid association lines connect actors to use cases;
+  inter-use-case relationships require dashed arrows with stereotypes.
+
+---
+
+### Question 9
+
+A development team receives this acceptance criterion: "The system shall update the
+loans table in the database and set the status field to RETURNED when a return is
+processed." A senior BA flags this criterion as poorly written. What is the primary
+problem?
+
+A. It uses the Given-When-Then format incorrectly
+
+B. It describes an internal implementation detail rather than an observable user outcome
+
+C. It is too short to be a valid acceptance criterion
+
+D. It fails the Valuable criterion of INVEST
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect because the criterion does not attempt Given-When-Then at all; the problem
+  is content, not format.
+- C is incorrect because length is not the issue; acceptance criteria can be brief and valid
+  as long as they describe observable outcomes.
+- D is incorrect because INVEST applies to user stories, not to acceptance criteria
+  individually.
+
+---
+
+### Question 10
+
+According to use case theory, a secondary actor is best defined as which of the following?
+
+A. An actor who has fewer permissions than the primary actor in the system
+
+B. An actor who uses the system less frequently than the primary actor
+
+C. An actor who is called upon by the system or primary actor to help complete a use case,
+   rather than initiating the use case themselves
+
+D. An actor who is not yet defined and will be identified in a later analysis phase
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- A is incorrect because secondary actor status is defined by interaction pattern, not by
+  authorization level or permissions.
+- B is incorrect because frequency of use is not the defining distinction; a batch job that
+  runs nightly is secondary despite running repeatedly.
+- D is incorrect because an undefined actor is simply a gap in the model; "secondary"
+  is a defined role, not a placeholder.
+
+---
+
+*Quiz — Module 08 | CIS-3312 Systems Analysis and Design | Texas Wesleyan University*

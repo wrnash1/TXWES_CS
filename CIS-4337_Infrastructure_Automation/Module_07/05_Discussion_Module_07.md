@@ -1,79 +1,40 @@
-# CIS-4337 Infrastructure Automation
+# Discussion: Module 07 — Terraform Variables, Outputs, and Locals
 
-## Discussion — Module 07: Terraform Workspaces and Environments
+## Course: CIS-4337 Infrastructure Automation
 
-### Course Alignment: HashiCorp Terraform Associate 003
+## Texas Wesleyan University | Professor Nash
+
+## Certification Alignment: HashiCorp Terraform Associate (003)
 
 ---
 
 ## Instructions
 
-Post your initial response by Wednesday at 11:59 PM. Reply to at least two classmates by Sunday at 11:59 PM. Analyze each scenario using the specific workspace behavior and limitations covered in Module 07.
+Respond to **one** of the three scenarios below. Your initial post must be **175–225 words**. Reply to **two classmates** with substantive feedback (minimum 75 words each). All posts are due by Sunday at 11:59 PM CT.
 
 ---
 
-## Scenario A: The Workspace Accident
+## Scenario A: The Sensitive Variable Misconception
 
-A DevOps team manages three environments — dev, staging, and prod — using three CLI workspaces within a single Terraform working directory. All workspaces use the same AWS account because the team never had time to set up separate accounts. One Friday afternoon, an engineer runs `terraform workspace select staging` to investigate a bug. After reviewing the state, they run `terraform destroy -auto-approve` to clean up a temporary test resource they thought they had deployed. Staging production infrastructure is destroyed within minutes.
+A junior engineer on your team declares all database credentials as Terraform variables and marks them `sensitive = true`. She tells the security team, "Don't worry — these are encrypted because I used the sensitive flag." The security team accepts her explanation and closes the ticket.
 
-For your initial post (175–225 words), address all three of the following points:
-
-1. Explain the specific characteristics of CLI workspaces that allowed this accident to happen. Focus on what workspace isolation does and does not provide.
-2. Compare the three-workspace approach to the recommended separate-directory pattern. Explain exactly what safeguard the separate-directory pattern provides that would have prevented this incident.
-3. Propose a three-part remediation plan for this team: one structural change, one process change, and one technical safeguard. Be specific about Terraform features involved in each part.
+Discuss the technical accuracy of her statement. What does `sensitive = true` actually protect against? What does it not protect against? What additional controls should the team implement to genuinely protect the credentials at rest? Reference specific Terraform features or external tools that address the gap she has left open. Consider both the state file storage problem and the risk of credentials appearing in CI/CD logs. What would you tell this engineer to ensure she understands the complete picture without undermining her confidence?
 
 ---
 
-## Scenario B: The Environment Variable Question
+## Scenario B: Variable Precedence Debugging
 
-A junior engineer is building a Terraform configuration to deploy a web application across dev, staging, and prod. They want to use different instance sizes per environment. They are debating between two approaches:
+A DevOps engineer is troubleshooting a deployment to the wrong AWS region. The configuration has a `terraform.tfvars` file setting `region = "us-east-1"`, but the resources are being created in `eu-west-1`. The engineer has checked the code twice and cannot find the problem.
 
-Approach 1 — Workspaces with terraform.workspace:
-
-```hcl
-locals {
-  sizes = {
-    dev     = "t3.micro"
-    staging = "t3.small"
-    prod    = "t3.large"
-  }
-}
-
-resource "aws_instance" "web" {
-  instance_type = lookup(local.sizes, terraform.workspace, "t3.micro")
-}
-```
-
-Approach 2 — Separate directories with a variable:
-
-```hcl
-variable "instance_type" {
-  type    = string
-  default = "t3.micro"
-}
-
-resource "aws_instance" "web" {
-  instance_type = var.instance_type
-}
-```
-
-For your initial post (175–225 words), address all three of the following points:
-
-1. Describe the operational experience of each approach. How does an engineer deploy to each environment using Approach 1 versus Approach 2?
-2. Identify one scenario where Approach 1 is superior and one scenario where Approach 2 is superior. Justify each recommendation with a specific technical reason.
-3. Explain how you would extend Approach 1 to handle a new environment called `qa` without modifying the `resource` block. What must be added and where?
+Walk through the complete variable precedence order that Terraform uses. Identify all the sources that could be overriding the `.tfvars` file to produce `eu-west-1`. How would you systematically diagnose which source is winning? What command or technique would you use to reveal the effective variable values before apply? Discuss how teams can avoid this class of confusion in the future through documentation or tooling conventions. What would your debugging checklist look like for a variable that is not resolving to its expected value?
 
 ---
 
-## Scenario C: The Workspace Naming Convention
+## Scenario C: Locals vs. Variables Design Decision
 
-An infrastructure team is designing a Terraform workspace strategy for a new SaaS product. The product will be deployed for multiple customers, each with their own isolated AWS environment. They are considering creating a workspace for each customer: `customer-acme`, `customer-globex`, `customer-initech`, etc. The senior engineer raises a concern.
+You are designing a Terraform module for a startup that plans to deploy the same application stack across five environments: `dev`, `qa`, `staging`, `uat`, and `prod`. The team is debating whether to use a single large `locals` block to define all environment-specific values, or whether to use input variables for everything and pass in separate `.tfvars` files per environment.
 
-For your initial post (175–225 words), address all three of the following points:
-
-1. Explain the senior engineer's likely concern. Reference the specific CLI workspace limitations that make a large number of customer workspaces problematic in practice.
-2. Compare the workspace-per-customer approach to an alternative architecture. Describe at least one alternative pattern and explain why it is better suited to per-customer isolation at scale.
-3. Describe the role of `terraform.workspace` in naming uniqueness when the team uses workspaces for lightweight environment separation. Write an example resource block that embeds the workspace name and explain what happens if two different workspaces attempt to create a resource with the same global identifier (like an S3 bucket name).
+Argue for the approach you believe is architecturally superior. Consider maintainability, reusability, the risk of misconfiguration, and how the module interface should be designed for callers who may not understand the internals. Is there a hybrid approach that combines both? How would you structure the `.tfvars` files and locals together to get the benefits of both? Reference the concept of module interface design and what it means for a module to be self-documenting.
 
 ---
 
@@ -81,33 +42,29 @@ For your initial post (175–225 words), address all three of the following poin
 
 When responding to classmates:
 
-- Identify a workspace behavior or limitation they did not address.
-- Offer a specific technical improvement or alternative architecture.
-- Ask a follow-up question about a trade-off they made in their recommendation.
-
-Each peer response must be at least 75 words and reference at least one specific `terraform workspace` command or `terraform.workspace` behavior by name.
-
----
-
-## Grading Rubric — 10 Points Total
-
-Initial Post — 6 Points:
-
-- 5–6 pts: Addresses all three prompt points with technical accuracy. Uses correct workspace terminology. Meets the 175–225 word count.
-- 3–4 pts: Addresses most points but lacks precision in at least one area.
-- 1–2 pts: Addresses fewer than two points or contains significant technical errors.
-- 0 pts: No initial post submitted.
-
-Peer Responses — 4 Points:
-
-- 4 pts: Two substantive responses referencing specific workspace concepts. Each at least 75 words.
-- 2 pts: One substantive response, or both lack technical depth.
-- 0 pts: No peer responses submitted.
+- Engage with the specific technical points they made
+- Add a detail, counterexample, or real-world context they may not have considered
+- Respectfully correct any technical inaccuracies with supporting reasoning
+- Ask a follow-up question that extends the discussion
 
 ---
 
-Professor Nash note: Scenario A describes a real class of Terraform incident. The workspace model provides convenience but no hard boundary between environments when all workspaces share credentials. Your post should reflect that you understand this trade-off at a production-system level, not just a definitional one.
+## Grading Rubric
+
+| Criterion | Points |
+|---|---|
+| Initial post addresses the scenario directly and accurately | 3 |
+| Technical content is correct and demonstrates module knowledge | 3 |
+| Post is 175–225 words (not including code snippets if used) | 1 |
+| First peer response is substantive and adds value | 1.5 |
+| Second peer response is substantive and adds value | 1.5 |
+| **Total** | **10** |
 
 ---
 
-Module 07 Discussion — CIS-4337 Infrastructure Automation — Texas Wesleyan University
+**Professor Nash note**: There are no universally right answers in these scenarios — the goal is rigorous technical reasoning. A well-argued case for a less common approach earns full credit if the reasoning is sound. I look for evidence that you have internalized the mechanics, not just recalled the definitions.
+
+---
+
+*Texas Wesleyan University — CIS-4337 Infrastructure Automation*
+*Proprietary and Confidential. Not for disclosure outside of authorized course participants.*

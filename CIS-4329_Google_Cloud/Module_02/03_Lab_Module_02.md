@@ -1,332 +1,344 @@
-# Lab — Module 02
+# Lab: Module 02 — IAM and Access Control in GCP
 
-## CIS-4329: Google Cloud Platform | Texas Wesleyan University
+## Course: CIS-4329 Google Cloud Computing
 
-### Topic: IAM Roles, Policy Bindings, and Service Accounts
-
-### Points: 100
+**Certification Alignment:** Google Cloud Associate Cloud Engineer (ACE)
 
 ---
 
 ## Lab Overview
 
-In this lab you will manage IAM policy bindings using both the Google Cloud Console and the gcloud CLI, create a custom IAM role, create a service account, and attach a service account to a Compute Engine VM. These tasks are core competencies for the Google Cloud Associate Cloud Engineer exam.
+In this lab you will implement IAM access control in GCP. You will create
+service accounts, assign predefined roles, test least-privilege access, create
+a custom role, and enable Data Access audit logs. These skills directly map to
+ACE exam scenarios.
 
-All tasks use Cloud Shell. No local SDK installation is required. Complete the lab in the GCP project you created in Module 01 (`txwes-gcp-lab-[your initials]`).
+**Estimated Time:** 75 minutes
 
-Estimated completion time: 60–75 minutes.
+**Prerequisites:**
 
----
+- Completed Module 01 lab (GCP project created, Cloud Shell configured)
+- An active GCP project with billing enabled
+- Owner or Editor access to the project
 
-## Prerequisites
+**Learning Objectives:**
 
-- Module 01 lab completed (project `txwes-gcp-lab-[your initials]` exists and is configured)
-- Compute Engine API enabled in your project
-- Cloud Shell accessible
+By the end of this lab you will be able to:
 
-Enable the Compute Engine API if not already done:
-
-```bash
-gcloud services enable compute.googleapis.com
-```
-
----
-
-## Part 1: Inspect the Current IAM Policy (15 points)
-
-### Task 1.1 — View IAM Policy via Console (5 points)
-
-1. Navigate to IAM and Admin > IAM in the Google Cloud Console.
-2. Observe the list of principals and their assigned roles.
-3. Identify any principal with a basic role (`roles/owner`, `roles/editor`, or `roles/viewer`).
-
-Deliverable: Screenshot of the IAM page showing the current policy. Label it "Task 1.1".
-
-### Task 1.2 — View IAM Policy via gcloud (10 points)
-
-Open Cloud Shell and run:
-
-```bash
-gcloud projects get-iam-policy $GOOGLE_CLOUD_PROJECT
-```
-
-The `$GOOGLE_CLOUD_PROJECT` environment variable is automatically set in Cloud Shell to your active project ID. Review the JSON output. Identify the `bindings` array, the `role` fields, and the `members` fields.
-
-Run the same command with JSON format and save it to a file:
-
-```bash
-gcloud projects get-iam-policy $GOOGLE_CLOUD_PROJECT \
-  --format=json > current-policy.json
-cat current-policy.json
-```
-
-Deliverable: Screenshot of the `gcloud projects get-iam-policy` output showing at least one binding. Label it "Task 1.2".
+1. Assign predefined roles to users and service accounts
+2. Create and configure a custom IAM role
+3. Create service accounts and attach them to resources
+4. Verify least-privilege access using the Policy Analyzer
+5. Enable and query Cloud Audit Logs
+6. Test Workload Identity concepts using service account impersonation
 
 ---
 
-## Part 2: Add and Remove IAM Bindings (20 points)
+## Part 1 — Explore and Modify IAM Policies (15 minutes)
 
-### Task 2.1 — Grant a Role to Your Own Account at Viewer Level (10 points)
-
-For this exercise, you will grant the `roles/storage.objectViewer` role to your own account on the project. In a real environment you would grant this to a different user, but for lab purposes using your own account demonstrates the mechanics.
-
-First, retrieve your account email:
+### Step 1.1 — View the Current IAM Policy
 
 ```bash
-gcloud config get-value account
+# Set your project (replace with your actual project ID)
+export PROJECT_ID=$(gcloud config get-value project)
+
+# View the current IAM policy
+gcloud projects get-iam-policy $PROJECT_ID
+
+# View in JSON format for inspection
+gcloud projects get-iam-policy $PROJECT_ID --format=json
 ```
 
-Now grant the role. Replace `YOUR_EMAIL` with your account email:
+Record the number of bindings currently in the policy.
+
+### Step 1.2 — Add a Role Binding
+
+Add a viewer binding for your own account (simulating adding a new team member):
 
 ```bash
-gcloud projects add-iam-policy-binding $GOOGLE_CLOUD_PROJECT \
-  --member="user:YOUR_EMAIL" \
-  --role="roles/storage.objectViewer"
-```
+# Replace with your actual email address
+export MY_EMAIL="your-email@example.com"
 
-Verify the binding was added:
+# Grant viewer role
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+  --member="user:$MY_EMAIL" \
+  --role="roles/viewer"
 
-```bash
-gcloud projects get-iam-policy $GOOGLE_CLOUD_PROJECT \
+# Verify the binding was added
+gcloud projects get-iam-policy $PROJECT_ID \
   --flatten="bindings[].members" \
   --format="table(bindings.role,bindings.members)" \
-  --filter="bindings.members:YOUR_EMAIL"
+  --filter="bindings.members:$MY_EMAIL"
 ```
 
-Deliverable: Screenshot showing the new `roles/storage.objectViewer` binding for your account. Label it "Task 2.1".
-
-### Task 2.2 — Remove the Binding (10 points)
-
-Remove the role you just added:
+### Step 1.3 — Remove a Role Binding
 
 ```bash
-gcloud projects remove-iam-policy-binding $GOOGLE_CLOUD_PROJECT \
-  --member="user:YOUR_EMAIL" \
-  --role="roles/storage.objectViewer"
-```
+# Remove the viewer binding
+gcloud projects remove-iam-policy-binding $PROJECT_ID \
+  --member="user:$MY_EMAIL" \
+  --role="roles/viewer"
 
-Confirm the binding is gone:
-
-```bash
-gcloud projects get-iam-policy $GOOGLE_CLOUD_PROJECT \
+# Confirm removal
+gcloud projects get-iam-policy $PROJECT_ID \
   --flatten="bindings[].members" \
   --format="table(bindings.role,bindings.members)" \
-  --filter="bindings.members:YOUR_EMAIL"
+  --filter="bindings.members:$MY_EMAIL"
 ```
-
-The output should show no `storage.objectViewer` binding for your account.
-
-Deliverable: Screenshot showing the filter result with no `storage.objectViewer` binding. Label it "Task 2.2".
 
 ---
 
-## Part 3: Explore Predefined Roles (15 points)
+## Part 2 — Create and Use Service Accounts (20 minutes)
 
-### Task 3.1 — List and Describe Roles (10 points)
-
-List the predefined roles available for Cloud Storage:
+### Step 2.1 — Create a Service Account
 
 ```bash
-gcloud iam roles list --filter="name:roles/storage"
+# Create a service account for a hypothetical app
+gcloud iam service-accounts create lab02-app-runner \
+  --display-name="Lab02 App Runner" \
+  --description="Service account for Module 02 lab exercises"
+
+# Verify creation
+gcloud iam service-accounts list
+
+# Store the service account email
+export SA_EMAIL="lab02-app-runner@${PROJECT_ID}.iam.gserviceaccount.com"
+echo "Service Account: $SA_EMAIL"
 ```
 
-Describe the `roles/storage.objectViewer` role to see its included permissions:
+### Step 2.2 — Assign a Predefined Role to the Service Account
 
 ```bash
-gcloud iam roles describe roles/storage.objectViewer
+# Grant storage object viewer role to the service account
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+  --member="serviceAccount:$SA_EMAIL" \
+  --role="roles/storage.objectViewer"
+
+# Verify the binding
+gcloud projects get-iam-policy $PROJECT_ID \
+  --flatten="bindings[].members" \
+  --format="table(bindings.role,bindings.members)" \
+  --filter="bindings.members:$SA_EMAIL"
 ```
 
-Note the list of included permissions in the output.
-
-Describe the `roles/storage.objectAdmin` role:
+### Step 2.3 — Test Service Account Impersonation
 
 ```bash
-gcloud iam roles describe roles/storage.objectAdmin
+# Describe the service account
+gcloud iam service-accounts describe $SA_EMAIL
+
+# Generate a short-lived access token for the service account
+# (requires iam.serviceAccounts.getAccessToken permission on the SA)
+gcloud auth print-access-token \
+  --impersonate-service-account=$SA_EMAIL
 ```
 
-Compare the two permission lists.
-
-Deliverable: Screenshot of the `roles/storage.objectViewer` describe output. Label it "Task 3.1".
-
-### Task 3.2 — Identify a Compute Engine Role (5 points)
-
-Describe the `roles/compute.instanceAdmin.v1` role:
+### Step 2.4 — Examine Default Service Accounts
 
 ```bash
-gcloud iam roles describe roles/compute.instanceAdmin.v1
+# List all service accounts including default ones
+gcloud iam service-accounts list --format=json | \
+  python3 -c "import sys,json; [print(sa['email']) for sa in json.load(sys.stdin)]"
 ```
 
-Review the list of permissions. Count how many `compute.instances.*` permissions are included.
+Look for:
 
-Deliverable: Screenshot of the describe output. In your submission notes, write how many `compute.instances.*` permissions you counted. Label it "Task 3.2".
+- The Compute Engine default service account:
+  `PROJECT_NUMBER-compute@developer.gserviceaccount.com`
+- The App Engine default service account:
+  `PROJECT_ID@appspot.gserviceaccount.com`
+
+**Question 2.4:** Why are default service accounts with broad permissions
+considered a security risk?
 
 ---
 
-## Part 4: Create a Custom Role (20 points)
+## Part 3 — Create a Custom Role (15 minutes)
 
-### Task 4.1 — Design a Minimal Monitoring Role (10 points)
+### Step 3.1 — Define a Custom Role in YAML
 
-You will create a custom role that allows a user to list Compute Engine VM instances and view their details, but grants nothing else. This simulates a read-only operations viewer role.
-
-Create a YAML file defining the role:
+Create a YAML file defining a custom role:
 
 ```bash
-cat > custom-viewer-role.yaml << 'EOF'
-title: "VM Read Only Viewer"
-description: "Can list and describe VM instances only. No write access."
+cat > custom-role.yaml << 'EOF'
+title: "Lab Custom Storage Reader"
+description: "Read objects and list buckets only — no write, no delete"
 stage: "GA"
 includedPermissions:
-  - compute.instances.list
-  - compute.instances.get
-  - compute.zones.list
-  - compute.regions.list
+  - storage.buckets.list
+  - storage.buckets.get
+  - storage.objects.get
+  - storage.objects.list
 EOF
 ```
 
-Create the custom role in your project:
+### Step 3.2 — Create the Custom Role
 
 ```bash
-gcloud iam roles create vmReadOnlyViewer \
-  --project=$GOOGLE_CLOUD_PROJECT \
-  --file=custom-viewer-role.yaml
+# Create the custom role in your project
+gcloud iam roles create labCustomStorageReader \
+  --project=$PROJECT_ID \
+  --file=custom-role.yaml
+
+# Verify creation
+gcloud iam roles describe labCustomStorageReader \
+  --project=$PROJECT_ID
 ```
 
-Deliverable: Screenshot of the successful role creation output. Label it "Task 4.1".
-
-### Task 4.2 — Verify the Custom Role (10 points)
-
-List custom roles in your project to confirm it was created:
+### Step 3.3 — Assign the Custom Role
 
 ```bash
-gcloud iam roles list --project=$GOOGLE_CLOUD_PROJECT
+# Grant the custom role to the service account
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+  --member="serviceAccount:$SA_EMAIL" \
+  --role="projects/$PROJECT_ID/roles/labCustomStorageReader"
 ```
 
-Describe the custom role:
+### Step 3.4 — Compare Permissions
 
 ```bash
-gcloud iam roles describe vmReadOnlyViewer \
-  --project=$GOOGLE_CLOUD_PROJECT
+# Describe the custom role to see its permissions
+gcloud iam roles describe labCustomStorageReader --project=$PROJECT_ID
+
+# Describe a predefined role for comparison
+gcloud iam roles describe roles/storage.objectViewer
 ```
 
-Deliverable: Screenshot of the describe output showing your custom role's permissions. Label it "Task 4.2".
+**Question 3.4:** What permissions does `roles/storage.objectViewer` have that
+your custom role does not? What does your custom role have that the predefined
+role lacks?
 
 ---
 
-## Part 5: Create and Use a Service Account (25 points)
+## Part 4 — IAM Conditions (10 minutes)
 
-### Task 5.1 — Create a Service Account (10 points)
+### Step 4.1 — Add a Time-Bounded Binding
 
-Create a service account named `lab-vm-sa`:
+Add a role binding with an expiration condition. This simulates granting
+temporary access to a contractor.
 
 ```bash
-gcloud iam service-accounts create lab-vm-sa \
-  --display-name="Lab VM Service Account" \
-  --description="Service account for Module 02 lab VM"
+# Grant editor access that expires at the end of 2026
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+  --member="serviceAccount:$SA_EMAIL" \
+  --role="roles/editor" \
+  --condition='expression=request.time < timestamp("2026-12-31T23:59:59Z"),title=Expires-2026,description=Temporary access for lab'
 ```
 
-List service accounts to confirm creation:
+### Step 4.2 — View the Conditional Binding
 
 ```bash
-gcloud iam service-accounts list
+# View bindings for the service account
+gcloud projects get-iam-policy $PROJECT_ID \
+  --flatten="bindings[].members" \
+  --format="table(bindings.role,bindings.condition,bindings.members)" \
+  --filter="bindings.members:$SA_EMAIL"
 ```
 
-Grant the service account `roles/storage.objectViewer` on the project:
+### Step 4.3 — Remove the Conditional Binding
 
 ```bash
-gcloud projects add-iam-policy-binding $GOOGLE_CLOUD_PROJECT \
-  --member="serviceAccount:lab-vm-sa@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com" \
+# Remove only the conditional editor binding (specify condition title)
+gcloud projects remove-iam-policy-binding $PROJECT_ID \
+  --member="serviceAccount:$SA_EMAIL" \
+  --role="roles/editor" \
+  --condition='title=Expires-2026'
+```
+
+---
+
+## Part 5 — Cloud Audit Logs (15 minutes)
+
+### Step 5.1 — View Admin Activity Logs
+
+```bash
+# View the most recent admin activity log entries
+gcloud logging read \
+  "logName=\"projects/$PROJECT_ID/logs/cloudaudit.googleapis.com%2Factivity\"" \
+  --limit=10 \
+  --format="table(timestamp,protoPayload.authenticationInfo.principalEmail,protoPayload.methodName)"
+```
+
+### Step 5.2 — Filter for IAM Changes
+
+```bash
+# Find all IAM policy change events
+gcloud logging read \
+  "logName=\"projects/$PROJECT_ID/logs/cloudaudit.googleapis.com%2Factivity\"
+   AND protoPayload.methodName=\"SetIamPolicy\"" \
+  --limit=5 \
+  --format=json
+```
+
+### Step 5.3 — Enable Data Access Logs
+
+In the Cloud Console:
+
+1. Navigate to **IAM & Admin > Audit Logs**.
+2. Find **Cloud Storage** in the service list.
+3. Enable **Data Read** and **Data Write** audit logs.
+4. Click **Save**.
+
+Verify via gcloud:
+
+```bash
+# View the current audit config in the IAM policy
+gcloud projects get-iam-policy $PROJECT_ID --format=json | \
+  python3 -c "import sys,json; p=json.load(sys.stdin); [print(ac) for ac in p.get('auditConfigs',[])]"
+```
+
+---
+
+## Lab Deliverables
+
+Submit a lab report (PDF or Word) containing:
+
+1. Screenshot of the IAM page showing your project's policy bindings.
+2. Output of `gcloud iam service-accounts list` showing your created SA.
+3. Output of `gcloud iam roles describe labCustomStorageReader` showing the
+   custom role definition.
+4. Screenshot of the Audit Logs page showing Data Access logs enabled for
+   Cloud Storage.
+5. Output of the audit log query showing at least one `SetIamPolicy` event.
+6. Answers to the lab questions.
+
+**Lab Questions:**
+
+1. You need to grant a developer read access to Cloud Storage objects but not
+   the ability to list or modify buckets. Which predefined role best fits, and
+   what permissions does it include?
+2. Why is it risky to grant `roles/editor` at the project level to a service
+   account used by a single microservice?
+3. A service account key file was accidentally committed to a public GitHub
+   repository. What are the immediate steps to mitigate the exposure?
+4. What is the difference between Admin Activity logs and Data Access logs?
+   Why are Data Access logs disabled by default?
+5. Explain the etag field in an IAM policy and why it matters when updating
+   policies programmatically.
+
+---
+
+## Cleanup
+
+```bash
+# Remove IAM bindings for the service account
+gcloud projects remove-iam-policy-binding $PROJECT_ID \
+  --member="serviceAccount:$SA_EMAIL" \
   --role="roles/storage.objectViewer"
+
+gcloud projects remove-iam-policy-binding $PROJECT_ID \
+  --member="serviceAccount:$SA_EMAIL" \
+  --role="projects/$PROJECT_ID/roles/labCustomStorageReader"
+
+# Delete the custom role
+gcloud iam roles delete labCustomStorageReader --project=$PROJECT_ID
+
+# Delete the service account
+gcloud iam service-accounts delete $SA_EMAIL
 ```
-
-Deliverable: Screenshot of the service account list showing your new `lab-vm-sa` account. Label it "Task 5.1".
-
-### Task 5.2 — Create a VM with the Service Account (10 points)
-
-Create a small Compute Engine VM attached to your service account:
-
-```bash
-gcloud compute instances create lab-iam-vm \
-  --zone=us-central1-a \
-  --machine-type=e2-micro \
-  --service-account=lab-vm-sa@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com \
-  --scopes=cloud-platform \
-  --no-address
-```
-
-The `--no-address` flag creates the VM without an external IP, which is a security best practice.
-
-Confirm the VM was created:
-
-```bash
-gcloud compute instances list
-```
-
-Deliverable: Screenshot of the `gcloud compute instances list` output showing `lab-iam-vm` with status RUNNING. Label it "Task 5.2".
-
-### Task 5.3 — Verify Service Account Attachment (5 points)
-
-Describe the VM to confirm the service account is attached:
-
-```bash
-gcloud compute instances describe lab-iam-vm \
-  --zone=us-central1-a \
-  --format="yaml(serviceAccounts)"
-```
-
-The output should show the `lab-vm-sa` email in the `serviceAccounts` section.
-
-Deliverable: Screenshot of the service account section from the describe output. Label it "Task 5.3".
-
----
-
-## Part 6: Cleanup (5 points)
-
-Delete the VM to avoid ongoing charges:
-
-```bash
-gcloud compute instances delete lab-iam-vm \
-  --zone=us-central1-a \
-  --quiet
-```
-
-Deliverable: Screenshot of the successful delete confirmation. Label it "Task 6".
-
-Note: Leave the `lab-vm-sa` service account and `vmReadOnlyViewer` custom role in place — they will be referenced in future labs.
-
----
-
-## Reflection Questions (bonus — included in rubric total)
-
-Answer in your submission document (2–4 sentences each):
-
-1. Why is it a security risk to grant `roles/editor` to a service account used by a web application?
-2. You created a VM with `--scopes=cloud-platform`. What does this scope do, and what controls the actual permissions?
-3. If you needed to grant a contractor temporary read-only access to your Cloud Storage bucket only during a specific project (ending in 30 days), how would you structure the IAM binding? What feature would you use?
-
----
-
-## Grading Rubric
-
-| Task | Points | Criteria |
-|---|---|---|
-| 1.1 IAM policy Console screenshot | 5 | Screenshot present showing at least one binding |
-| 1.2 gcloud get-iam-policy output | 10 | JSON output shown with bindings visible |
-| 2.1 Role granted and binding confirmed | 10 | objectViewer binding visible for account |
-| 2.2 Role removed and confirmed absent | 10 | Filter output shows no objectViewer binding |
-| 3.1 Role describe output for objectViewer | 10 | Permissions list visible in screenshot |
-| 3.2 Compute instanceAdmin role described | 5 | Output shown; count in submission notes |
-| 4.1 Custom role created | 10 | Success output with role name shown |
-| 4.2 Custom role verified and described | 10 | Describe output showing four permissions |
-| 5.1 Service account created and role granted | 10 | SA list shows lab-vm-sa |
-| 5.2 VM created with SA attached | 10 | instances list shows lab-iam-vm RUNNING |
-| 5.3 SA attachment verified | 5 | serviceAccounts section in describe output |
-| 6 VM deleted | 5 | Delete success confirmation shown |
-| Total | 100 | |
 
 ---
 
 End of Lab — Module 02
 
-Course: CIS-4329 Google Cloud Platform | Texas Wesleyan University | Professor Nash
-
-Certification Target: Google Cloud Associate Cloud Engineer
+Course: CIS-4329 Google Cloud Computing | Texas Wesleyan University | Professor Nash

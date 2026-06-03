@@ -252,4 +252,4 @@ AWS responsibility: physical data centers for both AZs, fiber connection between
 
 ## References
 
-All certification study materials and exam registration: aws.amazon.com/certification
+All certification study materials and exam registration: <aws.amazon.com/certification>

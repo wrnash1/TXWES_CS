@@ -1,77 +1,249 @@
-# Quiz: Module 13 - Implementation and Change Management
-## Course: CIS-3312 Systems Analysis & Design (IIBA ECBA)
+# Quiz: Module 13 — Solution Design and Prototyping
+
+## Course: CIS-3312 Systems Analysis and Design
+
+## Texas Wesleyan University | Professor Nash
+
+**Certification Alignment:** IIBA ECBA
 
 ---
 
-**Question 1**
-A hospital is replacing its patient records system. Because patient care cannot be interrupted, the hospital plans to run both the old and the new systems simultaneously for 90 days, with staff entering data in both, before switching off the legacy system. Which deployment strategy is this?
-*   A) Direct cutover (big bang) — all users switch to the new system on a single go-live date
-*   B) Pilot rollout — a small representative group tests the new system before full deployment
-*   C) Phased rollout — one department or ward at a time transitions to the new system
-*   D) Parallel operation — both systems run simultaneously until confidence is established to decommission the old one
-*   **Correct Answer:** D) Parallel operation — both systems run simultaneously until confidence is established to decommission the old one
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Direct cutover decommissions the old system the moment the new one goes live; no simultaneous operation occurs.
-    *   *Why B is incorrect:* A pilot deploys to a small group for validation before broader rollout; the scenario describes all staff in both systems simultaneously.
-    *   *Why C is incorrect:* Phased rollout deploys sequentially to one group at a time; the scenario describes all users in both systems at the same time.
-    *   *Why D is correct:* Running both systems simultaneously until the organization is confident enough to decommission the old one is the defining characteristic of parallel operation — high cost and effort, but lowest risk for critical systems where errors cannot be tolerated.
+## Quiz Instructions
+
+This quiz contains 10 multiple-choice questions. Each question is worth 10 points. Select the single best answer. Distractor analysis is provided after each question to support your learning.
+
+**Time limit:** 30 minutes
 
 ---
 
-**Question 2**
-In the context of systems implementation, which of the following is the most accurate definition of **transition requirements**?
-*   A) Requirements that define the ongoing operational capabilities the system must provide to users after full deployment
-*   B) Requirements describing capabilities needed only during the transition from the current state to the future state, which are no longer needed after cutover
-*   C) Requirements that specify how stakeholders should be trained to use the new system during the go-live phase
-*   D) Requirements for the backup and disaster recovery processes that protect the system after it goes live in production
-*   **Correct Answer:** B) Requirements describing capabilities needed only during the transition from the current state to the future state, which are no longer needed after cutover
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Requirements for ongoing operational capabilities after full deployment are solution requirements (persistent), not transition requirements (temporary).
-    *   *Why C is incorrect:* Training plans and materials are part of the OCM and training plan activities; while training may be described in transition requirements, the definition of transition requirements is broader and specifically about temporary capabilities.
-    *   *Why D is incorrect:* Backup and disaster recovery requirements are non-functional solution requirements (availability/resilience) that persist after go-live; they are not temporary transition requirements.
-    *   *Why B is correct:* BABOK® KA 3 defines transition requirements as a specific, temporary category of requirements — needed to support the changeover (e.g., data migration scripts, bulk import tools, parallel reporting) but with no value after the transition is complete.
+## Question 1
+
+A BA is designing a new inventory management system and wants to communicate the layout and placement of interface elements to stakeholders without triggering debates about color schemes and branding. Which artifact is most appropriate?
+
+A. A high-fidelity mockup with full color and typography
+B. A wireframe in grayscale showing element placement and labels
+C. An interactive prototype with clickable navigation
+D. A fully functional throwaway prototype built in the production technology stack
+
+### Distractor Analysis — Question 1
+
+**Correct answer: B**
+
+Wireframes are deliberately low-fidelity and grayscale precisely to keep stakeholder attention on structure and workflow rather than visual design choices. This is their primary purpose.
+
+**Why A is wrong:** A high-fidelity mockup with full color would immediately shift stakeholder focus to visual design preferences rather than layout and workflow validation. This is counterproductive at this stage.
+
+**Why C is wrong:** An interactive prototype adds navigational behavior beyond what is needed to communicate layout. It is higher cost and more than necessary for this purpose.
+
+**Why D is wrong:** A fully functional prototype built in the production stack is extremely expensive and far exceeds the goal of communicating layout. It also risks creating expectations that the prototype is the final system.
 
 ---
 
-**Question 3**
-According to the Prosci ADKAR model, a BA discovers through stakeholder feedback that users understand the new system is being deployed (Awareness) and want to use it (Desire), but they make repeated errors because they do not know how to perform key tasks in the new interface. Which ADKAR element is the gap?
-*   A) Awareness — users need more information about why the change is happening
-*   B) Desire — users need stronger motivation to engage with the change
-*   C) Knowledge — users need training on how to perform tasks in the new system
-*   D) Reinforcement — users need incentives and recognition to sustain their new behaviors
-*   **Correct Answer:** C) Knowledge — users need training on how to perform tasks in the new system
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* The scenario confirms users have Awareness; they know the system is being deployed. The gap is not at the Awareness stage.
-    *   *Why B is incorrect:* The scenario confirms users have Desire; they want to use the system. The gap is not motivation.
-    *   *Why D is incorrect:* Reinforcement addresses sustaining change after users have already demonstrated the new behaviors; users in this scenario cannot yet perform the tasks correctly, so reinforcement is premature.
-    *   *Why C is correct:* In the ADKAR model, Knowledge is the element that addresses knowing *how* to change — the skills, procedures, and behaviors required in the new state. Users making errors because they don't know how to use the new interface have a clear Knowledge gap, addressed by targeted role-specific training.
+## Question 2
+
+A development team is using agile methodology with two-week sprints. At the end of each sprint, the product owner and stakeholders review a working increment of the system and provide feedback that shapes the next sprint. This approach to prototyping is best described as which of the following?
+
+A. Throwaway prototyping, because each sprint discards the previous version
+B. Evolutionary prototyping, because the working system grows through successive iterations
+C. Wireframing, because each sprint produces a new visual design artifact
+D. Design validation, because stakeholders review the output and provide feedback
+
+### Distractor Analysis — Question 2
+
+**Correct answer: B**
+
+Evolutionary prototyping builds the system incrementally over iterations, with each version becoming part of the final delivered product. This description matches agile sprint-based delivery exactly.
+
+**Why A is wrong:** Throwaway prototyping produces artifacts that are discarded after use. In agile delivery, the sprint output is never discarded — it becomes part of the growing system.
+
+**Why C is wrong:** Wireframing is a design artifact, not a development strategy. A working increment of software produced in a sprint is not a wireframe.
+
+**Why D is wrong:** Design validation is an activity within the prototyping process, not a prototyping strategy itself. The sprint review includes validation, but the overall approach is evolutionary prototyping.
 
 ---
 
-**Question 4**
-A BA is conducting a go-live readiness assessment two days before a planned system launch. The assessment reveals that the data migration validation tests have not been completed and 15% of migrated customer records have unresolved data quality errors. What is the most appropriate action?
-*   A) Proceed with go-live and address the data quality errors through customer service tickets after launch
-*   B) Delay go-live until data migration is completed and validated, and present the risk to the project sponsor for a go/delay decision
-*   C) Launch the system without the affected customer records and migrate the remaining 15% in the following week
-*   D) Cancel the project and restart data migration from the beginning with a new vendor
-*   **Correct Answer:** B) Delay go-live until data migration is completed and validated, and present the risk to the project sponsor for a go/delay decision
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Launching with known data quality errors forces customers to experience system failures and erodes trust; addressing critical data errors post-launch is more expensive and disruptive than delaying.
-    *   *Why C is incorrect:* Launching without 15% of customer records creates an incomplete system that cannot serve all users from day one, violating operational requirements and potentially causing contractual issues.
-    *   *Why D is incorrect:* A complete project cancellation and vendor restart is a disproportionate response to a data quality issue that is resolvable with additional remediation time.
-    *   *Why B is correct:* The purpose of a go-live readiness assessment is precisely to surface blockers like this before launch. The appropriate action is to escalate the validated risk to the decision authority (sponsor), recommend a delay, and provide options — not to proceed with known critical failures.
+## Question 3
+
+A BA notices that a proposed portal design uses internal database field names as screen labels: "CUST_ACCT_BAL" instead of "Account Balance" and "TXN_DT" instead of "Transaction Date." Which of Nielsen's usability heuristics does this violate?
+
+A. Visibility of system status
+B. Error prevention
+C. Match between system and the real world
+D. Consistency and standards
+
+### Distractor Analysis — Question 3
+
+**Correct answer: C**
+
+"Match between system and the real world" requires that the interface use language and concepts familiar to users, not technical or system-internal terminology. Database field names are a classic violation of this heuristic.
+
+**Why A is wrong:** Visibility of system status is about keeping users informed of what the system is doing — loading states, confirmations, progress indicators. It is not about labeling conventions.
+
+**Why B is wrong:** Error prevention is about designing to avoid user mistakes before they happen. Field naming is a clarity issue, not an error prevention issue.
+
+**Why D is wrong:** Consistency and standards requires the same terms and patterns be used throughout the system. The labels may be consistently wrong (all using database names), which would satisfy consistency while still violating the real-world match heuristic.
 
 ---
 
-**Question 5**
-A BA is developing the implementation plan for a new finance system. The team has identified a requirement for a bulk data import utility that will load five years of historical invoice data from the legacy system's export files into the new database schema. This utility will be used only during the cutover weekend and will be decommissioned immediately afterward. How should this requirement be classified?
-*   A) A functional requirement — because it describes a specific system behavior (importing data) that the system must perform
-*   B) A non-functional requirement — because it describes a performance characteristic (importing five years of data in a limited window)
-*   C) A transition requirement — because it is needed only to support the cutover from the legacy system and has no value after the transition
-*   D) A business rule — because it defines a constraint (five years of data must be retained) that governs the organization's data management policy
-*   **Correct Answer:** C) A transition requirement — because it is needed only to support the cutover from the legacy system and has no value after the transition
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* While the import utility does perform a function, classifying it as a standard functional requirement (permanent system capability) misses the critical characteristic: it is temporary and will be decommissioned.
-    *   *Why B is incorrect:* A non-functional requirement (quality attribute) describes how the system performs ongoing operations; the import utility is not an ongoing system capability.
-    *   *Why D is incorrect:* A business rule defines a policy constraint that the system enforces continuously; the import utility is a one-time technical activity, not a persistent business rule.
-    *   *Why C is correct:* BABOK® KA 3 defines transition requirements as capabilities needed only during the change from current to future state. A one-time data migration utility used only during cutover weekend — with no post-go-live value — is the textbook definition of a transition requirement.
+## Question 4
+
+During requirements elicitation, a BA creates a rough sketch on a whiteboard to explore three different possible layouts for a reporting dashboard. After the meeting, the sketch is photographed but never refined further. What is the primary purpose this artifact served?
+
+A. Evolutionary prototyping — the sketch will be refined into the final design
+B. Design validation — the sketch was used to test whether the design meets requirements
+C. Low-fidelity throwaway prototyping — the sketch was used to explore options and is now complete
+D. Mockup creation — the sketch represents the visual design for stakeholder approval
+
+### Distractor Analysis — Question 4
+
+**Correct answer: C**
+
+A rough sketch created to explore layout options and not refined further is a low-fidelity throwaway prototype. It served its purpose (exploring alternatives) and will not become part of the final design artifact set.
+
+**Why A is wrong:** Evolutionary prototyping means the artifact grows into the final system. A whiteboard sketch that is photographed and set aside does not evolve into anything.
+
+**Why B is wrong:** Design validation is a structured activity involving realistic tasks and behavioral observation. A whiteboard exploration sketch is not a validation session.
+
+**Why D is wrong:** A mockup is a high-fidelity artifact with full visual design applied. A whiteboard sketch is the lowest fidelity artifact possible.
+
+---
+
+## Question 5
+
+A BA is running a design validation session. A participant is trying to find the "submit expense report" function and has been clicking in the wrong area of the screen for 45 seconds. The BA facilitating the session should do which of the following?
+
+A. Immediately point out the correct button to save time
+B. Continue observing and note the specific navigation behavior without intervening
+C. End the task and move to the next scenario
+D. Ask the participant directly: "Did you find the submit button confusing?"
+
+### Distractor Analysis — Question 5
+
+**Correct answer: B**
+
+The participant's struggle is valuable data revealing a navigation problem. The BA should observe and record the specific behavior. Intervening removes the signal that reveals the design flaw.
+
+**Why A is wrong:** Pointing out the correct button eliminates the finding. The 45-second struggle is the data — it shows that the button is not discoverable. Helping the participant hides this problem from the findings log.
+
+**Why C is wrong:** Ending the task prematurely also discards the finding. The participant should be allowed to either complete the task independently or reach a natural stopping point.
+
+**Why D is wrong:** Asking a leading question ("Did you find it confusing?") biases the response. The BA should observe behavior and ask neutral, open-ended follow-up questions after the task, not during.
+
+---
+
+## Question 6
+
+A project sponsor tells the BA: "We need to show the executive committee a demo next week. Can you have the prototype ready?" The BA should clarify which of the following before committing to a deliverable?
+
+A. Whether the prototype should be throwaway or evolutionary
+B. What level of fidelity is needed — wireframe, mockup, or interactive prototype
+C. Whether the prototype should use Nielsen's heuristics for design
+D. Whether the development team will reuse the prototype code
+
+### Distractor Analysis — Question 6
+
+**Correct answer: B**
+
+"Show the executive committee a demo" could mean anything from a click-through mockup to a fully interactive prototype. Before committing to a timeline, the BA must clarify what level of fidelity will satisfy the sponsor's actual need.
+
+**Why A is wrong:** The throwaway vs. evolutionary distinction is about the long-term fate of the prototype, not about what is appropriate for an executive demo. It is a secondary concern at this point.
+
+**Why C is wrong:** Nielsen's heuristics are a design evaluation framework, not a deliverable characteristic. This is not the right clarifying question for this situation.
+
+**Why D is wrong:** Whether development reuses the prototype code is a technical decision for later. The immediate priority is clarifying what the sponsor needs to see.
+
+---
+
+## Question 7
+
+After a design validation session, the BA documents the following finding: "Participant #3 clicked the 'Delete Account' button without reading the confirmation dialog, resulting in a simulated account deletion." The BA classifies this as a critical finding. What design change does this finding most directly call for?
+
+A. Adding a help documentation link to the account management screen
+B. Changing the color of the Delete Account button to a less prominent shade
+C. Redesigning the confirmation dialog to require active user input (such as typing "DELETE") before the action proceeds
+D. Moving the Delete Account button to a separate administration panel
+
+### Distractor Analysis — Question 7
+
+**Correct answer: C**
+
+The finding shows that the confirmation dialog is insufficient — users bypass it without reading. The "error prevention" heuristic calls for a design that makes irreversible actions harder to complete accidentally. Requiring active input (typing a confirmation word) forces deliberate action.
+
+**Why A is wrong:** Adding documentation does not address the interaction problem. Users who ignore confirmation dialogs will also ignore documentation.
+
+**Why B is wrong:** Changing the button color reduces visibility but does not address the real problem: users are clicking through the confirmation without reading it.
+
+**Why D is wrong:** Moving the button is a reasonable secondary option, but it does not address the core problem that when users do reach a destructive action, the confirmation step is not effective.
+
+---
+
+## Question 8
+
+Which of the following best describes the role of annotations in a wireframe?
+
+A. Annotations add color and styling to communicate the visual design intent
+B. Annotations describe the behavior of interface elements that cannot be conveyed by the layout alone
+C. Annotations replace the need for a separate requirements specification
+D. Annotations indicate which parts of the wireframe are optional for development
+
+### Distractor Analysis — Question 8
+
+**Correct answer: B**
+
+Annotations are notes attached to wireframe elements that explain interactive behavior, validation rules, data sources, and other requirements that the static layout cannot communicate. They bridge the wireframe and the requirements document.
+
+**Why A is wrong:** Wireframes deliberately exclude color and styling. Adding those would move the artifact toward a mockup, not an annotated wireframe.
+
+**Why C is wrong:** Annotations complement the requirements specification; they do not replace it. A wireframe with annotations is an analysis artifact, not a complete requirements document.
+
+**Why D is wrong:** Annotations have no standard meaning related to implementation optionality. They document behavior, not development priority.
+
+---
+
+## Question 9
+
+A BA is evaluating two proposals for how to handle a complex insurance claims form with 52 required fields. Proposal A puts all 52 fields on a single scrolling page. Proposal B breaks the form into six themed sections displayed as a step-by-step wizard with a progress indicator and the ability to save a draft and return. Which proposal better reflects Nielsen's usability heuristics, and why?
+
+A. Proposal A, because it gives users all information at once, supporting recognition over recall
+B. Proposal A, because consistency requires all form elements to appear in one location
+C. Proposal B, because it supports visibility of system status, user control, and error prevention
+D. Proposal B, because aesthetic and minimalist design requires fewer fields per screen
+
+### Distractor Analysis — Question 9
+
+**Correct answer: C**
+
+Proposal B addresses three heuristics simultaneously. The progress indicator satisfies visibility of system status. The ability to save and return satisfies user control and freedom. Breaking the form into themed sections reduces cognitive load and the risk of errors from missing fields, satisfying error prevention.
+
+**Why A is wrong:** Recognition over recall is better served by grouping related items clearly — which Proposal B does by theme. A 52-field single page increases cognitive load, which harms usability.
+
+**Why B is wrong:** Consistency applies to using the same patterns throughout a system, not to forcing all form elements onto a single screen. Proposal B can be entirely consistent with the rest of the portal.
+
+**Why D is wrong:** While aesthetic and minimalist design does apply (less is more), the stronger justification for Proposal B is the combination of visibility, user control, and error prevention — not aesthetics alone.
+
+---
+
+## Question 10
+
+According to the BABOK Guide, prototyping as a BA technique appears in which knowledge areas?
+
+A. Business Analysis Planning and Monitoring only
+B. Elicitation and Collaboration, and Requirements Analysis and Design Definition
+C. Solution Evaluation and Strategy Analysis
+D. Requirements Life Cycle Management only
+
+### Distractor Analysis — Question 10
+
+**Correct answer: B**
+
+The BABOK Guide explicitly lists Prototyping as a technique in two knowledge areas: Elicitation and Collaboration (using prototypes to gather requirements from stakeholders) and Requirements Analysis and Design Definition (using prototypes to define, validate, and communicate the solution design).
+
+**Why A is wrong:** Business Analysis Planning and Monitoring covers approach planning, stakeholder analysis, and governance. It does not list prototyping as a technique.
+
+**Why C is wrong:** Solution Evaluation focuses on assessing whether a delivered solution meets business needs. Strategy Analysis focuses on defining the business need and change strategy. Neither lists prototyping as a primary technique.
+
+**Why D is wrong:** Requirements Life Cycle Management covers tracing, maintaining, and approving requirements. While prototypes can inform requirements changes, RLCM is not a knowledge area that lists prototyping as a technique.
+
+---
+
+*Module 13 Quiz | CIS-3312 Systems Analysis and Design | Texas Wesleyan University*

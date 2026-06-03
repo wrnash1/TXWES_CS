@@ -1,67 +1,269 @@
-# Reading Guide: Module 11 – Cloud Monitoring, Logging, and Alerting
-## Course: CIS-4329 – Google Cloud Administration (Google Cloud Associate Cloud Engineer)
+# Reading Guide: Module 11 — Infrastructure as Code on GCP
+
+## Course: CIS-4329 Google Cloud Computing
+
+## Texas Wesleyan University | Professor Nash
+
+## Certification Alignment: Google Cloud Associate Cloud Engineer (ACE)
 
 ---
 
-### Introduction
-Welcome to **Module 11 – Cloud Monitoring, Logging, and Alerting**! Observability is a critical operations discipline for any cloud environment. This module covers Cloud Monitoring for metrics and uptime checks, Cloud Logging for log ingestion and analysis, Cloud Trace and Cloud Profiler for application performance insights, and alerting policies that notify your team when something goes wrong. The ACE exam tests your ability to configure monitoring resources, write log queries, route logs to storage sinks, and set up alerting policies.
+### Overview
+
+This reading guide accompanies the Module 11 video lectures on Infrastructure as Code.
+It covers Cloud Deployment Manager, Terraform with the GCP provider, state management,
+and infrastructure versioning patterns.
+
+**Estimated reading time**: 60–75 minutes
 
 ---
 
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The ACE exam tests these concepts in scenario-based questions.
+### Learning Objectives
 
-*   **Cloud Monitoring**: GCP's managed monitoring service (part of Google Cloud Observability, formerly Stackdriver). It collects metrics from GCP resources, Compute Engine VMs, GKE clusters, and custom application instrumentation. Metrics are stored as time series and can be visualized in dashboards or used to trigger alerting policies.
+After completing this module's readings you will be able to:
 
-*   **Alerting Policy**: A Cloud Monitoring resource that evaluates a metric condition over a time window and sends notifications when the condition is met. An alerting policy consists of a condition (e.g., CPU utilization > 90% for 5 minutes), one or more notification channels (email, PagerDuty, Pub/Sub, SMS), and optional documentation.
-
-*   **Cloud Logging**: GCP's managed log aggregation service. All GCP services write logs to Cloud Logging automatically. Logs are organized into log buckets with configurable retention periods. The default `_Default` log bucket retains logs for 30 days; you can extend retention up to 3,650 days.
-
-*   **Log Sink**: A Cloud Logging resource that routes log entries matching a filter to a destination outside Cloud Logging. Supported destinations include Cloud Storage (for long-term archival), BigQuery (for analytics), Pub/Sub (for streaming to third-party SIEM tools), and a second Cloud Logging bucket. Log sinks are the standard way to implement custom log retention policies.
-
-*   **Log-Based Metric**: A Cloud Monitoring metric derived from log entries. You define a filter that matches specific log entries (e.g., all ERROR severity entries from a Cloud Run service), and Cloud Monitoring increments a counter each time a matching entry arrives. Use log-based metrics to alert on log patterns that have no native metric equivalent.
-
-*   **Cloud Trace**: A distributed tracing service that collects latency data from GCP applications. Cloud Trace shows you where time is spent across microservice calls, helping identify slow dependencies. It integrates with Cloud Run, App Engine, and GKE automatically, and is instrumentable in custom applications via OpenTelemetry.
+- Explain the purpose and benefits of Infrastructure as Code
+- Write and deploy Cloud Deployment Manager configurations
+- Use Deployment Manager Jinja2 templates for reusable resource definitions
+- Initialize, plan, apply, and destroy infrastructure with Terraform
+- Configure Terraform remote state in Cloud Storage
+- Compare Deployment Manager and Terraform for GCP use cases
+- Describe infrastructure versioning best practices using Git
 
 ---
 
-### 2. Certification Exam Tips
+### Required Reading 1: Cloud Deployment Manager
 
-*   **Log sinks for custom retention**: The ACE exam frequently tests log sink configuration. Key pattern: if the question asks how to retain audit logs for 5 years, the answer is to create a log sink that exports matching logs to Cloud Storage with a lifecycle policy. The default Cloud Logging retention (30 days) is too short for compliance requirements.
+**Source**: Google Cloud Documentation — Deployment Manager Overview
 
-*   **Uptime checks verify external availability**: Cloud Monitoring uptime checks send probe requests to your service endpoints from multiple GCP regions. If the check fails, it triggers an alerting policy. The exam tests whether you know that uptime checks require an HTTPS or HTTP endpoint — they cannot check internal-only (ClusterIP or private IP) endpoints directly.
+**URL**: `https://cloud.google.com/deployment-manager/docs/fundamentals`
 
-*   **Notification channels must be created before the alerting policy**: The ACE exam may test ordering. You create notification channels (email, Pub/Sub, Slack webhook) first, then reference them in the alerting policy. A policy with no notification channel fires but silently — no one is notified.
+#### Deployment Manager Key Terms
 
-*   **`gcloud logging` commands for the exam**: Know `gcloud logging read` to query logs from the CLI and `gcloud logging sinks create` to create export sinks. The exam tests both Console-based and CLI-based log management.
+- **Deployment**: A named collection of GCP resources defined and managed as a unit;
+  creating, updating, and deleting a deployment affects all its resources together
+- **Configuration file**: A YAML file listing resources with their types and properties;
+  the primary input to Deployment Manager
+- **Template**: A reusable Jinja2 or Python file that generates resource definitions;
+  imported by configuration files and parameterized with `properties`
+- **Type**: Specifies the GCP resource type, such as `compute.v1.instance` or
+  `storage.v1.bucket`
+- **Manifest**: An immutable record of a deployment at a specific point in time;
+  Deployment Manager retains a manifest history for each deployment
+- **Preview**: A dry-run mode that shows what changes will be made without applying them;
+  enabled with `--preview` flag
 
-*   **Study Resource**: The freeCodeCamp ACE course covers Cloud Monitoring dashboards, alerting policy creation, and log sink configuration with hands-on console walkthroughs: [Google Cloud ACE Certification Course by freeCodeCamp](https://www.youtube.com/watch?v=UGRDM86MBIQ). Navigate to the Operations and Observability chapter using the video index.
+#### Deployment Manager CLI Reference
+
+| Command | Purpose |
+|---|---|
+| `gcloud deployment-manager deployments create NAME --config=FILE` | Create a new deployment |
+| `gcloud deployment-manager deployments update NAME --config=FILE` | Update an existing deployment |
+| `gcloud deployment-manager deployments update NAME --config=FILE --preview` | Preview changes before applying |
+| `gcloud deployment-manager deployments cancel-preview NAME` | Revert a preview without applying |
+| `gcloud deployment-manager deployments delete NAME` | Delete deployment and all its resources |
+| `gcloud deployment-manager deployments describe NAME` | Show deployment status and resources |
+| `gcloud deployment-manager deployments list` | List all deployments in the project |
+| `gcloud deployment-manager manifests list --deployment=NAME` | List deployment history |
+
+#### Deployment Manager ACE Exam Focus Points
+
+- Deployment Manager manages resources as a unit — deleting a deployment deletes all
+  its resources unless you explicitly exclude them
+- The `$(ref.RESOURCE.PROPERTY)` syntax creates implicit dependencies; Deployment Manager
+  creates referenced resources before dependents
+- Jinja2 templates use `{{ properties["key"] }}` to access parameters passed from the
+  configuration file
+- Deployment Manager does not require a local state file — state is managed entirely
+  by the GCP service
+- Python templates are also supported but Jinja2 is more common in documentation
+
+#### Deployment Manager Review Questions
+
+1. What is the difference between a configuration file and a template in Deployment
+   Manager?
+2. What does the `--preview` flag do, and how do you apply or cancel a preview?
+3. What happens to the resources in a deployment when you run `deployments delete`?
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
+### Required Reading 2: Terraform with GCP Provider
 
-*   **Required Reading**: Review the Cloud Monitoring overview including metrics, alerting policies, notification channels, and uptime checks: [Cloud Monitoring Overview](https://cloud.google.com/monitoring/docs/monitoring_overview). Pay attention to how alerting policies are structured.
-*   **Required Reading**: Review Cloud Logging concepts including log buckets, log sinks, and the Logs Explorer query language: [Cloud Logging Overview](https://cloud.google.com/logging/docs/overview). The log sink destination types are directly exam-relevant.
-*   **Required Video**: Watch the Operations and Observability segment of the ACE certification course: [Google Cloud ACE Certification Course by freeCodeCamp](https://www.youtube.com/watch?v=UGRDM86MBIQ). Navigate to the Cloud Monitoring and Logging chapter using the video index.
+**Source**: Terraform Documentation — Google Cloud Provider
+
+**URL**: `https://registry.terraform.io/providers/hashicorp/google/latest/docs`
+
+#### Terraform Key Terms
+
+- **HCL (HashiCorp Configuration Language)**: The declarative language used to write
+  Terraform configurations; human-readable JSON-compatible syntax
+- **Provider**: A plugin that implements CRUD operations for a specific platform; the
+  `google` provider manages GCP resources
+- **Resource block**: The primary unit of a Terraform configuration; defines one GCP
+  resource and its desired state
+- **State file**: `terraform.tfstate` — a JSON file tracking every resource Terraform
+  manages; must not be deleted or modified manually
+- **Backend**: Configures where the state file is stored; local by default; GCS backend
+  for team environments
+- **Plan**: `terraform plan` output showing what will be created, updated, or destroyed;
+  no changes are applied
+- **Module**: A directory of `.tf` files that can be called from other configurations;
+  supports parameterization via `variable` blocks
+
+#### Terraform Workflow Steps
+
+1. `terraform init` — downloads provider plugins and initializes the backend
+2. `terraform validate` — checks configuration syntax without connecting to GCP
+3. `terraform plan` — shows what changes will be made; compare to the state file
+4. `terraform apply` — executes the plan; prompts for confirmation
+5. `terraform destroy` — destroys all resources tracked in the state file
+
+#### Terraform GCP Provider Authentication
+
+Terraform authenticates to GCP using Application Default Credentials (ADC). In Cloud
+Shell or on a GCE VM with the correct service account, ADC works automatically. For
+local development:
+
+```bash
+# Authenticate using your user account
+gcloud auth application-default login
+
+# Or specify a service account key file
+export GOOGLE_APPLICATION_CREDENTIALS=/path/to/key.json
+```
+
+#### Terraform Remote State in GCS
+
+```hcl
+terraform {
+  backend "gcs" {
+    bucket  = "my-tf-state"
+    prefix  = "env/prod"
+  }
+}
+```
+
+The GCS bucket must exist before running `terraform init`. Enable object versioning on
+the bucket to allow state file rollback.
+
+#### Terraform ACE Exam Focus Points
+
+- Terraform state is the source of truth — if a resource is deleted outside of Terraform,
+  the next `terraform plan` shows it as needing recreation
+- `terraform import` brings existing resources under Terraform management; the resource
+  block must be written manually after import
+- The `google` provider version is pinned in the `terraform` block to prevent breaking
+  changes from provider updates
+- Remote state in GCS allows multiple team members to work with the same infrastructure
+  without state conflicts
+- `terraform plan` should always be reviewed before `terraform apply` in production
+
+#### Terraform Review Questions
+
+1. What is the purpose of the Terraform state file, and why should it never be deleted
+   manually?
+2. What are the five steps of the Terraform workflow in order?
+3. What backend configuration stores Terraform state in Cloud Storage?
 
 ---
 
-### Lab & Command Integration
-In this module's lab, you will create a Cloud Monitoring alerting policy, configure a log sink to Cloud Storage, and query logs using the Logs Explorer. Key commands to practice:
+### Required Reading 3: Deployment Manager vs Terraform
 
-*   `gcloud logging sinks create my-sink storage.googleapis.com/my-bucket --log-filter='severity>=ERROR'` — creates a log sink exporting ERROR+ logs to Cloud Storage
-*   `gcloud logging read 'resource.type="gce_instance" AND severity=ERROR' --limit=50` — queries recent error logs from Compute Engine instances
-*   `gcloud monitoring channels create --display-name="Ops Email" --type=email --channel-labels=email_address=ops@example.com` — creates an email notification channel
-*   `gcloud alpha monitoring policies create --policy-from-file=alert-policy.json` — creates an alerting policy from a JSON definition file
+**Source**: Google Cloud Blog — Choosing IaC Tools on GCP
+
+#### Comparison Table
+
+| Dimension | Cloud Deployment Manager | Terraform |
+|---|---|---|
+| Language | YAML + Jinja2 or Python | HCL |
+| GCP scope | GCP only | Multi-cloud |
+| State management | GCP-managed | Local or remote .tfstate file |
+| Module ecosystem | Limited | Extensive (Terraform Registry) |
+| Community size | Small | Very large |
+| CI/CD integration | Via Cloud Build | Via Cloud Build, GitHub Actions, etc. |
+| Drift detection | Via manifest comparison | Via `terraform plan` vs state |
+| Exam coverage | ACE tested | ACE tested |
+
+#### When to Use Each
+
+Use Deployment Manager when:
+
+- Your team is GCP-only and wants zero state file management
+- You are working in an environment where third-party tools are restricted
+- You need deep integration with GCP-specific APIs not yet in the Terraform provider
+
+Use Terraform when:
+
+- Your infrastructure spans multiple cloud providers
+- You want access to the large Terraform module registry
+- Your team prefers HCL over YAML
+- You need advanced features like workspaces, moved blocks, and conditional resources
+
+#### IaC Comparison ACE Exam Focus Points
+
+- Both tools create GCP resources; the ACE exam tests whether you know the basic commands
+  and concepts for each
+- Deployment Manager is GCP-native and requires no state file management
+- Terraform requires explicit state management; remote state is required for teams
+- Neither tool locks you in — you can migrate between them if needed
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and be able to explain each in your own words.
-- [ ] Read the [Cloud Monitoring Overview](https://cloud.google.com/monitoring/docs/monitoring_overview) documentation page.
-- [ ] Read the [Cloud Logging Overview](https://cloud.google.com/logging/docs/overview) documentation page.
-- [ ] Watch the Operations and Observability segment of the [ACE Certification Course by freeCodeCamp](https://www.youtube.com/watch?v=UGRDM86MBIQ).
-- [ ] Complete the module lab: create an alerting policy and configure a log sink to Cloud Storage.
-- [ ] Proceed to the weekly quiz.
+### Required Reading 4: Infrastructure Versioning Patterns
+
+**Source**: Google Cloud Architecture Center — Infrastructure as Code best practices
+
+**URL**: `https://cloud.google.com/docs/terraform/best-practices-for-terraform`
+
+#### Infrastructure Versioning Key Terms
+
+- **GitOps**: The practice of using Git as the single source of truth for both
+  application code and infrastructure; all changes go through pull requests
+- **Branch protection**: Prevents direct commits to the main branch; all changes must
+  go through reviewed pull requests
+- **Environment isolation**: Separate state backends for dev, staging, and production
+  to prevent accidental cross-environment changes
+- **State locking**: Prevents two users or CI/CD pipelines from running `terraform apply`
+  simultaneously; GCS backend supports locking via Cloud Storage object conditions
+
+#### Infrastructure Versioning Best Practices
+
+- Store all IaC configuration in a Git repository alongside application code or in a
+  dedicated infrastructure repository
+- Never apply Terraform from a local machine in production — always use CI/CD
+- Run `terraform plan` as a required check on every pull request
+- Tag the infrastructure repository at each production deployment (e.g., `prod-2024-01-15`)
+- Use separate `.tfvars` files per environment rather than hardcoded values
+- Enable state bucket versioning so corrupted state files can be rolled back
+
+#### Infrastructure Versioning ACE Exam Focus Points
+
+- The ACE exam does not test deep Git knowledge, but may ask about Deployment Manager
+  update strategies (preview before apply) and Terraform state isolation patterns
+- Multiple Terraform workspaces or separate state files per environment are both valid
+  isolation patterns
+
+---
+
+### Pre-Lab Checklist
+
+Before starting Lab 11, confirm you can answer yes to each item:
+
+- I can write a Deployment Manager YAML configuration defining at least 2 resources
+- I know the gcloud commands to create, update, describe, and delete a deployment
+- I understand what `$(ref.RESOURCE.PROPERTY)` does in a Deployment Manager config
+- I can describe the 5-step Terraform workflow
+- I know how to configure a GCS backend for Terraform remote state
+
+---
+
+### Additional Resources
+
+- Deployment Manager documentation:
+  `https://cloud.google.com/deployment-manager/docs`
+- Terraform GCP provider documentation:
+  `https://registry.terraform.io/providers/hashicorp/google/latest/docs`
+- Terraform best practices on GCP:
+  `https://cloud.google.com/docs/terraform/best-practices-for-terraform`
+- ACE exam guide:
+  `https://cloud.google.com/certification/guides/cloud-engineer`

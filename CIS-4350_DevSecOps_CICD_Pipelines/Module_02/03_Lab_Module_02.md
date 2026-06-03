@@ -1,289 +1,356 @@
-# Lab Activity: Module 02 - Version Control with Git and GitHub
+# Lab 02 — Version Control Security: Signed Commits, Branch Protection, and Secrets Scanning
 
 ## Course: CIS-4350 DevSecOps and CI/CD Pipelines
 
-## Certification Alignment: DevSecOps Professional (DSOE)
+## Texas Wesleyan University | Professor Nash
 
-## Total Points: 100
+## Certification Alignment: DevSecOps Professional (DSOE)
 
 ---
 
-## Objectives
+## Lab Overview
 
-By completing this lab you will be able to:
+In this lab you will configure GPG commit signing, set up branch protection rules on GitHub, implement a pre-commit hook configuration for secrets scanning, and practice the full secrets remediation workflow including history cleaning.
 
-- Configure a Git repository with a pre-commit hook that runs secrets detection before every commit.
-- Write a GitHub Actions workflow triggered on push to main that checks out code and runs tests.
-- Explain the security purpose of each workflow step and pipeline design decision.
-- Identify branch protection settings that enforce pipeline status checks as merge requirements.
+**Estimated Time:** 90–120 minutes
+
+**Difficulty:** Intermediate
 
 ---
 
 ## Prerequisites
 
-Before beginning this lab, confirm the following:
-
-- You have Git installed locally (`git --version` returns a result).
-- You have a GitHub account and can create a public or private repository.
-- You have Python 3.8 or later installed locally (`python --version` or `python3 --version`).
-- You have completed the Module 02 video and reading guide.
+- Git 2.34+ installed (`git --version`)
+- GPG installed (`gpg --version`)
+- GitHub account with a test repository
+- Python 3.8+ for the pre-commit framework (`python --version`)
+- Docker (optional, for gitleaks container)
 
 ---
 
-## Part 1: Configure a Local Pre-Commit Hook (25 points)
+## Part 1 — GPG Commit Signing (30 minutes)
 
-### Part 1 Background
+### Part 1 Objective
 
-Pre-commit hooks are the earliest shift-left control in the DevSecOps pipeline. This part walks you through installing and verifying a secrets-detection pre-commit hook in a real Git repository.
+Configure your local Git to sign all commits with a GPG key and verify that GitHub displays the "Verified" badge.
 
-### Part 1 Instructions
-
-**Step 1: Create a test repository.**
+### Step 1.1 — Generate a GPG Key
 
 ```bash
-mkdir devsecops-lab02
-cd devsecops-lab02
+gpg --full-generate-key
+```
+
+When prompted:
+
+- Key type: RSA and RSA (option 1)
+- Key size: 4096
+- Expiration: 0 (does not expire — acceptable for course use)
+- Name: Your full name
+- Email: Your GitHub-registered email address (critical — must match)
+- Comment: Leave blank
+- Passphrase: Choose a passphrase and remember it
+
+### Step 1.2 — Retrieve Your Key ID
+
+```bash
+gpg --list-secret-keys --keyid-format=long
+```
+
+Expected output:
+
+```text
+sec   rsa4096/A1B2C3D4E5F6G7H8 2024-01-15 [SC]
+      FINGERPRINT...
+uid   [ultimate] Your Name <you@example.com>
+```
+
+Note the 16-character key ID after `rsa4096/`.
+
+### Step 1.3 — Export Public Key and Add to GitHub
+
+```bash
+gpg --armor --export A1B2C3D4E5F6G7H8
+```
+
+Copy the full output (including `-----BEGIN PGP PUBLIC KEY BLOCK-----` headers). In GitHub: Settings > SSH and GPG keys > New GPG key. Paste and save.
+
+### Step 1.4 — Configure Git to Sign All Commits
+
+```bash
+git config --global user.signingkey A1B2C3D4E5F6G7H8
+git config --global commit.gpgsign true
+git config --global tag.gpgSign true
+```
+
+### Step 1.5 — Make a Signed Commit and Verify
+
+```bash
+mkdir ~/lab02-signing && cd ~/lab02-signing
+git init
+git checkout -b main
+echo "# Lab 02 Signing Demo" > README.md
+git add README.md
+git commit -m "Initial commit with GPG signing"
+git log --show-signature -1
+```
+
+The output should include `gpg: Good signature from "Your Name <you@example.com>"`.
+
+### Step 1.6 — Push and Verify on GitHub
+
+Push the repository to GitHub and navigate to the commits page. Verify the "Verified" green badge appears on your commit.
+
+---
+
+## Part 2 — Branch Protection Rules (20 minutes)
+
+### Part 2 Objective
+
+Configure branch protection rules to require signed commits, code review, and CI status checks.
+
+### Step 2.1 — Create a GitHub Repository
+
+Create a new public repository called `lab02-branch-protection` on GitHub.
+
+### Step 2.2 — Configure Branch Protection via GitHub UI
+
+Navigate to Settings > Branches > Add branch protection rule. Set branch name pattern to `main`.
+
+Enable the following:
+
+- Require a pull request before merging
+- Required number of approvals: 1
+- Dismiss stale pull request approvals when new commits are pushed
+- Require status checks to pass before merging
+- Require branches to be up to date before merging
+- Require signed commits
+- Do not allow bypassing the above settings
+
+Click "Create" to save.
+
+### Step 2.3 — Test Protection via Direct Push Attempt
+
+```bash
+cd ~/lab02-signing
+git remote add origin https://github.com/YOUR_USERNAME/lab02-branch-protection.git
+git push -u origin main
+```
+
+Create a second commit directly and attempt a direct push:
+
+```bash
+echo "Direct push test" >> README.md
+git add README.md
+git commit -m "Attempt direct push to main"
+git push origin main
+```
+
+If branch protection is configured correctly, this push will be rejected with an error message. Record the exact error message in your lab report.
+
+### Step 2.4 — Use a Pull Request Workflow
+
+```bash
+git checkout -b feature/add-content
+echo "## About This Project" >> README.md
+git add README.md
+git commit -m "Add about section"
+git push origin feature/add-content
+```
+
+Open a pull request on GitHub and observe that the status checks requirement is shown (even if no checks are configured yet, the requirement will display).
+
+---
+
+## Part 3 — Pre-Commit Framework for Secrets Prevention (30 minutes)
+
+### Part 3 Objective
+
+Install the pre-commit framework and configure it to automatically detect secrets before they enter the repository.
+
+### Step 3.1 — Install pre-commit
+
+```bash
+pip install pre-commit
+pre-commit --version
+```
+
+### Step 3.2 — Create a Pre-Commit Configuration
+
+```bash
+mkdir ~/lab02-hooks && cd ~/lab02-hooks
 git init
 git checkout -b main
 ```
 
-**Step 2: Install the pre-commit framework.**
-
-```bash
-pip install pre-commit
-```
-
-**Step 3: Create the hook configuration file.**
-
-Create a file named `.pre-commit-config.yaml` in the repository root with the following content:
+Create `.pre-commit-config.yaml`:
 
 ```yaml
 repos:
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.18.0
+    hooks:
+      - id: gitleaks
+        name: Detect secrets (gitleaks)
+
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.5.0
     hooks:
       - id: detect-private-key
-        name: Block private key files
+        name: Detect private keys
+      - id: check-added-large-files
+        args: [--maxkb=1024]
+      - id: check-json
       - id: check-yaml
-        name: Validate YAML syntax
-      - id: end-of-file-fixer
-        name: Ensure files end with newline
+      - id: no-commit-to-branch
+        args: [--branch, main]
       - id: trailing-whitespace
-        name: Remove trailing whitespace
+      - id: end-of-file-fixer
 ```
 
-**Step 4: Install hooks into the repository.**
+### Step 3.3 — Install the Hooks
 
 ```bash
 pre-commit install
 ```
 
-Confirm the installation succeeded. The output should include: `pre-commit installed at .git/hooks/pre-commit`
+You should see: `pre-commit installed at .git/hooks/pre-commit`
 
-**Step 5: Create a test file with a simulated private key and attempt to commit it.**
+### Step 3.4 — Test Secret Detection
 
-```bash
-cat > test_secret.txt << 'EOF'
------BEGIN RSA PRIVATE KEY-----
-MIIEowIBAAKCAQEA2a2rwplBQLzHPZe5
------END RSA PRIVATE KEY-----
-EOF
-
-git add test_secret.txt
-git commit -m "test: attempt to commit simulated private key"
-```
-
-The commit should be blocked. Record the exact error message output.
-
-**Step 6: Remove the simulated secret and commit the clean file.**
+Create a file with a fake secret:
 
 ```bash
-echo "no secrets here" > test_secret.txt
-git add test_secret.txt
-git commit -m "test: clean file commits successfully"
-```
-
-Confirm this commit succeeds.
-
-### Part 1 Deliverable
-
-Submit a document containing: a screenshot or copy of the blocked commit output from Step 5, a screenshot or copy of the successful commit output from Step 6, and a 3-4 sentence explanation of why pre-commit hooks must be paired with a CI pipeline secrets scan for full protection.
-
-### Part 1 Rubric
-
-| Criterion | Points |
-|---|---|
-| `.pre-commit-config.yaml` is correctly structured and submitted | 5 |
-| Blocked commit output is shown with the correct error | 8 |
-| Successful clean commit output is shown | 7 |
-| Explanation of hook + CI pipeline defense-in-depth is technically accurate | 5 |
-
----
-
-## Part 2: Write a GitHub Actions Workflow (40 points)
-
-### Part 2 Background
-
-GitHub Actions workflows are the automation engine for DevSecOps pipelines. This part requires you to write a complete workflow that runs on push to main, checks out code, sets up a Python environment, installs dependencies, and runs tests. This is the required workflow specification from the course lab requirements.
-
-### Part 2 Instructions
-
-**Step 1: Create the workflow directory in your lab repository.**
-
-```bash
-mkdir -p .github/workflows
-```
-
-**Step 2: Write the complete workflow file.**
-
-Create `.github/workflows/ci.yml` with a workflow that satisfies all of the following requirements:
-
-- Triggers on push to the `main` branch.
-- Has a single job named `build-and-test` running on `ubuntu-latest`.
-- Step 1: Checks out the repository code using `actions/checkout@v4`.
-- Step 2: Sets up Python 3.11 using `actions/setup-python@v5`.
-- Step 3: Installs dependencies from `requirements.txt` using `pip install -r requirements.txt`.
-- Step 4: Runs tests using `pytest tests/`.
-- Sets `permissions: contents: read` at the workflow level.
-
-The completed workflow must follow this structure:
-
-```yaml
-name: CI Pipeline
-
-on:
-  push:
-    branches:
-      - main
-
-permissions:
-  contents: read
-
-jobs:
-  build-and-test:
-    runs-on: ubuntu-latest
-    steps:
-      # Step 1: Checkout
-      # Step 2: Python setup
-      # Step 3: Install deps
-      # Step 4: Run tests
-```
-
-Fill in all four steps completely. Each step must have a `name:` field and either a `uses:` or `run:` field.
-
-**Step 3: Create a minimal requirements.txt and test file so the workflow can execute.**
-
-```bash
-echo "pytest==7.4.0" > requirements.txt
-
-mkdir -p tests
-cat > tests/test_hello.py << 'EOF'
-def test_addition():
-    assert 1 + 1 == 2
-
-def test_string():
-    assert "devsecops".upper() == "DEVSECOPS"
+cat > config.py << 'EOF'
+# This is a test file for the lab
+DATABASE_HOST = "localhost"
+# Fake AWS key for testing -- DO NOT USE IN REAL CODE
+AWS_ACCESS_KEY_ID = "AKIAIOSFODNN7EXAMPLE"
+AWS_SECRET_ACCESS_KEY = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
 EOF
 ```
 
-**Step 4: Push to GitHub and verify the workflow runs.**
-
-Create a repository on GitHub, add it as a remote, and push:
+Attempt to commit:
 
 ```bash
-git remote add origin https://github.com/YOUR_USERNAME/devsecops-lab02.git
-git add .
-git commit -m "feat: add CI workflow, tests, and pre-commit config"
-git push -u origin main
+git add config.py
+git commit -m "Test secret detection"
 ```
 
-Navigate to the Actions tab in your GitHub repository and confirm the workflow runs and all steps pass.
+The pre-commit hook should block the commit and display the gitleaks finding. Record the output.
 
-### Part 2 Deliverable
+### Step 3.5 — Remediate and Confirm Pass
 
-Submit: your complete `.github/workflows/ci.yml` file, a screenshot of the successful workflow run in the GitHub Actions tab showing all steps passed, and a 2-3 sentence explanation of what the `permissions: contents: read` setting does and why it is a security best practice.
+```bash
+cat > config.py << 'EOF'
+import os
 
-### Part 2 Rubric
+# Secrets loaded from environment variables only
+DATABASE_HOST = os.environ.get("DATABASE_HOST", "localhost")
+AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
+EOF
+```
 
-| Criterion | Points |
-|---|---|
-| Workflow YAML is syntactically correct and complete with all four steps | 15 |
-| Workflow triggers correctly on push to main | 5 |
-| All four steps use correct action names and parameters | 10 |
-| Screenshot shows successful workflow run with all steps green | 5 |
-| Permissions explanation is technically accurate | 5 |
+Also create `.env.example`:
 
----
+```bash
+cat > .env.example << 'EOF'
+DATABASE_HOST=localhost
+AWS_ACCESS_KEY_ID=your-key-id-here
+AWS_SECRET_ACCESS_KEY=your-secret-here
+EOF
+```
 
-## Part 3: Branch Protection Analysis (20 points)
+Create `.gitignore`:
 
-### Part 3 Background
+```gitignore
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+```
 
-Branch protection rules enforce that pipeline security checks must pass before code can merge. This part asks you to configure and document branch protection settings, then analyze their security impact.
+```bash
+git add .pre-commit-config.yaml config.py .env.example .gitignore
+git commit -m "Add pre-commit config, remediate secrets, add env template"
+```
 
-### Part 3 Instructions
-
-**Step 1: Enable branch protection on your lab repository.**
-
-In your GitHub repository, navigate to Settings, then Branches. Add a branch protection rule for the `main` branch. Enable the following settings:
-
-- Require a pull request before merging
-- Require status checks to pass before merging (add your `build-and-test` job as a required check)
-- Require branches to be up to date before merging
-- Do not allow bypassing the above settings
-
-**Step 2: Test the protection.**
-
-Attempt to push a commit directly to main from the command line. Record what happens.
-
-**Step 3: Document the analysis.**
-
-Answer the following questions in writing:
-
-1. What error or behavior did you observe when attempting a direct push to main?
-2. Why does requiring the `build-and-test` status check to pass make the CI workflow a mandatory security gate rather than an optional advisory?
-3. What is the risk of NOT checking "Do not allow bypassing the above settings"? Who could bypass the rules, and how does this undermine the DevSecOps shared responsibility model?
-
-### Part 3 Deliverable
-
-Submit: a screenshot of your branch protection rule configuration, a screenshot or description of the direct-push rejection, and written answers to the three analysis questions.
-
-### Part 3 Rubric
-
-| Criterion | Points |
-|---|---|
-| Branch protection rule is correctly configured (screenshot) | 6 |
-| Direct push rejection is documented | 4 |
-| Three analysis questions answered with technical accuracy | 10 |
+All hooks should pass. Record the output.
 
 ---
 
-## Part 4: Reflection on Shift-Left Enforcement (15 points)
+## Part 4 — Secrets Remediation in Git History (20 minutes)
 
-### Part 4 Instructions
+### Part 4 Objective
 
-Write a 200-250 word reflection addressing the following:
+Practice removing a secret that was accidentally committed to Git history.
 
-The pre-commit hook you configured in Part 1 and the CI workflow you wrote in Part 2 both serve shift-left security goals, but they operate at different points in the Git workflow and have different bypass characteristics.
+### Step 4.1 — Simulate an Accidental Secret Commit
 
-1. Explain the specific shift-left role of each control: what stage does the pre-commit hook operate at, and what stage does the CI pipeline operate at?
-2. Describe the bypass vector for each: how could a developer skip the pre-commit hook, and why is the CI pipeline not subject to the same bypass?
-3. Explain why the combination of both controls implements defense-in-depth rather than redundancy.
+```bash
+# Temporarily disable hooks for this simulation
+echo "SLACK_TOKEN=xoxb-example-token-12345678" > slack_config.py
+git add slack_config.py
+git commit --no-verify -m "Add Slack integration config"
+```
 
-### Part 4 Deliverable
+Verify the secret is in history:
 
-Submit your written reflection (200-250 words) as part of your combined submission document.
+```bash
+git log --oneline
+git show HEAD:slack_config.py
+```
 
-### Part 4 Rubric
+### Step 4.2 — Remove the Secret Using git-filter-repo
 
-| Criterion | Points |
-|---|---|
-| Shift-left stage of each control is correctly identified | 5 |
-| Bypass vector for each is accurately described | 5 |
-| Defense-in-depth argument is technically sound | 5 |
+```bash
+pip install git-filter-repo
+
+# Remove the file from all history
+git filter-repo --path slack_config.py --invert-paths --force
+```
+
+### Step 4.3 — Verify Removal
+
+```bash
+git log --oneline
+git show HEAD:slack_config.py 2>&1
+```
+
+The file should no longer exist in the repository history. Record the git log output before and after.
+
+### Step 4.4 — Document the Incident
+
+In your lab report, answer: In a real scenario after removing a secret from Git history, what other steps must you take? (Hint: consider the secret itself, not just the repository.)
 
 ---
 
-## Submission Instructions
+## Deliverables
 
-Combine all four parts into a single PDF or Word document. Label each part clearly. Include your name, date, course number (CIS-4350), and module number (02) at the top. Submit via the Canvas LMS assignment portal before the due date shown in Canvas.
+Submit the following on Canvas:
+
+1. Screenshot showing "Verified" badge on a signed commit in GitHub (Part 1, Step 1.6)
+2. Screenshot of the direct push rejection error message (Part 2, Step 2.3)
+3. Screenshot of gitleaks blocking the commit with fake AWS credentials (Part 3, Step 3.4)
+4. Screenshot of all pre-commit hooks passing after remediation (Part 3, Step 3.5)
+5. Git log output before and after git-filter-repo removal (Part 4, Steps 4.1 and 4.3)
+6. Written answer: what steps must follow secret removal from Git history (Part 4, Step 4.4 — minimum 100 words)
+
+---
+
+## Grading Rubric
+
+| Criterion | Points |
+|---|---|
+| Signed commit with Verified badge screenshot | 20 |
+| Branch protection rejection screenshot with error text | 15 |
+| gitleaks block screenshot | 20 |
+| All hooks passing after remediation screenshot | 15 |
+| git-filter-repo before/after log output | 15 |
+| Incident response write-up (100+ words) | 15 |
+| Total | 100 |
+
+---
+
+Lab 02 | CIS-4350 | Texas Wesleyan University | Professor Nash

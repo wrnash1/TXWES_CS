@@ -1,49 +1,258 @@
-# Reading Guide: Module 05 - Cryptography Fundamentals
-## Course: CIS-4328_Information_Security (CompTIA Security+ SY0-701)
+# Reading Guide: Module 05 — Cryptography and PKI
+
+## CIS-4328 Information Security | Texas Wesleyan University
+
+### CompTIA Security+ SY0-701 Alignment
 
 ---
 
-### Introduction
-Welcome to **Module 05 – Cryptography Fundamentals**! Cryptography underpins nearly every security control in modern IT — TLS, VPNs, digital signatures, password storage, and more. SY0-701 tests cryptography concepts in both direct definition questions and applied scenario questions where you must select the right algorithm or key type for a given security requirement.
+## Overview
+
+This reading guide supports Module 05 of CIS-4328. It covers the cryptographic foundations tested on the Security+ exam, including symmetric and asymmetric encryption, hashing algorithms, digital signatures, the TLS handshake, PKI components, and the certificate lifecycle.
+
+All readings use zero-cost, openly licensed resources.
 
 ---
 
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
+## Learning Objectives
 
-*   **Symmetric Encryption**: A cryptographic method that uses a single shared secret key for both encryption and decryption. It is fast and efficient for bulk data encryption but requires secure key distribution. Common algorithms include AES (current standard), 3DES (legacy), and RC4 (deprecated/broken). SY0-701 expects you to know AES key sizes: 128, 192, and 256 bits.
-*   **Asymmetric Encryption**: A cryptographic method that uses a mathematically linked key pair — a public key (freely shared) and a private key (kept secret). Encrypting with the public key ensures only the private key holder can decrypt (confidentiality). Signing with the private key allows anyone with the public key to verify authenticity (non-repudiation). RSA, ECC, and Diffie-Hellman are the primary asymmetric algorithms on SY0-701.
-*   **Hashing**: A one-way mathematical function that produces a fixed-length digest (hash value) from any input. Because it is irreversible, hashing is used to verify data integrity rather than to encrypt it. Common algorithms: SHA-256 (current standard), SHA-1 (deprecated), MD5 (broken — do not use for security). If two different inputs produce the same hash, it is called a collision — a property that breaks integrity guarantees.
-*   **Digital Signatures**: Created by hashing a document and encrypting that hash with the sender's private key. The recipient verifies by decrypting the hash with the sender's public key and re-hashing the document — if they match, the signature is valid. Digital signatures prove both integrity (the document was not altered) and non-repudiation (the sender cannot deny signing it).
-*   **Diffie-Hellman Key Exchange**: A protocol that allows two parties to independently derive the same shared secret over an insecure channel without ever transmitting the secret itself. It is the foundation of Perfect Forward Secrecy (PFS) in TLS. DHE (ephemeral) and ECDHE are the current preferred variants because they generate a new key pair per session.
-*   **Elliptic Curve Cryptography (ECC)**: An asymmetric algorithm that achieves equivalent security to RSA with much shorter key lengths. A 256-bit ECC key provides roughly the same security as a 3072-bit RSA key. ECC is preferred for mobile and IoT environments where computational resources are limited.
+By the end of this module, you will be able to:
 
----
+- Explain the key distribution problem and describe how asymmetric encryption solves it.
 
-### 2. Certification Exam Tips
-*   **Domain Weight:** Cryptography falls under **Domain 1 – General Security Concepts (12%)** and appears throughout **Domain 2** and **Domain 3** of SY0-701. Expect 8–12 questions referencing cryptographic controls.
-*   **Symmetric vs. Asymmetric Speed Trap:** Symmetric is fast (used for bulk data); asymmetric is slow (used for key exchange and signatures). TLS uses asymmetric cryptography to exchange a symmetric session key — then switches to symmetric for data transfer. Know this hybrid model.
-*   **Hashing ≠ Encryption:** A critical exam distinction. You cannot "decrypt" a hash. If a question describes reversing a hash, that is a red flag — hashing is one-way. Only encryption is reversible with a key.
-*   **Key Length vs. Algorithm:** For SY0-701, memorize these minimums: RSA ≥ 2048 bits, AES ≥ 128 bits (256 preferred), ECC ≥ 256 bits. The exam tests whether you can identify a configuration as adequately or inadequately keyed.
-*   **Study Resource:** Professor Messer's free [CompTIA Security+ SY0-701 study notes and video course](https://www.professormesser.com/) include side-by-side comparison tables for symmetric vs. asymmetric algorithms and hash function properties that are ideal for exam review.
+- Compare symmetric and asymmetric encryption by speed, key structure, and appropriate use cases.
 
----
+- Identify AES, RSA, and ECC by their mathematical basis, key size requirements, and exam-relevant properties.
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the "Cryptography" section in the OER Textbook: [Professor Messer's CompTIA Security+ SY0-701 Study Notes](https://www.professormesser.com/). Pay particular attention to the algorithm comparison tables and key exchange diagrams.
-*   **Required Video:** Watch the cryptography video lectures in [Professor Messer's SY0-701 Course Playlist on YouTube](https://www.youtube.com/playlist?list=PLG49S3nxzAnl4Q7y9umx51bbtILyD4Syy). The videos walk through how TLS combines symmetric and asymmetric cryptography in a real handshake.
+- Describe the properties of a cryptographic hash function and explain why MD5 and SHA-1 are deprecated.
+
+- Trace the steps of a digital signature creation and verification process.
+
+- Describe the TLS handshake and explain why it uses both asymmetric and symmetric cryptography.
+
+- Identify the components of a PKI and explain the role of each.
+
+- Describe the X.509 certificate structure and the three certificate validation levels.
+
+- Explain CRL, OCSP, and OCSP Stapling and their relative advantages.
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will use OpenSSL command-line tools to generate key pairs, create hashes, and inspect certificates. These tasks directly mirror SY0-701 performance-based questions that ask you to identify certificate properties or select the correct cryptographic operation.
+## Primary Readings
+
+### Reading 1 — NIST SP 800-175B Rev. 1: Guideline for Using Cryptographic Standards
+
+Source: [https://csrc.nist.gov/publications/detail/sp/800-175b/rev-1/final](https://csrc.nist.gov/publications/detail/sp/800-175b/rev-1/final)
+
+Read: Chapter 2 (Cryptographic Mechanisms Overview) and Chapter 3 (Symmetric Encryption).
+
+Focus areas:
+
+- NIST's current recommendations for symmetric algorithms (AES) and deprecation of DES/3DES.
+
+- The concept of modes of operation and why mode selection matters for security.
+
+- Key length requirements and the relationship between key length and security margin.
+
+### Reading 2 — NIST SP 800-57 Part 1 Rev. 5: Recommendation for Key Management
+
+Source: [https://csrc.nist.gov/publications/detail/sp/800-57-part-1/rev-5/final](https://csrc.nist.gov/publications/detail/sp/800-57-part-1/rev-5/final)
+
+Read: Section 5.6 (Asymmetric Key Pair Management) and Section 7 (Cryptographic Key Transitions).
+
+Focus areas:
+
+- RSA key size recommendations and the transition away from 1024-bit keys.
+
+- ECC key sizes and their equivalence to RSA key sizes.
+
+- Guidance on algorithm transitions — why organizations must plan migrations away from deprecated algorithms.
+
+### Reading 3 — NIST FIPS 180-4: Secure Hash Standard
+
+Source: [https://csrc.nist.gov/publications/detail/fips/180/4/final](https://csrc.nist.gov/publications/detail/fips/180/4/final)
+
+Read: Section 1 (Purpose and Scope) and the summary of SHA-1, SHA-224, SHA-256, SHA-384, SHA-512.
+
+Focus areas:
+
+- Output sizes for each SHA-2 variant.
+
+- Why SHA-256 is the baseline for current security applications.
+
+- The deprecation status of SHA-1.
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms above and be able to explain when to use each algorithm type and why.
-- [ ] Read the "Cryptography" section in [Professor Messer's SY0-701 Study Notes](https://www.professormesser.com/).
-- [ ] Watch the cryptography video lectures in [Professor Messer's SY0-701 Course Playlist](https://www.youtube.com/playlist?list=PLG49S3nxzAnl4Q7y9umx51bbtILyD4Syy).
-- [ ] Memorize: symmetric = speed + shared key; asymmetric = key pairs + non-repudiation; hashing = one-way + integrity only.
-- [ ] Proceed to the weekly hands-on lab activity.
+## Supplemental Readings
+
+### Reading 4 — Mozilla Developer Network: TLS Handshake
+
+Source: [https://developer.mozilla.org/en-US/docs/Web/Security/Transport_Layer_Security](https://developer.mozilla.org/en-US/docs/Web/Security/Transport_Layer_Security)
+
+Read: The full article.
+
+Focus areas:
+
+- How cipher suite negotiation works.
+
+- The role of the server certificate in the handshake.
+
+- TLS 1.3 improvements over TLS 1.2.
+
+### Reading 5 — Let's Encrypt: How It Works
+
+Source: [https://letsencrypt.org/how-it-works/](https://letsencrypt.org/how-it-works/)
+
+Read: The full article.
+
+Focus areas:
+
+- The ACME protocol and automated certificate issuance.
+
+- Domain validation in practice.
+
+- The certificate lifecycle as implemented in a real CA.
+
+---
+
+## Concept Reference Tables
+
+### Table 1 — Encryption Algorithm Comparison
+
+| Algorithm | Type | Key Sizes | Mathematical Basis | Primary Use |
+|---|---|---|---|---|
+| AES-128/192/256 | Symmetric | 128, 192, 256 bits | Substitution-permutation network | Bulk data encryption |
+| DES | Symmetric | 56 bits | Feistel network | Deprecated — do not use |
+| 3DES | Symmetric | 112/168 bits | Triple DES | Deprecated — do not use |
+| RSA | Asymmetric | 2048+ bits | Integer factorization | Key exchange, digital signatures |
+| ECC | Asymmetric | 256+ bits | Elliptic curve discrete log | Key exchange, digital signatures (resource-constrained) |
+| ECDHE | Asymmetric | 256+ bits | ECC + Diffie-Hellman | Key exchange with Perfect Forward Secrecy |
+
+### Table 2 — Hashing Algorithm Status
+
+| Algorithm | Output Size | Status | Notes |
+|---|---|---|---|
+| MD5 | 128 bits | Broken | Collision attacks are practical |
+| SHA-1 | 160 bits | Deprecated | SHAttered collision attack (2017) |
+| SHA-256 | 256 bits | Current standard | SHA-2 family; use as baseline |
+| SHA-384 | 384 bits | Current | SHA-2 family; higher security |
+| SHA-512 | 512 bits | Current | SHA-2 family; higher security |
+| SHA-3 | Variable | Current | Alternative design; Keccak |
+
+### Table 3 — PKI Component Roles
+
+| Component | Role |
+|---|---|
+| Root CA | Top of trust hierarchy; signs Intermediate CA certificates; kept offline |
+| Intermediate CA | Issues end-entity certificates; signed by Root CA |
+| Registration Authority (RA) | Verifies applicant identity; approves or rejects CSR |
+| Certificate Revocation List (CRL) | Periodic list of revoked certificate serial numbers |
+| OCSP Responder | Real-time certificate status query service |
+| End-Entity Certificate | The certificate installed on a server, device, or user |
+
+### Table 4 — Certificate Validation Levels
+
+| Level | Validation Performed | Identity Assurance | Common Use |
+|---|---|---|---|
+| Domain Validation (DV) | Domain control only | Low | General HTTPS |
+| Organization Validation (OV) | Domain + legal identity | Medium | Business websites |
+| Extended Validation (EV) | Most rigorous vetting | High | Financial, high-trust sites |
+
+---
+
+## Key Terms and Definitions
+
+**Symmetric Encryption** — Encryption that uses the same key for both encryption and decryption.
+
+**Asymmetric Encryption** — Encryption that uses a mathematically linked key pair: one public, one private.
+
+**AES** — Advanced Encryption Standard; current symmetric encryption standard using 128, 192, or 256-bit keys.
+
+**RSA** — Rivest–Shamir–Adleman; asymmetric algorithm based on integer factorization difficulty.
+
+**ECC** — Elliptic Curve Cryptography; asymmetric algorithm providing equivalent security with shorter keys.
+
+**ECDHE** — Elliptic Curve Diffie-Hellman Ephemeral; provides Perfect Forward Secrecy.
+
+**Perfect Forward Secrecy (PFS)** — Property ensuring that compromise of a long-term key does not expose past session keys.
+
+**Hash Function** — A one-way function producing a fixed-size digest from variable-size input.
+
+**SHA-256** — Secure Hash Algorithm with 256-bit output; current hashing standard.
+
+**MD5** — Message Digest 5; cryptographically broken due to practical collision attacks.
+
+**Digital Signature** — A hash of a message encrypted with the sender's private key; provides authentication, integrity, and non-repudiation.
+
+**Non-repudiation** — Inability for a sender to deny having sent a message; provided by digital signatures.
+
+**TLS** — Transport Layer Security; protocol securing HTTPS and other network communication.
+
+**PKI** — Public Key Infrastructure; the system for creating, managing, distributing, and revoking digital certificates.
+
+**Certificate Authority (CA)** — An entity trusted to issue digital certificates.
+
+**Root CA** — The top-level CA in a trust hierarchy; typically kept offline.
+
+**Intermediate CA** — A CA subordinate to the Root CA that issues end-entity certificates.
+
+**Registration Authority (RA)** — Verifies identity of certificate requestors on behalf of the CA.
+
+**X.509** — The standard format for digital certificates.
+
+**CSR** — Certificate Signing Request; a formatted request containing a public key and identity information.
+
+**CRL** — Certificate Revocation List; a periodically published list of revoked certificates.
+
+**OCSP** — Online Certificate Status Protocol; real-time certificate revocation status query.
+
+**OCSP Stapling** — Server-side caching and presentation of a signed OCSP response during the TLS handshake.
+
+**Chain of Trust** — The hierarchical relationship from Root CA through Intermediate CA to end-entity certificate.
+
+---
+
+## Security+ Exam Alignment
+
+The following SY0-701 exam objectives are covered in this module:
+
+- 1.4 — Explain the importance of using appropriate cryptographic solutions.
+
+---
+
+## Critical Thinking Questions
+
+1. A web server is using a certificate with a SHA-1 signature and a 1024-bit RSA key. What specific risks does each of these properties introduce? What should an administrator do, and in what order of priority?
+
+2. An organization's root CA private key is compromised. What is the impact? What steps must the organization take? Why is keeping the root CA offline a primary architectural control against this scenario?
+
+3. A browser displays a padlock icon for a website. A user interprets this as meaning "this website is safe." Is this interpretation correct? What does the padlock actually guarantee, and what does it not guarantee?
+
+4. Your organization's security policy requires Perfect Forward Secrecy for all TLS connections. What specific cipher suite components must be present to satisfy this requirement? What TLS cipher suites do NOT provide PFS?
+
+5. An incident responder discovers that an internal application is using MD5 to hash user passwords stored in a database. Explain why this is a security risk, what specific attacks become practical, and what migration steps are required.
+
+---
+
+## Review Checklist
+
+Before taking the Module 05 quiz, verify you can do each of the following without notes:
+
+- State the key size options for AES and the minimum acceptable RSA key size.
+
+- Explain why ECC keys can be shorter than RSA keys for equivalent security.
+
+- Describe the digital signature process in the correct order, identifying which key is used at each step.
+
+- Explain why TLS uses both asymmetric and symmetric cryptography rather than one or the other alone.
+
+- Name the four PKI components and state the role of each in one sentence.
+
+- Distinguish CRL from OCSP and explain OCSP Stapling's purpose.
+
+- State which hashing algorithms are deprecated and why each was deprecated.
+
+---
+
+Module 05 Reading Guide — End

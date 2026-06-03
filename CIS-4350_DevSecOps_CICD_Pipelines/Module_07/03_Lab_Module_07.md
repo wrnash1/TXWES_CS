@@ -1,217 +1,416 @@
-# Lab Activity: Module 07 - DAST: Dynamic Application Security Testing
+# Lab 07 — Application Security Testing: Semgrep, OWASP ZAP, and SBOM
 
 ## Course: CIS-4350 DevSecOps and CI/CD Pipelines
 
-## Certification Alignment: DevSecOps Professional (DSOE)
+## Texas Wesleyan University | Professor Nash
 
-## Total Points: 100
+## Certification Alignment: DevSecOps Professional (DSOE)
 
 ---
 
-## Objectives
+## Lab Overview
 
-By completing this lab you will be able to:
+In this lab you will run Semgrep SAST scans on a vulnerable Python application, run OWASP ZAP in baseline scan mode against OWASP Juice Shop (a deliberately vulnerable application), run OWASP Dependency-Check with a CVSS quality gate, generate an SBOM with Syft, and integrate all four into a GitHub Actions pipeline.
 
-- Explain the operational difference between SAST and DAST in a CI/CD pipeline context.
-- Configure a GitHub Actions workflow step that runs an OWASP ZAP baseline scan against a staging URL.
-- Interpret a DAST finding report, identifying vulnerability class, severity, and remediation.
-- Describe the authenticated scanning requirement and when it is necessary.
+**Estimated Time:** 90–120 minutes
+
+**Difficulty:** Intermediate
 
 ---
 
 ## Prerequisites
 
-Before beginning this lab, confirm the following:
-
-- Docker is installed and running (`docker --version`).
-- You have completed Module 07 video and reading guide.
-- You have access to the GitHub repository from previous modules.
-
-Note: For Parts 1 and 2, you will analyze provided DAST output rather than running a live scan against a real application, so a staging environment is not required for these parts. Part 3 requires Docker for a local scan against a public test application.
+- Docker Desktop running
+- Python 3.8+ installed
+- Git and GitHub account
+- Semgrep CLI (`pip install semgrep`)
+- Syft installed (binary download or `brew install syft`)
 
 ---
 
-## Part 1: DAST vs. SAST Comparison Analysis (25 points)
+## Part 1 — SAST with Semgrep (20 minutes)
 
-### Part 1 Background
+### Part 1 Objective
 
-Understanding when DAST is required versus when SAST is sufficient is a core DevSecOps Professional exam skill.
+Scan a vulnerable Python web application with Semgrep and interpret OWASP Top 10 findings.
 
-### Part 1 Scenario
-
-A security engineer joins a team that has SAST integrated into every pull request via Semgrep. The team claims their pipeline is "secure" and asks whether DAST is necessary given that SAST already runs on every commit.
-
-### Part 1 Instructions
-
-**Step 1: Identify five vulnerabilities DAST would find that SAST would miss.**
-
-For each vulnerability, provide: the vulnerability name and CWE number, a 2-sentence explanation of why SAST cannot detect it at code analysis time, and a concrete example HTTP request or scenario that DAST would use to detect it.
-
-**Step 2: Write a one-page recommendation memo.**
-
-Write a 200-250 word memo to the security engineer explaining why DAST is a necessary complement to SAST, not a redundant tool. Address: what SAST finds, what DAST finds, where each runs in the pipeline, and the defense-in-depth argument for running both.
-
-### Part 1 Deliverable
-
-Submit your five-vulnerability analysis and the recommendation memo.
-
-### Part 1 Rubric
-
-| Criterion | Points |
-|---|---|
-| Five vulnerabilities identified with correct CWE numbers | 10 |
-| Each vulnerability has accurate explanation of why SAST misses it | 10 |
-| Recommendation memo is technically accurate and within word count | 5 |
-
----
-
-## Part 2: DAST Finding Report Analysis (30 points)
-
-### Part 2 Background
-
-Interpreting DAST findings is a required skill for DevSecOps practitioners and is tested on the exam.
-
-### Part 2 Finding Report
-
-The following ZAP baseline scan findings were produced against a staging web application:
-
-```text
-WARN-NEW: Cookie Without Secure Flag [10011]
-  URL: https://staging.myapp.com/login
-  Evidence: Set-Cookie: session=abc123; HttpOnly; Path=/
-  Description: A cookie has been set without the secure flag.
-  An attacker may be able to read the cookie's value by snooping
-  the traffic between the browser and server.
-  CWE: 614
-  OWASP: A05:2021 - Security Misconfiguration
-
-WARN-NEW: Missing Anti-clickjacking Header [10020]
-  URL: https://staging.myapp.com/
-  Evidence: No X-Frame-Options or Content-Security-Policy frame-ancestors header found.
-  Description: The response does not include either Content-Security-Policy with 'frame-ancestors'
-  directive or X-Frame-Options to protect against Clickjacking attacks.
-  CWE: 1021
-  OWASP: A05:2021 - Security Misconfiguration
-
-FAIL-NEW: SQL Injection [40018]
-  URL: https://staging.myapp.com/search?q=test
-  Parameter: q
-  Evidence: 1 AND 1=1 -- injection string returned database error: syntax error near "1=1"
-  CWE: 89
-  OWASP: A03:2021 - Injection
-```
-
-### Part 2 Instructions
-
-**Step 1: Analyze Finding 1 — Cookie Without Secure Flag.**
-
-Write a structured analysis: vulnerability name and CWE, what the finding means (what is missing and why it matters), attack scenario (how could an attacker exploit this?), and the specific remediation — write the corrected `Set-Cookie` header value.
-
-**Step 2: Analyze Finding 2 — Missing Anti-clickjacking Header.**
-
-Write a structured analysis covering the same four elements. Include two valid HTTP response header solutions (X-Frame-Options and Content-Security-Policy with frame-ancestors).
-
-**Step 3: Analyze Finding 3 — SQL Injection.**
-
-Write a structured analysis covering the same four elements. This finding was detected by both SAST (Module 06) and now DAST — explain what additional information DAST provides that SAST could not.
-
-**Step 4: Classify the findings by scan mode.**
-
-For each of the three findings, state whether it would be detected by passive scanning, active scanning, or both. Explain your reasoning.
-
-### Part 2 Deliverable
-
-Submit your structured analysis for each finding and the scan mode classification.
-
-### Part 2 Rubric
-
-| Criterion | Points |
-|---|---|
-| Finding 1 analysis covers all four elements accurately | 8 |
-| Finding 2 analysis covers all four elements accurately | 8 |
-| Finding 3 analysis covers all four elements and explains the SAST/DAST difference | 10 |
-| Scan mode classification for all three findings is correct with explanation | 4 |
-
----
-
-## Part 3: DAST Local Scan Exercise (30 points)
-
-### Part 3 Background
-
-OWASP maintains a deliberately vulnerable web application — WebGoat — specifically for DAST practice. In this part you run a ZAP baseline scan against the publicly available demo instance.
-
-### Part 3 Instructions
-
-**Step 1: Run a ZAP baseline scan using Docker.**
-
-Note: The OWASP WebGoat demo instance is available at the URL shown below for educational purposes. Run the ZAP baseline scan:
+### Step 1.1 — Prepare the Vulnerable Application
 
 ```bash
-docker run --rm ghcr.io/zaproxy/zaproxy:stable \
-  zap-baseline.py \
-  -t https://webgoat.org \
-  -r zap-baseline-report.html \
-  -l WARN \
-  2>&1 | tee zap-output.txt
+mkdir ~/lab07-appsec && cd ~/lab07-appsec
+git init && git checkout -b main
+mkdir src
 ```
 
-Record the complete output.
+Create `src/vulnerable_app.py`:
 
-**Step 2: Count and categorize findings.**
+```python
+# src/vulnerable_app.py
+# Deliberately vulnerable application for security testing
 
-From the ZAP output, count the number of WARN and FAIL findings. Create a summary table with columns: Rule ID, Rule Name, Severity, Count of Alerts.
+import sqlite3
+import subprocess
+import yaml
+import pickle
+import hashlib
+from flask import Flask, request, render_template_string
 
-**Step 3: Select the highest-severity finding and analyze it.**
+app = Flask(__name__)
 
-For the highest-severity finding in your results, write a structured analysis covering: finding name, CWE, attack scenario, and remediation steps.
+@app.route("/search")
+def search():
+    # VULN: Reflected XSS — user input rendered without escaping
+    term = request.args.get("q", "")
+    return render_template_string(f"<h1>Results for: {term}</h1>")
 
-**Step 4: Interpret the exit code.**
+@app.route("/user")
+def get_user():
+    # VULN: SQL injection — string concatenation
+    uid = request.args.get("id")
+    conn = sqlite3.connect("app.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM users WHERE id = " + uid)
+    return str(cursor.fetchall())
 
-Record the exit code of the ZAP scan command. Explain what this exit code indicates for a CI/CD pipeline job and whether the pipeline would pass or fail with this exit code.
+@app.route("/run")
+def run_cmd():
+    # VULN: Command injection — shell=True with user input
+    cmd = request.args.get("cmd", "")
+    result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
+    return result.stdout
 
-### Part 3 Deliverable
+@app.route("/load")
+def load_data():
+    # VULN: Unsafe deserialization
+    data = request.get_data()
+    obj = pickle.loads(data)
+    return str(obj)
 
-Submit: the ZAP scan output, your finding summary table, the structured analysis of the highest-severity finding, and the exit code interpretation.
+@app.route("/config")
+def load_config():
+    # VULN: Unsafe YAML load
+    config_data = request.get_data(as_text=True)
+    config = yaml.load(config_data)
+    return str(config)
 
-### Part 3 Rubric
+def hash_password(password):
+    # VULN: Weak hashing — MD5
+    return hashlib.md5(password.encode()).hexdigest()
 
-| Criterion | Points |
-|---|---|
-| ZAP scan output is shown and demonstrates successful execution | 8 |
-| Finding summary table is complete and accurate | 8 |
-| Highest-severity finding analysis covers all four elements | 10 |
-| Exit code interpretation is technically accurate | 4 |
+if __name__ == "__main__":
+    app.run(debug=True, host="0.0.0.0")
+```
+
+Create `requirements.txt`:
+
+```text
+flask==3.0.3
+pyyaml==5.3.1
+```
+
+### Step 1.2 — Run Semgrep with OWASP Top 10 Rules
+
+```bash
+semgrep --config p/owasp-top-ten src/ \
+  --text \
+  2>&1 | tee semgrep-owasp.txt
+```
+
+### Step 1.3 — Run Semgrep with Python-Specific Rules
+
+```bash
+semgrep --config p/python src/ \
+  --text \
+  2>&1 | tee semgrep-python.txt
+```
+
+### Step 1.4 — Generate SARIF Output
+
+```bash
+semgrep --config p/owasp-top-ten --config p/python \
+  --sarif src/ > semgrep.sarif
+```
+
+### Step 1.5 — Record Findings
+
+In your lab report, create a table listing every Semgrep finding with rule ID, severity, file, line, and a brief description. You should find at least 5 distinct findings. Map each finding to its corresponding OWASP Top 10 category.
 
 ---
 
-## Part 4: DAST Pipeline Integration Design (15 points)
+## Part 2 — DAST with OWASP ZAP Against Juice Shop (30 minutes)
 
-### Part 4 Instructions
+### Part 2 Objective
 
-Write a 200-250 word technical design document for integrating DAST into the CI/CD pipeline you built in Module 03.
+Run ZAP baseline scan against OWASP Juice Shop and interpret DAST findings.
 
-Address all four points below:
+### Step 2.1 — Start OWASP Juice Shop
 
-1. Where in the pipeline does the DAST job run? What job does it need to wait for (`needs:`)? Why must it run after that job and not before?
-2. Should the DAST job use `zap-baseline.py` or `zap-full-scan.py` for a pipeline that runs on every PR merge? Justify your choice.
-3. How do you handle the health check problem — ensuring the staging environment is ready before ZAP begins scanning?
-4. Should the DAST job use `fail_action: true`? Explain the trade-off between blocking the pipeline on WARN findings versus HIGH/CRITICAL findings only.
+```bash
+docker run -d --name juiceshop \
+  -p 3000:3000 \
+  bkimminich/juice-shop
+```
 
-### Part 4 Deliverable
+Wait about 30 seconds for Juice Shop to start, then verify:
 
-Submit your written design document (200-250 words) addressing all four points.
+```bash
+curl -s http://localhost:3000 | head -5
+```
 
-### Part 4 Rubric
+### Step 2.2 — Run ZAP Baseline Scan
 
-| Criterion | Points |
-|---|---|
-| Pipeline placement is correctly justified | 4 |
-| Scan type choice is correctly justified for the use case | 4 |
-| Health check strategy is technically valid | 4 |
-| fail_action discussion correctly identifies the trade-off | 3 |
+```bash
+docker run --rm \
+  --network host \
+  -v "$(pwd):/zap/wrk:rw" \
+  owasp/zap2docker-stable:latest \
+  zap-baseline.py \
+  -t http://localhost:3000 \
+  -r zap-report.html \
+  -J zap-report.json \
+  -I
+```
+
+The `-I` flag ignores the exit code for this baseline run so we can examine results without a CI failure. The scan takes approximately 2–5 minutes.
+
+### Step 2.3 — Examine the HTML Report
+
+Open `zap-report.html` in your browser. Navigate to the Alerts section and record:
+
+- Total number of alerts by risk level (High, Medium, Low, Informational)
+- Names of any High-risk alerts
+- Names of any Medium-risk alerts
+
+### Step 2.4 — Run ZAP API Scan (Optional Extension)
+
+Juice Shop exposes a REST API. Run the API scan:
+
+```bash
+docker run --rm \
+  --network host \
+  -v "$(pwd):/zap/wrk:rw" \
+  owasp/zap2docker-stable:latest \
+  zap-api-scan.py \
+  -t http://localhost:3000/api/ \
+  -f openapi \
+  -r zap-api-report.html \
+  -J zap-api-report.json \
+  -I
+```
+
+### Step 2.5 — Stop Juice Shop
+
+```bash
+docker stop juiceshop && docker rm juiceshop
+```
 
 ---
 
-## Submission Instructions
+## Part 3 — Dependency Scanning with OWASP Dependency-Check (15 minutes)
 
-Combine all four parts into a single document. Label each part clearly. Include your name, date, course number (CIS-4350), and module number (07) at the top. Submit via the Canvas LMS assignment portal before the due date shown in Canvas.
+### Part 3 Objective
+
+Run Dependency-Check against the requirements file and enforce a CVSS quality gate.
+
+### Step 3.1 — Run Dependency-Check via Docker
+
+```bash
+mkdir reports
+docker run --rm \
+  -v "$(pwd):/src" \
+  -v "$(pwd)/reports:/report" \
+  owasp/dependency-check:latest \
+  --project lab07-app \
+  --scan /src/requirements.txt \
+  --format HTML \
+  --format JSON \
+  --out /report \
+  --enableRetired \
+  2>&1 | tee depcheck-run.txt
+```
+
+### Step 3.2 — Review the HTML Report
+
+Open `reports/dependency-check-report.html`. Note:
+
+- How many dependencies were scanned
+- How many CVEs were found
+- Which libraries have Critical/High findings
+- The CVSS scores of the top findings
+
+### Step 3.3 — Test the Quality Gate
+
+Re-run with `--failOnCVSS 7`:
+
+```bash
+docker run --rm \
+  -v "$(pwd):/src" \
+  -v "$(pwd)/reports:/report" \
+  owasp/dependency-check:latest \
+  --project lab07-app \
+  --scan /src/requirements.txt \
+  --format JSON \
+  --out /report \
+  --failOnCVSS 7
+echo "Exit code: $?"
+```
+
+The exit code should be non-zero (1) because `pyyaml==5.3.1` has a CVSS >= 7.0 finding. Record the exact exit code.
+
+---
+
+## Part 4 — SBOM Generation with Syft (15 minutes)
+
+### Part 4 Objective
+
+Generate a CycloneDX SBOM for the application directory and a container image.
+
+### Step 4.1 — Build the Application Image
+
+Create a minimal `Dockerfile`:
+
+```dockerfile
+FROM python:3.12-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY src/ .
+CMD ["python", "vulnerable_app.py"]
+```
+
+```bash
+docker build -t lab07-app:latest .
+```
+
+### Step 4.2 — Generate SBOM for the Container Image
+
+```bash
+syft lab07-app:latest -o cyclonedx-json=sbom-cyclonedx.json
+syft lab07-app:latest -o spdx-json=sbom-spdx.json
+```
+
+### Step 4.3 — Inspect the SBOM
+
+```bash
+# Count components in the SBOM
+python3 -c "
+import json
+with open('sbom-cyclonedx.json') as f:
+    sbom = json.load(f)
+print(f'SBOM format: {sbom.get(\"bomFormat\", \"unknown\")}')
+print(f'Spec version: {sbom.get(\"specVersion\", \"unknown\")}')
+print(f'Component count: {len(sbom.get(\"components\", []))}')
+"
+```
+
+### Step 4.4 — Scan the SBOM with Grype
+
+```bash
+grype sbom:sbom-cyclonedx.json --fail-on high
+echo "Grype exit code: $?"
+```
+
+---
+
+## Part 5 — Complete AppSec Pipeline in GitHub Actions (10 minutes)
+
+### Part 5 Objective
+
+Write the GitHub Actions workflow integrating all four tools as security gates.
+
+Create `.github/workflows/appsec.yml`:
+
+```yaml
+name: Application Security Testing Pipeline
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  semgrep:
+    name: SAST — Semgrep
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: returntocorp/semgrep-action@v1
+        with:
+          config: >-
+            p/owasp-top-ten
+            p/python
+          generateSarif: "1"
+      - uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: semgrep.sarif
+
+  dependency-check:
+    name: Dependency Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dependency-check/Dependency-Check_Action@main
+        with:
+          project: lab07-app
+          path: .
+          format: SARIF
+          out: reports/
+          args: --failOnCVSS 7 --enableRetired
+      - uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: reports/dependency-check-report.sarif
+
+  sbom:
+    name: SBOM Generation
+    runs-on: ubuntu-latest
+    needs: dependency-check
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image
+        run: docker build -t lab07-app:${{ github.sha }} .
+      - uses: anchore/sbom-action@v0
+        with:
+          image: lab07-app:${{ github.sha }}
+          format: cyclonedx-json
+          output-file: sbom.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sbom-${{ github.sha }}
+          path: sbom.json
+```
+
+---
+
+## Deliverables
+
+Submit the following on Canvas:
+
+1. Semgrep findings table — rule ID, severity, file, line, OWASP category (Part 1, Step 1.5)
+2. `zap-report.html` or screenshot of ZAP alerts summary (Part 2, Step 2.3)
+3. `reports/dependency-check-report.html` (Part 3, Step 3.2)
+4. Screenshot showing exit code from `--failOnCVSS 7` run (Part 3, Step 3.3)
+5. SBOM component count output from Python inspection (Part 4, Step 4.3)
+6. Completed `.github/workflows/appsec.yml` (Part 5)
+
+---
+
+## Grading Rubric
+
+| Criterion | Points |
+|---|---|
+| Semgrep findings table — 5+ findings with OWASP mapping | 20 |
+| ZAP HTML report or screenshot — alert counts recorded | 20 |
+| Dependency-Check HTML report submitted | 15 |
+| Quality gate exit code screenshot | 10 |
+| SBOM component count output | 10 |
+| GitHub Actions workflow — syntactically correct, 3 jobs | 25 |
+| Total | 100 |
+
+---
+
+Lab 07 | CIS-4350 | Texas Wesleyan University | Professor Nash

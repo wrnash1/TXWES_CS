@@ -1,281 +1,309 @@
-# Lab — Module 01
+# Lab: Module 01 — Cloud Computing Fundamentals and GCP Overview
 
-## CIS-4329: Google Cloud Platform | Texas Wesleyan University
+## Course: CIS-4329 Google Cloud Computing
 
-### Topic: GCP Console Navigation, Project Configuration, and gcloud CLI Fundamentals
-
-### Points: 100
+**Certification Alignment:** Google Cloud Associate Cloud Engineer (ACE)
 
 ---
 
 ## Lab Overview
 
-In this lab you will navigate the Google Cloud Console, create a GCP Project, configure the gcloud CLI using Cloud Shell, and explore regions and zones. These tasks mirror the skills tested on the Google Cloud Associate Cloud Engineer exam and are prerequisites for every subsequent lab in this course.
+In this lab you will create your first Google Cloud project, configure the
+gcloud CLI, navigate the Cloud Console, and set up a billing budget alert. These
+foundational skills are required for every subsequent lab in this course.
 
-You will use Cloud Shell exclusively — no local SDK installation is required. All commands are tested against the current version of the gcloud CLI.
+**Estimated Time:** 60 minutes
 
-Estimated completion time: 60–75 minutes.
+**Prerequisites:**
 
----
+- A Google account (personal Gmail or institutional account)
+- Access to Google Cloud Console at console.cloud.google.com
+- No prior GCP experience required
 
-## Prerequisites
+**Learning Objectives:**
 
-- A Google account with access to Google Cloud (personal or provided by your instructor)
-- A web browser (Chrome recommended for Cloud Shell compatibility)
-- Access to console.cloud.google.com
+By the end of this lab you will be able to:
 
----
-
-## Part 1: Console Navigation (20 points)
-
-### Task 1.1 — Log In and Identify the Project Selector (5 points)
-
-1. Open a browser and navigate to console.cloud.google.com.
-2. Sign in with your Google account if prompted.
-3. Locate the project selector at the top of the page (the dropdown showing a project name or "Select a project").
-4. Click the project selector to open the project chooser dialog.
-5. Note the columns displayed: Name, ID, and Number.
-
-Deliverable: Take a screenshot of the project chooser dialog showing at least one project listed. Label this screenshot "Task 1.1".
-
-### Task 1.2 — Navigate Console Service Sections (10 points)
-
-Using the Navigation Menu (hamburger icon, top-left), navigate to each of the following sections and take a screenshot of each landing page:
-
-- Compute Engine > VM Instances
-- Cloud Storage > Buckets
-- IAM and Admin > IAM
-- Billing
-- APIs and Services > Dashboard
-
-Deliverable: Five screenshots, one per section. Label each "Task 1.2a" through "Task 1.2e".
-
-### Task 1.3 — Console Search (5 points)
-
-1. Click the search bar at the top of the Console.
-2. Type "Cloud Shell" and note the results.
-3. Search for "us-central1" and note what results appear.
-
-Deliverable: One screenshot of any search result. Label it "Task 1.3".
+1. Create and configure a GCP project
+2. Navigate the Google Cloud Console
+3. Activate and use Cloud Shell
+4. Run essential gcloud CLI commands
+5. Configure a billing budget alert
+6. Understand the GCP resource hierarchy in practice
 
 ---
 
-## Part 2: Create a Project (20 points)
+## Part 1 — Create a GCP Project (15 minutes)
 
-### Task 2.1 — Create a New Project via Console (10 points)
+### Step 1.1 — Sign In to the Console
 
-1. Click the project selector.
-2. Click "New Project" in the top right of the dialog.
-3. Set the Project Name to: `txwes-gcp-lab-[your initials]` (example: `txwes-gcp-lab-wn`)
-4. Leave the Organization and Location fields at their defaults.
-5. Click Create.
-6. Wait for the project to be created (watch the notifications bell for a success message).
-7. Select your new project using the project selector.
+1. Open a browser and navigate to `console.cloud.google.com`.
+2. Sign in with your Google account.
+3. If prompted, accept the Terms of Service.
 
-Deliverable: Screenshot of the Console Home showing your new project name in the project selector. Label it "Task 2.1".
+### Step 1.2 — Create a New Project
 
-### Task 2.2 — Inspect Project Details (10 points)
+1. Click the project selector dropdown in the top navigation bar. It may show
+   "Select a project" or an existing project name.
+2. Click **New Project** in the top-right of the dialog.
+3. Fill in the following fields:
+   - **Project name**: `cis4329-lab01-yourname` (replace `yourname` with your
+     last name, e.g., `cis4329-lab01-nash`)
+   - **Project ID**: Note the auto-generated ID; you may customize it if desired.
+     The Project ID must be globally unique.
+   - **Organization**: Leave as-is (or select your institution if available).
+   - **Location**: Leave as-is.
+4. Click **Create**.
+5. Wait for the project to be created (about 10–15 seconds).
+6. Select the new project from the project selector dropdown.
 
-1. With your new project selected, navigate to IAM and Admin > Settings.
-2. Record the Project ID, Project Name, and Project Number.
+### Step 1.3 — Record Project Identifiers
 
-Deliverable: Screenshot of the IAM and Admin > Settings page showing all three project identifiers. Label it "Task 2.2".
+In the Cloud Console, navigate to **IAM & Admin > Settings**. Record the
+following for your lab submission:
+
+- Project Name: ______________________
+- Project ID: ______________________
+- Project Number: ______________________
+
+**Question 1.3:** Which of the three project identifiers is globally unique AND
+mutable after creation? (Answer in your lab report.)
 
 ---
 
-## Part 3: Cloud Shell and gcloud Configuration (30 points)
+## Part 2 — Explore the Cloud Console (10 minutes)
 
-### Task 3.1 — Open Cloud Shell (5 points)
+### Step 2.1 — Navigation Menu
 
-1. Click the Cloud Shell icon (terminal icon) in the top-right of the Console.
-2. Wait for Cloud Shell to provision — this may take up to 60 seconds on first use.
-3. When the terminal appears at the bottom of the browser, click the "Open in new window" button to expand it to a full tab.
+1. Click the hamburger menu (three horizontal lines) in the top-left.
+2. Browse the service categories:
+   - Compute
+   - Storage
+   - Networking
+   - Databases
+   - Operations
+   - IAM & Admin
+3. Pin **Compute Engine** and **Cloud Storage** to the top of the navigation
+   by clicking the pin icon next to each.
 
-Deliverable: Screenshot of the full Cloud Shell terminal window. Label it "Task 3.1".
+### Step 2.2 — APIs and Services
 
-### Task 3.2 — Verify Active Configuration (10 points)
+1. Navigate to **APIs & Services > Library**.
+2. Search for "Compute Engine API".
+3. Note its current status (enabled or disabled).
+4. If disabled, click **Enable**. (You may be prompted to set up billing — do
+   this in Part 3 if needed.)
 
-Run the following command in Cloud Shell:
+### Step 2.3 — Dashboard Customization
+
+1. Return to the main Dashboard by clicking the Google Cloud logo.
+2. Click **Customize** on the Dashboard.
+3. Add the **Billing** card if it is not already present.
+4. Take note of the current estimated charges (should be $0.00 for a new project).
+
+---
+
+## Part 3 — Set Up Cloud Billing (10 minutes)
+
+### Step 3.1 — Link a Billing Account
+
+If your project does not already have a billing account linked:
+
+1. Navigate to **Billing** in the navigation menu.
+2. Click **Link a billing account**.
+3. Select an existing billing account or create a new one with a credit card.
+
+Note: GCP offers a free trial with $300 in credits for new accounts. You can
+complete all labs in this course within the free tier or using the $300 credit.
+
+### Step 3.2 — Create a Budget Alert
+
+1. Navigate to **Billing > Budgets & alerts**.
+2. Click **Create budget**.
+3. Fill in:
+   - **Name**: `lab01-budget`
+   - **Projects**: Select your `cis4329-lab01-yourname` project
+   - **Budget type**: Specified amount
+   - **Target amount**: `$10`
+4. Under **Actions**, set three alert thresholds:
+   - 50% of budget ($5.00)
+   - 90% of budget ($9.00)
+   - 100% of budget ($10.00)
+5. Ensure **Email alerts to billing admins and users** is checked.
+6. Click **Finish**.
+
+**Question 3.2:** What happens to your running resources when spending crosses
+the 100% threshold? (Answer in your lab report.)
+
+---
+
+## Part 4 — Cloud Shell and gcloud CLI (20 minutes)
+
+### Step 4.1 — Activate Cloud Shell
+
+1. Click the **Cloud Shell** icon in the top-right of the Console toolbar
+   (looks like `>_`).
+2. A terminal panel opens at the bottom of the browser. Wait for it to
+   initialize (up to 30 seconds on first use).
+3. Confirm you see a prompt like `student@cloudshell:~ (your-project-id)$`.
+
+### Step 4.2 — Verify Authentication and Configuration
+
+Run these commands and record the output:
 
 ```bash
+# Check your active account
+gcloud auth list
+
+# Check your current configuration
 gcloud config list
+
+# Verify the active project
+gcloud config get-value project
 ```
 
-Verify that the output shows:
-
-- Your Google account email under `[core] account`
-- Your new project ID under `[core] project`
-
-If the project shown is not your new lab project, run:
+### Step 4.3 — Set Default Region and Zone
 
 ```bash
-gcloud config set project YOUR_PROJECT_ID
-```
-
-Replace `YOUR_PROJECT_ID` with the actual Project ID from Task 2.2.
-
-Run `gcloud config list` again to confirm.
-
-Deliverable: Screenshot of the `gcloud config list` output showing your account and your lab project ID. Label it "Task 3.2".
-
-### Task 3.3 — Set Default Region and Zone (10 points)
-
-Run the following commands to set your default compute region and zone:
-
-```bash
+# Set default region
 gcloud config set compute/region us-central1
+
+# Set default zone
 gcloud config set compute/zone us-central1-a
-```
 
-Confirm the settings by running:
-
-```bash
+# Confirm settings
 gcloud config list
 ```
 
-Verify that the output now includes:
-
-```text
-[compute]
-region = us-central1
-zone = us-central1-a
-```
-
-Deliverable: Screenshot showing the updated `gcloud config list` output with region and zone set. Label it "Task 3.3".
-
-### Task 3.4 — List Projects (5 points)
-
-Run:
+### Step 4.4 — Explore Projects
 
 ```bash
+# List all projects your account can access
 gcloud projects list
+
+# Describe your current project
+gcloud projects describe $(gcloud config get-value project)
 ```
 
-Note how many projects appear and identify your new lab project in the list.
+Record the output of `gcloud projects describe`. Identify the `projectId`,
+`projectNumber`, and `name` fields in the JSON output.
 
-Deliverable: Screenshot of the `gcloud projects list` output. Label it "Task 3.4".
-
----
-
-## Part 4: Exploring Regions and Zones (20 points)
-
-### Task 4.1 — List All Regions (5 points)
-
-Run:
+### Step 4.5 — List Available Regions and Zones
 
 ```bash
+# List all GCP regions
 gcloud compute regions list
+
+# List zones in us-central1
+gcloud compute zones list --filter="region:us-central1"
+
+# Count total available regions
+gcloud compute regions list --format="value(name)" | wc -l
 ```
 
-Observe the output. It shows region names, their status (UP or DOWN), and the number of CPUs and disks available in each region under your current quota.
+**Question 4.5:** How many zones are in the `us-central1` region?
 
-Deliverable: Screenshot of the first 20 lines of output. Label it "Task 4.1".
-
-### Task 4.2 — List Zones in us-central1 (5 points)
-
-Run:
+### Step 4.6 — Enable an API via CLI
 
 ```bash
-gcloud compute zones list --filter="region:(us-central1)"
+# Enable the Cloud Resource Manager API
+gcloud services enable cloudresourcemanager.googleapis.com
+
+# List enabled APIs
+gcloud services list --enabled --limit=10
 ```
 
-This returns only the zones within `us-central1`. Note how many zones exist in this region.
-
-Deliverable: Screenshot of the output. Label it "Task 4.2".
-
-### Task 4.3 — Describe Your Active Region (5 points)
-
-Run:
+### Step 4.7 — Explore gcloud Help
 
 ```bash
-gcloud compute regions describe us-central1
+# View top-level help
+gcloud help
+
+# View help for the compute group
+gcloud compute --help
+
+# View help for a specific subcommand
+gcloud compute instances --help
 ```
 
-Review the output. Note the `status` field and the `zones` list embedded in the response.
-
-Deliverable: Screenshot of the output. Label it "Task 4.3".
-
-### Task 4.4 — Named Configuration (5 points)
-
-Create a second named configuration called `lab-alt`:
+### Step 4.8 — Create a Named Configuration
 
 ```bash
-gcloud config configurations create lab-alt
-```
+# Create a new named configuration for this lab
+gcloud config configurations create lab01
 
-Set it to use `us-east1` as its region:
+# Switch back to the default configuration
+gcloud config configurations activate default
 
-```bash
-gcloud config set compute/region us-east1
-gcloud config set compute/zone us-east1-b
-```
-
-List all configurations to confirm both exist:
-
-```bash
+# List all configurations
 gcloud config configurations list
 ```
 
-Switch back to your default configuration:
+---
+
+## Part 5 — Organization Policy Exploration (5 minutes)
+
+### Step 5.1 — View Organization Policies
+
+1. In the Console, navigate to **IAM & Admin > Organization Policies**.
+2. If you have an Organization node, browse the available constraints.
+3. Search for `compute.requireOsLogin` and review its description.
+4. Search for `gcp.resourceLocations` and note what it controls.
+
+If you do not have an Organization node (common with personal accounts), you
+can view the policy list via:
 
 ```bash
-gcloud config configurations activate default
+# List available organization policy constraints (requires org access)
+gcloud org-policies list-custom-constraints \
+  --organization=ORGANIZATION_ID
 ```
 
-Confirm the active configuration returned to `default` by running:
+---
+
+## Lab Deliverables
+
+Submit a lab report (PDF or Word) containing:
+
+1. Screenshot of your project Dashboard showing Project ID and Project Number.
+2. Screenshot of your budget alert configuration.
+3. Output of `gcloud config list` from Cloud Shell.
+4. Output of `gcloud projects describe YOUR_PROJECT_ID` showing the full JSON.
+5. Output of `gcloud compute zones list --filter="region:us-central1"`.
+6. Answers to the following questions:
+
+**Lab Questions:**
+
+1. What is the difference between a Project ID, Project Number, and Project
+   Name? Which is mutable after creation?
+2. You set a budget alert at $10 with a 100% threshold. Your VM runs for longer
+   than expected and you receive an alert email. What happens to your VM?
+3. You run `gcloud config set compute/region us-east1`. Does this change affect
+   your project's configuration or your local gcloud client configuration?
+4. A colleague needs to access all projects in your organization. You want to
+   grant the minimum permissions. At what hierarchy level should you grant the
+   role, and which role?
+5. What is the difference between a sustained use discount and a committed use
+   discount?
+
+---
+
+## Cleanup
+
+To avoid any unexpected charges, ensure no paid resources are running:
 
 ```bash
-gcloud config list
+# Confirm no compute instances are running
+gcloud compute instances list
+
+# If you created any instances, delete them
+# gcloud compute instances delete INSTANCE_NAME --zone=ZONE
 ```
 
-Deliverable: Screenshot of `gcloud config configurations list` output showing both configurations, and a second screenshot of `gcloud config list` showing you are back on `default`. Label these "Task 4.4a" and "Task 4.4b".
-
----
-
-## Part 5: Reflection Questions (10 points)
-
-Answer the following questions in your lab submission document (2–4 sentences each):
-
-1. What is the difference between a Project ID and a Project Number? When would you use each one?
-2. A classmate says "I set a $50 budget alert on my GCP project, so I know my bill will never exceed $50." What is wrong with this statement?
-3. If a folder-level IAM policy grants a user `roles/editor`, can a project administrator inside that folder remove that editor role from the user at the project level? Explain why or why not.
-4. You have projects for development, staging, and production. Why would using named gcloud configurations be better than manually running `gcloud config set project` every time you switch contexts?
-
----
-
-## Submission Instructions
-
-Compile all screenshots and your reflection answers into a single PDF or Word document. Label every screenshot with its task number as specified. Submit via the course LMS by the due date listed in the syllabus.
-
----
-
-## Grading Rubric
-
-| Task | Points | Criteria |
-|---|---|---|
-| 1.1 Project selector screenshot | 5 | Screenshot present and shows project list dialog |
-| 1.2 Five service section screenshots | 10 | All five sections shown, each labeled correctly |
-| 1.3 Console search screenshot | 5 | Screenshot present |
-| 2.1 New project created and selected | 10 | Correct project name pattern, shown in selector |
-| 2.2 Project identifiers screenshot | 10 | All three identifiers (ID, Name, Number) visible |
-| 3.1 Cloud Shell screenshot | 5 | Full Cloud Shell terminal visible |
-| 3.2 gcloud config list with correct project | 10 | Account and lab project ID visible in output |
-| 3.3 Region and zone configured | 10 | us-central1 and us-central1-a shown in config |
-| 3.4 gcloud projects list | 5 | Output shown, lab project identifiable |
-| 4.1 Regions list | 5 | Output screenshot present |
-| 4.2 Zones filtered to us-central1 | 5 | Correct filter used, correct output shown |
-| 4.3 Region describe output | 5 | Output screenshot present |
-| 4.4 Named configuration created and restored | 5 | Both configurations visible; default restored |
-| Reflection Q1 | 2.5 | Accurate distinction explained |
-| Reflection Q2 | 2.5 | Correctly explains budget alerts do not stop resources |
-| Reflection Q3 | 2.5 | Correctly explains additive IAM inheritance |
-| Reflection Q4 | 2.5 | Explains safety and convenience of named configs |
-| Total | 100 | |
+The project itself can remain; the free tier and budget alert protect you.
 
 ---
 
 End of Lab — Module 01
 
-Course: CIS-4329 Google Cloud Platform | Texas Wesleyan University | Professor Nash
-
-Certification Target: Google Cloud Associate Cloud Engineer
+Course: CIS-4329 Google Cloud Computing | Texas Wesleyan University | Professor Nash

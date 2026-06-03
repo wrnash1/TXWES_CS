@@ -1,75 +1,197 @@
-# Quiz: Module 11 - Big Data Concepts – Hadoop and Spark
-## Course: CIS-4336_Data_Analytics (CompTIA Data+)
+# Quiz: Module 11 — SQL for Data Analytics
+
+## Course: CIS-4336 Data Analytics
+
+## Texas Wesleyan University | Professor Nash
+
+## Points: 20 (2 points each)
+
+## Certification Alignment: CompTIA Data+ (DA0-001) — Domain 3: Data Analysis
 
 ---
 
-**Question 1**
-A social media platform generates 500 million user events per day — likes, shares, comments, and views — arriving continuously in real time. The data includes structured fields (user ID, timestamp) as well as unstructured text (post content). Which of the "3 Vs of big data" are most clearly illustrated by this scenario?
-*   A) Volume and validity — the dataset is large and the values must be verified before use.
-*   B) Volume, velocity, and variety — the data is massive in scale, generated continuously at high speed, and combines structured and unstructured types.
-*   C) Velocity and uniqueness — events arrive in real time and each event must have a unique identifier.
-*   D) Variety and veracity — the data includes multiple types and its accuracy must be confirmed before analysis.
-*   **Correct Answer:** B) Volume, velocity, and variety — the data is massive in scale, generated continuously at high speed, and combines structured and unstructured types.
-*   **Distractor Analysis:**
-    *   *Why correct:* 500 million daily events = volume. Continuous real-time arrival = velocity. Structured fields plus unstructured text = variety. All three of the defining big data Vs are present.
-    *   A) "Validity" is a data quality dimension, not one of the 3 Vs. C) "Uniqueness" is also a data quality dimension, not a big data characteristic. D) "Veracity" is sometimes listed as a 4th V but is not one of the core 3 Vs; uniqueness is not a V at all. The scenario most directly illustrates all three classic Vs together.
+## Instructions
+
+Select the single best answer for each question. Each question is worth 2 points. No partial credit.
 
 ---
 
-**Question 2**
-In big data architecture, which of the following most accurately defines **Apache Spark**?
-*   A) A distributed file system that splits large files into blocks and replicates them across multiple nodes in a cluster to provide fault-tolerant storage at commodity hardware scale.
-*   B) A batch-processing framework that executes a map phase — applying a function to each data chunk in parallel — followed by a reduce phase that aggregates the intermediate results to disk.
-*   C) A fast, general-purpose distributed processing engine that performs computations primarily in memory rather than writing intermediate results to disk, making it significantly faster than disk-based MapReduce for iterative and interactive workloads.
-*   D) A cloud-hosted relational database service that scales compute and storage independently and stores data in columnar format for fast analytical query performance.
-*   **Correct Answer:** C) A fast, general-purpose distributed processing engine that performs computations primarily in memory rather than writing intermediate results to disk, making it significantly faster than disk-based MapReduce for iterative and interactive workloads.
-*   **Distractor Analysis:**
-    *   *Why C is correct:* Spark's defining characteristic is in-memory processing. By caching intermediate results in RAM instead of writing them to HDFS between each step, Spark achieves 10–100x speedups over MapReduce for iterative algorithms and interactive queries.
-    *   *Why A is incorrect:* Splitting files into blocks replicated across nodes describes HDFS (Hadoop Distributed File System) — the storage layer of Hadoop, not Spark.
-    *   *Why B is incorrect:* Map and reduce phases writing intermediate results to disk describes Hadoop MapReduce — the original Hadoop batch processing model that Spark improves upon.
-    *   *Why D is incorrect:* A cloud-hosted columnar relational database describes a service like Amazon Redshift or Google BigQuery — a data warehouse product, not a distributed processing engine.
+## Question 1
+
+An analyst writes the following query and receives an error. What is wrong?
+
+```sql
+SELECT region, SUM(amount) AS total
+FROM orders
+WHERE SUM(amount) > 100000
+GROUP BY region;
+```
+
+A. SUM() cannot be used with a GROUP BY clause
+
+B. Aggregate functions cannot appear in a WHERE clause — use HAVING instead
+
+C. The WHERE clause must come after GROUP BY in SQL
+
+D. SUM() requires an ORDER BY clause to function correctly
+
+**Correct Answer:** B — Aggregate functions cannot be used in WHERE because WHERE executes before GROUP BY and the aggregation has not yet occurred. The correct clause for filtering on aggregate results is HAVING, which executes after GROUP BY. Option A is false — SUM is designed for use with GROUP BY. Option C reverses the correct clause order. Option D is false — SUM does not require ORDER BY.
 
 ---
 
-**Question 3**
-A company receives three types of data daily: structured order records from a SQL database, semi-structured JSON clickstream events from its website, and raw unstructured server log files. A data engineer wants to store all three in a centralized repository in their original formats before any transformation. Which storage architecture is most appropriate?
-*   A) A relational data warehouse with a predefined star schema, where each data type is mapped to a fact or dimension table before loading.
-*   B) A data lake that accepts all data in its native format, applying schema only when data is read for analysis.
-*   C) A NoSQL key-value store optimized for high-speed lookups of individual records by primary key.
-*   D) A transactional OLTP database designed for insert-heavy workloads with row-level locking.
-*   **Correct Answer:** B) A data lake that accepts all data in its native format, applying schema only when data is read for analysis.
-*   **Distractor Analysis:**
-    *   *Why B is correct:* A data lake is purpose-built for storing raw, heterogeneous data — structured, semi-structured, and unstructured — without requiring schema enforcement at ingestion ("schema on read"). This matches the requirement to preserve original formats before transformation.
-    *   *Why A is incorrect:* A data warehouse enforces a predefined schema at load time ("schema on write") and is designed for cleaned, structured data. It cannot natively store raw unstructured logs or semi-structured JSON without transformation.
-    *   *Why C is incorrect:* A key-value store is optimized for fast single-record lookups, not for centralized multi-format storage of large heterogeneous datasets.
-    *   *Why D is incorrect:* An OLTP database handles high-frequency transactional writes for operational systems. It is not a centralized analytics repository and does not support unstructured log storage.
+## Question 2
+
+Which SQL clause filters rows BEFORE aggregation occurs?
+
+A. HAVING
+
+B. GROUP BY
+
+C. WHERE
+
+D. ORDER BY
+
+**Correct Answer:** C — WHERE filters individual rows before GROUP BY processes them into groups. HAVING filters groups after aggregation (A). GROUP BY performs the grouping itself (B). ORDER BY sorts the final output (D).
 
 ---
 
-**Question 4**
-A data team uses a cloud data platform (such as Google BigQuery or Amazon Redshift) to run analytics. Raw data from three source systems is loaded into cloud storage first, then transformed using SQL queries inside the warehouse. Which data pipeline pattern does this describe?
-*   A) ETL (Extract, Transform, Load) — data is cleaned and transformed before it is loaded into the target system.
-*   B) ELT (Extract, Load, Transform) — raw data is loaded into the target first, then transformed using the platform's compute resources.
-*   C) CDC (Change Data Capture) — only rows that changed since the last pipeline run are extracted and incrementally loaded.
-*   D) MPP (Massively Parallel Processing) — the transformation is parallelized across hundreds of compute nodes simultaneously.
-*   **Correct Answer:** B) ELT (Extract, Load, Transform) — raw data is loaded into the target first, then transformed using the platform's compute resources.
-*   **Distractor Analysis:**
-    *   *Why B is correct:* The pipeline loads raw data into cloud storage first, then applies transformations using the warehouse's SQL engine. This is the defining ELT pattern — load first, transform after. Cloud platforms favor ELT because their compute is elastic and cheap, and preserving raw data provides flexibility for future reprocessing.
-    *   *Why A is incorrect:* ETL transforms data before loading it. In this scenario, raw data arrives in cloud storage before any transformation occurs, which is the opposite sequence.
-    *   *Why C is incorrect:* CDC is an incremental extraction technique — it captures only rows that changed since the last run. The scenario describes a full-load pipeline pattern, not an incremental capture strategy.
-    *   *Why D is incorrect:* MPP describes the hardware architecture of some data warehouses — how they parallelize query execution. It is a platform characteristic, not a pipeline pattern name.
+## Question 3
+
+A table has five rows with the amount column values: `500, 500, 500, 300, 200`. If `RANK() OVER (ORDER BY amount DESC)` is applied, what rank does the row with amount = 300 receive?
+
+A. 2
+
+B. 3
+
+C. 4
+
+D. 5
+
+**Correct Answer:** C — The three rows with amount = 500 all receive rank 1. RANK skips to position 4 (accounting for the three tied rows), so amount = 300 receives rank 4. Option A would be DENSE_RANK's output. Option B would be incorrect by either ranking method. Option D is the row number, not the rank.
 
 ---
 
-**Question 5**
-A data scientist runs a machine learning algorithm on a Hadoop cluster using MapReduce. The algorithm requires 100 iterations over the same dataset to converge. After each iteration, results are written to HDFS before the next iteration reads them. The job takes 6 hours. A colleague suggests migrating the job to Apache Spark. What is the primary reason Spark would improve performance for this workload?
-*   A) Spark uses a more accurate algorithm that converges in fewer iterations, reducing the total computation required.
-*   B) Spark caches intermediate results in memory across iterations, eliminating the repeated disk reads and writes that make MapReduce slow for iterative workloads.
-*   C) Spark runs on faster hardware than Hadoop and automatically provisions larger CPU cores for machine learning tasks.
-*   D) Spark converts the iterative algorithm to a single SQL query that the cluster optimizer can execute in one pass.
-*   **Correct Answer:** B) Spark caches intermediate results in memory across iterations, eliminating the repeated disk reads and writes that make MapReduce slow for iterative workloads.
-*   **Distractor Analysis:**
-    *   *Why B is correct:* MapReduce writes intermediate results to HDFS after every map and reduce phase. In a 100-iteration algorithm, this means 200+ disk I/O operations on the full dataset. Spark keeps the working dataset in RAM between iterations — 100 iterations become 100 in-memory passes with no disk overhead, which is orders of magnitude faster.
-    *   *Why A is incorrect:* Spark does not change the mathematical algorithm or its convergence behavior. The same number of iterations is required. The improvement is purely in how intermediate results are stored between iterations.
-    *   *Why C is incorrect:* Spark can run on the same hardware as Hadoop. The performance advantage is architectural — in-memory processing — not a hardware specification difference.
-    *   *Why D is incorrect:* Spark does not convert iterative ML algorithms into SQL queries. Spark MLlib runs distributed iterative algorithms natively; the advantage is in-memory caching, not query compilation.
+## Question 4
+
+What is the key behavioral difference between ROW_NUMBER() and DENSE_RANK() when rows have tied values?
+
+A. ROW_NUMBER assigns unique integers (no ties); DENSE_RANK assigns the same value to tied rows with no gaps after the tie
+
+B. ROW_NUMBER assigns the same rank to tied rows; DENSE_RANK skips ranks after a tie
+
+C. ROW_NUMBER and DENSE_RANK produce identical results unless an ORDER BY is specified
+
+D. DENSE_RANK is only available in Oracle SQL; ROW_NUMBER works in all databases
+
+**Correct Answer:** A — ROW_NUMBER always assigns a unique sequential integer — tied rows get different numbers based on arbitrary ordering. DENSE_RANK assigns the same number to tied rows, then continues with the next consecutive integer (no gaps). Option B describes the opposite behavior. Option C is false — they differ whenever ties exist. Option D is false — both are ANSI SQL standard functions.
+
+---
+
+## Question 5
+
+Which window function is best suited for calculating month-over-month revenue change in a time-series dataset?
+
+A. ROW_NUMBER()
+
+B. RANK()
+
+C. LAG()
+
+D. DENSE_RANK()
+
+**Correct Answer:** C — LAG() returns the value from a preceding row in the partition, making it ideal for comparing the current period's value to the prior period's value. ROW_NUMBER (A) and RANK/DENSE_RANK (B, D) are ranking functions and do not access values from other rows.
+
+---
+
+## Question 6
+
+What is the purpose of the PARTITION BY clause inside a window function's OVER() specification?
+
+A. It sorts the rows within the window in ascending order
+
+B. It divides rows into independent groups, with the window function restarting for each group
+
+C. It filters rows to include only those matching the partition condition
+
+D. It limits the number of rows returned by the window function
+
+**Correct Answer:** B — PARTITION BY divides the full dataset into independent partitions, and the window function computes separately within each partition. This is analogous to GROUP BY but without collapsing rows. PARTITION BY does not sort (A), filter (C), or limit (D) rows.
+
+---
+
+## Question 7
+
+A data analyst writes the query below. What does the WITH clause define?
+
+```sql
+WITH regional_totals AS (
+    SELECT region, SUM(amount) AS total
+    FROM orders
+    GROUP BY region
+)
+SELECT region, total
+FROM regional_totals
+WHERE total > 50000;
+```
+
+A. A permanent view stored in the database schema
+
+B. A temporary table stored in the session's tempdb
+
+C. A common table expression that exists only for the duration of this query
+
+D. A stored procedure that can be called by name in future queries
+
+**Correct Answer:** C — The WITH clause defines a Common Table Expression (CTE) — a named, temporary result set that exists only for the duration of the single query in which it is defined. It does not create a permanent view (A), a physical temp table (B), or a reusable stored procedure (D).
+
+---
+
+## Question 8
+
+What distinguishes a correlated subquery from a regular (non-correlated) subquery?
+
+A. A correlated subquery uses JOIN syntax; a regular subquery uses WHERE syntax
+
+B. A correlated subquery references a column from the outer query and executes once for each outer row
+
+C. A correlated subquery can only appear in the FROM clause; a regular subquery can appear in WHERE
+
+D. A correlated subquery always returns multiple rows; a regular subquery always returns one row
+
+**Correct Answer:** B — A correlated subquery references a column from the outer query (using the outer query's table alias), which forces it to re-execute for every row processed by the outer query. A non-correlated subquery executes once and returns a value independent of the outer query. Options A, C, and D all misstate the distinction.
+
+---
+
+## Question 9
+
+An analyst needs to find the top-spending customer in each region. Which approach is most appropriate?
+
+A. Use a simple `GROUP BY region` with `MAX(amount)` to find the top customer per region
+
+B. Use `ROW_NUMBER() OVER (PARTITION BY region ORDER BY total_spend DESC)` and filter where row_num = 1
+
+C. Use `HAVING MAX(amount)` to filter the GROUP BY result to one row per region
+
+D. Use a `LIMIT 1` clause on a query sorted by total_spend
+
+**Correct Answer:** B — `ROW_NUMBER() OVER (PARTITION BY region ORDER BY total_spend DESC)` assigns rank 1 to the top customer within each region independently. Filtering on row_num = 1 then returns exactly one customer per region. Option A with MAX(amount) returns the max amount, not the customer identity. Option C misuses HAVING. Option D with LIMIT 1 returns only one row total, not one per region.
+
+---
+
+## Question 10
+
+In SQL logical execution order, which of the following is the correct sequence?
+
+A. SELECT → FROM → WHERE → GROUP BY → HAVING → ORDER BY
+
+B. FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY
+
+C. FROM → GROUP BY → WHERE → HAVING → SELECT → ORDER BY
+
+D. WHERE → FROM → GROUP BY → SELECT → HAVING → ORDER BY
+
+**Correct Answer:** B — The correct logical execution order is: FROM (identify tables) → JOIN → WHERE (filter rows) → GROUP BY (group rows) → HAVING (filter groups) → SELECT (compute output columns) → ORDER BY (sort output) → LIMIT. Option A incorrectly places SELECT first. Option C incorrectly swaps WHERE and GROUP BY. Option D incorrectly places WHERE before FROM.
+
+---
+
+End of Module 11 Quiz

@@ -1,331 +1,398 @@
-# Reading Guide — Module 01
+# Reading Guide: Module 01 — Cloud Computing Fundamentals and GCP Overview
 
-## CIS-4329: Google Cloud Platform | Texas Wesleyan University
+## Course: CIS-4329 Google Cloud Computing
 
-### Topic: GCP Overview — Regions, Zones, and Console Navigation
-
-### Certification Target: Google Cloud Associate Cloud Engineer
+**Certification Alignment:** Google Cloud Associate Cloud Engineer (ACE)
 
 ---
 
-## Introduction
+## Overview
 
-This reading guide accompanies the Module 01 video lectures and lab. Use it as your primary study reference before attempting the quiz. Module 01 establishes the foundational vocabulary and mental model for every topic that follows in this course. The Google Cloud Associate Cloud Engineer exam dedicates a significant portion of its questions to resource hierarchy, IAM inheritance, and infrastructure geography — all covered here.
+This reading guide accompanies Module 01 of CIS-4329. It is designed to
+reinforce the video lecture content, provide additional depth on key concepts,
+and prepare you for the module quiz and lab. All topics in this guide are
+testable on the Google Cloud Associate Cloud Engineer exam.
 
-Read every section carefully. The ACE exam tips are drawn from official exam guide objectives and from patterns observed across real certification exams.
+**Estimated Reading Time:** 45–60 minutes
 
 ---
 
-## 1. GCP Global Infrastructure
+## Section 1 — Cloud Computing Fundamentals
 
-### Regions
+### 1.1 The NIST Definition
 
-A region is a specific geographic location where Google operates clusters of data centers. Each region is identified by a short code. Examples:
+The National Institute of Standards and Technology (NIST) Special Publication
+800-145 defines cloud computing through five essential characteristics, three
+service models, and four deployment models. This definition is the industry
+standard and appears on cloud certification exams across all providers.
 
-- `us-central1` — Council Bluffs, Iowa, USA
-- `us-east1` — Moncks Corner, South Carolina, USA
-- `europe-west1` — St. Ghislain, Belgium
-- `asia-east1` — Changhua County, Taiwan
+**Five Essential Characteristics:**
+
+1. **On-demand self-service** — Consumers provision resources without requiring
+   human interaction with the service provider.
+2. **Broad network access** — Resources are available over the network and
+   accessed through standard mechanisms (web browser, mobile app, CLI).
+3. **Resource pooling** — Provider resources serve multiple consumers using a
+   multi-tenant model, with resources dynamically assigned and reassigned.
+4. **Rapid elasticity** — Resources can be provisioned and released elastically,
+   appearing unlimited to the consumer.
+5. **Measured service** — Resource usage is monitored, controlled, and reported,
+   providing transparency for both provider and consumer.
+
+### 1.2 Service Models
+
+#### Infrastructure as a Service (IaaS)
+
+IaaS delivers fundamental computing resources — virtual machines, storage, and
+networking — over the internet. The cloud provider manages the physical
+infrastructure; the customer manages the operating system, middleware, runtime,
+data, and applications.
+
+GCP IaaS examples: Compute Engine, Cloud Storage, Persistent Disk, VPC
+
+#### Platform as a Service (PaaS)
+
+PaaS delivers a computing platform and development stack. The cloud provider
+manages infrastructure and the runtime; the customer deploys and manages
+applications and data.
+
+GCP PaaS examples: App Engine, Cloud Run, Cloud Functions, Cloud SQL
+
+#### Software as a Service (SaaS)
+
+SaaS delivers a complete software application over the internet. The cloud
+provider manages everything, including the application.
+
+GCP SaaS examples: Google Workspace (Gmail, Docs, Drive)
+
+### 1.3 Deployment Models
+
+- **Public cloud**: Infrastructure owned and operated by a third party, shared
+  among multiple customers. Cost-efficient, no capital expense.
+- **Private cloud**: Infrastructure operated solely for one organization.
+  Greater control and compliance capability; higher cost.
+- **Hybrid cloud**: Combination of on-premises or private cloud with public
+  cloud. Workloads move between environments as needed.
+- **Multi-cloud**: Use of services from two or more public cloud providers.
+  Avoids vendor lock-in; increases operational complexity.
+
+---
+
+## Section 2 — GCP Global Infrastructure
+
+### 2.1 Regions
+
+A region is a specific geographic location containing at least two (usually
+three or more) zones. Region names follow a standardized format:
+
+```text
+{area}-{direction}{number}
+```
+
+Examples:
+
+- `us-central1` — Iowa, United States
+- `europe-west1` — Belgium
+- `asia-east1` — Taiwan
+- `southamerica-east1` — São Paulo, Brazil
 - `australia-southeast1` — Sydney, Australia
-- `southamerica-east1` — Osasco, São Paulo, Brazil
 
-Regions are engineered to be fault-isolated from one another. A failure in one region does not affect services running in another region. When you choose a region, consider three factors:
+Region selection criteria:
 
-1. Latency — choose the region geographically closest to your users
-2. Compliance — some industries require data to remain within specific countries or jurisdictions
-3. Service availability — not every GCP service is available in every region
+- **Latency**: Deploy close to your end users.
+- **Regulatory compliance**: Certain data must remain within specific
+  jurisdictions (GDPR in Europe, data residency laws in India, etc.).
+- **Service availability**: Not all GCP services are available in every region.
+- **Cost**: Pricing varies by region; `us-central1` is typically the lowest-cost
+  North American region.
 
-### Zones
+### 2.2 Zones
 
-A zone is an isolated deployment area within a region. Zone names append a letter suffix to the region name: `us-central1-a`, `us-central1-b`, `us-central1-c`, `us-central1-f`. Zones within the same region share low-latency, high-bandwidth internal networking but have independent power feeds, cooling systems, and network paths. A hardware failure in zone `us-central1-a` does not affect zone `us-central1-b`.
+A zone is a deployment area within a region, corresponding to one or more
+physical data centers with independent power, cooling, and network. Zone names
+append a letter to the region name:
 
-### Deployment Resilience Comparison
+```text
+us-central1-a
+us-central1-b
+us-central1-c
+us-central1-f
+```
 
-| Deployment Type | Survives Zone Failure | Survives Region Failure | Relative Cost |
-|---|---|---|---|
-| Single Zone | No | No | Lowest |
-| Multi-Zone, Single Region | Yes | No | Low |
-| Multi-Region | Yes | Yes | Highest |
+**Availability implications:**
 
-The ACE exam frequently presents scenarios and asks which deployment strategy meets the stated availability requirement at the lowest cost. Multi-zone, single region is the correct answer for most standard enterprise workloads. Multi-region is only warranted when the scenario explicitly requires surviving a full regional outage.
+| Deployment type | Protects against | Does not protect against |
+|---|---|---|
+| Single-zone | Hardware failure within a rack | Zone failure |
+| Multi-zone (same region) | Zone failure | Regional failure |
+| Multi-region | Regional failure | Global outages |
 
-### Network Tier
+Most enterprise production workloads use multi-zone deployments within a single
+region. Multi-region deployments are reserved for globally distributed
+applications or disaster recovery requirements.
 
-GCP offers two network service tiers:
+### 2.3 Network Infrastructure
 
-- **Premium Tier** — traffic travels over Google's private backbone as much as possible before entering the public internet. Lower latency, higher reliability. Default for most services.
-- **Standard Tier** — traffic enters and exits the public internet sooner, similar to a typical ISP route. Lower cost, acceptable for non-latency-sensitive workloads.
+Google operates one of the world's largest private fiber networks. GCP traffic
+between regions travels over this private network rather than the public
+internet, providing lower latency and higher bandwidth than most competitors.
+
+**Points of Presence (PoPs)**: More than 180 locations worldwide used for edge
+caching (Cloud CDN) and global load balancing. PoPs are not regions — you
+cannot deploy VMs to a PoP.
+
+**Premium vs Standard Network Tier:**
+
+- **Premium Tier**: Traffic enters Google's network at the PoP closest to the
+  user and stays on Google's network all the way to the destination VM. Lower
+  latency, higher cost.
+- **Standard Tier**: Traffic uses the public internet until it reaches a Google
+  ingress point near the destination region. Lower cost, higher latency.
 
 ---
 
-## 2. Resource Hierarchy
+## Section 3 — GCP Resource Hierarchy
 
-### Four-Level Structure
-
-GCP organizes all resources in a strict parent-child hierarchy with four levels:
+### 3.1 Four-Level Structure
 
 ```text
 Organization
-  └── Folder (optional, nestable up to 10 levels)
+  └── Folder
         └── Project
-              └── Resource (VMs, buckets, databases, etc.)
+              └── Resource
 ```
 
-Every resource must belong to exactly one Project. Every Project can optionally belong to one Folder. Every Folder ultimately rolls up to the Organization.
+This hierarchy is not just organizational — it is the foundation of GCP's access
+control and policy enforcement systems.
 
-### Organization Node
+### 3.2 Organization Node
 
-The Organization node is the root of your GCP environment. It maps to a Google Workspace or Cloud Identity domain. Key facts:
+- Created automatically when a Google Workspace or Cloud Identity account is
+  associated with a domain.
+- Represents the root of the entire GCP environment for that domain.
+- IAM policies and Organization Policy constraints applied here affect all
+  resources in the organization.
+- The `roles/resourcemanager.organizationAdmin` role is required to manage the
+  Organization node.
 
-- Created automatically when a Google Workspace or Cloud Identity account is established
-- Acts as the root IAM boundary for all resources in your domain
-- The `roles/resourcemanager.organizationAdmin` role grants full control over the Organization
-- Personal Gmail accounts do not have an Organization node
+### 3.3 Folders
 
-### Folders
+- Optional but recommended for organizations with multiple teams or environments.
+- Can be nested up to 10 levels deep.
+- Useful for delegating administrative control: grant a team admin rights over
+  their folder without giving them org-level access.
+- Common patterns: by department, by environment (prod/staging/dev), by product.
 
-Folders are optional grouping containers that sit between the Organization and Projects. You can nest folders up to 10 levels deep. Common uses:
+### 3.4 Projects
 
-- Group by department: `Engineering`, `Finance`, `Operations`
-- Group by environment: `Production`, `Development`, `Staging`
-- Group by geographic subsidiary
+The project is the core organizational unit in GCP.
 
-Folders are especially useful for applying IAM policies and Organization Policy constraints to a subset of projects without affecting the rest of the organization.
+**Project identifiers:**
 
-### Projects
+| Identifier | Set by | Unique | Mutable |
+|---|---|---|---|
+| Project ID | User (or auto-generated) | Globally unique | No (immutable) |
+| Project Number | Google | Globally unique | No (immutable) |
+| Project Name | User | Not required to be unique | Yes |
 
-Projects are the core unit of organization. Every interaction with GCP resources happens within a project context. Key facts:
+**Key project facts:**
 
-- Each Project has a **Project ID** (globally unique string, immutable after creation, chosen by you or auto-generated)
-- Each Project has a **Project Number** (globally unique integer, assigned by Google, immutable)
-- Each Project has a **Project Name** (display label, not unique, mutable)
-- A Project must be linked to exactly one active Billing Account to use paid services
-- Projects can be deleted but enter a 30-day pending deletion period before permanent removal
+- Every resource must belong to exactly one project.
+- A project must be linked to an active billing account to use paid services.
+- Projects can be deleted, but deletion is soft for 30 days (recoverable).
+- Deleting a project deletes all resources within it.
 
-### Project Identifier Comparison
+### 3.5 IAM Policy Inheritance
 
-| Identifier | Example | Unique | Mutable | Assigned By |
-|---|---|---|---|---|
-| Project ID | `my-web-app-prod-2024` | Globally | No | User or auto-generated |
-| Project Number | `123456789012` | Globally | No | Google |
-| Project Name | `My Web App Production` | No | Yes | User |
+IAM policies in GCP are inherited from parent to child in the resource hierarchy.
+A policy granted at the Organization level is effective at all folders, projects,
+and resources within that organization.
 
----
+**Key rule — additive only:**
 
-## 3. IAM Policy Inheritance
+Permissions can only be added as you move down the hierarchy. A more permissive
+policy at a higher level cannot be restricted at a lower level. If a user has
+`roles/editor` at the Organization level, a `roles/viewer` binding at the project
+level does not reduce their access — they retain the higher privilege.
 
-### How Inheritance Works
-
-IAM policies set at any level in the hierarchy automatically apply to all child levels. A role granted at the Organization level grants that role on every Folder, Project, and Resource in the organization. A role granted at a Folder level grants that role on every Project and Resource inside that folder.
-
-This inheritance is additive only. You cannot deny or remove a permission at a lower level that was granted at a higher level. The effective policy for any resource is the union of all policies on that resource plus all policies on every ancestor in the hierarchy.
-
-### Inheritance Direction
-
-```text
-Organization policy  -->  applies to all Folders, Projects, Resources below
-Folder policy        -->  applies to all child Folders, Projects, Resources below
-Project policy       -->  applies to all Resources in the project
-Resource policy      -->  applies to that resource only
-```
-
-### Common Exam Scenario
-
-A question states: "A user has `roles/editor` granted at the Organization level. An administrator wants to restrict this user to `roles/viewer` on a specific project. What should the administrator do?" The answer is: remove the `roles/editor` grant at the Organization level, because a project-level restriction cannot override an organization-level grant. IAM does not support deny rules at the resource/project level for inherited organization permissions (note: IAM Deny policies, introduced later, are a separate advanced feature).
+This is a critical distinction from some other cloud platforms that support
+explicit deny rules. GCP IAM uses allow-only policies (as of the current ACE
+exam scope).
 
 ---
 
-## 4. Billing Architecture
+## Section 4 — Billing and Cost Management
 
-### Billing Account Structure
+### 4.1 Billing Accounts
 
-A Billing Account is a GCP resource that stores a payment method and receives charges for GCP usage. Key structural facts:
+A billing account is a GCP resource that stores payment information and tracks
+charges. It exists at the Organization level but is separate from the project
+hierarchy — it is linked to projects, not contained within them.
 
-- A Billing Account belongs to an Organization (in enterprise setups) or to an individual Google account
-- A Billing Account can be linked to one or more Projects
-- Each Project can be linked to exactly one Billing Account at a time
-- Billing Accounts are not directly linked to Folders or Resources — only to Projects
+**Types of billing accounts:**
 
-### Billing Roles
+- **Self-serve**: Credit card billing; charges apply immediately.
+- **Invoiced**: Monthly invoice billing; available for large enterprises after
+  approval.
 
-| Role | What It Allows |
-|---|---|
-| `roles/billing.admin` | Full control of billing account: link/unlink projects, manage payment methods |
-| `roles/billing.user` | Link projects to a billing account (does not see payment methods) |
-| `roles/billing.viewer` | View billing account data and usage reports |
-| `roles/billing.projectManager` | Link/unlink billing accounts on projects you own |
+### 4.2 Pricing Models
 
-### Budget Alerts
+**On-demand / Pay-as-you-go:**
 
-Budget alerts are configured under Cloud Billing > Budgets and Alerts. You define:
+The default model. Resources are billed per second (minimum 1 minute for most
+compute) with no upfront commitment.
 
-- Scope: the entire billing account, or specific projects
-- Budget amount: a fixed dollar amount per month
-- Alert thresholds: percentage triggers (50%, 90%, 100%, or custom)
-- Notification channels: email to billing admins, or a Pub/Sub topic
+**Sustained Use Discounts (SUDs):**
 
-Critical ACE exam fact: budget alerts are notifications only. They do not cap, suspend, limit, or delete any resource. This distinction is tested on virtually every ACE exam.
+Automatically applied discounts for running a VM for a significant portion of
+a billing month:
 
----
+- 25–50% of the month: small discount begins
+- 50–75%: discount increases
+- 75–100%: maximum 30% discount
 
-## 5. Organization Policies
+No action required; discounts apply automatically. SUDs apply to Compute Engine
+and GKE (node VMs) but not to preemptible or Spot VMs, or to commitments.
 
-Organization Policies are constraints that control which GCP actions are permitted, independent of IAM permissions. While IAM answers "who can do X", Organization Policies answer "is X allowed at all".
+**Committed Use Discounts (CUDs):**
 
-### Constraint Types
+Contract-based discounts for committing to a specific resource level for 1 or
+3 years:
 
-| Type | Description |
-|---|---|
-| Boolean constraint | On/off toggle (e.g., disable serial port access) |
-| List constraint | Allow or deny a list of values (e.g., allowed resource regions) |
+- 1-year commitment: up to 37% discount
+- 3-year commitment: up to 55–57% discount
 
-### Frequently Tested Constraints
+Unlike AWS Reserved Instances, GCP CUDs are flexible by default — you commit to
+a vCPU/memory amount, not a specific VM type.
 
-| Constraint | Effect |
-|---|---|
-| `constraints/compute.disableSerialPortAccess` | Blocks interactive serial console on VMs |
-| `constraints/compute.requireOsLogin` | Enforces OS Login for VM SSH access |
-| `constraints/iam.disableServiceAccountKeyCreation` | Prevents downloadable service account keys |
-| `constraints/gcp.resourceLocations` | Restricts resource creation to approved regions |
-| `constraints/compute.vmExternalIpAccess` | Controls which VMs can have external IP addresses |
-| `constraints/iam.allowedPolicyMemberDomains` | Restricts IAM grants to specific domains |
+**Preemptible and Spot VMs:**
 
-Policies are set using the gcloud resource-manager CLI or in the Console under IAM and Admin > Organization Policies.
+Short-lived VMs that can be reclaimed by Google with 30-second notice. Up to
+91% cheaper than regular VMs. Suitable for batch jobs, fault-tolerant workloads,
+and distributed processing. We cover these in depth in Module 03.
 
----
+### 4.3 Budget Alerts
 
-## 6. Google Cloud Console Navigation
+Budget alerts are configured under Cloud Billing. They send email notifications
+(and optionally Pub/Sub messages) when spending crosses defined thresholds.
 
-### Key Console Sections
+**Important facts for the ACE exam:**
 
-| Section | Path | Purpose |
-|---|---|---|
-| Home Dashboard | console.cloud.google.com | Overview widgets, recent resources, billing summary |
-| Navigation Menu | Hamburger icon (top-left) | Browse all GCP services by category |
-| Project Selector | Top center dropdown | Switch between projects |
-| Cloud Shell | Terminal icon (top-right) | Browser-based CLI environment |
-| IAM and Admin | Navigation > IAM & Admin | Manage roles, service accounts, audit logs |
-| Billing | Navigation > Billing | Manage billing accounts, budgets, reports |
-| APIs and Services | Navigation > APIs & Services | Enable/disable GCP APIs, manage credentials |
+- Budget alerts do not cap or stop spending.
+- Crossing a budget threshold has no effect on running resources.
+- To automatically respond to budget events, you must connect a Pub/Sub
+  notification to a Cloud Function or other automation.
+- Budgets can be set for a billing account, a project, or filtered by service
+  or label.
 
-### Cloud Shell Key Facts
+### 4.4 GCP Pricing Calculator
 
-| Property | Value |
-|---|---|
-| VM type | Small Debian Linux VM (e2-micro class) |
-| Cost | Free |
-| Persistent storage | 5 GB home directory in Cloud Storage |
-| VM lifespan | Ephemeral — recycled after 20 min inactivity |
-| Pre-installed tools | gcloud, kubectl, Docker, Terraform, Python, Node.js, Java, Go |
-| Authentication | Auto-authenticated to your Google account |
-| Web preview | Available on port 8080 (and others) |
+The official pricing calculator at `cloud.google.com/products/calculator`
+allows you to estimate monthly costs by selecting services and configuring
+parameters. Use it to compare configurations before deploying.
 
 ---
 
-## 7. gcloud CLI Reference
+## Section 5 — Cloud Console and CLI
 
-### Configuration Commands
+### 5.1 Google Cloud Console
 
-| Command | Description |
-|---|---|
-| `gcloud init` | Interactive setup: authenticate, choose project and region |
-| `gcloud config list` | Show current active configuration (project, account, region, zone) |
-| `gcloud config set project PROJECT_ID` | Set active project |
-| `gcloud config set compute/region REGION` | Set default compute region |
-| `gcloud config set compute/zone ZONE` | Set default compute zone |
-| `gcloud config get-value project` | Print only the active project ID |
-| `gcloud config configurations create NAME` | Create a new named configuration |
-| `gcloud config configurations activate NAME` | Switch to a named configuration |
-| `gcloud config configurations list` | List all named configurations |
+The Cloud Console is the web-based GUI for managing GCP resources. Key areas:
 
-### Project and Infrastructure Commands
+- **Project selector** (top bar): Switch between projects.
+- **Navigation menu** (hamburger): Access all GCP services.
+- **Search bar**: Find services, documentation, and resources.
+- **Dashboard**: Overview of project health, billing, and recent activity.
+- **IAM & Admin**: Manage users, service accounts, and policies.
+- **APIs & Services**: Enable/disable APIs; manage credentials.
+- **Billing**: View costs, set budgets, link billing accounts.
 
-| Command | Description |
-|---|---|
-| `gcloud projects list` | List all projects your account can access |
-| `gcloud projects describe PROJECT_ID` | Show project metadata (number, labels, state) |
-| `gcloud projects create PROJECT_ID` | Create a new project |
-| `gcloud compute regions list` | List all GCP regions and their status |
-| `gcloud compute zones list` | List all GCP zones |
-| `gcloud compute zones list --filter="region:(REGION)"` | Filter zones by region |
+### 5.2 Cloud Shell
 
-### Output Formatting
+Cloud Shell is a free, browser-based development environment:
 
-The `--format` flag controls output format. Common values:
+- Debian-based Linux VM, provisioned per user session
+- 5 GB persistent home directory storage
+- Pre-installed: gcloud CLI, gsutil, bq, kubectl, terraform, git, and more
+- Pre-authenticated as your signed-in Google account
+- Free to use; no additional charge
 
-- `--format=table(field1,field2)` — custom table with selected columns
-- `--format=json` — full JSON output, useful for scripting
-- `--format=yaml` — YAML output
-- `--format=value(field)` — print a single field value, useful in shell scripts
+### 5.3 gcloud CLI Reference
 
-Example: print only project IDs:
+Key command groups for the ACE exam:
 
 ```bash
-gcloud projects list --format="value(projectId)"
+# Configuration management
+gcloud config set project PROJECT_ID
+gcloud config set compute/region REGION
+gcloud config set compute/zone ZONE
+gcloud config list
+gcloud config configurations create NAME
+
+# Project management
+gcloud projects list
+gcloud projects create PROJECT_ID
+gcloud projects describe PROJECT_ID
+gcloud projects delete PROJECT_ID
+
+# IAM
+gcloud projects add-iam-policy-binding PROJECT_ID \
+  --member="user:name@example.com" \
+  --role="roles/viewer"
+
+gcloud projects get-iam-policy PROJECT_ID
+
+# Compute (preview — full coverage in Module 03)
+gcloud compute instances list
+gcloud compute zones list
+gcloud compute regions list
 ```
 
 ---
 
-## 8. ACE Exam Tips
+## Key Terms Glossary
 
-1. Budget alerts never stop resources. This is one of the most frequently tested facts in Module 01. If a question offers "resources are suspended" as an answer choice when a budget is exceeded, that choice is always wrong.
-
-2. IAM inheritance is additive only. A permission granted higher in the hierarchy cannot be blocked at a lower level through standard IAM. If a question asks how to prevent an org-level permission from applying to a project, the answer is to remove the grant at the org/folder level, not to set something at the project level.
-
-3. Billing Accounts attach at the Project level. Answers stating "billing account is linked to the Organization" or "billing account is linked to individual resources" are incorrect.
-
-4. Organization Policies vs IAM. When a question asks how to prevent a specific action across all projects in an organization regardless of user permissions, the answer is an Organization Policy constraint, not an IAM role removal.
-
-5. Project ID vs Project Number. The Project ID is user-chosen or auto-generated and is globally unique. The Project Number is Google-assigned and immutable. Both uniquely identify a project. The Project Name is mutable and not unique.
-
-6. Cloud Shell is ephemeral but has persistent home storage. The VM itself does not persist, but files in your 5 GB home directory do. Files written outside the home directory are lost when the Cloud Shell VM is recycled.
-
-7. Multi-zone for zone resilience, multi-region for regional resilience. The ACE exam always pairs a resilience requirement with the appropriate architecture. Match zone-failure protection to multi-zone, and regional-failure protection to multi-region.
-
-8. Named configurations in gcloud allow you to manage multiple project contexts safely. The command `gcloud config configurations activate NAME` switches all subsequent commands to use that configuration's project and settings.
-
----
-
-## 9. Key GCP Documentation References
-
-All links go to cloud.google.com/learn or official Google Cloud documentation:
-
-- Resource Hierarchy overview: cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy
-- Regions and Zones reference: cloud.google.com/compute/docs/regions-zones
-- Organization Policies: cloud.google.com/resource-manager/docs/organization-policy/overview
-- Cloud Billing overview: cloud.google.com/billing/docs/overview
-- gcloud CLI reference: cloud.google.com/sdk/gcloud/reference
-- Cloud Shell documentation: cloud.google.com/shell/docs
+| Term | Definition |
+|---|---|
+| Region | A specific geographic location containing GCP data centers |
+| Zone | An isolated deployment area within a region |
+| Organization | Root node of the GCP resource hierarchy; tied to a domain |
+| Folder | Optional grouping layer between Organization and Projects |
+| Project | Fundamental unit of resource ownership and billing in GCP |
+| Project ID | Globally unique, immutable identifier chosen at project creation |
+| Billing account | Payment profile linked to one or more GCP projects |
+| SUD | Sustained Use Discount — automatic compute discount for long-running VMs |
+| CUD | Committed Use Discount — discount for 1- or 3-year resource commitment |
+| IAM | Identity and Access Management — controls who can do what in GCP |
+| Organization Policy | Governance constraints controlling what actions are allowed at all |
+| Cloud Shell | Free browser-based terminal with gcloud pre-installed |
+| gcloud | Primary CLI tool for managing GCP resources |
+| PoP | Point of Presence — edge location for CDN and global load balancing |
 
 ---
 
-## 10. Study Checklist
+## ACE Exam Focus Areas — Module 01
 
-Work through every item before taking the Module 01 quiz.
-
-- [ ] Explain the difference between a region and a zone without looking at notes
-- [ ] Draw the four-level GCP resource hierarchy from memory
-- [ ] State the three identifiers of a GCP Project and the uniqueness rules for each
-- [ ] Explain why IAM policy inheritance is additive only with a concrete example
-- [ ] Explain why a budget alert does not stop resources
-- [ ] Name the hierarchy level at which a Billing Account attaches
-- [ ] List four common Organization Policy constraints and what each prevents
-- [ ] Navigate to IAM, Billing, Compute Engine, and Cloud Storage in the Console
-- [ ] Open Cloud Shell and successfully run `gcloud config list`
-- [ ] Run `gcloud projects list` and identify your active project
-- [ ] Run `gcloud compute regions list` and identify the region closest to you
-- [ ] Create a named gcloud configuration with `gcloud config configurations create`
-- [ ] Review the gcloud CLI command reference table in Section 7 above
-- [ ] Complete the Module 01 lab
-- [ ] Take the Module 01 quiz
-- [ ] Post your Module 01 discussion response
+- Identify the four levels of the GCP resource hierarchy in order.
+- Explain IAM policy inheritance and why permissions cannot be reduced at lower
+  levels.
+- Distinguish between Organization Policies and IAM policies.
+- State that budget alerts notify only; they do not stop resources.
+- Differentiate sustained use discounts from committed use discounts.
+- Define region and zone and describe their relationship.
+- Identify the three project identifiers and their mutability.
 
 ---
 
-End of Reading Guide — Module 01
+## Further Reading
 
-Course: CIS-4329 Google Cloud Platform | Texas Wesleyan University | Professor Nash
-
-Certification Target: Google Cloud Associate Cloud Engineer
-
-Reference: cloud.google.com/learn
+- Google Cloud Documentation — Resource Manager:
+  cloud.google.com/resource-manager/docs
+- GCP Regions and Zones reference:
+  cloud.google.com/compute/docs/regions-zones
+- Cloud Billing documentation:
+  cloud.google.com/billing/docs
+- gcloud CLI overview:
+  cloud.google.com/sdk/gcloud
+- NIST SP 800-145 (Cloud Computing Definition):
+  nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-145.pdf

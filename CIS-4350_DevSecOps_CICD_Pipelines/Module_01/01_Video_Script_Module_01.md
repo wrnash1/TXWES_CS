@@ -1,172 +1,210 @@
-# Video Script: Module 01 - DevOps Fundamentals and the DevSecOps Mindset
+# Video Script: Module 01 — Introduction to DevSecOps
 
 ## Course: CIS-4350 DevSecOps and CI/CD Pipelines
 
+## Texas Wesleyan University | Professor Nash
+
+## Estimated Duration: 20–24 minutes
+
 ## Certification Alignment: DevSecOps Professional (DSOE)
 
-## Estimated Duration: 20-24 minutes
+---
 
-## Instructor: Professor Nash
+### SEGMENT 1 — Welcome and Course Orientation (0:00–2:00)
+
+[SLIDE: Course title card with Texas Wesleyan branding]
+
+Welcome to CIS-4350 — DevSecOps and CI/CD Pipelines. I'm Professor Nash, and over the next nine modules we're going to build a thorough, practical understanding of how modern software teams integrate security directly into the development and delivery process.
+
+Before we dive into the technical content, let me set the stage. This course aligns with the DevSecOps Professional certification, sometimes abbreviated DSOE. The skills you develop here are directly applicable to real-world job roles including DevSecOps Engineer, Platform Security Engineer, and Site Reliability Engineer with a security focus.
+
+By the end of this module you will be able to define DevSecOps, explain the shift-left principle, describe the DevSecOps lifecycle, identify major tools in the DevSecOps toolchain, and articulate the cultural changes required for successful adoption.
+
+Let's get started.
 
 ---
 
-### [00:00 - 01:30] Opening and Module Overview
+### SEGMENT 2 — What Is DevOps and Why Did It Emerge? (2:00–5:00)
 
-**Visual:** Instructor on camera, title card: "Module 01 — DevOps Fundamentals and the DevSecOps Mindset"
+[SLIDE: Traditional Waterfall vs. Agile vs. DevOps timeline]
 
-**Audio:**
+To understand DevSecOps we first need to understand DevOps. In the traditional software development world — sometimes called the waterfall model — development teams and operations teams were completely separate. Developers wrote code, threw it "over the wall" to operations, and operations tried to deploy it. Security was an afterthought, a gate at the very end, often called a "penetration test before release."
 
-"Welcome to CIS-4350, DevSecOps and CI/CD Pipelines. I'm Professor Nash, and in this opening module we're going to build the conceptual foundation that every subsequent module depends on.
+This created three fundamental problems.
 
-By the end of this video you'll be able to explain what DevSecOps is and why it exists, describe the evolution from waterfall development through DevOps to DevSecOps, define shift-left security with concrete examples, and identify where each class of security tool belongs in the software delivery lifecycle.
+First, slow delivery. A release cycle could take six months to a year. By the time software shipped, requirements had already changed.
 
-These concepts are directly tested on the DevSecOps Professional certification exam, so let's get into it."
+Second, instability. Operations teams were not involved in design decisions, so infrastructure assumptions were often wrong. Deployments failed regularly.
 
----
+Third, late-breaking security defects. When security testing happened only at the end, vulnerabilities discovered late were enormously expensive to fix. The NIST study on cost-of-defect repair showed that a bug found in production costs 30 times more to fix than one found during design.
 
-### [01:30 - 05:00] The Evolution: Waterfall to DevOps to DevSecOps
+DevOps emerged in the late 2000s — the term was popularized at the Agile conference in 2008 — as a cultural and technical movement to break down these silos. The Three Ways of DevOps, as described by Gene Kim in the book The Phoenix Project, are Flow, Feedback, and Continual Learning. Flow means work moves efficiently left to right. Feedback means problems surface quickly. Continual learning means teams improve continuously.
 
-**Visual:** Timeline diagram — Waterfall (1970s) to Agile (2001) to DevOps (2009) to DevSecOps (2012-present)
-
-**Audio:**
-
-"To understand DevSecOps, we need to understand the problem it solves. Let's go back to traditional software development.
-
-In the waterfall model — which dominated from the 1970s through the 1990s — development happened in strict sequential phases: requirements, design, implementation, testing, deployment. Security was positioned near the end, typically a 'security review' or 'penetration test' before go-live. The problem? By the time you found a SQL injection vulnerability in the security review, the code had already been written, tested, integrated, and was sitting in a release candidate. Fixing it was expensive. Research from that era showed that fixing a defect in production could cost 100 times more than fixing it during design.
-
-Then Agile emerged — shorter iterations, faster feedback, continuous stakeholder collaboration. Better, but security still lagged. The Agile Manifesto said nothing about security.
-
-DevOps — popularized around 2009 — broke down the wall between Development and Operations. Suddenly teams were releasing code multiple times per day using CI/CD pipelines, Infrastructure as Code, and automated testing. The velocity was remarkable.
-
-But here is the problem that DevSecOps addresses: when you are deploying dozens of times per day, a manual security review every six weeks does not work. Security became the bottleneck. The security team was perpetually behind. Vulnerabilities were shipping to production faster than they could be reviewed.
-
-DevSecOps — sometimes called Rugged DevOps — emerged around 2012 to solve this. The core idea: embed security controls directly into the CI/CD pipeline so that security checking happens automatically on every single commit, every single deployment, without human bottlenecks."
+DevOps gave us CI/CD — Continuous Integration and Continuous Delivery — which we'll explore deeply in Module 03. But DevOps in its early form still treated security as a separate concern. That's where DevSecOps comes in.
 
 ---
 
-### [05:00 - 09:00] The Three Pillars of DevSecOps
+### SEGMENT 3 — Shift-Left Security (5:00–9:00)
 
-**Visual:** Three-column diagram — People, Process, Technology
+[SLIDE: SDLC diagram with security touchpoints at every stage]
 
-**Audio:**
+The phrase "shift left" refers to moving security earlier in the software development lifecycle. Picture a timeline going left to right: Plan, Code, Build, Test, Release, Deploy, Operate, Monitor. In the old model, security lived all the way to the right — at release or even in production. Shift-left means we move security activities to the far left — into planning and coding — where defects are cheapest to find and fix.
 
-"The DevSecOps model rests on three pillars: People, Process, and Technology. Let's walk through each.
+Let me give you a concrete example. Suppose a developer writes code that constructs a SQL query by concatenating user input directly — a classic SQL injection vulnerability. In a traditional model this might not be caught until a penetration tester runs sqlmap against the production environment months later. In a shift-left DevSecOps model, a Static Application Security Testing tool — SAST — would flag this in the developer's IDE before the code is even committed to version control.
 
-**People.** DevSecOps requires a cultural shift. Developers are no longer just responsible for making features work — they are co-owners of security. This is sometimes implemented through 'security champions' — developers within each team who receive extra security training and serve as liaisons to the dedicated security team. Operations engineers are responsible for secure infrastructure configuration. Security professionals shift from gatekeepers to enablers: they build the tools, write the policies, and train the teams rather than reviewing everything manually.
+The four dimensions of shift-left are as follows.
 
-**Process.** The key process change is integrating security activities into existing development workflows rather than adding separate security phases. Code review now includes security checklists. Pull requests trigger automated scans. Sprint planning includes threat modeling for new features. Incident response includes post-mortems that feed back into pipeline policy.
+**People** — Developers are trained in secure coding practices. Security is not a separate team's responsibility; it is everyone's responsibility.
 
-**Technology.** This is where the CI/CD pipeline tools come in. Automated Static Application Security Testing — SAST — scans source code at commit time. Software Composition Analysis — SCA — checks dependencies for known vulnerabilities at build time. Dynamic Application Security Testing — DAST — tests running applications in staging. Container scanning checks Docker images before deployment. Infrastructure as Code scanning checks Terraform configurations before provisioning.
+**Process** — Security reviews happen at every stage: threat modeling in design, code review in development, automated scanning in CI, compliance checks in deployment.
 
-Each of these we will cover in depth in later modules. Today we are establishing why they exist and where they fit."
+**Technology** — Automated tools are embedded into the pipeline so security gates run without human intervention on every code change.
+
+**Measurement** — Teams track security metrics alongside performance metrics. Mean Time to Remediate vulnerabilities, vulnerability density per thousand lines of code, and pipeline security gate pass rates are all first-class metrics.
+
+The shift-left principle is foundational to everything we'll do in this course. Keep it in mind as we explore each tool and technique.
 
 ---
 
-### [09:00 - 13:00] Shift-Left Security: The Core Concept
+### SEGMENT 4 — The DevSecOps Lifecycle (9:00–13:00)
 
-**Visual:** SDLC cost curve — exponentially increasing cost from Design to Code to Test to Staging to Production
+[SLIDE: Infinity loop diagram — Plan, Code, Build, Test, Release, Deploy, Operate, Monitor]
 
-**Audio:**
+The DevSecOps lifecycle extends the classic DevOps infinity loop by adding security activities at each phase. Let's walk through each phase and describe what security looks like there.
 
-"The single most important conceptual term in DevSecOps — and on the certification exam — is 'shift left.' Let me explain it precisely.
+**Plan** — Threat modeling occurs here. Teams use frameworks like STRIDE — Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege — to systematically identify potential threats against the system being designed. Security requirements are written alongside functional requirements.
 
-Imagine a timeline of the software development lifecycle laid out horizontally. On the left side: design and coding. On the right side: staging, production, post-deployment. Shifting left means moving security activities toward the left side of that timeline — earlier in the process.
+**Code** — Developers use IDE plugins from tools like SonarLint, Semgrep, or Snyk to get real-time security feedback while writing code. Pre-commit hooks prevent secrets from being committed to version control. Peer code review includes security-focused checklists.
 
-Why does this matter economically? The cost of fixing a vulnerability increases dramatically the later it is found. A hardcoded credential found by a developer before they commit costs minutes to fix. The same credential found in a production security audit six months later means potential data breach, incident response, credential rotation across all environments, a security advisory, and possible regulatory notification. The cost difference is orders of magnitude.
+**Build** — The CI server compiles code and runs unit tests, but also triggers SAST scans, dependency vulnerability scans, and license compliance checks. A build that introduces a critical vulnerability fails the pipeline.
 
-Shift-left security means: put the controls where the cost of detection is lowest. That is as early as possible in the developer's workflow.
+**Test** — Automated integration and functional tests run alongside Dynamic Application Security Testing, or DAST, which fires HTTP requests at a running application to find runtime vulnerabilities like XSS and CSRF.
 
-**[SHOW CODE]**
+**Release** — Security sign-off is automated wherever possible. Release gates check that all security scans passed, that compliance policies are satisfied, and that the Software Bill of Materials is generated and stored.
 
-Here is a concrete example. A pre-commit hook is the earliest possible shift-left control. When a developer runs `git commit`, this hook fires before the commit is finalized:
+**Deploy** — Infrastructure is provisioned from code — Infrastructure as Code — and that code is also scanned for misconfigurations. Container images are scanned before being pushed to registries and again before being deployed to Kubernetes clusters.
 
-```bash
-#!/bin/sh
-# .git/hooks/pre-commit
-# Run Gitleaks to detect secrets before commit is created
-gitleaks detect --source . --no-git --exit-code 1
-if [ $? -ne 0 ]; then
-  echo "BLOCKED: Secret detected. Remove credentials before committing."
-  exit 1
-fi
+**Operate** — Runtime security monitoring watches for anomalous behavior in production. Tools like Falco alert on unexpected syscalls from containers.
+
+**Monitor** — Security logs feed into SIEM systems. Vulnerability management platforms track open findings and their remediation status. Compliance dashboards provide continuous audit evidence.
+
+This lifecycle is the backbone of this course. Each subsequent module zooms in on one or more phases.
+
+---
+
+### SEGMENT 5 — Security as Code (13:00–16:00)
+
+[SLIDE: Code snippet of a policy file]
+
+One of the most powerful concepts in DevSecOps is Security as Code — treating security policies, configurations, and controls as versioned, testable code rather than as documents or manual checklists.
+
+Consider a compliance requirement that says all S3 buckets must have public access blocked. In a traditional model, a security engineer manually reviews the AWS console periodically. In a Security as Code model, this policy is written as a machine-executable rule:
+
+```python
+# Example: OPA Rego policy for S3 public access
+deny[msg] {
+    resource := input.resource.aws_s3_bucket[_]
+    resource.config.acl == "public-read"
+    msg := sprintf("S3 bucket %v must not be public", [resource.address])
+}
 ```
 
-This runs on the developer's local machine before the commit even exists in Git history. If it finds an API key, the commit is blocked. The secret never enters the repository. That is shift-left in its purest form — detection at the earliest possible moment, on the developer's own workstation.
+This policy runs automatically in the CI pipeline every time infrastructure code changes. If a developer accidentally sets a bucket to public, the pipeline fails immediately with a clear error message. No human reviewer needed.
 
-Compare that to scanning the running production application — same security check, but now the secret has been in production for however long the application has been running. The risk exposure is vastly different."
+Security as Code has four major benefits. It makes security repeatable — the same check runs every time. It makes security auditable — the Git history shows every policy change. It makes security fast — policies execute in seconds. And it makes security collaborative — developers can propose changes to policies through pull requests, just like application code.
 
----
-
-### [13:00 - 17:00] The DevSecOps Pipeline: Security Gates Overview
-
-**Visual:** CI/CD pipeline diagram with labeled security stages — Pre-commit, Build, Test, Staging, Deploy, Monitor
-
-**Audio:**
-
-"Let's map the security tools to the pipeline stages. This mapping is critical for the exam and for designing real DevSecOps pipelines.
-
-**Pre-commit stage:** Secrets scanning with tools like Gitleaks or truffleHog. Pre-commit hooks run on the developer's machine before code is pushed. This is the earliest possible gate.
-
-**Code commit and pull request:** SAST — Static Application Security Testing. Tools like Semgrep, Checkmarx, or SonarQube analyze source code without executing it, looking for vulnerability patterns: SQL injection, cross-site scripting, insecure deserialization, and hardcoded credentials.
-
-**Build stage:** SCA — Software Composition Analysis. When your build process downloads dependencies — npm packages, Maven jars, Python pip packages — SCA tools like Snyk, OWASP Dependency-Check, or Grype scan those dependencies against vulnerability databases like the NVD. A dependency with a known critical CVE fails the build.
-
-**Container build:** Container image scanning. When you build a Docker image, tools like Trivy scan the base image layers and installed packages for CVEs before the image is pushed to a registry.
-
-**Staging deployment:** DAST — Dynamic Application Security Testing. Tools like OWASP ZAP send actual HTTP requests to the running application looking for runtime vulnerabilities that SAST cannot find because they only appear during execution.
-
-**Infrastructure provisioning:** IaC scanning. When Terraform configurations are being applied, tools like Checkov or tfsec scan the .tf files for misconfigurations: publicly exposed S3 buckets, security groups with overly permissive ingress rules, missing encryption settings.
-
-**Production monitoring:** Runtime security monitoring with tools like Falco for container runtime anomaly detection.
-
-Each of these stages has its own module in this course. Right now, what you need to understand is the architecture: security is not a single gate at the end. It is a series of automated checks at every stage, each catching the class of vulnerability most efficiently detectable at that point."
+The tools that implement Security as Code include Open Policy Agent for general policy enforcement, HashiCorp Sentinel for Terraform policies, tfsec and checkov for Infrastructure as Code scanning, and Conftest for testing configurations against OPA policies. We'll use all of these in later modules.
 
 ---
 
-### [17:00 - 20:00] Feedback Loops and Why They Matter
+### SEGMENT 6 — DevSecOps Toolchain Overview (16:00–19:00)
 
-**Visual:** Diagram showing short feedback loop vs. long feedback loop with cost annotations
+[SLIDE: Toolchain diagram organized by lifecycle phase]
 
-**Audio:**
+The DevSecOps toolchain is large. Let me give you a high-level map so you know what we're covering across the course.
 
-"The second critical concept after shift-left is the feedback loop. In DevSecOps, a feedback loop is the time between when a developer introduces a vulnerability and when they are notified about it.
+**Source Control Security** — GitHub, GitLab, Bitbucket. Branch protection, signed commits, secret scanning. Covered in Module 02.
 
-In traditional security models, the feedback loop could be measured in weeks or months — a developer writes vulnerable code, it ships, a penetration test happens six weeks later, a ticket is filed, the developer is contacted. By then they have moved on to three other features and have zero context on the original code.
+**CI/CD Platforms** — GitHub Actions, GitLab CI, Jenkins. Pipeline as code, security gates. Covered in Module 03.
 
-In DevSecOps, the goal is to make feedback loops as short as possible. Ideally, a developer gets a failed security check notification within minutes of pushing code. At that point they still have the code open in their editor, they understand what they just wrote, and the fix takes minutes.
+**SAST — Static Analysis** — SonarQube, Semgrep, Checkmarx, Veracode. Analyze source code without running it. Covered in Module 07.
 
-This is why pipeline integration matters. A SAST scan that runs as a GitHub Actions job on every pull request and posts its results as a PR comment achieves a tight feedback loop. The developer sees the issue immediately, in context, while fixing it is cheap.
+**DAST — Dynamic Analysis** — OWASP ZAP, Burp Suite Enterprise. Test running applications. Covered in Module 07.
 
-The feedback loop concept also applies at the organizational level: when a production security incident occurs, the lessons learned need to feed back into pipeline policy changes — new SAST rules, updated dependency blocklists, new IaC scan checks — so the same class of vulnerability is automatically prevented in the future."
+**Dependency Scanning** — OWASP Dependency-Check, Snyk, Dependabot. Find vulnerabilities in open-source libraries. Covered in Module 07.
 
----
+**Container Security** — Docker Scout, Trivy, Snyk Container, Anchore. Scan container images. Covered in Module 04.
 
-### [20:00 - 22:30] DevSecOps Professional Exam Alignment
+**Kubernetes Security** — Falco, OPA Gatekeeper, kube-bench. Runtime and policy enforcement. Covered in Module 05.
 
-**Visual:** Exam objective checklist on screen
+**Infrastructure as Code Security** — tfsec, checkov, Terrascan. Scan Terraform, CloudFormation, Kubernetes manifests. Covered in Module 06.
 
-**Audio:**
+**Secrets Management** — HashiCorp Vault, AWS Secrets Manager, Azure Key Vault. Never hardcode secrets. Covered in Module 09.
 
-"Let me connect everything we have covered to the DevSecOps Professional certification objectives.
+**Software Composition Analysis** — Snyk, Black Duck, FOSSA. License and vulnerability tracking. Covered in Module 08.
 
-The exam tests your ability to explain the DevSecOps philosophy and distinguish it from traditional security models. Know the three pillars: People, Process, Technology. Know that DevSecOps is a culture and set of practices, not just a collection of tools.
+**SBOM** — Syft, CycloneDX, SPDX. Generate software bill of materials. Covered in Module 08.
 
-The exam will present scenario questions where you must identify which security activity should be added at which pipeline stage. Use this mental model: SAST at commit, SCA at build, DAST at staging, container scan at image build, IaC scan at provisioning.
-
-The exam tests the business case for shift-left: the cost multiplier for late-stage vulnerability discovery. Know that earlier detection costs less to remediate.
-
-Finally, the exam tests understanding of the shared responsibility model: developers own secure code, operations owns secure infrastructure, security teams own tooling and policy and training. No single role owns security in DevSecOps — it is a shared responsibility.
-
-In the next module, we will get hands-on with version control and Git — the foundation everything else is built on. For this module's lab, you will create a shift-left security map documenting which tools and controls belong at each stage of a sample CI/CD pipeline. Complete the reading guide and quiz before moving on."
+That is eleven tool categories across eight modules. You don't need to memorize every tool today — we'll build familiarity as we work through each module in detail.
 
 ---
 
-### [22:30 - End] Closing
+### SEGMENT 7 — Cultural and Organizational Change (19:00–21:30)
 
-**Visual:** Instructor on camera
+[SLIDE: Conway's Law diagram]
 
-**Audio:**
+Technology is only part of the DevSecOps story. Culture is equally important, and honestly harder to change than any tool.
 
-"That wraps up Module 01. The key takeaways: DevSecOps embeds security at every CI/CD pipeline stage rather than treating it as a final gate. Shift-left means detecting vulnerabilities earlier when they are cheapest to fix. Feedback loops should be as short as possible. Security is a shared responsibility across developers, operations, and security teams.
+Conway's Law states that organizations design systems that mirror their communication structures. If your organization has separate Development, Security, and Operations teams that rarely talk to each other, your software architecture will reflect those boundaries — and security will always be siloed.
 
-See you in Module 02."
+DevSecOps requires what practitioners call a "security champions" model. In this model, each development team has one or two members with extra security training who serve as liaisons to the central security team. Security champions help their colleagues understand security issues, triage findings from automated tools, and propagate security culture throughout the organization.
+
+The CALMS framework — Culture, Automation, Lean, Measurement, and Sharing — provides a useful lens for DevSecOps adoption. Culture means shared ownership of security outcomes. Automation means replacing manual gates with automated controls. Lean means eliminating waste in security processes. Measurement means tracking security KPIs. Sharing means making security knowledge available to all teams.
+
+Organizational change is gradual. Start by embedding one security tool into an existing pipeline. Demonstrate value quickly — show that automated SAST found a real vulnerability faster than a manual review would have. Build momentum from there.
+
+---
+
+### SEGMENT 8 — ROI of DevSecOps (21:30–23:00)
+
+[SLIDE: Cost comparison chart — fix cost at different SDLC stages]
+
+Let's close with the business case. Why should organizations invest in DevSecOps?
+
+The IBM Systems Sciences Institute data is frequently cited: fixing a defect in the design phase costs $1; in development, $10; in integration testing, $100; in production, $1,000. Security defects follow the same exponential cost curve.
+
+Beyond defect cost, consider breach costs. The IBM Cost of a Data Breach Report 2023 found the average breach cost $4.45 million. Organizations with mature DevSecOps practices had lower breach rates and lower breach costs.
+
+Regulatory compliance is another driver. GDPR, HIPAA, PCI-DSS, SOC 2 — all require evidence of security controls. DevSecOps generates that evidence automatically as a byproduct of the pipeline.
+
+Finally, consider developer productivity. Counterintuitively, embedding security earlier makes developers faster, not slower. When a security finding surfaces in the IDE before commit, it takes minutes to fix. When it surfaces in a quarterly penetration test, it requires a sprint of rework, meetings, and patch releases.
+
+The ROI case for DevSecOps is compelling on every dimension: cost of defects, cost of breaches, compliance, and developer velocity.
+
+---
+
+### SEGMENT 9 — Module Summary and Looking Ahead (23:00–24:00)
+
+[SLIDE: Module 01 key takeaways]
+
+Let's recap the key takeaways from Module 01.
+
+DevOps broke down silos between development and operations. DevSecOps extends that by integrating security into every stage of the lifecycle.
+
+Shift-left security means finding and fixing vulnerabilities earlier, where they are cheapest to remediate.
+
+The DevSecOps lifecycle — Plan, Code, Build, Test, Release, Deploy, Operate, Monitor — has security activities at every stage.
+
+Security as Code treats policies and controls as versioned, testable artifacts.
+
+The DevSecOps toolchain spans source control, CI/CD, SAST, DAST, container security, IaC security, secrets management, and SCA.
+
+Cultural change — through security champions, CALMS, and shared ownership — is as important as any tool.
+
+The business case is strong: lower defect costs, lower breach costs, better compliance posture, and faster developer velocity.
+
+In Module 02 we'll get hands-on with version control security — signed commits, branch protection, git hooks, and secrets scanning. See you there.
+
+---
+
+*[END OF SCRIPT — Module 01]*

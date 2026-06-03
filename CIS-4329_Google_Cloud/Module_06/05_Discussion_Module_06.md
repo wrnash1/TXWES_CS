@@ -1,99 +1,117 @@
-# Discussion — Module 06
+# Discussion: Module 06 — Google Kubernetes Engine (GKE)
 
-## CIS-4329: Google Cloud Platform | Texas Wesleyan University
+## Course: CIS-4329 Google Cloud Computing
 
-### Topic: Cloud Load Balancing and Cloud CDN
-
----
-
-## Instructions
-
-Read all three scenarios below. Choose one scenario to address in your initial post. In your peer responses, you may respond to classmates who chose any scenario.
-
-Initial Post due: Wednesday at 11:59 PM Central
-
-Peer Responses due: Sunday at 11:59 PM Central
+**Certification Alignment:** Google Cloud Associate Cloud Engineer (ACE)
 
 ---
 
-## Scenario A — The Broken Health Check Investigation
+## Overview
 
-A startup has deployed a Global HTTP(S) Load Balancer in front of a Managed Instance Group of two web servers. The instance group shows two running VMs, and the load balancer has a forwarding rule with a global IP address. However, users are receiving 502 Bad Gateway errors. The on-call engineer checks the load balancer backend health and sees both instances listed as UNHEALTHY. The VMs are running and Apache is serving content on port 80 — a direct curl to each VM's external IP returns HTTP 200. The engineer is confused: the VMs work individually but the load balancer says they are unhealthy.
+This discussion asks you to apply GKE architecture principles to realistic
+production scenarios. Kubernetes is the dominant container orchestration
+platform in enterprise environments, and the ability to design GKE deployments
+correctly is a highly valued cloud engineering skill.
 
-In 175–225 words, address the following:
+**Due:** See course calendar for deadlines.
 
-- What is the root cause of the UNHEALTHY status even though the VMs respond correctly when accessed directly? Be specific about the technical reason.
-- Describe the exact firewall rule that needs to be created to fix this issue. State the rule direction, source ranges, protocol, port, and target. Explain why these specific IP ranges are the source.
-- After adding the correct firewall rule, the engineer waits 30 seconds but the backends still show UNHEALTHY. What health check parameters determine how quickly a backend transitions from UNHEALTHY to HEALTHY, and what is the minimum time the engineer must wait?
-
----
-
-## Scenario B — The CDN Strategy Decision
-
-A media company runs a news website that serves articles, images, and video thumbnails to users globally. The website has a Global HTTP(S) Load Balancer with two backend MIGs in `us-central1`. The engineering team is evaluating Cloud CDN to reduce load on their origin servers and improve load times for international users. The CTO asks the team to evaluate three CDN cache modes and recommend the best approach for their content mix.
-
-In 175–225 words, address the following:
-
-- Compare the three Cloud CDN cache modes (`USE_ORIGIN_HEADERS`, `CACHE_ALL_STATIC`, `FORCE_CACHE_ALL`) and explain which is most appropriate for a news website serving a mix of static images and dynamically generated article HTML.
-- The website serves personalized "recommended articles" content via API calls at `/api/recommendations`. This content is unique per user and should never be served from a shared cache. How should the team configure the CDN or the backend to ensure this endpoint bypasses the cache?
-- The engineering team updates article images frequently throughout the day. Describe two strategies for ensuring users receive updated images promptly rather than stale cached versions.
+**Grading:** Initial post (60 points) + two peer responses (20 points each) = 100 points
 
 ---
 
-## Scenario C — The Load Balancer Type Selection Problem
+## Prompt A — GKE Architecture Design (Choose One)
 
-A solutions architect at a consulting firm is designing cloud infrastructure for three separate clients simultaneously. Each client has a different requirement:
+A startup is building a multi-tenant SaaS platform. Their application has
+three components:
 
-Client 1 wants a game server for a multiplayer mobile game that requires UDP connectivity and needs to preserve the original source IP address of each player's device for rate limiting and geographic analytics.
+- A high-traffic HTTP API serving thousands of requests per second
+- A machine learning inference service that requires GPU acceleration
+- A nightly batch job that processes large datasets for 2–4 hours, fault-tolerant
 
-Client 2 runs a microservices architecture entirely inside a single GCP VPC. Services communicate over gRPC (HTTP/2). No service should be reachable from the internet; all load balancing is internal only.
+The engineering team is three people and does not want to spend time managing
+Kubernetes infrastructure. They expect traffic to be variable — low overnight,
+peak during business hours.
 
-Client 3 has a global e-commerce website with product pages at `/products`, checkout at `/checkout`, and a CDN-cached static asset directory at `/static`. They require a WAF to block OWASP Top 10 attacks.
+Design a GKE architecture for this platform:
 
-In 175–225 words, address the following:
-
-- For each client, state the specific load balancer type you would recommend and justify your choice using the key selection criteria (scope, layer, traffic direction, and any protocol or feature requirements).
-- Client 3 asks whether they can use Cloud CDN on just the `/static` backend while leaving `/products` and `/checkout` uncached. Explain how the load balancer architecture makes this possible at the backend service level.
-- The architect later learns that Client 1's budget is very tight and they cannot afford Cloud Interconnect. Does this affect your load balancer recommendation for Client 1? Explain why or why not.
-
----
-
-## Peer Response Guidelines
-
-Your peer responses must be at least 50 words each. A strong peer response does at least one of the following:
-
-- Identifies a technical error in the classmate's firewall rule specification (wrong source range, wrong direction, missing tag)
-- Points out a CDN configuration edge case the classmate overlooked, such as authenticated API responses being accidentally cached
-- Questions the classmate's load balancer type selection and provides a better-justified alternative with reference to a specific selection criterion
-- Proposes a specific gcloud command from the lab that would implement part of the classmate's design recommendation
-
-Responses that consist only of agreement without substantive technical additions receive no credit.
+1. Choose Standard or Autopilot for this scenario and justify your choice.
+   If Standard, describe the node pool structure.
+2. Describe the Kubernetes objects you would deploy for each component
+   (Deployment vs. StatefulSet vs. Job, Service type, HPA settings).
+3. Explain how you would handle the GPU inference service on a shared cluster.
+   Include node pool configuration and pod scheduling constraints.
+4. Describe the autoscaling strategy for the HTTP API, including what signals
+   you would use for the HPA and how the Cluster Autoscaler fits in.
+5. Explain how you would expose the HTTP API externally while keeping the
+   inference service internal.
 
 ---
 
-## Grading Rubric — 10 Points Total
+## Prompt B — GKE Migration Analysis (Choose One)
 
-Initial Post — 6 Points:
+A financial services firm currently runs a 20-service microservices application
+on bare-metal servers in their own data center. They are evaluating migration
+to GKE. The application has these characteristics:
 
-- 5–6 pts: Addresses all sub-questions accurately. Uses correct load balancing terminology (health check, forwarding rule, backend service, URL map, CDN cache mode, security policy). Justifies design choices with reference to specific GCP features, IP ranges, or configuration parameters. 175–225 words.
-- 3–4 pts: Addresses most sub-questions but uses vague terminology or lacks specific technical justification.
-- 1–2 pts: Only addresses one sub-question or contains significant factual errors about GCP load balancing.
-- 0 pts: Initial post not submitted by the Wednesday deadline.
+- Services communicate over HTTP/2 and gRPC
+- Two services require stateful storage with guaranteed IOPS
+- One service processes payments and must meet PCI-DSS compliance requirements
+- The team currently uses Ansible and shell scripts for deployment; they have
+  no Kubernetes experience
+- The application must maintain 99.9% uptime with zero planned downtime windows
 
-Peer Responses — 4 Points:
+Analyze the migration path and produce recommendations:
 
-- 4 pts: Two responses submitted by Sunday, each at least 50 words, each contributing specific technical additions or corrections.
-- 2 pts: Only one qualifying response, or both are superficial.
-- 0 pts: No peer responses submitted.
+1. Should they use Standard or Autopilot? Discuss the trade-offs given their
+   experience level and compliance requirements.
+2. Describe the Kubernetes service types and Ingress configuration needed for
+   gRPC and HTTP/2 traffic.
+3. Explain how to address the stateful storage requirement. What Kubernetes
+   and GCP storage objects are involved?
+4. Describe the cluster configuration (zonal vs. regional, node pool design)
+   needed to meet the 99.9% uptime requirement.
+5. Propose a phased migration approach that minimizes risk for a team new to
+   Kubernetes.
 
 ---
 
-Professor Nash note: Load balancer health checks are one of the most reliably tested ACE exam topics, and Scenario A captures the single most common real-world mistake I have seen engineers make when deploying their first load balancer. The symptom — VMs respond when you curl them directly but the load balancer marks them unhealthy — is deeply counterintuitive until you understand that health check probes come from Google's prober infrastructure, not from your network. The probe traffic originates from `35.191.0.0/16` and `130.211.0.0/22`. Your VPC does not know about those addresses until you write a firewall rule that does. Once you understand that, you will never forget it, and you will immediately recognize the 502 error pattern on the exam.
+## Response Requirements
+
+Your initial post must be at least 300 words and include:
+
+- Specific Kubernetes object types and GKE features by name
+- Explicit reasoning for architecture decisions, including trade-offs considered
+- At least one decision where you explain why you chose one option over another
+
+Your two peer responses must each be at least 100 words and do one of the
+following:
+
+- Identify a failure scenario the original architecture does not handle
+- Challenge a specific design choice with a concrete alternative
+- Add a security or compliance consideration the post did not address
+
+---
+
+## Discussion Tips
+
+- The Kubernetes documentation at kubernetes.io/docs is the authoritative
+  reference for object types and their configuration options.
+- Think about the "day 2" operational experience, not just the initial
+  deployment. Who will maintain this cluster? How will upgrades work?
+- The ACE exam frequently presents scenario questions with two plausible
+  cluster configurations. Practice articulating why one fits better.
+
+---
+
+## Reflection Question (Optional — Extra Credit)
+
+Compare running workloads on GKE (with Cluster Autoscaler) to running the same
+workloads on Compute Engine managed instance groups (with autoscaling). Describe
+two scenarios where you would clearly prefer GKE and two scenarios where a MIG
+would be the better choice. Minimum 150 words.
 
 ---
 
 End of Discussion — Module 06
 
-Course: CIS-4329 Google Cloud Platform | Texas Wesleyan University | Professor Nash
-
-Certification Target: Google Cloud Associate Cloud Engineer
+Course: CIS-4329 Google Cloud Computing | Texas Wesleyan University | Professor Nash

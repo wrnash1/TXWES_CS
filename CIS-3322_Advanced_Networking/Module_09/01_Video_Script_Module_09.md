@@ -1,154 +1,332 @@
-# Video Script: Module 09 - WAN Technologies and VPNs
+# Video Script: Module 09 — Access Control Lists (ACLs)
 
-**Course:** CIS-3322 Advanced Networking
-**Certification Alignment:** Cisco CCNA 200-301 (Domain 4: IP Services / Domain 5: Security Fundamentals)
-**Estimated Duration:** 22 minutes
-**Recorded by:** Professor Nash | Texas Wesleyan University
+## Course: CIS-3322 Advanced Networking
 
----
+## Texas Wesleyan University | Professor Nash
 
-## Production Notes
+## Estimated Duration: 20–24 minutes
 
-- Record in 1080p with a clean slide backdrop
-- Use Packet Tracer 8.x for GRE tunnel configuration demonstration
-- Show physical packet flow diagrams for GRE encapsulation
-- Insert [SHOW DIAGRAM] markers as full-screen overlays
-- Pause 2 seconds after each CCNA Exam Tip callout
+## Certification Alignment: Cisco CCNA 200-301
 
 ---
 
-## Section 1: WAN Fundamentals and Connectivity Types [00:00 - 04:00]
+## Introduction (0:00–1:30)
 
-Welcome to Module 09. I am Professor Nash. Today we step outside the LAN and look at how organizations connect geographically separated sites — that is, WAN technologies and virtual private networks.
+Welcome back to CIS-3322 Advanced Networking. I'm Professor Nash, and in Module 09 we are covering one of the most operationally critical topics on the CCNA exam: Access Control Lists, or ACLs.
 
-A WAN, or Wide Area Network, connects sites that span cities, countries, or continents. The connection between your corporate office and a branch two states away is a WAN link. Unlike a LAN, the organization typically does not own the physical infrastructure — they lease connectivity from a service provider.
+[SHOW SLIDE: "Module 09 — Access Control Lists"]
 
-[SHOW DIAGRAM: A map-style diagram showing a headquarters building and three branch offices connected by lines representing WAN links. Labels show WAN provider cloud in the middle. Two site connections use Metro Ethernet and one uses a leased line]
+ACLs are the primary packet-filtering mechanism on Cisco IOS routers and Layer 3 switches. They allow you to permit or deny traffic based on source address, destination address, protocol, and port number. Every enterprise network uses ACLs to enforce security policy at the network layer.
 
-The CCNA 200-301 exam focuses on four primary WAN connection categories:
+By the end of this module you will be able to:
 
-- Leased lines: dedicated point-to-point connections; expensive but guaranteed bandwidth
-- Metro Ethernet: carrier-provided Ethernet service across a metropolitan area
-- Internet-based WAN: uses the public internet with VPNs for security
-- Broadband (cable, DSL, fiber): lower-cost connectivity for smaller sites
+- Distinguish standard ACLs from extended ACLs
 
-For the exam, understand the trade-offs between these options: cost, bandwidth, reliability, and security.
+- Write and apply numbered and named ACLs
 
----
+- Understand inbound versus outbound interface placement
 
-## Section 2: Metro Ethernet [04:00 - 08:00]
+- Use wildcard masks correctly
 
-[SHOW DIAGRAM: A carrier network cloud labeled "Metro Ethernet Provider." Three customer sites connect to the cloud using standard Ethernet interfaces. Labels indicate E-Line (point-to-point) between Site A and Site B, and E-LAN (multipoint) connecting all three sites]
+- Configure IPv6 ACLs
 
-Metro Ethernet is a WAN technology that extends Ethernet connectivity across a metropolitan area network operated by a service provider. The key advantage is that the customer side uses standard Ethernet interfaces — the same hardware used in the LAN — simplifying configuration and reducing equipment costs.
+- Troubleshoot common ACL problems
 
-Metro Ethernet service types:
+[PAUSE — 3 seconds]
 
-- E-Line: point-to-point Ethernet service between two sites. Equivalent to a leased line using Ethernet.
-- E-LAN: multipoint-to-multipoint service where all sites appear to be on the same Ethernet segment. Used for any-to-any communication.
-- E-Tree: hub-and-spoke topology where spokes can communicate with the hub but not directly with each other.
-
-CCNA Exam Tip: The CCNA tests Metro Ethernet at the conceptual level. You need to know the service type names (E-Line, E-LAN, E-Tree) and their topologies. You will not be asked to configure the provider side.
+Let's start with the fundamentals.
 
 ---
 
-## Section 3: VPNs and IPsec Framework [08:00 - 14:00]
+## Section 1: ACL Processing Logic (1:30–4:00)
 
-[SHOW DIAGRAM: Two router icons labeled HQ Router and Branch Router connected by a line labeled "IPsec VPN Tunnel" crossing through an "Internet" cloud. Small lock icons on the tunnel indicate encryption. Arrows show traffic entering unencrypted on the LAN side and leaving encrypted across the internet]
+[SHOW SLIDE: "ACL Fundamentals — Permit and Deny Logic"]
 
-A Virtual Private Network creates a secure, encrypted tunnel through an untrusted network — typically the public internet — to connect two sites as if they were directly connected. There are two main VPN models:
+An ACL is an ordered list of statements. When a packet arrives at an interface where an ACL is applied, the router tests the packet against each statement from top to bottom. The first match wins. If the packet matches a permit statement, it is forwarded. If it matches a deny statement, it is dropped. If no statement matches, the packet is dropped by the implicit deny any at the end of every ACL.
 
-- Site-to-Site VPN: connects entire networks. Always-on. Configured on routers or firewalls at each site.
-- Remote Access VPN: connects individual users to the corporate network. Used for remote workers.
+That implicit deny is invisible — you will not see it in the running configuration — but it is always there.
 
-For the CCNA exam, the focus is on site-to-site VPNs and the IPsec framework.
+[SHOW SLIDE: "Implicit Deny — The Hidden Rule"]
 
-### IPsec Components
+Think of ACL processing like a bouncer checking a list. The bouncer reads from the top. The first rule that fits the guest either lets them in or turns them away. Once a decision is made, the bouncer stops reading. That last invisible rule is "turn away anyone not on the list."
 
-IPsec is not a single protocol — it is a framework of protocols working together:
+[PAUSE — 3 seconds]
 
-- IKE (Internet Key Exchange): negotiates the security association, exchanges encryption keys, and authenticates peers before any traffic is sent
-- AH (Authentication Header): provides data integrity and origin authentication but no encryption — the payload is readable
-- ESP (Encapsulating Security Payload): provides integrity, authentication, and encryption — the most commonly used IPsec protocol
+ACLs can be applied to:
 
-CCNA Exam Tip: The most tested IPsec distinction on the CCNA is AH versus ESP. AH = Authentication only, no encryption. ESP = Encryption plus authentication. In production, ESP is almost always used because it provides confidentiality. AH alone leaves traffic readable.
+- Routed interfaces (physical, subinterface, SVI)
 
-### IPsec Modes
+- VTY lines for management access control
 
-- Transport mode: encrypts only the payload, preserving the original IP header. Used for host-to-host encryption.
-- Tunnel mode: encrypts the entire original IP packet and adds a new IP header. Used for site-to-site VPNs.
+- Route redistribution filters
+
+- NAT pool selection — covered in Module 10
 
 ---
 
-## Section 4: GRE Tunnels [14:00 - 19:00]
+## Section 2: Standard ACLs (4:00–7:30)
 
-[SHOW DIAGRAM: Two routers R1 and R2 connected via the internet. A tunnel interface labeled "Tunnel0" is drawn as a logical overlay above the physical connection. OSPF neighbor relationship is shown running over the Tunnel0 interface. Original IP packet shown being wrapped in a GRE header and then an outer IP header]
+[SHOW SLIDE: "Standard ACLs — Number Range and Syntax"]
 
-GRE — Generic Routing Encapsulation — is a tunneling protocol that encapsulates virtually any Layer 3 protocol inside IP packets. The result is a virtual point-to-point link between two routers that can carry routing protocol traffic (including OSPF hello packets and LSAs) across a WAN.
+Standard ACLs filter traffic based solely on the **source IP address**. They use access list numbers 1–99 and 1300–1999 in the expanded range.
 
-Key GRE characteristics:
+The syntax for a numbered standard ACL is:
 
-- Supports multicast and broadcast (IPsec alone does not)
-- No encryption — GRE is plaintext by design
-- Commonly combined with IPsec for encrypted dynamic routing tunnels
-
-### GRE Configuration
-
-On R1 (source: 203.0.113.1, destination: 203.0.113.2):
-
-```ios
-R1(config)# interface Tunnel0
-R1(config-if)# tunnel mode gre ip
-R1(config-if)# tunnel source 203.0.113.1
-R1(config-if)# tunnel destination 203.0.113.2
-R1(config-if)# ip address 172.16.0.1 255.255.255.252
-R1(config-if)# no shutdown
+```
+Router(config)# access-list <1-99> {permit | deny} <source> <wildcard>
 ```
 
-On R2 (source: 203.0.113.2, destination: 203.0.113.1):
+To permit host 192.168.1.10:
 
-```ios
-R2(config)# interface Tunnel0
-R2(config-if)# tunnel mode gre ip
-R2(config-if)# tunnel source 203.0.113.2
-R2(config-if)# tunnel destination 203.0.113.1
-R2(config-if)# ip address 172.16.0.2 255.255.255.252
-R2(config-if)# no shutdown
+```
+Router(config)# access-list 10 permit 192.168.1.10
 ```
 
-The tunnel interface is a logical interface — it has its own IP address in a separate subnet. Once the tunnel is up, you can configure OSPF or static routes using the tunnel interface as the next hop.
+To permit the entire 10.0.0.0/8 network:
 
-CCNA Exam Tip: GRE tunnels support multicast, which is why they are used to run OSPF or EIGRP across a WAN. IPsec tunnels alone do not support multicast by default. When you need dynamic routing protocols over an encrypted WAN link, the typical solution is GRE over IPsec.
+```
+Router(config)# access-list 10 permit 10.0.0.0 0.255.255.255
+```
+
+The `0.255.255.255` is the wildcard mask. A zero bit means "must match." A one bit means "ignore." We will cover wildcard masks in detail shortly.
+
+[SHOW SLIDE: "Standard ACL Placement Rule"]
+
+**Critical placement rule for standard ACLs**: place them as close to the destination as possible. Because standard ACLs filter only on source address, placing them close to the source could block traffic from that source to ALL destinations, not just the one you intend.
+
+[PAUSE — 3 seconds]
+
+Named standard ACLs offer the same filtering capability but are far easier to manage:
+
+```
+Router(config)# ip access-list standard BLOCK_SALES
+Router(config-std-nacl)# deny 192.168.10.0 0.0.0.255
+Router(config-std-nacl)# permit any
+```
+
+Named ACLs allow you to delete individual lines using sequence numbers, which is a significant operational advantage over numbered ACLs.
 
 ---
 
-## Section 5: Verification and Exam Strategy [19:00 - 22:00]
+## Section 3: Extended ACLs (7:30–11:00)
 
-Key verification commands for GRE tunnels:
+[SHOW SLIDE: "Extended ACLs — Number Range and Syntax"]
 
-```ios
-R1# show interface Tunnel0
-R1# show ip interface brief
-R1# show ip route
+Extended ACLs filter on multiple fields simultaneously:
+
+- Source IP address
+
+- Destination IP address
+
+- Protocol such as IP, TCP, UDP, or ICMP
+
+- Source and destination port numbers
+
+Extended ACLs use numbers 100–199 and 2000–2699.
+
+The full syntax is:
+
+```
+Router(config)# access-list <100-199> {permit | deny} <protocol>
+  <source> <src-wildcard> <destination> <dst-wildcard>
+  [eq | lt | gt | neq | range] <port>
 ```
 
-The tunnel interface should show `up/up`. If the tunnel shows `up/down`, the underlying routing to the tunnel destination may be missing.
+To permit HTTP traffic from 192.168.1.0/24 to any destination:
 
-Common GRE tunnel issues:
+```
+Router(config)# access-list 110 permit tcp 192.168.1.0 0.0.0.255 any eq 80
+```
 
-- Tunnel source or destination misconfigured (wrong IP address)
-- No route to the tunnel destination in the routing table
-- Tunnel source and destination swapped on one end
+To deny Telnet from any source to the 10.0.0.0/8 network:
 
-For exam strategy on WAN and VPN questions: the CCNA tests conceptual understanding of these technologies, not detailed IPsec CLI syntax. Know the difference between AH and ESP, understand what GRE provides (and lacks), and be able to identify the correct WAN service type for a given scenario.
+```
+Router(config)# access-list 110 deny tcp any 10.0.0.0 0.255.255.255 eq 23
+Router(config)# access-list 110 permit ip any any
+```
 
-For additional study, visit cisco.com/c/en/us/training-events/training-certifications and professormesser.com.
+[SHOW SLIDE: "Extended ACL Placement Rule"]
+
+**Critical placement rule for extended ACLs**: place them as close to the source as possible. This drops unwanted traffic early before it consumes bandwidth traversing the network toward its destination.
+
+[PAUSE — 3 seconds]
+
+Named extended ACLs follow the same pattern with added sequence number support:
+
+```
+Router(config)# ip access-list extended FILTER_WEB
+Router(config-ext-nacl)# 10 permit tcp 192.168.1.0 0.0.0.255 any eq 443
+Router(config-ext-nacl)# 20 deny tcp any any eq 23
+Router(config-ext-nacl)# 30 permit ip any any
+```
+
+Sequence numbers 10, 20, 30 allow you to insert a new rule between existing ones by choosing a number that falls between them, without recreating the entire ACL.
 
 ---
 
-## End Card
+## Section 4: Wildcard Masks (11:00–13:30)
 
-Module 09 Complete
-Next: Module 10 - Access Control Lists
-Resources: cisco.com/c/en/us/training-events/training-certifications | professormesser.com
-Texas Wesleyan University | CIS-3322 Advanced Networking | Professor Nash
+[SHOW SLIDE: "Wildcard Masks — Match and Ignore Bits"]
+
+Wildcard masks are the inverse of subnet masks in concept but they are used differently. Think of them as match masks:
+
+- Bit value 0 means the router MUST match this bit in the address
+
+- Bit value 1 means the router IGNORES this bit
+
+Common wildcard mask examples:
+
+| Subnet Mask     | Wildcard Mask   | Meaning              |
+|-----------------|-----------------|----------------------|
+| 255.255.255.255 | 0.0.0.0         | Match exact host     |
+| 255.255.255.0   | 0.0.0.255       | Match /24 network    |
+| 255.255.0.0     | 0.0.255.255     | Match /16 network    |
+| 255.0.0.0       | 0.255.255.255   | Match /8 network     |
+| 0.0.0.0         | 255.255.255.255 | Match any address    |
+
+The keywords `host` and `any` are useful shortcuts:
+
+- `host 10.1.1.5` is equivalent to `10.1.1.5 0.0.0.0`
+
+- `any` is equivalent to `0.0.0.0 255.255.255.255`
+
+[SHOW SLIDE: "Non-Contiguous Wildcard Masks"]
+
+You can also write non-contiguous wildcard masks to match specific bit patterns across octets. These are less common on the CCNA but you should understand the concept because the exam occasionally presents scenarios that test whether you can read an unusual mask correctly.
+
+---
+
+## Section 5: Applying ACLs to Interfaces (13:30–15:30)
+
+[SHOW SLIDE: "ip access-group Command"]
+
+After creating an ACL, you must apply it to an interface to activate it. The command is `ip access-group`:
+
+```
+Router(config)# interface GigabitEthernet0/0
+Router(config-if)# ip access-group 110 in
+```
+
+The direction `in` means the ACL filters packets as they enter the interface. The direction `out` means the ACL filters packets as they exit the interface.
+
+[SHOW TOPOLOGY: Router R1 with Gi0/0 connected to LAN and Gi0/1 connected to WAN]
+
+Inbound processing means the packet arrives at Gi0/0 and the ACL runs before the routing table is consulted. If denied, the packet is dropped immediately without ever entering the routing process. This is more efficient.
+
+Outbound processing means the packet hits the routing table first, gets forwarded toward Gi0/1, and then the ACL runs at the exit point. If denied, the packet has already consumed routing resources.
+
+For VTY line access control the command changes to `access-class`:
+
+```
+Router(config)# line vty 0 4
+Router(config-line)# access-class 10 in
+```
+
+Note: `access-class` is used for VTY lines, not `access-group`. This is a frequently tested distinction on the exam.
+
+---
+
+## Section 6: IPv6 ACLs (15:30–18:00)
+
+[SHOW SLIDE: "IPv6 ACLs — Key Differences"]
+
+IPv6 ACLs work differently from IPv4 ACLs in three important ways.
+
+First, all IPv6 ACLs are named. There are no numbered IPv6 ACLs.
+
+Second, IPv6 ACLs include two implicit permit statements before the implicit deny. These permit `icmp any any nd-na` and `icmp any any nd-ns`, which allow Neighbor Discovery Protocol to function. IPv6 neighbor resolution depends on ICMPv6 NDP, so these must remain permitted.
+
+Third, IPv6 ACLs are applied with `ipv6 traffic-filter` instead of `ip access-group`.
+
+Configuration example:
+
+```
+Router(config)# ipv6 access-list BLOCK_TELNET_V6
+Router(config-ipv6-acl)# deny tcp any any eq 23
+Router(config-ipv6-acl)# permit ipv6 any any
+
+Router(config)# interface GigabitEthernet0/0
+Router(config-if)# ipv6 traffic-filter BLOCK_TELNET_V6 in
+```
+
+[SHOW SLIDE: "IPv6 NDP Implicit Permits"]
+
+If you write an IPv6 ACL that accidentally denies all ICMPv6, you will break IPv6 neighbor resolution. The network will appear to be down even though routing is configured correctly. Always remember the hidden NDP permit statements when troubleshooting IPv6 connectivity failures.
+
+[PAUSE — 3 seconds]
+
+---
+
+## Section 7: ACL Troubleshooting (18:00–21:30)
+
+[SHOW SLIDE: "ACL Troubleshooting Commands"]
+
+The most important verification and troubleshooting commands for ACLs are:
+
+```
+Router# show access-lists
+Router# show access-lists 110
+Router# show ip interface GigabitEthernet0/0
+Router# show running-config | section access-list
+Router# debug ip packet detail
+```
+
+`show access-lists` displays every configured ACL along with match counters showing how many packets matched each line. A counter incrementing when you expect a permit confirms that traffic is matching the correct rule.
+
+`show ip interface` shows which ACL is applied to each interface in each direction. Always verify this when troubleshooting to confirm the correct ACL is active in the correct direction.
+
+[SHOW SLIDE: "Top Five ACL Mistakes"]
+
+The most common ACL mistakes in production and on the CCNA exam:
+
+**Mistake 1: Wrong order.** Specific entries must come before general entries. A `deny host 10.1.1.1` entry must appear before `deny 10.1.1.0 0.0.0.255`.
+
+**Mistake 2: Wrong direction.** Applying inbound when outbound is needed or vice versa produces confusing results.
+
+**Mistake 3: Wrong interface.** The ACL is on the correct router but applied to the wrong interface entirely.
+
+**Mistake 4: Missing permit any.** Forgetting to add a `permit any` or `permit ip any any` at the end means the implicit deny blocks all unmatched traffic.
+
+**Mistake 5: Editing numbered ACLs.** You cannot insert a line into a numbered ACL without deleting and recreating it. Named ACLs solve this problem.
+
+[PAUSE — 3 seconds]
+
+To clear ACL hit counters without removing the ACL:
+
+```
+Router# clear access-list counters 110
+```
+
+---
+
+## Conclusion (21:30–23:00)
+
+[SHOW SLIDE: "Module 09 Summary"]
+
+Let's wrap up Module 09. Today you learned:
+
+- Standard ACLs filter on source IP only and should be placed close to the destination
+
+- Extended ACLs filter on source, destination, protocol, and port — place them close to the source
+
+- Wildcard masks use zero bits to enforce matches and one bits to ignore bits
+
+- Named ACLs support sequence-number-based line insertion and deletion
+
+- IPv6 ACLs are always named, applied with `ipv6 traffic-filter`, and include implicit NDP permit statements
+
+- Troubleshoot with `show access-lists` and `show ip interface`
+
+[SHOW SLIDE: "CCNA Exam Focus Areas"]
+
+For the CCNA exam, pay close attention to ACL placement rules, the implicit deny any, and the difference between `access-group` and `access-class`. These are consistently tested.
+
+Your lab this module has you configure and verify both standard and extended ACLs in a multi-router topology. The reading guide includes a complete command reference table and a troubleshooting flowchart.
+
+[PAUSE — 3 seconds]
+
+I'll see you in Module 10 where we cover NAT and PAT. Take care.
+
+---
+
+*End of Module 09 Video Script*

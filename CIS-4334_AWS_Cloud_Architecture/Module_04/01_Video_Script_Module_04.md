@@ -199,7 +199,7 @@ Versioning protects against accidental deletion. CRR replicates across Regions f
 
 In the lab this week you will apply lifecycle policies, configure bucket policies, and analyze S3 security configurations. In the Reading Guide you will find a complete storage class comparison table, lifecycle policy examples, and security configuration checklists.
 
-For your certification study: aws.amazon.com/certification.
+For your certification study: <aws.amazon.com/certification>
 
 ---
 

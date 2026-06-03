@@ -1,50 +1,336 @@
-# Reading Guide: Module 10 - Responsible AI: Ethics, Fairness, and Transparency
-## Course: CIS-4330_Intro_to_AI (AI-900 (Microsoft Azure AI Fundamentals))
+# Reading Guide: Module 10 — Generative AI and Azure OpenAI Service
+
+## Course: CIS-4330 Introduction to Artificial Intelligence
+
+## Texas Wesleyan University | Professor Nash
+
+## AI-900 Domain: Describe features of generative AI workloads on Azure
 
 ---
 
-### Introduction
-Welcome to **Module 10 - Responsible AI: Ethics, Fairness, and Transparency**! This module covers Microsoft's framework for building AI systems that are trustworthy, equitable, and explainable. Responsible AI is directly tested on the **AI-900 (Microsoft Azure AI Fundamentals)** exam as one of its core knowledge areas, and understanding Microsoft's six guiding principles is essential for both the certification and for ethical real-world AI development.
+## Overview
 
-As a student, you will also study NLP text preprocessing fundamentals — tokenization, stop-word removal, lemmatization, and bag-of-words representation — which are the building blocks for every language AI feature you have encountered so far in this course. Complete the glossary and checklist before beginning the lab.
-
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **Microsoft's Responsible AI principles (Fairness, Reliability, Privacy/Security, Inclusiveness, Transparency, Accountability)**: Microsoft's six-principle framework for ethical AI development. Fairness means AI systems should treat all people equitably without bias based on protected characteristics. Reliability and Safety means systems should perform consistently and fail safely. Privacy and Security means training data and model outputs must respect user data rights. Inclusiveness means AI should serve and benefit all people regardless of ability or background. Transparency means AI decisions and capabilities should be explainable. Accountability means humans must remain responsible for AI system outcomes.
-*   **Tokenization**: The NLP preprocessing step that splits a raw text string into a sequence of individual tokens — typically words and punctuation marks. Tokenization is the first step in almost every NLP pipeline because downstream operations (stop-word removal, vectorization, model training) all require text to be in discrete token form before they can process it.
-*   **Stop-word removal and lemmatization**: Stop-word removal filters out high-frequency words with little semantic value (e.g., "the," "is," "and") to reduce noise and dimensionality in text feature vectors. Lemmatization reduces each token to its dictionary root form (lemma) — for example, "running," "ran," and "runs" all reduce to "run" — so the model treats morphological variants of the same word as a single feature.
-*   **Bag-of-words (BoW) representation**: A text vectorization method that converts a document into a fixed-length numeric vector by counting how many times each vocabulary word appears, ignoring word order and grammar. While simple, BoW is effective for tasks like spam detection and sentiment classification. Its main limitation is that it loses context and meaning conveyed by word sequence.
+This reading guide covers generative AI fundamentals, Azure OpenAI Service, prompt engineering techniques, major use cases, and responsible AI guardrails. Estimated reading time: 50–65 minutes.
 
 ---
 
-### 2. Certification Exam Tips
-*   **AI-900 Focus Area:** Microsoft's six Responsible AI principles are tested by name and by scenario. Know which principle applies to which situation: a hiring algorithm that disadvantages one demographic → **Fairness**. A self-driving system that fails unpredictably in rain → **Reliability and Safety**. A model that collects biometric data without user consent → **Privacy and Security**. A model that cannot explain why it denied a loan → **Transparency**. An AI deployed with no human oversight → **Accountability**. The exam presents scenarios and asks you to identify the principle being violated or upheld.
-*   **Common AI-900 Trap:** The exam distinguishes **Transparency** (the AI's decision-making process can be understood and explained) from **Accountability** (humans take responsibility for AI outcomes and maintain oversight). A question about "explaining why an AI made a decision" → Transparency. A question about "who is responsible when AI causes harm" → Accountability. Students frequently swap these two; practice applying them to real scenarios to build the distinction.
-*   **Study Resource:** The Microsoft Learn module [Fundamental AI Concepts](https://learn.microsoft.com/en-us/training/modules/get-started-ai-fundamentals/) includes a dedicated section on Microsoft's Responsible AI principles with scenario-based examples. It is free and maps directly to the AI-900 exam's Responsible AI knowledge area. A companion resource, the [Microsoft Responsible AI Standards](https://www.microsoft.com/en-us/ai/responsible-ai), provides the authoritative documentation behind the principles.
+## Section 1: Generative AI Fundamentals
+
+### Discriminative vs. Generative AI
+
+| Dimension | Discriminative AI | Generative AI |
+|-----------|------------------|---------------|
+| Task | Classify, detect, extract | Create new content |
+| Output | Label, score, bounding box | Text, image, code, audio |
+| Training objective | Learn decision boundaries | Learn data distribution |
+| Examples | Image classifier, NER, sentiment | GPT-4, DALL-E, Stable Diffusion |
+| Azure examples | Custom Vision, CLU, Face API | Azure OpenAI Service |
+
+### How Large Language Models Work
+
+A large language model is a neural network trained to predict the next token in a sequence. Training involves exposure to hundreds of billions of tokens from diverse text sources. The model learns statistical patterns at multiple levels — grammar, style, facts, reasoning, and code conventions — without any explicit programming of these features.
+
+At inference time, you provide a **prompt** (a sequence of tokens) and the model generates a **completion** (a continuation of that sequence) by repeatedly sampling the next most likely token.
+
+Key properties of LLMs:
+
+**Context window**: The maximum number of tokens the model can consider at once. GPT-4 Turbo supports 128,000 tokens — roughly 100,000 words. Everything within the context window is equally accessible to the model.
+
+**Temperature**: Controls randomness in token sampling. Temperature 0.0 is deterministic (always most likely token). Higher values (0.7–1.0) introduce variation for creative tasks.
+
+**Max tokens**: Caps the length of the generated response.
+
+**Stop sequences**: Tokens that terminate generation early.
+
+### Transformer Architecture
+
+Modern LLMs are based on the transformer architecture introduced in the 2017 paper "Attention Is All You Need." The key innovation is the **self-attention mechanism**, which allows the model to weigh the relevance of every token in the context window when predicting the next token — capturing long-range dependencies that earlier architectures (RNNs, LSTMs) struggled with.
+
+You do not need to understand transformer internals for AI-900, but you should know the name and the general capability it enables.
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the chapters on ethics in AI, fairness, and natural language processing in the OER Textbook: [Artificial Intelligence: Foundations of Computational Agents](http://artint.info/). This freely available textbook by Poole and Mackworth addresses ethical considerations in AI system design as well as the NLP techniques (tokenization, bag-of-words) that are foundational to text-based AI services.
-*   **Required Video:** Watch the Responsible AI and NLP fundamentals segment in the official AI-900 preparation playlist: [Microsoft Azure AI Fundamentals Complete Course](https://www.youtube.com/watch?v=s0H3G50vGgU). This video covers Microsoft's six Responsible AI principles with concrete business examples and explains how they are applied across Azure AI services.
+## Section 2: Azure OpenAI Service
+
+### What It Provides
+
+Azure OpenAI Service makes OpenAI's models available through Azure's enterprise cloud infrastructure. You interact with the models via REST API or the Azure OpenAI SDK, using the same prompt interface as the OpenAI API but with Azure's security, compliance, and data governance controls in place.
+
+### Model Families Available
+
+| Model Family | Capabilities | Primary Use Cases |
+|-------------|-------------|------------------|
+| GPT-4 | Complex reasoning, vision input, long context | Analysis, code generation, complex writing |
+| GPT-3.5 Turbo | Chat interaction, moderate complexity | Summarization, Q&A, simple tasks |
+| DALL-E 3 | Text-to-image generation | Concept art, illustrations, marketing images |
+| Whisper | Speech-to-text transcription | Meeting transcription, voice input |
+| Ada / text-embedding | Text vectorization | Semantic search, clustering, RAG |
+
+### Why Azure OpenAI vs. Direct OpenAI API
+
+| Consideration | Azure OpenAI | Direct OpenAI API |
+|--------------|-------------|-------------------|
+| Data privacy | Processed and stored in your Azure region | Processed by OpenAI; may be used for model improvement |
+| Compliance certifications | SOC 2, ISO 27001, HIPAA, FedRAMP | Fewer enterprise certifications |
+| Content filtering | Built-in, always-on, configurable | Available but less integrated |
+| Azure integration | Native (AI Search, Monitor, Key Vault) | Via API calls only |
+| Access | Requires approved Azure subscription | Available to all paid OpenAI customers |
+
+### Accessing Azure OpenAI
+
+Azure OpenAI requires an approved subscription. You apply through the Azure portal. Standard Azure for Students subscriptions do not automatically include Azure OpenAI access; your instructor will provide access details for the lab.
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Tokenize a sample paragraph into individual words using NLTK**: Call `nltk.word_tokenize(text)` on a sample paragraph, then print the resulting list of tokens to observe how the library handles punctuation, contractions, and whitespace boundaries.
-*   **Filter out common stop words**: Import `stopwords` from `nltk.corpus`, build a set of English stop words, and use a list comprehension to remove them from the token list — comparing word counts before and after to see the vocabulary reduction.
-*   **Perform sentiment scoring on text segments using TextBlob or VADER**: Apply `TextBlob(text).sentiment.polarity` (range −1 to +1) to several product review sentences and classify each as positive, negative, or neutral, observing how preprocessing choices affect the final polarity score.
+## Section 3: Prompt Engineering Techniques
+
+### The System Prompt
+
+The system prompt is the foundational instruction set for a chat-based model. It is processed before any user message and establishes:
+
+- The model's role and persona
+- Topic scope and constraints
+- Output format requirements
+- Tone and style guidelines
+- Safety instructions
+
+A well-crafted system prompt dramatically reduces the need for repetitive instructions in every user turn.
+
+### Prompting Strategies
+
+| Strategy | Description | Best For |
+|----------|-------------|----------|
+| Zero-shot | Instruction only, no examples | Simple well-defined tasks |
+| One-shot | One example of input-output pair | Tasks with specific format requirements |
+| Few-shot | Multiple examples | Format-sensitive tasks; improving consistency |
+| Chain-of-thought | Instruct the model to reason step by step | Math, logic, multi-step analysis |
+| Role prompting | Assign a specific expert role in the system prompt | Specialized language, domain framing |
+| Self-consistency | Generate multiple responses and select the most consistent | High-stakes reasoning tasks |
+
+### Few-Shot Prompt Structure
+
+A few-shot prompt follows this pattern:
+
+```text
+[Task description]
+
+Example 1:
+Input: [example input 1]
+Output: [example output 1]
+
+Example 2:
+Input: [example input 2]
+Output: [example output 2]
+
+Now:
+Input: [actual input]
+Output:
+```
+
+The examples teach the model the format, style, and reasoning pattern you expect. Two to five examples typically provide sufficient signal for most tasks.
+
+### Chain-of-Thought Trigger Phrases
+
+Adding any of these phrases to a prompt activates more deliberate step-by-step reasoning:
+
+- "Think step by step."
+- "Explain your reasoning before giving the answer."
+- "Let's work through this carefully."
+- "Show your work."
+
+This technique significantly improves accuracy on arithmetic, logic puzzles, and multi-step analytical questions.
+
+### Common Prompt Engineering Mistakes
+
+| Mistake | Effect | Fix |
+|---------|--------|-----|
+| Vague task description | Unpredictable outputs | Be explicit about what you want |
+| No output format specified | Inconsistent structure | Specify JSON, bullet list, table, etc. |
+| No scope constraint | Model goes off-topic | Add "Answer only questions about X" |
+| Asking for facts without grounding | Hallucination risk | Provide source documents in the prompt |
+| Too long a prompt | Diluted attention | Keep prompts focused and structured |
 
 ---
 
-### 3. Study Checklist
-*   [ ] Read the glossary terms and memorize their definitions.
-*   [ ] Read the chapters on AI ethics and NLP in [Artificial Intelligence: Foundations of Computational Agents](http://artint.info/).
-*   [ ] Watch the video lecture on Responsible AI and NLP in [Microsoft Azure AI Fundamentals Complete Course](https://www.youtube.com/watch?v=s0H3G50vGgU).
-*   [ ] Review the commands outlined in the lab instructions.
-*   [ ] Proceed to the weekly hands-on lab activity.
+## Section 4: Retrieval-Augmented Generation (RAG)
+
+### The Hallucination Problem
+
+LLMs generate text by predicting probable token sequences. They do not retrieve facts from a database; they approximate facts from statistical patterns learned during training. This means they can generate confident, fluent, but factually incorrect statements — called **hallucinations**.
+
+Hallucinations are more common when:
+
+- The model is asked about recent events after its training cutoff
+- The model is asked about highly specific or niche information
+- The question is ambiguous or lacks context
+
+### How RAG Works
+
+Retrieval-Augmented Generation combines a retrieval system with the generative model:
+
+```text
+1. User submits a question
+2. System searches a document store for relevant chunks
+3. Retrieved chunks are inserted into the model's context as grounding
+4. Model generates an answer based on the retrieved content
+5. Model is instructed to cite sources or say "I don't know" if content is absent
+```
+
+### Azure Services for RAG
+
+| Component | Azure Service |
+|-----------|--------------|
+| Document storage and indexing | Azure AI Search |
+| Text chunking and embedding | Azure OpenAI — text-embedding model |
+| Vector similarity search | Azure AI Search — vector search |
+| Answer generation | Azure OpenAI — GPT-4 or GPT-3.5 |
+| Orchestration | Azure AI Studio prompt flows, LangChain, or custom code |
+
+RAG is the recommended architecture for any enterprise application where factual accuracy is required — legal, medical, financial, and technical support use cases all benefit from RAG over pure generation.
+
+---
+
+## Section 5: Use Cases Reference
+
+### Summarization
+
+| Use Case | Prompt Pattern |
+|----------|---------------|
+| Executive summary | "Summarize the following in 3 bullet points for a non-technical audience" |
+| Meeting action items | "Extract all action items and owners from the following transcript" |
+| Legal contract summary | "Summarize the key obligations and termination clauses in this contract" |
+| Research abstract | "Write a 150-word abstract for the following paper" |
+
+### Code Generation
+
+| Use Case | Prompt Pattern |
+|----------|---------------|
+| Function implementation | "Write a Python function that [description]. Include docstring and type hints." |
+| Code explanation | "Explain what this code does in plain English" |
+| Debugging | "What is wrong with this code? Here is the error: [error message]" |
+| Unit tests | "Write pytest tests for this function including edge cases" |
+| Language conversion | "Convert this Python function to TypeScript" |
+| SQL query | "Write a SQL query to [description]" |
+
+### Content Creation
+
+| Use Case | Prompt Pattern |
+|----------|---------------|
+| Product descriptions | "Write 3 product descriptions for [product]. Each should be 40–60 words highlighting [benefit]." |
+| Email drafts | "Draft a professional email declining [request] while maintaining the relationship" |
+| Social media | "Write 5 tweet-length variants for this announcement: [text]" |
+| Quiz questions | "Write 5 multiple-choice questions about [topic] at a college introductory level" |
+
+---
+
+## Section 6: Responsible AI Guardrails in Azure OpenAI
+
+### Content Filtering Categories
+
+Azure OpenAI Service applies built-in content filters to both prompts (inputs) and completions (outputs).
+
+| Category | Description |
+|----------|-------------|
+| Hate | Content that attacks people based on protected characteristics |
+| Sexual | Explicit sexual content |
+| Violence | Content depicting or promoting physical harm |
+| Self-harm | Content promoting self-harm or suicide |
+
+Each category has severity levels: safe, low, medium, high. You can configure the threshold at which content is blocked, within the limits Microsoft permits. Some thresholds cannot be lowered below a baseline for safety reasons.
+
+### Jailbreak and Prompt Injection
+
+**Jailbreak attacks** are prompt formulations that attempt to override the system prompt and make the model ignore its safety instructions. Common patterns include asking the model to "pretend" to be an unconstrained AI, using fictional framing, or embedding instructions in base64 encoding.
+
+Azure OpenAI Service includes jailbreak detection that flags and blocks known attack patterns.
+
+**Prompt injection** occurs when user-supplied content attempts to insert instructions that override the developer's system prompt. This is especially relevant in RAG systems where user documents may contain adversarial text.
+
+### Data Protection
+
+| Feature | Description |
+|---------|-------------|
+| No training use | Customer prompts and completions are not used to train base models |
+| Regional processing | Data stays in the Azure region you select |
+| Encryption at rest | Prompts and outputs stored temporarily are encrypted |
+| Audit logs | Azure Monitor captures API call metadata |
+
+### Human Oversight Requirements
+
+For high-stakes applications, Microsoft's responsible AI guidance recommends:
+
+- Human review before publishing or acting on generated content
+- Output evaluation on representative test cases before deployment
+- Monitoring of live traffic for quality regression or safety incidents
+- Clear user disclosure when content was AI-generated
+
+---
+
+## Section 7: AI-900 Exam Tips
+
+### High-Frequency Exam Topics
+
+**Topic 1 — Definition of generative AI.** Know that generative AI creates new content rather than classifying or extracting from existing content. Know examples: text (GPT), images (DALL-E), code.
+
+**Topic 2 — Hallucination.** Know what it is (plausible but factually incorrect output) and the primary mitigation (RAG / grounding with source documents).
+
+**Topic 3 — Prompt engineering strategies.** Know the names and descriptions of zero-shot, few-shot, and chain-of-thought. Know that system prompts define model role and constraints.
+
+**Topic 4 — Azure OpenAI models.** Know GPT-4 and GPT-3.5 for text/code, DALL-E for images, Whisper for speech, and embedding models for vectors.
+
+**Topic 5 — Content filter categories.** Memorize the four categories: hate, sexual, violence, self-harm. Know that filters apply to both inputs and outputs.
+
+**Topic 6 — RAG components.** Know that RAG combines a retrieval system (Azure AI Search) with generation (GPT) to ground responses in trusted documents.
+
+### Common Exam Traps
+
+- "DALL-E is a language model" is wrong. DALL-E is an image generation model.
+- "Content filters can be completely disabled" is wrong. Some baseline safety protections are always active.
+- "GPT-4 retrieves facts from the internet at inference time" is wrong by default. Standard GPT-4 uses only its training-time knowledge plus whatever is in the context window (the prompt).
+- "Azure OpenAI and OpenAI's API are the same service" is wrong. Azure OpenAI runs on Azure with enterprise controls; the direct OpenAI API runs on OpenAI's infrastructure.
+
+---
+
+## Section 8: Key Term Glossary
+
+| Term | Definition |
+|------|-----------|
+| Generative AI | AI that produces new content (text, image, code) rather than classifying existing content |
+| Large language model (LLM) | Transformer-based deep learning model trained on large text corpora for text generation |
+| Prompt | Input text provided to an LLM to guide its output |
+| Completion | The text output generated by an LLM in response to a prompt |
+| System prompt | Pre-conversation instructions defining the model's role, scope, and behavior |
+| Temperature | Sampling parameter controlling randomness of output (0 = deterministic; higher = more varied) |
+| Context window | Maximum tokens the model considers at once |
+| Hallucination | Confident-sounding but factually incorrect output from an LLM |
+| Retrieval-Augmented Generation (RAG) | Architecture that retrieves relevant documents and injects them into the prompt to ground responses |
+| Zero-shot prompting | Instructing the model with no examples |
+| Few-shot prompting | Providing examples of input-output pairs in the prompt |
+| Chain-of-thought | Prompting technique instructing the model to reason step by step |
+| DALL-E | Azure OpenAI image generation model |
+| Whisper | Azure OpenAI speech-to-text model |
+| Content filtering | Built-in Azure OpenAI guardrails screening for hate, sexual, violence, and self-harm content |
+| Jailbreak | Prompt attack attempting to override safety instructions |
+| Grounding | Providing source material in the prompt to reduce hallucination |
+
+---
+
+## Section 9: Study Checklist
+
+Work through this checklist before taking the quiz.
+
+- [ ] I can explain the difference between discriminative and generative AI with examples
+- [ ] I understand how LLMs work at a conceptual level (predict next token)
+- [ ] I know what temperature controls and how it affects output
+- [ ] I know the Azure OpenAI model families: GPT-4, GPT-3.5, DALL-E, Whisper, embeddings
+- [ ] I can describe zero-shot, few-shot, and chain-of-thought prompting
+- [ ] I know what a system prompt is and what it controls
+- [ ] I can explain hallucination and describe why RAG mitigates it
+- [ ] I know the four content filter categories in Azure OpenAI Service
+- [ ] I can describe at least two responsible AI concerns specific to generative AI
+- [ ] I know why Azure OpenAI offers enterprise advantages over the direct OpenAI API
+- [ ] I can select the appropriate Azure OpenAI model for a given use case
+
+---
+
+End of Reading Guide — Module 10

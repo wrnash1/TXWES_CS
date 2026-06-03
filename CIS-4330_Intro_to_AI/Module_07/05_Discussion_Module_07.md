@@ -1,116 +1,84 @@
-# Discussion Forum: Module 07 - Azure Cognitive Services: Vision, Speech, and Language
+# Discussion Forum: Module 07 — Computer Vision with Azure
 
-## Course: CIS-4330 Introduction to AI | Texas Wesleyan University
+## Course: CIS-4330 Introduction to Artificial Intelligence
 
-**Due Dates:** Initial post by Wednesday 11:59 PM | Peer responses by Sunday 11:59 PM
-**Total Points:** 10
+## Texas Wesleyan University | Professor Nash
 
----
-
-## Instructions
-
-Read all three scenarios below. Choose one scenario for your initial post. Identify your scenario choice (A, B, or C) at the top of your post.
+## Due Dates: Initial post by Wednesday 11:59 PM | Peer responses by Sunday 11:59 PM
 
 ---
 
-## Scenario A: The Multilingual Customer Service Platform
+## Overview
 
-A global telecommunications company serves customers in 47 countries and receives support contacts in 35 languages via phone, chat, and email. The company wants to build a unified AI-powered customer service platform that can:
+Computer vision is one of the most commercially deployed forms of AI, appearing in retail stores, hospitals, factory floors, and public spaces. This discussion asks you to move beyond the technical mechanics and examine real-world deployment decisions, trade-offs, and ethical considerations. Your posts should demonstrate both your understanding of Azure computer vision services and your ability to reason critically about their use.
 
-1. Transcribe phone calls in real time.
-2. Translate non-English transcripts to English for processing.
-3. Detect customer sentiment to flag frustrated customers for human escalation.
-4. Identify the customer's service request (billing inquiry, technical fault, upgrade request).
-5. Route the request to the appropriate department.
-
-In your initial post (175-225 words), address all of the following:
-
-- Map each of the five listed capabilities to the specific Azure Cognitive Service and capability name that would implement it.
-
-- Two of the five capabilities require custom training while three are prebuilt. Identify which two require custom training and explain what training data would be needed for each.
-
-- The sentiment escalation system (capability 3) could reduce the number of human agents needed. Identify one responsible AI concern this raises and which Microsoft principle it most relates to.
+Professor Nash note: There are no purely correct answers to these scenarios. I am looking for evidence that you have thought carefully, applied module concepts, and engaged honestly with the tensions involved. Cite specific Azure services and concepts from the lecture and reading guide in your posts.
 
 ---
 
-## Scenario B: The Smart Manufacturing Inspection System
+## Scenario 1: Retail Loss Prevention
 
-A precision manufacturing company produces automotive components. They want to build a computer vision quality control system with three capabilities:
+A national grocery chain is considering deploying Azure AI Vision Spatial Analysis across all 400 of its store locations. The system would use existing overhead security cameras to detect when customers place unpurchased items into bags or pockets. When the system's confidence score exceeds 0.85, it would automatically alert a loss prevention associate, who would then approach the customer.
 
-1. Detect scratches, cracks, and deformations on metal parts (defects are domain-specific and not in standard models).
-2. Read serial numbers printed on each part (some printed, some laser-etched).
-3. Automatically reject components where the detected defect confidence exceeds 0.85.
+The chain estimates the system would reduce shrinkage (theft and error) by 30%, saving approximately $12 million per year.
 
-The engineering team has 800 labeled images of defective and non-defective parts across five defect categories. They have unlimited images of serial number plates.
+Respond to the following prompts in 175–225 words:
 
-In your initial post (175-225 words), address all of the following:
-
-- Map each of the three capabilities to the specific Azure service and capability that would implement it. Explain why custom training is or is not required for each.
-
-- The team has 800 labeled images for five defect categories (160 per category). Is this sufficient for Azure Custom Vision? What factors should they consider when evaluating whether this dataset is adequate?
-
-- The automatic rejection threshold of 0.85 means parts with 0-84% confidence defect scores are passed as acceptable. Discuss the trade-off between false positives (rejecting good parts) and false negatives (passing defective parts) in an automotive safety context.
+1. Which Azure computer vision capability is central to this system, and how does it technically work?
+2. What is one significant benefit and one significant risk of deploying this system as described?
+3. The system has a confidence threshold of 0.85 — meaning 15% of alerts could be false positives. What real-world consequence does a false positive carry for the customer who is wrongly approached, and how should the chain address this?
 
 ---
 
-## Scenario C: The Accessible Government Services Portal
+## Scenario 2: Custom Vision for Medical Screening
 
-A state government wants to redesign its citizen services portal to be more accessible and multilingual. The project has three AI requirements:
+A regional health network wants to use Azure Custom Vision to build an image classification model that screens chest X-ray images and flags potential cases of pneumonia for radiologist review. The model would be trained on 5,000 labeled X-ray images (2,500 pneumonia-positive, 2,500 normal).
 
-1. Convert all written content on the portal to audio, so visually impaired users can hear page content read aloud.
-2. Allow citizens to speak their service requests (e.g., "Renew my driver's license") and have the system understand and respond.
-3. Translate the portal into 12 additional languages for immigrant populations who do not read English.
+The health network stresses that a radiologist will always review every flagged case — the model is a triage tool, not a diagnostic decision-maker.
 
-The technology director wants to use Azure Cognitive Services for all three capabilities.
+Respond to the following prompts in 175–225 words:
 
-In your initial post (175-225 words), address all of the following:
-
-- Map each of the three capabilities to the specific Azure service and capability. For capability 2, identify whether a prebuilt capability is sufficient or whether custom training is needed.
-
-- One of the three services used in this project requires gated access approval from Microsoft. Identify which service feature requires approval, explain why Microsoft requires approval, and evaluate whether the government portal's use case is likely to be approved or denied.
-
-- This project is explicitly designed to improve accessibility and language equity. Identify which Microsoft responsible AI principle the entire project embodies and explain how each of the three capabilities contributes to it.
+1. Is Custom Vision Classification or Custom Vision Object Detection more appropriate for this scenario? Justify your choice.
+2. The training dataset contains 5,000 images. Based on what you learned about Custom Vision training requirements and performance metrics, is this an adequate dataset? What factors beyond quantity matter?
+3. The health network says a radiologist will always review flagged cases. Does this human-in-the-loop design adequately address the responsible AI concerns you might have? Are there remaining risks?
 
 ---
 
-## Peer Response Guidelines
+## Scenario 3: Face API in Campus Access Control
 
-Reply to at least two classmates who chose different scenarios than you. Each peer response must be at least 50 words and must add substantive analysis beyond agreement.
+A university is considering replacing physical key cards with a face recognition system at all campus building entrances. Students, faculty, and staff would enroll by having their photos taken once during orientation. The Azure Face API would then verify identity in real time as people approach building doors.
 
-Suggested peer response approaches:
+The university's IT director argues this is more secure and convenient than key cards, which are frequently lost or shared. The student government president objects, citing privacy concerns and potential bias.
 
-- Identify a service mapping your peer made that you disagree with and propose the correct service with justification.
+Respond to the following prompts in 175–225 words:
 
-- Raise a technical limitation of one of the services your peer selected that they did not discuss.
-
-- Challenge the responsible AI reasoning in your peer's post with a counter-argument or a different principle.
-
-- Propose an additional Azure service that would enhance the solution your peer designed.
+1. Which Face API capabilities would this system require, and what Microsoft policy governs access to those capabilities?
+2. Evaluate the student government president's bias concern. Is it technically founded? What evidence from the module supports your position?
+3. Propose one design change the university could make that would meaningfully address either the privacy concern or the bias concern while still achieving the security goal.
 
 ---
 
-## Grading Rubric (10 Points Total)
+## Peer Response Requirements
 
-### Initial Post — 6 Points
+After posting your initial response to one scenario of your choice, reply substantively to at least two classmates who chose different scenarios. Each peer response must be at least 75 words and must do one of the following:
 
-**6 pts:** All service mappings are correct with accurate capability names. Responsible AI reasoning identifies the correct principle. Meets 175-225 word requirement. Demonstrates original reasoning.
+- Add a technical detail or Azure service consideration your classmate did not mention
+- Respectfully challenge an assumption in your classmate's argument with evidence from the module
+- Extend the analysis to a real-world example from a different industry
 
-**4-5 pts:** Most service mappings correct. Minor capability name errors or one sub-question underdeveloped. Word count met.
-
-**2-3 pts:** Fewer than half the mappings correct, or significant factual errors. May not meet word count.
-
-**0-1 pts:** Post missing or does not engage substantively with the scenario.
-
-### Peer Responses — 4 Points
-
-**4 pts:** Substantive responses to at least two peers from different scenarios. Each adds new analysis or challenges a service mapping. Minimum 50 words each.
-
-**2-3 pts:** Responds to two peers with limited substance, or only one peer.
-
-**0-1 pts:** No responses or all responses are superficial.
+Responses that only agree or restate what the classmate said will not receive full credit.
 
 ---
 
-## Professor Nash Note
+## Grading Rubric (10 points total)
 
-Scenario A maps directly to the kind of multi-service architecture question you will encounter on the AI-900 exam. Strong posts will use the exact service and capability names from Table 1 in the reading guide rather than general descriptions. If you find yourself writing "the speech service" or "the language tool," you are not being specific enough. Precision in service naming is a core exam skill.
+| Criterion | Points | Description |
+|-----------|--------|-------------|
+| Technical accuracy | 3 | Correctly names and describes relevant Azure services and capabilities |
+| Depth of analysis | 3 | Moves beyond surface observations; addresses trade-offs and nuance |
+| Responsible AI reasoning | 2 | Engages substantively with ethical, bias, or privacy dimensions |
+| Peer engagement | 2 | Two peer responses that add value per the requirements above |
+
+---
+
+End of Discussion — Module 07

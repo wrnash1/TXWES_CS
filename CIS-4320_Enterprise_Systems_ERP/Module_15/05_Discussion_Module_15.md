@@ -1,28 +1,71 @@
-# Discussion Forum: Module 15 - ERP Post-Implementation
-## Course: CIS-4320_Enterprise_Systems_ERP (Salesforce Certified Associate / SAP Certified Associate)
+# Discussion: Module 15 — ERP Implementation Methodology
+
+## Course: CIS-4320 Enterprise Systems and ERP
+
+## Texas Wesleyan University | Professor Nash
+
+**Certification Alignment:** Salesforce Administrator / SAP S/4HANA Essentials
 
 ---
 
-## Discussion Prompt
-Consider the following real-world scenario or technical concept:
-*   **Topic Focus:** **ERP Post-Implementation** (specifically focusing on: `User adoption tracking, system performance reviews, bug databases, upgrading modules.`)
+## Instructions
 
-**Your Tasks:**
-1.  **Initial Post (Due Wednesday at 11:59 PM):** In 150-200 words, explain how you would apply ERP Post-Implementation in an enterprise system. Address the following:
-    *   What is the primary benefit of utilizing this configuration or standard in a production environment?
-    *   Identify one common security concern or operational challenge related to this topic, and suggest a best-practice mitigation strategy.
-2.  **Peer Responses (Due Sunday at 11:59 PM):** Read through your classmates' posts and write constructive replies (at least 50 words each) to at least two peers. In your replies:
-    *   Provide feedback on their proposed mitigation strategy.
-    *   Share an alternative approach or add context from your own research or lab exercises.
+Choose ONE of the three scenarios below. Write an initial post of 175–225 words responding to your chosen scenario. Then reply to at least two classmates who chose different scenarios from yours. Each reply should be 75–100 words and add substantive insight — agreement alone does not earn full credit.
+
+Posts are due by Thursday 11:59 PM. Replies are due by Sunday 11:59 PM.
 
 ---
 
-## Discussion Rubric (10 Points Total)
-*   **Initial Post (6 Points):**
-    *   *5-6 pts:* Thoroughly addresses all prompt questions with technical accuracy, clear explanations, and appropriate terminology. Meets the word count.
-    *   *3-4 pts:* Addresses some prompt questions, but lacks detail or technical accuracy.
-    *   *0-2 pts:* Incomplete or missing initial post.
-*   **Peer Responses (4 Points):**
-    *   *4 pts:* Responds constructively to at least two peers, contributing meaningful additions to the conversation.
-    *   *2 pts:* Responds to only one peer, or comments are superficial (e.g., "Good post!").
-    *   *0 pts:* No peer responses submitted.
+## Scenario A — The Compressed Timeline
+
+A healthcare network with 3,200 employees is implementing Salesforce Health Cloud for patient relationship management. The project sponsor — a VP who just returned from a Salesforce conference — tells the implementation team: "I saw a demo of this at Dreamforce and it looked easy. I want us live in six weeks." The project manager knows that a proper implementation of this scope requires at least 16–18 weeks. The VP dismisses the concern, saying: "We'll figure out the details as we go."
+
+Respond to this scenario. What implementation risks does a six-week timeline create for a 3,200-employee healthcare organization? Identify at least two specific ASAP or Salesforce lifecycle phases that would be dangerously compressed. What should the project manager do — comply with the VP's timeline, push back, or propose a middle-ground approach? What evidence or data would you bring to that conversation? Reference at least one concept from the Module 15 reading or lecture.
+
+---
+
+## Scenario B — Resistance at the Middle Manager Level
+
+A manufacturing company is six weeks from go-live on SAP S/4HANA. The project is technically on track — configuration is complete, integration testing passed, training is scheduled. But three of the five plant managers are openly telling their teams: "This SAP thing is being forced on us by corporate. It's going to make your jobs harder. Just keep using the old system as long as you can." The project sponsor is aware of the problem but has not addressed it directly.
+
+Respond to this scenario. What is the likely impact of this middle-manager resistance on the go-live outcome? Who is responsible for addressing this resistance — the project manager, the change management lead, or the executive sponsor? What specific actions would you recommend in the six weeks remaining before go-live? Reference at least one concept from the Module 15 reading or lecture in your response.
+
+---
+
+## Scenario C — The Go/No-Go Decision
+
+A retail company is on the eve of its Salesforce Commerce Cloud go-live. It is Sunday afternoon. The cutover weekend plan called for data migration to complete by 2:00 PM. It is now 4:30 PM and the migration is still running — 73% complete. The system integrator estimates it will finish by 7:00 PM. UAT was signed off two weeks ago. Training is complete. The executive sponsor is calling every 30 minutes asking for a status update. Monday is the first day of the holiday shopping season.
+
+Respond to this scenario. What factors should drive the go/no-go decision — proceed with a late go-live, delay until next weekend, or invoke the rollback plan? Who should make this decision and based on what criteria? What are the business consequences of each option? Reference at least one concept from the Module 15 reading or lecture in your response.
+
+---
+
+## Peer Reply Guidelines
+
+When replying to a classmate, consider:
+
+- Do you agree with their risk assessment? Would you add a risk they missed?
+- Did they identify the correct person responsible for action in their scenario?
+- Does their recommended approach reflect sound methodology from the reading?
+- Can you draw a parallel to a real-world ERP case study or another module's content?
+
+Replies that simply say "I agree with your post" receive zero credit.
+
+---
+
+## Grading Rubric (10 points)
+
+| Criterion | Points |
+|---|---|
+| Initial post addresses the chosen scenario with specific, accurate analysis | 3 |
+| Initial post applies at least one Module 15 concept by name and correctly | 2 |
+| Initial post meets length requirement (175–225 words) | 1 |
+| Reply 1 — substantive, adds new insight, 75–100 words | 2 |
+| Reply 2 — substantive, adds new insight, 75–100 words | 2 |
+| **Total** | **10** |
+
+---
+
+*End of Discussion Prompt — Module 15*
+
+**Certification Alignment:** Salesforce Administrator / SAP S/4HANA Essentials

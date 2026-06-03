@@ -1,103 +1,203 @@
-# Quiz: Module 12 – Test-Driven Development (TDD) and BDD
+# Quiz: Module 12 — Software Design Patterns
 
-## Course: CIS-3350_Software_Engineering_Agile (Professional Scrum Master (PSM I))
+## Course: CIS-3350 Software Engineering and Agile
 
----
+## Texas Wesleyan University | Professor Nash
 
-### Question 1
-
-What is the correct sequence of phases in the Test-Driven Development (TDD) cycle?
-
-* A) Refactor, Write Code, Write Test
-* B) Write Test (Red), Implement Code (Green), Refactor
-* C) Design, Code, Test, Release
-* D) Deploy, Assert, Cleanup
-
-Correct Answer: B) TDD proceeds in a tight loop: write a failing test (Red), implement just enough code to make it pass (Green), then improve the code structure without changing behavior (Refactor).
-
-Distractor Analysis:
-
-* *Why B is correct:* The Red-Green-Refactor sequence is the defining characteristic of TDD. Tests are always written before the code they verify.
-* *Why A is incorrect:* Starting with Refactor before writing a test or code makes no sense — there is nothing to refactor yet. This sequence reverses TDD's intent entirely.
-* *Why C is incorrect:* Design-Code-Test-Release is a Waterfall phase model, not TDD. TDD does not have a separate "design" phase before coding — the test serves as the design specification.
-* *Why D is incorrect:* Deploy-Assert-Cleanup is not a recognized development cycle. It conflates deployment with testing in a way that does not reflect TDD practice.
+## Certification Alignment: Scrum.org PSM I / Software Engineering Best Practices
 
 ---
 
-### Question 2
+## Instructions
 
-Which of the following is the most accurate definition of Behavior-Driven Development (BDD)?
-
-* A) A testing methodology where QA engineers write automated regression tests after all development is complete.
-* B) An extension of TDD that expresses system behaviors in natural language (Given-When-Then) so that tests serve as executable specifications readable by non-technical stakeholders.
-* C) A deployment strategy that releases new features to a small subset of users before full rollout to detect behavioral regressions.
-* D) A project management approach where the Product Owner defines system behavior and Developers implement it without discussion.
-
-Correct Answer: B)
-
-Distractor Analysis:
-
-* *Why B is correct:* BDD bridges the collaboration gap between technical and non-technical team members by writing test scenarios in human-readable Gherkin (Given-When-Then) format that can be validated by the Product Owner before development and executed as automated tests.
-* *Why A is incorrect:* Writing tests after all development is complete is regression testing, not TDD or BDD. Both TDD and BDD require tests to be written before or alongside production code.
-* *Why C is incorrect:* This describes a canary release or feature flag deployment strategy — unrelated to BDD as a development practice.
-* *Why D is incorrect:* BDD is explicitly collaborative — Product Owners, QA, and Developers author scenarios together. It is not a one-way specification delivery model.
+Select the single best answer for each question. Each question is worth 10 points.
 
 ---
 
-### Question 3
+## Question 1
 
-A developer writes the following BDD scenario: "Given a logged-in user, When they submit an empty search query, Then an error message 'Please enter a search term' is displayed." At what point in the Sprint should this scenario be written?
+A developer is building a SQL query construction library. Users need to combine optional clauses — WHERE, ORDER BY, LIMIT, JOIN — in any combination. The final SQL string should only be produced when all clauses have been specified. Which creational pattern best fits this requirement?
 
-* A) After the search feature is fully implemented and manually tested
-* B) Before the implementation code is written, to serve as the acceptance criterion driving development
-* C) During the Sprint Review, when stakeholders can validate the scenario against the live system
-* D) During the Sprint Retrospective, when the team reflects on what was built
+- A) Singleton — to ensure only one query object is active per database connection
+- B) Builder — to construct the complex query object step-by-step using method chaining, producing the final string with a `build()` call
+- C) Factory Method — to create different types of queries (SELECT, INSERT, UPDATE) at runtime
+- D) Adapter — to convert the query object into a format compatible with the database driver
 
-Correct Answer: B)
+Correct Answer: B — Builder is designed for constructing complex objects with many optional parts. Method chaining allows each optional clause to be added independently, and `build()` produces the final result only when construction is complete. The user can add any combination of clauses without affecting others.
 
 Distractor Analysis:
 
-* *Why B is correct:* In BDD, scenarios are written collaboratively before implementation begins — they serve as executable acceptance criteria that define what "done" looks like for the story, driving the development from the outside in.
-* *Why A is incorrect:* Writing BDD scenarios after implementation converts them from specifications into documentation. This misses BDD's core purpose of guiding development and catching specification ambiguities early.
-* *Why C is incorrect:* Sprint Review inspects completed Increments. Writing scenarios during the review would mean development happened without a clear acceptance criterion.
-* *Why D is incorrect:* Sprint Retrospective is for process improvement, not for defining product acceptance criteria.
+- A is incorrect — Singleton controls instance count; it does not manage construction of complex objects with optional parts
+- C is incorrect — Factory Method handles choosing which type to create, not assembling a single complex object from optional parts
+- D is incorrect — Adapter resolves interface incompatibilities between existing classes; it is not a construction pattern
 
 ---
 
-### Question 4
+## Question 2
 
-During the Refactor phase of the TDD cycle, a developer adds a new "export to CSV" feature while cleaning up existing code. What is wrong with this approach?
+In the Observer pattern, what is the primary structural advantage of storing observers as objects implementing a common interface rather than storing references to specific observer classes?
 
-* A) Refactoring should only happen in the Sprint Retrospective, not during active development.
-* B) The Refactor phase is strictly for improving existing code structure — adding new features requires starting a new Red-Green-Refactor cycle.
-* C) CSV export is a non-functional requirement and should be added to the Definition of Done, not the Sprint Backlog.
-* D) Nothing is wrong — the Refactor phase is the appropriate time to add new features because tests are already passing.
+- A) It makes the notify loop run faster because interface dispatch is more efficient than direct method calls
+- B) The subject can notify any number of observer types added in future development without any change to the subject class
+- C) It prevents observers from unsubscribing, ensuring all notifications are always delivered
+- D) It limits the pattern to exactly one observer per subject, maintaining the one-to-many relationship
 
-Correct Answer: B)
+Correct Answer: B — By depending on an observer interface rather than concrete observer types, the subject is decoupled from specific implementations. New observer types (new features in future Sprints) can be added without touching the subject at all. This is the Open/Closed Principle applied to the Observer pattern.
 
 Distractor Analysis:
 
-* *Why B is correct:* The Refactor phase is exclusively for restructuring code — improving naming, eliminating duplication, applying patterns — without changing external behavior. Adding a new feature during Refactor bypasses the Red phase and skips the failing test that should drive the new behavior.
-* *Why A is incorrect:* Refactoring happens continuously during development as part of the TDD cycle — not only during the Sprint Retrospective.
-* *Why C is incorrect:* CSV export is a functional feature, not a non-functional requirement. Its placement in the Definition of Done vs. Sprint Backlog depends on whether it is a universal quality standard or a specific deliverable.
-* *Why D is incorrect:* Adding features without a failing test violates TDD's core discipline. Tests must be written first to ensure the new behavior is intentional and verifiable.
+- A is incorrect — interface dispatch has no meaningful performance advantage over direct method calls in this context; performance is not the reason for the interface
+- C is incorrect — Observer implementations always include unsubscribe functionality; the interface does not prevent removal
+- D is incorrect — Observer is explicitly a one-to-many pattern — the subject can have any number of observers; the interface does not limit this
 
 ---
 
-### Question 5
+## Question 3
 
-A Scrum Team never practices TDD and instead writes manual tests at the end of each Sprint. Over time, the team notices their Sprint velocity is declining and they spend more time fixing bugs than building new features. What is the most likely root cause?
+The Decorator pattern and the Facade pattern both "wrap" other objects. What is the fundamental difference between them?
 
-* A) The Sprint timeboxes are too short and need to be extended to one month.
-* B) Accumulating technical debt from untested code makes each Sprint's work harder and riskier as the codebase grows.
-* C) The Product Owner is adding too many backlog items to each Sprint, exceeding the team's capacity.
-* D) The Scrum Master is not facilitating the Daily Scrum correctly, causing misalignment.
+- A) Decorator is a Creational pattern; Facade is a Structural pattern
+- B) Decorator adds behavior to an existing object without changing its interface; Facade provides a new simplified interface to a complex subsystem
+- C) Facade can only wrap one class at a time; Decorator can wrap many classes simultaneously
+- D) Decorator requires subclassing; Facade uses composition exclusively
 
-Correct Answer: B)
+Correct Answer: B — The key distinction is intent and interface. Decorator preserves the original interface while adding behavior (the client sees the same interface, just with more functionality). Facade introduces a new, simpler interface that hides the complexity of multiple subsystem classes from the caller.
 
 Distractor Analysis:
 
-* *Why B is correct:* Without automated test coverage built incrementally through TDD, defects accumulate and interactions between features become unpredictable. The team spends increasing Sprint capacity on regression fixes rather than new value delivery — a classic technical debt spiral.
-* *Why A is incorrect:* Sprint timebox length does not determine defect accumulation rates. A longer Sprint with the same testing practices would produce the same accumulation problem over a longer period.
-* *Why C is incorrect:* Over-commitment is a separate Sprint Planning problem. The specific symptom described — more bug-fixing over time — points to codebase quality, not Sprint commitment size.
-* *Why D is incorrect:* Daily Scrum facilitation issues affect daily alignment, not the long-term trend of increasing defect rates. The described pattern is a code quality and testing practice problem.
+- A is incorrect — both Decorator and Facade are Structural patterns; they are in the same Gang of Four category
+- C is incorrect — both patterns can wrap multiple classes; Facade typically aggregates several subsystem classes, while Decorators chain multiple wrappers
+- D is incorrect — Decorator uses composition (wrapping), not subclassing, which is explicitly its advantage over inheritance; Facade also uses composition
+
+---
+
+## Question 4
+
+A Command object in the Command pattern must implement which two methods to support undo functionality?
+
+- A) `run()` and `rollback()`
+- B) `execute()` and `undo()`
+- C) `send()` and `cancel()`
+- D) `process()` and `revert()`
+
+Correct Answer: B — The standard Command pattern interface defines `execute()` to perform the operation and `undo()` to reverse it. The CommandHistory stores executed commands and calls `undo()` on them in reverse order. While naming conventions vary in practice, `execute()` and `undo()` are the canonical names from the Gang of Four.
+
+Distractor Analysis:
+
+- A names `run()` and `rollback()` — these are used in some frameworks but are not the canonical Gang of Four names; `rollback()` is more commonly associated with database transaction patterns
+- C names `send()` and `cancel()` — these might be used in a specific messaging domain but are not the Command pattern's standard interface
+- D names `process()` and `revert()` — non-standard naming not associated with the Gang of Four Command pattern definition
+
+---
+
+## Question 5
+
+A new team member asks why the Factory Method pattern is used in the payment processing module instead of directly calling `new CreditCardProcessor()` or `new PayPalProcessor()` in the checkout code. What is the best explanation?
+
+- A) Factory Method prevents more than one payment processor from running simultaneously, avoiding double charges
+- B) Factory Method centralizes the creation logic so that adding a new payment method requires adding only a new class and a registry entry — no changes to checkout code that calls the factory
+- C) Factory Method automatically validates payment data before creating the processor object, replacing input validation code
+- D) Factory Method is required to satisfy the Observer pattern, which cannot function without a factory to create subscriber objects
+
+Correct Answer: B — Factory Method embodies the Open/Closed Principle. Adding a new payment provider (a new Sprint feature) means adding a new class that extends the base and one entry in the factory's registry. The checkout code that calls `createPaymentProcessor(method)` never changes. Without the factory, every new payment method would require finding and modifying all places that call `new SpecificProcessor()`.
+
+Distractor Analysis:
+
+- A is incorrect — Factory Method has no instance-limiting behavior; that is Singleton's purpose
+- C is incorrect — Factory Method creates objects; input validation is a separate responsibility that should not be embedded in object creation
+- D is incorrect — Observer and Factory Method are independent patterns; Observer does not require a factory
+
+---
+
+## Question 6
+
+The Strategy pattern and the Command pattern both encapsulate behavior. What is the most important distinction between them?
+
+- A) Strategy patterns can only be used in JavaScript; Command patterns work in all languages
+- B) Strategy encapsulates interchangeable algorithms selected at runtime; Command encapsulates a specific request as an object that can be stored, queued, or reversed
+- C) Strategy requires the Observer pattern to function; Command does not
+- D) Command objects are always synchronous; Strategy objects always run asynchronously
+
+Correct Answer: B — Strategy is about choosing between alternative algorithms that accomplish the same goal differently (sort this data with algorithm A or B). Command is about treating a specific operation as a first-class object that can be scheduled, logged, or undone (execute this action now or later, and be able to reverse it).
+
+Distractor Analysis:
+
+- A is incorrect — both patterns work in any object-oriented language; they are language-agnostic design solutions
+- C is incorrect — Strategy and Command are independent patterns with no structural dependency on each other or on Observer
+- D is incorrect — both patterns can be used synchronously or asynchronously depending on implementation; synchronicity is not a definitional property of either
+
+---
+
+## Question 7
+
+Which creational pattern is most appropriate when a class represents a shared application-wide resource — such as a thread pool or global event bus — that must have exactly one instance, regardless of how many modules request it?
+
+- A) Builder — to assemble the resource from configurable parts
+- B) Factory Method — to create the right type of resource based on the runtime environment
+- C) Singleton — to ensure only one instance is ever created and shared across all callers
+- D) Prototype — to create new instances by cloning an existing configured instance
+
+Correct Answer: C — Singleton is specifically designed for exactly this use case: a shared resource that must exist as a single instance. All callers get the same object via a static `getInstance()` method. The first call creates the instance; subsequent calls return the same reference.
+
+Distractor Analysis:
+
+- A is incorrect — Builder handles construction of complex objects with optional parts; it creates new objects, not single shared instances
+- B is incorrect — Factory Method handles choosing the type to create; it can create many instances of many types, the opposite of Singleton's constraint
+- D is incorrect — Prototype creates new instances by cloning; it produces multiple copies, which is the opposite of Singleton's single-instance guarantee
+
+---
+
+## Question 8
+
+A legacy API uses `getCustomerInfo(customerId)` but the new application code expects `fetchUser(userId)`. Without modifying either the legacy API or the new application code, which pattern creates a bridge?
+
+- A) Strategy — by defining `getCustomerInfo` and `fetchUser` as interchangeable algorithms
+- B) Facade — by wrapping both the legacy API and the new code in a single simplified interface
+- C) Adapter — by wrapping the legacy API in a class that exposes `fetchUser(userId)` and internally calls `getCustomerInfo(userId)`
+- D) Command — by encapsulating both method calls as reversible command objects
+
+Correct Answer: C — The Adapter pattern is the canonical solution for interface incompatibility. An Adapter class exposes the interface the new code expects (`fetchUser(userId)`) and internally translates that call to the legacy API's method (`getCustomerInfo(customerId)`). Neither the caller nor the legacy API needs to change.
+
+Distractor Analysis:
+
+- A is incorrect — Strategy defines interchangeable algorithms for the same purpose; it does not bridge different method signatures
+- B is incorrect — Facade simplifies access to a complex subsystem; it does not specifically solve an interface naming mismatch between two existing APIs
+- D is incorrect — Command encapsulates operations for scheduling and reversibility; it does not resolve interface incompatibility
+
+---
+
+## Question 9
+
+A Scrum team notices that every new notification type added in a Sprint requires modifying the `EventNotifier` class. The Product Owner is frustrated because "simple" features take multiple days. After reviewing the code, the architect recommends refactoring to the Observer pattern. How does the Observer pattern directly solve this problem?
+
+- A) Observer replaces the EventNotifier class entirely, removing the need for a notification system
+- B) Observer allows new notification types to be added as new observer classes that subscribe to the subject — the EventNotifier subject class never needs to change for new notification types
+- C) Observer automatically generates notification classes using a code generation tool, reducing developer effort
+- D) Observer limits each event to one notification type, preventing the system from growing too complex
+
+Correct Answer: B — With Observer, `EventNotifier` (the Subject) holds a list of objects implementing a Notifier interface. Adding a new notification type means adding a new class that implements the interface and subscribing it to the subject. The subject class is closed for modification — it never changes when new notification types are added.
+
+Distractor Analysis:
+
+- A is incorrect — Observer does not remove the need for a notification subject; it restructures how subjects and observers relate to each other
+- C is incorrect — Observer is a design pattern, not a code generation tool; it requires manual implementation of observer classes
+- D is incorrect — Observer is a one-to-many pattern designed to support many observers; it does not limit the system to one notification type
+
+---
+
+## Question 10
+
+Which of the following correctly maps the Facade pattern to its primary benefit in a Scrum team context?
+
+- A) Facade allows multiple algorithms to be swapped at runtime, enabling the team to ship different sorting behaviors in the same Sprint
+- B) Facade simplifies a complex subsystem into one clean interface, reducing the cognitive load for developers adding features in future Sprints
+- C) Facade ensures only one instance of the subsystem exists, preventing resource conflicts between Sprint features
+- D) Facade records all operations performed on the subsystem, enabling the team to audit and undo previous Sprint work
+
+Correct Answer: B — Facade provides a simplified interface to a complex subsystem. For a Scrum team, this means developers working on new Sprint features interact with a small, understandable API rather than navigating the full complexity of the subsystem. This reduces onboarding time, minimizes mistakes, and makes new features faster to implement.
+
+Distractor Analysis:
+
+- A is incorrect — swapping algorithms at runtime describes the Strategy pattern, not Facade
+- C is incorrect — ensuring one instance is the Singleton pattern's purpose; Facade does not control instance count
+- D is incorrect — recording operations for audit and undo describes the Command pattern, not Facade

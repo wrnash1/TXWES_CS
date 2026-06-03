@@ -34,7 +34,7 @@ By completing this lab you will be able to:
 
 **Company:** Pinnacle Software Solutions
 
-**Industry:** B2B SaaS — enterprise workflow automation software
+**Industry:** B2B SaaS -- enterprise workflow automation software
 
 **Size:** 220 employees, $48 million ARR (annual recurring revenue)
 
@@ -54,11 +54,11 @@ For each business event at Pinnacle, identify the correct Salesforce object that
 
 | Business Event | Salesforce Object | One-Sentence Justification |
 |---|---|---|
-| A marketing team member enters information about a company that downloaded a whitepaper from Pinnacle's website — the contact has not been qualified yet | | |
-| A sales rep calls Marcus Webb, the IT Director at Bridgecross Financial, and has an exploratory conversation — Marcus's company uses a competitor product and has no current buying signal | | |
+| A marketing team member enters information about a company that downloaded a whitepaper from Pinnacle's website -- the contact has not been qualified yet | | |
+| A sales rep calls Marcus Webb, the IT Director at Bridgecross Financial, and has an exploratory conversation -- Marcus's company uses a competitor product and has no current buying signal | | |
 | After three weeks of conversations, Marcus Webb confirms that Bridgecross has budget approval and is actively evaluating vendors; his company is now a real prospect | | |
 | The sales rep wins the deal with Bridgecross and the contract is signed for $85,000/year | | |
-| Six months after go-live, Bridgecross's system administrator reports that automated reports are generating errors — she needs help from Pinnacle's support team | | |
+| Six months after go-live, Bridgecross's system administrator reports that automated reports are generating errors -- she needs help from Pinnacle's support team | | |
 | Pinnacle's support team resolves the reporting error and documents the fix for future reference | | |
 
 ### A-2: Lead Conversion Analysis
@@ -92,11 +92,11 @@ The Pinnacle sales manager provides the following open Opportunity data for her 
 
 | Opportunity | Owner | Amount | Stage | Close Date | Probability | Forecasted Revenue |
 |---|---|---|---|---|---|---|
-| Bridgecross Financial — Year 2 Renewal | M. Torres | $85,000 | Negotiation | 2026-07-31 | | |
-| Meridian Health Group — New Deal | K. Park | $120,000 | Proposal / Price Quote | 2026-08-15 | | |
-| Oakdale Manufacturing — Platform Upgrade | S. Reyes | $42,000 | Qualification | 2026-09-30 | | |
-| Coastal Logistics — Net New | M. Torres | $67,000 | Needs Analysis | 2026-08-01 | | |
-| Summit Financial — Pilot | K. Park | $18,000 | Prospecting | 2026-10-31 | | |
+| Bridgecross Financial -- Year 2 Renewal | M. Torres | $85,000 | Negotiation | 2026-07-31 | | |
+| Meridian Health Group -- New Deal | K. Park | $120,000 | Proposal / Price Quote | 2026-08-15 | | |
+| Oakdale Manufacturing -- Platform Upgrade | S. Reyes | $42,000 | Qualification | 2026-09-30 | | |
+| Coastal Logistics -- Net New | M. Torres | $67,000 | Needs Analysis | 2026-08-01 | | |
+| Summit Financial -- Pilot | K. Park | $18,000 | Prospecting | 2026-10-31 | | |
 
 Show your calculations and state the total forecasted revenue for the team.
 
@@ -128,7 +128,7 @@ For each customer contact below, assign the correct priority level and describe 
 
 **Contact 2:** Meridian Health Group's operations manager submits a web form question asking how to configure a specific report filter. The Case is created Friday at 3:00 PM. The first response is sent Monday at 8:30 AM.
 
-**Contact 3:** Summit Financial's IT Director calls to report that automated email notifications from the system stopped working at some point over the weekend — the exact time is unknown. The Case is created Tuesday at 10:00 AM. The first response is sent at 11:30 AM.
+**Contact 3:** Summit Financial's IT Director calls to report that automated email notifications from the system stopped working at some point over the weekend -- the exact time is unknown. The Case is created Tuesday at 10:00 AM. The first response is sent at 11:30 AM.
 
 ### C-2: Escalation Scenario
 
@@ -179,5 +179,5 @@ Three months after the Salesforce-SAP integration goes live, the implementation 
 
 1. Compile all responses into a single document.
 2. Name your file: `Lab07_LastName_FirstName.pdf`
-3. Upload to Canvas under "Lab 07 — Customer Relationship Management Modules."
+3. Upload to Canvas under "Lab 07 -- Customer Relationship Management Modules."
 4. Deadline: See course schedule in Canvas. Late submissions lose 10 points per day.

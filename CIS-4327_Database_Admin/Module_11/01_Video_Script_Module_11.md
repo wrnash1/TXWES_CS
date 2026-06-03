@@ -1,7 +1,10 @@
-# Video Script: CIS-4327_Database_Admin (Google Cloud Associate Database Engineer)
-## Module 11 - Performance Tuning
+# Video Script: Module 11 — Database Performance Tuning and Query Optimization
 
----
+## Course: CIS-4327 Database Administration
 
-**Video Script 11.1: Indexes, Locks, and Explain Plans**
-*Audio:* "A query that takes 10 seconds is a failure. You must learn to read an `EXPLAIN` plan to see if the database is doing a full table scan. Adding an Index drastically speeds up `SELECT` queries, but remember, every index slows down `INSERT` and `UPDATE` queries. It is a constant balancing act."
+## Texas Wesleyan University — Professor Nash
+
+This module's video content is split into two parts:
+
+- Part 1: `01_Video_Script_Module_11_Part_1.md` — Query Execution Plans, Indexing, and GCP Performance Tools (~12–14 minutes)
+- Part 2: `01_Video_Script_Module_11_Part_2.md` — Connection Pooling, Query Rewriting, Spanner, BigQuery, and Exam Scenarios (~11–13 minutes)

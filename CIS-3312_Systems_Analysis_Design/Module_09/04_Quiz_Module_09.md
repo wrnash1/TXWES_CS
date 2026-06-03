@@ -1,235 +1,314 @@
-# Quiz: Module 09 - System Design: Logical vs. Physical Design
+# Quiz: Module 09 — Process Modeling with BPMN
 
-**Course:** CIS-3312 Systems Analysis and Design
-**Certification Alignment:** IIBA ECBA (Entry Certificate in Business Analysis)
-**Prepared by:** Professor Nash | Texas Wesleyan University
+## Course: CIS-3312 Systems Analysis and Design
+
+## Texas Wesleyan University | Professor Nash
+
+## Certification Alignment: IIBA ECBA — Business Process Modeling
 
 ---
 
-## Question 1
+### Instructions
 
-A BA produces a conceptual Entity-Relationship Diagram showing Customer, Order, and Product entities with their relationships, using no technology-specific names. Which type of design artifact is this?
+Select the single best answer for each question. Each question is worth 10 points.
+Total: 100 points.
 
-A) Physical design — because it specifies the structure of data the system will store
+---
 
-B) Logical design — because it describes the data model in technology-independent terms
+### Question 1
 
-C) Implementation design — because it will be directly converted into database tables during development
+A BPMN process model shows a diamond shape with a plus sign (+) inside. At the point where
+this gateway splits the flow, two outgoing paths are drawn. What will happen when execution
+reaches this gateway?
 
-D) Operational design — because it models the runtime behavior of entities in the production system
+A. The path with the highest-priority condition label will be taken.
+
+B. The first outgoing path that evaluates to true will be taken, and the other will be
+   skipped.
+
+C. Both outgoing paths will execute simultaneously regardless of any conditions.
+
+D. One or more outgoing paths will execute based on which conditions evaluate to true.
+
+Correct Answer: C
+
+Distractor Analysis:
+
+- A is incorrect because priority-based routing is not a BPMN gateway behavior; BPMN
+  gateways use type semantics, not priority rankings.
+- B describes an Exclusive (XOR) gateway, not a Parallel gateway.
+- D describes an Inclusive (OR) gateway, identified by an O inside the diamond, not a plus
+  sign.
+
+---
+
+### Question 2
+
+In a BPMN collaboration diagram, a Customer pool and a Vendor pool are shown. The process
+analyst draws an arrow from a task in the Vendor pool to a task in the Customer pool to show
+that the vendor sends an order confirmation to the customer. What type of arrow should be
+used, and what is wrong if a solid arrow is used instead?
+
+A. Message Flow (dashed arrow with open circle at source) should be used; a solid arrow
+   would imply the vendor task and customer task are in the same sequence, which violates
+   BPMN rules for cross-pool connections.
+
+B. Sequence Flow (solid arrow) is correct here; pools can share sequence flow for
+   communication.
+
+C. Association (dotted line) should be used; associations connect artifacts to activities
+   across pools.
+
+D. Message Flow should be used; a solid arrow is acceptable as an informal notation
+   variation when tools do not support dashed arrows.
+
+Correct Answer: A
+
+Distractor Analysis:
+
+- B is incorrect because BPMN 2.0 explicitly prohibits sequence flow crossing pool
+  boundaries. This is an absolute rule.
+- C is incorrect because associations connect artifacts (data objects, annotations) to flow
+  objects; they do not represent communication between participants.
+- D is incorrect because BPMN notation is not optional or informally variable on this rule.
+  Solid arrows between pools represent a modeling error regardless of tool limitations.
+
+---
+
+### Question 3
+
+A business analyst is modeling a loan approval process. When an application is submitted,
+three independent reviews must all be completed before a final decision can be made: a
+credit check, an employment verification, and a collateral assessment. Which gateway type
+should the analyst use to split the flow into the three reviews, and which type should be
+used to synchronize before the final decision?
+
+A. Exclusive Gateway split and Inclusive Gateway join
+
+B. Parallel Gateway split and Parallel Gateway join
+
+C. Inclusive Gateway split and Parallel Gateway join
+
+D. Event-Based Gateway split and Exclusive Gateway join
 
 Correct Answer: B
 
 Distractor Analysis:
 
-- Why A is incorrect: Physical design artifacts specify technology-specific implementations (e.g., SQL CREATE TABLE with data types and constraints). A conceptual ERD uses technology-neutral notation.
-- Why C is incorrect: "Implementation design" is not a standard systems analysis category; the distinguishing feature of the artifact is its technology independence, making it logical.
-- Why D is incorrect: "Operational design" is not a standard design classification; the artifact models data structure, not runtime system behavior.
-- Why B is correct: A conceptual ERD expresses what data the system will manage and how entities relate, without specifying any database product, table structure, or SQL syntax — the hallmark of logical design.
+- A is incorrect because an Exclusive split would take only one of the three review paths,
+  not all three. The Inclusive join would also be wrong because it waits for active paths
+  only, but the semantics here require all three reviews.
+- C is incorrect because an Inclusive split would allow one or more paths — not necessarily
+  all three — which does not match the "must all complete" requirement.
+- D is incorrect because an Event-Based gateway routes to whichever event occurs first, not
+  to all concurrent paths.
 
 ---
 
-## Question 2
+### Question 4
 
-In the context of system design, which of the following is the most accurate definition of system architecture?
+A BPMN diagram shows a circle with a single thin outer ring and an envelope icon inside.
+This symbol appears at the beginning of a process. What does it represent?
 
-A) The visual wireframe sketches of all screens and navigation flows that users will interact with in the final system
+A. A Message End Event — the process ends by sending a message
 
-B) The high-level structure of a software system — its major components, how they interact, and the principles governing their design
+B. A Send Intermediate Event — an outgoing message is sent during the process
 
-C) The detailed SQL schema defining all database tables, indexes, primary keys, and foreign key constraints
+C. A Message Start Event — the process is triggered when a message is received
 
-D) The project plan that specifies which development team members are responsible for building each software module
+D. A Receive Task — a task that waits for an incoming message before proceeding
+
+Correct Answer: C
+
+Distractor Analysis:
+
+- A is incorrect because an End Event has a thick single-ring circle, not a thin ring. An
+  End Event also appears at the end of a process path, not the beginning.
+- B is incorrect because an Intermediate Event has a double-ring circle (two concentric
+  lines), not a single thin ring.
+- D is incorrect because a Receive Task is drawn as a rounded rectangle with an envelope
+  icon, not as a circle.
+
+---
+
+### Question 5
+
+An analyst is comparing an As-Is BPMN model and a To-Be BPMN model for the same process.
+The As-Is model has 14 activities and 9 lane crossings. The To-Be model has 9 activities
+and 3 lane crossings. What does the reduction in lane crossings most directly indicate?
+
+A. The To-Be process has fewer decision points, which reduces branching logic complexity.
+
+B. The To-Be process has fewer handoffs between roles or departments, which typically
+   reduces delays and error opportunities.
+
+C. The To-Be process is less expensive to implement because fewer people are involved.
+
+D. The To-Be process uses parallel gateways to compress sequential steps.
 
 Correct Answer: B
 
 Distractor Analysis:
 
-- Why A is incorrect: Wireframes and screen flows are UI/UX design artifacts, not system architecture.
-- Why C is incorrect: A SQL schema is a physical data design artifact — it is one output of physical design, not the definition of architecture.
-- Why D is incorrect: A team assignment plan is a project management artifact; it is not system architecture.
-- Why B is correct: System architecture describes the structural decisions about major components (layers, services, databases, interfaces) and their relationships — the blueprint that constrains all subsequent physical design decisions.
+- A is incorrect because decision points are represented by gateways, not by lane
+  crossings. A reduction in lane crossings does not directly indicate fewer gateways.
+- C is incorrect because fewer handoffs does not necessarily mean fewer people — automation
+  can reduce handoffs while keeping the same number of roles involved.
+- D is incorrect because parallel gateways add concurrent paths, which would not reduce
+  lane crossings; they might increase them if concurrent tasks span multiple lanes.
 
 ---
 
-## Question 3
+### Question 6
 
-According to BABOK Guide v3 KA 5, which of the following design-phase activities is specifically the business analyst's responsibility?
+In BPMN 2.0, a subprocess is drawn as a rounded rectangle with a small plus sign at the
+bottom center. A process analyst collapses the subprocess so only the outer boundary is
+visible on the main diagram. What is the primary reason to use a collapsed subprocess
+rather than showing all internal steps inline?
 
-A) Writing the source code for the user authentication module
+A. Collapsed subprocesses execute faster in process automation engines.
 
-B) Configuring the production database server and applying security patches
+B. Collapsed subprocesses hide internal steps to maintain confidentiality from stakeholders
+   who should not see implementation details.
 
-C) Defining and evaluating design options and recommending the solution approach that best satisfies the requirements
+C. Collapsed subprocesses keep the parent diagram readable at a high level while signaling
+   that additional detail exists and is documented separately.
 
-D) Conducting code reviews and approving pull requests before merging to the main branch
+D. Collapsed subprocesses are required when the subprocess contains more than five tasks.
 
 Correct Answer: C
 
 Distractor Analysis:
 
-- Why A is incorrect: Writing source code is a developer responsibility; BAs are not expected to code the solution.
-- Why B is incorrect: Database server configuration and patching are IT operations responsibilities; they are outside the BA's scope.
-- Why D is incorrect: Code reviews are a software engineering quality practice performed by technical team members; the BA does not review code.
-- Why C is correct: BABOK KA 5 explicitly assigns the BA responsibility for defining design options (make/buy/subscribe, architecture alternatives), evaluating their tradeoffs, and recommending the option that best addresses requirements — bridging requirements and the development team's technical decisions.
+- A is incorrect because diagram notation has no effect on process engine execution speed;
+  this is a modeling concept, not a runtime optimization.
+- B is incorrect because subprocess collapse is a diagram readability technique, not an
+  access control mechanism. Stakeholder access is managed through document permissions, not
+  diagram layout.
+- D is incorrect because there is no BPMN rule mandating collapse based on task count;
+  the choice is based on diagram readability and communication goals.
 
 ---
 
-## Question 4
+### Question 7
 
-A company is evaluating whether to custom-build a new expense reporting system or subscribe to a commercial SaaS expense management platform. The requirements analysis shows that the company's expense policies closely match the standard features of three competing SaaS products, and the budget is limited. Which design option is most appropriate?
+A BPMN process model for an insurance claim process has a gateway that routes the flow to
+whichever of the following occurs first: the customer submits additional documentation, or
+a 30-day timer expires. After either event occurs, the process continues to the next step.
+Which gateway type is being described?
 
-A) Custom build — to ensure the system exactly matches the organization's unique branding requirements
+A. Parallel Gateway — because two paths exist
 
-B) SaaS subscription — because the standard requirements match available products and the cost is lower than custom development
+B. Exclusive Gateway — because exactly one outgoing path will be taken
 
-C) Custom build — because SaaS products can never meet enterprise security requirements
+C. Inclusive Gateway — because one or more of the events may occur
 
-D) Delay the decision until all requirements are re-analyzed to check for any non-standard needs
-
-Correct Answer: B
-
-Distractor Analysis:
-
-- Why A is incorrect: Branding is a relatively minor concern; when requirements are standard and budget is constrained, building a custom system to satisfy only branding needs is not cost-justified.
-- Why C is incorrect: Modern SaaS platforms routinely meet enterprise security requirements; this is a false generalization.
-- Why D is incorrect: Requirements analysis has already been completed; delaying a straightforward make-buy decision to re-analyze is not justified by the scenario.
-- Why B is correct: Make-versus-buy analysis recommends COTS or SaaS when requirements are standard and commercial products provide a strong fit at lower cost and risk than custom development — exactly the conditions described.
-
----
-
-## Question 5
-
-A physical design document specifies that the application will use PostgreSQL 16 for the relational database, React 18 for the front end, and Node.js 20 for the API layer, running on AWS EC2 instances behind an Application Load Balancer. What distinguishes this from a logical design document?
-
-A) Physical design documents are shorter and less detailed than logical design documents
-
-B) Physical design specifies concrete technology choices and configurations, while logical design is technology-independent
-
-C) Physical design is produced by the business analyst, while logical design is produced by the developer
-
-D) Physical design only covers the user interface, while logical design covers the data and process models
-
-Correct Answer: B
-
-Distractor Analysis:
-
-- Why A is incorrect: Physical design documents are often more detailed than logical design documents; document length is not the distinguishing characteristic.
-- Why C is incorrect: BAs contribute to logical design; physical design is primarily the responsibility of architects and developers — but this is about roles, not the definition of what makes a design "physical."
-- Why D is incorrect: Physical design covers all components; it is not limited to user interface.
-- Why B is correct: The defining characteristic of physical design is the presence of specific, named technology choices (PostgreSQL, React, Node.js, AWS). Logical design would describe the same system as "a relational database," "a web-based user interface," and "a RESTful API layer" without naming specific products.
-
----
-
-## Question 6
-
-A BA is reviewing a physical design document for a new patient records system. The document specifies that all patient records will be stored in a relational database with no encryption at rest. The approved non-functional requirements include: "All patient data shall be encrypted at rest using AES-256 encryption." What is the BA's correct response?
-
-A) Accept the design since encryption can be added later as a maintenance task
-
-B) Escalate the conflict to the project sponsor and request that the non-functional requirement be removed from scope
-
-C) Flag the design as non-compliant with the approved requirement and require the design to be updated before approval
-
-D) Defer to the database architect since physical design decisions are outside the BA's scope
-
-Correct Answer: C
-
-Distractor Analysis:
-
-- Why A is incorrect: Deferring a security requirement to maintenance exposes the organization to risk between go-live and maintenance implementation; non-functional requirements are binding at deployment.
-- Why B is incorrect: Removing an approved non-functional requirement requires stakeholder approval and business justification; the BA's first action is to flag the gap, not remove the requirement.
-- Why D is incorrect: BAs review physical design against requirements — that is a core BA responsibility during design, not an activity outside scope.
-- Why C is correct: Non-functional requirements are as binding as functional requirements. The BA's role during design review is to identify gaps between the design and the approved requirements baseline and require resolution before approval. Flagging a requirement violation is the correct BA action.
-
----
-
-## Question 7
-
-A nonprofit organization is selecting a donor management system. The requirements include standard donor tracking, event registration, email communications, and donation processing. These are common features found in several established donor management SaaS products. The organization has no IT staff and a very small budget. Which design option is most appropriate?
-
-A) Custom build — to ensure the nonprofit retains full ownership of its donor data in its own infrastructure
-
-B) Buy COTS — to avoid recurring subscription fees and maintain software independence
-
-C) Subscribe SaaS — because requirements are standard, budget is limited, and no IT staff is available to maintain on-premise software
-
-D) Custom build — because only custom software can integrate with nonprofit-specific fundraising platforms
-
-Correct Answer: C
-
-Distractor Analysis:
-
-- Why A is incorrect: Custom build requires significant upfront development investment and ongoing maintenance by skilled staff — neither of which this organization has.
-- Why B is incorrect: COTS still requires installation, configuration, and server maintenance; without IT staff, maintaining on-premise software is not realistic for this organization.
-- Why D is incorrect: Many SaaS donor management platforms include integration capabilities with fundraising and payment platforms; the generalization is not accurate.
-- Why C is correct: SaaS is the correct choice when requirements are standard, budget is constrained, and no IT maintenance staff is available. The vendor hosts, maintains, and updates the system — eliminating the need for internal technical capacity.
-
----
-
-## Question 8
-
-A BA has produced a data flow diagram, an ERD, and a set of process specifications for a new billing system. The development team is now asking for the specific database schema (table names, column names, data types, primary keys, foreign keys) so they can begin database creation. Who is responsible for producing this artifact?
-
-A) The business analyst — because the BA produced the ERD and data dictionary that the schema is derived from
-
-B) The product owner — because the schema reflects business data ownership decisions
-
-C) The database administrator or data architect — because the schema is a physical design artifact requiring technical expertise
-
-D) The project manager — because the schema is a project deliverable that falls under the project manager's accountability
-
-Correct Answer: C
-
-Distractor Analysis:
-
-- Why A is incorrect: The BA produces the logical ERD and data dictionary; translating these into a technology-specific physical schema is the responsibility of the DBA or data architect.
-- Why B is incorrect: Product owners define business priorities; physical database design is a technical responsibility, not a product ownership responsibility.
-- Why D is incorrect: Project managers oversee schedules and resources; they do not produce technical design artifacts.
-- Why C is correct: A SQL schema is a physical design artifact that requires knowledge of the specific database product, data type specifications, constraint syntax, and performance considerations. This is the responsibility of the database administrator or data architect, who works from the BA's logical ERD as input.
-
----
-
-## Question 9
-
-A requirement states: "The system shall process payment transactions within 1.5 seconds under normal load." This is a non-functional requirement. How does this requirement influence physical design?
-
-A) It determines the layout and navigation of the payment screen in the user interface
-
-B) It specifies the database table structure for storing transaction records
-
-C) It constrains infrastructure and application performance decisions — such as caching strategy, database indexing, and server capacity
-
-D) It defines the business rule for when a payment is considered complete
-
-Correct Answer: C
-
-Distractor Analysis:
-
-- Why A is incorrect: Screen layout and navigation are UI design concerns, not performance requirements.
-- Why B is incorrect: Table structure is determined by the data model, not by a response time requirement.
-- Why D is incorrect: Defining when a payment is considered complete is a functional or business rule requirement, not what a performance non-functional requirement specifies.
-- Why C is correct: A performance requirement (1.5-second response time) directly constrains physical design decisions about infrastructure (server capacity), application architecture (caching, async processing), and database design (indexes, query optimization). The architect and DBA must design the physical system to meet this constraint.
-
----
-
-## Question 10
-
-In BABOK Guide v3, which knowledge area is primarily responsible for the activities of defining design options, analyzing their potential value, and recommending a solution to stakeholders?
-
-A) KA 2: Business Analysis Planning and Monitoring
-
-B) KA 3: Elicitation and Collaboration
-
-C) KA 4: Requirements Life Cycle Management
-
-D) KA 5: Requirements Analysis and Design Definition
+D. Event-Based Gateway — because the routing depends on which event occurs first
 
 Correct Answer: D
 
 Distractor Analysis:
 
-- Why A is incorrect: KA 2 covers planning the BA's own work — approach, stakeholder engagement, governance — not design option evaluation.
-- Why B is incorrect: KA 3 covers elicitation techniques and stakeholder collaboration for gathering requirements, not design analysis.
-- Why C is incorrect: KA 4 covers requirements tracing, prioritization, and change management — maintaining requirements after they are defined, not design option analysis.
-- Why D is correct: BABOK KA 5 (Requirements Analysis and Design Definition) includes the tasks of defining design options, analyzing potential value, and recommending solutions. It is the knowledge area that bridges the gap between approved requirements and the design decisions that implement them.
+- A is incorrect because a Parallel Gateway executes ALL outgoing paths simultaneously; it
+  does not wait for a triggering event.
+- B is incorrect because an Exclusive Gateway evaluates conditions on data, not on which
+  event occurs first. The scenario describes a race between two competing events.
+- C is incorrect because an Inclusive Gateway also evaluates data conditions; it does not
+  route based on event arrival order.
+
+---
+
+### Question 8
+
+A business analyst creates a BPMN diagram for a library book return process. One of the
+end events in the diagram has a thick single-ring circle with an X inside. What does this
+end event type mean, and how does it differ from a None End Event?
+
+A. It is a Terminate End Event; it ends only the current path, leaving other parallel paths
+   running.
+
+B. It is an Error End Event; it throws an error condition that must be caught by the parent
+   process.
+
+C. It is a Terminate End Event; it immediately ends ALL active paths in the entire process
+   instance.
+
+D. It is a Cancel End Event; it cancels any pending compensation activities.
+
+Correct Answer: C
+
+Distractor Analysis:
+
+- A reverses the definition of Terminate End; a None End Event ends only the current path.
+  The Terminate End kills everything — that is what makes it distinct.
+- B is incorrect because an Error End Event uses a lightning bolt icon, not an X, and
+  throws an error condition rather than terminating all paths.
+- D is incorrect because Cancel End Events are used specifically within transaction
+  subprocesses and use a different icon.
+
+---
+
+### Question 9
+
+A business analyst is reviewing a BPMN diagram created by a junior analyst. The diagram
+shows a solid sequence flow arrow connecting a task in the Customer pool to a task in the
+Order Management System pool. The senior BA immediately flags this as an error. Why?
+
+A. Sequence flow arrows must always be horizontal; diagonal arrows are not valid in BPMN.
+
+B. Sequence flow cannot cross pool boundaries; communication between pools must use
+   message flow.
+
+C. The task in the Customer pool cannot have an outgoing sequence flow because customers
+   are always passive participants.
+
+D. Solid arrows are reserved for data associations; process flow must use dashed arrows.
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect because arrow direction and angle have no prescribed orientation in BPMN;
+  diagrams can use any layout direction.
+- C is incorrect because pool participants — including customers — can initiate tasks with
+  outgoing flows; the customer pool can have internal sequence flow. The problem is
+  specifically that the arrow crosses the pool boundary.
+- D reverses the notation rules; solid arrows are sequence flow and dashed arrows are
+  message flow.
+
+---
+
+### Question 10
+
+When building an As-Is process model, a business analyst should document inefficiencies,
+workarounds, and manual steps even though those problems will be eliminated in the To-Be
+model. Which of the following best justifies this practice?
+
+A. Regulatory compliance requires documenting the current state before any process can
+   be legally changed.
+
+B. The As-Is model establishes a baseline for measuring improvement and surfaces embedded
+   business rules that might otherwise be overlooked during To-Be design.
+
+C. Stakeholders are more likely to approve the To-Be model if they can see how bad the
+   current process is.
+
+D. Process modeling tools require an As-Is input file before they can generate a To-Be
+   diagram automatically.
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect because while some industries have regulatory documentation requirements,
+  the general business analysis justification for As-Is modeling is analytical, not
+  compliance-driven.
+- C is incorrect because while contrast can be persuasive, the analytical purpose of the
+  As-Is model is measurement and discovery, not persuasion. This answer describes a
+  political tactic, not a methodology rationale.
+- D is incorrect because no standard process modeling tool generates To-Be diagrams from
+  As-Is inputs; the two models are independently created by the analyst.
+
+---
+
+*Quiz — Module 09 | CIS-3312 Systems Analysis and Design | Texas Wesleyan University*

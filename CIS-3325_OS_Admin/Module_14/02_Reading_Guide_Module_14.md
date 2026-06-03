@@ -1,52 +1,217 @@
 # Reading Guide: Module 14 - SELinux and AppArmor Security
-## Course: CIS-3325_OS_Admin (CompTIA Linux+ XK0-005)
+
+## CIS-3325 OS Administration | Texas Wesleyan University
+
+**Certification Alignment:** CompTIA Linux+ (XK0-005)
+**Exam Domain:** Domain 2.0 - Security
 
 ---
 
-### Introduction
-Welcome to **Module 14 – SELinux and AppArmor Security**! This week covers Mandatory Access Control (MAC) on Linux — Security-Enhanced Linux (SELinux) used on RHEL/CentOS/Fedora, and AppArmor used on Debian/Ubuntu. These frameworks enforce access policies that go beyond standard Unix file permissions. SELinux and AppArmor are tested on CompTIA Linux+ XK0-005 under Domain 2.0 (Security).
+### Glossary
 
-As you work through this material you will learn how SELinux labels and policies control process access, how to check and change SELinux modes, how to troubleshoot AVC denials, and how AppArmor profiles restrict application behavior.
+**DAC (Discretionary Access Control)** - Standard Unix permission model where the file owner controls access via read/write/execute bits. The owner may grant or restrict access at their discretion.
 
----
+**MAC (Mandatory Access Control)** - A kernel-enforced security model where policy is defined by the system and cannot be overridden by individual users, including root. SELinux and AppArmor are MAC implementations.
 
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
+**SELinux (Security-Enhanced Linux)** - A label-based MAC system integrated into the Linux kernel. Developed by the NSA. Default on RHEL, CentOS, and Fedora. Enforces policy based on security contexts (labels) attached to files, processes, ports, and devices.
 
-*   **SELinux modes**: SELinux operates in three modes. **Enforcing** — the policy is active and access violations are blocked and logged. **Permissive** — violations are logged but not blocked (used for troubleshooting and policy development). **Disabled** — SELinux is completely off; no logging, no enforcement. Check the current mode with `getenforce` or `sestatus`. Change it temporarily with `setenforce 0` (permissive) or `setenforce 1` (enforcing). Persistent mode is set in `/etc/selinux/config` via the `SELINUX=` directive — requires a reboot.
-*   **SELinux contexts and labels**: Every file, process, port, and user has an SELinux security context consisting of user, role, type, and level (e.g., `system_u:object_r:httpd_sys_content_t:s0`). The `type` field is the most important for policy decisions — it controls which processes can access which files. View file contexts with `ls -Z`; view process contexts with `ps -Z`. Set or restore file contexts with `chcon -t httpd_sys_content_t /var/www/html/file` (temporary) or `restorecon -v /var/www/html/file` (restore to policy default).
-*   **SELinux troubleshooting (`ausearch`, `audit2allow`)**: Access denials are logged to `/var/log/audit/audit.log` as AVC (Access Vector Cache) denial messages. `ausearch -m avc -ts recent` shows recent denials. `audit2why` explains why a denial occurred in plain language. `audit2allow -a` reads the audit log and generates a policy module to permit the denied action. `setsebool -P httpd_can_network_connect on` enables a named boolean (persistent with `-P`) without modifying the core policy.
-*   **SELinux booleans**: Predefined policy switches that toggle specific behaviors without rewriting the policy. `getsebool -a` lists all booleans and their current state. `setsebool httpd_can_sendmail on` enables the boolean for the current session; `-P` makes it permanent. Common exam booleans: `httpd_can_network_connect`, `httpd_enable_homedirs`, `ftp_home_dir`, `samba_enable_home_dirs`.
-*   **AppArmor**: A MAC system used on Debian, Ubuntu, and SUSE. AppArmor uses per-application profiles stored in `/etc/apparmor.d/` to define what files and capabilities a program may access. Profiles can be in **enforce** mode (violations blocked and logged) or **complain** mode (violations logged only, equivalent to SELinux permissive). `aa-status` shows loaded profiles; `aa-complain /etc/apparmor.d/usr.sbin.nginx` puts a profile in complain mode; `aa-enforce` re-enables enforcement. `apparmor_parser -r /etc/apparmor.d/profile` reloads a profile after editing.
-*   **DAC vs MAC**: Discretionary Access Control (DAC) is the standard Unix permission model — the file owner controls access via `chmod`/`chown`. Mandatory Access Control (MAC) — SELinux and AppArmor — enforces policy defined by the system administrator that users and processes cannot override, even as root. A root process can be denied access by SELinux policy, which is the key security advantage of MAC over DAC.
+**Security Context** - The SELinux label attached to every object, in the format `user:role:type:level`. The type field is most relevant for daily administration.
 
----
+**AVC (Access Vector Cache)** - The SELinux kernel component that caches policy decisions. AVC denial messages in `/var/log/audit/audit.log` identify what was blocked and why.
 
-### 2. Certification Exam Tips
-*   **Domain alignment:** SELinux and AppArmor map to Linux+ Domain 2.0 (Security). Expect 5–7 questions on SELinux modes, context types, boolean management, and AVC denial troubleshooting.
-*   **`setenforce` vs `/etc/selinux/config` trap:** `setenforce 0` immediately switches to permissive mode but is lost at reboot. Persistent mode change requires editing `SELINUX=permissive` (or `enforcing`/`disabled`) in `/etc/selinux/config` and rebooting. The exam presents a scenario where the mode reverts after reboot — the answer is that `setenforce` was used instead of editing the config file.
-*   **`restorecon` vs `chcon`:** `chcon` sets a context immediately but it is overwritten the next time `restorecon` or a relabeling runs. `restorecon` restores the context from the policy's file context database — this is the permanent fix. The exam scenario: "context was fixed with `chcon` but broke after a relabel" — the correct fix is `restorecon`.
-*   **AVC denial workflow:** The standard exam troubleshooting sequence for SELinux denials is: (1) `ausearch -m avc -ts recent` to find the denial, (2) `audit2why` to understand it, (3) check if a boolean covers the use case (`getsebool -a | grep relevant`), (4) if not, use `audit2allow` to generate a policy module.
-*   **AppArmor complain mode = SELinux permissive:** The exam tests equivalencies between SELinux and AppArmor terminology. Complain mode in AppArmor is the equivalent of permissive mode in SELinux — both log violations without blocking them.
-*   **Study Resource:** [The Linux Command Line by William Shotts](https://linuxcommand.org/tlcl.php) provides security and permissions foundation relevant to MAC concepts. [Linux Essentials Course by LearnLinuxTV](https://www.youtube.com/playlist?list=PLT98CRl2KxEG0QLjR-8t7k3S4I15Z1A78) includes video demonstrations of SELinux mode management, context fixes, and AppArmor profile inspection in a live Linux environment.
+**restorecon** - A command that resets file SELinux contexts to the values defined in the policy database. Used after `semanage fcontext` to apply new context rules to existing files.
+
+**semanage** - A tool for managing SELinux policy settings including file contexts, port contexts, and user mappings. Changes made with semanage survive filesystem relabeling.
+
+**AppArmor** - A path-based MAC system that confines programs via per-program profiles. Default on Ubuntu, Debian, and SUSE. Simpler than SELinux but less granular.
+
+**AppArmor Profile** - A file in `/etc/apparmor.d/` that defines the allowed files, capabilities, and network operations for a specific program.
+
+**Complain mode (AppArmor)** - AppArmor mode where violations are logged but not blocked. Equivalent to SELinux Permissive mode. Used for profile development and troubleshooting.
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the security and permissions chapters of the free OER textbook [The Linux Command Line by William Shotts](https://linuxcommand.org/tlcl.php), which provide the file permission and process security foundation essential for understanding how SELinux and AppArmor extend the Linux security model.
-*   **Required Video:** Watch the SELinux and AppArmor videos in the [Linux Essentials Course by LearnLinuxTV](https://www.youtube.com/playlist?list=PLT98CRl2KxEG0QLjR-8t7k3S4I15Z1A78), a free YouTube playlist that demonstrates SELinux mode switching, context management, boolean configuration, and AppArmor profile usage in a live environment.
+### SELinux Mode Reference
+
+| Mode | getenforce output | Behavior |
+|------|------------------|---------|
+| Enforcing | `Enforcing` | Violations blocked and logged to audit.log |
+| Permissive | `Permissive` | Violations logged only, not blocked |
+| Disabled | `Disabled` | No policy loaded, no enforcement |
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab you will check the SELinux mode with `getenforce`, switch to permissive mode with `setenforce 0`, inspect file contexts with `ls -Z`, fix a wrong context with `restorecon`, toggle an SELinux boolean with `setsebool -P`, and review AppArmor profile status with `aa-status`.
+### SELinux Runtime vs Persistent Mode Commands
+
+| Goal | Command |
+|------|---------|
+| Check current mode | `getenforce` |
+| Check full status | `sestatus` |
+| Switch to permissive (runtime only) | `sudo setenforce 0` |
+| Switch to enforcing (runtime only) | `sudo setenforce 1` |
+| Set mode persistently | Edit `/etc/selinux/config`, set `SELINUX=enforcing` |
+
+`setenforce` changes do NOT survive reboot. The persistent setting is in `/etc/selinux/config`.
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read the security chapters in [The Linux Command Line by William Shotts](https://linuxcommand.org/tlcl.php).
-- [ ] Watch the SELinux and AppArmor videos in [Linux Essentials Course by LearnLinuxTV](https://www.youtube.com/playlist?list=PLT98CRl2KxEG0QLjR-8t7k3S4I15Z1A78).
-- [ ] Review the commands outlined in the lab instructions.
-- [ ] Proceed to the weekly hands-on lab activity.
+### SELinux Context Commands
+
+| Command | Purpose |
+|---------|---------|
+| `ls -Z FILE` | Show file security context |
+| `ps auxZ` | Show process security contexts |
+| `id -Z` | Show current user security context |
+| `chcon -t TYPE FILE` | Set context temporarily (overwritten by restorecon) |
+| `semanage fcontext -a -t TYPE "PATH_REGEX"` | Add permanent context rule to policy |
+| `restorecon -Rv PATH` | Apply policy contexts to files recursively |
+| `sudo touch /.autorelabel && sudo reboot` | Relabel entire filesystem on next boot |
+
+---
+
+### Permanent Context Fix Workflow (Most Tested)
+
+```bash
+# Step 1: Add the rule to the policy database
+sudo semanage fcontext -a -t httpd_sys_content_t "/srv/webdata(/.*)?"
+
+# Step 2: Apply the new rule to existing files
+sudo restorecon -Rv /srv/webdata/
+```
+
+`chcon` alone is a temporary fix — it is overwritten when `restorecon` runs. Always use the two-step `semanage + restorecon` approach for production.
+
+---
+
+### SELinux Troubleshooting Commands
+
+| Command | Purpose |
+|---------|---------|
+| `sudo ausearch -m avc -ts recent` | Show recent AVC denial messages |
+| `sudo ausearch -m avc -ts recent \| audit2why` | Human-readable explanation of denials |
+| `sudo sealert -a /var/log/audit/audit.log` | Detailed denial analysis with suggested fixes |
+| `sudo grep AVC /var/log/audit/audit.log` | Raw AVC entries |
+
+---
+
+### SELinux Boolean Reference
+
+| Command | Purpose |
+|---------|---------|
+| `getsebool -a` | List all booleans and values |
+| `getsebool BOOLEAN` | Check a specific boolean |
+| `sudo setsebool BOOLEAN on` | Set boolean at runtime (temporary) |
+| `sudo setsebool -P BOOLEAN on` | Set boolean permanently |
+
+Common web server booleans:
+
+| Boolean | Allows |
+|---------|--------|
+| `httpd_can_network_connect` | Apache to make outbound connections |
+| `httpd_can_sendmail` | Apache to send email |
+| `httpd_read_user_content` | Apache to read user home directories |
+| `httpd_enable_homedirs` | Apache to serve from home directories |
+
+---
+
+### SELinux Port Context Commands
+
+| Command | Purpose |
+|---------|---------|
+| `semanage port -l` | List all port contexts |
+| `semanage port -l \| grep http` | Find HTTP-related ports |
+| `sudo semanage port -a -t http_port_t -p tcp 8080` | Allow Apache on port 8080 |
+
+---
+
+### AppArmor Mode Reference
+
+| Mode | aa-status listing | Behavior |
+|------|------------------|---------|
+| enforce | "profiles in enforce mode" | Violations blocked and logged |
+| complain | "profiles in complain mode" | Violations logged only |
+| disabled | Not shown / "unloaded" | No restriction |
+
+---
+
+### AppArmor Command Reference
+
+| Command | Purpose |
+|---------|---------|
+| `sudo aa-status` | Show all loaded profiles and their modes |
+| `sudo systemctl status apparmor` | Check AppArmor service status |
+| `sudo aa-enforce /etc/apparmor.d/PROFILE` | Switch profile to enforce mode |
+| `sudo aa-complain /etc/apparmor.d/PROFILE` | Switch profile to complain mode |
+| `sudo aa-disable /etc/apparmor.d/PROFILE` | Disable profile (program runs unrestricted) |
+| `sudo apparmor_parser -r /etc/apparmor.d/PROFILE` | Reload modified profile into kernel |
+| `sudo systemctl reload apparmor` | Reload all profiles |
+| `sudo aa-genprof /path/to/program` | Generate a new profile interactively |
+| `sudo aa-logprof` | Update profile based on recent log denials |
+
+---
+
+### AppArmor Log Diagnosis
+
+```bash
+sudo journalctl -k | grep apparmor
+sudo grep apparmor /var/log/kern.log
+```
+
+Key fields in an AppArmor denial message:
+
+* `apparmor="DENIED"` — access was blocked (enforce mode)
+* `apparmor="ALLOWED"` — access logged in complain mode
+* `profile=` — the confining profile
+* `name=` — the file or resource accessed
+* `requested_mask=` — the access type attempted (r=read, w=write, x=execute)
+
+---
+
+### SELinux vs AppArmor Comparison
+
+| Feature | SELinux | AppArmor |
+|---------|---------|---------|
+| Approach | Label-based (inode labels) | Path-based (file paths) |
+| Default distro | RHEL / CentOS / Fedora | Ubuntu / Debian / SUSE |
+| Complexity | Higher | Lower |
+| Permissive equivalent | Permissive mode | Complain mode |
+| Log location | /var/log/audit/audit.log | Kernel log / journald |
+| Diagnosis command | `ausearch -m avc` | `journalctl -k \| grep apparmor` |
+
+---
+
+### Exam Tips
+
+1. SELinux modes: Enforcing blocks, Permissive logs only, Disabled is off. `getenforce` returns the exact string. Know all three.
+
+2. `setenforce` is runtime only. `/etc/selinux/config` is persistent. Both are needed: set the config file for permanence, then `setenforce 1` for immediate effect without a reboot.
+
+3. `chcon` is temporary — overwritten by `restorecon`. The permanent fix is always `semanage fcontext` + `restorecon`. This scenario (Apache cannot serve files after copying to new directory) is a direct exam question.
+
+4. `setsebool -P` makes boolean changes permanent. Without `-P` the change is lost at reboot.
+
+5. AppArmor `complain` mode = SELinux `permissive` mode. Both log without blocking. Use for troubleshooting and profile development.
+
+6. `ausearch -m avc -ts recent` is the first command in any SELinux troubleshooting workflow. Know it.
+
+7. `apparmor_parser -r` is required after editing a profile file — it reloads the profile into the running kernel.
+
+8. `aa-logprof` reads recent AppArmor denials and interactively offers to add allow rules. It is the primary tool for refining a new profile after running the application in complain mode.
+
+---
+
+### Study Checklist
+
+Before the quiz and lab, confirm you can do all of the following without looking them up:
+
+* State what `getenforce` returns for each of the three SELinux modes
+* Use `setenforce 0` and `setenforce 1` correctly and explain why they do not persist
+* Edit `/etc/selinux/config` to make the mode change persistent
+* Use `ausearch -m avc -ts recent` to find SELinux denials
+* Apply a permanent context fix with `semanage fcontext` and `restorecon`
+* Set a SELinux boolean permanently with `setsebool -P`
+* Use `aa-status` to determine which AppArmor profiles are in enforce vs complain mode
+* Switch an AppArmor profile between enforce and complain mode
+* Reload a modified AppArmor profile with `apparmor_parser -r`
+* Find AppArmor denials in the journal
+* Compare SELinux and AppArmor by approach, default distro, and log location

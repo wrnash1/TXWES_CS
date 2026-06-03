@@ -1,100 +1,119 @@
-# Discussion — Module 04
+# Discussion: Module 04 — Cloud Storage
 
-## CIS-4329: Google Cloud Platform | Texas Wesleyan University
+## Course: CIS-4329 Google Cloud Computing
 
-### Topic: Cloud Storage Design — Classes, Lifecycle, and Access Control
-
----
-
-## Instructions
-
-Read all three scenarios below. Choose one scenario to address in your initial post. In your peer responses, you may respond to classmates who chose any scenario.
-
-Initial Post due: Wednesday at 11:59 PM Central
-
-Peer Responses due: Sunday at 11:59 PM Central
+**Certification Alignment:** Google Cloud Associate Cloud Engineer (ACE)
 
 ---
 
-## Scenario A — The Media Archive Strategy
+## Overview
 
-A regional television station is migrating its entire video archive to Google Cloud. The archive contains 50 years of footage — approximately 2 petabytes of video files. The station's usage pattern is:
+This discussion asks you to apply Cloud Storage design principles to real-world
+data management problems. Object storage is the backbone of modern cloud data
+architectures and an important part of cost optimization strategies.
 
-- Current season content (last 12 months): accessed daily for production and re-broadcast
-- Content from 1 to 5 years ago: accessed approximately once per month for retrospective programming
-- Content older than 5 years: accessed at most once or twice per year for anniversary specials
-- Content older than 20 years: almost never accessed; kept strictly for historical preservation
+**Due:** See course calendar for deadlines.
 
-The station has a fixed monthly storage budget and wants to minimize costs without deleting any content.
-
-In 175–225 words, address the following:
-
-- Map each age tier of content to the appropriate Cloud Storage class and justify each choice.
-- Design a lifecycle policy that automates these transitions. Describe the specific rules (action, condition) even if you do not write exact JSON.
-- The station's content management system needs programmatic read access to all buckets. What IAM configuration would you apply, and would you use a service account or user credentials?
+**Grading:** Initial post (60 points) + two peer responses (20 points each) = 100 points
 
 ---
 
-## Scenario B — The Healthcare Compliance Challenge
+## Prompt A — Data Lifecycle Architecture (Choose One)
 
-A regional hospital is migrating its electronic health records (EHR) system to Google Cloud. EHR files must be retained for a minimum of 10 years under HIPAA regulations. Files cannot be modified or deleted during the retention period. The hospital's security team is also concerned about accidental deletion by authorized administrators who have broad storage permissions.
+A regional hospital generates the following types of digital data:
 
-In 175–225 words, address the following:
+- Medical imaging files (MRI, CT scans): 2–5 GB each; accessed frequently for
+  30 days post-procedure; then reviewed during annual checkups (once per year);
+  must be retained for 10 years by law
+- Electronic health records (PDFs): Accessed regularly for active patients;
+  patients become inactive after discharge (roughly every 6 months); records
+  must be retained for 7 years after the patient's last visit
+- System log files: Generated continuously; accessed only if an incident occurs
+  (roughly 5% chance in the first 7 days, near zero after 30 days); useful
+  to retain for 90 days
 
-- Which specific Cloud Storage feature would you use to enforce the 10-year retention requirement? Explain the difference between an unlocked and a locked retention policy and which you would recommend for HIPAA compliance.
-- The hospital's existing data governance team says "we'll use object versioning because it lets us recover deleted files." Why is versioning alone insufficient for HIPAA retention compliance? What does it protect against that a retention policy does not, and vice versa?
-- What bucket location type would you choose for EHR data that must remain within the United States, and why?
+Design a Cloud Storage strategy for each data type:
 
----
-
-## Scenario C — The External Partner Sharing Problem
-
-A pharmaceutical company runs a research collaboration with three university partners. The company stores proprietary research datasets in a private Cloud Storage bucket. Each university needs periodic access to different specific files — not the entire bucket. The universities use various systems and email domains (not Google Workspace). Access to each file should expire after 72 hours, after which the university must request fresh access. The company's security policy prohibits making any bucket or object publicly accessible.
-
-In 175–225 words, address the following:
-
-- What Cloud Storage feature would you use to provide file-level, time-limited access to the university partners without violating the public access prohibition?
-- The company's developer suggests using `allAuthenticatedUsers` instead because "all three universities have users with Google accounts." Explain why this is still inappropriate and what the security difference is between `allAuthenticatedUsers` and a signed URL.
-- Describe the operational workflow for the sharing process: how does a university researcher request a file, how does the company IT team generate access, and how does the 72-hour expiration enforce itself without manual intervention?
-
----
-
-## Peer Response Guidelines
-
-Your peer responses must be at least 50 words each. A strong peer response does at least one of the following:
-
-- Identifies a minimum storage duration implication the classmate did not address in their storage class selection
-- Points out a security gap in the classmate's access control design
-- Raises a regulatory or compliance consideration the classmate overlooked
-- Connects the scenario to a specific gcloud storage command from the lab
-
-Responses that consist only of praise or agreement without substantive additions receive no credit.
+1. Specify the bucket location type (regional, dual-region, multi-region) and
+   justify your choice for each data type.
+2. Specify the initial storage class and the full lifecycle policy for each
+   data type. Include specific conditions and actions in your answer.
+3. Explain how you would enforce the retention requirements to prevent premature
+   deletion — even by administrators.
+4. Describe the access control model (uniform vs. fine-grained, which IAM
+   roles) you would apply to each bucket and why.
 
 ---
 
-## Grading Rubric — 10 Points Total
+## Prompt B — Cloud Storage Cost Optimization Review (Choose One)
 
-Initial Post — 6 Points:
+Your team has inherited a Cloud Storage environment with the following issues
+discovered during a cost audit:
 
-- 5–6 pts: Addresses all sub-questions accurately. Uses correct storage class names and retention/versioning terminology. Justifies design choices with reference to access frequency, minimum storage durations, or compliance requirements. 175–225 words.
-- 3–4 pts: Addresses most sub-questions but contains inaccuracies in storage class selection, ignores minimum storage durations, or lacks justification.
-- 1–2 pts: Only addresses one sub-question or contains significant factual errors about Cloud Storage features.
-- 0 pts: Initial post not submitted by the Wednesday deadline.
+- A single `us-multi-region` bucket contains all data types: active app assets,
+  90-day-old log files, 2-year-old compliance archives, and versioned objects
+  with hundreds of old versions accumulating
+- No lifecycle policies exist on any bucket
+- All data is in Standard storage class regardless of age
+- Several buckets have `allUsers: objectViewer` access set from an old public
+  website that was decommissioned
+- Monthly Cloud Storage costs have grown 40% in the last 6 months without a
+  corresponding increase in active data
 
-Peer Responses — 4 Points:
+Analyze each problem and propose a remediation plan:
 
-- 4 pts: Two responses submitted by Sunday, each at least 50 words, each contributing specific technical content.
-- 2 pts: Only one qualifying response, or both are superficial.
-- 0 pts: No peer responses submitted.
+1. Estimate which issues are contributing the most to the cost increase and
+   explain your reasoning.
+2. Design a revised bucket structure (how many buckets, what locations, what
+   storage classes) that separates data by access pattern.
+3. Write out the lifecycle policies you would implement for each bucket,
+   including conditions and actions.
+4. Identify the security risk of the public access configuration and describe
+   the specific steps to remediate it.
 
 ---
 
-Professor Nash note: Storage cost optimization is one of the most tangible wins in cloud migrations. When organizations move from on-premises storage — where the cost of a disk is a one-time capital expense — to cloud object storage where you pay by the gigabyte per month, choosing the wrong storage class can mean paying 20x more than necessary for data nobody is reading. The lifecycle policy system exists precisely to automate this optimization. In your discussion posts, show that you understand the trade-offs between access cost and storage cost at each tier.
+## Response Requirements
+
+Your initial post must be at least 300 words and include:
+
+- Specific storage class names and lifecycle condition/action parameters
+- At least one cost calculation or estimation using the GCP pricing page
+  (cloud.google.com/storage/pricing)
+- Explicit reasoning for each architecture decision, not just conclusions
+
+Your two peer responses must each be at least 100 words and do one of the
+following:
+
+- Identify a compliance or data residency consideration the original post did
+  not address
+- Propose a different storage class or lifecycle timeline and justify it
+- Point out a configuration that could lead to unexpected cost or data loss
+
+---
+
+## Discussion Tips
+
+- Use the Cloud Storage pricing calculator to compare monthly costs between
+  storage classes at realistic data volumes.
+- Think about access patterns carefully. The biggest cost optimization
+  opportunities come from correctly identifying data that is in Standard but
+  should be in Coldline or Archive.
+- Retention policies and lifecycle policies serve different purposes. A
+  retention policy prevents early deletion. A lifecycle policy automates
+  transitions. They complement each other.
+
+---
+
+## Reflection Question (Optional — Extra Credit)
+
+The Archive storage class offers the lowest cost but the highest retrieval fee.
+Describe a scenario where Archive is the wrong choice even though the data is
+accessed less than once per year. What storage class would you use instead and
+why? Minimum 150 words.
 
 ---
 
 End of Discussion — Module 04
 
-Course: CIS-4329 Google Cloud Platform | Texas Wesleyan University | Professor Nash
-
-Certification Target: Google Cloud Associate Cloud Engineer
+Course: CIS-4329 Google Cloud Computing | Texas Wesleyan University | Professor Nash

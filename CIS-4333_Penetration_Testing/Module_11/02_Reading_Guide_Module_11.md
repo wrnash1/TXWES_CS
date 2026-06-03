@@ -1,60 +1,186 @@
-# Reading Guide: Module 11 - Social Engineering and Phishing Simulation
-## Course: CIS-4333_Penetration_Testing (CompTIA PenTest+)
+# Reading Guide: Module 11 — Wireless Network Assessment
+
+## Course: CIS-4333 Penetration Testing
+
+**Certification Alignment:** CompTIA PenTest+ (PT0-002)
 
 ---
 
-### Introduction
-Welcome to **Module 11 - Social Engineering and Phishing Simulation**! Social engineering attacks target the human element of security rather than technical vulnerabilities — they manipulate people into taking actions or revealing information that grants an attacker access. Phishing campaigns remain the most common initial access vector in real-world breaches, making social engineering simulation an essential component of a comprehensive penetration test. This module maps to the **Attacks and Exploits** domain of PT0-002 (**30% of exam weight**) and covers the social engineering techniques and tools the exam tests directly.
+## Overview
 
-A phishing simulation that succeeds in credential harvesting or malware delivery provides compelling evidence to a client about the risk of human-layer vulnerabilities — often more impactful than technical findings alone.
-
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **Spear Phishing**: A targeted phishing attack directed at a specific individual or organization, using personalized information gathered during reconnaissance (name, role, colleagues, recent events) to craft a convincing pretext. Unlike mass phishing, spear phishing is tailored to the target — dramatically increasing success rates. It is the most common social engineering technique tested on PT0-002 and the most common initial access vector in real-world targeted attacks.
-
-*   **Pretexting**: The creation of a fabricated scenario (pretext) used to manipulate a target into performing an action or divulging information. Examples include impersonating IT support to obtain credentials, posing as a vendor to gain physical access, or pretending to be a new employee who needs help resetting an account. Pretexting differs from phishing in that it typically involves direct interaction (phone, in-person) rather than email or a malicious link.
-
-*   **Vishing (Voice Phishing)**: A social engineering attack conducted over the phone in which the attacker impersonates a trusted party — IT help desk, bank, IRS, vendor — to manipulate the target into revealing sensitive information or taking an action (e.g., transferring funds, resetting a password, disabling 2FA). Vishing relies on urgency, authority, and fear as psychological manipulation triggers. PT0-002 tests awareness of vishing as a distinct social engineering vector.
-
-*   **Credential Harvesting**: The process of capturing usernames and passwords through deceptive means — typically a phishing page that mimics a legitimate login portal. Tools like the Social Engineering Toolkit (SET) automate credential harvesting by cloning legitimate websites and serving them from an attacker-controlled server. Harvested credentials are then used for initial access, lateral movement, or account takeover.
-
-*   **Social Engineering Toolkit (SET)**: An open-source Python-based penetration testing framework specifically designed for social engineering attacks. SET automates spear phishing email campaigns, credential harvesting via website cloning, SMS phishing (smishing), and payload delivery through malicious documents. It is the industry-standard tool for social engineering simulation engagements and is explicitly referenced in PT0-002 exam content.
+This reading guide supports Module 11 and prepares you for the CompTIA PenTest+ exam's wireless attack content in Domain 3: Attacks and Exploits. Wireless assessments require understanding both the underlying protocols and the specific tools that exploit their weaknesses. This guide organizes the key concepts, vocabulary, and study questions you need to master.
 
 ---
 
-### 2. Certification Exam Tips
-*   **Domain Weight:** Attacks and Exploits is **30% of PT0-002**. Social engineering questions appear as scenario questions — know the attack type names, how they differ, and which psychological principles they exploit.
-*   **Social Engineering Principles (PT0-002 Vocabulary):** The exam tests six psychological influence principles used in social engineering: **Authority** (impersonating figures of power), **Urgency** (time pressure to bypass critical thinking), **Social Proof** (everyone is doing it), **Scarcity** (limited availability), **Intimidation** (threatening consequences), and **Familiarity/Liking** (building rapport before asking for something).
-*   **Phishing vs. Spear Phishing vs. Whaling:** Phishing is mass/untargeted. Spear phishing is targeted at a specific individual using personalized details. Whaling is spear phishing specifically targeting C-suite executives (CEO, CFO). PT0-002 may present a scenario and ask which term applies.
-*   **Smishing vs. Vishing vs. Phishing:** These are the three delivery channel variants — email (phishing), SMS/text (smishing), and voice/phone (vishing). Know which medium each uses.
-*   **Exam Trap — Authorization Required for Social Engineering:** PT0-002 tests that phishing simulations and social engineering are only performed when explicitly included in the scope and Rules of Engagement. Impersonating an employee or sending phishing emails without written authorization violates the RoE and potentially the law.
-*   **SET Workflow:** The Social Engineering Toolkit menu hierarchy: `1) Social-Engineering Attacks` → `2) Website Attack Vectors` → `3) Credential Harvester Attack Method` → `2) Site Cloner`. Know the general flow for PT0-002 scenario questions about credential harvesting tool usage.
-*   **Study Resource:** [TryHackMe Pentest Learning Path](https://tryhackme.com/path/outline/pentesting) — The "Phishing" and "Social Engineering" rooms provide browser-based guided practice with phishing simulation concepts, SET usage, and credential harvesting techniques against realistic lab targets without requiring a local setup.
-*   **Video Lecture:** [CompTIA PenTest+ Complete Course by freeCodeCamp](https://www.youtube.com/watch?v=3Kq1MIfC-4U) — Navigate to the Social Engineering section for content covering phishing, pretexting, vishing, and SET mapped to PT0-002 domain 3 objectives.
+## Primary Reading Topics
+
+### 1. 802.11 Wireless Security Protocol History
+
+Review the evolution of wireless security protocols. Key facts for the exam:
+
+- WEP uses RC4 with a 24-bit IV and is completely broken due to IV collision attacks. Collecting 50,000–100,000 packets is sufficient for key recovery.
+- WPA-TKIP was an interim fix and is also deprecated. The TKIP protocol has known weaknesses.
+- WPA2-CCMP (AES) is the current mainstream standard. WPA2-Personal is vulnerable to offline dictionary attacks against the four-way handshake.
+- WPA2-Enterprise uses 802.1X/RADIUS for per-user authentication. There is no shared PSK to crack, but evil twin attacks can capture EAP credentials.
+- WPA3 uses SAE instead of the pre-shared key handshake, providing forward secrecy and resistance to offline dictionary attacks.
+
+### 2. The WPA2 Four-Way Handshake
+
+Understand what happens during WPA2-Personal authentication:
+
+- The client and AP exchange four EAPOL frames
+- The handshake contains material derived from the PSK using PBKDF2 with the SSID as a salt
+- An attacker who captures the handshake can test password candidates offline without further interaction with the AP
+- The SSID is used as the PBKDF2 salt, which means common SSIDs like "linksys" may have precomputed rainbow tables available
+- Changing the SSID to something unique forces attackers to recompute hashes for each attempt
+
+### 3. Aircrack-ng Suite
+
+Review the purpose of each tool in the Aircrack-ng suite. The exam tests tool selection by name:
+
+- `airmon-ng`: enables and manages monitor mode on wireless interfaces
+- `airodump-ng`: passive packet capture and network enumeration
+- `aireplay-ng`: frame injection including deauthentication, fake authentication, and ARP replay
+- `aircrack-ng`: offline dictionary and brute-force attack against WPA2 handshakes and WEP keys
+- `airbase-ng`: creates a software access point for evil twin and rogue AP scenarios
+
+### 4. PMKID Attack
+
+The PMKID attack is a more recent technique that does not require capturing a four-way handshake:
+
+- The PMKID is derived from the PMK (itself derived from the PSK) combined with the AP and client MAC addresses
+- A single EAPOL frame during the association process contains the PMKID
+- Tools: `hcxdumptool` for capture, `hcxpcapngtool` for conversion, Hashcat with mode 22000 for cracking
+- The PMKID attack requires only that the client attempt to associate — a full handshake completion is not required
+
+### 5. Evil Twin and Rogue AP Attacks
+
+Review the distinction between these two related attacks:
+
+- Evil twin: rogue AP with the same SSID (and optionally BSSID spoofed) as a legitimate network, designed to intercept client connections
+- `hostapd-wpe`: specifically designed for WPA2-Enterprise evil twin attacks; captures EAP credential exchanges from enterprise clients attempting to authenticate with the rogue RADIUS server
+- Captive portal phishing: the rogue AP serves a fake login page to harvest credentials from clients who connect
+- Key legal risk: RF signals may extend to areas beyond the authorized scope
+
+### 6. WPS Vulnerabilities
+
+Understand the WPS PIN design flaw in detail:
+
+- The 8-digit PIN is verified in two halves: the AP confirms the first 4 digits before checking the second 4
+- The last digit of the 8-digit PIN is a checksum, reducing the second half to 3 unknown digits
+- Total brute-force space: `10^4 + 10^3 = 11,000` combinations rather than `10^8`
+- Reaver and bully are the standard tools for WPS PIN attacks
+- Many APs implement WPS lockout after repeated failures; some older models do not
+- WPS attacks recover the WPA2-Personal PSK — they do not apply to WPA2-Enterprise
+
+### 7. Bluetooth and Zigbee
+
+Review these alternative wireless attack surfaces:
+
+- Bluejacking (unsolicited messages), Bluesnarfing (data theft), Bluebugging (device control) — primarily historical attacks on classic Bluetooth
+- BLE (Bluetooth Low Energy) advertising packets are broadcast continuously and may reveal device identity, capabilities, and location
+- Zigbee mesh networks are used in IoT, industrial, and building automation contexts
+- KillerBee is the primary Zigbee security research framework
+- Physical penetration tests of data centers and industrial facilities may include Zigbee scoping
+
+### 8. Legal Constraints
+
+This is an exam-tested topic. Key points:
+
+- Written authorization must explicitly include wireless testing and should specify authorized SSIDs and BSSIDs
+- Deauthentication attacks disrupt service for legitimate users — coordinate timing with the client
+- Evil twin deployments in shared facilities risk capturing traffic from unauthorized third parties
+- Radio frequency propagation does not respect property boundaries — be aware of geographic scope
+- The Computer Fraud and Abuse Act (CFAA) applies to unauthorized access to any wireless network
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Complete the Phishing and Social Engineering rooms in the [TryHackMe Pentest Learning Path](https://tryhackme.com/path/outline/pentesting). TryHackMe is a browser-based cybersecurity training platform — labs run entirely in the browser with no local VM installation required. The phishing rooms cover email header analysis, credential harvesting simulation, and the psychological principles behind effective social engineering attacks.
-*   **Required Video:** Watch the Social Engineering segment of the [CompTIA PenTest+ Complete Course by freeCodeCamp](https://www.youtube.com/watch?v=3Kq1MIfC-4U). This is a free, full-length PT0-002 prep course on YouTube. Use chapter markers to navigate to the social engineering content covering phishing, pretexting, vishing, and the Social Engineering Toolkit.
+## Key Vocabulary
+
+Review and be able to define each of the following terms:
+
+- 802.11 standard
+- WEP (Wired Equivalent Privacy)
+- WPA-TKIP
+- WPA2-CCMP (AES)
+- WPA2-Personal (PSK)
+- WPA2-Enterprise (802.1X)
+- WPA3 (SAE)
+- Four-way handshake
+- PBKDF2
+- PMK (Pairwise Master Key)
+- PTK (Pairwise Transient Key)
+- PMKID
+- Monitor mode
+- Managed mode
+- airodump-ng
+- airmon-ng
+- aireplay-ng
+- aircrack-ng
+- Deauthentication attack
+- Evil twin
+- Rogue access point
+- hostapd-wpe
+- WPS (Wi-Fi Protected Setup)
+- Reaver
+- BSSID
+- SSID
+- Bluejacking
+- Bluesnarfing
+- BLE (Bluetooth Low Energy)
+- Zigbee
+- KillerBee
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Launch the Social Engineering Toolkit: `sudo setoolkit`**: You will open SET and navigate its menu to explore the social engineering attack categories available — building familiarity with the tool's structure before executing a specific attack vector.
-*   **Clone a credential harvesting page**: Using SET's Website Attack Vector → Credential Harvester → Site Cloner option, you will clone a login page and set up a local listener. You will document how a phishing link to this page would capture credentials entered by a victim, and what those credentials would enable an attacker to access.
-*   **Craft a targeted spear phishing pretext**: Using OSINT gathered in earlier modules (LinkedIn, WHOIS, theHarvester results), you will draft a realistic spear phishing email pretext for a hypothetical target — identifying the psychological principles used (authority, urgency, familiarity) and explaining why the pretext would be effective against the specific target persona.
+## Study Questions
+
+These questions are for self-study and are not submitted. Use them to prepare for the quiz.
+
+1. Why is WEP considered completely broken? What specific cryptographic weakness enables the IV collision attack?
+
+2. A WPA2-Personal network uses the SSID "linksys" and a 12-character passphrase. Why is the SSID relevant to the difficulty of cracking the handshake?
+
+3. Explain the WPS PIN design flaw in your own words. Why does verifying the PIN in two halves reduce the attack space from 100 million to approximately 11,000?
+
+4. What is the difference between a deauthentication attack and an evil twin attack? Could they be used together? Explain.
+
+5. What does `airmon-ng start wlan0` do, and why is this step required before running `airodump-ng`?
+
+6. A tester wants to crack a WPA2 handshake as quickly as possible. Should they use aircrack-ng or Hashcat, and why?
+
+7. Why is WPA2-Enterprise resistant to the offline handshake cracking attack that targets WPA2-Personal?
+
+8. What is the PMKID attack and what advantage does it have over traditional handshake capture?
+
+9. What legal risk exists when conducting an evil twin attack in an office building that houses multiple tenant organizations?
+
+10. Name two differences between classic Bluetooth attacks (Bluejacking, Bluesnarfing) and modern BLE attack techniques.
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and be able to explain each in your own words.
-- [ ] Complete the Phishing and Social Engineering rooms in [TryHackMe Pentest Learning Path](https://tryhackme.com/path/outline/pentesting).
-- [ ] Watch the Social Engineering section of the [CompTIA PenTest+ Complete Course by freeCodeCamp](https://www.youtube.com/watch?v=3Kq1MIfC-4U).
-- [ ] Review the lab instructions and understand the purpose of each step before starting.
-- [ ] Proceed to the weekly hands-on lab activity.
+## Recommended Resources
+
+The following free resources supplement the lecture material:
+
+- Aircrack-ng documentation: aircrack-ng.org/documentation.html
+- hcxtools documentation (PMKID attack): github.com/ZerBea/hcxtools
+- TryHackMe Pentesting Learning Path (Wi-Fi Hacking room): tryhackme.com
+- Offensive Security wireless tutorials: kali.org/tools/aircrack-ng
+- WPS vulnerability research: sviehb.wordpress.com/2011/12/27/wi-fi-protected-setup-pin-brute-force-vulnerability
+
+TryHackMe's Wi-Fi Hacking room is strongly recommended as a browser-accessible lab that walks through the aircrack-ng workflow, handshake capture, and offline cracking without requiring physical wireless hardware.
+
+---
+
+## CompTIA PenTest+ Exam Objectives Covered
+
+The following PT0-002 exam objective is the primary focus:
+
+- 3.2: Given a scenario, research attack vectors and perform wireless attacks
+
+This objective explicitly tests: WPA cracking, evil twin attacks, deauthentication, WPS PIN attacks, Bluetooth enumeration, and the legal requirements for wireless testing. Wireless attacks appear as scenario questions requiring you to select the correct tool or technique for a given situation.
+
+---
+
+*End of Module 11 Reading Guide*

@@ -1,58 +1,322 @@
-# Reading Guide: Module 16 - Final Exam Prep and Windows Server Administration Certification
+# Reading Guide: Module 16 — Capstone Review
 
-## Course: CIS-3326_Windows_Server_Admin (3326_Windows_Server_Admin - Microsoft Windows Server Administration (Active Directory))
+## Course: CIS-3326 Windows Server Administration
 
----
+## Texas Wesleyan University | Professor Nash
 
-### Introduction
-
-Welcome to **Module 16 – Final Exam Prep and Windows Server Administration Certification**! This final module consolidates the key concepts from all 15 preceding modules and maps them directly to the AZ-800 (Administering Windows Server Hybrid Core Infrastructure) and AZ-801 (Configuring Windows Server Hybrid Advanced Services) exam objectives. Use this guide as your comprehensive review checklist before the final exam.
-
-As a student, you will review all major topic domains, practice scenario-based reasoning, and confirm your readiness across installation, AD DS, GPO, networking, security, virtualization, and identity services. Make sure to complete the checklist and review all glossary terms from previous modules before sitting for the final.
+## Certification Alignment: Microsoft Windows Server Administration
 
 ---
 
-### 1. High-Yield Glossary
+## Overview
 
-Review these essential definitions carefully. These terms span all 15 modules and represent the highest-frequency topics on the certification exam:
-
-* **AZ-800 Exam Domain Summary**: The AZ-800 exam covers five domains: (1) Deploy and manage Windows Server infrastructure, (2) Manage on-premises and hybrid AD DS, (3) Manage Windows Server and workloads in a hybrid environment, (4) Manage virtual machines and containers, and (5) Implement and manage an on-premises and hybrid networking infrastructure.
-* **Hybrid Identity (Azure AD Connect + AD FS)**: The combination of on-premises AD DS synchronized to Microsoft Entra ID via Azure AD Connect, optionally federated through AD FS. Enables SSO across on-premises and cloud resources. Key decision: Password Hash Sync vs. Pass-Through Authentication vs. Federation.
-* **LSDOU + Enforced + Block Inheritance**: The complete GPO processing model. Local → Site → Domain → OU, last writer wins, unless Enforced (higher-level GPO always wins) or Block Inheritance (OU refuses higher-level GPOs, except Enforced ones). The most commonly tested GPO concept on AZ-800.
-* **Authoritative Restore vs. AD Recycle Bin**: Two recovery paths for deleted AD objects. AD Recycle Bin (`Restore-ADObject`) is faster and preserves all attributes — use it first if enabled. Authoritative restore from backup using `ntdsutil` is the fallback when Recycle Bin is unavailable or the retention window has passed.
-* **BitLocker Network Unlock vs. TPM-only**: For headless servers that cannot accept a PIN at boot, BitLocker Network Unlock automatically decrypts the drive when the server boots on the trusted internal network. TPM-only is convenient but provides no protection against booting the server on an untrusted network.
-* **Always On VPN vs. DirectAccess**: Always On VPN is the modern replacement — it works with all Windows 10/11 editions, non-domain devices, and IPv4 networks. DirectAccess requires Enterprise edition, domain membership, and IPv6. For any new deployment scenario on AZ-800, Always On VPN is the correct answer.
+This reading guide consolidates the highest-yield concepts from all 15 modules.
+Use it as your comprehensive review checklist before the final exam. Topics
+are organized by domain, mirroring the structure of Microsoft certification
+exam objectives for Windows Server Administration.
 
 ---
 
-### 2. Certification Exam Tips
+## Part 1: Remote Desktop Services and Remote Administration
 
-* **Read every scenario question twice**: AZ-800 scenario questions hide the key constraint in the last sentence. Common constraints include "without additional cost," "without reinstalling the OS," "must work when the WAN link is down," and "must not require user interaction." Identify the constraint before evaluating answers.
-* **Use elimination on distractors**: Each answer choice on the AZ-800 is plausible in some context. Eliminate answers that are technically correct but wrong for the specific constraint in the scenario. The most common distractor is a solution that works but requires more steps or higher cost than necessary.
-* **PowerShell syntax on the exam**: You will see PowerShell cmdlets in answer choices. Know the difference between `Get-ADUser`, `Set-ADUser`, `New-ADUser`, and `Remove-ADUser`, and understand when to use `-Filter`, `-Identity`, and `-SearchBase` parameters.
-* **Microsoft Learn Reference**: Use [Microsoft Learn – AZ-800 Study Guide](https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/az-800) as your final review reference. It maps every exam objective to the corresponding documentation, providing the authoritative checklist for certification readiness.
+### 1.1 RDS Role Services Reference
+
+| Role Service | Function | Port |
+|---|---|---|
+| RD Session Host | Hosts user sessions and applications | 3389 (RDP) |
+| RD Gateway | Proxies RDP over HTTPS; bypasses port 3389 restrictions | 443 |
+| RD Web Access | Web portal for RemoteApp and desktop connections | 443 |
+| RD Connection Broker | Session reconnection and load balancing | 3389 |
+| RD Licensing | Issues Client Access Licenses (120-day grace) | 135, 49152+ |
+| RD Virtualization Host | Hosts personal session desktops on Hyper-V | 3389 |
+
+### 1.2 PSRemoting Command Reference
+
+```powershell
+# Interactive one-to-one session
+Enter-PSSession -ComputerName "Server01"
+
+# Fan-out command to multiple servers simultaneously
+Invoke-Command -ComputerName "Server01","Server02","Server03" -ScriptBlock {
+    Get-Service -Name "W32Time"
+}
+
+# Create a reusable persistent session
+$session = New-PSSession -ComputerName "Server01"
+Invoke-Command -Session $session -ScriptBlock { Get-Process }
+Remove-PSSession $session
+
+# Enable WinRM if not active
+Enable-PSRemoting -Force
+```
 
 ---
 
-### Required Readings & Videos
+## Part 2: Hyper-V Virtualization
 
-To prepare for the final exam, you must complete the following readings and reviews:
+### 2.1 Generation Comparison
 
-* **Required Reading:** Review the official AZ-800 exam study guide at [Microsoft Learn: AZ-800 Study Guide](https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/az-800). Cross-reference each objective with the reading guides from Modules 01–15 to identify any gaps.
-* **Required Video:** Re-watch any video lectures from the course playlist where you feel less confident: [Windows Server Administration Course](https://www.youtube.com/playlist?list=PLvG40H4sL3h0n72gQJ_m8N7xN61tL6d5H).
+| Feature | Generation 1 | Generation 2 |
+|---|---|---|
+| Firmware | BIOS | UEFI |
+| Secure Boot | Not supported | Supported |
+| Boot from | IDE, legacy network | NVMe, synthetic network |
+| Guest OS | Windows Server 2003+ | Windows Server 2012 R2+ |
+| Recommendation | Legacy VMs only | All new deployments |
+
+### 2.2 Checkpoint Types
+
+```powershell
+# Create a production checkpoint (VSS-consistent, recommended for VMs with databases)
+Checkpoint-VM -Name "WebVM" -SnapshotName "PrePatch" -CheckpointType Production
+
+# Restore to a checkpoint
+Restore-VMCheckpoint -Name "WebVM" -SnapshotName "PrePatch" -Confirm:$false
+
+# Remove a checkpoint
+Remove-VMCheckpoint -VMName "WebVM" -SnapshotName "PrePatch"
+```
+
+### 2.3 Hyper-V Replica Failover Types
+
+| Failover Type | When Used | Effect on Replication |
+|---|---|---|
+| Planned Failover | Deliberate switchover (maintenance) | Replication continues reversed |
+| Unplanned Failover | Primary site failure | Replication must be resumed manually |
+| Test Failover | DR testing | No impact on production replication |
 
 ---
 
-### Lab & Command Integration
+## Part 3: Storage
 
-In this final module's lab, you will complete a comprehensive review exercise covering AD DS administration, GPO creation and troubleshooting, BitLocker configuration, PowerShell remoting, and performance monitoring — consolidating all hands-on skills from the semester into a single capstone scenario.
+### 3.1 Storage Spaces Resiliency Comparison
+
+| Type | Minimum Disks | Fault Tolerance | Use Case |
+|---|---|---|---|
+| Simple | 1 | None | Temp data, scratch space |
+| Mirror (2-way) | 2 | 1 disk failure | OS volumes, databases |
+| Mirror (3-way) | 5 | 2 disk failures | High-availability data |
+| Parity | 3 | 1 disk failure | Archival, sequential workloads |
+| Dual Parity | 7 | 2 disk failures | Archival with higher protection |
+
+### 3.2 BitLocker Key Protectors
+
+| Protector | Description | Use Case |
+|---|---|---|
+| TPM | Hardware-bound; auto-unlocks on trusted hardware | Server volumes |
+| TPM + PIN | TPM plus a PIN typed at boot | High-security servers with console access |
+| TPM + Startup Key | TPM plus USB key at boot | Servers without TPM PIN UI |
+| Recovery Key | 48-digit numeric key; emergency access | Always configure as backup |
+| Network Unlock | Auto-decrypts when server boots on trusted network | Headless servers in secured datacenters |
+
+```powershell
+# Enable BitLocker and back up recovery key to AD
+Enable-BitLocker -MountPoint "C:" -TpmProtector
+Add-BitLockerKeyProtector -MountPoint "C:" -RecoveryPasswordProtector
+Backup-BitLockerKeyProtector -MountPoint "C:" `
+    -KeyProtectorId (Get-BitLockerVolume "C:").KeyProtector[1].KeyProtectorId
+```
 
 ---
 
-### 3. Study Checklist
+## Part 4: Security
 
-* [ ] Review the glossary terms from all 16 modules.
-* [ ] Review the official AZ-800 study guide at [Microsoft Learn: AZ-800 Study Guide](https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/az-800).
-* [ ] Re-watch any video lectures you need to reinforce in [Windows Server Administration Course](https://www.youtube.com/playlist?list=PLvG40H4sL3h0n72gQJ_m8N7xN61tL6d5H).
-* [ ] Complete the capstone lab exercise.
-* [ ] Proceed to the final exam.
+### 4.1 Windows Firewall Rule Evaluation
+
+Windows Firewall evaluates rules in the following order. The first match wins,
+with Block rules taking precedence over Allow rules.
+
+1. Authenticated bypass rules
+2. Block connection rules
+3. Allow connection rules
+
+```powershell
+# Verify Defender protection status
+Get-MpComputerStatus | Select-Object AMRunningMode, RealTimeProtectionEnabled
+
+# Create an inbound Allow rule
+New-NetFirewallRule -DisplayName "Allow HTTPS In" `
+    -Direction Inbound `
+    -Protocol TCP `
+    -LocalPort 443 `
+    -Action Allow `
+    -Profile Domain
+
+# Create an inbound Block rule (overrides any Allow for the same traffic)
+New-NetFirewallRule -DisplayName "Block Telnet In" `
+    -Direction Inbound `
+    -Protocol TCP `
+    -LocalPort 23 `
+    -Action Block
+```
+
+### 4.2 JEA Configuration Summary
+
+```powershell
+# Create the Role Capability File
+New-PSRoleCapabilityFile -Path "C:\JEA\RoleCapabilities\HelpDesk.psrc" `
+    -VisibleCmdlets @(
+        "Get-Service",
+        "Restart-Service",
+        @{Name="Set-Service"; Parameters=@{Name="Name"; ValidateSet=@("DNS","W32Time")}}
+    )
+
+# Create the Session Configuration File
+New-PSSessionConfigurationFile -Path "C:\JEA\HelpDeskEndpoint.pssc" `
+    -SessionType RestrictedRemoteServer `
+    -RunAsVirtualAccount `
+    -RoleDefinitions @{ "CONTOSO\HelpDesk" = @{ RoleCapabilities = "HelpDesk" } }
+
+# Register the endpoint
+Register-PSSessionConfiguration -Name "HelpDeskJEA" `
+    -Path "C:\JEA\HelpDeskEndpoint.pssc" `
+    -Force
+```
+
+### 4.3 LAPS Command Reference
+
+```powershell
+# Extend the AD schema (run once as Schema Admin)
+Update-LapsADSchema
+
+# Configure permissions for an OU
+Set-LapsADComputerSelfPermission -Identity "OU=Servers,DC=contoso,DC=com"
+
+# Retrieve a computer's current LAPS password
+Get-LapsADPassword -Identity "Server01" -AsPlainText
+```
+
+---
+
+## Part 5: PowerShell and DSC
+
+### 5.1 Event Log Efficiency Reference
+
+```powershell
+# Less efficient — retrieves all events then filters in memory
+Get-EventLog -LogName Security | Where-Object { $_.InstanceId -eq 4625 }
+
+# Most efficient — server-side filter at source
+Get-WinEvent -FilterHashtable @{
+    LogName   = "Security"
+    Id        = 4625
+    StartTime = (Get-Date).AddDays(-1)
+}
+```
+
+### 5.2 DSC Quick Reference
+
+```powershell
+# Compile a configuration to MOF
+. "C:\DSC\MyConfig.ps1"
+MyConfig -OutputPath "C:\DSC\MOF"
+
+# Apply the configuration
+Start-DscConfiguration -Path "C:\DSC\MOF" -Wait -Verbose -Force
+
+# Test compliance (read-only)
+Test-DscConfiguration -Verbose
+
+# Configure LCM for auto-correction
+[DSCLocalConfigurationManager()]
+Configuration AutoCorrectLCM {
+    Node "localhost" {
+        Settings {
+            ConfigurationMode  = "ApplyAndAutoCorrect"
+            RefreshMode        = "Push"
+            RebootNodeIfNeeded = $false
+        }
+    }
+}
+```
+
+### 5.3 LCM Configuration Modes
+
+| Mode | Behavior |
+|---|---|
+| ApplyOnly | Applies once; no monitoring |
+| ApplyAndMonitor | Applies and logs drift; does not correct |
+| ApplyAndAutoCorrect | Applies, monitors, and corrects drift automatically |
+
+---
+
+## Part 6: Active Directory and Group Policy Review
+
+### 6.1 GPO Processing Order
+
+LSDOU: Local → Site → Domain → OU (last applied wins for conflicting settings).
+
+Enforced GPOs win regardless of Block Inheritance. Block Inheritance at an OU
+prevents higher-level GPOs from applying — except Enforced GPOs, which bypass
+the block.
+
+```powershell
+# Force Group Policy refresh
+Invoke-GPUpdate -Computer "Workstation01" -Force
+
+# Generate HTML GPO report for a user
+gpresult /h "C:\Reports\gpreport.html" /user "CONTOSO\jsmith"
+```
+
+### 6.2 AD Object Recovery
+
+```powershell
+# Restore deleted objects using AD Recycle Bin (requires Recycle Bin to be enabled)
+Get-ADObject -Filter {isDeleted -eq $true -and ObjectClass -eq "user"} `
+    -IncludeDeletedObjects | Restore-ADObject
+
+# Enable AD Recycle Bin (one-time; requires Forest Functional Level 2008 R2+)
+Enable-ADOptionalFeature -Identity "Recycle Bin Feature" `
+    -Scope ForestOrConfigurationSet `
+    -Target "contoso.com"
+```
+
+---
+
+## Part 7: Hybrid Identity Reference
+
+| Authentication Method | Password in Azure AD | On-Premises DC Required | Best For |
+|---|---|---|---|
+| Password Hash Sync (PHS) | Yes (hash) | No (for cloud auth) | Simplicity and cloud resilience |
+| Pass-Through Auth (PTA) | No | Yes (always) | Compliance; passwords never leave on-prem |
+| AD FS Federation | No | Yes (always) | Complex claims; conditional access policies |
+
+---
+
+## Key Terms Consolidated
+
+- **FSMO roles** — Five single-master roles; two forest-wide (Schema Master,
+  Domain Naming Master), three domain-wide (PDC Emulator, RID Master,
+  Infrastructure Master)
+- **DSRM** — Directory Services Restore Mode; offline DC maintenance mode
+  for AD recovery
+- **MOF file** — Managed Object Format; DSC configuration compiled output
+- **LCM** — Local Configuration Manager; DSC engine on every managed node
+- **JEA** — Just Enough Administration; PowerShell session with constrained
+  command set
+- **IQN** — iSCSI Qualified Name; unique identifier for iSCSI targets and
+  initiators
+- **VBS** — Virtualization-Based Security; hardware isolation used by
+  Credential Guard and Device Guard
+- **RemoteApp** — RDS feature that publishes individual applications rather
+  than full desktops
+- **GPO** — Group Policy Object; AD object that defines user and computer
+  configuration settings
+- **CAL** — Client Access License; required for each user or device connecting
+  to RDS Session Host
+
+---
+
+## Exam Preparation Checklist
+
+- Review GPO LSDOU processing, Enforced, and Block Inheritance
+- Know all five FSMO roles and their functions
+- Know the difference between PHS, PTA, and AD FS federation
+- Know the three DSC ConfigurationMode options
+- Know the RDS role services and their ports
+- Know BitLocker key protectors and when to use each
+- Know JEA file types (.pssc vs .psrc) and their purposes
+- Know Storage Spaces resiliency types and minimum disk requirements
+- Know Hyper-V checkpoint types (Standard vs Production)
+- Know the difference between Push and Pull mode DSC
+- Practice reading scenario questions by identifying the constraint first

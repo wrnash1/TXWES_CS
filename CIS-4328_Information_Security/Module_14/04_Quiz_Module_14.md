@@ -1,76 +1,167 @@
-# Quiz: Module 14 - Risk Management and Business Continuity
-## Course: CIS-4328_Information_Security (CompTIA Security+ SY0-701)
+# Quiz: Module 14 — Governance, Compliance, and Regulatory Frameworks
+
+## Course: CIS-4328 Information Security
+
+**Certification Alignment:** CompTIA Security+ (SY0-701)
 
 ---
 
-**Question 1**
-A risk analyst is evaluating the threat of a ransomware attack against a file server valued at $500,000. The analyst estimates that a successful attack would render 40% of the server's value unrecoverable. Historical data suggests ransomware attacks of this type occur approximately twice per year at similar organizations. What is the Annualized Loss Expectancy (ALE) for this threat?
-A) $200,000
-B) $400,000
-C) $100,000
-D) $500,000
-*   **Correct Answer:** B) $400,000
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* $200,000 represents only the Single Loss Expectancy (SLE = $500,000 × 0.40). The ALE requires multiplying the SLE by the Annualized Rate of Occurrence (ARO): ALE = $200,000 × 2 = $400,000.
-    *   *Why C is incorrect:* $100,000 does not correspond to any correct step in the ALE calculation. It may result from incorrectly applying the exposure factor to the ARO rather than to the asset value first.
-    *   *Why D is incorrect:* $500,000 is the full asset value with no adjustment for the exposure factor or frequency. The ALE accounts for the percentage of value lost per event and the expected frequency of events — it is not simply the total asset value.
+## Instructions
+
+Select the best answer for each question. Each question is worth 10 points. Questions mirror the style and difficulty of CompTIA Security+ SY0-701 exam items.
 
 ---
 
----
+## Questions
 
-**Question 2**
-A company's security team has identified that their customer-facing web portal uses an end-of-life web framework with multiple known vulnerabilities. The vendor no longer provides patches. Replacing the framework requires a six-month development effort. As an interim measure, the team deploys a web application firewall (WAF) to filter known exploit patterns targeting the vulnerable framework. Which risk response strategy does the WAF deployment represent?
-A) Risk Avoidance
-B) Risk Transference
-C) Risk Acceptance
-D) Risk Mitigation
-*   **Correct Answer:** D) Risk Mitigation
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Risk avoidance would mean taking the vulnerable web portal completely offline or discontinuing the service to eliminate the risk entirely — the organization is not doing that here; they are continuing to operate the portal while reducing the risk.
-    *   *Why B is incorrect:* Risk transference shifts the financial impact of the risk to a third party (e.g., cyber insurance or a managed security service contract) — deploying an internal WAF is a technical control that reduces the organization's own exposure, not a transfer of liability.
-    *   *Why C is incorrect:* Risk acceptance means acknowledging the risk and choosing to take no action — deploying a WAF is an active control implementation, which is the opposite of accepting the risk without response.
+### Question 1
 
----
+A company based in Canada operates an e-commerce website that accepts orders from customers in France and Germany. The company collects names, addresses, and payment details. Which regulation most directly governs how this company must handle the European customers' personal data?
 
----
+A. HIPAA
+B. SOX
+C. GDPR
+D. PCI-DSS
 
-**Question 3**
-A hospital's IT disaster recovery plan specifies that the Electronic Health Record (EHR) system must be restored within 2 hours of a failure, and no more than 15 minutes of patient data can be lost in the event of a disaster. Which statements correctly identify the Recovery Time Objective (RTO) and Recovery Point Objective (RPO)?
-A) RTO = 15 minutes; RPO = 2 hours
-B) RTO = 2 hours; RPO = 15 minutes
-C) Both 2 hours and 15 minutes are RTO values; RPO is not specified.
-D) RTO = 2 hours; RPO = 0 minutes, because patient safety requires no data loss.
-*   **Correct Answer:** B) RTO = 2 hours; RPO = 15 minutes
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* This reverses the definitions. RTO defines the maximum acceptable downtime (how long the system can be unavailable) — that is the 2-hour requirement. RPO defines the maximum acceptable data loss measured in time (how old the backup can be) — that is the 15-minute requirement.
-    *   *Why C is incorrect:* The two values represent different recovery metrics, not two RTO values. The 15-minute requirement specifically describes data loss tolerance, which is the definition of RPO, not RTO.
-    *   *Why D is incorrect:* The RPO is explicitly stated as 15 minutes — this is the maximum data loss the organization has defined as acceptable. Assuming RPO is zero is an interpretation not supported by the scenario and would require continuous synchronous replication, which is a significantly higher infrastructure investment.
+Correct Answer: C
+
+Explanation: GDPR applies to any organization that processes personal data of EU residents, regardless of where the organization is headquartered. The Canadian company processing French and German customers' data is subject to GDPR. HIPAA covers healthcare data in the US. SOX covers US public companies' financial reporting. PCI-DSS governs cardholder data but is a contractual standard, not a data protection regulation.
 
 ---
 
-**Question 4**
-A retail company's disaster recovery plan calls for an alternate processing site that must be capable of resuming full e-commerce operations within 30 minutes of a primary site failure. The site must have all hardware pre-provisioned, all software pre-installed, and data continuously replicated from the production environment. Which disaster recovery site type meets this requirement?
-A) Cold site
-B) Warm site
-C) Hot site
-D) Mobile site
-*   **Correct Answer:** C) Hot site
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* A cold site provides only physical space, power, and connectivity — no hardware or software is pre-installed. Recovery requires procuring, shipping, and configuring equipment, which typically takes days to weeks. This cannot meet a 30-minute RTO.
-    *   *Why B is incorrect:* A warm site has some hardware and connectivity pre-installed but requires data restoration and system configuration before operations can resume — recovery typically takes hours to days. A 30-minute RTO is beyond what a warm site can reliably deliver.
-    *   *Why D is incorrect:* A mobile site is a portable unit (truck or trailer) with computing equipment that can be deployed to a disaster location — it is used when the organization needs temporary on-site processing capability, not for rapid failover with pre-replicated data.
+### Question 2
+
+A security analyst discovers that a cloud storage vendor used by a hospital to archive patient records has no signed agreement defining the vendor's data protection obligations. Under HIPAA, which requirement is the hospital violating?
+
+A. The Minimum Necessary Standard
+B. The requirement to have a Business Associate Agreement in place
+C. The 60-day breach notification requirement
+D. The requirement to conduct an annual risk analysis
+
+Correct Answer: B
+
+Explanation: HIPAA requires covered entities to have a signed Business Associate Agreement (BAA) with any vendor that handles protected health information on their behalf. Without a BAA, the hospital is out of compliance regardless of how the vendor actually handles the data. The other options describe real HIPAA requirements but are not the issue described in this scenario.
 
 ---
 
-**Question 5**
-A small software company identifies a low-severity risk: the risk that a single employee's unencrypted USB drive could be lost, potentially exposing draft marketing materials that are not yet publicly released. The security team estimates the likelihood is low and the financial impact of exposure is minimal — the materials contain no PII, financial data, or trade secrets. After reviewing the cost of deploying USB encryption software company-wide ($8,000 annually) versus the estimated ALE ($500), the CISO decides to document the risk and take no further action. Which risk response strategy is the CISO applying?
-A) Risk Mitigation
-B) Risk Avoidance
-C) Risk Transference
-D) Risk Acceptance
-*   **Correct Answer:** D) Risk Acceptance
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Risk mitigation involves implementing a control to reduce the likelihood or impact of the risk — deploying USB encryption would be mitigation. The CISO explicitly decided not to deploy the control.
-    *   *Why B is incorrect:* Risk avoidance would mean prohibiting USB drives entirely to eliminate the risk — the company is not doing that. They are continuing the activity that creates the risk while choosing not to invest in controls.
-    *   *Why C is incorrect:* Risk transference would involve purchasing insurance or contracting with a third party to absorb the financial impact — no such transfer mechanism is mentioned. The company is simply acknowledging and documenting the risk without action.
+### Question 3
+
+An organization has documented that it uses AES-256 for all encryption of data at rest on servers containing sensitive data. This document is reviewed and approved annually by the security team. Which type of governance document does this best represent?
+
+A. Policy
+B. Guideline
+C. Procedure
+D. Standard
+
+Correct Answer: D
+
+Explanation: A standard is a specific, measurable requirement that supports a higher-level policy. Specifying AES-256 as the required algorithm is a standard — it is mandatory and measurable. A policy would state the high-level requirement ("sensitive data must be encrypted at rest") without specifying the algorithm. A procedure would provide step-by-step implementation instructions. A guideline is non-mandatory.
+
+---
+
+### Question 4
+
+A retail merchant processes approximately 2 million credit card transactions per year. The merchant stores the cardholder's full name, primary account number (PAN), expiration date, and the 3-digit CVV security code in its transaction database after each sale is completed. Which stored data element is explicitly prohibited by PCI-DSS?
+
+A. Full cardholder name
+B. Primary account number (PAN)
+C. Expiration date
+D. CVV security code
+
+Correct Answer: D
+
+Explanation: PCI-DSS explicitly prohibits storing Sensitive Authentication Data (SAD) after authorization is complete. The CVV/CVC security code is classified as SAD and must never be stored post-authorization. The PAN (if stored) must be protected with strong encryption or tokenization, but it is not prohibited from storage. Cardholder name and expiration date are cardholder data that may be stored with appropriate protections.
+
+---
+
+### Question 5
+
+A software developer at a publicly traded company has the ability to write code changes to the company's financial reporting system and also has deployment access to push those changes directly to the production environment without any approval. Which internal control principle required for SOX compliance does this situation violate?
+
+A. Data minimization
+B. Segregation of duties
+C. Privacy by Design
+D. Least privilege
+
+Correct Answer: B
+
+Explanation: SOX Section 404 requires effective internal controls over financial reporting. Segregation of duties (SoD) is a core IT General Control (ITGC) that prevents one person from having conflicting access — in this case, both writing and deploying financial system code without oversight. While least privilege is also relevant, the specific SOX ITGC concept being violated is segregation of duties.
+
+---
+
+### Question 6
+
+An organization wants to understand its current cybersecurity capabilities, identify where it wants to be in 18 months, and prioritize investments to close the gap. Which NIST Cybersecurity Framework concept most directly supports this activity?
+
+A. Tiers 1 through 4 maturity ratings
+B. Current Profile and Target Profile comparison
+C. Annex A control selection
+D. Plan-Do-Check-Act cycle
+
+Correct Answer: B
+
+Explanation: The NIST CSF Current Profile describes an organization's existing cybersecurity practices mapped to the framework. The Target Profile describes the desired future state. Comparing the two produces a gap analysis that drives prioritized investment. Tiers describe organizational maturity but are not the primary gap analysis tool. Annex A is an ISO 27001 concept. PDCA is the ISO 27001 improvement cycle.
+
+---
+
+### Question 7
+
+An organization pursuing ISO 27001 certification has completed its risk assessment and selected applicable controls from Annex A. Which required document must it produce that lists all Annex A controls, indicates which are applicable, and provides justification for any controls that were excluded?
+
+A. Risk Treatment Plan
+B. Information Security Policy
+C. Statement of Applicability
+D. ISMS Scope Document
+
+Correct Answer: C
+
+Explanation: The Statement of Applicability (SoA) is a mandatory ISO 27001 document that lists all Annex A controls, indicates whether each is applicable to the organization, and justifies any exclusions. It is a key deliverable for certification audits. The Risk Treatment Plan documents how risks will be addressed. The Information Security Policy is the top-level governance document. The Scope Document defines the ISMS boundaries.
+
+---
+
+### Question 8
+
+A healthcare organization experiences a ransomware attack that encrypts files containing ePHI for 12,000 patients across three states. Assuming the encryption constitutes a breach under HIPAA's definition, what are the organization's notification obligations?
+
+A. Notify affected individuals within 30 days; no media notification required
+B. Notify affected individuals within 60 days; notify media in each affected state; notify HHS
+C. Notify HHS within 24 hours; notify affected individuals within 72 hours
+D. Notify affected individuals within 60 days; notify the FBI immediately
+
+Correct Answer: B
+
+Explanation: HIPAA's Breach Notification Rule requires covered entities to notify affected individuals within 60 days of discovering a breach. When a breach affects 500 or more residents of a state, the covered entity must also notify prominent media outlets in that state without unreasonable delay. All breaches must be reported to HHS. The 72-hour notification rule is a GDPR requirement, not HIPAA.
+
+---
+
+### Question 9
+
+A company collects customer email addresses to send order confirmation emails. Six months later, marketing wants to use those same email addresses to send promotional newsletters. The customers never consented to marketing communications. Which privacy principle does using the emails for marketing violate?
+
+A. Data minimization
+B. Right to erasure
+C. Purpose limitation
+D. Privacy by Design
+
+Correct Answer: C
+
+Explanation: Purpose limitation is the principle that data collected for one specific purpose must not be used for a different purpose without obtaining new consent. The customers provided their email addresses for transactional communication only. Using them for marketing without consent violates purpose limitation. Data minimization concerns the quantity of data collected, not its reuse. Right to erasure is a data subject right. Privacy by Design concerns how systems are built.
+
+---
+
+### Question 10
+
+A manager in the finance department is responsible for deciding how long financial records must be retained and who within the department may access them. She has delegated the task of configuring access controls in the financial system to the IT team. Which data governance roles do the manager and IT team respectively hold?
+
+A. Manager: Data Steward; IT team: Data Owner
+B. Manager: Data Custodian; IT team: Data Processor
+C. Manager: Data Owner; IT team: Data Custodian
+D. Manager: Data Controller; IT team: Data Processor
+
+Correct Answer: C
+
+Explanation: The data owner is the business role accountable for the data — they make decisions about classification, access, and retention. The data custodian is the technical role responsible for implementing the controls defined by the owner. The manager making decisions about retention and access is the data owner. The IT team implementing those controls is the data custodian. Data controller and data processor are GDPR-specific terms not applicable in this internal governance context.
+
+---
+
+End of Quiz — Module 14

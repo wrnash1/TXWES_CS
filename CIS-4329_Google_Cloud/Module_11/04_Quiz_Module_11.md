@@ -1,82 +1,203 @@
-# Quiz: Module 11 – Cloud Monitoring, Logging, and Alerting
-## Course: CIS-4329 – Google Cloud Administration (Google Cloud Associate Cloud Engineer)
+# Quiz: Module 11 — Infrastructure as Code on GCP
+
+## Course: CIS-4329 Google Cloud Computing
+
+## Texas Wesleyan University | Professor Nash
+
+## Certification Alignment: Google Cloud Associate Cloud Engineer (ACE)
 
 ---
 
-**Question 1**
-Your company's compliance policy requires that all Cloud Audit Logs (Admin Activity and Data Access logs) be retained for 7 years. Cloud Logging's default retention is 30 days. What is the correct way to implement the 7-year retention requirement with minimal operational overhead?
+### Instructions
 
-A) Increase the Cloud Logging bucket retention period for the `_Default` bucket to 2,555 days in the Logs Storage settings.
-B) Create a log sink that exports audit logs to a Cloud Storage bucket, then configure an Object Lifecycle rule on the bucket to delete objects after 7 years.
-C) Write a daily Cloud Scheduler job that copies logs from Cloud Logging to BigQuery for long-term storage.
-D) Enable Cloud Monitoring log-based metrics on audit log entries, which automatically archives the underlying log data for 7 years.
-
-*   **Correct Answer:** B) Create a log sink that exports audit logs to a Cloud Storage bucket, then configure an Object Lifecycle rule on the bucket to delete objects after 7 years.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* The `_Default` log bucket maximum retention period is 3,650 days (10 years), so technically this could work — however, extending the default bucket retention does not give you cost-efficient long-term storage. Cloud Storage Archive class is far cheaper for logs that are rarely accessed, making a Cloud Storage sink the recommended pattern for compliance archival.
-    *   *Why C is incorrect:* A Cloud Scheduler job that copies logs adds operational complexity (a script to maintain, error handling, IAM permissions for copying) and introduces a 24-hour gap in coverage for any logs written between runs. A log sink streams logs continuously in near real-time without any scheduled job to maintain.
-    *   *Why D is incorrect:* Log-based metrics are counters derived from log entry patterns — they do not archive the underlying log data. Creating a log-based metric does not cause Cloud Logging to retain the source log entries for any longer than the bucket's retention policy specifies.
+Select the single best answer for each question. Each question is worth 10 points.
+Total: 100 points.
 
 ---
 
-**Question 2**
-You have deployed a web application on Compute Engine. You want to receive an email alert whenever the average CPU utilization across all VMs in the instance group exceeds 85% for more than 5 consecutive minutes. Which sequence of steps correctly configures this alerting?
+### Question 1
 
-A) Create a Cloud Logging log sink filtered on CPU metrics, then create a Pub/Sub topic that emails subscribers when messages arrive.
-B) Create an email notification channel in Cloud Monitoring, then create an alerting policy with a metric condition on `compute.googleapis.com/instance/cpu/utilization` with a threshold of 0.85 and a duration of 5 minutes, referencing the notification channel.
-C) Enable a Cloud Monitoring uptime check on the instance group's load balancer endpoint, and configure the uptime check to send an email if the response time exceeds a threshold.
-D) Create a Cloud Function triggered by a Pub/Sub message that checks CPU metrics via the Cloud Monitoring API every 5 minutes and sends an email if the threshold is exceeded.
+A team wants to deploy a set of GCP resources defined in a YAML file and manage them as
+a single unit. They want GCP to handle state management without maintaining a local state
+file. Which GCP-native service supports this workflow?
 
-*   **Correct Answer:** B) Create an email notification channel in Cloud Monitoring, then create an alerting policy with a metric condition on `compute.googleapis.com/instance/cpu/utilization` with a threshold of 0.85 and a duration of 5 minutes, referencing the notification channel.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* CPU utilization is a Cloud Monitoring metric, not a log entry — it does not appear in Cloud Logging and cannot be captured by a log sink. Log sinks export log data, not time-series metrics. Alerting policies are the correct mechanism for metric-based alerts.
-    *   *Why C is incorrect:* Uptime checks verify that an HTTP/HTTPS endpoint returns a successful response — they test external availability, not CPU utilization. An uptime check cannot measure or threshold internal VM CPU metrics.
-    *   *Why D is incorrect:* Polling the Cloud Monitoring API from a Cloud Function every 5 minutes adds unnecessary complexity compared to the native alerting policy, introduces latency in detection (up to 5 minutes between polls), and requires maintaining a Cloud Function. Native alerting policies evaluate conditions continuously against the metric time series.
+- A) Terraform with GCS backend
+- B) Cloud Deployment Manager
+- C) Cloud Build with gcloud scripts
+- D) Config Connector on GKE
 
----
-
-**Question 3**
-A developer on your team is troubleshooting a Cloud Run service that is returning intermittent 500 errors. They need to find all log entries from the service in the last hour that have a severity of ERROR or higher. Which tool and query syntax should they use?
-
-A) Cloud Monitoring Metrics Explorer — filter by `run.googleapis.com/request_count` and segment by response code.
-B) Cloud Logging Logs Explorer — use the filter `resource.type="cloud_run_revision" AND severity>=ERROR` with the time range set to the last 1 hour.
-C) Cloud Trace — search for traces with a latency above 500ms, which identifies requests that encountered errors.
-D) BigQuery — run `SELECT * FROM cloudlogging.run_logs WHERE severity = 'ERROR'` to query the error logs table.
-
-*   **Correct Answer:** B) Cloud Logging Logs Explorer — use the filter `resource.type="cloud_run_revision" AND severity>=ERROR` with the time range set to the last 1 hour.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Metrics Explorer shows aggregated numeric metrics (like request count by response code) — it does not show individual log entries with their message text. To read the actual error messages and stack traces needed for debugging, the developer must use Logs Explorer.
-    *   *Why C is incorrect:* Cloud Trace shows latency data and the call graph for individual requests. While a 500 error may correlate with high latency, Cloud Trace does not provide the error log messages, exception text, or stack traces needed to diagnose the root cause of the errors.
-    *   *Why D is incorrect:* BigQuery can query logs if a log sink has been configured to export to BigQuery, but this requires advance setup and the log data is only available there if the sink was created before the errors occurred. Logs Explorer provides direct access to all Cloud Logging data without any prior export configuration.
+Correct answer: B — Cloud Deployment Manager is GCP's native IaC service that accepts
+YAML configuration files and manages the state of deployments within GCP itself. No local
+state file is required. Terraform requires a state file (local or remote). Cloud Build
+can run gcloud commands but is not an IaC framework. Config Connector manages GCP
+resources via Kubernetes but is GKE-specific.
 
 ---
 
-**Question 4**
-You are setting up monitoring for a multi-tier application. You want to be notified if the `/health` endpoint of your public-facing load balancer returns a non-200 response from any of Google's global probe locations. Which Cloud Monitoring feature implements this?
+### Question 2
 
-A) Create a log-based metric that counts HTTP 200 responses in the load balancer access logs and alert when the count drops to zero.
-B) Configure an alerting policy on the `loadbalancing.googleapis.com/https/request_count` metric filtered by response code 200.
-C) Create an uptime check targeting the load balancer's external IP address on the `/health` path, and attach an alerting policy that fires when the check fails.
-D) Deploy a Cloud Function that sends an HTTP GET to `/health` every minute and publishes a Pub/Sub message if the response code is not 200.
+In a Cloud Deployment Manager configuration, one resource references another using
+`$(ref.my-network.selfLink)`. What is the effect of this reference?
 
-*   **Correct Answer:** C) Create an uptime check targeting the load balancer's external IP address on the `/health` path, and attach an alerting policy that fires when the check fails.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* A log-based metric counting 200 responses would alert when the count drops to zero — but this only fires after a sustained period with no successful requests, not immediately when the health endpoint starts failing. Uptime checks probe from multiple global locations every minute and alert within minutes of a failure.
-    *   *Why B is incorrect:* Alerting on the `request_count` metric filtered to 200 responses measures actual user traffic — it will alert when user 200 responses drop, but only if users are actively sending requests. Uptime checks send their own synthetic probes regardless of user traffic volume, providing coverage even during off-peak hours with no real traffic.
-    *   *Why D is incorrect:* A self-managed polling Cloud Function achieves the same goal but adds infrastructure to maintain (a Cloud Function, a Pub/Sub topic, a subscriber, retry logic). Cloud Monitoring uptime checks provide this capability natively with global probe locations and built-in alerting integration.
+- A) It creates a DNS alias between the two resources
+- B) It creates an implicit dependency so Deployment Manager creates the referenced
+   resource first
+- C) It copies the network configuration into the referencing resource
+- D) It exports the value as a deployment output
+
+Correct answer: B — The `$(ref.RESOURCE.PROPERTY)` syntax creates an implicit dependency
+in Deployment Manager. Before creating the resource that contains the reference, GCP
+first ensures the referenced resource is successfully created and retrieves its property
+value. This guarantees correct resource creation order without explicit dependency
+declarations.
 
 ---
 
-**Question 5**
-Your security team wants to receive real-time alerts whenever any project administrator grants the `roles/owner` or `roles/editor` IAM role to any user in the production project. Cloud Audit Logs capture all IAM policy changes. Which combination of Cloud Logging and Cloud Monitoring features implements this with the least custom code?
+### Question 3
 
-A) Create a log sink to Pub/Sub filtered on `protoPayload.methodName="SetIamPolicy"`, then write a Cloud Function that parses the Pub/Sub message and sends an email if an Owner or Editor role is detected.
-B) Create a log-based metric with a filter for `protoPayload.methodName="SetIamPolicy" AND (protoPayload.request.policy.bindings.role="roles/owner" OR protoPayload.request.policy.bindings.role="roles/editor")`, then create a Cloud Monitoring alerting policy on that metric with an email notification channel.
-C) Enable Security Command Center and configure a finding notification for IAM misconfigurations, which automatically emails administrators when broad roles are granted.
-D) Schedule a daily Cloud Scheduler job that runs `gcloud projects get-iam-policy` and sends a diff report by email if Owner or Editor bindings are present.
+You want to preview what changes a Deployment Manager update will make before applying
+them to production. Which command accomplishes this?
 
-*   **Correct Answer:** B) Create a log-based metric with a filter for `protoPayload.methodName="SetIamPolicy"` and role conditions, then create a Cloud Monitoring alerting policy on that metric with an email notification channel.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* A log sink to Pub/Sub combined with a Cloud Function is a valid approach but requires writing, deploying, and maintaining custom function code for message parsing and email delivery. The log-based metric plus native alerting policy achieves the same result entirely within Cloud Monitoring and Cloud Logging with no custom code.
-    *   *Why C is incorrect:* Security Command Center's IAM finding notifications flag configurations that violate security best practices on a periodic scan basis — they are not real-time streaming alerts triggered by individual IAM change events. Response time can be hours rather than minutes.
-    *   *Why D is incorrect:* A daily scheduled diff report introduces up to a 24-hour delay between when a privilege escalation occurs and when the team is notified. Real-time alerting via log-based metrics fires within minutes of the IAM change event being written to Cloud Audit Logs.
+- A) `gcloud deployment-manager deployments describe MY_DEPLOY`
+- B) `gcloud deployment-manager deployments update MY_DEPLOY --config=config.yaml --preview`
+- C) `gcloud deployment-manager deployments validate MY_DEPLOY --config=config.yaml`
+- D) `gcloud deployment-manager deployments plan MY_DEPLOY --config=config.yaml`
+
+Correct answer: B — The `--preview` flag on the `deployments update` command creates a
+preview deployment that shows what will change without applying the changes. After
+reviewing, you run `deployments update` again (without `--preview`) to apply, or run
+`deployments cancel-preview` to revert. `--validate` and `--plan` are not valid flags
+for this command.
+
+---
+
+### Question 4
+
+A developer runs `terraform apply` and it completes successfully. Another team member
+then manually deletes the GCE VM that Terraform created using the Cloud Console. What
+will happen the next time the first developer runs `terraform plan`?
+
+- A) Terraform will show no changes because it does not detect out-of-band deletions
+- B) Terraform will show an error because the state file is corrupted
+- C) Terraform will show that it plans to recreate the deleted VM to match the desired
+   state
+- D) Terraform will automatically recreate the VM without requiring an apply
+
+Correct answer: C — Terraform's state file still shows the VM as existing, but the next
+`terraform plan` refreshes the state by querying GCP and detects that the VM no longer
+exists. Terraform then shows it as needing to be created. The actual recreation happens
+on the next `terraform apply`. Terraform detects drift — it does not silently ignore
+out-of-band changes.
+
+---
+
+### Question 5
+
+A team stores Terraform state locally on developers' workstations. Two developers both
+run `terraform apply` on the same production infrastructure at the same time. What is
+the risk?
+
+- A) Terraform will automatically merge the two plans
+- B) The second apply will be rejected because the state file is read-only
+- C) Both applies may succeed but produce corrupted or inconsistent state, causing
+   infrastructure drift
+- D) Terraform will create duplicate resources to satisfy both applies
+
+Correct answer: C — Concurrent local applies with no state locking can result in state
+file corruption or resource inconsistency if both developers are modifying overlapping
+resources. The correct solution is remote state in Cloud Storage with state locking
+enabled. Remote backends prevent concurrent applies by locking the state file during
+an operation.
+
+---
+
+### Question 6
+
+Where should Terraform remote state be stored for a GCP project, and what additional
+configuration should be applied to the storage location to support state rollback?
+
+- A) In a BigQuery table; enable BigQuery table snapshots
+- B) In a Cloud Storage bucket; enable object versioning on the bucket
+- C) In Cloud Firestore; enable point-in-time recovery
+- D) In a Cloud SQL database; enable automated backups
+
+Correct answer: B — The recommended remote backend for Terraform on GCP is Cloud Storage
+(GCS). Object versioning on the bucket allows rolling back to a previous version of the
+state file if the current state becomes corrupted. The Terraform GCS backend also supports
+state locking to prevent concurrent applies.
+
+---
+
+### Question 7
+
+A team has an existing GCE VM that was created manually before they adopted Terraform.
+They want to bring this VM under Terraform management without destroying and recreating
+it. Which Terraform command should they use?
+
+- A) `terraform refresh`
+- B) `terraform plan --import`
+- C) `terraform import google_compute_instance.NAME projects/P/zones/Z/instances/VM`
+- D) `terraform state add google_compute_instance.NAME`
+
+Correct answer: C — `terraform import` imports an existing resource into the Terraform
+state file. The resource block must already be written in the `.tf` configuration files
+before importing. After import, `terraform plan` will show the current resource state
+vs. the configuration and indicate any differences. `terraform refresh` updates state
+from the real world but does not import new resources.
+
+---
+
+### Question 8
+
+Which statement best describes the key difference between Cloud Deployment Manager and
+Terraform regarding multi-cloud support?
+
+- A) Deployment Manager supports AWS and Azure resources via plugins
+- B) Terraform is GCP-only and requires separate tools for AWS and Azure
+- C) Deployment Manager manages GCP resources only; Terraform supports multiple cloud
+   providers through provider plugins
+- D) Both tools support multi-cloud deployments equally
+
+Correct answer: C — Deployment Manager is a GCP-native service that only manages GCP
+resources. Terraform uses a provider model that supports hundreds of cloud platforms and
+services. A single Terraform configuration can provision resources across GCP, AWS,
+Azure, and third-party services simultaneously. This makes Terraform the preferred choice
+for multi-cloud or hybrid cloud organizations.
+
+---
+
+### Question 9
+
+A Jinja2 template for Deployment Manager uses `{{ properties["zone"] }}` in its resource
+definition. How is this value provided when the template is used?
+
+- A) Terraform passes it via the `.tfvars` file
+- B) The template reads it from an environment variable at runtime
+- C) The configuration file that imports the template passes it in the `properties` block
+   of the resource using that template
+- D) The value is defined inside the Jinja2 template itself and cannot be overridden
+
+Correct answer: C — When a Deployment Manager configuration imports a Jinja2 template,
+it passes parameters via the `properties` block in the resource definition. The template
+accesses these via `{{ properties["key"] }}`. This allows the same template to create
+resources with different configurations (different zones, machine types, names) from a
+single reusable template file.
+
+---
+
+### Question 10
+
+An organization wants infrastructure changes to require peer review before being applied
+to production. Which practice supports this requirement?
+
+- A) Using `terraform apply -auto-approve` in a CI/CD pipeline
+- B) Storing all Terraform or Deployment Manager configurations in a Git repository and
+   requiring pull request approval before merging to the main branch
+- C) Running `terraform plan` locally before each apply
+- D) Using separate GCP projects for development and production
+
+Correct answer: B — Storing IaC configurations in Git and requiring pull request
+approval before merging to the main branch implements a peer review gate for all
+infrastructure changes. The CI/CD pipeline can run `terraform plan` on the PR to show
+reviewers exactly what will change. This is the standard GitOps practice for infrastructure
+change management. The other options do not enforce review before production changes.

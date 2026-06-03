@@ -1,7 +1,13 @@
-# Video Script: CIS-4329_Google_Cloud (Google Cloud Associate Cloud Engineer)
-## Module 13 - Hybrid Cloud
+# Video Script: Module 13 — CI/CD with Cloud Build and Artifact Registry
 
----
+## Course: CIS-4329 Google Cloud Computing
 
-**Video Script 13.1: Cloud VPN and Cloud Interconnect**
-*Audio:* "Enterprises don't move to the cloud overnight; they run in a Hybrid model. To connect a corporate office to GCP securely, you build an IPsec Cloud VPN over the internet. If you need massive, dedicated bandwidth (10 Gbps+) that doesn't touch the public internet, you buy Cloud Interconnect."
+## Texas Wesleyan University | Professor Nash
+
+## Note: This module's video content is split across two files
+
+## See: 01_Video_Script_Module_13_Part_1.md (Cloud Build and Triggers)
+
+## See: 01_Video_Script_Module_13_Part_2.md (Artifact Registry and Cloud Deploy)
+
+## Certification Alignment: Google Cloud Associate Cloud Engineer (ACE)

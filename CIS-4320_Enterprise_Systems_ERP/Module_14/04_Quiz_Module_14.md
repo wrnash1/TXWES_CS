@@ -1,93 +1,251 @@
-# Quiz: Module 14 - Cloud ERP Hosting
+# Quiz: Module 14 — ERP Reporting and Business Intelligence
 
-## Course: CIS-4320_Enterprise_Systems_ERP (Salesforce Certified Associate / SAP Certified Associate)
+## Course: CIS-4320 Enterprise Systems and ERP
+
+## Texas Wesleyan University | Professor Nash
+
+**Certification Alignment:** Salesforce Administrator / SAP S/4HANA Essentials
 
 ---
 
+## Instructions
+
+Select the single best answer for each question. Each question is worth 10 points. Questions are drawn from the video lecture, reading guide, and lab activity for Module 14.
+
+---
+
+## Questions
+
 ### Question 1
 
-What is a defining characteristic of a multi-tenant cloud database design?
+A sales manager needs a report that shows total opportunity revenue grouped by sales rep, with each rep's totals broken out by product family across the columns. Which Salesforce report type should be used?
 
-* A) Each customer has their own dedicated physical server and isolated database instance
-* B) Multiple customers share the same application infrastructure and database platform, with logical isolation enforcing data privacy between tenants
-* C) All customer data is stored in an unencrypted shared table visible to all users of the platform
-* D) The database only supports read-only SQL queries and does not allow data modification
+A) Tabular
 
-* **Correct Answer:** B) Multi-tenancy allows cloud providers to scale infrastructure efficiently by sharing physical resources among customers while enforcing strict logical data isolation between tenants.
-* **Distractor Analysis:**
-  * *Why B is correct:* Salesforce's multi-tenant architecture is the textbook example — all customers share the same application code, database servers, and platform services, but each org's data is logically separated so no tenant can see another's records.
-  * *Why A is incorrect:* Dedicated physical servers per customer describes single-tenant architecture (e.g., a private cloud or dedicated hosting), which is the opposite of multi-tenancy.
-  * *Why C is incorrect:* Multi-tenant platforms use robust logical isolation and encryption to ensure tenants cannot access each other's data; the shared infrastructure does not mean shared data visibility.
-  * *Why D is incorrect:* Multi-tenant databases support full read/write operations; read-only restrictions describe reporting replicas or data warehouse configurations, not the multi-tenant model itself.
+B) Summary
+
+C) Matrix
+
+D) Joined
+
+**Correct Answer:** C
+
+### Distractor Analysis
+
+- **A — Tabular** is incorrect. Tabular reports display flat lists with no grouping. They cannot produce row-and-column group summaries.
+- **B — Summary** is incorrect. Summary reports support row groupings and subtotals but only one axis of grouping — they cannot simultaneously group rows by sales rep and columns by product family.
+- **C — Matrix** is correct. Matrix reports support two-dimensional groupings: one dimension in rows (sales rep) and one in columns (product family), with summarized values in each cell. This is the defining use case for the matrix format.
+- **D — Joined** is incorrect. Joined reports combine multiple report blocks for side-by-side comparison, not two-dimensional grouping of a single dataset.
 
 ---
 
 ### Question 2
 
-Which of the following best describes **Software as a Service (SaaS)** in the context of ERP and CRM deployment?
+A Salesforce dashboard was refreshed at 8:00 AM. A deal worth $250,000 closed at 10:00 AM and the opportunity was updated in Salesforce. A VP views the dashboard at 11:00 AM and the pipeline total has not changed. What is the most likely explanation?
 
-* A) A model where the customer purchases and installs software on their own servers and manages all infrastructure
-* B) A cloud delivery model where the vendor hosts and maintains the complete application stack and the customer accesses it through a web browser, managing only data and configuration
-* C) A development platform where customers build custom applications on top of a vendor-provided runtime environment
-* D) A model where infrastructure resources (compute, storage, network) are rented from a cloud provider but the customer installs and manages their own software
+A) The VP does not have permission to view the closed opportunity.
 
-* **Correct Answer:** B) SaaS means the vendor owns and operates the entire technology stack — hardware through application — and customers pay a subscription fee for access without managing any infrastructure.
-* **Distractor Analysis:**
-  * *Why B is correct:* Salesforce and SAP S/4HANA Cloud Public Edition are the primary SaaS examples in this course. The customer's IT team configures the application and manages users/data; the vendor handles all infrastructure, patching, and upgrades.
-  * *Why A is incorrect:* This describes an on-premise deployment, where the customer owns and operates all infrastructure and software, which is the opposite of SaaS.
-  * *Why C is incorrect:* This describes Platform as a Service (PaaS) — Salesforce Platform (Force.com) is a PaaS offering, distinct from the SaaS CRM application layer.
-  * *Why D is incorrect:* This describes Infrastructure as a Service (IaaS) — renting compute and storage resources while managing your own OS and software stack, as with AWS EC2 or Azure VMs.
+B) The dashboard shows data as of its last refresh and has not been refreshed since 8:00 AM.
+
+C) The Opportunity record is missing a required field and was not saved correctly.
+
+D) Salesforce dashboards only update once per day at midnight.
+
+**Correct Answer:** B
+
+### Distractor Analysis
+
+- **A — Permission** is incorrect. If the VP lacked permission, the dashboard would show an error or blank component, not a stale number.
+- **B — Refresh timing** is correct. Salesforce dashboards display data as of the last refresh. A deal that closed after the last refresh will not appear until the dashboard is refreshed again.
+- **C — Missing required field** is incorrect. A record missing a required field cannot be saved in the first place; it would not produce a stale total.
+- **D — Midnight refresh** is incorrect. Dashboard refresh schedules are configurable; there is no system-imposed midnight-only rule.
 
 ---
 
 ### Question 3
 
-A company runs SAP ERP on-premise for their core financial and manufacturing processes, while using Salesforce CRM in the public cloud for their sales team. What cloud architecture pattern does this represent?
+Which statement about Salesforce dynamic dashboards is correct?
 
-* A) Full public cloud — all workloads run on the same public cloud platform
-* B) Private cloud — all workloads run on dedicated customer-owned infrastructure
-* C) Hybrid cloud — a combination of on-premise or private cloud for some workloads and public cloud services for others
-* D) Multi-cloud — multiple competing public cloud platforms used for the same workload simultaneously
+A) Dynamic dashboards can have unlimited components because they use Einstein Analytics.
 
-* **Correct Answer:** C) Hybrid cloud describes the combination of on-premise (SAP ERP) and public cloud (Salesforce) environments connected through integration middleware.
-* **Distractor Analysis:**
-  * *Why C is correct:* The hybrid cloud model is extremely common in large enterprises that have invested in on-premise ERP infrastructure but adopted cloud CRM. The two systems are typically integrated through middleware like MuleSoft to exchange customer and order data.
-  * *Why A is incorrect:* Full public cloud would require all workloads — including the SAP ERP — to run on a public cloud platform; keeping SAP on-premise disqualifies this classification.
-  * *Why B is incorrect:* Private cloud describes workloads on dedicated, customer-controlled infrastructure; Salesforce running on Salesforce's shared public infrastructure is not private cloud.
-  * *Why D is incorrect:* Multi-cloud specifically refers to using multiple public cloud providers (e.g., both AWS and Azure) for similar workloads; having one on-premise and one public cloud system is hybrid, not multi-cloud.
+B) Dynamic dashboards display data based on the permissions of the dashboard creator.
+
+C) Dynamic dashboards show each viewer data based on their own access level rather than a single running user.
+
+D) Dynamic dashboards require a custom report type and cannot use standard report types.
+
+**Correct Answer:** C
+
+### Distractor Analysis
+
+- **A — Unlimited components** is incorrect. Component limits apply to all dashboard types regardless of Einstein Analytics.
+- **B — Creator's permissions** is incorrect. That describes a standard (non-dynamic) dashboard. Dynamic dashboards show data from each viewer's own perspective.
+- **C — Viewer's own access** is correct. The defining characteristic of a dynamic dashboard is that it runs as "the logged-in user," so each viewer sees data scoped to their own access rights.
+- **D — Custom report type required** is incorrect. Dynamic dashboards work with any report type, standard or custom.
 
 ---
 
 ### Question 4
 
-In Salesforce's SaaS model, how many major release updates does Salesforce deliver per year, and how is this different from on-premise ERP upgrade management?
+Einstein Analytics datasets differ from Salesforce native report data in which of the following ways?
 
-* A) One major release per year; same as on-premise where customers control upgrade timing
-* B) Three major releases per year (Spring, Summer, Winter) delivered automatically to all customers; on-premise customers control their own upgrade schedule and can defer for years
-* C) Six monthly releases delivered only to enterprise-tier customers; smaller customers receive annual updates
-* D) Continuous deployment with daily updates; on-premise systems receive updates every 5 years
+A) Datasets are stored inside standard Salesforce objects alongside CRM records.
 
-* **Correct Answer:** B) Salesforce delivers three named releases per year to all customers simultaneously; on-premise ERP customers control their own upgrade schedules and frequently run versions that are multiple years behind current.
-* **Distractor Analysis:**
-  * *Why B is correct:* The Spring/Summer/Winter release cadence is one of the most tested operational facts on the Salesforce Associate exam. All Salesforce customers receive the same update on the same timeline — this is a core characteristic of SaaS multi-tenancy.
-  * *Why A is incorrect:* Salesforce delivers three releases per year, not one; and on-premise customers can and often do defer upgrades for 2–5 years, unlike SaaS customers.
-  * *Why C is incorrect:* Salesforce releases are delivered to all customers on the same schedule regardless of tier; there is no tier-differentiated release frequency.
-  * *Why D is incorrect:* Salesforce does not push daily code changes to production; the three annual named releases are the major delivery cadence, with hotfixes applied transparently when needed.
+B) Datasets are extracted from Salesforce objects and external sources into a separate analytical engine, enabling higher row volumes and richer visualizations.
+
+C) Datasets are only available to System Administrators and cannot be shared with standard users.
+
+D) Datasets automatically refresh every minute and always reflect live data.
+
+**Correct Answer:** B
+
+### Distractor Analysis
+
+- **A — Inside standard objects** is incorrect. Datasets are stored in Einstein Analytics's own data store, separate from the Salesforce object model.
+- **B — Separate analytical engine** is correct. Einstein Analytics extracts data via dataflows into its own engine, enabling much larger datasets and more sophisticated analytics than native reports allow.
+- **C — Admins only** is incorrect. Einstein Analytics dashboards and lenses can be shared with any licensed user.
+- **D — Minute-by-minute refresh** is incorrect. Dataset refreshes are scheduled (typically daily or hourly); they do not provide real-time live data by default.
 
 ---
 
 ### Question 5
 
-Under the SaaS shared responsibility model, which of the following remains the **customer's** responsibility even when using a cloud-hosted ERP or CRM?
+In SAP BW, what is the role of an InfoCube?
 
-* A) Patching the operating system on the application servers
-* B) Upgrading the database engine to the latest supported version
-* C) Managing user access, data classification, and ensuring appropriate configuration security within the application
-* D) Maintaining physical security of the data center where servers are hosted
+A) A real-time connection between S/4HANA and SAP Analytics Cloud
 
-* **Correct Answer:** C) Even in SaaS, customers are responsible for managing who has access to the application, classifying and protecting their own data, and configuring the application security settings correctly.
-* **Distractor Analysis:**
-  * *Why C is correct:* The SaaS shared responsibility model transfers infrastructure security (physical, OS, database, network) to the vendor while the customer retains responsibility for data governance, user access management, configuration security, and application-layer compliance.
-  * *Why A is incorrect:* OS patching is entirely the vendor's responsibility in SaaS; the customer has no access to or visibility into the underlying operating system.
-  * *Why B is incorrect:* Database engine upgrades are the vendor's responsibility in SaaS; the customer cannot select, defer, or modify the database software version.
-  * *Why D is incorrect:* Physical data center security is the vendor's responsibility in any cloud model; customers have no access to the physical facilities.
+B) A star-schema fact table optimized for multidimensional analytical reporting
+
+C) A configuration object that defines user authorizations for BW queries
+
+D) A staging table that holds granular transactional data before aggregation
+
+**Correct Answer:** B
+
+### Distractor Analysis
+
+- **A — Real-time connection** is incorrect. Real-time connectivity is handled by live data connections in SAP Analytics Cloud, not InfoCubes.
+- **B — Star-schema fact table** is correct. An InfoCube is structured as a star schema with a fact table surrounded by dimension tables, optimized for multidimensional OLAP queries.
+- **C — Authorization object** is incorrect. SAP BW authorizations are defined via analysis authorizations, not InfoCubes.
+- **D — Staging table** is incorrect. That describes a DataStore Object (DSO). InfoCubes store aggregated data for reporting, not granular staging data.
+
+---
+
+### Question 6
+
+A finance team has been using a report showing "Total Invoices Processed This Month" as a key metric. According to the KPI design criteria in the reading, what is this metric most likely missing that prevents it from qualifying as a true KPI?
+
+A) A measurable formula
+
+B) A defined target or threshold and strategic alignment to a business objective
+
+C) An assigned report type in Salesforce
+
+D) An Einstein Analytics dataset
+
+**Correct Answer:** B
+
+### Distractor Analysis
+
+- **A — Measurable formula** is incorrect. "Total Invoices Processed" has a clear formula (count of invoices with posting date in current month). Measurability is not the missing element.
+- **B — Target/threshold and strategic alignment** is correct. Without a defined target (e.g., 500 invoices/month) and a connection to a business goal (e.g., operational efficiency), the number has no actionable meaning. A metric becomes a KPI only when targets, ownership, and strategic alignment are defined.
+- **C — Report type** is incorrect. Whether the metric is surfaced in a tabular or summary report is irrelevant to its KPI status.
+- **D — Einstein Analytics dataset** is incorrect. KPI design is a business concept, not a tool requirement.
+
+---
+
+### Question 7
+
+SAP Analytics Cloud (SAC) differs from BEx Analyzer in which of the following ways?
+
+A) BEx Analyzer is a cloud-native platform; SAC is a legacy Excel-based tool.
+
+B) SAC is a cloud SaaS platform combining BI, planning, and predictive analytics; BEx Analyzer is an Excel-based query tool for SAP BW.
+
+C) SAC can only connect to external databases and cannot access S/4HANA directly.
+
+D) BEx Analyzer includes built-in machine learning models; SAC does not.
+
+**Correct Answer:** B
+
+### Distractor Analysis
+
+- **A — Reversed descriptions** is incorrect. This inverts the two tools. BEx Analyzer is the legacy Excel add-in; SAC is the modern cloud platform.
+- **B — Correct distinction** is correct. SAC is SAP's cloud-native SaaS BI platform that unifies reporting, planning, and predictive analytics. BEx Analyzer is the established Excel-based query tool for SAP BW, a legacy on-premises tool.
+- **C — SAC cannot connect to S/4HANA** is incorrect. SAC supports live connections directly to S/4HANA and BW.
+- **D — BEx Analyzer has ML** is incorrect. Machine learning and predictive analytics are features of SAC and Einstein Analytics, not BEx Analyzer.
+
+---
+
+### Question 8
+
+Which executive dashboard design principle is violated when a dashboard shows 35 individual numeric values with no charts, no color thresholds, and no trend indicators?
+
+A) The drill-down principle
+
+B) The data freshness principle
+
+C) The cognitive load and at-a-glance status principles
+
+D) The running user principle
+
+**Correct Answer:** C
+
+### Distractor Analysis
+
+- **A — Drill-down** is incorrect. A dashboard with 35 numbers may or may not support drill-down; drill-down is a separate principle about navigation depth.
+- **B — Data freshness** is incorrect. The freshness principle concerns timestamp disclosure, not the number of metrics or visual design.
+- **C — Cognitive load and at-a-glance status** is correct. Showing 35 numbers with no visual encoding violates the "minimize cognitive load" principle (limit to 5–7 top-level KPIs) and the "show status at a glance" principle (use color coding and visual indicators so status is understood in seconds).
+- **D — Running user** is incorrect. Running user is a Salesforce-specific dashboard setting, not an executive dashboard design principle.
+
+---
+
+### Question 9
+
+A Salesforce report shows 0 records for "Accounts with no open Opportunities," but the sales team says they know of at least 20 accounts with no activity. What Salesforce report feature should be used to correctly build this report?
+
+A) A matrix report with a column grouping on Opportunity Stage
+
+B) A joined report with two blocks: one for accounts and one for opportunities
+
+C) A summary report with conditional highlighting
+
+D) A tabular report with a cross-filter excluding accounts that have active opportunities
+
+**Correct Answer:** D
+
+### Distractor Analysis
+
+- **A — Matrix report** is incorrect. A matrix report groups existing data; it cannot filter for the absence of related records.
+- **B — Joined report** is incorrect. A joined report shows two datasets side by side but does not inherently filter for records with no related objects.
+- **C — Conditional highlighting** is incorrect. Conditional highlighting formats cell colors based on values; it cannot filter for missing relationships.
+- **D — Cross-filter** is correct. A cross-filter specifically filters parent records based on the presence or absence of child records. "Accounts without Opportunities" is the classic cross-filter use case.
+
+---
+
+### Question 10
+
+Which of the following best describes the relationship between data quality and ERP reporting?
+
+A) Data quality only affects reports built on custom objects; standard object reports are always accurate.
+
+B) Poor data quality in source records produces inaccurate report totals and KPIs, which can lead to flawed business decisions regardless of how well the reports are designed.
+
+C) ERP systems automatically correct data quality issues before reports are generated.
+
+D) Data quality is the responsibility of the IT department only and does not affect how analysts build reports.
+
+**Correct Answer:** B
+
+### Distractor Analysis
+
+- **A — Standard objects are always accurate** is incorrect. Data quality problems affect all object types equally. Standard object records are entered by users and are just as susceptible to errors and omissions.
+- **B — Poor data produces inaccurate reports** is correct. This captures the core principle: no matter how well-designed a report or dashboard is, it will produce misleading outputs if the underlying data is incomplete, inaccurate, or stale.
+- **C — ERP corrects data automatically** is incorrect. ERP systems can enforce validation rules and required fields, but they cannot infer correct values for missing or wrong entries.
+- **D — IT responsibility only** is incorrect. Data quality is a shared responsibility involving data entry users, business process owners, data stewards, and administrators.
+
+---
+
+*End of Quiz — Module 14*
+
+**Certification Alignment:** Salesforce Administrator / SAP S/4HANA Essentials

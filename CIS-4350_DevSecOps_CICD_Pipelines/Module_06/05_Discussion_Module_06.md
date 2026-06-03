@@ -1,69 +1,68 @@
-# Discussion Forum: Module 06 - SAST: Static Application Security Testing
+# Discussion Forum: Module 06 — Infrastructure as Code Security
 
 ## Course: CIS-4350 DevSecOps and CI/CD Pipelines
+
+## Texas Wesleyan University | Professor Nash
 
 ## Certification Alignment: DevSecOps Professional (DSOE)
 
 ---
 
-## Overview
+## Discussion Overview
 
-This discussion applies Module 06 concepts — SAST mechanics, tool selection, finding analysis, false positive management, and pipeline integration — to realistic engineering scenarios. Read all three scenarios and respond to the one assigned to your group or the one of your choice. Initial post due Wednesday at 11:59 PM; peer responses due Sunday at 11:59 PM.
+Post your original response to one scenario below (minimum 175 words). Then reply substantively to at least two classmates' posts (minimum 75 words each). Original posts due Sunday 11:59 PM; peer replies due Tuesday 11:59 PM.
 
----
-
-## Scenario A: The Alert Fatigue Crisis
-
-A DevSecOps engineer integrates Semgrep with the `p/owasp-top-ten` rule pack into a mature Python/Django application's CI/CD pipeline in breaking mode (exit-code 1) on day one. The initial scan produces 1,243 findings across 847 files. Every pull request now fails immediately, development has effectively stopped, and the development team is furious. The security team insists all findings must be fixed before any new code merges. The development team argues the scanner is "useless noise" and wants it removed.
-
-In 175-225 words, address the following: Identify the specific process error that created this situation and explain what the correct rollout strategy should have been. Propose a remediation plan that satisfies both teams' concerns — how do you restore development velocity without abandoning security scanning? Describe the specific pipeline configuration change that implements your plan. Finally, explain how you would prioritize which of the 1,243 findings to remediate first, and why that prioritization criterion is the correct one for a DevSecOps team.
+Professor Nash note: IaC security is where cloud security theory meets cloud engineering practice. The best responses will engage with the real organizational challenges — why engineers use public examples, why scanning is hard to adopt in infrastructure teams, and why drift is so common in organizations that started without IaC discipline. I am looking for practical, realistic analysis.
 
 ---
 
-## Scenario B: The False Positive Decision
+## Scenario 1 — The Legacy Cloud Estate
 
-A financial services company's SAST pipeline flags the following finding as a Critical SQL injection on every pipeline run:
+Your organization has been using AWS for six years. The first four years were "ClickOps" — everything provisioned through the AWS console. Two years ago the team adopted Terraform and began managing new resources as IaC. Approximately 60% of your AWS resources are still managed manually (no Terraform state). A security audit identifies 47 critical misconfigurations across the estate, including 12 S3 buckets with public access and 8 security groups with port 22 open to 0.0.0.0/0.
 
-```text
-Rule: python.django.security.injection.sql.sql-injection
-Line 47: raw_query = User.objects.raw(f"SELECT * FROM auth_user WHERE department = '{dept}'")
-Severity: ERROR
-```
+Design a remediation and modernization plan. How do you prioritize the 47 critical findings — do you start with manual resources or Terraform-managed ones, and why? What is your strategy for bringing the 60% of manually managed resources under IaC without causing outages? How do tfsec and checkov fit into your plan, and when can you start enforcing IaC security gates? What is the risk of using Terraform import on production resources? Reference specific tools and concepts from this module.
 
-A developer reviews line 47 and discovers that `dept` is not user-controlled — it is hardcoded from a `settings.py` configuration file that cannot be modified by end users. The developer wants to suppress the finding. The security lead argues that suppressing any Critical finding sets a bad precedent.
+### Scenario 1 — Peer Response Prompt
 
-In 175-225 words, address the following: Evaluate both positions — is this a legitimate false positive, and is suppression appropriate? Describe the technical standard a confirmed false positive must meet before suppression is justified. Write the exact suppression comment syntax needed in Python/Semgrep. Explain what documentation must accompany the suppression. Propose a process the team should establish to prevent unauthorized suppression of genuine vulnerabilities masked as false positives.
+Your classmate proposed a prioritization framework for the 47 findings. Is "fix Terraform-managed first" or "fix manual resources first" the better strategy? What risk does their choice create?
 
 ---
 
-## Scenario C: The SAST Tool Selection Dilemma
+## Scenario 2 — The Sentinel Hard Mandatory Debate
 
-A healthcare startup is building a Java Spring Boot application that processes patient health records. They need to choose a SAST tool. Option 1: Semgrep Community (free, pattern-matching, fast). Option 2: SonarQube Community (free, quality gates, deeper analysis). Option 3: Checkmarx (commercial, deep taint analysis, expensive). The CTO wants to use Semgrep because it is free and fast. The lead developer argues that for HIPAA-regulated healthcare data, they need Checkmarx's deep taint analysis because Java Spring Boot has complex injection patterns that pattern-matching tools miss.
+Your organization uses Terraform Enterprise. The security team wants to enforce the following as a Hard Mandatory Sentinel policy: all AWS RDS instances must have `deletion_protection = true`. The database team pushes back: "We have dozens of ephemeral testing databases that are intentionally short-lived. If we can't delete them, our testing workflows break." The security team's response: "If it's in Terraform, it's subject to the policy."
 
-In 175-225 words, address the following: Evaluate both arguments on their technical merits — what does Semgrep miss in a complex Java Spring Boot application that Checkmarx would catch, and why does this matter for HIPAA compliance? Explain the role of a quality gate (SonarQube feature) and why it is relevant to a regulated healthcare environment. Provide a recommendation that balances security thoroughness with the startup's resource constraints, and justify your recommendation using DevSecOps principles.
+Evaluate both positions. Is a blanket Hard Mandatory policy the right tool for this requirement, or should it be Soft Mandatory with an exception workflow? How would you write a Sentinel policy that differentiates between production and non-production RDS instances — for example, using resource tags or workspace names? What is the broader principle about how enforcement level should be calibrated to the risk of the controlled configuration? Reference the three Sentinel enforcement levels from the reading guide and propose a specific policy design that satisfies both teams.
 
----
+### Scenario 2 — Peer Response Prompt
 
-## Discussion Rubric (10 Points Total)
-
-### Initial Post (6 Points)
-
-Due Wednesday at 11:59 PM. Your post must be 175-225 words, address all elements of your chosen scenario, and use precise SAST and DevSecOps terminology.
-
-- 5-6 pts: Thoroughly addresses all scenario elements with technical accuracy, clear explanations, and appropriate terminology. Meets the word count.
-- 3-4 pts: Addresses most elements but lacks technical depth in one or more areas.
-- 0-2 pts: Incomplete, missing, or does not substantively address the scenario.
-
-### Peer Responses (4 Points)
-
-Due Sunday at 11:59 PM. Respond to at least two classmates who chose different scenarios.
-
-- 4 pts: Two substantive responses (at least 50 words each) that add technical depth, propose an alternative approach, or cite a specific concept from the reading guide or lab.
-- 2 pts: Only one substantive response, or both are superficial.
-- 0 pts: No peer responses submitted.
+Your classmate proposed a policy design to satisfy both teams. Does their approach scale to a 50-team enterprise? What happens when a team forgets to tag their test database correctly?
 
 ---
 
-## Professor Nash Note
+## Scenario 3 — The Drift Incident
 
-The SAST finding analysis skill you practiced in the lab maps directly to this discussion. When discussing Scenario B, you must take a specific technical position on whether the finding qualifies as a false positive. Saying "it depends" without criteria is not an acceptable answer on the exam or in practice. A false positive must meet a specific standard: the flagged code pattern cannot, under any foreseeable execution path, reach the sink with attacker-controlled data. Apply that standard explicitly in your response.
+A security incident is traced to a misconfigured AWS security group that allowed SSH access from a specific external IP — an IP address belonging to a former contractor. Investigation reveals the security group rule was added manually in the AWS console six months ago and persists in production today despite the contractor's access being revoked. The Terraform code for the security group does not include this rule. The rule survived six months because Terraform was run with `terraform apply -refresh=false` in the CI pipeline — disabling the drift detection that would have flagged the discrepancy.
+
+Analyze this incident. What went wrong at each of three levels: process, tooling configuration, and governance? What specific Terraform pipeline configuration would have detected and potentially auto-remediated this drift? Why is `-refresh=false` used in some pipelines (there are legitimate reasons), and how do you get the security benefit of drift detection without the performance cost it adds to large Terraform plans? Reference Terraform plan flags and Terraform Cloud capabilities from the reading guide.
+
+### Scenario 3 — Peer Response Prompt
+
+Your classmate proposed a solution to the `-refresh=false` performance vs. security trade-off. Is their solution practical for a Terraform configuration managing 500+ resources? What additional compensating control would you recommend?
+
+---
+
+## Grading Rubric
+
+| Criterion | Points |
+|---|---|
+| Original post addresses all parts of the chosen scenario | 3 |
+| Specific IaC tools, policies, or pipeline configurations cited | 2 |
+| Organizational realities and trade-offs acknowledged | 2 |
+| Peer reply 1 — substantive challenge or extension | 1.5 |
+| Peer reply 2 — substantive challenge or extension | 1.5 |
+| Total | 10 |
+
+---
+
+Discussion — Module 06 | CIS-4350 | Texas Wesleyan University | Professor Nash

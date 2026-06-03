@@ -1,61 +1,68 @@
-# Discussion Forum: Module 01 - DevOps Fundamentals and the DevSecOps Mindset
+# Discussion Forum: Module 01 — Introduction to DevSecOps
 
 ## Course: CIS-4350 DevSecOps and CI/CD Pipelines
+
+## Texas Wesleyan University | Professor Nash
 
 ## Certification Alignment: DevSecOps Professional (DSOE)
 
 ---
 
-## Overview
+## Discussion Overview
 
-This discussion asks you to apply Module 01 concepts — DevSecOps culture, shift-left security, pipeline automation, and shared responsibility — to real-world organizational scenarios. Read all three scenarios and respond to the one assigned to your group (or the one of your choice if your instructor has not assigned groups). Your initial post is due Wednesday at 11:59 PM; peer responses are due Sunday at 11:59 PM.
+Post your original response to one scenario below (minimum 175 words). Then reply substantively to at least two classmates' posts (minimum 75 words each reply). Responses are due by Sunday at 11:59 PM. Peer replies are due by Tuesday at 11:59 PM.
 
----
-
-## Scenario A: The Legacy Audit Model
-
-A financial services company has been conducting security through a dedicated Security Operations team that manually reviews every deployment before it goes to production. Reviews take 5-7 business days. The development teams now deploy 15-20 times per week across 8 microservices. The security team is overwhelmed, and developers complain that their code sits idle for a week waiting for approval. The CISO has asked your team to propose a DevSecOps transformation plan.
-
-In 175-225 words, address the following: Identify the core DevSecOps principle that the current model violates and explain why it is unsustainable at the current deployment frequency. Propose two specific automated pipeline controls that would reduce the manual review burden while maintaining an equivalent or higher security bar. Explain how you would preserve meaningful human security review for the changes that truly require it. Use precise DevSecOps terminology from Module 01 in your response.
+Professor Nash note: There are no purely right or wrong answers here. I am looking for evidence that you have engaged with the module concepts, applied them to a realistic situation, and thought critically about trade-offs. Support your positions with specific tools, frameworks, or examples from the reading.
 
 ---
 
-## Scenario B: The Shared Responsibility Conflict
+## Scenario 1 — The Reluctant Security Team
 
-A retail e-commerce platform suffered a data breach. The breach was caused by a vulnerable version of a popular open-source JSON parsing library with a known CVE that had been in the codebase for 11 months. The Development team says it is a security issue, so it belongs to the Security team. The Security team says they only review the application perimeter, not code internals. Operations says they only manage servers. No team accepted responsibility.
+Your organization has just announced a DevSecOps initiative. The development teams are enthusiastic — they want faster pipelines and automated feedback. However, the security team is resistant. Their lead says: "If you automate our gates, you remove our authority. Developers will just override findings to keep the pipeline green." The security team currently reviews every release manually, a process that takes three to five days per release.
 
-In 175-225 words, address the following: Explain how the DevSecOps shared responsibility model would have assigned clear ownership for this vulnerability before it was exploited. Identify which specific automated control — and at which pipeline stage — would have detected this CVE when it was first introduced 11 months ago. Describe how a post-incident feedback loop should be used to prevent the same class of vulnerability from recurring. Use precise DevSecOps terminology from Module 01 in your response.
+Consider this tension from both perspectives. What legitimate concerns does the security team have? What would you say to address those concerns while still making the case for automation? How does the security champion model help bridge this gap? What metrics would you propose tracking to demonstrate that automated security gates are more effective than manual review, not less? Reference at least one specific framework or tool from the module in your response.
 
----
+### Scenario 1 — Peer Response Prompt
 
-## Scenario C: The Startup Velocity Problem
-
-A Series A startup is building a SaaS product with a team of 6 engineers. They have no dedicated security staff. The CTO argues that adding security tooling to the CI/CD pipeline will slow down the team and that security can be addressed once they reach Series B and hire a security engineer. One of the developers pushes back, arguing that the cost of a breach at this stage could be fatal to the company.
-
-In 175-225 words, address the following: Evaluate the CTO's argument using the shift-left cost multiplier concept from Module 01. Identify two low-friction DevSecOps controls that a 6-person team with no security staff could realistically implement in a week without significantly impacting velocity. Explain how these controls create the feedback loop needed to catch vulnerabilities early without requiring a dedicated security engineer to review every change. Use precise DevSecOps terminology from Module 01 in your response.
+After reading a classmate's response, consider whether their proposed metrics would actually demonstrate the value of automation to a skeptical security team. What would you add or challenge?
 
 ---
 
-## Discussion Rubric (10 Points Total)
+## Scenario 2 — Shift-Left at a Startup
 
-### Initial Post (6 Points)
+You are the first security hire at a 20-person startup. The company has been shipping features fast with no formal security process. The CTO is supportive but has one constraint: "Don't slow down our developers. We ship ten times a day." You have a budget for two tools and two weeks to show measurable improvement.
 
-Due Wednesday at 11:59 PM. Your post must be 175-225 words, address all elements of your chosen scenario, and use precise DevSecOps terminology.
+Given the shift-left principle and the DevSecOps toolchain overview from this module, which two tool categories would you prioritize and why? What is the minimum viable security pipeline you would implement in two weeks? How would you measure "measurable improvement" to satisfy the CTO? Consider the cost-of-defect curve in your answer — at what SDLC stage are defects currently being found at this startup, and where do you want them to be found after your two weeks? Be specific about tool names and what each tool detects.
 
-- 5-6 pts: Thoroughly addresses all scenario questions with technical accuracy, clear explanations, and appropriate terminology. Meets the word count.
-- 3-4 pts: Addresses most scenario elements but lacks technical depth or precise terminology in one or more areas.
-- 0-2 pts: Incomplete, missing, or does not address the scenario elements.
+### Scenario 2 — Peer Response Prompt
 
-### Peer Responses (4 Points)
-
-Due Sunday at 11:59 PM. Respond to at least two classmates who chose different scenarios from yours.
-
-- 4 pts: Two substantive responses (at least 50 words each) that add technical content, offer an alternative approach, or connect the peer's scenario to concepts from the reading guide.
-- 2 pts: Only one substantive peer response, or both responses are superficial (e.g., "Great post, I agree").
-- 0 pts: No peer responses submitted.
+Compare your classmate's two chosen tool categories to your own. Did they make a stronger or weaker case for their choices? What would you have chosen differently, and why?
 
 ---
 
-## Professor Nash Note
+## Scenario 3 — Conway's Law in Action
 
-Focus on precision in your use of terms. "Shift-left" is not a synonym for "move faster" — it specifically means moving a security activity to an earlier SDLC stage. "Feedback loop" is not a synonym for "communication" — it specifically refers to the elapsed time between vulnerability introduction and developer notification. Examiners and interviewers will notice the difference.
+A large enterprise is struggling with DevSecOps adoption. Their organizational chart has four separate groups: Application Development, QA, Information Security, and Cloud Infrastructure. Each group has its own management chain, budget, and ticketing system. Security reviews require a formal ticket submission to the InfoSec group, which has a documented SLA of ten business days. Developers find ways to minimize their security ticket submissions by scoping changes as "minor" to avoid the review threshold.
+
+Using Conway's Law and the CALMS framework, diagnose what is happening at this organization. What structural changes would you recommend to improve security outcomes without simply hiring more InfoSec staff? How do security champions fit into your recommendation? What does the CALMS "Lean" pillar specifically prescribe for the ten-day SLA problem? Propose one concrete automation that would reduce the need for manual InfoSec tickets while maintaining audit evidence for compliance.
+
+### Scenario 3 — Peer Response Prompt
+
+Your classmate proposed structural changes. Are those changes realistic in a large enterprise? What resistance would they face and how might it be overcome?
+
+---
+
+## Grading Rubric
+
+| Criterion | Points |
+|---|---|
+| Original post addresses the scenario directly and substantively | 3 |
+| Specific tools, frameworks, or module concepts cited | 2 |
+| Critical thinking — trade-offs acknowledged, not just positives | 2 |
+| Peer reply 1 — substantive, adds new perspective or challenge | 1.5 |
+| Peer reply 2 — substantive, adds new perspective or challenge | 1.5 |
+| Total | 10 |
+
+---
+
+Discussion — Module 01 | CIS-4350 | Texas Wesleyan University | Professor Nash

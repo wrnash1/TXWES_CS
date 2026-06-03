@@ -1,236 +1,268 @@
-# Video Script: Module 04 - Containerization: Docker Security
+# Video Script: Module 04 — Container Security with Docker
 
 ## Course: CIS-4350 DevSecOps and CI/CD Pipelines
 
+## Texas Wesleyan University | Professor Nash
+
+## Estimated Duration: 20–24 minutes
+
 ## Certification Alignment: DevSecOps Professional (DSOE)
 
-## Estimated Duration: 20-24 minutes
+---
 
-## Instructor: Professor Nash
+### SEGMENT 1 — Introduction (0:00–1:30)
+
+[SLIDE: Module 04 title card]
+
+Welcome to Module 04. Containers have fundamentally changed how applications are built and deployed. Docker is the dominant container runtime, and understanding its security model is essential for any DevSecOps practitioner. In this module we'll work through Docker architecture, secure Dockerfile practices, image scanning with Trivy and Snyk, running containers as non-root users, read-only filesystems, Docker Content Trust for image signing, and container registry security.
+
+By the end of this module you'll be able to write security-hardened Dockerfiles, scan images for vulnerabilities before pushing them to a registry, configure containers to run with minimal privilege, and integrate container scanning into your CI pipeline from Module 03.
 
 ---
 
-### [00:00 - 01:30] Opening and Module Overview
+### SEGMENT 2 — Docker Architecture and the Threat Model (1:30–5:00)
 
-**Visual:** Instructor on camera, title card: "Module 04 — Containerization: Docker Security"
+[SLIDE: Docker architecture diagram — daemon, client, registry, containers]
 
-**Audio:**
+Docker uses a client-server architecture. The Docker client sends commands to the Docker daemon, which manages images, containers, networks, and volumes. Images are pulled from and pushed to registries.
 
-"Welcome back to CIS-4350. I'm Professor Nash. We have covered the DevSecOps culture, Git workflows, and multi-stage CI/CD pipelines. Now we're going to get into one of the most important infrastructure topics in modern DevSecOps: Docker and container security.
+The Docker threat model has five attack surfaces.
 
-Containers are everywhere. If you are working in DevSecOps today, you are almost certainly building, securing, and scanning Docker images. By the end of this video you'll understand the Docker security model, be able to write a secure Dockerfile using production best practices, explain the attack surface of container images, and describe how container image scanning fits into the CI/CD pipeline."
+The host OS is the first surface. The Docker daemon runs as root on the host. If an attacker can escape the container namespace — a container escape — they have root on the host.
 
----
+The Docker daemon itself is the second surface. The daemon socket at `/var/run/docker.sock` is effectively root access to the host. Never mount the Docker socket into a container.
 
-### [01:30 - 06:00] The Docker Security Model
+The container image is the third surface. Images built from base images containing known CVEs in OS packages or application libraries can be exploited after deployment.
 
-**Visual:** Diagram — Docker architecture: host kernel, Docker daemon, containers, namespaces, cgroups
+The container runtime is the fourth surface. Running containers as root inside the container, without read-only filesystem, with elevated Linux capabilities, or with access to the host network namespace all expand the attack surface.
 
-**Audio:**
+The registry is the fifth surface. If an attacker can push a malicious image to your registry or perform a man-in-the-middle attack to substitute an image, they control your application.
 
-"Let's start with how Docker security actually works at the kernel level, because this is the foundation for everything else.
-
-Docker containers are not virtual machines. A container shares the host operating system kernel. The isolation between containers — and between containers and the host — is provided by two Linux kernel features: namespaces and control groups (cgroups).
-
-Namespaces isolate what a container can see: its own process tree (PID namespace), its own network interfaces (network namespace), its own filesystem view (mount namespace), and its own hostname (UTS namespace). From inside the container, it looks like a standalone system. But the kernel calls are all going to the same shared kernel.
-
-Control groups limit what a container can use: CPU, memory, I/O. They prevent a runaway container from starving other containers or the host of resources.
-
-This architecture has a critical security implication: a vulnerability in the Linux kernel could potentially be exploited from inside a container to escape to the host. This is called a container breakout. Container breakouts are rare but documented — CVE-2019-5736 (runc vulnerability) and CVE-2022-0492 (cgroups escape) are historical examples.
-
-The Docker daemon itself runs as root by default. A compromised Docker daemon has root access to the host. This is why the exam tests Docker daemon access control and rootless Docker as a hardening measure.
-
-Understanding this kernel-shared architecture tells us why container image hardening matters: a smaller, more minimal image reduces the attack surface available to exploit inside the container."
+Each of these surfaces has specific controls. Let's work through them.
 
 ---
 
-### [06:00 - 12:00] Secure Dockerfile Best Practices
+### SEGMENT 3 — Dockerfile Security Best Practices (5:00–9:00)
 
-**Visual:** Side-by-side comparison — insecure Dockerfile vs. secure Dockerfile
+[SLIDE: Insecure Dockerfile vs. Secure Dockerfile side by side]
 
-**Audio:**
+The Dockerfile is the blueprint for your container image. Security decisions made here affect every container deployed from the image. Let's compare a typical insecure Dockerfile to a hardened one.
 
-"Now let's look at how to write a production-secure Dockerfile. This is directly tested on the DevSecOps Professional exam and required in this module's lab.
-
-**[SHOW CODE]**
-
-Here is an insecure Dockerfile — the kind you should never use in production:
+Here is an insecure Dockerfile:
 
 ```dockerfile
 FROM ubuntu:latest
 RUN apt-get update && apt-get install -y python3 python3-pip
 COPY . /app
 WORKDIR /app
-RUN pip3 install -r requirements.txt
+RUN pip install -r requirements.txt
+EXPOSE 80
 CMD ["python3", "app.py"]
 ```
 
-Let me count the problems: `ubuntu:latest` is a mutable, massive base image with hundreds of packages that are potential attack surface. Running as root (no `USER` directive). Copying the entire repository into the image (potentially including test files, .env files, Git history). Using `latest` means the build is not reproducible.
+The problems with this Dockerfile:
 
-Now here is the same application with a secure Dockerfile:
+First, `ubuntu:latest` is a floating tag. The exact image you get today differs from what you get in six months. And Ubuntu is a large general-purpose OS — most of its packages are irrelevant to your application, adding attack surface.
+
+Second, the application runs as root. If someone exploits a vulnerability in your application, they have root inside the container.
+
+Third, the entire build context is copied with `COPY . /app`, which may include `.env` files, test data, or other sensitive artifacts.
+
+Here is the hardened version:
 
 ```dockerfile
-# Stage 1: Build stage
-FROM python:3.11-slim AS builder
-
+# Stage 1: Build
+FROM python:3.12-slim AS builder
 WORKDIR /build
-
-# Copy only dependency manifest first (layer caching optimization)
 COPY requirements.txt .
+RUN pip install --no-cache-dir --user -r requirements.txt
 
-# Install dependencies into a prefix directory
-RUN pip install --no-cache-dir --prefix=/install -r requirements.txt
-
-# Stage 2: Production image
-FROM python:3.11-slim
-
-# Create a non-root user and group
-RUN groupadd -r appgroup && useradd -r -g appgroup -s /sbin/nologin appuser
-
+# Stage 2: Runtime
+FROM python:3.12-slim AS runtime
 WORKDIR /app
 
-# Copy installed packages from builder stage
-COPY --from=builder /install /usr/local
+# Create non-root user
+RUN groupadd -r appuser && useradd -r -g appuser appuser
 
-# Copy only the application source code, not tests or dev files
-COPY src/ ./src/
-
-# Change ownership to non-root user
-RUN chown -R appuser:appgroup /app
+# Copy only installed packages from builder
+COPY --from=builder /root/.local /home/appuser/.local
+COPY --chown=appuser:appuser src/ .
 
 # Switch to non-root user
 USER appuser
 
-# Expose only the required port
 EXPOSE 8080
 
-# Use exec form (not shell form) to handle signals correctly
-CMD ["python3", "-m", "src.main"]
+# Use exec form to ensure signals are handled correctly
+CMD ["/home/appuser/.local/bin/python", "app.py"]
 ```
 
-Let me walk through every security decision here.
-
-Multi-stage build: the `builder` stage installs dependencies using pip. The final `python:3.11-slim` stage copies only the installed packages and application code — not the build tools, not pip, not any build artifacts. This dramatically reduces image size and attack surface.
-
-`python:3.11-slim`: a minimal base image. Not `ubuntu:latest` with 500 packages. Not `:latest` — a pinned version so the build is reproducible and we know exactly what base image CVEs we're dealing with.
-
-Non-root user: `groupadd` creates a system group, `useradd` creates a system user with no login shell. `USER appuser` switches to that user before the CMD runs. If the container is compromised, the attacker runs as `appuser` — no root, no sudo, no ability to write to system directories.
-
-`COPY src/ ./src/` — we copy only the application source, not the entire repository. This prevents test files, configuration templates, or accidentally included secrets from ending up in the image.
-
-`CMD ["python3", "-m", "src.main"]` — exec form, not shell form. Exec form passes signals directly to the process, enabling clean shutdown. Shell form wraps the command in `/bin/sh -c`, creating an extra process and potentially exposing shell injection vectors."
+Key improvements: multi-stage build (build tools not in production image), non-root user, explicit version pinning (`python:3.12-slim`), minimal copy with `--chown`, and exec form CMD.
 
 ---
 
-### [12:00 - 17:00] Container Image Attack Surface and Scanning
+### SEGMENT 4 — Multi-Stage Builds and Minimal Base Images (9:00–11:30)
 
-**Visual:** Trivy scan output showing CVEs in a container image
+[SLIDE: Multi-stage build diagram showing layers dropped between stages]
 
-**Audio:**
+Multi-stage builds are one of the most powerful Docker security techniques. The build stage installs compilers, development libraries, and build tools. The final runtime stage copies only the compiled artifacts — no build tools, no source code, no package managers in the final image.
 
-"Even a perfectly written Dockerfile can result in a vulnerable image if the base image itself contains packages with known CVEs. This is where container image scanning comes in.
+For Python applications, distroless images from Google represent the most minimal option. They contain only the runtime and its dependencies — no shell, no package manager, no unnecessary OS utilities:
 
-Container image scanning tools analyze every layer of a Docker image against vulnerability databases, identifying OS packages, system libraries, and language runtime dependencies that have known CVEs.
+```dockerfile
+FROM python:3.12-slim AS builder
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt -t /app/packages
 
-The two tools you need to know for the exam are Trivy and Grype.
-
-**[SHOW CODE]**
-
-Trivy is an open-source scanner from Aqua Security. Install and run it locally:
-
-```bash
-# Install Trivy
-brew install aquasecurity/trivy/trivy
-
-# Scan a local image
-trivy image myapp:latest
-
-# Scan and fail if any CRITICAL or HIGH CVEs are found
-trivy image --exit-code 1 --severity CRITICAL,HIGH myapp:latest
-
-# Output results in JSON format for pipeline integration
-trivy image --format json --output trivy-results.json myapp:latest
+FROM gcr.io/distroless/python3-debian12
+WORKDIR /app
+COPY --from=builder /app/packages /app/packages
+COPY src/ .
+ENV PYTHONPATH=/app/packages
+CMD ["app.py"]
 ```
 
-The `--exit-code 1` flag is critical for pipeline integration: when Trivy finds a vulnerability at or above the specified severity threshold, it exits with code 1, causing the pipeline step to fail and blocking the image from being pushed.
+The distroless image has no shell (`/bin/sh`) and no package manager. An attacker who exploits your application cannot easily install tools or run interactive commands. This dramatically limits post-exploitation capability.
 
-Here is how to integrate Trivy into a GitHub Actions pipeline:
+For organizations not ready for distroless, `python:3.12-slim` is a reasonable intermediate choice — it's a Debian slim image containing only what Python needs, reducing the package surface significantly compared to `ubuntu:latest`.
+
+---
+
+### SEGMENT 5 — Image Scanning with Trivy (11:30–14:30)
+
+[SLIDE: Trivy scan output]
+
+Trivy, developed by Aqua Security, is the leading open-source container image scanner. It checks OS packages, language libraries (Python packages, Node modules, Ruby gems, etc.), and IaC files in a single scan.
+
+Running Trivy in CI:
+
+```bash
+# Scan a local image
+trivy image --severity HIGH,CRITICAL myapp:latest
+
+# Exit with non-zero code if HIGH or CRITICAL found (CI gate)
+trivy image --severity HIGH,CRITICAL --exit-code 1 myapp:latest
+
+# Output in JSON for integration
+trivy image --format json --output trivy-report.json myapp:latest
+
+# Output in SARIF for GitHub Security tab
+trivy image --format sarif --output trivy.sarif myapp:latest
+```
+
+In a GitHub Actions pipeline, the Trivy action integrates cleanly:
 
 ```yaml
-- name: Scan container image with Trivy
+- name: Build image
+  run: docker build -t myapp:${{ github.sha }} .
+
+- name: Scan image with Trivy
   uses: aquasecurity/trivy-action@master
   with:
-    image-ref: myapp:latest
+    image-ref: myapp:${{ github.sha }}
     format: sarif
     output: trivy-results.sarif
-    severity: CRITICAL,HIGH
-    exit-code: '1'
+    severity: HIGH,CRITICAL
+    exit-code: "1"
 
-- name: Upload Trivy results to GitHub Security
+- name: Upload Trivy SARIF results
   uses: github/codeql-action/upload-sarif@v3
+  if: always()
   with:
     sarif_file: trivy-results.sarif
 ```
 
-Uploading results in SARIF format to GitHub Security displays the findings directly in the repository's Security tab, integrated with the code review workflow.
+The `exit-code: "1"` is what makes this a blocking gate — if HIGH or CRITICAL vulnerabilities are found, the job fails, and the image is not pushed to the registry.
 
-Grype, from Anchore, is the other major open-source scanner. Its syntax is similar:
+---
+
+### SEGMENT 6 — Non-Root Containers and Capabilities (14:30–17:00)
+
+[SLIDE: Linux capabilities diagram]
+
+Running a container as root (`USER root`) means that if an attacker exploits a vulnerability in your application, they have root inside the container. With certain misconfigurations — like privileged mode or mounted host volumes — root inside the container can become root on the host.
+
+The fix is simple: always create and use a non-root user. We saw this in the Dockerfile example. At runtime, you can also enforce non-root using Docker security options:
 
 ```bash
-# Install Grype
-curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin
-
-# Scan image
-grype myapp:latest
-
-# Fail on CRITICAL findings
-grype myapp:latest --fail-on critical
+docker run \
+  --user 1001:1001 \
+  --read-only \
+  --tmpfs /tmp \
+  --cap-drop ALL \
+  --cap-add NET_BIND_SERVICE \
+  --no-new-privileges \
+  myapp:latest
 ```
 
-For the exam: know that both Trivy and Grype scan base image layers and application dependencies. Know that `--exit-code 1` / `--fail-on` flags are what make scanners into pipeline security gates rather than informational reports."
+Let me explain each flag.
+
+`--user 1001:1001` — run as UID/GID 1001, not root.
+
+`--read-only` — mount the root filesystem as read-only. The application cannot write files outside of explicitly declared writable directories.
+
+`--tmpfs /tmp` — provide a writable in-memory temporary directory. Required by many applications but does not persist between restarts.
+
+`--cap-drop ALL` — drop all Linux capabilities. Capabilities like `NET_RAW`, `SYS_ADMIN`, `SYS_PTRACE` are dangerous if an attacker gains container access.
+
+`--cap-add NET_BIND_SERVICE` — add back only the specific capability needed (in this case, binding to ports below 1024 — though it's better to use port 8080+ and avoid this entirely).
+
+`--no-new-privileges` — prevents the process from gaining additional privileges via setuid binaries.
 
 ---
 
-### [17:00 - 20:30] Container Security in the CI/CD Pipeline
+### SEGMENT 7 — Docker Content Trust and Registry Security (17:00–20:00)
 
-**Visual:** CI/CD pipeline diagram with container build and scan steps highlighted
+[SLIDE: Docker Content Trust signing diagram]
 
-**Audio:**
+Docker Content Trust (DCT) uses the Notary framework to sign images. When DCT is enabled, Docker only pulls images that have a valid signature from a trusted publisher.
 
-"Let's place container security controls in the context of the full CI/CD pipeline we discussed in Module 03.
+```bash
+# Enable DCT globally
+export DOCKER_CONTENT_TRUST=1
 
-The container-related security steps occur in this order within the pipeline:
+# Push a signed image (prompts for signing keys)
+docker push myregistry.io/myapp:v1.2.3
 
-First, during the build stage, the Dockerfile itself is scanned for security misconfigurations — tools like Hadolint analyze Dockerfile syntax against security rules: running as root, using `latest` tags, adding unnecessary capabilities.
-
-Second, after the Docker image is built, it is scanned with Trivy or Grype before being pushed to any registry. If the scan finds critical CVEs, the push is blocked.
-
-Third, the approved image is pushed to a private container registry — Docker Hub private, Amazon ECR, Google Artifact Registry, or a self-hosted Harbor instance.
-
-Fourth, in production, the running container should have read-only filesystem (`--read-only`), dropped capabilities (`--cap-drop ALL`), no new privileges (`--security-opt no-new-privileges`), and memory and CPU limits to prevent resource exhaustion attacks.
-
-**[SHOW CODE]**
-
-Dockerfile linting with Hadolint in a GitHub Actions pipeline:
-
-```yaml
-- name: Lint Dockerfile with Hadolint
-  uses: hadolint/hadolint-action@v3.1.0
-  with:
-    dockerfile: Dockerfile
-    failure-threshold: warning
+# Pull — will be verified against signature
+docker pull myregistry.io/myapp:v1.2.3
 ```
 
-The exam tests the order: lint Dockerfile, build image, scan image, push to registry. Never push an unscanned image."
+For registry security, the key controls are:
+
+Image signing with DCT or Sigstore/cosign ensures images were not tampered with in transit or storage.
+
+Registry access control via role-based permissions prevents unauthorized users from pushing images.
+
+Image scanning at push time — AWS ECR, Google Artifact Registry, and Azure Container Registry all support automatic scanning on image push.
+
+Image tag immutability prevents a production image tag from being overwritten — once `v1.2.3` is pushed, no one can push a different image under that tag.
+
+Pull-through cache with scanning combines performance and security — images are cached locally and scanned before being served to build systems.
 
 ---
 
-### [20:30 - End] Closing and Exam Alignment
+### SEGMENT 8 — Module Summary and Looking Ahead (20:00–22:00)
 
-**Visual:** Instructor on camera
+[SLIDE: Module 04 key takeaways]
 
-**Audio:**
+Module 04 in review.
 
-"For the exam: know the Docker security model — namespace and cgroup isolation, kernel sharing, and why this differs from VM isolation. Know the six secure Dockerfile practices: minimal base image, non-root user, multi-stage build, pinned versions, selective COPY, exec form CMD. Know Trivy and Grype as the primary container scanning tools and that `--exit-code 1` makes them pipeline gates. Know Hadolint for Dockerfile linting.
+Docker's threat model spans five surfaces: host OS, daemon, image, runtime, and registry.
 
-Complete the lab, which requires writing a secure multi-stage Dockerfile. See you in Module 05."
+Hardened Dockerfiles use multi-stage builds, minimal base images (slim or distroless), non-root users, explicit version pins, and minimal COPY scope.
+
+Trivy scans container images for OS package CVEs and language library vulnerabilities. In CI, `--exit-code 1` makes it a blocking gate.
+
+Runtime security flags — `--read-only`, `--cap-drop ALL`, `--no-new-privileges`, `--user` — minimize privilege at container runtime.
+
+Docker Content Trust and Sigstore/cosign provide image signing for supply chain integrity.
+
+Registry security includes access control, scanning at push, and tag immutability.
+
+In Module 05 we scale up — Kubernetes security: RBAC, Pod Security Admission, network policies, and runtime threat detection with Falco. See you there.
+
+---
+
+*[END OF SCRIPT — Module 04]*

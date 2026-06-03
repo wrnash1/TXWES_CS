@@ -1,55 +1,304 @@
-# Reading Guide: Module 16 - Final Exam Prep & CompTIA Data+ DA0-001 Certification
-## Course: CIS-4336_Data_Analytics (CompTIA Data+)
+# Reading Guide: Module 16 — Data+ DA0-001 Exam Preparation and Capstone
+
+## Course: CIS-4336 Data Analytics
+
+## Texas Wesleyan University | Professor Nash
+
+**Certification Alignment:** CompTIA Data+ (DA0-001)
 
 ---
 
 ### Introduction
-Welcome to **Module 16 - Final Exam Prep and CompTIA Data+ DA0-001 Certification**! This module is a comprehensive review of all concepts covered throughout the course, structured specifically to prepare you for both the course final exam and the CompTIA Data+ DA0-001 certification exam. Rather than introducing new content, this module synthesizes the four exam domains into a targeted review strategy, highlights the highest-yield topics, and helps you identify any remaining gaps before test day.
 
-The CompTIA Data+ exam tests your ability to apply analytical concepts to realistic business scenarios — not just recall definitions. Your preparation should emphasize scenario-based practice questions, reviewing distractor explanations to understand why wrong answers are wrong, and ensuring you can confidently distinguish between closely related concepts such as data masking vs. pseudonymization, leading vs. lagging indicators, and ETL vs. ELT.
+Welcome to **Module 16 — Data+ DA0-001 Exam Preparation and Capstone**. This reading guide is a comprehensive reference for all five Data+ exam domains. It synthesizes the key concepts from every prior module into a single, exam-focused document. Use this guide as your primary study reference in the days before the exam. Each section includes the most frequently tested concepts, definitions, and exam traps for its domain.
 
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **Data+ DA0-001 exam domain structure**: The exam covers four domains: Domain 1 — Data Concepts and Environments (~15%): data types, data formats, database fundamentals; Domain 2 — Data Collection and Management (~25%): data sources, data quality, governance, pipelines; Domain 3 — Data Mining (~23%): statistics, cleaning, analysis methods, ML concepts; Domain 4 — Analytics and Reporting (~23%): visualization, BI tools, storytelling, KPIs. The final ~14% covers integrated scenario questions spanning multiple domains. Domain 2 and Domain 4 together represent nearly 50% of the exam.
-*   **Most-tested concept clusters**: The exam disproportionately tests: (1) data quality dimensions (accuracy, completeness, consistency, validity, uniqueness) in scenario format; (2) hypothesis testing and p-value interpretation; (3) SQL clause order and JOIN behavior; (4) chart type selection for a described analytical goal; (5) privacy regulations and the shared responsibility model; (6) leading vs. lagging indicators; (7) supervised vs. unsupervised learning classification. These clusters account for the majority of scenario questions.
-*   **Common exam traps (summary)**: The p-value equals the probability of the data given H₀, not the probability H₀ is true. The median is preferred for skewed distributions, not the mean. HAVING filters groups after aggregation; WHERE filters rows before grouping. A data lake stores raw data schema-on-read; a data warehouse stores structured schema-on-write. Pseudonymized data is still personal data under GDPR; anonymized data is not. ELT loads before transforming; ETL transforms before loading. DirectQuery is always live; Import mode is a snapshot.
-*   **Exam strategy for scenario questions**: Read the scenario once for context, then read it again to identify the key constraint or requirement. Eliminate obviously incorrect answers first. For "which is most appropriate" questions, the correct answer always directly satisfies the stated requirement — not a plausible but indirect alternative. Watch for answer choices that are true statements but answer a different question than the one asked.
-*   **Certification readiness checklist**: You are ready when you can: define all five data quality dimensions and identify violations in a scenario; interpret a p-value correctly; write and explain a GROUP BY query with HAVING; select the correct chart type for any described analytical goal; classify a business metric as leading or lagging; distinguish anonymization from pseudonymization; and classify a machine learning task as supervised classification, supervised regression, or unsupervised clustering.
+The CompTIA Data+ DA0-001 exam tests practical data analyst competencies. It is not a memorization exam — it is a scenario-based exam where you apply knowledge to realistic situations. Reading this guide builds the conceptual map you need to navigate those scenarios confidently.
 
 ---
 
-### 2. Certification Exam Tips
-*   **Domain weight summary:** Domain 1 (~15%), Domain 2 (~25%), Domain 3 (~23%), Domain 4 (~23%). Focus the most study time on Domains 2 and 3 for maximum score impact. Domain 2 includes data quality, governance, and pipelines — areas with many testable scenario questions.
-*   **Final review priority — data quality scenarios:** Practice identifying which of the five quality dimensions is violated in a described scenario. Completeness = missing/null. Validity = wrong format. Accuracy = wrong value. Consistency = cross-system conflict. Uniqueness = duplicate records. The exam presents these as scenario questions, not definition recall.
-*   **Final review priority — visualization:** For every chart type, know: what question it answers, when to use it, and the most common misuse. Bar = compare categories. Line = trend over time. Scatter = correlation between two numeric variables. Box plot = distribution comparison across groups. Pie = part-to-whole with few categories. Truncated y-axis = misleading chart trap.
-*   **Final review priority — SQL:** Know the correct clause order (FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY). Know that WHERE cannot filter on aggregates; HAVING can. Know the difference between INNER JOIN (only matching rows), LEFT JOIN (all left rows), and FULL OUTER JOIN (all rows from both).
-*   **Study Resource:** For final review, work through all practice scenario questions in each module's quiz. The [Introduction to Data Science by Rafael A. Irizarry](https://rafalab.github.io/dsbook/) provides comprehensive coverage of the statistical and analytical foundations tested on Data+. The [Data Analysis with Python Course by freeCodeCamp](https://www.youtube.com/watch?v=GPVsHOl2238) reinforces the practical application of every major concept through hands-on Python examples that parallel exam scenarios.
+### Exam Overview
+
+| Feature | Detail |
+|---|---|
+| Exam code | DA0-001 |
+| Total questions | Up to 90 |
+| Time limit | 90 minutes |
+| Passing score | 675 out of 900 |
+| Question format | Multiple choice (single and multiple answer), performance-based |
+| Exam cost | $338 USD (discounts available through CertMaster) |
+| Validity | 3 years; renewable through continuing education or retake |
+
+#### Domain Weights
+
+| Domain | Title | Exam Weight |
+|---|---|---|
+| 1 | Data Concepts and Environments | 15% |
+| 2 | Data Mining | 25% |
+| 3 | Data Analysis and Statistics | 23% |
+| 4 | Data Visualization and Reporting | 22% |
+| 5 | Data Governance | 15% |
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Review all sixteen modules' glossary terms and certification exam tips sections. For any concept you cannot confidently explain in two sentences, re-read the corresponding chapter in the OER Textbook: [Introduction to Data Science by Rafael A. Irizarry](https://rafalab.github.io/dsbook/).
-*   **Required Video:** Re-watch any sections of the [Data Analysis with Python Course by freeCodeCamp](https://www.youtube.com/watch?v=GPVsHOl2238) corresponding to your identified weak areas — particularly statistics, data cleaning, and visualization topics in Modules 5–7.
+### Domain 1 Review — Data Concepts and Environments (15%)
+
+#### Data Types
+
+* **Quantitative (numeric)** — measurable values. Continuous (revenue, temperature) or discrete (headcount, order count).
+* **Qualitative (categorical)** — non-numeric labels. Nominal (no order: region, color) or ordinal (ordered: satisfaction ratings, size tiers).
+* **Structured** — organized in rows and columns; queryable with SQL. Examples: relational database tables, spreadsheets.
+* **Semi-structured** — has some organizational properties but not a rigid schema. Examples: JSON, XML, CSV.
+* **Unstructured** — no predefined format. Examples: email text, images, audio, video.
+
+#### Data Sources
+
+* **First-party data** — collected directly from your own customers or operations. Highest quality and accuracy.
+* **Second-party data** — another organization's first-party data shared with you through a direct agreement.
+* **Third-party data** — purchased from a data aggregator or broker; collected from unknown sources.
+
+Exam trap: confusing first-party and third-party. If your company collects it from your own customers, it is first-party. If you buy it, it is third-party.
+
+#### Database Concepts
+
+* **OLTP (Online Transaction Processing)** — optimized for frequent, fast reads and writes of individual records. Examples: order entry systems, banking transactions.
+* **OLAP (Online Analytical Processing)** — optimized for complex queries across large historical datasets. Examples: data warehouses, business intelligence systems.
+* **Relational database** — data stored in tables with defined relationships; queried with SQL.
+* **Non-relational (NoSQL) database** — flexible schema; stores documents, key-value pairs, graphs, or wide columns. Examples: MongoDB (document), Redis (key-value), Cassandra (wide column).
+* **Normalization** — organizing a relational database to reduce redundancy. First, second, and third normal forms progressively eliminate update anomalies.
+* **Primary key** — uniquely identifies each row in a table.
+* **Foreign key** — a column in one table that references the primary key of another table; enforces referential integrity.
+
+#### Data Warehousing
+
+* **Star schema** — a fact table at the center connected to multiple dimension tables. Denormalized for fast analytical queries.
+* **Snowflake schema** — dimension tables are normalized into sub-dimension tables. More storage-efficient but more complex to query.
+* **Fact table** — contains measurable events (sales transactions, web clicks) with foreign keys to dimensions.
+* **Dimension table** — describes the attributes of facts (date, customer, product, location).
+* **ETL** — Extract, Transform, Load. Data is transformed before loading into the warehouse.
+* **ELT** — Extract, Load, Transform. Raw data is loaded first; transformation occurs inside the warehouse. Common in cloud platforms.
+* **Data mart** — a subset of a data warehouse focused on a single department or subject area.
+* **Data lake** — stores raw data in any format at massive scale; schema-on-read rather than schema-on-write.
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Complete a timed practice exam of 30 scenario questions spanning all four domains**: Identify which domain and topic each question falls under, check your answers, and for every incorrect answer write a one-sentence explanation of why the correct answer is right and why your chosen answer was wrong.
-*   **Build a personal concept map of the five data quality dimensions**: For each dimension, write the definition, one example of a violation, and the correct exam answer pattern for a scenario describing that violation.
-*   **Audit your weakest topic area from the practice exam**: Select the domain where you scored lowest, re-read that module's reading guide and quiz with distractor explanations, then answer five additional practice questions in that domain.
+### Domain 2 Review — Data Mining (25%)
+
+#### Data Collection Methods
+
+* **SQL query** — retrieves structured data from relational databases.
+* **API call** — retrieves data from a web service using HTTP requests; returns JSON or XML.
+* **Web scraping** — programmatically extracts data from HTML web pages.
+* **Flat file import** — reads CSV, TSV, Excel, or fixed-width files.
+* **Data catalog** — a metadata inventory that documents available datasets, their schemas, owners, and quality attributes.
+
+#### Data Cleaning Techniques
+
+* **Null handling** — imputation (fill with mean, median, mode, or model prediction) versus deletion (drop rows or columns).
+* **Outlier detection** — IQR method (1.5× IQR rule), Z-score method (flag values beyond 3 standard deviations).
+* **Deduplication** — identifying and removing exact or near-duplicate records.
+* **Standardization** — converting inconsistent formats to a common standard (date formats, phone number formats, unit conversions).
+* **Data type conversion** — changing a column's data type (string to integer, string to datetime).
+
+#### Data Quality Dimensions
+
+* **Completeness** — are all required values present?
+* **Consistency** — does the data agree across sources and time?
+* **Accuracy** — does the data correctly represent the real-world entity?
+* **Validity** — do values conform to the expected format, range, or set of allowed values?
+* **Uniqueness** — are records deduplicated?
+* **Timeliness** — is the data current enough for the intended use?
+
+Exam tip: match described problems to their quality dimension. Missing fields → completeness. Contradictory values between systems → consistency. Values outside the valid range → validity.
+
+#### Data Transformation
+
+* **Aggregation** — summarizing data at a higher level (sum, count, average by group).
+* **Parsing** — splitting a compound field into components (full name → first name, last name).
+* **Merging / joining** — combining data from two sources on a shared key.
+* **Transposing** — rotating rows to columns or columns to rows.
+* **Deriving** — calculating new columns from existing ones (profit = revenue − cost).
 
 ---
 
-### 3. Study Checklist
-- [ ] Review all 16 modules' glossary terms and exam trap notes.
-- [ ] Complete at least one full timed practice exam covering all four Data+ domains.
-- [ ] Identify and remediate your three weakest topic areas before the exam.
-- [ ] Review the [Introduction to Data Science by Rafael A. Irizarry](https://rafalab.github.io/dsbook/) chapters for any remaining weak areas.
-- [ ] Watch targeted sections of the [Data Analysis with Python Course by freeCodeCamp](https://www.youtube.com/watch?v=GPVsHOl2238) for hands-on reinforcement.
-- [ ] Confirm you can state and apply the certification readiness checklist from Section 1 without notes.
-- [ ] Proceed to the course final exam.
+### Domain 3 Review — Data Analysis and Statistics (23%)
+
+#### Descriptive Statistics
+
+* **Mean** — arithmetic average; sensitive to outliers.
+* **Median** — middle value; resistant to outliers; preferred for skewed distributions.
+* **Mode** — most frequent value; useful for categorical data.
+* **Range** — max minus min; sensitive to outliers.
+* **Variance** — average squared deviation from the mean.
+* **Standard deviation** — square root of variance; in the same unit as the data.
+* **Percentile** — the value below which a given percentage of observations fall.
+* **Interquartile range (IQR)** — Q3 minus Q1; range of the middle 50%.
+
+#### Distributions
+
+* **Normal distribution** — symmetric bell curve; mean equals median equals mode; 68% of data within 1 standard deviation, 95% within 2, 99.7% within 3.
+* **Right-skewed (positive skew)** — long tail to the right; mean greater than median.
+* **Left-skewed (negative skew)** — long tail to the left; mean less than median.
+* **Bimodal** — two distinct peaks in the distribution.
+
+#### Correlation and Regression
+
+* **Correlation coefficient (r)** — ranges from -1 to 1. Values near 1 indicate strong positive linear relationship. Values near -1 indicate strong negative. Values near 0 indicate no linear relationship.
+* **Causation vs. correlation** — correlation never implies causation. A third variable (confound) may explain both.
+* **Simple linear regression** — models the relationship between one independent variable (x) and one dependent variable (y) as a straight line: y = mx + b.
+* **Multiple regression** — extends to multiple independent variables.
+* **R² (coefficient of determination)** — proportion of variance in y explained by x(es). Range: 0 to 1.
+
+#### Hypothesis Testing
+
+* **Null hypothesis (H₀)** — assumes no effect or no difference.
+* **Alternative hypothesis (H₁)** — asserts there is an effect or difference.
+* **p-value** — probability of observing the result if H₀ is true. If p < significance level (commonly 0.05), reject H₀.
+* **Type I error** — rejecting a true null hypothesis (false positive).
+* **Type II error** — failing to reject a false null hypothesis (false negative).
+* **Statistical significance** — p < 0.05 by convention, but this is a threshold, not a guarantee of practical importance.
+
+#### Analysis Types
+
+* **Trend analysis** — examines how a metric changes over time.
+* **Cohort analysis** — compares groups defined by a shared characteristic or event (signup month, acquisition channel).
+* **Root cause analysis** — investigates the underlying cause of an observed problem.
+* **Gap analysis** — compares current state to desired state; identifies what must change.
+* **What-if analysis (sensitivity analysis)** — models how outcomes change when input assumptions change.
+
+#### Machine Learning Concepts
+
+* **Supervised learning** — labeled training data; model predicts labels. Classification (category output) or regression (numeric output).
+* **Unsupervised learning** — no labels; algorithm finds structure. Clustering (K-means), dimensionality reduction (PCA).
+* **Overfitting** — model memorizes training data; poor test performance. Remedies: regularization, more data, simpler model.
+* **Underfitting** — model too simple; poor performance on both training and test. Remedies: more complex model, more features.
+* **Train/test split** — holds out data unseen during training to estimate real-world performance.
+* **Feature engineering** — encoding, scaling, date decomposition, log transformation.
+
+---
+
+### Domain 4 Review — Data Visualization and Reporting (22%)
+
+#### Chart Type Selection
+
+* **Line chart** — trends over continuous time.
+* **Bar / column chart** — comparing values across categories.
+* **Pie / donut chart** — part-to-whole for five or fewer categories.
+* **Scatter plot** — relationship between two numeric variables.
+* **Histogram** — distribution of one numeric variable.
+* **Box plot** — distribution and outlier visualization by group.
+* **Heatmap** — correlation matrix or cross-tabulation.
+* **Choropleth map** — geographic distribution by shading regions.
+* **Stacked area chart** — composition change over time.
+* **Bullet chart** — metric vs. target with qualitative ranges.
+
+#### Dashboard Design Principles
+
+* **Single audience, single purpose** — design for one role answering one question.
+* **Limit KPI count** — five or fewer primary KPIs at the top.
+* **Consistent color encoding** — one meaning per color across the whole dashboard.
+* **Remove chart junk** — eliminate non-data-encoding visual elements.
+* **Proximity and grouping** — related metrics together, whitespace as a separator.
+
+#### KPI Concepts
+
+* **Metric** — any quantitative measurement.
+* **KPI** — a metric tied to a strategic objective with a target and direction.
+* **Benchmark** — a reference value for evaluating metric performance.
+* **Leading indicator** — predicts future performance.
+* **Lagging indicator** — reflects past outcomes.
+* **Vanity metric** — impressive-looking but not actionable.
+
+#### BI Tools
+
+* **Tableau** — drag-and-drop canvas; Tableau Public for free publishing; strong for ad-hoc exploration.
+* **Power BI** — Microsoft ecosystem; Power Query for ETL; DAX for calculated measures.
+* **Looker** — LookML central metric model; prevents inconsistent metric definitions across teams.
+
+---
+
+### Domain 5 Review — Data Governance (15%)
+
+#### Privacy Regulations
+
+* **GDPR** — EU; any org processing EU resident data; rights include access, erasure, portability, rectification; penalty up to 4% global revenue or €20M.
+* **CCPA** — California; qualifying businesses; rights include know, delete, opt-out of sale, non-discrimination.
+* **HIPAA** — US healthcare; covered entities and business associates; Privacy Rule and Security Rule; protects PHI.
+
+#### PII and Identifiers
+
+* **Direct identifiers** — SSN, full name, email, phone, biometrics.
+* **Quasi-identifiers** — ZIP code, birth date, gender, ethnicity; can re-identify when combined.
+
+#### Anonymization Techniques
+
+* **Data masking** — replace with fictional data; irreversible; no mapping retained.
+* **Pseudonymization** — replace with token; mapping retained; still personal data under GDPR.
+* **Data generalization** — replace with ranges or categories.
+* **Aggregation** — report group statistics instead of individual records.
+* **k-anonymity** — each record indistinguishable from at least k-1 others on quasi-identifiers.
+* **Data suppression** — remove rows or columns that cannot be protected.
+
+#### Algorithmic Bias Types
+
+* **Historical bias** — training data reflects past inequality.
+* **Measurement bias** — outcome measured less accurately for some groups.
+* **Sampling bias** — training data not representative of deployment population.
+* **Proxy discrimination** — a non-protected variable correlates with a protected attribute and produces disparate impact.
+
+#### Responsible Data Principles
+
+* Data minimization, purpose limitation, transparency, consent, fairness, accountability, security.
+
+---
+
+### Exam Strategy
+
+#### Time Management
+
+At 90 questions in 90 minutes, the budget is 60 seconds per question. Move faster on topics you know well to bank time for harder questions. Flag uncertain questions and return at the end — never sit on one question for more than 90 seconds.
+
+#### Answer Selection Technique
+
+* Read the full question stem before looking at answers
+* Identify the key qualifier: "most appropriate," "first step," "primary reason"
+* Eliminate options that are clearly wrong
+* Of the remaining options, choose the one that is most complete and most directly answers the qualifier
+
+#### Common Exam Traps
+
+* OLTP vs. OLAP — OLTP is for transactions, OLAP is for analysis
+* ETL vs. ELT — transform before load vs. load then transform
+* Correlation vs. causation — never conflate them
+* First-party vs. third-party data — collected by you vs. purchased
+* Mean vs. median for skewed data — median is more robust
+* Overfitting vs. underfitting — large train-test gap vs. both low
+
+---
+
+### Key Terms — Master List
+
+All key terms from Modules 1–15 are tested on the exam. The most frequently tested are:
+
+* **data warehouse, data lake, data mart** — storage architecture distinctions
+* **ETL, ELT** — transformation timing
+* **star schema, snowflake schema** — warehouse modeling patterns
+* **OLTP, OLAP** — processing paradigms
+* **KPI, metric, benchmark** — measurement vocabulary
+* **PII, PHI, quasi-identifier** — privacy data types
+* **GDPR, CCPA, HIPAA** — regulatory frameworks
+* **supervised, unsupervised, classification, regression, clustering** — ML taxonomy
+* **overfitting, underfitting, train-test split** — ML evaluation
+* **normal distribution, skewness, correlation coefficient** — statistics
+* **Type I error, Type II error, p-value** — hypothesis testing
+* **data masking, pseudonymization, k-anonymity** — anonymization
+* **data minimization, purpose limitation** — governance principles
+
+---
+
+### OER Resources
+
+* **CompTIA Data+ exam objectives (free PDF)** — [comptia.org/certifications/data](https://www.comptia.org/certifications/data)
+* **Professor Messer CompTIA study notes** — [professormesser.com](https://www.professormesser.com/)
+* **freeCodeCamp Data Analysis with Python** — [freecodecamp.org/learn](https://www.freecodecamp.org/learn/data-analysis-with-python/)
+* **Khan Academy Statistics and Probability** — [khanacademy.org/math/statistics-probability](https://www.khanacademy.org/math/statistics-probability)
+* **IAPP Privacy Fundamentals** — [iapp.org/resources](https://iapp.org/resources/)

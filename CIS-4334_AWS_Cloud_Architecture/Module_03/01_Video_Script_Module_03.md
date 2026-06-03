@@ -139,7 +139,7 @@ Load balancers: ALB for Layer 7 web traffic; NLB for Layer 4 high performance an
 
 In the lab this week, you will work through EC2 instance selection scenarios, configure Auto Scaling Group parameters, and design a load balancing architecture. In the Reading Guide you have a complete instance family reference table, purchasing model comparison, and scaling policy decision framework.
 
-For your certification study: aws.amazon.com/certification.
+For your certification study: <aws.amazon.com/certification>
 
 ---
 

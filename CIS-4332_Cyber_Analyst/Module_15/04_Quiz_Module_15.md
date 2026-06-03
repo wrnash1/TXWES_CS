@@ -1,82 +1,163 @@
-# Quiz: Module 15 - Security Reporting and Communication
-## Course: CIS-4332_Cyber_Analyst (CompTIA CySA+)
+# Quiz: Module 15 — Advanced Threat Hunting
+
+## Course: CIS-4332 Cyber Security Analysis
+
+## Texas Wesleyan University | Professor Nash
+
+**Certification Alignment:** CompTIA CySA+ (CS0-003)
 
 ---
 
-**Question 1**
-A vulnerability scanner identifies a critical CVE with a CVSS base score of 9.8 on an internet-facing web server that processes customer payment data. The analyst must write a report for two audiences: the security engineering team and the executive leadership team. Which statement best describes the correct approach to communicating this finding?
+## Instructions
 
-*   A) Send the full technical vulnerability report including CVE details, CVSS score, and patch instructions to both audiences — all stakeholders benefit from complete technical information
-*   B) Write separate sections for each audience: a technical finding section with CVE identifier, CVSS score, and remediation steps for the engineering team, and an executive summary that frames the risk in terms of potential data breach, regulatory penalty, and remediation cost for leadership
-*   C) Report the finding only to the executive team and allow them to decide whether to share it with the technical team based on budget priority
-*   D) Convert the CVSS score directly into a business risk rating and present only the risk rating to both audiences, omitting technical details to avoid confusion
-*   **Correct Answer:** B) Write separate sections for each audience: a technical finding section with CVE identifier, CVSS score, and remediation steps for the engineering team, and an executive summary that frames the risk in terms of potential data breach, regulatory penalty, and remediation cost for leadership.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Sending a full technical report to executive leadership fails the communication objective — non-technical stakeholders cannot act on CVE numbers, CVSS vectors, or patch commands. Effective security reporting tailors content and language to each audience's role and decision-making authority.
-    *   *Why B is correct:* A well-structured vulnerability report contains distinct sections for different audiences. The technical finding section provides the precision that engineers need to apply a patch or implement a compensating control. The executive summary translates the same risk into business consequences — what data could be exposed, what regulations could be violated, and what remediation costs versus accepted-risk costs look like — enabling non-technical decision makers to authorize or prioritize the fix.
-    *   *Why C is incorrect:* Restricting technical findings from the engineering team would prevent remediation. Security analysts are responsible for distributing findings to appropriate owners, not gatekeeping technical information based on perceived budget considerations.
-    *   *Why D is incorrect:* Converting CVSS to a risk rating without context is insufficient for both audiences. Technical staff need the actual CVE and patch details; executives need the business impact framing, not just a numeric rating.
+Select the best answer for each question. Distractor analysis is provided after each question to support exam preparation.
 
 ---
 
-**Question 2**
-In security reporting, which of the following most accurately defines a **lessons-learned report** in the context of the NIST SP 800-61 incident response lifecycle?
+## Question 1
 
-*   A) A pre-incident document that defines escalation thresholds and assigns IR team roles before an incident occurs — completed during the Preparation phase to ensure the response team is ready to act
-*   B) A structured post-incident document completed during the Post-Incident Activity phase that captures what happened (timeline), what was detected and when, what worked well in the response, what failed or was slow, and specific recommended improvements with assigned owners
-*   C) A real-time log of analyst decisions and actions recorded during the active containment phase of an incident — used as an audit trail for legal and compliance purposes
-*   D) An executive briefing prepared by the CISO after a major incident summarizing financial losses, regulatory exposure, and insurance claim amounts for the board of directors
-*   **Correct Answer:** B) A structured post-incident document completed during the Post-Incident Activity phase that captures what happened (timeline), what was detected and when, what worked well in the response, what failed or was slow, and specific recommended improvements with assigned owners.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Pre-incident readiness documentation (playbooks, escalation matrices, role assignments) is completed during the Preparation phase of the NIST IR lifecycle — not during Post-Incident Activity. Lessons-learned reporting occurs after an incident is resolved, not before one occurs.
-    *   *Why B is correct:* The lessons-learned report is the formal output of the Post-Incident Activity phase. NIST SP 800-61 defines it as a structured review that analyzes the full incident timeline, evaluates detection effectiveness, identifies response gaps, and produces actionable recommendations with owners and target completion dates. It is the primary mechanism by which security organizations improve their detection and response capability over time.
-    *   *Why C is incorrect:* Real-time documentation of analyst decisions during containment is an incident timeline log or case management record — a forensic audit artifact, not a lessons-learned report. Lessons-learned are produced after the incident is resolved during a structured retrospective process.
-    *   *Why D is incorrect:* A board-level briefing covering financial losses and insurance claims is an executive incident disclosure or crisis communication document. While it may reference some lessons-learned content, it is a different document type serving a different audience and purpose.
+A senior analyst proposes starting a threat hunt with the goal of "looking for unusual activity." A junior analyst suggests instead that the hunt should be structured around the hypothesis: "Based on a CISA advisory indicating active exploitation of CVE-2024-1234 in VPN appliances, we hypothesize that if our perimeter VPN has been compromised, we will observe PowerShell or bash process creation by the VPN management daemon within the past 14 days." Which statement best explains why the junior analyst's approach is superior?
 
----
+- A) The junior analyst's approach is more interesting and will keep the team engaged
+- B) The specific hypothesis defines clear success and failure criteria, targets a specific data source and indicator, and is tied to credible intelligence — making the hunt efficient and repeatable
+- C) "Looking for unusual activity" always produces too many results, causing alert fatigue
+- D) Hypotheses must always be based on CVE publications; other intelligence sources are not valid for hunting
 
-**Question 3**
-An analyst completes a vulnerability report for a critical finding on a legacy manufacturing control system that cannot be patched without a 30-day vendor-coordinated maintenance window. The CISO asks why the vulnerability is still open 14 days after discovery. Which section of the vulnerability report should document this situation, and what should it contain?
+**Correct Answer:** B
 
-*   A) The executive summary section — it should state that the vulnerability is low priority because the manufacturing system is air-gapped and therefore not exploitable
-*   B) The remediation timeline section — it should document the specific inhibitor (vendor patch requires 30-day coordinated maintenance window), the compensating controls implemented in the interim (network segmentation, enhanced monitoring), and the expected remediation date
-*   C) The technical finding section — it should add a note that the CVE has been disputed by the vendor and may not apply to this specific product version
-*   D) The risk rating section — it should downgrade the severity rating from Critical to Low to reflect that the patch is pending, reducing stakeholder concern until remediation is complete
-*   **Correct Answer:** B) The remediation timeline section — it should document the specific inhibitor (vendor patch requires 30-day coordinated maintenance window), the compensating controls implemented in the interim (network segmentation, enhanced monitoring), and the expected remediation date.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Claiming air-gap protection without evidence would be inaccurate and misleading. Air-gapped systems can still be reached via removable media or insider threats. The report must document the actual constraint (maintenance window), not misrepresent the risk to justify inaction.
-    *   *Why B is correct:* CySA+ tests knowledge of inhibitors to remediation — the documented barriers that prevent a known vulnerability from being fixed on the standard timeline. Common inhibitors include legacy system constraints (vendor-coordinated patching), change freeze windows, and business continuity requirements. The remediation timeline section must document the specific inhibitor, the compensating controls deployed to reduce exposure in the interim, and the committed remediation date. This protects the analyst and provides the CISO with an accurate status.
-    *   *Why C is incorrect:* A vendor dispute claim requires vendor confirmation and CVE status verification — it cannot be added without evidence. Fabricating a technical justification to explain a remediation delay is a documentation integrity violation.
-    *   *Why D is incorrect:* Downgrading a severity rating because remediation is in progress is a misuse of risk ratings. The CVSS-based technical severity does not change because a patch is pending. The risk rating may be adjusted based on environmental factors or compensating controls, but only with documented justification — not to reduce stakeholder concern.
+**Distractor Analysis:** Why A is incorrect: Analyst engagement is not a methodology criterion. The quality of a hypothesis is measured by its precision, testability, and evidence basis — not its entertainment value. Why B is correct: A strong hunting hypothesis defines exactly what evidence would confirm or refute it, what data source to query, and what time range to cover. This enables efficient investigation, clear documentation of findings, and a repeatable playbook. "Looking for unusual activity" produces undefined scope, no success criteria, and no reproducible methodology. Why C is incorrect: While broad searches can produce noise, the problem with "unusual activity" is not result volume — it is that there is no defined indicator to search for and no criteria for what "unusual" means. Why D is incorrect: Threat intelligence for hunting hypotheses can come from CISA advisories, commercial threat feeds, ISAC reports, peer organizations, vendor advisories, internal anomaly data, and analyst intuition. CVE publications are one valid source among many.
 
 ---
 
-**Question 4**
-An analyst is preparing an executive summary for a CISO briefing about a high-severity vulnerability discovered on the organization's customer-facing web portal. The original technical finding reads: "CVE-2024-1234 (CVSS 8.9) — Apache HTTP Server mod_proxy buffer overflow via HTTP/2 request handling; affects versions 2.4.51 and earlier; exploitable remotely without authentication; patch available in 2.4.52." Which rewritten executive summary most effectively communicates this finding to a non-technical executive?
+## Question 2
 
-*   A) "CVE-2024-1234 is an 8.9 CVSS vulnerability in Apache 2.4.51 affecting the mod_proxy module via HTTP/2 buffer overflow; unauthenticated remote exploitation is confirmed; upgrade to 2.4.52 required."
-*   B) "A critical security weakness in the software running our customer web portal could allow an external attacker to take control of the portal without needing a password — potentially exposing customer data and triggering regulatory notification obligations. A software update is available and recommended within 72 hours; estimated effort is four hours of scheduled maintenance downtime."
-*   C) "Our security team has identified a vulnerability rated 8.9 out of 10 in severity. The vulnerability exists in a commonly used web server component and has a patch available. Security recommends patching."
-*   D) "The web portal runs Apache HTTP Server 2.4.51 which has a known buffer overflow in mod_proxy. Upgrading to 2.4.52 resolves the issue. No action is needed until the next scheduled maintenance cycle in 90 days."
-*   **Correct Answer:** B) "A critical security weakness in the software running our customer web portal could allow an external attacker to take control of the portal without needing a password — potentially exposing customer data and triggering regulatory notification obligations. A software update is available and recommended within 72 hours; estimated effort is four hours of scheduled maintenance downtime."
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Option A is the technical finding restated with minor paraphrasing. It retains all the technical jargon (CVSS score, CVE number, module name, buffer overflow, HTTP/2) that a non-technical executive cannot act on. An executive summary must eliminate jargon and translate risk into business consequences.
-    *   *Why B is correct:* An effective executive summary for a non-technical audience eliminates all technical identifiers, replaces them with business-impact language (customer data, regulatory obligations, external attacker), states the recommended action in plain terms, and provides a cost-benefit framing (72 hours urgency, four hours downtime). This gives the CISO the information needed to authorize and prioritize the patch without requiring technical knowledge.
-    *   *Why C is incorrect:* Option C removes jargon but is too vague to enable a decision. Saying a patch "is available" without urgency framing, business impact, or recommended timeline gives the executive no basis for prioritizing this finding over other work.
-    *   *Why D is incorrect:* Option D retains technical component names and recommends deferring a CVSS 8.9 vulnerability for 90 days without justification. A high-severity unauthenticated remote code execution vulnerability should not be deferred without documented business justification; this response could expose the organization to increased risk and regulatory liability.
+A threat hunter reviewing endpoint telemetry finds the following process creation event: ParentProcess = `winword.exe`, ChildProcess = `powershell.exe`, CommandLine = `powershell.exe -nop -w hidden -enc JABjAGwAaQBlAG4AdA...`. Which MITRE ATT&CK technique does this most directly represent, and why is this pattern significant?
+
+- A) T1566.001 (Spearphishing Attachment) — the Word document is a phishing artifact
+- B) T1059.001 (PowerShell) with parent process anomaly indicating macro execution — a Word document launched encoded PowerShell, consistent with macro-based initial access
+- C) T1055 (Process Injection) — the PowerShell process has been injected into winword.exe
+- D) T1078 (Valid Accounts) — the use of PowerShell indicates credential-based access
+
+**Correct Answer:** B
+
+**Distractor Analysis:** Why A is incorrect: T1566.001 describes the delivery mechanism (a spearphishing email with a malicious attachment). While the Word document may have been delivered via spearphishing, the telemetry record described shows the execution stage, not the delivery stage. Why B is correct: T1059.001 (Command and Scripting Interpreter: PowerShell) covers the execution of PowerShell as a malicious tool. The parent process anomaly — `winword.exe` spawning `powershell.exe` — is the classic indicator of a malicious macro executing a PowerShell payload. The `-enc` argument indicates base64 obfuscation (T1027 Obfuscated Files or Information), and `-nop -w hidden` are stealth flags. This combination is a high-confidence macro execution indicator. Why C is incorrect: Process injection (T1055) involves injecting code into an existing process's memory space. The process creation event shows a new child process being created — this is process spawning, not injection. Why D is incorrect: T1078 describes attackers using legitimate stolen credentials. The described event is a code execution event from a document, with no credential involvement indicated.
 
 ---
 
-**Question 5**
-An organization wants to improve its security reporting process to ensure that post-incident findings are systematically converted into measurable improvements in detection and response capability. Which two controls together best achieve this goal?
+## Question 3
 
-*   A) Require all security analysts to complete annual security awareness training and obtain a CompTIA Security+ certification within one year of hire
-*   B) Implement a formal lessons-learned process that requires a post-incident review within five business days of incident closure — producing a structured report with root cause analysis, detection gap identification, and assigned improvement actions with target dates — and integrate those improvement actions into the SIEM tuning backlog and IR playbook update cycle
-*   C) Deploy a vulnerability scanner that runs weekly automated scans against all production systems and emails the results to the security team distribution list
-*   D) Publish monthly security metrics dashboards to executive leadership showing mean time to detect (MTTD), mean time to respond (MTTR), and total incident count trends for the current quarter
-*   **Correct Answer:** B) Implement a formal lessons-learned process with post-incident reviews within five business days producing structured improvement actions — and integrate those actions into SIEM tuning and IR playbook updates.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Annual training and certification improve individual analyst baseline knowledge, but they do not create a feedback loop that converts specific incident findings into targeted detection improvements. Training is a foundational control, not a post-incident improvement mechanism.
-    *   *Why B is correct:* The lessons-learned process creates the feedback loop: each incident produces documented findings, gaps in detection are identified and fed back into SIEM correlation rule tuning, and gaps in response procedure are fed back into playbook updates. The five-day completion window ensures timely conversion of findings while the incident is fresh. Without integration into the tuning and playbook cycle, lessons-learned reports become documentation artifacts that produce no measurable improvement in capability.
-    *   *Why C is incorrect:* Weekly vulnerability scanning identifies new attack surface — it is a vulnerability management control, not a post-incident improvement mechanism. Scanning does not address detection gaps revealed by an incident or improve the IR team's ability to respond faster next time.
-    *   *Why D is incorrect:* Publishing MTTD/MTTR dashboards measures performance trends and communicates them to leadership — this is reporting and accountability, not an improvement mechanism. Dashboards that show a negative trend do not automatically produce the root cause analysis or corrective actions needed to reverse it; only a structured lessons-learned process does.
+A threat hunter analyzes DNS query logs and observes that a single internal workstation has made 847 DNS queries to unique subdomains under the parent domain `updates-service-cdn.net` in a 6-hour window. Each subdomain is a 32-character hexadecimal string. No responses returned valid IP addresses (all NXDOMAIN). Which threat technique does this pattern most strongly indicate, and which MITRE ATT&CK technique ID applies?
+
+- A) T1566.002 (Spearphishing Link) — the workstation is resolving links from a phishing email
+- B) T1071.004 (Application Layer Protocol: DNS) for DNS tunneling — the high query volume with encoded subdomains indicates data exfiltration via DNS
+- C) T1568.002 (Dynamic Resolution: Domain Generation Algorithms) — the workstation is infected with malware using DGA to locate its C2 server, and the NXDOMAIN responses indicate the C2 domain has not yet been registered
+- D) T1190 (Exploit Public-Facing Application) — the DNS queries indicate a web application is being exploited
+
+**Correct Answer:** C
+
+**Distractor Analysis:** Why A is incorrect: Spearphishing links resolve to specific attacker-controlled domains, not hundreds of unique NXDOMAIN subdomains. A phishing link would produce a small number of DNS queries to specific domains, not 847 queries to random hex subdomains. Why B is incorrect: DNS tunneling (T1071.004) does produce high query volumes with encoded subdomain data, but tunneling requires successful DNS resolution to function — the C2 server must receive and respond to the queries. NXDOMAIN for all queries means no server is answering, making exfiltration via this channel impossible. Why C is correct: DGA malware generates pseudo-random domain names to locate its C2 server. The malware queries these domains in sequence until one resolves successfully. High volumes of NXDOMAIN responses are the defining characteristic of DGA activity in pre-registration or disrupted phases — the C2 infrastructure has been taken down or not yet brought online. The 32-character hex subdomain pattern is consistent with a DGA algorithm. This is a high-confidence DGA indicator. Why D is incorrect: Exploitation of public-facing applications involves inbound attack traffic targeting a server, not outbound DNS queries from an internal workstation. The traffic direction and protocol are inconsistent with this technique.
+
+---
+
+## Question 4
+
+An EDR platform captures the following sequence on a single host over 8 minutes: (1) `excel.exe` spawns `powershell.exe` with a base64 argument, (2) PowerShell makes an outbound HTTPS connection to `185.44.33.121:443`, (3) PowerShell spawns `cmd.exe` with arguments `whoami /all`, (4) `cmd.exe` spawns `net.exe group "Domain Admins" /domain`, (5) `cmd.exe` spawns `net.exe view /domain`. What stage of the ATT&CK kill chain does the sequence of events 3 through 5 represent?
+
+- A) Initial Access — the attacker is establishing the initial foothold
+- B) Persistence — the attacker is creating mechanisms to maintain access
+- C) Discovery — the attacker is gathering information about the environment and domain structure
+- D) Lateral Movement — the attacker is moving to other systems
+
+**Correct Answer:** C
+
+**Distractor Analysis:** Why A is incorrect: Initial Access (in ATT&CK terms) describes how the attacker first gained entry to the environment. That stage is represented by step 1 (the Excel macro). Events 3–5 occur after access is established. Why B is incorrect: Persistence involves creating mechanisms to maintain access after a restart or credential change (scheduled tasks, registry run keys, new user accounts). Querying user groups and network resources with built-in commands does not create persistence. Why C is correct: Events 3–5 are all Discovery techniques. `whoami /all` (T1033 — System Owner/User Discovery), `net group "Domain Admins"` (T1069.002 — Permission Groups Discovery: Domain Groups), and `net view /domain` (T1018 — Remote System Discovery) are textbook Discovery commands. Attackers run these immediately after establishing initial access to understand the environment they have landed in. Why D is incorrect: Lateral Movement involves actually moving to and executing code on other systems. The commands shown are information gathering, not execution on other hosts.
+
+---
+
+## Question 5
+
+A threat hunter wants to detect beaconing behavior in network telemetry. They extract all outbound connections from internal hosts to external IPs, grouped by source-destination pair, and compute statistics on the inter-connection intervals. Which statistical characteristic most strongly indicates beaconing rather than normal user-driven traffic?
+
+- A) A high mean interval time (connections spaced more than an hour apart on average)
+- B) A low standard deviation relative to the mean interval (consistent, regular timing)
+- C) A high total byte count (large amounts of data transferred)
+- D) A high connection count (many individual connections in a short period)
+
+**Correct Answer:** B
+
+**Distractor Analysis:** Why A is incorrect: Long mean intervals might indicate infrequent C2 check-in but are also consistent with cron jobs, scheduled backups, software update checks, and many other legitimate automated processes. Mean interval alone is not a reliable beaconing indicator. Why B is correct: Beaconing is defined by regularity — C2 frameworks check in on a configured interval, optionally with jitter. The statistical signature of beaconing is a low coefficient of variation (standard deviation divided by mean). Human-driven traffic (browsing, email) has high variability in connection timing because humans are unpredictable. Automated C2 beaconing has low variability. A connection that fires every 60 seconds ±2 seconds across 72 hours is almost certainly automated, not human. Why C is incorrect: High byte counts indicate data transfer but could represent legitimate streaming, backup operations, or cloud sync. High bytes alone do not indicate beaconing; they might indicate exfiltration, which is a related but different hunt. Why D is incorrect: High connection counts could indicate beaconing but could equally indicate a chatty legitimate application, a streaming service, or a software update in progress. The defining characteristic of beaconing is the consistency of timing, not the volume of connections.
+
+---
+
+## Question 6
+
+During a threat hunt, an analyst identifies a confirmed Cobalt Strike beacon running inside a `svchost.exe` process. The hunt has confirmed initial access, C2 establishment, and discovery. No lateral movement or exfiltration evidence has been found yet. What is the most appropriate immediate action?
+
+- A) Continue the hunt to find exfiltration evidence before notifying anyone, so the IR team has a complete picture
+- B) Escalate immediately to the IR team with the confirmed findings while documenting all evidence collected so far
+- C) Isolate the affected host at the network level without notifying the IR team, to contain the threat immediately
+- D) Wait 24 hours to confirm the beacon persists across a reboot before escalating, to avoid false positives
+
+**Correct Answer:** B
+
+**Distractor Analysis:** Why A is incorrect: Waiting to find exfiltration evidence before escalating allows an active threat actor to continue operating — including completing exfiltration. Confirmed C2 presence is a high-severity confirmed incident that triggers immediate escalation. The IR team does not need a complete picture before being engaged; they are designed to work with partial information. Why B is correct: A confirmed Cobalt Strike beacon represents an active, in-progress compromise. The correct action is immediate escalation to the IR team with all evidence collected to date, while preserving and documenting the evidence. The hunting analyst's job is to find and hand off; the IR team's job is to respond. Delaying escalation to collect more evidence is a judgment call that should never be made unilaterally by a Tier 1 or 2 analyst. Why C is incorrect: Isolating a host without notifying the IR team denies the IR team control over the response. Host isolation may also destroy volatile evidence (RAM contents, active connections) before the IR team can decide whether to preserve it. Containment decisions must involve the IR team. Why D is incorrect: Waiting 24 hours with a confirmed active C2 beacon is indefensible. The attacker is operating right now. The standard for escalation is a confirmed threat, not a threat confirmed across multiple reboots.
+
+---
+
+## Question 7
+
+A threat hunter uses the MITRE ATT&CK Navigator to map their organization's current detection coverage. Techniques shown in green are currently detectable by automated SIEM or EDR rules. The hunter notices that T1547.001 (Boot or Logon Autostart Execution: Registry Run Keys) is marked red (no coverage). Which data source would provide the best telemetry for detecting this technique?
+
+- A) Network flow data showing outbound connections to known malicious IPs
+- B) DNS query logs showing resolution of DGA-generated domains
+- C) Windows Registry modification events captured by EDR, specifically for `HKCU\Software\Microsoft\Windows\CurrentVersion\Run` and related keys
+- D) HTTP proxy logs showing downloads of executable files
+
+**Correct Answer:** C
+
+**Distractor Analysis:** Why A is incorrect: Network flow data provides visibility into network-level indicators. Registry run key creation is a disk/system event, not a network event. Network data would not capture registry modifications. Why B is incorrect: DNS query logs provide visibility into domain resolution activity. Registry persistence creation does not generate DNS queries. Why C is correct: T1547.001 describes persistence achieved by writing to Windows registry autostart keys. The only data source that captures registry write events is endpoint telemetry from an EDR agent that monitors registry modifications. The specific keys to monitor are `HKCU\Software\Microsoft\Windows\CurrentVersion\Run`, `HKLM\Software\Microsoft\Windows\CurrentVersion\Run`, and related `RunOnce` variants. This is the precise data source specified in the ATT&CK technique's Detection guidance. Why D is incorrect: HTTP proxy logs show file download activity. While an attacker might download a malicious executable before writing its persistence key, the registry write event itself is not captured in proxy logs.
+
+---
+
+## Question 8
+
+A threat hunting team documents their hunts in a shared repository. After completing a hunt that found no evidence of the hypothesized attacker technique, a junior analyst suggests not documenting the negative result. "Nothing happened, so there is nothing to write up." What is wrong with this reasoning?
+
+- A) The junior analyst is correct — documenting negative results wastes time and clutters the repository
+- B) Negative hunt results confirm the hypothesis was tested, establish an environmental baseline, prevent redundant future hunts, and provide evidence of proactive security activity for auditors
+- C) Negative results must be reported to management as security incidents, even if nothing was found
+- D) All hunt documentation is optional and is only required when findings are escalated to the IR team
+
+**Correct Answer:** B
+
+**Distractor Analysis:** Why A is incorrect: Negative results have significant documentation value. Without them, the team cannot demonstrate coverage, cannot prevent the same hunt from being repeated, and cannot track what has been ruled out over time. Why B is correct: A documented negative result serves four purposes. First, it confirms the hypothesis was tested — providing a basis for confidence that the specific technique was absent in the searched data. Second, it establishes a baseline — the telemetry looked normal on this date, providing a reference point. Third, it prevents wasted effort — a repository of negative results prevents analysts from conducting the same hunt repeatedly. Fourth, it provides audit evidence that the security team is proactively hunting, which is increasingly required in compliance frameworks. Why C is incorrect: Negative hunt results are internal documentation, not incident reports. They do not indicate a security event occurred and should not be escalated as incidents. Why D is incorrect: Hunt documentation is not optional. A hunt without documentation provides no institutional value — the findings exist only in the analyst's memory and are lost when they leave or forget.
+
+---
+
+## Question 9
+
+A threat hunter hypothesizes that a threat actor may have used the living-off-the-land technique T1218.010 (Regsvr32) to execute malicious code by registering a DLL from a user-writable directory. Which query against endpoint process telemetry most directly tests this hypothesis?
+
+- A) Filter for `cmd.exe` processes with CommandLine containing `del` or `rmdir`
+- B) Filter for `regsvr32.exe` processes with CommandLine paths pointing to directories outside `C:\Windows\System32\` or `C:\Program Files\`
+- C) Filter for `svchost.exe` processes making outbound HTTPS connections
+- D) Filter for `powershell.exe` processes with CommandLine containing `-EncodedCommand`
+
+**Correct Answer:** B
+
+**Distractor Analysis:** Why A is incorrect: `del` and `rmdir` are file deletion commands, unrelated to Regsvr32 execution. These would be relevant for anti-forensic hunting, not T1218.010. Why B is correct: T1218.010 describes attackers using `regsvr32.exe` (a legitimate Windows binary) to register and execute a DLL. The malicious DLL is almost always stored in a user-writable directory (`C:\Users\`, `C:\ProgramData\`, `C:\Temp\`) rather than the legitimate system directories. Filtering for `regsvr32.exe` with CommandLine paths outside trusted directories directly tests for malicious Regsvr32 abuse — the classic LOLBin hunting pattern for this technique. Why C is incorrect: `svchost.exe` outbound connections are relevant for detecting process injection (T1055) or service-based C2, not for Regsvr32 execution. Why D is incorrect: PowerShell with `-EncodedCommand` tests for T1059.001 obfuscated PowerShell execution, not Regsvr32 abuse. While both are execution techniques, they are distinct techniques requiring separate queries.
+
+---
+
+## Question 10
+
+An analyst completes a 4-hour threat hunt and finds no evidence supporting their hypothesis. Which outcome best describes what the analyst should do next, and why?
+
+- A) Repeat the exact same hunt immediately using the same queries, in case data was missed on the first pass
+- B) Document the negative finding, note what data sources and time ranges were covered, and propose a refined hypothesis or a hunt for a related technique for the next cycle
+- C) Report to management that the organization has no active threats and security investment can be reduced
+- D) Mark the technique as permanently excluded from future hunts since it has been ruled out
+
+**Correct Answer:** B
+
+**Distractor Analysis:** Why A is incorrect: Repeating the exact same hunt immediately with the same queries against the same data will produce the same result. If the first hunt was properly executed, re-running it adds no value. A refined query, a different data source, or a different time range might yield different results — but that is a refinement, not a repetition. Why B is correct: A negative finding has documentation and planning value. Documenting what was covered (data sources, time range, queries) creates a baseline and prevents redundant future work. Proposing a related hypothesis or a refined version of the original hypothesis keeps the hunt cycle productive. The hunting loop explicitly continues with a new or refined hypothesis after each hunt completes. Why C is incorrect: A negative result in one hunt covering one technique over one time window absolutely does not mean the organization has no active threats. It means no evidence of the specific hypothesized technique was found in the searched data during the covered time period. Drawing conclusions beyond that is a significant overreach. Why D is incorrect: Adversary techniques evolve. A technique that was not observed last month may be actively used next month against updated infrastructure. ATT&CK techniques are never permanently excluded from future hunt consideration.

@@ -1,56 +1,202 @@
-# Reading Guide: Module 11 - Service Management Practices - Service Level Management
-## Course: CIS-4335_IT_Service_Management (ITIL 4 Foundation)
+# Reading Guide: Module 11 — Service Management Practices: Service Level Management
+
+**Course:** CIS-4335 IT Service Management — Texas Wesleyan University
+**Instructor:** Professor Nash
+**Certification Alignment:** ITIL 4 Foundation
 
 ---
 
-### Introduction
-Welcome to **Module 11 - Service Management Practices: Service Level Management**! Service Level Management (SLM) is the ITIL 4 practice that ensures service providers and customers share a clear, agreed understanding of what services will be delivered and at what quality level. It is a critical practice for maintaining customer trust, managing expectations, and driving continual improvement. This module covers the purpose of SLM, key agreement types, and how SLM connects to other ITIL 4 practices.
+## Overview
 
-As a student, you will learn the definitions and relationships between service level agreements (SLAs), operational level agreements (OLAs), and underpinning contracts (UCs), understand what makes a good SLA, and explore how SLM contributes to value co-creation with customers. Make sure to complete the checklist and review the glossary terms before beginning the lab activity.
+Service Level Management (SLM) is the practice responsible for setting clear, business-based targets for service performance and ensuring that delivery is measured, reported, and managed against those targets. It is one of the most relationship-focused practices in the ITIL 4 framework — its success depends on honest, ongoing engagement between the service provider and its customers as much as it depends on technical monitoring.
 
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The ITIL 4 Foundation exam expects you to know these concepts precisely:
-
-*   **Service Level Management (SLM)**: The ITIL 4 practice whose purpose is to set clear, business-based targets for service levels and ensure that delivery of services is properly assessed, monitored, and managed against those targets. SLM creates and maintains the ongoing relationship between the service provider and the customer around service quality.
-*   **Service Level Agreement (SLA)**: A documented agreement between a service provider and a customer that identifies both the services required and the expected level of service. SLAs define measurable targets such as availability, response times, and resolution times, and establish the basis for measuring performance and identifying failures.
-*   **Operational Level Agreement (OLA)**: An agreement between an IT service provider and another part of the same organization — such as a network team or database team — that defines the goods or services to be provided and the responsibilities of both parties. OLAs support the delivery of SLAs by defining internal commitments.
-*   **Underpinning Contract (UC)**: A legally binding contract between an IT service provider and a third-party supplier or vendor that supports the delivery of an IT service to a customer. UCs underpin SLAs by ensuring external suppliers meet the standards needed to deliver agreed service levels.
-*   **Service Level**: The measured and reported achievement against one or more service level targets. Monitoring service levels provides the data needed to manage services, identify gaps, and drive improvement.
-*   **Customer Engagement**: A key activity of SLM that involves ongoing communication with customers to understand their needs, gather feedback on service performance, and ensure the agreed service levels remain relevant as business needs evolve. SLM is not a one-time agreement — it requires continual engagement.
+Use this guide alongside the Module 11 video lecture and ITIL 4 Foundation study resources.
 
 ---
 
-### 2. Certification Exam Tips
-*   **SLA vs. OLA vs. UC:** This three-way distinction is a high-frequency exam topic. An SLA is between the provider and the customer; an OLA is between internal teams; a UC is with an external supplier. Map each to its relationship.
-*   **SLAs Must Be Business-Focused:** A common exam trap presents SLAs filled with technical metrics (e.g., CPU utilization at 60%). ITIL 4 states that SLAs should use metrics that are relevant and meaningful to the customer — such as availability percentages and response times, not internal infrastructure measurements.
-*   **Watermelon SLAs:** ITIL 4 specifically warns against "watermelon SLAs" — SLAs that appear green (meeting metrics) on the outside but hide dissatisfied customers on the inside. Metrics must reflect actual customer experience, not just technical outputs.
-*   **SLM Is Ongoing, Not a One-Time Agreement:** The exam tests that SLM involves continual engagement with customers to review performance, update targets, and ensure the SLA remains aligned with changing business needs. Signing an SLA once and filing it is insufficient.
-*   **OLAs and UCs Support SLAs:** The exam may present a scenario where an SLA target cannot be met because an internal team or external supplier is failing. OLAs govern internal teams; UCs govern external suppliers.
-*   **Study Resource:** The Axelos ITIL 4 Foundation resources at [https://www.axelos.com/certifications/itil-service-management/itil-4-foundation](https://www.axelos.com/certifications/itil-service-management/itil-4-foundation) include the official glossary definitions for SLA, OLA, and Service Level Management.
-*   **Video Resource:** The [ITIL 4 Foundation Certification Complete Course Playlist](https://www.youtube.com/playlist?list=PLK-tWc9i-GZ5V68tH3pB2rWn3Bv-yP85W) on YouTube includes a dedicated video on Service Level Management covering SLAs, watermelon SLAs, and exam scenario examples.
+## Purpose of Service Level Management
+
+ITIL 4 defines the purpose of Service Level Management as:
+
+> To set clear, business-based targets for service levels, and to ensure that delivery of services is properly assessed, monitored, and managed against these targets.
+
+Three ideas are embedded in this definition.
+
+**Business-based targets** — Targets must reflect what the business actually needs, not what is convenient to measure technically. A target like "disk I/O latency under 4 milliseconds" may be easy to monitor but meaningless to a business analyst who needs to run quarterly close reports.
+
+**Assessed and monitored** — Performance must be continuously measured. An SLA that is signed but never tracked is not an active management tool — it is a legal document waiting to become a dispute.
+
+**Managed against targets** — When performance falls short of a target, SLM is responsible for identifying the gap, understanding the cause, and driving corrective action.
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the chapter covering **Service Level Management** in the OER Textbook: [ITIL 4 Foundation Study Notes & Overviews](https://www.axelos.com/). Focus on the purpose of SLM, the three agreement types (SLA, OLA, UC), and the watermelon SLA concept.
-*   **Required Video:** Watch the video lecture on **Service Level Management** in the official course playlist: [ITIL 4 Foundation Certification Complete Course Playlist](https://www.youtube.com/playlist?list=PLK-tWc9i-GZ5V68tH3pB2rWn3Bv-yP85W).
+## The Three Agreement Types
+
+This is the highest-tested area within the SLM topic on the ITIL 4 Foundation exam.
+
+| Agreement Type | Full Name | Parties Involved | Nature |
+|---|---|---|---|
+| SLA | Service Level Agreement | Service provider and customer | Documented agreement on services and expected service levels |
+| OLA | Operational Level Agreement | Service provider and internal support team | Internal commitment that underpins the SLA |
+| UC | Underpinning Contract | Service provider and external supplier | Legally binding contract with a third party |
+
+### Service Level Agreement (SLA)
+
+An SLA is a documented agreement between a service provider and a customer. It identifies the services to be delivered and specifies the expected level of service. The SLA is the primary artifact of Service Level Management — it is what the customer signs up to and what the provider commits to deliver.
+
+A well-formed SLA contains:
+
+* Measurable service level targets — availability percentages, response time targets, resolution time targets, throughput thresholds
+* Definitions of how each metric will be measured and reported
+* Procedures for what happens when targets are not met — escalation paths, service credits, remediation plans
+* A defined review cadence — how often the SLA will be formally revisited
+
+### Operational Level Agreement (OLA)
+
+An OLA is an agreement between the service provider and an internal team within the same organization. Internal support teams — a network team, a database administration team, a desktop support team — make specific performance commitments that collectively enable the provider to meet its SLA with the customer.
+
+Example: If the SLA commits to 99.5% monthly availability for the order management system, the OLA with the network team might require 99.7% network availability, the OLA with the database team might require 99.8% database availability, and the OLA with the application support team might require 99.9% application server availability. Each internal OLA provides the headroom needed to absorb failures at one layer without breaching the overall SLA.
+
+### Underpinning Contract (UC)
+
+A UC is a legally binding contract between the service provider and an external third-party supplier. When components of service delivery depend on external vendors — a cloud infrastructure provider, a network carrier, a software maintenance organization — the UC defines the minimum performance commitments that supplier must meet.
+
+The UC gives the service provider contractual recourse if an external supplier's failures cause SLA breaches with the customer.
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will apply these concepts in the following activities:
-*   **Evaluate a sample SLA**: Review a provided SLA document and identify metrics that are customer-meaningful versus those that are internal technical measures. Rewrite two technical metrics as customer-relevant SLA targets.
-*   **Map agreement types**: Given a scenario with a customer, internal support teams, and an external cloud provider, identify which relationships require an SLA, which require an OLA, and which require an underpinning contract.
-*   **Identify a watermelon SLA**: Review a service performance report where all SLA metrics are green but customer satisfaction scores are declining. Identify which metrics fail to capture actual customer experience and recommend replacements.
+## The Agreement Hierarchy
+
+The three agreement types exist in a layered structure.
+
+```text
+Customer
+   ↕ SLA
+Service Provider
+   ↕ OLA          ↕ UC
+Internal Teams    External Suppliers
+```
+
+The SLA defines the customer-facing commitment. OLAs and UCs define the internal and external commitments that make it possible to meet the SLA. If OLAs and UCs are not aligned with the SLA — if internal teams or external suppliers are only committed to performance levels that cannot support the SLA target — SLA breaches become structurally inevitable.
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and memorize the definitions of SLA, OLA, and underpinning contract.
-- [ ] Read the chapter covering **Service Level Management** in [ITIL 4 Foundation Study Notes & Overviews](https://www.axelos.com/).
-- [ ] Watch the video lecture on **Service Level Management** in [ITIL 4 Foundation Certification Complete Course Playlist](https://www.youtube.com/playlist?list=PLK-tWc9i-GZ5V68tH3pB2rWn3Bv-yP85W).
-- [ ] Review the activities outlined in the lab instructions.
-- [ ] Proceed to the weekly hands-on lab activity.
+## What Makes a Good SLA?
+
+Not all SLAs are effective. ITIL 4 identifies several patterns of SLA failure.
+
+| Failure Mode | Description | Remedy |
+|---|---|---|
+| Watermelon SLA | Metrics are technically green but the customer experiences significant pain in unmeasured areas | Engage customers to identify what actually matters; redesign metrics |
+| Unused SLA | Signed once, filed, never referenced again until a dispute | Build regular service reviews into the operating model |
+| Unrealistic targets | Targets set beyond the provider's actual capability | Baseline actual performance before setting targets |
+| Technically oriented SLA | Metrics expressed in infrastructure terms the customer does not understand | Translate metrics into business outcome language |
+
+### The Watermelon SLA
+
+The watermelon SLA is a specific, named ITIL 4 concept. It occurs when the SLA is technically compliant — all dashboard tiles are green — but the customer is experiencing significant service quality problems in areas the SLA does not measure.
+
+The name captures the problem visually: green on the outside, red on the inside.
+
+This failure mode arises when SLA metrics are chosen based on what is easy to monitor rather than what the customer actually cares about. The fix is customer engagement: active conversations with users and business stakeholders to understand their pain points, followed by SLA redesign that measures the outcomes they experience, not the infrastructure metrics that are convenient to collect.
+
+---
+
+## Customer Engagement in SLM
+
+ITIL 4 is explicit that Service Level Management is a relationship management practice, not a contract administration function. The goal is not to avoid SLA breaches by writing cleverly narrow commitments — it is to build genuine trust by delivering what the customer needs and demonstrating that delivery transparently.
+
+Customer engagement activities in SLM include:
+
+* **Initial SLA development** — Understanding what the customer needs before writing any targets requires listening and exploration, not just presenting a standard SLA template.
+* **Regular service reviews** — Periodic structured meetings where actual service performance is reviewed against SLA targets, trends are discussed, and problems are surfaced before they become crises.
+* **SLA revision** — As the business evolves, the SLA must evolve with it. Customer engagement ensures the provider knows when the business has changed and targets need updating.
+* **Satisfaction measurement** — Surveys, feedback sessions, and informal conversations that go beyond the metrics to understand how customers actually experience the service day to day.
+
+---
+
+## Service Level Management and Related Practices
+
+| Related Practice | Relationship |
+|---|---|
+| Incident Management | Incident impact on availability and response times directly affects SLA performance; major incidents trigger SLA breach reporting |
+| Problem Management | Recurring SLA breaches pointing to the same root cause become candidates for Problem Management |
+| Continual Improvement | SLA performance gaps feed the Continual Improvement Register as improvement initiative candidates |
+| Service Desk | Service Desk response and resolution times must align with SLA commitments; SLA targets translate directly into Service Desk operational targets |
+| Monitoring and Event Management | Monitoring data is the source of SLA performance measurement; monitoring accuracy determines reporting reliability |
+| Change Enablement | Changes that affect monitored services can impact SLA compliance; the change schedule should account for SLA implications |
+
+---
+
+## SLM and the ITIL 4 Guiding Principles
+
+| Guiding Principle | Application to SLM |
+|---|---|
+| Focus on value | SLA metrics must reflect what creates value for the customer, not what is easy to measure |
+| Start where you are | Baseline actual service performance before setting targets — do not guess or aspirationally commit |
+| Progress iteratively with feedback | SLA reviews provide the feedback cycle for improvement; do not wait for annual reviews |
+| Collaborate and promote visibility | Involve customers in SLA design; make performance data visible and accessible |
+| Think and work holistically | OLAs and UCs must collectively support the SLA; no single team can be optimized in isolation |
+| Keep it simple and practical | Fewer, meaningful metrics are better than comprehensive dashboards nobody reads |
+| Optimize and automate | Automate SLA performance data collection where possible to ensure accuracy and reduce manual effort |
+
+---
+
+## ITIL 4 Foundation Exam Tips — Module 11
+
+1. Know the three agreement types and who each party is. On the exam, read the parties carefully: customer-provider equals SLA, internal teams equal OLA, external supplier equals UC.
+
+2. The watermelon SLA is a named ITIL 4 concept. If an exam scenario describes an organization meeting all SLA targets while customers are dissatisfied, the answer will involve watermelon SLA and the fix will involve customer engagement and metric redesign.
+
+3. SLAs must be business-based. Technically oriented metrics that the customer does not understand or care about are a failure mode, not a best practice.
+
+4. An SLA signed once and never reviewed is not functioning as intended. SLM requires ongoing engagement and regular service reviews.
+
+5. OLAs support the SLA — they define what internal teams commit to in order to collectively enable the provider to meet the SLA commitment. They are not the same as the SLA.
+
+6. UCs are legally binding contracts with external suppliers — they carry legal weight that OLAs do not.
+
+7. SLM is not a monitoring function. Monitoring and Event Management produces the data; SLM uses that data to assess and manage performance.
+
+8. Do not confuse SLM with the Service Desk. The Service Desk handles user interactions. SLM manages the formal agreements about what level of service will be delivered.
+
+---
+
+## Key Terms Glossary — Module 11
+
+| Term | Definition |
+|---|---|
+| Service Level Management (SLM) | The practice of setting and managing clear, business-based service level targets |
+| Service Level Agreement (SLA) | A documented agreement between a service provider and a customer specifying expected service levels |
+| Operational Level Agreement (OLA) | An agreement between a service provider and an internal team that supports the SLA |
+| Underpinning Contract (UC) | A legally binding contract between a service provider and an external supplier |
+| Watermelon SLA | An SLA where metrics appear compliant but customer experience is poor in unmeasured areas |
+| Service Review | A periodic meeting where actual service performance is assessed against SLA targets |
+| Service Level Target | A specific, measurable commitment included in an SLA |
+| Customer Engagement | Ongoing interaction with customers to understand needs, review performance, and maintain trust |
+| XLA | Experience Level Agreement — an emerging supplement to SLAs focusing on customer experience outcomes |
+
+---
+
+## Required Reading
+
+* ITIL 4 Foundation publication — chapter on the Service Level Management practice
+* Axelos ITIL 4 Foundation sample questions — filter for SLA, OLA, UC, and watermelon scenarios
+* Axelos ITIL 4 Foundation practice exam at [axelos.com](https://www.axelos.com)
+
+---
+
+## Study Checklist
+
+* [ ] Define the purpose of Service Level Management in your own words
+* [ ] Explain the difference between an SLA, an OLA, and a UC — including the parties involved for each
+* [ ] Describe the watermelon SLA failure mode and explain how to fix it
+* [ ] List four failure modes of ineffective SLAs
+* [ ] Explain why SLM is considered a relationship management practice rather than a contract administration function
+* [ ] Describe at least three customer engagement activities that SLM requires
+* [ ] Explain how SLM relates to Incident Management, Problem Management, and Continual Improvement
+* [ ] Apply the Guiding Principle "Focus on value" to the design of an SLA
+
+---
+
+Module 11 Reading Guide | CIS-4335 IT Service Management | Texas Wesleyan University

@@ -1,52 +1,367 @@
-# Reading Guide: Module 11 - NAT and PAT Configurations
-## Course: CIS-3322_Advanced_Networking (Cisco CCNA (200-301))
+# Reading Guide: Module 11 — DHCP and DNS Configuration
+
+## Course: CIS-3322 Advanced Networking
+
+## Texas Wesleyan University | Professor Nash
+
+## Certification Alignment: Cisco CCNA 200-301
 
 ---
 
-### Introduction
-Welcome to **Module 11 - NAT and PAT Configurations**! This week's study material focuses on the core foundations and configuration mechanics of **NAT and PAT Configurations** as aligned with the **Cisco CCNA (200-301)** certification framework. Understanding these topics is essential not only for passing the certification exam but also for administering enterprise systems in real-world environments.
+## Overview
 
-As a student, you will learn the primary operational roles, command syntaxes, and troubleshooting parameters needed to design, configure, and maintain these services. We will explore how different protocols establish connections, how configurations manage resource allocation, and how security controls prevent access breaches. Make sure to complete the checklists and review the glossary terms in detail before beginning the lab activity.
-
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **Static vs Dynamic NAT**: Static NAT creates a permanent one-to-one mapping between a specific private (inside local) IP address and a specific public (inside global) IP address — commonly used for servers that must be consistently reachable from the internet. Dynamic NAT maps private addresses to a pool of public addresses on a first-come, first-served basis, but still requires a one-to-one public IP for each active session, meaning the pool may be exhausted.
-*   **Port Address Translation (PAT) / Overload**: PAT (also called NAT Overload) maps many private IP addresses to a single public IP address by tracking unique source port numbers for each session. This allows hundreds or thousands of internal hosts to share one public IP simultaneously. PAT is the most common NAT implementation in home and small enterprise networks, configured with the `overload` keyword on Cisco routers.
-*   **Inside local/global definitions**: The four NAT address terms are: **Inside Local** (private IP of internal host as seen from inside), **Inside Global** (public IP of internal host as seen from outside), **Outside Local** (IP of external host as seen from inside — typically the same as outside global), **Outside Global** (real IP of the external host). The exam frequently asks you to identify which term applies to a specific address in a NAT translation table.
+DHCP and DNS are IP Services topics tested on the CCNA 200-301 exam. The exam focuses on Cisco IOS DHCP server configuration, DHCP relay (ip helper-address), DHCP snooping, and the DNS resolution process. This guide provides configuration tables, command references, troubleshooting flowcharts, and CCNA exam tips covering all testable concepts.
 
 ---
 
-### 2. Certification Exam Tips
-*   **CCNA Domain:** NAT falls under **IP Services (10%)** of the CCNA 200-301 exam. Expect 2–3 NAT questions focusing on address terminology and PAT configuration.
-*   **Four NAT terms — memorize the matrix:** Inside = your network. Outside = the internet. Local = as seen from inside. Global = as seen from outside. So: Inside Local = your host's private IP (10.x.x.x). Inside Global = the public IP your host appears to be when seen from the internet.
-*   **PAT configuration syntax:** The key command is `ip nat inside source list [acl] interface [WAN-interface] overload`. The ACL identifies which inside addresses are translated. The `overload` keyword enables PAT. Interfaces must be tagged `ip nat inside` or `ip nat outside`.
-*   **Common Trap:** Forgetting to tag interfaces with `ip nat inside` and `ip nat outside` is the most common PAT configuration error. Without these tags, NAT does not function even if the translation rule is correct.
-*   **Study Resource:** Watch the NAT and PAT episodes in the Jeremy's IT Lab CCNA free playlist, which demonstrate static NAT, dynamic NAT, and PAT configurations with Packet Tracer and `show ip nat translations` verification: [Jeremy's IT Lab CCNA Complete Course on YouTube](https://www.youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ). Look for the "NAT" episodes.
+## 1. DHCP Core Concepts
+
+### The DORA Exchange
+
+DHCP uses four messages to assign an IP address. The entire process takes milliseconds on a functioning network.
+
+| Step | Message    | Direction          | Source    | Destination   | Purpose                                             |
+|------|------------|--------------------|-----------|---------------|-----------------------------------------------------|
+| 1    | Discover   | Client → Server    | 0.0.0.0   | 255.255.255.255 | Client broadcasts to find available DHCP servers  |
+| 2    | Offer      | Server → Client    | Server IP | 255.255.255.255 | Server offers an available IP address and params  |
+| 3    | Request    | Client → Server    | 0.0.0.0   | 255.255.255.255 | Client requests the offered address (broadcast)   |
+| 4    | Acknowledge| Server → Client    | Server IP | Client IP     | Server confirms and delivers full IP configuration  |
+
+### Why Broadcasts Cannot Cross Routers
+
+DHCP Discover and Request messages use Layer 2 and Layer 3 broadcast addresses. Routers do not forward broadcasts by default. This means each subnet needs either a local DHCP server or a relay agent configured on the subnet's gateway router.
+
+### DHCP Lease Lifecycle
+
+A DHCP lease has three timing thresholds. At 50% of lease time (T1), the client attempts to renew directly with the server that issued the lease. At 87.5% of lease time (T2), if renewal failed, the client broadcasts a rebind request to any available DHCP server. At 100% of lease time, if rebind failed, the client releases its address and restarts the DORA process.
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the section covering **NAT and PAT** in the Cisco Skills for All CCNA course. The content includes NAT terminology diagrams, configuration examples, and Packet Tracer labs: [Cisco Skills for All Portal - CCNA Guides](https://skillsforall.com/). Navigate to "CCNA: Enterprise Networking, Security, and Automation" — the NAT chapter.
-*   **Required Video:** Watch the NAT episodes in the Jeremy's IT Lab CCNA complete playlist. These videos cover all four NAT address types, static/dynamic/PAT configurations, and troubleshooting with `show ip nat translations` and `debug ip nat`: [Jeremy's IT Lab CCNA Complete Course](https://www.youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ).
+## 2. Cisco IOS DHCP Server Configuration
+
+### Configuration Order
+
+Always configure excluded addresses before creating pools. The excluded-address command must be in place before the pool starts handing out addresses.
+
+```text
+! Step 1: Reserve addresses for static assignment (gateways, servers, printers)
+ip dhcp excluded-address <first-ip> <last-ip>
+
+! Step 2: Create pool and define parameters
+ip dhcp pool <pool-name>
+  network <network-address> <subnet-mask>
+  default-router <gateway-ip>
+  dns-server <dns-ip1> [dns-ip2]
+  domain-name <domain>
+  lease <days> [<hours> [<minutes>]]
+```
+
+### Full Cisco IOS DHCP Server Example
+
+```text
+R1(config)# ip dhcp excluded-address 192.168.10.1 192.168.10.20
+R1(config)# ip dhcp pool VLAN10_POOL
+R1(dhcp-config)# network 192.168.10.0 255.255.255.0
+R1(dhcp-config)# default-router 192.168.10.1
+R1(dhcp-config)# dns-server 10.1.1.53 8.8.8.8
+R1(dhcp-config)# domain-name corp.local
+R1(dhcp-config)# lease 0 12
+```
+
+The `lease 0 12` means 0 days and 12 hours. The default lease is 1 day if not specified.
+
+### DHCP Pool Parameter Reference
+
+| Parameter       | Command Syntax                              | Purpose                                          |
+|-----------------|---------------------------------------------|--------------------------------------------------|
+| Subnet definition| `network <ip> <mask>`                      | Defines which subnet this pool serves            |
+| Default gateway | `default-router <ip>`                       | Sent to clients as the default gateway           |
+| DNS server(s)   | `dns-server <ip1> [ip2]`                    | Up to 8 DNS server addresses in order            |
+| Domain name     | `domain-name <name>`                        | Appended to unqualified hostnames by client      |
+| Lease time      | `lease <days> [hours] [minutes]`            | Duration of the IP address assignment            |
+| WINS server     | `netbios-name-server <ip>`                  | Windows name service server (legacy)             |
+| NTP server      | `option 42 ip <ip>`                         | NTP server address via DHCP option               |
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Configure NAT pool: `ip nat pool [name] [start-ip] [end-ip] netmask [mask]`**: Define a pool of public IP addresses for dynamic NAT. Give the pool a descriptive name. Then create an ACL to match inside hosts and link the pool with `ip nat inside source list [acl] pool [name]`.
-*   **Map inside list to interface with overload: `ip nat inside source list 1 interface g0/0 overload`**: This PAT command translates all addresses matching ACL 1 to the IP address of interface g0/0, using unique port numbers to track each session. Tag the LAN interface `ip nat inside` and the WAN interface `ip nat outside`.
-*   **Verify mappings: `show ip nat translations`**: This command displays all active NAT translation entries, including the inside local, inside global, outside local, and outside global addresses and ports for each active session.
+## 3. DHCP Relay Agent — ip helper-address
 
+### When a Relay Agent Is Needed
+
+A relay agent is needed whenever the DHCP server and the DHCP clients are on different subnets separated by a router. Because DHCP broadcasts do not cross routers, the relay converts the broadcast to a unicast and forwards it.
+
+### Configuration
+
+Apply `ip helper-address` on the router interface facing the client subnet — not the server-facing interface:
+
+```text
+Router(config)# interface GigabitEthernet0/0
+Router(config-if)# ip helper-address <dhcp-server-ip>
+```
+
+Multiple `ip helper-address` statements can be added to the same interface to specify multiple DHCP servers for redundancy.
+
+### How the Relay Works
+
+When a DHCP Discover broadcast arrives on the interface with `ip helper-address` configured:
+
+1. The router copies the broadcast packet and converts the destination from 255.255.255.255 to the DHCP server's unicast IP
+2. The router populates the `giaddr` (gateway IP address) field in the DHCP packet with the receiving interface's IP address
+3. The DHCP server uses the `giaddr` field to determine which pool to use for the response
+4. The server sends the Offer/Acknowledge directly to the relay agent's `giaddr` address
+5. The relay agent forwards the response to the client subnet
+
+### Default UDP Services Forwarded by ip helper-address
+
+| Port | Service                |
+|------|------------------------|
+| 67   | DHCP (BootP server)    |
+| 68   | DHCP (BootP client)    |
+| 69   | TFTP                   |
+| 37   | Time protocol          |
+| 137  | NetBIOS Name Service   |
+| 138  | NetBIOS Datagram       |
+| 49   | TACACS                 |
+| 53   | DNS                    |
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read the section covering **NAT and PAT** in [Cisco Skills for All Portal - CCNA Guides](https://skillsforall.com/).
-- [ ] Watch the NAT episodes in [Jeremy's IT Lab CCNA Complete Course](https://www.youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ).
-- [ ] Review the commands outlined in the lab instructions.
-- [ ] Proceed to the weekly hands-on lab activity.
+## 4. DHCP Snooping
+
+### What DHCP Snooping Prevents
+
+Without DHCP snooping, any host on the network can run a rogue DHCP server. A rogue server can:
+
+- Hand out incorrect default gateways (redirecting traffic to an attacker's machine)
+- Hand out incorrect DNS servers (enabling DNS hijacking)
+- Exhaust the legitimate DHCP pool (denial of service)
+
+### Trusted vs Untrusted Ports
+
+| Port Type | Connected To                              | Behavior                                       |
+|-----------|-------------------------------------------|------------------------------------------------|
+| Trusted   | Legitimate DHCP server, uplink to switch  | All DHCP messages (including Offers) allowed   |
+| Untrusted | End-user client devices (default)         | DHCP Offer and ACK messages are dropped        |
+
+All ports are untrusted by default when DHCP snooping is enabled. Only explicitly trusted ports allow DHCP server traffic.
+
+### DHCP Snooping Configuration
+
+```text
+! Enable DHCP snooping globally
+Switch(config)# ip dhcp snooping
+
+! Enable for specific VLAN(s)
+Switch(config)# ip dhcp snooping vlan 10
+Switch(config)# ip dhcp snooping vlan 20
+
+! Trust the uplink port facing the legitimate DHCP server
+Switch(config)# interface GigabitEthernet0/24
+Switch(config-if)# ip dhcp snooping trust
+
+! Verification
+Switch# show ip dhcp snooping
+Switch# show ip dhcp snooping binding
+```
+
+### DHCP Snooping Binding Table
+
+The snooping binding table maps: client MAC → assigned IP → VLAN → switch port → lease time. This table feeds into:
+
+- Dynamic ARP Inspection (DAI): validates ARP packets against the binding table
+- IP Source Guard: filters packets by source IP and MAC against the binding table
+
+---
+
+## 5. DNS Resolution Process
+
+### Full Resolution Sequence
+
+```text
+Client query: www.example.com (no cache hit)
+    |
+    v
+1. Client → Recursive Resolver
+   Query: "What is the IP of www.example.com?" (recursive query)
+    |
+    v
+2. Recursive Resolver → Root Name Server
+   Query: "Who handles .com?" (iterative query)
+   Response: "Ask the .com TLD server at 192.5.6.30"
+    |
+    v
+3. Recursive Resolver → .com TLD Server
+   Query: "Who handles example.com?"
+   Response: "Ask ns1.example.com at 205.251.196.1"
+    |
+    v
+4. Recursive Resolver → Authoritative Server for example.com
+   Query: "What is the IP of www.example.com?"
+   Response: A record = 93.184.216.34  (TTL: 3600)
+    |
+    v
+5. Recursive Resolver caches result and returns to client
+6. Client connects to 93.184.216.34
+```
+
+### Recursive vs Iterative Queries
+
+| Query Type | Who Does the Work       | Used Between                        |
+|------------|-------------------------|-------------------------------------|
+| Recursive  | Resolver does all work  | Client and recursive resolver       |
+| Iterative  | Resolver follows referrals | Recursive resolver and root/TLD/auth servers |
+
+### DNS Record Types
+
+| Record | Full Name              | Maps                                     | Example                            |
+|--------|------------------------|------------------------------------------|------------------------------------|
+| A      | Address                | Hostname → IPv4 address                  | www.example.com → 93.184.216.34    |
+| AAAA   | IPv6 Address           | Hostname → IPv6 address                  | www.example.com → 2606:2800::/32   |
+| CNAME  | Canonical Name         | Alias hostname → real hostname           | ftp.example.com → www.example.com  |
+| MX     | Mail Exchanger         | Domain → mail server hostname            | example.com → mail.example.com     |
+| PTR    | Pointer (reverse)      | IP address → hostname                    | 34.216.184.93.in-addr.arpa → www   |
+| NS     | Name Server            | Domain → authoritative DNS server        | example.com → ns1.example.com      |
+| SOA    | Start of Authority     | Zone metadata (primary NS, serial, TTL)  | example.com SOA ns1.example.com    |
+
+---
+
+## 6. Split-Horizon DNS
+
+### The Problem Split-Horizon Solves
+
+An organization publishes `app.corp.com` in public DNS as 203.0.113.50 (the public IP). Internal users querying public DNS get 203.0.113.50, which routes to the outside of the firewall. Traffic must transit NAT to reach the internal server at 10.5.1.50. This is inefficient and can fail in environments where hairpin NAT is not supported.
+
+### The Solution
+
+Run two authoritative DNS zones for the same domain name:
+
+- External DNS zone for `corp.com`: returns 203.0.113.50 for `app.corp.com`
+- Internal DNS zone for `corp.com`: returns 10.5.1.50 for `app.corp.com`
+
+Internal clients query the internal DNS server and receive the internal IP. External clients query public DNS and receive the public IP.
+
+### Cisco IOS DNS Configuration
+
+To configure a Cisco router for DNS resolution:
+
+```text
+Router(config)# ip domain-lookup
+Router(config)# ip name-server 8.8.8.8 8.8.4.4
+Router(config)# ip domain-name corp.local
+```
+
+To disable DNS lookup on a router (reduces response time when mistyping commands):
+
+```text
+Router(config)# no ip domain-lookup
+```
+
+---
+
+## 7. DHCP and DNS Command Reference
+
+| Task                                  | Command                                          | Mode            |
+|---------------------------------------|--------------------------------------------------|-----------------|
+| Exclude addresses from DHCP pool      | `ip dhcp excluded-address <first> <last>`        | Global config   |
+| Create DHCP pool                      | `ip dhcp pool <name>`                            | Global config   |
+| Define pool subnet                    | `network <ip> <mask>`                            | DHCP pool       |
+| Set default gateway for clients       | `default-router <ip>`                            | DHCP pool       |
+| Set DNS server for clients            | `dns-server <ip1> [ip2]`                         | DHCP pool       |
+| Set lease duration                    | `lease <days> [hours] [minutes]`                 | DHCP pool       |
+| Configure DHCP relay                  | `ip helper-address <server-ip>`                  | Interface       |
+| Enable DHCP snooping globally         | `ip dhcp snooping`                               | Global config   |
+| Enable snooping on VLAN               | `ip dhcp snooping vlan <vlan-id>`                | Global config   |
+| Trust a switch port for snooping      | `ip dhcp snooping trust`                         | Interface       |
+| View active DHCP leases               | `show ip dhcp binding`                           | Privileged EXEC |
+| View DHCP pool usage statistics       | `show ip dhcp pool`                              | Privileged EXEC |
+| View address conflicts                | `show ip dhcp conflict`                          | Privileged EXEC |
+| View DHCP server statistics           | `show ip dhcp server statistics`                 | Privileged EXEC |
+| Debug DHCP events                     | `debug ip dhcp server events`                    | Privileged EXEC |
+| View snooping binding table           | `show ip dhcp snooping binding`                  | Privileged EXEC |
+| Configure router DNS server(s)        | `ip name-server <ip1> [ip2]`                     | Global config   |
+| Enable DNS lookup on router           | `ip domain-lookup`                               | Global config   |
+| Set default domain name               | `ip domain-name <name>`                          | Global config   |
+
+---
+
+## 8. DHCP Troubleshooting Flowchart
+
+```text
+SYMPTOM: Client not receiving an IP address via DHCP
+         |
+         v
+Is the DHCP server on the same subnet as the client?
+  YES --> Check: show ip dhcp pool — is the pool configured for that subnet?
+       --> Check: show ip dhcp binding — is the client getting an IP?
+       --> Check: show ip dhcp conflict — are there conflicts in the pool?
+  NO  --> Continue (relay agent required)
+         |
+         v
+Is ip helper-address configured on the gateway interface facing the client?
+  NO  --> Add ip helper-address <server-ip> to the interface
+  YES --> Continue
+         |
+         v
+Can the relay router reach the DHCP server?
+  Run: ping <dhcp-server-ip> from the relay router
+  NO  --> Fix routing to DHCP server
+  YES --> Continue
+         |
+         v
+Is DHCP snooping blocking the Offer on a switch between client and router?
+  Run: show ip dhcp snooping — is snooping enabled?
+  Is the uplink port trusted?
+  NO  --> Add ip dhcp snooping trust to the uplink port
+         |
+         v
+Run: debug ip dhcp server events on the DHCP server
+Are Discover messages arriving?
+  NO  --> Relay or routing issue
+  YES but no Offer --> Pool exhausted or wrong scope; check show ip dhcp pool
+         |
+         v
+Issue resolved — verify with ipconfig /renew or dhclient
+```
+
+---
+
+## 9. CCNA Exam Tips
+
+**Tip 1 — DORA sequence.** The CCNA tests DORA in multiple question formats: identifying message types, explaining why Discover uses broadcast, and describing what happens when the server is on a different subnet. Know all four messages and their source/destination addresses.
+
+**Tip 2 — ip helper-address placement.** The relay command goes on the interface facing the client subnet — the interface that receives the DHCP broadcast. It does NOT go on the server-facing interface. This is a frequently missed question.
+
+**Tip 3 — DHCP snooping default.** All ports are untrusted by default when DHCP snooping is enabled. You must explicitly trust uplink ports and the port facing the DHCP server. Forgetting to trust the uplink is the most common snooping misconfiguration.
+
+**Tip 4 — Recursive vs iterative.** The client sends a recursive query to its resolver. The resolver sends iterative queries to root, TLD, and authoritative servers. The resolver does all the heavy lifting — the client just waits for the final answer.
+
+**Tip 5 — show ip dhcp binding.** This command is the primary verification tool for DHCP. It shows every active lease, the MAC address of each client, and the lease expiration time. If a client claims it is not getting an IP, check this output first.
+
+**Tip 6 — Split-horizon use case.** When a question describes internal users getting routed to an external IP for an internal resource, split-horizon DNS is the solution. It ensures internal clients receive the internal IP directly rather than the public-facing IP.
+
+**Tip 7 — ip domain-lookup.** On routers, `no ip domain-lookup` disables DNS resolution for the router itself. This is a best practice in labs to prevent the router from trying to resolve typos as DNS names. On the exam, if a question says the router attempts DNS resolution for every mistyped command, the fix is `no ip domain-lookup`.
+
+---
+
+## 10. Study Checklist
+
+Work through each item before taking the Module 11 quiz.
+
+- [ ] Write the Cisco IOS DHCP server configuration from memory for a /24 pool with exclusions
+- [ ] Explain where `ip helper-address` is placed and why
+- [ ] Describe the DORA process including source and destination addresses for each message
+- [ ] Explain the difference between trusted and untrusted ports in DHCP snooping
+- [ ] Draw the DNS resolution sequence for a fresh query from a client (no cache)
+- [ ] Explain the difference between recursive and iterative DNS queries
+- [ ] Describe a scenario where split-horizon DNS is necessary and how it resolves the problem
+- [ ] Identify four DHCP troubleshooting commands and what each shows
+- [ ] Complete the Module 11 Packet Tracer lab
+- [ ] Post your Module 11 discussion response by Wednesday at 11:59 PM
+
+---
+
+## Required Study Resources
+
+- Cisco CCNA certification training information: cisco.com/c/en/us/training-events/training-certifications
+- Free CCNA study notes and practice questions: professormesser.com
+- Cisco DHCP configuration guide: cisco.com/c/en/us/td/docs/ios-xml/ios/ipaddr_dhcp/configuration/15-mt/dhcp-15-mt-book.html

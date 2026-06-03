@@ -1,103 +1,201 @@
-# Quiz: Module 14 – Scaled Agile: SAFe and LeSS Overview
+# Quiz: Module 14 — Scaled Agile: SAFe and LeSS Overview
 
-## Course: CIS-3350_Software_Engineering_Agile (Professional Scrum Master (PSM I))
+**Course:** CIS-3350 Software Engineering and Agile
 
----
+**Certification Alignment:** PSM I (Professional Scrum Master I) – Scrum.org
 
-### Question 1
+**Instructor:** Professor Nash | Texas Wesleyan University
 
-In the Scaled Agile Framework (SAFe), what is an Agile Release Train (ART)?
-
-* A) A document that lists all planned feature releases for the next fiscal year
-* B) A long-lived team-of-teams aligned to a common business mission that delivers a continuous flow of value on a shared Program Increment cadence
-* C) A Scrum Master certification level above Professional Scrum Master that certifies large-team facilitation
-* D) A daily synchronization meeting between multiple Product Owners to align backlog priorities
-
-Correct Answer: B) An ART is SAFe's fundamental unit of delivery — typically 50–125 people organized into multiple Agile teams that plan and deliver together on an 8–12 week PI cadence.
-
-Distractor Analysis:
-
-* *Why B is correct:* The ART is SAFe's core organizational construct — a team-of-teams that works toward a shared mission with a synchronized Program Increment planning cycle.
-* *Why A is incorrect:* A release schedule or roadmap document describes planned deliverables but is not an ART. The ART is an organizational structure, not a planning artifact.
-* *Why C is incorrect:* ART is not a certification level. SAFe has its own certifications (SAFe Agilist, SAFe Scrum Master), but these are distinct from PSM I and unrelated to the ART definition.
-* *Why D is incorrect:* A daily Product Owner synchronization meeting is a scaling coordination practice, but it does not define what an ART is. ARTs are long-lived organizational units, not meeting events.
+**Total Questions:** 10 | **Points:** 10 (1 point each)
 
 ---
 
-### Question 2
+## Question 1
 
-Which of the following most accurately describes the key philosophical difference between SAFe and LeSS?
+In SAFe, what is an Agile Release Train (ART)?
 
-* A) SAFe is designed only for software teams; LeSS can be applied to hardware development as well.
-* B) SAFe adds extensive new roles, events, and artifacts to coordinate large organizations; LeSS scales by extending core Scrum with minimal additions.
-* C) SAFe requires all teams to share a single Product Owner; LeSS assigns a separate Product Owner to each team.
-* D) LeSS is proprietary software that costs money to use; SAFe is free and open source.
+- A) A tool for tracking Sprint velocity across a single Scrum Team
+- B) A group of five to twelve Scrum Teams that plan, develop, and deliver together on a synchronized cadence
+- C) A SAFe term for the Product Backlog at the enterprise level
+- D) A deployment pipeline that automatically releases software to production after each Iteration
 
-Correct Answer: B)
+Correct Answer: B — An Agile Release Train is the primary value delivery unit in SAFe. Five to twelve teams work together on synchronized Iteration cadences, plan together during PI Planning, and deliver a System Demo at the end of each Program Increment.
 
 Distractor Analysis:
 
-* *Why B is correct:* SAFe's philosophy is to provide a comprehensive prescriptive structure for enterprises — adding roles like Release Train Engineer and Business Owner, and events like PI Planning. LeSS's philosophy is to extend standard Scrum minimally, preserving the Scrum Guide's core structure.
-* *Why A is incorrect:* Both frameworks can be applied to hardware and software contexts. The distinction is architectural philosophy, not domain applicability.
-* *Why C is incorrect:* This is partially backward. LeSS uses one Product Owner for multiple teams sharing a single backlog. SAFe uses Product Managers at the program level with Team-level Product Owners — a different but also more complex structure.
-* *Why D is incorrect:* Both frameworks provide free online documentation. The distinction between them is philosophical and structural, not licensing or cost.
+- Why A is incorrect: Velocity tracking is a team-level metric unrelated to the ART structure. ARTs are not a reporting or measurement tool.
+- Why C is incorrect: The SAFe term for the enterprise-level backlog is the Portfolio Backlog. The Program Backlog sits at the ART level, not the enterprise level.
+- Why D is incorrect: A deployment pipeline is a CI/CD concept — the technical infrastructure for automated delivery. An ART is an organizational structure.
 
 ---
 
-### Question 3
+## Question 2
 
-An organization is scaling Scrum across four teams working on the same product. According to LeSS principles, how many Product Backlogs should exist?
+What is the primary purpose of PI Planning in SAFe?
 
-* A) Four — one per team to ensure each team has clear ownership of their work
-* B) Two — one for the current Sprint and one for future Sprints
-* C) One — all four teams draw from a single, shared Product Backlog managed by one Product Owner
-* D) One per Sprint — a new Product Backlog is created at each Sprint Planning and discarded after the Sprint
+- A) To review the work completed in the previous Program Increment and identify defects
+- B) To allow all ART teams to plan their Iterations together, surface cross-team dependencies, and commit to PI Objectives
+- C) To create the Program Backlog by prioritizing features for the next quarter
+- D) To train team members in SAFe roles and responsibilities before a new Program Increment begins
 
-Correct Answer: C)
+Correct Answer: B — PI Planning is a two-day event at the start of every Program Increment where all ART teams plan together. Teams identify dependencies, negotiate scope, and commit to PI Objectives — the business outcomes they will deliver during the PI. It is SAFe's primary answer to the multi-team coordination challenge.
 
 Distractor Analysis:
 
-* *Why C is correct:* LeSS scales Scrum by maintaining a single Product Backlog with one Product Owner who represents the product's overall vision and priorities. All teams pull from this shared backlog, ensuring alignment.
-* *Why A is incorrect:* Four separate backlogs create silos, duplicate work, and require separate Product Owners — which is contrary to LeSS's goal of maintaining a unified product direction.
-* *Why B is incorrect:* The Scrum Guide describes a continuously evolving Product Backlog, not separate current and future backlogs. This is not a valid Scrum or LeSS structure.
-* *Why D is incorrect:* Product Backlogs persist for the life of the product — they are not created and discarded each Sprint.
+- Why A is incorrect: Reviewing completed work from the previous PI is the purpose of the System Demo and the Inspect and Adapt event — not PI Planning. PI Planning is forward-looking.
+- Why C is incorrect: The Program Backlog is prepared by the Product Manager before PI Planning. PI Planning does not create the backlog — it plans the work from an existing backlog.
+- Why D is incorrect: PI Planning is a planning event for the ART's work, not a training session. SAFe training happens separately through role-based education programs.
 
 ---
 
-### Question 4
+## Question 3
 
-A Scrum Master working in a SAFe organization asks what their closest SAFe role equivalent is. What is the most accurate answer?
+Which of the following best describes the LeSS approach to Product Ownership at scale?
 
-* A) Product Manager — since Scrum Masters manage product delivery timelines
-* B) Release Train Engineer (RTE) — since both support Agile process health and remove impediments, though at different organizational levels
-* C) Business Owner — since Scrum Masters represent business stakeholder interests in team-level planning
-* D) System Architect — since Scrum Masters are responsible for technical design decisions
+- A) Each team has its own Product Owner who independently manages their team's backlog
+- B) One Product Owner owns a single Product Backlog shared by all teams
+- C) A Product Manager owns a Program Backlog and delegates to Team Product Owners
+- D) Product Ownership rotates among team members to distribute the accountability
 
-Correct Answer: B)
+Correct Answer: B — LeSS's defining principle at the product ownership level is one Product Owner and one Product Backlog for all teams. All teams select work from the same shared backlog, and one person is accountable for its prioritization.
 
 Distractor Analysis:
 
-* *Why B is correct:* The Release Train Engineer is SAFe's ART-level servant leader who facilitates PI Planning, coaches teams on Agile practices, and removes impediments — paralleling the Scrum Master's role, but at the program (multi-team) level rather than a single team.
-* *Why A is incorrect:* Scrum Masters do not manage product delivery timelines. The SAFe Product Manager is a product strategy role analogous to a scaled Product Owner — not a Scrum Master equivalent.
-* *Why C is incorrect:* Business Owners in SAFe are senior stakeholders who validate PI Objectives and represent organizational priorities — not a servant leadership or coaching role.
-* *Why D is incorrect:* System Architects in SAFe provide technical guidance for the ART's architectural direction — a technical leadership role, not a process coaching role.
+- Why A is incorrect: Multiple independent Product Owners with separate backlogs describes the fragmented product ownership model that LeSS explicitly avoids. It is a common anti-pattern in multi-team organizations.
+- Why C is incorrect: That describes SAFe's two-level product ownership structure — Product Manager at the program level, Team Product Owners at the team level. LeSS deliberately avoids this layering.
+- Why D is incorrect: Rotating Product Ownership is not a recognized practice in either SAFe or LeSS. The Product Owner role requires sustained product knowledge that cannot rotate without significant context loss.
 
 ---
 
-### Question 5
+## Question 4
 
-Which scaling challenge does Program Increment (PI) Planning most directly address?
+In LeSS, what is a feature team, and why does LeSS require them?
 
-* A) Ensuring each individual Developer has a personalized development plan for the next quarter
-* B) Cross-team dependency identification and alignment on shared objectives across all teams in an ART
-* C) Replacing the Sprint Retrospective for all teams with a single quarterly process review
-* D) Eliminating the need for individual Sprint Planning events within each Agile team
+- A) A team that specializes in UI features, as opposed to a backend team that specializes in data processing
+- B) A cross-functional team capable of delivering end-to-end customer-facing features independently, without requiring handoffs to other component teams
+- C) A team dedicated to testing and quality assurance for features delivered by development teams
+- D) A temporary team assembled specifically to deliver a high-priority feature before returning to their regular teams
 
-Correct Answer: B)
+Correct Answer: B — Feature teams in LeSS are cross-functional and capable of taking a feature from the Product Backlog through development and testing without requiring work from other teams. LeSS requires feature teams because component teams create structural dependencies — handoffs between components that generate the coordination overhead LeSS is designed to eliminate.
 
 Distractor Analysis:
 
-* *Why B is correct:* PI Planning's primary purpose is to get all teams in an ART aligned on a shared set of objectives, identify and plan around cross-team dependencies, and create a Program Board that makes these dependencies visible and manageable.
-* *Why A is incorrect:* PI Planning is an organizational planning event for teams, not an individual developer development planning process.
-* *Why C is incorrect:* PI Planning does not replace Sprint Retrospectives. SAFe teams still hold individual Sprint Retrospectives; PI Planning is a separate cadence-level event.
-* *Why D is incorrect:* SAFe teams still run Sprint Planning within each Sprint. PI Planning sets the quarter's direction; Sprint Planning refines the work for each two-week Sprint within that quarter.
+- Why A is incorrect: That describes a component team model where teams specialize by technology layer. LeSS specifically recommends against this model.
+- Why C is incorrect: Dedicated QA teams are separate specialist teams, not feature teams. In LeSS, testing is a skill within each feature team, not a separate team.
+- Why D is incorrect: Temporary teams assembled for specific features are project-based structures. LeSS feature teams are permanent teams with stable membership.
+
+---
+
+## Question 5
+
+An organization has seven teams building a single product. Each team selects items from one shared Product Backlog. All teams run Sprints on the same cadence and hold a combined Sprint Review. One person is accountable for the Product Backlog's prioritization. Which scaling structure does this describe?
+
+- A) SAFe with seven teams on a single ART
+- B) LeSS with one Product Owner and one shared Product Backlog
+- C) Scrum of Scrums — seven teams coordinating via daily representative meetings
+- D) Portfolio SAFe — seven teams aligned to a shared portfolio vision
+
+Correct Answer: B — This describes the core LeSS structure exactly: one Product Owner, one Product Backlog, all teams on the same Sprint cadence, and a shared Sprint Review. SAFe would add a Program Backlog layer and a Product Manager role above the teams.
+
+Distractor Analysis:
+
+- Why A is incorrect: An SAFe ART would have a Program Backlog managed by a Product Manager, separate from Team Backlogs. The scenario describes one shared backlog with no program-level layer.
+- Why C is incorrect: Scrum of Scrums is a coordination practice (daily representative meetings) — it is not a complete scaling structure that includes shared backlogs or synchronized Sprint events.
+- Why D is incorrect: Portfolio SAFe is an organizational layer above the ART level, not a structure for describing how teams relate to a single Product Backlog.
+
+---
+
+## Question 6
+
+A SAFe team's PI Objective states: "Enable customer self-service password reset in the mobile application." At the PI System Demo, this feature is not complete. What does the incomplete PI Objective most likely indicate about the PI Planning process for this team?
+
+- A) The team did not understand how to write a good PI Objective
+- B) The team's Sprint Reviews during the PI were not transparent enough
+- C) The team committed to an objective without adequately identifying the dependencies, effort, or risks involved
+- D) The Release Train Engineer failed to allocate enough Iterations to the mobile team
+
+Correct Answer: C — Incomplete PI Objectives most commonly result from overcommitment during PI Planning. Teams may underestimate complexity, fail to surface a dependency on another team, or accept optimistic capacity assumptions. PI Planning's dependency mapping and risk identification (ROAM) process is specifically designed to prevent this — when it fails, the root cause is usually incomplete dependency identification or unrealistic capacity planning.
+
+Distractor Analysis:
+
+- Why A is incorrect: Writing PI Objectives is a skill, but poorly worded objectives lead to ambiguity — not necessarily incompleteness. The question describes a feature not delivered, not a poorly defined target.
+- Why B is incorrect: Sprint Reviews during the PI reveal incremental progress but do not cause the PI Objective miss. A transparent Sprint Review might reveal the objective is at risk earlier — but the root cause is the planning commitment, not the review process.
+- Why D is incorrect: The Release Train Engineer facilitates PI Planning but does not allocate Iterations to teams. Teams self-organize their Iteration plans during PI Planning.
+
+---
+
+## Question 7
+
+Which of Scrum's three pillars of empiricism does multi-team dependency management most directly threaten?
+
+- A) Transparency — because teams cannot see each other's work
+- B) Inspection — because integrated Increments cannot be reviewed if teams deliver separately
+- C) Adaptation — because teams cannot adjust when dependencies on other teams delay their work
+- D) All three equally — because empiricism requires all three pillars simultaneously
+
+Correct Answer: A — When teams have unmanaged dependencies, they cannot see the full state of the integrated product. A team might complete their stories but not know whether their work integrates correctly with another team's work until late — often at Sprint Review. This opacity is a Transparency failure. Without transparency, meaningful inspection and adaptation cannot follow.
+
+Distractor Analysis:
+
+- Why B is incorrect: Inspection may be compromised as a consequence of failed transparency, but the root pillar failure is transparency. You cannot inspect what you cannot see.
+- Why C is incorrect: Adaptation is the response to inspection failures — it is downstream of the transparency problem. Delayed adaptation results from the inability to see the dependency problem early.
+- Why D is incorrect: While all three pillars interact, the primary failure is in transparency. The exam tests the ability to identify the root pillar failure, not just note that the system is impaired.
+
+---
+
+## Question 8
+
+What is the Innovation and Planning (IP) Iteration in SAFe, and when does it occur?
+
+- A) The first Iteration of each PI, used for planning the remaining Iterations before development begins
+- B) The final Iteration of each PI, reserved for testing, technical debt reduction, exploration, and preparation for the next PI Planning event
+- C) A special Sprint scheduled quarterly, separate from the normal PI cadence, for innovation hackathons
+- D) An optional Iteration that teams can skip if their PI Objectives are fully met ahead of schedule
+
+Correct Answer: B — The IP Iteration is the last Iteration of each Program Increment. It is intentionally not a feature development Iteration. Teams use it for integration testing, technical debt work, exploration of new ideas, and preparation for the upcoming PI Planning event. It provides a buffer between the end of development and the next PI's planning activities.
+
+Distractor Analysis:
+
+- Why A is incorrect: The first Iteration is a development Iteration. PI Planning occurs before any Iteration begins — it is a separate event, not an Iteration.
+- Why C is incorrect: The IP Iteration is a standard SAFe structure, not an optional add-on. It occurs in every PI, not quarterly, and is not a hackathon — it is structured work time.
+- Why D is incorrect: The IP Iteration is not conditional on PI Objective completion. It is a fixed part of the PI cadence regardless of delivery status.
+
+---
+
+## Question 9
+
+A software organization has eight teams building separate components of the same platform. Each team has its own Product Owner and deploys independently. Teams frequently block each other because their APIs are incompatible. Management has decided to adopt LeSS. What is the most significant organizational change LeSS would require?
+
+- A) Adding a Release Train Engineer to coordinate the eight teams
+- B) Converting the eight component teams into feature teams and consolidating to one Product Owner with one shared Product Backlog
+- C) Implementing PI Planning every twelve weeks so all eight teams plan together
+- D) Creating a Program Backlog above the eight team backlogs to manage cross-component dependencies
+
+Correct Answer: B — LeSS's most significant organizational change is the elimination of component teams in favor of feature teams, and the consolidation of eight Product Owners into one. This directly addresses the API incompatibility problem — feature teams capable of working across the full stack can own a feature end-to-end without creating handoffs that generate incompatibilities.
+
+Distractor Analysis:
+
+- Why A is incorrect: The Release Train Engineer is a SAFe role. LeSS does not introduce this role.
+- Why C is incorrect: PI Planning is a SAFe practice. LeSS does not add a PI Planning event — it relies on Sprint-level planning shared across all teams.
+- Why D is incorrect: A Program Backlog above team backlogs is a SAFe structure. LeSS uses one shared Product Backlog for all teams with no program-level layer.
+
+---
+
+## Question 10
+
+A Scrum Master at an organization that recently adopted SAFe says: "Our team spends more time in cross-team coordination meetings than we did before SAFe. We're less productive, not more." What does this observation most likely indicate?
+
+- A) SAFe is inappropriate for this organization — it should switch to LeSS immediately
+- B) The coordination overhead may indicate that the underlying cause of dependencies — component team structure, architectural coupling, or fragmented ownership — was not addressed before adding SAFe's coordination machinery
+- C) The team's Scrum Master is not facilitating Daily Scrums effectively
+- D) SAFe requires a longer adoption period — the coordination cost will reduce after three to four PI cycles
+
+Correct Answer: B — Coordination overhead in SAFe is a symptom of unresolved structural problems. SAFe's ceremonies — Scrum of Scrums, System Demo, ART Sync — are designed to coordinate teams that have inherent dependencies. If those dependencies stem from component team structures or architectural coupling that SAFe did not address, the coordination machinery adds overhead without reducing the root cause. The observation is a signal to examine whether the team structure itself needs to change.
+
+Distractor Analysis:
+
+- Why A is incorrect: The observation is insufficient to conclude that SAFe is wrong for the organization. It indicates implementation problems, not a framework mismatch. Switching frameworks without diagnosing root causes would likely reproduce the same problems.
+- Why C is incorrect: Daily Scrum facilitation affects team-level communication, not cross-team coordination overhead. The problem described is inter-team, not intra-team.
+- Why D is incorrect: While SAFe adoption does have a learning curve, coordination overhead that exceeds pre-SAFe levels after multiple PIs is a structural signal, not a temporary adoption cost.
+
+---

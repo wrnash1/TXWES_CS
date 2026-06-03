@@ -1,279 +1,467 @@
-# Lab Activity: Module 06 - SAST: Static Application Security Testing
+# Lab 06 — IaC Security: Scanning Terraform with tfsec, checkov, and Conftest
 
 ## Course: CIS-4350 DevSecOps and CI/CD Pipelines
 
-## Certification Alignment: DevSecOps Professional (DSOE)
+## Texas Wesleyan University | Professor Nash
 
-## Total Points: 100
+## Certification Alignment: DevSecOps Professional (DSOE)
 
 ---
 
-## Objectives
+## Lab Overview
 
-By completing this lab you will be able to:
+In this lab you will write intentionally insecure Terraform configurations, scan them with tfsec and checkov to identify misconfigurations, write a custom OPA Rego policy and test it with Conftest, remediate the findings, and integrate the scanning pipeline into GitHub Actions.
 
-- Run Semgrep SAST against vulnerable Python code and interpret the output.
-- Analyze a SAST finding using the structured framework from the reading guide.
-- Write remediated code that eliminates the vulnerability identified by the scanner.
-- Integrate Semgrep into a GitHub Actions pipeline as a required security gate.
+**Estimated Time:** 90–120 minutes
+
+**Difficulty:** Intermediate
 
 ---
 
 ## Prerequisites
 
-Before beginning this lab, confirm the following:
+- Terraform CLI installed (`terraform version`)
+- Docker (for tfsec and checkov via container)
+- Python 3.8+ for checkov CLI installation
+- Git and GitHub account
+- An AWS or Azure account is NOT required — all scanning is static analysis
 
-- Python 3.8 or later is installed (`python --version`).
-- You have access to the GitHub repository from previous modules.
-- Semgrep can be installed locally for Parts 1 and 2.
+---
 
-Install Semgrep locally:
+## Part 1 — Insecure Terraform Configuration (15 minutes)
+
+### Part 1 Objective
+
+Create a Terraform module with multiple security misconfigurations that scanners will detect.
+
+### Step 1.1 — Initialize the Project
 
 ```bash
-pip install semgrep
-semgrep --version
+mkdir ~/lab06-iac-security && cd ~/lab06-iac-security
+git init && git checkout -b main
+mkdir infra policies
+```
+
+### Step 1.2 — Write Insecure Terraform
+
+Create `infra/main.tf`:
+
+```hcl
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
+}
+
+provider "aws" {
+  region = "us-east-1"
+}
+
+# MISCONFIGURATION 1: S3 bucket with public access
+resource "aws_s3_bucket" "app_data" {
+  bucket = "my-app-data-bucket-lab06"
+}
+
+resource "aws_s3_bucket_acl" "app_data_acl" {
+  bucket = aws_s3_bucket.app_data.id
+  acl    = "public-read"
+}
+
+# MISCONFIGURATION 2: No encryption at rest
+# (no aws_s3_bucket_server_side_encryption_configuration)
+
+# MISCONFIGURATION 3: Security group open to world on port 22
+resource "aws_security_group" "web" {
+  name        = "web-sg"
+  description = "Web server security group"
+  vpc_id      = "vpc-00000000"
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "SSH from anywhere"
+  }
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "HTTP from anywhere"
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "All outbound traffic"
+  }
+}
+
+# MISCONFIGURATION 4: RDS instance publicly accessible
+resource "aws_db_instance" "app_db" {
+  identifier        = "lab06-db"
+  engine            = "mysql"
+  engine_version    = "8.0"
+  instance_class    = "db.t3.micro"
+  allocated_storage = 20
+  db_name           = "appdb"
+  username          = "admin"
+  password          = "SuperSecret123!"  # MISCONFIGURATION 5: Hardcoded password
+  publicly_accessible    = true
+  skip_final_snapshot    = true
+  storage_encrypted      = false  # MISCONFIGURATION 6: Unencrypted RDS
+  deletion_protection    = false
+  backup_retention_period = 0     # MISCONFIGURATION 7: No backups
+}
 ```
 
 ---
 
-## Part 1: Analyze SAST Findings — SQL Injection (30 points)
+## Part 2 — Scan with tfsec (20 minutes)
 
-### Part 1 Background
+### Part 2 Objective
 
-This is the core deliverable of Module 06. Given a vulnerable Python code sample and its Semgrep output, analyze the finding using the structured framework from the reading guide, then write the remediated code.
+Run tfsec and interpret the findings against the insecure Terraform configuration.
 
-### Part 1 Vulnerable Code Sample
+### Step 2.1 — Run tfsec via Docker
 
-The following Python Flask application has a critical SQL injection vulnerability. Read it carefully.
-
-```python
-from flask import Flask, request, jsonify
-import sqlite3
-
-app = Flask(__name__)
-
-def get_db():
-    conn = sqlite3.connect('app.db')
-    return conn
-
-@app.route('/products')
-def search_products():
-    category = request.args.get('category', '')
-    conn = get_db()
-    cursor = conn.cursor()
-    query = "SELECT id, name, price FROM products WHERE category = '" + category + "'"
-    cursor.execute(query)
-    results = cursor.fetchall()
-    conn.close()
-    return jsonify(results)
-
-@app.route('/admin/user')
-def get_user():
-    username = request.args.get('name')
-    conn = get_db()
-    cursor = conn.cursor()
-    cursor.execute(f"SELECT * FROM users WHERE username = '{username}'")
-    row = cursor.fetchone()
-    conn.close()
-    return jsonify(row)
+```bash
+docker run --rm \
+  -v "$(pwd)/infra:/terraform" \
+  aquasec/tfsec:latest /terraform \
+  --format lovely \
+  2>&1 | tee tfsec-results.txt
 ```
 
-### Part 1 SAST Finding Output
+### Step 2.2 — Run tfsec with SARIF Output
 
-Semgrep produces the following findings when scanning this code:
-
-```text
-Finding 1:
-/app/routes.py
-  python.flask.security.injection.sql-injection.sql-injection
-  Detected SQL injection. User-controlled data flows into a SQL query
-  without sanitization.
-
-  14 |  query = "SELECT id, name, price FROM products WHERE category = '" + category + "'"
-      |  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-  Severity: ERROR
-  CWE: CWE-89 (Improper Neutralization of Special Elements in SQL Commands)
-  OWASP: A03:2021 - Injection
-
-Finding 2:
-/app/routes.py
-  python.flask.security.injection.sql-injection.sql-injection
-  Detected SQL injection. User-controlled data flows into a SQL query
-  without sanitization.
-
-  22 |  cursor.execute(f"SELECT * FROM users WHERE username = '{username}'")
-      |  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-  Severity: ERROR
-  CWE: CWE-89 (Improper Neutralization of Special Elements in SQL Commands)
-  OWASP: A03:2021 - Injection
+```bash
+docker run --rm \
+  -v "$(pwd)/infra:/terraform" \
+  -v "$(pwd):/output" \
+  aquasec/tfsec:latest /terraform \
+  --format sarif \
+  --out /output/tfsec-results.sarif
 ```
 
-### Part 1 Instructions
+### Step 2.3 — Record Findings
 
-**Step 1: Analyze Finding 1 using the structured framework.**
+In your lab report, create a table listing every finding tfsec reports with:
 
-Write a structured analysis covering all six framework elements:
+- Rule ID (e.g., `aws-s3-no-public-buckets`)
+- Severity
+- Affected resource
+- Brief description of the issue
 
-1. Finding description — what did the tool flag?
-2. Vulnerability type — name the vulnerability class.
-3. CWE and OWASP classification — cite the numbers.
-4. Attack scenario — describe a specific attack an adversary would execute against the `/products` endpoint using this vulnerability. Include an example malicious input string.
-5. Why SAST caught it — explain which analysis technique detected this finding.
-6. Remediation — write the corrected `search_products()` function using parameterized queries.
+You should find at least 6 distinct findings.
 
-**Step 2: Analyze Finding 2 using the structured framework.**
+---
 
-Write a structured analysis covering all six framework elements for the `/admin/user` endpoint finding. Note whether the attack surface differs from Finding 1 given the endpoint name.
+## Part 3 — Scan with checkov (20 minutes)
 
-**Step 3: Write the complete remediated version of the vulnerable file.**
+### Part 3 Objective
 
-Replace all vulnerable SQL patterns with parameterized queries. Your remediated file must pass Semgrep scanning with zero SQL injection findings.
+Run checkov against the same Terraform configuration and compare findings to tfsec.
 
-### Part 1 Deliverable
+### Step 3.1 — Install and Run checkov
 
-Submit: your structured analysis for Finding 1 (covering all six elements), your structured analysis for Finding 2, and your complete remediated Python file.
+```bash
+pip install checkov
 
-### Part 1 Rubric
+checkov -d infra/ \
+  --framework terraform \
+  --output cli \
+  2>&1 | tee checkov-results.txt
+```
+
+### Step 3.2 — Run checkov with SARIF Output
+
+```bash
+checkov -d infra/ \
+  --framework terraform \
+  --output sarif \
+  --output-file-path ./ \
+  --soft-fail
+```
+
+### Step 3.3 — Compare tfsec and checkov Findings
+
+Create a comparison table in your lab report:
+
+| Finding | Found by tfsec | Found by checkov |
+|---|---|---|
+| Public S3 bucket | | |
+| No S3 encryption | | |
+| SSH open to 0.0.0.0/0 | | |
+| RDS publicly accessible | | |
+| RDS storage not encrypted | | |
+| Hardcoded RDS password | | |
+| No RDS backup retention | | |
+
+Which tool found more issues? Were there findings unique to one tool?
+
+---
+
+## Part 4 — Write a Custom OPA Policy with Conftest (20 minutes)
+
+### Part 4 Objective
+
+Write a Rego policy that enforces an organization-specific rule: all RDS instances must have `deletion_protection = true`.
+
+### Step 4.1 — Install Conftest
+
+```bash
+# On Linux/macOS
+wget https://github.com/open-policy-agent/conftest/releases/download/v0.50.0/conftest_0.50.0_linux_amd64.tar.gz
+tar xzf conftest_*.tar.gz
+sudo mv conftest /usr/local/bin/
+
+# Verify
+conftest --version
+```
+
+### Step 4.2 — Generate a Terraform Plan JSON
+
+```bash
+cd infra/
+terraform init -backend=false
+terraform plan -out=tfplan.binary 2>/dev/null || true
+terraform show -json tfplan.binary > ../tfplan.json 2>/dev/null || \
+  echo '{"resource_changes": []}' > ../tfplan.json
+cd ..
+```
+
+If you do not have AWS credentials, create a mock plan JSON for policy testing:
+
+```bash
+cat > tfplan.json << 'EOF'
+{
+  "resource_changes": [
+    {
+      "address": "aws_db_instance.app_db",
+      "type": "aws_db_instance",
+      "change": {
+        "actions": ["create"],
+        "after": {
+          "deletion_protection": false,
+          "storage_encrypted": false,
+          "publicly_accessible": true,
+          "backup_retention_period": 0
+        }
+      }
+    }
+  ]
+}
+EOF
+```
+
+### Step 4.3 — Write Rego Policies
+
+Create `policies/terraform/rds_security.rego`:
+
+```rego
+package main
+
+deny[msg] {
+  resource := input.resource_changes[_]
+  resource.type == "aws_db_instance"
+  resource.change.actions[_] == "create"
+  resource.change.after.deletion_protection == false
+  msg := sprintf(
+    "RDS instance '%s' must have deletion_protection = true",
+    [resource.address]
+  )
+}
+
+deny[msg] {
+  resource := input.resource_changes[_]
+  resource.type == "aws_db_instance"
+  resource.change.actions[_] == "create"
+  resource.change.after.storage_encrypted == false
+  msg := sprintf(
+    "RDS instance '%s' must have storage_encrypted = true",
+    [resource.address]
+  )
+}
+
+deny[msg] {
+  resource := input.resource_changes[_]
+  resource.type == "aws_db_instance"
+  resource.change.actions[_] == "create"
+  resource.change.after.publicly_accessible == true
+  msg := sprintf(
+    "RDS instance '%s' must not be publicly_accessible",
+    [resource.address]
+  )
+}
+```
+
+### Step 4.4 — Run Conftest
+
+```bash
+conftest test tfplan.json --policy policies/terraform/
+```
+
+All three policies should produce `FAIL` messages. Record the output.
+
+### Step 4.5 — Remediate One Policy and Re-test
+
+Update `tfplan.json` to set `deletion_protection: true` only, then re-run Conftest. Confirm the deletion protection check now passes while the other two still fail. Record both outputs.
+
+---
+
+## Part 5 — Remediate and Integrate into GitHub Actions (15 minutes)
+
+### Part 5 Objective
+
+Fix the Terraform misconfigurations and write the CI pipeline.
+
+### Step 5.1 — Create the Secure Terraform File
+
+Create `infra/main_secure.tf` (keep `main.tf` for comparison):
+
+```hcl
+# infra/main_secure.tf — remediated configuration
+
+resource "aws_s3_bucket" "app_data_secure" {
+  bucket = "company-app-data-lab06-secure"
+}
+
+resource "aws_s3_bucket_public_access_block" "app_data_secure" {
+  bucket                  = aws_s3_bucket.app_data_secure.id
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
+
+resource "aws_s3_bucket_server_side_encryption_configuration" "app_data_secure" {
+  bucket = aws_s3_bucket.app_data_secure.id
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm = "aws:kms"
+    }
+  }
+}
+
+resource "aws_s3_bucket_versioning" "app_data_secure" {
+  bucket = aws_s3_bucket.app_data_secure.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+```
+
+### Step 5.2 — Write the IaC Security Pipeline
+
+Create `.github/workflows/iac-security.yml`:
+
+```yaml
+name: IaC Security Pipeline
+
+on:
+  pull_request:
+    paths:
+      - infra/**
+      - policies/**
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  terraform-validate:
+    name: Terraform Validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.7.0
+      - run: terraform -chdir=infra/ init -backend=false
+      - run: terraform -chdir=infra/ validate
+      - run: terraform -chdir=infra/ fmt -check -recursive
+
+  tfsec:
+    name: tfsec Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: aquasecurity/tfsec-action@v1.0.0
+        with:
+          working_directory: infra/
+          soft_fail: false
+          format: sarif
+          sarif_file: tfsec.sarif
+      - uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: tfsec.sarif
+
+  checkov:
+    name: checkov Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: bridgecrewio/checkov-action@master
+        with:
+          directory: infra/
+          framework: terraform
+          soft_fail: false
+          output_format: sarif
+          output_file_path: checkov.sarif
+      - uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: checkov.sarif
+
+  conftest:
+    name: OPA Policy Validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install conftest
+        run: |
+          wget -q https://github.com/open-policy-agent/conftest/releases/download/v0.50.0/conftest_0.50.0_linux_amd64.tar.gz
+          tar xzf conftest_*.tar.gz && sudo mv conftest /usr/local/bin/
+      - name: Run Conftest
+        run: conftest test tfplan.json --policy policies/terraform/
+```
+
+---
+
+## Deliverables
+
+Submit the following on Canvas:
+
+1. `tfsec-results.txt` and `checkov-results.txt` (Parts 2 and 3)
+2. Comparison table showing which tool detected which finding (Part 3, Step 3.3)
+3. `policies/terraform/rds_security.rego` — completed Rego policy file (Part 4)
+4. Screenshot of Conftest reporting three FAIL findings (Part 4, Step 4.4)
+5. Screenshot of Conftest with deletion_protection passing (Part 4, Step 4.5)
+6. Completed `.github/workflows/iac-security.yml` (Part 5)
+
+---
+
+## Grading Rubric
 
 | Criterion | Points |
 |---|---|
-| Finding 1 analysis covers all six framework elements accurately | 12 |
-| Finding 2 analysis covers all six framework elements accurately | 8 |
-| Remediated file correctly uses parameterized queries for both routes | 8 |
-| Remediated file would pass Semgrep scanning (no SQL injection patterns) | 2 |
+| tfsec and checkov output files — 6+ findings identified | 20 |
+| Comparison table — accurate, complete | 15 |
+| Rego policy — syntactically correct, 3 deny rules | 25 |
+| Conftest FAIL screenshot (all 3 findings) | 15 |
+| Conftest partial pass screenshot | 10 |
+| GitHub Actions workflow — syntactically correct, 4 jobs | 15 |
+| Total | 100 |
 
 ---
 
-## Part 2: Run Semgrep and Interpret Results (25 points)
-
-### Part 2 Background
-
-Running a SAST tool locally against provided vulnerable code and interpreting the output is a hands-on DevSecOps skill.
-
-### Part 2 Instructions
-
-**Step 1: Create the vulnerable code file.**
-
-Save the vulnerable code from Part 1 as `vulnerable_routes.py` in your lab directory.
-
-**Step 2: Run Semgrep with the OWASP Top 10 rule pack.**
-
-```bash
-semgrep --config p/owasp-top-ten vulnerable_routes.py
-```
-
-Record the complete output.
-
-**Step 3: Run Semgrep with JSON output for pipeline integration simulation.**
-
-```bash
-semgrep --config p/owasp-top-ten --json vulnerable_routes.py > semgrep-results.json
-```
-
-Open `semgrep-results.json` and record the values of the following fields for Finding 1: `path`, `check_id`, `severity`, `message`, `line`.
-
-**Step 4: Run Semgrep against your remediated file.**
-
-```bash
-semgrep --config p/owasp-top-ten remediated_routes.py
-```
-
-Record the output confirming zero SQL injection findings.
-
-**Step 5: Explain the exit code significance.**
-
-In 2-3 sentences, explain what happens to the Semgrep process exit code when findings are detected vs. when no findings are detected, and why this matters for CI/CD pipeline integration.
-
-### Part 2 Deliverable
-
-Submit: the full Semgrep output for the vulnerable file, the five JSON fields from the results file, the Semgrep output for the remediated file confirming zero findings, and your exit code explanation.
-
-### Part 2 Rubric
-
-| Criterion | Points |
-|---|---|
-| Semgrep output for vulnerable file is shown and correct | 8 |
-| Five JSON fields are correctly extracted and recorded | 7 |
-| Semgrep output for remediated file confirms zero findings | 6 |
-| Exit code explanation is technically accurate | 4 |
-
----
-
-## Part 3: GitHub Actions SAST Pipeline Integration (25 points)
-
-### Part 3 Background
-
-SAST is most valuable as a required CI/CD pipeline gate — not just a local tool.
-
-### Part 3 Instructions
-
-**Step 1: Add a SAST job to your GitHub Actions pipeline.**
-
-Update your `full-pipeline.yml` from Module 03 to add a dedicated SAST step within the `security-scan` job. The step must:
-
-- Use `returntocorp/semgrep-action@v1`.
-- Configure the `config:` parameter to include `p/owasp-top-ten` and `p/python`.
-- Run on every pull request.
-
-**Step 2: Commit the vulnerable code to a feature branch and open a pull request.**
-
-Add the `vulnerable_routes.py` file to your repository on a feature branch. Open a pull request to main. Observe the pipeline results in the GitHub Actions tab.
-
-**Step 3: Document the pipeline gate behavior.**
-
-Take a screenshot of the failed SAST step in GitHub Actions showing the SQL injection findings. Take a screenshot of the PR checks section showing the security-scan job as failing.
-
-**Step 4: Replace the vulnerable file with the remediated version.**
-
-Commit the `remediated_routes.py` to the same branch. Observe the pipeline results.
-
-**Step 5: Document the passing pipeline.**
-
-Take a screenshot of the passing SAST step and the passing PR checks.
-
-### Part 3 Deliverable
-
-Submit: your updated pipeline YAML with the SAST step, screenshots of the failed run (with SQL injection findings), and screenshots of the passing run.
-
-### Part 3 Rubric
-
-| Criterion | Points |
-|---|---|
-| Pipeline YAML correctly adds Semgrep to the security-scan job | 8 |
-| Screenshot shows failed SAST step with SQL injection findings | 7 |
-| Screenshot shows passing SAST step after remediation | 6 |
-| PR check screenshots show the security-scan job status in both states | 4 |
-
----
-
-## Part 4: SAST Operational Concepts (20 points)
-
-### Part 4 Instructions
-
-Answer each question in 3-5 sentences using precise SAST and DevSecOps terminology.
-
-**Question A:** A team introduces Semgrep to a production codebase that has 847 existing findings. The team lead proposes using `continue-on-error: true` in the GitHub Actions step for the first two weeks. Explain what this configuration does, why it is appropriate as an initial rollout strategy, and what the team should do after those two weeks.
-
-**Question B:** A developer receives a Semgrep finding flagging a line of code as a potential path traversal vulnerability, but after reviewing the code they determine the input is validated by an earlier function call that Semgrep cannot see. Describe the correct way to handle this confirmed false positive, including the syntax needed in the code and what documentation is required to justify the suppression.
-
-**Question C:** Explain the difference between SAST and DAST using a specific example: a cross-site scripting (XSS) vulnerability in a web application. Describe what each tool sees, what information each needs to run, and what stage of the CI/CD pipeline each belongs at.
-
-### Part 4 Deliverable
-
-Submit written answers to all three questions (3-5 sentences each). Label each answer with the question letter.
-
-### Part 4 Rubric
-
-| Criterion | Points |
-|---|---|
-| Question A correctly explains continue-on-error and the rollout strategy | 7 |
-| Question B correctly describes suppression syntax and documentation requirement | 7 |
-| Question C accurately distinguishes SAST and DAST with XSS example | 6 |
-
----
-
-## Submission Instructions
-
-Combine all four parts into a single document. Label each part clearly. Include your name, date, course number (CIS-4350), and module number (06) at the top. Submit via the Canvas LMS assignment portal before the due date shown in Canvas.
+Lab 06 | CIS-4350 | Texas Wesleyan University | Professor Nash

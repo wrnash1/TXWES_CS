@@ -1,61 +1,68 @@
-# Discussion Forum: Module 04 - Containerization: Docker Security
+# Discussion Forum: Module 04 — Container Security with Docker
 
 ## Course: CIS-4350 DevSecOps and CI/CD Pipelines
+
+## Texas Wesleyan University | Professor Nash
 
 ## Certification Alignment: DevSecOps Professional (DSOE)
 
 ---
 
-## Overview
+## Discussion Overview
 
-This discussion applies Module 04 concepts — Dockerfile security, container image scanning, non-root execution, multi-stage builds, and runtime hardening — to realistic engineering scenarios. Read all three scenarios and respond to the one assigned to your group or the one of your choice. Initial post due Wednesday at 11:59 PM; peer responses due Sunday at 11:59 PM.
+Post your original response to one scenario below (minimum 175 words). Then reply substantively to at least two classmates' posts (minimum 75 words each). Original posts due Sunday 11:59 PM; peer replies due Tuesday 11:59 PM.
 
----
-
-## Scenario A: The Privileged Production Container
-
-A DevOps engineer at a healthcare company deploys a containerized application to production using the following `docker run` command: `docker run --privileged -u root -p 80:80 patient-data-api:latest`. The application processes protected health information. A security auditor flags this configuration during an annual review and states it violates HIPAA's minimum necessary access standard.
-
-In 175-225 words, address the following: Explain specifically what attack capability `--privileged` grants an attacker who achieves code execution inside the container, and why `-u root` compounds this risk. Identify the correct runtime flags that should replace `--privileged` and `-u root` to implement least privilege for a web application that needs to bind to port 80. Explain how the principle of least privilege in container runtime configuration relates to the DevSecOps shared responsibility model — specifically, which team is responsible for setting these runtime flags and how this should be enforced systematically rather than relying on individual engineer knowledge.
+Professor Nash note: Container security is a domain where developers and security engineers often have genuine disagreements about practical defaults. Distroless vs. slim, root vs. non-root during build, scanning frequency — these are real debates. I am looking for responses that engage with the engineering trade-offs, not just the security ideal.
 
 ---
 
-## Scenario B: The Exposed Secret in the Registry
+## Scenario 1 — The Production Image Audit
 
-A development team pushes a Docker image to Docker Hub. Two weeks later, a security researcher contacts them to report that running `docker history their-image:latest` reveals a layer with the instruction `ENV STRIPE_SECRET_KEY=sk_live_xyz123...` — a plaintext production payment API key. The key has been publicly accessible for two weeks in the image that was pushed to a public registry.
+Your team has been running containers in production for eighteen months. An audit reveals that all 47 production container images were built from `ubuntu:latest` and run as root. Image scanning was never configured. The DevOps lead's response is: "The containers are behind a WAF and inside a private VPC — the risk is low." The security team disagrees.
 
-In 175-225 words, address the following: Explain the technical reason why the key is visible in the image history even if a subsequent Dockerfile revision removed the ENV instruction. Identify the two immediate remediation actions that must occur in the correct order and explain why the ordering matters. Then describe two specific technical controls — one at the Dockerfile authoring stage and one at the CI/CD pipeline stage — that would prevent this class of exposure in the future. Use precise Docker and DevSecOps terminology in your response.
+Evaluate the DevOps lead's argument. Is the "defense in depth compensates for container hygiene" argument ever valid? What specific attack scenarios does running as root inside a container enable, even behind a WAF and inside a private VPC? Propose a remediation plan that addresses both the image configuration and the process that allowed this situation to develop over 18 months. Include a prioritization framework — which of the 47 images do you fix first and why? Reference specific Dockerfile and scanning controls from this module, and be honest about the operational cost of the remediation.
 
----
+### Scenario 1 — Peer Response Prompt
 
-## Scenario C: The CVE Triage Problem
-
-A DevSecOps engineer integrates Trivy into the CI/CD pipeline with `--exit-code 1 --severity CRITICAL,HIGH`. On the first run, Trivy reports 47 CRITICAL and 312 HIGH CVEs in the base image `ubuntu:22.04`. The engineering manager panics and asks the team to disable the scan because it is blocking all deployments. The DevSecOps engineer argues that disabling the scan is the wrong response.
-
-In 175-225 words, address the following: Explain to the engineering manager why 47 CRITICAL CVEs in a base image does not necessarily mean the application is exploitable in production — introduce the concept of reachability in vulnerability triage. Propose a realistic remediation path that does not involve disabling the scanner: what base image change would reduce the CVE count dramatically and why? Finally, describe how a vulnerability acceptance policy (sometimes called a .trivyignore file or scanner exception) can be used for CVEs that are genuinely not exploitable in the application's context, while preserving the value of the scan for new critical vulnerabilities.
+Your classmate proposed a prioritization framework for remediating 47 images. Is their framework sound? What criterion did they miss that you would add?
 
 ---
 
-## Discussion Rubric (10 Points Total)
+## Scenario 2 — Distroless vs. Developer Productivity
 
-### Initial Post (6 Points)
+Your security team mandates that all production container images must use `gcr.io/distroless` base images, citing the lack of shell as a critical attack surface reduction. Three development teams push back with the same argument: "Our on-call engineers need to exec into containers to debug production issues. Without a shell, we're flying blind during incidents."
 
-Due Wednesday at 11:59 PM. Your post must be 175-225 words, address all elements of your chosen scenario, and use precise Docker and DevSecOps terminology.
+Take a position. Is the security team's mandate reasonable given the stated trade-off? What alternative debugging approaches exist that do not require a shell in the production image — for example, debug containers in Kubernetes, sidecar debugging patterns, or structured logging with distributed tracing? If you were writing the policy, how would you balance the security mandate with legitimate operational needs? Consider whether the "no shell in production" principle should apply equally to all container types or whether there are justified exceptions. Reference at least one specific tool or technique from this module or your own research.
 
-- 5-6 pts: Thoroughly addresses all scenario elements with technical accuracy, clear explanations, and appropriate terminology. Meets the word count.
-- 3-4 pts: Addresses most elements but lacks technical depth or correct terminology in one or more areas.
-- 0-2 pts: Incomplete, missing, or does not substantively address the scenario.
+### Scenario 2 — Peer Response Prompt
 
-### Peer Responses (4 Points)
-
-Due Sunday at 11:59 PM. Respond to at least two classmates who chose different scenarios.
-
-- 4 pts: Two substantive responses (at least 50 words each) that add technical depth, propose an alternative approach, or cite a specific concept from the reading guide or lab.
-- 2 pts: Only one substantive response, or both are superficial.
-- 0 pts: No peer responses submitted.
+Your classmate proposed an alternative to shell access for production debugging. Is their proposed alternative realistic for a 2 AM incident with a junior on-call engineer? What is the actual cost of their proposed debugging approach?
 
 ---
 
-## Professor Nash Note
+## Scenario 3 — Container Supply Chain Attack
 
-Scenario B involves a real pattern that has affected production systems at multiple organizations. When discussing the remediation order, note that "remove the key from the Dockerfile" is not the first action — it is the second. The first is always to revoke the exposed credential. A key that has been publicly visible for two weeks must be treated as compromised regardless of whether the image is still accessible. The exam tests this sequencing explicitly.
+A popular open-source Docker base image used by hundreds of companies — including yours — is compromised. A malicious contributor gained access to the maintainer's account and pushed a new `latest` tag that includes a cryptocurrency miner and a reverse shell. Your organization pulls base images automatically during CI builds. The compromise was active for 72 hours before the maintainer detected and removed it.
+
+Walk through the incident response. How do you determine whether any of your production images were built using the compromised base image during the 72-hour window? What process evidence would you look for in your CI pipeline logs? After containment, what long-term controls would you implement to prevent this class of supply chain attack in the future? Reference image pinning to digest, Docker Content Trust or cosign, and private registry practices from this module. What is the fundamental tension between "always use the latest patched base image" (for CVE hygiene) and "pin to a specific digest" (for supply chain integrity), and how do you resolve it?
+
+### Scenario 3 — Peer Response Prompt
+
+Your classmate described a long-term control to prevent future supply chain attacks. Does their control address the fundamental tension between patch currency and supply chain integrity? What additional control would you layer on top of theirs?
+
+---
+
+## Grading Rubric
+
+| Criterion | Points |
+|---|---|
+| Original post addresses all parts of the chosen scenario | 3 |
+| Specific Dockerfile practices, scanning tools, or registry controls cited | 2 |
+| Engineering trade-offs acknowledged realistically | 2 |
+| Peer reply 1 — substantive challenge or extension | 1.5 |
+| Peer reply 2 — substantive challenge or extension | 1.5 |
+| Total | 10 |
+
+---
+
+Discussion — Module 04 | CIS-4350 | Texas Wesleyan University | Professor Nash

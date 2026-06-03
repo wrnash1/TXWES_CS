@@ -1,50 +1,240 @@
-# Reading Guide: Module 15 - Security Reporting and Communication
-## Course: CIS-4332_Cyber_Analyst (CompTIA CySA+)
+# Reading Guide: Module 15 — Advanced Threat Hunting
+
+## Course: CIS-4332 Cyber Security Analysis
+
+## Texas Wesleyan University | Professor Nash
+
+**Certification Alignment:** CompTIA CySA+ (CS0-003)
 
 ---
 
-### Introduction
-Welcome to **Module 15 - Security Reporting and Communication**! This module covers how analysts communicate security findings to both technical and non-technical audiences, document vulnerability and incident reports, and support organizational decision-making with clear, evidence-based security metrics. Effective reporting is a distinct professional skill tested on the CySA+ exam and required in every SOC and security engineering role. These topics are tested under **Domain 4: Reporting and Communication (17%)** of the CompTIA CySA+ CS0-003 exam.
+## Introduction
 
-As a student, you will learn how to structure vulnerability reports, write executive summaries, communicate risk in business terms, and document lessons-learned findings after security incidents. Complete the glossary review and study checklist before beginning the lab activity.
+Module 15 covers one of the highest-skill disciplines in security operations: threat hunting. Where reactive detection waits for attackers to trigger alerts, threat hunting proactively searches for adversary activity that has evaded automated systems — and gets there before the attacker completes their mission.
 
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **Vulnerability Report Components**: A formal vulnerability report includes: executive summary (risk impact in business terms for non-technical leadership), technical findings (affected system, CVE identifier, CVSS score, attack vector description), risk rating (Critical/High/Medium/Low based on CVSS and business context), recommended remediation (specific patch, configuration change, or compensating control), and remediation timeline (urgency driven by severity and exploitability). CySA+ tests whether you know what belongs in each section and which audience each section addresses.
-*   **Risk Communication (Technical vs. Non-Technical Audiences)**: Technical audiences (security engineers, system administrators) need precise technical detail — CVE numbers, affected software versions, patch instructions. Non-technical audiences (executives, board members) need business impact framing — what data is at risk, what is the potential financial or operational consequence, and what is the cost-benefit of remediation versus acceptance. CySA+ scenario questions test whether you tailor communication appropriately for each audience type.
-*   **Lessons-Learned Report**: A structured post-incident document completed during the Post-Incident Activity phase of the NIST IR lifecycle. It captures: what happened (timeline), what was detected and when (detection gap analysis), what worked well in the response, what failed or was slow, and what specific improvements are recommended. Lessons-learned reports are the primary mechanism for improving IR capability over time and are required by most security frameworks (NIST, ISO 27001).
+Threat hunting is increasingly a required skill for senior analysts and is explicitly tested in the CySA+ CS0-003 exam under Domain 1 (Security Operations). This module builds your understanding of hypothesis-driven hunting methodology, MITRE ATT&CK as a hunting framework, endpoint telemetry analysis, and hunt documentation standards.
 
 ---
 
-### 2. Certification Exam Tips
-*   **Focus Area – Domain 4 (17% of exam):** CySA+ CS0-003 dedicates a full domain to reporting and communication. Expect questions about what belongs in an executive summary versus a technical finding, how to communicate risk to non-technical stakeholders, and what the correct format for a lessons-learned report contains.
-*   **Scenario Trap – CVSS Score vs. Risk Rating:** A CVSS score measures the technical severity of a vulnerability in isolation. An organization's actual risk rating may differ because of environmental factors (the vulnerable system is internet-facing and holds PII) or compensating controls (the system is behind a WAF). CySA+ tests that you understand CVSS is an input to risk assessment, not the final risk decision.
-*   **Inhibitors to Remediation:** CySA+ questions may describe barriers to fixing a known vulnerability and ask what to document in the report. Common inhibitors include: organizational change freeze windows, legacy system constraints (no patch available), business continuity requirements (system cannot be taken offline), and resource constraints. Analysts must document these inhibitors in the vulnerability report and recommend compensating controls when remediation cannot be completed on schedule.
-*   **Study Resource:** The CertifyBreakfast CySA+ playlist covers security reporting concepts, executive communication techniques, and lessons-learned documentation mapped to CS0-003 Domain 4 objectives: [CertifyBreakfast CompTIA CySA+ Complete Playlist](https://www.youtube.com/playlist?list=PL1Y3F-rCypPM3S7PjJvHjTqP684FwJd0W). This free resource includes walkthroughs of vulnerability report structure and stakeholder communication scenarios.
+## Section 1 — High-Yield Glossary
+
+**Threat Hunting** — The proactive, analyst-led search through an organization's environment for signs of adversary activity that has evaded automated detection. Distinguished from reactive detection by its hypothesis-driven, human-led nature.
+
+**Dwell Time** — The period between an attacker's initial compromise of an environment and the organization's detection of that compromise. Threat hunting directly reduces dwell time.
+
+**Hypothesis** — A specific, testable statement about adversary activity that a threat hunt is designed to confirm or refute. Effective hypotheses are time-bounded, technique-specific, and tied to a credible threat source.
+
+**Hunting Loop** — The iterative cycle of threat hunting: form hypothesis → investigate → uncover patterns → inform detection → repeat.
+
+**MITRE ATT&CK** — A knowledge base of adversary tactics and techniques derived from real-world observations, organized into a matrix framework. The primary structured resource for hunting hypothesis development.
+
+**Tactic** — The "why" of adversary behavior in MITRE ATT&CK — the high-level goal the adversary is trying to achieve. Examples: Persistence, Lateral Movement, Exfiltration.
+
+**Technique** — The "how" of adversary behavior in MITRE ATT&CK — a specific method used to accomplish a tactic. Examples: T1059.001 (PowerShell), T1078 (Valid Accounts).
+
+**Sub-technique** — A more specific variant of a technique. T1059 (Command and Scripting Interpreter) has sub-techniques for PowerShell (T1059.001), Bash (T1059.004), etc.
+
+**EDR (Endpoint Detection and Response)** — A security platform that continuously monitors endpoint activity, collects telemetry (process, network, file, registry events), and provides detection and response capability. The primary data source for most threat hunts.
+
+**XDR (Extended Detection and Response)** — An evolution of EDR that integrates telemetry from endpoints, networks, email, cloud, and identity systems into a unified detection and hunting platform.
+
+**KQL (Kusto Query Language)** — The query language used in Microsoft Defender Advanced Hunting, Azure Sentinel (Microsoft Sentinel), and Azure Log Analytics. Widely used for threat hunting in Microsoft environments.
+
+**Beaconing** — Periodic, clock-like outbound network connections from a compromised host to a C2 server, indicating the malware is checking in for commands. A key network hunting indicator.
+
+**Detection Engineering** — The practice of translating threat hunting findings and threat intelligence into new automated detection rules, SIEM content, and EDR policies.
+
+**ATT&CK Navigator** — A web-based tool (attack.mitre.org/navigator) that visualizes ATT&CK technique coverage, allowing teams to map which techniques they can detect and identify gaps.
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the section covering **Reporting and Communication** in the OER Textbook: [CompTIA CySA+ CS0-003 Exam Reference Library](https://www.comptia.org/). The official CompTIA reference details vulnerability report components, risk communication frameworks, and lessons-learned documentation requirements tested on the exam.
-*   **Required Video:** Watch the video lecture on **Security Reporting and Communication** in the official course playlist: [CertifyBreakfast CompTIA CySA+ Complete Playlist](https://www.youtube.com/playlist?list=PL1Y3F-rCypPM3S7PjJvHjTqP684FwJd0W). This playlist includes demonstrations of executive report writing and risk communication framing for non-technical stakeholders.
+## Section 2 — The Hunting Loop in Depth
+
+### Forming a Strong Hypothesis
+
+A hunt hypothesis must be specific enough to direct investigation but broad enough that confirmable evidence could exist. The Sqrrl threat hunting maturity model provides a useful framing:
+
+Level 0 (Reactive): No proactive hunting; relies entirely on automated alerts.
+
+Level 1 (Minimal): Ad-hoc hunting based on IoCs (known-bad IPs, hashes). Low detection lift.
+
+Level 2 (Procedural): Follows documented procedures and hunt playbooks. Moderate lift.
+
+Level 3 (Innovative): Creates new hunting hypotheses using ATT&CK and threat intelligence. High lift.
+
+Level 4 (Leading): Automates successful hunts into detection content; hunting directly drives detection engineering.
+
+CySA+ analysts should aspire to Level 3. The exam tests Level 3 concepts.
+
+A good hypothesis structure:
+
+"Based on [threat intelligence or TTPs], we hypothesize that [specific adversary activity] is or has occurred in [specific environment or time range], which we would detect by observing [specific telemetry indicator] in [specific data source]."
+
+### Investigating the Hypothesis
+
+Investigation follows the hypothesis's implied data sources and indicators. If the hypothesis targets PowerShell execution from Office processes, the investigation queries endpoint telemetry for exactly that process relationship. If the hypothesis targets DNS beaconing, it analyzes DNS query patterns in network logs.
+
+Investigation is structured, not exploratory browsing. Time-boxing hunts prevents infinite scope expansion. A focused 8-hour hunt is more productive than an open-ended 3-day investigation.
+
+### Uncovering Patterns and Informing Detection
+
+Whether the hunt confirms the hypothesis or not, it surfaces knowledge about the environment:
+
+- Confirmation: the hunt finds the adversary activity → IR escalation + detection rule creation
+- Refutation with clean result: hypothesis was wrong or attacker is absent → document negative finding + refine hypothesis for future
+- Refutation with anomaly: hypothesis was wrong but something else was found → pivot to new hypothesis
+
+Every hunt output must produce detection value: either a new SIEM rule, EDR policy, or hunt playbook that other analysts can reuse.
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Draft a vulnerability report for a critical finding**: Using a provided vulnerability scan result (a critical CVE with a CVSS score of 9.8 on an internet-facing web server), write a complete vulnerability report with: executive summary section (2–3 sentences in business terms), technical finding section (system, CVE, CVSS score, attack vector), risk rating with justification, recommended remediation steps, and a proposed remediation timeline with urgency rationale.
-*   **Rewrite a technical finding as an executive summary**: Take the technical finding drafted above and rewrite it as a 3-sentence executive summary suitable for a non-technical CISO briefing — eliminating jargon, framing impact in terms of business risk (data exposure, regulatory penalty, operational disruption), and stating the recommended action and its estimated cost/effort.
-*   **Draft a lessons-learned section for a simulated incident**: Using a provided incident timeline summary (a phishing-to-ransomware scenario that took 72 hours to contain), complete a lessons-learned template covering: detection gap (why did it take 48 hours to detect?), what worked (EDR isolation was effective), what failed (no MFA on VPN allowed initial access), and three specific recommended improvements with assigned owners and target completion dates.
+## Section 3 — MITRE ATT&CK as a Hunting Framework
+
+### Using ATT&CK for Hunt Planning
+
+The ATT&CK Navigator allows hunters to mark which techniques they can currently detect (green), which they are hunting for (yellow), and which they have no coverage for (red/blank). This creates a visual gap analysis of detection coverage.
+
+A systematic hunt program works through the ATT&CK matrix technique by technique, prioritizing:
+
+1. Techniques used by threat actors known to target your industry
+2. Techniques for which your current automated detection has gaps
+3. Techniques associated with active campaigns in current threat intelligence
+
+### Key Techniques to Know for CySA+
+
+The exam expects familiarity with common ATT&CK techniques:
+
+**T1059 — Command and Scripting Interpreter** — Use of PowerShell, Bash, Python, and other scripting environments. Sub-technique T1059.001 (PowerShell) is the most commonly detected.
+
+**T1078 — Valid Accounts** — Attackers use legitimate stolen credentials to blend in with normal traffic. Extremely difficult to detect with signature-based methods.
+
+**T1055 — Process Injection** — Injecting malicious code into legitimate processes (svchost.exe, explorer.exe) to evade detection.
+
+**T1547 — Boot or Logon Autostart Execution** — Persistence through registry run keys, startup folders, or scheduled tasks.
+
+**T1021 — Remote Services** — Lateral movement using RDP, SMB, SSH, WinRM.
+
+**T1041 — Exfiltration Over C2 Channel** — Data exfiltrated using the same channel as C2 communications, blending exfiltration with normal C2 traffic.
+
+**T1071 — Application Layer Protocol** — Using HTTP, HTTPS, DNS for C2 communications to blend into normal web traffic.
+
+**T1136 — Create Account** — Attacker creates a new user account for persistence or backdoor access.
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read the section covering **Reporting and Communication** in the [CompTIA CySA+ CS0-003 Exam Reference Library](https://www.comptia.org/).
-- [ ] Watch the video lecture on **Security Reporting and Communication** in the [CertifyBreakfast CompTIA CySA+ Complete Playlist](https://www.youtube.com/playlist?list=PL1Y3F-rCypPM3S7PjJvHjTqP684FwJd0W).
-- [ ] Review the vulnerability report template and lessons-learned documentation steps outlined in the lab instructions.
-- [ ] Proceed to the weekly hands-on lab activity.
+## Section 4 — Endpoint Telemetry Analysis
+
+### Process Trees and Parent-Child Relationships
+
+The process tree is the most powerful single data structure for detecting malicious activity. Every process has a parent — the process that created it. Normal parent-child relationships follow predictable patterns. Malicious activity creates abnormal patterns.
+
+Normal patterns:
+
+- `explorer.exe` → `chrome.exe` (user launching a browser)
+- `services.exe` → `svchost.exe` (Windows service management)
+- `svchost.exe` → `msiexec.exe` (software installation via Windows Update)
+
+Malicious patterns:
+
+- `winword.exe` → `powershell.exe` (macro executing PowerShell — T1059.001)
+- `powershell.exe` → `cmd.exe` → `whoami.exe` (discovery chain — T1087)
+- `svchost.exe` → `powershell.exe` (process hollowing or injection — T1055)
+- `explorer.exe` → `regsvr32.exe` loading a DLL from `C:\Users\Public\` (LOLBin abuse — T1218.010)
+
+### Command-Line Argument Analysis
+
+Malicious processes often reveal themselves through their command-line arguments:
+
+- Base64-encoded arguments: `powershell.exe -enc JABjAGwAaQBlAG4Ad...` (T1059.001 obfuscation)
+- Download cradles: `powershell.exe -c "IEX(New-Object Net.WebClient).DownloadString('http://...')"` (T1105)
+- WMI execution: `wmic.exe process call create "cmd.exe /c..."` (T1047)
+
+### Network Connection Analysis from Endpoints
+
+EDR platforms correlate network connections with the process that made them. This enables hunting for:
+
+- Processes making unexpected outbound connections (e.g., `word.exe` connecting to an external IP)
+- Connections to newly registered domains or Tor exit nodes
+- Processes making connections at regular intervals (beaconing)
+
+---
+
+## Section 5 — Network-Based Hunting
+
+### Beaconing Detection
+
+Beaconing is one of the most reliable C2 indicators. Most C2 frameworks beacon at configurable intervals with optional jitter.
+
+Detection approach: calculate the standard deviation of connection intervals from each internal IP to each external IP. Low standard deviation (consistent timing) + regular intervals = beaconing candidate.
+
+Additional indicators: small consistent payload sizes, connections surviving weekends and off-hours (automated, not human-driven), connections to IPs hosting no legitimate services.
+
+### DNS Hunting
+
+DNS provides visibility into every domain resolution attempt, including those using encrypted connections that hide the payload.
+
+High-value DNS hunt queries:
+
+- Domains registered within the past 30 days with connections from internal hosts
+- Subdomains with entropy scores above threshold (DGA detection)
+- NXDOMAIN rates above baseline (DGA pre-registration queries)
+- DNS query volume per host above baseline (DNS tunneling)
+- Queries for domains with no HTTPS content or no legitimate business purpose
+
+---
+
+## Section 6 — Hunt Documentation Standards
+
+Every hunt, regardless of outcome, produces a documented record. The hunt record serves four purposes: institutional memory, detection engineering input, audit evidence of proactive security activity, and repeatable playbook for future hunts.
+
+Required sections in a hunt documentation record:
+
+- Hunt title and unique identifier
+- Hunt date, analyst name, time spent
+- Hypothesis and supporting threat intelligence source
+- Data sources queried, tools used, time range covered
+- Queries or search methodology (exact queries should be recorded)
+- Findings — positive (with evidence) or negative (confirmed absence or inconclusive)
+- IoCs or TTPs identified
+- New detection rules created or recommended
+- Recommendations for future hunts or control improvements
+
+---
+
+## Section 7 — CySA+ Exam Focus Areas
+
+For the exam, know these threat hunting topics:
+
+- The hunting loop — four stages and the purpose of each
+- Hypothesis development — what makes a strong vs. weak hypothesis
+- MITRE ATT&CK — tactics vs. techniques, how to use ATT&CK for hunt planning
+- Endpoint telemetry — process trees, command-line arguments, network connections
+- EDR vs. XDR — what each collects and provides
+- Beaconing as a network hunting indicator
+- Hunt documentation as a required output
+
+---
+
+## Study Checklist
+
+- [ ] Define all glossary terms without referencing notes
+- [ ] Write one strong hunting hypothesis using the required structure
+- [ ] List the 14 MITRE ATT&CK Enterprise tactics in order
+- [ ] Name five ATT&CK techniques relevant to endpoint hunting and describe each
+- [ ] Describe three abnormal process parent-child relationships and explain what each suggests
+- [ ] Explain what beaconing is and how to detect it in network telemetry
+- [ ] List the required sections in a hunt documentation record
+- [ ] Complete the Module 15 Lab
+- [ ] Complete the Module 15 Quiz
+- [ ] Post your Module 15 Discussion initial post by Wednesday
+
+---
+
+## Required Resources
+
+- MITRE ATT&CK Enterprise Matrix — attack.mitre.org (free)
+- ATT&CK Navigator — mitre-attack.github.io/attack-navigator (free)
+- Sqrrl Threat Hunting Reference Guide (archived, available via Google)
+- CrowdStrike Threat Hunting Guide — crowdstrike.com (free registration)
+- CompTIA CySA+ CS0-003 Exam Objectives — Domain 1
+- Module 15 Video Lecture (Professor Nash)

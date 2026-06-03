@@ -1,75 +1,179 @@
-# Quiz: Module 08 - Business Intelligence Tools – Power BI and Tableau
-## Course: CIS-4336_Data_Analytics (CompTIA Data+)
+# Quiz: Module 08 — Data Mining and Predictive Techniques
+
+## Course: CIS-4336 Data Analytics
+
+## Texas Wesleyan University | Professor Nash
+
+## Points: 20 (2 points each)
+
+## Certification Alignment: CompTIA Data+ (DA0-001) — Domain 2: Data Analysis
 
 ---
 
-**Question 1**
-A sales director wants a single screen showing live KPI tiles for revenue, units sold, and return rate — updated every hour — so she can monitor performance throughout the day without running a new report each time. What type of BI output best meets this need?
-*   A) A paginated report with detailed transaction rows exported to PDF.
-*   B) An interactive dashboard displaying real-time KPI tiles that refresh automatically.
-*   C) A flat CSV extract sent to her inbox each morning.
-*   D) A data dictionary documenting the definitions of each metric.
-*   **Correct Answer:** B) An interactive dashboard displaying real-time KPI tiles that refresh automatically.
-*   **Distractor Analysis:**
-    *   *Why correct:* A dashboard is designed for real-time or near-real-time monitoring of key metrics on a single screen. The director's need — "monitor performance throughout the day" — is the canonical dashboard use case.
-    *   A) A paginated PDF report is for detailed historical analysis, not live monitoring. C) A CSV extract is a static snapshot, not a live display. D) A data dictionary documents metadata, not operational metrics.
+## Instructions
+
+Select the single best answer for each question. Each question is worth 2 points. No partial credit.
 
 ---
 
-**Question 2**
-In business intelligence, which of the following most accurately defines a **data connector**?
-*   A) A formula-based computation inside a BI tool that aggregates raw data into a derived metric — such as total revenue or profit margin — evaluated dynamically based on the active filter context.
-*   B) A driver or interface that allows a BI tool to read data from a specific external system, such as a database, a cloud storage service, or an API endpoint.
-*   C) A visual component on a dashboard that lets users select a value from a dropdown or slider to dynamically filter all charts on the page.
-*   D) A schema design pattern in which a central fact table is joined to multiple surrounding dimension tables to support fast analytical queries.
-*   **Correct Answer:** B) A driver or interface that allows a BI tool to read data from a specific external system, such as a database, a cloud storage service, or an API endpoint.
-*   **Distractor Analysis:**
-    *   *Why B is correct:* A data connector is the mechanism that establishes the link between the BI tool and the data source. Without a connector, the tool cannot ingest or query the data.
-    *   *Why A is incorrect:* This describes a calculated measure or calculated field — a formula evaluated at query time, not a connection mechanism.
-    *   *Why C is incorrect:* This describes a slicer or filter control — a UI element for interactive filtering, not a data ingestion component.
-    *   *Why D is incorrect:* This describes a star schema — a data modeling pattern, not a connection mechanism.
+## Question 1
+
+Which of the following best describes unsupervised learning?
+
+A. A model trained on labeled data to predict output values for new inputs
+
+B. A model that discovers hidden structure in data without predefined output labels
+
+C. A model that uses a training set and a test set to evaluate classification accuracy
+
+D. A model that predicts a continuous numeric output using regression coefficients
+
+**Correct Answer:** B — Unsupervised learning finds patterns in unlabeled data. Option A describes supervised learning. Option C describes model evaluation methodology, not learning type. Option D describes regression, which is a supervised technique.
 
 ---
 
-**Question 3**
-A BI analyst is building a Power BI dashboard connected to a hospital database that updates every 10 minutes with new patient admission data. The hospital needs the dashboard to always reflect the most current data without manual refreshes. Which connection mode is most appropriate?
-*   A) Import mode, because it caches a full snapshot of the data in Power BI for fast performance.
-*   B) DirectQuery mode, because it sends live queries to the source database each time a visual loads, always reflecting current data.
-*   C) Export mode, because it writes the data to a CSV file that Power BI reads at startup.
-*   D) Snapshot mode, because it takes a point-in-time copy of the database and stores it locally.
-*   **Correct Answer:** B) DirectQuery mode, because it sends live queries to the source database each time a visual loads, always reflecting current data.
-*   **Distractor Analysis:**
-    *   *Why B is correct:* DirectQuery bypasses caching and queries the live source on every interaction, ensuring the dashboard always shows the latest data. This matches the hospital's requirement for up-to-the-minute accuracy.
-    *   *Why A is incorrect:* Import mode creates a static snapshot that is only as fresh as the last scheduled refresh. With data changing every 10 minutes, an import-mode cache would frequently be stale.
-    *   *Why C is incorrect:* "Export mode" is not a Power BI connection mode. Exporting to CSV and re-reading it would not provide live updates.
-    *   *Why D is incorrect:* "Snapshot mode" is not a standard Power BI connection mode. The term describes what Import mode does, but the answer is framed incorrectly and does not address the live-data requirement.
+## Question 2
+
+In the k-means algorithm, what happens during each iteration after initial centroid placement?
+
+A. Each centroid is moved to the farthest data point from the cluster center
+
+B. Each data point is assigned to the nearest centroid, then centroids are recalculated as cluster means
+
+C. A new centroid is added for each cluster that exceeds the WCSS threshold
+
+D. The algorithm removes data points that fall outside two standard deviations of the mean
+
+**Correct Answer:** B — K-means alternates between assignment (each point to nearest centroid) and update (centroid to mean of assigned points) until convergence. Options A, C, and D do not describe any step of the k-means algorithm.
 
 ---
 
-**Question 4**
-An analyst builds a Tableau dashboard showing quarterly sales. When a user clicks a bar in the "Sales by Region" chart, the "Sales by Product" chart on the same dashboard automatically filters to show only that region's products. What BI feature is being used?
-*   A) Data blending — combining data from two different sources into a single view.
-*   B) Cross-filtering (dashboard actions) — clicking one visual passes a filter context to other visuals on the same dashboard.
-*   C) Drill-through — navigating from a summary page to a separate detailed report page.
-*   D) Calculated field — a formula that derives a new metric from existing columns in the data source.
-*   **Correct Answer:** B) Cross-filtering (dashboard actions) — clicking one visual passes a filter context to other visuals on the same dashboard.
-*   **Distractor Analysis:**
-    *   *Why B is correct:* Cross-filtering (called dashboard actions in Tableau, cross-report filtering or interactions in Power BI) allows a selection in one chart to act as a filter for other charts on the same canvas. This is the standard mechanism for building interactive dashboards.
-    *   *Why A is incorrect:* Data blending combines data from multiple sources at the row level. It is a data preparation technique, not an interaction behavior between two charts.
-    *   *Why C is incorrect:* Drill-through navigates to a separate, more detailed page or report. The scenario describes both charts on the same dashboard, not navigation to another page.
-    *   *Why D is incorrect:* A calculated field is a formula for deriving a metric. It has nothing to do with the interactive filtering behavior between charts.
+## Question 3
+
+A decision tree model achieves 100% accuracy on training data but only 62% on test data. What problem does this indicate?
+
+A. Underfitting — the model is too simple to capture patterns
+
+B. Data leakage — test data was included in training
+
+C. Overfitting — the model memorized training data and does not generalize
+
+D. Class imbalance — the model is biased toward the majority class
+
+**Correct Answer:** C — A large gap between training accuracy (100%) and test accuracy (62%) is the classic signature of overfitting. The model learned training noise rather than generalizable patterns. Underfitting shows low accuracy on both sets (A). Data leakage typically inflates test performance, not reduces it (B). Class imbalance distorts metrics but does not cause this training/test gap pattern (D).
 
 ---
 
-**Question 5**
-A BI developer creates a measure in Power BI: `Profit Margin = DIVIDE([Total Profit], [Total Revenue])`. When a slicer is set to "Electronics," the measure shows 18%. When the slicer is cleared, it shows 22%. What explains this behavior?
-*   A) The measure formula contains an error that causes it to calculate incorrectly when no filter is applied.
-*   B) Measures in Power BI are evaluated dynamically based on the current filter context, so the result changes as slicers and filters change.
-*   C) The measure is recalculating because the underlying database was updated between the two slicer states.
-*   D) Power BI rounds calculated fields differently depending on the number of rows returned by the active filter.
-*   **Correct Answer:** B) Measures in Power BI are evaluated dynamically based on the current filter context, so the result changes as slicers and filters change.
-*   **Distractor Analysis:**
-    *   *Why B is correct:* This is the defining behavior of a BI measure — it aggregates only the data that passes through the active filter context. "Electronics" filters to a subset with an 18% margin; the full dataset yields 22%. This is expected and correct behavior.
-    *   *Why A is incorrect:* Different results for different filter states is not an error — it is the intended behavior of a dynamic measure. An actual formula error would produce a consistent error or null value, not contextually different numbers.
-    *   *Why C is incorrect:* The scenario describes two slicer states in the same session, not two different query times. The database update explanation does not apply to instantaneous slicer changes.
-    *   *Why D is incorrect:* Power BI does not apply different rounding logic based on row count. The difference in results is driven by filter context, not a rounding implementation detail.
+## Question 4
+
+Which metric should be prioritized when building a model to screen patients for a rare but treatable disease where missing a positive case has serious consequences?
+
+A. Accuracy
+
+B. Precision
+
+C. Recall
+
+D. Specificity
+
+**Correct Answer:** C — Recall measures the proportion of actual positives correctly identified. Missing a diseased patient (false negative) is the costly error, so maximizing recall is critical. Accuracy is misleading with rare conditions (A). Precision penalizes false positives, not false negatives (B). Specificity measures the true negative rate, not sensitivity to positive cases (D).
+
+---
+
+## Question 5
+
+A fraud detection model produces: TP = 45, TN = 900, FP = 55, FN = 10. What is the model's precision?
+
+A. 45%
+
+B. 55%
+
+C. 82%
+
+D. 90%
+
+**Correct Answer:** A — `precision = TP / (TP + FP) = 45 / (45 + 55) = 45 / 100 = 45%`. Option B is the raw FP count, not precision. Option C applies an incorrect formula. Option D is closer to the overall accuracy figure.
+
+---
+
+## Question 6
+
+In association rule mining, what does a lift value of 1.0 indicate?
+
+A. The two items are perfectly correlated and always appear together
+
+B. The two items are negatively associated and rarely appear together
+
+C. The two items appear together no more often than would be expected by chance
+
+D. The confidence of the rule equals the support of the consequent itemset
+
+**Correct Answer:** C — `lift = confidence(A → B) / support(B)`. When lift = 1, the conditional probability of B given A equals the unconditional probability of B — the items are statistically independent. Lift > 1 means positive association (not what lift=1 describes, so A is wrong). Lift < 1 means negative association (B). Option D restates the lift formula imprecisely without capturing the independence meaning.
+
+---
+
+## Question 7
+
+What is the primary advantage of random forests over a single decision tree?
+
+A. Random forests are faster to train and require less memory
+
+B. Random forests are fully interpretable — you can trace every prediction path
+
+C. Random forests reduce overfitting by averaging across many diverse trees
+
+D. Random forests do not require a training dataset
+
+**Correct Answer:** C — By combining hundreds of trees trained on different bootstrap samples and feature subsets, random forests average out individual tree errors and dramatically reduce variance and overfitting. They are slower than single trees (A is wrong). They sacrifice interpretability compared to single trees (B is wrong). All supervised models require training data (D is wrong).
+
+---
+
+## Question 8
+
+Given TP = 60, TN = 200, FP = 20, FN = 10, what is the F1 score?
+
+A. F1 = 2 × (0.75 × 0.857) / (0.75 + 0.857) ≈ 0.80
+
+B. F1 = (60 + 200) / (60 + 200 + 20 + 10) = 0.90
+
+C. F1 = 60 / (60 + 20) = 0.75
+
+D. F1 = 60 / (60 + 10) = 0.857
+
+**Correct Answer:** A — `precision = 60/(60+20) = 0.75`. `recall = 60/(60+10) = 0.857`. `F1 = 2*(0.75*0.857)/(0.75+0.857) ≈ 0.80`. Option B computes overall accuracy. Option C computes precision alone. Option D computes recall alone.
+
+---
+
+## Question 9
+
+Which split criterion is used by the CART decision tree algorithm?
+
+A. Information gain (entropy reduction)
+
+B. Gini impurity
+
+C. Chi-square statistic
+
+D. Pearson correlation coefficient
+
+**Correct Answer:** B — CART (Classification and Regression Trees) uses Gini impurity as its split criterion. Information gain via entropy is used by ID3 and C4.5 algorithms (A). Chi-square is used in the CHAID algorithm (C). Pearson correlation is not a tree-splitting criterion (D).
+
+---
+
+## Question 10
+
+A retail analyst finds: `support(milk) = 0.40`, `support(cereal) = 0.30`, `support(milk and cereal) = 0.18`. What is the confidence of the rule `{milk} → {cereal}`?
+
+A. 0.18
+
+B. 0.45
+
+C. 0.60
+
+D. 1.50
+
+**Correct Answer:** B — `confidence(milk → cereal) = support(milk and cereal) / support(milk) = 0.18 / 0.40 = 0.45`. Option A is the raw joint support. Option C results from dividing by support(cereal) rather than support(milk). Option D is the lift value, not confidence.
+
+---
+
+End of Module 08 Quiz

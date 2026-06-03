@@ -1,82 +1,193 @@
-# Quiz: Module 09 – Cloud SQL and Cloud Spanner: Managed Relational Databases
-## Course: CIS-4329 – Google Cloud Administration (Google Cloud Associate Cloud Engineer)
+# Quiz: Module 09 — Cloud Load Balancing and CDN
+
+## Course: CIS-4329 Google Cloud Computing
+
+## Texas Wesleyan University | Professor Nash
+
+## Certification Alignment: Google Cloud Associate Cloud Engineer (ACE)
 
 ---
 
-**Question 1**
-Your company runs a customer-facing e-commerce application backed by a MySQL database in a single Compute Engine VM. You want to migrate to a fully managed database service that handles automated backups, patches, and provides automatic failover if the primary database zone goes down. Which GCP service and configuration should you use?
+### Instructions
 
-A) Cloud Spanner with a multi-region configuration
-B) Cloud SQL for MySQL with a high availability (regional) configuration
-C) Cloud SQL for MySQL with a read replica in a second zone
-D) Cloud Bigtable with a MySQL-compatible schema
-
-*   **Correct Answer:** B) Cloud SQL for MySQL with a high availability (regional) configuration
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Cloud Spanner is a globally distributed database appropriate for workloads requiring horizontal scalability and global consistency. For a standard MySQL migration with zone-level failover, Cloud SQL HA is the correct and far more cost-effective choice.
-    *   *Why C is incorrect:* A read replica serves read-only traffic and uses asynchronous replication. It does not participate in automatic failover — if the primary instance fails, the read replica does not automatically promote. High availability (regional) configuration is required for automatic failover.
-    *   *Why D is incorrect:* Cloud Bigtable is a NoSQL wide-column database and is not MySQL-compatible. It does not support SQL queries, JOINs, or relational schemas, making it unsuitable for a MySQL application migration.
+Select the single best answer for each question. Each question is worth 10 points.
+Total: 100 points.
 
 ---
 
-**Question 2**
-You are designing a financial trading platform that requires a relational database supporting ANSI SQL with ACID transactions. The platform must serve users in North America, Europe, and Asia with strong consistency — every user must always read the latest committed data regardless of which region they connect to. Which database service meets these requirements?
+### Question 1
 
-A) Cloud SQL for PostgreSQL with read replicas in each region
-B) Cloud Bigtable with a global replication profile
-C) Cloud Spanner with a multi-region instance configuration
-D) Firestore in Native mode with multi-region replication
+A web application serves users worldwide. The team wants a single IP address that routes
+users to the nearest healthy backend, with support for URL-based routing, SSL termination,
+and Cloud CDN integration. Which load balancer should they use?
 
-*   **Correct Answer:** C) Cloud Spanner with a multi-region instance configuration
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Cloud SQL read replicas use asynchronous replication, meaning replicas may lag behind the primary. Users reading from a replica could see stale data — this violates the strong consistency requirement. Cloud SQL also cannot serve writes from multiple regions simultaneously.
-    *   *Why B is incorrect:* Cloud Bigtable does not support SQL or ACID transactions. It is designed for high-throughput analytics and time-series workloads using row-key access patterns, not for relational financial data with complex transactions and JOINs.
-    *   *Why D is incorrect:* Firestore is a NoSQL document database. While it supports ACID transactions within a single document and multi-region replication, it does not support ANSI SQL or relational schemas with JOINs — it is not suitable for a SQL-based trading platform.
+- A) External Network Load Balancer
+- B) Global External HTTP(S) Load Balancer
+- C) Regional External HTTP(S) Load Balancer
+- D) Internal HTTP(S) Load Balancer
 
----
-
-**Question 3**
-A Cloud SQL instance in your project is configured with a public IP address. Your application running on a Compute Engine VM needs to connect securely to the database. The security team requires that database credentials not be embedded in application code and that the connection be encrypted. Which approach follows Google's recommended best practice?
-
-A) Add the VM's external IP address to the Cloud SQL authorized networks list and connect using SSL certificates.
-B) Use the Cloud SQL Auth Proxy running on the VM, which handles encryption and uses IAM-based authentication automatically.
-C) Configure a VPN tunnel between the VM's VPC and the Cloud SQL network to establish a private connection.
-D) Store the database password in a Compute Engine metadata key and retrieve it in the application startup script.
-
-*   **Correct Answer:** B) Use the Cloud SQL Auth Proxy running on the VM, which handles encryption and uses IAM-based authentication automatically.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Adding a VM's external IP to the Cloud SQL authorized networks list exposes the database port to that IP over the public internet. While SSL encrypts the connection, it still requires managing SSL certificates manually and does not use IAM-based authentication — the Auth Proxy is simpler and more secure.
-    *   *Why C is incorrect:* Cloud SQL instances do not reside in a customer VPC — they are managed by Google. There is no VPC network to tunnel into. The Cloud SQL Auth Proxy or Private IP with VPC peering are the correct connectivity patterns.
-    *   *Why D is incorrect:* Storing a database password in Compute Engine instance metadata is a security anti-pattern — metadata is accessible to any process running on the VM and is not encrypted at rest in a secrets management system. Use Secret Manager or the Auth Proxy for credential-free connectivity.
+Correct answer: B — The Global External HTTP(S) Load Balancer is the only GCP load
+balancer offering global anycast routing, URL-based routing, SSL termination at the load
+balancer, and native Cloud CDN integration. The Network LB is Layer 4 pass-through with
+no CDN. The Regional HTTP(S) LB is single-region. The Internal LB does not serve internet
+traffic.
 
 ---
 
-**Question 4**
-Your application writes time-series sensor data from 10,000 IoT devices at a sustained rate of 500,000 writes per second. Each record has a device ID, timestamp, and a set of numeric sensor readings. The data will be queried by device ID and time range for analytics pipelines. Relational JOIN queries are not required. Which GCP database service is most appropriate?
+### Question 2
 
-A) Cloud SQL for MySQL with a high-performance db-n1-highmem-96 instance
-B) Cloud Spanner with a single-region configuration
-C) Cloud Bigtable with a row key composed of device ID and reverse timestamp
-D) Firestore with one document per sensor reading stored in a devices collection
+An application requires that backend servers receive the original client IP address in the
+TCP connection. SSL termination occurs on the backend servers, not on the load balancer.
+The application is regional. Which load balancer best fits these requirements?
 
-*   **Correct Answer:** C) Cloud Bigtable with a row key composed of device ID and reverse timestamp
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Cloud SQL is a single-node relational database that cannot sustain 500,000 writes per second regardless of instance size. It is designed for transactional workloads with hundreds or thousands of concurrent connections, not petabyte-scale IoT ingestion.
-    *   *Why B is incorrect:* Cloud Spanner scales horizontally and can handle high write throughput, but it is significantly more expensive than Bigtable and is optimized for relational workloads requiring ACID transactions and SQL JOINs — capabilities that are not needed here. Bigtable is the purpose-built service for this use case.
-    *   *Why D is incorrect:* Firestore is a document database optimized for flexible schemas, real-time sync, and mobile applications. It has throughput and document size limits that make it unsuitable for 500,000 writes per second from IoT devices. It also lacks Bigtable's columnar storage efficiency for time-series data.
+- A) Global External HTTP(S) Load Balancer
+- B) External SSL Proxy Load Balancer
+- C) External Network Load Balancer (pass-through)
+- D) Internal TCP/UDP Load Balancer
+
+Correct answer: C — The External Network Load Balancer is a pass-through, Layer 4 load
+balancer that preserves the original client IP address. It does not terminate SSL — the
+backend handles TLS. It is regional, matching the requirement. The HTTP(S) LB and SSL
+Proxy LB are both proxy-based and terminate the connection at the load balancer.
 
 ---
 
-**Question 5**
-You need to export a Cloud SQL database backup to Cloud Storage so it can be used to seed a development environment. You also want to automate this export to run every Sunday at 2:00 AM. Which combination of GCP features accomplishes this with the least operational overhead?
+### Question 3
 
-A) Write a cron job on a Compute Engine VM that runs `mysqldump` and uploads the output to Cloud Storage using `gsutil cp`.
-B) Use Cloud SQL's built-in export feature triggered by Cloud Scheduler invoking a Cloud Function that calls the Cloud SQL Admin API.
-C) Enable Cloud SQL automated backups and use Cloud Scheduler to trigger a snapshot of the backup storage bucket weekly.
-D) Configure a Cloud SQL read replica and take a Compute Engine persistent disk snapshot of the replica's underlying storage every Sunday.
+What is the correct order of the Global HTTP(S) Load Balancer component chain, from
+internet to backend?
 
-*   **Correct Answer:** B) Use Cloud SQL's built-in export feature triggered by Cloud Scheduler invoking a Cloud Function that calls the Cloud SQL Admin API.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Running `mysqldump` from a Compute Engine VM requires maintaining a VM, managing credentials, handling network connectivity, and monitoring the cron job. This adds significant operational overhead compared to using Cloud SQL's native export API with Cloud Scheduler.
-    *   *Why C is incorrect:* Cloud SQL automated backups create internal backups managed by Cloud SQL — they are not stored in a customer-accessible Cloud Storage bucket. There is no mechanism to snapshot the automated backup storage directly; the correct approach is to use the Cloud SQL export API to write a SQL dump to Cloud Storage.
-    *   *Why D is incorrect:* Cloud SQL instances run on Google-managed infrastructure — you do not have access to take Compute Engine persistent disk snapshots of the underlying storage. Read replicas cannot be snapshotted at the disk level by the customer.
+- A) Forwarding Rule → Backend Service → URL Map → Target Proxy → Instance Group
+- B) Target Proxy → Forwarding Rule → URL Map → Backend Service → Instance Group
+- C) Forwarding Rule → Target Proxy → URL Map → Backend Service → Instance Group
+- D) URL Map → Forwarding Rule → Target Proxy → Backend Service → Instance Group
+
+Correct answer: C — The correct chain is: Forwarding Rule (receives traffic from the
+internet) → Target Proxy (HTTP or HTTPS proxy that reads the URL map) → URL Map (routes
+to the correct backend service) → Backend Service (references instance groups and health
+checks) → Instance Group (the actual backend VMs).
+
+---
+
+### Question 4
+
+You are setting up an HTTP health check for a Global HTTP(S) Load Balancer. After
+configuring the health check and backend service, the backends show as unhealthy even
+though the web servers are responding correctly. What is the most likely cause?
+
+- A) The health check path returns HTTP 200 instead of HTTP 204
+- B) The firewall rules do not allow TCP traffic from GCP health check IP ranges
+- C) The backend service protocol is set to HTTPS instead of HTTP
+- D) The URL map is not referencing the backend service
+
+Correct answer: B — Health check probes originate from `35.191.0.0/16` and
+`130.211.0.0/22`. If firewall rules do not permit TCP traffic from these ranges to the
+backend instances on the health check port, all probes fail and backends appear unhealthy.
+This is the most common health check configuration mistake.
+
+---
+
+### Question 5
+
+A team wants to use a Google-managed SSL certificate on their Global HTTPS Load Balancer.
+They have created the certificate resource but the status shows `PROVISIONING` for over
+two hours. What is the most likely cause?
+
+- A) The SSL certificate was not attached to the target HTTPS proxy
+- B) The forwarding rule is using port 80 instead of port 443
+- C) The domain's DNS A record does not point to the load balancer's IP address
+- D) Google-managed certificates require manual approval before provisioning
+
+Correct answer: C — Google-managed SSL certificates require the domain's DNS A record to
+resolve to the load balancer's IP address before certificate issuance can begin. If DNS
+has not been updated or has not yet propagated, the certificate remains in `PROVISIONING`
+status. There is no manual approval step — provisioning is fully automated once DNS is
+correct.
+
+---
+
+### Question 6
+
+Which of the following Cloud CDN cache modes caches responses regardless of the
+`Cache-Control` headers returned by the backend?
+
+- A) USE_ORIGIN_HEADERS
+- B) CACHE_ALL_STATIC
+- C) FORCE_CACHE_ALL
+- D) ALWAYS_CACHE
+
+Correct answer: C — `FORCE_CACHE_ALL` caches all successful responses from the origin
+regardless of their `Cache-Control` headers, including responses with
+`Cache-Control: no-store`. `USE_ORIGIN_HEADERS` respects the origin's cache headers.
+`CACHE_ALL_STATIC` caches static content types but still respects no-cache directives
+on dynamic content. `ALWAYS_CACHE` is not a valid GCP cache mode name.
+
+---
+
+### Question 7
+
+You need to protect a Global HTTP(S) Load Balancer from SQL injection attacks and block
+traffic originating from a specific country. Which service provides both capabilities?
+
+- A) Cloud Firewall policies
+- B) Cloud Armor
+- C) Cloud NAT
+- D) VPC Service Controls
+
+Correct answer: B — Cloud Armor provides preconfigured WAF rules for OWASP Top 10
+attacks (including SQL injection) and supports geo-based rule expressions to block
+traffic from specific countries. Cloud Armor attaches directly to backend services on the
+Global HTTP(S) LB. VPC Service Controls, Cloud Firewall policies, and Cloud NAT do not
+provide application-layer WAF or CDN-integrated geo blocking.
+
+---
+
+### Question 8
+
+In a Cloud Armor security policy, two rules are configured: rule priority 500 allows
+traffic from `10.0.0.0/8`, and rule priority 1000 denies all traffic. A request arrives
+from `10.1.2.3`. What action is taken?
+
+- A) The request is denied because the deny rule exists in the policy
+- B) The request is allowed because priority 500 is evaluated first and it matches
+- C) The request is denied because the deny rule has a broader match
+- D) No rule matches so the default GCP behavior allows the request
+
+Correct answer: B — Cloud Armor evaluates rules in priority order from lowest to highest
+number. Priority 500 is evaluated before priority 1000. The request from `10.1.2.3`
+matches the `10.0.0.0/8` range at priority 500, so the allow action is applied and
+evaluation stops. The deny rule at priority 1000 is never reached.
+
+---
+
+### Question 9
+
+Which GCP load balancer type is required to route internal microservice traffic within a
+VPC using HTTP path-based routing rules?
+
+- A) External Network Load Balancer
+- B) Global External HTTP(S) Load Balancer
+- C) Internal HTTP(S) Load Balancer
+- D) Internal TCP/UDP Load Balancer
+
+Correct answer: C — The Internal HTTP(S) Load Balancer is a regional, VPC-internal Layer
+7 load balancer that supports URL path-based and host-based routing for microservices
+within a VPC. The External Network LB and Global External HTTP(S) LB face the public
+internet. The Internal TCP/UDP LB is Layer 4 and does not support path-based routing.
+
+---
+
+### Question 10
+
+A team wants to invalidate all CDN-cached content for their application after deploying
+a new version. Which gcloud command accomplishes this?
+
+- A) `gcloud compute backend-services update --clear-cdn-cache`
+- B) `gcloud compute url-maps invalidate-cdn-cache MY_URL_MAP --path="/*" --global`
+- C) `gcloud cdn cache invalidate --all --backend-service=MY_BACKEND`
+- D) `gcloud compute forwarding-rules delete --cdn-cache MY_RULE`
+
+Correct answer: B — `gcloud compute url-maps invalidate-cdn-cache` is the correct
+command for cache invalidation. The `--path="/*"` wildcard pattern invalidates all
+cached content. Options A, C, and D use incorrect command structures that do not exist
+in the gcloud CLI.

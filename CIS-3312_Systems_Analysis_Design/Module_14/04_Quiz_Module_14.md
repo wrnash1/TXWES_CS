@@ -1,77 +1,249 @@
-# Quiz: Module 14 - Agile BA: Scrum and Kanban in BA Context
-## Course: CIS-3312 Systems Analysis & Design (IIBA ECBA)
+# Quiz: Module 14 — Testing, Validation, and Quality Assurance
+
+## Course: CIS-3312 Systems Analysis and Design
+
+## Texas Wesleyan University | Professor Nash
+
+**Certification Alignment:** IIBA ECBA
 
 ---
 
-**Question 1**
-In a Scrum project, a BA is spending most of their time meeting individually with the development team to clarify user story details, add acceptance criteria, and break down epics into sprint-sized stories — all in preparation for upcoming sprints. Which Scrum event or activity best describes this work?
-*   A) Sprint Retrospective — reviewing what went well and what can be improved in the BA's process
-*   B) Sprint Review — demonstrating the completed increment to stakeholders for feedback
-*   C) Daily Scrum — reporting progress and removing impediments each morning
-*   D) Backlog Refinement — grooming the product backlog so stories are ready for Sprint Planning
-*   **Correct Answer:** D) Backlog Refinement — grooming the product backlog so stories are ready for Sprint Planning
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* The Sprint Retrospective focuses on improving team process, not on story preparation or requirement clarification.
-    *   *Why B is incorrect:* The Sprint Review is for demonstrating working software to stakeholders; it occurs at the end of a sprint, not during ongoing story preparation.
-    *   *Why C is incorrect:* The Daily Scrum is a 15-minute synchronization event for the Development Team; the BA's story clarification work is not a Daily Scrum activity.
-    *   *Why D is correct:* Backlog Refinement (grooming) is the ongoing activity where the team reviews and improves upcoming backlog items — clarifying requirements, adding acceptance criteria, splitting epics, and estimating. It is the primary BA activity in Scrum between sprints.
+## Quiz Instructions
+
+This quiz contains 10 multiple-choice questions. Each question is worth 10 points. Select the single best answer. Distractor analysis is provided after each question to support your learning.
+
+**Time limit:** 30 minutes
 
 ---
 
-**Question 2**
-In the context of Agile frameworks, which of the following is the most accurate definition of **Definition of Done (DoD)**?
-*   A) The acceptance criteria written for a specific user story that the product owner will verify when deciding to accept it
-*   B) A team-level checklist of quality criteria that every product increment must satisfy before it is considered complete and potentially releasable
-*   C) The sprint goal statement that the team commits to achieving by the end of a sprint
-*   D) The prioritized list of all work items the development team may be asked to complete during the project
-*   **Correct Answer:** B) A team-level checklist of quality criteria that every product increment must satisfy before it is considered complete and potentially releasable
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Acceptance criteria are story-specific conditions; the DoD applies to all stories across all sprints as a team-wide standard.
-    *   *Why C is incorrect:* A sprint goal is the objective the team sets for a specific sprint; it is not the same as the DoD, which is a persistent quality standard.
-    *   *Why D is incorrect:* A prioritized list of work items is the product backlog, not the DoD.
-    *   *Why B is correct:* The Definition of Done is a shared, stable quality standard applied consistently to every increment — covering code review, test passage, documentation, and other quality gates — ensuring the team has an objective and consistent definition of completion.
+## Question 1
+
+A BA reviews a requirement that states: "The system shall provide a good user experience." The BA flags this requirement before test case development begins. What is the primary reason for flagging it?
+
+A. The requirement is out of scope for system testing.
+B. The requirement is not testable because it lacks a specific, measurable outcome.
+C. User experience requirements belong in the design document, not the requirements specification.
+D. The requirement cannot be linked to a functional test case because it is non-functional.
+
+### Distractor Analysis — Question 1
+
+**Correct answer: B**
+
+"Good user experience" is a subjective qualifier with no agreed measurement. A tester cannot determine objectively whether it passes or fails. The requirement must be rewritten with specific, measurable criteria before a valid test case can be written.
+
+**Why A is wrong:** Whether a requirement is in scope for system testing is a planning decision, not the reason to flag it. The problem is testability, not scope.
+
+**Why C is wrong:** Non-functional quality requirements belong in the requirements specification. Placing them only in the design document would mean they never get formally tested.
+
+**Why D is wrong:** Non-functional requirements absolutely can and do generate test cases — performance tests, accessibility tests, and usability tests all verify non-functional requirements. The issue here is specificity, not requirement type.
 
 ---
 
-**Question 3**
-A software maintenance team uses Kanban to manage incoming bug reports and enhancement requests. The team notices that the "In Review" column on the Kanban board frequently has 8–10 items waiting for review at the same time, creating a bottleneck where items take 5 days to get reviewed. The team decides to set a WIP limit of 3 for the "In Review" stage. What is the primary purpose of this WIP limit?
-*   A) To ensure that no more than three team members are working at any time, reducing labor costs
-*   B) To guarantee that all review work is completed within exactly three business days
-*   C) To prevent the review stage from becoming overloaded, expose the bottleneck, and improve flow throughput
-*   D) To restrict the number of bug reports that can be submitted by users each day
-*   **Correct Answer:** C) To prevent the review stage from becoming overloaded, expose the bottleneck, and improve flow throughput
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* WIP limits constrain the number of work items in a stage, not the number of team members working. They are about flow, not headcount.
-    *   *Why B is incorrect:* WIP limits do not guarantee specific completion times; they create conditions where bottlenecks are visible so they can be resolved, which improves average cycle time.
-    *   *Why D is incorrect:* WIP limits apply to the team's internal workflow stages, not to external submission channels. Users can still submit any number of requests.
-    *   *Why C is correct:* The Kanban principle of WIP limits is to prevent overloading any stage, which forces the team to finish before starting new work, surfaces bottlenecks visually, and improves overall flow by reducing multitasking and queue buildup.
+## Question 2
+
+A project team is preparing the Requirements Traceability Matrix. A QA analyst discovers that three test cases in the test suite have no corresponding requirement ID in the RTM. What does this most likely indicate?
+
+A. The three test cases are regression tests and do not need requirement links.
+B. The test cases may be testing functionality that was not formally required — a potential scope issue.
+C. The RTM is incomplete and the requirements for these test cases must have been accidentally deleted.
+D. These test cases should be promoted to UAT scenarios since they are not covered by requirements.
+
+### Distractor Analysis — Question 2
+
+**Correct answer: B**
+
+Test cases without corresponding requirements are "test orphans." They may indicate that the development team built functionality that was not formally requested — a scope creep signal. They may also indicate that requirements exist but were not documented. Either way, this is a discrepancy that needs investigation.
+
+**Why A is wrong:** Regression tests should still trace to requirements. A regression test verifies that previously working functionality still works — and that functionality must have been required in the first place.
+
+**Why C is wrong:** While RTM maintenance errors are possible, the first interpretation should be that this represents untraced functionality, not a clerical error. Assuming clerical error without investigation would mask a real problem.
+
+**Why D is wrong:** UAT scenarios must also trace to requirements. Promoting untraceable test cases to UAT does not resolve the fundamental problem of missing requirement documentation.
 
 ---
 
-**Question 4**
-In Scrum, which role is responsible for prioritizing the product backlog and making final decisions about which features are included in each sprint?
-*   A) The Scrum Master — who facilitates the process and removes impediments for the team
-*   B) The Development Team — who collectively owns the technical decisions about what to build
-*   C) The Project Manager — who is responsible for budget, schedule, and resource allocation
-*   D) The Product Owner — who represents stakeholder interests and maximizes the value of the product
-*   **Correct Answer:** D) The Product Owner — who represents stakeholder interests and maximizes the value of the product
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* The Scrum Master facilitates the Scrum process and removes impediments; they do not own the backlog or make priority decisions.
-    *   *Why B is incorrect:* The Development Team decides how to build (technical decisions and effort estimates) but does not own backlog prioritization — that authority belongs to the PO.
-    *   *Why C is incorrect:* Scrum does not have a "Project Manager" role; in Scrum teams, PM responsibilities are distributed. Backlog ownership specifically belongs to the Product Owner.
-    *   *Why D is correct:* The Product Owner is the sole authority for backlog prioritization, story acceptance, and scope decisions in Scrum. The Scrum Guide explicitly states that the PO is accountable for maximizing the value of the product through backlog management.
+## Question 3
+
+A test case for a customer registration form includes the expected result: "The account is created." A QA manager asks the BA to revise this expected result. What is the most appropriate revised version?
+
+A. "The account is created successfully without errors."
+B. "A confirmation message displays stating 'Account created for [entered email address]' and a welcome email is sent to the entered email address within 2 minutes."
+C. "The user is redirected to the dashboard and the system does not display any error messages."
+D. "The registration process completes and the user can log in."
+
+### Distractor Analysis — Question 3
+
+**Correct answer: B**
+
+This expected result is specific and observable. It identifies the exact message text, confirms the personalization element (email address in message), and specifies a measurable timing requirement for the follow-up email. Two different testers would agree whether this passed or failed.
+
+**Why A is wrong:** "Successfully without errors" is still vague. What constitutes success? What counts as an error? This version is only marginally better than the original.
+
+**Why C is wrong:** This version is better than the original but still incomplete. It does not specify what appears on the dashboard or confirm that the account data was actually stored correctly.
+
+**Why D is wrong:** "Can log in" is an important validation but this version lacks specificity about what immediate feedback the user receives, making it difficult to confirm the test result at the moment of execution.
 
 ---
 
-**Question 5**
-A BA is transitioning from a Waterfall project to an Agile Scrum project. On the Waterfall project, she produced a comprehensive 80-page Software Requirements Specification (SRS) before design began. On the Scrum project, she is asked to create "just enough" documentation to enable the current sprint's development without over-documenting future sprints. Which Agile principle does this reflect?
-*   A) Test-Driven Development — all code must be preceded by failing test cases before it is written
-*   B) Continuous Integration — all developers merge code changes frequently to detect conflicts early
-*   C) Progressive elaboration of requirements — requirements are detailed incrementally as the team approaches each iteration
-*   D) Timeboxing — all documentation must be completed within a fixed time period regardless of quality
-*   **Correct Answer:** C) Progressive elaboration of requirements — requirements are detailed incrementally as the team approaches each iteration
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Test-Driven Development (TDD) is a coding practice where tests are written before code; it is not about documentation strategy.
-    *   *Why B is incorrect:* Continuous Integration is a development engineering practice about frequent code merges; it is not a requirements documentation principle.
-    *   *Why D is incorrect:* Timeboxing is a scheduling technique (fixed durations for events); it does not describe the "just enough" documentation approach.
-    *   *Why C is correct:* Progressive elaboration (also called "just-in-time requirements") is the Agile approach of detailing requirements incrementally — only elaborating stories to the level needed for the current or next sprint. This avoids the waste of documenting distant future requirements that may change before they are built.
+## Question 4
+
+Which test type is specifically designed to verify that a system modification did not break functionality that was working correctly before the change was made?
+
+A. Boundary value test
+B. Integration test
+C. Negative test
+D. Regression test
+
+### Distractor Analysis — Question 4
+
+**Correct answer: D**
+
+Regression testing re-executes previously passing test cases after a change to confirm that the change did not introduce new defects in existing functionality. It is the standard mechanism for maintaining system stability across iterative changes.
+
+**Why A is wrong:** Boundary value testing targets the edges of valid input ranges. It is a test design technique, not a re-verification mechanism for existing functionality.
+
+**Why B is wrong:** Integration testing verifies that separately built components work together correctly. It focuses on interfaces between modules, not on re-verifying previously stable functionality after a change.
+
+**Why C is wrong:** Negative testing verifies correct handling of invalid inputs. It is a test type based on input class, not on the timing or context of system changes.
+
+---
+
+## Question 5
+
+A BA is setting UAT entry criteria for a payroll system replacement. Which of the following is the most appropriate entry criterion?
+
+A. The business stakeholders have approved the project charter.
+B. All critical and high-priority defects from system testing have been resolved and retested.
+C. The development team has completed at least 50% of the planned sprint backlog.
+D. The BA has reviewed the requirements specification one final time.
+
+### Distractor Analysis — Question 5
+
+**Correct answer: B**
+
+Entry criteria ensure that UAT begins with a stable, minimally defect-free system. Starting UAT with unresolved critical defects wastes participants' time and erodes stakeholder confidence. Requiring resolution of critical and high defects before UAT is the professional standard.
+
+**Why A is wrong:** Project charter approval is a project initiation activity, not a UAT entry criterion. It occurs months before testing.
+
+**Why C is wrong:** Completing 50% of the sprint backlog means the system is only half-built. UAT on an incomplete system produces incomplete and potentially misleading results.
+
+**Why D is wrong:** A final requirements review is a good practice but is not a standard UAT entry criterion. Entry criteria focus on system readiness, not document review activities.
+
+---
+
+## Question 6
+
+During UAT, a business stakeholder discovers that the system calculates loan interest correctly but rounds to two decimal places, while the business process requires rounding to four decimal places for regulatory reporting. No requirement specified the rounding precision. How should the BA classify and respond to this finding?
+
+A. Reject it as out of scope because it was not in the requirements.
+B. Log it as a defect against the existing functional requirement and escalate to the change control process.
+C. Log it as a requirements gap, assess the business impact, and initiate a change request to add the missing requirement.
+D. Defer it to the next release and document it as a known limitation.
+
+### Distractor Analysis — Question 6
+
+**Correct answer: C**
+
+This is a requirements gap — a business need that was not captured during elicitation. The correct response is to document it as missing, assess its business and regulatory impact, and initiate a change request. Since it was not a documented requirement, it is not technically a defect.
+
+**Why A is wrong:** Dismissing a regulatory reporting precision issue as out of scope without investigation is professionally irresponsible and could expose the organization to compliance risk.
+
+**Why B is wrong:** Logging it as a defect against an existing requirement is incorrect because no requirement specified the rounding behavior. A defect is a deviation from a stated requirement; a gap is a missing requirement.
+
+**Why D is wrong:** Deferring a regulatory precision issue to the next release without a business impact assessment is inappropriate. The severity of this finding — regulatory risk — may require it to be resolved before go-live.
+
+---
+
+## Question 7
+
+A BA is reviewing a defect log entry. The defect description reads: "The quarterly revenue chart on the executive dashboard displays a gray background. The approved mockup shows a white background." The defect is marked Severity: Low, Priority: High. What is the most likely explanation for the high priority despite low severity?
+
+A. The tester made an error — a cosmetic defect should always be low priority.
+B. A senior executive or key stakeholder considers the visual appearance significant, elevating the urgency despite minimal functional impact.
+C. The defect is actually high severity because dashboard appearance affects user productivity.
+D. High priority means the defect should be fixed in the next sprint, regardless of severity.
+
+### Distractor Analysis — Question 7
+
+**Correct answer: B**
+
+Severity and priority are independent. A cosmetic defect on a screen viewed by the CEO or executive leadership can legitimately be low severity (it does not affect function) but high priority (the stakeholder wants it fixed immediately). This is a common real-world scenario.
+
+**Why A is wrong:** Severity and priority are explicitly defined as independent dimensions. Asserting that cosmetic defects must always be low priority misunderstands the framework.
+
+**Why C is wrong:** A background color change does not affect user productivity in any meaningful way. This would not justify reclassifying severity.
+
+**Why D is wrong:** This describes what high priority means in terms of scheduling, which is correct, but it does not explain the rationale for the specific low-severity/high-priority combination in this scenario.
+
+---
+
+## Question 8
+
+What is the primary difference between a UAT test scenario and a system test case?
+
+A. UAT test scenarios are written by developers; system test cases are written by BAs.
+B. UAT test scenarios cover end-to-end business processes in business language; system test cases verify technical specifications at a granular level.
+C. UAT test scenarios do not require expected results; system test cases do.
+D. UAT test scenarios are executed only once; system test cases can be executed multiple times.
+
+### Distractor Analysis — Question 8
+
+**Correct answer: B**
+
+UAT scenarios describe complete business workflows in terms end users understand. System test cases are granular, technical, and mapped to specific functional specifications. Both need expected results; the difference is scope, audience, and language level.
+
+**Why A is wrong:** BAs typically write or heavily contribute to both types. UAT scenarios are often written by the BA and reviewed with business stakeholders. System test cases may be written by BAs, QA analysts, or both.
+
+**Why C is wrong:** UAT scenarios absolutely require expected results — without them, there is no objective basis for determining whether UAT passed or failed.
+
+**Why D is wrong:** Both scenario types can and should be re-executed as needed, particularly for regression purposes after defect fixes.
+
+---
+
+## Question 9
+
+The BA documents the following sign-off criterion: "UAT is complete when stakeholders feel comfortable with the system." Why is this criterion problematic?
+
+A. Stakeholder comfort is irrelevant to technical testing outcomes.
+B. The criterion is subjective and cannot produce a consistent, auditable go/no-go decision.
+C. Sign-off criteria should only address defect counts, not stakeholder sentiment.
+D. UAT should not require stakeholder sign-off — that is the sponsor's responsibility.
+
+### Distractor Analysis — Question 9
+
+**Correct answer: B**
+
+"Feel comfortable" has no measurable definition. Different stakeholders will have different thresholds, and the standard cannot be audited or defended objectively. Sign-off criteria must be specific and measurable so that the go/no-go decision is rational and defensible.
+
+**Why A is wrong:** Stakeholder confidence is genuinely relevant to release readiness — but it must be expressed as a measurable condition (e.g., all designated stakeholders have signed the UAT sign-off document), not a vague sentiment.
+
+**Why C is wrong:** Sign-off criteria legitimately include stakeholder sign-off requirements — the problem is not that stakeholders are involved, but that "feel comfortable" is not a measurable standard.
+
+**Why D is wrong:** Business stakeholder sign-off on UAT is standard practice and appropriate. The sponsor is often one of the designated sign-off parties.
+
+---
+
+## Question 10
+
+Which of the following best describes the BA's role during defect retesting after a developer has applied a fix?
+
+A. The BA reruns the original test case to confirm the defect is resolved and verifies no new defects were introduced in adjacent functionality.
+B. The BA writes a new test case to replace the original test case that caught the defect.
+C. The BA closes the defect in the tracking system without re-executing any tests, trusting the developer's confirmation.
+D. The BA escalates the defect to the project manager for retesting authorization before any verification occurs.
+
+### Distractor Analysis — Question 10
+
+**Correct answer: A**
+
+After a fix is applied, the BA or QA tester reruns the original test case to confirm resolution, then performs a targeted check of adjacent functionality (smoke regression) to catch any regression introduced by the fix. This is the standard retesting process.
+
+**Why B is wrong:** The original test case is valid and should be reused. Writing a new test case for every fix would create test suite bloat and lose the direct traceability to the original defect and requirement.
+
+**Why C is wrong:** Closing a defect without retesting defeats the purpose of defect tracking. Developer confirmation is not a substitute for independent verification.
+
+**Why D is wrong:** Retesting authorization does not require a project manager escalation as a standard step. The BA or QA team has standing authority to retest resolved defects as part of normal workflow.
+
+---
+
+*Module 14 Quiz | CIS-3312 Systems Analysis and Design | Texas Wesleyan University*

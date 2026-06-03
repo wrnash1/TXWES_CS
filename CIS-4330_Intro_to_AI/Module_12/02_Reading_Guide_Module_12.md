@@ -1,50 +1,167 @@
 # Reading Guide: Module 12 - AI in Business: Use Cases and ROI
-## Course: CIS-4330_Intro_to_AI (AI-900 (Microsoft Azure AI Fundamentals))
+
+## Course: CIS-4330 Introduction to AI | Texas Wesleyan University
+
+**AI-900 Domain:** Describe AI workloads and considerations (15-20%)
 
 ---
 
-### Introduction
-Welcome to **Module 12 - AI in Business: Use Cases and ROI**! This module examines how organizations deploy AI to solve real business problems — from automating repetitive tasks to personalizing customer experiences — and how decision-makers evaluate the return on investment (ROI) of AI initiatives. Understanding practical AI applications and the business value they deliver is a tested knowledge area on the **AI-900 (Microsoft Azure AI Fundamentals)** exam.
+## Overview
 
-As a student, you will also explore the six principles of Microsoft's Responsible AI framework in greater depth, learning how each principle maps to real organizational accountability structures and business governance requirements. Complete the glossary and checklist before beginning the lab.
-
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **AI workload categories (prediction, classification, anomaly detection, knowledge mining)**: The five Azure AI workload types tested on AI-900 are: machine learning (prediction and classification from data), computer vision (image and video analysis), natural language processing (text and speech understanding), conversational AI (bots and virtual assistants), and anomaly detection (identifying unusual patterns in time-series data). Business use cases map to these categories — for example, a fraud detection system maps to anomaly detection; a document search system maps to knowledge mining via Azure Cognitive Search.
-*   **Return on Investment (ROI) in AI projects**: A business metric that compares the financial benefit of an AI solution against its total cost (data preparation, model development, infrastructure, maintenance, and change management). Common AI ROI drivers include: reduced labor costs from automation, improved accuracy over manual processes, faster decision-making, and new revenue from personalized product recommendations. The exam tests awareness that AI projects have upfront costs and ongoing operational costs that must be weighed against measurable business outcomes.
-*   **Microsoft's Responsible AI principles — Inclusiveness and Accountability**: Inclusiveness means AI systems should be designed to serve all people, including those with disabilities or from underrepresented groups, using techniques such as accessible UI design and diverse training data. Accountability means that humans — not AI systems — are ultimately responsible for AI decisions, and organizations must establish governance structures, audit processes, and redress mechanisms to ensure oversight.
-*   **Anomaly detection**: A machine learning technique that identifies data points, events, or observations that deviate significantly from an expected pattern in a time-series or dataset. Azure Anomaly Detector is a Cognitive Service that applies this technique to business metrics (e.g., server CPU load, sales volume, sensor readings) and flags unusual spikes or drops automatically without requiring labeled training data.
+This reading guide covers AI business use case categories, the build-versus-buy decision framework, AI ROI measurement, common Azure AI use case patterns, and AI adoption maturity. These topics appear in AI-900 scenario questions that require matching a business need to the appropriate AI approach or Azure service. Complete the study checklist before the lab activity.
 
 ---
 
-### 2. Certification Exam Tips
-*   **AI-900 Focus Area:** The exam presents business scenarios and asks which Azure AI service or workload type applies. Practice these mappings: "monitor server telemetry for unusual spikes" → **Azure Anomaly Detector** (anomaly detection workload). "Search documents and extract key information" → **Azure Cognitive Search with AI enrichment** (knowledge mining). "Predict customer churn from historical data" → **Azure Machine Learning** (supervised classification). "Generate product descriptions from keywords" → **Azure OpenAI Service** (generative AI). Recognizing the correct workload category from a business description is one of the most common AI-900 question patterns.
-*   **Common AI-900 Trap:** Students often confuse **Azure Anomaly Detector** (detects anomalies in time-series data — univariate or multivariate) with **Azure Monitor** (monitors Azure infrastructure health and alerts on threshold rules). Anomaly Detector uses ML to learn expected patterns and flag deviations intelligently. Azure Monitor uses static threshold rules. If a scenario describes "automatically learning what normal looks like and flagging deviations," the answer is Anomaly Detector, not Azure Monitor.
-*   **Study Resource:** The Microsoft Learn module [Fundamentals of anomaly detection](https://learn.microsoft.com/en-us/training/modules/fundamentals-anomaly-detection/) covers Azure Anomaly Detector capabilities and use cases tested directly on AI-900. It is free and includes a hands-on exercise with real time-series data. A broader business context module, [Identify principles and practices for responsible AI](https://learn.microsoft.com/en-us/training/modules/responsible-ai-principles/), covers how Microsoft's six Responsible AI principles apply in enterprise deployment scenarios.
+## Section 1: Core Vocabulary
+
+**AI workload**
+A category of business task that AI can perform or support. Common workloads: document processing, customer service, predictive analytics, image analysis, speech processing, anomaly detection.
+
+**Automation**
+An AI application category where AI performs tasks previously done by humans, reducing cost and increasing throughput. Example: extracting invoice fields with Azure Document Intelligence rather than manual data entry.
+
+**Enhancement (AI-assisted)**
+An AI application category where AI augments human work rather than replacing it. Example: a radiologist using AI-flagged scan regions to prioritize review, not to replace diagnosis.
+
+**Insights**
+An AI application category where AI extracts actionable patterns from data at a scale humans cannot match. Example: customer churn prediction from behavioral signals.
+
+**Build vs buy (in AI)**
+The decision between using a prebuilt Azure AI service versus building a custom model. Prebuilt services are faster but less flexible; custom models require training data but can address domain-specific requirements.
+
+**ROI (Return on Investment)**
+A measure of financial return relative to cost. In AI: (Value Realized minus Investment Cost) divided by Investment Cost, expressed as a percentage.
+
+**Data drift**
+The phenomenon where the statistical properties of production data change over time, degrading a model's performance. Requires ongoing monitoring and periodic retraining.
+
+**Model drift**
+A broader term for model performance degradation in production, encompassing data drift and concept drift (when the underlying relationship between features and target changes).
+
+**Baseline metric**
+A measurement of current performance before an AI system is deployed, used to calculate the improvement (and thus the value) the AI system provides.
+
+**MLOps**
+Machine Learning Operations. The set of practices for reliably deploying, monitoring, and maintaining ML models in production. Analogous to DevOps for software engineering.
+
+**AI maturity model**
+A framework describing stages of organizational AI adoption, from initial experimentation to AI-native operations.
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the chapters on AI applications, business intelligence, and knowledge representation in the OER Textbook: [Artificial Intelligence: Foundations of Computational Agents](http://artint.info/). This freely available textbook by Poole and Mackworth provides theoretical grounding in how AI systems are applied to real-world decision-making scenarios, which supports the business use case analysis covered in this module.
-*   **Required Video:** Watch the AI business applications and anomaly detection segment in the official AI-900 preparation playlist: [Microsoft Azure AI Fundamentals Complete Course](https://www.youtube.com/watch?v=s0H3G50vGgU). This video maps real enterprise AI use cases to specific Azure services and covers how organizations measure the ROI and governance requirements of AI deployments.
+## Section 2: Comparison Tables
+
+### Table 1: AI Use Case Categories
+
+| Category | Definition | Value Proposition | Azure Service Example |
+|---|---|---|---|
+| Automation | AI replaces human task execution | Lower cost, faster speed, 24/7 availability | Document Intelligence, CLU bot |
+| Enhancement | AI augments human workers | Higher quality or volume per worker | Azure ML model assisting clinician |
+| Insights | AI extracts patterns from data | Evidence-based decisions not previously possible | Azure ML churn prediction |
+| New products | AI enables entirely new offerings | New revenue or competitive differentiation | Azure OpenAI-powered SaaS product |
+
+### Table 2: Build vs Buy Decision Framework
+
+| Scenario | Recommended Approach | Reason |
+|---|---|---|
+| Standard task (sentiment analysis, OCR, translation) | Use Azure Cognitive Services (prebuilt) | No training data needed; deployed in days |
+| Domain-specific categories not in prebuilt models | Build custom model (Azure ML / Custom Vision) | Prebuilt models cannot recognize proprietary patterns |
+| General language task (summarization, Q&A, drafting) | Azure OpenAI with prompt engineering | LLM handles diverse language tasks with prompting |
+| Proprietary training data available; performance critical | Custom Azure ML model | Training data exists; control needed over model |
+| No labeled data available; need rapid deployment | Azure Cognitive Services or Azure OpenAI | Prebuilt services require no training data |
+
+### Table 3: AI Investment Cost Components
+
+| Cost Type | Description | Notes |
+|---|---|---|
+| Development and integration | Engineering work to build, train, and connect AI to business systems | Typically highest upfront cost |
+| Data collection and labeling | Acquiring, cleaning, and annotating training data | Often underestimated; critical for custom models |
+| Azure compute | Training jobs, inference endpoints, storage | Ongoing; scales with usage |
+| Maintenance and retraining | Monitoring performance; retraining as data drifts | Ongoing; often underbudgeted |
+| Change management | Training users, updating processes, governance setup | Organizational, not technical |
+
+### Table 4: AI ROI Value Components
+
+| Value Type | How to Measure | Example |
+|---|---|---|
+| Labor cost savings | FTEs displaced or redirected x fully loaded cost | Invoice processing bot saves 8 FTE-equivalent hours per day |
+| Quality improvement | Error rate reduction x cost per error | Fraud model increases detection rate from 60% to 88% |
+| Speed improvement | Time reduction x value per time unit | Loan approval time from 3 days to 4 hours |
+| New revenue | Incremental revenue from AI-enabled products | Personalization engine increases conversion rate by 3% |
+| Cost avoidance | Cost of prevented failures or violations | Predictive maintenance prevents unplanned factory downtime |
+
+### Table 5: Common AI Use Case Patterns and Azure Services
+
+| Business Need | AI Pattern | Azure Service |
+|---|---|---|
+| Extract data from invoices, forms, contracts | Document processing | Azure AI Document Intelligence |
+| Answer customer questions automatically | FAQ chatbot | Azure AI Language Question Answering |
+| Route customer requests to correct department | Intent classification | Azure AI Language CLU |
+| Predict customer churn | Binary classification | Azure Machine Learning |
+| Predict next month's demand | Regression / time series | Azure Machine Learning AutoML |
+| Detect unusual transactions | Anomaly detection | Azure Anomaly Detector |
+| Quality control image inspection | Custom image classification | Azure Custom Vision |
+| Transcribe customer call audio | Speech-to-text | Azure AI Speech |
+| Analyze customer review sentiment | Sentiment analysis | Azure AI Language |
+| Generate product descriptions | Text generation | Azure OpenAI (GPT-4) |
+| Recommend products to users | Personalization | Azure Personalizer |
+| Search documents by meaning | Knowledge mining | Azure AI Search + Azure OpenAI |
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Analyze a dataset for demographic bias indicators**: Load a classification model's predictions stratified by demographic group using Pandas, compute accuracy and false positive rates per group, and compare them to identify whether the model's error rate differs significantly across groups — the key diagnostic for a Fairness violation.
-*   **Detect anomalies in a time-series using statistical thresholds**: Plot a synthetic time-series dataset using Matplotlib, compute a rolling mean and standard deviation, and flag observations beyond 2 standard deviations as anomalies — simulating the core logic used by Azure Anomaly Detector before applying ML-based detection.
-*   **Document model lineage and limitations in a model card**: Write a structured text summary documenting the model's training dataset, performance metrics, known failure modes, and intended use boundaries — practicing the Transparency and Accountability documentation required in responsible AI deployment workflows.
+## Section 3: AI Adoption Maturity Model
+
+Organizations adopt AI progressively across four stages:
+
+**Stage 1 — Experimentation:** Individual projects using prebuilt services or open-source tools. No formal governance. Proof-of-concept focus. No production deployments.
+
+**Stage 2 — Operationalization:** First production AI deployments. Beginning MLOps practices: model versioning, automated deployment, performance monitoring. Integration with business processes.
+
+**Stage 3 — Scaling:** Multiple AI systems deployed across business units. Shared data platform. Formal responsible AI governance. Centralized AI platform team supporting multiple product teams.
+
+**Stage 4 — AI-Native:** AI embedded in core business processes. Organization-wide data literacy. Continuous learning loops where production feedback automatically improves models.
 
 ---
 
-### 3. Study Checklist
-*   [ ] Read the glossary terms and memorize their definitions.
-*   [ ] Read the chapters on AI applications and business intelligence in [Artificial Intelligence: Foundations of Computational Agents](http://artint.info/).
-*   [ ] Watch the video lecture on AI in Business and Anomaly Detection in [Microsoft Azure AI Fundamentals Complete Course](https://www.youtube.com/watch?v=s0H3G50vGgU).
-*   [ ] Review the commands outlined in the lab instructions.
-*   [ ] Proceed to the weekly hands-on lab activity.
+## Section 4: AI-900 Exam Tips
+
+1. AI use case categories (automation, enhancement, insights, new products) appear in scenario questions asking what type of AI value a described application creates. Know all four with examples.
+
+2. The build-versus-buy decision is tested through scenarios. When a scenario describes a standard task (sentiment analysis, OCR), the answer is prebuilt Azure Cognitive Services. When it describes proprietary categories requiring custom training, the answer is Azure ML or Custom Vision.
+
+3. Baseline metrics are essential to ROI measurement. If a scenario asks how an organization knows its AI system created value, the answer requires a pre-deployment baseline measurement.
+
+4. Data drift and model drift are why AI models require ongoing monitoring and retraining. When a scenario describes a model that degraded in performance over time, the answer involves data drift.
+
+5. Azure Document Intelligence (formerly Form Recognizer) is the service for extracting structured data from unstructured documents. When a scenario describes processing invoices, receipts, or forms at scale, this is the answer.
+
+6. Azure Personalizer is the service for real-time personalization — recommending the next best action or content item for an individual user based on context and behavior.
+
+7. MLOps encompasses the practices for deploying, monitoring, and maintaining ML models in production. It includes automated retraining, A/B testing model versions, and performance alerting.
+
+8. Human-in-the-loop (HITL) is appropriate when AI systems make high-stakes decisions. The AI reduces workload; the human makes the final call. This is the appropriate design for medical diagnosis AI, credit denial AI, and criminal justice AI.
+
+---
+
+## Section 5: Required Reading
+
+**Microsoft Learn — Introduction to AI technology for business leaders:**
+learn.microsoft.com/en-us/training/paths/ai-technology-for-business-leaders/
+
+**Microsoft Learn — Identify common AI workloads:**
+learn.microsoft.com/en-us/training/modules/get-started-ai-fundamentals/
+
+---
+
+## Section 6: Study Checklist
+
+- [ ] Name and define all four AI use case categories with one example each.
+- [ ] Explain the build-versus-buy decision for AI using Table 2.
+- [ ] List the five cost components of an AI investment.
+- [ ] Explain why baseline metrics are required to calculate AI ROI.
+- [ ] Match five business needs from Table 5 to their Azure services without referring to notes.
+- [ ] Explain data drift and why it requires ongoing model maintenance.
+- [ ] Describe the four stages of the AI maturity model.
+- [ ] Complete the Module 12 quiz.
+- [ ] Complete the Module 12 lab.
+- [ ] Post initial discussion by Wednesday 11:59 PM and respond to two peers by Sunday 11:59 PM.

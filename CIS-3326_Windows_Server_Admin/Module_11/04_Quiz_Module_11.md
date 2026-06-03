@@ -1,88 +1,307 @@
-# Quiz: Module 11 - Windows Server Security
+# Quiz: Module 11 — Windows Server Security: BitLocker, EFS, and Firewall
 
-## Course: CIS-3326_Windows_Server_Admin (3326_Windows_Server_Admin - Microsoft Windows Server Administration (Active Directory))
+## Course: CIS-3326 Windows Server Administration
 
----
+## Texas Wesleyan University | Professor Nash
 
-### Question 1
-
-A server stores highly sensitive financial data and must have its OS volume encrypted so that the server cannot boot without presenting a PIN in addition to using the TPM chip. Which BitLocker configuration satisfies this requirement?
-
-A) TPM-only mode, which uses the TPM chip alone to release the volume encryption key automatically at boot without user interaction.
-B) TPM + PIN mode, which requires the TPM chip and a user-supplied PIN at pre-boot, preventing unattended boot without both factors.
-C) Password-only mode, which replaces the TPM entirely and prompts for a BitLocker password on every boot.
-D) USB Startup Key mode, which stores the encryption key on a USB drive inserted at boot and requires no TPM at all.
-
-* **Correct Answer:** B) TPM + PIN mode, which requires the TPM chip and a user-supplied PIN at pre-boot, preventing unattended boot without both factors.
-* **Distractor Analysis:**
-  * *Why A is incorrect:* TPM-only mode releases the volume key automatically if platform measurements match — no PIN or user interaction is required. The server would boot unattended, which does not satisfy the requirement for a PIN challenge.
-  * *Why C is incorrect:* Password-only mode does not use the TPM at all and is not available for OS volumes in standard BitLocker configurations. TPM + PIN combines hardware attestation with a knowledge factor, providing stronger assurance.
-  * *Why D is incorrect:* USB Startup Key mode stores the key externally on a removable USB drive rather than combining TPM hardware binding with a PIN. It introduces a physical token dependency and does not meet the TPM + PIN requirement described in the scenario.
+**Certification Alignment:** Microsoft Windows Server Administration
 
 ---
 
-### Question 2
+## Instructions
 
-A Windows Server administrator needs to encrypt a single sensitive folder on a file server so that only the owning user account can decrypt the files, even if another administrator logs on locally. Which Windows feature provides per-file, per-user encryption at the NTFS level?
-
-A) BitLocker Drive Encryption, which encrypts the entire volume so all files are protected regardless of which user account reads them.
-B) Encrypting File System (EFS), which encrypts individual files and folders using the user's certificate so only the owner and designated recovery agents can decrypt them.
-C) Windows Defender Credential Guard, which isolates credential secrets in a virtualization-based security enclave.
-D) NTFS Deny permissions configured for all other accounts, which prevent other users from reading files even when logged in as a local administrator.
-
-* **Correct Answer:** B) Encrypting File System (EFS), which encrypts individual files and folders using the user's certificate so only the owner and designated recovery agents can decrypt them.
-* **Distractor Analysis:**
-  * *Why A is incorrect:* BitLocker encrypts an entire volume and protects data at rest when the drive is removed from the server, but once the volume is unlocked at boot all authenticated users — including other admins — can read unencrypted file contents. It does not provide per-user file-level access control.
-  * *Why C is incorrect:* Credential Guard protects NTLM hashes and Kerberos tickets in a virtualized security boundary — it is an identity protection feature, not a file encryption mechanism.
-  * *Why D is incorrect:* A local Administrator account holds SeBackupPrivilege and SeRestorePrivilege and can bypass NTFS Deny permissions to access file contents. NTFS permissions alone cannot prevent a local administrator from reading files the way EFS encryption does.
+Select the best answer for each question. Each question is worth 10 points.
+Review your Reading Guide and video notes before beginning.
 
 ---
 
-### Question 3
+## Question 1
 
-A Windows Server administrator creates an inbound firewall rule in Windows Defender Firewall with Advanced Security (WFAS) to allow TCP port 3389 for the IT Admins security group. A second rule explicitly blocks TCP port 3389 for all users. Both rules are set at the same priority level. Which rule takes effect for members of the IT Admins group?
+A Windows Server administrator needs to allow inbound TCP traffic on port 8443
+for a custom HTTPS application, but only when the server is connected to the
+corporate domain network. Which PowerShell command creates this rule correctly?
 
-A) The Allow rule takes effect because Allow rules always override Block rules in WFAS when the same port is targeted.
-B) The Block rule takes effect because Block rules take precedence over Allow rules in WFAS regardless of group membership.
-C) Neither rule applies; WFAS reverts to the default inbound behavior and drops the connection due to the conflict.
-D) The most recently created rule takes effect because WFAS processes rules in creation order with last-write-wins semantics.
+A) `New-NetFirewallRule -DisplayName "HTTPS App" -Direction Outbound -Protocol TCP -LocalPort 8443 -Action Allow -Profile Domain`
 
-* **Correct Answer:** B) The Block rule takes effect because Block rules take precedence over Allow rules in WFAS regardless of group membership.
-* **Distractor Analysis:**
-  * *Why A is incorrect:* WFAS does not give Allow rules automatic precedence over Block rules. The evaluation order in WFAS is: authenticated bypass rules first, then Block rules, then Allow rules — Block wins over Allow at the same precedence level.
-  * *Why C is incorrect:* WFAS does not revert to a neutral default when rules conflict; the explicit Block rule is the matching active rule and it drops the connection. The default inbound drop behavior only applies when no matching rule exists at all.
-  * *Why D is incorrect:* WFAS does not use creation-order or last-write-wins semantics. Rule type (Block vs. Allow) and rule priority determine precedence, with Block rules taking priority over Allow rules at equivalent priority settings.
+B) `New-NetFirewallRule -DisplayName "HTTPS App" -Direction Inbound -Protocol TCP -LocalPort 8443 -Action Allow -Profile Domain`
 
----
+C) `New-NetFirewallRule -DisplayName "HTTPS App" -Direction Inbound -Protocol UDP -LocalPort 8443 -Action Allow -Profile Any`
 
-### Question 4
+D) `Add-NetFirewallRule -DisplayName "HTTPS App" -Port 8443 -Action Allow -Profile Domain`
 
-An organization's servers are deployed in a data center with no on-site staff. The servers use BitLocker with TPM + PIN mode. After a power outage all servers need to reboot, but no one is available to type the PIN at each server console. Which BitLocker feature allows these servers to boot automatically when connected to the corporate network, while still requiring the PIN for any boot that occurs off-network?
-
-A) BitLocker Recovery Password stored in Active Directory, which automatically supplies the recovery password to servers on the corporate network at boot time.
-B) BitLocker Network Unlock, which automatically releases the volume encryption key when the server PXE-boots on a trusted corporate network segment, eliminating the pre-boot PIN requirement on that network.
-C) USB Startup Key mode, which stores the PIN equivalent on a USB drive that can be pre-inserted at all server locations.
-D) TPM-only mode, which removes the PIN requirement permanently so servers always boot unattended regardless of network location.
-
-* **Correct Answer:** B) BitLocker Network Unlock, which automatically releases the volume encryption key when the server PXE-boots on a trusted corporate network segment, eliminating the pre-boot PIN requirement on that network.
-* **Distractor Analysis:**
-  * *Why A is incorrect:* BitLocker Recovery Passwords stored in AD are a break-glass recovery mechanism used when normal unlock methods fail. They are not automatically supplied to servers over the network — an administrator must manually retrieve and enter the 48-digit recovery key.
-  * *Why C is incorrect:* USB Startup Key distributes a physical token to server locations, which requires manual insertion before each boot. It does not provide automatic unlocking and does not eliminate the need for on-site staff at reboot time.
-  * *Why D is incorrect:* Switching to TPM-only mode removes PIN protection entirely and permanently, including when the server is booted off the corporate network. This eliminates the security control rather than providing context-aware automatic unlock.
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: `-Direction Outbound` would control traffic leaving the
+    server, not arriving. A web application listening on port 8443 needs an
+    Inbound rule.
+  - Why C is incorrect: `-Protocol UDP` is incorrect for an HTTPS application,
+    which uses TCP. Using `-Profile Any` would also allow the rule on Public and
+    Private profiles, not just Domain.
+  - Why D is incorrect: `Add-NetFirewallRule` is not a valid PowerShell cmdlet.
+    The correct cmdlet is `New-NetFirewallRule`.
 
 ---
 
-### Question 5
+## Question 2
 
-A company's IT policy requires that if an employee's EFS private key is lost or the employee leaves the organization, a designated administrator must still be able to decrypt the employee's EFS-protected files. Which EFS configuration supports this organizational recovery capability?
+A Windows Server has three network adapters: one connected to the corporate
+LAN (which can reach a domain controller), one connected to a Wi-Fi hotspot,
+and one connected to a hotel network. Which firewall profiles are active on
+each adapter?
 
-A) Configure BitLocker on the same volume so the BitLocker recovery key can be used to decrypt any EFS-encrypted file when the original EFS key is unavailable.
-B) Configure a Data Recovery Agent (DRA) by issuing an EFS recovery certificate to a designated administrator account and applying it via Group Policy so the DRA certificate is embedded in every subsequently encrypted file.
-C) Enable Volume Shadow Copy Service on the EFS volume so previous versions of encrypted files can be opened without the original EFS key.
-D) Enable EFS key archival in Certificate Services so the user's private key is automatically backed up to the CA database and can be retrieved by any domain administrator on demand.
+A) Domain profile on all three, because the server is domain-joined.
 
-* **Correct Answer:** B) Configure a Data Recovery Agent (DRA) by issuing an EFS recovery certificate to a designated administrator account and applying it via Group Policy so the DRA certificate is embedded in every subsequently encrypted file.
-* **Distractor Analysis:**
-  * *Why A is incorrect:* BitLocker and EFS operate at different layers. A BitLocker recovery key unlocks the volume but does not decrypt individual EFS-encrypted files within that volume; EFS decryption still requires the user's private key or a configured DRA private key.
-  * *Why C is incorrect:* Volume Shadow Copies capture point-in-time snapshots of files, but snapshots of EFS-encrypted files remain encrypted with the same user certificate. Accessing a previous version does not bypass EFS encryption — the private key is still required to read the file contents.
-  * *Why D is incorrect:* Certificate Services key archival must be explicitly enabled on the certificate template and enrolled by the user. It is not enabled by default for EFS certificates. The DRA is the standard Group Policy-driven mechanism recommended for enterprise EFS recovery and applies to all users automatically once configured.
+B) Domain profile on the corporate LAN adapter; Public profile on the Wi-Fi
+hotspot and hotel network adapters.
+
+C) Domain profile on the corporate LAN adapter; Private profile on the Wi-Fi
+hotspot; Public profile on the hotel network.
+
+D) The administrator must manually assign profiles to each adapter through the
+Network and Sharing Center.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: The Domain profile activates only on the adapter that
+    can reach a domain controller. Other adapters use Public or Private based
+    on network type, not domain membership.
+  - Why C is incorrect: Without the user designating the Wi-Fi hotspot as a
+    Private network, Windows defaults to Public for any unknown or unverified
+    network. Private profile requires explicit trust designation.
+  - Why D is incorrect: Windows automatically selects profiles based on network
+    detection. Administrators do not manually assign profiles per adapter.
+
+---
+
+## Question 3
+
+A company's IT security policy requires all server hard drives to be protected
+so that if a drive is physically removed and connected to another computer, the
+data cannot be read. Which Windows Server feature satisfies this requirement?
+
+A) EFS (Encrypting File System), because it encrypts files individually so they
+cannot be opened by other users.
+
+B) NTFS permissions, because the access control list prevents unauthorized users
+from reading the drive's content.
+
+C) BitLocker Drive Encryption, because it encrypts the entire volume and the
+decryption key is bound to the server's TPM.
+
+D) Windows Defender Firewall, because blocking inbound connections prevents
+attackers from accessing drive contents over the network.
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why A is incorrect: EFS protection depends on the certificate store. If the
+    drive is attached to another OS, EFS is not designed to protect against
+    physical drive removal the way BitLocker is.
+  - Why B is incorrect: NTFS permissions are enforced by the Windows kernel. If
+    the drive is attached to another OS or accessed through a bootable
+    environment, NTFS permissions are bypassed entirely.
+  - Why D is incorrect: Windows Defender Firewall protects against network-
+    based attacks. It has no effect on physical drive theft.
+
+---
+
+## Question 4
+
+An administrator is preparing to apply a BIOS firmware update to a BitLocker-
+protected server. If they do not take any action before the update, what will
+happen after the server restarts?
+
+A) BitLocker will disable automatically to allow the BIOS update to complete.
+
+B) The server will boot normally because BitLocker TPM-only mode does not check
+BIOS integrity.
+
+C) The TPM will detect the BIOS change and refuse to release the BitLocker key,
+requiring the 48-digit recovery key to unlock the drive.
+
+D) BitLocker will re-encrypt the drive with a new key after detecting the
+firmware change.
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why A is incorrect: BitLocker does not automatically disable for firmware
+    updates. The administrator must run `Suspend-BitLocker` before the update.
+  - Why B is incorrect: The TPM measures the BIOS and boot environment as part
+    of the Platform Configuration Registers. A BIOS change alters PCR values,
+    causing the TPM to refuse to release the sealed key.
+  - Why D is incorrect: BitLocker does not automatically re-encrypt with a new
+    key. The original key cannot be retrieved, so the drive becomes inaccessible
+    without the recovery key.
+
+---
+
+## Question 5
+
+A user encrypts a file using EFS and then leaves the organization. The IT
+department needs to access the contents of that file. The user's account has
+been deleted and their certificate store is no longer available. Under which
+condition can the IT department still access the file?
+
+A) The IT department can always access EFS-encrypted files by using the local
+Administrator account, which bypasses EFS encryption.
+
+B) The file can be accessed if a Data Recovery Agent (DRA) certificate was
+configured in Group Policy before the file was encrypted.
+
+C) EFS-encrypted files can be decrypted by resetting the user's password in
+Active Directory and logging in as that user.
+
+D) The file can be recovered using Windows Server Backup if a backup was taken
+after the file was encrypted.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: EFS encryption is not bypassed by the local
+    Administrator or any administrator account. Even a Domain Admin cannot
+    open an EFS-encrypted file without the correct certificate private key
+    or a DRA.
+  - Why C is incorrect: Resetting the password does not recover the EFS
+    certificate private key. The private key is tied to the original user
+    profile and certificate.
+  - Why D is incorrect: Windows Server Backup backs up encrypted files in their
+    encrypted state. Restoring the backup does not decrypt the files — the same
+    certificate is still required after restoration.
+
+---
+
+## Question 6
+
+A domain administrator runs `cipher /u /n` on a server. What does this command
+display?
+
+A) All EFS certificates stored in the current user's certificate store, along
+with their thumbprints and expiration dates.
+
+B) All EFS-encrypted files accessible to the current user, listed without
+updating the encryption keys.
+
+C) All users on the domain who have currently open EFS-encrypted files.
+
+D) All volumes on the server that are not encrypted with BitLocker.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: The cipher command with `/u /n` operates on files, not
+    certificates. For certificate information, use `Get-Item Cert:\CurrentUser\My`.
+  - Why C is incorrect: `cipher /u /n` reports files accessible to the user
+    running the command, not a domain-wide scan of other users' activity.
+  - Why D is incorrect: The cipher command is specific to EFS file encryption.
+    BitLocker status is reported by `Get-BitLockerVolume`.
+
+---
+
+## Question 7
+
+An administrator needs to temporarily disable BitLocker protection on a server
+drive before applying a firmware update, without fully decrypting the volume.
+Which command is correct?
+
+A) `Disable-BitLocker -MountPoint "C:"`
+
+B) `Stop-BitLocker -MountPoint "C:" -Suspend`
+
+C) `Suspend-BitLocker -MountPoint "C:"`
+
+D) `Set-BitLockerVolume -MountPoint "C:" -ProtectionStatus Suspended`
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why A is incorrect: `Disable-BitLocker` fully decrypts the volume, which
+    takes significant time and removes all protection permanently until
+    re-enabled. For a temporary maintenance window, `Suspend-BitLocker` is
+    the correct command.
+  - Why B is incorrect: `Stop-BitLocker` is not a valid BitLocker PowerShell
+    cmdlet. The correct cmdlet for temporary suspension is `Suspend-BitLocker`.
+  - Why D is incorrect: `Set-BitLockerVolume` is not a valid BitLocker cmdlet.
+    BitLocker volume settings are managed through `Enable-BitLocker`,
+    `Disable-BitLocker`, `Suspend-BitLocker`, and `Resume-BitLocker`.
+
+---
+
+## Question 8
+
+An administrator creates an Allow rule for TCP port 443, but a Block rule for
+the same port and protocol already exists. What happens when traffic arrives
+on port 443?
+
+A) The Allow rule takes precedence because it was created more recently.
+
+B) The Block rule takes precedence because Block rules always override Allow
+rules in Windows Defender Firewall.
+
+C) Windows prompts the administrator to choose which rule applies.
+
+D) Both rules are applied simultaneously, resulting in traffic being allowed
+and logged.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Rule precedence in WFAS is based on action type, not
+    creation order. Block rules override Allow rules regardless of when they
+    were created.
+  - Why C is incorrect: Windows Defender Firewall does not prompt the
+    administrator at traffic arrival time. Rules are evaluated automatically.
+  - Why D is incorrect: When conflicting rules exist, WFAS applies the more
+    restrictive rule (Block) rather than applying both simultaneously.
+
+---
+
+## Question 9
+
+A user reports that they cannot open a file they own that was previously
+encrypted with EFS. They recently had their computer replaced and their user
+profile was recreated. What is the most likely cause?
+
+A) EFS encryption was automatically removed when the computer was replaced
+because EFS is a machine-specific feature.
+
+B) The user's EFS private key certificate was not migrated to the new computer,
+so Windows cannot decrypt the file encryption key.
+
+C) EFS files cannot be accessed after a computer replacement because the file
+system metadata is invalidated.
+
+D) The file is now read-only because EFS encryption prevents modification after
+the encrypting computer is decommissioned.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: EFS encryption is tied to the user's certificate, not
+    the machine. The file remains encrypted; the issue is the missing private
+    key certificate on the new computer.
+  - Why C is incorrect: EFS metadata travels with the file. The issue is the
+    absence of the private key needed to decrypt the FEK stored in the DDF,
+    not invalid metadata.
+  - Why D is incorrect: EFS-encrypted files do not become read-only when the
+    encrypting computer is decommissioned. The file is inaccessible (not
+    read-only) without the correct private key.
+
+---
+
+## Question 10
+
+A security administrator wants to verify that Windows Defender Firewall is
+blocking all inbound traffic by default on the Domain profile. Which PowerShell
+command confirms this?
+
+A) `Test-NetConnection -ComputerName localhost -Port 0`
+
+B) `Get-NetFirewallProfile -Profile Domain | Select-Object Name, DefaultInboundAction`
+
+C) `Get-NetFirewallRule -Profile Domain | Where-Object {$_.Action -eq "Block"}`
+
+D) `Get-NetFirewallSetting | Select-Object DefaultInboundAction`
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: `Test-NetConnection` tests whether a TCP connection can
+    be established — it does not report firewall profile configuration settings.
+  - Why C is incorrect: This lists explicit Block rules, not the profile's
+    default action for unmatched traffic. `Get-NetFirewallProfile` is the
+    correct cmdlet for per-profile default behavior.
+  - Why D is incorrect: `Get-NetFirewallSetting` retrieves global firewall
+    settings, not per-profile default actions.

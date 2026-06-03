@@ -1,211 +1,262 @@
-# Video Script — Module 02, Part 2
+# Video Script: Module 02 — IAM and Access Control in GCP (Part 2 of 2)
 
-## CIS-4329: Google Cloud Platform | Texas Wesleyan University
+## Course: CIS-4329 Google Cloud Computing
 
-### Topic: IAM — Service Accounts, Conditions, and gcloud Commands
+## Texas Wesleyan University | Professor Nash
 
-### Estimated Duration: 11–13 minutes
+## Estimated Duration: 15 minutes
 
----
-
-## Introduction to Part 2
-
-Welcome back to Module 02. In Part 1 we covered the IAM model — principals, the three categories of roles, and the structure of IAM policies. In Part 2 we are going to focus on service accounts, which are one of the most important and most tested topics on the ACE exam. We will also cover IAM conditions, audit logging, and the gcloud commands you need for the lab.
+## Certification Alignment: Google Cloud Associate Cloud Engineer (ACE)
 
 ---
 
-## Section 1: Service Accounts in Depth
+## Segment 1 — Recap and Agenda (1 minute)
 
-**[SHOW SLIDE: Service account lifecycle diagram — Create, Attach to VM, Use key or metadata server, Audit]**
+Welcome back. In Part 1 we covered IAM fundamentals, role types, policy
+structure, conditions, and service accounts. In Part 2 we cover:
 
-A service account is a special Google identity intended to represent an application or workload, not a human user. When your code running on a Compute Engine VM needs to call the Cloud Storage API, it should not use a human user's credentials. It should authenticate as a service account.
-
-Service accounts serve a dual role in GCP IAM:
-
-- They are a principal — you can grant roles TO a service account, just like a user
-- They are a resource — you can control WHO can use (impersonate) a service account
-
-### Types of Service Accounts
-
-**[SHOW SLIDE: Three columns — User-Managed, Default, Google-Managed]**
-
-There are three types:
-
-User-managed service accounts are ones you create explicitly. Their email format is `SA-NAME@PROJECT-ID.iam.gserviceaccount.com`. You have full control over their lifecycle, keys, and IAM bindings.
-
-Default service accounts are created automatically when you enable certain APIs. The most important one is the Compute Engine default service account: `PROJECT-NUMBER-compute@developer.gserviceaccount.com`. By default, this service account is granted `roles/editor` on the project — which is overly broad and a security concern. Best practice is to disable the default service account and create purpose-built user-managed service accounts instead.
-
-Google-managed service accounts are created by Google to run internal GCP infrastructure services. You generally do not interact with these directly.
-
-### Attaching a Service Account to a VM
-
-**[SHOW CONSOLE: Compute Engine > VM Instances > Create instance > Identity and API access section]**
-
-When you create a Compute Engine VM, you can specify a service account in the "Identity and API access" section. The VM then automatically authenticates as that service account for all GCP API calls made from within the VM. Code running on the VM can retrieve credentials from the instance metadata server at the URL `http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token` without any hardcoded keys.
-
-**[PAUSE — Professor on camera]**
-
-This metadata-server-based authentication is the correct pattern. It is more secure than embedding a key file because there is no key to steal — the credentials are short-lived tokens that the metadata server rotates automatically. The ACE exam will test this pattern repeatedly: when a VM needs to call a GCP API, the answer is always "attach a service account to the VM," not "generate a service account key and put it on the VM."
-
-### Service Account Keys
-
-Service account keys are long-lived JSON credential files that you can download from the Console or generate via gcloud. They allow code anywhere — not just on GCP — to authenticate as a service account.
-
-Keys are a necessary evil in some scenarios: code running outside of GCP (on-premises servers, third-party CI/CD pipelines) sometimes needs them. But they carry significant risk: if a key file is accidentally committed to a public Git repository or stolen from a server, an attacker gains persistent access to your GCP environment until the key is manually rotated.
-
-Best practices for service account keys:
-
-- Do not create keys unless you genuinely cannot use workload identity federation or VM-attached service accounts
-- Rotate keys regularly (every 90 days maximum)
-- Apply the Organization Policy constraint `constraints/iam.disableServiceAccountKeyCreation` to prevent key creation in projects that do not need it
-- Use Secret Manager to store keys if they must exist
+- Workload Identity Federation
+- Cloud Audit Logs
+- Console walkthrough: creating roles, binding policies
+- gcloud CLI commands for IAM
+- ACE exam strategy for IAM questions
 
 ---
 
-## Section 2: The serviceAccountUser Role
+## Segment 2 — Workload Identity Federation (3 minutes)
 
-**[SHOW SLIDE: Diagram showing a developer with serviceAccountUser role being able to attach a service account to a VM]**
+### The Problem with Service Account Keys
 
-There are two important IAM roles related to service account usage:
+The traditional way to authenticate external workloads — workloads running
+outside of GCP — was to create a service account, generate a JSON key file,
+and store that key in the external environment.
 
-`roles/iam.serviceAccountUser` — This role grants the ability to attach a service account to a resource (like a Compute Engine VM). If a developer needs to create a VM that runs as a specific service account, that developer must have `serviceAccountUser` on that service account. Without it, they cannot create the VM with that identity attached.
+This creates real security risks. Key files can be accidentally committed to
+source control, emailed, or stolen. If compromised, the attacker has persistent
+access until the key is manually revoked.
 
-`roles/iam.serviceAccountTokenCreator` — This role grants the ability to generate OAuth tokens and sign blobs for a service account — essentially to impersonate it in API calls. This is a more powerful role and should be granted sparingly.
+### Workload Identity Federation
 
-The ACE exam frequently tests: "A developer cannot create a VM using a specific service account even though they have `roles/compute.instanceAdmin`. Why?" The answer is that they are missing `roles/iam.serviceAccountUser` on the service account.
+Workload Identity Federation (WIF) solves this by allowing external workloads
+to exchange their own identity tokens for short-lived Google Cloud access tokens.
+No service account key file is required.
+
+Supported external identity providers:
+
+- AWS IAM roles
+- Azure Active Directory (Microsoft Entra ID)
+- GitHub Actions
+- Kubernetes clusters (external)
+- Any OIDC-compliant identity provider
+
+How it works:
+
+1. Configure a Workload Identity Pool in GCP linked to your external IdP.
+2. Define attribute mappings and conditions (e.g., only allow tokens from
+   a specific GitHub repository or AWS account).
+3. Grant a service account `roles/iam.workloadIdentityUser` with a condition
+   matching the external identity.
+4. The external workload requests a Google access token by presenting its
+   native credential (AWS role, GitHub OIDC token, etc.).
+5. GCP validates the credential and issues a short-lived access token.
+
+**ACE Exam Tip:** If a question asks how to authenticate an AWS Lambda function
+or a GitHub Actions workflow to GCP without a service account key, the answer
+is Workload Identity Federation.
 
 ---
 
-## Section 3: IAM Conditions
+## Segment 3 — Cloud Audit Logs (3 minutes)
 
-**[SHOW SLIDE: IAM policy binding JSON with a condition block highlighted]**
+### Overview
 
-IAM Conditions allow you to grant a role only when certain attributes are true at the time of the request. Conditions are added directly to policy bindings. Common condition attributes include:
+Cloud Audit Logs record administrative and data access activities in GCP.
+They are essential for security monitoring, compliance, and forensic
+investigation.
 
-- `request.time` — restrict access to specific time windows (e.g., weekday business hours only)
-- `resource.name` — restrict access to resources with specific names or name prefixes
-- `resource.type` — restrict access to a specific GCP resource type
-- `resource.service` — restrict access to a specific GCP service
+There are four audit log types:
 
-Here is an example binding with a time-based condition:
+- **Admin Activity logs** — Record API calls that modify resource configuration
+  or metadata. Always enabled; cannot be disabled. No extra charge.
+  Examples: creating a VM, modifying a firewall rule, changing an IAM policy.
+- **Data Access logs** — Record API calls that read resource configuration or
+  user-provided data. Disabled by default (can generate very high volume).
+  Must be explicitly enabled per service.
+  Examples: reading a Cloud Storage object, querying BigQuery data.
+- **System Event logs** — Record GCE system events (e.g., live migrations).
+  Always enabled; cannot be disabled. Generated by Google infrastructure.
+- **Policy Denied logs** — Record when a security policy violation causes
+  resource access to be denied. Always enabled.
 
-```json
-{
-  "role": "roles/storage.objectAdmin",
-  "members": ["user:contractor@example.com"],
-  "condition": {
-    "title": "Business hours only",
-    "description": "Allow access only Mon-Fri 9am-5pm UTC",
-    "expression": "request.time.getHours('America/Chicago') >= 9 && request.time.getHours('America/Chicago') < 17 && request.time.getDayOfWeek('America/Chicago') >= 1 && request.time.getDayOfWeek('America/Chicago') <= 5"
-  }
-}
-```
+### Log Entry Structure
 
-For the ACE exam: IAM Conditions are the feature to use when a scenario requires time-based access, resource-name-based access, or temporary access. Organization Policies are for restricting what actions are allowed. VPC Service Controls are for network-level API perimeters. Know which feature answers which type of question.
+Each audit log entry contains:
 
----
+- **Who** — The authenticated principal (user email or service account)
+- **What** — The API method called (e.g., `compute.instances.insert`)
+- **When** — Timestamp of the action
+- **Where** — The resource affected and its location
+- **Status** — Whether the action succeeded or was denied
 
-## Section 4: gcloud IAM Commands
+### Accessing Audit Logs
 
-**[SHOW CONSOLE: Cloud Shell terminal with gcloud iam commands]**
-
-Let's walk through the gcloud commands you will use in the lab and that appear on the ACE exam.
-
-List all available roles:
+Audit logs are written to Cloud Logging. You can view them in the Logs Explorer:
 
 ```bash
-gcloud iam roles list
+# View audit logs using gcloud
+gcloud logging read \
+  'logName="projects/PROJECT_ID/logs/cloudaudit.googleapis.com%2Factivity"' \
+  --limit=10 \
+  --format=json
 ```
 
-Describe a specific predefined role to see its included permissions:
+**ACE Exam Tip:** Data Access logs must be explicitly enabled for each service
+where you need them. Admin Activity logs are always on. Know the difference
+between Admin Activity and Data Access log types.
+
+---
+
+## Segment 4 — Console Walkthrough: IAM Configuration (4 minutes)
+
+### Viewing and Modifying IAM Policies
+
+1. In the Cloud Console, navigate to **IAM & Admin > IAM**.
+2. The IAM page lists all principals with bindings in the current project,
+   along with their roles.
+3. To add a new binding, click **Grant Access**.
+4. Enter the principal's email address in the "New principals" field.
+5. Select a role from the dropdown. Use the search box to filter by role name.
+6. Click **Save**.
+
+### Creating a Service Account
+
+1. Navigate to **IAM & Admin > Service Accounts**.
+2. Click **Create service account**.
+3. Fill in:
+   - **Service account name**: descriptive name (e.g., `my-app-runner`)
+   - **Service account ID**: auto-populated from the name
+   - **Description**: optional but recommended
+4. Click **Create and continue**.
+5. Optionally grant roles to the service account at the project level.
+6. Optionally grant users the ability to use this service account.
+7. Click **Done**.
+
+### Creating a Custom Role
+
+1. Navigate to **IAM & Admin > Roles**.
+2. Click **Create Role**.
+3. Fill in:
+   - **Title**: `Custom Storage Viewer`
+   - **ID**: `customStorageViewer`
+   - **Role launch stage**: General Availability
+4. Click **Add Permissions**.
+5. Search for and add specific permissions (e.g., `storage.objects.get`,
+   `storage.buckets.list`).
+6. Click **Create**.
+
+---
+
+## Segment 5 — gcloud CLI for IAM (3 minutes)
+
+### Viewing and Modifying Policies
 
 ```bash
-gcloud iam roles describe roles/storage.objectViewer
-```
-
-Get the current IAM policy for a project:
-
-```bash
+# Get the IAM policy for a project
 gcloud projects get-iam-policy PROJECT_ID
-```
 
-Grant a role to a user on a project:
+# Get the IAM policy as JSON
+gcloud projects get-iam-policy PROJECT_ID --format=json
 
-```bash
+# Add an IAM binding
 gcloud projects add-iam-policy-binding PROJECT_ID \
-  --member="user:student@txwes.edu" \
+  --member="user:alice@example.com" \
   --role="roles/storage.objectViewer"
-```
 
-Remove a role from a user:
-
-```bash
+# Remove an IAM binding
 gcloud projects remove-iam-policy-binding PROJECT_ID \
-  --member="user:student@txwes.edu" \
+  --member="user:alice@example.com" \
   --role="roles/storage.objectViewer"
 ```
 
-Create a service account:
+### Service Accounts via gcloud
 
 ```bash
-gcloud iam service-accounts create my-app-sa \
-  --display-name="My Application Service Account"
-```
-
-Grant a role to a service account:
-
-```bash
-gcloud projects add-iam-policy-binding PROJECT_ID \
-  --member="serviceAccount:my-app-sa@PROJECT_ID.iam.gserviceaccount.com" \
-  --role="roles/storage.objectAdmin"
-```
-
-List service accounts in a project:
-
-```bash
+# List service accounts in a project
 gcloud iam service-accounts list
+
+# Create a service account
+gcloud iam service-accounts create my-app-runner \
+  --display-name="My App Runner" \
+  --project=PROJECT_ID
+
+# Grant a role to a service account
+gcloud projects add-iam-policy-binding PROJECT_ID \
+  --member="serviceAccount:my-app-runner@PROJECT_ID.iam.gserviceaccount.com" \
+  --role="roles/storage.objectAdmin"
+
+# Create a service account key (use sparingly)
+gcloud iam service-accounts keys create key.json \
+  --iam-account=my-app-runner@PROJECT_ID.iam.gserviceaccount.com
 ```
 
-**[SHOW CONSOLE: Run these commands live in Cloud Shell]**
+### Listing and Describing Roles
 
-Note the `--member` flag format. It always takes the form `TYPE:IDENTIFIER`, such as `user:email@domain.com`, `serviceAccount:sa@project.iam.gserviceaccount.com`, or `group:name@domain.com`. Getting this format wrong is a common mistake — remember the colon separator and the correct prefix word.
+```bash
+# List all predefined roles
+gcloud iam roles list
 
----
+# Describe a specific role and its permissions
+gcloud iam roles describe roles/storage.objectViewer
 
-## Section 5: Audit Logging
+# List custom roles in a project
+gcloud iam roles list --project=PROJECT_ID
 
-**[SHOW SLIDE: Audit log types — Admin Activity, Data Access, System Event]**
-
-Every IAM change in GCP is recorded in Cloud Audit Logs. There are three types of audit logs relevant to IAM:
-
-Admin Activity logs record administrative actions: who modified IAM policies, who created or deleted resources, who enabled or disabled APIs. These logs are always enabled, cannot be turned off, and are free.
-
-Data Access logs record who read data and who used the APIs to access resource metadata. These are disabled by default because they can generate large volumes of entries and incur storage costs. You must explicitly enable them for the services you want to audit.
-
-System Event logs record GCP's internal system actions — for example, when GCP migrates your VM during maintenance.
-
-For the ACE exam: when a question asks "how do you find out who changed an IAM policy last week?", the answer is Cloud Audit Logs — specifically Admin Activity logs. You view them in Cloud Logging under the Audit Logs section.
+# Create a custom role from a YAML file
+gcloud iam roles create customStorageViewer \
+  --project=PROJECT_ID \
+  --file=role-definition.yaml
+```
 
 ---
 
-## Module 02 Summary
+## Segment 6 — ACE Exam Strategy for IAM (1 minute)
 
-**[SHOW SLIDE: Summary bullet list]**
+IAM is tested extensively on the ACE exam. Key patterns in exam questions:
 
-Let's bring together both parts of Module 02. IAM controls who can do what on which resource using bindings of principals, roles, and resources. Principals include Google Accounts, Service Accounts, Groups, and domain identifiers. Roles come in three categories: basic (avoid in production), predefined (service-specific, auto-updated), and custom (tailored, manually maintained).
+- **Least privilege**: When asked which role to assign, choose the most
+  restrictive role that still allows the task. Avoid primitive roles.
+- **Service account keys vs. short-lived tokens**: The exam frequently tests
+  whether you know to avoid key files in favor of attached service accounts
+  or Workload Identity Federation.
+- **Policy inheritance**: Remember — permissions flow downward and are additive.
+- **Organization Policy vs. IAM**: Org policies control what is possible; IAM
+  controls who can do it.
+- **Service account as principal vs. resource**: Understand both dimensions.
+- **Audit logs**: Know which log types are always enabled vs. must be configured.
 
-Service accounts represent application identities. Attach them to VMs using the metadata server — never embed key files unless absolutely necessary. The `serviceAccountUser` role is required to attach a service account to a resource. IAM Conditions add attribute-based access control to policy bindings.
+---
 
-Key gcloud commands: `gcloud projects add-iam-policy-binding`, `gcloud projects get-iam-policy`, `gcloud iam service-accounts create`, and `gcloud iam roles describe`. All IAM changes are recorded in Cloud Audit Logs — Admin Activity logs are always on and free.
+## Summary — Module 02
 
-Complete the lab, take the quiz, and post to the discussion board. Module 03 covers Compute Engine — we will finally start spinning up virtual machines.
+Across both parts we covered:
+
+- IAM fundamentals: principals, roles, permissions, policies
+- Three role types: primitive (avoid), predefined (prefer), custom (when needed)
+- IAM Conditions for attribute-based and time-based access control
+- Service accounts: user-managed, default, and Google-managed types
+- Workload Identity Federation for keyless external authentication
+- Cloud Audit Logs: Admin Activity, Data Access, System Event, Policy Denied
+- Console and gcloud workflows for managing IAM
+
+The lab will have you create service accounts, assign predefined roles, test
+least-privilege access, and enable Data Access logs.
 
 ---
 
 End of Part 2 — Module 02
 
-Course: CIS-4329 Google Cloud Platform | Texas Wesleyan University | Professor Nash
+Course: CIS-4329 Google Cloud Computing | Texas Wesleyan University | Professor Nash
 
 Certification Target: Google Cloud Associate Cloud Engineer
 
-Reference: cloud.google.com/learn
+Reference: cloud.google.com/iam/docs

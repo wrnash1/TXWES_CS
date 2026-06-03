@@ -1,83 +1,196 @@
-# Quiz: Module 12 - Drift Management & Importing Existing Resources
+# Quiz: Module 12 — Terraform and CI/CD Pipelines
 
-## Course: CIS-4337_Infrastructure_Automation (HashiCorp Certified: Terraform Associate)
+## Course: CIS-4337 Infrastructure Automation
 
----
+## Texas Wesleyan University | Professor Nash
 
-**Question 1**
-Which command reads real-world resource attributes and registers them inside your local state file without creating or modifying any infrastructure?
-
-* A) `terraform apply`
-* B) `terraform import`
-* C) `terraform plan`
-* D) `terraform state push`
-* **Correct Answer:** B) `terraform import` reads the target resource by its provider-specific ID and populates the Terraform state file with its attributes. You must separately write the matching HCL `resource` block.
-* **Distractor Analysis:**
-  * *Why B is correct:* `terraform import` is the only command designed to bring an existing, unmanaged resource into Terraform state. It performs a read-only API call to fetch resource attributes and writes them to state — it does not create, update, or destroy infrastructure.
-  * *Why A is incorrect:* `terraform apply` creates or modifies infrastructure to match desired state. It does not read an existing resource and register it; running apply on a new resource block would attempt to create a second copy of the resource.
-  * *Why C is incorrect:* `terraform plan` computes a diff between desired configuration and current state but does not write anything to the state file. It would show a plan to create the resource if no state entry exists.
-  * *Why D is incorrect:* `terraform state push` uploads a local state file to a remote backend, overwriting what is there. It is used for disaster recovery, not for importing individual resources.
+**Certification Alignment:** HashiCorp Terraform Associate (003)
 
 ---
 
-**Question 2**
-Which of the following most accurately describes **infrastructure drift** in the context of Terraform?
+## Instructions
 
-* A) The gradual increase in the size of the Terraform state file as more resources are added to a configuration over time
-* B) The condition where real-world resource configuration has diverged from what Terraform's state file records, typically due to manual out-of-band changes made outside of Terraform
-* C) A version mismatch between the Terraform CLI binary and the provider plugin installed in the `.terraform` directory
-* D) The delay between when `terraform apply` is run and when cloud provider APIs complete resource provisioning
-* **Correct Answer:** B) Drift occurs when someone modifies infrastructure directly — through the cloud console, CLI, or another tool — without going through Terraform, causing the actual resource state to differ from what Terraform expects.
-* **Distractor Analysis:**
-  * *Why B is correct:* This is the precise, exam-tested definition of infrastructure drift. Drift is detected when `terraform plan` shows changes that were not initiated by a configuration update — the diff reflects reality diverging from desired state recorded in the state file.
-  * *Why A is incorrect:* State file growth is a normal consequence of managing more resources and is not called drift. Drift specifically refers to a divergence between actual and recorded resource attributes, not file size.
-  * *Why C is incorrect:* A version mismatch between the CLI and provider plugin causes a compatibility error during `terraform init` or `terraform plan`, not drift. Drift is a runtime infrastructure condition, not a tooling version issue.
-  * *Why D is incorrect:* API provisioning latency is an operational characteristic of cloud providers, not a Terraform-specific concept. It does not describe a relationship between desired state and actual state.
+Select the best answer for each question. Each question is worth 1 point. Distractor analysis follows each question to explain why incorrect options are wrong.
 
 ---
 
-**Question 3**
-After running `terraform import aws_instance.web i-0abc123`, a practitioner immediately runs `terraform plan`. What is the most likely outcome?
+## Questions
 
-* A) Terraform reports no changes because the import synchronized the configuration with real infrastructure
-* B) Terraform shows a plan to destroy `aws_instance.web` because no matching HCL `resource` block has been written yet
-* C) Terraform generates the HCL `resource` block automatically from the imported state and writes it to `main.tf`
-* D) Terraform reports an error stating the state file is locked and must be unlocked before planning
-* **Correct Answer:** B) `terraform import` only writes to state. Without a corresponding `resource "aws_instance" "web"` block in the configuration, Terraform sees a state entry with no matching configuration and plans to destroy the orphaned resource.
-* **Distractor Analysis:**
-  * *Why B is correct:* This outcome is the most critical exam point about `terraform import`. State and configuration must both be present and aligned. Import populates only state; the practitioner must write the HCL and then iteratively run `terraform plan` until no diff remains.
-  * *Why A is incorrect:* Import does not synchronize configuration — it only updates state. A clean plan requires both a matching resource block in HCL and state entries that reflect actual infrastructure attributes.
-  * *Why C is incorrect:* `terraform import` has never automatically generated HCL in the classic CLI workflow. The newer config-driven `import` block (Terraform 1.5+) combined with `terraform plan -generate-config-out` can generate HCL, but this is a distinct, opt-in feature requiring explicit configuration.
-  * *Why D is incorrect:* State locking is a concurrency control mechanism activated during write operations. Running `terraform plan` after an import does not encounter locking errors under normal circumstances.
+### Question 1 — Answer: C
 
----
+A CI pipeline runs `terraform plan -detailed-exitcode`. The pipeline script checks the exit code and the job exits with code 2. What does this indicate?
 
-**Question 4**
-A cloud engineer manually deleted a security group rule directly in the AWS console without using Terraform. When the team next runs `terraform plan`, which behavior should they expect?
+A. The plan encountered a fatal error and no plan was generated.
 
-* A) Terraform detects no change because the state file was automatically updated when the console change was saved
-* B) Terraform shows a plan to recreate the deleted security group rule in order to restore infrastructure to the desired state defined in the configuration
-* C) Terraform permanently removes the security group rule from the configuration file to match the current real-world state
-* D) Terraform locks the state file and requires an administrator to manually run `terraform refresh` before any further operations are possible
-* **Correct Answer:** B) During `terraform plan`, Terraform refreshes state by querying the provider API. It detects the missing rule and computes a diff showing it will add the rule back to match the desired configuration.
-* **Distractor Analysis:**
-  * *Why B is correct:* Terraform's desired state is defined in HCL configuration. When real infrastructure diverges, `terraform plan` shows the changes needed to restore the desired state. The default behavior is always to reconcile infrastructure to match configuration, not the other way around.
-  * *Why A is incorrect:* Terraform state is not automatically updated by cloud console actions. State is only updated when Terraform itself performs a refresh or apply operation. This is precisely why drift can accumulate undetected.
-  * *Why C is incorrect:* Terraform never modifies `.tf` configuration files automatically. Configuration is always managed by the practitioner. Terraform only modifies state files and real infrastructure — never source files.
-  * *Why D is incorrect:* `terraform plan` does not lock the state file in a way that requires administrator intervention. State locking is a short-lived concurrency control released automatically after each operation completes.
+B. The plan completed successfully and no infrastructure changes are needed.
+
+C. The plan completed successfully and infrastructure changes are present.
+
+D. The pipeline was cancelled before the plan could finish.
+
+Why the distractors are wrong: **A** is wrong because exit code 1 indicates an error — exit code 2 specifically signals that the plan succeeded and changes are present. **B** is wrong because exit code 0 means no changes; exit code 2 means changes were detected. **D** is wrong because a cancelled pipeline reports its own cancellation status, not a predictable Terraform exit code.
 
 ---
 
-**Question 5**
-Which `terraform state` subcommand would you use to remove a resource from Terraform state management without destroying the real infrastructure it represents?
+### Question 2 — Answer: C
 
-* A) `terraform state delete`
-* B) `terraform state rm`
-* C) `terraform state detach`
-* D) `terraform state purge`
-* **Correct Answer:** B) `terraform state rm <resource_address>` removes the specified resource's entry from the state file. The real infrastructure is left untouched — Terraform simply stops tracking it.
-* **Distractor Analysis:**
-  * *Why B is correct:* `terraform state rm` is the correct and documented command for this operation. It is commonly used when a resource needs to be removed from Terraform management without destroying the underlying cloud resource — for example, when moving a resource to a different Terraform root module or simply abandoning IaC management of a resource.
-  * *Why A is incorrect:* `terraform state delete` is not a valid Terraform CLI subcommand. The correct subcommand for removal is `terraform state rm`.
-  * *Why C is incorrect:* `terraform state detach` does not exist as a Terraform CLI command. There is no `detach` subcommand in the `terraform state` family of commands.
-  * *Why D is incorrect:* `terraform state purge` is not a valid Terraform CLI subcommand. Bulk state cleanup is done by running `terraform state rm` for each resource address or by directly editing the state file using `terraform state pull` and `terraform state push`.
+Your team wants to ensure that the exact plan reviewed in a pull request is the one that gets applied after merge. Which approach achieves this?
+
+A. Run `terraform plan` again at apply time using the same commit SHA.
+
+B. Save the plan output as a text file in the repository and read it during apply.
+
+C. Save the binary plan file as a CI artifact and apply it with `terraform apply tfplan`.
+
+D. Use `terraform refresh` before apply to ensure state is current.
+
+Why the distractors are wrong: **A** is wrong because a new plan at apply time can differ if cloud resources changed or provider versions differ. **B** is wrong because the human-readable plan text cannot be consumed by `terraform apply` — only the binary `.tfplan` file produced by `-out=tfplan` can. **D** is wrong because `terraform refresh` updates state but does not produce a plan and does not guarantee the apply matches the reviewed output.
+
+---
+
+### Question 3 — Answer: B
+
+Which authentication method eliminates the need to store long-lived cloud provider credentials as CI/CD secrets?
+
+A. IAM user access keys stored in environment variables
+
+B. OpenID Connect (OIDC) federated identity
+
+C. Encrypted credentials committed to a private repository
+
+D. SSH key pairs uploaded to the CI platform
+
+Why the distractors are wrong: **A** is wrong because IAM access keys are long-lived — if the CI secrets store is compromised the attack window is large. **C** is wrong because committing credentials to any repository is a security anti-pattern regardless of encryption. **D** is wrong because SSH key pairs are for repository and server authentication, not cloud provider API authentication.
+
+---
+
+### Question 4 — Answer: C
+
+In a GitLab CI pipeline, a job is configured with `when: manual`. What is the behavior of this job?
+
+A. The job runs automatically when the previous stage succeeds.
+
+B. The job is skipped unless a specific environment variable is set.
+
+C. The job pauses the pipeline and requires a human to click play in the GitLab UI.
+
+D. The job runs only on scheduled pipelines, not on push events.
+
+Why the distractors are wrong: **A** is wrong because that describes the default `when: on_success` behavior. **B** is wrong because conditional execution on environment variables uses `rules:` with `if:` conditions. **D** is wrong because `when: manual` is not tied to scheduled pipelines; it creates a pause point on any trigger type.
+
+---
+
+### Question 5 — Answer: C
+
+A developer manually enables a public access setting on an S3 bucket through the AWS console. The Terraform configuration has `block_public_acls = true`. What term describes this situation, and what command detects it?
+
+A. Configuration conflict; detected with `terraform validate`
+
+B. State corruption; detected with `terraform show`
+
+C. Infrastructure drift; detected with `terraform plan`
+
+D. Provider error; detected with `terraform providers`
+
+Why the distractors are wrong: **A** is wrong because `terraform validate` checks HCL syntax only and does not contact cloud providers. **B** is wrong because state corruption means a damaged state file, not a resource changed outside Terraform; `terraform show` displays state but does not compare it to live infrastructure. **D** is wrong because `terraform providers` lists provider requirements and does not inspect resource state.
+
+---
+
+### Question 6 — Answer: C
+
+Which tfsec command-line flag causes the tool to report findings but exit with code 0 even when issues are found?
+
+A. `--ignore-warnings`
+
+B. `--no-color`
+
+C. `--soft-fail`
+
+D. `--format=json`
+
+Why the distractors are wrong: **A** is wrong because `--ignore-warnings` is not a valid tfsec flag; tfsec uses severity levels rather than a separate warnings category. **B** is wrong because `--no-color` disables ANSI color codes and does not affect exit codes. **D** is wrong because `--format=json` changes output format to JSON and does not affect exit codes.
+
+---
+
+### Question 7 — Answer: B
+
+Your organization requires that all S3 buckets use a specific KMS key ARN. This rule is not in the default tfsec or Checkov check libraries. How do you enforce it?
+
+A. Add a comment to every Terraform file reminding engineers to use the key.
+
+B. Write a custom Checkov policy or tfsec YAML rule and include it in the pipeline.
+
+C. Use `terraform validate` with a custom schema to enforce the KMS ARN.
+
+D. Manually review every plan output for the correct KMS ARN before approving.
+
+Why the distractors are wrong: **A** is wrong because comments are not enforceable and the pipeline will not catch violations. **C** is wrong because `terraform validate` checks HCL structure and type correctness, not specific attribute values. **D** is wrong because manual review is error-prone and does not scale to a team environment.
+
+---
+
+### Question 8 — Answer: B
+
+Why are Terratest integration tests typically excluded from pull request pipelines and run only on a schedule or manually?
+
+A. Terratest is incompatible with GitHub Actions and can only run locally.
+
+B. Terratest tests deploy real cloud resources, making them slow and costly to run on every commit.
+
+C. Terratest requires a special Terraform Enterprise license.
+
+D. Terratest tests can only validate AWS resources.
+
+Why the distractors are wrong: **A** is wrong because Terratest runs in any environment with Go installed, including GitHub Actions runners. **C** is wrong because Terratest is open-source with no dependency on Terraform Enterprise. **D** is wrong because Terratest supports AWS, Azure, GCP, Kubernetes, and more through its provider-specific modules.
+
+---
+
+### Question 9 — Answer: C
+
+A team is designing their GitOps Terraform workflow. Which of the following configurations violates the GitOps principle?
+
+A. All infrastructure changes are submitted as pull requests and reviewed before merge.
+
+B. The CI pipeline posts `terraform plan` output as a comment on every pull request.
+
+C. An on-call engineer runs `terraform apply` manually from their laptop during an incident.
+
+D. The main branch is protected and requires at least one approval before merge.
+
+Why the distractors are wrong: **A** is wrong because submitting all changes as PRs is a core GitOps practice. **B** is wrong because surfacing plan output in PRs supports the GitOps review process. **D** is wrong because branch protection with required approvals is a GitOps best practice.
+
+---
+
+### Question 10 — Answer: C
+
+In a GitHub Actions workflow, an apply job has `needs: [validate, security-scan]` but no dependency on the plan job. What is the primary risk?
+
+A. The apply job will always fail because it cannot find the tfplan artifact.
+
+B. The apply job will run without waiting for security scan results.
+
+C. The apply job may apply changes that were never reviewed in a PR plan comment.
+
+D. The apply job will run `terraform plan` again automatically before applying, duplicating work.
+
+Why the distractors are wrong: **A** is wrong because the apply job generates a new plan at apply time and would not automatically fail from a missing artifact. **B** is wrong because `needs: [validate, security-scan]` ensures security scan results are awaited. **D** is wrong because `terraform apply` without `-out` applies current state rather than running a new plan automatically.
+
+---
+
+## Answer Key
+
+| Question | Answer |
+|----------|--------|
+| 1 | C |
+| 2 | C |
+| 3 | B |
+| 4 | C |
+| 5 | C |
+| 6 | C |
+| 7 | B |
+| 8 | B |
+| 9 | C |
+| 10 | C |
+
+---
+
+End of Module 12 Quiz

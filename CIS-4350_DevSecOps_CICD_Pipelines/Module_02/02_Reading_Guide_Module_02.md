@@ -1,197 +1,372 @@
-# Reading Guide: Module 02 - Version Control with Git and GitHub
+# Reading Guide: Module 02 — Version Control Security and Git Best Practices
 
 ## Course: CIS-4350 DevSecOps and CI/CD Pipelines
+
+## Texas Wesleyan University | Professor Nash
 
 ## Certification Alignment: DevSecOps Professional (DSOE)
 
 ---
 
-## Introduction
+## Learning Objectives
 
-Module 02 establishes version control as the triggering mechanism for all DevSecOps pipeline automation. Every SAST scan, SCA check, secrets detection run, and container build in subsequent modules is initiated by a Git event. This reading guide covers Git security fundamentals, branch protection configuration, pre-commit hooks, and GitHub Actions workflow design — all of which appear on the DevSecOps Professional certification exam.
+After completing this reading guide, you will be able to:
 
----
-
-## Section 1: High-Yield Glossary
-
-**Git** — A distributed version control system where every developer has a complete copy of the repository and its history. Commits are identified by SHA hashes, making history tamper-evident.
-
-**Repository** — A Git-tracked directory containing project source code, configuration files, and the complete commit history. Repositories may be local (on a developer's machine) or remote (on GitHub, GitLab, Bitbucket).
-
-**Branch** — A lightweight pointer to a specific commit. Feature branches allow developers to work on changes in isolation from the main codebase. In DevSecOps, the main branch is protected and receives code only through reviewed, pipeline-checked pull requests.
-
-**Pull request (PR)** — A request to merge a feature branch into the main branch. The PR is the standard checkpoint for automated security scanning: pipeline jobs run against the PR's changes, and branch protection rules can require those jobs to pass before merging is allowed.
-
-**Pre-commit hook** — A shell script stored in `.git/hooks/pre-commit` that executes before `git commit` finalizes. If the script exits non-zero, the commit is aborted. Pre-commit hooks provide the earliest shift-left security gate — on the developer's local machine before code reaches the remote repository.
-
-**Branch protection rule** — A GitHub repository setting that enforces policies on a protected branch. Key policies include: require status checks to pass before merging, require a pull request before merging (no direct pushes), require signed commits, and require a minimum number of approving reviews.
-
-**GitHub Actions** — GitHub's built-in CI/CD automation platform. Workflows are defined in YAML files under `.github/workflows/` and are triggered by Git events (push, pull_request, schedule, workflow_dispatch).
-
-**Workflow** — A GitHub Actions automation definition. Each workflow has a trigger (on:), one or more jobs, and each job contains sequential steps. Multiple jobs in a workflow run in parallel by default unless dependencies are defined with `needs:`.
-
-**Runner** — The compute environment where a GitHub Actions job executes. GitHub provides hosted runners (ubuntu-latest, windows-latest, macos-latest). Organizations can also run self-hosted runners on their own infrastructure for compliance or performance reasons.
-
-**Status check** — A pass/fail result posted to a pull request by a CI/CD job. Branch protection rules can require specific status checks to pass before a PR can be merged, making them the enforcement mechanism for pipeline security gates.
-
-**Gitleaks** — An open-source secrets detection tool that scans Git repositories and commit history for hardcoded credentials using regex patterns and entropy analysis. Used in both pre-commit hooks and CI pipelines.
-
-**GITHUB_TOKEN** — An automatically generated token available to GitHub Actions workflows. It has scoped permissions to the current repository. Best practice is to restrict its permissions to only what the workflow requires using the `permissions:` block.
-
-**Signed commit** — A Git commit that includes a GPG cryptographic signature verifying the committer's identity. Signed commits prevent commit author spoofing and provide non-repudiation for code changes.
-
-**fetch-depth** — A parameter in `actions/checkout` controlling how many commits of history are fetched. Setting `fetch-depth: 0` fetches the complete history, which is required for secrets scanners to check all commits in a PR rather than just the current file state.
+- Compare GitFlow and trunk-based development branching strategies and their security trade-offs
+- Configure GPG-signed commits and explain their role in supply chain integrity
+- Implement branch protection rules that enforce CI security gates
+- Write and manage git hooks using the pre-commit framework
+- Scan repository history for secrets using gitleaks and truffleHog
+- Configure a comprehensive `.gitignore` to prevent sensitive file exposure
 
 ---
 
-## Section 2: Git Security Workflow Reference
+## Section 1 — Branching Strategies and Security Implications
 
-The following table maps the standard Git collaborative workflow to the security concern and control at each step.
+### 1.1 GitFlow
 
-| Workflow Step | Security Concern | DevSecOps Control |
+GitFlow organizes work around five branch types:
+
+| Branch | Purpose | Lifetime |
 |---|---|---|
-| Developer writes code locally | Hardcoded credentials, insecure patterns | IDE security plugins (e.g., Semgrep IDE) |
-| git add / git commit | Secret in staged file | Pre-commit hook (Gitleaks, detect-private-key) |
-| git push to remote branch | Secret bypasses local hook | CI pipeline secrets scan on push |
-| Pull request opened | Insecure code, vulnerable deps | SAST + SCA pipeline jobs as required status checks |
-| Code review | Logic flaws, architecture risk | Human security review (security champion) |
-| Merge to main | Policy enforcement | Branch protection required status checks |
-| Release tag | Artifact provenance | Signed tags, SBOM generation |
+| main | Production-ready code | Permanent |
+| develop | Integration branch | Permanent |
+| feature/* | New features | Days to weeks |
+| release/* | Release preparation | Days |
+| hotfix/* | Emergency production fixes | Hours to days |
 
----
+Security concerns with GitFlow:
 
-## Section 3: Branch Protection Configuration Reference
+- Long-lived feature branches accumulate drift, missing security patches merged to develop
+- Merge complexity increases — each merge point is a conflict risk
+- Multiple integration points mean security scans must run on each branch, increasing CI cost
+- Hotfix branches may bypass normal review processes under pressure
 
-The following settings should be applied to the main (or master) branch of any production repository in a DevSecOps environment.
+### 1.2 Trunk-Based Development
 
-| Setting | Purpose | Risk if Disabled |
+Trunk-based development uses a single long-lived branch (main or trunk). All developers merge short-lived branches (under 2 days) or commit directly. Features not ready for release are hidden behind feature flags.
+
+Security advantages:
+
+- Security patches reach all developers within hours
+- No branch drift — everyone works from the same base
+- Simpler merge history reduces conflict-resolution bugs
+- CI pipeline always reflects current production-bound code
+
+Security requirements for trunk-based development:
+
+- Mandatory CI status checks on every merge to main
+- Feature flags to decouple deployment from release
+- Robust automated test coverage to catch regressions fast
+
+### 1.3 Branching Strategy Comparison
+
+| Dimension | GitFlow | Trunk-Based |
 |---|---|---|
-| Require pull request before merging | Forces all changes through the PR and review process | Developers can push directly to main, bypassing all pipeline checks |
-| Require status checks to pass | Makes CI/CD security scan jobs mandatory | Pipeline failures are informational only; broken or insecure code can merge |
-| Require branches to be up to date | PR must include latest main before merging | Security fixes merged to main are not present when PR is checked |
-| Require signed commits | Verifies committer identity cryptographically | Commit author can be spoofed |
-| Require linear history | Enforces squash or rebase merges | Complex merge commits obscure the history of individual changes |
-| Include administrators | Protection rules apply to admins too | Admins can bypass security gates |
+| Branch longevity | Weeks | Hours to 2 days |
+| Merge complexity | High | Low |
+| Security patch latency | Days to weeks | Hours |
+| CI integration | Per-branch | Every commit to trunk |
+| Release cadence fit | Scheduled (monthly/quarterly) | Continuous |
+| Feature flag requirement | Optional | Required for incomplete features |
+| Best for | Enterprise with scheduled releases | Startups, SaaS, continuous delivery |
 
 ---
 
-## Section 4: GitHub Actions Workflow Structure Reference
+## Section 2 — GPG-Signed Commits
 
-A GitHub Actions workflow file has the following structure:
+### 2.1 Why Sign Commits
 
-```yaml
-name:            # Workflow display name in the GitHub UI
-on:              # Trigger events (push, pull_request, schedule, etc.)
-permissions:     # Token permissions — use least privilege
-env:             # Workflow-level environment variables
-jobs:
-  job-name:
-    runs-on:     # Runner OS (ubuntu-latest, windows-latest, macos-latest)
-    steps:
-      - name:    # Step display name
-        uses:    # Pre-built Action from the Actions Marketplace
-        with:    # Input parameters for the Action
-        run:     # Shell command to execute directly
-        env:     # Step-level environment variables
+A Git commit contains the author name and email as plain text — anyone can set `git config user.name` to any value. Without signatures, there is no cryptographic proof of authorship. A supply chain attacker who briefly compromises a developer's workstation can impersonate them.
+
+GPG-signed commits provide:
+
+- Cryptographic non-repudiation — the commit was made by someone with the private key
+- "Verified" badge in GitHub/GitLab, making unsigned commits visually identifiable
+- Enforcement via branch protection — platforms can reject unsigned commits
+
+### 2.2 GPG Setup Reference
+
+```bash
+# Step 1: Generate key (RSA 4096, no passphrase expiry for lab use)
+gpg --full-generate-key
+
+# Step 2: Get key ID
+gpg --list-secret-keys --keyid-format=long
+# Output: sec   rsa4096/ABCD1234EFGH5678
+
+# Step 3: Export public key for GitHub
+gpg --armor --export ABCD1234EFGH5678
+
+# Step 4: Configure Git globally
+git config --global user.signingkey ABCD1234EFGH5678
+git config --global commit.gpgsign true
+git config --global tag.gpgSign true
+
+# Step 5: Verify a signed commit
+git log --show-signature -1
 ```
 
-Key security design rules for workflow files:
+### 2.3 SSH Signing (Modern Alternative)
 
-- Set `permissions:` to the minimum required scope. Default to `contents: read`.
-- Never print secrets to the workflow log with `echo` or `run: env`.
-- Pin Actions to a specific commit SHA rather than a mutable tag when security is critical.
-- Use `GITHUB_TOKEN` rather than personal access tokens where possible.
-- Store all credentials and API keys in GitHub Secrets, never in the workflow YAML file.
+GitHub also supports SSH key signing as of 2022, which many developers find simpler since they already manage SSH keys:
 
----
-
-## Section 5: CI/CD Pipeline Stage Comparison
-
-| Dimension | Pre-commit Hook | CI Pipeline Job | Branch Protection Rule |
-|---|---|---|---|
-| Execution location | Developer's local machine | GitHub-hosted or self-hosted runner | GitHub server-side policy |
-| Can be bypassed? | Yes (--no-verify) | No (for PR merge blocking) | No (enforced by GitHub) |
-| Trigger | git commit | Push or pull_request event | PR merge attempt |
-| Latency | Immediate (seconds) | 1-5 minutes typically | Enforced after CI completes |
-| Purpose | Earliest feedback | Automated security gate | Policy enforcement |
+```bash
+# Configure SSH signing
+git config --global gpg.format ssh
+git config --global user.signingkey ~/.ssh/id_ed25519.pub
+git config --global commit.gpgsign true
+```
 
 ---
 
-## Section 6: SAST vs. DAST vs. SCA Comparison
+## Section 3 — Branch Protection Rules
 
-| Dimension | SAST | DAST | SCA |
-|---|---|---|---|
-| Full name | Static Application Security Testing | Dynamic Application Security Testing | Software Composition Analysis |
-| Requires running application | No | Yes | No |
-| Primary target | First-party source code | Running application endpoints | Third-party dependencies |
-| Pipeline stage | Commit / Pull request | Staging | Build |
-| Finds | Insecure code patterns, injection flaws | Runtime flaws, auth issues, config errors | Known CVEs in libraries |
-| Representative tools | Semgrep, SonarQube, Checkmarx | OWASP ZAP, Burp Suite Enterprise | Snyk, OWASP Dependency-Check, Grype |
+### 3.1 GitHub Branch Protection Controls
 
----
+| Control | Security Purpose |
+|---|---|
+| Require pull request before merging | Enforces code review, prevents direct push |
+| Required number of approvals | Ensures multiple reviewers; minimum 2 for sensitive branches |
+| Dismiss stale reviews | Invalidates approvals after new commits |
+| Require review from Code Owners | Ensures domain experts review relevant changes |
+| Require status checks to pass | CI pipeline must be green before merge |
+| Require branches to be up to date | Prevents stale-branch merges that bypass security fixes |
+| Require signed commits | Enforces GPG/SSH signatures |
+| Restrict who can push | Limits direct-push to designated users |
+| Do not allow bypassing | Prevents admin override — essential for compliance |
 
-## Section 7: Docker Security Best Practices Reference
+### 3.2 CODEOWNERS File
 
-These practices appear in exam questions across multiple modules.
+The CODEOWNERS file maps file patterns to responsible teams or individuals. When a PR touches those files, the designated owners are automatically required as reviewers:
 
-- Use minimal base images such as Alpine or distroless to reduce attack surface.
-- Never run containers as root. Use the `USER` directive in the Dockerfile.
-- Use multi-stage builds to exclude build tools and source code from the final image.
-- Pin base image versions with a digest rather than a mutable tag.
-- Scan images with Trivy or Grype before pushing to a registry.
-- Store all secrets in environment variables injected at runtime, never baked into image layers.
+```gitignore
+# CODEOWNERS
+# Security-sensitive paths require security team review
+/infra/          @org/security-team
+/auth/           @org/security-team @org/backend-team
+*.tf             @org/platform-team @org/security-team
+Dockerfile       @org/platform-team
+.github/         @org/devops-team
+```
 
----
+### 3.3 GitLab Protected Branches
 
-## Section 8: Secrets Rotation Reference
+GitLab uses "Protected Branches" under Settings > Repository. Key settings:
 
-- Static credentials hardcoded in code or config files must never be used in production.
-- Secrets belong in dedicated management systems: HashiCorp Vault, AWS Secrets Manager, GitHub Secrets.
-- Rotation intervals: database passwords every 30-90 days; API keys on compromise or periodically.
-- If a secret is committed to Git history, rotating it is mandatory — the old value is permanently accessible in history.
-- Automated rotation via secrets management platforms eliminates the human error risk of manual rotation.
-
----
-
-## Section 9: Required Reading
-
-Complete the following before attempting the quiz.
-
-- Read the OWASP DevSecOps Guideline section on secrets management and secure coding at [https://owasp.org/www-project-devsecops-guideline/](https://owasp.org/www-project-devsecops-guideline/).
+- Allowed to merge: Developers, Maintainers, or No One
+- Allowed to push and merge: Maintainers or No One (use for main)
+- Require approval: Linked to Approval Rules
+- Code owner approval: Tied to CODEOWNERS file
 
 ---
 
-## Section 10: DevSecOps Professional Exam Tips
+## Section 4 — Git Hooks
 
-1. **Pre-commit vs. CI pipeline** — Know that pre-commit hooks run locally and can be bypassed with `--no-verify`. CI pipeline scans are server-side and cannot be bypassed for branch protection purposes. Both are needed; they complement each other.
+### 4.1 Hook Types and Security Use Cases
 
-2. **fetch-depth: 0** — This GitHub Actions checkout parameter appears in exam questions about secrets scanning. Full history is required to scan every commit in a PR, not just the latest file state.
+| Hook | Trigger | Security Use |
+|---|---|---|
+| pre-commit | Before commit recorded | Secrets scan, lint, credential check |
+| commit-msg | After commit message written | Enforce commit message policy (e.g., ticket reference) |
+| pre-push | Before push to remote | Run full test suite, SAST scan |
+| post-receive | Server-side, after push received | Trigger CI, notify SIEM |
+| pre-receive | Server-side, before push accepted | Block direct pushes to protected branches |
 
-3. **permissions block** — Know that GitHub Actions workflows should use `permissions: contents: read` by default. Overly permissive tokens (write-all) are a common exam distractor representing a security misconfiguration.
+### 4.2 The pre-commit Framework
 
-4. **Branch protection required status checks** — Know that listing a job name under required status checks makes it mandatory for merging. If the job is not listed, it is optional regardless of its pass/fail result.
+Manual `.git/hooks/` scripts are not version-controlled and must be manually installed by each developer. The pre-commit framework solves this with a configuration file committed to the repo:
 
-5. **pull_request trigger** — Know that `on: pull_request` fires when a PR is opened, updated (synchronized), or reopened. It does not fire on direct pushes. This is the correct trigger for merge-blocking security gates.
+```yaml
+# .pre-commit-config.yaml
+repos:
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.18.0
+    hooks:
+      - id: gitleaks
+        name: Detect secrets with gitleaks
 
-6. **Secret rotation after exposure** — The exam tests that when a secret is found in Git history, the first action is to rotate the credential immediately — not simply delete the file in a new commit.
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: detect-private-key
+      - id: check-added-large-files
+        args: [--maxkb=500]
+      - id: check-json
+      - id: check-yaml
+      - id: no-commit-to-branch
+        args: [--branch, main, --branch, develop]
 
-7. **Defense in depth for secrets** — Know that best practice combines a pre-commit hook (early feedback) with a CI pipeline scan (enforcement) because the hook can be bypassed. Neither alone is sufficient.
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.7.5
+    hooks:
+      - id: bandit
+        args: [-lll, --recursive, .]
+```
 
-8. **Signed commits vs. 2FA** — Know the difference: signed commits verify commit authorship cryptographically; two-factor authentication verifies user login. Both are security controls but at different points.
+Install and use:
+
+```bash
+# Install the framework
+pip install pre-commit
+
+# Install hooks defined in .pre-commit-config.yaml
+pre-commit install
+
+# Run manually against all files
+pre-commit run --all-files
+
+# Update hook versions
+pre-commit autoupdate
+```
+
+### 4.3 Bypassing Hooks — A Risk to Document
+
+Hooks can be bypassed with `git commit --no-verify`. This is necessary in some legitimate scenarios (emergency hotfixes, broken hook environment) but creates risk. Best practices:
+
+- Log all `--no-verify` usage via a server-side pre-receive hook
+- Require post-bypass justification in the commit message or PR description
+- Run the same scans in CI so the server-side pipeline catches what hooks missed
 
 ---
 
-## Section 11: Study Checklist
+## Section 5 — Secrets Scanning
 
-Work through this checklist before attempting the quiz and lab.
+### 5.1 Tool Comparison: gitleaks vs. truffleHog
 
-- [ ] Explain why Git history permanence makes pre-commit secrets scanning critical.
-- [ ] List five branch protection rule settings and the risk each addresses.
-- [ ] Explain the difference between a pre-commit hook and a CI pipeline secrets scan.
-- [ ] Write (from memory or notes) the YAML structure of a GitHub Actions workflow with at least two jobs.
-- [ ] Explain what `fetch-depth: 0` does and why it matters for secrets scanning.
-- [ ] Explain the `permissions:` block and what `contents: read` means.
-- [ ] Identify the correct trigger for a security gate that must pass before a PR can merge.
-- [ ] Read the OWASP DevSecOps Guideline secrets management section at [https://owasp.org/www-project-devsecops-guideline/](https://owasp.org/www-project-devsecops-guideline/).
-- [ ] Complete the Module 02 lab activity.
-- [ ] Attempt all 10 quiz questions and review distractor analysis for any incorrect answers.
+| Feature | gitleaks | truffleHog |
+|---|---|---|
+| Detection method | Regex pattern matching | Regex + entropy analysis |
+| Pre-commit support | Yes (protect --staged) | Limited |
+| CI integration | Yes (detect command) | Yes (git scan) |
+| GitHub Actions | Official action available | Community action |
+| Verified-only mode | No | Yes (--only-verified) |
+| Custom rules | Yes (TOML config) | Yes |
+| Output formats | JSON, SARIF, CSV | JSON |
+| License | MIT | AGPL-3.0 |
+
+### 5.2 gitleaks Configuration
+
+Custom rules extend gitleaks beyond its built-in patterns:
+
+```toml
+# .gitleaks.toml
+title = "Custom Gitleaks Configuration"
+
+[[rules]]
+id = "internal-api-key"
+description = "Internal API key pattern"
+regex = '''(?i)internal[_-]?api[_-]?key\s*=\s*['"][A-Za-z0-9]{32,}['"]'''
+severity = "CRITICAL"
+tags = ["api", "internal"]
+
+[allowlist]
+description = "Allowlist for known false positives"
+regexes = [
+  '''EXAMPLE_KEY''',
+  '''TEST_SECRET'''
+]
+paths = [
+  '''docs/''',
+  '''tests/fixtures/'''
+]
+```
+
+### 5.3 GitHub Native Secret Scanning
+
+For repositories on GitHub, enable secret scanning under Settings > Security:
+
+- Secret scanning alerts notify repository admins when patterns are detected
+- Push protection blocks pushes containing detected secrets in real time
+- Partner patterns: 200+ token types from providers including AWS, Azure, Google, Stripe, Twilio are automatically revoked when detected in public repos
+
+---
+
+## Section 6 — .gitignore Best Practices
+
+### 6.1 What to Always Ignore
+
+```gitignore
+# Secrets and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
+credentials.json
+service-account.json
+*_credentials.json
+
+# Cloud provider credentials
+.aws/
+.azure/
+.gcp/
+kubeconfig
+
+# IDE and OS files
+.vscode/settings.json
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+dist/
+build/
+target/
+*.class
+node_modules/
+.venv/
+__pycache__/
+```
+
+### 6.2 The .env.example Pattern
+
+Never commit `.env` but always commit `.env.example` with placeholder values to document required environment variables:
+
+```bash
+# .env.example — commit this file
+DATABASE_URL=postgresql://user:password@localhost:5432/mydb
+AWS_ACCESS_KEY_ID=your-key-id-here
+AWS_SECRET_ACCESS_KEY=your-secret-here
+JWT_SECRET=your-jwt-secret-here
+```
+
+---
+
+## Exam Tips for DSOE Certification
+
+- Know the difference between GitFlow (long-lived branches) and trunk-based development (short-lived, feature flags).
+- GPG signing provides cryptographic non-repudiation — not just identity; it proves possession of a private key.
+- Branch protection rules are server-side enforced — pre-commit hooks are client-side and can be bypassed.
+- The pre-commit framework version-controls hook configuration, ensuring all developers run the same checks.
+- gitleaks uses regex patterns; truffleHog adds entropy analysis for unknown secret formats.
+- GitHub native secret scanning includes push protection — it blocks the push before the secret enters the repo.
+- `.gitignore` prevents staging; it does not remove already-committed files from history.
+- To remove a secret from Git history: `git filter-repo` or BFG Repo Cleaner, followed by a force push and credential rotation.
+
+---
+
+## Key Terms Glossary
+
+| Term | Definition |
+|---|---|
+| GitFlow | Branching model with long-lived feature, develop, release, and hotfix branches |
+| Trunk-Based Development | All developers integrate to main frequently; branches live less than 2 days |
+| GPG | GNU Privacy Guard — cryptographic key management for signing |
+| Signed Commit | Git commit with a cryptographic signature proving authorship |
+| Branch Protection | Server-side rules preventing direct pushes and enforcing review/CI |
+| CODEOWNERS | File mapping paths to required reviewers |
+| pre-commit | Python framework for managing client-side git hooks |
+| gitleaks | Open-source secrets scanning tool for git repositories |
+| truffleHog | Secrets scanner with entropy-based detection |
+| .gitignore | File specifying paths Git should not track |
+| Push Protection | GitHub feature blocking pushes containing detected secrets |
+| Feature Flag | Runtime toggle hiding incomplete features from end users |
+
+---
+
+Reading Guide — Module 02 | CIS-4350 | Texas Wesleyan University | Professor Nash

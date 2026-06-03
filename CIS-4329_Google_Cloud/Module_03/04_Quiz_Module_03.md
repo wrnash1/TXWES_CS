@@ -1,235 +1,228 @@
-# Quiz — Module 03
+# Quiz: Module 03 — Compute Engine
 
-## CIS-4329: Google Cloud Platform | Texas Wesleyan University
+## Course: CIS-4329 Google Cloud Computing
 
-### Topic: Compute Engine — VM Instances and Machine Types
+**Certification Alignment:** Google Cloud Associate Cloud Engineer (ACE)
 
-### 10 Questions | 10 Points Each | Total: 100 Points
+---
+
+## Instructions
+
+Select the best answer for each question. Each question is worth 10 points.
+This quiz covers machine families, disk types, instance groups, autoscaling,
+startup scripts, snapshots, and preemptible VMs.
 
 ---
 
 ## Question 1
 
-You are managing a fleet of Compute Engine instances. You need to capture the exact state of a data disk right before a major software upgrade so you can quickly roll back if the upgrade fails. What is the most efficient Google Cloud feature to use?
+A company needs to run SAP HANA, an in-memory database platform that requires
+12 TB of RAM in a single node. Which GCP machine family is the correct choice?
 
-A. Create a custom image of the disk.
+- A) E2 — cost-optimized general purpose
+- B) C2 — compute-optimized
+- C) M2 — memory-optimized
+- D) A2 — accelerator-optimized
 
-B. Create a snapshot of the disk.
+**Correct Answer:** C
 
-C. Export the disk contents to a Cloud Storage bucket as a tar archive.
-
-D. Use Database Migration Service to copy the disk contents to another project.
-
-Correct Answer: B
-
-Distractor Analysis:
-
-- Why A is incorrect: Custom images are designed to create reusable VM templates for provisioning new instances at scale, not for point-in-time backup and rollback of an existing running disk. While an image could technically preserve disk state, snapshots are the correct tool for pre-upgrade backup and rollback scenarios.
-- Why C is incorrect: Exporting disk contents to Cloud Storage as an archive is a manual, time-consuming process not designed for quick pre-upgrade backup and rollback. It is used for long-term archiving or moving data out of GCP entirely.
-- Why D is incorrect: Database Migration Service is designed for migrating database workloads between database systems, not for backing up or restoring raw Compute Engine persistent disks.
+**Explanation:** The M2 memory-optimized machine family supports up to 12 TB of
+memory and is specifically designed for SAP HANA and large in-memory database
+workloads. E2 machines are for general-purpose and cost-sensitive workloads. C2
+machines are compute-intensive but not memory-intensive. A2 machines are for
+GPU-accelerated ML workloads.
 
 ---
 
 ## Question 2
 
-A developer stops a Compute Engine VM to resize it, then restarts it an hour later. Which statement about the VM's storage is correct?
+A VM instance has been stopped (TERMINATED state). Which of the following
+statements is correct?
 
-A. All data on attached persistent disks is permanently lost when the VM stops.
+- A) The VM and its boot disk are immediately deleted
+- B) The VM continues to be billed at the full running rate
+- C) The persistent boot disk still exists and is billed for storage
+- D) The VM is automatically deleted after 7 days if not restarted
 
-B. Data on attached persistent disks is preserved; data on any local SSDs is permanently lost.
+**Correct Answer:** C
 
-C. Data on both persistent disks and local SSDs is preserved across stop and start cycles.
-
-D. The boot disk data is preserved, but all secondary persistent disks are automatically detached and lose their data.
-
-Correct Answer: B
-
-Distractor Analysis:
-
-- Why A is incorrect: Persistent disks are network-attached storage that exist independently of the VM instance lifecycle. Stopping or even deleting a VM does not delete its attached persistent disks unless you explicitly request deletion.
-- Why C is incorrect: Local SSDs are physically attached to the host machine running the VM. Their data is ephemeral and is permanently lost whenever the VM stops, crashes, or is migrated to a different host machine.
-- Why D is incorrect: Secondary persistent disks are not automatically detached or deleted when a VM stops. They remain attached and retain all data until explicitly detached or deleted by an administrator.
+**Explanation:** A TERMINATED VM still exists — it is not deleted. Its persistent
+boot disk remains and incurs storage charges. Compute charges stop when the VM
+is terminated, but storage charges for attached disks continue. The VM can be
+restarted at any time and is not automatically deleted.
 
 ---
 
 ## Question 3
 
-Your batch processing application processes video transcoding jobs that each take about 10 minutes. The application automatically retries any job that fails. You want to minimize compute costs while maintaining acceptable job completion rates. Which Compute Engine option is most appropriate?
+You are designing a web application that must remain available if a single
+zone in us-central1 goes down. Which instance group configuration satisfies
+this requirement at minimum cost?
 
-A. N2 standard on-demand instances with 1-year committed use discounts.
+- A) A zonal MIG in us-central1-a with 3 instances
+- B) A regional MIG in us-central1 spanning all zones
+- C) Three separate zonal MIGs, one in each zone
+- D) A single VM with a static external IP
 
-B. Memory-optimized M2 instances for maximum RAM per transcoding job.
+**Correct Answer:** B
 
-C. Spot VM instances.
-
-D. Compute-optimized C2 instances billed by the second at full on-demand rates.
-
-Correct Answer: C
-
-Distractor Analysis:
-
-- Why A is incorrect: Committed use discounts offer up to 37% off for 1-year commitments, which is a significant savings. However, Spot VMs offer up to 91% off and are the minimum-cost option for fault-tolerant, retryable workloads. The scenario explicitly mentions automatic retry capability, making this a perfect Spot VM use case.
-- Why B is incorrect: Memory-optimized M2 instances are designed for workloads requiring extremely large amounts of RAM, such as in-memory databases. Video transcoding is a CPU-bound workload; M2 instances would be far more expensive than necessary.
-- Why D is incorrect: Compute-optimized C2 instances do provide high per-core CPU performance suitable for transcoding, but they are billed at full on-demand rates. Spot VMs provide the needed compute at a fraction of the cost for this fault-tolerant workload.
+**Explanation:** A regional MIG automatically distributes instances across all
+zones in the region. If one zone fails, the instances in the other zones continue
+serving traffic. A zonal MIG (option A) concentrates all instances in one zone
+and would fail entirely on a zone outage. Three separate zonal MIGs (option C)
+could work but adds unnecessary management complexity compared to a single
+regional MIG.
 
 ---
 
 ## Question 4
 
-You need to deploy 50 identical web server VMs, each pre-configured with your company's custom Nginx setup, internal security hardening, and TLS certificates. What is the most operationally efficient approach?
+An instance template has been used to create a managed instance group. You need
+to change the machine type from e2-medium to e2-standard-4 for all instances
+in the group. What is the correct procedure?
 
-A. Write a startup script that runs on every VM boot to download and install Nginx and apply configuration from a Git repository.
+- A) Edit the existing instance template to change the machine type
+- B) Create a new instance template with e2-standard-4 and perform a rolling
+     update on the MIG to use the new template
+- C) Stop all instances in the MIG and change their machine types individually
+- D) Delete the MIG, delete the template, and recreate both from scratch
 
-B. Create a custom image from a fully configured reference VM, then use that image as the boot disk for all 50 instances.
+**Correct Answer:** B
 
-C. Take a snapshot of one configured VM's boot disk and manually restore it to each of the 50 VMs individually.
-
-D. Use Cloud Marketplace to deploy a pre-configured Nginx template to all 50 VMs.
-
-Correct Answer: B
-
-Distractor Analysis:
-
-- Why A is incorrect: Startup scripts that download and install software on every boot introduce variability (package versions may change), depend on external repositories being available, slow down boot time, and add network dependency. Custom images are faster, more reliable, and more consistent for fleet deployment.
-- Why C is incorrect: Snapshots are designed for backup and restore of existing disks, not for provisioning new instances at scale. Restoring a snapshot to each of 50 VMs individually is more complex and less efficient than using a custom image with an instance template or managed instance group.
-- Why D is incorrect: Cloud Marketplace provides third-party pre-configured software stacks but cannot incorporate proprietary company-specific configuration, internal certificates, or custom security hardening scripts.
+**Explanation:** Instance templates are immutable — they cannot be edited after
+creation. The correct process is to create a new instance template with the
+desired configuration, then perform a rolling update on the MIG to gradually
+replace instances with the new template. This achieves the change with minimal
+downtime.
 
 ---
 
 ## Question 5
 
-Which Compute Engine machine family is designed specifically for workloads that require a very large amount of RAM relative to vCPU count, such as SAP HANA deployments?
+Which disk type offers the highest I/O performance but loses all data when the
+VM is stopped or live-migrated?
 
-A. E2
+- A) pd-extreme
+- B) pd-ssd
+- C) Local SSD
+- D) Hyperdisk
 
-B. C2
+**Correct Answer:** C
 
-C. N2
-
-D. M2
-
-Correct Answer: D
-
-Distractor Analysis:
-
-- Why A is incorrect: The E2 family is a cost-optimized general-purpose family suitable for development environments, small web servers, and cost-sensitive workloads. It provides standard RAM-to-vCPU ratios and is not designed for memory-intensive database workloads.
-- Why B is incorrect: The C2 family is compute-optimized with the highest per-core CPU performance. It is designed for CPU-bound workloads like game servers, scientific computing, and high-performance computing — not for maximizing RAM capacity.
-- Why C is incorrect: The N2 family is a general-purpose high-performance family suitable for production workloads requiring consistent CPU performance. While N2 offers more RAM than E2, it does not provide the extreme memory capacity of the M2 family.
+**Explanation:** Local SSD is physically attached to the host machine and offers
+the highest IOPS and lowest latency of any GCP disk type. However, it is
+ephemeral — data is not preserved if the VM stops, terminates, or is
+live-migrated. pd-extreme (option A) is the highest-performance persistent disk
+but survives VM stops. Persistent disks are always network-attached.
 
 ---
 
 ## Question 6
 
-A Cloud Architect is designing a data pipeline that runs overnight batch jobs processing large datasets. The jobs take approximately 3 hours and write results to Cloud Storage when complete. The pipeline restarts automatically if any individual step fails. The architect wants to minimize the nightly compute bill. Which pricing model is most appropriate?
+A data engineering team runs nightly batch jobs that process large datasets.
+The jobs are designed to checkpoint progress every 10 minutes and retry failed
+tasks automatically. The team wants to minimize compute costs. What VM type
+should they use?
 
-A. On-demand E2 instances with sustained use discounts applied automatically.
+- A) N2 standard VMs with committed use discounts
+- B) E2 VMs with sustained use discounts
+- C) Spot VMs
+- D) M2 memory-optimized VMs
 
-B. Resource-based committed use discounts on N2 instances for a 3-year term.
+**Correct Answer:** C
 
-C. Spot VMs for the pipeline worker nodes.
-
-D. Per-second billing on custom machine types to minimize idle time.
-
-Correct Answer: C
-
-Distractor Analysis:
-
-- Why A is incorrect: On-demand instances with sustained use discounts provide modest savings for workloads running continuously throughout the month. For a 3-hour nightly batch job that runs only a small fraction of each month, sustained use discounts provide minimal benefit. Spot VMs offer far greater savings for this fault-tolerant pattern.
-- Why B is incorrect: A 3-year committed use commitment is inappropriate for a 3-hour nightly batch workload. CUDs are cost-effective for workloads that run continuously and would actually consume the committed capacity. Paying for committed capacity that runs only 3 hours per day would be wasteful.
-- Why D is incorrect: Per-second billing is a billing increment, not a pricing model offering discount. It reduces waste at the end of jobs but does not provide the 91% cost reduction that Spot VMs offer for fault-tolerant batch workloads.
+**Explanation:** Spot VMs offer up to 91% cost reduction compared to regular VMs.
+Because the batch jobs are fault-tolerant (checkpoint every 10 minutes, retry
+failed tasks), they can absorb the interruptions that Spot VMs may experience.
+This is the textbook use case for Spot VMs. Committed use discounts (option A)
+require a 1–3 year commitment and are better for always-on workloads.
 
 ---
 
 ## Question 7
 
-Your application running on a Compute Engine VM needs to store temporary files for fast processing. These files can be regenerated from the source data if lost. You need the highest I/O performance available in GCP. Which storage type should you use?
+You are configuring autohealing on a managed instance group that runs a web
+application. The startup script takes about 4 minutes to complete. What should
+the `--initial-delay` parameter be set to, at minimum?
 
-A. Standard persistent disk (pd-standard)
+- A) 0 seconds (health checks should start immediately)
+- B) 30 seconds
+- C) 240 seconds (4 minutes)
+- D) 600 seconds (10 minutes)
 
-B. SSD persistent disk (pd-ssd)
+**Correct Answer:** C
 
-C. Balanced persistent disk (pd-balanced)
-
-D. Local SSD
-
-Correct Answer: D
-
-Distractor Analysis:
-
-- Why A is incorrect: Standard persistent disks use HDD technology and have the lowest I/O performance of all Compute Engine disk options. They are appropriate for sequential batch workloads but not for maximum I/O performance requirements.
-- Why B is incorrect: SSD persistent disks provide high IOPS suitable for production databases, but they are still network-attached storage and cannot match the raw I/O performance of physically attached local SSDs.
-- Why C is incorrect: Balanced persistent disks offer a good balance of performance and cost for general production workloads. Their performance is between standard and SSD persistent disks — still network-attached and lower performance than local SSDs.
+**Explanation:** The `--initial-delay` gives newly created instances time to
+complete initialization before health checks begin. If the delay is shorter than
+the startup time, the health check may mark the VM as unhealthy before it is
+ready, triggering an unnecessary recreation. Setting the initial delay to at
+least the startup script duration (240 seconds for a 4-minute startup) prevents
+this.
 
 ---
 
 ## Question 8
 
-A Managed Instance Group (MIG) is configured with a health check that tests whether port 80 is responding with HTTP 200. One VM in the group stops serving HTTP 200 responses after a configuration error. What does the MIG do?
+Which autoscaling signal would be most appropriate for a MIG that processes
+messages from a queue, where scaling should be based on backlog depth?
 
-A. Nothing — the MIG only manages scaling, not health monitoring.
+- A) CPU utilization target
+- B) HTTP load balancing serving capacity
+- C) Cloud Pub/Sub subscription backlog (undelivered message count)
+- D) Cloud Monitoring custom memory metric
 
-B. The MIG logs a warning in Cloud Monitoring but takes no corrective action.
+**Correct Answer:** C
 
-C. The MIG automatically deletes the unhealthy VM and creates a replacement VM using the instance template.
-
-D. The MIG pauses autoscaling until the unhealthy VM recovers or is manually repaired.
-
-Correct Answer: C
-
-Distractor Analysis:
-
-- Why A is incorrect: Managed Instance Groups support autohealing, which is specifically the feature that monitors VM health via health checks and replaces unhealthy VMs automatically. Autohealing is a core MIG capability alongside autoscaling, rolling updates, and multi-zone support.
-- Why B is incorrect: While MIG health check failures do generate Cloud Monitoring metrics and alerts, the autohealing feature takes active corrective action — it does not merely log a warning. The unhealthy VM is automatically replaced.
-- Why D is incorrect: MIG autohealing does not pause autoscaling when a VM becomes unhealthy. The MIG continues managing the group's target size and scaling behavior independently from the health check response for the affected VM.
+**Explanation:** Pub/Sub subscription backlog depth is a supported autoscaling
+signal for MIGs. When the number of undelivered messages increases, the
+autoscaler adds VMs to process the backlog faster. When the backlog decreases,
+VMs are removed. This is more accurate than CPU utilization for queue-based
+workloads where VMs may be waiting for messages and thus show low CPU usage.
 
 ---
 
 ## Question 9
 
-A developer uses `gcloud compute instances create` to provision a new VM without specifying any service account. What service account is attached to the VM, and what is the security implication?
+You need to create a VM with 6 vCPUs and 10 GB of RAM. No predefined machine
+type matches these exact specifications. What should you do?
 
-A. No service account is attached; the VM has no ability to call GCP APIs.
+- A) Choose the nearest predefined machine type that exceeds these requirements
+- B) Use a custom machine type to specify exactly 6 vCPUs and 10 GB
+- C) Use two E2 machines and split the workload
+- D) Custom machine types are not supported on Compute Engine
 
-B. The Compute Engine default service account is attached, which has `roles/editor` on the project by default — granting broad write access to most project resources.
+**Correct Answer:** B
 
-C. A new purpose-built service account is created automatically and attached with minimal permissions.
-
-D. The current gcloud user's Google Account is used as the VM's identity for API calls.
-
-Correct Answer: B
-
-Distractor Analysis:
-
-- Why A is incorrect: When a VM is created without specifying a service account, GCP automatically attaches the Compute Engine default service account rather than leaving the VM without any identity. The VM does have the ability to call GCP APIs.
-- Why C is incorrect: GCP does not auto-create purpose-built service accounts on VM creation. The Compute Engine default service account already exists from when the Compute Engine API was enabled, and this pre-existing account is attached.
-- Why D is incorrect: User accounts (human Google identities) are not attached to VMs as their runtime identity. VM instances authenticate as service accounts, not as the user who ran the `gcloud compute instances create` command.
+**Explanation:** Compute Engine custom machine types allow you to specify any
+vCPU count and memory combination within the allowed ranges. A custom machine
+type with 6 vCPUs and 10 GB RAM avoids over-provisioning the memory that a
+predefined n2-standard-8 (8 vCPUs, 32 GB) would provide. Custom machine types
+cost slightly more per unit than predefined types but can save money overall
+by avoiding unused capacity.
 
 ---
 
 ## Question 10
 
-You are reviewing your organization's Compute Engine environment and find that several production VMs use `e2-micro` machine types. The application teams report frequent CPU throttling and performance degradation under load. Which action addresses this most directly?
+A snapshot is taken of a 500 GB persistent disk that has 200 GB of data
+written to it. The snapshot is the first snapshot taken of this disk. How
+large is the snapshot?
 
-A. Move the VMs to Spot instances to access higher-performance hardware at a lower cost.
+- A) 500 GB (full disk size)
+- B) 200 GB (only data that has been written)
+- C) 0 GB (snapshots are free)
+- D) 50 GB (snapshots always compress to 25% of disk size)
 
-B. Upgrade the VMs to a higher machine type such as `e2-standard-4` or `n2-standard-4` that provides dedicated vCPUs and more memory.
+**Correct Answer:** B
 
-C. Add more local SSDs to the VMs to increase I/O throughput and compensate for CPU bottlenecks.
-
-D. Apply sustained use discounts to allow the VMs to access more CPU capacity automatically.
-
-Correct Answer: B
-
-Distractor Analysis:
-
-- Why A is incorrect: Spot VMs can use any machine type, including e2-micro. Switching to Spot instances changes the pricing and availability model but does not change the underlying machine type or resolve the CPU throttling issue. Additionally, production services should not use Spot VMs due to preemption risk.
-- Why C is incorrect: Local SSDs increase disk I/O performance, not CPU processing capacity. If the bottleneck is CPU throttling on an e2-micro (which uses shared-core CPU scheduling), additional storage does not address the root cause.
-- Why D is incorrect: Sustained use discounts are a billing discount applied automatically to on-demand VMs that run for a significant portion of the month. They reduce cost but do not increase the VM's CPU allocation, memory capacity, or performance characteristics.
+**Explanation:** The first snapshot of a disk captures only the bytes that have
+actually been written (allocated), not the full provisioned disk size. For a
+500 GB disk with 200 GB of data, the first snapshot is approximately 200 GB.
+Subsequent snapshots are incremental — they capture only the changes since the
+last snapshot.
 
 ---
 
 End of Quiz — Module 03
 
-Course: CIS-4329 Google Cloud Platform | Texas Wesleyan University | Professor Nash
-
-Certification Target: Google Cloud Associate Cloud Engineer
+Course: CIS-4329 Google Cloud Computing | Texas Wesleyan University | Professor Nash

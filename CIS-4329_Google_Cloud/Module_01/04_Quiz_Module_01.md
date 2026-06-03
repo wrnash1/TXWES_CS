@@ -1,235 +1,220 @@
-# Quiz — Module 01
+# Quiz: Module 01 — Cloud Computing Fundamentals and GCP Overview
 
-## CIS-4329: Google Cloud Platform | Texas Wesleyan University
+## Course: CIS-4329 Google Cloud Computing
 
-### Topic: GCP Overview — Regions, Zones, and Console Navigation
+**Certification Alignment:** Google Cloud Associate Cloud Engineer (ACE)
 
-### 10 Questions | 10 Points Each | Total: 100 Points
+---
+
+## Instructions
+
+Select the best answer for each question. Each question is worth 10 points.
+This quiz covers cloud computing fundamentals, GCP global infrastructure,
+the resource hierarchy, billing, and the Cloud Console and gcloud CLI.
 
 ---
 
 ## Question 1
 
-You want to receive an email notification if your Google Cloud spending exceeds $500 for the current month. You set up a budget and an alert threshold at 100%. What happens to your running resources if the spending reaches $501?
+Which of the following is NOT one of the five NIST essential characteristics
+of cloud computing?
 
-A. All resources are immediately suspended to prevent further charges.
+- A) On-demand self-service
+- B) Rapid elasticity
+- C) Dedicated hardware
+- D) Measured service
 
-B. Compute instances are shut down, but Cloud Storage remains active.
+**Correct Answer:** C
 
-C. The resources continue to run normally and you receive an email alert.
-
-D. The project is automatically deleted after a 24-hour grace period.
-
-Correct Answer: C
-
-Distractor Analysis:
-
-- Why A is incorrect: GCP budget alerts are notification-only mechanisms. They send emails and can publish to Pub/Sub, but they take no automated action against running resources. Suspension requires custom automation built by the administrator.
-- Why B is incorrect: GCP has no native behavior that selectively stops compute but preserves storage when a budget threshold is crossed. Budget alerts do not distinguish between resource types.
-- Why D is incorrect: GCP will never automatically delete a project because a billing threshold was exceeded. Project deletion is always an explicit administrative action and requires confirmation.
+**Explanation:** The five NIST characteristics are: on-demand self-service,
+broad network access, resource pooling, rapid elasticity, and measured service.
+Dedicated hardware describes private infrastructure, which is the opposite of
+the shared resource pooling model that defines cloud computing.
 
 ---
 
 ## Question 2
 
-At which level of the Google Cloud resource hierarchy are Billing Accounts linked to pay for consumed resources?
+Your company wants to deploy a web application where your team writes and
+manages application code but does not want to manage servers, operating systems,
+or runtime environments. Which GCP service model best fits this requirement?
 
-A. Organization level
+- A) IaaS — using Compute Engine
+- B) PaaS — using App Engine
+- C) SaaS — using Google Workspace
+- D) IaaS — using Cloud Storage
 
-B. Folder level
+**Correct Answer:** B
 
-C. Project level
-
-D. Individual resource level
-
-Correct Answer: C
-
-Distractor Analysis:
-
-- Why A is incorrect: While Billing Accounts are owned by an Organization in enterprise setups, the actual payment linkage that causes a running VM or bucket to generate a bill occurs when the Billing Account is associated with a specific Project, not with the Organization node itself.
-- Why B is incorrect: Folders are structural grouping containers for Projects. Billing Accounts are never directly linked to Folders; billing flows from the Project level upward to the Billing Account.
-- Why D is incorrect: Individual resources such as VMs, Cloud Storage buckets, or Cloud SQL instances do not have their own Billing Account associations. They inherit billing from their parent Project.
+**Explanation:** Platform as a Service (PaaS) abstracts the infrastructure and
+runtime, allowing developers to focus on application code. App Engine is GCP's
+managed PaaS offering. IaaS (Compute Engine) would still require OS and runtime
+management.
 
 ---
 
 ## Question 3
 
-A GCP administrator needs to display the currently active SDK configuration — including the active project, account email, and default region — on their local workstation. Which command is most appropriate?
+A GCP project has three identifiers: Project Name, Project ID, and Project
+Number. Which statement is correct?
 
-A. `gcloud config list`
+- A) Project Name is globally unique and immutable
+- B) Project ID is globally unique and immutable after creation
+- C) Project Number is chosen by the user during creation
+- D) All three identifiers are mutable after project creation
 
-B. `gcloud projects describe`
+**Correct Answer:** B
 
-C. `gcloud info --format=json`
-
-D. `gcloud init --show-config`
-
-Correct Answer: A
-
-Distractor Analysis:
-
-- Why B is incorrect: `gcloud projects describe PROJECT_ID` returns metadata about a specific project such as its project number, labels, and lifecycle state. It does not display the local SDK configuration context such as the active account or default zone.
-- Why C is incorrect: `gcloud info` outputs diagnostic information about the gcloud SDK installation environment including version numbers, Python path, and log file locations. It is not used to display active configuration values.
-- Why D is incorrect: `--show-config` is not a valid flag for `gcloud init`. The `gcloud init` command launches an interactive setup wizard that guides you through authenticating and selecting a project. It does not have a display-only mode.
+**Explanation:** The Project ID is globally unique across all of GCP and cannot
+be changed after the project is created. Project Number is also immutable but is
+assigned by Google, not the user. Project Name is the only identifier that can
+be changed after creation, and it is not required to be globally unique.
 
 ---
 
 ## Question 4
 
-Your team needs to deploy a web application that must remain available even if a single Google Cloud data center experiences a complete hardware failure. The application does not need to survive a full regional outage. Which deployment strategy meets this requirement at the lowest additional cost and complexity?
+You have granted `roles/editor` to a user at the Organization level. A project
+owner attempts to restrict that user to `roles/viewer` within a specific project
+by adding a `roles/viewer` binding on that project. What is the result?
 
-A. Deploy the application to a single zone in one region.
+- A) The user now has viewer-only access in that project
+- B) The user retains editor access in that project due to additive IAM inheritance
+- C) The conflicting bindings cancel out and the user has no access
+- D) The project-level binding overrides the organization-level binding
 
-B. Deploy the application across multiple zones within a single region.
+**Correct Answer:** B
 
-C. Deploy the application across multiple regions using a global load balancer.
-
-D. Deploy the application on-premises and connect it to GCP via Cloud VPN.
-
-Correct Answer: B
-
-Distractor Analysis:
-
-- Why A is incorrect: A single-zone deployment has no redundancy against zone failures. A hardware failure in that one zone takes the entire application offline, which directly violates the stated availability requirement.
-- Why C is incorrect: Multi-region deployment with a global load balancer does provide resilience against full regional outages, but the scenario explicitly states that regional resilience is not required. Multi-region deployment adds substantial cost, latency management complexity, and data replication overhead that is unnecessary here.
-- Why D is incorrect: On-premises deployment abandons GCP's availability zones entirely and introduces infrastructure management overhead. It does not solve the stated problem and is out of scope for a cloud administration course.
+**Explanation:** GCP IAM inheritance is additive only. Permissions granted at a
+higher level in the hierarchy flow down and cannot be reduced by bindings at a
+lower level. Adding `roles/viewer` at the project level does not reduce the
+`roles/editor` inherited from the Organization level.
 
 ---
 
 ## Question 5
 
-You are establishing governance for your organization's GCP environment. You need to enforce a policy that prevents any Project in the entire organization from creating resources outside of two approved regions, regardless of what IAM permissions individual users hold. What is the correct approach?
+Your monthly GCP spending reaches 90% of your configured budget alert threshold.
+Which of the following will happen automatically?
 
-A. Apply the `roles/compute.admin` role restriction at the Organization level to block non-approved regions.
+- A) All compute instances in the project will be stopped
+- B) The billing account will be suspended
+- C) An email notification will be sent to billing administrators
+- D) New resource creation will be blocked until the budget resets
 
-B. Manually configure each Project to deny resource creation outside approved regions.
+**Correct Answer:** C
 
-C. Apply an Organization Policy constraint using `constraints/gcp.resourceLocations` at the Organization level.
-
-D. Create a custom IAM role that excludes `compute.instances.create` permissions for non-approved regions.
-
-Correct Answer: C
-
-Distractor Analysis:
-
-- Why A is incorrect: IAM roles control who can perform actions but cannot restrict resource creation to specific geographic regions. There is no IAM role that enforces region restrictions at the organizational level for all resource types.
-- Why B is incorrect: Manually configuring every project is operationally unsustainable, especially as new projects are created. Projects added in the future would not be covered unless an administrator remembered to apply the configuration each time.
-- Why D is incorrect: IAM roles and permissions do not operate at the geographic region level. You cannot create an IAM role that differentiates between creating a VM in `us-central1` versus `europe-west1`. Geographic restrictions are solely in the domain of Organization Policies.
+**Explanation:** Budget alerts in GCP are notifications only. Crossing any budget
+threshold sends an email (and optionally a Pub/Sub message) but takes no
+automatic action on resources. Resources continue running and charges continue
+to accrue. Automatic remediation requires custom automation via Cloud Functions.
 
 ---
 
 ## Question 6
 
-Which of the following correctly describes the relationship between a GCP Zone and a GCP Region?
+Which statement best describes the difference between a GCP region and a zone?
 
-A. A region is a single data center; a zone is a group of data centers in the same country.
+- A) A region is a single data center; a zone is a collection of regions
+- B) A region is a geographic location containing multiple isolated zones
+- C) Zones span multiple regions for global availability
+- D) Regions and zones are interchangeable terms for data center locations
 
-B. A zone is a geographic location containing multiple regions for low-latency connectivity.
+**Correct Answer:** B
 
-C. A region is a geographic location containing multiple isolated zones; each zone has independent power and networking.
-
-D. Regions and zones are interchangeable terms for the same concept in GCP documentation.
-
-Correct Answer: C
-
-Distractor Analysis:
-
-- Why A is incorrect: The definitions are reversed. A region is the broader geographic location (equivalent to a metropolitan area of data centers), and a zone is a single isolated deployment area within that region.
-- Why B is incorrect: This reverses the hierarchy. Zones are contained within regions, not the other way around. A zone does not contain regions.
-- Why D is incorrect: Regions and zones are distinct concepts with different failure domains, different scopes, and different use cases in architecture decisions. They are not interchangeable.
+**Explanation:** A region is a specific geographic location (such as Iowa or
+Belgium) that contains multiple zones. A zone is an isolated deployment area
+within a region — typically one or more physical data centers with independent
+power and cooling. Zones within a region are connected by low-latency networking.
 
 ---
 
 ## Question 7
 
-A developer signs up for Google Cloud using a personal `@gmail.com` account and creates several projects. Which statement about the resource hierarchy for this account is correct?
+An architect wants to ensure that no one in the organization can create GCP
+resources outside of `us-central1` and `us-east1`, regardless of their IAM
+role. What is the correct approach?
 
-A. A personal Gmail account automatically creates an Organization node that owns all projects.
+- A) Create IAM deny policies restricting resource creation in other regions
+- B) Configure a VPC firewall rule limiting traffic to those regions
+- C) Apply an Organization Policy constraint using `constraints/gcp.resourceLocations`
+- D) Set a billing budget alert filtered to the approved regions
 
-B. Projects created under a personal Gmail account are not associated with any Organization node.
+**Correct Answer:** C
 
-C. Google assigns a shared Organization node to all personal Gmail GCP accounts.
-
-D. Personal Gmail accounts cannot create GCP Projects without first creating an Organization node.
-
-Correct Answer: B
-
-Distractor Analysis:
-
-- Why A is incorrect: Organization nodes are only created when a Google Workspace or Cloud Identity domain is associated with the account. Personal Gmail accounts do not trigger Organization node provisioning.
-- Why C is incorrect: Google does not create shared Organization nodes for personal Gmail users. Each Organization node maps to a specific domain, and personal Gmail addresses (`@gmail.com`) are not managed domains.
-- Why D is incorrect: Personal Gmail accounts can create GCP Projects and use GCP services without an Organization node. Many individual developers and students use GCP without any Organization node in their hierarchy.
+**Explanation:** Organization Policy constraints control what actions are
+permitted at all, independent of IAM. The `constraints/gcp.resourceLocations`
+constraint restricts which regions resources can be created in. IAM controls
+who can perform actions; Organization Policies control what actions are possible.
 
 ---
 
 ## Question 8
 
-An administrator grants the `roles/editor` role to a contractor at the Folder level. The folder contains five Projects. The contractor will be leaving the company next week. The administrator wants to revoke all GCP access for this contractor. What is the most efficient action?
+You are comparing GCP's Compute Engine pricing to AWS EC2. Your workload runs
+continuously for an entire month with no interruption. Which GCP pricing
+benefit applies automatically without any reservation or commitment?
 
-A. Remove the `roles/editor` binding from each of the five Projects individually.
+- A) Committed Use Discount at 57% off
+- B) Preemptible VM pricing
+- C) Sustained Use Discount at up to 30% off
+- D) Custom machine type discount
 
-B. Remove the `roles/editor` binding from the Folder level.
+**Correct Answer:** C
 
-C. Delete all five Projects to remove the contractor's access.
-
-D. Reassign the contractor's account to a different Folder with no permissions.
-
-Correct Answer: B
-
-Distractor Analysis:
-
-- Why A is incorrect: Removing the binding project-by-project is inefficient and error-prone. Since the original grant was at the Folder level, the binding exists on the Folder, not on each individual Project. A project-level removal would not remove the Folder-level grant.
-- Why C is incorrect: Deleting projects is a destructive action that would remove all resources in those projects, not just the contractor's access. This is a completely disproportionate response that would harm other users and workloads.
-- Why D is incorrect: Moving an account to a different folder is not how IAM works. IAM grants are not attached to accounts in a folder membership sense; they are policy bindings on specific resources. The contractor's email must be removed from the IAM policy binding.
+**Explanation:** Sustained Use Discounts (SUDs) are applied automatically when
+a VM runs for more than 25% of a billing month. A VM running for a full month
+qualifies for the maximum SUD of approximately 30%. No reservation or commitment
+is required — this is a key differentiator from AWS Reserved Instances.
 
 ---
 
 ## Question 9
 
-You are working in Cloud Shell and run `gcloud config set compute/zone us-east1-b`. You then close the browser tab. The next time you open Cloud Shell, which statement about your configuration is correct?
+A developer runs the following command in Cloud Shell:
 
-A. The zone setting is permanently lost because Cloud Shell is fully ephemeral.
+```bash
+gcloud config set compute/region europe-west1
+```
 
-B. The zone setting persists because Cloud Shell writes configuration to the persistent 5 GB home directory.
+Which of the following is true?
 
-C. The zone setting reverts to `us-central1-a` because that is the Cloud Shell default.
+- A) All existing Compute Engine resources are migrated to europe-west1
+- B) The default region for new resources created by this gcloud configuration
+   is set to europe-west1
+- C) A new VPC network is created in europe-west1
+- D) The project's billing is now linked to europe-west1 pricing
 
-D. The zone setting persists for 24 hours and then resets automatically.
+**Correct Answer:** B
 
-Correct Answer: B
-
-Distractor Analysis:
-
-- Why A is incorrect: While the Cloud Shell VM itself is ephemeral (recycled after inactivity), the gcloud configuration files are stored in the home directory, which resides on persistent Cloud Storage. Configuration changes survive Cloud Shell session restarts.
-- Why C is incorrect: Cloud Shell does not have a built-in default zone of `us-central1-a`. The zone reverts to whatever is saved in the gcloud configuration file in your home directory, not to a hardcoded system default.
-- Why D is incorrect: There is no 24-hour expiration timer on gcloud configuration settings. Configuration persists until explicitly changed by the user or until the home directory storage is deleted.
+**Explanation:** `gcloud config set compute/region` sets the default region for
+the active gcloud CLI configuration. It affects which region is used when a
+region is not explicitly specified in subsequent gcloud commands. It does not
+move, create, or affect any existing resources.
 
 ---
 
 ## Question 10
 
-Your organization wants to prevent anyone from creating downloadable service account keys across all GCP Projects, even if those users have the `roles/iam.serviceAccountAdmin` role. What is the correct control to implement?
+Your organization uses Google Workspace with the domain `university.edu`. A new
+GCP environment is being set up. Which resource will be automatically created
+at the top of the GCP resource hierarchy?
 
-A. Remove `roles/iam.serviceAccountAdmin` from all users across the organization.
+- A) A default project named `university-edu`
+- B) An Organization node for `university.edu`
+- C) A billing account linked to the Workspace subscription
+- D) A Folder named after the Workspace domain
 
-B. Apply the `constraints/iam.disableServiceAccountKeyCreation` Organization Policy constraint at the Organization level.
+**Correct Answer:** B
 
-C. Create a custom IAM role that omits the `iam.serviceAccountKeys.create` permission and assign it to all users.
-
-D. Enable the Security Command Center and configure it to auto-delete service account keys.
-
-Correct Answer: B
-
-Distractor Analysis:
-
-- Why A is incorrect: Removing the IAM role would prevent users from managing service accounts at all, which is far more restrictive than necessary. The goal is specifically to prevent key creation while still allowing other service account management tasks.
-- Why C is incorrect: Creating and assigning a custom role to every user is operationally complex and does not scale. New users would not be covered unless the administrator remembered to assign the custom role. Additionally, users with the original `serviceAccountAdmin` role could still create keys unless that role itself is replaced.
-- Why D is incorrect: Security Command Center is a threat detection and security posture management service. It does not auto-delete IAM resources based on policy violations. Preventing key creation requires a preventive control, not a detective one.
+**Explanation:** When GCP is associated with a Google Workspace or Cloud
+Identity domain, an Organization node is automatically provisioned at the top of
+the resource hierarchy. This Organization node is named after the domain
+(e.g., `university.edu`) and serves as the root for all folders, projects, and
+resources within that GCP environment.
 
 ---
 
 End of Quiz — Module 01
 
-Course: CIS-4329 Google Cloud Platform | Texas Wesleyan University | Professor Nash
-
-Certification Target: Google Cloud Associate Cloud Engineer
+Course: CIS-4329 Google Cloud Computing | Texas Wesleyan University | Professor Nash

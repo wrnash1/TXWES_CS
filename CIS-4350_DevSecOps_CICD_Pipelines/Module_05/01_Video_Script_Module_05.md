@@ -1,198 +1,173 @@
-# Video Script: Module 05 - Container Orchestration Security: Kubernetes
+# Video Script: Module 05 — Kubernetes Security
 
 ## Course: CIS-4350 DevSecOps and CI/CD Pipelines
 
+## Texas Wesleyan University | Professor Nash
+
+## Estimated Duration: 20–24 minutes
+
 ## Certification Alignment: DevSecOps Professional (DSOE)
 
-## Estimated Duration: 20-24 minutes
+---
 
-## Instructor: Professor Nash
+### SEGMENT 1 — Introduction (0:00–1:30)
+
+[SLIDE: Module 05 title card]
+
+Welcome to Module 05. In Module 04 we secured individual Docker containers. In this module we scale up to Kubernetes — the dominant container orchestration platform — and learn how to apply security controls at the cluster level.
+
+Kubernetes introduces new attack surface: the API server, etcd, RBAC permissions, pod scheduling, network communication between pods, secrets storage, and admission control. Each of these is an area where misconfiguration creates critical vulnerabilities.
+
+By the end of this module you'll understand Kubernetes RBAC, Pod Security Admission, network policies, secrets management, admission controllers including OPA Gatekeeper, runtime security with Falco, and the CIS Kubernetes Benchmark.
 
 ---
 
-### [00:00 - 01:30] Opening and Module Overview
+### SEGMENT 2 — Kubernetes Architecture and Security Surface (1:30–4:30)
 
-**Visual:** Instructor on camera, title card: "Module 05 — Container Orchestration Security: Kubernetes"
+[SLIDE: Kubernetes control plane and node architecture]
 
-**Audio:**
+Kubernetes has two types of components: control plane and worker nodes.
 
-"Welcome back to CIS-4350. I'm Professor Nash. In Module 04 we secured individual Docker containers. Now we're scaling up: when you have hundreds or thousands of containers running across multiple hosts, you need an orchestration platform. That platform is Kubernetes — the dominant container orchestration system in enterprise DevSecOps environments.
+The control plane includes the API server — the central management endpoint; etcd — the key-value store holding all cluster state including secrets; the scheduler — assigns pods to nodes; and the controller manager — maintains desired state.
 
-Kubernetes introduces a new security model with its own attack surface. By the end of this video you'll understand the Kubernetes architecture from a security perspective, explain the RBAC model, configure Security Contexts, understand Network Policies, and know how to secure the Kubernetes API server. Kubernetes security has its own dedicated module later in this course (Module 12) — here we're building the foundational concepts."
+Worker nodes run the kubelet — the node agent; the container runtime (containerd or CRI-O); and kube-proxy — network routing.
 
----
+The security attack surface breaks down into four areas.
 
-### [01:30 - 06:00] Kubernetes Architecture and Security Model
+Control plane security: The API server is the single point of control for the entire cluster. Unauthorized access to the API server is a complete cluster compromise. etcd contains all secrets in base64 encoding by default — encryption at rest is required for any regulated environment.
 
-**Visual:** Kubernetes architecture diagram — control plane (API server, etcd, scheduler, controller manager) and worker nodes (kubelet, kube-proxy, pods)
+Workload security: Pods running with excessive privileges, host namespace access, or as root can escape to the node.
 
-**Audio:**
+Network security: By default, all pods can communicate with all other pods. This is a flat network model that violates the principle of least privilege.
 
-"Let's start with the Kubernetes architecture and its security implications.
-
-The Kubernetes control plane consists of four components. The API server is the central control point — every interaction with Kubernetes (kubectl commands, CI/CD deployments, pod scheduling) goes through the API server. This makes it the highest-value attack target in a Kubernetes cluster. The API server must be protected with authentication, authorization (RBAC), and network access controls.
-
-etcd is the key-value store that holds all cluster state — pod definitions, secrets, service configurations, certificates. etcd stores Kubernetes Secrets in base64 encoding by default, which is not encryption. Encryption at rest for etcd must be explicitly configured. Compromising etcd is equivalent to compromising the entire cluster.
-
-The scheduler assigns pods to nodes. The controller manager runs control loops that maintain desired state (e.g., ensuring the right number of pod replicas are running).
-
-Worker nodes run the actual workloads. Each worker node has a kubelet — the agent that communicates with the API server and manages pods on the node. The kubelet has a local API that must be secured against unauthorized access.
-
-From a DevSecOps pipeline perspective, the CI/CD system interacts with the Kubernetes API server to deploy workloads. This means the CI/CD system needs credentials to authenticate to the Kubernetes API — and those credentials must be tightly scoped using RBAC."
+Secrets security: Kubernetes Secrets are base64-encoded, not encrypted. They must be protected with RBAC and optionally with external secret management.
 
 ---
 
-### [06:00 - 11:00] Kubernetes RBAC Model
+### SEGMENT 3 — RBAC in Kubernetes (4:30–8:00)
 
-**Visual:** RBAC diagram — Subject (User/ServiceAccount) → RoleBinding → Role → Resources/Verbs
+[SLIDE: RBAC entities diagram — Subject, Role, RoleBinding]
 
-**Audio:**
+Role-Based Access Control is the primary authorization mechanism in Kubernetes. RBAC has four resources: Role, ClusterRole, RoleBinding, and ClusterRoleBinding.
 
-"Role-Based Access Control — RBAC — is the authorization model in Kubernetes. Understanding RBAC is one of the highest-priority Kubernetes topics on the DevSecOps Professional exam.
+A Role defines a set of permissions within a specific namespace. A ClusterRole defines permissions cluster-wide. A RoleBinding grants a Role to a subject (user, group, or ServiceAccount) within a namespace. A ClusterRoleBinding grants a ClusterRole cluster-wide.
 
-RBAC in Kubernetes has four key objects: Role, ClusterRole, RoleBinding, and ClusterRoleBinding.
-
-A **Role** defines a set of permissions within a specific namespace. Permissions specify what API resources (pods, services, deployments) can be accessed and what verbs (get, list, watch, create, update, delete) are allowed.
-
-A **ClusterRole** defines permissions across the entire cluster, not limited to a namespace. ClusterRoles are used for cluster-wide resources like nodes, persistent volumes, and namespaces themselves.
-
-A **RoleBinding** grants the permissions defined in a Role to a subject (a user, group, or service account) within a specific namespace.
-
-A **ClusterRoleBinding** grants a ClusterRole to a subject cluster-wide.
-
-**[SHOW CODE]**
-
-Here is an RBAC configuration for a CI/CD deployment service account — the principle of least privilege applied to Kubernetes:
+Here's a minimal Role for a developer who needs read-only access to pods and logs in the `production` namespace:
 
 ```yaml
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: ci-deployer
-  namespace: production
-
----
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: deployment-manager
+  name: pod-reader
   namespace: production
 rules:
-  - apiGroups: ["apps"]
-    resources: ["deployments"]
-    verbs: ["get", "list", "update", "patch"]
   - apiGroups: [""]
-    resources: ["pods"]
-    verbs: ["get", "list"]
+    resources: ["pods", "pods/log"]
+    verbs: ["get", "list", "watch"]
+```
 
----
+```yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: ci-deployer-binding
+  name: developer-pod-reader
   namespace: production
 subjects:
-  - kind: ServiceAccount
-    name: ci-deployer
-    namespace: production
+  - kind: User
+    name: alice@company.com
+    apiGroup: rbac.authorization.k8s.io
 roleRef:
   kind: Role
-  name: deployment-manager
+  name: pod-reader
   apiGroup: rbac.authorization.k8s.io
 ```
 
-This creates a service account `ci-deployer` that can only update deployments and read pods in the `production` namespace. It cannot create new resources, access secrets, delete deployments, or touch any other namespace. This is the correct least-privilege model for a CI/CD deployment credential.
+The most common RBAC mistake is using the `cluster-admin` ClusterRole for service accounts that don't need it. `cluster-admin` is effectively root on the cluster. Use it only for cluster administrators.
 
-The most dangerous RBAC misconfiguration — and the one most frequently tested on exams — is granting `cluster-admin` to a service account. `cluster-admin` has full control of the entire cluster. A compromised CI/CD credential with `cluster-admin` is a full cluster compromise."
+ServiceAccount RBAC is especially important because ServiceAccounts are mounted into pods by default. A pod with an overly permissive ServiceAccount can manipulate the Kubernetes API on behalf of an attacker who compromises the pod.
+
+```yaml
+# Disable automounting for service accounts that don't need API access
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: api-service
+  namespace: production
+automountServiceAccountToken: false
+```
 
 ---
 
-### [11:00 - 16:00] Security Contexts and Pod Security
+### SEGMENT 4 — Pod Security Admission (8:00–11:00)
 
-**Visual:** Pod specification YAML with securityContext highlighted
+[SLIDE: Pod Security Admission profile levels — Privileged, Baseline, Restricted]
 
-**Audio:**
+Pod Security Admission (PSA), introduced in Kubernetes 1.23 and stable in 1.25, replaces the deprecated PodSecurityPolicy. PSA enforces security standards at the namespace level using three profiles.
 
-"Security Contexts in Kubernetes apply the same principle we used in Docker — running as non-root, dropping capabilities, read-only filesystems — but at the pod and container specification level.
+Privileged: No restrictions. Pods can run as root, use host namespaces, and escalate privileges. Only for system namespaces like `kube-system`.
 
-**[SHOW CODE]**
+Baseline: Prevents the most dangerous configurations. Disallows: host namespaces (`hostPID`, `hostIPC`, `hostNetwork`), privileged containers, host path volumes that aren't read-only, and several other high-risk settings.
 
-Here is a pod specification with a comprehensive Security Context:
+Restricted: Implements current pod security best practices. Requires non-root user, drops all capabilities, requires seccomp profile, disallows privilege escalation.
+
+Enable PSA by labeling namespaces:
+
+```yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: production
+  labels:
+    pod-security.kubernetes.io/enforce: restricted
+    pod-security.kubernetes.io/enforce-version: latest
+    pod-security.kubernetes.io/warn: restricted
+    pod-security.kubernetes.io/audit: restricted
+```
+
+With `enforce: restricted`, any pod that violates the Restricted profile will be rejected at admission. The `warn` label lets non-conforming pods through but generates a warning. The `audit` label logs violations to the audit log. Use `warn` and `audit` before `enforce` during migration to identify which workloads need remediation.
+
+A pod that satisfies the Restricted profile looks like:
 
 ```yaml
 apiVersion: v1
 kind: Pod
 metadata:
   name: secure-app
-  namespace: production
 spec:
   securityContext:
     runAsNonRoot: true
     runAsUser: 1001
-    runAsGroup: 1001
-    fsGroup: 1001
     seccompProfile:
       type: RuntimeDefault
-
   containers:
     - name: app
-      image: myapp:1.2.3
+      image: myapp:v1.2.3
       securityContext:
         allowPrivilegeEscalation: false
-        readOnlyRootFilesystem: true
         capabilities:
-          drop:
-            - ALL
-          add:
-            - NET_BIND_SERVICE
-      resources:
-        limits:
-          memory: "256Mi"
-          cpu: "500m"
-        requests:
-          memory: "128Mi"
-          cpu: "250m"
+          drop: ["ALL"]
+        readOnlyRootFilesystem: true
       volumeMounts:
-        - name: tmp-dir
+        - name: tmp
           mountPath: /tmp
-
   volumes:
-    - name: tmp-dir
+    - name: tmp
       emptyDir: {}
 ```
 
-Let me walk through the security fields.
-
-`runAsNonRoot: true` — Kubernetes will refuse to start the pod if the container image runs as root. This is an admission control check.
-
-`runAsUser: 1001` — enforces that the process runs as UID 1001, not root.
-
-`allowPrivilegeEscalation: false` — prevents the container process from gaining more privileges than it starts with (e.g., via setuid binaries).
-
-`readOnlyRootFilesystem: true` — mounts the container's root filesystem read-only. The `tmp-dir` volume mount provides a writable temporary directory for applications that need to write files.
-
-`capabilities: drop: [ALL]` — drops all Linux capabilities. `add: [NET_BIND_SERVICE]` adds back only what is needed.
-
-`seccompProfile: RuntimeDefault` — enables the default seccomp (system call filtering) profile, blocking a large set of dangerous system calls.
-
-Resource limits (`memory` and `cpu`) prevent denial-of-service attacks where a compromised container consumes all node resources."
-
 ---
 
-### [16:00 - 20:00] Network Policies and API Server Security
+### SEGMENT 5 — Network Policies (11:00–13:30)
 
-**Visual:** Kubernetes Network Policy diagram showing allowed and denied traffic paths
+[SLIDE: Network policy ingress/egress diagram]
 
-**Audio:**
+By default, all pods in a Kubernetes cluster can reach all other pods on any port. This flat network model means that if an attacker compromises one pod, they can reach every other pod in the cluster.
 
-"By default, Kubernetes allows all pod-to-pod communication within the cluster — any pod can reach any other pod on any port. This flat network model means that if an attacker compromises one pod, they can reach all other pods in the cluster. Network Policies change this.
+Network Policies define how pods can communicate. They are the firewall rules for pod-to-pod traffic.
 
-**[SHOW CODE]**
-
-A Network Policy that implements a default-deny posture and then allows only specific traffic:
+A default-deny policy blocks all ingress and egress traffic for a namespace:
 
 ```yaml
-# Default deny all ingress and egress
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -203,18 +178,20 @@ spec:
   policyTypes:
     - Ingress
     - Egress
+```
 
----
-# Allow frontend pods to reach backend pods on port 8080
+Then selectively allow only required communication:
+
+```yaml
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: allow-frontend-to-backend
+  name: allow-frontend-to-api
   namespace: production
 spec:
   podSelector:
     matchLabels:
-      app: backend
+      app: api
   policyTypes:
     - Ingress
   ingress:
@@ -227,18 +204,130 @@ spec:
           port: 8080
 ```
 
-The first policy selects all pods in the `production` namespace and denies all ingress and egress by default. The second policy explicitly allows frontend pods to reach backend pods on port 8080. Any other traffic — backend to database on an unspecified port, compromised pod to external internet — is blocked.
-
-For API server security: the Kubernetes API server should not be exposed to the public internet. Access should be restricted to management networks and CI/CD systems via firewall rules. Audit logging should be enabled to record all API server requests for forensic purposes."
+Network Policies require a CNI plugin that supports them — Calico, Cilium, and Weave are common examples. The default Flannel CNI does not enforce Network Policies.
 
 ---
 
-### [20:00 - End] Closing and Exam Alignment
+### SEGMENT 6 — Admission Controllers and OPA Gatekeeper (13:30–17:00)
 
-**Visual:** Instructor on camera
+[SLIDE: Kubernetes admission controller flow diagram]
 
-**Audio:**
+Admission controllers are plugins that intercept API requests after authentication and authorization but before persistence in etcd. They can mutate requests or validate them, rejecting requests that violate policy.
 
-"For the exam: know the four RBAC objects — Role, ClusterRole, RoleBinding, ClusterRoleBinding — and how they combine to grant permissions. Know that `cluster-admin` is the most dangerous RBAC assignment. Know Security Context fields: `runAsNonRoot`, `allowPrivilegeEscalation: false`, `readOnlyRootFilesystem: true`, and capability dropping. Know that Kubernetes Network Policies are deny-by-default additive rules — you must explicitly start with a default-deny policy.
+Two types: Mutating Admission Controllers modify the incoming object (e.g., inject a sidecar container). Validating Admission Controllers accept or reject based on policy.
 
-Modules 12 covers Kubernetes security in depth. Complete the lab and quiz for this module before moving on to Module 06."
+OPA Gatekeeper is a validating admission webhook that uses Rego policies (same language as OPA) to enforce custom policies on Kubernetes objects. It extends PSA capabilities with organization-specific policies.
+
+A ConstraintTemplate defines a reusable policy type:
+
+```yaml
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: k8srequiredlabels
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sRequiredLabels
+      validation:
+        openAPIV3Schema:
+          properties:
+            labels:
+              type: array
+              items:
+                type: string
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package k8srequiredlabels
+        violation[{"msg": msg}] {
+          provided := {label | input.review.object.metadata.labels[label]}
+          required := {label | label := input.parameters.labels[_]}
+          missing := required - provided
+          count(missing) > 0
+          msg := sprintf("Missing required labels: %v", [missing])
+        }
+```
+
+A Constraint instantiates the policy:
+
+```yaml
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sRequiredLabels
+metadata:
+  name: require-app-label
+spec:
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod"]
+  parameters:
+    labels: ["app", "version", "team"]
+```
+
+---
+
+### SEGMENT 7 — Runtime Security with Falco and CIS Benchmark (17:00–20:30)
+
+[SLIDE: Falco alert output]
+
+Falco is an open-source runtime security tool from Sysdig (now CNCF). It monitors the Linux kernel via eBPF or kernel module, detecting anomalous container behavior and generating alerts.
+
+Falco rules define suspicious behavior. Built-in rules detect events like:
+
+```yaml
+- rule: Terminal shell in container
+  desc: A shell was spawned by a non-shell program in a container
+  condition: >
+    spawned_process and container
+    and shell_procs and proc.pname exists
+    and not proc.pname in (shell_binaries)
+  output: >
+    Shell spawned in container (user=%user.name container=%container.name
+    shell=%proc.name parent=%proc.pname)
+  priority: WARNING
+```
+
+Falco integrates with SIEM systems, Slack, PagerDuty, and Kubernetes audit logs for alerting.
+
+The CIS Kubernetes Benchmark provides prescriptive hardening guidance for Kubernetes clusters. kube-bench is an open-source tool that automates CIS benchmark checks:
+
+```bash
+# Run kube-bench on a node
+kube-bench run --targets node
+
+# Run against the control plane
+kube-bench run --targets master
+
+# Output in JSON for integration
+kube-bench run --json > kube-bench-results.json
+```
+
+kube-bench reports pass, fail, and warn for each CIS check, organized by section (API server, etcd, scheduler, controller manager, RBAC, etc.).
+
+---
+
+### SEGMENT 8 — Module Summary and Looking Ahead (20:30–22:00)
+
+[SLIDE: Module 05 key takeaways]
+
+Module 05 summary.
+
+Kubernetes RBAC controls who can do what to which resources. Avoid `cluster-admin` for service accounts; disable automounting tokens for pods that don't need API access.
+
+Pod Security Admission enforces security profiles at the namespace level. Use `warn` and `audit` before `enforce` to identify non-compliant workloads.
+
+Network Policies implement default-deny with selective allow — the Kubernetes equivalent of firewall rules.
+
+OPA Gatekeeper extends PSA with custom organization policies enforced at admission.
+
+Falco provides runtime threat detection by monitoring kernel syscalls and container behavior.
+
+kube-bench automates CIS Kubernetes Benchmark checks to assess and track cluster hardening status.
+
+In Module 06 we move to Infrastructure as Code security — Terraform scanning with tfsec and checkov, policy as code with OPA and Sentinel, and immutable infrastructure principles. See you there.
+
+---
+
+*[END OF SCRIPT — Module 05]*

@@ -1,162 +1,265 @@
-# Reading Guide: Module 05 - Container Orchestration Security: Kubernetes
+# Reading Guide: Module 05 — Kubernetes Security
 
 ## Course: CIS-4350 DevSecOps and CI/CD Pipelines
+
+## Texas Wesleyan University | Professor Nash
 
 ## Certification Alignment: DevSecOps Professional (DSOE)
 
 ---
 
-## Introduction
+## Learning Objectives
 
-Module 05 introduces Kubernetes container orchestration from a security perspective. Kubernetes is the dominant platform for deploying containerized applications at scale in enterprise DevSecOps environments. Its RBAC model, Security Contexts, Network Policies, and API server security configuration are all heavily tested on the DevSecOps Professional exam. Module 12 covers Kubernetes security in greater depth; this module establishes the foundational concepts.
+After completing this reading guide, you will be able to:
 
----
-
-## Section 1: High-Yield Glossary
-
-**Kubernetes (K8s)** — An open-source container orchestration system that automates the deployment, scaling, and management of containerized applications across clusters of machines.
-
-**Pod** — The smallest deployable unit in Kubernetes. A pod contains one or more containers that share a network namespace and storage. Security configurations are applied at the pod and container level.
-
-**Namespace** — A logical partition within a Kubernetes cluster that isolates resources. RBAC Roles and Network Policies are namespace-scoped.
-
-**Control plane** — The Kubernetes components that manage the cluster: API server, etcd, scheduler, and controller manager. The control plane must be hardened and isolated from workload nodes.
-
-**API server** — The central Kubernetes component that processes all REST API requests. Every kubectl command, CI/CD deployment, and controller operation passes through the API server. Its security directly determines cluster security.
-
-**etcd** — The distributed key-value store that holds all Kubernetes cluster state: pod definitions, Secrets, ConfigMaps, RBAC policies, and certificates. Must be encrypted at rest and access-restricted.
-
-**ServiceAccount** — A Kubernetes object representing an identity for processes running in a pod. Pods use ServiceAccounts to authenticate to the Kubernetes API server. CI/CD systems use ServiceAccounts for deployment credentials.
-
-**RBAC (Role-Based Access Control)** — The Kubernetes authorization model. Controls what actions a subject (user, group, or service account) can perform on which API resources.
-
-**Role** — A namespaced Kubernetes RBAC object that defines a set of permissions (allowed API resources and verbs) within a specific namespace.
-
-**ClusterRole** — A cluster-scoped Kubernetes RBAC object that defines permissions across all namespaces and for cluster-level resources.
-
-**RoleBinding** — A Kubernetes object that grants the permissions defined in a Role to a subject within a specific namespace.
-
-**ClusterRoleBinding** — A Kubernetes object that grants a ClusterRole to a subject at the cluster level (all namespaces).
-
-**cluster-admin** — The most privileged built-in ClusterRole in Kubernetes, granting full control over all resources in the cluster. Should never be granted to automated CI/CD service accounts.
-
-**Security Context** — A Kubernetes pod or container specification field that applies Linux security settings: running user/group, read-only root filesystem, capability dropping, seccomp profiles, and privilege escalation prevention.
-
-**seccompProfile** — A Security Context field that enables Linux seccomp (secure computing mode) to filter allowed system calls. `RuntimeDefault` uses the container runtime's default seccomp profile.
-
-**allowPrivilegeEscalation** — A Security Context container field. When set to `false`, prevents the container process from gaining additional privileges through setuid/setgid binaries or Linux capabilities.
-
-**readOnlyRootFilesystem** — A Security Context container field. When set to `true`, mounts the container's root filesystem read-only, preventing filesystem writes by a compromised process.
-
-**Network Policy** — A Kubernetes object that controls ingress and egress traffic between pods. Network Policies are additive (default-allow by default; require explicit default-deny to enforce zero-trust).
-
-**Default-deny Network Policy** — A Network Policy with an empty `podSelector: {}` that selects all pods in a namespace and denies all ingress and egress. Required to enforce network segmentation. Additional policies then explicitly allow required traffic.
-
-**Admission controller** — A Kubernetes component that intercepts API server requests before objects are persisted, enabling policy enforcement: blocking pods that run as root, requiring image scanning results, enforcing resource limits.
-
-**PodSecurityAdmission** — A built-in Kubernetes admission controller (GA in K8s 1.25+) that enforces Pod Security Standards (Privileged, Baseline, Restricted) at the namespace level.
+- Describe Kubernetes control plane components and their security implications
+- Write RBAC Roles, ClusterRoles, and bindings following least-privilege principles
+- Configure Pod Security Admission profiles on namespaces
+- Write Network Policies implementing default-deny with selective allow
+- Deploy OPA Gatekeeper ConstraintTemplates and Constraints for custom policy enforcement
+- Interpret Falco alert output and understand kube-bench CIS benchmark reports
 
 ---
 
-## Section 2: Kubernetes RBAC Model Reference
+## Section 1 — Kubernetes Architecture Security Review
 
-| RBAC Object | Scope | Purpose |
+### 1.1 Control Plane Components
+
+| Component | Function | Key Security Concern |
 |---|---|---|
-| Role | Namespace | Defines permissions (resources + verbs) within one namespace |
-| ClusterRole | Cluster-wide | Defines permissions across all namespaces or for cluster resources |
-| RoleBinding | Namespace | Grants a Role or ClusterRole to a subject in one namespace |
-| ClusterRoleBinding | Cluster-wide | Grants a ClusterRole to a subject across all namespaces |
+| kube-apiserver | All cluster operations go through it | Expose only via TLS; audit log all requests |
+| etcd | Stores all cluster state, including secrets | Encrypt at rest; restrict access to apiserver only |
+| kube-scheduler | Assigns pods to nodes | Limit to authenticated API access |
+| kube-controller-manager | Runs control loops | Restrict SA token auto-mount |
+| cloud-controller-manager | Cloud provider integration | Least-privilege IAM role |
 
-### RBAC Verb Reference
+### 1.2 Node Components
 
-| Verb | Description |
-|---|---|
-| get | Read a single named resource |
-| list | List all resources of a type |
-| watch | Watch for changes to resources |
-| create | Create a new resource |
-| update | Replace an existing resource |
-| patch | Partially modify an existing resource |
-| delete | Delete a resource |
-| * | All verbs (wildcard — avoid in least-privilege configurations) |
+| Component | Function | Key Security Concern |
+|---|---|---|
+| kubelet | Node agent executing pod specs | Authenticate with TLS client certs; restrict anonymous access |
+| containerd / CRI-O | Container runtime | Use rootless mode where possible |
+| kube-proxy | Manages iptables/eBPF rules | No external exposure needed |
 
-### Principle of Least Privilege for Service Accounts
+### 1.3 Default Insecure Configurations to Remediate
 
-- CI/CD deployment accounts should have only `update` and `patch` on `deployments`, and `get`/`list` on `pods` — not `cluster-admin`.
-- Application pods should have no ServiceAccount token mounted unless they explicitly need to call the Kubernetes API.
-- Set `automountServiceAccountToken: false` on pods that do not need cluster API access.
+- Anonymous authentication to the API server (`--anonymous-auth=false`)
+- Unauthenticated kubelet API (`--authentication-token-webhook=true`)
+- etcd without encryption at rest
+- Default service account with automounted token in all pods
+- No audit logging on the API server
+- Flat network (no Network Policies)
 
 ---
 
-## Section 3: Security Context Reference
+## Section 2 — RBAC Deep Dive
 
-The following Security Context settings should be applied to all production pods.
+### 2.1 RBAC Resource Hierarchy
+
+```text
+ClusterRole / Role (defines permissions)
+    ↓ bound to ↓
+ClusterRoleBinding / RoleBinding (binds to subject)
+    ↓ for subject ↓
+User / Group / ServiceAccount
+```
+
+### 2.2 RBAC Principle of Least Privilege
+
+| Anti-Pattern | Risk | Correct Approach |
+|---|---|---|
+| `cluster-admin` for app service accounts | Full cluster compromise if SA token stolen | Create minimal Role with only required verbs |
+| `get/list/watch` on Secrets cluster-wide | Exposes all secrets | Namespace-scoped Role for specific secret names |
+| Wildcard verbs: `verbs: ["*"]` | Allows create/delete/escalate | Enumerate exactly required verbs |
+| Wildcard resources: `resources: ["*"]` | Broad access | Enumerate exactly required resources |
+| No RBAC at all (ABAC legacy) | Flat authorization | Migrate to RBAC |
+
+### 2.3 Minimal ServiceAccount Pattern
+
+```yaml
+# Dedicated ServiceAccount per application
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: payments-service
+  namespace: production
+automountServiceAccountToken: false   # Disable unless API access needed
+---
+# Role with exactly required permissions
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: payments-config-reader
+  namespace: production
+rules:
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    resourceNames: ["payments-config"]  # Named resource restriction
+    verbs: ["get"]
+---
+# Bind role to ServiceAccount
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: payments-config-binding
+  namespace: production
+subjects:
+  - kind: ServiceAccount
+    name: payments-service
+    namespace: production
+roleRef:
+  kind: Role
+  name: payments-config-reader
+  apiGroup: rbac.authorization.k8s.io
+```
+
+### 2.4 Auditing RBAC with kubectl
+
+```bash
+# List all ClusterRoleBindings — find who has cluster-admin
+kubectl get clusterrolebindings -o wide
+
+# Check effective permissions for a ServiceAccount
+kubectl auth can-i --list \
+  --as=system:serviceaccount:production:payments-service
+
+# Check if a specific action is permitted
+kubectl auth can-i delete pods \
+  --as=system:serviceaccount:production:payments-service \
+  -n production
+```
+
+---
+
+## Section 3 — Pod Security Admission
+
+### 3.1 PSA Profile Comparison
+
+| Check | Privileged | Baseline | Restricted |
+|---|---|---|---|
+| hostNetwork / hostPID / hostIPC | Allowed | Blocked | Blocked |
+| Privileged containers | Allowed | Blocked | Blocked |
+| Host path volumes | Allowed | Blocked (most) | Blocked |
+| runAsRoot | Allowed | Allowed | Must be false |
+| Capabilities (all) | Allowed | CAP_SYS_ADMIN+ blocked | Must drop ALL |
+| Privilege escalation | Allowed | Allowed | Must be false |
+| seccomp profile | Allowed | Allowed | Must be RuntimeDefault or Localhost |
+| Volume types | All | Most | Limited set only |
+
+### 3.2 Namespace Labels for PSA
+
+```yaml
+# Dry run — warn mode first (does not block)
+metadata:
+  labels:
+    pod-security.kubernetes.io/warn: restricted
+    pod-security.kubernetes.io/warn-version: latest
+
+# Graduated enforcement
+metadata:
+  labels:
+    pod-security.kubernetes.io/audit: restricted
+    pod-security.kubernetes.io/warn: restricted
+    pod-security.kubernetes.io/enforce: baseline   # Enforce at baseline first
+```
+
+### 3.3 Compliant Pod Spec for Restricted Profile
 
 ```yaml
 spec:
   securityContext:
     runAsNonRoot: true
     runAsUser: 1001
+    runAsGroup: 1001
     fsGroup: 1001
     seccompProfile:
       type: RuntimeDefault
   containers:
-    - securityContext:
+    - name: app
+      image: myapp:v1.2.3@sha256:abc123...
+      securityContext:
         allowPrivilegeEscalation: false
-        readOnlyRootFilesystem: true
         capabilities:
-          drop: [ALL]
+          drop: ["ALL"]
+        readOnlyRootFilesystem: true
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "250m"
+        limits:
+          memory: "128Mi"
+          cpu: "500m"
 ```
 
-| Field | Value | Security Effect |
-|---|---|---|
-| `runAsNonRoot` | `true` | Blocks pod start if image runs as root |
-| `runAsUser` | non-zero UID | Enforces non-root UID for process |
-| `allowPrivilegeEscalation` | `false` | Prevents setuid privilege gain |
-| `readOnlyRootFilesystem` | `true` | Blocks filesystem writes by compromised process |
-| `capabilities.drop` | `[ALL]` | Removes all Linux capabilities |
-| `seccompProfile.type` | `RuntimeDefault` | Filters dangerous system calls |
-
 ---
 
-## Section 4: Kubernetes vs. Docker Security Model Comparison
+## Section 4 — Network Policies
 
-| Dimension | Docker (standalone) | Kubernetes |
-|---|---|---|
-| Access control | Docker daemon socket (root equivalent) | RBAC on API server |
-| Secrets management | Docker Secrets (Swarm) or env vars | Kubernetes Secrets (base64, optionally encrypted) |
-| Network isolation | Docker network bridges | Network Policies (namespace-scoped) |
-| Non-root enforcement | USER directive in Dockerfile | `runAsNonRoot` in Security Context |
-| Capability dropping | `--cap-drop ALL` at runtime | `capabilities.drop: [ALL]` in Security Context |
-| Audit logging | Docker daemon logs | Kubernetes API server audit logs |
-| Policy enforcement | Limited (manual) | Admission controllers, OPA Gatekeeper |
-
----
-
-## Section 5: Network Policy Reference
-
-### Default-Deny Pattern
-
-Applying a default-deny NetworkPolicy to a namespace blocks all traffic. All required connections must then be explicitly permitted.
+### 4.1 Default-Deny Pattern
 
 ```yaml
+# Apply this to every application namespace
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: default-deny-all
+  name: default-deny-ingress
   namespace: production
 spec:
   podSelector: {}
   policyTypes:
     - Ingress
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-egress
+  namespace: production
+spec:
+  podSelector: {}
+  policyTypes:
     - Egress
 ```
 
-### Allowlist Addition Pattern
-
-After applying default-deny, add explicit allow policies for each required traffic path.
+### 4.2 Three-Tier Application Network Policy
 
 ```yaml
+# Allow ingress-controller → frontend
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-ingress-to-frontend
+  namespace: production
+spec:
+  podSelector:
+    matchLabels:
+      tier: frontend
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: ingress-nginx
+      ports:
+        - port: 8080
+---
+# Allow frontend → API
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-frontend-to-api
+  namespace: production
+spec:
+  podSelector:
+    matchLabels:
+      tier: api
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              tier: frontend
+      ports:
+        - port: 8080
+---
+# Allow API → database
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -165,84 +268,194 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-      app: database
-  policyTypes:
-    - Ingress
+      tier: database
   ingress:
     - from:
         - podSelector:
             matchLabels:
-              app: api
+              tier: api
       ports:
-        - protocol: TCP
-          port: 5432
+        - port: 5432
+```
+
+### 4.3 DNS Egress Policy
+
+Pods need DNS resolution. Always include an egress rule to allow port 53:
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-dns-egress
+  namespace: production
+spec:
+  podSelector: {}
+  policyTypes:
+    - Egress
+  egress:
+    - ports:
+        - port: 53
+          protocol: UDP
+        - port: 53
+          protocol: TCP
 ```
 
 ---
 
-## Section 6: CI/CD Pipeline Stage Comparison — Kubernetes Security Controls
+## Section 5 — Admission Controllers and OPA Gatekeeper
 
-| Pipeline Stage | Kubernetes Security Control | Tool / Method |
+### 5.1 Built-in Admission Controllers to Enable
+
+| Controller | Purpose |
+|---|---|
+| NodeRestriction | Limits kubelet to modify only its own node/pods |
+| PodSecurity | Enforces Pod Security Admission profiles |
+| LimitRanger | Enforces resource limits in namespaces |
+| ResourceQuota | Limits total resources per namespace |
+| ServiceAccount | Automates SA token injection (also enables disabling it) |
+
+### 5.2 OPA Gatekeeper Policy Catalog
+
+Common Gatekeeper policies for production clusters:
+
+| Policy | Description |
+|---|---|
+| k8srequiredlabels | Require specific labels on all pods |
+| k8scontainerlimits | Require CPU/memory limits on all containers |
+| k8sallowedrepos | Restrict image pull to approved registries only |
+| k8snolatestimage | Block `:latest` tag on container images |
+| k8sreadonlyrootfs | Require readOnlyRootFilesystem on all containers |
+| k8sblockloadbalancer | Prevent LoadBalancer services in certain namespaces |
+
+### 5.3 Approved Registry Policy Example
+
+```yaml
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: k8sallowedrepos
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sAllowedRepos
+      validation:
+        openAPIV3Schema:
+          properties:
+            repos:
+              type: array
+              items:
+                type: string
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package k8sallowedrepos
+        violation[{"msg": msg}] {
+          container := input.review.object.spec.containers[_]
+          not strings.any_prefix_match(
+            container.image,
+            input.parameters.repos
+          )
+          msg := sprintf("Image '%v' not from approved registry", [container.image])
+        }
+---
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sAllowedRepos
+metadata:
+  name: approved-registries
+spec:
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod"]
+  parameters:
+    repos:
+      - "registry.company.com/"
+      - "gcr.io/distroless/"
+```
+
+---
+
+## Section 6 — Runtime Security and CIS Benchmark
+
+### 6.1 Falco Rule Anatomy
+
+```yaml
+- rule: Write below root
+  desc: An attempt to write to any file directly below / or /etc
+  condition: >
+    open_write and container
+    and (fd.name startswith /etc or fd.directory = /)
+    and not proc.name in (known_root_files_writers)
+  output: >
+    File below / or /etc opened for writing
+    (user=%user.name target=%fd.name command=%proc.cmdline
+    container=%container.name image=%container.image.repository)
+  priority: ERROR
+  tags: [filesystem, mitre_persistence]
+```
+
+### 6.2 Falco Integration Targets
+
+```yaml
+# falco.yaml output section
+json_output: true
+json_include_output_property: true
+
+grpc:
+  enabled: true
+  bind_address: "0.0.0.0:5060"
+
+program_output:
+  enabled: true
+  keep_alive: false
+  program: "jq '{text: .output}' | curl -d @- -X POST https://hooks.slack.com/YOUR_WEBHOOK"
+```
+
+### 6.3 kube-bench CIS Check Categories
+
+| Category | CIS Section | Key Checks |
 |---|---|---|
-| Container build | Image scanning | Trivy, Grype |
-| Pre-deployment | Kubernetes manifest scanning | Checkov, kubesec, kube-score |
-| Deployment | Admission controller enforcement | OPA Gatekeeper, Kyverno |
-| Runtime | Security Context enforcement | PodSecurityAdmission |
-| Runtime | Network policy enforcement | Calico, Cilium, WeaveNet |
-| Runtime monitoring | Container behavior anomaly detection | Falco |
+| Control Plane | 1.x | API server TLS, audit log, anonymous auth |
+| etcd | 2.x | Encryption at rest, TLS, client auth |
+| Control Plane Config | 3.x | Scheduler, controller manager flags |
+| Worker Node | 4.x | kubelet flags, node authentication |
+| Kubernetes Policies | 5.x | RBAC, pod security policies, network policies |
 
 ---
 
-## Section 7: Kubernetes API Server Security Reference
+## Exam Tips for DSOE Certification
 
-- Enable RBAC authentication (`--authorization-mode=RBAC`).
-- Enable audit logging (`--audit-log-path`, `--audit-policy-file`).
-- Restrict API server network access to management and CI/CD networks via firewall rules.
-- Disable anonymous authentication (`--anonymous-auth=false`).
-- Use TLS for all API server communications.
-- Encrypt etcd at rest using the EncryptionConfiguration API.
-
----
-
-## Section 8: SAST vs. DAST vs. SCA Comparison
-
-| Dimension | SAST | DAST | SCA |
-|---|---|---|---|
-| Kubernetes equivalent | Manifest linting (kubesec) | Runtime security testing (Falco) | Image dependency scanning (Trivy) |
-| Requires running cluster | No | Yes | No |
-| Pipeline stage | Pre-deployment | Post-deployment | Pre-deployment |
+- Role vs. ClusterRole: Role is namespace-scoped; ClusterRole is cluster-wide.
+- RoleBinding can bind a ClusterRole but limits its scope to the binding's namespace.
+- PSA replaces PodSecurityPolicy (deprecated in 1.21, removed in 1.25).
+- PSA `enforce` mode rejects non-compliant pods at admission. Use `warn` first.
+- Network Policies require a compatible CNI (Calico, Cilium) — Flannel does not enforce them.
+- `podSelector: {}` with no `ingress` or `egress` defined blocks all traffic (default-deny).
+- OPA Gatekeeper uses ConstraintTemplate (policy schema) + Constraint (policy instance).
+- Falco monitors kernel syscalls via eBPF — it detects runtime threats not caught by admission controls.
+- kube-bench automates CIS Kubernetes Benchmark checks — use it to assess cluster hardening status.
+- `automountServiceAccountToken: false` prevents unnecessary API credential exposure in pods.
 
 ---
 
-## Section 9: DevSecOps Professional Exam Tips
+## Key Terms Glossary
 
-1. **RBAC objects and their scope** — Know that Roles and RoleBindings are namespaced; ClusterRoles and ClusterRoleBindings are cluster-scoped. The exam frequently presents scenarios where a Role is used where a ClusterRole is needed (or vice versa).
-
-2. **cluster-admin risk** — The exam tests that granting `cluster-admin` to a service account (especially a CI/CD service account) is a critical misconfiguration. Know the least-privilege alternative.
-
-3. **Security Context vs. Dockerfile** — Both enforce non-root execution. `USER` in Dockerfile is image-level. `runAsNonRoot` in Security Context is cluster-enforcement. Both are needed: the Dockerfile sets the default; the Security Context enforces the policy.
-
-4. **Default-deny Network Policy requirement** — Know that Kubernetes does NOT default to deny-all. You must explicitly create a NetworkPolicy with empty `podSelector: {}` to achieve default-deny. Without it, all pods can reach all other pods.
-
-5. **etcd encryption** — Know that Kubernetes Secrets are stored in etcd as base64-encoded data (not encrypted) by default. Encryption at rest requires explicit EncryptionConfiguration. The exam tests this as a common misconfiguration.
-
-6. **automountServiceAccountToken** — Pods automatically mount a ServiceAccount token that can be used to call the Kubernetes API. Set `automountServiceAccountToken: false` for pods that don't need cluster API access.
-
-7. **readOnlyRootFilesystem + emptyDir** — Know that `readOnlyRootFilesystem: true` prevents all filesystem writes. Applications that need writable temp space use a `volumeMount` pointing to an `emptyDir` volume.
-
-8. **Admission controller role** — Admission controllers (OPA Gatekeeper, Kyverno, PodSecurityAdmission) enforce policy at the API server level, preventing non-compliant pods from being created. They are the Kubernetes equivalent of a security gate.
+| Term | Definition |
+|---|---|
+| RBAC | Role-Based Access Control — Kubernetes authorization mechanism |
+| ServiceAccount | Kubernetes identity for workloads |
+| Pod Security Admission (PSA) | Namespace-level pod security enforcement (replaces PSP) |
+| Network Policy | Kubernetes resource defining allowed pod-to-pod communication |
+| Admission Controller | Plugin intercepting API requests before persistence |
+| OPA Gatekeeper | Kubernetes admission webhook using Rego policies |
+| ConstraintTemplate | Gatekeeper resource defining a policy type schema |
+| Constraint | Gatekeeper resource instantiating a policy from a template |
+| Falco | Open-source runtime security tool monitoring kernel syscalls |
+| kube-bench | Tool automating CIS Kubernetes Benchmark checks |
+| etcd | Key-value store for all Kubernetes cluster state |
+| CNI | Container Network Interface — plugin providing pod networking |
 
 ---
 
-## Section 10: Study Checklist
-
-- [ ] List the four Kubernetes RBAC objects and their scope (namespace vs. cluster).
-- [ ] Write a minimal RBAC configuration for a CI/CD deployment service account from memory.
-- [ ] Explain what `cluster-admin` grants and why it should not be used for service accounts.
-- [ ] List five Security Context fields and their security effects.
-- [ ] Explain the default-deny Network Policy pattern and why it is required.
-- [ ] Explain the difference between base64 encoding and encryption for Kubernetes Secrets.
-- [ ] Describe the role of admission controllers in Kubernetes security policy enforcement.
-- [ ] Read the OWASP DevSecOps Guideline Kubernetes security section at [https://owasp.org/www-project-devsecops-guideline/](https://owasp.org/www-project-devsecops-guideline/).
-- [ ] Complete the Module 05 lab activity.
-- [ ] Attempt all 10 quiz questions and review distractor analysis for any incorrect answers.
+Reading Guide — Module 05 | CIS-4350 | Texas Wesleyan University | Professor Nash

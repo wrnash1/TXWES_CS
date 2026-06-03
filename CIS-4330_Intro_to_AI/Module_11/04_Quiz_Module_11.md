@@ -1,75 +1,257 @@
-# Quiz: Module 11 - Azure OpenAI Service and Generative AI
-## Course: CIS-4330_Intro_to_AI (AI-900 (Microsoft Azure AI Fundamentals))
+# Quiz: Module 11 — AI Ethics and Responsible AI Principles
+
+## Course: CIS-4330 Introduction to Artificial Intelligence
+
+## Texas Wesleyan University | Professor Nash
+
+## AI-900 Domain: Describe responsible AI considerations and Microsoft's Responsible AI principles
 
 ---
 
-**Question 1**
-What core neural network architecture is the foundation for modern Large Language Models (LLMs) like GPT-4?
-*   A) Convolutional Neural Network (CNN)
-*   B) Recurrent Neural Network (RNN)
-*   C) Transformer
-*   D) Support Vector Machine (SVM)
-*   **Correct Answer:** C) Transformers use self-attention mechanisms to process all tokens in a sequence simultaneously, capturing long-range dependencies and enabling training on massive datasets — which is why they replaced RNNs as the dominant LLM architecture.
-*   **Distractor Analysis:**
-    *   *Why correct:* The Transformer's parallel processing and self-attention allow it to scale to billions of parameters, which is what makes GPT, BERT, and similar LLMs possible.
-    *   CNNs are designed for grid-like data such as images. RNNs process sequences one step at a time and suffer from vanishing gradients over long sequences. SVMs are shallow linear classifiers with no generative capability.
+## Instructions
+
+Select the best answer for each question. Each question is worth 10 points. Submit through the course LMS.
 
 ---
 
-**Question 2**
-In the context of generative AI and LLMs, which of the following is the most accurate definition of **fine-tuning**?
-*   A) The process of continuing to train a pre-trained model's weights on a smaller, task-specific dataset so the model specializes in a particular domain or style without being trained from scratch.
-*   B) The practice of crafting input prompts with clear instructions, context, and examples to guide a frozen pre-trained model toward a desired output without modifying any model weights.
-*   C) A technique that converts text into dense numeric vectors encoding semantic meaning, enabling similarity comparisons between documents using distance metrics like cosine similarity.
-*   D) A neural network mechanism that allows each token in a sequence to dynamically weigh the relevance of every other token, enabling the model to capture long-range contextual dependencies.
-*   **Correct Answer:** A) The process of continuing to train a pre-trained model's weights on a smaller, task-specific dataset so the model specializes in a particular domain or style without being trained from scratch.
-*   **Distractor Analysis:**
-    *   *Why A is correct:* Fine-tuning updates the model's weights using domain-specific examples (e.g., medical records, legal documents), producing a more specialized model than prompt engineering alone can achieve.
-    *   *Why B is incorrect:* This describes **prompt engineering** — guiding a model's outputs through carefully designed input text, with no weight updates.
-    *   *Why C is incorrect:* This describes **embeddings** — numeric vector representations of text used for semantic search and retrieval, not model adaptation.
-    *   *Why D is incorrect:* This describes the **self-attention mechanism** within the Transformer architecture, not the fine-tuning training process.
+## Question 1
+
+A company deploys a loan approval AI that has a 5% false negative rate (incorrectly denying qualified applicants) overall, but analysis shows the false negative rate is 18% for Hispanic applicants and 3% for white applicants. Which Responsible AI principle is primarily violated?
+
+A. Reliability and Safety
+
+B. Privacy and Security
+
+C. Fairness
+
+D. Inclusiveness
+
+### Q1 — Correct Answer
+
+C. Fairness
+
+### Q1 — Distractor Analysis
+
+- A is incorrect: Reliability and Safety concerns the system performing consistently and preventing harm across general conditions. The issue here is not a random failure — it is a systematic disparity across demographic groups, which is a fairness violation.
+- B is incorrect: Privacy and Security concerns data collection, storage, and protection. No privacy breach is described here.
+- D is incorrect: Inclusiveness concerns designing for people with disabilities, diverse languages, and varying economic access. While related, the specific failure — discriminatory error rates by ethnicity — is most precisely described as a Fairness violation.
 
 ---
 
-**Question 3**
-A developer needs to **load a tabular dataset from a CSV file using the Pandas library**. Which command is most appropriate?
-*   A) import pandas as pd; df = pd.read_csv('data.csv')
-*   B) model.fit(X_train, y_train)
-*   C) predictions = model.predict(X_test)
-*   D) accuracy = accuracy_score(y_test, predictions)
-*   **Correct Answer:** A) import pandas as pd; df = pd.read_csv('data.csv')
-*   **Distractor Analysis:**
-    *   *Why A is correct:* `pd.read_csv()` reads a CSV file from disk into a Pandas DataFrame, which is the standard first step in any Python ML data pipeline.
-    *   *Why B is incorrect:* `model.fit()` trains a model on already-loaded data; it does not load data from a file.
-    *   *Why C is incorrect:* `model.predict()` generates predictions from a trained model; data must already be loaded and the model already fitted.
-    *   *Why D is incorrect:* `accuracy_score()` evaluates predictions against true labels — an evaluation step that occurs after loading, training, and predicting.
+## Question 2
+
+An autonomous vehicle company deploys a self-driving system. After deployment, the company discovers the system performs poorly on roads covered with snow or ice because the training data contained almost no winter driving examples. Which Responsible AI principle is primarily at issue?
+
+A. Transparency
+
+B. Reliability and Safety
+
+C. Accountability
+
+D. Fairness
+
+### Q2 — Correct Answer
+
+B. Reliability and Safety
+
+### Q2 — Distractor Analysis
+
+- A is incorrect: Transparency concerns the explainability of AI decisions and honest communication about capabilities. The issue here is not that users lack explanation — it is that the system fails to perform safely in real-world conditions.
+- C is incorrect: Accountability concerns who is responsible for AI outcomes. While accountability would become relevant after harm occurs, the primary design failure is a reliability and safety problem.
+- D is incorrect: Fairness concerns equitable treatment across demographic groups. Poor performance in winter conditions is a coverage gap in training data, not a demographic disparity.
 
 ---
 
-**Question 4**
-An LLM deployed via Azure OpenAI Service is generating confident but factually incorrect answers about a company's internal product catalog. The model has no access to the catalog documents. What is the most effective fix?
-*   A) Implement Retrieval-Augmented Generation (RAG) — embed the product catalog documents, retrieve the most relevant passages at query time, and inject them into the prompt as context so the model grounds its answers in actual catalog content.
-*   B) Fine-tune the model on a dataset of question-answer pairs derived from the product catalog to encode catalog knowledge directly into the model's weights.
-*   C) Apply L2 regularization to the model's output layer to reduce its confidence in low-probability tokens and suppress hallucinated content.
-*   D) Increase the model's temperature parameter above 1.0 to generate more diverse and exploratory responses that are less likely to repeat incorrect patterns.
-*   **Correct Answer:** A) Implement Retrieval-Augmented Generation (RAG) — embed the product catalog documents, retrieve the most relevant passages at query time, and inject them into the prompt as context so the model grounds its answers in actual catalog content.
-*   **Distractor Analysis:**
-    *   *Why A is correct:* Hallucinations occur when the model lacks relevant information and generates plausible-sounding but false content. RAG solves this by providing the correct source material in the prompt context, giving the model factual grounding without retraining.
-    *   *Why B is incorrect:* Fine-tuning on a static catalog dataset would help but requires significant effort and the catalog can go out of date; RAG is the faster, more maintainable solution for grounding LLMs in live documents.
-    *   *Why C is incorrect:* L2 regularization is a training-time technique for reducing weight magnitudes to prevent overfitting — it has no effect on hallucination at inference time and cannot be applied post-deployment.
-    *   *Why D is incorrect:* Raising the temperature increases randomness and creative variation in outputs, which would likely increase hallucination rather than reduce it.
+## Question 3
+
+A healthcare AI that recommends treatment plans does not provide any explanation of why it recommended a specific treatment. Physicians cannot understand the reasoning behind recommendations and must either trust or ignore the AI blindly. Which Responsible AI principle is most directly implicated?
+
+A. Inclusiveness
+
+B. Accountability
+
+C. Fairness
+
+D. Transparency
+
+### Q3 — Correct Answer
+
+D. Transparency
+
+### Q3 — Distractor Analysis
+
+- A is incorrect: Inclusiveness addresses accessibility and diversity of user populations. The issue here is not about who can use the system — it is about whether anyone can understand how it makes decisions.
+- B is incorrect: Accountability addresses who is responsible for outcomes. Lack of explainability is a transparency issue; accountability would come into play in determining who bears responsibility when the unexplainable recommendation causes harm.
+- C is incorrect: Fairness addresses equitable treatment across groups. The absence of explanation is not inherently a fairness concern — it could affect all physicians equally.
 
 ---
 
-**Question 5**
-Attackers are submitting thousands of specially crafted prompts to an Azure OpenAI Service deployment, attempting to extract the confidential system prompt and proprietary few-shot examples embedded in it. Which defense best mitigates this **prompt injection / system prompt extraction** attack?
-*   A) Avoid placing sensitive business logic or proprietary data directly in the system prompt; use output filtering to detect and block responses that appear to be reproducing the system prompt; and monitor for anomalous query patterns.
-*   B) Apply differential privacy to the training data and rate-limit the public inference API to reduce the attacker's query volume.
-*   C) Enable full disk encryption on all Azure VMs hosting the OpenAI model deployment.
-*   D) Rotate the Azure OpenAI API key every 30 days and enforce TLS 1.3 on all API connections.
-*   **Correct Answer:** A) Avoid placing sensitive business logic or proprietary data directly in the system prompt; use output filtering to detect and block responses that appear to be reproducing the system prompt; and monitor for anomalous query patterns.
-*   **Distractor Analysis:**
-    *   *Why A is correct:* System prompt extraction exploits the model's instruction-following behavior to reveal the prompt itself. The mitigations are architectural: keep secrets out of prompts, filter outputs for prompt leakage, and detect high-volume probing behavior.
-    *   *Why B is incorrect:* Differential privacy defends against training data reconstruction via model inversion — not against a deployed model repeating its system prompt in response to crafted queries.
-    *   *Why C is incorrect:* Disk encryption protects data stored on Azure VMs at rest; it has no effect on an LLM revealing its system prompt through its text outputs at inference time.
-    *   *Why D is incorrect:* API key rotation and TLS protect the transport layer and authenticate callers, but they do not prevent an authenticated caller from using prompt injection to extract the system prompt.
+## Question 4
+
+Which of the following best describes what a model card communicates?
+
+A. The source code and training scripts used to build the model
+
+B. The model's purpose, training data, performance metrics (including by demographic subgroup), limitations, and ethical considerations
+
+C. The legal terms under which the model may be used commercially
+
+D. The API endpoint and authentication credentials for accessing the model
+
+### Q4 — Correct Answer
+
+B. The model's purpose, training data, performance metrics (including by demographic subgroup), limitations, and ethical considerations
+
+### Q4 — Distractor Analysis
+
+- A is incorrect: Source code and training scripts are separate technical artifacts. Model cards are human-readable documentation, not code.
+- C is incorrect: Legal terms are covered in service agreements and licenses, not model cards.
+- D is incorrect: API documentation and credentials are developer resources. Model cards are transparency and accountability documents, not technical reference guides.
+
+---
+
+## Question 5
+
+A predictive policing AI directs additional police patrols to neighborhoods based on crime predictions. More patrols lead to more arrests in those areas. Those new arrests are added to the training data for the next version of the model, which predicts even higher crime in those same areas. What is this phenomenon called?
+
+A. Representation bias
+
+B. A feedback loop
+
+C. Distribution shift
+
+D. Label bias
+
+### Q5 — Correct Answer
+
+B. A feedback loop
+
+### Q5 — Distractor Analysis
+
+- A is incorrect: Representation bias refers to some groups being underrepresented in training data. While the feedback loop creates representation problems, the cycle itself is specifically called a feedback loop.
+- C is incorrect: Distribution shift occurs when the deployment environment differs from the training environment. The described scenario is a self-reinforcing cycle in which the AI's outputs influence its own future training data.
+- D is incorrect: Label bias occurs when human annotators apply labels inconsistently. The scenario describes a structural cycle, not a labeling problem.
+
+---
+
+## Question 6
+
+An organization deploys an AI recruitment screener that uses name analysis as a feature. The AI was trained on historical hiring data from a period when the company's workforce was 90% male. Male-sounding names receive higher scores. No explanation is given to candidates, and no human reviews the AI's rejections. Which list correctly identifies ALL principles violated?
+
+A. Fairness only
+
+B. Fairness and Transparency
+
+C. Fairness, Transparency, and Accountability
+
+D. Fairness, Transparency, Accountability, and Privacy and Security
+
+### Q6 — Correct Answer
+
+C. Fairness, Transparency, and Accountability
+
+### Q6 — Distractor Analysis
+
+- A is incorrect: While Fairness is violated (discriminatory scoring based on gender-associated names), the lack of explanation also violates Transparency, and the absence of human review and redress violates Accountability.
+- B is incorrect: This correctly identifies Fairness and Transparency but omits Accountability. Deploying consequential decisions with no human oversight and no mechanism for candidates to appeal is an accountability failure.
+- D is incorrect: Privacy and Security concerns data collection and protection. No privacy breach is described in the scenario — the violation is about discriminatory scoring, lack of explanation, and absent oversight.
+
+---
+
+## Question 7
+
+Which of the following is the correct definition of an AI impact assessment?
+
+A. A performance benchmark comparing the AI model to industry-standard accuracy thresholds
+
+B. A security audit evaluating whether the AI system is vulnerable to adversarial attacks
+
+C. A pre-deployment evaluation of the potential harms an AI system could cause and the safeguards needed to mitigate them
+
+D. A post-deployment analysis of actual harms the AI system caused during its first year of operation
+
+### Q7 — Correct Answer
+
+C. A pre-deployment evaluation of the potential harms an AI system could cause and the safeguards needed to mitigate them
+
+### Q7 — Distractor Analysis
+
+- A is incorrect: Performance benchmarking compares accuracy metrics. An AI impact assessment is a governance and ethics evaluation, not a performance comparison.
+- B is incorrect: Security auditing for adversarial attacks is a specific technical security activity. An AI impact assessment is broader, covering social, ethical, and fairness harms.
+- D is incorrect: An AI impact assessment occurs before deployment to prevent harms proactively. Post-deployment incident analysis is a different (though also important) activity.
+
+---
+
+## Question 8
+
+A voice recognition AI is highly accurate for adult male speakers in North American English but has significantly higher error rates for speakers with accents, elderly speakers, and children. Which Responsible AI principle does this performance gap most directly violate?
+
+A. Privacy and Security
+
+B. Accountability
+
+C. Inclusiveness
+
+D. Transparency
+
+### Q8 — Correct Answer
+
+C. Inclusiveness
+
+### Q8 — Distractor Analysis
+
+- A is incorrect: Privacy and Security concerns data protection. No privacy violation is described — the issue is unequal system performance across user groups.
+- B is incorrect: Accountability concerns who is responsible for AI outcomes. The described issue is a design and coverage problem, not an absence of human oversight.
+- D is incorrect: Transparency concerns explainability of decisions. The system's differential performance is not a transparency problem — it is an inclusiveness problem because the system was not designed to work equally well for all people.
+
+---
+
+## Question 9
+
+Under the European Union AI Act, which of the following AI applications would be classified as high risk?
+
+A. A spam filter for a personal email account
+
+B. A movie recommendation engine on a streaming platform
+
+C. An AI system used by a bank to evaluate creditworthiness of loan applicants
+
+D. An AI feature that auto-completes text messages on a smartphone
+
+### Q9 — Correct Answer
+
+C. An AI system used by a bank to evaluate creditworthiness of loan applicants
+
+### Q9 — Distractor Analysis
+
+- A is incorrect: Spam filters are minimal-risk systems under the EU AI Act. They do not make consequential decisions affecting individuals' rights or economic circumstances.
+- B is incorrect: Recommendation engines are generally classified as minimal or limited risk. They influence content consumption but do not determine access to financial products, employment, or housing.
+- D is incorrect: Text autocomplete is minimal risk. It assists a user but does not make binding decisions affecting that user's rights or opportunities.
+
+---
+
+## Question 10
+
+Microsoft's Responsible AI principle of Accountability means which of the following?
+
+A. The AI model itself is programmed to apologize when it makes an error
+
+B. The AI system logs every prediction it makes so errors can be traced in audit records
+
+C. Humans and organizations deploying AI are answerable for how those systems behave, and mechanisms exist for redress when AI causes harm
+
+D. The AI vendor guarantees 100% accuracy and pays financial penalties for incorrect predictions
+
+### Q10 — Correct Answer
+
+C. Humans and organizations deploying AI are answerable for how those systems behave, and mechanisms exist for redress when AI causes harm
+
+### Q10 — Distractor Analysis
+
+- A is incorrect: AI models do not have moral responsibility or the capacity to "apologize" in any meaningful sense. Accountability is a property of humans and organizations, not of the model itself.
+- B is incorrect: Audit logging is a technical mechanism that supports accountability, but it is not the definition of the principle. Accountability is about human answerability and redress, not just logging.
+- D is incorrect: Vendors do not typically guarantee 100% accuracy, and financial penalties are not the definition of accountability in the Responsible AI framework. Accountability is about governance structure and redress pathways, not contractual liability.
+
+---
+
+End of Quiz — Module 11

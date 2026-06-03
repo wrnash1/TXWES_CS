@@ -1,169 +1,340 @@
-# Reading Guide: Module 08 - Feasibility Analysis and Cost-Benefit Analysis
+# Reading Guide: Module 08 — Use Case and User Story Development
 
-**Course:** CIS-3312 Systems Analysis and Design
-**Certification Alignment:** IIBA ECBA (Entry Certificate in Business Analysis)
-**Prepared by:** Professor Nash | Texas Wesleyan University
+## Course: CIS-3312 Systems Analysis and Design
 
----
+## Texas Wesleyan University | Professor Nash
 
-## Introduction
-
-Module 08 covers feasibility analysis and cost-benefit analysis — the tools BAs use to evaluate whether a proposed system or solution is viable before resources are committed. Feasibility analysis examines the solution from four dimensions: technical, economic, operational, and legal. Cost-benefit analysis quantifies the financial return using metrics including ROI, payback period, and NPV. Both techniques appear in BABOK Guide v3 KA 2 (Needs Assessment) and are tested on the IIBA ECBA exam.
+## Certification Alignment: IIBA ECBA — Requirements Life Cycle Management
 
 ---
 
-## 1. Core Vocabulary
+### Overview
 
-### 1.1 Feasibility Analysis
-
-Feasibility analysis is a structured evaluation of whether a proposed solution can be built, is worth building, will be adopted by users, and is legally permissible. It is conducted during the needs assessment phase before detailed requirements analysis begins. A feasibility study informs the go/no-go decision at project initiation.
-
-### 1.2 Technical Feasibility
-
-Technical feasibility evaluates whether the required technology exists, whether the organization has or can acquire the skills and infrastructure to build and operate the system, and whether the proposed solution integrates with existing systems. A system that requires capabilities no vendor or internal team can deliver within project constraints fails technical feasibility.
-
-### 1.3 Economic Feasibility
-
-Economic feasibility evaluates whether the projected benefits justify the costs. It is the primary financial evaluation of a proposed system. Economic feasibility is determined through cost-benefit analysis — if the benefits outweigh the costs (positive ROI, acceptable payback period, positive NPV), the system is economically feasible.
-
-### 1.4 Operational Feasibility
-
-Operational feasibility evaluates whether the proposed system will be adopted and successfully used in the organizational environment. It considers user readiness, workflow fit, change management requirements, and cultural factors. A system that is technically and economically feasible but operationally infeasible — because users will not use it — delivers no value.
-
-### 1.5 Legal and Ethical Feasibility
-
-Legal and ethical feasibility evaluates whether the proposed system complies with applicable laws, regulations, contracts, and organizational policies. Relevant constraints include data privacy regulations (HIPAA, GDPR), industry-specific compliance requirements, intellectual property restrictions, and contractual obligations.
-
-### 1.6 Cost-Benefit Analysis (CBA)
-
-Cost-benefit analysis is a financial modeling technique that quantifies and compares the projected costs and benefits of a proposed system over its useful life. CBA produces metrics — ROI, payback period, NPV — that enable decision makers to assess whether and when the investment will pay off.
-
-### 1.7 Return on Investment (ROI)
-
-ROI measures net benefit as a percentage of total cost. Formula: ROI = (Net Benefit / Total Cost) x 100%. Net Benefit = Total Benefits - Total Costs. A positive ROI means benefits exceed costs. ROI is expressed as a percentage.
-
-### 1.8 Payback Period
-
-Payback period is the time required for cumulative benefits to equal cumulative costs (break-even point). Formula: Payback Period = Total Cost / Annual Net Benefit. Expressed in years or months. A shorter payback period means faster recovery of investment.
-
-### 1.9 Net Present Value (NPV)
-
-NPV is the sum of all future project cash flows (benefits minus costs) discounted to present-day value using a discount rate. Formula: NPV = sum of [Cash Flow(t) / (1 + r)^t] for each year t. Positive NPV means the project creates value; negative NPV means it destroys value. NPV accounts for the time value of money.
-
-### 1.10 Total Cost of Ownership (TCO)
-
-TCO is the full life-cycle cost of a system, including one-time development costs (hardware, software, development labor, testing, training, deployment) and ongoing operating costs (maintenance, support, subscriptions, upgrades) over the expected useful life.
-
-### 1.11 Tangible vs. Intangible Benefits
-
-Tangible benefits are directly measurable in financial terms (cost savings, revenue increases, error reduction with quantifiable cost impact). Intangible benefits are real but difficult to quantify (improved customer satisfaction, competitive advantage, employee morale). Both should be documented in a feasibility study.
+This reading guide supports Module 08 and covers use case modeling, user story development,
+acceptance criteria, and story mapping. These techniques are foundational for both
+traditional and Agile requirements practice and appear prominently on the ECBA exam.
 
 ---
 
-## 2. Four Dimensions of Feasibility
+### Section 1: Use Case Fundamentals
 
-| Dimension | Question | Failure Example |
-|---|---|---|
-| Technical | Can we build it with available technology and skills? | Required AI capability unavailable from any vendor within timeline |
-| Economic | Do benefits justify costs? | Project NPV is negative; costs exceed benefits over useful life |
-| Operational | Will users adopt it and does it fit workflows? | Users resist new system; projected adoption rate of 30% |
-| Legal/Ethical | Does it comply with regulations and policies? | System stores patient data in a way that violates HIPAA |
+A use case represents a discrete unit of functionality that delivers observable value to an
+actor. The three essential components of any use case are the actor who initiates the
+interaction, the goal the actor wants to achieve, and the system response that fulfills or
+denies that goal.
 
----
+Use cases were formalized by Ivar Jacobson and incorporated into the Unified Modeling
+Language (UML) 1.x specification. They remain one of the most widely used requirements
+visualization techniques in business analysis practice.
 
-## 3. Cost-Benefit Analysis Metrics
+#### Key Use Case Vocabulary
 
-| Metric | Formula | Unit | Interpretation |
-|---|---|---|---|
-| ROI | (Net Benefit / Total Cost) x 100% | Percentage | Higher = better return per dollar invested |
-| Payback Period | Total Cost / Annual Net Benefit | Years (or months) | Shorter = faster break-even |
-| NPV | Sum of discounted net cash flows | Dollars | Positive = creates value; Negative = destroys value |
-
----
-
-## 4. Development Costs vs. Operating Costs
-
-| Cost Category | Examples |
+| Term | Definition |
 |---|---|
-| Development (one-time) | Hardware purchase, software licenses, development labor, testing, training, deployment, data migration |
-| Operating (ongoing) | Annual maintenance, technical support, subscription renewals, periodic upgrades, user support |
+| Actor | A role played by a person, system, or organization outside the SuD |
+| Use Case | An ellipse representing a goal-oriented interaction |
+| System Under Discussion (SuD) | The system whose requirements are being modeled |
+| System Boundary | The rectangle enclosing all in-scope use cases |
+| Association | A solid line connecting an actor to a use case it participates in |
+| Primary Actor | The actor who initiates the use case to achieve a personal goal |
+| Secondary Actor | An actor called upon to help fulfill the use case |
+| Precondition | A state that must be true before the use case can begin |
+| Postcondition | A state that is true after the use case completes successfully |
 
 ---
 
-## 5. Tangible vs. Intangible Benefits
+### Section 2: Use Case Diagram Notation Reference
 
-| Benefit Type | Examples | How to Document |
+The use case diagram is a UML structural diagram that provides a high-level view of system
+scope and actor interactions. It does not show sequence, flow, or internal logic — those
+details belong in the fully dressed specification.
+
+#### Diagram Elements
+
+```
+[Stick Figure]          Actor — a role that interacts with the system
+(  Ellipse  )           Use Case — a goal-oriented interaction
+[  Rectangle  ]         System Boundary — encloses all in-scope use cases
+ --- line ---           Association — connects actor to use case
+ - - >  <<include>>     Include relationship — mandatory behavioral reuse
+ - - >  <<extend>>      Extend relationship — conditional optional behavior
+ -----> (triangle)      Generalization — inheritance between actors or use cases
+```
+
+#### Lakewood Library Management System (LMS) — Example Diagram Description
+
+System Boundary Label: Library Management System
+
+Actors (outside boundary):
+
+- Library Patron (primary — left side)
+- Librarian (primary — left side)
+- System Administrator (primary — right side)
+- Email Service (secondary — right side)
+
+Use Cases (inside boundary):
+
+- Search Catalog
+- Check Out Book
+- Return Book
+- Reserve Book
+- Manage Member Account
+- Generate Overdue Report
+- Authenticate Member
+- Send Notification
+
+Relationships:
+
+- Library Patron associates with: Search Catalog, Check Out Book, Return Book, Reserve Book
+- Librarian associates with: Check Out Book, Return Book, Generate Overdue Report
+- System Administrator associates with: Manage Member Account
+- Email Service associates with: Send Notification
+- Check Out Book --include--> Authenticate Member
+- Reserve Book --include--> Authenticate Member
+- Apply Late Fee --extend--> Return Book (extension point: book is overdue)
+- Send Notification --include--> Check Out Book
+
+---
+
+### Section 3: Include vs. Extend — Critical Distinction
+
+This distinction is one of the most frequently tested topics on the ECBA exam. Master it
+with both the definition and a concrete example.
+
+#### Include Relationship
+
+- **Direction**: Base use case --> Included use case
+- **Behavior**: The included behavior ALWAYS executes as part of the base use case
+- **Purpose**: Factors out common mandatory behavior shared by multiple use cases
+- **Arrow label**: double-angle-brackets include double-angle-brackets on the dashed arrow
+- **Example**: Check Out Book includes Authenticate Member every time, without exception
+
+#### Extend Relationship
+
+- **Direction**: Extending use case --> Base use case
+- **Behavior**: The extending behavior executes ONLY when a specific condition is met
+- **Purpose**: Documents optional or exceptional behavior without cluttering the base flow
+- **Arrow label**: double-angle-brackets extend double-angle-brackets on the dashed arrow
+- **Extension point**: A named location in the base use case where extension can occur
+- **Example**: Apply Late Fee extends Return Book only when return date exceeds due date
+
+#### Quick Comparison Table
+
+| Dimension | Include | Extend |
 |---|---|---|
-| Tangible | Reduced labor hours, eliminated paper processing, fewer data entry errors, faster transaction processing | Quantify in dollars; include in financial model |
-| Intangible | Improved customer satisfaction, competitive differentiation, employee morale, reduced reputational risk | Describe qualitatively; include as supporting rationale |
+| Frequency | Always | Conditionally |
+| Arrow direction | Base → Included | Extension → Base |
+| Who knows about whom | Base knows about included | Base does NOT know about extension |
+| Analogy | Function call | Plugin |
+| Trigger | Execution reaches step | Extension point condition is true |
+
+> ECBA Exam Tip: The extend arrow direction is counterintuitive. The arrow points FROM the
+> extending use case TO the base use case, because the extension "reaches into" the base.
+> Many students get this backwards. Draw it ten times until it is automatic.
 
 ---
 
-## 6. Feasibility Analysis in the BABOK Framework
+### Section 4: Fully Dressed Use Case — Field Reference
 
-Feasibility analysis is primarily conducted as part of BABOK KA 2: Needs Assessment. The BA identifies the problem or opportunity, determines the current state, defines the desired future state, and assesses the feasibility of proposed solutions before selecting the recommended approach. Feasibility findings inform the Business Case — the formal document that captures the justification for undertaking a project.
+The fully dressed use case specification provides complete behavioral documentation. The
+following table defines each field.
 
----
+| Field | Description |
+|---|---|
+| Use Case ID | Unique identifier (e.g., UC-08) |
+| Use Case Name | Short verb-noun description (e.g., Check Out Book) |
+| Goal in Context | One sentence describing what the primary actor wants to achieve |
+| Scope | The system being described (SuD name) |
+| Level | User Goal, Summary, or Subfunction |
+| Primary Actor | The actor who triggers the use case |
+| Stakeholders and Interests | All parties affected and what they need from this interaction |
+| Preconditions | States that must be true before execution begins |
+| Minimal Guarantees | What the system ensures even if the use case fails |
+| Success Guarantees | What the system ensures when the use case succeeds |
+| Main Success Scenario | Numbered steps of the happy path |
+| Extensions | Alternate flows and exception handling (numbered with letter suffix) |
+| Technology Variations | Implementation-independent alternatives at specific steps |
 
-## 7. Common CBA Pitfalls
+#### Extension Numbering Convention
 
-BAs who conduct cost-benefit analysis should be aware of common errors that undermine the analysis:
-
-Optimism bias: systematically underestimating costs and overestimating benefits. Mitigation: use conservative (pessimistic) scenarios in addition to expected scenarios.
-
-Omitting operating costs: modeling only development costs while ignoring ongoing maintenance, support, and upgrade costs. Mitigation: use TCO rather than development cost alone.
-
-Ignoring intangible costs: change management, productivity dip during transition, user training time. Mitigation: document and estimate these even approximately.
-
-Ignoring intangible benefits: treating only quantifiable benefits as valid. Mitigation: document and describe qualitative benefits as supporting evidence.
-
-Incorrect discount rate: using an inappropriate discount rate in NPV calculations. Mitigation: use the organization's published cost of capital or hurdle rate.
-
----
-
-## 8. Certification Exam Tips
-
-1. The exam tests the ability to match a scenario description to the correct feasibility dimension. Practice this mapping: skills or technology gap = Technical; cost exceeds benefit = Economic; user resistance or adoption concern = Operational; regulatory or legal constraint = Legal. One scenario, one dimension — identify it immediately.
-
-2. ROI, payback period, and NPV definitions are tested in detail. Know: ROI is a percentage. Payback period is a time measurement. NPV is a dollar amount with a positive or negative sign. If the exam presents a number and asks which metric it represents, the unit is the giveaway.
-
-3. NPV positive means the project creates value (benefits exceed costs at the discount rate). NPV negative means the project destroys value (costs exceed benefits). This is directly tested — do not confuse negative NPV with a budget variance or cost overrun.
-
-4. Payback period formula is Payback = Total Cost / Annual Net Benefit. If the exam presents a scenario with total cost and annual benefit, calculate and select the matching year. Practice this calculation until it takes less than 30 seconds.
-
-5. ROI formula is (Net Benefit / Total Cost) x 100%. Net Benefit = Total Benefits - Total Costs. Be careful: Total Benefits does not equal Net Benefit. You must subtract costs first.
-
-6. Operational feasibility includes user adoption, workflow fit, and change management. A question about strong user resistance or cultural objections to a new system is testing operational feasibility — not technical or economic.
-
-7. The Business Case is the primary deliverable that captures the results of feasibility analysis. BABOK KA 2 positions the Business Case as the output of needs assessment. The exam may ask which deliverable documents the justification for a project.
-
-8. Total Cost of Ownership differs from development cost. TCO includes ongoing operating costs across the full useful life. A project with low development cost but high annual operating cost may have poor TCO even if the initial investment seems affordable.
+Extensions are referenced by the step number they branch from, followed by a letter. For
+example, Extension 3a branches from Step 3 of the main success scenario. Extension 3b is a
+second branch from the same step. Extension 3a.1 is a sub-step within Extension 3a.
 
 ---
 
-## 9. Required and Supplemental Reading
+### Section 5: User Story Format and INVEST Criteria
 
-Required reading:
+User stories originated in Extreme Programming (XP) and were popularized by Mike Cohn in
+"User Stories Applied" (2004). They are the primary requirements format in Scrum-based
+development.
 
-- BABOK Guide v3, KA 2: Needs Assessment — Assess Capability Gaps and Recommend Actions tasks
-- BABOK Guide v3, Chapter 10 (Techniques) — Business Cases; Financial Analysis
+#### Standard User Story Format
 
-Supplemental reading:
+```
+As a [type of user],
+I want [to perform some action or achieve some goal],
+so that [I receive some benefit or business value].
+```
 
-- Any standard corporate finance reference covering NPV, IRR, payback period, and ROI formulas
-- Project Management Institute PMBOK Guide — Business Case section for additional context
+All three parts are required. The "so that" clause prevents feature requests from losing
+their business justification as the story moves through development.
+
+#### INVEST Criteria
+
+| Letter | Criterion | Meaning |
+|---|---|---|
+| I | Independent | Stories can be developed in any order without dependency |
+| N | Negotiable | Details are open for discussion between team and stakeholders |
+| V | Valuable | The story delivers perceivable value to the user or business |
+| E | Estimable | The team can estimate the effort required to implement it |
+| S | Small | The story fits within a single sprint (1–2 weeks of work) |
+| T | Testable | Acceptance criteria can verify whether the story is complete |
+
+#### Epic vs. Story vs. Task
+
+- **Epic**: A large user story too big for one sprint; must be split before implementation
+- **Story**: A deliverable unit of work completable within a single sprint
+- **Task**: A technical sub-step within a story; not directly visible to the stakeholder
+
+> ECBA Exam Tip: The BABOK references user stories in the context of Agile Analysis. Know
+> that an Epic must be decomposed before it can be estimated and placed in a sprint. Know
+> that INVEST is the quality checklist applied to individual stories.
 
 ---
 
-## 10. Study Checklist
+### Section 6: Acceptance Criteria — Given-When-Then Format
 
-- [ ] Name all four feasibility dimensions and give one example of a failure in each.
-- [ ] Calculate ROI from a provided cost and benefit scenario.
-- [ ] Calculate payback period from a provided cost and annual benefit.
-- [ ] Explain NPV in your own words, including the role of the discount rate.
-- [ ] Distinguish tangible benefits from intangible benefits with two examples of each.
-- [ ] Explain the difference between development cost and TCO.
-- [ ] Identify the BABOK knowledge area where feasibility analysis is primarily located.
-- [ ] Watch the Module 08 video lecture.
-- [ ] Complete the Module 08 lab activity.
-- [ ] Post your initial discussion response by Wednesday at 11:59 PM.
+Acceptance criteria make user stories testable. Without acceptance criteria, a story cannot
+be verified as done. The Given-When-Then (GWT) format provides a structured template.
+
+```
+Given [some initial context or precondition],
+When  [an action is performed or an event occurs],
+Then  [an observable outcome results].
+```
+
+#### LMS Acceptance Criteria Examples
+
+For the story "As a Patron, I want to search the catalog by title":
+
+- Given the patron is on the catalog search page, when they enter a title keyword and click
+  Search, then the results list displays all matching books sorted by relevance score.
+- Given the patron enters a search term with no matches, when they click Search, then the
+  system displays "No results found" and suggests alternate search terms.
+- Given the patron enters a blank search field, when they click Search, then the system
+  displays a validation message requiring at least one character.
+
+Best practice guidelines for acceptance criteria:
+
+- Write 3–8 criteria per story
+- Each criterion must be independently verifiable
+- Use observable outcomes — not internal system states
+- Avoid implementation details (do not specify how, only what)
+
+---
+
+### Section 7: Story Mapping
+
+Story mapping, introduced by Jeff Patton, organizes user stories into a two-dimensional
+grid that reveals the full user experience and enables release planning.
+
+#### Story Map Structure
+
+```
+BACKBONE (top row) ──────────────────────────────────────────────────────
+  [Activity 1]         [Activity 2]         [Activity 3]
+─────────────────────────────────────────────────────── WALKING SKELETON
+  [Story 1a]           [Story 2a]           [Story 3a]   (MVP Release)
+─────────────────────────────────────────────────────── RELEASE 2
+  [Story 1b]           [Story 2b]           [Story 3b]
+─────────────────────────────────────────────────────── RELEASE 3
+  [Story 1c]                                [Story 3c]
+```
+
+The backbone lists high-level user activities in temporal order from left to right. Each
+column under an activity contains the stories that enable it. Horizontal lines represent
+release boundaries — the walking skeleton contains the minimum viable feature set.
+
+#### LMS Story Map Backbone Example
+
+Activities in sequence: Join Library, Browse Catalog, Borrow Materials, Return Materials,
+Manage Account.
+
+MVP slice under Borrow Materials: Search catalog, Check item availability, Check out at
+desk, Receive due date confirmation.
+
+Release 2 additions: Self-checkout kiosk, Email confirmation, Renew online.
+
+Release 3 additions: Mobile app check-out, Recommendation engine.
+
+---
+
+### Section 8: ECBA Exam Preparation
+
+#### Relevant BABOK Knowledge Areas
+
+- **Knowledge Area 4 — Requirements Analysis and Design Definition**: Use cases, user stories,
+  and acceptance criteria are core elicitation and modeling outputs
+- **Knowledge Area 3 — Requirements Life Cycle Management**: Tracing requirements back to use
+  cases; maintaining use case specifications as requirements evolve
+- **Agile Analysis and Design**: User stories, story maps, and acceptance criteria are Agile
+  BA deliverables
+
+#### Likely ECBA Question Patterns
+
+Questions will present scenarios and ask you to identify the correct technique or element.
+
+- A BA needs to show optional system behavior that occurs under a specific condition —
+  answer: extend relationship
+- A BA factors out authentication logic used by five different use cases — answer: include
+  relationship
+- A team needs to verify whether a story is complete — answer: acceptance criteria
+- A BA needs to plan releases while showing the full user journey — answer: story mapping
+- A story cannot be completed in one sprint and needs to be broken down — answer: Epic
+  decomposition
+
+---
+
+### Study Checklist
+
+Work through each item before attempting the quiz.
+
+- [ ] Can you draw a use case diagram from scratch with all five notation elements?
+- [ ] Can you correctly draw an include relationship with the arrow in the right direction?
+- [ ] Can you correctly draw an extend relationship with the arrow in the right direction?
+- [ ] Can you distinguish primary from secondary actors with an example?
+- [ ] Can you write all fields of a fully dressed use case specification?
+- [ ] Can you write a user story using the As a / I want / so that format?
+- [ ] Can you apply INVEST to evaluate a given user story?
+- [ ] Can you write three Given-When-Then acceptance criteria for a story?
+- [ ] Can you describe the structure of a story map and what each dimension represents?
+- [ ] Can you identify whether a given story is a Story or an Epic?
+
+---
+
+### Key Terms Glossary
+
+| Term | Definition |
+|---|---|
+| Actor | Role interacting with the system under discussion |
+| Association | Line connecting actor to use case |
+| Backbone | Top-row activities in a story map showing user journey |
+| ECBA | Entry Certificate in Business Analysis — IIBA entry-level credential |
+| Epic | User story too large to complete in a single sprint |
+| Extend | Optional conditional behavioral addition to a base use case |
+| Extension Point | Named location in a base use case where extend can insert behavior |
+| Fully Dressed | The most detailed use case specification format |
+| Given-When-Then | Acceptance criteria format: context, action, outcome |
+| Include | Mandatory behavioral reuse factored out of multiple use cases |
+| INVEST | Quality criteria checklist for user stories |
+| Primary Actor | Actor who triggers the use case |
+| Story Map | Two-dimensional grid organizing stories by user journey and release |
+| SuD | System Under Discussion — the system being modeled |
+| UML | Unified Modeling Language — standard notation for software models |
+| User Story | Short requirement in As a / I want / so that format |
+| Walking Skeleton | Minimum viable product slice in a story map |
+
+---
+
+*Reading Guide — Module 08 | CIS-3312 Systems Analysis and Design | Texas Wesleyan University*

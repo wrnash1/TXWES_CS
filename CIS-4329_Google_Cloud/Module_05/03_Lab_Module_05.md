@@ -1,363 +1,380 @@
-# Lab — Module 05
+# Lab: Module 05 — Virtual Private Cloud Networking
 
-## CIS-4329: Google Cloud Platform | Texas Wesleyan University
+## Course: CIS-4329 Google Cloud Computing
 
-### Topic: VPC — Custom Networks, Subnets, Firewall Rules, and Network Tags
-
-### Points: 100
+**Certification Alignment:** Google Cloud Associate Cloud Engineer (ACE)
 
 ---
 
 ## Lab Overview
 
-In this lab you will create a custom VPC with subnets in two regions, configure firewall rules using network tags, deploy VMs in the custom VPC, test connectivity between VMs, and verify that firewall rules correctly permit and block traffic based on tags. These skills are fundamental for the ACE exam and for designing production GCP networks.
+In this lab you will create a custom VPC, configure subnets and firewall rules,
+deploy VMs to test connectivity, configure VPC peering, and deploy a load
+balancer in front of a managed instance group.
 
-All tasks use Cloud Shell. Complete this lab in your `txwes-gcp-lab-[your initials]` project.
+**Estimated Time:** 90 minutes
 
-Estimated completion time: 75–90 minutes.
+**Prerequisites:**
 
----
-
-## Prerequisites
-
-- Modules 01–04 labs completed
+- Active GCP project with billing enabled
 - Compute Engine API enabled
-- Active project configured in Cloud Shell
+- Cloud Shell access
+
+**Learning Objectives:**
+
+By the end of this lab you will be able to:
+
+1. Create a custom-mode VPC with regional subnets
+2. Configure targeted firewall rules using network tags
+3. Deploy VMs and test intra-VPC connectivity
+4. Configure VPC peering between two VPCs
+5. Deploy an external HTTP load balancer in front of a MIG
+6. Verify load balancer functionality and health check behavior
 
 ---
 
-## Part 1: Create a Custom VPC (15 points)
+## Part 1 — Create a Custom VPC and Subnets (15 minutes)
 
-### Task 1.1 — Create a Custom Mode VPC (5 points)
-
-Create a new custom mode VPC. In custom mode, no subnets are created automatically:
+### Step 1.1 — Set Environment Variables
 
 ```bash
-gcloud compute networks create txwes-vpc \
+export PROJECT_ID=$(gcloud config get-value project)
+export REGION=us-central1
+export ZONE=us-central1-a
+```
+
+### Step 1.2 — Create a Custom VPC
+
+```bash
+gcloud compute networks create lab05-vpc \
   --subnet-mode=custom \
-  --mtu=1460
+  --mtu=1460 \
+  --description="Lab 05 custom VPC"
+
+# Verify
+gcloud compute networks describe lab05-vpc
 ```
 
-List networks to confirm creation:
+### Step 1.3 — Create Subnets
 
 ```bash
-gcloud compute networks list
+# Web tier subnet
+gcloud compute networks subnets create lab05-web-subnet \
+  --network=lab05-vpc \
+  --region=$REGION \
+  --range=10.10.1.0/24 \
+  --description="Web tier subnet"
+
+# App tier subnet
+gcloud compute networks subnets create lab05-app-subnet \
+  --network=lab05-vpc \
+  --region=$REGION \
+  --range=10.10.2.0/24 \
+  --description="Application tier subnet"
+
+# List subnets
+gcloud compute networks subnets list --network=lab05-vpc
 ```
 
-Deliverable: Screenshot of `gcloud compute networks list` showing `txwes-vpc`. Label it "Task 1.1".
-
-### Task 1.2 — Create Subnets in Two Regions (10 points)
-
-Create a subnet in `us-central1`:
+### Step 1.4 — Verify No Default Firewall Rules
 
 ```bash
-gcloud compute networks subnets create txwes-subnet-us \
-  --network=txwes-vpc \
-  --region=us-central1 \
-  --range=10.10.0.0/24
+# The custom VPC has NO default allow rules — confirm this
+gcloud compute firewall-rules list --filter="network:lab05-vpc"
 ```
-
-Create a second subnet in `us-east1`:
-
-```bash
-gcloud compute networks subnets create txwes-subnet-east \
-  --network=txwes-vpc \
-  --region=us-east1 \
-  --range=10.20.0.0/24
-```
-
-List subnets to confirm both were created:
-
-```bash
-gcloud compute networks subnets list --network=txwes-vpc
-```
-
-Deliverable: Screenshot of the subnets list showing both subnets in their respective regions. Label it "Task 1.2".
 
 ---
 
-## Part 2: Configure Firewall Rules (25 points)
+## Part 2 — Configure Firewall Rules (15 minutes)
 
-### Task 2.1 — Allow Internal Traffic Between All VMs (5 points)
-
-Allow all TCP, UDP, and ICMP traffic between VMs within the VPC (internal communication):
+### Step 2.1 — Allow SSH from Cloud Shell (Internal Google IPs)
 
 ```bash
-gcloud compute firewall-rules create txwes-allow-internal \
-  --network=txwes-vpc \
+# Allow SSH from all sources for lab purposes
+# In production, restrict source-ranges to your office IP
+gcloud compute firewall-rules create lab05-allow-ssh \
+  --network=lab05-vpc \
+  --allow=tcp:22 \
   --direction=INGRESS \
-  --priority=1000 \
-  --action=ALLOW \
-  --rules=tcp,udp,icmp \
-  --source-ranges=10.10.0.0/24,10.20.0.0/24
-```
-
-Deliverable: Screenshot of the firewall rule creation success. Label it "Task 2.1".
-
-### Task 2.2 — Allow SSH to VMs Tagged "bastion" (10 points)
-
-Create an SSH rule that only allows port 22 access to VMs with the `bastion` tag:
-
-```bash
-gcloud compute firewall-rules create txwes-allow-ssh-bastion \
-  --network=txwes-vpc \
-  --direction=INGRESS \
-  --priority=1000 \
-  --action=ALLOW \
-  --rules=tcp:22 \
   --source-ranges=0.0.0.0/0 \
-  --target-tags=bastion
-```
-
-Create an HTTP rule for VMs tagged `web-server`:
-
-```bash
-gcloud compute firewall-rules create txwes-allow-http \
-  --network=txwes-vpc \
-  --direction=INGRESS \
+  --target-tags=ssh-access \
   --priority=1000 \
-  --action=ALLOW \
-  --rules=tcp:80 \
+  --description="Allow SSH to tagged VMs"
+```
+
+### Step 2.2 — Allow HTTP to Web Tier
+
+```bash
+gcloud compute firewall-rules create lab05-allow-http \
+  --network=lab05-vpc \
+  --allow=tcp:80 \
+  --direction=INGRESS \
   --source-ranges=0.0.0.0/0 \
-  --target-tags=web-server
+  --target-tags=web-server \
+  --priority=1000 \
+  --description="Allow HTTP to web servers"
 ```
 
-List all firewall rules for your VPC:
+### Step 2.3 — Allow Internal Traffic Between Subnets
 
 ```bash
-gcloud compute firewall-rules list --filter="network=txwes-vpc"
+gcloud compute firewall-rules create lab05-allow-internal \
+  --network=lab05-vpc \
+  --allow=tcp,udp,icmp \
+  --direction=INGRESS \
+  --source-ranges=10.10.0.0/16 \
+  --priority=1000 \
+  --description="Allow all internal VPC traffic"
 ```
 
-Deliverable: Screenshot showing all txwes-vpc firewall rules including the two just created. Label it "Task 2.2".
-
-### Task 2.3 — Describe a Firewall Rule (10 points)
-
-Describe the SSH bastion rule in detail:
+### Step 2.4 — Allow Health Check Probes
 
 ```bash
-gcloud compute firewall-rules describe txwes-allow-ssh-bastion
+# GCP health checkers use these IP ranges
+gcloud compute firewall-rules create lab05-allow-health-check \
+  --network=lab05-vpc \
+  --allow=tcp:80 \
+  --direction=INGRESS \
+  --source-ranges=130.211.0.0/22,35.191.0.0/16 \
+  --target-tags=web-server \
+  --priority=900 \
+  --description="Allow load balancer health checks"
 ```
 
-Review the output. Note the `targetTags`, `sourceRanges`, `direction`, and `allowed` fields.
+### Step 2.5 — Verify Rules
 
-Deliverable: Screenshot of the describe output. Label it "Task 2.3".
+```bash
+gcloud compute firewall-rules list \
+  --filter="network:lab05-vpc" \
+  --format="table(name,direction,priority,allowed,targetTags,sourceRanges)"
+```
 
 ---
 
-## Part 3: Deploy VMs in the Custom VPC (25 points)
+## Part 3 — Deploy VMs and Test Connectivity (20 minutes)
 
-### Task 3.1 — Create a Bastion VM with SSH Tag (10 points)
-
-Create a VM in the us-central1 subnet with the `bastion` network tag:
+### Step 3.1 — Create a Startup Script
 
 ```bash
-gcloud compute instances create bastion-vm \
-  --zone=us-central1-a \
-  --machine-type=e2-micro \
-  --subnet=txwes-subnet-us \
-  --network=txwes-vpc \
-  --tags=bastion \
-  --image-family=debian-11 \
-  --image-project=debian-cloud
+cat > web-startup.sh << 'EOF'
+#!/bin/bash
+apt-get update -y
+apt-get install -y apache2
+systemctl enable apache2
+systemctl start apache2
+echo "<h1>$(hostname) — Lab 05 Web VM</h1>" > /var/www/html/index.html
+EOF
 ```
 
-List instances to confirm the VM is running:
+### Step 3.2 — Create Two Web VMs
 
 ```bash
-gcloud compute instances list
+# First web VM
+gcloud compute instances create lab05-web-vm-1 \
+  --zone=$ZONE \
+  --machine-type=e2-micro \
+  --subnet=lab05-web-subnet \
+  --tags=web-server,ssh-access \
+  --metadata-from-file=startup-script=web-startup.sh
+
+# Second web VM
+gcloud compute instances create lab05-web-vm-2 \
+  --zone=$ZONE \
+  --machine-type=e2-micro \
+  --subnet=lab05-web-subnet \
+  --tags=web-server,ssh-access \
+  --metadata-from-file=startup-script=web-startup.sh
+
+# List instances with internal and external IPs
+gcloud compute instances list --filter="name:lab05"
 ```
 
-Note the internal IP of `bastion-vm`.
-
-Deliverable: Screenshot of the instances list showing `bastion-vm` with status RUNNING. Label it "Task 3.1".
-
-### Task 3.2 — Create a Web Server VM (10 points)
-
-Create a second VM in us-east1 with the `web-server` tag and a startup script installing Nginx:
+### Step 3.3 — Test HTTP and SSH Connectivity
 
 ```bash
-gcloud compute instances create web-vm \
-  --zone=us-east1-b \
+# Get external IPs
+VM1_IP=$(gcloud compute instances describe lab05-web-vm-1 \
+  --zone=$ZONE \
+  --format='value(networkInterfaces[0].accessConfigs[0].natIP)')
+VM2_IP=$(gcloud compute instances describe lab05-web-vm-2 \
+  --zone=$ZONE \
+  --format='value(networkInterfaces[0].accessConfigs[0].natIP)')
+
+# Test HTTP (wait 60 seconds after creation)
+curl -s http://$VM1_IP
+curl -s http://$VM2_IP
+
+# Test internal connectivity (SSH into VM1 and ping VM2)
+VM2_INTERNAL=$(gcloud compute instances describe lab05-web-vm-2 \
+  --zone=$ZONE \
+  --format='value(networkInterfaces[0].networkIP)')
+
+gcloud compute ssh lab05-web-vm-1 --zone=$ZONE \
+  --command="ping -c 3 $VM2_INTERNAL"
+```
+
+---
+
+## Part 4 — Deploy an External HTTP Load Balancer (25 minutes)
+
+### Step 4.1 — Create an Instance Template
+
+```bash
+gcloud compute instance-templates create lab05-web-template \
   --machine-type=e2-micro \
-  --subnet=txwes-subnet-east \
-  --network=txwes-vpc \
-  --tags=web-server \
   --image-family=debian-11 \
   --image-project=debian-cloud \
-  --metadata=startup-script='#!/bin/bash
-apt-get update && apt-get install -y nginx
-echo "Hello from txwes-vpc web-vm" > /var/www/html/index.html'
+  --network=lab05-vpc \
+  --subnet=lab05-web-subnet \
+  --region=$REGION \
+  --tags=web-server,ssh-access \
+  --metadata-from-file=startup-script=web-startup.sh
 ```
 
-Deliverable: Screenshot of the instances list showing both VMs. Label it "Task 3.2".
-
-### Task 3.3 — Create a VM with No Tags (5 points)
-
-Create a third VM with no network tags, to test that untagged VMs cannot receive SSH from the internet:
+### Step 4.2 — Create a Regional MIG
 
 ```bash
-gcloud compute instances create internal-vm \
-  --zone=us-central1-a \
-  --machine-type=e2-micro \
-  --subnet=txwes-subnet-us \
-  --network=txwes-vpc \
-  --no-address \
-  --image-family=debian-11 \
-  --image-project=debian-cloud
+gcloud compute instance-groups managed create lab05-web-mig \
+  --template=lab05-web-template \
+  --size=2 \
+  --region=$REGION
+
+# Wait for instances to be running
+gcloud compute instance-groups managed wait-until stable lab05-web-mig \
+  --region=$REGION \
+  --timeout=300
 ```
 
-Note: `--no-address` creates the VM without an external IP. It can still communicate internally.
+### Step 4.3 — Create a Health Check
 
-Deliverable: Screenshot of the instances list showing all three VMs. Label it "Task 3.3".
+```bash
+gcloud compute health-checks create http lab05-lb-health-check \
+  --port=80 \
+  --request-path=/ \
+  --check-interval=10 \
+  --timeout=5
+```
+
+### Step 4.4 — Create Backend Service and Add MIG
+
+```bash
+# Set named port on the MIG
+gcloud compute instance-groups managed set-named-ports lab05-web-mig \
+  --named-ports=http:80 \
+  --region=$REGION
+
+# Create backend service
+gcloud compute backend-services create lab05-web-backend \
+  --protocol=HTTP \
+  --port-name=http \
+  --health-checks=lab05-lb-health-check \
+  --global
+
+# Add MIG to backend service
+gcloud compute backend-services add-backend lab05-web-backend \
+  --instance-group=lab05-web-mig \
+  --instance-group-region=$REGION \
+  --global
+```
+
+### Step 4.5 — Create URL Map, Proxy, and Forwarding Rule
+
+```bash
+gcloud compute url-maps create lab05-url-map \
+  --default-service=lab05-web-backend
+
+gcloud compute target-http-proxies create lab05-http-proxy \
+  --url-map=lab05-url-map
+
+gcloud compute forwarding-rules create lab05-forwarding-rule \
+  --load-balancing-scheme=EXTERNAL \
+  --global \
+  --target-http-proxy=lab05-http-proxy \
+  --ports=80
+
+# Get the load balancer IP (takes 2-3 minutes to provision)
+LB_IP=$(gcloud compute forwarding-rules describe lab05-forwarding-rule \
+  --global --format='value(IPAddress)')
+echo "Load Balancer IP: $LB_IP"
+```
+
+### Step 4.6 — Test the Load Balancer
+
+```bash
+# Wait 3-5 minutes for the LB to become active
+# Then test multiple times to see different backends responding
+for i in {1..5}; do
+  curl -s http://$LB_IP
+  sleep 1
+done
+```
 
 ---
 
-## Part 4: Test Connectivity (20 points)
+## Lab Deliverables
 
-### Task 4.1 — SSH into the Bastion VM (10 points)
+Submit a lab report containing:
 
-SSH into the bastion VM using the IAP (Identity-Aware Proxy) tunnel, which uses Google's internal network and does not require an external IP firewall rule:
+1. Output of `gcloud compute networks subnets list --network=lab05-vpc`.
+2. Output of the firewall rules list showing all 4 rules.
+3. Output of `curl` commands to both VM external IPs confirming HTTP response.
+4. Output of the `ping` test showing internal connectivity between VMs.
+5. Output of the load balancer test loop showing at least two different
+   hostnames responding.
+6. Answers to the lab questions.
 
-```bash
-gcloud compute ssh bastion-vm \
-  --zone=us-central1-a \
-  --tunnel-through-iap
-```
+**Lab Questions:**
 
-You may be prompted to add your SSH key — type `y` and press Enter.
-
-Once connected, confirm the hostname:
-
-```bash
-hostname
-```
-
-Exit the SSH session:
-
-```bash
-exit
-```
-
-Deliverable: Screenshot of the hostname output inside the bastion VM SSH session. Label it "Task 4.1".
-
-### Task 4.2 — Test Internal Communication (10 points)
-
-Get the internal IP of `internal-vm`:
-
-```bash
-gcloud compute instances describe internal-vm \
-  --zone=us-central1-a \
-  --format="get(networkInterfaces[0].networkIP)"
-```
-
-SSH into the bastion VM and ping the internal VM using its internal IP:
-
-```bash
-gcloud compute ssh bastion-vm --zone=us-central1-a --tunnel-through-iap \
-  --command="ping -c 3 INTERNAL_VM_IP"
-```
-
-Replace `INTERNAL_VM_IP` with the IP you retrieved. Ping should succeed because the `txwes-allow-internal` rule permits ICMP between the two subnet ranges.
-
-Deliverable: Screenshot showing three successful ping responses. Label it "Task 4.2".
+1. Your custom VPC has no default allow rules. Why is this more secure than
+   using the default VPC, and what is the risk of the default VPC's
+   `default-allow-ssh` rule?
+2. You have three VPCs: A, B, and C. VPC A is peered with VPC B. VPC B is
+   peered with VPC C. Can a VM in VPC A communicate with a VM in VPC C?
+   Explain why or why not.
+3. What is the purpose of the `130.211.0.0/22` and `35.191.0.0/16` source
+   ranges in the health check firewall rule?
+4. Explain the difference between a URL map and a forwarding rule in the
+   External Application Load Balancer architecture.
+5. When would you choose Shared VPC instead of VPC peering for connecting
+   multiple teams' GCP projects?
 
 ---
 
-## Part 5: Verify Firewall Behavior (10 points)
-
-### Task 5.1 — Confirm Web Server is Accessible on Port 80 (5 points)
-
-Get the external IP of `web-vm`:
+## Cleanup
 
 ```bash
-gcloud compute instances describe web-vm \
-  --zone=us-east1-b \
-  --format="get(networkInterfaces[0].accessConfigs[0].natIP)"
+# Delete load balancer components
+gcloud compute forwarding-rules delete lab05-forwarding-rule --global --quiet
+gcloud compute target-http-proxies delete lab05-http-proxy --quiet
+gcloud compute url-maps delete lab05-url-map --quiet
+gcloud compute backend-services delete lab05-web-backend --global --quiet
+gcloud compute health-checks delete lab05-lb-health-check --quiet
+
+# Delete MIG and template
+gcloud compute instance-groups managed delete lab05-web-mig \
+  --region=$REGION --quiet
+gcloud compute instance-templates delete lab05-web-template --quiet
+
+# Delete standalone VMs
+gcloud compute instances delete lab05-web-vm-1 lab05-web-vm-2 \
+  --zone=$ZONE --quiet
+
+# Delete firewall rules
+gcloud compute firewall-rules delete \
+  lab05-allow-ssh lab05-allow-http \
+  lab05-allow-internal lab05-allow-health-check --quiet
+
+# Delete subnets
+gcloud compute networks subnets delete \
+  lab05-web-subnet lab05-app-subnet \
+  --region=$REGION --quiet
+
+# Delete VPC
+gcloud compute networks delete lab05-vpc --quiet
 ```
-
-Open a browser and navigate to `http://EXTERNAL_IP`. You should see the Nginx page because `web-vm` has the `web-server` tag and the `txwes-allow-http` rule applies.
-
-Deliverable: Screenshot of the browser showing the Nginx response. Label it "Task 5.1".
-
-### Task 5.2 — Confirm Internal VM Has No External Access (5 points)
-
-Verify that `internal-vm` has no external IP:
-
-```bash
-gcloud compute instances describe internal-vm \
-  --zone=us-central1-a \
-  --format="yaml(networkInterfaces[0])"
-```
-
-The output should show an `accessConfigs` section with no `natIP` field.
-
-Deliverable: Screenshot of the describe output confirming no external IP. In your submission notes, explain why `internal-vm` can still communicate with other VMs internally even without an external IP. Label it "Task 5.2".
-
----
-
-## Cleanup (5 points)
-
-Delete all VMs and the custom VPC to avoid charges:
-
-```bash
-gcloud compute instances delete bastion-vm --zone=us-central1-a --quiet
-gcloud compute instances delete web-vm --zone=us-east1-b --quiet
-gcloud compute instances delete internal-vm --zone=us-central1-a --quiet
-```
-
-Delete firewall rules:
-
-```bash
-gcloud compute firewall-rules delete txwes-allow-internal --quiet
-gcloud compute firewall-rules delete txwes-allow-ssh-bastion --quiet
-gcloud compute firewall-rules delete txwes-allow-http --quiet
-```
-
-Delete subnets and VPC:
-
-```bash
-gcloud compute networks subnets delete txwes-subnet-us --region=us-central1 --quiet
-gcloud compute networks subnets delete txwes-subnet-east --region=us-east1 --quiet
-gcloud compute networks delete txwes-vpc --quiet
-```
-
-Deliverable: Screenshot of `gcloud compute networks list` showing only the default network remains. Label it "Cleanup".
-
----
-
-## Reflection Questions
-
-Answer in your submission document (2–4 sentences each):
-
-1. Why is it recommended to use custom mode VPCs for production environments instead of auto mode?
-2. The `txwes-allow-internal` rule allows traffic between VMs in both subnets. What specific property of the rule makes it apply to both `10.10.0.0/24` and `10.20.0.0/24`?
-3. You created `internal-vm` with `--no-address`. It has no external IP, yet it could still be pinged from `bastion-vm`. Explain why this works and what would be required if `internal-vm` needed to call the Cloud Storage API.
-
----
-
-## Grading Rubric
-
-| Task | Points | Criteria |
-|---|---|---|
-| 1.1 Custom VPC created | 5 | Networks list shows txwes-vpc |
-| 1.2 Two subnets in two regions | 10 | Subnets list shows both with correct CIDRs and regions |
-| 2.1 Internal traffic firewall rule | 5 | Rule creation success message |
-| 2.2 SSH bastion + HTTP rules listed | 10 | All txwes-vpc rules visible in list |
-| 2.3 Firewall rule describe output | 10 | All fields (targetTags, direction, etc.) visible |
-| 3.1 Bastion VM created with tag | 10 | VM RUNNING with bastion tag |
-| 3.2 Web VM created with tag | 10 | Both VMs visible |
-| 3.3 Internal VM with no external IP | 5 | All three VMs visible |
-| 4.1 SSH into bastion VM confirmed | 10 | Hostname shown from inside VM |
-| 4.2 Ping internal VM succeeds | 10 | Three successful ping responses |
-| 5.1 Web VM accessible on port 80 | 5 | Browser screenshot with Nginx page |
-| 5.2 Internal VM has no external IP | 5 | networkInterfaces output confirms no natIP |
-| Cleanup | 5 | Networks list shows only default |
-| Total | 100 | |
 
 ---
 
 End of Lab — Module 05
 
-Course: CIS-4329 Google Cloud Platform | Texas Wesleyan University | Professor Nash
-
-Certification Target: Google Cloud Associate Cloud Engineer
+Course: CIS-4329 Google Cloud Computing | Texas Wesleyan University | Professor Nash

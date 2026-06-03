@@ -1,52 +1,210 @@
 # Reading Guide: Module 11 - Firewall Management
-## Course: CIS-3325_OS_Admin (CompTIA Linux+ XK0-005)
+
+## CIS-3325 OS Administration | Texas Wesleyan University
+
+**Certification Alignment:** CompTIA Linux+ (XK0-005)
+**Exam Domain:** Domain 2.0 - Security
 
 ---
 
-### Introduction
-Welcome to **Module 11 – Firewall Management**! This week covers Linux host-based firewall configuration — from the `firewalld` zone model used on RHEL/CentOS/Fedora, to `ufw` (Uncomplicated Firewall) on Debian/Ubuntu, to the underlying `iptables` framework that both tools manage. Firewall management is tested on CompTIA Linux+ XK0-005 under Domain 2.0 (Security) and is a common scenario question topic.
+### Glossary
 
-As you work through this material you will learn how to allow and block services and ports, manage firewall zones, make rules persistent, and understand how `iptables` chains and targets work at the packet-filtering level.
+**netfilter** - The Linux kernel framework that implements packet filtering. All Linux firewall tools (iptables, firewalld, ufw, nftables) configure netfilter rules.
 
----
+**iptables** - A command-line tool for configuring netfilter rules directly. Rules exist in tables (filter, nat, mangle). The filter table has INPUT, OUTPUT, and FORWARD chains.
 
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
+**Chain** - A list of rules in iptables. Built-in chains: INPUT (inbound), OUTPUT (outbound), FORWARD (routing between interfaces).
 
-*   **`firewalld` and zones**: The dynamic firewall daemon used on RHEL, CentOS, and Fedora systems. `firewalld` organizes rules into named zones (e.g., `public`, `home`, `trusted`, `drop`) that define how traffic is treated based on the source network or interface. The active zone for an interface is set with `firewall-cmd --zone=public --change-interface=eth0`. List rules with `firewall-cmd --list-all`. Changes made without `--permanent` are runtime-only and lost at reboot.
-*   **`firewall-cmd`**: The command-line client for `firewalld`. Key operations: `firewall-cmd --permanent --add-service=http` (allow HTTP), `firewall-cmd --permanent --add-port=8080/tcp` (allow a specific port), `firewall-cmd --permanent --remove-service=ftp` (block a service), `firewall-cmd --reload` (apply permanent rules to the running configuration). The `--permanent` flag writes to the persistent configuration; without it, changes apply only until the next reload or reboot.
-*   **`ufw` (Uncomplicated Firewall)**: A simplified front-end for `iptables` used on Debian and Ubuntu systems. `ufw enable` activates the firewall; `ufw allow ssh` or `ufw allow 22/tcp` permits SSH; `ufw deny 23/tcp` blocks Telnet; `ufw status verbose` shows current rules. Rules added with `ufw` are automatically persistent. `ufw` is disabled by default on fresh Ubuntu installs.
-*   **`iptables`**: The legacy Linux kernel packet-filtering framework that underlies both `firewalld` and `ufw`. Organizes rules into chains: `INPUT` (inbound to the host), `OUTPUT` (outbound from the host), and `FORWARD` (routed traffic). Each rule specifies a target: `ACCEPT`, `DROP` (silently discard), or `REJECT` (discard and send ICMP error). Rules are processed top-to-bottom; the first match wins. `iptables -L -n -v` lists all rules with packet counts.
-*   **Default policy and rule order**: The default policy for a chain (e.g., `iptables -P INPUT DROP`) defines what happens when no rule matches — common secure practice is to default-deny inbound traffic and explicitly allow needed services. Rule order matters: if an ACCEPT rule for port 22 appears before a DROP-all rule, SSH is permitted. The `iptables -I INPUT 1` flag inserts a rule at position 1 (top of the chain).
-*   **Persistent `iptables` rules**: Unlike `firewalld` and `ufw`, raw `iptables` rules are not automatically saved. On RHEL systems, install and use `iptables-services` and run `service iptables save`. On Debian/Ubuntu use the `iptables-persistent` package with `netfilter-persistent save`. Without persistence, all rules are lost at reboot.
+**Default Policy** - The action taken when a packet matches no rule in a chain. ACCEPT or DROP.
 
----
+**ufw (Uncomplicated Firewall)** - Ubuntu's simplified firewall management tool. Persistent by default. Frontend for iptables.
 
-### 2. Certification Exam Tips
-*   **Domain alignment:** Firewall management maps to Linux+ Domain 2.0 (Security). Expect 4–6 questions on `firewalld` commands, `ufw` syntax, and `iptables` chain/target concepts.
-*   **`--permanent` trap:** The most common `firewall-cmd` exam trap is forgetting `--permanent`. A rule added without `--permanent` is active immediately but disappears after `firewall-cmd --reload` or a reboot. The exam may present a scenario where a rule "stops working after reboot" — the answer is that `--permanent` was omitted.
-*   **`firewall-cmd --reload` vs `--complete-reload`:** `--reload` applies permanent rules while keeping existing connections open. `--complete-reload` drops all active connections. On the exam, `--reload` is always the safer answer unless asked about a clean state.
-*   **`iptables` chain direction:** Memorize: `INPUT` = traffic destined for the local host, `OUTPUT` = traffic originating from the local host, `FORWARD` = traffic passing through (router function). A web server rule allowing port 80 belongs in the `INPUT` chain, not `OUTPUT`.
-*   **`ufw` default state:** `ufw` is inactive by default on Ubuntu. An exam scenario where a firewall rule has no effect may indicate `ufw` has not been enabled with `ufw enable`.
-*   **Study Resource:** [The Linux Command Line by William Shotts](https://linuxcommand.org/tlcl.php) provides foundational context for Linux networking and security. [Linux Essentials Course by LearnLinuxTV](https://www.youtube.com/playlist?list=PLT98CRl2KxEG0QLjR-8t7k3S4I15Z1A78) includes video demonstrations of `firewalld`, `ufw`, and `iptables` configuration in a live Linux environment.
+**firewalld** - A zone-based firewall management daemon used on RHEL, CentOS, Fedora, and Rocky Linux. Separates runtime (active) and permanent (saved) configurations.
+
+**Zone** - A named firewall policy in firewalld that is assigned to a network interface or source address range. Each zone has its own allowed services and ports.
+
+**Runtime Configuration** - firewalld rules that are currently active but not saved. Lost when firewalld is reloaded or the system reboots.
+
+**Permanent Configuration** - firewalld rules written to configuration files. Not active until firewalld is reloaded.
+
+**Rich Rule** - An advanced firewalld rule type that allows complex matching conditions including source address, destination, rate limiting, and logging.
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the networking and security chapters of the free OER textbook [The Linux Command Line by William Shotts](https://linuxcommand.org/tlcl.php), which provide foundational knowledge of Linux network services and access control relevant to firewall configuration.
-*   **Required Video:** Watch the firewall management videos in the [Linux Essentials Course by LearnLinuxTV](https://www.youtube.com/playlist?list=PLT98CRl2KxEG0QLjR-8t7k3S4I15Z1A78), a free YouTube playlist that demonstrates `firewalld` zone management, `ufw` rule configuration, and `iptables` chain filtering with live examples.
+### iptables Filter Table Chain Model
+
+```
+INBOUND PACKETS  →  INPUT chain  →  local process
+                                      ↓
+LOCAL PROCESS    →  OUTPUT chain →  network
+
+ROUTED PACKETS   →  FORWARD chain → network
+```
+
+Rule evaluation: top to bottom. First match wins. If no match, the default policy applies.
+
+Targets:
+
+| Target | Effect |
+|--------|--------|
+| ACCEPT | Allow the packet |
+| DROP | Silently discard (no response to sender) |
+| REJECT | Discard and send ICMP error to sender |
+| LOG | Log packet details; continue to next rule |
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab you will enable `ufw`, allow SSH and HTTP, verify rules with `ufw status verbose`, then use `firewall-cmd` to add a permanent service rule, reload the firewall, and verify persistence after a reload. You will also inspect `iptables -L -n` to understand the underlying rules generated by both tools.
+### iptables Command Reference
+
+| Command | Purpose |
+|---------|---------|
+| iptables -L -n -v | List all rules, numeric IPs, with counters |
+| iptables -L INPUT -n -v --line-numbers | List INPUT chain with line numbers |
+| iptables -A CHAIN RULE | Append a rule to a chain |
+| iptables -I CHAIN N RULE | Insert a rule at position N |
+| iptables -D CHAIN N | Delete rule at line number N |
+| iptables -D CHAIN RULE | Delete a rule by specification |
+| iptables -F CHAIN | Flush (delete all) rules in a chain |
+| iptables -F | Flush all rules in all chains |
+| iptables -P CHAIN POLICY | Set the default policy for a chain |
+| iptables -S CHAIN | Print rules in save/restore format |
+
+Common rule components:
+
+| Component | Meaning |
+|-----------|---------|
+| -p tcp | Match TCP protocol |
+| -p udp | Match UDP protocol |
+| --dport N | Match destination port N |
+| --sport N | Match source port N |
+| -s IP/CIDR | Match source address |
+| -d IP/CIDR | Match destination address |
+| -i IFACE | Match input interface |
+| -o IFACE | Match output interface |
+| -m state --state ESTABLISHED,RELATED | Match established connections |
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read the relevant chapters in [The Linux Command Line by William Shotts](https://linuxcommand.org/tlcl.php).
-- [ ] Watch the firewall management videos in [Linux Essentials Course by LearnLinuxTV](https://www.youtube.com/playlist?list=PLT98CRl2KxEG0QLjR-8t7k3S4I15Z1A78).
-- [ ] Review the commands outlined in the lab instructions.
-- [ ] Proceed to the weekly hands-on lab activity.
+### ufw Command Reference
+
+| Command | Purpose |
+|---------|---------|
+| ufw status | Show status and all rules |
+| ufw status numbered | Show rules with line numbers |
+| ufw enable | Enable ufw (takes effect immediately) |
+| ufw disable | Disable ufw |
+| ufw allow ssh | Allow by service name |
+| ufw allow 80/tcp | Allow specific port/protocol |
+| ufw allow from IP to any port N | Allow from specific source to port |
+| ufw deny PORT/PROTO | Explicitly deny a port |
+| ufw delete allow PORT/PROTO | Remove a rule |
+| ufw delete N | Remove rule by number |
+| ufw logging on | Enable logging |
+| ufw reset | Remove all rules and disable ufw |
+
+ufw rules are persistent automatically. No reload command is needed.
+
+---
+
+### firewalld Command Reference
+
+| Command | Purpose |
+|---------|---------|
+| firewall-cmd --get-zones | List all available zones |
+| firewall-cmd --get-default-zone | Show the default zone |
+| firewall-cmd --get-active-zones | Show active zones and their interfaces |
+| firewall-cmd --list-all | Show rules in the default zone |
+| firewall-cmd --list-all-zones | Show all zones and their rules |
+| firewall-cmd --list-services | List allowed services in active zone |
+| firewall-cmd --list-ports | List explicitly opened ports |
+| firewall-cmd --add-service=NAME | Allow service (runtime) |
+| firewall-cmd --add-service=NAME --permanent | Allow service (permanent) |
+| firewall-cmd --remove-service=NAME --permanent | Remove service (permanent) |
+| firewall-cmd --add-port=N/tcp --permanent | Allow port (permanent) |
+| firewall-cmd --remove-port=N/tcp --permanent | Remove port (permanent) |
+| firewall-cmd --reload | Load permanent config into runtime |
+| firewall-cmd --runtime-to-permanent | Copy runtime rules to permanent |
+| firewall-cmd --query-service=NAME | Returns yes/no if service is active |
+
+---
+
+### firewalld Runtime vs Permanent
+
+| Action | Command | Active now? | Survives reload? |
+|--------|---------|------------|-----------------|
+| Add runtime rule | --add-service=X | Yes | No |
+| Add permanent rule | --add-service=X --permanent | No | Yes |
+| Add both | Both commands above | Yes | Yes |
+| Add permanent + reload | --permanent then --reload | Yes | Yes |
+
+The most common mistake: adding a rule with --permanent but forgetting --reload, leaving
+the rule in config files but not active in the running firewall.
+
+---
+
+### firewalld Zones Reference
+
+| Zone | Default Allowed Services | Use Case |
+|------|--------------------------|---------|
+| drop | None (all inbound dropped silently) | Maximum restriction |
+| block | None (inbound rejected with ICMP) | Block with notification |
+| public | ssh, dhcpv6-client | Internet-facing servers |
+| home | ssh, mdns, samba-client, dhcpv6-client | Home networks |
+| trusted | All | Fully trusted networks |
+| dmz | ssh only | DMZ servers |
+
+---
+
+### iptables Persistence (Ubuntu)
+
+```bash
+sudo apt install iptables-persistent
+sudo netfilter-persistent save
+```
+
+Rules saved to:
+- /etc/iptables/rules.v4 (IPv4)
+- /etc/iptables/rules.v6 (IPv6)
+
+Manual save: sudo iptables-save > /etc/iptables/rules.v4
+Manual restore: sudo iptables-restore < /etc/iptables/rules.v4
+
+---
+
+### Exam Tips
+
+1. iptables rules are not persistent by default. ufw rules are persistent. firewalld permanent rules are persistent.
+
+2. firewalld --permanent writes to config but does NOT activate. --reload activates the permanent config. Both steps are required for a rule to be active AND persistent.
+
+3. iptables -F flushes all rules. If the default policy is DROP, flushing locks you out. Always change the policy to ACCEPT before flushing, or ensure you have console access.
+
+4. ufw enable on a remote server without first allowing SSH will lock you out. Always allow SSH before enabling ufw.
+
+5. iptables -I inserts at the top; -A appends to the bottom. Loopback rules and ESTABLISHED,RELATED rules should be inserted at the top to evaluate first.
+
+6. DROP silently discards packets. REJECT sends an ICMP error. Drop is less informative to attackers; Reject is more useful for debugging.
+
+7. firewall-cmd --list-all shows the current zone's active runtime rules. Add --permanent to list the saved permanent rules.
+
+8. Zone drop versus block: drop silently discards, block sends an ICMP rejection message. Use drop for maximum stealth.
+
+---
+
+### Study Checklist
+
+Before the quiz and lab, confirm you can do all of the following without looking them up:
+
+- Describe the iptables filter table chains and default policies
+- Add, insert, and delete iptables rules
+- Set the default policy for an iptables chain
+- Save and restore iptables rules on Ubuntu
+- Enable ufw and add basic allow/deny rules
+- Remove ufw rules by rule specification and by number
+- List all ufw rules with and without line numbers
+- Explain the difference between firewalld runtime and permanent configuration
+- Add a permanent firewalld service rule and reload it
+- List active services and ports in the default firewalld zone
+- Move a network interface to a specific firewalld zone
+- Add a source address to a trusted zone in firewalld
+- Explain the firewalld zones and their default trust levels

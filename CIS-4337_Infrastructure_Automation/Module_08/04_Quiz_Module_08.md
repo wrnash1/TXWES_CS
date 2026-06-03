@@ -1,77 +1,207 @@
-# Quiz: Module 08 - Provisioners and Null Resources
-## Course: CIS-4337_Infrastructure_Automation (HashiCorp Certified: Terraform Associate)
+# Quiz: Module 08 — Terraform State Management
+
+## Course: CIS-4337 Infrastructure Automation
+
+## Texas Wesleyan University | Professor Nash
+
+## Certification Alignment: HashiCorp Terraform Associate (003)
 
 ---
 
-**Question 1**
-Which provisioner type executes a command on the machine running `terraform apply`, rather than on the newly created remote resource?
-*   A) remote-exec
-*   B) file
-*   C) local-exec
-*   D) inline
-*   **Correct Answer:** C) `local-exec` runs a command on the machine where Terraform is executing (the local runner or CI agent). It does not connect to the provisioned resource over SSH or WinRM.
-*   **Distractor Analysis:**
-    *   *Why C is correct:* `local-exec` is the provisioner used when you need to trigger a side-effect on the Terraform runner itself — for example, calling an external API, writing a local inventory file, or invoking Ansible against the new resource. The command runs in a local shell context.
-    *   *Why A is incorrect:* `remote-exec` connects to the provisioned resource over SSH or WinRM and runs commands on that machine, not on the local runner.
-    *   *Why B is incorrect:* The `file` provisioner copies files or directories from the local machine to the remote resource over SSH or WinRM. It does not execute commands on either machine.
-    *   *Why D is incorrect:* `inline` is an argument inside a `remote-exec` provisioner block that accepts a list of commands to run on the remote machine. It is not a provisioner type itself.
+**Instructions**: Select the single best answer for each question. Each question is worth 10 points.
 
 ---
 
-**Question 2**
-Which of the following most accurately describes the **`null_resource`** in Terraform?
-*   A) A resource that creates a null (empty) virtual machine with no operating system, used as a placeholder for future infrastructure
-*   B) A special resource from the `hashicorp/null` provider that creates no real infrastructure but can have provisioners and lifecycle rules attached to it, re-running whenever its `triggers` map changes
-*   C) A built-in Terraform block that marks another resource as optional, so Terraform skips it if the provider returns a null response
-*   D) A resource that automatically destroys itself after the first successful `terraform apply`, leaving no trace in state
-*   **Correct Answer:** B) `null_resource` is a resource that provisions nothing in any cloud or system, but serves as a vehicle for attaching provisioners to arbitrary trigger conditions. When any value in its `triggers` map changes, Terraform destroys and re-creates the `null_resource`, causing its provisioners to re-run.
-*   **Distractor Analysis:**
-    *   *Why B is correct:* The `null_resource` is the standard Terraform pattern for running scripts or side-effects in response to upstream changes without creating real infrastructure. The `triggers` argument is the key mechanism that controls when provisioners re-execute. The exam tests this pattern directly.
-    *   *Why A is incorrect:* `null_resource` does not provision any virtual machine or cloud resource. The word "null" refers to the absence of managed infrastructure, not an empty VM.
-    *   *Why C is incorrect:* There is no built-in Terraform block that marks a resource as optional. Conditional resource creation is handled with `count = 0` or `count = var.enabled ? 1 : 0`.
-    *   *Why D is incorrect:* `null_resource` persists in state like any other resource. It is not self-destroying. Removing it from configuration causes Terraform to plan a destroy on the next apply.
+### Question 1
+
+What is the primary purpose of the `terraform.tfstate` file?
+
+A. It stores the Terraform configuration in a compiled binary format for faster execution.
+B. It maps the resources defined in your configuration to the real-world objects that were created, including their current attribute values.
+C. It records the history of all `terraform apply` commands run against the configuration.
+D. It stores provider plugin binaries and their version checksums.
+
+**Correct Answer**: B
+
+**Distractor Analysis**:
+
+- A is incorrect — state is a JSON document, not a compiled binary, and does not store configuration.
+- C is incorrect — state records current infrastructure state, not a history of operations. A history is maintained via state versioning in the backend, not in the file itself.
+- D is incorrect — provider binaries are stored in `.terraform/providers/`; the lock file `.terraform.lock.hcl` records version checksums.
 
 ---
 
-**Question 3**
-A Terraform configuration uses a `remote-exec` provisioner to run an installation script on a newly created EC2 instance. The provisioner command exits with a non-zero status code. What does Terraform do by default?
-*   A) Terraform logs the error as a warning and continues with the rest of the apply without modifying the resource's state
-*   B) Terraform marks the resource as tainted in state, halts the current apply, and plans to destroy and re-create the resource on the next apply
-*   C) Terraform automatically retries the failed provisioner command up to three times before stopping
-*   D) Terraform rolls back all changes made during the current apply and restores the previous state file
-*   **Correct Answer:** B) The default `on_failure` behavior for a provisioner is `fail` — Terraform marks the resource as tainted and stops the apply. A tainted resource is destroyed and re-created on the next `terraform apply`.
-*   **Distractor Analysis:**
-    *   *Why B is correct:* This is the exact behavior the exam tests. The resource exists in the real world but its provisioner failed, so Terraform can't confirm it is correctly configured. Tainting signals that the resource must be replaced. You can override this with `on_failure = continue` if you want Terraform to proceed despite the failure.
-    *   *Why A is incorrect:* Continuing silently after a provisioner failure is only the behavior when `on_failure = continue` is explicitly set. The default is to fail and taint.
-    *   *Why C is incorrect:* Terraform does not have a built-in provisioner retry mechanism. There is no automatic retry count.
-    *   *Why D is incorrect:* Terraform does not perform rollbacks. Resources already created during the apply remain in their created state. Terraform is not transactional in the way that database operations are.
+### Question 2
+
+You are configuring an S3 backend for a team environment. You want to prevent two engineers from running `terraform apply` simultaneously. What additional resource must you create?
+
+A. An S3 bucket policy that denies concurrent PutObject operations
+B. An AWS Lambda function that monitors the S3 bucket for concurrent writes
+C. A DynamoDB table with a `LockID` primary key, referenced in the backend configuration
+D. An IAM role with a session condition that limits one active session per user
+
+**Correct Answer**: C
+
+**Distractor Analysis**:
+
+- A is incorrect — S3 bucket policies cannot enforce sequential writes in the way Terraform requires; this is not a supported locking mechanism.
+- B is incorrect — Lambda monitoring would not provide the atomic lock-acquire semantics that Terraform needs.
+- D is incorrect — IAM session conditions do not provide the mutex (mutual exclusion) behavior needed for state locking.
 
 ---
 
-**Question 4**
-HashiCorp's official documentation describes provisioners as a "last resort." A team wants to bootstrap an AWS EC2 instance with a startup script. Which approach does HashiCorp recommend over using a `remote-exec` provisioner?
-*   A) Use a `local-exec` provisioner instead, since it avoids the SSH connection requirement
-*   B) Use the EC2 instance's `user_data` argument to pass the bootstrap script directly through the provider, keeping the configuration declarative and Terraform-managed
-*   C) Use a `null_resource` with a `remote-exec` provisioner and a `depends_on` argument pointing to the EC2 instance
-*   D) Split the bootstrap script into a separate Terraform configuration directory and apply it as a second pass after the first apply completes
-*   **Correct Answer:** B) Cloud provider resources like `aws_instance` expose a `user_data` argument that passes the startup script to the instance through the provider API. This is fully declarative, requires no SSH connection, and is modeled in the plan — making it strongly preferred over a provisioner.
-*   **Distractor Analysis:**
-    *   *Why B is correct:* The official Terraform documentation explicitly recommends `user_data` (AWS), `custom_data` (Azure), and equivalent cloud-native mechanisms as alternatives to `remote-exec`. These attributes are tracked in state and shown in plan diffs, whereas provisioner execution is opaque to Terraform.
-    *   *Why A is incorrect:* Replacing `remote-exec` with `local-exec` still uses a provisioner — it does not avoid the "last resort" problem. `local-exec` introduces the same state opacity and side-effect issues.
-    *   *Why C is incorrect:* This approach still uses a provisioner; wrapping it in a `null_resource` does not resolve the underlying concern about external side-effects being invisible to Terraform's plan.
-    *   *Why D is incorrect:* Splitting into a second configuration pass adds operational complexity and does not eliminate the need for a provisioner — it just defers it.
+### Question 3
+
+A Terraform apply operation was forcibly killed mid-run, and now all subsequent `terraform plan` commands fail with a state lock error. What is the correct recovery action?
+
+A. Delete the `terraform.tfstate` file and re-run `terraform init`.
+B. Run `terraform state push` with a backup state file to overwrite the current state.
+C. Run `terraform force-unlock <LOCK-ID>` using the Lock ID displayed in the error message.
+D. Run `terraform destroy` to release the lock automatically.
+
+**Correct Answer**: C
+
+**Distractor Analysis**:
+
+- A is incorrect — deleting the state file would cause Terraform to lose all knowledge of existing infrastructure, leading to duplicate resource creation.
+- B is incorrect — `state push` is for uploading an alternative state file; it does not address a stuck lock and bypasses locking protections.
+- D is incorrect — `terraform destroy` also tries to acquire the lock; it will fail with the same lock error.
 
 ---
 
-**Question 5**
-A `null_resource` has the following configuration: `triggers = { instance_id = aws_instance.web.id }`. Under which condition will Terraform destroy and re-create the `null_resource`, causing its provisioners to re-run?
-*   A) Every time `terraform plan` is run, regardless of whether the instance ID changes
-*   B) Only when the `null_resource` block is removed from the configuration and then re-added
-*   C) Whenever the value of `aws_instance.web.id` changes — for example, when the EC2 instance is replaced with a new one that has a different ID
-*   D) Only on the first `terraform apply` after the `null_resource` is initially declared; it never re-runs after that
-*   **Correct Answer:** C) The `triggers` map causes Terraform to detect a change in the `null_resource` whenever any trigger value changes. Since `aws_instance.web.id` changes when the instance is replaced, the `null_resource` is destroyed and re-created, running its provisioners against the new instance.
-*   **Distractor Analysis:**
-    *   *Why C is correct:* This is the core exam-tested behavior of `null_resource`. The `triggers` argument is specifically designed to re-run provisioners in response to upstream changes that would otherwise not affect the `null_resource` itself. It is the primary reason `null_resource` exists.
-    *   *Why A is incorrect:* `terraform plan` does not cause resources to be re-created. Resources are re-created only when their configuration or trigger values change and `terraform apply` is run.
-    *   *Why B is incorrect:* Removing and re-adding a resource from configuration would destroy and re-create it, but this describes manually editing code — not the purpose of the `triggers` mechanism. `triggers` automates re-creation in response to referenced value changes.
-    *   *Why D is incorrect:* `null_resource` is not a one-time resource. It will re-run its provisioners whenever a trigger value changes, which can happen on any subsequent apply.
+### Question 4
+
+A developer runs `terraform state rm aws_instance.web`. What is the result?
+
+A. The EC2 instance is terminated in AWS and removed from state.
+B. The EC2 instance continues running in AWS but is removed from Terraform's state tracking.
+C. The state file entry is marked as "tainted" and the instance will be replaced on the next apply.
+D. Terraform creates a plan to import the instance back into state automatically.
+
+**Correct Answer**: B
+
+**Distractor Analysis**:
+
+- A is incorrect — `state rm` only modifies the state file; it does not call the provider to destroy the resource.
+- C is incorrect — tainting is a different operation (`terraform taint`) that marks a resource for recreation; `state rm` completely removes the tracking entry.
+- D is incorrect — Terraform has no automatic re-import mechanism; you would need to manually run `terraform import` to re-track the resource.
+
+---
+
+### Question 5
+
+You are refactoring a Terraform configuration and rename a resource from `aws_instance.app` to `aws_instance.web_server` in your `.tf` files. Without any other action, what will `terraform plan` propose?
+
+A. No changes — Terraform automatically detects the rename.
+B. Update the resource with a new name tag.
+C. Destroy `aws_instance.app` and create a new `aws_instance.web_server`.
+D. An error — Terraform does not allow resource addresses to change.
+
+**Correct Answer**: C
+
+**Distractor Analysis**:
+
+- A is incorrect — Terraform tracks resources by their address in state; it has no way to infer that a renamed address is the same resource.
+- B is incorrect — instance renaming in code results in destroy/create, not an update, because the state no longer has a matching address.
+- D is incorrect — renaming is valid HCL; Terraform processes it but treats the new name as a new resource and the old name as a deleted one.
+
+---
+
+### Question 6
+
+Which backend configuration argument is NOT valid in an S3 backend block?
+
+A. `bucket`
+B. `dynamodb_table`
+C. `encrypt`
+D. `lock_timeout`
+
+**Correct Answer**: D
+
+**Distractor Analysis**:
+
+- A is incorrect — `bucket` is a required argument for the S3 backend.
+- B is incorrect — `dynamodb_table` is a valid optional argument that enables state locking.
+- C is incorrect — `encrypt` is a valid optional argument that enables server-side encryption.
+- D is correct — `lock_timeout` is not a valid S3 backend argument. The timeout for lock acquisition is a global Terraform behavior, not a per-backend setting.
+
+---
+
+### Question 7
+
+You need to share an output value (specifically a VPC ID) from one Terraform configuration with another. Which approach is correct?
+
+A. Copy and paste the VPC ID value directly into the second configuration's variables file.
+B. Use the `terraform_remote_state` data source in the second configuration, pointing to the first configuration's backend.
+C. Export the VPC ID as a Terraform variable and reference it with `var.vpc_id` in the second configuration.
+D. Use a `module` block with `source` pointing to the first configuration's directory.
+
+**Correct Answer**: B
+
+**Distractor Analysis**:
+
+- A is incorrect — hardcoding values defeats the purpose of infrastructure as code and breaks when the VPC ID changes.
+- C is incorrect — Terraform variables require a value to be supplied; they do not automatically read from another configuration's outputs.
+- D is incorrect — `module` blocks compose configurations at authoring time; they do not read live state from a separately-applied configuration.
+
+---
+
+### Question 8
+
+What is the effect of adding `terraform.tfstate` to a `.gitignore` file?
+
+A. Terraform will automatically store state in the cloud backend instead of locally.
+B. The state file will be encrypted before Git can track it.
+C. Git will not track the state file, preventing accidental commits of sensitive infrastructure data.
+D. Terraform will refuse to create a local state file and will require a remote backend.
+
+**Correct Answer**: C
+
+**Distractor Analysis**:
+
+- A is incorrect — `.gitignore` is a Git configuration file; it has no effect on Terraform's backend selection.
+- B is incorrect — `.gitignore` prevents tracking entirely; it does not apply encryption.
+- D is incorrect — Terraform's backend selection is entirely independent of `.gitignore`; Terraform will still create a local state file if the local backend is configured.
+
+---
+
+### Question 9
+
+Which command downloads the current state file from the configured backend and prints it to stdout?
+
+A. `terraform state show`
+B. `terraform state list`
+C. `terraform state pull`
+D. `terraform show -state`
+
+**Correct Answer**: C
+
+**Distractor Analysis**:
+
+- A is incorrect — `terraform state show <resource>` displays attributes of a specific resource, not the entire state file.
+- B is incorrect — `terraform state list` lists resource addresses, not the full state file content.
+- D is incorrect — `terraform show -state` is not a valid command syntax; `terraform show` displays the current plan or state in a human-readable format but does not output raw JSON.
+
+---
+
+### Question 10
+
+A team is moving from storing Terraform state locally to using an S3 backend. They run `terraform init` after adding the backend block. What does `terraform init` do with the existing local state?
+
+A. Deletes the local state file after verifying the S3 bucket is accessible.
+B. Prompts the user to migrate the existing state to the new backend and copies it if confirmed.
+C. Errors out because you cannot change backends after initial initialization.
+D. Ignores the local state and starts with an empty state in S3.
+
+**Correct Answer**: B
+
+**Distractor Analysis**:
+
+- A is incorrect — Terraform does not automatically delete the local state; it preserves it as a backup after migration.
+- C is incorrect — backend changes are fully supported; `terraform init` is the mechanism for performing them.
+- D is incorrect — starting with empty state in S3 would cause Terraform to propose creating all resources again, which is dangerous; the migration prompt prevents this.
+
+---
+
+*Texas Wesleyan University — CIS-4337 Infrastructure Automation*
+*Proprietary and Confidential. Not for disclosure outside of authorized course participants.*

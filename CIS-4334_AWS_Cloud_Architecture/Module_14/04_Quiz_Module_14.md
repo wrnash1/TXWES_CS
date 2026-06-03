@@ -1,78 +1,246 @@
-# Quiz: Module 14 - Monitoring – CloudWatch, CloudTrail, AWS Config
-## Course: CIS-4334_AWS_Cloud_Architecture (AWS Certified Solutions Architect - Associate)
+# Quiz: Module 14 — AWS Cost Optimization
+
+## Course: CIS-4334 AWS Cloud Architecture
+
+## Texas Wesleyan University | Professor Nash
+
+**Certification Alignment:** AWS Solutions Architect — Associate (SAA-C03)
 
 ---
 
-**Question 1**
-Which AWS service should you check first to determine which IAM user or role executed an API call that terminated a production EC2 instance three days ago?
-*   A) Amazon CloudWatch Metrics — review the EC2 instance state change metric history.
-*   B) AWS CloudTrail — search the event history for `TerminateInstances` events with the instance ID to identify the caller's identity, source IP, and timestamp.
-*   C) AWS Config — review the configuration history of the EC2 instance to identify who changed its state.
-*   D) Amazon GuardDuty — check threat findings for unauthorized instance termination events.
-*   **Correct Answer:** B) AWS CloudTrail records every API call including who made it (IAM ARN), from where (source IP), and when — making it the definitive source for answering "who did what?" in an AWS account.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* CloudWatch Metrics track performance data (CPU, network, disk). Instance state changes are visible as metric data points, but CloudWatch does not record the identity of who initiated the state change — only that the state changed.
-    *   *Why B is correct:* CloudTrail is the security audit trail for AWS API activity. The `TerminateInstances` EC2 API call creates a CloudTrail Management Event recording the `userIdentity` (IAM user/role ARN), `sourceIPAddress`, `eventTime`, and `requestParameters` (including the instance ID). This is the only native AWS service that records caller identity for API actions.
-    *   *Why C is incorrect:* AWS Config records the configuration state of resources over time and can show when an EC2 instance's state changed from `running` to `terminated`. However, Config does not record the IAM identity that initiated the change — it records the state change outcome, not the caller. CloudTrail records the caller.
-    *   *Why D is incorrect:* GuardDuty analyzes logs for threat patterns and generates security findings. It may generate a finding if the termination was from an anomalous source, but it is not the primary tool for answering accountability questions about specific API calls. GuardDuty findings are behavioral detections, not a complete API activity record.
+## Instructions
+
+Select the best answer for each question. Each question is worth 10 points. Answer key and distractor analysis follow each question.
 
 ---
 
-**Question 2**
-Which of the following is the most accurate description of **AWS Config** and its primary use case?
-*   A) A real-time performance monitoring service that collects CPU, memory, and network metrics from AWS resources and triggers alarms when thresholds are exceeded.
-*   B) A configuration history and compliance service that continuously records the state of AWS resource configurations, tracks changes over time, and evaluates resources against compliance rules.
-*   C) A log aggregation service that collects application logs from EC2 instances, Lambda functions, and containers into centralized Log Groups for querying and alerting.
-*   D) An API audit service that records every AWS API call made in an account, including the caller's identity, source IP, and timestamp.
-*   **Correct Answer:** B) AWS Config records the configuration state of AWS resources continuously, maintains a history of changes, and evaluates configurations against compliance rules — answering "was this resource compliant at any point in time?"
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* This describes Amazon CloudWatch (metrics and alarms). CloudWatch collects time-series performance data; Config records resource configuration attributes (properties, relationships, and tags).
-    *   *Why B is correct:* Config is the configuration history and compliance layer. It can answer questions like "what was the inbound rule set of this security group on March 15th?" and "have any S3 buckets been configured with public access in the last 30 days?" Config Rules provide automated compliance evaluation with optional auto-remediation.
-    *   *Why C is incorrect:* This describes Amazon CloudWatch Logs. CloudWatch Logs aggregates log streams from various sources; Config tracks structured resource configuration attributes, not unstructured log text.
-    *   *Why D is incorrect:* This describes AWS CloudTrail. CloudTrail records API call events (actions); Config records resource configuration states (current and historical property values).
+## Question 1
+
+A company runs a web application on EC2 with steady, predictable traffic 24 hours a day, 7 days a week, for the foreseeable future. The finance team wants to reduce the EC2 cost by the maximum possible amount without changing the application architecture. Which purchasing option provides the greatest discount?
+
+- A. Spot Instances with a persistent request
+- B. On-Demand Instances with detailed monitoring disabled
+- C. All Upfront, 3-year Standard Reserved Instances
+- D. Compute Savings Plan with 1-year no-upfront commitment
+
+### Q1 Answer: C
+
+### Q1 Analysis
+
+A is incorrect. Spot Instances can be interrupted with a 2-minute warning. A 24/7 web application cannot tolerate arbitrary interruptions. Additionally, a steady-state always-on workload is not the target use case for Spot.
+
+B is incorrect. Disabling detailed monitoring reduces CloudWatch metric frequency but has no effect on EC2 instance pricing.
+
+C is correct. All Upfront 3-year Standard Reserved Instances provide up to 72% discount — the maximum available for EC2. The workload is steady and predictable, making the 3-year commitment low risk.
+
+D is incorrect. A 1-year Compute Savings Plan provides up to 66% discount, which is less than the 72% available from a 3-year Standard RI or EC2 Instance Savings Plan. The question asks for the maximum discount.
 
 ---
 
-**Question 3**
-An operations team needs to receive an email alert whenever an EC2 instance's CPU utilization exceeds 80% for more than 10 consecutive minutes. Which combination of AWS services implements this with the least operational overhead?
-*   A) Install a custom monitoring agent on each EC2 instance that sends emails via an SMTP server when CPU exceeds 80%.
-*   B) Create a CloudWatch Alarm on the `CPUUtilization` metric with a threshold of 80% over two 5-minute periods; configure an SNS Topic as the alarm action, with an email subscription on the topic.
-*   C) Enable AWS Config Rule `ec2-instance-cpu-alarm` to detect high CPU and trigger an SNS notification.
-*   D) Configure CloudTrail to log CPU metrics and set a CloudTrail Insight to trigger an email when unusual CPU patterns are detected.
-*   **Correct Answer:** B) CloudWatch Alarm → SNS → Email is the standard, fully managed AWS pattern for metric-based operational alerting with no infrastructure to manage.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* A self-managed SMTP-based monitoring agent on every EC2 instance requires installation, maintenance, scaling, and SMTP configuration — significant operational overhead compared to the fully managed CloudWatch + SNS approach.
-    *   *Why B is correct:* CloudWatch Alarms are designed exactly for this use case. The alarm monitors the `CPUUtilization` metric in the `AWS/EC2` namespace, evaluates it over the specified period and datapoint count (2 datapoints of 5 minutes each = 10 minutes), and triggers an SNS action when in ALARM state. SNS handles email delivery to all subscribed addresses — zero operational overhead.
-    *   *Why C is incorrect:* AWS Config Rules evaluate resource configuration properties (e.g., security group rules, S3 bucket settings). CPU utilization is a performance metric, not a configuration property. There is no AWS Config managed rule for CPU performance.
-    *   *Why D is incorrect:* CloudTrail records API calls (control plane events), not performance metrics. CloudTrail Insights detects unusual API activity patterns. CloudTrail cannot monitor EC2 CPU utilization — that is CloudWatch's domain.
+## Question 2
+
+A data science team runs weekly batch ML training jobs that take 6–8 hours to complete. Jobs can be restarted from a checkpoint if interrupted. The team wants to minimize compute costs. Which EC2 purchasing model is MOST appropriate?
+
+- A. Reserved Instances (1-year, All Upfront)
+- B. On-Demand Instances
+- C. Spot Instances
+- D. Dedicated Hosts
+
+### Q2 Answer: C
+
+### Q2 Analysis
+
+A is incorrect. Reserved Instances provide a discount on steady-state, continuous usage. Weekly 6–8 hour batch jobs represent sporadic usage — the RI capacity would sit idle most of the time, wasting the committed cost.
+
+B is incorrect. On-Demand provides no discount. For this workload, Spot delivers up to 90% savings.
+
+C is correct. Spot Instances are ideal for batch ML training jobs. The workload is fault-tolerant (restarts from checkpoint), runs periodically (not continuously), and can tolerate interruption. Spot delivers up to 90% discount.
+
+D is incorrect. Dedicated Hosts are required for per-socket/per-core software licensing. This workload has no such licensing requirement. Dedicated Hosts are the most expensive option.
 
 ---
 
-**Question 4**
-A security officer finds that an EC2 instance's security group was modified to allow inbound traffic from 0.0.0.0/0 on port 22 (SSH) at some point in the past two weeks. They need to determine both (a) what the security group looked like before the change and (b) which IAM user made the change. Which combination of services provides both answers?
-*   A) Amazon CloudWatch Logs and Amazon Inspector
-*   B) AWS Config (for configuration history showing the before/after state) and AWS CloudTrail (for the API event showing who made the change)
-*   C) AWS CloudTrail only — CloudTrail records both the old and new configuration state in the event payload
-*   D) AWS Config only — Config records both the configuration change and the identity of the principal who initiated it
-*   **Correct Answer:** B) Config records the configuration history (showing the before and after security group rule states) and CloudTrail records the API event identifying who made the `AuthorizeSecurityGroupIngress` call.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* CloudWatch Logs contains application and system logs, not resource configuration history. Amazon Inspector performs vulnerability scans, not configuration change tracking. Neither answers either of the two required questions.
-    *   *Why B is correct:* This is the canonical AWS monitoring combination for compliance and accountability. Config maintains a timeline of resource configuration states — you can see exactly what the security group rules were at any point in time. CloudTrail provides the event record showing which IAM principal called `AuthorizeSecurityGroupIngress`, from which IP, and at what time. Together they provide complete forensic context.
-    *   *Why C is incorrect:* CloudTrail records the API action and its parameters (the new rules being added), but it does not independently maintain the full configuration state of the resource before and after the change. You would need to reconstruct the before-state by examining all prior CloudTrail events, which is complex. Config's configuration history is far more straightforward for seeing historical resource state.
-    *   *Why D is incorrect:* AWS Config records what the resource looks like (configuration state changes) and when the change occurred, but Config does not record the IAM identity that initiated the change. Config delegates accountability information to CloudTrail. Using Config alone, you know the configuration changed but not who changed it.
+## Question 3
+
+A company stores large volumes of log files in S3. Logs are queried intensively for the first 30 days after creation (daily analysis), then accessed approximately once per month for 6 months, then rarely accessed for the remaining retention period of 7 years. Which S3 configuration MOST cost-effectively serves this access pattern?
+
+- A. S3 Standard for all objects throughout the 7-year retention period
+- B. S3 Intelligent-Tiering applied to the entire bucket
+- C. S3 Lifecycle policy: Standard → Standard-IA at 30 days → Glacier Flexible Retrieval at 180 days → expire at 7 years
+- D. S3 One Zone-IA for all objects after initial creation
+
+### Q3 Answer: C
+
+### Q3 Analysis
+
+A is incorrect. S3 Standard is the most expensive per-GB storage class. Keeping logs in Standard for 7 years when they are rarely accessed after 6 months is significantly over-cost.
+
+B is incorrect. Intelligent-Tiering is appropriate when the access pattern is unknown. This scenario has a clearly defined access pattern — Intelligent-Tiering adds a per-object monitoring fee without providing additional cost savings over a lifecycle policy with known transitions.
+
+C is correct. The access pattern perfectly maps to lifecycle transitions: Standard for the first 30 days (daily access), Standard-IA for months 1–6 (monthly access), Glacier Flexible Retrieval for years 1–7 (rare access). Each class is matched to the actual access frequency.
+
+D is incorrect. S3 One Zone-IA stores data in a single AZ, eliminating Multi-AZ resilience. Log files are important audit data — losing them due to a single-AZ outage is unacceptable. Also, One Zone-IA does not cover the full access pattern progression.
 
 ---
 
-**Question 5**
-A company wants to ensure that no EC2 instances in their AWS account are ever launched with the unrestricted inbound rule `0.0.0.0/0` on port 22. They want non-compliant resources detected automatically and the violation reported within minutes of the change. Which AWS service and configuration achieves this?
-*   A) Create a CloudWatch Alarm on a custom metric that counts EC2 instances with open port 22.
-*   B) Enable the AWS Config managed rule `restricted-ssh`, which evaluates security groups and marks those allowing unrestricted SSH as NON_COMPLIANT, triggering an SNS notification.
-*   C) Enable AWS GuardDuty to detect open port 22 in security groups and generate a critical finding immediately.
-*   D) Configure CloudTrail to send all events to a CloudWatch Logs group, then create a metric filter and alarm for `AuthorizeSecurityGroupIngress` API calls.
-*   **Correct Answer:** B) The `restricted-ssh` AWS Config managed rule continuously evaluates security groups and immediately flags any group allowing 0.0.0.0/0 on port 22 as NON_COMPLIANT, with SNS notification support and optional auto-remediation.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* There is no built-in CloudWatch metric for "EC2 instances with open port 22." Building a custom metric would require a Lambda function scheduled to run periodically to evaluate all security groups, adding significant operational complexity. Config does this natively.
-    *   *Why B is correct:* AWS Config managed rules evaluate resource configurations against defined policies. `restricted-ssh` is a purpose-built managed rule that detects security groups with unrestricted SSH access. Config evaluates the rule when the security group is created or changed (change-triggered), providing near-real-time detection. Auto-remediation via Systems Manager Automation can automatically remove the offending rule.
-    *   *Why C is incorrect:* GuardDuty detects behavioral threats (active attacks, compromised credentials, cryptomining) by analyzing CloudTrail and Flow Logs. GuardDuty does not evaluate security group configurations for compliance policy violations. Detecting a configuration policy violation (open port 22) is AWS Config's role.
-    *   *Why D is incorrect:* Monitoring `AuthorizeSecurityGroupIngress` CloudTrail events via CloudWatch metric filters detects when any security group rule is added, but requires additional filtering logic to determine if the new rule is specifically port 22 with 0.0.0.0/0 — a complex metric filter. This approach also triggers on any `AuthorizeSecurityGroupIngress` call, not just violations. Config's `restricted-ssh` rule evaluates the actual resource state directly, providing a cleaner and more accurate compliance check.
+## Question 4
 
+An organization's AWS bill has increased 40% over the past quarter, but the number of deployed resources has increased only 10%. The finance team suspects untagged resources are driving unattributed costs. Which AWS tool provides the MOST granular view of spending broken down by team and project?
+
+- A. AWS Trusted Advisor Cost Optimization checks
+- B. AWS Cost Explorer grouped by cost allocation tags
+- C. AWS Config configuration history for billing resources
+- D. CloudWatch billing metric grouped by service
+
+### Q4 Answer: B
+
+### Q4 Analysis
+
+A is incorrect. Trusted Advisor provides recommendations for specific optimization patterns (underutilized instances, unused Elastic IPs) but does not provide tag-based cost attribution.
+
+B is correct. Cost Explorer can group spending by any activated cost allocation tag. Tags like `Team` and `Project` provide per-team, per-project breakdowns when resources are consistently tagged and tags are activated in the Billing console.
+
+C is incorrect. AWS Config records resource configuration history and compliance, not billing data. It does not provide cost attribution.
+
+D is incorrect. CloudWatch billing metrics provide total account spend by service but cannot break costs down by resource tag.
+
+---
+
+## Question 5
+
+A company has purchased Compute Savings Plans covering 60% of their EC2 usage. The remaining 40% is covered by On-Demand pricing. A solutions architect recommends purchasing additional coverage to reach 80%. Which type of Savings Plan provides the MOST flexibility across EC2 instance families, regions, and also covers AWS Lambda and Fargate?
+
+- A. EC2 Instance Savings Plan
+- B. Standard Reserved Instance
+- C. Compute Savings Plan
+- D. Convertible Reserved Instance
+
+### Q5 Answer: C
+
+### Q5 Analysis
+
+A is incorrect. EC2 Instance Savings Plans apply to a specific instance family in a specific region. They do not cover Lambda or Fargate usage.
+
+B is incorrect. Standard Reserved Instances apply to a specific instance family, OS, and region. They do not cover Lambda or Fargate.
+
+C is correct. Compute Savings Plans apply to any EC2 instance family, region, OS, and tenancy, and also cover Lambda and Fargate usage automatically. They provide the broadest coverage at up to 66% discount.
+
+D is incorrect. Convertible RIs allow exchange for a different family, OS, or region, but they still do not cover Lambda or Fargate. They also require manual exchange requests, unlike Savings Plans which apply automatically.
+
+---
+
+## Question 6
+
+A company's software requires a Windows Server license tied to physical CPU sockets for a legacy compliance scanning tool. The tool must run on AWS. Which EC2 purchasing model is REQUIRED for this licensing model?
+
+- A. On-Demand Windows Instances
+- B. Dedicated Instances
+- C. Dedicated Hosts
+- D. Spot Instances with Windows AMI
+
+### Q6 Answer: C
+
+### Q6 Analysis
+
+A is incorrect. On-Demand instances run on shared physical hardware. Per-socket Windows Server licensing requires knowing which physical sockets are in use, which is not possible on shared hardware.
+
+B is incorrect. Dedicated Instances run on hardware dedicated to your account but you do not control or see the underlying physical host. Per-socket licensing typically requires visibility into the specific physical hardware.
+
+C is correct. Dedicated Hosts provide a physical server dedicated to your use with full visibility into the number of physical sockets and cores. This is required for Bring Your Own License (BYOL) software with per-socket or per-core licensing models.
+
+D is incorrect. Spot Instances run on shared physical hardware and can be interrupted. Neither characteristic is compatible with per-socket licensing requirements.
+
+---
+
+## Question 7
+
+AWS Compute Optimizer has flagged an EC2 instance as over-provisioned with a recommendation to downsize from m5.2xlarge to m5.xlarge. The instance currently runs a web application. Before applying the recommendation, a solutions architect should verify which THREE factors? (Select THREE.)
+
+- A. The m5.xlarge has sufficient memory for peak application load
+- B. The current instance's Reserved Instance term has expired
+- C. Peak CPU utilization does not exceed the m5.xlarge's capacity during high-traffic periods
+- D. The application can handle the 5-minute downtime required for instance type change
+- E. Network throughput requirements are within the m5.xlarge's network bandwidth limit
+
+### Q7 Answer: A, C, and E
+
+### Q7 Analysis
+
+A is correct. Compute Optimizer uses memory metrics from the CloudWatch Agent if available. If the Agent is not installed, memory data may be missing from the analysis. Verify peak memory usage fits within the smaller instance's capacity.
+
+B is incorrect. Whether an RI term has expired is a billing consideration but does not affect whether the smaller instance will perform adequately. The technical suitability verification should come first.
+
+C is correct. Compute Optimizer bases recommendations on average utilization metrics. A web application may have traffic spikes that push CPU beyond what the smaller instance can handle. Review p99 CPU, not just average CPU.
+
+D is incorrect. Stopping and starting an instance to change the instance type does cause a brief downtime, but this is an operational concern separate from whether the smaller instance is technically sufficient. A properly designed application with load balancing handles this without impact.
+
+E is correct. m5.2xlarge provides up to 10 Gbps network bandwidth; m5.xlarge provides up to 10 Gbps as well for this family, but network bandwidth scales with instance size. Verify the application's network throughput requirements are met.
+
+---
+
+## Question 8
+
+A company activates cost allocation tags in the AWS Billing console but finds that resources created two months ago show no tag-based cost data in Cost Explorer. What is the MOST likely reason?
+
+- A. Cost Explorer has a 90-day lag in processing tag activation requests
+- B. Tags are not retroactive — tag-based cost data only appears from the activation date forward
+- C. The resources must be stopped and restarted before tag data appears in billing
+- D. Cost allocation tags only work with AWS Organizations management accounts
+
+### Q8 Answer: B
+
+### Q8 Analysis
+
+A is incorrect. There is no 90-day lag. Tag activation takes effect promptly (within 24 hours), but only for future billing periods.
+
+B is correct. Cost allocation tags are not retroactive. Once activated, the tags appear in Cost Explorer for billing data from that point forward. Past billing records do not retroactively include the tag attribution. This is a frequently missed nuance — organizations that adopt tagging late cannot recover historical per-tag cost data.
+
+C is incorrect. Stopping and restarting resources is not related to tag processing in billing data.
+
+D is incorrect. Cost allocation tags work in any AWS account, not only Organizations management accounts.
+
+---
+
+## Question 9
+
+A company wants to automatically prevent engineers in a development account from spending more than $500 in a single month. When the $500 threshold is reached, all new EC2 instance launches should be denied automatically without manual intervention. Which feature implements this?
+
+- A. AWS Budgets with a Budget Action that applies a deny-EC2 IAM policy
+- B. CloudWatch billing alarm with an SNS email notification
+- C. AWS Cost Anomaly Detection alert to an email address
+- D. Service Control Policy pre-applied to all member accounts
+
+### Q9 Answer: A
+
+### Q9 Analysis
+
+A is correct. AWS Budgets supports Budget Actions. When the $500 cost budget threshold is reached, a Budget Action can automatically apply an IAM policy that denies `ec2:RunInstances` to the account's IAM users. This requires no manual intervention.
+
+B is incorrect. A CloudWatch billing alarm sends an SNS notification (email, SMS, Lambda) but does not automatically apply any IAM restriction. Manual intervention is still required to stop spending.
+
+C is incorrect. Cost Anomaly Detection sends alerts about unusual spending patterns but does not take automated restricting actions.
+
+D is incorrect. A pre-applied SCP could restrict EC2, but it would apply permanently regardless of spend level. The requirement is conditional — only apply the restriction when the $500 threshold is hit.
+
+---
+
+## Question 10
+
+A company stores noncritical, reproducible thumbnail images in S3. These images are accessed frequently when first created but rarely after 60 days. The company wants to minimize storage costs while accepting reduced availability guarantees for these images. Which storage class is MOST cost-effective after 60 days?
+
+- A. S3 Standard-IA
+- B. S3 One Zone-IA
+- C. S3 Glacier Instant Retrieval
+- D. S3 Intelligent-Tiering
+
+### Q10 Answer: B
+
+### Q10 Analysis
+
+A is incorrect. S3 Standard-IA provides Multi-AZ resilience, which is unnecessary for reproducible noncritical thumbnails. One Zone-IA is cheaper.
+
+B is correct. S3 One Zone-IA stores data in a single Availability Zone at a lower cost than Standard-IA. The question explicitly states the images are noncritical and reproducible — losing them in a single-AZ failure is acceptable because they can be regenerated.
+
+C is incorrect. Glacier Instant Retrieval has a lower per-GB storage cost than One Zone-IA but charges a per-GB retrieval fee. Images that are "rarely" — not "almost never" — accessed would accumulate retrieval charges that exceed the storage savings.
+
+D is incorrect. Intelligent-Tiering adds a per-object monitoring fee. For objects with a known access pattern (frequently accessed initially, rarely after 60 days), a Lifecycle policy to One Zone-IA is more cost-effective than paying the monitoring fee for dynamic tiering.

@@ -1,81 +1,192 @@
-# Quiz: Module 12 - Database Migration – DMS and Migrate for Compute Engine
-## Course: CIS-4327_Database_Admin (4327_Database_Admin - Google Cloud Professional Cloud Database Engineer)
+# Quiz: Module 12 — BigQuery for Analytics
+
+## Course: CIS-4327 Database Administration
+
+## Texas Wesleyan University — Professor Nash
+
+## Google Cloud Professional Cloud Database Engineer Alignment
 
 ---
 
-**Question 1**
-Your organization wants to migrate a production Oracle 19c database to Cloud SQL for PostgreSQL. The application cannot be down for more than 2 hours during cutover. What type of migration is required and what must be completed before data transfer can begin?
-A) Homogeneous migration; configure a VPN tunnel between on-premises and GCP.
-B) Heterogeneous migration; convert the Oracle schema DDL and PL/SQL stored procedures to PostgreSQL-compatible syntax.
-C) Lift-and-shift migration; export the Oracle database using Data Pump and import into Cloud SQL for PostgreSQL.
-D) Continuous migration; enable Oracle Streams CDC on the source database.
-*   **Correct Answer:** B) Heterogeneous migration; convert the Oracle schema DDL and PL/SQL stored procedures to PostgreSQL-compatible syntax.
-*   **Distractor Analysis:**
-    *   *Why B is correct:* Oracle to PostgreSQL is a heterogeneous migration (different database engines with different SQL dialects, data types, and procedural language syntax). Schema conversion is mandatory before the initial data load can begin, because the Oracle DDL is not directly compatible with PostgreSQL.
-    *   *Why A is incorrect:* Oracle to PostgreSQL is heterogeneous, not homogeneous. A VPN tunnel is a connectivity requirement but is not the first and primary action needed before data transfer.
-    *   *Why C is incorrect:* "Lift-and-shift" refers to moving a workload without changing the underlying technology (e.g., Oracle on-premises to Oracle on a GCE VM). Changing from Oracle to PostgreSQL is a re-platforming migration requiring engine conversion. Oracle Data Pump export format is also not directly importable into PostgreSQL.
-    *   *Why D is incorrect:* Oracle Streams is a legacy Oracle replication technology; DMS for heterogeneous Oracle-to-PostgreSQL migrations uses LogMiner-based CDC, not Oracle Streams. Additionally, CDC setup comes after schema conversion, not before.
+### Instructions
+
+This quiz contains 10 questions. Each question is worth 10 points. Select the single best answer. Distractor analysis follows each question.
 
 ---
 
----
+### Question 1
 
-**Question 2**
-A DMS migration job from an on-premises MySQL 8.0 database to Cloud SQL for MySQL has completed its initial load. The job status shows "Running" and CDC is actively replicating changes. The operations team is ready to perform cutover. What is the correct sequence of final steps?
-A) Delete the DMS migration job, then update the application connection string.
-B) Stop all writes to the source database, wait for CDC lag to reach zero, then promote the Cloud SQL destination instance, then update the application connection string.
-C) Promote the Cloud SQL destination instance immediately, then stop writes to the source database.
-D) Enable Cloud SQL HA on the destination instance before promoting it to ensure high availability.
-*   **Correct Answer:** B) Stop all writes to the source database, wait for CDC lag to reach zero, then promote the Cloud SQL destination instance, then update the application connection string.
-*   **Distractor Analysis:**
-    *   *Why B is correct:* The correct cutover sequence is: (1) Stop application writes to the source to prevent new changes from being missed, (2) Wait for the CDC replication lag to reach zero (all pending changes replicated), (3) Promote the destination to sever the replication link and make it writable, (4) Update the application connection string to point to the new Cloud SQL instance.
-    *   *Why A is incorrect:* Deleting the DMS job before promoting would leave the destination in an ambiguous state. The promotion step is what severs the replication link cleanly and makes the instance fully writable.
-    *   *Why C is incorrect:* Promoting before stopping writes means new changes written to the source after promotion will never be replicated to the destination, causing data loss during the window between promotion and source shutdown.
-    *   *Why D is incorrect:* While enabling HA after migration is a good practice, doing it before promotion adds unnecessary delay to the cutover window and is not a required step in the promotion sequence.
+A data engineer notices that a BigQuery query scanning a 10 TB table takes the same amount of time regardless of how many rows match the WHERE clause. Which architectural feature of BigQuery best explains this behavior?
+
+- A) BigQuery uses B-tree indexes that are not selective enough at this scale to narrow the scan
+- B) Dremel distributes the scan across thousands of leaf nodes in parallel, so scan time is bounded by the parallelism level, not the result set size
+- C) BigQuery caches query results for 24 hours, masking true execution time for repeated queries
+- D) The table is not partitioned, so BigQuery must scan all storage blocks regardless of the filter
+
+Correct Answer: B — Dremel's multi-level serving tree dispatches the scan to thousands of leaf nodes simultaneously. Each leaf node reads a small slice of columnar data. Because the work is parallelized across many nodes, scan time is primarily bounded by the degree of parallelism and the volume of data read — not by how many rows ultimately match the WHERE filter. Result set size has minimal effect on total scan duration.
+
+Distractor analysis: A is incorrect because BigQuery does not use B-tree indexes; it uses columnar storage with partition and clustering pruning for selective access. B-tree index selectivity is a concept from row-based OLTP databases. C is incorrect because BigQuery does cache identical query results for approximately 24 hours, but the question states the behavior is observed across different result sizes, not identical queries. D is incorrect because while lack of partitioning does cause full table scans and is a problem for cost, it is not the architectural explanation for why scan time is independent of result size.
 
 ---
 
----
+### Question 2
 
-**Question 3**
-A database migration engineer needs to **query the current replication lag in seconds for a DMS migration job** to determine if CDC is keeping up with the source database write rate. Which approach is most appropriate?
-A) Monitor the `database_migration_service/migration_job/replication_lag` metric in Cloud Monitoring.
-B) Run `SHOW SLAVE STATUS` on the Cloud SQL destination to view replication lag.
-C) Run `SELECT * FROM information_schema.replica_status` on the DMS migration endpoint.
-D) Check the Cloud Audit Logs for the DMS service to view replication event timestamps.
-*   **Correct Answer:** A) Monitor the `database_migration_service/migration_job/replication_lag` metric in Cloud Monitoring.
-*   **Distractor Analysis:**
-    *   *Why A is correct:* DMS exports its migration job metrics to Cloud Monitoring, including `replication_lag` measured in seconds. You can create a Cloud Monitoring dashboard or alert based on this metric to proactively detect when lag is increasing and the destination is falling behind the source.
-    *   *Why B is incorrect:* `SHOW SLAVE STATUS` is a MySQL command that can show replication lag for traditional MySQL replication. During an active DMS migration, DMS manages the replication connection internally and the Cloud SQL instance is in a read-only replication state — but the recommended method is Cloud Monitoring, not direct SQL commands.
-    *   *Why C is incorrect:* `information_schema.replica_status` is not a standard SQL view; this syntax does not exist in MySQL, PostgreSQL, or the DMS API.
-    *   *Why D is incorrect:* Cloud Audit Logs record administrative actions (who created/modified the DMS job), not per-second replication performance metrics. Audit logs are not suitable for monitoring replication lag in real time.
+A 50 TB `orders` table is partitioned by `order_date`. A business analyst runs the following query daily without any date filter:
 
----
+```sql
+SELECT customer_id, SUM(revenue)
+FROM orders
+GROUP BY customer_id;
+```
 
-**Question 4**
-After successfully migrating a MySQL database to Cloud SQL for MySQL using DMS, the application team reports that queries that were fast on the on-premises source are running significantly slower on Cloud SQL. No indexes have been changed. What should be the first diagnostic action?
-A) Run `EXPLAIN` on the slow queries and compare the execution plans between the on-premises source and the Cloud SQL destination to identify differences in index usage or table statistics.
-B) Immediately upgrade the Cloud SQL instance to a larger machine type to match the on-premises server's hardware specs.
-C) Restore the database from the DMS migration backup and retry the migration with a larger instance type.
-D) Check Cloud Audit Logs to see if the application is connecting with insufficient IAM permissions that are degrading query execution.
-*   **Correct Answer:** A) Run `EXPLAIN` on the slow queries and compare the execution plans between the on-premises source and the Cloud SQL destination to identify differences in index usage or table statistics.
-*   **Distractor Analysis:**
-    *   *Why A is correct:* Performance differences after migration are commonly caused by: missing statistics on Cloud SQL (run `ANALYZE TABLE`), different MySQL configuration flags (e.g., `innodb_buffer_pool_size`), or a different query optimizer version. Running `EXPLAIN` on both systems side-by-side pinpoints whether the Cloud SQL optimizer is choosing a different (worse) plan, which informs the specific fix needed.
-    *   *Why B is incorrect:* Scaling up the instance may help but is an expensive first response. The root cause — statistics, configuration, or query plan differences — should be diagnosed first so the fix is targeted and cost-efficient.
-    *   *Why C is incorrect:* The migration itself is complete and working; the issue is a post-migration performance problem. Restarting the migration does not fix optimizer or statistics differences.
-    *   *Why D is incorrect:* IAM permissions control whether a connection is permitted, not how a permitted query is executed. An IAM permission error results in an access denied error, not slow query execution.
+The query is too slow and too expensive. Which single change provides the greatest cost and performance improvement?
+
+- A) Add `customer_id` as a cluster column to the table so BigQuery can prune blocks within partitions
+- B) Require the analyst to always include a `WHERE order_date` filter so partition pruning eliminates irrelevant partitions
+- C) Convert the table to an external table stored in Cloud Storage to reduce BigQuery storage costs
+- D) Create a view that pre-filters orders for the current year and direct the analyst to query the view
+
+Correct Answer: B — Without a filter on the partition column (`order_date`), BigQuery scans all 50 TB regardless of how the table is partitioned. Adding a date filter enables partition pruning, which eliminates irrelevant partitions from the scan. For a query that only needs recent data, this can reduce bytes scanned by 90% or more — the most impactful single change available.
+
+Distractor analysis: A is incorrect because clustering improves block-level pruning within partitions, but it does not prevent BigQuery from opening all partitions when no partition column filter is present. The full partition scan still occurs; clustering reduces work within each opened partition. C is incorrect because converting to an external table removes data from BigQuery-managed storage but does not change how queries are executed or how much data is scanned. D is incorrect because a view that pre-filters for the current year is a partial workaround, but it hardcodes the time window and does not solve the fundamental issue of requiring a partition filter in the query.
 
 ---
 
-**Question 5**
-When migrating a database to Cloud SQL using DMS, you must mitigate the risk of **CDC replication traffic between the on-premises source database and GCP being intercepted and read by a network adversary**. Which control best addresses this threat?
-A) Configure an IPsec VPN tunnel or Cloud Interconnect between the on-premises network and the GCP VPC used by DMS, encrypting all migration traffic in transit.
-B) Enable CMEK on the Cloud SQL destination instance to encrypt the replicated data at rest.
-C) Enable Google-managed encryption on the DMS migration job's staging Cloud Storage bucket.
-D) Use Cloud Armor to create a WAF policy that blocks unauthorized IP addresses from sending data to the DMS endpoint.
-*   **Correct Answer:** A) Configure an IPsec VPN tunnel or Cloud Interconnect between the on-premises network and the GCP VPC used by DMS, encrypting all migration traffic in transit.
-*   **Distractor Analysis:**
-    *   *Why A is correct:* An IPsec VPN tunnel encrypts all traffic between the on-premises network and GCP using IPsec, preventing network interception of CDC replication data in transit. Cloud Dedicated Interconnect provides a private, physical connection that never traverses the public internet, offering equivalent protection against network interception.
-    *   *Why B is incorrect:* CMEK encrypts data at rest on Cloud SQL's physical storage after it has been received and written. It does not encrypt the CDC replication stream as it travels across the network from on-premises to GCP.
-    *   *Why C is incorrect:* Encrypting the DMS staging bucket protects data stored in Cloud Storage at rest but does not protect the in-transit replication stream between the on-premises source and GCP.
-    *   *Why D is incorrect:* Cloud Armor is a WAF and DDoS protection service for HTTP/HTTPS applications and Google Cloud load balancers; it does not provide network-layer encryption for TCP database replication traffic.
+### Question 3
+
+A view in dataset `analytics` needs to read from a table in dataset `hr_data`. The company's security policy prohibits granting the view's users direct access to `hr_data` tables. Which BigQuery feature allows the view to access `hr_data` without exposing it to end users?
+
+- A) A materialized view with cross-dataset refresh configured to cache `hr_data` table contents
+- B) An authorized view configured in the `hr_data` dataset settings, which grants the specific view access to read from `hr_data` without passing that access to the view's users
+- C) A BigQuery Data Transfer Service scheduled query that copies `hr_data` to `analytics` nightly
+- D) A federated query using a Cloud SQL connection that bypasses BigQuery dataset IAM controls
+
+Correct Answer: B — An authorized view is a view that is explicitly listed in the source dataset's access control settings. BigQuery grants the view permission to read from that dataset, but the view's users do not inherit that access — they can only see what the view exposes. This enables row-level and column-level filtering of sensitive data while making aggregate or anonymized data available to analysts.
+
+Distractor analysis: A is incorrect because a materialized view caches query results and refreshes them on a schedule, but the access control mechanism for cross-dataset reads is still the authorized view pattern; materialized views do not add a separate access-control capability. C is incorrect because copying `hr_data` to `analytics` creates a data copy and introduces a sync delay; it is operationally costly and does not use BigQuery's native access control mechanism. D is incorrect because federated queries read from external sources (Cloud SQL, Sheets) at query time; they do not provide a mechanism for managing intra-BigQuery dataset access controls.
+
+---
+
+### Question 4
+
+A developer accidentally deleted 500,000 rows from a BigQuery table at 2:00 PM. A table snapshot was created at 8:00 AM. It is now 3:00 PM. What is the most efficient recovery approach?
+
+- A) Restore from the most recent Cloud Storage export of the table, accepting data loss since the export was created
+- B) Query the table using `FOR SYSTEM_TIME AS OF` at a timestamp before 2:00 PM to retrieve the deleted rows, then re-insert them into the table
+- C) Contact Google Cloud Support to restore the table from Google's internal backups
+- D) Use BigQuery Data Transfer Service to reload data from the 8:00 AM snapshot
+
+Correct Answer: B — BigQuery time travel retains table data for up to 7 days. Since the deletion occurred 1 hour ago, the data is within the time travel window. `FOR SYSTEM_TIME AS OF` queries the table at its pre-deletion state. The recovered rows can then be inserted back into the current table with a `INSERT INTO ... SELECT` from the time travel query. This is faster and more precise than restoring from a snapshot or export.
+
+Distractor analysis: A is incorrect because restoring from a Cloud Storage export loses all data written since the export was created. Since the export predates the deletion, this is unnecessary when time travel can recover the exact rows that were deleted. C is incorrect because contacting Google support is necessary only during the fail-safe window (7–14 days after deletion) when self-service time travel has expired; it is not required or appropriate 1 hour after deletion. D is incorrect because Data Transfer Service is for scheduled data ingestion pipelines from external sources, not for point-in-time recovery within BigQuery.
+
+---
+
+### Question 5
+
+A team is designing a BigQuery table for a streaming IoT sensor dataset. Each sensor emits readings every second. Queries almost always filter on `reading_date` with a date range and on `sensor_id` with an equality condition. The table will grow to trillions of rows. What is the optimal table design?
+
+- A) Partition by `sensor_id`, cluster by `reading_date` — sensor_id is the primary filter column
+- B) Partition by `reading_date`, cluster by `sensor_id` — date range filters enable partition pruning and sensor_id equality filters benefit from clustering
+- C) No partitioning; use a materialized view for each sensor to pre-aggregate readings
+- D) Partition by ingestion time only; `sensor_id` has too high a cardinality to cluster
+
+Correct Answer: B — Partitioning by `reading_date` aligns with the date range filters in most queries, enabling partition pruning to skip irrelevant time ranges. Clustering by `sensor_id` co-locates rows for the same sensor within each partition, so filtering by `sensor_id = 'S001'` only reads relevant blocks within the selected date partitions. This combination is the standard BigQuery design pattern for time-series IoT data.
+
+Distractor analysis: A is incorrect because partitioning by `sensor_id` would create millions of partitions (one per sensor), far exceeding the 4,000-partition limit and making partition management unworkable. BigQuery partitioning is designed for low-cardinality time or range keys, not high-cardinality IDs. C is incorrect because pre-aggregating in materialized views eliminates the ability to query raw readings for anomaly detection or detailed analysis; and maintaining thousands of per-sensor materialized views is operationally impractical. D is incorrect because clustering supports up to 4 columns and works effectively with high-cardinality columns like `sensor_id`; high cardinality is expected and appropriate for a cluster column.
+
+---
+
+### Question 6
+
+A company runs BigQuery analytics with a consistent daily query volume of approximately 800 TB scanned. At the on-demand pricing rate of $6.25 per TB, what is the approximate monthly cost?
+
+- A) $5,000 per month
+- B) $150,000 per month
+- C) $1,500,000 per month
+- D) $50,000 per month
+
+Correct Answer: B — 800 TB/day × 30 days = 24,000 TB per month. 24,000 TB × $6.25/TB = $150,000 per month. At this volume, the team should evaluate BigQuery flat-rate capacity pricing (slot reservations), which charges a fixed monthly fee for committed compute capacity rather than per-byte scanned.
+
+Distractor analysis: A is incorrect because $5,000 would correspond to only 800 TB/month (one day's worth), not 30 days. C is incorrect because $1,500,000 would correspond to 240,000 TB scanned per month — 10× the stated volume. D is incorrect because $50,000 would correspond to 8,000 TB per month, which is approximately 10 days of the stated daily volume rather than 30.
+
+---
+
+### Question 7
+
+Which BigQuery SQL statement removes all rows from a table without dropping the table's schema, and does not support a WHERE clause to filter which rows are removed?
+
+- A) `DELETE FROM table WHERE 1=1` — removes all rows via DML with a constant-true filter
+- B) `DROP TABLE table; CREATE TABLE table (...)` — drops and recreates the table
+- C) `TRUNCATE TABLE table` — removes all rows, preserves schema, accepts no WHERE clause
+- D) `UPDATE table SET all_columns = NULL WHERE TRUE` — nullifies all values rather than removing rows
+
+Correct Answer: C — `TRUNCATE TABLE` in BigQuery removes all rows from a table and preserves the table schema. It does not accept a WHERE clause — it always removes all rows. It is atomic and faster than a `DELETE` with a constant-true filter because it does not go through DML row-by-row processing.
+
+Distractor analysis: A is incorrect because `DELETE FROM table WHERE 1=1` is a valid BigQuery DML statement that does delete all rows, but it accepts a WHERE clause (just happens to use a condition that matches all rows). The question asks for a statement that does not support a WHERE clause. B is incorrect because dropping and recreating the table would lose all metadata, permissions, and potentially cause naming conflicts; it is not a standard "truncate" operation and `TRUNCATE TABLE` is preferable. D is incorrect because `UPDATE SET column = NULL` leaves the rows in the table with null values rather than removing them, which is a different operation entirely.
+
+---
+
+### Question 8
+
+A materialized view is defined as:
+
+```sql
+CREATE MATERIALIZED VIEW mv_daily_sales AS
+SELECT sale_date, region, SUM(amount) AS total
+FROM sales
+GROUP BY sale_date, region;
+```
+
+A user runs the following query directly against the base table:
+
+```sql
+SELECT region, SUM(amount) FROM sales
+WHERE sale_date = '2025-06-01'
+GROUP BY region;
+```
+
+What will BigQuery's optimizer do?
+
+- A) Ignore the materialized view because the user did not explicitly reference it in their query
+- B) Automatically rewrite the query to read from `mv_daily_sales` instead of `sales` if it determines the materialized view can satisfy the query more efficiently
+- C) Return an error because the materialized view and the base table cannot coexist in the same dataset
+- D) Require the user to explicitly reference `mv_daily_sales` in their SQL before the optimization takes effect
+
+Correct Answer: B — BigQuery supports smart tuning: the query optimizer can automatically rewrite queries against base tables to instead read from a materialized view when the view's precomputed results can satisfy the query. The user does not need to modify their query. For this example, the query filters on `sale_date = '2025-06-01'` and groups by `region` — which matches the materialized view's `(sale_date, region)` grouping. BigQuery reads the view's cached result rather than reprocessing all rows in `sales`.
+
+Distractor analysis: A is incorrect because BigQuery's smart tuning explicitly looks for opportunities to serve queries from materialized views even when the user's query references the base table directly. D is incorrect because automatic smart tuning does not require the user to reference the materialized view; the optimizer handles the rewrite transparently. C is incorrect because BigQuery fully supports materialized views coexisting with their base tables in the same or different datasets; the materialized view is a dependent object on the base table, not a replacement.
+
+---
+
+### Question 9
+
+An organization wants to prevent runaway BigQuery costs from analysts running queries that accidentally scan an entire 500-partition table. Which table option enforces that every query must include a partition column filter at query submission time, returning an error for queries without one?
+
+- A) `OPTIONS (max_staleness = INTERVAL '1' DAY)` — limits how stale the query results can be
+- B) `OPTIONS (partition_expiration_days = 365)` — automatically expires partitions after one year
+- C) `OPTIONS (require_partition_filter = true)` — causes BigQuery to reject queries that do not include a filter on the partition column
+- D) `OPTIONS (clustering_fields = ['partition_date'])` — adds clustering on the partition date column
+
+Correct Answer: C — `require_partition_filter = true` is a table-level option that causes BigQuery to return an error if a query does not include a filter on the partition column. This prevents accidental full-table scans and the associated cost on large partitioned tables. The error message explicitly tells the user to add a partition filter.
+
+Distractor analysis: A is incorrect because `max_staleness` is used with materialized views to control how stale the cached results can be before the view reads fresh data; it does not affect whether queries against the base table require a partition filter. B is incorrect because `partition_expiration_days` controls automatic deletion of old partitions after a defined retention period; it does not enforce query-time filter requirements. D is incorrect because clustering improves block-level pruning within partitions but does not prevent full partition scans; adding clustering does not reject queries that lack a partition filter.
+
+---
+
+### Question 10
+
+A team migrates from BigQuery on-demand pricing to flat-rate capacity pricing. They purchase 2,000 slots and create two reservations: 1,500 slots for production workloads and 500 slots for development. A runaway development query attempts to consume all available compute. What happens to production queries?
+
+- A) Production queries are queued behind the development query until it completes or is cancelled
+- B) BigQuery automatically cancels the development query after 60 seconds of excess resource usage
+- C) Production queries continue running against their 1,500-slot reservation, isolated from the development workload
+- D) All 2,000 slots are shared equally across all workloads using round-robin scheduling regardless of reservations
+
+Correct Answer: C — BigQuery slot reservations create isolated compute pools. Assignments attach projects or folders to a specific reservation. The production reservation's 1,500 slots are fully isolated from the development reservation's 500 slots. A runaway query in development cannot consume production slots because workloads only use the slots from their assigned reservation.
+
+Distractor analysis: A is incorrect because slot reservations prevent the development workload from affecting production — production queries are not queued behind development work. Queueing only occurs within the same reservation when its slot limit is reached. B is incorrect because BigQuery does not automatically cancel queries after 60 seconds of high resource usage; long-running queries continue unless cancelled manually or a timeout is set via query labels or scripts. D is incorrect because round-robin scheduling among all workloads would eliminate the isolation benefit of reservations; the entire point of reservations is to guarantee dedicated compute capacity per workload.
+
+---
+
+Reference: cloud.google.com/learn

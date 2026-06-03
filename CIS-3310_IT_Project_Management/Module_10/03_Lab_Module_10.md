@@ -1,170 +1,200 @@
-# Lab Activity: Module 10 – Procurement Management
+# Lab Activity: Module 10 — Earned Value Management
 
-**Course:** CIS-3310 IT Project Management
-**Certification Alignment:** CompTIA Project+ (PK0-005)
-**Total Points:** 100
-**Prepared by:** Professor Nash | Texas Wesleyan University
+## Course: CIS-3310 IT Project Management
+
+## Texas Wesleyan University | Professor Nash
+
+## Certification Alignment: CompTIA Project+ (PK0-005)
+
+## Total Points: 100
 
 ---
 
 ## Lab Overview
 
-In this lab you will apply Module 10 procurement management concepts through three activities: performing a make-or-buy analysis, selecting contract types, and evaluating vendor proposals using source selection criteria. All deliverables are written documents — no software is required.
+In this lab you will apply all EVM formulas to a realistic IT project scenario. The lab has three parts: calculating base EVM metrics, generating performance forecasts, and writing a management status report based on your findings. You will use a spreadsheet for calculations and submit a written deliverable interpreting the results.
 
-Submit all work as a single PDF or Word document to the Canvas assignment portal.
+Submit your completed spreadsheet and written report as a single PDF or zipped file to the Canvas Module 10 Lab assignment.
 
 ---
 
 ## Scenario Background
 
-Redstone Health Network is a mid-sized regional hospital system with 6 hospitals and 22 outpatient clinics. The IT leadership team is launching a Patient Portal Upgrade Project to replace the current patient-facing web portal with a modern, mobile-responsive platform. The new portal must support appointment scheduling, prescription refill requests, lab result viewing, and secure messaging with care teams.
+Pinnacle Healthcare is implementing a new electronic health records (EHR) integration platform across 14 hospital locations. You are the project manager. The project has a total approved budget of $1,200,000 and a planned 12-month schedule beginning January 1.
 
-The project has a $900,000 budget and an 18-month timeline. The go-live deadline is tied to a state health data reporting mandate that cannot be moved.
+The project has been divided into four phases. The table below shows each phase's budgeted cost and the planned completion percentage for each phase by the end of month 6 (the midpoint status review date).
 
-The project team has identified four major components of work:
+| Phase | Phase Budget | Planned % Complete by Month 6 |
+|-------|-------------|-------------------------------|
+| Phase 1 — Infrastructure Setup | $300,000 | 100% |
+| Phase 2 — Data Migration | $400,000 | 75% |
+| Phase 3 — Integration Development | $350,000 | 50% |
+| Phase 4 — Training and Go-Live | $150,000 | 0% |
+| **Total** | **$1,200,000** | |
 
-1. Portal software platform — a new patient-facing web and mobile application
-2. Identity and access management (IAM) module — single sign-on and multi-factor authentication
-3. Integration layer — connections between the portal and existing EHR, lab, and pharmacy systems
-4. End-user training — staff training for 1,800 clinical and administrative employees
+At the month 6 status review, your project coordinator has collected the following actual data:
 
-The internal IT team has strong skills in EHR integration and custom development but has no experience with modern IAM implementation. The team has moderate capacity constraints due to two other concurrent IT projects. Redstone's executive team has placed a premium on data security and has expressed concern about sharing patient identity data with vendors.
+| Phase | Actual % Complete | Actual Cost Spent |
+|-------|------------------|-------------------|
+| Phase 1 — Infrastructure Setup | 100% | $315,000 |
+| Phase 2 — Data Migration | 60% | $265,000 |
+| Phase 3 — Integration Development | 40% | $160,000 |
+| Phase 4 — Training and Go-Live | 0% | $0 |
+| **Total** | | **$740,000** |
 
 ---
 
-## Part 1: Make-or-Buy Analysis
+## Part 1 — Calculate Base EVM Metrics
 
 ### Part 1 Objective
 
-Perform a make-or-buy analysis for each of the four project components.
+Calculate PV, EV, and AC for each phase and for the total project.
 
 ### Part 1 Instructions
 
-For each of the four components listed in the scenario, complete the make-or-buy analysis table. Consider the internal capability factors (skills, capacity, security concerns) described in the scenario. For each component, record your recommendation (Make or Buy) and provide a 2–3 sentence justification referencing specific scenario details.
+Complete the table below for each project phase and the total row. Show all calculations in your spreadsheet. For each phase, PV = Phase Budget × Planned % Complete and EV = Phase Budget × Actual % Complete.
 
-| Component | Recommendation (Make or Buy) | Key Justification Factors |
-|---|---|---|
-| 1. Portal software platform | | |
-| 2. Identity and access management module | | |
-| 3. Integration layer (EHR, lab, pharmacy) | | |
-| 4. End-user training | | |
+| Phase | PV | EV | AC |
+|-------|----|----|----|
+| Phase 1 — Infrastructure Setup | | | |
+| Phase 2 — Data Migration | | | |
+| Phase 3 — Integration Development | | | |
+| Phase 4 — Training and Go-Live | | | |
+| **Project Total** | | | |
 
-After completing the table, answer the following question in 3–4 sentences:
+After completing the table, answer the following:
 
-Question 1-A: The executive team is concerned about patient identity data security. How does this concern affect the make-or-buy analysis for the IAM module specifically? What additional provision could be included in the procurement to address the security concern if you recommend buying?
+**Question 1-A:** Why is the Earned Value for Phase 4 zero even though the project is halfway through its schedule? What does this tell you about the relationship between EV and calendar time?
 
-**Part 1 Point Value:** 30 points
+**Part 1 Point Value:** 20 points
 
-Grading breakdown:
-
-- Make-or-buy table (20 pts): Four recommendations (2 pts each = 8 pts); justifications reference specific scenario details (3 pts each = 12 pts)
-- Question 1-A (10 pts): Security concern connected to IAM analysis (5 pts); specific procurement provision suggested (5 pts)
+- Phase-level PV calculations (8 pts — 2 pts each, correct use of percentage)
+- Phase-level EV calculations (8 pts — 2 pts each, correct use of actual completion)
+- AC values correctly transferred from scenario (2 pts)
+- Question 1-A: 2–3 sentences showing understanding of EV concept (2 pts)
 
 ---
 
-## Part 2: Contract Type Selection
+## Part 2 — Calculate Variance and Index Metrics
 
 ### Part 2 Objective
 
-Select the most appropriate contract type for each procured component and justify your selection.
+Calculate SV, CV, SPI, and CPI for each phase and for the total project.
 
 ### Part 2 Instructions
 
-For each component that you recommended buying in Part 1, select the most appropriate contract type from the following list: Fixed-Price Lump Sum (FPLS), Fixed-Price Incentive Fee (FPIF), Cost Plus Fixed Fee (CPFF), Cost Plus Incentive Fee (CPIF), or Time and Material (T&M).
+Using the PV, EV, and AC values from Part 1, complete the variance and index table below. Show formulas in your spreadsheet cells. Round all index values to two decimal places.
 
-Complete the contract selection table below for each procured component.
+| Phase | SV (`EV-PV`) | CV (`EV-AC`) | SPI (`EV/PV`) | CPI (`EV/AC`) |
+|-------|--------------|--------------|---------------|---------------|
+| Phase 1 — Infrastructure Setup | | | |  |
+| Phase 2 — Data Migration | | | | |
+| Phase 3 — Integration Development | | | | |
+| Phase 4 — Training and Go-Live | N/A | N/A | N/A | N/A |
+| **Project Total** | | | | |
 
-| Component | Contract Type Selected | Justification | Who Bears Cost Risk |
-|---|---|---|---|
-| (List only buy decisions from Part 1) | | | |
+Note: Phase 4 variances and indices are not applicable because both PV and EV are zero — no work was planned or performed.
 
-After completing the table, answer the following two questions in 2–3 sentences each:
+After completing the table, answer the following:
 
-Question 2-A: The IAM module is a specialized service. Redstone's legal team is pushing for a Cost-Plus contract because "we want transparency into vendor costs." Is this a sound argument? What is the risk to Redstone if they use Cost-Plus for a service with a well-defined scope?
+**Question 2-A:** Identify which phase has the worst schedule performance and which has the worst cost performance. For each, explain in one to two sentences what the data tells you about what happened during execution.
 
-Question 2-B: Suppose the integration layer scope is partially unknown because documentation for the legacy EHR integration points is incomplete. How does this uncertainty affect the contract type recommendation? Which contract type protects the buyer better in this situation, and why?
+**Question 2-B:** The project total SPI is below 1.0 and the total CPI is also below 1.0. Using the EVM Status Interpretation Matrix from the reading guide, characterize the overall project status and identify the greater concern — schedule or cost.
 
-**Part 2 Point Value:** 35 points
+**Part 2 Point Value:** 30 points
 
-Grading breakdown:
-
-- Contract selection table (15 pts): Appropriate contract type for each procured component (3 pts each); correct risk assignment (2 pts per row)
-- Question 2-A (10 pts): Accurate assessment of Cost-Plus risk for defined-scope work; correct explanation of buyer risk
-- Question 2-B (10 pts): Uncertainty correctly connected to contract type guidance; appropriate recommendation with justification
+- Phase-level SV calculations (6 pts)
+- Phase-level CV calculations (6 pts)
+- Phase-level SPI calculations (6 pts)
+- Phase-level CPI calculations (6 pts)
+- Question 2-A response: identifies correct worst phases with evidence (4 pts)
+- Question 2-B response: correct matrix quadrant identification and prioritization (2 pts)
 
 ---
 
-## Part 3: Source Selection and Vendor Evaluation
+## Part 3 — Forecasting Metrics
 
 ### Part 3 Objective
 
-Define source selection criteria and evaluate two fictional vendor proposals for the portal software platform.
+Calculate EAC, ETC, and VAC for the total project using three EAC methods.
 
 ### Part 3 Instructions
 
-#### Component 3-A: Source Selection Criteria
+Using the project total PV, EV, AC, and BAC values, calculate EAC three ways. Show all formulas in your spreadsheet.
 
-Define five source selection criteria that Redstone Health Network should use to evaluate portal software vendors. For each criterion, assign a weight (all five weights must total 100%), and describe what specific evidence would demonstrate a high score (4–5 out of 5) for that criterion.
+| EAC Method | Formula | Calculation | Result |
+|------------|---------|-------------|--------|
+| Method 1: Current CPI trend | `BAC / CPI` | | |
+| Method 2: New estimate (assume $580,000 remains) | `AC + ETC` | | |
+| Method 3: Remaining work at planned rate | `AC + (BAC - EV)` | | |
 
-| Criterion | Weight (%) | Description | High Score Evidence |
-|---|---|---|---|
-| 1. | | | |
-| 2. | | | |
-| 3. | | | |
-| 4. | | | |
-| 5. | | | |
-| **Total** | **100%** | | |
+For Method 2, the project team has provided a new bottom-up estimate of $580,000 for all remaining work.
 
-#### Component 3-B: Vendor Proposal Scoring
+After completing the EAC table, calculate ETC and VAC for Method 1 only.
 
-Two vendors have submitted proposals for the portal software platform. Using the criteria and weights you defined in Component 3-A, score each vendor's proposal. Assign a score of 1–5 for each criterion, multiply by the weight, and calculate the weighted score. Then add a brief note explaining your scoring rationale for each vendor on each criterion.
+| Metric | Formula | Calculation | Result |
+|--------|---------|-------------|--------|
+| ETC (Method 1) | `EAC - AC` | | |
+| VAC (Method 1) | `BAC - EAC` | | |
 
-Use the following proposal summaries:
+**Question 3-A:** The three EAC methods produce different forecasted totals. Which method should you present to the project sponsor as the primary forecast, and why? Under what circumstances would Method 3 (planned rate) be the most appropriate choice?
 
-Vendor A — Healthbridge Solutions: 12 years in patient portal development; 47 hospital system implementations; demo shows modern, mobile-first interface; references from 3 comparable hospital systems available; proposed price $280,000; implementation plan is detailed but assigns junior resources to integration work; no healthcare data security certifications listed.
+**Question 3-B:** The VAC from Method 1 is negative. Translate this number into a plain-English sentence a non-technical project sponsor would understand. Do not use acronyms in your answer to Question 3-B.
 
-Vendor B — MedConnect Platform: 6 years in patient portal development; 19 implementations (8 at hospital systems); demo shows capable platform with some older UI patterns; one reference from a comparable hospital system; proposed price $215,000; implementation plan assigns senior architects to integration; holds HITRUST certification for healthcare data security.
+**Part 3 Point Value:** 30 points
 
-| Criterion | Weight | Vendor A Score (1–5) | Vendor A Weighted | Vendor B Score (1–5) | Vendor B Weighted |
-|---|---|---|---|---|---|
-| 1. | | | | | |
-| 2. | | | | | |
-| 3. | | | | | |
-| 4. | | | | | |
-| 5. | | | | | |
-| **Total** | **100%** | | | | |
+- Three EAC calculations correct (15 pts — 5 pts each)
+- ETC and VAC calculations (5 pts)
+- Question 3-A: Correct method selection with reasoning (5 pts)
+- Question 3-B: Plain-language translation without jargon (5 pts)
 
-After completing the scoring matrix, answer the following question in 2–3 sentences:
+---
 
-Question 3-A: Based on your weighted scoring, which vendor would you recommend and why? If the lower-scoring vendor offered a significantly lower price, how should price factor into the source selection decision given the project context?
+## Part 4 — Management Status Report
 
-**Part 3 Point Value:** 35 points
+### Part 4 Objective
 
-Grading breakdown:
+Synthesize all EVM findings into a one-page written status report for the project sponsor.
 
-- Component 3-A: Criteria definition (15 pts): Five criteria defined (5 pts); weights total 100% (5 pts); high-score evidence is specific (5 pts)
-- Component 3-B: Vendor scoring (15 pts): Scores assigned for both vendors across all criteria (8 pts); weighted totals calculated correctly (4 pts); scoring rationale notes present (3 pts)
-- Question 3-A (5 pts): Recommendation tied to scoring results; price-vs-value tradeoff addressed in context of project constraints
+### Part 4 Instructions
+
+Write a status report addressed to the Pinnacle Healthcare project sponsor. Your report must be 200–300 words and must address all of the following points in flowing prose (not bullets):
+
+1. Overall project status as of month 6 (use SPI and CPI values to characterize performance)
+2. Which phase is performing best and which is performing worst, with specific data references
+3. The forecasted total project cost at completion (cite Method 1 EAC) and the projected variance
+4. One specific recommendation for corrective action to improve the worst-performing phase
+5. A closing statement on whether the project remains achievable within the original budget and schedule, with your professional judgment
+
+Format: Write as a professional memo with a subject line, date, and your name as project manager. Use plain language — translate all EVM terms into business language. Do not use abbreviations like SPI or EV in the memo body.
+
+**Part 4 Point Value:** 20 points
+
+| Criterion | Points | Description |
+|-----------|--------|-------------|
+| Completeness | 8 | All five required points addressed |
+| Accuracy | 6 | EVM values cited match Part 1–3 calculations |
+| Professional tone | 3 | Memo format, plain language, no unexplained jargon |
+| Recommendation quality | 3 | Specific, actionable, tied to scenario data |
 
 ---
 
 ## Deliverables Summary
 
-Compile the following into one submission document:
+Submit the following as a single PDF or zipped package:
 
-1. Make-or-buy analysis table with Question 1-A response (Part 1)
-2. Contract type selection table with Questions 2-A and 2-B responses (Part 2)
-3. Source selection criteria table, vendor scoring matrix, and Question 3-A response (Part 3)
-
-Submit as a single PDF or Word document to the Canvas Module 10 Lab assignment.
+1. Spreadsheet showing all calculations for Parts 1, 2, and 3 with visible formulas
+2. Written responses to Questions 1-A, 2-A, 2-B, 3-A, and 3-B (may be embedded in spreadsheet or in a separate document)
+3. Management status report memo (Part 4)
 
 ---
 
 ## Grading Rubric Summary
 
 | Section | Points | Key Criteria |
-|---|---|---|
-| Part 1: Make-or-Buy Analysis | 30 | Four recommendations; scenario-grounded justifications; security concern addressed |
-| Part 2: Contract Type Selection | 35 | Appropriate contract types; correct risk assignment; uncertainty analysis |
-| Part 3: Source Selection | 35 | Five weighted criteria; both vendors scored; recommendation justified |
+|---------|--------|--------------|
+| Part 1: Base Metrics | 20 | Correct PV and EV by phase; AC transferred accurately |
+| Part 2: Variances and Indices | 30 | All formulas correct; worst-phase identification accurate |
+| Part 3: Forecasting | 30 | Three EAC methods correct; plain-language translation |
+| Part 4: Status Report | 20 | Five required points; professional tone; actionable recommendation |
 | **Total** | **100** | |

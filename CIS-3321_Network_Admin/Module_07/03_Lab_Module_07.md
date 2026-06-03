@@ -1,22 +1,22 @@
-# Lab Activity: Module 07 – WAN and Cloud Connectivity
+# Lab Activity: Module 07 — Network Monitoring and Troubleshooting Tools
 
-## CIS-3321 Network Administration | CompTIA Network+ (N10-008)
+## Course: CIS-3321 Network Administration
 
-## Texas Wesleyan University | Professor Nash
+**Certification Alignment:** CompTIA Network+ (N10-008)
 
 ---
 
 ### Overview
 
-This lab has two parts. Part 1 uses command-line tools and web resources to observe real-world WAN and cloud connectivity — analyzing traceroute output to identify hops across WAN infrastructure and identifying cloud provider IP ranges. Part 2 uses Cisco Packet Tracer to build and test a site-to-site VPN topology, observing the before-and-after effect of a VPN tunnel on packet routing.
+This lab has two parts. Part 1 uses the command-line diagnostic tools covered in the video lectures — ping, traceroute/tracert, nslookup, and netstat — to investigate real network connectivity and DNS behavior from your own machine. Part 2 introduces Wireshark packet capture, where you will capture live traffic, apply display filters, and identify the TCP three-way handshake and DNS query/response pairs in a real capture.
 
 Estimated Time: 60–75 minutes
 
 Required Tools:
 
-- Windows 10 or 11 (for Part 1 commands), or Linux/macOS with equivalent tools
-- Cisco Packet Tracer 8.x (free download at netacad.com with a free account)
-- Web browser for cloud provider IP lookups
+- Windows 10 or 11 with Command Prompt, or Linux/macOS with terminal
+- Wireshark (free download at wireshark.org) — install before the lab session
+- Active internet connection
 
 ---
 
@@ -24,236 +24,262 @@ Required Tools:
 
 By the end of this lab, you will be able to:
 
-1. Interpret traceroute output to identify WAN hops, carrier infrastructure, and cloud provider edge nodes.
-2. Identify cloud provider IP address ranges and explain the significance of anycast routing.
-3. Build a basic site-to-site VPN topology in Packet Tracer.
-4. Explain the difference between pre-tunnel and post-tunnel traffic paths.
-5. Describe how IPsec Tunnel mode hides internal IP addresses from the transit network.
+1. Use ping to test Layer 3 reachability and interpret TTL and RTT values.
+2. Use traceroute/tracert to map a network path and explain intermediate hop behavior.
+3. Use nslookup to resolve hostnames and query specific DNS record types.
+4. Use netstat to identify active connections and listening ports on a live system.
+5. Capture live network traffic in Wireshark and apply display filters.
+6. Identify the TCP three-way handshake in a Wireshark capture.
+7. Identify DNS Query and DNS Response packets in a Wireshark capture.
 
 ---
 
-### Part 1: WAN and Cloud Connectivity Analysis
+### Part 1: Command-Line Diagnostic Tools
 
-#### Part 1A: Traceroute to Cloud Provider Infrastructure
+### Part 1A: ping — Testing Reachability and Interpreting Output
 
-Traceroute (or `tracert` on Windows) sends packets with incrementing TTL values to map the path between your machine and a destination. Each hop is a router that decrements the TTL by 1 and returns an ICMP Time Exceeded message when TTL reaches 0.
+Step 1: Open a Command Prompt (Windows) or terminal (Linux/macOS).
 
-Step 1: Open a Command Prompt on Windows (or terminal on Linux/macOS).
+Step 2: Run the following three ping commands. On Windows, 4 packets are sent by default. On Linux/macOS, press Ctrl+C after 4 replies.
 
-Step 2: Run a traceroute to three destinations. Record the results for each:
+```text
+ping 127.0.0.1
+ping 8.8.8.8
+ping txwes.edu
+```
 
-```bat
+Step 3: Record your results in the table below.
+
+Ping Results Table:
+
+| Target | Packets Sent | Packets Received | Packet Loss % | Average RTT (ms) | TTL Received |
+|--------|-------------|-----------------|--------------|-----------------|-------------|
+| 127.0.0.1 | | | | | |
+| 8.8.8.8 | | | | | |
+| txwes.edu | | | | | |
+
+Step 4: Answer the following questions based on your results.
+
+Question 1A-1: The target 127.0.0.1 is the loopback address. What does a successful ping to 127.0.0.1 tell you about the health of the TCP/IP stack on your own machine? What OSI layer does this test verify?
+
+Question 1A-2: Compare the TTL value you received from 8.8.8.8 to the TTL value from txwes.edu. Assuming a standard starting TTL of 128 for Windows hosts and 64 for Linux hosts, calculate the approximate number of hops to each destination. Show your calculation.
+
+Question 1A-3: If a ping to 8.8.8.8 succeeds (receives replies) but a ping to txwes.edu fails with "Ping: unknown host," what specific network service has failed, and what command would you run next to diagnose it?
+
+---
+
+### Part 1B: tracert / traceroute — Mapping the Network Path
+
+Step 1: Run a traceroute to two destinations. On Windows use `tracert`; on Linux/macOS use `traceroute`.
+
+```text
 tracert 8.8.8.8
+tracert txwes.edu
 ```
 
-```bat
-tracert 1.1.1.1
-```
+Step 2: For each traceroute, record the first hop, the last hop, the total hop count, and the RTT values at the hop where you observe the largest single increase in latency.
 
-```bat
-tracert outlook.com
-```
+Traceroute Results Table:
 
-On Linux or macOS, replace `tracert` with `traceroute`.
+| Destination | Total Hops | First Hop IP | Last Hop IP | Largest RTT Jump at Hop # | RTT Before Jump | RTT After Jump |
+|------------|-----------|-------------|------------|--------------------------|----------------|---------------|
+| 8.8.8.8 | | | | | | |
+| txwes.edu | | | | | | |
 
-Step 3: For each traceroute, count the total number of hops and record the hostnames or IP addresses of the first three hops and the last three hops.
+Question 1B-1: Examine your traceroute to 8.8.8.8. At what hop number does the largest RTT jump occur? What does a sudden large increase in RTT between two consecutive hops suggest about the geographic or infrastructure relationship between those two routers?
 
-Step 4: Look at the round-trip time (RTT) values for each hop. Identify where latency increases significantly — this typically indicates crossing a WAN boundary or a geographic distance.
+Question 1B-2: If hop 4 in your traceroute shows three asterisks (***), does this mean hop 4 is down and the path to the destination is broken? Explain two reasons why a router might not respond to traceroute probes even when it is actively forwarding traffic.
 
-Observation Table — Part 1A:
-
-| Destination | Total Hops | First 3 Hops (IP/Hostname) | Last 3 Hops (IP/Hostname) | RTT Increase Point |
-|-------------|-----------|--------------------------|--------------------------|-------------------|
-| 8.8.8.8 | | | | |
-| 1.1.1.1 | | | | |
-| outlook.com | | | | |
+Question 1B-3: The first hop in your traceroute should be your default gateway (typically your home router or campus router). What is the IP address of your first hop? Is it a private IP address (RFC 1918)? What RFC 1918 range does it fall into?
 
 ---
 
-#### Part 1B: Cloud Provider IP Range Identification
+### Part 1C: nslookup — DNS Diagnostics
 
-Major cloud providers publish their IP address ranges for firewall and routing purposes. You will look up the IP address of a cloud-hosted service and identify which provider's infrastructure it uses.
+Step 1: Run the following nslookup commands and record the results.
 
-Step 1: Use `nslookup` to resolve the IP addresses of the following hostnames:
+Default resolver lookup:
 
-```bat
-nslookup outlook.office365.com
-nslookup s3.amazonaws.com
-nslookup storage.googleapis.com
+```text
+nslookup txwes.edu
 ```
 
-Record the IP addresses returned for each hostname.
+Query against an alternate resolver:
 
-Step 2: For each IP address obtained, use a WHOIS lookup (whois.domaintools.com or similar) or the ARIN registry (search.arin.net) to identify which organization owns the IP address range.
+```text
+nslookup txwes.edu 8.8.8.8
+```
 
-Step 3: Based on your lookup, identify which cloud provider is hosting each service (Microsoft Azure, AWS, or Google Cloud).
+Query for MX records:
 
-Observation Table — Part 1B:
+```text
+nslookup -type=MX txwes.edu
+```
 
-| Hostname | Resolved IP | IP Range Owner | Cloud Provider |
-|----------|------------|---------------|----------------|
-| outlook.office365.com | | | |
-| s3.amazonaws.com | | | |
-| storage.googleapis.com | | | |
+Query for NS records:
 
-Analysis Questions — Part 1A and 1B:
+```text
+nslookup -type=NS txwes.edu
+```
 
-Question 1: In your traceroute to 8.8.8.8, at what hop number did you observe the largest single RTT increase? What does a large RTT jump between two consecutive hops suggest about the network path between those two hops?
+Reverse lookup:
 
-Question 2: Traceroute output often shows asterisks (***) at certain hops. What causes this? Does it indicate a network failure? Explain the two reasons why a router might not respond to traceroute probes.
+```text
+nslookup 8.8.8.8
+```
 
-Question 3: When you ran `nslookup outlook.office365.com`, you likely received an IP address owned by Microsoft. Why might different users running the same nslookup command from different locations receive different IP addresses for the same hostname? What routing or DNS technique causes this?
+Step 2: Record results.
 
-Question 4: Based on what you observed in Part 1, describe in your own words what the term "WAN hop" means. At what point in your traceroute output do you believe traffic leaves your local ISP and enters a larger carrier or backbone network? What clues in the output support your answer?
+nslookup Results Table:
+
+| Query | DNS Server Used | Result / Answer |
+|-------|----------------|----------------|
+| nslookup txwes.edu (default) | | |
+| nslookup txwes.edu 8.8.8.8 | | |
+| nslookup -type=MX txwes.edu | | |
+| nslookup -type=NS txwes.edu | | |
+| nslookup 8.8.8.8 | | |
+
+Question 1C-1: When you ran `nslookup txwes.edu`, the output likely showed "Non-authoritative answer." What does this mean? Which server would provide an authoritative answer for txwes.edu, and how would you query it directly?
+
+Question 1C-2: Examine the MX records returned for txwes.edu. What is the purpose of MX records in DNS? If a mail server cannot deliver email to a txwes.edu address, why would checking MX records be an early troubleshooting step?
+
+Question 1C-3: Compare the results of `nslookup txwes.edu` (using your default resolver) with `nslookup txwes.edu 8.8.8.8` (using Google's resolver). Are the IP addresses the same? What does it mean if they differ?
 
 ---
 
-### Part 2: Site-to-Site VPN Topology in Cisco Packet Tracer
+### Part 1D: netstat — Active Connections and Listening Ports
 
-In Part 2, you will build a simple topology with two sites connected through a simulated internet cloud, configure static routing between them, and observe how traffic flows. You will then add a VPN tunnel (simulated using Packet Tracer's IPsec capabilities) and compare the traffic path before and after.
+Step 1: Open an elevated Command Prompt (Run as Administrator on Windows) or terminal.
 
-#### Step 1: Build the Topology
+Step 2: Run the following commands and record a sample of the output.
 
-Open Packet Tracer and create the following topology:
-
-Site A:
-
-- 1 Router (Router0) — this is the Site A edge router
-- 1 PC (PC0) — connected to Router0's LAN interface
-
-Site B:
-
-- 1 Router (Router1) — this is the Site B edge router
-- 1 PC (PC1) — connected to Router1's LAN interface
-
-Internet (simulated):
-
-- 1 Router (Router2) — simulates an ISP/internet core router
-
-Connect the devices:
-
-- Router0 GigabitEthernet0/0 to Router2 GigabitEthernet0/0 (WAN link A)
-- Router1 GigabitEthernet0/0 to Router2 GigabitEthernet0/1 (WAN link B)
-- Router0 GigabitEthernet0/1 to PC0 (LAN)
-- Router1 GigabitEthernet0/1 to PC1 (LAN)
-
-#### Step 2: Configure IP Addressing
-
-Assign the following addresses. Click each device, go to Config or CLI tab:
-
-Router0:
-
-- GigabitEthernet0/0 (WAN): 203.0.113.1 /30
-- GigabitEthernet0/1 (LAN): 10.1.1.1 /24
-
-Router1:
-
-- GigabitEthernet0/0 (WAN): 198.51.100.1 /30
-- GigabitEthernet0/1 (LAN): 10.2.2.1 /24
-
-Router2:
-
-- GigabitEthernet0/0: 203.0.113.2 /30
-- GigabitEthernet0/1: 198.51.100.2 /30
-
-PC0: IP 10.1.1.10, Mask 255.255.255.0, Gateway 10.1.1.1
-
-PC1: IP 10.2.2.10, Mask 255.255.255.0, Gateway 10.2.2.1
-
-#### Step 3: Configure Static Routing (No VPN)
-
-On Router0, add static routes:
-
-```cisco
-ip route 10.2.2.0 255.255.255.0 203.0.113.2
-ip route 198.51.100.0 255.255.255.252 203.0.113.2
+```text
+netstat -an
 ```
 
-On Router1, add static routes:
-
-```cisco
-ip route 10.1.1.0 255.255.255.0 198.51.100.2
-ip route 203.0.113.0 255.255.255.252 198.51.100.2
+```text
+netstat -r
 ```
 
-On Router2, add static routes:
+Step 3: From the `netstat -an` output, identify at least one LISTENING port, one ESTABLISHED connection (if any), and any UDP entries.
 
-```cisco
-ip route 10.1.1.0 255.255.255.0 203.0.113.1
-ip route 10.2.2.0 255.255.255.0 198.51.100.1
+netstat Results Table:
+
+| Protocol | Local Address:Port | Foreign Address:Port | State | Notes |
+|---------|-------------------|---------------------|-------|-------|
+| (record one LISTENING) | | | LISTENING | |
+| (record one ESTABLISHED, if any) | | | ESTABLISHED | |
+| (record one UDP entry) | | | | |
+
+Question 1D-1: What is the significance of a TCP port showing state LISTENING? What would you expect to find if you opened a web browser and navigated to a website — which new state should appear in the netstat output?
+
+Question 1D-2: Review the netstat -r (routing table) output. Identify the default route entry (destination 0.0.0.0 on Windows or default on Linux). What is the gateway address shown? How does this relate to the first hop you saw in your traceroute?
+
+Question 1D-3: A security analyst discovers that a process is listening on TCP port 4444 on a workstation. The workstation is not a server and no applications should be listening on non-standard ports. What does this finding suggest, and what netstat flag (on Windows) would reveal which executable is associated with that listening port?
+
+---
+
+### Part 2: Wireshark Packet Capture and Analysis
+
+### Part 2A: Capture Setup and Basic Filtering
+
+Step 1: Launch Wireshark. On the main screen, select your active network interface (the one with traffic activity shown on the waveform graph — typically "Ethernet" or "Wi-Fi").
+
+Step 2: Click the blue shark-fin Start button to begin capturing.
+
+Step 3: Open a web browser and navigate to http://neverssl.com (this site deliberately uses unencrypted HTTP so you can see the content in Wireshark).
+
+Step 4: Return to Wireshark and click the red Stop button after about 10 seconds of capture.
+
+Step 5: In the Display Filter bar, enter the following filter and press Enter:
+
+```text
+http
 ```
 
-#### Step 4: Test Connectivity Without VPN
+You should now see only HTTP packets. Browse through a few packets and note the HTTP GET request and the HTTP 200 OK response.
 
-From PC0's Desktop, open Command Prompt and run:
+Step 6: Clear the display filter and try:
 
-```bat
-ping 10.2.2.10
+```text
+dns
 ```
 
-This should succeed. The traffic travels: PC0 → Router0 → Router2 → Router1 → PC1.
+You should see DNS query and response packets.
 
-Switch to Packet Tracer's Simulation Mode (bottom right). Run the same ping and observe the packet path. Note that the packet passes through Router2 (simulating the internet) with the internal addresses (10.1.1.10 and 10.2.2.10) visible in the IP header at every hop.
+---
 
-Record the packet path and note which router sees the internal IP addresses.
+### Part 2B: Identifying the TCP Three-Way Handshake
 
-#### Step 5: Enable the VPN Tunnel
+Step 1: Clear all display filters (empty the filter bar and press Enter).
 
-In Packet Tracer, click on Router0. Go to the Config tab, then select Tunnel interface (or use CLI). Configure a GRE tunnel simulating the VPN tunnel:
+Step 2: Apply this filter to isolate TCP connection establishment:
 
-On Router0 CLI:
-
-```cisco
-interface Tunnel0
- ip address 172.16.0.1 255.255.255.252
- tunnel source GigabitEthernet0/0
- tunnel destination 198.51.100.1
+```text
+tcp.flags.syn == 1
 ```
 
-On Router1 CLI:
+Step 3: Find a SYN packet in the list. Note the source IP, destination IP, and destination port.
 
-```cisco
-interface Tunnel0
- ip address 172.16.0.2 255.255.255.252
- tunnel source GigabitEthernet0/0
- tunnel destination 203.0.113.1
+Step 4: Right-click that SYN packet and select "Follow > TCP Stream." Wireshark will automatically filter to show all packets in that TCP conversation.
+
+Step 5: Identify the three packets that form the handshake:
+
+- Packet 1: SYN — flags show SYN=1, ACK=0
+- Packet 2: SYN-ACK — flags show SYN=1, ACK=1
+- Packet 3: ACK — flags show SYN=0, ACK=1
+
+Record the frame numbers and timestamp of each handshake packet.
+
+Handshake Capture Table:
+
+| Step | Frame Number | Source IP | Destination IP | TCP Flags | Sequence Number |
+|------|-------------|-----------|---------------|-----------|----------------|
+| SYN | | | | SYN | |
+| SYN-ACK | | | | SYN, ACK | |
+| ACK | | | | ACK | |
+
+---
+
+### Part 2C: Identifying DNS Queries and Responses
+
+Step 1: Clear the display filter and apply:
+
+```text
+dns
 ```
 
-Update the static routes on Router0 to use the tunnel:
+Step 2: Locate a DNS Query packet (the Info column shows "Standard query"). Click on it. In the packet detail pane, expand the "Domain Name System (query)" section. Note the queried name and query type (A, AAAA, MX, etc.).
 
-```cisco
-ip route 10.2.2.0 255.255.255.0 172.16.0.2
-```
+Step 3: Locate the corresponding DNS Response packet immediately following the query (same transaction ID, Info column shows "Standard query response"). Note the answer section — the returned IP address.
 
-Update the static routes on Router1 to use the tunnel:
+DNS Capture Table:
 
-```cisco
-ip route 10.1.1.0 255.255.255.0 172.16.0.1
-```
+| Frame | Type | Queried Name | Record Type | Answer / IP Returned | Latency (ms) |
+|-------|------|-------------|-------------|---------------------|-------------|
+| (Query) | Query | | | N/A | |
+| (Response) | Response | | | | |
 
-#### Step 6: Test Connectivity Through the Tunnel
+Question 2C-1: In the DNS packets you captured, what port number was used as the destination port for DNS queries, and what transport protocol (TCP or UDP) was used? Why is this protocol typically chosen for DNS?
 
-From PC0's Desktop Command Prompt, run:
+Question 2C-2: Each DNS query and response pair shares a "Transaction ID" field. What is the purpose of this identifier? What would happen if two DNS queries were outstanding simultaneously and there were no transaction IDs?
 
-```bat
-ping 10.2.2.10
-```
+---
 
-Switch to Simulation Mode and run the ping again. Observe that the packet is now encapsulated in a GRE header — the inner IP header (with 10.1.1.10 and 10.2.2.10) is now inside the tunnel encapsulation, and only the outer header (203.0.113.1 to 198.51.100.1) is visible to Router2.
+### Part 2D: Wireshark Display Filter Practice
 
-Lab Questions — Part 2:
+Write the correct Wireshark display filter for each of the following requirements. Do not run these — write them as answers.
 
-Question 5: In Step 4 (without VPN), what IP addresses appear in the packet header when it passes through Router2? Who can see the internal IP addresses of PC0 and PC1?
+Question 2D-1: Show only traffic where the source OR destination IP is 192.168.1.50.
 
-Question 6: After enabling the GRE tunnel in Step 6, what IP addresses appear in the outer IP header when the packet passes through Router2? What are the inner IP addresses, and can Router2 see them?
+Question 2D-2: Show only TCP traffic on port 443 (HTTPS).
 
-Question 7: The tunnel configured in this lab uses GRE without encryption. In a real production VPN, what additional protocol would be layered on top of GRE to provide confidentiality? Name the specific protocol and the IPsec mode that would be used for a site-to-site VPN.
+Question 2D-3: Show only ICMP packets (ping traffic).
 
-Question 8: The two internal networks in this lab are 10.1.1.0/24 and 10.2.2.0/24. Both are RFC 1918 private addresses. Without a tunnel, could Router2 (simulating the internet) route traffic to 10.1.1.0/24 or 10.2.2.0/24? Explain why or why not using the concept of private address non-routability.
+Question 2D-4: Show only DNS response packets (not queries).
 
-Question 9: In this lab, all traffic between the sites routes through the GRE tunnel. This is analogous to which VPN configuration — full-tunnel or split-tunnel? Explain what the difference would be in the context of a remote-access VPN.
-
-Question 10: A remote sales employee works from hotels and coffee shops. The hotel firewall blocks all traffic except ports 80 and 443. Would the GRE tunnel you configured in this lab work for that employee? What VPN technology and protocol would you recommend instead, and what port does it use?
+Question 2D-5: Show traffic between 192.168.1.10 and 10.0.0.1 only.
 
 ---
 
@@ -261,15 +287,15 @@ Question 10: A remote sales employee works from hotels and coffee shops. The hot
 
 Submit the following in a single PDF or Word document:
 
-1. Part 1 Observation Tables — Completed traceroute table (Part 1A) and cloud IP table (Part 1B) with all columns filled.
+1. Part 1 Result Tables — All four tables (ping, traceroute, nslookup, netstat) with all columns filled from your actual command output.
 
-2. Part 1 Written Responses — Answers to Questions 1 through 4 in complete sentences. Include at least one screenshot of a full traceroute output.
+2. Part 1 Written Responses — Answers to Questions 1A-1 through 1D-3 in complete sentences (11 questions total). Include at least one screenshot of actual command output for each Part 1 section.
 
-3. Part 2 Topology Screenshot — A screenshot of your Packet Tracer topology showing Router0, Router1, Router2, PC0, and PC1 with all link indicators visible.
+3. Part 2 Capture Tables — Completed handshake table (Part 2B) and DNS capture table (Part 2C).
 
-4. Part 2 Simulation Screenshots — One screenshot from Simulation Mode showing the packet path without the tunnel (Step 4) and one showing the encapsulated packet path with the tunnel (Step 6).
+4. Part 2 Wireshark Screenshots — One screenshot showing the TCP three-way handshake with the packet detail pane open on the SYN packet. One screenshot showing a DNS query and response pair.
 
-5. Part 2 Written Responses — Answers to Questions 5 through 10 in complete sentences.
+5. Part 2 Written Responses — Answers to Questions 2C-1, 2C-2, and all five filter-writing questions (2D-1 through 2D-5).
 
 ---
 
@@ -277,21 +303,20 @@ Submit the following in a single PDF or Word document:
 
 | Item | Points |
 |------|--------|
-| Part 1A Observation Table — all three destinations recorded with hop counts and RTT data | 10 |
-| Part 1B Observation Table — IPs resolved, WHOIS lookup completed, provider identified | 10 |
-| Question 1 — RTT hop analysis with correct interpretation | 8 |
-| Question 2 — Asterisk explanation (firewall or ICMP rate limit) | 7 |
-| Question 3 — Anycast or DNS geo-distribution explanation | 7 |
-| Question 4 — WAN hop identification with supporting evidence from output | 8 |
-| Part 2 Topology Screenshot — correct devices and connections | 5 |
-| Part 2 Simulation Screenshot (no tunnel) — internal IPs visible at Router2 | 5 |
-| Part 2 Simulation Screenshot (with tunnel) — encapsulated packet at Router2 | 5 |
-| Question 5 — Pre-tunnel IP header analysis correct | 8 |
-| Question 6 — Post-tunnel outer/inner header analysis correct | 8 |
-| Question 7 — GRE + IPsec ESP + Tunnel mode identified | 8 |
-| Question 8 — RFC 1918 non-routability explanation correct | 7 |
-| Question 9 — Full-tunnel vs. split-tunnel distinction correct | 7 |
-| Question 10 — SSL/TLS VPN on TCP 443 identified correctly | 7 |
+| Part 1A — Ping table complete with all three targets | 6 |
+| Part 1A — Questions 1A-1 through 1A-3 correct | 9 |
+| Part 1B — Traceroute table with RTT jump data | 6 |
+| Part 1B — Questions 1B-1 through 1B-3 correct | 9 |
+| Part 1C — nslookup table complete | 5 |
+| Part 1C — Questions 1C-1 through 1C-3 correct | 9 |
+| Part 1D — netstat table with LISTENING and ESTABLISHED entries | 5 |
+| Part 1D — Questions 1D-1 through 1D-3 correct | 9 |
+| Part 2B — Handshake table with correct frame/flag data | 8 |
+| Part 2B — Wireshark screenshot showing three-way handshake | 5 |
+| Part 2C — DNS table with query and response pair | 8 |
+| Part 2C — Questions 2C-1 and 2C-2 correct | 6 |
+| Part 2D — Display filter questions 2D-1 through 2D-5 | 10 |
+| Screenshots — One per Part 1 section (4 total) | 5 |
 | Total | 100 |
 
 ---

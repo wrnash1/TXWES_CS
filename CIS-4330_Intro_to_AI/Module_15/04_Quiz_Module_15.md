@@ -1,75 +1,266 @@
-# Quiz: Module 15 - AI Security and Privacy
-## Course: CIS-4330_Intro_to_AI (AI-900 (Microsoft Azure AI Fundamentals))
+# Quiz: Module 15 — Emerging AI Technologies
+
+## Course: CIS-4330 Introduction to Artificial Intelligence
+
+## Texas Wesleyan University | Professor Nash
+
+**Certification Alignment:** Microsoft Azure AI Fundamentals (AI-900)
 
 ---
 
-**Question 1**
-How is a trained machine learning model typically exposed to client applications in a production deployment?
-*   A) As a raw Python script file that clients download and execute locally
-*   B) As a web-accessible REST API endpoint that accepts JSON input and returns JSON predictions
-*   C) Via a direct SQL database connection where clients query prediction results from a table
-*   D) As an email attachment containing the serialized model file
-*   **Correct Answer:** B) Models are deployed inside containerized web services that expose REST API endpoints — clients send feature data as a JSON POST request and receive predictions in return, enabling language-agnostic integration at scale.
-*   **Distractor Analysis:**
-    *   *Why correct:* REST API deployment decouples the model from the client application, enables authentication, supports horizontal scaling, and is the standard pattern used by Azure Machine Learning real-time endpoints and Azure Cognitive Services.
-    *   Distributing raw script files or SQL connections creates serious security, versioning, and scalability problems. Email attachments are not a deployment mechanism for production inference services.
+## Instructions
+
+This quiz contains 10 multiple-choice questions. Each question is worth 10 points for a total of 100 points. Select the single best answer for each question. Review your reading guide and video notes before attempting the quiz.
 
 ---
 
-**Question 2**
-In the context of AI security, which of the following is the most accurate definition of a **model inversion attack**?
-*   A) An attack in which an adversary repeatedly queries a public model API and analyzes the output probabilities to reconstruct sensitive private data that was used to train the model.
-*   B) An attack in which an adversary adds imperceptible perturbations to input data (such as pixel noise in an image) to cause the model to make incorrect predictions with high confidence.
-*   C) An attack in which an adversary corrupts a portion of the training dataset before model training to cause the resulting model to behave incorrectly on specific inputs chosen by the attacker.
-*   D) An attack in which an adversary crafts a carefully structured user input to override a language model's system prompt instructions and cause the model to follow the attacker's instructions instead.
-*   **Correct Answer:** A) An attack in which an adversary repeatedly queries a public model API and analyzes the output probabilities to reconstruct sensitive private data that was used to train the model.
-*   **Distractor Analysis:**
-    *   *Why A is correct:* Model inversion exploits the information encoded in a model's learned weights — accessible through output confidence scores — to reverse-engineer training examples. Differential privacy and API rate-limiting are the primary defenses.
-    *   *Why B is incorrect:* This describes an **adversarial example** attack — perturbing inputs at inference time to cause misclassification. Defense: adversarial training and input filtering.
-    *   *Why C is incorrect:* This describes a **data poisoning** attack — corrupting the training set to manipulate model behavior at a specific trigger. Defense: data validation and provenance controls.
-    *   *Why D is incorrect:* This describes a **prompt injection** attack — specific to LLMs, where crafted user input overrides system instructions. Defense: output filtering and keeping sensitive logic outside the prompt.
+## Questions
+
+### Question 1
+
+A hospital system wants to train a disease prediction model across five partner institutions without any institution transmitting patient records outside its own data center. Each institution trains the model locally and sends only parameter updates to a central aggregator. Which technology enables this architecture?
+
+A) Edge AI with ONNX Runtime
+
+B) Multimodal AI with cross-attention
+
+C) Federated learning with FedAvg aggregation
+
+D) Knowledge distillation from a teacher model
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- **A — Incorrect.** Edge AI addresses local inference on-device to avoid cloud round trips. It does not describe a collaborative training architecture across multiple institutions.
+- **B — Incorrect.** Cross-attention in multimodal AI enables reasoning across data modalities within a single model. It is not a distributed training paradigm.
+- **C — Correct.** Federated learning enables collaborative model training across distributed data sources by sharing model updates rather than raw data. FedAvg aggregates client updates by weighted averaging at the central server, and patient records never leave each institution.
+- **D — Incorrect.** Knowledge distillation trains a small student model to mimic a large teacher model. It involves a single training process and does not address distributed data ownership across institutions.
 
 ---
 
-**Question 3**
-A developer needs to **train a machine learning model on labeled training data**. Which command is most appropriate?
-*   A) model.fit(X_train, y_train)
-*   B) predictions = model.predict(X_test)
-*   C) accuracy = accuracy_score(y_test, predictions)
-*   D) import pandas as pd; df = pd.read_csv('data.csv')
-*   **Correct Answer:** A) model.fit(X_train, y_train)
-*   **Distractor Analysis:**
-    *   *Why A is correct:* `model.fit(X_train, y_train)` passes the feature matrix and target labels to the model, allowing it to learn the input-output mapping through the training algorithm.
-    *   *Why B is incorrect:* `model.predict()` generates predictions from a trained model; `fit()` must be called first before prediction is possible.
-    *   *Why C is incorrect:* `accuracy_score()` evaluates predictions against true labels — an evaluation step that requires predictions to already exist.
-    *   *Why D is incorrect:* This loads a CSV file into a DataFrame — data loading, which occurs at the beginning of the pipeline before any model training.
+### Question 2
+
+OpenAI's CLIP model demonstrated an important multimodal capability: classifying images into categories that were not part of the training data, guided only by natural language descriptions of those categories. What is this capability called?
+
+A) Transfer learning
+
+B) Zero-shot classification
+
+C) Few-shot prompting
+
+D) Supervised fine-tuning
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- **A — Incorrect.** Transfer learning refers to adapting a pre-trained model to a new task through fine-tuning on labeled examples from that task. CLIP's capability does not require any fine-tuning on the new categories.
+- **B — Correct.** Zero-shot classification is the ability to classify inputs into categories the model has never explicitly seen during training, using only natural language descriptions of those categories. CLIP achieves this by aligning image and text embeddings in a shared space during contrastive pretraining.
+- **C — Incorrect.** Few-shot prompting provides a small number of labeled examples to guide model behavior. CLIP's zero-shot classification requires no examples of the new categories at inference time.
+- **D — Incorrect.** Supervised fine-tuning updates model weights on labeled examples from a target task. This is the opposite of zero-shot classification, which requires no task-specific training.
 
 ---
 
-**Question 4**
-A security team discovers that an external researcher submitted 50,000 queries to a public medical AI classifier and used the returned diagnosis probabilities to reconstruct individual patient health records from the training data. Which combination of controls would most directly prevent this attack in future deployments?
-*   A) Apply differential privacy during model training to add statistical noise to the learned weights, and enforce strict API rate-limiting to cap the number of queries any single client can submit per time period.
-*   B) Train the model with adversarially perturbed patient records included in the training set and add input validation to reject malformed feature vectors.
-*   C) Enable full disk encryption on all servers hosting the model and require TLS 1.3 for all API connections.
-*   D) Deploy the model behind Azure Private Link so only internal hospital network traffic can reach the inference endpoint.
-*   **Correct Answer:** A) Apply differential privacy during model training to add statistical noise to the learned weights, and enforce strict API rate-limiting to cap the number of queries any single client can submit per time period.
-*   **Distractor Analysis:**
-    *   *Why A is correct:* This is a model inversion attack. Differential privacy degrades the statistical signal an attacker can extract from outputs by injecting noise into training. Rate-limiting restricts how many queries the attacker can submit, making reconstruction computationally infeasible.
-    *   *Why B is incorrect:* Adversarial training and input validation defend against adversarial example attacks (perturbed inference inputs) — not against an attacker mining training data from API outputs over thousands of legitimate-looking queries.
-    *   *Why C is incorrect:* Disk encryption and TLS protect data in transit and at rest, but they do not prevent an authenticated client from extracting training data through the model's output distribution via a large number of normal API calls.
-    *   *Why D is incorrect:* Private Link restricts network access, but the attack was conducted by an external researcher through a public API — the correct response is to limit what can be inferred from the outputs themselves, not just who can reach the endpoint.
+### Question 3
+
+A manufacturing company deploys an AI defect detection model directly on factory floor cameras to inspect products at 60 frames per second. The cameras have no reliable internet connectivity and must make accept/reject decisions in under 5 milliseconds. Which deployment approach is most appropriate?
+
+A) Cloud-hosted inference via Azure Cognitive Services REST API
+
+B) Edge AI with an on-device quantized model using ONNX Runtime
+
+C) Federated learning aggregation server in the factory network
+
+D) A multimodal model combining camera feeds and ERP system text
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- **A — Incorrect.** Cloud API inference requires reliable internet connectivity and introduces network round-trip latency of 50–500 ms, both of which violate the stated requirements.
+- **B — Correct.** Edge AI runs the model locally on the camera hardware, eliminating network dependency and achieving sub-millisecond to single-digit millisecond inference latency. Quantization reduces model size to fit constrained camera hardware. ONNX Runtime is specifically optimized for this cross-platform edge deployment scenario.
+- **C — Incorrect.** A federated learning aggregation server is a training infrastructure component. It does not enable real-time inference and does not address connectivity or latency requirements.
+- **D — Incorrect.** A multimodal model combining camera and ERP data could add analytical value but does not solve the core requirements of offline operation and sub-5 ms latency.
 
 ---
 
-**Question 5**
-An organization's deployed image classifier is being targeted by attackers who send images with specially crafted pixel-level noise, causing the model to misclassify dangerous objects as benign with high confidence. Which defense best mitigates this **adversarial example** attack?
-*   A) Train the model with adversarial examples included in the training set and implement input pre-processing filters that detect and reject images with statistically anomalous pixel distributions before inference.
-*   B) Apply differential privacy to the training image dataset and rate-limit the public inference API to reduce query volume.
-*   C) Enable full disk encryption on all edge devices that submit images to the classification endpoint.
-*   D) Enforce multi-factor authentication on all accounts with permission to retrain or redeploy the model.
-*   **Correct Answer:** A) Train the model with adversarial examples included in the training set and implement input pre-processing filters that detect and reject images with statistically anomalous pixel distributions before inference.
-*   **Distractor Analysis:**
-    *   *Why A is correct:* Adversarial training teaches the model to correctly classify both clean and perturbed inputs by exposing it to crafted examples during training. Pre-processing filters provide a second line of defense by detecting and blocking anomalous images before they reach the classifier.
-    *   *Why B is incorrect:* Differential privacy defends against model inversion (training data reconstruction) — not adversarial perturbations applied to inference inputs. These are distinct attack types requiring different defenses.
-    *   *Why C is incorrect:* Disk encryption protects image data stored on edge devices at rest; it has no effect on manipulated images submitted through a live API connection.
-    *   *Why D is incorrect:* MFA secures accounts that manage the model pipeline but does not prevent an external attacker from submitting adversarially crafted images through the public inference endpoint.
+### Question 4
+
+In the FedAvg algorithm, how are model updates from participating clients combined to produce the next global model?
+
+A) The server selects the single best-performing client model and discards the others.
+
+B) The server computes a weighted average of client parameter updates, weighted by each client's dataset size.
+
+C) The server trains a meta-model that learns to combine client predictions at inference time.
+
+D) Clients vote on each individual parameter, and the majority value is used.
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- **A — Incorrect.** Selecting only one client model would discard the knowledge contributed by all other participants, defeating the purpose of collaborative training.
+- **B — Correct.** FedAvg (McMahan et al., 2017) computes a weighted average of client model updates. Clients contributing larger datasets receive proportionally higher weight in the aggregation, ensuring that the global model reflects the full data distribution across all clients.
+- **C — Incorrect.** Training a meta-model to combine predictions is a technique called stacking or ensemble learning. It is not the FedAvg aggregation strategy and would require sharing more data than just weight updates.
+- **D — Incorrect.** Per-parameter majority voting is not a standard aggregation method in federated learning. It would be computationally expensive and would not produce a well-calibrated combined model.
+
+---
+
+### Question 5
+
+Microsoft's **Semantic Kernel** SDK is best described as which of the following?
+
+A) A hardware abstraction layer for running AI models on edge NPU processors
+
+B) An SDK that connects large language models to external tools and data sources through a plugin architecture
+
+C) A multi-agent framework where specialized AI agents communicate through a shared message bus
+
+D) A differential privacy library for training LLMs with formal (ε, δ) guarantees
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- **A — Incorrect.** Hardware abstraction for edge NPU deployment is the role of ONNX Runtime and platform-specific inference engines. Semantic Kernel operates at the application orchestration layer, not the hardware layer.
+- **B — Correct.** Semantic Kernel is a Microsoft SDK that allows developers to integrate LLMs into applications by defining plugins — structured descriptions of available functions — that the model can reason about and invoke. It handles memory management, planning, and function orchestration.
+- **C — Incorrect.** A multi-agent framework with a shared message bus describes AutoGen, a separate Microsoft Research project. While both AutoGen and Semantic Kernel support agent architectures, the description of plugins and tool integration specifically characterizes Semantic Kernel.
+- **D — Incorrect.** Differential privacy training is supported by the SmartNoise/OpenDP toolkit and TensorFlow Privacy, not Semantic Kernel.
+
+---
+
+### Question 6
+
+Under the EU AI Act, which of the following AI systems falls into the **high-risk** category subject to conformity assessments, technical documentation, and mandatory human oversight requirements?
+
+A) A recommendation algorithm suggesting products on an e-commerce website
+
+B) A chatbot that discloses it is an AI when users ask
+
+C) An AI system used by employers to rank job candidates and make hiring decisions
+
+D) A spam filter that automatically routes emails to a junk folder
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- **A — Incorrect.** Product recommendation systems are classified as minimal risk under the EU AI Act. They do not produce legal or similarly significant effects on individuals and have no specific obligations beyond general product safety law.
+- **B — Incorrect.** A chatbot that discloses its AI nature falls under the limited-risk tier, which requires transparency (disclosure that the user is interacting with AI) but not conformity assessments or mandatory human oversight.
+- **C — Correct.** Employment and worker management AI — including systems used for recruitment, hiring, task allocation, and performance monitoring — is explicitly listed in Annex III of the EU AI Act as a high-risk AI application requiring conformity assessment, technical documentation, human oversight mechanisms, and registration in the EU database.
+- **D — Incorrect.** Spam filtering produces a minor, reversible effect and is classified as minimal risk. It does not affect individuals' legal rights or significantly significant interests.
+
+---
+
+### Question 7
+
+A data scientist applies dynamic INT8 quantization to a neural network model before deploying it to a mobile device. Which of the following best describes what quantization does to the model?
+
+A) It trains a smaller model from scratch using the original model's predictions as soft labels.
+
+B) It removes entire convolutional filters whose output norms fall below a threshold.
+
+C) It replaces 32-bit floating-point weight values with 8-bit integer representations, reducing model size and memory footprint.
+
+D) It splits the model into a server-side teacher and a device-side student that communicate at inference time.
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- **A — Incorrect.** Training a smaller model using a larger model's predictions as soft labels is knowledge distillation. It produces a separate student model and requires a full training run.
+- **B — Incorrect.** Removing filters below a norm threshold is structured pruning. It reduces the number of parameters by eliminating entire network substructures rather than changing numerical precision.
+- **C — Correct.** Quantization reduces the numerical precision of model weights from FP32 (4 bytes per value) to INT8 (1 byte per value), achieving approximately a 4x reduction in model size and memory bandwidth requirements with typically minimal accuracy loss.
+- **D — Incorrect.** Splitting a model between a server and device with runtime communication is split computing, a deployment architecture distinct from quantization.
+
+---
+
+### Question 8
+
+A research group working on quantum machine learning reports that their variational quantum circuit classifier achieves competitive accuracy on a small benchmark dataset using a 20-qubit NISQ device. What is the most accurate characterization of this result for enterprise AI practitioners?
+
+A) Quantum ML has achieved practical production readiness and should replace classical ML pipelines for classification tasks.
+
+B) The result is a promising research demonstration, but NISQ limitations mean quantum ML is not yet practically advantageous for real-world ML workloads at scale.
+
+C) Azure Quantum already provides NISQ-based ML services that outperform classical Azure ML on standard tabular datasets.
+
+D) The 20-qubit result proves that fault-tolerant quantum computers are now available for commercial use.
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- **A — Incorrect.** NISQ devices have high error rates and limited qubit counts that restrict circuit depth and problem scale. No NISQ quantum ML system has demonstrated practical advantage over classical ML on real-world datasets.
+- **B — Correct.** NISQ devices represent a valuable research platform but are not yet practically superior to classical ML for enterprise workloads. Practical quantum advantage for ML likely requires fault-tolerant quantum computers with millions of logical qubits, which are a decade or more away from current hardware.
+- **C — Incorrect.** Azure Quantum provides access to quantum hardware for research purposes. It does not offer quantum ML services that outperform Azure Machine Learning on standard enterprise datasets.
+- **D — Incorrect.** NISQ devices are explicitly not fault-tolerant. Fault-tolerant quantum computing requires error correction codes that demand millions of physical qubits per logical qubit — far beyond current 20-qubit demonstrations.
+
+---
+
+### Question 9
+
+An AI agent built with Microsoft AutoGen is performing a multi-step task: researching a topic, drafting a report, and emailing it to a distribution list. At which step should the responsible design pattern require human approval before the agent proceeds?
+
+A) Searching the web for research sources
+
+B) Drafting the initial report text in memory
+
+C) Sending the email to the distribution list
+
+D) Summarizing source documents into bullet points
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- **A — Incorrect.** Web search is a low-stakes, easily reversible information-gathering action. Autonomous execution without human approval is appropriate and is the efficiency advantage of agentic systems.
+- **B — Incorrect.** Drafting text in memory is an internal, non-externalized action with no external effect. The agent should proceed autonomously; the human can review the draft before it is sent.
+- **C — Correct.** Sending an email is an externalized, potentially irreversible action with real-world consequences (the recipients receive the message and may act on it). The responsible human-in-the-loop design pattern requires human review and approval before any high-stakes, irreversible, or externally visible action is taken.
+- **D — Incorrect.** Summarizing text is an internal reasoning step with no external effect. Autonomous summarization is both appropriate and is a core value-add of agentic AI.
+
+---
+
+### Question 10
+
+The NIST AI Risk Management Framework (AI RMF 1.0) organizes AI risk management around four core functions. Which set correctly names all four functions?
+
+A) Identify, Protect, Detect, Respond
+
+B) Govern, Map, Measure, Manage
+
+C) Plan, Build, Evaluate, Deploy
+
+D) Assess, Mitigate, Monitor, Report
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- **A — Incorrect.** Identify, Protect, Detect, Respond (plus Recover) are the five functions of the NIST Cybersecurity Framework (CSF), not the AI RMF. These are related but distinct frameworks for different risk domains.
+- **B — Correct.** The NIST AI RMF 1.0 (January 2023) organizes AI risk management around four functions: Govern (establishing policies, accountability, and culture), Map (identifying and categorizing AI risks), Measure (analyzing and assessing identified risks), and Manage (prioritizing and treating risks through controls and responses).
+- **C — Incorrect.** Plan, Build, Evaluate, Deploy describes a generic software development lifecycle, not the NIST AI RMF structure.
+- **D — Incorrect.** Assess, Mitigate, Monitor, Report is a reasonable risk management sequence but does not correspond to the specific function names defined in the NIST AI RMF 1.0.
+
+---
+
+## Answer Key
+
+| Question | Answer |
+|---|---|
+| 1 | C |
+| 2 | B |
+| 3 | B |
+| 4 | B |
+| 5 | B |
+| 6 | C |
+| 7 | C |
+| 8 | B |
+| 9 | C |
+| 10 | B |
+
+---
+
+*Quiz Line Count: 175 | Module 15 — Emerging AI Technologies*

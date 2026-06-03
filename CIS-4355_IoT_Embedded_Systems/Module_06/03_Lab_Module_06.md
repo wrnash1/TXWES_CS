@@ -1,289 +1,376 @@
-# Lab Activity – Module 06: IoT Cloud Platforms – AWS IoT Core, Azure IoT Hub, GCP IoT
+# Lab: Module 06 — Microcontroller Programming
 
 **Course:** CIS-4355 IoT and Embedded Systems
-**Instructor:** Professor Nash
+
+**Institution:** Texas Wesleyan University | Professor Nash
+
 **Points:** 100
-**Submission:** Canvas – Module 06 Lab Assignment
 
 ---
 
-## Overview
+## Lab Overview
 
-In this lab you will analyze AWS IoT Core policy documents for security violations, trace a Device Shadow synchronization sequence, evaluate Azure Device Twin configurations, and assess a GCP Pub/Sub access control setup. All work is analytical and written — no cloud account is required.
+In this lab you will write, upload, and demonstrate three progressively complex Arduino/ESP32 programs that exercise digital I/O, analog reading, PWM output, and hardware interrupts. All three parts run on the same breadboard circuit.
 
----
+**Estimated time:** 2–3 hours
 
-## Learning Objectives
+**Hardware required:**
 
-By completing this lab you will be able to:
-
-- Read an AWS IoT Core Policy JSON document and identify least-privilege violations.
-- Trace an AWS Device Shadow desired/reported/delta sequence for a device reconnecting after offline period.
-- Evaluate Azure Device Twin configurations for operational and security issues.
-- Assess GCP Pub/Sub IAM access controls for data exposure risks.
-- Compare all three platforms' authentication mechanisms and state synchronization models.
-
----
-
-## Prerequisites
-
-- Completed Module 06 video lecture and reading guide.
-- No cloud account required. All analysis uses provided documents and scenarios.
+- Arduino Uno R3 or ESP32 DevKit V1 (either platform accepted)
+- USB cable
+- Half-size breadboard
+- 1x red LED
+- 1x green LED
+- 2x 220 Ω resistors
+- 1x 10 kΩ potentiometer
+- 1x tactile pushbutton
+- Jumper wires (10+)
 
 ---
 
-## Part 1: AWS IoT Core Policy Analysis (30 points)
+## Circuit Wiring Diagram
 
-### Part 1 Background
+Build the following circuit on your breadboard before writing any code.
 
-AWS IoT Core policies are JSON documents using IAM-style Allow/Deny rules. Each statement specifies:
+**Red LED (PWM controlled):**
 
-- Effect: Allow or Deny.
-- Action: one or more IoT actions such as iot:Connect, iot:Publish, iot:Subscribe, iot:Receive.
-- Resource: the ARN (Amazon Resource Name) of the topic, client, or shadow resource.
+- LED anode (long leg) → 220 Ω resistor → Pin 9 (Uno) or GPIO 18 (ESP32)
+- LED cathode (short leg) → GND rail
 
-A secure policy grants only the minimum actions on the minimum resources required for a specific device.
+**Green LED (digital on/off):**
 
-### Part 1 Policy Documents
+- LED anode → 220 Ω resistor → Pin 13 (Uno) or GPIO 2 (ESP32)
+- LED cathode → GND rail
 
-The following three policy documents are submitted for security review. Analyze each one.
+**Potentiometer:**
 
-Policy A (submitted for device sensor-node-42 in region us-east-1 account 123456789012):
+- Left pin → GND rail
+- Center pin (wiper) → A0 (Uno) or GPIO 34 (ESP32)
+- Right pin → 5V (Uno) or 3.3V (ESP32)
 
-```json
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": "iot:*",
-      "Resource": "*"
+**Pushbutton:**
+
+- One side → Pin 2 (Uno) or GPIO 4 (ESP32)
+- Other side → GND rail
+- (Use INPUT_PULLUP in code — no external resistor needed)
+
+**Power:**
+
+- Connect Arduino/ESP32 GND to breadboard GND rail
+- Connect Arduino/ESP32 5V (Uno) or 3.3V (ESP32) to breadboard VCC rail
+
+---
+
+## Part A — Digital I/O and Serial Communication (25 points)
+
+### Part A Objective
+
+Toggle the green LED with the pushbutton using a software debounce routine and report state changes over Serial.
+
+### Part A Code
+
+```cpp
+// Part A: Debounced Button → LED + Serial Report
+// Works on both Arduino Uno and ESP32
+
+#ifdef ESP32
+  #define BUTTON_PIN  4
+  #define GREEN_LED   2
+#else
+  #define BUTTON_PIN  2
+  #define GREEN_LED   13
+#endif
+
+const uint32_t DEBOUNCE_MS = 50;
+
+int      lastRawState   = HIGH;
+int      confirmedState = HIGH;
+uint32_t lastDebounce   = 0;
+bool     ledState       = false;
+
+void setup() {
+  Serial.begin(115200);
+  pinMode(BUTTON_PIN, INPUT_PULLUP);
+  pinMode(GREEN_LED,  OUTPUT);
+  digitalWrite(GREEN_LED, LOW);
+  Serial.println(F("Part A ready. Press button to toggle LED."));
+}
+
+void loop() {
+  int reading = digitalRead(BUTTON_PIN);
+
+  if (reading != lastRawState) {
+    lastDebounce = millis();
+  }
+
+  if ((millis() - lastDebounce) > DEBOUNCE_MS) {
+    if (reading != confirmedState) {
+      confirmedState = reading;
+      if (confirmedState == LOW) {
+        ledState = !ledState;
+        digitalWrite(GREEN_LED, ledState ? HIGH : LOW);
+        Serial.print(F("Button pressed — LED is now: "));
+        Serial.println(ledState ? F("ON") : F("OFF"));
+      }
     }
-  ]
+  }
+
+  lastRawState = reading;
 }
 ```
 
-Policy B (submitted for temperature sensor fleet):
+### Part A Expected Serial Output
 
-```json
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": ["iot:Connect"],
-      "Resource": "arn:aws:iot:us-east-1:123456789012:client/${iot:ClientId}"
-    },
-    {
-      "Effect": "Allow",
-      "Action": ["iot:Publish"],
-      "Resource": "arn:aws:iot:us-east-1:123456789012:topic/sensors/${iot:ClientId}/temperature"
-    },
-    {
-      "Effect": "Allow",
-      "Action": ["iot:Subscribe", "iot:Receive"],
-      "Resource": "arn:aws:iot:us-east-1:123456789012:topicfilter/$aws/things/${iot:ClientId}/shadow/update/delta"
-    }
-  ]
-}
+```text
+Part A ready. Press button to toggle LED.
+Button pressed — LED is now: ON
+Button pressed — LED is now: OFF
+Button pressed — LED is now: ON
 ```
 
-Policy C (submitted for actuator controller fleet):
+### Part A Deliverables
 
-```json
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": ["iot:Connect", "iot:Publish", "iot:Subscribe", "iot:Receive"],
-      "Resource": "arn:aws:iot:us-east-1:123456789012:*"
-    }
-  ]
-}
-```
-
-### Part 1 Questions
-
-For each policy, answer all three sub-questions:
-
-Question 1A: Is Policy A least-privilege compliant? Identify every specific violation. If a sensor node using Policy A had its certificate stolen, what is the full scope of access the attacker would have? Rewrite Policy A as a least-privilege policy for a sensor node that only publishes temperature readings and subscribes to its own shadow delta.
-
-Question 1B: Evaluate Policy B. Is it correctly scoped? Explain what the `${iot:ClientId}` substitution variable does and why it is critical for this policy to be secure. Would Policy B still be safe if two sensor devices shared the same Client ID?
-
-Question 1C: Is Policy C acceptably scoped? Identify the specific security issue with the resource ARN and explain what it permits. Propose a corrected policy for an actuator device that must subscribe to a command topic and publish a status topic, both scoped to the device's own Client ID.
-
-### Part 1 Grading Rubric
-
-| Criterion | Points |
-|---|---|
-| Question 1A: Violations identified, attack scope explained, corrected policy written | 12 |
-| Question 1B: Policy B evaluated correctly, ClientId variable explained, shared-ID risk addressed | 9 |
-| Question 1C: Issue identified, corrected policy provided with correct ARN scoping | 9 |
-| Total | 30 |
+- Upload code and demonstrate to instructor (in-person) or record a 30-second video showing button toggle and matching Serial Monitor output
+- Screenshot of Serial Monitor with at least 4 state changes visible
 
 ---
 
-## Part 2: AWS Device Shadow Trace (25 points)
+## Part B — Analog Read and PWM Fade (35 points)
 
-### Part 2 Instructions
+### Part B Objective
 
-Analyze the following Device Shadow scenario and answer all five questions.
+Read the potentiometer position and use the value to control the brightness of the red LED via PWM. Display the raw ADC value and calculated voltage in the Serial Monitor at 500ms intervals.
 
-A temperature controller device (Thing Name: hvac-unit-07) has been offline for 4 hours. During that time, the facility manager updated the desired setpoint from 72°F to 68°F and enabled a new setting called economy_mode.
+### Part B Code
 
-The Device Shadow document at the time the device reconnects:
+```cpp
+// Part B: Potentiometer → PWM LED + Serial Display
+// Works on both Arduino Uno (10-bit ADC) and ESP32 (12-bit ADC)
 
-```json
-{
-  "state": {
-    "desired": {
-      "setpoint_f": 68,
-      "economy_mode": true,
-      "fan_speed": "auto"
-    },
-    "reported": {
-      "setpoint_f": 72,
-      "fan_speed": "auto",
-      "firmware_version": "2.1.4"
-    }
-  },
-  "metadata": {
-    "desired": {
-      "setpoint_f": {"timestamp": 1717305600},
-      "economy_mode": {"timestamp": 1717305600},
-      "fan_speed": {"timestamp": 1717290000}
-    },
-    "reported": {
-      "setpoint_f": {"timestamp": 1717291200},
-      "fan_speed": {"timestamp": 1717291200},
-      "firmware_version": {"timestamp": 1717291200}
-    }
-  },
-  "version": 14,
-  "timestamp": 1717305600
+#ifdef ESP32
+  #define POT_PIN   34
+  #define RED_LED   18
+  #define ADC_MAX   4095
+  #define V_REF     3.3f
+  #define PWM_CHAN  0
+  #define PWM_FREQ  5000
+  #define PWM_RES   8
+#else
+  #define POT_PIN   A0
+  #define RED_LED   9
+  #define ADC_MAX   1023
+  #define V_REF     5.0f
+#endif
+
+uint32_t lastPrint = 0;
+
+void setup() {
+  Serial.begin(115200);
+
+#ifdef ESP32
+  ledcSetup(PWM_CHAN, PWM_FREQ, PWM_RES);
+  ledcAttachPin(RED_LED, PWM_CHAN);
+#else
+  pinMode(RED_LED, OUTPUT);
+#endif
+
+  Serial.println(F("Part B ready. Turn potentiometer."));
+  Serial.println(F("Raw ADC | Voltage | PWM Duty"));
+  Serial.println(F("--------|---------|----------"));
 }
-```
 
-Question 1: What delta document does AWS IoT Core deliver to hvac-unit-07 on reconnect? Write out the complete delta JSON structure.
+void loop() {
+  int   raw     = analogRead(POT_PIN);
+  float voltage = raw * (V_REF / (float)ADC_MAX);
+  int   pwmVal  = map(raw, 0, ADC_MAX, 0, 255);
 
-Question 2: After the device applies the setpoint and economy_mode changes, it publishes an update to the shadow. Write the JSON body of the MQTT PUBLISH message the device sends to the shadow update topic to report the new state.
+#ifdef ESP32
+  ledcWrite(PWM_CHAN, pwmVal);
+#else
+  analogWrite(RED_LED, pwmVal);
+#endif
 
-Question 3: The `fan_speed` property appears in both desired and reported with the same value "auto". Does this property appear in the delta? Explain why or why not.
-
-Question 4: The device does not know about the `economy_mode` setting because its firmware version 2.1.4 predates the feature. What should a well-designed device firmware do when it receives a desired property it does not recognize?
-
-Question 5: The desired shadow update was made at timestamp 1717305600 and the reported setpoint was last updated at 1717291200. What does this difference indicate, and why is tracking these timestamps important for fleet management?
-
-### Part 2 Grading Rubric
-
-| Criterion | Points |
-|---|---|
-| Question 1: Correct delta document written (setpoint_f and economy_mode only) | 7 |
-| Question 2: Correct shadow update PUBLISH body written | 5 |
-| Question 3: fan_speed delta exclusion correctly explained | 5 |
-| Question 4: Unknown property handling behavior correctly described | 4 |
-| Question 5: Timestamp significance accurately explained | 4 |
-| Total | 25 |
-
----
-
-## Part 3: Azure Device Twin Analysis (20 points)
-
-### Part 3 Instructions
-
-Review the following Azure IoT Hub Device Twin document for a smart building occupancy sensor and answer the three questions.
-
-```json
-{
-  "deviceId": "occupancy-sensor-b3-204",
-  "etag": "AAAAAAAAAAE=",
-  "status": "enabled",
-  "tags": {
-    "building": "B",
-    "floor": 3,
-    "room": 204,
-    "sensor_type": "PIR"
-  },
-  "properties": {
-    "desired": {
-      "reporting_interval_sec": 30,
-      "motion_threshold": 0.85,
-      "firmware_target": "3.2.0",
-      "$version": 12
-    },
-    "reported": {
-      "reporting_interval_sec": 60,
-      "motion_threshold": 0.85,
-      "firmware_version": "3.1.2",
-      "$version": 9
-    }
+  if (millis() - lastPrint >= 500) {
+    lastPrint = millis();
+    Serial.print(raw);
+    Serial.print(F("\t\t"));
+    Serial.print(voltage, 2);
+    Serial.print(F("V\t\t"));
+    Serial.println(pwmVal);
   }
 }
 ```
 
-Question 1: List all properties that are out of sync between desired and reported. For each property, describe what action the device should take to bring itself into the desired state.
+### Part B Expected Serial Output
 
-Question 2: The tags section contains building, floor, and room metadata. Explain how a facility manager could use the IoT Hub Registry query language to find all sensors on Floor 3 of Building B that are currently running firmware older than 3.2.0. Describe the query structure (you do not need to know exact Azure SDK syntax — describe it in plain English).
+```text
+Part B ready. Turn potentiometer.
+Raw ADC | Voltage | PWM Duty
+--------|---------|----------
+0       0.00V    0
+256     1.25V    63
+512     2.50V    127
+768     3.75V    191
+1023    5.00V    255
+```
 
-Question 3: The `$version` field is 12 in desired and 9 in reported. Explain what the version number represents and what it indicates when desired version is higher than reported version.
+### Part B Deliverables
 
-### Part 3 Grading Rubric
+- Screenshot of Serial Monitor showing at least 10 readings spanning low, mid, and high potentiometer positions
+- Brief written observation (2–3 sentences): Does the LED brightness change smoothly? At what ADC reading does it appear half-brightness to your eye?
+
+---
+
+## Part C — Hardware Interrupt and Timed Sampling (40 points)
+
+### Part C Objective
+
+Use a hardware interrupt on the button pin to count button presses. Independently, use `millis()` (non-blocking timing) to sample the potentiometer every 250ms and display a running average of the last 8 readings. Demonstrate that the interrupt counter increments correctly regardless of the sampling code's timing.
+
+### Part C Code
+
+```cpp
+// Part C: Interrupt counter + non-blocking ADC sampling with running average
+// Works on both Arduino Uno and ESP32
+
+#ifdef ESP32
+  #define BUTTON_PIN  4
+  #define POT_PIN     34
+  #define ADC_MAX     4095
+  #define V_REF       3.3f
+  #define ISR_ATTR    IRAM_ATTR
+#else
+  #define BUTTON_PIN  2
+  #define POT_PIN     A0
+  #define ADC_MAX     1023
+  #define V_REF       5.0f
+  #define ISR_ATTR
+#endif
+
+// Interrupt state
+volatile uint32_t g_pressCount  = 0;
+volatile uint32_t g_lastPressMs = 0;
+
+// Sampling state
+const uint8_t  BUF_SIZE    = 8;
+uint16_t       sampleBuf[BUF_SIZE];
+uint8_t        sampleIdx   = 0;
+uint32_t       lastSample  = 0;
+const uint32_t SAMPLE_MS   = 250;
+
+void ISR_ATTR buttonISR() {
+  uint32_t now = millis();
+  // Simple ISR debounce: ignore edges within 50ms of previous
+  if (now - g_lastPressMs > 50) {
+    g_pressCount++;
+    g_lastPressMs = now;
+  }
+}
+
+void setup() {
+  Serial.begin(115200);
+  pinMode(BUTTON_PIN, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(BUTTON_PIN), buttonISR, FALLING);
+
+  // Pre-fill sample buffer
+  for (uint8_t i = 0; i < BUF_SIZE; i++) {
+    sampleBuf[i] = analogRead(POT_PIN);
+  }
+
+  Serial.println(F("Part C ready."));
+  Serial.println(F("Press count | Avg ADC | Avg Voltage"));
+  Serial.println(F("------------|---------|------------"));
+}
+
+void loop() {
+  if (millis() - lastSample >= SAMPLE_MS) {
+    lastSample = millis();
+
+    // Add new sample to circular buffer
+    sampleBuf[sampleIdx % BUF_SIZE] = analogRead(POT_PIN);
+    sampleIdx++;
+
+    // Compute running average
+    uint32_t sum = 0;
+    for (uint8_t i = 0; i < BUF_SIZE; i++) sum += sampleBuf[i];
+    uint16_t avg     = sum / BUF_SIZE;
+    float    avgVolts = avg * (V_REF / (float)ADC_MAX);
+
+    // Read volatile safely (disable interrupts briefly on AVR)
+    noInterrupts();
+    uint32_t count = g_pressCount;
+    interrupts();
+
+    Serial.print(count);
+    Serial.print(F("\t\t"));
+    Serial.print(avg);
+    Serial.print(F("\t\t"));
+    Serial.println(avgVolts, 3);
+  }
+}
+```
+
+### Part C Expected Serial Output
+
+```text
+Part C ready.
+Press count | Avg ADC | Avg Voltage
+------------|---------|------------
+0           511      2.498
+0           512      2.503
+1           511      2.498
+1           710      3.472
+2           890      4.351
+```
+
+### Part C Deliverables
+
+- Screenshot of Serial Monitor showing at least 12 rows with press count incrementing at button presses
+- Written answer (3–5 sentences): What would happen if you tried to handle the button count using `digitalRead()` polling inside `loop()` with a 250ms delay? Why is the interrupt approach more reliable?
+
+---
+
+## Submission Instructions
+
+Submit the following to the course LMS by the due date:
+
+1. A single `.ino` file or `.zip` containing all three parts (combined into one sketch with `#define PART_A`, `PART_B`, `PART_C` guards, or three separate sketch folders)
+2. Three Serial Monitor screenshots (one per part)
+3. Part B written observation
+4. Part C written answer
+5. A photo of your assembled breadboard circuit
+
+---
+
+## Grading Rubric
 
 | Criterion | Points |
-|---|---|
-| Question 1: Out-of-sync properties identified and required device actions described | 8 |
-| Question 2: Fleet query approach accurately described | 6 |
-| Question 3: Version field meaning and implication correctly explained | 6 |
-| Total | 20 |
+|-----------|--------|
+| **Part A** — Code compiles and uploads | 5 |
+| **Part A** — Debounce implemented correctly (not just digitalRead) | 10 |
+| **Part A** — Serial output matches expected format | 10 |
+| **Part B** — ADC read and voltage conversion correct | 10 |
+| **Part B** — PWM range mapped 0–255 from full pot range | 10 |
+| **Part B** — Serial output includes raw, voltage, and PWM columns | 10 |
+| **Part B** — Written brightness observation | 5 |
+| **Part C** — ISR implemented with volatile variable | 10 |
+| **Part C** — Non-blocking sampling using millis() (no delay()) | 10 |
+| **Part C** — Running average of 8 samples computed correctly | 10 |
+| **Part C** — Written interrupt vs polling explanation | 10 |
+| **Breadboard photo submitted** | 5 |
+| **Code quality** — comments, naming, no unused variables | 5 |
+| **TOTAL** | **100** |
 
 ---
 
-## Part 4: GCP Pub/Sub Access Control Review (25 points)
+## Troubleshooting Tips
 
-### Part 4 Instructions
+**LED does not light up:** Check resistor orientation and confirm pin number matches your `#define`. Use a multimeter to verify 5V at the pin when HIGH is written.
 
-A GCP IoT Core deployment routes telemetry from 800 smart grid power meters to a Pub/Sub topic named `projects/util-corp-prod/topics/meter-telemetry`. Answer all four questions in complete sentences.
+**ADC always reads 0 or 1023:** Confirm the potentiometer wiper is connected to the analog pin. Verify power and ground on the outer potentiometer terminals.
 
-Question 1: An audit reveals the Pub/Sub topic has the following IAM binding: `allUsers: roles/pubsub.subscriber`. Explain what this binding permits, identify the OWASP IoT Top 10 item it violates, and describe the specific data exposure risk given that the topic receives power consumption readings from 800 residential meters.
+**Button ISR never fires:** Confirm `attachInterrupt` uses `digitalPinToInterrupt(pin)` not the raw pin number. On ESP32, confirm pin supports interrupts (avoid GPIO 6–11).
 
-Question 2: The correct IAM binding should restrict the `roles/pubsub.subscriber` role to a specific service account used by the analytics pipeline. Describe the corrected binding in plain English and explain why using a dedicated service account (rather than a user account) is a best practice for automated pipelines.
+**Serial output garbled:** Baud rate in Serial Monitor must match `Serial.begin()` value exactly.
 
-Question 3: GCP IoT Core devices authenticate using JWTs signed with device private keys. The utility provisioned all 800 meters with the same RSA key pair to simplify manufacturing. One meter is physically stolen and the private key is extracted from its firmware. Describe the full scope of what the attacker can now do on the GCP IoT Core platform and why the blast radius extends beyond the stolen meter's data.
-
-Question 4: Propose a three-step remediation plan for the utility that addresses the shared key problem, the compromised key, and the public Pub/Sub binding. Be specific about what action must be taken at each step and in what order.
-
-### Part 4 Grading Rubric
-
-| Criterion | Points |
-|---|---|
-| Question 1: Binding effect explained, OWASP item correct, data exposure risk specific | 7 |
-| Question 2: Corrected binding described, service account rationale explained | 6 |
-| Question 3: Attack scope accurately described including cross-device impact | 6 |
-| Question 4: Three-step remediation specific, ordered correctly | 6 |
-| Total | 25 |
-
----
-
-## Submission Checklist
-
-- [ ] Part 1: All three policy analysis questions answered with corrected policies.
-- [ ] Part 2: All five Device Shadow trace questions answered with JSON documents where required.
-- [ ] Part 3: All three Device Twin analysis questions answered.
-- [ ] Part 4: All four GCP Pub/Sub review questions answered.
-
----
-
-## Overall Grading Summary
-
-| Part | Description | Points |
-|---|---|---|
-| 1 | AWS IoT Core policy analysis | 30 |
-| 2 | AWS Device Shadow trace | 25 |
-| 3 | Azure Device Twin analysis | 20 |
-| 4 | GCP Pub/Sub access control review | 25 |
-| Total | | 100 |
-
----
-
-End of Lab – Module 06
+**ESP32 crashing on ISR:** Add `IRAM_ATTR` to your ISR function declaration.

@@ -1,201 +1,298 @@
-# Video Script — Module 04, Part 2
+# Video Script: Module 04 — Cloud Storage (Part 2 of 2)
 
-## CIS-4329: Google Cloud Platform | Texas Wesleyan University
+## Course: CIS-4329 Google Cloud Computing
 
-### Topic: Cloud Storage — Versioning, IAM, Signed URLs, Retention, and CLI
+## Texas Wesleyan University | Professor Nash
 
-### Estimated Duration: 11–12 minutes
+## Estimated Duration: 15 minutes
 
----
-
-## Introduction to Part 2
-
-Welcome back to Module 04. In Part 1 we covered buckets, storage classes, and lifecycle policies. In Part 2 we cover object versioning, Cloud Storage IAM, signed URLs, retention policies, and the gcloud storage CLI commands you will use in the lab.
+## Certification Alignment: Google Cloud Associate Cloud Engineer (ACE)
 
 ---
 
-## Section 1: Object Versioning
+## Segment 1 — Recap and Agenda (1 minute)
 
-**[SHOW SLIDE: Object versioning diagram — live version on top, noncurrent versions below]**
+Welcome back. In Part 1 we covered storage classes, bucket configuration,
+lifecycle policies, and access control fundamentals. In Part 2 we cover:
 
-By default, when you upload a new version of an object with the same name, the old version is permanently overwritten. Object versioning changes this behavior: when versioning is enabled on a bucket, each upload creates a new version with a unique generation number. The most recent upload is the "live" version. Previous uploads become "noncurrent" versions and are still stored — and still billed.
+- Signed URLs for time-limited access
+- Object versioning
+- Pub/Sub notifications for object events
+- Data transfer options
+- Console and gcloud CLI walkthrough
+- ACE exam strategy
 
-Why enable versioning? It protects against accidental deletion or overwriting. If an application accidentally overwrites an important file, you can restore the previous version. If someone runs `gsutil rm` on an object and versioning is enabled, the object is not immediately gone — it becomes noncurrent.
+---
 
-Use versioning with lifecycle policies to control cost. For example: enable versioning, then create a lifecycle policy that deletes noncurrent versions older than 30 days. This gives you a 30-day recovery window without accumulating years of old object versions.
+## Segment 2 — Signed URLs (3 minutes)
 
-gcloud commands for versioning:
+### What is a Signed URL?
+
+A signed URL is a time-limited URL that grants access to a specific Cloud
+Storage object without requiring the user to have a Google account or any
+IAM permissions.
+
+Use cases:
+
+- Allow a customer to download a file for 15 minutes after purchase
+- Allow a third-party service to upload a file to your bucket
+- Grant temporary read access to a private object
+
+### How Signed URLs Work
+
+1. Your server (or Cloud Function) generates a signed URL using your service
+   account's private key or via the IAM signing API.
+2. The signed URL includes the object path, expiration time, and a cryptographic
+   signature.
+3. You give the signed URL to the client.
+4. The client uses the URL to access the object directly. No GCP credentials
+   required.
+5. After the expiration time, the URL is invalid.
+
+### Generating a Signed URL
 
 ```bash
-gcloud storage buckets update gs://my-bucket --versioning
-gcloud storage ls -a gs://my-bucket/
+# Sign a URL using the service account attached to your environment
+gcloud storage sign-url gs://BUCKET_NAME/OBJECT_NAME \
+  --duration=15m \
+  --region=us-central1
+
+# For a service account key file (legacy method)
+gsutil signurl -d 15m -r us-central1 \
+  key.json gs://BUCKET_NAME/OBJECT_NAME
 ```
 
-The `-a` flag lists all versions including noncurrent ones.
+**ACE Exam Tip:** Signed URLs are the correct answer when a question asks how
+to grant temporary access to a single object for an unauthenticated user or
+an external party. They are not a substitute for IAM when you need persistent
+access control.
 
 ---
 
-## Section 2: Cloud Storage IAM
+## Segment 3 — Object Versioning (2 minutes)
 
-**[SHOW SLIDE: IAM scope diagram — bucket-level IAM vs. project-level IAM vs. object-level ACLs]**
+### Enabling Versioning
 
-Cloud Storage follows the same IAM principles we learned in Module 02, with some storage-specific roles and features.
-
-The key storage IAM roles:
-
-- `roles/storage.admin` — full control of all buckets and objects in the project
-- `roles/storage.objectAdmin` — full control of objects (create, read, update, delete); cannot create or delete buckets
-- `roles/storage.objectCreator` — can create (upload) objects but cannot read or delete them
-- `roles/storage.objectViewer` — can read objects and list bucket contents
-
-These can be applied at the project level (affects all buckets in the project) or at the individual bucket level (affects only that bucket).
-
-### Uniform vs. Fine-Grained Access
-
-When you create a bucket, you choose between two access control models:
-
-Uniform bucket-level access (recommended): IAM policies on the bucket control access for all objects in the bucket. Object-level Access Control Lists (ACLs) are disabled. This is simpler, more consistent, and harder to misconfigure.
-
-Fine-grained access: Each object can have its own ACL in addition to the bucket-level IAM. This model exists for legacy compatibility and is not recommended for new buckets.
-
-For the ACE exam: the recommended model is uniform bucket-level access. If a question asks about simplifying access management for a bucket, enabling uniform access is the answer.
-
----
-
-## Section 3: Signed URLs
-
-**[SHOW SLIDE: Signed URL flow — service account signs URL, shares with external partner, partner accesses object]**
-
-A signed URL is a time-limited, cryptographically signed link that grants temporary access to a specific Cloud Storage object without requiring the user to have a Google Account or GCP IAM permissions. Signed URLs are the correct tool when you need to:
-
-- Share a private file with an external partner who has no Google Account
-- Provide a download link that expires after a specific time period
-- Allow a user to upload a file to your bucket from a browser form without exposing your service account credentials
-
-Signed URLs are generated by signing the URL with a service account's private key. The signature encodes the expiration time, the allowed HTTP method (GET, PUT, etc.), and the object path. Anyone with the URL can access the object until the expiration time passes.
+When versioning is enabled on a bucket, Cloud Storage retains previous
+versions of objects when they are overwritten or deleted. Instead of being
+permanently destroyed, the old version becomes a **noncurrent** version.
 
 ```bash
-gcloud storage sign-url gs://my-bucket/report.pdf \
-  --duration=24h \
-  --private-key-file=sa-key.json
+# Enable versioning on a bucket
+gcloud storage buckets update gs://BUCKET_NAME \
+  --versioning
+
+# Check versioning status
+gcloud storage buckets describe gs://BUCKET_NAME \
+  --format='value(versioning)'
+
+# List all versions of objects in a bucket
+gcloud storage ls -a gs://BUCKET_NAME/
+
+# Delete a specific version
+gcloud storage rm gs://BUCKET_NAME/OBJECT_NAME#GENERATION_NUMBER
 ```
 
-Or using the Cloud Console: navigate to the object, click the three-dot menu, and select "Generate signed URL."
+### Versioning and Lifecycle Policies
+
+Versioning and lifecycle policies work together. A common pattern:
+
+- Keep the 3 most recent versions of each object (condition: `numNewerVersions: 3`)
+- Automatically delete noncurrent versions older than 30 days
+
+This prevents unbounded storage cost growth from versioning.
 
 ---
 
-## Section 4: Retention Policies
+## Segment 4 — Pub/Sub Notifications (2 minutes)
 
-**[SHOW SLIDE: Retention policy diagram — lock icon on objects with a calendar showing retention period]**
+### Cloud Storage Pub/Sub Integration
 
-A retention policy sets a minimum duration that objects in a bucket must be kept. Once a retention policy is set, objects cannot be deleted or overwritten until the retention period has elapsed — even by project owners and storage admins.
-
-This is specifically designed for regulatory compliance scenarios:
-
-- Financial records required by SEC regulations to be kept for 7 years
-- Healthcare records subject to HIPAA retention requirements
-- Legal holds
-
-After setting a retention policy, you can optionally lock it. A locked retention policy cannot be shortened, modified, or removed — not by anyone, including Google. This makes it court-admissible evidence of non-tampering.
-
-For the ACE exam: object versioning protects against accidental deletion but does not prevent an admin from permanently deleting all versions. Retention policies create hard immutability that even admins cannot bypass.
-
----
-
-## Section 5: gcloud Storage CLI Commands
-
-**[SHOW CONSOLE: Cloud Shell with gcloud storage and gsutil commands]**
-
-GCP provides two CLIs for Cloud Storage: the legacy `gsutil` tool and the newer `gcloud storage` command (available in recent gcloud SDK versions). Both work; the newer `gcloud storage` commands are faster and consistent with the rest of the gcloud ecosystem.
-
-Create a bucket:
+Cloud Storage can publish notifications to a Pub/Sub topic when objects are
+created, deleted, modified, or when their metadata changes. This enables
+event-driven architectures.
 
 ```bash
-gcloud storage buckets create gs://my-bucket-name \
+# Grant Cloud Storage permission to publish to a Pub/Sub topic
+BUCKET_SA=$(gcloud storage service-agent --project=$PROJECT_ID)
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+  --member="serviceAccount:$BUCKET_SA" \
+  --role=roles/pubsub.publisher
+
+# Create a Pub/Sub topic
+gcloud pubsub topics create storage-events
+
+# Create a notification on the bucket
+gcloud storage buckets notifications create gs://BUCKET_NAME \
+  --topic=storage-events \
+  --event-types=OBJECT_FINALIZE,OBJECT_DELETE
+
+# List notifications on a bucket
+gcloud storage buckets notifications list gs://BUCKET_NAME
+```
+
+Event types:
+
+- `OBJECT_FINALIZE` — Object created or overwritten
+- `OBJECT_DELETE` — Object deleted
+- `OBJECT_ARCHIVE` — Object archived (versioning)
+- `OBJECT_METADATA_UPDATE` — Object metadata changed
+
+**ACE Exam Tip:** When a question asks how to trigger a Cloud Function when a
+file is uploaded to Cloud Storage, the answer uses either Pub/Sub notifications
+or direct Cloud Storage triggers (Eventarc in newer Cloud Functions gen 2).
+
+---
+
+## Segment 5 — Data Transfer Options (2 minutes)
+
+### gcloud storage / gsutil
+
+For small volumes and scripting, use gcloud storage (preferred) or gsutil:
+
+```bash
+# Upload a file
+gcloud storage cp local-file.txt gs://BUCKET_NAME/
+
+# Upload a directory recursively
+gcloud storage cp -r ./local-dir gs://BUCKET_NAME/dir/
+
+# Download
+gcloud storage cp gs://BUCKET_NAME/file.txt ./
+
+# Sync a directory (upload new/changed files only)
+gcloud storage rsync -r ./local-dir gs://BUCKET_NAME/dir/
+```
+
+### Storage Transfer Service
+
+For large-scale transfers from other cloud providers, HTTP sources, or
+on-premises systems, use Storage Transfer Service:
+
+- Transfer from AWS S3, Azure Blob Storage, or HTTP URLs
+- Schedule recurring transfers
+- Supports petabyte-scale transfers
+- Preserves metadata during transfer
+
+### Transfer Appliance
+
+For very large on-premises datasets where network transfer is impractical
+(petabytes, months of network time), Google provides the Transfer Appliance:
+
+- Physical rack-mounted appliance shipped to your data center
+- Load data locally (up to 1 PB per appliance)
+- Ship back to Google; Google uploads to Cloud Storage
+
+**ACE Exam Tip:** Know which transfer option to recommend based on data volume
+and source. Small data via gcloud storage. Large online transfer from another
+cloud via Storage Transfer Service. Petabyte-scale on-premises via Transfer
+Appliance.
+
+---
+
+## Segment 6 — Console and gcloud CLI Walkthrough (4 minutes)
+
+### Creating a Bucket in the Console
+
+1. Navigate to **Cloud Storage > Buckets**.
+2. Click **Create**.
+3. Configure:
+   - **Name**: globally unique name (e.g., `cis4329-lab04-yourname`)
+   - **Location type**: Regional
+   - **Region**: `us-central1`
+   - **Default storage class**: Standard
+   - **Access control**: Uniform (recommended)
+4. Click **Create**.
+
+### Key gcloud Storage Commands
+
+```bash
+# Create a bucket
+gcloud storage buckets create gs://BUCKET_NAME \
   --location=us-central1 \
-  --storage-class=STANDARD
-```
+  --default-storage-class=STANDARD \
+  --uniform-bucket-level-access
 
-Upload a file to a bucket:
+# List buckets
+gcloud storage buckets list
 
-```bash
-gcloud storage cp local-file.txt gs://my-bucket/
-```
+# Describe a bucket
+gcloud storage buckets describe gs://BUCKET_NAME
 
-Download a file from a bucket:
+# Upload an object
+gcloud storage cp file.txt gs://BUCKET_NAME/
 
-```bash
-gcloud storage cp gs://my-bucket/file.txt ./
-```
+# List objects in a bucket
+gcloud storage ls gs://BUCKET_NAME/
 
-List objects in a bucket:
+# Download an object
+gcloud storage cp gs://BUCKET_NAME/file.txt ./
 
-```bash
-gcloud storage ls gs://my-bucket/
-```
+# Delete an object
+gcloud storage rm gs://BUCKET_NAME/file.txt
 
-List all versions (including noncurrent):
+# Delete a bucket and all its contents
+gcloud storage rm -r gs://BUCKET_NAME
 
-```bash
-gcloud storage ls -a gs://my-bucket/
-```
-
-Copy all files recursively:
-
-```bash
-gcloud storage cp -r local-folder/ gs://my-bucket/folder/
-```
-
-Delete an object:
-
-```bash
-gcloud storage rm gs://my-bucket/file.txt
-```
-
-Set the storage class of an existing bucket:
-
-```bash
-gcloud storage buckets update gs://my-bucket \
-  --default-storage-class=NEARLINE
-```
-
-Apply a lifecycle configuration from a JSON file:
-
-```bash
-gcloud storage buckets update gs://my-bucket \
+# Set a lifecycle policy from a JSON file
+gcloud storage buckets update gs://BUCKET_NAME \
   --lifecycle-file=lifecycle.json
-```
 
-Set bucket IAM policy — grant a user objectViewer:
+# Set the storage class of an existing object
+gcloud storage objects update gs://BUCKET_NAME/file.txt \
+  --storage-class=NEARLINE
 
-```bash
-gcloud storage buckets add-iam-policy-binding gs://my-bucket \
-  --member=user:student@txwes.edu \
+# Grant IAM access on a bucket
+gcloud storage buckets add-iam-policy-binding gs://BUCKET_NAME \
+  --member=user:alice@example.com \
   --role=roles/storage.objectViewer
 ```
 
-**[SHOW CONSOLE: Commands executing in Cloud Shell]**
+---
+
+## Segment 7 — ACE Exam Tips for Cloud Storage (1 minute)
+
+Key ACE exam patterns for Module 04:
+
+- **Storage class selection**: Match access frequency to the correct class.
+  Know minimum storage durations.
+- **Lifecycle policies**: Know the conditions (age, storage class match) and
+  actions (SetStorageClass, Delete). Use lifecycle for cost automation.
+- **IAM vs. ACLs**: Uniform access (IAM only) is the modern, recommended
+  approach. Fine-grained ACLs are legacy.
+- **Signed URLs**: Temporary access for unauthenticated users or external
+  parties accessing a specific object.
+- **Public access**: `allUsers` + `roles/storage.objectViewer` on a bucket
+  makes all objects publicly readable.
+- **Data transfer**: Storage Transfer Service for large-scale online transfers;
+  Transfer Appliance for petabyte-scale offline transfers.
+- **Versioning + lifecycle**: Combine them to prevent unbounded storage costs.
 
 ---
 
-## Module 04 Summary
+## Summary — Module 04
 
-**[SHOW SLIDE: Summary bullet list]**
+Across both parts we covered:
 
-Let's wrap up Module 04. Cloud Storage stores objects in buckets. Bucket names are globally unique. Location types: regional, dual-region, multi-region. Storage classes: Standard (frequent access), Nearline (monthly access, 30-day minimum), Coldline (quarterly, 90-day minimum), Archive (annual or less, 365-day minimum).
+- Cloud Storage fundamentals: buckets, objects, global naming
+- Four storage classes and cost trade-offs
+- Object lifecycle policies for automated tiering and deletion
+- Uniform bucket-level access vs. ACLs
+- Signed URLs for time-limited unauthenticated access
+- Object versioning and integrating lifecycle policies
+- Pub/Sub notifications for event-driven architectures
+- Data transfer: gcloud storage, Storage Transfer Service, Transfer Appliance
+- Console and gcloud CLI workflows
 
-Lifecycle policies automate class transitions and deletion using conditions (age, storage class, versioning) and actions (SetStorageClass, Delete). Object versioning preserves all versions for recovery — use with lifecycle policies to control cost. Uniform bucket-level access is recommended over fine-grained ACLs. Signed URLs provide temporary time-limited access to objects without requiring a Google Account. Retention policies enforce immutability — locked retention policies cannot be shortened by anyone.
-
-Key gcloud storage commands: `buckets create`, `cp`, `ls`, `rm`, `buckets update`, `buckets add-iam-policy-binding`.
-
-Complete the lab, take the quiz, and post to the discussion. Module 05 covers VPC networking.
+The lab will have you create buckets, configure lifecycle policies, generate
+signed URLs, and set up Pub/Sub notifications.
 
 ---
 
 End of Part 2 — Module 04
 
-Course: CIS-4329 Google Cloud Platform | Texas Wesleyan University | Professor Nash
+Course: CIS-4329 Google Cloud Computing | Texas Wesleyan University | Professor Nash
 
 Certification Target: Google Cloud Associate Cloud Engineer
 
-Reference: cloud.google.com/learn
+Reference: cloud.google.com/storage/docs

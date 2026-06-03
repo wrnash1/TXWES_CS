@@ -1,259 +1,393 @@
-# Lab Activity: Module 03 - CI/CD Concepts: Jenkins, GitHub Actions, GitLab CI
+# Lab 03 — Building a Security-Integrated CI Pipeline with GitHub Actions
 
 ## Course: CIS-4350 DevSecOps and CI/CD Pipelines
 
-## Certification Alignment: DevSecOps Professional (DSOE)
+## Texas Wesleyan University | Professor Nash
 
-## Total Points: 100
+## Certification Alignment: DevSecOps Professional (DSOE)
 
 ---
 
-## Objectives
+## Lab Overview
 
-By completing this lab you will be able to:
+In this lab you will build a complete GitHub Actions CI pipeline that integrates secrets scanning, SAST with Semgrep, and dependency vulnerability scanning as enforced security gates. You will observe pipeline failures triggered by security findings, remediate the findings, and confirm the pipeline passes.
 
-- Write a complete multi-stage CI/CD pipeline YAML with build, test, security-scan, and deploy stages.
-- Explain the job dependency graph that ensures security gates block deployment on failure.
-- Compare the same pipeline logic expressed in GitHub Actions and GitLab CI syntax.
-- Analyze a Jenkins Declarative pipeline for security misconfigurations.
+**Estimated Time:** 90–120 minutes
+
+**Difficulty:** Intermediate
 
 ---
 
 ## Prerequisites
 
-Before beginning this lab, confirm the following:
-
-- You have completed the Module 03 video and reading guide.
-- You have a GitHub account and the repository from Module 02 available.
-- You are familiar with the GitHub Actions workflow syntax from Module 02.
+- GitHub account
+- Git configured with GPG signing from Lab 02
+- Python 3.8+ installed locally
+- A text editor (VS Code recommended)
 
 ---
 
-## Part 1: Write a Complete CI/CD Pipeline YAML (40 points)
+## Part 1 — Repository Setup with Intentional Vulnerabilities (15 minutes)
 
-### Part 1 Background
+### Part 1 Objective
 
-This part requires you to write the complete four-stage pipeline that is the core deliverable of Module 03. The pipeline must include build, test, security-scan, and deploy stages. The security-scan job must be on the critical path to deployment — if any security check fails, the deploy job must not run.
+Create a Python web application with deliberate security vulnerabilities to demonstrate pipeline security gate behavior.
 
-### Part 1 Instructions
+### Step 1.1 — Initialize the Repository
 
-**Step 1: Write the complete GitHub Actions pipeline.**
+```bash
+mkdir ~/lab03-ci-pipeline && cd ~/lab03-ci-pipeline
+git init
+git checkout -b main
+```
 
-Create `.github/workflows/full-pipeline.yml` in your lab repository. The pipeline must satisfy all requirements below:
+### Step 1.2 — Create a Vulnerable Python Application
 
-Requirements:
+```bash
+mkdir src tests
+```
 
-- Triggers on both `pull_request` to main and `push` to main.
-- Sets `permissions: contents: read` and `security-events: write` at the workflow level.
-- Has four jobs: `build`, `test`, `security-scan`, and `deploy`.
-- The `test` job has `needs: build`.
-- The `security-scan` job has `needs: build` (runs in parallel with test).
-- The `deploy` job has `needs: [test, security-scan]`.
-- The `deploy` job only runs on pushes to main (not on pull requests) using an `if:` condition.
-- The `security-scan` job includes at minimum: a secrets detection step and a SAST step.
-- All steps have descriptive `name:` values.
-- No plaintext credentials appear anywhere in the YAML — all secrets use `${{ secrets.NAME }}` syntax.
+Create `src/app.py` with deliberate vulnerabilities:
 
-The pipeline must follow this structure:
+```python
+# src/app.py
+# WARNING: This file contains intentional vulnerabilities for lab purposes only
+import sqlite3
+import subprocess
+from flask import Flask, request
+
+app = Flask(__name__)
+
+@app.route("/user")
+def get_user():
+    # VULNERABILITY 1: SQL Injection — string concatenation in SQL query
+    user_id = request.args.get("id")
+    conn = sqlite3.connect("users.db")
+    cursor = conn.cursor()
+    query = "SELECT * FROM users WHERE id = " + user_id  # SQL injection
+    cursor.execute(query)
+    return str(cursor.fetchall())
+
+@app.route("/run")
+def run_command():
+    # VULNERABILITY 2: Command injection — unsanitized shell=True
+    cmd = request.args.get("cmd")
+    result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
+    return result.stdout
+
+if __name__ == "__main__":
+    app.run(debug=True)  # VULNERABILITY 3: Debug mode in production
+```
+
+### Step 1.3 — Create a Requirements File with a Known Vulnerable Dependency
+
+```bash
+cat > requirements.txt << 'EOF'
+flask==2.0.1
+requests==2.18.0
+pyyaml==5.3.1
+EOF
+```
+
+Note: These are older versions that have known CVEs for demonstration purposes.
+
+### Step 1.4 — Create a Minimal Test File
+
+```python
+# tests/test_app.py
+def test_placeholder():
+    """Placeholder test — real tests would cover application logic."""
+    assert True
+```
+
+### Step 1.5 — Create a Basic Dockerfile
+
+```dockerfile
+FROM python:3.12-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY src/ .
+EXPOSE 8080
+CMD ["python", "app.py"]
+```
+
+---
+
+## Part 2 — Write the Security-Integrated Pipeline (30 minutes)
+
+### Part 2 Objective
+
+Write a complete GitHub Actions workflow with security gates that will detect the vulnerabilities you introduced in Part 1.
+
+### Step 2.1 — Create the Workflow Directory and File
+
+```bash
+mkdir -p .github/workflows
+```
+
+Create `.github/workflows/secure-ci.yml`:
 
 ```yaml
-name: Full CI/CD Pipeline with Security Gates
+name: Secure CI Pipeline
 
 on:
-  pull_request:
-    branches: [main]
   push:
+    branches: [main, develop]
+  pull_request:
     branches: [main]
 
 permissions:
   contents: read
   security-events: write
 
+env:
+  PYTHON_VERSION: "3.12"
+
 jobs:
-  build:
-    # Complete this job
+  secrets-scan:
+    name: Secrets Detection
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-  test:
-    needs: build
-    # Complete this job
+      - name: Run gitleaks secrets scan
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  security-scan:
-    needs: build
-    # Complete this job with at least 2 security steps
+  unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
-  deploy:
-    needs: [test, security-scan]
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    # Complete this job
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-cov
+
+      - name: Run unit tests with coverage
+        run: pytest tests/ --tb=short --cov=src --cov-report=xml
+
+  sast-semgrep:
+    name: SAST — Semgrep
+    runs-on: ubuntu-latest
+    needs: unit-tests
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Semgrep SAST scan
+        uses: returntocorp/semgrep-action@v1
+        with:
+          config: >-
+            p/owasp-top-ten
+            p/python
+            p/flask
+          generateSarif: "1"
+
+      - name: Upload Semgrep SARIF to GitHub Security
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: semgrep.sarif
+
+  dependency-scan:
+    name: Dependency Vulnerability Scan
+    runs-on: ubuntu-latest
+    needs: unit-tests
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run OWASP Dependency-Check
+        uses: dependency-check/Dependency-Check_Action@main
+        with:
+          project: lab03-app
+          path: .
+          format: SARIF
+          out: dep-check-results/
+          args: >-
+            --failOnCVSS 7
+            --enableRetired
+            --scan requirements.txt
+
+      - name: Upload Dependency-Check SARIF
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: dep-check-results/dependency-check-report.sarif
+
+  security-summary:
+    name: Security Gate Summary
+    runs-on: ubuntu-latest
+    needs: [secrets-scan, sast-semgrep, dependency-scan]
+    if: always()
+    steps:
+      - name: Check all security gates passed
+        run: |
+          echo "Secrets scan: ${{ needs.secrets-scan.result }}"
+          echo "SAST scan: ${{ needs.sast-semgrep.result }}"
+          echo "Dependency scan: ${{ needs.dependency-scan.result }}"
+          if [[ "${{ needs.secrets-scan.result }}" == "failure" || \
+                "${{ needs.sast-semgrep.result }}" == "failure" || \
+                "${{ needs.dependency-scan.result }}" == "failure" ]]; then
+            echo "PIPELINE FAILED: One or more security gates did not pass."
+            exit 1
+          fi
+          echo "All security gates passed."
 ```
 
-**Step 2: Push the workflow to GitHub and verify it runs on a pull request.**
+### Step 2.2 — Create CODEOWNERS to Protect the Pipeline
 
-Create a feature branch, push the workflow file, and open a pull request to main. Navigate to the Actions tab and confirm that build, test, and security-scan jobs run on the PR. Confirm that deploy does NOT run on the PR.
-
-**Step 3: Merge the PR and verify deploy runs on push to main.**
-
-After all PR checks pass, merge the pull request. In the Actions tab, confirm that the push-to-main trigger fires and the deploy job runs this time.
-
-### Part 1 Deliverable
-
-Submit: your complete `full-pipeline.yml` file, a screenshot of the PR check run showing build/test/security-scan passing and deploy not running, and a screenshot of the post-merge run showing all four jobs including deploy.
-
-### Part 1 Rubric
-
-| Criterion | Points |
-|---|---|
-| Pipeline YAML is syntactically correct and complete | 10 |
-| All four jobs present with correct `needs:` dependencies | 10 |
-| Security-scan has at least two distinct security steps | 8 |
-| Deploy `if:` condition correctly limits to main push only | 6 |
-| PR screenshot shows deploy not running | 3 |
-| Post-merge screenshot shows all four jobs running | 3 |
-
----
-
-## Part 2: GitLab CI Equivalent Pipeline (25 points)
-
-### Part 2 Background
-
-The DevSecOps Professional exam tests your ability to work across CI/CD platforms. This part requires translating your GitHub Actions pipeline into GitLab CI syntax.
-
-### Part 2 Instructions
-
-**Step 1: Write the equivalent pipeline in GitLab CI syntax.**
-
-Create a file named `gitlab-ci-equivalent.yml` (you do not need to run this — submit the file). The pipeline must define the same four stages and security controls as your GitHub Actions pipeline in Part 1, expressed in GitLab CI syntax.
-
-Requirements:
-
-- Define `stages:` array with four stages: `build`, `test`, `security`, `deploy`.
-- Build job runs `pip install -r requirements.txt`.
-- Test job runs `pytest tests/`.
-- Security stage includes two separate jobs: one for secrets detection, one for SAST.
-- Deploy job uses `rules:` to restrict deployment to the main branch only.
-- All jobs specify a Docker image using the `image:` keyword.
-- Credentials use environment variable syntax (`$VARIABLE_NAME`), not plaintext.
-
-**Step 2: Write a comparison table.**
-
-Create a table with two columns — GitHub Actions syntax element and GitLab CI equivalent — covering these items:
-
-- Job dependencies (ordering between stages)
-- Parallel job execution within a stage
-- Credential injection
-- Branch-conditional execution
-- Runner/executor specification
-
-### Part 2 Deliverable
-
-Submit your `gitlab-ci-equivalent.yml` file and the comparison table.
-
-### Part 2 Rubric
-
-| Criterion | Points |
-|---|---|
-| Stages array is correctly defined | 4 |
-| All four stage jobs are present with correct stage assignment | 8 |
-| Security stage has two parallel jobs in the same stage | 5 |
-| Deploy job uses `rules:` to restrict to main branch | 4 |
-| Comparison table covers all five required items accurately | 4 |
-
----
-
-## Part 3: Jenkins Pipeline Security Analysis (20 points)
-
-### Part 3 Background
-
-The Jenkins Declarative pipeline below contains several security misconfigurations. Analyze it and provide a detailed remediation plan.
-
-### Part 3 Scenario
-
-Review the following Jenkinsfile:
-
-```groovy
-pipeline {
-    agent any
-
-    environment {
-        DB_PASSWORD = "MyP@ssw0rd123"
-        AWS_SECRET_KEY = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
-        DEPLOY_ENV = "production"
-    }
-
-    stages {
-        stage('Build') {
-            steps {
-                sh 'pip install -r requirements.txt'
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                sh './scripts/deploy.sh ${DEPLOY_ENV}'
-            }
-        }
-    }
-}
+```bash
+mkdir -p .github
+cat > .github/CODEOWNERS << 'EOF'
+# Pipeline configuration requires security team review
+.github/workflows/   @YOUR_USERNAME
+EOF
 ```
 
-### Part 3 Instructions
+---
 
-**Step 1: Identify all security problems.**
+## Part 3 — Push and Observe Pipeline Failures (20 minutes)
 
-List every security misconfiguration in the Jenkinsfile above. For each problem, state: what the misconfiguration is, what the risk is, and which DevSecOps principle it violates.
+### Part 3 Objective
 
-You must identify at least four distinct problems.
+Push the vulnerable application to GitHub and observe how each security gate fires.
 
-**Step 2: Write the corrected Jenkinsfile.**
+### Step 3.1 — Create the Repository on GitHub
 
-Rewrite the complete Jenkinsfile with all security problems fixed. Use `withCredentials()` for secrets. Add a Security Scan stage between Build and Deploy. Restrict deployment to the main branch using a `when` condition.
+Create a new public repository called `lab03-ci-pipeline` on GitHub.
 
-**Step 3: Explain the withCredentials pattern.**
+### Step 3.2 — Push the Code
 
-In 3-4 sentences, explain how `withCredentials()` protects secrets compared to environment variables in the `environment {}` block. Specifically explain what happens to the secret value in the Jenkins build log.
+```bash
+git add .
+git commit -m "Initial commit: vulnerable app for CI pipeline demo"
+git remote add origin https://github.com/YOUR_USERNAME/lab03-ci-pipeline.git
+git push -u origin main
+```
 
-### Part 3 Deliverable
+### Step 3.3 — Observe the Pipeline
 
-Submit: your list of security problems with analysis, your corrected Jenkinsfile, and your `withCredentials()` explanation.
+Navigate to the Actions tab in your GitHub repository. Watch the pipeline jobs execute. You should see:
 
-### Part 3 Rubric
+- Semgrep SAST flagging the SQL injection (SQL string concatenation) and command injection (`shell=True`)
+- Dependency-Check flagging known CVEs in `flask==2.0.1`, `requests==2.18.0`, and `pyyaml==5.3.1`
 
-| Criterion | Points |
-|---|---|
-| At least 4 security problems identified with accurate risk analysis | 10 |
-| Corrected Jenkinsfile uses withCredentials and adds Security Scan stage | 6 |
-| withCredentials explanation is technically accurate | 4 |
+Take screenshots of the failing jobs. Record which Semgrep rule IDs fired and which CVE IDs were found by Dependency-Check.
+
+### Step 3.4 — Review Findings in the Security Tab
+
+Navigate to Security > Code scanning alerts and Security > Dependency alerts. These are populated from the SARIF uploads.
 
 ---
 
-## Part 4: Pipeline Design Justification (15 points)
+## Part 4 — Remediate and Confirm Green Pipeline (25 minutes)
 
-### Part 4 Instructions
+### Part 4 Objective
 
-Write a 200-250 word technical justification for the following pipeline design decision:
+Fix the vulnerabilities so the pipeline passes all security gates.
 
-"The security-scan job is placed in parallel with the test job rather than sequentially after it, and both are required by the deploy job."
+### Step 4.1 — Fix the Application Code
 
-Your justification must address:
+```python
+# src/app.py — remediated version
+import sqlite3
+import subprocess
+import shlex
+from flask import Flask, request
 
-1. The performance benefit of running security-scan and test in parallel rather than sequentially.
-2. Why both must be required by the deploy job rather than having deploy depend only on test.
-3. A scenario where this design catches a security issue that would have been missed if security-scan ran after deploy.
+app = Flask(__name__)
 
-### Part 4 Deliverable
+ALLOWED_COMMANDS = {"uptime", "date", "hostname"}
 
-Submit your written justification (200-250 words) as part of your combined submission document.
+@app.route("/user")
+def get_user():
+    # FIX 1: Parameterized query prevents SQL injection
+    user_id = request.args.get("id")
+    conn = sqlite3.connect("users.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM users WHERE id = ?", (user_id,))
+    return str(cursor.fetchall())
 
-### Part 4 Rubric
+@app.route("/run")
+def run_command():
+    # FIX 2: Allowlist + no shell=True prevents command injection
+    cmd = request.args.get("cmd")
+    if cmd not in ALLOWED_COMMANDS:
+        return "Command not allowed", 403
+    result = subprocess.run(shlex.split(cmd), capture_output=True, text=True)
+    return result.stdout
 
-| Criterion | Points |
-|---|---|
-| Performance benefit of parallelism is accurately explained | 5 |
-| Necessity of both jobs blocking deploy is correctly justified | 5 |
-| Scenario correctly illustrates why sequential post-deploy scanning is insufficient | 5 |
+if __name__ == "__main__":
+    # FIX 3: Debug mode disabled
+    app.run(debug=False)
+```
+
+### Step 4.2 — Update Dependencies to Non-Vulnerable Versions
+
+```bash
+cat > requirements.txt << 'EOF'
+flask==3.0.3
+requests==2.32.3
+pyyaml==6.0.1
+pytest==8.2.0
+pytest-cov==5.0.0
+EOF
+```
+
+### Step 4.3 — Commit and Push the Fix
+
+```bash
+git add src/app.py requirements.txt
+git commit -m "Security fixes: parameterized queries, no shell=True, update deps"
+git push origin main
+```
+
+### Step 4.4 — Confirm All Gates Pass
+
+Return to the Actions tab and confirm the pipeline is green. Take a screenshot of all jobs passing.
 
 ---
 
-## Submission Instructions
+## Deliverables
 
-Combine all four parts into a single document. Label each part clearly. Include your name, date, course number (CIS-4350), and module number (03) at the top. Submit via the Canvas LMS assignment portal before the due date shown in Canvas.
+Submit the following on Canvas:
+
+1. Screenshot of failing pipeline showing Semgrep findings (Part 3, Step 3.3)
+2. Screenshot of failing pipeline showing Dependency-Check CVEs (Part 3, Step 3.3)
+3. Screenshot of Security tab showing code scanning alerts (Part 3, Step 3.4)
+4. Completed `secure-ci.yml` workflow file (Part 2)
+5. Screenshot of fully green pipeline after remediation (Part 4, Step 4.4)
+6. Written reflection (minimum 150 words): What was the developer experience of discovering these vulnerabilities through the pipeline vs. discovering them in a code review? What would have happened if these vulnerabilities reached production?
+
+---
+
+## Grading Rubric
+
+| Criterion | Points |
+|---|---|
+| Failing pipeline screenshot — Semgrep findings | 15 |
+| Failing pipeline screenshot — Dependency-Check CVEs | 15 |
+| Security tab screenshot with alerts | 10 |
+| Workflow YAML — complete, syntactically correct | 25 |
+| Green pipeline screenshot after remediation | 20 |
+| Reflection — substantive, 150+ words | 15 |
+| Total | 100 |
+
+---
+
+Lab 03 | CIS-4350 | Texas Wesleyan University | Professor Nash

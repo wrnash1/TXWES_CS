@@ -1,58 +1,421 @@
-# Reading Guide: Module 06 - Convolutional Neural Networks (CNNs) for Image Classification
-## Course: CIS-4345_Machine_Learning_Deep_Learning (TensorFlow Developer Certificate)
+# Reading Guide: Module 06 — Training Deep Neural Networks
+
+## Course: CIS-4345 Machine Learning and Deep Learning
+
+## Texas Wesleyan University | Professor Nash
+
+## Certification Alignment: TensorFlow Developer Certificate
 
 ---
 
-### Introduction
-Welcome to **Module 06 - Convolutional Neural Networks (CNNs) for Image Classification**! CNNs are the dominant architecture for image tasks and are one of the four core task categories on the TensorFlow Developer Certificate exam. Unlike fully connected networks that flatten images and lose spatial relationships, CNNs use convolutional filters that slide across the image and detect local features like edges, textures, and shapes — regardless of where they appear in the image.
+## Overview
 
-You will learn to build CNN architectures with `tf.keras.layers.Conv2D`, `MaxPooling2D`, `Flatten`, and `Dense` layers, and how to use `ImageDataGenerator` to load and preprocess image datasets.
-
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **Convolutional layer (Conv2D)**: Applies a set of learnable filters to the input image. Each filter slides across the spatial dimensions and computes a dot product with the local patch of pixels, producing a feature map. In Keras: `tf.keras.layers.Conv2D(filters=32, kernel_size=(3,3), activation='relu', padding='same')`. The number of filters determines how many feature maps are produced.
-
-*   **MaxPooling2D**: A downsampling layer that reduces the spatial dimensions of feature maps by taking the maximum value in each pooling window. `tf.keras.layers.MaxPooling2D(pool_size=(2,2))` halves both the height and width. Pooling reduces computation, controls overfitting, and introduces some translation invariance.
-
-*   **Flatten layer**: Converts the 3D feature map tensor (height × width × channels) output from the last convolutional/pooling layer into a 1D vector so it can be fed into Dense layers. `tf.keras.layers.Flatten()` has no trainable parameters — it only reshapes the tensor.
-
-*   **Feature map**: The output of a convolutional filter applied to an input. Each filter learns to detect a specific low-level feature (e.g., horizontal edges, diagonal textures). Deeper layers combine these into higher-level features (e.g., eyes, wheels). The shape of a feature map is (batch, height, width, filters).
-
-*   **ImageDataGenerator**: A Keras utility for loading images from directories and optionally applying real-time data augmentation (rotation, zoom, horizontal flip). `ImageDataGenerator(rescale=1./255)` normalizes pixel values from [0, 255] to [0, 1]. `flow_from_directory()` creates batches from a folder structure where each subfolder is a class.
-
-*   **Padding**: Controls whether the filter extends beyond the edges of the input. `padding='same'` adds zeros around the border so the output feature map has the same spatial dimensions as the input. `padding='valid'` (default) does not pad, so the output is smaller than the input.
+Knowing how to build a Keras model is necessary but not sufficient. This module covers the techniques that determine whether a trained model actually generalizes to new data. Callbacks, learning rate schedules, batch normalization, dropout, and proper evaluation are all tested on the TensorFlow Developer Certificate and appear in every serious production ML system.
 
 ---
 
-### 2. Certification Exam Tips
-*   **CNN Architecture Pattern:** The standard TF exam CNN pattern is: `[Conv2D → MaxPooling2D] × N → Flatten → Dense(relu) → Dense(output)`. Typically 2–3 Conv/Pool blocks, then one or two Dense layers.
-*   **Input Shape:** Always specify `input_shape=(height, width, channels)` in the first layer. For grayscale: `(28, 28, 1)`. For color: `(150, 150, 3)`. The exam commonly uses `(150, 150, 3)` for dog/cat image tasks.
-*   **ImageDataGenerator Pattern:** `train_gen = ImageDataGenerator(rescale=1./255, rotation_range=40, horizontal_flip=True)` then `train_gen.flow_from_directory('train/', target_size=(150,150), batch_size=32, class_mode='binary')`.
-*   **Study Resource:** The [TensorFlow image classification tutorial](https://www.tensorflow.org/tutorials/images/classification) at tensorflow.org walks through a complete CNN training pipeline with `ImageDataGenerator` and is directly representative of exam tasks. The [fast.ai Lesson 1](https://course.fast.ai/) also covers CNN image classification using a dataset very similar to the exam format.
+## Section 1 — The Training Loop and History Object
+
+`model.fit()` executes the training loop and returns a `History` object.
+
+```python
+history = model.fit(
+    X_train, y_train,
+    epochs=100,
+    batch_size=32,
+    validation_data=(X_val, y_val),
+    callbacks=[...],
+    verbose=1
+)
+```
+
+The `history.history` attribute is a dictionary mapping metric names to lists of per-epoch values:
+
+```python
+# Keys present when validation_data is provided
+print(history.history.keys())
+# dict_keys(['loss', 'accuracy', 'val_loss', 'val_accuracy'])
+```
+
+### Plotting Training Curves
+
+```python
+import matplotlib.pyplot as plt
+
+plt.figure(figsize=(12, 4))
+
+plt.subplot(1, 2, 1)
+plt.plot(history.history['loss'], label='Train Loss')
+plt.plot(history.history['val_loss'], label='Val Loss')
+plt.title('Loss')
+plt.legend()
+
+plt.subplot(1, 2, 2)
+plt.plot(history.history['accuracy'], label='Train Acc')
+plt.plot(history.history['val_accuracy'], label='Val Acc')
+plt.title('Accuracy')
+plt.legend()
+
+plt.tight_layout()
+plt.show()
+```
+
+### Diagnosing from Training Curves
+
+| Observation | Diagnosis | Action |
+|---|---|---|
+| Both losses high | Underfitting | Increase model capacity, train longer |
+| Train loss low, val loss high | Overfitting | Add dropout, L2 reg, or more data |
+| Both losses decrease together | Healthy training | Continue or fine-tune |
+| Val loss increases after plateau | Overfitting onset | Use EarlyStopping |
+| Loss oscillates wildly | LR too high | Reduce learning rate |
+| Loss barely changes | LR too low | Increase learning rate |
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Work through the [TensorFlow CNN tutorial](https://www.tensorflow.org/tutorials/images/cnn) and the [image classification tutorial](https://www.tensorflow.org/tutorials/images/classification) at tensorflow.org. These free official tutorials cover Conv2D, MaxPooling2D, ImageDataGenerator, and the full training pipeline tested on the exam.
-*   **Required Video:** Watch the CNN lecture in the course playlist: [Machine Learning with Python & TensorFlow Course](https://www.youtube.com/watch?v=cKzgMFG5HpU). This covers convolutional filters, pooling, and the Keras API for building image classifiers.
+## Section 2 — Callbacks
+
+Callbacks are objects passed to `model.fit()` that can intercept the training loop and execute logic at defined points — end of batch, end of epoch, end of training.
+
+### EarlyStopping
+
+Halts training when a monitored metric stops improving.
+
+```python
+tf.keras.callbacks.EarlyStopping(
+    monitor='val_loss',      # metric to watch
+    patience=10,             # epochs to wait before stopping
+    restore_best_weights=True,  # revert to best epoch on stop
+    min_delta=1e-4           # minimum change to count as improvement
+)
+```
+
+Key parameters:
+
+- `monitor`: almost always `'val_loss'` — use validation, not training metric
+- `patience`: how many non-improving epochs to tolerate before stopping
+- `restore_best_weights=True`: critical — without this, you keep the final (potentially overfit) weights, not the best ones
+
+### ModelCheckpoint
+
+Saves the model to disk when the monitored metric improves.
+
+```python
+tf.keras.callbacks.ModelCheckpoint(
+    filepath='best_model.keras',
+    monitor='val_loss',
+    save_best_only=True,
+    save_weights_only=False,
+    verbose=1
+)
+```
+
+`save_best_only=True` overwrites the saved file only when the monitored metric improves. `save_weights_only=True` saves only the weights (smaller file) rather than the full model.
+
+### ReduceLROnPlateau
+
+Reduces the learning rate by a factor when improvement stalls.
+
+```python
+tf.keras.callbacks.ReduceLROnPlateau(
+    monitor='val_loss',
+    factor=0.5,       # multiply LR by this when triggered
+    patience=5,       # epochs to wait before reducing
+    min_lr=1e-7,      # lower bound on learning rate
+    verbose=1
+)
+```
+
+Typical usage: pair with EarlyStopping. ReduceLROnPlateau fires first (patience=5), then EarlyStopping fires later (patience=15) if the reduced LR still does not help.
+
+### LearningRateScheduler
+
+Applies a custom function to update the learning rate each epoch.
+
+```python
+def schedule(epoch, lr):
+    if epoch < 10:
+        return lr
+    else:
+        return float(lr * 0.95)
+
+tf.keras.callbacks.LearningRateScheduler(schedule, verbose=1)
+```
+
+### Custom Callback
+
+You can write your own callback by subclassing `tf.keras.callbacks.Callback`:
+
+```python
+class PrintLR(tf.keras.callbacks.Callback):
+    def on_epoch_end(self, epoch, logs=None):
+        current_lr = self.model.optimizer.learning_rate
+        print(f"\nEpoch {epoch+1}: LR = {float(current_lr):.6f}")
+```
+
+### Callback Methods Available
+
+| Method | When it fires |
+|---|---|
+| `on_train_begin` | Start of `model.fit()` |
+| `on_epoch_begin(epoch, logs)` | Start of each epoch |
+| `on_batch_end(batch, logs)` | End of each training batch |
+| `on_epoch_end(epoch, logs)` | End of each epoch |
+| `on_train_end(logs)` | End of `model.fit()` |
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Build a CNN for image classification**: Define a Sequential model with two `Conv2D(32, (3,3), activation='relu')` + `MaxPooling2D(2,2)` blocks, followed by `Flatten()`, `Dense(64, activation='relu')`, and `Dense(1, activation='sigmoid')` for binary classification.
-*   **Load images with ImageDataGenerator**: Create generators for train and validation directories with `rescale=1./255` and augmentation parameters, then use `flow_from_directory()` to create batches.
-*   **Train with fit and evaluate**: Call `model.fit(train_generator, epochs=15, validation_data=val_generator)` and inspect training curves for overfitting.
+## Section 3 — Learning Rate Schedules
+
+### Why Schedule the Learning Rate?
+
+A fixed learning rate is a compromise between exploration (high LR, fast but unstable) and exploitation (low LR, precise but slow). Scheduling lets you have both: explore early, refine late.
+
+### ExponentialDecay
+
+```python
+schedule = tf.keras.optimizers.schedules.ExponentialDecay(
+    initial_learning_rate=0.01,
+    decay_steps=1000,
+    decay_rate=0.96,
+    staircase=False    # True = step-wise, False = smooth decay
+)
+model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=schedule), ...)
+```
+
+LR at step `t` = `initial_lr * decay_rate ^ (t / decay_steps)`
+
+### CosineDecay
+
+Decays the learning rate following a cosine curve, which tends to give smooth convergence.
+
+```python
+schedule = tf.keras.optimizers.schedules.CosineDecay(
+    initial_learning_rate=0.01,
+    decay_steps=5000
+)
+```
+
+### Comparison of Schedule Types
+
+| Schedule | Shape | Best For |
+|---|---|---|
+| Constant | Flat line | Baselines, simple problems |
+| Exponential Decay | Smooth curve downward | General-purpose default |
+| Cosine Decay | S-curve downward | Fine-tuning, modern training |
+| ReduceLROnPlateau | Step-wise, reactive | When plateau timing is unpredictable |
+| Warm-up + Decay | Rise then fall | Transformer models, large LR training |
 
 ---
 
-### 3. Study Checklist
-*   [ ] Read the glossary terms and draw a CNN architecture diagram showing input → Conv → Pool → Flatten → Dense → output.
-*   [ ] Work through the [TensorFlow CNN tutorial](https://www.tensorflow.org/tutorials/images/cnn) and [image classification tutorial](https://www.tensorflow.org/tutorials/images/classification).
-*   [ ] Watch the CNN lecture in the [Machine Learning with Python & TensorFlow Course](https://www.youtube.com/watch?v=cKzgMFG5HpU).
-*   [ ] Complete the Module 06 lab: build and train a CNN on an image dataset.
-*   [ ] Proceed to the Module 06 quiz.
+## Section 4 — Batch Normalization
+
+### The Problem It Solves
+
+As training progresses, the distribution of each layer's inputs shifts because the weights of previous layers change. This is called **internal covariate shift**. Layers must constantly adapt to changing input distributions, which slows training.
+
+Batch normalization normalizes each layer's pre-activation (or post-activation, depending on placement) across the training batch.
+
+### The Computation
+
+For a mini-batch of activations `x`:
+
+```
+mu = mean(x over batch)
+sigma = std(x over batch)
+x_norm = (x - mu) / (sigma + epsilon)
+output = gamma * x_norm + beta
+```
+
+`gamma` (scale) and `beta` (shift) are learnable parameters — the network can undo the normalization if needed.
+
+During inference, batch statistics are replaced with running statistics accumulated during training (exponential moving average).
+
+### Placement
+
+```python
+# Style 1: BN before activation (original paper)
+tf.keras.layers.Dense(128),
+tf.keras.layers.BatchNormalization(),
+tf.keras.layers.Activation('relu'),
+
+# Style 2: BN after activation (common in practice)
+tf.keras.layers.Dense(128, activation='relu'),
+tf.keras.layers.BatchNormalization(),
+```
+
+Both styles are acceptable. Style 1 (before activation) is the original formulation. Use either consistently within a model.
+
+### Benefits of Batch Normalization
+
+- Allows higher learning rates without instability
+- Reduces sensitivity to weight initialization
+- Provides mild regularization effect
+- Significantly accelerates training convergence
+
+### Exam Tip
+
+BatchNormalization adds `4 * features` parameters to a model: gamma, beta (learnable) and mean, variance (non-trainable moving averages). A `BatchNormalization()` layer after a `Dense(128)` adds `4 * 128 = 512` parameters, of which `2 * 128 = 256` are trainable and `256` are non-trainable.
+
+---
+
+## Section 5 — Dropout
+
+Dropout is a regularization technique that randomly sets a fraction of neuron outputs to zero during each training step.
+
+### How It Works
+
+During training: each unit is independently zeroed with probability `p` (the dropout rate).
+
+During inference: all units are active, but their outputs are scaled by `(1 - p)` to maintain the same expected output magnitude. Keras handles this scaling automatically.
+
+```python
+tf.keras.layers.Dropout(rate=0.5)   # 50% of neurons zeroed each step
+```
+
+### Why It Works
+
+Dropout forces the network to learn redundant representations. No single neuron can be relied upon to carry critical information because it might not be present in the next training step. This produces more robust, distributed feature representations.
+
+### Placement Guidelines
+
+```python
+model = tf.keras.Sequential([
+    tf.keras.layers.Dense(256, activation='relu', input_shape=(100,)),
+    tf.keras.layers.Dropout(0.4),       # after large hidden layers
+
+    tf.keras.layers.Dense(128, activation='relu'),
+    tf.keras.layers.Dropout(0.3),       # lower rate deeper in network
+
+    tf.keras.layers.Dense(1, activation='sigmoid')
+    # no dropout on output layer
+])
+```
+
+### Dropout Rate Guidelines
+
+| Layer Position | Typical Rate |
+|---|---|
+| First hidden layer | 0.2–0.4 |
+| Middle hidden layers | 0.3–0.5 |
+| Final hidden layer | 0.1–0.3 |
+| Output layer | Never use dropout |
+
+### training=True vs. training=False
+
+Dropout behaves differently during training and inference. In `model.fit()`, Keras passes `training=True` automatically. In `model.predict()` and `model.evaluate()`, it passes `training=False`. In custom training loops, you must pass this argument explicitly:
+
+```python
+# Training step — dropout active
+output = model(x_batch, training=True)
+
+# Inference — dropout disabled
+output = model(x_batch, training=False)
+```
+
+---
+
+## Section 6 — Model Evaluation
+
+### evaluate()
+
+```python
+loss, accuracy = model.evaluate(X_test, y_test, verbose=0)
+```
+
+Returns the values of all compiled metrics on the test set. This is the definitive performance measurement — always evaluate on a held-out test set that was never used during training or validation.
+
+### predict()
+
+```python
+probabilities = model.predict(X_test)           # raw output
+labels = (probabilities > 0.5).astype(int)      # binary threshold
+class_ids = np.argmax(probabilities, axis=1)    # multi-class argmax
+```
+
+### Beyond Accuracy
+
+```python
+from sklearn.metrics import classification_report, confusion_matrix
+import numpy as np
+
+y_pred = (model.predict(X_test) > 0.5).astype(int).flatten()
+print(confusion_matrix(y_test, y_pred))
+print(classification_report(y_test, y_pred, target_names=['Class 0', 'Class 1']))
+```
+
+Classification report gives precision, recall, F1-score, and support for each class. For imbalanced datasets this is far more informative than accuracy alone.
+
+---
+
+## Section 7 — Combining Techniques: A Reference Template
+
+```python
+# Architecture with BatchNorm + Dropout
+model = tf.keras.Sequential([
+    tf.keras.layers.Dense(128, input_shape=(n_features,)),
+    tf.keras.layers.BatchNormalization(),
+    tf.keras.layers.Activation('relu'),
+    tf.keras.layers.Dropout(0.3),
+
+    tf.keras.layers.Dense(64),
+    tf.keras.layers.BatchNormalization(),
+    tf.keras.layers.Activation('relu'),
+    tf.keras.layers.Dropout(0.2),
+
+    tf.keras.layers.Dense(n_outputs, activation='softmax')
+])
+
+# Compile
+model.compile(
+    optimizer=tf.keras.optimizers.Adam(learning_rate=0.001),
+    loss='sparse_categorical_crossentropy',
+    metrics=['accuracy']
+)
+
+# Callbacks
+callbacks = [
+    tf.keras.callbacks.EarlyStopping(
+        monitor='val_loss', patience=15, restore_best_weights=True
+    ),
+    tf.keras.callbacks.ReduceLROnPlateau(
+        monitor='val_loss', factor=0.5, patience=5, min_lr=1e-7
+    ),
+    tf.keras.callbacks.ModelCheckpoint(
+        'best_model.keras', monitor='val_loss', save_best_only=True
+    )
+]
+
+# Train
+history = model.fit(
+    X_train, y_train,
+    epochs=300,
+    batch_size=32,
+    validation_data=(X_val, y_val),
+    callbacks=callbacks,
+    verbose=1
+)
+```
+
+---
+
+## Section 8 — Exam Tips
+
+- `restore_best_weights=True` in EarlyStopping is critical. Without it, training stops but keeps the final (potentially worse) weights rather than the best ones.
+- `save_best_only=True` in ModelCheckpoint prevents disk from filling with every epoch's weights.
+- BatchNormalization adds non-trainable parameters (moving mean and variance). `model.summary()` shows these separately under "Non-trainable params."
+- Dropout is automatically disabled during `model.predict()` and `model.evaluate()`. You never need to manually toggle it.
+- `model.evaluate()` returns values in the order they were specified in `metrics=[]` during compile, preceded by the loss value.
+- The `patience` parameter in both EarlyStopping and ReduceLROnPlateau is in units of epochs, not batches.
+
+---
+
+## Study Checklist
+
+- [ ] Implement EarlyStopping with `restore_best_weights=True` and verify training stops before the specified epoch count
+- [ ] Add BatchNormalization to a model and check `model.summary()` for non-trainable parameter count
+- [ ] Add Dropout and verify predictions do not change between two calls to `model.predict()` (dropout is off during inference)
+- [ ] Plot training and validation loss curves and identify the epoch where overfitting begins
+- [ ] Complete Module 06 Lab
+- [ ] Complete Module 06 Quiz
+- [ ] Post to Module 06 Discussion Board by Wednesday 11:59 PM

@@ -1,59 +1,176 @@
-# Reading Guide: Module 10 - Wireless Network Penetration Testing
-## Course: CIS-4333_Penetration_Testing (CompTIA PenTest+)
+# Reading Guide: Module 10 — Web Application Exploit Methods
+
+## Course: CIS-4333 Penetration Testing
+
+**Certification Alignment:** CompTIA PenTest+ (PT0-002)
 
 ---
 
-### Introduction
-Welcome to **Module 10 - Wireless Network Penetration Testing**! Wireless networks are a pervasive and frequently misconfigured attack surface. Enterprise Wi-Fi deployments using WPA2-Enterprise can be complex to secure, and many organizations still operate networks using weaker protocols or insecure configurations. Wireless penetration testing evaluates the security of 802.11 Wi-Fi networks by testing authentication, encryption, and client isolation controls. This module maps to the **Attacks and Exploits** domain of PT0-002 (**30% of exam weight**) and covers the wireless attack techniques the exam tests directly.
+## Overview
 
-Wireless attacks are particularly relevant in physical-access and insider-threat scenarios — an attacker within radio range of a target network can attempt authentication bypass, capture handshakes for offline cracking, or set up rogue access points to intercept credentials.
-
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **WPA2 Four-Way Handshake Capture**: During WPA2-Personal (PSK) authentication, a four-packet exchange occurs between the client and access point that contains material derived from the pre-shared key. By passively monitoring or actively forcing a client to re-authenticate (using a deauthentication attack), a tester can capture this handshake and attempt to crack the PSK offline using a wordlist attack with Hashcat or Aircrack-ng. Capturing the handshake requires the tester's wireless adapter to be in monitor mode.
-
-*   **Evil Twin / Rogue Access Point**: An attack in which the tester creates a wireless access point with the same SSID (and optionally the same BSSID) as a legitimate network to trick clients into connecting to an attacker-controlled network. Once connected, the attacker can perform a Man-in-the-Middle (MitM) attack to intercept credentials, capture unencrypted traffic, or serve fake captive portal login pages. Tools like `hostapd-wpe` automate rogue AP deployment for WPA2-Enterprise credential capture.
-
-*   **WPS PIN Attack**: Wi-Fi Protected Setup (WPS) is a feature designed to simplify device pairing that contains a design flaw — the 8-digit PIN is verified in two halves, reducing the brute-force space from 10^8 to approximately 11,000 combinations. The `reaver` and `bully` tools exploit this flaw to recover the WPS PIN and, consequently, the WPA2 PSK. Many routers have WPS enabled by default. This vulnerability is a standard PT0-002 wireless exam topic.
-
-*   **Deauthentication Attack (802.11 Deauth)**: The 802.11 management frame standard does not require authentication by default, allowing an attacker to spoof deauthentication frames to disconnect clients from an access point. Penetration testers use this technique to force clients to re-authenticate, generating a fresh WPA2 handshake for capture. The command `aireplay-ng --deauth 10 -a <BSSID> -c <client_MAC> <interface>` sends deauthentication frames. This is a necessary step when the tester cannot wait for organic client re-authentication.
-
-*   **Aircrack-ng Suite**: The standard open-source wireless auditing toolkit used in penetration testing. Key tools in the suite include: `airmon-ng` (puts the wireless adapter into monitor mode), `airodump-ng` (scans for networks and captures packets), `aireplay-ng` (injects frames including deauthentication), and `aircrack-ng` (offline dictionary/brute-force attack against captured WPA2 handshakes or WEP IVs). PT0-002 expects testers to know the purpose of each tool in the suite.
+This reading guide supports Module 10 and directs your study toward the concepts tested on the CompTIA PenTest+ exam under Domain 3: Attacks and Exploits. Web application vulnerabilities consistently rank among the most common findings in real-world penetration tests. This guide organizes the key reading areas, vocabulary, and study questions to prepare you for the quiz and lab.
 
 ---
 
-### 2. Certification Exam Tips
-*   **Domain Weight:** Attacks and Exploits is **30% of PT0-002**. Wireless attacks appear in scenario questions — know the attack names, which protocols they target, and which tools execute them.
-*   **WEP vs. WPA vs. WPA2 vs. WPA3:** WEP is completely broken (RC4 stream cipher with weak IV handling). WPA/TKIP is deprecated and crackable. WPA2-Personal uses AES-CCMP and is vulnerable to offline PSK cracking via captured handshakes. WPA2-Enterprise uses 802.1X/RADIUS and is much stronger — the primary attack is the Evil Twin/rogue AP to capture RADIUS credentials. WPA3 uses SAE (Simultaneous Authentication of Equals) and is resistant to offline dictionary attacks.
-*   **Monitor Mode vs. Managed Mode:** Wireless adapters normally operate in managed mode (connecting to APs). Monitor mode enables the adapter to passively capture all 802.11 frames in range regardless of SSID. Monitor mode is required before running `airodump-ng` or capturing handshakes.
-*   **Exam Trap — WPS Attack Targets WPA2-Personal, Not Enterprise:** WPS PIN attacks recover the PSK — they only work against WPA2-Personal networks. WPA2-Enterprise does not use a PSK and is not vulnerable to WPS attacks.
-*   **PMKID Attack:** A newer WPA2 cracking technique that does not require capturing a four-way handshake — it extracts the PMKID from a single EAPOL frame during association. The tool `hcxdumptool` captures PMKIDs. This is more efficient than waiting for a handshake capture.
-*   **Study Resource:** [TryHackMe Pentest Learning Path](https://tryhackme.com/path/outline/pentesting) — The "Wi-Fi Hacking" and related wireless rooms provide browser-accessible guided practice with the Aircrack-ng suite, WPA2 handshake capture, and wireless attack methodology in a legal lab environment.
-*   **Video Lecture:** [CompTIA PenTest+ Complete Course by freeCodeCamp](https://www.youtube.com/watch?v=3Kq1MIfC-4U) — Navigate to the Wireless Attacks section for content covering WPA2 cracking, rogue APs, and deauthentication attacks mapped to PT0-002 domain 3.
+## Primary Reading Topics
+
+### 1. OWASP Top 10
+
+The OWASP Top 10 is the foundational reference for web application security. For this module, focus on the following categories:
+
+- A01: Broken Access Control
+- A02: Cryptographic Failures
+- A03: Injection
+- A05: Security Misconfiguration
+- A07: Identification and Authentication Failures
+- A08: Software and Data Integrity Failures
+
+Read each entry for the description, example attack scenarios, and prevention guidance. The OWASP Top 10 is freely available at owasp.org.
+
+### 2. SQL Injection
+
+Read the OWASP SQL Injection Prevention Cheat Sheet. Focus on:
+
+- How parameterized queries (prepared statements) eliminate the vulnerability at the root cause level
+- The difference between union-based, error-based, and blind (boolean and time-based) techniques
+- How SQLMap automates detection and exploitation across all injection types
+- The risk of second-order SQL injection, where input is stored safely then executed unsafely later
+
+### 3. Cross-Site Scripting
+
+Read the OWASP XSS Prevention Cheat Sheet and the DOM-Based XSS Prevention Cheat Sheet. Key concepts:
+
+- The difference between server-side rendering vulnerabilities (reflected and stored) versus client-side vulnerabilities (DOM-based)
+- Why `HttpOnly` cookies prevent XSS-based session theft
+- Content Security Policy as a defense-in-depth control that limits script execution sources
+- How `innerHTML` and `document.write()` are dangerous JavaScript sinks in DOM-based XSS
+
+### 4. Injection Vulnerabilities Beyond SQL
+
+Review command injection, LDAP injection, and XML injection. The PenTest+ exam tests your ability to recognize vulnerable code patterns and recommend fixes. Focus on:
+
+- Shell metacharacters that enable command injection: semicolon, pipe, ampersand, backtick, `$()`
+- How directory traversal sequences bypass path restrictions and how URL encoding evades simple filters
+- The difference between LFI and RFI, and the conditions that make each exploitable
+- PHP configuration settings such as `allow_url_include` that affect file inclusion risk
+
+### 5. Authentication and Session Management
+
+Read the OWASP Authentication Cheat Sheet and Session Management Cheat Sheet. Key areas:
+
+- Multi-factor authentication as a credential stuffing countermeasure
+- Session token entropy requirements and what makes a token unpredictable
+- Secure and HttpOnly cookie flags and when each applies
+- The difference between session fixation and session hijacking as distinct attacks
+- How account lockout policies interact with brute force timing and engagement risk
+
+### 6. Burp Suite Professional Workflows
+
+Review the PortSwigger Web Security Academy documentation for Burp Suite. Focus on:
+
+- Configuring browser proxy settings for Burp intercept
+- Using Repeater for manual injection testing and iterative payload refinement
+- Configuring Intruder attack types: Sniper for single-position fuzzing versus Cluster bomb for credential testing
+- Reading scanner output and triaging findings by severity
+- Using the Decoder tab for encoding and decoding payloads in various schemes
+
+### 7. API Security
+
+Read the OWASP API Security Top 10. Focus on:
+
+- API1: Broken Object Level Authorization (BOLA)
+- API3: Excessive Data Exposure
+- API6: Mass Assignment
+- API7: Security Misconfiguration
+- How to use ffuf or Gobuster for API endpoint discovery using wordlists
+- Reading OpenAPI and Swagger documentation to enumerate available endpoints and parameters
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Complete the Wireless Hacking rooms in the [TryHackMe Pentest Learning Path](https://tryhackme.com/path/outline/pentesting). TryHackMe is a browser-based cybersecurity training platform — all labs run in your browser without requiring a dedicated wireless adapter or physical lab setup. The wireless rooms walk through the Aircrack-ng workflow, handshake capture concepts, and Evil Twin attack methodology with guided instructions.
-*   **Required Video:** Watch the Wireless Attacks segment of the [CompTIA PenTest+ Complete Course by freeCodeCamp](https://www.youtube.com/watch?v=3Kq1MIfC-4U). This is a free, full-length PT0-002 prep course on YouTube. Use chapter markers to navigate to the wireless security content covering WPA2, deauthentication attacks, WPS vulnerabilities, and rogue access points.
+## Key Vocabulary
+
+Review and be able to define each of the following terms:
+
+- SQL injection
+- Union-based injection
+- Boolean-based blind injection
+- Time-based blind injection
+- Second-order injection
+- Reflected XSS
+- Stored XSS
+- DOM-based XSS
+- Cross-site request forgery (CSRF)
+- Command injection
+- Directory traversal
+- Local file inclusion (LFI)
+- Remote file inclusion (RFI)
+- Log poisoning
+- Brute force attack
+- Credential stuffing
+- Session hijacking
+- Session fixation
+- Broken Object Level Authorization (BOLA/IDOR)
+- Mass assignment
+- Excessive data exposure
+- Content Security Policy (CSP)
+- Prepared statement
+- Parameterized query
+- Burp Suite Intruder
+- Burp Suite Repeater
+- OWASP Top 10
+- CVSS score
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Enable monitor mode: `airmon-ng start wlan0`**: You will configure your wireless adapter to capture all 802.11 frames in the environment, a required prerequisite for all subsequent wireless attack steps. You will verify the monitor mode interface is active before proceeding.
-*   **Capture nearby networks and identify targets: `airodump-ng wlan0mon`**: You will scan the wireless environment to enumerate nearby access points — recording BSSID, SSID, channel, encryption type, and connected clients. You will select a lab target based on this output and focus further capture on that channel.
-*   **Capture WPA2 handshake and attempt offline crack**: You will run `airodump-ng` against the target BSSID and optionally send deauthentication frames to force a handshake, then run `aircrack-ng -w wordlist.txt capture.cap` to attempt offline dictionary cracking — documenting whether the PSK was recovered and what it demonstrates about password policy strength.
+## Study Questions
+
+Answer these questions in your own words after completing the reading. These questions are not submitted — they are self-check questions to prepare for the quiz.
+
+1. What is the fundamental cause of SQL injection, and why do parameterized queries eliminate it?
+
+2. Explain the difference between reflected XSS and stored XSS. Which is more dangerous and why?
+
+3. A web application includes a file based on the `page` URL parameter. The developer strips `../` sequences from input. What alternative traversal sequences might an attacker try?
+
+4. What is the difference between brute force and credential stuffing? Which is more likely to succeed against a large target with many user accounts, and why?
+
+5. Describe two Burp Suite modules and explain a specific scenario where you would use each one.
+
+6. What is BOLA? Give a concrete example showing how an attacker exploits it against a REST API.
+
+7. Why does mass assignment represent a privilege escalation risk? What field should an attacker try to modify in a user update request?
+
+8. What is the purpose of the `HttpOnly` cookie flag? Which type of XSS attack does it prevent?
+
+9. Explain time-based blind SQL injection. How does the attacker extract a single character of data using only timing responses?
+
+10. What OWASP Top 10 category covers SQL injection, command injection, and LDAP injection under a single umbrella heading?
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and be able to explain each in your own words.
-- [ ] Complete the Wireless Hacking rooms in [TryHackMe Pentest Learning Path](https://tryhackme.com/path/outline/pentesting).
-- [ ] Watch the Wireless Attacks section of the [CompTIA PenTest+ Complete Course by freeCodeCamp](https://www.youtube.com/watch?v=3Kq1MIfC-4U).
-- [ ] Review the lab instructions and understand the purpose of each step before starting.
-- [ ] Proceed to the weekly hands-on lab activity.
+## Recommended Resources
+
+The following freely available resources supplement the module lecture.
+
+- OWASP Top 10: owasp.org/www-project-top-ten
+- OWASP Testing Guide v4.2: owasp.org/www-project-web-security-testing-guide
+- PortSwigger Web Security Academy: portswigger.net/web-security — free browser-based labs for SQLi, XSS, CSRF, SSRF, and more
+- HackTricks Web Application Testing: book.hacktricks.xyz
+- SecLists wordlists: github.com/danielmiessler/SecLists
+- SQLMap documentation: sqlmap.org
+
+PortSwigger Web Security Academy is particularly valuable. It provides free browser-based labs for every topic in this module. Complete at least the apprentice-level SQL injection and XSS labs before your quiz.
+
+---
+
+## CompTIA PenTest+ Exam Objectives Covered
+
+The following PT0-002 exam objectives are addressed in this module:
+
+- 3.3: Given a scenario, research attack vectors and perform application-based attacks
+
+This objective explicitly lists SQL injection, XSS, command injection, directory traversal, file inclusion, authentication attacks, and API vulnerabilities. Web application testing is the largest single component of the Attacks and Exploits domain and appears in multiple scenario-format questions on the exam.
+
+---
+
+*End of Module 10 Reading Guide*

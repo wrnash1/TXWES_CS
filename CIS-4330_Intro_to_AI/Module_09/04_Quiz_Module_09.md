@@ -1,75 +1,257 @@
-# Quiz: Module 09 - Azure Bot Service and Conversational AI
-## Course: CIS-4330_Intro_to_AI (AI-900 (Microsoft Azure AI Fundamentals))
+# Quiz: Module 09 — Conversational AI and Azure Bot Service
+
+## Course: CIS-4330 Introduction to Artificial Intelligence
+
+## Texas Wesleyan University | Professor Nash
+
+## AI-900 Domain: Describe features of conversational AI workloads on Azure
 
 ---
 
-**Question 1**
-Which computer vision task involves identifying both the locations and classes of multiple objects inside an image using bounding boxes?
-*   A) Image Classification
-*   B) Object Detection
-*   C) Semantic Segmentation
-*   D) Optical Character Recognition
-*   **Correct Answer:** B) Object detection locates each object in an image with a bounding box and assigns a class label to it, returning both position and identity for every detected instance.
-*   **Distractor Analysis:**
-    *   *Why correct:* Object detection returns bounding box coordinates plus a class label for every object found — it answers "what is where?" rather than just "what is in the image?"
-    *   Classification assigns a single label to the whole image. Semantic segmentation labels every pixel. OCR reads and transcribes printed or handwritten text.
+## Instructions
+
+Select the best answer for each question. Each question is worth 10 points. Submit through the course LMS.
 
 ---
 
-**Question 2**
-In the context of Azure conversational AI, which of the following is the most accurate definition of **intent recognition**?
-*   A) The process of identifying what a user wants to accomplish from a natural language utterance — for example, recognizing that "Book me a flight to Dallas" expresses a BookFlight intent — so a bot can take the appropriate action.
-*   B) A technique that converts spoken audio into a written text transcript in real time, enabling voice-driven applications to process spoken commands as text strings.
-*   C) A cloud service that translates text from one language to another (e.g., Spanish to English) using neural machine translation models, without understanding the meaning or intent of the content.
-*   D) An image preprocessing step that resizes and normalizes pixel values before passing them to a convolutional neural network for classification.
-*   **Correct Answer:** A) The process of identifying what a user wants to accomplish from a natural language utterance — for example, recognizing that "Book me a flight to Dallas" expresses a BookFlight intent — so a bot can take the appropriate action.
-*   **Distractor Analysis:**
-    *   *Why A is correct:* Intent recognition is the core function of Azure AI Language's Conversational Language Understanding (CLU) — it maps free-form user input to a predefined intent category that the bot can act on.
-    *   *Why B is incorrect:* This describes Azure AI Speech's speech-to-text capability — audio transcription, not intent extraction from text.
-    *   *Why C is incorrect:* This describes Azure Translator — language-to-language translation, which moves text between languages without inferring user intent.
-    *   *Why D is incorrect:* This describes image normalization — a computer vision preprocessing step entirely unrelated to conversational AI or natural language understanding.
+## Question 1
+
+A university wants to deploy a chatbot on its website that answers common student questions such as "What are the library hours?" and "How do I register for classes?" The answers should come from the university's existing FAQ documents. Which Azure service is most appropriate?
+
+A. Azure AI Language — Conversational Language Understanding
+
+B. Azure AI Language — Question Answering
+
+C. Azure Bot Framework SDK — Waterfall Dialogs
+
+D. Azure AI Vision — Spatial Analysis
+
+### Q1 — Correct Answer
+
+B. Azure AI Language — Question Answering
+
+### Q1 — Distractor Analysis
+
+- A is incorrect: CLU classifies intents and extracts entities for task-oriented commands. It does not retrieve answers from an existing FAQ document.
+- C is incorrect: Waterfall Dialogs is a Bot Framework SDK component for managing dialog flow. It is not a service for matching questions to answers; it would require a separate data source and retrieval logic.
+- D is incorrect: Spatial Analysis is a computer vision service for analyzing physical spaces and video. It has no conversational or text-retrieval capability.
 
 ---
 
-**Question 3**
-A developer needs to **calculate the accuracy of model predictions against actual test labels**. Which command is most appropriate?
-*   A) accuracy = accuracy_score(y_test, predictions)
-*   B) model.fit(X_train, y_train)
-*   C) predictions = model.predict(X_test)
-*   D) import pandas as pd; df = pd.read_csv('data.csv')
-*   **Correct Answer:** A) accuracy = accuracy_score(y_test, predictions)
-*   **Distractor Analysis:**
-    *   *Why A is correct:* `accuracy_score(y_test, predictions)` compares the model's predicted labels against the true test labels and returns the fraction that match — the standard way to evaluate classification performance.
-    *   *Why B is incorrect:* `model.fit()` trains the model on labeled training data; it does not compute a performance metric.
-    *   *Why C is incorrect:* `model.predict()` generates predictions from a trained model; it does not compute accuracy.
-    *   *Why D is incorrect:* This loads a CSV file into a DataFrame — data loading, not evaluation.
+## Question 2
+
+In Azure AI Language Question Answering, a confidence threshold is configured at 0.70. A user asks a question and the best matching answer scores 0.55. What does the bot return?
+
+A. The answer with the 0.55 score, since it is the best available match
+
+B. An error message indicating the knowledge base is unavailable
+
+C. The configured fallback answer, because the score is below the threshold
+
+D. The top three answers scored 0.55, 0.43, and 0.31 for the user to choose from
+
+### Q2 — Correct Answer
+
+C. The configured fallback answer, because the score is below the threshold
+
+### Q2 — Distractor Analysis
+
+- A is incorrect: The confidence threshold exists precisely to prevent low-confidence answers from being returned. When the threshold is not met, the fallback response is used.
+- B is incorrect: A score below the threshold triggers the fallback message, not a service error. The knowledge base is functioning correctly.
+- D is incorrect: Returning multiple low-confidence options is not the default behavior. The threshold is the decision boundary between returning the best answer and returning the fallback.
 
 ---
 
-**Question 4**
-A bot's intent recognition model returns suspiciously high accuracy on the validation set. Investigation reveals the text vectorizer (TF-IDF) was fitted on the combined train and test utterances before splitting. What is this problem and how should it be fixed?
-*   A) Data leakage — fit the TF-IDF vectorizer only on training utterances using `.fit_transform()`, then apply `.transform()` to the test set separately to prevent test vocabulary from influencing the training representation.
-*   B) Overfitting — add more training utterances or apply dropout regularization to reduce the model's sensitivity to noise in the training data.
-*   C) Class imbalance — use oversampling (SMOTE) or class weights to ensure rare intents are represented equally during training.
-*   D) Underfitting — increase the number of features or switch to a more complex model such as a transformer-based language model.
-*   **Correct Answer:** A) Data leakage — fit the TF-IDF vectorizer only on training utterances using `.fit_transform()`, then apply `.transform()` to the test set separately to prevent test vocabulary from influencing the training representation.
-*   **Distractor Analysis:**
-    *   *Why A is correct:* Fitting a vectorizer on the full dataset allows test-set vocabulary statistics to influence how training features are constructed, making the model appear more accurate on test data than it truly is on real unseen inputs.
-    *   *Why B is incorrect:* Overfitting produces high training accuracy but lower validation accuracy — the opposite of the suspiciously high validation accuracy described here.
-    *   *Why C is incorrect:* Class imbalance causes the model to favor majority-class intents; it does not inflate validation accuracy from improper preprocessing.
-    *   *Why D is incorrect:* Underfitting produces uniformly low accuracy on both training and validation sets — not inflated validation scores.
+## Question 3
+
+What is the purpose of the None intent in a Conversational Language Understanding (CLU) project?
+
+A. It stores the training utterances that were rejected during the labeling process
+
+B. It captures user inputs that do not match any defined application intent, preventing false positive intent matches
+
+C. It is the default intent assigned to all inputs until the model is trained
+
+D. It represents the bot's response when it has no more questions to ask the user
+
+### Q3 — Correct Answer
+
+B. It captures user inputs that do not match any defined application intent, preventing false positive intent matches
+
+### Q3 — Distractor Analysis
+
+- A is incorrect: Rejected utterances are not stored in None. None is an active intent with training examples you provide.
+- C is incorrect: Untrained models do not assign None by default. None is a deliberately designed intent that requires its own training utterances.
+- D is incorrect: Intents represent user goals, not bot states. None is on the user-input side of the conversation, not the bot-response side.
 
 ---
 
-**Question 5**
-Attackers are querying a public bot's language understanding API with thousands of carefully crafted utterances to reconstruct the private training data (including proprietary FAQ content). Which defense best mitigates this **model inversion** attack?
-*   A) Apply differential privacy to the training data and rate-limit the public inference API to reduce the attacker's ability to extract information through repeated queries.
-*   B) Train the model with adversarial utterances included in the training set and validate all inputs for anomalous patterns before inference.
-*   C) Enable full disk encryption on all client endpoints submitting queries to the bot API.
-*   D) Enforce role-based access control (RBAC) on the Azure Bot Service resource so only approved Azure AD principals can manage the bot configuration.
-*   **Correct Answer:** A) Apply differential privacy to the training data and rate-limit the public inference API to reduce the attacker's ability to extract information through repeated queries.
-*   **Distractor Analysis:**
-    *   *Why A is correct:* Differential privacy adds calibrated statistical noise to training data, making it mathematically difficult to reconstruct individual records from model outputs. Rate-limiting restricts how many queries an attacker can submit, slowing or blocking the reconstruction attempt entirely.
-    *   *Why B is incorrect:* Adversarial training builds robustness against perturbed inputs designed to cause misclassification — it does not protect training data from being reverse-engineered through output analysis.
-    *   *Why C is incorrect:* Disk encryption protects data stored on a device at rest; it has no effect on information leaked through the bot's live API responses.
-    *   *Why D is incorrect:* RBAC restricts who can manage the bot's Azure configuration, not who can query the public inference endpoint — it does not prevent an attacker from extracting training data through API outputs.
+## Question 4
+
+A company builds a bot using Azure Bot Framework and wants to deploy it so that employees can interact with it inside Microsoft Teams, and customers can interact with it through the company's public website. How is this typically accomplished?
+
+A. Build two separate bots — one for Teams and one for the website
+
+B. Configure both Microsoft Teams and Web Chat as channels in Azure Bot Service for a single bot
+
+C. Export the bot logic to two different programming languages for each platform
+
+D. Microsoft Teams and web chat cannot be connected to the same Azure bot simultaneously
+
+### Q4 — Correct Answer
+
+B. Configure both Microsoft Teams and Web Chat as channels in Azure Bot Service for a single bot
+
+### Q4 — Distractor Analysis
+
+- A is incorrect: One of the core benefits of Azure Bot Service channels is that a single bot can be connected to multiple channels simultaneously. Building two bots doubles the maintenance burden unnecessarily.
+- C is incorrect: The same bot code handles all channels. The Bot Framework SDK normalizes channel-specific activity formats, so no language changes are needed.
+- D is incorrect: Azure Bot Service explicitly supports multiple simultaneous channels for a single bot. Teams and Web Chat can both be active at the same time.
+
+---
+
+## Question 5
+
+Which Azure Bot Service channel should a developer use to embed a bot inside a custom-built iOS mobile application?
+
+A. Microsoft Teams
+
+B. Twilio SMS
+
+C. Direct Line
+
+D. Facebook Messenger
+
+### Q5 — Correct Answer
+
+C. Direct Line
+
+### Q5 — Distractor Analysis
+
+- A is incorrect: Teams is a Microsoft-specific platform app, not a custom mobile app integration channel.
+- B is incorrect: Twilio SMS is for text message-based interactions via phone numbers, not for embedding in a custom mobile application.
+- D is incorrect: Facebook Messenger connects the bot to the Messenger platform. It does not enable integration into a custom-built iOS app.
+
+---
+
+## Question 6
+
+A retail company wants to deploy a bot that handles both task requests ("Track my order") and informational questions ("What is your return policy?") through a single API endpoint. Which Azure AI Language feature enables this?
+
+A. Custom Text Classification
+
+B. Orchestration Workflow
+
+C. Active Learning
+
+D. Entity Linking
+
+### Q6 — Correct Answer
+
+B. Orchestration Workflow
+
+### Q6 — Distractor Analysis
+
+- A is incorrect: Custom Text Classification labels documents with custom categories. It is not a routing mechanism for bots.
+- C is incorrect: Active Learning is a Question Answering feature that suggests new Q&A pairs from unmatched user queries. It does not route between CLU and QA.
+- D is incorrect: Entity Linking connects recognized entities to a knowledge base like Wikipedia. It is an NLP feature, not a bot routing mechanism.
+
+---
+
+## Question 7
+
+Microsoft Copilot Studio is described as a low-code bot authoring tool. Which scenario is it most appropriate for?
+
+A. A software development team building a highly customized bot with proprietary APIs, custom middleware, and complex dialog branching logic written in Python
+
+B. An HR business analyst with no coding experience who needs to build an employee onboarding assistant connected to SharePoint and Teams
+
+C. A data scientist building a bot that uses a custom PyTorch model for intent classification
+
+D. A team that needs to deploy a bot to a custom IoT device running a Linux container
+
+### Q7 — Correct Answer
+
+B. An HR business analyst with no coding experience who needs to build an employee onboarding assistant connected to SharePoint and Teams
+
+### Q7 — Distractor Analysis
+
+- A is incorrect: Complex custom development with proprietary APIs and custom middleware is the use case for the Azure Bot Framework SDK, not Copilot Studio.
+- C is incorrect: Custom ML model integration requires code-level control that Copilot Studio's no-code environment does not support.
+- D is incorrect: Deploying to Linux containers on IoT devices requires pro-code deployment patterns available in the Bot Framework, not Copilot Studio's managed hosting.
+
+---
+
+## Question 8
+
+In the Azure Bot Framework activity model, what is the most common type of activity exchanged between a user and a bot?
+
+A. conversationUpdate
+
+B. event
+
+C. typing
+
+D. message
+
+### Q8 — Correct Answer
+
+D. message
+
+### Q8 — Distractor Analysis
+
+- A is incorrect: conversationUpdate fires when a user joins or leaves a conversation, or when the bot is added to a channel. It occurs far less frequently than message activities.
+- B is incorrect: event activities carry background signals not visible to the user. They are used for system integration, not for standard conversational exchanges.
+- C is incorrect: typing indicates that the sender is composing a message. It is a transient signal, not the primary vehicle for conversation content.
+
+---
+
+## Question 9
+
+A travel company deploys a customer service chatbot on its website. The bot is designed to help users find flights. A user asks: "My father passed away and I need to cancel everything urgently." The bot cannot find a flight-related intent and keeps prompting the user to try again. What responsible AI design principle is violated?
+
+A. Fairness — the bot treats users differently based on message length
+
+B. Transparency — the user does not know they are talking to a bot
+
+C. Graceful escalation — the bot has no path to transfer the user to a human agent
+
+D. Privacy — the bot is storing the user's personal situation without consent
+
+### Q9 — Correct Answer
+
+C. Graceful escalation — the bot has no path to transfer the user to a human agent
+
+### Q9 — Distractor Analysis
+
+- A is incorrect: There is no indication the bot is treating users differently by demographic or message length. The failure is about handling out-of-scope distress, not fairness.
+- B is incorrect: The scenario does not provide evidence the user is unaware they are talking to a bot. Transparency may be a concern but is not the primary failure in this scenario.
+- D is incorrect: While conversation logging raises privacy considerations, the immediate design failure described is the bot looping without offering a human handoff in a clearly sensitive situation.
+
+---
+
+## Question 10
+
+Question Answering (formerly QnA Maker) supports follow-up prompts. What is the primary purpose of this feature?
+
+A. To send the user's question to a CLU model when the QA model is not confident
+
+B. To enable multi-turn conversations by linking answers to related follow-up questions
+
+C. To automatically generate new Q&A pairs from unmatched user queries
+
+D. To translate the answer into the user's detected language
+
+### Q10 — Correct Answer
+
+B. To enable multi-turn conversations by linking answers to related follow-up questions
+
+### Q10 — Distractor Analysis
+
+- A is incorrect: Routing to CLU when confidence is low is the function of an Orchestration Workflow, not follow-up prompts.
+- C is incorrect: Generating new Q&A pair suggestions from unmatched queries is the Active Learning feature, not follow-up prompts.
+- D is incorrect: Translation is handled by Azure AI Translator, not by Question Answering's follow-up prompt feature.
+
+---
+
+End of Quiz — Module 09

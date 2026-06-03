@@ -1,267 +1,325 @@
-# Lab Activity: Module 07 - Azure Cognitive Services: Vision, Speech, and Language
+# Lab 07 — Computer Vision with Azure
 
-## Course: CIS-4330 Introduction to AI | Texas Wesleyan University
+## Course: CIS-4330 Introduction to Artificial Intelligence
 
-**AI-900 Domain:** All five workload domains
-**Points:** 100
-**Submission:** Canvas LMS — Module 07 Lab Assignment
+## Texas Wesleyan University | Professor Nash
 
----
-
-## Objectives
-
-By the end of this lab, you will be able to:
-
-- Select the correct Azure Cognitive Service and specific capability for a given business scenario.
-- Distinguish between services that require custom training and those that are prebuilt.
-- Interpret structured JSON output from multiple Azure Cognitive Services.
-- Explain the provisioning steps required to deploy any Cognitive Service.
-- Apply responsible AI reasoning to gated service access decisions.
+## AI-900 Alignment: Describe features of computer vision workloads on Azure
 
 ---
 
-## Prerequisites
+## Lab Overview
 
-No Azure subscription is required. All exercises are service selection, interpretation, and analysis tasks. You will need:
+In this lab you will provision an Azure AI Vision resource, call the Analyze Image REST endpoint programmatically, perform OCR on a document image, and build and test a Custom Vision image classifier. You will document your findings and submit screenshots and written responses.
 
-- Module 07 video lecture (completed).
-- Module 07 reading guide (completed), especially Table 1 (master service-to-task mapping).
+### Learning Objectives
 
----
+By completing this lab you will be able to:
 
-## Part A: Service Selection (40 points)
+- Create and configure an Azure AI Vision resource
+- Call the Analyze Image API and interpret the JSON response
+- Use the Read API to extract text from an image
+- Build a Custom Vision classifier with at least three categories
+- Evaluate model performance using Precision, Recall, and Average Precision
+- Explain one responsible use consideration raised by your lab work
 
-For each scenario, identify the specific Azure Cognitive Service AND the specific capability within that service. Then indicate whether custom training is required.
+### Prerequisites
 
-Use the exact service names and capability names from Table 1 in the reading guide.
+- Active Azure for Students subscription (free at azure.microsoft.com/en-us/free/students/)
+- A web browser and access to the Azure portal (portal.azure.com)
+- Python 3.8+ installed locally, OR use Azure Cloud Shell
+- Basic familiarity with REST APIs and JSON
 
-Format your answer as:
+### Time Estimate
 
-- Service: ________________
-- Capability: ________________
-- Custom training required: Yes / No
-
-### Scenario 1
-
-A radio station wants to automatically generate transcripts of all broadcast episodes for posting on their website. Audio files are uploaded in MP3 format after each episode.
-
-### Scenario 2
-
-A bank wants to detect unusual spikes or drops in its daily transaction volume over the past 18 months to identify potential fraud windows or system outages.
-
-### Scenario 3
-
-An accessibility nonprofit wants to add a feature to their mobile app that reads aloud the text in any photograph a user points their phone at — street signs, restaurant menus, product labels.
-
-### Scenario 4
-
-A legal services firm wants to automatically remove all names, addresses, phone numbers, and social security numbers from client documents before sharing them with third-party analysts.
-
-### Scenario 5
-
-A hardware retailer wants to build a smart mirror in their bathroom showroom. When a customer says "I want to see the blue granite countertop option," the mirror's AI recognizes the intent (view product option) and the entity (product = blue granite countertop) to display the correct product image.
-
-### Scenario 6
-
-A news aggregation startup wants to determine the language of each article it ingests — whether it is English, Spanish, French, Mandarin, or one of 70+ other languages — to route articles to the correct editorial team.
-
-### Scenario 7
-
-A food delivery platform wants to personalize which promotional banners each user sees on the app home screen based on their order history, time of day, and location, learning over time which promotions convert best for each user type.
-
-### Scenario 8
-
-A children's educational app needs a character with a custom voice that sounds like the company's mascot. They have recordings of a voice actor performing in that character's style.
-
-### Scenario 9
-
-A customs agency receives thousands of invoices per day from importers. Each invoice contains vendor name, shipment date, cargo description, and declared value. The agency needs to extract these fields automatically from scanned invoice PDFs.
-
-### Scenario 10
-
-An insurance company receives photos of accident scenes. They want to automatically identify and locate all vehicles, pedestrians, and road signs in each photo to assist claims adjusters.
+Approximately 90–120 minutes.
 
 ---
 
-## Part B: Prebuilt vs Custom Training (20 points)
+## Part A: Provision Azure AI Vision (20 minutes)
 
-For each scenario, write "Prebuilt" or "Custom Training Required" and provide a two-sentence justification explaining why.
+### Step A1: Create the Resource
 
-### Scenario 11
+1. Sign in to the Azure portal at portal.azure.com.
+2. Select **Create a resource** from the left navigation or the home page.
+3. In the search box type **Computer Vision** and press Enter.
+4. Select **Computer Vision** from the results and click **Create**.
+5. Fill in the creation form with the following values:
 
-A global corporation wants to analyze 200,000 English customer emails for sentiment to understand overall satisfaction trends. The sentiment categories are standard: positive, negative, neutral.
+   - **Subscription**: Your Azure for Students subscription
+   - **Resource group**: Click **Create new** and name it `cis4330-mod07-rg`
+   - **Region**: East US (or the region nearest to you)
+   - **Name**: `cis4330-vision-<your-initials>` (must be globally unique)
+   - **Pricing tier**: Free F0
 
-### Scenario 12
+6. Click **Review + create**, then **Create**.
+7. Wait for deployment to complete (typically 30–60 seconds).
+8. Click **Go to resource**.
 
-A pharmaceutical company wants to extract drug names, clinical trial IDs, and patient dosage levels from unstructured clinical notes. These entity types are not in the standard NER model.
+### Step A2: Retrieve Your Credentials
 
-### Scenario 13
+1. On the resource overview page, click **Keys and Endpoint** in the left menu.
+2. Copy **KEY 1** to a text file — you will use this as your API key.
+3. Copy the **Endpoint** URL — it will look like `https://eastus.api.cognitive.microsoft.com/`.
+4. Keep this tab open; you will need these values throughout the lab.
 
-A logistics company wants to extract vendor name, total amount, and delivery date from standard commercial invoices using Azure Form Recognizer.
+### Deliverable A
 
-### Scenario 14
-
-A restaurant chain wants to build a voice assistant that responds to orders: "I'd like a large pepperoni pizza with extra cheese for pickup." The system needs to recognize the ordering intent and extract pizza type, size, toppings, and fulfillment method.
-
-### Scenario 15
-
-A city government wants to detect anomalous water usage readings from smart meters to identify potential pipe leaks. They have two years of daily meter readings but no labeled examples of leak events.
+Take a screenshot of the **Keys and Endpoint** page showing your endpoint URL (you may blur or crop the key value for security). Label this screenshot **Lab07-A-Credentials**.
 
 ---
 
-## Part C: Interpreting Multi-Service Output (25 points)
+## Part B: Analyze Image API (30 minutes)
 
-Read the following scenario and JSON output fragments, then answer the questions.
+### Step B1: Prepare a Test Image
 
-A customer service platform uses three Azure Cognitive Services in sequence:
+Choose any publicly accessible image URL from the web. Good options include:
 
-Step 1 — Azure Speech Service transcribes the customer's audio call.
-Step 2 — Azure Language Service analyzes the transcript.
-Step 3 — Azure Language Understanding (CLU) identifies the customer's intent.
+- A photo of a city street (tests object detection, OCR on signs)
+- A photo of a kitchen (tests object and scene recognition)
+- A photo of a document with visible text (tests OCR alongside analysis)
 
-The following outputs were produced for one call:
+Note your image URL — you will use it in the API call.
 
-Speech-to-Text output:
+### Step B2: Call the Analyze Image API
 
-```json
-{
-  "transcript": "I've been waiting three weeks for my order and nobody has called me back. I want a full refund immediately.",
-  "confidence": 0.961
+You can make this call using Python, curl, or the Azure Cloud Shell. The instructions below use Python.
+
+Create a file named `lab07_analyze.py` with the following content, replacing the placeholder values:
+
+```python
+import requests
+import json
+
+ENDPOINT = "https://<your-endpoint>/"
+API_KEY  = "<your-key-1>"
+IMAGE_URL = "<your-image-url>"
+
+url = (
+    ENDPOINT
+    + "computervision/imageanalysis:analyze"
+    + "?api-version=2023-02-01-preview"
+    + "&features=tags,caption,objects,read"
+    + "&language=en"
+    + "&gender-neutral-captions=true"
+)
+
+headers = {
+    "Ocp-Apim-Subscription-Key": API_KEY,
+    "Content-Type": "application/json"
 }
+
+body = {"url": IMAGE_URL}
+
+response = requests.post(url, headers=headers, json=body)
+response.raise_for_status()
+
+result = response.json()
+print(json.dumps(result, indent=2))
 ```
 
-Language Service — Sentiment output:
+Run the script:
 
-```json
-{
-  "sentiment": "negative",
-  "confidenceScores": {"positive": 0.02, "neutral": 0.04, "negative": 0.94}
-}
+```bash
+python lab07_analyze.py
 ```
 
-Language Service — NER output:
+### Step B3: Interpret the Response
 
-```json
-{
-  "entities": [
-    {"text": "three weeks", "category": "Quantity", "subcategory": "Duration", "score": 0.99},
-    {"text": "full refund", "category": "Product", "score": 0.71}
-  ]
-}
-```
+Review the JSON output and answer the following questions in your lab write-up.
 
-CLU output:
+1. What are the top three tags returned, and what are their confidence scores?
+2. What caption did the service generate for the image?
+3. How many objects were detected? List the object names and their bounding box coordinates.
+4. If any text was detected, what was it?
 
-```json
-{
-  "topIntent": "RequestRefund",
-  "confidence": 0.912,
-  "entities": [
-    {"category": "RefundType", "text": "full refund", "confidence": 0.88}
-  ]
-}
-```
+### Deliverable B
 
-### Question 16 (7 points)
-
-The platform automatically routes calls with negative sentiment above 0.85 and a "RequestRefund" intent above 0.80 to a senior customer service agent. Does this call meet the escalation criteria? Show your reasoning by referencing specific values from the JSON outputs.
-
-Your answer: ________________
-
-### Question 17 (8 points)
-
-NER identified "full refund" with category "Product" and confidence 0.71. CLU also extracted "full refund" as a "RefundType" entity with confidence 0.88. Explain the conceptual difference between what NER and CLU are doing with the same text. Which output is more useful for routing this call to the refund processing team and why?
-
-Your answer: ________________
-
-### Question 18 (10 points)
-
-Design a business rule system that uses the three services' outputs together to automate routing decisions. Propose at least three routing scenarios based on combinations of sentiment, intent, and entity values. For each scenario, describe the input combination and the automated action.
-
-Your answer: ________________
+Paste the full JSON response into your lab document (truncate if longer than 100 lines). Answer the four questions above.
 
 ---
 
-## Part D: Service Provisioning Knowledge (15 points)
+## Part C: OCR with the Read API (20 minutes)
 
-Answer each question in two to three complete sentences.
+### Step C1: Choose a Document Image
 
-### Question 19 (5 points)
+Find or create an image that contains printed text. Good options:
 
-A developer needs to use both Azure Computer Vision and Azure Language Service in the same application. They want to manage one set of credentials rather than two separate sets. What Azure resource type should they create, and what is the benefit?
+- A scanned or photographed page of text
+- A screenshot of a web article
+- A photo of a printed sign or poster
 
-Your answer: ________________
+Upload the image to a publicly accessible URL, or use a local file path.
 
-### Question 20 (5 points)
+### Step C2: Call the Read API
 
-A team is building a proof-of-concept using Azure Speech Service and wants to keep costs near zero during development. What pricing tier should they select, and what limitation should they be aware of?
+The Read API is asynchronous. You first submit the image, then poll for results. Add the following to a new file named `lab07_ocr.py`:
 
-Your answer: ________________
+```python
+import requests
+import time
+import json
 
-### Question 21 (5 points)
+ENDPOINT = "https://<your-endpoint>/"
+API_KEY  = "<your-key-1>"
+IMAGE_URL = "<your-document-image-url>"
 
-A developer calls the Azure Language Service sentiment analysis API and receives a 401 Unauthorized error. What is the most likely cause of this error, and how is it resolved?
+# Step 1: Submit the read operation
+submit_url = ENDPOINT + "computervision/imageanalysis:analyze"
+params = {
+    "api-version": "2023-02-01-preview",
+    "features": "read"
+}
+headers = {
+    "Ocp-Apim-Subscription-Key": API_KEY,
+    "Content-Type": "application/json"
+}
+body = {"url": IMAGE_URL}
 
-Your answer: ________________
+response = requests.post(submit_url, headers=headers,
+                         params=params, json=body)
+response.raise_for_status()
+result = response.json()
 
----
+# Step 2: Print extracted text
+read_result = result.get("readResult", {})
+blocks = read_result.get("blocks", [])
+for block in blocks:
+    for line in block.get("lines", []):
+        print(line.get("text", ""))
+```
 
-## Answer Key and Grading Rubric
+Run the script and observe the extracted text output.
 
-### Part A (4 points per scenario = 40 points)
+### Deliverable C
 
-Scoring: 4 pts = correct service, correct capability, correct custom training indicator. 2 pts = correct service with wrong capability. 0 pts = incorrect service.
-
-Scenario 1: Azure Speech Service / Speech-to-Text (ASR). No custom training.
-
-Scenario 2: Azure Anomaly Detector / Anomaly Detection (time series). No custom training.
-
-Scenario 3: Azure Computer Vision / OCR Read API. No custom training.
-
-Scenario 4: Azure Language Service / PII Detection. No custom training.
-
-Scenario 5: Azure Language Service / Conversational Language Understanding (CLU). Yes, custom training required.
-
-Scenario 6: Azure Language Service / Language Detection. No custom training.
-
-Scenario 7: Azure Personalizer / Content Personalization. No (learns from user interaction rewards).
-
-Scenario 8: Azure Speech Service / Custom Neural Voice (Text-to-Speech). Yes, custom training required + gated access.
-
-Scenario 9: Azure Form Recognizer / Prebuilt Invoice model (Document Intelligence). No custom training.
-
-Scenario 10: Azure Computer Vision / Object Detection. No custom training.
-
-### Part B (4 points per scenario = 20 points)
-
-Scenario 11: Prebuilt. Standard English sentiment analysis is covered by the prebuilt Language Service capability.
-
-Scenario 12: Custom Training Required. Domain-specific entities (drug names, trial IDs, dosage) are not in the standard NER model.
-
-Scenario 13: Prebuilt. Azure Form Recognizer includes a prebuilt invoice model that handles standard commercial invoice fields.
-
-Scenario 14: Custom Training Required. CLU intent recognition requires defining intents, labeling example utterances, and training the model on restaurant-ordering vocabulary.
-
-Scenario 15: Prebuilt. Azure Anomaly Detector learns normal patterns from historical data without labeled anomaly examples.
-
-### Part C (25 points)
-
-Q16: Yes — sentiment is negative at 0.94 (exceeds 0.85 threshold) AND RequestRefund intent confidence is 0.912 (exceeds 0.80 threshold). Both criteria are met; the call should be routed to a senior agent.
-
-Q17: NER identifies the text "full refund" as a general named entity and tries to fit it into a standard category (Product in this case, which is incorrect). CLU extracts "full refund" as the RefundType entity within the specific intent context — this is semantically correct for the business use case. CLU output is more useful because it correctly categorizes the entity within the conversation's purpose, enabling automated routing to the refund team.
-
-Q18: Full credit requires three distinct routing scenarios with specific threshold values from the outputs. Examples: (1) Negative sentiment > 0.85 + RequestRefund > 0.80 → senior agent queue. (2) Negative sentiment > 0.70 + any "Request" intent → standard escalation queue. (3) Positive sentiment > 0.70 + any intent → automated resolution with satisfaction survey sent.
-
-### Part D (5 points each = 15 points)
-
-Q19: Create a multi-service Cognitive Services resource. This provides a single endpoint URL and subscription key that authenticates calls to multiple Cognitive Services, simplifying credential management in code.
-
-Q20: Select the Free tier (F0). The free tier typically provides 5,000 transactions per month at no cost. Limitation: lower transaction limits and sometimes lower latency SLAs than standard tiers.
-
-Q21: The most likely cause is a missing or incorrect subscription key in the Ocp-Apim-Subscription-Key header. Resolution: verify the key was copied correctly from the Azure portal "Keys and Endpoint" page, and ensure it is passed in the correct header.
+1. Screenshot of the terminal showing the extracted text.
+2. Short written answer (3–5 sentences): How accurately did the OCR capture the text in your image? Were there any errors? What do you think caused them?
 
 ---
 
-## Deliverable
+## Part D: Custom Vision Classifier (30 minutes)
 
-Submit a single document (PDF or Word) with all answers. Include the relevant JSON excerpts inline with Part C answers to show which values you are referencing. Include your name, course section, and date at the top. Upload to the Module 07 Lab Assignment in Canvas by the posted due date.
+### Step D1: Create a Custom Vision Resource
+
+1. Navigate to customvision.ai and sign in with your Azure credentials.
+2. Click **New Project**.
+3. Fill in the project form:
+
+   - **Name**: `lab07-classifier`
+   - **Resource**: Create new → select your resource group `cis4330-mod07-rg` → Free F0 tier
+   - **Project Types**: Classification
+   - **Classification Types**: Multiclass (Single Tag per Image)
+   - **Domains**: General [A2] (recommended for most scenarios)
+
+4. Click **Create project**.
+
+### Step D2: Collect Training Images
+
+Choose a classification scenario with exactly three categories. Suggestions:
+
+- Three types of fruit (apple, banana, orange)
+- Three types of weather (sunny, cloudy, rainy)
+- Three types of clothing (shirt, pants, shoes)
+
+For each category, collect at least 15 images. You can:
+
+- Search Google Images and download
+- Use free image sources such as Unsplash or Pixabay
+- Take your own photos
+
+Store images in three separate folders named after their categories.
+
+### Step D3: Upload and Tag Images
+
+1. In your Custom Vision project, click **Add images**.
+2. Upload all images for your first category and enter the category name as the tag.
+3. Repeat for the remaining two categories.
+4. Verify each category shows at least 15 tagged images in the gallery.
+
+### Step D4: Train the Model
+
+1. Click **Train** in the top menu.
+2. Select **Quick Training** and click **Train**.
+3. Wait for training to complete (typically 2–5 minutes).
+4. When the **Performance** tab appears, record the metrics:
+
+   - Overall Precision
+   - Overall Recall
+   - Mean Average Precision (mAP)
+   - Per-tag Precision and Recall
+
+### Step D5: Test the Model
+
+1. Click **Quick Test** in the top menu.
+2. Enter the URL of an image you did NOT use in training, from one of your three categories.
+3. Observe the prediction and confidence score.
+4. Test at least three different images (one per category).
+
+### Deliverable D
+
+1. Screenshot of the Performance tab showing your trained model metrics.
+2. Screenshot of at least one Quick Test prediction.
+3. Written answers to these questions:
+
+   - Which category had the highest Average Precision? Why do you think that is?
+   - Did any category perform poorly? What might be causing the lower performance?
+   - How would you improve the model if you had more time?
+
+---
+
+## Part E: Reflection and Responsible AI (10 minutes)
+
+Answer the following in 150–200 words:
+
+Your Custom Vision model classifies images into the categories you chose. Consider a scenario where an organization deploys a computer vision system to classify people's behavior in a workplace — for example, detecting whether workers are wearing safety helmets.
+
+Address the following points:
+
+1. What bias risks exist when training this type of model?
+2. What data privacy considerations should the organization address before deployment?
+3. How should the organization handle cases where the model's prediction is wrong?
+
+---
+
+## Submission Requirements
+
+Submit to the course LMS by the posted deadline. Include all of the following.
+
+- **Lab07-A-Credentials** screenshot (key blurred or cropped)
+- Full JSON response from Part B with written answers to the four interpretation questions
+- OCR screenshot and written accuracy assessment from Part C
+- Custom Vision Performance tab screenshot and Quick Test screenshot from Part D
+- Written answers to the three Part D analysis questions
+- Reflection response from Part E (150–200 words)
+
+---
+
+## Grading Rubric
+
+| Component | Points | Criteria |
+|-----------|--------|----------|
+| Part A — Resource provisioning | 10 | Screenshot shows correct resource type and endpoint |
+| Part B — Analyze Image call | 20 | Valid JSON response; all four questions answered with specifics |
+| Part C — OCR extraction | 15 | Extracted text shown; accuracy assessment thoughtful |
+| Part D — Custom Vision training | 30 | Model trained with 3 tags, 15+ images each; metrics recorded; 3 test predictions shown |
+| Part D — Analysis questions | 15 | Specific and accurate explanations referencing actual metrics |
+| Part E — Reflection | 10 | Addresses bias, privacy, and error handling substantively |
+| **Total** | **100** | |
+
+---
+
+## Cleanup (Important)
+
+To avoid incurring Azure charges beyond the free tier, delete your resource group after submitting the lab.
+
+1. In the Azure portal, navigate to **Resource groups**.
+2. Select `cis4330-mod07-rg`.
+3. Click **Delete resource group**.
+4. Type the resource group name to confirm and click **Delete**.
+
+Custom Vision resources within the group will also be deleted.
+
+---
+
+End of Lab 07

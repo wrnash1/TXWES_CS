@@ -1,67 +1,250 @@
-# Reading Guide: Module 15 – Migration to GCP: Transfer Service and Migrate for Compute Engine
-## Course: CIS-4329 – Google Cloud Administration (Google Cloud Associate Cloud Engineer)
+# Reading Guide: Module 15 — GCP Cost Management and Billing
+
+## Course: CIS-4329 Google Cloud Computing
+
+## Texas Wesleyan University | Professor Nash
+
+## Certification Alignment: Google Cloud Associate Cloud Engineer (ACE)
 
 ---
 
-### Introduction
-Welcome to **Module 15 – Migration to GCP: Transfer Service and Migrate for Compute Engine**! Moving workloads and data to GCP requires selecting the right migration tool for the source environment and data type. This module covers Storage Transfer Service and Transfer Appliance for data migration, Migrate for Compute Engine (formerly Velostrata) for VM lift-and-shift migrations, and Database Migration Service for moving relational databases to Cloud SQL or AlloyDB. The ACE exam tests your ability to select the correct migration tool for a given scenario and understand the key tradeoffs between tools.
+## Introduction
+
+Module 15 covers GCP cost management and billing — a domain tested on every ACE exam and an essential operational skill for any GCP administrator. Cloud costs can grow rapidly without active governance: idle VMs accumulate charges, over-provisioned instances waste budget, and unmanaged storage transitions to high-cost tiers. This module provides the framework for understanding GCP billing, controlling costs proactively, and analyzing spending with data.
+
+The ACE exam tests cost management through scenario questions: which discount type applies to a given workload, how to enforce a spending limit programmatically, which tool identifies over-provisioned resources, and how to implement cost allocation across teams. This guide consolidates all terms, tables, and decision frameworks needed to answer those questions correctly.
 
 ---
 
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The ACE exam tests these concepts in scenario-based questions.
+## Section 1: High-Yield Glossary
 
-*   **Storage Transfer Service**: A fully managed GCP service that transfers data from Amazon S3, Azure Blob Storage, HTTP/HTTPS sources, or on-premises file systems to Cloud Storage. Supports one-time and recurring scheduled transfers. For on-premises sources, the Transfer Service for On Premises Data agent runs on your local network to read and upload data. Best for data sets that can be transferred over the network in a reasonable timeframe.
+**Cloud Billing Account** — A GCP resource that defines who pays for a set of GCP projects. A billing account is linked to one or more projects. Each project must be linked to exactly one active billing account for paid resources to function. Billing accounts are linked to a Google payments profile (credit card or invoiced billing for enterprise customers).
 
-*   **Transfer Appliance**: A physical hardware device shipped by Google that you fill with data (up to 1 PB per appliance) and ship back to Google for ingestion into Cloud Storage. Use Transfer Appliance when the data volume is so large that transferring over the internet would take weeks or months (as a rule of thumb, when network transfer would take more than one week). Transfer Appliance is offline — your data is loaded onto the device without a network transfer.
+**Billing account roles** — IAM roles controlling access to billing account operations:
 
-*   **Migrate for Compute Engine**: A GCP service that replicates on-premises or other-cloud VMs to GCP using continuous block-level replication. Migrations can be tested in GCP before cutover, and the cutover itself causes only minutes of downtime. After migration, VMs run as Compute Engine instances. Supports sources including VMware vSphere, AWS EC2, and Azure VMs.
+- `roles/billing.viewer` — view costs and invoices; no modifications
+- `roles/billing.admin` — full control: link/unlink projects, modify payment methods, manage budgets
+- `roles/billing.projectManager` — link and unlink projects to billing accounts; no payment method access
+- `roles/billing.budgetAdmin` — create and manage budgets without full billing admin access
 
-*   **Database Migration Service (DMS)**: A fully managed service for migrating relational databases to Cloud SQL (MySQL, PostgreSQL, SQL Server) or AlloyDB with minimal downtime. DMS uses continuous change data capture (CDC) replication to keep the destination database in sync with the source until cutover. The source database can remain online and serving traffic during migration.
+**Cloud Billing Budget** — A spending threshold that triggers notifications when costs reach defined percentages of the budget amount. Budgets are informational by default — they do not stop resource usage. Up to five alert thresholds per budget. Notifications go to billing admins via email and/or a Pub/Sub topic.
 
-*   **Lift-and-Shift vs. Re-platform vs. Re-architect**: Three migration strategies. Lift-and-shift moves workloads to GCP with no code changes (use Migrate for Compute Engine). Re-platform adapts the workload to use managed services (e.g., moving from self-managed MySQL on a VM to Cloud SQL). Re-architect refactors the application to be cloud-native (e.g., decomposing a monolith into Cloud Run microservices). The ACE exam tests choosing the right strategy for a given scenario.
+**Programmatic cost cap** — The pattern of connecting a budget Pub/Sub notification to a Cloud Function that calls the Cloud Billing API to disable billing on a project when a threshold is exceeded. Disabling billing stops all paid resources in the project. This is the only GCP-native mechanism to automatically stop resource usage based on spending.
 
-*   **Cloud Storage Transfer Service vs. `gsutil`**: For large-scale data migration, Storage Transfer Service is preferred over `gsutil rsync` because it runs fully managed without requiring a local machine to stay connected, supports scheduling, and provides transfer job monitoring. `gsutil` is appropriate for ad hoc small uploads and scripted operations but requires a persistent client connection.
+**Committed Use Discounts (CUDs)** — Discounts on Compute Engine resources in exchange for a usage commitment:
+
+- Resource-based CUDs: commit to a specific amount of vCPU and memory in a specific region for 1 or 3 years. Up to 57% off on-demand pricing (3-year) or 37% (1-year). Applied at project level.
+- Spend-based CUDs: commit to a minimum monthly spend on specific services (Cloud SQL, VMware Engine). Applied at billing account level.
+
+**Sustained Use Discounts (SUDs)** — Automatic discounts applied when a Compute Engine VM runs for more than 25% of a calendar month. No commitment required; GCP applies them automatically. Maximum discount approximately 30% at 100% monthly usage. Applies to N1 and N2 machine types only. Does not apply to E2, Spot VMs, preemptible VMs, A2 GPU instances, or Cloud SQL.
+
+**Preemptible VM** — A Compute Engine VM type that uses excess GCP capacity at up to 91% discount. Can be reclaimed by GCP at any time with 30 seconds notice. Automatically terminated after 24 hours maximum runtime. Replaced by Spot VMs as the recommended product.
+
+**Spot VM** — The current recommended product for discounted interruptible compute. Same deep discount as preemptible VMs (up to 91%) but with no maximum 24-hour runtime. Can still be preempted at any time when GCP needs capacity back.
+
+**Billing export to BigQuery** — The configuration that sends Cloud Billing data (standard or detailed usage cost) to a BigQuery dataset on a daily basis. Enables SQL-based cost analysis, cost allocation by label, and historical trend analysis. Not retroactive — data populates from the date export is enabled.
+
+**Resource labels** — Key-value metadata attached to GCP resources (VMs, buckets, Cloud SQL instances, etc.). Labels appear in billing export data, enabling cost allocation by team, environment, application, or cost center. Example: `team: payments`, `env: production`, `app: checkout-service`.
+
+**GCP Recommender** — A service that analyzes resource usage and configuration to produce actionable optimization recommendations. Cost-relevant recommenders include: Idle VM Recommender, VM Rightsizing Recommender, Unattached Disk Recommender, Idle IP Address Recommender, and CUD Recommender.
+
+**VM Rightsizing Recommender** — Identifies Compute Engine VMs that are consistently over-provisioned based on CPU and memory utilization over the past 14 days. Recommends switching to a smaller machine type with projected monthly savings. Accessible via Cloud Console and the gcloud CLI.
+
+**Object Lifecycle Management** — A Cloud Storage configuration that automatically transitions objects to lower-cost storage classes or deletes objects based on age or other conditions. Used to move infrequently accessed data to Nearline, Coldline, or Archive storage classes to reduce storage costs.
+
+**Cloud Storage classes** — Storage tiers with different per-GB pricing and minimum storage duration requirements:
+
+- Standard: no minimum duration; highest per-GB price; for frequently accessed data
+- Nearline: 30-day minimum; for data accessed less than once per month
+- Coldline: 90-day minimum; for data accessed less than once per quarter
+- Archive: 365-day minimum; lowest per-GB price; for data accessed less than once per year
+
+**GCP Pricing Calculator** — A web tool for estimating monthly GCP costs before provisioning resources. Supports detailed configuration of most GCP services and can compare on-demand vs. CUD pricing.
+
+**Always Free tier** — Specific monthly quotas of GCP services that are permanently free, regardless of billing account status. Key limits: 1 f1-micro VM/month (selected US regions), 5 GB Regional storage, 10 GB BigQuery storage + 1 TB query processing, 2 million Cloud Functions invocations.
 
 ---
 
-### 2. Certification Exam Tips
+## Section 2: Discount Type Decision Framework
 
-*   **Bandwidth determines Transfer Appliance vs. online transfer**: The exam uses bandwidth and data size to test which tool is appropriate. If moving 500 TB over a 1 Gbps link would take more than a week, Transfer Appliance is the answer. If the data is tens of GB or a few TB and the network is fast enough to complete transfer in days, Storage Transfer Service is correct.
-
-*   **DMS requires network connectivity to the source**: Database Migration Service connects to the source database over the network. For on-premises sources, this typically requires Cloud VPN or Cloud Interconnect. The exam may test that DMS cannot migrate a database that has no network path to GCP.
-
-*   **Migrate for Compute Engine preserves VM configurations**: Unlike manually re-creating VMs in GCP, Migrate for Compute Engine replicates the exact disk contents, including OS, applications, and data. The migrated VM runs identically on Compute Engine. No application changes are required.
-
-*   **One-time vs. recurring transfers**: Storage Transfer Service supports both. One-time transfers for a bulk data migration, and recurring transfers for ongoing synchronization (e.g., keeping a GCS bucket in sync with an S3 bucket as a data sharing arrangement). The ACE exam tests whether you know to use a scheduled recurring transfer for ongoing sync versus a one-time job for a migration.
-
-*   **Study Resource**: The freeCodeCamp ACE course covers Storage Transfer Service, Migrate for Compute Engine, and Database Migration Service with architecture overviews: [Google Cloud ACE Certification Course by freeCodeCamp](https://www.youtube.com/watch?v=UGRDM86MBIQ). Navigate to the Migration chapter using the video index.
-
----
-
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-
-*   **Required Reading**: Review the Storage Transfer Service overview including supported sources, transfer job configuration, and the on-premises agent for local network transfers: [Storage Transfer Service Overview](https://cloud.google.com/storage-transfer/docs/overview). The source types and scheduling options are directly exam-relevant.
-*   **Required Reading**: Review the Migrate for Compute Engine overview to understand the replication-based migration workflow, test clone capabilities, and supported source environments: [Migrate for Compute Engine Overview](https://cloud.google.com/migrate/compute-engine/docs/5.0/concepts/migrate-for-compute-engine-overview).
-*   **Required Video**: Watch the Migration segment of the ACE certification course: [Google Cloud ACE Certification Course by freeCodeCamp](https://www.youtube.com/watch?v=UGRDM86MBIQ). Navigate to the GCP Migration chapter using the video index.
+| Workload Characteristic | Recommended Discount | Reason |
+|---|---|---|
+| Runs 24/7, stable resource usage, 3-year horizon | Resource-based 3-year CUD | Maximum discount (57%); no usage uncertainty |
+| Runs 24/7, stable usage, 1-year horizon | Resource-based 1-year CUD | 37% discount; lower commitment risk |
+| Variable usage, no long-term commitment desired | Sustained Use Discount | Automatic, no commitment, up to 30% |
+| Batch workload, can tolerate interruption | Spot VM | Up to 91% discount; preemption acceptable |
+| Dev/test VMs, idle overnight | Schedule stop/start | Cost reduction via zero-hours billing |
+| Cloud SQL production instance | Spend-based CUD | Resource-based CUD not available for Cloud SQL |
 
 ---
 
-### Lab & Command Integration
-In this module's lab, you will create a Storage Transfer Service job to move data from an S3 bucket to Cloud Storage and review the migration architecture for Migrate for Compute Engine. Key commands to practice:
+## Section 3: Billing Export to BigQuery Reference
 
-*   `gcloud transfer jobs create gs://destination-bucket --source-agent-pool=projects/PROJECT/agentPools/default` — creates a transfer job from an on-premises source using the agent pool
-*   `gcloud transfer jobs list` — lists all Storage Transfer Service jobs in the project
-*   `gcloud transfer jobs describe JOB_NAME` — shows the status and configuration of a transfer job
-*   `gcloud database-migration migration-jobs create my-migration --region=us-central1 --type=CONTINUOUS --source=source-connection --destination=dest-connection` — creates a continuous DMS migration job
+### Setup Sequence
+
+1. Create a BigQuery dataset in a project (note: dataset must be in the same organization)
+2. Cloud Billing → Billing Export → BigQuery export → Enable
+3. Select billing account, destination project, and dataset name
+4. Data begins flowing within 24 hours of enablement
+
+### Key Billing Export Schema Fields
+
+| Field | Description |
+|---|---|
+| `project.id` | GCP project ID |
+| `service.description` | GCP service name (e.g., Compute Engine) |
+| `sku.description` | Specific SKU (e.g., N1 Predefined Instance Core) |
+| `usage_start_time` | Start of the usage period |
+| `cost` | Net cost after credits and discounts |
+| `labels` | Resource labels as key-value pairs |
+| `credits` | Discount credits applied (CUDs, SUDs, promotions) |
+
+### Sample Cost Analysis Queries
+
+Top services by cost in the past 30 days:
+
+```sql
+SELECT service.description, ROUND(SUM(cost), 2) AS total_cost
+FROM `project.dataset.gcp_billing_export_v1_XXXXXXXX`
+WHERE DATE(usage_start_time) >= DATE_SUB(CURRENT_DATE(), INTERVAL 30 DAY)
+GROUP BY service.description
+ORDER BY total_cost DESC;
+```
+
+Cost by label (team allocation):
+
+```sql
+SELECT
+  (SELECT value FROM UNNEST(labels) WHERE key = 'team') AS team,
+  ROUND(SUM(cost), 2) AS team_cost
+FROM `project.dataset.gcp_billing_export_v1_XXXXXXXX`
+WHERE DATE(usage_start_time) >= DATE_SUB(CURRENT_DATE(), INTERVAL 30 DAY)
+GROUP BY team
+ORDER BY team_cost DESC;
+```
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and be able to explain each in your own words.
-- [ ] Read the [Storage Transfer Service Overview](https://cloud.google.com/storage-transfer/docs/overview) documentation page.
-- [ ] Read the [Migrate for Compute Engine Overview](https://cloud.google.com/migrate/compute-engine/docs/5.0/concepts/migrate-for-compute-engine-overview) documentation page.
-- [ ] Watch the Migration segment of the [ACE Certification Course by freeCodeCamp](https://www.youtube.com/watch?v=UGRDM86MBIQ).
-- [ ] Complete the module lab: create a Storage Transfer Service job and review the Migrate for Compute Engine workflow.
-- [ ] Proceed to the weekly quiz.
+## Section 4: GCP Recommender Reference
+
+### Recommender Types and Access
+
+| Recommender | What It Finds | Access Path |
+|---|---|---|
+| Idle VM Recommender | VMs with < 5% CPU for 14 days | Compute Engine → VM instances → Recommendations |
+| VM Rightsizing Recommender | Over-provisioned VM machine types | Compute Engine → VM instances → Recommendations |
+| Unattached Disk Recommender | Persistent disks not attached for 30+ days | Compute Engine → Disks |
+| Idle IP Recommender | Reserved IPs not attached to any resource | VPC Network → IP addresses |
+| CUD Recommender | Recommended CUD purchases based on usage | Compute Engine → Committed use discounts |
+
+### gcloud CLI Access
+
+```bash
+# List all cost recommendations for a project
+gcloud recommender recommendations list \
+  --project=PROJECT_ID \
+  --location=global \
+  --recommender=google.compute.instance.MachineTypeRecommender
+
+# Mark a recommendation as claimed (applying the change)
+gcloud recommender recommendations mark-claimed RECOMMENDATION_ID \
+  --project=PROJECT_ID \
+  --location=LOCATION \
+  --recommender=RECOMMENDER_ID \
+  --etag=ETAG
+```
+
+---
+
+## Section 5: Cloud Storage Cost Optimization Reference
+
+### Storage Class Comparison
+
+| Class | Min Duration | Access Cost | Use Case |
+|---|---|---|---|
+| Standard | None | Free | Frequently accessed; active data |
+| Nearline | 30 days | Per-read charge | Monthly backups; data accessed < 1x/month |
+| Coldline | 90 days | Higher per-read charge | Quarterly archives; DR backups |
+| Archive | 365 days | Highest per-read charge | Long-term compliance archives; annual access |
+
+### Object Lifecycle Management Example
+
+```json
+{
+  "lifecycle": {
+    "rule": [
+      {
+        "action": {"type": "SetStorageClass", "storageClass": "NEARLINE"},
+        "condition": {"age": 30}
+      },
+      {
+        "action": {"type": "SetStorageClass", "storageClass": "COLDLINE"},
+        "condition": {"age": 90}
+      },
+      {
+        "action": {"type": "Delete"},
+        "condition": {"age": 365}
+      }
+    ]
+  }
+}
+```
+
+This lifecycle policy transitions objects to Nearline at 30 days, Coldline at 90 days, and deletes them at 365 days — automating cost optimization for log data, backups, or media archives.
+
+---
+
+## Section 6: ACE Exam Cost Scenario Patterns
+
+### Pattern 1: Programmatic Budget Enforcement
+
+Scenario: Enforce that spending on a development project never exceeds $500/month. When the limit is reached, all resource usage must stop automatically.
+
+Solution: Create a budget for $500 on the project with a 100% threshold alert and a Pub/Sub topic notification. Create a Cloud Function triggered by the Pub/Sub topic that calls `billingClient.UpdateProjectBillingInfo()` with `billingAccountName: ""` to disable billing on the project.
+
+### Pattern 2: Cost Allocation Across Teams
+
+Scenario: An organization has 15 teams sharing a single GCP billing account. Finance needs to chargeback costs to each team monthly.
+
+Solution: Apply consistent resource labels (`team: TEAM_NAME`) to all resources. Enable billing export to BigQuery. Create a scheduled BigQuery query that aggregates costs by the `team` label and exports to a spreadsheet or BI tool.
+
+### Pattern 3: Storage Cost Reduction for Log Data
+
+Scenario: A Cloud Storage bucket contains application logs. Logs older than 30 days are rarely accessed; logs older than 1 year are never accessed but must be retained for compliance.
+
+Solution: Configure Object Lifecycle Management: transition to Nearline at 30 days, transition to Archive at 365 days (do not delete — compliance retention required).
+
+### Pattern 4: Right-Sizing Compute
+
+Scenario: A GCP administrator suspects several Compute Engine VMs are over-provisioned after a traffic reduction. How do they identify and right-size them without manual analysis?
+
+Solution: Navigate to Compute Engine → VM instances → Recommendations tab and review VM Rightsizing Recommender suggestions. Apply recommended machine type changes to identified VMs during a maintenance window.
+
+---
+
+## Section 7: GCP Always Free Tier Reference
+
+| Service | Always Free Limit |
+|---|---|
+| Compute Engine | 1 f1-micro instance/month in us-west1, us-central1, or us-east1 (combined, not per region) |
+| Cloud Storage | 5 GB Regional storage in US |
+| BigQuery | 10 GB storage; 1 TB query processing/month |
+| Cloud Functions | 2 million invocations; 400,000 GB-seconds; 200,000 GHz-seconds |
+| Cloud Run | 2 million requests; 360,000 GB-seconds; 180,000 vCPU-seconds |
+| Pub/Sub | 10 GB messages/month |
+| Firestore | 1 GB storage; 50,000 reads/day; 20,000 writes/day; 20,000 deletes/day |
+| Cloud Shell | Free managed instance; 5 GB persistent disk |
+
+---
+
+## Section 8: Practice Questions
+
+**1.** An organization's development team has been leaving VMs running overnight and on weekends. The cloud administrator wants to automatically stop all VMs in the `dev` project at 6 PM daily and restart them at 8 AM. What GCP-native solution achieves this with no custom code?
+
+**2.** A GCP project has an active billing account. A Cloud Function is triggered by a budget alert Pub/Sub message and calls the Cloud Billing API to disable billing. What happens to the Compute Engine VMs running in the project when billing is disabled?
+
+**3.** An organization runs 40 n1-standard-4 VMs in us-central1 continuously for the past 12 months and plans to continue for at least 3 years. SUDs are currently providing a ~30% discount. What additional discount strategy would maximize savings?
+
+**4.** A team stores 10 TB of application logs in Cloud Storage Standard class. The logs are accessed frequently for the first 30 days, rarely for the next 60 days, and never accessed after 90 days but must be retained for 7 years for compliance. Design the Object Lifecycle Management policy.
+
+**5.** An organization wants to identify which GCP services are driving the highest costs and allocate charges to individual engineering teams. They have no existing cost management infrastructure. List the three configuration steps required to enable team-level cost allocation.

@@ -1,82 +1,313 @@
-# Quiz: Module 16 - Final Exam Preparation
-## Course: CIS-3321 – Network Administration (CompTIA Network+ N10-009)
+# Quiz: Module 16 — Network+ N10-008 Exam Preparation
+
+## Course: CIS-3321 Network Administration
+
+## Texas Wesleyan University | Professor Nash
+
+## Certification Alignment: CompTIA Network+ (N10-008)
+
+**Questions:** 20 | **Format:** Multiple choice | **Scope:** All five N10-008 domains
 
 ---
 
-**Question 1**
-A network engineer is designing the IP addressing scheme for a new office. The office requires exactly 6 separate subnets, with the largest subnet needing to support 28 hosts. The engineer has been allocated the 192.168.10.0/24 address block. Which subnet mask provides the correct number of host addresses per subnet while using address space efficiently, and how many usable host addresses does it provide?
+### Question 1
 
-A) /25 (255.255.255.128) — provides 126 usable hosts per subnet; efficiently supports 28 hosts but wastes address space compared to smaller options
-B) /27 (255.255.255.224) — provides 30 usable hosts per subnet; the smallest subnet mask that supports 28 hosts while leaving enough subnets for all 6 networks within the /24 block
-C) /28 (255.255.255.240) — provides 14 usable hosts per subnet; sufficient for the 28-host requirement with 2 usable addresses to spare per subnet
-D) /26 (255.255.255.192) — provides 62 usable hosts per subnet; required because the 28-host subnet must account for the network address, broadcast address, and 2 reserved gateway addresses, reducing usable hosts below 30
+A host receives the IP address 169.254.45.12 automatically. Which service has most likely failed?
 
-*   **Correct Answer:** B) /27 (255.255.255.224) — provides 30 usable hosts per subnet; the smallest subnet mask that supports 28 hosts while leaving enough subnets for all 6 networks within the /24 block
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* A /25 mask provides 126 usable hosts per subnet (128 total addresses minus 2 for network and broadcast). While it supports 28 hosts, it only creates 2 subnets from a /24 block — not enough for the 6 required subnets. A /25 is also far oversized for a 28-host requirement and wastes address space unnecessarily.
-    *   *Why C is incorrect:* A /28 mask provides only 14 usable hosts per subnet (16 total addresses minus 2). This does not support 28 hosts — it falls 14 addresses short of the requirement. A /28 would require at least two subnets to accommodate 28 hosts, which defeats the purpose of a single subnet.
-    *   *Why D is incorrect:* A /26 mask provides 62 usable hosts per subnet, which is more than sufficient but not the most efficient choice. The claim that 4 addresses must be reserved (network + broadcast + 2 gateway addresses) is incorrect — only the network address and broadcast address are reserved in every subnet; gateway addresses are simply regular host addresses assigned to a router interface and count within the 30 usable addresses provided by /27.
+- A. DNS
+- B. DHCP
+- C. NTP
+- D. NAT
 
----
+Correct Answer: B
 
-**Question 2**
-A user reports that their workstation can access file shares on the local network (192.168.1.x) by both IP address and hostname, but cannot reach any external websites or remote servers either by IP address or by hostname. The workstation is configured with a static IP address. Which is the most likely cause, and which command confirms it?
-
-A) DNS failure — the local DNS server is not resolving external hostnames; confirmed by running `nslookup www.google.com`, which would return a timeout or server failure error while local hostname resolution continues to work
-B) Default gateway misconfiguration — the workstation has no route to send traffic beyond the local subnet; confirmed by running `ipconfig /all` to verify the gateway address, then `ping` to the gateway IP to test reachability
-C) Duplicate IP address conflict — another device on the network is using the same static IP, causing intermittent connectivity; confirmed by running `arp -a` to check whether the workstation's IP maps to two different MAC addresses in the ARP cache
-D) MTU mismatch — the workstation's NIC is configured with a 9000-byte jumbo frame MTU that the upstream router does not support, causing large packets to be silently dropped while small packets (local file share traffic) pass successfully
-
-*   **Correct Answer:** B) Default gateway misconfiguration — the workstation has no route to send traffic beyond the local subnet; confirmed by running `ipconfig /all` to verify the gateway address, then `ping` to the gateway IP to test reachability
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* DNS failure would cause hostname resolution to fail, but the user would still be able to reach external servers by IP address — the question states that IP address access to external servers also fails. Since even direct IP access to external destinations fails, DNS is not the root cause. DNS failure only explains hostname failures, not IP-based failures.
-    *   *Why C is incorrect:* A duplicate IP address would cause intermittent connectivity failures on the local network — ARP conflicts typically disrupt local communication, not just external routing. The scenario describes consistent local access (both IP and hostname work locally) with consistent external failure, which is the classic symptom of a missing or incorrect default gateway, not an IP conflict.
-    *   *Why D is incorrect:* An MTU mismatch causing jumbo frame issues would typically manifest as large transfers failing while small packets (like ping) succeed — it would not cause a complete failure to reach all external destinations by IP. Additionally, jumbo frames (9000 bytes) must be explicitly configured; the default Ethernet MTU is 1500 bytes, and a standard workstation would not be set to 9000 bytes by default.
+Explanation: 169.254.0.0/16 is the APIPA range. Windows and other operating systems assign an APIPA address when a DHCP server cannot be reached.
 
 ---
 
-**Question 3**
-An organization's security policy requires that all remote access VPN connections use certificate-based mutual authentication, that VPN traffic is able to pass through public Wi-Fi hotspots and hotel networks that block non-standard ports, and that split tunneling is disabled so that all internet traffic from remote workers routes through the corporate security stack. Which VPN technology and configuration meets all three requirements?
+### Question 2
 
-A) IPsec IKEv2 VPN using pre-shared key (PSK) authentication on UDP port 500 with split tunneling disabled — PSK provides strong authentication, and UDP 500 is used by all corporate hotspots and hotels because it is the standard IKE negotiation port
-B) SSL/TLS VPN client using certificate-based mutual authentication on TCP port 443 with full-tunnel mode configured — port 443 passes through virtually all firewalls and captive portals, certificates provide mutual authentication, and full-tunnel routes all traffic through the corporate gateway
-C) GRE tunnel over IPsec using certificate authentication with full-tunnel routing — GRE encapsulation allows multicast and broadcast traffic that plain IPsec cannot carry, and port 443 can be configured as the GRE destination port to pass through restrictive networks
-D) L2TP/IPsec VPN using certificate authentication on UDP port 1701 with split tunneling disabled — L2TP/IPsec is the most widely supported VPN protocol and port 1701 is universally permitted through hotel and hotspot firewalls because it is the standard L2TP port
+Which OSI layer is responsible for logical addressing and routing packets between networks?
 
-*   **Correct Answer:** B) SSL/TLS VPN client using certificate-based mutual authentication on TCP port 443 with full-tunnel mode configured — port 443 passes through virtually all firewalls and captive portals, certificates provide mutual authentication, and full-tunnel routes all traffic through the corporate gateway
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* IPsec IKEv2 uses UDP port 500 for IKE negotiation and UDP port 4500 for NAT-traversal. These ports are frequently blocked by hotel and public Wi-Fi firewalls, which is precisely why SSL/TLS VPN on port 443 was developed as the firewall-traversal solution. PSK authentication also does not meet the certificate-based mutual authentication requirement.
-    *   *Why C is incorrect:* GRE is an encapsulation protocol that adds a GRE header to packets — it does not natively use port 443. While GRE over IPsec is a valid site-to-site VPN design, it does not change the underlying IPsec port requirements that cause hotel/hotspot firewall traversal problems. This answer contains a technically inaccurate claim about GRE port configuration.
-    *   *Why D is incorrect:* L2TP/IPsec uses UDP port 1701 (L2TP) plus UDP 500/4500 (IPsec). UDP port 1701 is commonly blocked by restrictive firewalls — it is not "universally permitted." L2TP/IPsec has the same firewall-traversal problems as standard IPsec. Hotel and public Wi-Fi networks almost universally permit TCP 443 (HTTPS) while often blocking UDP 500, 1701, and 4500.
+- A. Layer 2 (Data Link)
+- B. Layer 3 (Network)
+- C. Layer 4 (Transport)
+- D. Layer 5 (Session)
 
----
+Correct Answer: B
 
-**Question 4**
-A network operations center analyst receives an automated alert that a core router has been unreachable via SNMP for 15 minutes. The analyst opens a terminal and attempts to ping the router's management IP address — ping succeeds with normal latency. The analyst then attempts to SSH into the router — SSH times out. Which is the most likely cause, and what is the appropriate next troubleshooting action?
-
-A) The router has failed completely — ping succeeds because ICMP is processed by a separate hardware path from the management plane; the analyst should dispatch a technician to physically inspect and power cycle the router
-B) The SNMP agent process or SSH daemon on the router has crashed or the management ACL is blocking the NMS and the analyst's IP — the analyst should check whether the router's control plane processes are running by attempting access via an out-of-band console connection or by checking the syslog server for related error messages
-C) The network monitoring system (NMS) has a software bug causing false SNMP timeout alerts — since ping succeeds, the router is healthy; the analyst should restart the NMS polling process and mark the alert as a false positive without further investigation
-D) The router's uplink interface has failed, isolating it from the rest of the network — ping works because ICMP is handled locally by the router CPU, while SNMP and SSH traffic is forwarded through the failed uplink interface to reach the NMS and analyst's workstation
-
-*   **Correct Answer:** B) The SNMP agent process or SSH daemon on the router has crashed or the management ACL is blocking the NMS and the analyst's IP — the analyst should check whether the router's control plane processes are running by attempting access via an out-of-band console connection or by checking the syslog server for related error messages
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* A completely failed router would not respond to ping. The fact that ping succeeds confirms the router's data plane (forwarding) is operational and the IP stack is responding. A failed router is ruled out by the successful ping — hardware failure does not explain selective failure of SNMP and SSH while ICMP continues to function.
-    *   *Why C is incorrect:* While NMS software bugs do occur, dismissing an alert as a false positive without verifying the underlying cause is poor troubleshooting practice and violates the CompTIA methodology (Step 2: establish a theory; Step 3: test the theory). The simultaneous failure of both SNMP (UDP 161) and SSH (TCP 22) from independent sources makes a software bug unlikely and warrants investigation. Marking without investigation is negligent.
-    *   *Why D is incorrect:* If the router's uplink interface had failed, the ping from the analyst's workstation would also fail — because the ping itself must traverse the same network path as SNMP and SSH traffic to reach the router's management IP. A failed uplink would cause ping to fail, not succeed. The scenario describes selective management-plane failure (SNMP/SSH down) while the data plane responds to ICMP, which is a control plane process or ACL issue.
+Explanation: IP addressing and routing decisions occur at Layer 3, the Network layer. Layer 2 handles MAC addressing within a single network segment.
 
 ---
 
-**Question 5**
-A company is preparing for its CompTIA Network+ N10-009 certification audit and must verify that its network documentation, security controls, and operational practices align with exam domain objectives. The security team presents the following four configurations: (1) SNMPv3 authPriv mode for all network device monitoring, (2) 802.1Q trunk ports with native VLAN set to VLAN 999 (unused, carries no data), (3) All workstation switch ports configured with PortFast and BPDU Guard enabled, (4) Inter-VLAN routing handled by a Layer 3 switch using SVIs rather than a Router-on-a-Stick configuration. Which evaluation of all four configurations is correct?
+### Question 3
 
-A) Configuration 1 is the only fully correct choice — SNMPv3 authPriv is definitively best practice. Configurations 2, 3, and 4 each contain a security or design flaw: native VLAN should always be VLAN 1, BPDU Guard should not be used with PortFast, and Router-on-a-Stick is the preferred inter-VLAN method for enterprise networks
-B) All four configurations represent current best practices — SNMPv3 authPriv provides encrypted monitoring, a non-default unused native VLAN prevents double-tagging attacks, PortFast with BPDU Guard is the recommended access port configuration, and Layer 3 switch SVIs provide more scalable inter-VLAN routing than Router-on-a-Stick
-C) Configuration 4 is incorrect — Router-on-a-Stick using a single trunk link with 802.1Q sub-interfaces is always preferred over Layer 3 SVIs because sub-interfaces provide hardware-level forwarding while SVIs are processed in software, making SVIs slower and unsuitable for production inter-VLAN routing
-D) Configuration 3 is incorrect — PortFast should only be enabled on uplink ports connecting to other switches, not on workstation access ports; enabling PortFast on end-device ports introduces a Spanning Tree loop risk because the port skips the Listening and Learning states that normally prevent loops during link initialization
+A network administrator wants to bundle four physical links between two switches into a single logical link to maximize available bandwidth and prevent STP from blocking redundant ports. Which technology should be configured?
 
-*   **Correct Answer:** B) All four configurations represent current best practices — SNMPv3 authPriv provides encrypted monitoring, a non-default unused native VLAN prevents double-tagging attacks, PortFast with BPDU Guard is the recommended access port configuration, and Layer 3 switch SVIs provide more scalable inter-VLAN routing than Router-on-a-Stick
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* This distractor contains three false claims. (1) The native VLAN should NOT always be VLAN 1 — changing it to an unused VLAN is explicit security best practice to prevent VLAN-hopping double-tagging attacks. (2) BPDU Guard is specifically designed to work with PortFast on access ports — they are a complementary security pair, not incompatible options. (3) Router-on-a-Stick is an older design that uses a single physical link as a bottleneck; Layer 3 SVIs on a multilayer switch are the modern, scalable enterprise best practice.
-    *   *Why C is incorrect:* Modern Layer 3 switches use ASICs (Application-Specific Integrated Circuits) to forward inter-VLAN traffic at line rate in hardware — SVIs are not processed in software at reduced speed on enterprise-grade switches. Router-on-a-Stick is actually the design with a performance limitation (all inter-VLAN traffic must traverse a single physical trunk link twice — in and out), making it unsuitable for high-traffic environments. Layer 3 SVIs are the preferred enterprise inter-VLAN routing method.
-    *   *Why D is incorrect:* PortFast is specifically designed for end-device access ports — workstation, printer, and server ports — not uplink ports between switches. Enabling PortFast on a switch uplink port is dangerous because it would skip STP's Listening and Learning states on a port that could create a loop. BPDU Guard mitigates the PortFast loop risk on access ports by immediately disabling any port that receives a BPDU, which would only occur if a switch (not a workstation) were incorrectly connected to an access port.
+- A. RSTP
+- B. PortFast
+- C. EtherChannel
+- D. BPDU Guard
+
+Correct Answer: C
+
+Explanation: EtherChannel bundles multiple physical links into one logical link. STP treats the bundle as a single link, so no ports are blocked, and all physical links carry traffic simultaneously.
+
+---
+
+### Question 4
+
+Which wireless security standard uses Simultaneous Authentication of Equals (SAE) and is resistant to offline dictionary attacks?
+
+- A. WEP
+- B. WPA/TKIP
+- C. WPA2/AES-CCMP
+- D. WPA3/SAE
+
+Correct Answer: D
+
+Explanation: WPA3 introduced SAE to replace the PSK handshake used in WPA2 Personal. SAE is resistant to offline dictionary attacks because the handshake does not expose enough information for offline cracking.
+
+---
+
+### Question 5
+
+A company uses MPLS for its WAN. Which statement about MPLS is accurate?
+
+- A. MPLS routes packets using IP addresses at each hop
+- B. MPLS uses labels to forward traffic, enabling traffic engineering and any-to-any connectivity
+- C. MPLS is limited to point-to-point connections between two sites
+- D. MPLS operates only over fiber optic transport media
+
+Correct Answer: B
+
+Explanation: MPLS uses short fixed-length labels instead of IP addresses to make forwarding decisions. It supports any-to-any VPN connectivity and allows traffic engineering — choosing paths based on QoS policies, bandwidth, or latency requirements.
+
+---
+
+### Question 6
+
+Which port and protocol combination is used by SNMP traps?
+
+- A. TCP 161
+- B. UDP 161
+- C. UDP 162
+- D. TCP 162
+
+Correct Answer: C
+
+Explanation: SNMP queries are sent to port 161 (UDP). SNMP traps — unsolicited notifications from a device to the management station — are sent to port 162 (UDP).
+
+---
+
+### Question 7
+
+A technician runs `tracert` from a Windows workstation to a remote server. The output shows that hops 3 through 6 are responding but hop 7 shows three asterisks (***) for all three probes, and all subsequent hops also show asterisks. What does this indicate?
+
+- A. The remote server is unreachable due to a DNS failure
+- B. The connection is being encrypted at hop 7
+- C. Traffic is being dropped or a device at hop 7 is not responding to TTL-expired packets
+- D. The workstation has an incorrect default gateway
+
+Correct Answer: C
+
+Explanation: Three asterisks in tracert output indicate the device at that hop is not returning ICMP TTL-exceeded messages, or packets are being dropped. This may be a firewall dropping ICMP, a router configured not to respond to traceroute probes, or a routing loop. The gateway issue would be visible at hop 1.
+
+---
+
+### Question 8
+
+Which authentication protocol uses TCP port 49, encrypts the entire authentication payload, and is Cisco's preferred protocol for network device administration?
+
+- A. RADIUS
+- B. TACACS+
+- C. 802.1X
+- D. LDAP
+
+Correct Answer: B
+
+Explanation: TACACS+ uses TCP port 49 and encrypts the entire body of every authentication packet. This makes it more secure than RADIUS, which only encrypts the password field. TACACS+ is preferred for administering network devices (switches, routers) because it also fully separates authentication, authorization, and accounting.
+
+---
+
+### Question 9
+
+A host with IP address 192.168.50.75 and subnet mask 255.255.255.192 needs to communicate with a host at 192.168.50.130. A network technician reports the hosts cannot reach each other without routing. Why?
+
+- A. Both hosts are in the same /26 subnet and should communicate directly
+- B. 192.168.50.75 is in the 192.168.50.64/26 subnet; 192.168.50.130 is in the 192.168.50.128/26 subnet
+- C. The subnet mask 255.255.255.192 is not a valid mask
+- D. The hosts need an ARP proxy to communicate across subnets
+
+Correct Answer: B
+
+Explanation: /26 (255.255.255.192) creates subnets of 64 addresses each. The first host is in 192.168.50.64–127; the second is in 192.168.50.128–191. They are in different subnets and require a Layer 3 router to communicate.
+
+---
+
+### Question 10
+
+Which VPN type encrypts only the payload of the original IP packet, preserving the original IP header in the clear?
+
+- A. IPsec Tunnel mode
+- B. IPsec Transport mode
+- C. SSL/TLS VPN
+- D. GRE tunnel
+
+Correct Answer: B
+
+Explanation: IPsec Transport mode encrypts only the data payload and leaves the original IP header intact. It is used for end-to-end encryption between two hosts. Tunnel mode wraps the entire original packet in a new IP packet with a new header, making it suitable for site-to-site VPNs.
+
+---
+
+### Question 11
+
+A network administrator is configuring RSTP on a switch. An access port connected to a workstation is taking 30 seconds to start forwarding traffic after the workstation boots. Which RSTP feature should be enabled to eliminate this delay?
+
+- A. BPDU Guard
+- B. Root Guard
+- C. PortFast
+- D. Loop Guard
+
+Correct Answer: C
+
+Explanation: PortFast instructs the switch to immediately move the port to Forwarding state, bypassing the Listening and Learning states. It should only be enabled on access ports connected to end devices, never on ports connected to switches. BPDU Guard is a companion feature that err-disables a PortFast port if a BPDU is received.
+
+---
+
+### Question 12
+
+A company has two ISP circuits: fiber at 1 Gbps and cable broadband at 100 Mbps. They want to automatically route latency-sensitive VoIP traffic over the fiber link and route bulk file transfers over cable broadband. Which WAN technology provides this application-aware path selection?
+
+- A. MPLS
+- B. SD-WAN
+- C. Metro Ethernet E-Line
+- D. DMVPN
+
+Correct Answer: B
+
+Explanation: SD-WAN uses application-aware routing policies to direct different traffic types across different WAN transports. VoIP traffic can be assigned to the low-latency fiber path; bulk transfers can use the less expensive cable broadband circuit. MPLS alone does not provide multi-transport application-aware selection at this level.
+
+---
+
+### Question 13
+
+Which step in the CompTIA seven-step troubleshooting model immediately follows "Implement the solution or escalate"?
+
+- A. Establish a theory of probable cause
+- B. Establish a plan of action
+- C. Verify full system functionality
+- D. Document findings, actions, and outcomes
+
+Correct Answer: C
+
+Explanation: The seven steps in order are: Identify the problem → Establish theory → Test the theory → Establish a plan → Implement or escalate → Verify full system functionality → Document. After implementing the fix, the technician must verify that the problem is fully resolved — not just the specific symptom but the entire affected system.
+
+---
+
+### Question 14
+
+A security analyst discovers that an attacker has sent gratuitous ARP replies associating the attacker's MAC address with the default gateway's IP address. What type of attack is this and what is the likely goal?
+
+- A. MAC flooding; to fill the CAM table and cause the switch to broadcast all traffic
+- B. ARP poisoning; to redirect traffic through the attacker's device for interception
+- C. VLAN hopping; to gain access to a restricted VLAN segment
+- D. DNS poisoning; to redirect users to a malicious web server
+
+Correct Answer: B
+
+Explanation: ARP poisoning (also called ARP spoofing) involves sending fraudulent ARP replies to associate the attacker's MAC address with a legitimate IP, typically the default gateway. Hosts update their ARP cache and send gateway-destined traffic to the attacker instead, enabling a man-in-the-middle attack.
+
+---
+
+### Question 15
+
+An administrator runs `show spanning-tree` on a Cisco switch and observes that one port is in "BLK" (Blocking) state. What does this indicate?
+
+- A. The port is err-disabled due to a security violation
+- B. The port is forwarding traffic normally but not learning MAC addresses
+- C. STP has placed the port in Blocking state to prevent a Layer 2 loop
+- D. The port has lost physical connectivity
+
+Correct Answer: C
+
+Explanation: STP Blocking state means the port is receiving BPDUs to monitor for topology changes but is not forwarding frames. STP intentionally blocks redundant ports to prevent loops. A blocked port is not err-disabled — err-disabled is a separate condition caused by security violations or other errors.
+
+---
+
+### Question 16
+
+Which IPv6 address type is automatically configured on every IPv6-enabled interface and is used for communication within a single network link only?
+
+- A. Global unicast (2000::/3)
+- B. Multicast (ff00::/8)
+- C. Link-local (fe80::/10)
+- D. Unique local (fc00::/7)
+
+Correct Answer: C
+
+Explanation: Link-local addresses in the fe80::/10 range are automatically assigned to every IPv6 interface during address autoconfiguration. They are non-routable — valid only on a single link segment. Routers will not forward packets with a link-local source or destination address.
+
+---
+
+### Question 17
+
+A network technician is troubleshooting a fiber connection. The receiving end of the link reports very low signal strength despite a short run. Which tool should the technician use to test for a physical break or severe bend in the fiber strand?
+
+- A. TDR (Time Domain Reflectometer)
+- B. Basic cable tester
+- C. Visual fault locator (VFL)
+- D. Protocol analyzer
+
+Correct Answer: C
+
+Explanation: A visual fault locator injects red laser light into the fiber. Physical breaks, sharp bends, or connector defects scatter the light visibly. For copper cables, a TDR measures the distance to a fault using reflected electrical signals. A basic cable tester only tests continuity on copper.
+
+---
+
+### Question 18
+
+A user can successfully ping a server by its IP address but cannot connect to it using its hostname. All other users in the organization can connect by hostname without issues. Which service should be investigated first?
+
+- A. DHCP
+- B. DNS
+- C. Default gateway
+- D. Firewall
+
+Correct Answer: B
+
+Explanation: The ability to ping by IP but not hostname is the classic DNS failure symptom. The Layer 3 path works (ping by IP succeeds), but name resolution is failing. Since other users work normally, this is likely a DNS configuration issue on the affected workstation (wrong DNS server address or stale/missing DNS cache entry).
+
+---
+
+### Question 19
+
+What is the administrative distance of OSPF routes on a Cisco router?
+
+- A. 90
+- B. 100
+- C. 110
+- D. 120
+
+Correct Answer: C
+
+Explanation: OSPF has an administrative distance of 110. Administrative distance represents the trustworthiness of a routing source — lower values are more preferred. EIGRP (internal) = 90, OSPF = 110, RIP = 120. If a router learns a route to the same destination via both EIGRP and OSPF, the EIGRP route wins because 90 < 110.
+
+---
+
+### Question 20
+
+A company's SLA with its ISP guarantees 99.99% availability. Approximately how much total downtime per year is permitted under this SLA?
+
+- A. 87.6 hours
+- B. 8.76 hours
+- C. 52.6 minutes
+- D. 5.26 minutes
+
+Correct Answer: C
+
+Explanation: 99.99% availability (four nines) permits approximately 52.6 minutes of downtime per year. 99.9% (three nines) allows 8.76 hours. 99% allows 87.6 hours. 99.999% (five nines) allows only 5.26 minutes per year. These values are commonly tested on Network+ and are important for SLA negotiation and DR planning.
+
+---
+
+CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash

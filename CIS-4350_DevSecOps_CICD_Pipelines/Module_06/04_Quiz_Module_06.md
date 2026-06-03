@@ -1,226 +1,207 @@
-# Quiz: Module 06 - SAST: Static Application Security Testing
+# Quiz: Module 06 — Infrastructure as Code Security
 
 ## Course: CIS-4350 DevSecOps and CI/CD Pipelines
+
+## Texas Wesleyan University | Professor Nash
 
 ## Certification Alignment: DevSecOps Professional (DSOE)
 
 ---
 
-### Question 1
+## Instructions
 
-What is the fundamental difference between SAST and DAST?
-
-- A) SAST runs on the production environment while DAST runs on the development environment
-- B) SAST analyzes source code without executing the application, while DAST sends requests to a running application to find runtime vulnerabilities
-- C) SAST detects vulnerabilities in third-party dependencies, while DAST detects vulnerabilities in first-party application code
-- D) SAST requires a live database connection to perform analysis, while DAST runs entirely in memory
-
-#### Q1 Correct Answer
-
-B — SAST (Static Analysis) analyzes source code without execution — it finds vulnerability patterns at the code level. DAST (Dynamic Analysis) sends crafted HTTP requests to a running application and observes responses to find runtime vulnerabilities. SAST runs at PR/commit; DAST runs at staging.
-
-#### Q1 Distractor Analysis
-
-- *Why A is incorrect:* SAST runs at the earliest pipeline stages (commit, PR). DAST runs at staging after deployment. Neither runs exclusively in production or development.
-- *Why C is incorrect:* Detecting third-party dependency vulnerabilities is SCA, not SAST or DAST.
-- *Why D is incorrect:* SAST reads source code files from the filesystem. It does not require a database connection.
+Select the single best answer for each question. Each question is worth 10 points. Submit answers through the Canvas quiz interface.
 
 ---
 
-### Question 2
+## Question 1
 
-A Semgrep scan flags the following line of Python code. What vulnerability type does this finding represent?
+Which statement best describes the primary reason IaC misconfigurations are so prevalent despite engineers using infrastructure code review processes?
 
-```python
-query = "SELECT * FROM accounts WHERE user = '" + request.args.get('user') + "'"
-cursor.execute(query)
-```
+- A) IaC files are too large to review effectively
+- B) Engineers frequently copy public examples that prioritize functionality over security, and cloud APIs add new security parameters that legacy configs do not use
+- C) IaC scanners are too slow to run in CI pipelines
+- D) Cloud providers do not provide documentation about secure defaults
 
-- A) Cross-Site Scripting (XSS) — user-controlled input is written to the HTML response
-- B) SQL Injection — untrusted user input is concatenated directly into a SQL query string without parameterization
-- C) Path Traversal — the user-controlled input is used to construct a filesystem path
-- D) Command Injection — the user-controlled input is passed to an OS shell command
+### Q1 — Correct Answer: B
 
-#### Q2 Correct Answer
+### Q1 — Distractor Analysis
 
-B — The `request.args.get('user')` value is an HTTP query parameter (untrusted user input). It is concatenated directly into the SQL query string using the `+` operator. The database executes whatever SQL the attacker injects through the `user` parameter.
-
-#### Q2 Distractor Analysis
-
-- *Why A is incorrect:* XSS involves writing untrusted data to an HTML response. This code executes a SQL query, not an HTML response.
-- *Why C is incorrect:* Path traversal involves constructing filesystem paths from user input. This code constructs a SQL query.
-- *Why D is incorrect:* Command injection involves passing user input to OS shell functions like `os.system()`. This code passes to a SQL cursor's execute method.
+- A) File size is not a meaningful barrier to reviewing IaC — most Terraform files are small.
+- C) IaC scanners like tfsec and checkov complete in seconds — speed is not the cause of misconfigurations.
+- D) Cloud providers publish extensive security documentation; the problem is adoption and training, not availability.
 
 ---
 
-### Question 3
+## Question 2
 
-Which remediation correctly fixes the SQL injection vulnerability from Question 2?
+tfsec is designed primarily to scan which type of infrastructure code?
 
-- A) Wrapping the query in a try/except block to catch SQL errors before they reach the user
-- B) Using a parameterized query with a `?` placeholder and passing user input as a separate parameter tuple
-- C) Converting the user input to uppercase before concatenating it into the query
-- D) Checking that the user input is not empty before executing the query
+- A) Kubernetes YAML manifests
+- B) Terraform `.tf` files
+- C) AWS CloudFormation templates
+- D) Dockerfile configurations
 
-#### Q3 Correct Answer
+### Q2 — Correct Answer: B
 
-B — A parameterized query separates the SQL structure from the data. The database driver handles the user input as a data value, not as SQL syntax. An attacker cannot inject SQL commands through a parameterized parameter.
+### Q2 — Distractor Analysis
 
-#### Q3 Distractor Analysis
-
-- *Why A is incorrect:* A try/except block catches errors after the injection has already been attempted. It does not prevent SQL injection from occurring.
-- *Why C is incorrect:* Converting to uppercase does not prevent SQL injection. SQL is case-insensitive and an attacker can construct effective injection payloads in any case.
-- *Why D is incorrect:* Checking for empty input prevents a null value error but does not prevent injection. An attacker will provide a non-empty, malicious input.
+- A) Kubernetes manifest scanning is supported by checkov and Trivy config mode — tfsec focuses on Terraform.
+- C) CloudFormation scanning is supported by checkov and cfn-lint — not tfsec's primary focus.
+- D) Dockerfile scanning is handled by hadolint or checkov — not tfsec.
 
 ---
 
-### Question 4
+## Question 3
 
-A SAST tool is integrated into a pull request pipeline with `continue-on-error: true`. How does this affect the pipeline's behavior when the SAST tool finds a critical vulnerability?
+A checkov inline suppression comment is written as `# checkov:skip=CKV_AWS_25: Public HTTP required for ALB`. What security benefit does including the justification text after the colon provide?
 
-- A) The pipeline fails immediately and the PR cannot be merged until the vulnerability is fixed
-- B) The pipeline job reports the findings but exits successfully, allowing the PR to proceed and merge
-- C) The pipeline pauses and waits for a security engineer to manually approve before continuing
-- D) The SAST tool automatically applies the fix and recommits the corrected code
+- A) The justification text is automatically validated against an approved exception database
+- B) The justification creates an auditable record of accepted risk tracked in Git history
+- C) Including a justification causes checkov to score the finding as lower severity
+- D) The justification text triggers automatic ticket creation in Jira
 
-#### Q4 Correct Answer
+### Q3 — Correct Answer: B
 
-B — `continue-on-error: true` makes the GitHub Actions step succeed regardless of the tool's exit code. SAST findings are reported in the log and any connected dashboard, but they do not cause the pipeline job to fail. The PR can merge despite findings. This is non-breaking mode.
+### Q3 — Distractor Analysis
 
-#### Q4 Distractor Analysis
-
-- *Why A is incorrect:* That describes breaking mode. `continue-on-error: true` is specifically the configuration that prevents the job from failing.
-- *Why C is incorrect:* There is no built-in GitHub Actions "pause for approval" mechanism in this context. That would require an environment protection rule, not `continue-on-error`.
-- *Why D is incorrect:* SAST tools are read-only analysis tools. They report findings but do not modify source code.
+- A) There is no automated validation of suppression justification — it is a human-readable comment.
+- C) Justification text does not affect severity scoring — the finding is simply skipped.
+- D) Checkov has no built-in integration with Jira ticket creation from suppression comments.
 
 ---
 
-### Question 5
+## Question 4
 
-Which SAST tool is most appropriate for a highly regulated financial institution that needs deep interprocedural taint analysis across a large Java monolith with complex method call chains?
+In HashiCorp Sentinel, which enforcement level blocks a Terraform plan and cannot be overridden by any user, including administrators?
 
-- A) Semgrep Community — because it has the largest community rule registry and free licensing
-- B) Hadolint — because it integrates directly with Java build tools like Maven and Gradle
-- C) Checkmarx — because it performs deep interprocedural taint analysis suited for complex enterprise codebases
-- D) Grype — because it scans Java JAR files for CVEs in compiled bytecode
+- A) Advisory
+- B) Soft Mandatory
+- C) Hard Mandatory
+- D) Strict
 
-#### Q5 Correct Answer
+### Q4 — Correct Answer: C
 
-C — Checkmarx is designed for enterprise environments with complex codebases. Its deep interprocedural taint analysis traces data flow across method calls, class boundaries, and module imports — essential for finding injection vulnerabilities in large Java monoliths where taint sources and sinks may be in different modules.
+### Q4 — Distractor Analysis
 
-#### Q5 Distractor Analysis
-
-- *Why A is incorrect:* Semgrep is excellent for most use cases but uses pattern matching with lighter taint analysis. For deep interprocedural analysis in a complex enterprise codebase, Checkmarx provides more thorough coverage.
-- *Why B is incorrect:* Hadolint is a Dockerfile linter, not a Java source code SAST tool. It does not analyze Java code.
-- *Why D is incorrect:* Grype scans artifacts for known CVEs in dependencies. It does not perform source code vulnerability analysis or taint analysis.
+- A) Advisory logs the violation but allows the plan to proceed — it is the least-restrictive level.
+- B) Soft Mandatory blocks but can be overridden by users with the appropriate override permission.
+- D) "Strict" is not a Sentinel enforcement level — only Advisory, Soft Mandatory, and Hard Mandatory exist.
 
 ---
 
-### Question 6
+## Question 5
 
-A developer finds a Semgrep finding that flags a line of code as a potential security issue. After careful review, they determine with certainty that the flagged code pattern cannot be exploited in this application's context. What is the correct way to handle this finding?
+A developer runs `terraform plan -refresh-only` and sees that an AWS security group now allows `0.0.0.0/0` on port 22, but the Terraform code does not have that rule. What most likely caused this discrepancy?
 
-- A) Delete the code entirely since any flagged code should be removed
-- B) Disable the Semgrep rule globally across the entire repository to prevent recurrence of this finding type
-- C) Add a `# nosemgrep: rule-id` comment on the flagged line with a comment explaining why the finding is a false positive
-- D) Ignore the finding permanently and instruct the team to filter it out of dashboard views
+- A) A bug in the Terraform AWS provider
+- B) Configuration drift caused by a manual change made in the AWS console
+- C) The `.tfstate` file is corrupted
+- D) The developer ran the plan with the wrong AWS credentials
 
-#### Q6 Correct Answer
+### Q5 — Correct Answer: B
 
-C — A line-level suppression comment with the specific rule ID suppresses only that finding at that line. The rule remains active for all other code. A justification comment documents why the finding was reviewed and confirmed as a false positive, creating an audit trail.
+### Q5 — Distractor Analysis
 
-#### Q6 Distractor Analysis
-
-- *Why A is incorrect:* Code that is functionally correct and confirmed not exploitable should not be deleted. The SAST tool's judgment about exploitability is not infallible.
-- *Why B is incorrect:* Disabling a rule globally removes protection for all other locations where the same vulnerability pattern might genuinely exist.
-- *Why D is incorrect:* Silently ignoring findings without documentation creates no audit trail and allows future team members to be unaware that the finding was reviewed.
+- A) Provider bugs that silently add security group rules are extremely rare — manual changes are far more common.
+- C) State file corruption typically causes Terraform to fail entirely, not produce unexpected resource diffs.
+- D) Wrong credentials would cause permission errors, not phantom security group rules.
 
 ---
 
-### Question 7
+## Question 6
 
-A SonarQube quality gate is configured with the rule: "No new Critical vulnerabilities." A pull request adds three new files with two new Critical SAST findings. What happens when the PR is analyzed?
+What is the primary security risk of storing the Terraform state file (`.tfstate`) in a public or unencrypted location?
 
-- A) The PR can be merged because new findings only count against the next sprint's quality metrics
-- B) The quality gate fails, blocking the PR from merging until the two Critical findings are remediated
-- C) The quality gate sends a warning email but does not block the merge
-- D) SonarQube automatically increases the severity threshold to accommodate the new findings
+- A) It allows anyone to see which Terraform modules are being used
+- B) State files frequently contain plaintext secrets such as database passwords and API keys
+- C) It enables unauthorized users to run `terraform destroy` on the infrastructure
+- D) It exposes the Terraform version being used, enabling version-specific attacks
 
-#### Q7 Correct Answer
+### Q6 — Correct Answer: B
 
-B — SonarQube quality gates evaluate the current code change against configured thresholds. Two new Critical findings violate the "no new Critical vulnerabilities" rule. The quality gate fails, and SonarQube reports a failure status to the CI/CD pipeline, blocking the PR merge through the branch protection required status check.
+### Q6 — Distractor Analysis
 
-#### Q7 Distractor Analysis
-
-- *Why A is incorrect:* SonarQube quality gates are evaluated on each analysis run. Findings do not carry over to future sprints — they must be remediated in the current change or the gate fails.
-- *Why C is incorrect:* A quality gate failure blocks merging when properly integrated with branch protection required status checks. It is not merely advisory.
-- *Why D is incorrect:* SonarQube does not automatically adjust quality gate thresholds. Thresholds are configured by the team and remain fixed until deliberately changed.
+- A) Module names are not sensitive security information.
+- C) Running `terraform destroy` requires Terraform CLI credentials, not just access to the state file.
+- D) Terraform version disclosure is a minimal risk compared to plaintext secret exposure.
 
 ---
 
-### Question 8
+## Question 7
 
-Which CWE number corresponds to SQL Injection vulnerabilities?
+Which command generates a JSON representation of a Terraform execution plan that can be tested with Conftest?
 
-- A) CWE-79
-- B) CWE-22
-- C) CWE-89
-- D) CWE-798
+- A) `terraform show --json`
+- B) `terraform plan -out=tfplan.binary && terraform show -json tfplan.binary`
+- C) `terraform output -json`
+- D) `terraform state pull`
 
-#### Q8 Correct Answer
+### Q7 — Correct Answer: B
 
-C — CWE-89 is "Improper Neutralization of Special Elements used in an SQL Command (SQL Injection)." This is one of the most common and highest-priority vulnerabilities detected by SAST tools.
+### Q7 — Distractor Analysis
 
-#### Q8 Distractor Analysis
-
-- *Why A is incorrect:* CWE-79 is Cross-Site Scripting (XSS) — improper neutralization of input during web page generation.
-- *Why B is incorrect:* CWE-22 is Path Traversal — improper limitation of a pathname to a restricted directory.
-- *Why D is incorrect:* CWE-798 is Use of Hard-coded Credentials — embedding passwords or cryptographic keys directly in source code.
+- A) `terraform show --json` without a plan file shows the current state, not the planned changes.
+- C) `terraform output -json` shows output values from the current state — not the planned changes to resources.
+- D) `terraform state pull` downloads the raw state file — it does not show planned changes.
 
 ---
 
-### Question 9
+## Question 8
 
-A security team wants to ensure that SAST covers the OWASP Top 10 vulnerability categories. Which Semgrep configuration parameter addresses this requirement most directly?
+The immutable infrastructure principle improves security compared to traditional server patching primarily because:
 
-- A) `config: p/secrets` — scans for hardcoded credentials and API keys
-- B) `config: p/owasp-top-ten` — uses the community rule pack mapped to OWASP Top 10 categories
-- C) `config: auto` — automatically selects rules based on the detected programming language
-- D) `config: p/python` — uses all Python-specific rules regardless of vulnerability category
+- A) Immutable servers are automatically encrypted at rest
+- B) Replacing servers eliminates configuration drift, ensuring production always matches the IaC-defined state
+- C) Immutable infrastructure does not require network access after initial deployment
+- D) Replacement builds are faster than patching, reducing the window of exposure
 
-#### Q9 Correct Answer
+### Q8 — Correct Answer: B
 
-B — The `p/owasp-top-ten` Semgrep rule pack is specifically curated to cover the OWASP Top 10 web application security risk categories: Broken Access Control, Cryptographic Failures, Injection, Insecure Design, Security Misconfiguration, and others.
+### Q8 — Distractor Analysis
 
-#### Q9 Distractor Analysis
-
-- *Why A is incorrect:* `p/secrets` specifically targets hardcoded credentials and API keys. It covers OWASP A07 (authentication failures) but not the full Top 10.
-- *Why C is incorrect:* `auto` selects rules based on language detection, not vulnerability category coverage. It may not cover all OWASP Top 10 categories for a given language.
-- *Why D is incorrect:* `p/python` covers Python-specific coding patterns, but is not organized around OWASP Top 10 categories.
+- A) Encryption at rest is a separate configuration — immutability does not automatically enable it.
+- C) Servers still require network access for communication — immutability refers to configuration management, not network isolation.
+- D) Speed is a secondary benefit; eliminating drift is the primary security rationale.
 
 ---
 
-### Question 10
+## Question 9
 
-A developer is performing taint analysis mentally before running a SAST tool. They identify this code path. What is the taint source, the sink, and the missing control?
+checkov's ability to scan multiple frameworks in a single tool provides which DevSecOps pipeline advantage over tfsec?
 
-```python
-filename = request.form.get('document_name')
-with open(f'/app/documents/{filename}', 'rb') as f:
-    return f.read()
-```
+- A) checkov scans faster than tfsec because it uses a compiled binary
+- B) A single checkov job can enforce security standards across Terraform, Kubernetes, Dockerfiles, and CloudFormation simultaneously
+- C) checkov automatically creates pull requests with remediation suggestions
+- D) checkov integrates with HashiCorp Vault for secret scanning inside IaC files
 
-- A) Source: `/app/documents/` path string. Sink: `open()` call. Missing control: directory existence check
-- B) Source: `request.form.get('document_name')`. Sink: `open()` call with constructed path. Missing control: path validation to prevent traversal outside `/app/documents/`
-- C) Source: `f.read()` return value. Sink: the HTTP response. Missing control: response encryption
-- D) Source: `/app/documents/` directory. Sink: `request.form`. Missing control: CSRF token verification
+### Q9 — Correct Answer: B
 
-#### Q10 Correct Answer
+### Q9 — Distractor Analysis
 
-B — The taint source is the HTTP form parameter `document_name` (untrusted user input). It flows into an f-string that constructs a filesystem path. The sink is the `open()` call. Without path validation, an attacker can provide `../../etc/passwd` as the filename, traversing out of the intended directory. This is a Path Traversal vulnerability (CWE-22).
+- A) Performance is not the differentiator — both tools are fast enough for CI use.
+- C) Neither checkov nor tfsec automatically creates PRs with fixes — Bridgecrew's platform does, but the open-source CLI does not.
+- D) Vault integration is not a checkov feature — secret detection in IaC is handled by tfsec's `general-secrets` rules or by gitleaks.
 
-#### Q10 Distractor Analysis
+---
 
-- *Why A is incorrect:* The static path string `/app/documents/` is not tainted — it is hardcoded. The taint comes from the form input, not the path prefix.
-- *Why C is incorrect:* `f.read()` reads file content — it is not a taint source in this context. The taint source is the user-controlled `filename` parameter.
-- *Why D is incorrect:* The taint flow runs from the request form input to the file open call, not in the reverse direction. CSRF token verification addresses a different vulnerability class.
+## Question 10
+
+OPA Conftest uses the `deny` rule pattern in Rego policies. What happens when a Conftest policy has zero `deny` violations?
+
+- A) Conftest exits with a non-zero code to indicate no policy was evaluated
+- B) Conftest exits with code 0 (success), indicating all policies passed
+- C) Conftest exits with a warning code and continues to the next policy file
+- D) Conftest requires explicit `allow` rules to be defined for a pass result
+
+### Q10 — Correct Answer: B
+
+### Q10 — Distractor Analysis
+
+- A) Zero violations means all checks passed — Conftest exits 0, not with an error.
+- C) Conftest uses standard Unix exit codes — 0 for success, non-zero for failure — there is no "warning" exit code.
+- D) Rego in Conftest defaults to deny-unless-explicitly-denied — `allow` rules are not required for the policy to pass.
+
+---
+
+Quiz — Module 06 | CIS-4350 | Texas Wesleyan University | Professor Nash

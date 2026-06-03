@@ -1,77 +1,206 @@
-# Quiz: Module 09 - Terraform Cloud and Terraform Enterprise
-## Course: CIS-4337_Infrastructure_Automation (HashiCorp Certified: Terraform Associate)
+# Quiz: Module 09 — Terraform Modules
+
+## Course: CIS-4337 Infrastructure Automation
+
+## Texas Wesleyan University | Professor Nash
+
+## Certification Alignment: HashiCorp Terraform Associate (003)
 
 ---
 
-**Question 1**
-Which HCL block is used to connect a Terraform configuration to Terraform Cloud for remote execution and state storage?
-*   A) backend "remote"
-*   B) cloud
-*   C) provider "tfe"
-*   D) workspace
-*   **Correct Answer:** B) The `cloud` block is the current, recommended way to configure a Terraform Cloud integration. It is placed inside the `terraform {}` block and specifies the organization and workspace. It replaces the older `remote` backend for TFC integrations.
-*   **Distractor Analysis:**
-    *   *Why B is correct:* The `cloud` block was introduced as the purpose-built TFC integration block. After adding it and running `terraform init`, all subsequent plan and apply operations execute remotely on Terraform Cloud. The exam tests this block name and its placement inside the `terraform {}` configuration block.
-    *   *Why A is incorrect:* `backend "remote"` is the legacy way to configure a Terraform Cloud backend. It still works but HashiCorp now recommends the `cloud` block for all new TFC integrations. The exam distinguishes between the two.
-    *   *Why C is incorrect:* There is no `provider "tfe"` for connecting to TFC's execution backend. The `tfe` provider exists for managing TFC resources (workspaces, teams, policies) via the TFC API, but it is not used to route plan/apply operations to TFC.
-    *   *Why D is incorrect:* `workspace` is not a top-level HCL block. Workspace configuration for TFC is specified as a nested argument inside the `cloud` block, not as a standalone block.
+**Instructions**: Select the single best answer for each question. Each question is worth 10 points.
 
 ---
 
-**Question 2**
-Which of the following most accurately describes how **Terraform Cloud workspaces** differ from **Terraform CLI workspaces**?
-*   A) Terraform Cloud workspaces and CLI workspaces are identical in behavior — both share the same configuration code and differ only in state file location
-*   B) Terraform Cloud workspaces are fully isolated environments, each with its own configuration code, variables, credentials, and state, while CLI workspaces share one configuration directory and differ only in state
-*   C) CLI workspaces are the preferred approach for enterprise teams because they provide stronger access control than Terraform Cloud workspaces
-*   D) Terraform Cloud workspaces can only be created through the TFC API and cannot be managed from the Terraform CLI
-*   **Correct Answer:** B) TFC workspaces are fully independent environments — each can have completely different configuration code, provider credentials, team access, and variable sets. CLI workspaces share all `.tf` files in a single directory and isolate only the state file. This is a key distinction tested on the exam.
-*   **Distractor Analysis:**
-    *   *Why B is correct:* The official Terraform documentation explicitly distinguishes these two workspace types. The exam frequently uses a scenario where environments have different configurations or credentials and asks which approach is appropriate — the answer is TFC workspaces (or separate configuration directories), not CLI workspaces.
-    *   *Why A is incorrect:* CLI workspaces do share configuration code, but TFC workspaces do not. Saying they are identical misses the fundamental architectural difference.
-    *   *Why C is incorrect:* CLI workspaces have no built-in team access control. TFC workspaces provide granular RBAC (read, plan, apply, admin) per team. TFC is the enterprise-preferred approach for access control.
-    *   *Why D is incorrect:* TFC workspaces can be created and managed through the TFC UI, TFC API, and also via the `tfe` Terraform provider. They are not restricted to API-only creation.
+### Question 1
+
+A team is calling a module from the Terraform Registry with `source = "terraform-aws-modules/vpc/aws"`. They want to allow patch-level updates but prevent minor or major version changes from being applied automatically. Which version constraint achieves this?
+
+A. `version = ">= 5.0.0"`
+B. `version = "~> 5.0"`
+C. `version = "~> 5.1.2"`
+D. `version = "= 5.1.2"`
+
+**Correct Answer**: C
+
+**Distractor Analysis**:
+
+- A is incorrect — `>= 5.0.0` allows any version from 5.0.0 upward, including major version 6 and beyond — far too permissive.
+- B is incorrect — `~> 5.0` allows any 5.x version (patch and minor updates), not just patch updates.
+- D is incorrect — `= 5.1.2` pins to exactly one version, preventing even patch updates from being applied. While safe, it does not "allow" patch updates.
 
 ---
 
-**Question 3**
-A company's security policy requires that all Terraform runs execute within their private data center network and that no state data leaves the corporate perimeter. Which HashiCorp product meets this requirement?
-*   A) Terraform Cloud (free tier), configured with a local backend override
-*   B) Terraform CLI with the S3 remote backend and DynamoDB locking
-*   C) Terraform Enterprise, deployed as a self-hosted installation within the company's private network
-*   D) Terraform Cloud (plus tier), with IP allowlisting configured to restrict inbound connections
-*   **Correct Answer:** C) Terraform Enterprise is the self-hosted version of Terraform Cloud, designed for organizations with air-gapped networks, strict data residency requirements, or private execution environments. All runs and state remain within the organization's infrastructure.
-*   **Distractor Analysis:**
-    *   *Why C is correct:* The exam tests the distinction between TFC (SaaS — runs and state on HashiCorp infrastructure) and TFE (self-hosted — runs and state on the organization's own infrastructure). When the requirement is private network execution or data residency, TFE is the correct answer.
-    *   *Why A is incorrect:* Terraform Cloud is a SaaS product — plan and apply operations execute on HashiCorp's infrastructure. Even with a local backend override, the TFC control plane is still external. This does not satisfy a private data center requirement.
-    *   *Why B is incorrect:* S3 + DynamoDB is a valid remote backend for state storage, but it does not provide the Terraform Cloud feature set (VCS integration, Sentinel policies, private registry, run history). More importantly, this approach does not satisfy the "runs within the private data center" requirement for the run execution itself.
-    *   *Why D is incorrect:* IP allowlisting controls which IPs can reach TFC, but Terraform's plan and apply operations still execute on HashiCorp's cloud infrastructure. The state and run logs still exist on TFC servers, which does not satisfy a data residency requirement.
+### Question 2
+
+You have a module sourced from a Git repository: `source = "git::https://github.com/acme/infra.git//modules/vpc?ref=v2.0.0"`. What is the purpose of the `//` characters in this URL?
+
+A. They indicate that the repository is private and requires authentication.
+B. They separate the repository root URL from the subdirectory within the repository containing the module.
+C. They specify that Terraform should use HTTPS rather than SSH for the Git connection.
+D. They are a Terraform comment syntax embedded in the source string.
+
+**Correct Answer**: B
+
+**Distractor Analysis**:
+
+- A is incorrect — authentication for Git modules is handled by SSH keys or credential helpers, not by `//`.
+- C is incorrect — the `https://` in the URL already specifies the protocol; `//` is a Terraform-specific path separator.
+- D is incorrect — Terraform comments use `#` or `//` inside HCL, but within a string value `//` is a literal path separator recognized by Terraform's module loader.
 
 ---
 
-**Question 4**
-Terraform Cloud supports policy-as-code enforcement through Sentinel. When a Sentinel policy is configured as `hard-mandatory`, what happens if an `apply` would violate the policy?
-*   A) Terraform Cloud logs the policy violation as a warning in the run history but allows the apply to proceed
-*   B) Terraform Cloud pauses the run and sends an email to the workspace owner, who must manually approve or override the policy within 24 hours
-*   C) Terraform Cloud blocks the apply from completing — the run fails and the infrastructure change cannot be deployed until the policy is satisfied or the policy itself is changed
-*   D) Terraform Cloud automatically modifies the plan to bring it into compliance with the policy before proceeding with the apply
-*   **Correct Answer:** C) A `hard-mandatory` Sentinel policy cannot be overridden by any user, including organization owners. If the plan violates a hard-mandatory policy, the apply is blocked entirely. The code or configuration must be changed to pass the policy.
-*   **Distractor Analysis:**
-    *   *Why C is correct:* The exam tests all three Sentinel policy enforcement levels: `advisory` (warn, allow), `soft-mandatory` (block, but organization owners can override), and `hard-mandatory` (block, no override possible). `hard-mandatory` is the strictest level and completely prevents non-compliant deployments.
-    *   *Why A is incorrect:* That behavior describes the `advisory` enforcement level, which logs a warning but does not block the apply.
-    *   *Why B is incorrect:* Terraform Cloud does not have a timed approval window for policy overrides. Soft-mandatory policies can be overridden immediately by an organization owner with a single click, not after a 24-hour window.
-    *   *Why D is incorrect:* Terraform Cloud does not automatically modify plans to satisfy policies. Policy enforcement is strictly a gate — it either passes or blocks. No automated remediation is applied.
+### Question 3
+
+A child module declares an output named `subnet_id`. Which expression correctly references this output in the calling root module, assuming the module block is named `network`?
+
+A. `var.network.subnet_id`
+B. `output.network.subnet_id`
+C. `module.network.outputs.subnet_id`
+D. `module.network.subnet_id`
+
+**Correct Answer**: D
+
+**Distractor Analysis**:
+
+- A is incorrect — `var.` is the prefix for input variables, not module outputs.
+- B is incorrect — `output.` is not a valid reference namespace; outputs inside a module are accessed through the module namespace.
+- C is incorrect — `.outputs.` is not part of the reference path; the correct form goes directly from the module name to the output name.
 
 ---
 
-**Question 5**
-Which Terraform Cloud feature allows teams to publish and share internal, private Terraform modules across their organization, using the same registry address format as the public Terraform Registry?
-*   A) VCS integration, which automatically detects and indexes module directories in connected Git repositories
-*   B) The Terraform Cloud private module registry, which hosts organization-specific modules at an address in the format `<HOSTNAME>/<NAMESPACE>/<MODULE>/<PROVIDER>`
-*   C) Sentinel policies, which enforce that all module calls reference approved source URLs
-*   D) Workspace variable sets, which inject module source paths as environment variables at runtime
-*   **Correct Answer:** B) The Terraform Cloud private module registry lets organizations publish, version, and share internal modules. Modules in the private registry are called using a four-part address that includes the TFC hostname, making them distinguishable from public registry modules.
-*   **Distractor Analysis:**
-    *   *Why B is correct:* The private module registry is a first-class TFC feature tested on the exam. The address format `<HOSTNAME>/<NAMESPACE>/<MODULE>/<PROVIDER>` (e.g., `app.terraform.io/my-org/vpc/aws`) is the TFC-specific variant of the three-part public registry format (`hashicorp/consul/aws`). Teams use this to enforce consistent, organization-approved module versions.
-    *   *Why A is incorrect:* VCS integration connects workspaces to Git repositories for triggering runs — it does not index or publish modules to a registry. Module publishing to the private registry is a separate, explicit action.
-    *   *Why C is incorrect:* Sentinel policies can enforce compliance rules (including requiring specific module sources), but they do not host or serve modules. The registry is the hosting mechanism; Sentinel is the enforcement mechanism.
-    *   *Why D is incorrect:* Variable sets inject Terraform variables and environment variables into workspaces at runtime. They have no role in defining or serving module source addresses.
+### Question 4
+
+You add a new module block to your root configuration and run `terraform plan` without running `terraform init` first. What happens?
+
+A. Terraform downloads the module automatically and proceeds with the plan.
+B. Terraform errors with a message indicating the module has not been installed.
+C. Terraform ignores the new module block and plans the rest of the configuration.
+D. Terraform prompts you to run `terraform init` and then continues automatically.
+
+**Correct Answer**: B
+
+**Distractor Analysis**:
+
+- A is incorrect — `terraform plan` does not download modules; that is the responsibility of `terraform init`.
+- C is incorrect — Terraform does not silently ignore uninstalled modules; the missing module causes a hard error.
+- D is incorrect — Terraform errors and exits; it does not auto-run `terraform init`.
+
+---
+
+### Question 5
+
+Which of the following is a valid Terraform Registry source address format?
+
+A. `registry.terraform.io/hashicorp/consul`
+B. `hashicorp/consul/aws`
+C. `aws/consul/hashicorp`
+D. `https://registry.terraform.io/hashicorp/consul/aws`
+
+**Correct Answer**: B
+
+**Distractor Analysis**:
+
+- A is incorrect — the full registry hostname prefix is not used in the `source` argument; Terraform infers it from the format.
+- C is incorrect — the format is `<namespace>/<module>/<provider>`, not `<provider>/<module>/<namespace>`.
+- D is incorrect — using a full HTTPS URL would make Terraform treat this as an HTTP archive source, not a Registry source.
+
+---
+
+### Question 6
+
+A root module calls two child modules: `module.network` and `module.compute`. The `module.compute` block uses `module.network.vpc_id` as an input. How does Terraform handle the execution order?
+
+A. Terraform creates both modules simultaneously and retries any failures.
+B. Terraform creates `module.compute` first because it is declared later in the file.
+C. Terraform creates `module.network` first because `module.compute` has an implicit dependency on it through the reference.
+D. The order depends on the `depends_on` argument; without it, order is undefined.
+
+**Correct Answer**: C
+
+**Distractor Analysis**:
+
+- A is incorrect — Terraform respects dependencies; it does not run dependent modules simultaneously and retry.
+- B is incorrect — Terraform does not use file declaration order to determine execution order; it uses the dependency graph.
+- D is incorrect — `depends_on` is for explicit dependencies when implicit ones cannot be detected (e.g., when dependencies exist through external systems). Reference-based dependencies are detected automatically.
+
+---
+
+### Question 7
+
+What is the correct naming convention for a Terraform module repository intended for publication on the public Terraform Registry?
+
+A. `terraform_<module>_<provider>`
+B. `<provider>-<module>-terraform`
+C. `terraform-<provider>-<module_name>`
+D. `<namespace>_terraform_<module>`
+
+**Correct Answer**: C
+
+**Distractor Analysis**:
+
+- A is incorrect — underscores are not used in the naming convention; hyphens are required.
+- B is incorrect — the order is wrong; `terraform` must be the prefix, not the suffix.
+- D is incorrect — this format is not recognized by the Registry; the required format is `terraform-<provider>-<module_name>`.
+
+---
+
+### Question 8
+
+A developer wants to create three identical network module instances for three different regions using a single module block. Which meta-argument enables this?
+
+A. `count = 3`
+B. `source = "3"`
+C. `instances = 3`
+D. `version = "3.0"`
+
+**Correct Answer**: A
+
+**Distractor Analysis**:
+
+- B is incorrect — `source` specifies where the module code lives; it is not used to set the instance count.
+- C is incorrect — `instances` is not a valid Terraform meta-argument for modules or resources.
+- D is incorrect — `version` is a constraint on which published version of the module to use, not a count.
+
+---
+
+### Question 9
+
+A module is stored in `./modules/database`. Which of the following `source` values is valid for calling this module from the root configuration?
+
+A. `source = "modules/database"`
+B. `source = "/modules/database"`
+C. `source = "./modules/database"`
+D. `source = "local::./modules/database"`
+
+**Correct Answer**: C
+
+**Distractor Analysis**:
+
+- A is incorrect — local paths without `./` or `../` are ambiguous and would cause Terraform to interpret the string as a Registry module address.
+- B is incorrect — absolute paths starting with `/` are not a supported local module source format in Terraform.
+- D is incorrect — `local::` is not a valid Terraform source prefix; local paths simply use `./` or `../`.
+
+---
+
+### Question 10
+
+What is the key architectural difference between an input variable (`variable`) and a module output (`output`) in the context of module interfaces?
+
+A. Input variables flow data into a module; outputs flow data out of a module to the caller.
+B. Input variables are read-only; outputs are read-write.
+C. Input variables are defined in `variables.tf`; outputs must be in `main.tf`.
+D. Input variables accept any type; outputs only support string values.
+
+**Correct Answer**: A
+
+**Distractor Analysis**:
+
+- B is incorrect — neither variables nor outputs are "read-write" in Terraform's immutable evaluation model; both are evaluated once per plan cycle.
+- C is incorrect — while convention places outputs in `outputs.tf`, Terraform loads all `.tf` files in a directory regardless of name; file names do not determine functionality.
+- D is incorrect — outputs support all Terraform types including complex types like `list`, `map`, and `object`.
+
+---
+
+*Texas Wesleyan University — CIS-4337 Infrastructure Automation*
+*Proprietary and Confidential. Not for disclosure outside of authorized course participants.*

@@ -1,216 +1,321 @@
-# Video Script: Module 07 - File and Print Services (Part 1 of 2)
+# Video Script: Module 07 — Active Directory User and Group Management (Part 1 of 2)
 
 ## Course: CIS-3326 Windows Server Administration
 
-## Texas Wesleyan University
+## Texas Wesleyan University | Professor Nash
+
+## Estimated Duration: 15 minutes
+
+## Certification Alignment: Microsoft Windows Server Administration
 
 ---
 
-**Recorded by:** Professor Nash | Texas Wesleyan University
+## Introduction
 
-**Module:** 07 - File and Print Services
+Welcome back to CIS-3326 Windows Server Administration.
 
-**Part:** 1 of 2 — Concepts, Theory, and Architecture
+I am Professor Nash, and in Module 07 we are covering one of the most essential
+day-to-day skills for any Windows Server administrator: managing users and groups
+inside Active Directory.
 
-**Estimated Duration:** 13 minutes
+By the end of this two-part module, you will understand how Active Directory
+organizes its objects, why group types and scopes matter, and how to automate
+provisioning at scale using PowerShell.
 
-**Certification Alignment:** AZ-800 (Administering Windows Server Hybrid Core Infrastructure)
+Part 1 covers concepts, architecture, and planning. Part 2 puts those concepts
+to work with hands-on GUI and PowerShell demonstrations.
 
----
-
-### [SEGMENT 1 — Introduction]
-
-**[SHOW SCREEN: Course title slide — Module 07]**
-
-Welcome to Module 07. I am Professor Nash. File and Print Services are the server roles that most end users interact with every single day, even when they do not realize it. Every time someone opens a file from a mapped drive, saves a document to a shared folder, or sends a job to a network printer — they are using the services covered in this module.
-
-This module maps to AZ-800 objectives: "Configure and manage file services" and "Configure and manage print services." We will cover SMB and NTFS permissions, DFS Namespaces, DFS Replication, File Server Resource Manager, Shadow Copies, and Windows Server print management.
+Let us start with the big picture.
 
 ---
 
-### [SEGMENT 2 — SMB File Sharing and the File and Storage Services Role]
+## Section 1: Active Directory Object Model
 
-**[SHOW SCREEN: Server Manager — File and Storage Services role services tree]**
+Active Directory is a hierarchical directory service built on the LDAP protocol.
+Everything stored in Active Directory — users, computers, printers, groups — is
+called an **object**.
 
-[Alt-text: Server Manager showing the File and Storage Services role expanded to reveal role services including File Server, DFS Namespaces, DFS Replication, File Server Resource Manager, and Work Folders.]
+Objects are organized inside containers. The most flexible and important container
+type is the **Organizational Unit**, abbreviated OU.
 
-Windows Server file sharing uses the SMB protocol — Server Message Block. SMB 3.x is the current version, with SMB 3.1.1 used in Windows Server 2022. It supports encryption, multichannel (multiple NICs simultaneously), and SMB Direct (RDMA — remote direct memory access for extremely fast transfers between servers).
+Think of OUs as folders inside a filing cabinet. You can nest them to mirror your
+company's geography, departments, or administrative boundaries. An OU named
+**Sales** might contain a child OU named **Sales-East** and another named
+**Sales-West**.
 
-The **File and Storage Services** role umbrella contains:
+OUs serve two critical purposes:
 
-- **File Server** — the base role for creating and managing SMB shares
-- **DFS Namespaces** — virtual namespace for aggregating shares
-- **DFS Replication** — multi-master folder replication engine
-- **File Server Resource Manager** — quotas, file screening, reports
-- **Work Folders** — sync solution for bringing server-stored files to devices
+- They give you a logical structure for delegation of administrative control.
 
-For the exam, know which role service provides which capability.
+- They are the attachment points for Group Policy Objects, which we cover in
+  Module 08.
 
----
-
-### [SEGMENT 3 — Creating SMB Shares: New Technology File System and Share Permissions]
-
-**[SHOW SCREEN: Windows Explorer — Share properties with Security (NTFS) and Sharing tabs side by side]**
-
-[Alt-text: Windows Explorer showing two tabs: the Sharing tab with Share permissions (Read, Change, Full Control) and the Security tab with NTFS permissions (Full Control, Modify, Read and Execute, Read, Write, Special Permissions).]
-
-When you share a folder on Windows Server, two permission systems apply simultaneously:
-
-**Share Permissions** — apply only to network access through the share path. Three settings:
-
-- **Read** — view files, run programs, read attributes
-- **Change** — Read plus create, modify, and delete files
-- **Full Control** — Change plus change permissions and take ownership
-
-**NTFS Permissions** — apply to all access, both local and remote, with much finer granularity:
-
-- Full Control, Modify, Read and Execute, List Folder Contents, Read, Write
-- Applied per user or group through Access Control Lists (ACLs)
-- Inherited from parent folders by default; can be overridden
-
-**The critical rule for network access:** The effective permission is the most restrictive combination of Share and NTFS permissions evaluated separately. If Share says Read and NTFS says Full Control — the user gets Read over the network. If Share says Full Control and NTFS says Read — the user still gets Read.
-
-**Local access** bypasses Share permissions entirely. Only NTFS permissions apply when sitting at the console.
-
-**Best practice:** Set Share permissions to Full Control for Everyone or Authenticated Users, then use NTFS permissions to enforce granular access control. This is simpler to manage and avoids double-permission conflicts.
+Containers also exist — the built-in **Users** and **Computers** containers you
+see when you open Active Directory Users and Computers. But these built-in
+containers cannot have Group Policy linked to them, and you cannot delegate
+control as granularly. For any real environment, you should move objects into
+proper OUs.
 
 ---
 
-### [SEGMENT 4 — DFS Namespaces]
+## Section 2: Designing an OU Structure
 
-**[SHOW SCREEN: DFS Management console showing a domain-based namespace with multiple folder targets]**
+Before you create a single user account, you need a plan. A poorly designed OU
+structure causes headaches for years. A well-designed one simplifies everything
+from daily administration to disaster recovery.
 
-[Alt-text: DFS Management console showing a namespace \\corp.local\Files with three folders: HR, IT, and Finance, each pointing to a different server share as the folder target.]
+There are two primary OU design strategies:
 
-**DFS Namespaces (DFSN)** creates a virtual folder hierarchy accessible through a single UNC path, regardless of where the actual data lives on the network.
+**Geography-based structure** — Top-level OUs represent locations: Dallas,
+Chicago, New York. Sub-OUs represent departments within each location. This
+works well when IT administration is decentralized and each location manages
+its own users.
 
-Example: Instead of users needing to know `\\FS-NYC-01\HR`, `\\FS-LA-01\Finance`, and `\\FS-CHICAGO-01\IT`, they access everything through `\\corp.local\Files\HR`, `\\corp.local\Files\Finance`, and `\\corp.local\Files\IT`. The namespace server redirects them transparently.
+**Function-based structure** — Top-level OUs represent departments: IT, Finance,
+HR, Operations. Sub-OUs represent object types or roles within each department.
+This works well for centralized IT organizations.
 
-Two types of namespaces:
+Many enterprises use a hybrid. For our lab environment at Texas Wesleyan, we will
+use a function-based structure under a root OU named **TXWES**.
 
-**Domain-Based Namespace** (recommended): Stored in AD DS. Highly available — any domain member with the Namespace Server role can host it. The path starts with the domain name: `\\corp.local\Files`.
+A typical lab OU tree looks like this:
 
-**Stand-alone Namespace**: Stored on a single server. The path starts with the server name: `\\SRV-FS-01\Files`. Not fault-tolerant if the server fails.
+```
+TXWES (root OU)
+├── IT
+│   ├── Admins
+│   └── Helpdesk
+├── Faculty
+├── Students
+└── ServiceAccounts
+```
 
-Each folder in a namespace has one or more **Folder Targets** — the actual UNC paths to server shares. If multiple folder targets point to the same folder on different servers, DFS can load-balance and provide site affinity (users in NYC go to the NYC server automatically).
-
----
-
-### [SEGMENT 5 — DFS Replication]
-
-**[SHOW SCREEN: DFS Management showing a replication group with two members and a replicated folder]**
-
-[Alt-text: DFS Management console showing a replication group named Corp-Files-RG with two members FS-NYC-01 and FS-LA-01, both listed as Primary and Secondary for the HR folder.]
-
-**DFS Replication (DFSR)** is a multi-master replication engine that keeps folder contents synchronized across multiple servers.
-
-Key DFSR concepts:
-
-**Replication Group:** A group of servers (members) that participate in replicating one or more folders.
-
-**Replicated Folder:** The folder being kept in sync. Each member has a local path for the replicated folder.
-
-**Remote Differential Compression (RDC):** DFSR does not send entire files when a change occurs. It identifies only the changed blocks within a file and sends just those blocks. This dramatically reduces replication bandwidth.
-
-**Staging Folder:** A temporary area where DFSR stages outgoing replication data before transmission and incoming data before applying changes. The staging folder must be large enough for the largest files being replicated.
-
-**Conflict resolution:** DFSR uses a last-writer-wins algorithm for conflicting changes. The losing version is moved to the `DfsrPrivate\ConflictAndDeleted` folder on the member that received the conflict.
-
-DFSR is commonly used together with DFSN to both provide a unified namespace AND keep the data behind that namespace synchronized across sites.
+Pause here for a moment and think about your own organization or a hypothetical
+company. What OU structure would make sense? There is no single correct answer,
+but the design decision affects everything downstream.
 
 ---
 
-### [SEGMENT 6 — File Server Resource Manager]
+## Section 3: User Account Fundamentals
 
-**[SHOW SCREEN: FSRM console showing Quota Management and File Screening Management]**
+A user account in Active Directory represents a person — or in the case of a
+service account, an application or service — that needs to authenticate and
+access resources.
 
-[Alt-text: File Server Resource Manager console tree showing Quota Management with a 5 GB hard quota on the HR share, and File Screening Management showing an Active Screen blocking Audio and Video file groups.]
+Every user object has a **distinguished name** that encodes its exact location
+in the directory hierarchy. For example:
 
-**File Server Resource Manager (FSRM)** is a role service that provides three major capabilities:
+```
+CN=jsmith,OU=IT,OU=TXWES,DC=txwes,DC=edu
+```
 
-**Quota Management:**
+This tells you the user jsmith lives in the IT OU inside TXWES inside the
+txwes.edu domain.
 
-- Sets limits on how much disk space a folder (or user's home folder) can consume
-- **Hard quota:** Prevents writes when the limit is reached — the save fails
-- **Soft quota:** Logs an event and can send a notification, but does not block writes
-- Quota templates allow consistent quota policies across many folders
+Key attributes on a user object include:
 
-**File Screening:**
+- **sAMAccountName** — the pre-Windows 2000 logon name, also called the
+  "username." Must be unique in the domain. Maximum 20 characters.
 
-- **Active Screen:** Actively blocks files matching defined file groups (e.g., Audio and Video, Executables)
-- **Passive Screen:** Logs events but does not block — useful for auditing before enforcement
-- File groups are predefined collections of file extensions that can be customized
+- **userPrincipalName (UPN)** — the email-style logon name such as
+  jsmith@txwes.edu. Preferred for modern authentication. Must be unique in
+  the forest.
 
-**Storage Reports:**
+- **displayName** — the friendly name shown in address books.
 
-- Generates reports on disk usage, file type distribution, large files, duplicate files
-- Can be scheduled to run automatically and emailed to administrators
+- **employeeID** — useful for linking AD accounts to HR systems.
 
----
+- **manager** — links to another user object, enabling org chart features.
 
-### [SEGMENT 7 — Volume Shadow Copies (Previous Versions)]
+When planning user accounts, you should establish a consistent naming convention.
+Common conventions are:
 
-**[SHOW SCREEN: Volume Shadow Copy settings on a volume, and Previous Versions tab on a shared folder]**
+- First initial plus last name: jsmith
 
-[Alt-text: The Volume Shadow Copy Service settings dialog showing a schedule of twice-daily snapshots, and the Previous Versions tab of a shared folder showing three restore points from the past week.]
+- First name plus period plus last name: john.smith
 
-**Shadow Copies of Shared Folders** — also called Previous Versions — are point-in-time snapshots of the data on a volume. When enabled, Windows Server takes snapshots of the entire volume on a schedule.
+- Last name plus first initial: smithj
 
-Shadow Copies enable:
-
-- End users to restore their own accidentally deleted or overwritten files by right-clicking a folder and selecting "Restore previous versions"
-- Administrators to recover files without a full backup restoration
-- Self-service recovery without IT involvement for common accidental deletions
-
-Key shadow copy facts:
-
-- Shadow copies are stored on the same volume or a separate volume
-- Recommended minimum storage: 10% of the volume size
-- Maximum of 64 shadow copies per volume; oldest copies are deleted when the limit is reached
-- Shadow copies are not a substitute for backup — they protect only against accidental deletion or modification, not hardware failure
+Pick one convention and stick to it. Inconsistency causes confusion and breaks
+automation scripts.
 
 ---
 
-### [SEGMENT 8 — Print Services Overview]
+## Section 4: Group Types
 
-**[SHOW SCREEN: Print Management console showing print servers, printers, and drivers]**
+Active Directory supports two types of groups, and understanding the difference
+is critical for both the exam and real-world administration.
 
-[Alt-text: Print Management console showing a print server with four shared printers listed, each with a driver name and status column showing Ready or Error.]
+### Security Groups
 
-**Print Management** is a Windows Server role service (under Print and Document Services) that provides centralized management of all printers and print servers in the domain from a single console.
+Security groups are used to control access to resources. You add a security group
+to an NTFS permission or a share permission, and every member of that group
+inherits that access. Security groups can also be used as email distribution lists
+in Exchange-integrated environments.
 
-Key print services concepts:
+Security groups are the type you will use for the vast majority of administrative
+tasks — assigning file permissions, controlling software deployment, managing
+printer access.
 
-**Print Server:** A Windows Server (or role on an existing server) that hosts shared printers. Clients connect to the print server share rather than directly to the physical printer. The server handles spooling, driver distribution, and print queue management.
+### Distribution Groups
 
-**Printer Driver Distribution:** When a client first connects to a shared printer on a Windows print server, the correct driver is automatically downloaded and installed on the client. This eliminates per-workstation driver installation.
+Distribution groups exist solely for email distribution. They cannot be used to
+assign permissions to resources. If you have Exchange or Microsoft 365, you use
+distribution groups to create mailing lists.
 
-**Publishing printers to AD DS:** Shared printers can be published to Active Directory so users can search for printers by name, location, or capability rather than needing to know the print server name.
-
-**Print Queue Management:** The print queue shows all pending, printing, and error jobs. Administrators can pause, resume, cancel, and reorder jobs from Print Management.
-
-**Printer Pooling:** Multiple physical printers presented as a single shared printer. Jobs are distributed to whichever physical printer is available first.
-
----
-
-### [SEGMENT 9 — Summary and Part 2 Preview]
-
-**[SHOW SCREEN: Summary slide]**
-
-Part 1 covered SMB file sharing, the critical Share + NTFS permission interaction, DFS Namespaces for unified paths, DFS Replication for content synchronization, File Server Resource Manager for quotas and file screening, Shadow Copies for self-service file recovery, and the Print Management role for centralized printer administration.
-
-In Part 2 we will install and configure a file share using PowerShell, set NTFS permissions, install FSRM, configure a quota and file screen, enable shadow copies, and share a printer through the Print Management console.
+A practical rule of thumb: if you are not sure which type to create, choose a
+security group. It can do everything a distribution group does, plus permissions.
 
 ---
 
-### Additional Resources
+## Section 5: Group Scopes
 
-- [SMB file sharing overview](https://learn.microsoft.com/en-us/windows-server/storage/file-server/file-server-smb-overview)
-- [DFS Namespaces overview](https://learn.microsoft.com/en-us/windows-server/storage/dfs-namespaces/dfs-overview)
-- [DFS Replication overview](https://learn.microsoft.com/en-us/windows-server/storage/dfs-replication/dfsr-overview)
-- [File Server Resource Manager](https://learn.microsoft.com/en-us/windows-server/storage/fsrm/fsrm-overview)
-- [Shadow copies of shared folders](https://learn.microsoft.com/en-us/windows-server/storage/file-server/volume-shadow-copy-service)
+Every security group and distribution group has a **scope** that controls where
+the group can be used and who can be a member.
+
+There are three scopes:
+
+### Domain Local
+
+A Domain Local group is used to assign permissions to resources within a single
+domain. It can contain members from any domain in the forest, from trusted
+forests, or from the same domain.
+
+Think of Domain Local groups as the "permission holders" — they live near the
+resource and hold the permissions.
+
+### Global
+
+A Global group is used to organize users with similar roles or job functions
+within a single domain. It can only contain members from the same domain where
+it was created. However, it can be added to Domain Local groups in any domain
+in the forest.
+
+Think of Global groups as the "role buckets" — they hold the users who share
+a role.
+
+### Universal
+
+A Universal group can contain members from any domain in the forest and can be
+assigned permissions in any domain in the forest. Universal group membership is
+stored in the Global Catalog, so changes to Universal group membership trigger
+Global Catalog replication across all domain controllers.
+
+Use Universal groups sparingly in large forests. Excessive use causes replication
+traffic spikes.
 
 ---
 
-*End of Part 1. Continue to Part 2 for demonstrations, PowerShell commands, exam tips, and lab preview.*
+## Section 6: The AGDLP Strategy
+
+Microsoft recommends a nesting strategy called **AGDLP** for managing access:
+
+- **A** — Accounts (user accounts)
+
+- **G** — Global groups (role-based)
+
+- **DL** — Domain Local groups (resource-based)
+
+- **P** — Permissions (on the actual resource)
+
+The workflow looks like this:
+
+1. You create a Global group called **G_FileShare_ReadOnly** and add user
+   accounts to it.
+
+2. You create a Domain Local group called **DL_FinanceShares_Read** and add the
+   Global group to it.
+
+3. You assign Read permission on the Finance file share to the Domain Local group.
+
+This nesting model lets you manage access cleanly. When a new employee joins the
+Finance team, you add them to the Global group, and they automatically get access
+to all the resources that Domain Local group controls.
+
+In forests with multiple domains, the pattern extends to **AGUDLP** — inserting
+Universal groups between Global and Domain Local to bridge domain boundaries.
+
+---
+
+## Section 7: Account Management Concepts
+
+Beyond creating accounts, administrators spend significant time managing the
+lifecycle of accounts:
+
+**Disabling accounts** — When an employee goes on extended leave or terminates,
+you disable the account rather than deleting it immediately. A disabled account
+cannot authenticate, but its group memberships and attributes are preserved. This
+is important for audit trails and for re-enabling if the employee returns.
+
+**Unlocking accounts** — Account lockout policies lock an account after a defined
+number of failed password attempts. Administrators must unlock these accounts,
+either manually or through self-service tools.
+
+**Password resets** — One of the most common helpdesk tasks. In Active Directory
+Users and Computers, right-click the user and choose Reset Password.
+
+**Moving accounts** — When users change departments, you move their account to
+the correct OU so they receive the right Group Policy settings.
+
+**Deleting accounts** — Best practice is to wait 30-90 days after disabling before
+deleting, in case the account needs to be restored for audit or access recovery
+purposes.
+
+---
+
+## Section 8: Bulk Provisioning Overview
+
+In enterprise environments, you rarely create user accounts one at a time. New
+employee onboarding, semester starts at universities, or mergers and acquisitions
+can require creating hundreds or thousands of accounts quickly.
+
+The tools for bulk provisioning include:
+
+- **CSV import with PowerShell** — The most flexible and common method. You
+  maintain a CSV file with columns like FirstName, LastName, Department, OU,
+  and a script loops through each row calling **New-ADUser**.
+
+- **LDIF files** — A low-level import format used with **ldifde.exe**. Rarely
+  used in modern environments but still appears on certification exams.
+
+- **CSVDE** — A Microsoft tool for importing and exporting AD objects using CSV
+  format. Limited compared to PowerShell.
+
+- **Azure AD Connect / Entra Connect** — In hybrid environments, accounts may be
+  sourced from on-premises HR systems and synchronized to the cloud.
+
+In Part 2, we will walk through a complete PowerShell bulk provisioning script
+that reads a CSV, creates users, assigns them to groups, and places them in the
+correct OUs.
+
+---
+
+## Wrap-Up: Part 1 Summary
+
+Let us review what we covered in Part 1:
+
+- Active Directory uses a hierarchical object model with OUs as the primary
+  organizational and administrative containers.
+
+- OU design should be deliberate — function-based, geography-based, or hybrid
+  — because it affects Group Policy application and delegation.
+
+- User accounts have key attributes including sAMAccountName, UPN, and
+  displayName. Naming conventions should be established before provisioning begins.
+
+- Security groups control access to resources. Distribution groups are for email
+  only.
+
+- Group scopes — Domain Local, Global, and Universal — control membership rules
+  and where the group can be used to assign permissions.
+
+- The AGDLP strategy is Microsoft's recommended nesting model for scalable
+  access management.
+
+- Bulk provisioning using PowerShell and CSV files is the standard approach for
+  large-scale account creation.
+
+In Part 2, we move to the command line and GUI to build these structures,
+create users, and run bulk provisioning scripts in our lab environment.
+
+See you in Part 2.

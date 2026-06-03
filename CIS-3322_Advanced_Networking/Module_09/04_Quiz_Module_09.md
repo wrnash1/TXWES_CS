@@ -1,206 +1,232 @@
-# Quiz: Module 09 - WAN Technologies and VPNs
+# Quiz: Module 09 — Access Control Lists (ACLs)
 
-**Course:** CIS-3322 Advanced Networking
-**Certification Alignment:** Cisco CCNA 200-301 (Domain 4: IP Services / Domain 5: Security Fundamentals)
-**Questions:** 10 | **Points:** 10 (1 point each)
-**Prepared by:** Professor Nash | Texas Wesleyan University
+## Course: CIS-3322 Advanced Networking
+
+## Texas Wesleyan University | Professor Nash
+
+## Certification Alignment: Cisco CCNA 200-301
+
+## Questions: 10 | Points: 10 (1 point each)
 
 ---
 
 ## Question 1
 
-Which IPsec component provides data integrity and origin authentication without providing encryption?
+A network engineer needs to block all traffic from the 172.16.5.0/24 subnet from reaching the server farm at 10.10.10.0/24. All other traffic should be permitted. The engineer uses a standard ACL. Where should this ACL be applied?
 
-- A) ESP (Encapsulating Security Payload)
-- B) AH (Authentication Header)
-- C) IKE (Internet Key Exchange)
-- D) Diffie-Hellman
+- A) Inbound on the interface closest to the source subnet 172.16.5.0/24
+- B) Outbound on the interface closest to the server farm 10.10.10.0/24
+- C) Inbound on the interface closest to the server farm 10.10.10.0/24
+- D) Outbound on the interface closest to the source subnet 172.16.5.0/24
 
 **Correct Answer:** B
 
 **Distractor Analysis:**
 
-- A is incorrect: ESP provides encryption in addition to integrity and authentication. ESP is the IPsec protocol that encrypts the payload, making traffic unreadable by eavesdroppers.
-- B is correct: AH (Authentication Header) provides data integrity verification and origin authentication, confirming that the packet has not been modified and came from the expected source. AH does not provide encryption — the payload remains readable in cleartext.
-- C is incorrect: IKE (Internet Key Exchange) is the protocol responsible for negotiating IPsec security associations and exchanging encryption keys between peers. It is the setup mechanism, not a data security protocol.
-- D is incorrect: Diffie-Hellman is a key exchange algorithm used within IKE to securely derive shared encryption keys. It is not itself an IPsec security protocol.
+- A is incorrect: Applying a standard ACL inbound near the source would filter all traffic from that source regardless of destination. The standard ACL cannot distinguish which destination the traffic is headed to, so applying it near the source would block the source from reaching all destinations, not just the server farm.
+- B is correct: Standard ACLs filter based on source IP address only. Placing the ACL outbound on the interface connected to the server farm ensures it only blocks the source subnet from reaching that specific destination. Traffic from the same source to other destinations is unaffected.
+- C is incorrect: An inbound ACL on the server farm interface would filter traffic entering from outside toward the router, which would not be the direction of traffic destined for the server farm. Outbound is the correct direction for traffic flowing toward the connected segment.
+- D is incorrect: Outbound on the source interface sends traffic away from the source subnet. Traffic from LAN hosts exits the router toward their destinations on different interfaces, not back out the LAN interface.
 
 ---
 
 ## Question 2
 
-Which of the following most accurately describes GRE (Generic Routing Encapsulation) tunnels?
+An engineer types the following command on a Cisco router:
 
-- A) A tunneling protocol that encapsulates any Layer 3 protocol within IP packets, enabling routing protocols and multicast traffic to traverse WAN links but providing no native encryption
-- B) An IPsec transport-mode framework that encrypts only the IP payload between two hosts while preserving the original IP header for routing across the public internet
-- C) A carrier WAN service that extends Ethernet frames over a metropolitan area network, offering point-to-point and multipoint connectivity to enterprise customers
-- D) A Cisco VPN technology that uses NHRP and IPsec to create dynamic spoke-to-spoke tunnels in a hub-and-spoke architecture
+```text
+access-list 115 permit tcp 10.1.0.0 0.0.255.255 any eq 443
+```
 
-**Correct Answer:** A
+Which traffic does this entry permit?
+
+- A) All TCP traffic from any source to the 10.1.0.0/16 network on port 443
+- B) HTTPS traffic from any host in the 10.1.0.0/16 network to any destination
+- C) All traffic from 10.1.0.0/16 to any destination using any protocol
+- D) TCP traffic from any source destined for port 443 on hosts in 10.1.0.0/16
+
+**Correct Answer:** B
 
 **Distractor Analysis:**
 
-- A is correct: GRE encapsulates a wide range of protocols and supports multicast and broadcast — which is why it is used to run OSPF and EIGRP across WAN links. GRE provides no encryption by design and must be combined with IPsec when security is required.
-- B is incorrect: This describes IPsec in transport mode. IPsec transport mode encrypts the payload while preserving the original IP header. GRE does not involve encryption.
-- C is incorrect: This describes Metro Ethernet, a carrier-provided WAN service. Metro Ethernet is a WAN connectivity product, not a tunneling protocol.
-- D is incorrect: This describes DMVPN (Dynamic Multipoint VPN), which uses GRE as one component but is a distinct advanced technology. DMVPN adds NHRP for dynamic spoke-to-spoke tunnel creation — that functionality is not part of basic GRE.
+- A is incorrect: The source and destination positions are reversed. In an extended ACL, the first address field is source and the second is destination. The source here is 10.1.0.0 0.0.255.255, not the destination.
+- B is correct: Access list 115 is an extended ACL (100–199). The statement permits TCP traffic where the source is any address in 10.1.0.0/16 (wildcard 0.0.255.255 matches the first two octets exactly), the destination is any address, and the destination port is 443 (HTTPS).
+- C is incorrect: The protocol keyword `tcp` restricts this entry to TCP traffic only, not all IP protocols. The keyword `ip` would match all protocols.
+- D is incorrect: The `eq 443` qualifier applies to the destination port, and the destination is `any`, not 10.1.0.0/16. The 10.1.0.0/16 is the source field in this statement.
 
 ---
 
 ## Question 3
 
-A network engineer needs to trace the Layer 3 hop-by-hop path that packets follow through a WAN to verify GRE tunnel routing is working correctly. Which command is most appropriate?
+A network administrator wants to configure a standard ACL that permits exactly two hosts — 192.168.1.50 and 192.168.1.75 — and denies all others. Which configuration is correct?
 
-- A) `traceroute`
-- B) `ping`
-- C) `netstat -ano`
-- D) `nslookup`
+- A) `access-list 20 permit 192.168.1.50` then `access-list 20 permit 192.168.1.75`
+- B) `access-list 20 permit 192.168.1.50 0.0.0.255` then `access-list 20 permit 192.168.1.75 0.0.0.255`
+- C) `access-list 20 permit 192.168.1.0 0.0.0.255`
+- D) `access-list 20 permit host 192.168.1.50 192.168.1.75`
 
 **Correct Answer:** A
 
 **Distractor Analysis:**
 
-- A is correct: `traceroute` reveals each router hop along the path by sending packets with incrementing TTL values. In a GRE tunnel scenario, it confirms whether traffic is traversing the tunnel or using a different path.
-- B is incorrect: `ping` confirms end-to-end reachability and measures round-trip time but does not identify the intermediate hops or confirm the routing path taken.
-- C is incorrect: `netstat -ano` lists active TCP/UDP connections and listening ports on a local host. It does not test routing paths.
-- D is incorrect: `nslookup` resolves DNS names to IP addresses. It is unrelated to routing path analysis.
+- A is correct: Each `permit` statement with a host address and no wildcard (or using the `host` keyword which implies 0.0.0.0 wildcard) matches exactly one IP address. Two separate permit statements cover both hosts. The implicit deny any at the end drops all other traffic.
+- B is incorrect: The wildcard `0.0.0.255` matches any host in the 192.168.1.0/24 network, not just the two specified hosts. This would permit the entire subnet.
+- C is incorrect: This permits the entire 192.168.1.0/24 subnet, not just the two specified hosts.
+- D is incorrect: This is not valid ACL syntax. You cannot specify two host addresses in a single permit statement without a separate wildcard mask for each.
 
 ---
 
 ## Question 4
 
-A network engineer configures a GRE tunnel between R1 and R2. After configuration, `show interface Tunnel0` on R1 shows the tunnel as `up/down`. What is the most likely cause?
+An engineer applies `ip access-group 101 in` on GigabitEthernet0/0 of R1. ACL 101 has only one entry: `deny tcp any any eq 23`. Traffic from the 10.1.1.0/24 LAN connected to Gi0/0 that is not Telnet is also being blocked. What is the most likely cause?
 
-- A) The tunnel source and destination IP addresses are transposed on R1
-- B) R1 has no route to reach the IP address configured as the tunnel destination
-- C) R1's physical WAN interface is administratively down
-- D) The GRE tunnel mode is not set to `gre ip`
+- A) The ACL is applied in the wrong direction — it should be outbound
+- B) The ACL number 101 is in the standard range and cannot filter by port
+- C) The implicit deny any at the end of the ACL is dropping all non-Telnet traffic
+- D) The `deny tcp` entry must be changed to `deny ip` to match all protocols
 
-**Correct Answer:** B
+**Correct Answer:** C
 
 **Distractor Analysis:**
 
-- A is incorrect: Transposing source and destination would cause the tunnel on both ends to be misconfigured, but this would typically result in the tunnel failing to send traffic rather than specifically causing the `up/down` line protocol state. The `up/down` state specifically indicates a routing problem.
-- B is correct: The GRE tunnel line protocol (second status) is `down` when the router has no route to the tunnel destination IP address. The router cannot forward GRE-encapsulated packets to the remote endpoint, so the line protocol fails. Fix: ensure a route to the tunnel destination exists in the routing table.
-- C is incorrect: If the physical WAN interface is administratively down, the router has no connectivity to the WAN at all. This would likely cause the tunnel to show `down/down` rather than `up/down`, and would have been caught earlier when testing WAN reachability.
-- D is incorrect: `tunnel mode gre ip` is the default mode for tunnel interfaces. If it were missing, Packet Tracer and most IOS versions still default to GRE. This would not specifically cause the `up/down` state.
+- A is incorrect: Inbound on Gi0/0 is the correct direction to filter traffic entering from the LAN. The direction is appropriate for the stated goal.
+- B is incorrect: ACL number 101 is in the extended ACL range (100–199). Extended ACLs can filter by protocol and port. The configuration is valid.
+- C is correct: The ACL contains only a single deny statement. After that entry, the implicit deny any drops all remaining traffic regardless of protocol. There is no `permit ip any any` entry to allow legitimate non-Telnet traffic. The fix is to add `access-list 101 permit ip any any` after the deny statement.
+- D is incorrect: Changing the deny to `deny ip` would actually make the problem worse by explicitly denying all IP traffic in addition to what the implicit deny already drops. The issue is the missing permit, not the protocol keyword on the deny.
 
 ---
 
 ## Question 5
 
-Which Metro Ethernet service type connects multiple customer sites in a multipoint-to-multipoint topology where any site can communicate directly with any other site?
+Which command correctly restricts management access to a router's VTY lines to only hosts in the 10.0.0.0/24 subnet?
 
-- A) E-Line
-- B) E-Tree
-- C) E-LAN
-- D) E-Access
+- A) `ip access-group 5 in` applied to the VTY interface
+- B) `access-class 5 in` applied under `line vty 0 4`
+- C) `ip access-group 5 in` applied under `line vty 0 4`
+- D) `access-class 5 in` applied to all physical interfaces
 
-**Correct Answer:** C
+**Correct Answer:** B
 
 **Distractor Analysis:**
 
-- A is incorrect: E-Line is a point-to-point Metro Ethernet service connecting exactly two customer sites. It is equivalent to a leased line using Ethernet interfaces.
-- B is incorrect: E-Tree is a hub-and-spoke Metro Ethernet service. Spoke sites can communicate with the hub but not directly with other spokes.
-- C is correct: E-LAN is the multipoint-to-multipoint Metro Ethernet service. All connected sites appear on the same Ethernet segment, enabling any-to-any communication without requiring traffic to traverse a hub.
-- D is incorrect: E-Access is not a standard Metro Ethernet service type tested on the CCNA. The three testable service types are E-Line, E-LAN, and E-Tree.
+- A is incorrect: `ip access-group` is the command for physical and logical Layer 3 interfaces. VTY lines are not physical interfaces and do not use this command.
+- B is correct: The `access-class` command is the correct command to apply an ACL to VTY lines. It is entered in line configuration mode (`line vty 0 4`) and filters incoming connection attempts by source IP address.
+- C is incorrect: `ip access-group` is not valid syntax under `line vty` configuration mode. The correct command is `access-class`.
+- D is incorrect: Applying `access-class` to physical interfaces is not valid. Physical interfaces use `ip access-group`. Even if it were valid, applying it to physical interfaces would not restrict VTY management access specifically.
 
 ---
 
 ## Question 6
 
-An engineer needs to run OSPF between two remote sites over the internet. The engineer configures an IPsec site-to-site VPN between the two routers. OSPF neighbor relationships fail to form across the IPsec tunnel. What is the most likely reason?
+What is the correct wildcard mask to match all hosts in the 192.168.4.0/26 subnet?
 
-- A) IPsec tunnels do not support multicast traffic by default, and OSPF uses multicast Hello packets
-- B) OSPF requires the tunnel interface to have an IP address in the same subnet as the remote router's LAN
-- C) IPsec transport mode must be changed to tunnel mode before OSPF can function
-- D) The OSPF process IDs must match across the IPsec tunnel endpoints
-
-**Correct Answer:** A
-
-**Distractor Analysis:**
-
-- A is correct: OSPF uses multicast addresses (224.0.0.5 and 224.0.0.6) for Hello packets and LSA flooding. IPsec tunnels do not support multicast by default. This is why GRE is added on top of IPsec when dynamic routing protocols are needed — GRE supports multicast, and IPsec provides encryption.
-- B is incorrect: OSPF tunnel interfaces do need an IP address, but that address should be in the tunnel subnet, not the LAN subnet. Misunderstanding this does not explain the OSPF failure over IPsec.
-- C is incorrect: IPsec tunnel mode is the correct mode for site-to-site VPNs and would already be in use. Changing to transport mode would be incorrect and would not resolve the multicast issue.
-- D is incorrect: OSPF process IDs are locally significant and do not need to match between routers. This is not a cause of OSPF neighbor failure.
-
----
-
-## Question 7
-
-In a site-to-site IPsec VPN, which mode encrypts the entire original IP packet and adds a new outer IP header pointing to the VPN endpoints?
-
-- A) Transport mode
-- B) Tunnel mode
-- C) AH mode
-- D) IKE phase 1
-
-**Correct Answer:** B
-
-**Distractor Analysis:**
-
-- A is incorrect: Transport mode encrypts only the payload of the original IP packet while preserving the original IP header. It is used for host-to-host encryption, not site-to-site VPNs between routers.
-- B is correct: Tunnel mode encrypts the entire original IP packet (header and payload) and encapsulates it inside a new outer IP packet with the VPN router addresses as source and destination. This hides the internal LAN IP addresses from the public internet.
-- C is incorrect: AH mode is not an IPsec operational mode. AH (Authentication Header) is an IPsec protocol that provides integrity and authentication. The operational modes are Transport and Tunnel.
-- D is incorrect: IKE Phase 1 is the first phase of IPsec negotiation where peers authenticate and establish a secure channel for key exchange. It is not a data encryption mode.
-
----
-
-## Question 8
-
-A network administrator needs to protect management sessions on a WAN router from plaintext credential capture. Which configuration directly addresses this threat?
-
-- A) Configure SSH for terminal access and HTTPS for web management, disabling Telnet and HTTP
-- B) Configure IPsec ESP tunnel mode between all WAN sites to encrypt inter-site traffic
-- C) Enable passive-interface on all WAN-facing interfaces to prevent OSPF hello exposure
-- D) Deploy a site-to-site GRE tunnel to encapsulate all management traffic
-
-**Correct Answer:** A
-
-**Distractor Analysis:**
-
-- A is correct: SSH and HTTPS encrypt the interactive management session in transit, preventing password capture by packet sniffers. Configure with `transport input ssh` on VTY lines and disable Telnet.
-- B is incorrect: IPsec ESP encrypts data traffic between sites but does not protect local management sessions where an administrator uses Telnet to the router's VTY lines or HTTP to the web interface.
-- C is incorrect: Passive interfaces control OSPF Hello behavior and have no relevance to management session security.
-- D is incorrect: A GRE tunnel encapsulates routed traffic between sites but does not encrypt interactive management sessions conducted locally or over VTY lines.
-
----
-
-## Question 9
-
-Which of the following is NOT a function of IKE in an IPsec VPN deployment?
-
-- A) Authenticating the identity of each VPN peer
-- B) Negotiating and establishing security associations
-- C) Encrypting the data payload of each IP packet
-- D) Exchanging encryption keys using Diffie-Hellman
+- A) 0.0.0.255
+- B) 0.0.0.128
+- C) 0.0.0.63
+- D) 255.255.255.192
 
 **Correct Answer:** C
 
 **Distractor Analysis:**
 
-- A is incorrect (IKE does perform this): IKE Phase 1 authenticates VPN peers using pre-shared keys, certificates, or other methods. Peer authentication is a core IKE function.
-- B is incorrect (IKE does perform this): IKE negotiates IPsec security associations — the set of parameters (algorithms, keys, lifetime) governing how traffic is encrypted. This is the primary purpose of IKE.
-- C is correct (IKE does NOT perform this): IKE is responsible for key exchange and security association setup. The actual encryption of data packets is performed by ESP (Encapsulating Security Payload), not IKE. IKE establishes the keys and parameters that ESP then uses.
-- D is incorrect (IKE does perform this): IKE uses the Diffie-Hellman algorithm to securely derive shared encryption keys between peers without transmitting the keys in plaintext.
+- A is incorrect: 0.0.0.255 matches the entire 192.168.4.0/24 subnet (256 hosts), not a /26 (64 hosts).
+- B is incorrect: 0.0.0.128 matches a /25 subnet (128 hosts). A /26 has 64 host addresses.
+- C is correct: A /26 subnet mask is 255.255.255.192. Subtracting from 255: 255-255, 255-255, 255-255, 255-192 = 0.0.0.63. The wildcard mask 0.0.0.63 correctly identifies all 64 addresses in a /26 network.
+- D is incorrect: 255.255.255.192 is the subnet mask for a /26 network, not the wildcard mask. Wildcard masks are conceptually the inverse of subnet masks.
 
 ---
 
-## Question 10
+## Question 7
 
-An engineer configures a GRE tunnel and wants to run OSPF across it. The OSPF network statement on R1 is `network 172.16.0.0 0.0.0.3 area 0` where 172.16.0.0/30 is the tunnel subnet. The same statement is on R2. After five minutes, `show ip ospf neighbor` on R1 shows no neighbors. The tunnel is up/up. Which is the most likely cause?
+An IPv6 ACL named FILTER_V6 is configured with a single entry: `deny tcp any any eq 23`. After applying it to an interface, administrators report that IPv6 routing between directly connected devices on that segment has stopped working. What is the most likely cause?
 
-- A) The OSPF area IDs do not match — one router uses area 0 and the other uses area 1
-- B) passive-interface is configured on Tunnel0 on one of the routers
-- C) The GRE tunnel IP addresses are not in the same /30 subnet
-- D) OSPF requires a separate network statement for the physical WAN interface
+- A) The ACL is blocking OSPFv3 hello packets because OSPF uses TCP
+- B) The deny entry is blocking all ICMPv6 traffic including Neighbor Discovery Protocol messages
+- C) IPv6 ACLs cannot block Telnet — only IPv4 ACLs can filter by port number
+- D) The ACL implicit deny is blocking the IPv6 NDP packets because there is no explicit permit for ICMPv6 nd-na and nd-ns
+
+**Correct Answer:** D
+
+**Distractor Analysis:**
+
+- A is incorrect: OSPFv3 uses IP protocol 89, not TCP. A TCP deny entry does not affect OSPF traffic.
+- B is incorrect: The deny entry specifically targets TCP port 23. ICMPv6 uses IP protocol 58, not TCP. The explicit deny entry itself does not block ICMPv6.
+- C is incorrect: IPv6 ACLs can absolutely filter by protocol and port number using the same syntax as IPv4 extended ACLs.
+- D is correct: IPv6 ACLs include two implicit permit statements for NDP (nd-na and nd-ns) before the implicit deny. However, the implicit deny any at the end drops all traffic that does not match an explicit permit. The ACL has no `permit ipv6 any any` entry, so the implicit deny is dropping NDP traffic that would normally be covered by the implicit NDP permits only when those permits exist in the right position. The fix is to add `permit ipv6 any any` before the implicit deny takes effect, or to verify that the NDP implicit permits are active. In this scenario the missing explicit permit ipv6 any any is causing all non-Telnet traffic including routing-adjacent ICMPv6 to be dropped.
+
+---
+
+## Question 8
+
+A network engineer needs to insert a new ACL entry between sequence numbers 10 and 20 in an existing ACL. Which ACL type supports this operation without deleting and recreating the entire ACL?
+
+- A) Numbered standard ACL (range 1–99)
+- B) Numbered extended ACL (range 100–199)
+- C) Named ACL (standard or extended)
+- D) Both numbered and named ACLs support in-place line insertion
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- A is incorrect: Numbered ACLs do not support line insertion. To add a statement between existing entries in a numbered ACL, the entire ACL must be deleted with `no access-list <number>` and recreated in the desired order.
+- B is incorrect: Numbered extended ACLs have the same limitation. Inserting a line at a specific sequence position requires deleting and recreating the entire list.
+- C is correct: Named ACLs (both standard and extended) support sequence-number-based line editing. You can enter the named ACL configuration mode and issue a new statement with a sequence number that falls between two existing entries. For example, `15 deny host 10.1.1.5` inserts between sequence 10 and sequence 20.
+- D is incorrect: Only named ACLs support this operation. Numbered ACLs do not support in-place sequence insertion or deletion.
+
+---
+
+## Question 9
+
+Review this ACL output from `show access-lists`:
+
+```text
+Extended IP access list OUTBOUND_FILTER
+    10 permit tcp 10.0.0.0 0.255.255.255 any eq 80 (432 matches)
+    20 permit tcp 10.0.0.0 0.255.255.255 any eq 443 (871 matches)
+    30 deny ip any any (0 matches)
+```
+
+A network administrator reports that ICMP ping tests from internal hosts (10.x.x.x) to external destinations are failing. What does the output indicate?
+
+- A) The ACL is not applied to any interface because match counters show zero on line 30
+- B) ICMP traffic is being dropped by line 30 because there is no permit entry for ICMP
+- C) Line 10 and line 20 are permitting too much traffic and need to be restricted further
+- D) The ACL is only filtering outbound HTTP and HTTPS — all other traffic is being forwarded normally
 
 **Correct Answer:** B
 
 **Distractor Analysis:**
 
-- A is incorrect: If area IDs mismatched, the neighbor relationship would partially form (reaching 2-Way) and then fail. A complete absence of neighbors more often points to hellos not being sent or received at all.
-- B is correct: If `passive-interface Tunnel0` is configured, OSPF hello packets are suppressed on the tunnel interface. No hellos means no neighbor discovery. Check `show ip ospf interface brief` — if Tunnel0 shows as passive, remove it with `no passive-interface Tunnel0`.
-- C is incorrect: If tunnel IP addresses are in different /30 subnets, OSPF would reject the neighbor due to subnet mask mismatch. This is a possible cause but the scenario states the same network statement is used on both routers, suggesting matching tunnel IPs.
-- D is incorrect: OSPF does not need a network statement for the physical WAN interface to form a neighbor relationship across the tunnel. OSPF only needs to run on the tunnel interface subnet. Including the WAN interface in OSPF would advertise it unnecessarily.
+- A is incorrect: Zero matches on line 30 does not mean the ACL is unapplied. It means no traffic has yet matched that line during the counter period (or counters were recently cleared). The ACL could still be applied and actively filtering.
+- B is correct: The ACL explicitly permits only TCP port 80 and TCP port 443 from internal hosts. ICMP uses IP protocol 1, not TCP, and there is no permit for ICMP or for `ip any any`. The implicit deny any (represented here as line 30 `deny ip any any`) drops all non-HTTP and non-HTTPS traffic, including ICMP pings. Adding `permit icmp 10.0.0.0 0.255.255.255 any` before line 30 would resolve the issue.
+- C is incorrect: Lines 10 and 20 are correctly scoped to HTTP and HTTPS. They are not overly permissive and are not the cause of the ICMP failure.
+- D is incorrect: The explicit `deny ip any any` at line 30 actively blocks all traffic that does not match lines 10 or 20. The network is not forwarding other traffic normally — it is dropping it.
+
+---
+
+## Question 10
+
+An engineer configures the following ACL on R1 and applies it inbound on the interface connected to the HR subnet (172.16.10.0/24):
+
+```text
+ip access-list extended HR_FILTER
+  10 deny tcp host 172.16.10.55 any eq 443
+  20 permit ip 172.16.10.0 0.0.0.255 any
+```
+
+A user at 172.16.10.55 reports they can still reach HTTPS websites. The `show access-lists HR_FILTER` output shows 0 matches on line 10 and increasing matches on line 20. What is the most likely cause?
+
+- A) The ACL is applied in the outbound direction instead of inbound
+- B) The host 172.16.10.55 is actually using a different source IP address due to DHCP reassignment
+- C) The ACL is applied to the wrong interface — it should be on the interface toward the internet
+- D) Line 20 uses `permit ip` which matches all IP traffic from the entire subnet before the host-specific deny on line 10 can be evaluated
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- A is incorrect: The question states the ACL is applied inbound, and inbound on the HR subnet interface is the correct direction to filter traffic from HR hosts. Direction is not the problem here.
+- B is possible but less likely: DHCP reassignment is a valid operational concern but the question focuses on ACL logic and the show output provides a clearer diagnostic — zero matches on line 10 indicates the traffic is not reaching that entry.
+- C is correct: The zero matches on line 10 combined with the increasing matches on line 20 indicate that traffic from 172.16.10.55 is matching line 20 and being permitted, which means the ACL logic is running but the specific deny is not being hit. The most operationally likely cause in a real scenario is that the ACL is applied to the wrong interface and never sees the HTTPS traffic from that host. If the ACL were on the correct inbound interface facing the HR subnet, line 10 would fire for any HTTPS traffic from .55.
+- D is incorrect: Line 10 is a deny for a specific host. Line 20 permits the broader subnet. Because line 10 comes first in sequence order, it would be evaluated before line 20 for traffic from host .55. If the ACL were processing traffic from .55, line 10 would match first.

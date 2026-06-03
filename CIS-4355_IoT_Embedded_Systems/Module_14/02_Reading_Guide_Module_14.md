@@ -1,53 +1,231 @@
-# Reading Guide: Module 14 - Industrial IoT (IIoT) and SCADA Systems
-## Course: CIS-4355_IoT_Embedded_Systems (IoT & Embedded Security (General Principles))
+# Reading Guide: Module 14 — Machine Learning for IoT
+
+## Course: CIS-4355 IoT and Embedded Systems
+
+## Texas Wesleyan University | Professor Nash
+
+Certification Alignment: IoT Fundamentals / Embedded Systems
 
 ---
 
-### Introduction
-Welcome to **Module 14 – Industrial IoT (IIoT) and SCADA Systems**! This module examines the convergence of operational technology (OT) with information technology (IT) in industrial environments — manufacturing plants, power grids, water treatment facilities, and oil and gas pipelines. Industrial control systems such as SCADA (Supervisory Control and Data Acquisition), PLCs (Programmable Logic Controllers), and DCS (Distributed Control Systems) were originally designed as isolated, air-gapped networks. Connecting them to IP networks and the internet introduces cybersecurity risks that did not exist in the original design, with consequences ranging from production downtime to physical equipment damage and public safety incidents.
+## Learning Objectives
 
-You will learn the architecture of SCADA and ICS networks, how the Purdue Reference Model defines network segmentation zones, and why IT/OT convergence creates security challenges unique to industrial environments. Real-world ICS attacks — including Stuxnet, the Ukraine power grid attacks, and the Oldsmar water treatment facility incident — illustrate the stakes. Security frameworks including IEC 62443 and NIST SP 800-82 provide guidance for securing these environments.
+By the end of this module you should be able to:
 
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **SCADA (Supervisory Control and Data Acquisition)**: An industrial control system architecture that uses remote terminal units (RTUs) or PLCs to collect sensor data from distributed field devices (valves, pumps, breakers), transmit it over a communications network to a central supervisory server, and allow human operators to monitor and control physical processes through an HMI (Human-Machine Interface). SCADA systems are used in power distribution, water treatment, oil and gas pipelines, and transportation infrastructure. Legacy SCADA systems communicate over proprietary protocols (Modbus, DNP3) that lack authentication, making them vulnerable when exposed to IP networks.
-*   **Purdue Reference Model (ISA-95)**: A hierarchical network segmentation model that divides ICS/SCADA networks into five levels: Level 0 (physical process — sensors and actuators), Level 1 (intelligent field devices — PLCs, RTUs), Level 2 (supervisory control — HMI, SCADA servers), Level 3 (site operations — historian, manufacturing execution systems), and Level 4/5 (enterprise IT — ERP, corporate network, internet). Security best practice requires firewall-enforced conduits between levels and a DMZ between Level 3 and Level 4 to prevent direct IT-to-OT connectivity. The model defines where IT security controls apply and where OT-specific controls are needed.
-*   **IT/OT Convergence**: The integration of operational technology (OT) — hardware and software that monitors and controls physical industrial processes — with information technology (IT) systems for data analytics, remote management, and enterprise connectivity. IT/OT convergence enables capabilities like predictive maintenance and remote monitoring but creates security risks: OT systems designed for 20–30 year operational lifespans often run unpatched legacy firmware that cannot be updated without process interruption, and enterprise network compromises can now pivot to OT environments that control physical processes.
-*   **IEC 62443**: An international standards series for industrial automation and control system (IACS) cybersecurity, developed by ISA (International Society of Automation). IEC 62443 defines security levels (SL 1–4) based on threat capability, a zone-and-conduit network segmentation model, and security requirements for asset owners, system integrators, and component manufacturers. IEC 62443-3-3 defines system security requirements; IEC 62443-4-2 defines component security requirements. It is the primary compliance framework for industrial control system security globally.
-*   **OT-Specific Attack Surface**: Industrial control systems present attack vectors distinct from enterprise IT, including: unpatched legacy PLCs and RTUs running proprietary OS without patch management; unauthenticated industrial protocols (Modbus, DNP3, OPC-UA without authentication enabled) that accept commands from any source; engineering workstations with remote access software connected to both corporate and OT networks simultaneously; removable media (USB drives used to update PLC programs) that bypass network controls; and vendor remote access channels maintained for support that remain open 24/7 without monitoring.
+- Explain the TinyML pipeline and the four stages from data collection to deployment
+- Describe TensorFlow Lite Micro's memory model and why it avoids dynamic allocation
+- Implement a keyword spotting application using MFCC features and a CNN model
+- Design an autoencoder-based anomaly detection system for IoT sensor data
+- Apply post-training quantization and understand the accuracy vs. size trade-off
 
 ---
 
-### 2. Certification Exam Tips
-*   **Purdue Model zone mapping:** Memorize the five levels and which devices belong at each level. Exam scenarios describe a device type (PLC, HMI, historian, ERP) and ask which Purdue level it occupies, or describe an attack path and ask which boundary was violated.
-*   **Protocol authentication gaps:** Modbus and DNP3 have no built-in authentication — any device on the network can send commands. OPC-UA has optional security modes (None, Sign, SignAndEncrypt). Exam questions may ask which protocol is most vulnerable to unauthenticated command injection or which OPC-UA security mode provides integrity protection.
-*   **IT vs OT CIA triad priority reversal:** In IT security, the CIA triad prioritizes Confidentiality first. In OT/ICS security, the priority is reversed: Availability first (a plant shutdown or safety system failure is catastrophic), Integrity second (false sensor data causes wrong control actions), Confidentiality last. Exam scenarios describing an OT security decision should apply this priority ordering.
-*   **Real-world ICS attacks for context:** Stuxnet (2010) targeted Siemens PLCs via USB propagation, manipulating centrifuge speeds while reporting normal to operators. The 2015/2016 Ukraine power grid attacks used spear-phishing to pivot from enterprise to OT, triggering relay trips to cut power. The 2021 Oldsmar water treatment attack used TeamViewer remote access to alter sodium hydroxide concentration. Each illustrates a specific attack vector testable on exams.
-*   **Study Resource:** The [OWASP IoT Security Project Guides & Embedded Systems Wiki](https://owasp.org/www-project-internet-of-things/) covers insecure network services and lack of physical hardening — both highly relevant to legacy ICS devices with unauthenticated protocols and physically accessible control panels.
+## Section 1 — The Case for On-Device Inference
+
+### Cloud ML vs. Edge ML vs. TinyML
+
+Machine learning inference — applying a trained model to new data to produce a prediction — has traditionally been done in the cloud. A device captures data, transmits it to a cloud API, the API runs inference on a GPU-backed server, and returns the result. This architecture works well when: connectivity is reliable, latency of several hundred milliseconds is acceptable, transmitting raw data raises no privacy concerns, and the power budget allows continuous radio transmission.
+
+IoT devices frequently violate all four of these assumptions simultaneously. Consider:
+
+**A wildlife poaching detection camera** must identify a person vs. an animal in a remote location with no cellular coverage, within 500 ms (before the subject moves), without sending images to the cloud (privacy and bandwidth), on a battery that must last six months.
+
+**A bearing fault detector** on an industrial compressor must detect early-stage fault signatures in vibration data continuously, 24 hours per day, in a basement facility where cellular is unreliable, while adding under 1 watt to the device's total power budget.
+
+**A medical wearable** must detect atrial fibrillation from ECG data in real time without transmitting health data to any cloud service, using a coin cell battery for six months.
+
+TinyML addresses all three use cases. The model runs on the device. Raw sensor data is processed locally. Only a classification result — a few bytes — is ever transmitted.
+
+### TinyML Hardware Landscape
+
+The hardware landscape for TinyML spans several capability tiers:
+
+**Cortex-M4/M7 class (Arduino Nano 33, STM32):** 64–512 KB SRAM, hardware FPU, 80–216 MHz. Suitable for audio keyword spotting and small image classification with quantized models.
+
+**Xtensa LX6/LX7 class (ESP32, ESP32-S3):** 520 KB SRAM (ESP32), vector instructions (ESP32-S3). The ESP32-S3 includes dedicated AI instructions that accelerate int8 matrix multiply — suitable for small image models and audio processing.
+
+**Cortex-M55 with Ethos-U55 NPU (Arduino Portenta H7, STM32MP1):** Hardware neural processing unit, hundreds of GOPS (giga operations per second) at milliwatt power levels. Suitable for moderate-complexity image models and transformer-based audio models.
+
+**Raspberry Pi RP2040:** Dual Cortex-M0+, no FPU, 264 KB SRAM. Very constrained — best suited for tiny regression models and simple anomaly detectors.
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** The [OWASP IoT Security Project Guides & Embedded Systems Wiki](https://owasp.org/www-project-internet-of-things/) — focus on the insecure network services and lack of physical hardening sections, which apply directly to legacy ICS/SCADA devices with unauthenticated protocols and control panels that are physically accessible in industrial facilities.
-*   **Required Video:** The [IoT Course & Embedded Systems Tutorials by freeCodeCamp](https://www.youtube.com/watch?v=h0J8f60LdB0) includes coverage of industrial IoT architecture and ICS/SCADA integration patterns, discussing network segmentation strategies and the security implications of connecting legacy control systems to IP networks.
+## Section 2 — TensorFlow Lite Micro Architecture
+
+### Memory Model
+
+Standard TensorFlow requires dynamic memory allocation, a file system to load models, and a full operating system. TensorFlow Lite Micro was re-architected from scratch to eliminate these dependencies.
+
+TFLM's memory model has three components:
+
+**Model data (flash):** The TFLite model file is converted to a C byte array and stored in flash. It is never modified at runtime — the model is read-only. The FlatBuffer format allows field access without deserialization, so TFLM can access model parameters directly from flash without copying them to RAM.
+
+**Tensor arena (SRAM):** A fixed-size byte array you allocate and pass to the `MicroInterpreter`. TFLM uses this arena as its workspace: input and output tensors are subarrays within the arena, intermediate activation tensors during inference are allocated and freed within the arena, and the arena is reused across inference calls. You size this arena to be large enough for your model's peak memory requirement plus a safety margin of at least 10%.
+
+**Code (flash):** The TFLM runtime and the operation kernels for your model's layer types. Total code size varies from 16 KB (minimal configuration) to 100 KB+ (all operations included).
+
+### Operator Resolver
+
+TFLM uses a resolver pattern to minimize flash footprint. Instead of including all possible neural network operation implementations, you declare exactly which operations your model uses:
+
+```cpp
+static tflite::MicroMutableOpResolver<5> resolver;
+resolver.AddDepthwiseConv2D();
+resolver.AddFullyConnected();
+resolver.AddReshape();
+resolver.AddSoftmax();
+resolver.AddQuantize();
+```
+
+Only the implementations of these five operations are linked into the binary. An unknown operation in the model causes an error at `AllocateTensors()` time, making the resolver an explicit model-binary compatibility check.
+
+### Inference API
+
+The inference workflow has five steps:
+
+1. `tflite::GetModel(model_data)` — wrap the model byte array in a Model pointer
+2. `tflite::MicroInterpreter interpreter(model, resolver, arena, arena_size)` — create interpreter
+3. `interpreter.AllocateTensors()` — allocate tensor views within the arena; must succeed before inference
+4. Fill `interpreter.input(0)->data.f` (float32) or `->data.int8` (quantized) with input data
+5. `interpreter.Invoke()` — run inference; read results from `interpreter.output(0)->data`
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Map a simulated Purdue Model network**: Using a network diagram tool or draw.io, create a five-level Purdue Model diagram for a simulated water treatment facility. Place specific device types (sensor RTU, PLC, HMI server, historian, ERP system, internet DMZ) at their correct levels and draw firewall conduits between levels, labeling the allowed protocol and direction for each conduit.
-*   **Analyze Modbus protocol structure**: Using Wireshark with a pre-captured Modbus TCP packet trace, identify function codes for read holding registers (FC 03) and write single coil (FC 05), observe the absence of authentication fields in the Modbus frame structure, and document how an attacker could craft a write command to change a coil state without any credential.
-*   **Apply IEC 62443 zone segmentation to a scenario**: Given a description of a manufacturing plant's current flat network (all OT devices on the same VLAN as corporate PCs), identify the IEC 62443 zone violations, propose a zone-and-conduit segmentation design, and specify which industrial protocols require a security proxy or encrypted tunnel at each conduit boundary.
+## Section 3 — Keyword Spotting
+
+### Audio Feature Extraction — MFCC
+
+Speech recognition does not operate on raw audio waveforms because: (a) raw waveforms contain far more data than needed, (b) the perceptually important features of speech are in the frequency domain, not the time domain, and (c) the human auditory system applies a nonlinear frequency scale (the Mel scale) that emphasizes lower frequencies where speech information is denser.
+
+Mel-Frequency Cepstral Coefficients (MFCC) capture these properties:
+
+1. **Framing:** Divide the audio stream into overlapping 25 ms frames with a 10 ms stride.
+2. **Windowing:** Apply a Hamming window to reduce spectral leakage at frame boundaries.
+3. **FFT:** Compute the Fast Fourier Transform of the frame to get the frequency spectrum.
+4. **Mel filterbank:** Apply 40 triangular filters spaced on the Mel scale — a perceptual frequency scale where equal steps correspond to equal perceived pitch differences.
+5. **Log compression:** Take the log of each filterbank energy — humans perceive loudness logarithmically.
+6. **DCT:** Apply the Discrete Cosine Transform to decorrelate the filterbank energies. The first 13–40 coefficients are the MFCCs.
+
+For keyword spotting on a 1-second window at 16 kHz, you produce approximately 40 frames × 40 coefficients = a 40×40 feature matrix. This is the input to the neural network.
+
+### Model Architecture
+
+The most effective small architecture for keyword spotting on microcontrollers is a **Depthwise Separable Convolutional Neural Network** (DS-CNN). Regular convolutions apply a filter across all input channels simultaneously. Depthwise separable convolutions factorize this into: a depthwise convolution that filters each channel independently, followed by a pointwise (1×1) convolution that combines channels. This reduces multiply-accumulate operations by a factor of 8–9x for typical kernel sizes.
+
+A typical DS-CNN for 10-word keyword spotting:
+
+- Input: 49×10 MFCC features (downsampled from 40×40)
+- 2–3 depthwise separable conv blocks
+- Global average pooling
+- Fully connected layer → 12 classes (10 keywords + unknown + silence)
+- Softmax activation
+
+Quantized to int8, this model is typically 16–40 KB — fits easily in ESP32 flash.
+
+### Speech Commands Dataset
+
+Google's Speech Commands dataset is the standard benchmark for keyword spotting models. It contains 105,829 one-second audio clips of 35 words spoken by thousands of speakers. The dataset is used to train and evaluate models; it is available at `tensorflow.org/datasets/catalog/speech_commands`.
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and memorize the five Purdue Model levels and example devices at each level.
-- [ ] Read the insecure network services section at [OWASP IoT Security Project Guides & Embedded Systems Wiki](https://owasp.org/www-project-internet-of-things/).
-- [ ] Watch the IIoT/SCADA sections of [IoT Course & Embedded Systems Tutorials by freeCodeCamp](https://www.youtube.com/watch?v=h0J8f60LdB0).
-- [ ] Review IT vs OT CIA triad priority reversal and protocol authentication gaps before the lab.
-- [ ] Proceed to the weekly hands-on lab activity.
+## Section 4 — Anomaly Detection
+
+### Autoencoder Architecture
+
+An autoencoder is an unsupervised neural network with two components:
+
+**Encoder:** Compresses the input to a lower-dimensional latent representation. For a 96-element vibration window, the encoder might reduce it to 8 values.
+
+**Decoder:** Reconstructs the input from the latent representation. The reconstruction is the network's best guess at the original input.
+
+When trained on normal data only, the autoencoder learns the manifold of normal patterns — the statistical space that normal inputs occupy. Anomalous inputs lie off this manifold; the encoder cannot represent them efficiently, and the decoder's reconstruction is poor. The **reconstruction error** — typically mean squared error between input and reconstruction — is low for normal data and high for anomalies.
+
+Threshold the reconstruction error at a value determined from the training distribution (e.g., the 99th percentile of training reconstruction errors) to produce a binary anomaly flag.
+
+### Training Strategy
+
+The training-to-deployment workflow:
+
+1. Collect 2–4 weeks of sensor data from the machine in known-normal operating state.
+2. Train the autoencoder on a GPU-equipped development machine using Keras/TensorFlow.
+3. Evaluate reconstruction error distribution on a held-out normal validation set.
+4. Set the anomaly threshold at the 99th or 99.9th percentile of validation errors.
+5. Convert the trained model to TFLite format and quantize.
+6. Deploy to the microcontroller.
+7. Periodically upload anomaly events (timestamp + reconstruction error) to the cloud for monitoring.
+
+### Practical Anomaly Detection Considerations
+
+**Concept drift:** A machine's normal signature changes over time — wear, seasonal temperature changes, load variations. The model may need periodic retraining on recent normal data to avoid false positives.
+
+**Contextual anomalies:** Some operations are normal in one context but anomalous in another — a pump running at 3,000 RPM is normal during operation but anomalous during shutdown. Context-aware models include operating mode as an input feature.
+
+**Sensitivity vs. specificity:** A lower threshold catches more real anomalies but also generates more false alarms. A higher threshold misses subtle early-stage faults. Tune for the cost of each error type in the specific application.
+
+---
+
+## Section 5 — Model Optimization Techniques
+
+### Post-Training Quantization
+
+Float32 (32-bit floating point) is the native training format for neural networks. For microcontroller deployment, int8 (8-bit integer) offers:
+
+- 4x reduction in model storage size
+- 2–4x reduction in inference time (integer multiply-accumulate is faster than float on MCUs without FPU)
+- Reduced power consumption (integer arithmetic uses less energy per operation)
+
+The quantization formula maps float values to int8:
+
+```text
+quantized_value = round(float_value / scale) + zero_point
+```
+
+where `scale` and `zero_point` are determined per layer by analyzing the value range of activations over the representative dataset.
+
+**Full integer quantization** (model inputs, activations, weights, and outputs all in int8) requires a representative dataset during conversion. **Dynamic range quantization** quantizes weights only — activations remain float32 during inference. Full integer is preferred for microcontrollers because it eliminates float32 arithmetic entirely.
+
+### Pruning
+
+Pruning zeros out weights with small magnitudes during training, producing a sparse model. The Keras TensorFlow Model Optimization Toolkit provides the `prune_low_magnitude()` wrapper. Typically, 50–80% sparsity can be achieved with less than 1% accuracy degradation for well-regularized models.
+
+Sparse models benefit from compression: a 50% sparse model with run-length encoding may be only 30% the size of the dense model. However, sparse matrix arithmetic is only faster than dense arithmetic when sparsity exceeds approximately 80% — most hardware lacks native sparse math acceleration.
+
+### Knowledge Distillation
+
+Knowledge distillation trains a compact "student" model by minimizing its divergence from a large, accurate "teacher" model's output probabilities — not from the original hard labels. The soft probability distributions from the teacher contain richer information than hard labels (a misidentified "seven" is often confused with "one" or "four", not with "dog") and allow the student to learn a more nuanced decision boundary. Distilled models typically outperform equivalently sized models trained directly on hard labels.
+
+---
+
+## Key Terms
+
+- **TinyML** — machine learning inference on microcontrollers and low-power processors
+- **TensorFlow Lite Micro (TFLM)** — Google's MCU-targeted ML inference runtime
+- **FlatBuffer** — zero-copy serialization format used for TFLite model files
+- **MicroInterpreter** — TFLM's inference engine class
+- **TensorArena** — fixed-size SRAM buffer used for all dynamic allocations during inference
+- **MFCC** — Mel-Frequency Cepstral Coefficients; perceptual audio features for speech recognition
+- **Keyword spotting** — real-time classification of short spoken words on device
+- **Autoencoder** — neural network that compresses and reconstructs its input; used for anomaly detection
+- **Reconstruction error** — difference between autoencoder input and output; high for anomalies
+- **Post-training quantization** — converting float32 weights to int8 after training
+- **Representative dataset** — small data sample used to calibrate quantization scale factors
+- **Weight pruning** — zeroing small weights to create sparse, compressible models
+- **Knowledge distillation** — training a small student model to mimic a large teacher model
+- **Depthwise separable convolution** — factorized convolution reducing computation by 8–9x
+
+---
+
+## Review Questions
+
+1. Name the four stages of the TinyML pipeline and describe what happens in each stage.
+2. Why does TFLM avoid dynamic memory allocation (`malloc`), and what is the alternative mechanism for runtime memory management?
+3. What is the role of the `MicroMutableOpResolver` in TFLM, and what happens at `AllocateTensors()` time if the model uses an operation not registered in the resolver?
+4. Explain the five steps of MFCC feature extraction and why each step is applied.
+5. What is the input shape to a keyword spotting CNN that processes 1 second of 16 kHz audio with 40-coefficient MFCC features and 33 frames?
+6. Describe the autoencoder architecture: what are the encoder and decoder, and what property of the training data makes reconstruction error a useful anomaly signal?
+7. What determines the anomaly detection threshold for an autoencoder model, and what are the consequences of setting the threshold too low vs. too high?
+8. In post-training full integer quantization, what is the purpose of the representative dataset and why is it required?
+9. What are the three quantitative benefits of int8 quantization over float32 for microcontroller deployment?
+10. A keyword spotting model achieves 94.2% accuracy in float32 and 93.6% accuracy after int8 quantization. The float32 model is 480 KB and the int8 model is 122 KB. The ESP32's available flash for the model is 200 KB. Which model can be deployed, and is the accuracy trade-off acceptable? Justify your answer.
+
+---

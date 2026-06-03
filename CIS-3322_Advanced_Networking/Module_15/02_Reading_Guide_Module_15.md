@@ -1,53 +1,361 @@
-# Reading Guide: Module 15 - CCNA Review and Diagnostics
-## Course: CIS-3322_Advanced_Networking (Cisco CCNA (200-301))
+# Reading Guide: Module 15 — Automation and Programmability
+
+## Course: CIS-3322 Advanced Networking
+
+## Texas Wesleyan University | Professor Nash
+
+**Certification Alignment:** Cisco CCNA 200-301
 
 ---
 
-### Introduction
-Welcome to **Module 15 - CCNA Review and Diagnostics**! This week's study material focuses on the core foundations and configuration mechanics of **CCNA Review and Diagnostics** as aligned with the **Cisco CCNA (200-301)** certification framework. Understanding these topics is essential not only for passing the certification exam but also for administering enterprise systems in real-world environments.
+## Overview
 
-As a student, you will learn the primary operational roles, command syntaxes, and troubleshooting parameters needed to design, configure, and maintain these services. We will explore how different protocols establish connections, how configurations manage resource allocation, and how security controls prevent access breaches. Make sure to complete the checklists and review the glossary terms in detail before beginning the lab activity.
-
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **Troubleshooting methodology**: A systematic approach to diagnosing network problems using the OSI model as a framework. Cisco recommends starting at Layer 1 (physical cabling, interface status) and working up through Layer 2 (switching, VLAN, STP), Layer 3 (IP addressing, routing), and above (ACLs, NAT, application issues). Alternatively, the "divide and conquer" method starts at the layer most likely to have the fault based on symptoms.
-*   **Interface states**: Cisco IOS displays two status values for each interface: the physical layer state and the line protocol state. `up/up` = fully operational. `down/down` = Layer 1 problem (no cable signal, speed mismatch). `up/down` = Layer 2 problem (encapsulation mismatch, keepalive failure, remote end shut down). `administratively down/down` = the interface has been shut down with the `shutdown` command. Knowing these states is essential for exam troubleshooting scenarios.
-*   **Routing loops**: A network condition where packets circulate indefinitely between routers because each router believes the best path to a destination is through another router in the loop. Routing loops cause TTL expiration, high CPU utilization, and network outages. Distance-vector protocols prevent loops using split horizon, route poisoning, hold-down timers, and maximum hop count (e.g., RIP's maximum of 15 hops — 16 is unreachable).
-*   **Mismatch symptoms**: Configuration inconsistencies between directly connected devices that prevent communication. Common mismatches include: duplex mismatch (one end full-duplex, other half-duplex — causes late collisions and CRC errors), speed mismatch (causes interface to stay down), native VLAN mismatch (causes CDP warnings and traffic misclassification), and OSPF area mismatch (prevents neighbor adjacency).
+This reading guide supports Module 15: Automation and Programmability. This CCNA 200-301 domain (6.0) accounts for 15% of exam questions and is frequently underprepared because it differs from the traditional CLI-based topics covered earlier in the course. This guide covers every testable topic: SDN architecture, northbound/southbound APIs, REST API methods and status codes, JSON and XML, NETCONF and RESTCONF, Python concepts, Ansible vs. Puppet vs. Chef, and Cisco DNA Center.
 
 ---
 
-### 2. Certification Exam Tips
-*   **CCNA Domain:** Troubleshooting content is embedded across all domains but is especially prominent in **IP Connectivity (25%)** and **Network Access (20%)**. Exam simulations (sim-lets and drag-and-drops) frequently test troubleshooting methodology.
-*   **Interface status cheat sheet:** Know all four `show interfaces` status combinations and their Layer 1/Layer 2 meanings. The exam will show a status and ask you to identify the layer and likely cause. `up/down` on a serial interface often means PPP/HDLC encapsulation mismatch.
-*   **`show` commands to memorize:** `show ip interface brief` (all interfaces at a glance), `show interfaces [id]` (detailed stats including errors), `show ip route` (routing table), `show ip ospf neighbor` (OSPF adjacency), `show vlan brief` (VLAN assignments), `show interfaces trunk` (trunk status).
-*   **Duplex mismatch identification:** A full-duplex end sees late collisions; the half-duplex end sees regular collisions. CRC errors appear on both sides. This is a common exam troubleshooting scenario — look for a mix of error types in `show interfaces` output.
-*   **Study Resource:** Watch the troubleshooting and diagnostics episodes in the Jeremy's IT Lab CCNA free playlist, which include systematic OSI-layer troubleshooting walkthroughs and interpretation of IOS `show` command output: [Jeremy's IT Lab CCNA Complete Course on YouTube](https://www.youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ). Look for troubleshooting-focused episodes throughout the playlist.
+## Section 1: Traditional vs. SDN Architecture
+
+### The Traditional Networking Model
+
+In traditional networking, intelligence is distributed. Every device independently runs:
+
+* Control plane functions — routing protocols (OSPF, EIGRP, BGP), spanning tree, ARP processing
+* Data plane functions — hardware packet forwarding based on FIB/CAM table lookups
+* Management plane functions — SSH, SNMP, syslog for device access and monitoring
+
+Changes require direct access to each device. There is no global network view from any single point.
+
+### The SDN Model
+
+SDN centralizes the control plane in a software controller while keeping the data plane in hardware devices.
+
+```text
+Application Plane
+  (monitoring, orchestration, security, business apps)
+          |
+          |  Northbound API (REST over HTTPS, JSON)
+          v
+Control Plane
+  (SDN Controller — Cisco DNA Center / Catalyst Center)
+          |
+          |  Southbound API (OpenFlow, NETCONF, RESTCONF)
+          v
+Data Plane
+  (routers, switches — hardware packet forwarding at line rate)
+```
+
+### Plane Comparison Table
+
+| Plane | Function | Location in Traditional | Location in SDN |
+|---|---|---|---|
+| Management | Device access, monitoring | Each device | Each device |
+| Control | Routing decisions, STP | Each device | Centralized controller |
+| Data | Packet forwarding | Each device (hardware) | Each device (hardware) |
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the troubleshooting sections in the Cisco Skills for All CCNA courses. Focus on chapters that cover systematic fault isolation using `show` commands, reading interface counters, and diagnosing routing and switching problems: [Cisco Skills for All Portal - CCNA Guides](https://skillsforall.com/). Review the troubleshooting labs across all three CCNA course modules.
-*   **Required Video:** Watch the diagnostic and troubleshooting episodes in the Jeremy's IT Lab CCNA complete playlist. These videos walk through realistic troubleshooting scenarios step-by-step, modeling the methodology you will need for the CCNA exam simulations: [Jeremy's IT Lab CCNA Complete Course](https://www.youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ).
+## Section 2: API Directions Reference
+
+### Northbound vs. Southbound
+
+| Attribute | Northbound API | Southbound API |
+|---|---|---|
+| Direction | Applications → Controller | Controller → Network devices |
+| Purpose | Applications request network services | Controller programs forwarding rules |
+| Common protocols | REST (HTTPS/JSON), Python requests | OpenFlow, NETCONF, RESTCONF |
+| Who calls it | Automation scripts, business apps | SDN controller |
+
+The controller is the center point. North = above the controller (applications). South = below the controller (devices).
+
+### East-West APIs
+
+East-west APIs enable communication between controllers at the same architectural layer — for example, between a WAN controller and a campus controller. This appears as a distractor on the CCNA exam. Know what it is; do not confuse it with northbound or southbound.
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Diagnose a duplex mismatch between router and switch**: Configure one end of a link as full-duplex and the other as half-duplex. Observe the error counters in `show interfaces` — look for late collisions, CRC errors, and input errors. Resolve by matching duplex settings on both ends.
-*   **Solve a routing loop issue using CLI interface counters**: In a Packet Tracer scenario with a misconfigured route, observe TTL-exceeded ICMP messages with `debug ip icmp`. Use `show ip route` to trace the loop and identify the incorrect static route or routing protocol configuration.
-*   **Trace routing paths: `traceroute`**: Use Cisco IOS `traceroute [destination]` to identify the hop-by-hop path. Interpret `*` (timeout), `!H` (host unreachable), and `!N` (network unreachable) responses to locate the failing hop.
+## Section 3: REST API Reference
 
+### REST Principles
+
+REST (Representational State Transfer) is a stateless client-server architectural style. Each request contains all information needed to process it — no server-side session state. REST APIs operate over HTTP or HTTPS and identify resources by URL.
+
+### HTTP Method to CRUD Mapping
+
+| HTTP Method | CRUD Operation | Description | Example use |
+|---|---|---|---|
+| GET | Read | Retrieve a resource; no side effects | Read device list, interface status |
+| POST | Create | Submit data to create a new resource | Create a new network policy |
+| PUT | Update/Replace | Replace an existing resource completely | Update device configuration |
+| DELETE | Delete | Remove a resource | Remove a VLAN |
+
+Note: PATCH performs a partial update and is not emphasized on the CCNA exam.
+
+### HTTP Status Code Reference
+
+| Code | Name | Meaning | Triggered by |
+|---|---|---|---|
+| 200 | OK | Request succeeded; body contains data | Successful GET or PUT |
+| 201 | Created | Resource successfully created | Successful POST |
+| 204 | No Content | Succeeded; no response body | Successful DELETE |
+| 400 | Bad Request | Malformed request syntax | Missing required field |
+| 401 | Unauthorized | Missing or invalid credentials | No token provided |
+| 403 | Forbidden | Authenticated but not authorized | Insufficient privilege |
+| 404 | Not Found | Resource does not exist | Wrong URL or ID |
+| 500 | Internal Server Error | Server-side failure | API bug or backend error |
+
+### REST API Request Structure
+
+Every REST API request has four components:
+
+* HTTP Method — specifies the operation (GET, POST, PUT, DELETE)
+* URL (Endpoint) — identifies the resource being accessed
+* Headers — metadata including `Content-Type: application/json` and `Authorization: Bearer <token>`
+* Body — data payload used with POST and PUT; absent for GET and DELETE
+
+### DNA Center API Authentication Flow
+
+```text
+Step 1: POST /dna/system/api/v1/auth/token
+        Body: Basic Auth (username:password base64 encoded)
+        Response: { "Token": "eyJhbGciOiJSUzI1NiJ9..." }
+
+Step 2: GET /dna/intent/api/v1/network-device
+        Header: X-Auth-Token: eyJhbGciOiJSUzI1NiJ9...
+        Response: JSON array of device objects
+```
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read the troubleshooting sections in [Cisco Skills for All Portal - CCNA Guides](https://skillsforall.com/).
-- [ ] Watch the diagnostic and troubleshooting episodes in [Jeremy's IT Lab CCNA Complete Course](https://www.youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ).
-- [ ] Review the commands outlined in the lab instructions.
-- [ ] Proceed to the weekly hands-on lab activity.
+## Section 4: Data Format Reference
+
+### JSON
+
+JSON (JavaScript Object Notation) is the primary data format for modern REST APIs. It is human-readable and compact.
+
+#### JSON Syntax Rules
+
+| Element | Syntax | Example |
+|---|---|---|
+| Object | Curly braces containing key-value pairs | `{ "hostname": "R1" }` |
+| Array | Square brackets containing ordered values | `[ "R1", "R2", "R3" ]` |
+| String | Value in double quotes | `"10.0.0.1"` |
+| Number | Value without quotes | `42` or `3.14` |
+| Boolean | Lowercase true or false | `true` |
+| Null | Lowercase null | `null` |
+| Nested object | Object as a value | `{ "device": { "ip": "10.0.0.1" } }` |
+
+#### JSON Example
+
+```json
+{
+  "networkDevices": [
+    {
+      "hostname": "SW1",
+      "managementIpAddress": "10.0.0.10",
+      "platformId": "WS-C3850",
+      "reachabilityStatus": "Reachable"
+    },
+    {
+      "hostname": "R1",
+      "managementIpAddress": "10.0.0.1",
+      "platformId": "ISR4451",
+      "reachabilityStatus": "Reachable"
+    }
+  ]
+}
+```
+
+### XML
+
+XML (Extensible Markup Language) uses paired tags to structure hierarchical data. Used by NETCONF and some legacy REST APIs.
+
+#### XML Example
+
+```xml
+<networkDevices>
+  <device>
+    <hostname>SW1</hostname>
+    <managementIpAddress>10.0.0.10</managementIpAddress>
+    <platformId>WS-C3850</platformId>
+  </device>
+</networkDevices>
+```
+
+### JSON vs. XML for the Exam
+
+| Feature | JSON | XML |
+|---|---|---|
+| Delimiter | Curly braces `{}`, square brackets `[]` | Opening/closing tags `<tag></tag>` |
+| Verbosity | Compact | Verbose |
+| Common use | REST APIs | NETCONF, SOAP |
+| Array syntax | Native `[]` | Repeated elements (no native array) |
+| Comment support | None | Yes (`<!-- comment -->`) |
+
+---
+
+## Section 5: NETCONF and RESTCONF
+
+### NETCONF
+
+NETCONF (Network Configuration Protocol) is defined in RFC 6241. It provides transactional, model-driven configuration management.
+
+| Attribute | Value |
+|---|---|
+| Transport | SSH — specifically port 830 |
+| Data format | XML |
+| Data model | YANG (Yet Another Next Generation) |
+| Key feature | Transactional commits — all-or-nothing configuration changes |
+| Supported by | Cisco IOS-XE, IOS-XR, Juniper, and YANG-capable platforms |
+
+#### NETCONF Operations Reference
+
+| Operation | Purpose |
+|---|---|
+| `get` | Retrieve running state and configuration |
+| `get-config` | Retrieve configuration from a specific datastore |
+| `edit-config` | Modify the configuration in a datastore |
+| `commit` | Apply candidate configuration to running |
+| `delete-config` | Delete an entire configuration datastore |
+| `lock` / `unlock` | Lock a datastore to prevent concurrent changes |
+
+### RESTCONF
+
+RESTCONF (RFC 8040) is a REST API wrapper over NETCONF YANG data models.
+
+| Attribute | Value |
+|---|---|
+| Transport | HTTPS |
+| Data format | JSON or XML |
+| Operations | HTTP methods (GET, POST, PUT, PATCH, DELETE) |
+| Data model | YANG (same models as NETCONF) |
+| Supported on | Cisco IOS-XE 16.6+ |
+
+RESTCONF provides the same device configuration capability as NETCONF but through a familiar REST/HTTP interface. It is easier to use from Python scripts than raw NETCONF XML.
+
+---
+
+## Section 6: Configuration Management Tools
+
+### Ansible
+
+Ansible is the dominant tool for network device automation. It is maintained by Red Hat and has a large Cisco-specific collection (cisco.ios).
+
+| Feature | Value |
+|---|---|
+| Agent required | No — agentless |
+| Communication | SSH (network devices), HTTPS (APIs) |
+| Configuration language | YAML (playbooks and inventory) |
+| Execution model | Push — control node pushes to devices |
+| Idempotency | Yes |
+| Network support | Cisco IOS, NX-OS, IOS-XE, IOS-XR, Juniper, Arista |
+
+#### Sample Ansible Playbook Structure
+
+```yaml
+---
+- name: Configure hostname on all routers
+  hosts: routers
+  gather_facts: false
+  connection: network_cli
+
+  tasks:
+    - name: Set hostname
+      cisco.ios.ios_hostname:
+        config:
+          hostname: "{{ inventory_hostname }}"
+        state: merged
+```
+
+### Puppet
+
+| Feature | Value |
+|---|---|
+| Agent required | Yes — Puppet agent on managed nodes |
+| Communication | HTTPS between agent and Puppet server |
+| Configuration language | Puppet DSL (declarative) |
+| Execution model | Pull — agents poll server for configuration |
+| Network device support | Limited native support |
+
+### Chef
+
+| Feature | Value |
+|---|---|
+| Agent required | Yes — Chef client on managed nodes |
+| Configuration language | Ruby (Cookbooks and Recipes) |
+| Execution model | Pull — clients check in with Chef server |
+| Network device support | Limited native support |
+
+### Three-Tool Comparison Table
+
+| Feature | Ansible | Puppet | Chef |
+|---|---|---|---|
+| Agent required | No | Yes | Yes |
+| Model | Push | Pull | Pull |
+| Language | YAML | Puppet DSL | Ruby |
+| Network device focus | Strong | Limited | Limited |
+| Idempotent | Yes | Yes | Yes |
+
+---
+
+## Section 7: Python Concepts for Networking
+
+### Key Python Libraries
+
+* `requests` — sends HTTP requests; used for REST API calls to DNA Center, WLC APIs
+* `netmiko` — establishes SSH connections to network devices; sends commands and parses output
+* `nornir` — network automation framework; manages device inventories and concurrent task execution
+* `napalm` — network abstraction library; provides a vendor-neutral API over CLI/NETCONF
+
+### Python Code Pattern for REST API Call
+
+```python
+import requests
+
+# Step 1: Authenticate and get token
+auth_url = "https://sandboxdnac.cisco.com/dna/system/api/v1/auth/token"
+response = requests.post(auth_url, auth=("devnetuser", "Cisco123!"), verify=False)
+token = response.json()["Token"]
+
+# Step 2: Use token to retrieve device list
+headers = {"X-Auth-Token": token, "Content-Type": "application/json"}
+devices_url = "https://sandboxdnac.cisco.com/dna/intent/api/v1/network-device"
+devices = requests.get(devices_url, headers=headers, verify=False)
+
+# Step 3: Print hostnames
+for device in devices.json()["response"]:
+    print(device["hostname"])
+```
+
+### Python Data Types Relevant to Networking
+
+| Type | Description | Example |
+|---|---|---|
+| String | Text data | `"10.0.0.1"` |
+| Integer | Whole number | `24` |
+| List | Ordered, mutable collection | `["R1", "R2"]` |
+| Dictionary | Key-value pairs | `{"hostname": "R1", "ip": "10.0.0.1"}` |
+| Boolean | True or False | `True` |
+
+---
+
+## Section 8: CCNA Exam Tips — Module 15
+
+* Southbound APIs connect the controller to network devices (below the controller). Northbound APIs connect applications to the controller (above). Always from the controller's perspective.
+* GET = Read, POST = Create, PUT = Update, DELETE = Delete. All four appear on the exam.
+* JSON uses curly braces `{}` for objects and square brackets `[]` for arrays. XML uses paired tags. NETCONF uses XML. REST APIs typically use JSON.
+* Ansible is agentless and uses a push model. Puppet and Chef are agent-based and use a pull model. This is the most tested distinction.
+* NETCONF runs over SSH on port 830 and uses XML. RESTCONF runs over HTTPS and uses JSON or XML.
+* 200 OK = success (GET/PUT). 201 Created = new resource (POST). 404 = not found. 401 = not authenticated.
+* OpenFlow is always a southbound protocol. It programs flow tables from the controller to switches.
+
+---
+
+## Study Checkpoint Questions
+
+1. Draw the three-plane SDN model from memory and label all APIs.
+2. A script sends a POST request to create a network policy. The server responds with status 201. What does this mean?
+3. What is the key difference between NETCONF and RESTCONF?
+4. Which configuration management tool requires no software installed on the managed network device?
+5. A code block shows `{ "hostname": "R1" }`. What data format is this and how do you know?
+6. What Python library is used to send HTTP requests to a REST API?

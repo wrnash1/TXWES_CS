@@ -1,276 +1,413 @@
-# Lab Activity: Module 06 — Firestore and Datastore: Document Databases
+# Lab Activity: Module 06 — PostgreSQL Administration
 
 ## Course: CIS-4327 Database Administration
 
-## Texas Wesleyan University — Professor Nash
-
-## Total Points: 100
+**Certification Alignment:** Google Cloud Professional Database Engineer
 
 ---
 
-### Lab Overview
+## Lab Overview
 
-In this lab you will create a Firestore database in Native mode, write and read documents using the gcloud CLI and Firebase REST API, create a composite index, write security rules, and analyze the difference between a transaction and a batch write. These skills are directly tested in the Firestore domain of the GCP Database Engineer exam.
+In this lab you will administer a PostgreSQL instance from installation through production-ready configuration. You will create roles with appropriate privileges, configure host-based authentication, analyze table health using pg_stat views, run VACUUM operations, and configure PgBouncer connection pooling.
 
-Estimated completion time: 60–75 minutes.
+**Estimated Time:** 90 minutes
 
----
+**Prerequisites:**
 
-### Prerequisites
-
-- Google Cloud student project with billing enabled
-- Module 06 video scripts and reading guide reviewed
-- Cloud Shell available in the Google Cloud Console
-
-Cost note: Firestore charges per document read, write, and delete. This lab generates a small number of operations and costs less than $0.01.
+- Ubuntu 22.04 LTS VM (Google Cloud Compute Engine e2-medium or equivalent)
+- sudo privileges
+- Basic familiarity with psql from Module 05
 
 ---
 
-### Part 1 — Create a Firestore Database (15 points)
+## Part 1 — Install and Initialize PostgreSQL
 
-#### Step 1 — Create the Database in Native Mode
-
-```bash
-# Create a Firestore database in Native mode
-gcloud firestore databases create \
-    --location=us-central \
-    --type=firestore-native
-```
-
-If a Firestore database already exists in your project, use the existing one.
-
-#### Step 2 — Verify Database Creation
+### Step 1.1 — Install PostgreSQL 15
 
 ```bash
-# List Firestore databases
-gcloud firestore databases list
+sudo apt-get update
+sudo apt-get install -y postgresql-15 postgresql-contrib-15
+
+# Verify installation
+psql --version
+sudo systemctl status postgresql
 ```
 
-**[SHOW CONSOLE: Firestore Console showing the (default) database in Native mode]**
+### Step 1.2 — Explore the Data Directory
 
-**Deliverable 1 (10 points)**: Take a screenshot of either the gcloud output or the Firestore Console showing the database in Native mode. Save as `lab06_screenshot_01.png`.
+```bash
+sudo -u postgres ls /var/lib/postgresql/15/main/
+sudo -u postgres ls /var/lib/postgresql/15/main/pg_wal/
+```
 
-**Deliverable 2 (5 points)**: In your lab report, explain in two sentences why you chose Native mode rather than Datastore mode for this lab, referencing at least one feature that Native mode provides.
+Identify the following directories and record their purpose in your lab notebook:
+
+- `base/` — per-database object files
+- `pg_wal/` — Write-Ahead Log segments
+- `global/` — cluster-wide system catalogs
+- `pg_tblspc/` — symlinks to tablespace directories
+
+### Step 1.3 — Connect as the postgres Superuser
+
+```bash
+sudo -u postgres psql
+```
+
+Run a quick sanity check:
+
+```sql
+SELECT version();
+SELECT current_user;
+\l
+\q
+```
 
 ---
 
-### Part 2 — Write and Read Documents (25 points)
+## Part 2 — Configure postgresql.conf
 
-#### Step 3 — Create Documents
-
-Use the Firestore REST API via curl to create documents. First, get an access token:
+### Step 2.1 — Edit Configuration
 
 ```bash
-ACCESS_TOKEN=$(gcloud auth print-access-token)
-PROJECT_ID=$(gcloud config get-value project)
+sudo nano /etc/postgresql/15/main/postgresql.conf
 ```
 
-Create a product document:
+Change or add the following parameters:
+
+```ini
+listen_addresses = 'localhost'
+max_connections = 50
+shared_buffers = 128MB
+work_mem = 8MB
+maintenance_work_mem = 64MB
+effective_cache_size = 512MB
+random_page_cost = 1.1
+checkpoint_completion_target = 0.9
+wal_level = replica
+log_min_duration_statement = 500
+log_line_prefix = '%t [%p]: [%l-1] user=%u,db=%d,app=%a,client=%h '
+```
+
+### Step 2.2 — Reload and Verify
 
 ```bash
-curl -X POST \
-  "https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/products" \
-  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "fields": {
-      "productName": {"stringValue": "Wireless Keyboard"},
-      "category": {"stringValue": "Electronics"},
-      "price": {"doubleValue": 49.99},
-      "inStock": {"booleanValue": true},
-      "tags": {"arrayValue": {"values": [
-        {"stringValue": "wireless"},
-        {"stringValue": "bluetooth"}
-      ]}}
-    }
-  }'
+sudo systemctl reload postgresql
 ```
 
-Create two more product documents (modify the values for variety):
-
-```bash
-curl -X POST \
-  "https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/products" \
-  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "fields": {
-      "productName": {"stringValue": "USB-C Hub"},
-      "category": {"stringValue": "Electronics"},
-      "price": {"doubleValue": 34.99},
-      "inStock": {"booleanValue": true},
-      "tags": {"arrayValue": {"values": [
-        {"stringValue": "usb"},
-        {"stringValue": "connectivity"}
-      ]}}
-    }
-  }'
+```sql
+sudo -u postgres psql -c "SELECT name, setting, unit FROM pg_settings WHERE name IN ('max_connections','shared_buffers','work_mem','random_page_cost');"
 ```
 
-```bash
-curl -X POST \
-  "https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/products" \
-  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "fields": {
-      "productName": {"stringValue": "Desk Lamp"},
-      "category": {"stringValue": "Office"},
-      "price": {"doubleValue": 24.99},
-      "inStock": {"booleanValue": false},
-      "tags": {"arrayValue": {"values": [
-        {"stringValue": "led"},
-        {"stringValue": "adjustable"}
-      ]}}
-    }
-  }'
-```
-
-#### Step 4 — Read Documents
-
-```bash
-# List all documents in the products collection
-curl \
-  "https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/products" \
-  -H "Authorization: Bearer ${ACCESS_TOKEN}"
-```
-
-**[SHOW CONSOLE: Firestore Console — Data tab showing the products collection with three documents]**
-
-**Deliverable 3 (15 points)**: Take a screenshot of the Firestore Console showing the products collection with at least three documents visible. Alternatively, show the curl output listing the documents. Save as `lab06_screenshot_02.png`.
-
-In your lab report, answer these two questions about the documents you created.
-
-First: each document has a system-generated ID. How does Firestore's auto-generated document ID differ from a relational database's AUTO_INCREMENT primary key in terms of what the value looks like and how it is generated?
-
-Second: the `tags` field is an array. If you wanted to query all products that have the tag "wireless," what type of Firestore query operator would you use, and what type of index supports it?
-
-**Deliverable 4 (10 points)**: Create a document in a sub-collection. Choose the first product document and add a review sub-collection entry.
-
-```bash
-# Get the document ID of the first product (from previous output)
-# Replace PRODUCT_DOC_ID with the actual ID from Step 4
-PRODUCT_DOC_ID="REPLACE_WITH_ACTUAL_ID"
-
-curl -X POST \
-  "https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/products/${PRODUCT_DOC_ID}/reviews" \
-  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "fields": {
-      "reviewer": {"stringValue": "Alice Johnson"},
-      "rating": {"integerValue": 5},
-      "comment": {"stringValue": "Excellent keyboard, very comfortable to type on."},
-      "reviewDate": {"timestampValue": "2025-01-15T09:00:00Z"}
-    }
-  }'
-```
-
-Take a screenshot of the Firestore Console showing the product document with its reviews sub-collection. Save as `lab06_screenshot_03.png`.
+**Lab Question 2.1:** What is the unit for `shared_buffers` as reported by pg_settings? Why does this differ from the value you set in postgresql.conf?
 
 ---
 
-### Part 3 — Composite Index (20 points)
+## Part 3 — Configure pg_hba.conf
 
-#### Step 5 — Understand Index Requirements
-
-A query filtering by both category and price requires a composite index. Attempt to run such a query through the Firestore Console or confirm the index requirement from the documentation.
-
-**[SHOW CONSOLE: Firestore Console — Indexes tab]**
-
-#### Step 6 — Create a Composite Index
+### Step 3.1 — Edit the HBA File
 
 ```bash
-# Create a composite index via gcloud
-gcloud firestore indexes composite create \
-    --collection-group=products \
-    --field-config field-path=category,order=ASCENDING \
-    --field-config field-path=price,order=ASCENDING
+sudo nano /etc/postgresql/15/main/pg_hba.conf
 ```
 
-Wait 1–2 minutes for the index to finish building.
+Replace the default content below the comments with:
+
+```text
+# TYPE  DATABASE        USER            ADDRESS                 METHOD
+local   all             postgres                                peer
+local   all             all                                     scram-sha-256
+host    labdb           labapp          127.0.0.1/32            scram-sha-256
+host    all             all             0.0.0.0/0               reject
+```
+
+### Step 3.2 — Reload and Test
 
 ```bash
-# List composite indexes
-gcloud firestore indexes composite list
+sudo systemctl reload postgresql
 ```
 
-**Deliverable 5 (15 points)**: Take a screenshot of the gcloud output showing the composite index in READY state. Save as `lab06_screenshot_04.png`.
+```sql
+sudo -u postgres psql -c "SELECT pg_reload_conf();"
+```
 
-In your lab report, answer these two questions.
-
-First: why does a query like `category == "Electronics" AND price < 50` require a composite index when single-field queries on category or price alone work without one?
-
-Second: what would happen if you tried to run this multi-field query without the composite index existing? Describe the error behavior and explain how Firestore helps you resolve it.
-
-**Deliverable 6 (5 points)**: In your lab report, explain what an Index Exemption is in Firestore and give one example of a field where you might want to disable automatic indexing.
+**Lab Question 3.1:** Why does the `local all postgres peer` rule need to appear before the `local all all scram-sha-256` rule?
 
 ---
 
-### Part 4 — Security Rules Analysis (20 points)
+## Part 4 — Create Roles and a Lab Database
 
-#### Step 7 — Review and Write Security Rules
+### Step 4.1 — Create the Database and Roles
 
-**Deliverable 7 (20 points)**: You do not need to deploy rules to your lab project for this deliverable (deploying requires the Firebase CLI). Instead, write the security rules in your lab report.
+```bash
+sudo -u postgres psql
+```
 
-Write Firestore Security Rules that implement the following access policy for a user profile application.
+```sql
+-- Create the lab database
+CREATE DATABASE labdb;
 
-Policy requirements:
+-- Create group roles
+CREATE ROLE lab_readonly;
+CREATE ROLE lab_readwrite;
 
-- Unauthenticated users cannot read or write any document.
-- An authenticated user can read and update only their own user profile document in the `users` collection, identified by matching `request.auth.uid` to the document ID.
-- An authenticated user can create their own profile document if it does not yet exist.
-- All authenticated users can read product documents in the `products` collection.
-- No client can write to the products collection (write access reserved for server-side only).
-- Reviews in a product's sub-collection can be created by any authenticated user.
-- A review can only be updated or deleted by the user who created it (the `authorUid` field in the review matches `request.auth.uid`).
+-- Create login users
+CREATE ROLE labapp WITH LOGIN PASSWORD 'AppPass2024!';
+CREATE ROLE labreport WITH LOGIN PASSWORD 'ReportPass2024!';
 
-In addition to the rules code, write two to three sentences explaining why Security Rules are essential for mobile and web applications that connect directly to Firestore without a backend server layer.
+-- Assign to groups
+GRANT lab_readwrite TO labapp;
+GRANT lab_readonly TO labreport;
+
+\c labdb
+```
+
+### Step 4.2 — Create Tables and Grant Privileges
+
+```sql
+CREATE TABLE products (
+    product_id SERIAL PRIMARY KEY,
+    product_name VARCHAR(100) NOT NULL,
+    price NUMERIC(10,2),
+    stock_qty INTEGER DEFAULT 0,
+    created_at TIMESTAMPTZ DEFAULT now()
+);
+
+CREATE TABLE order_events (
+    event_id BIGSERIAL PRIMARY KEY,
+    product_id INTEGER REFERENCES products(product_id),
+    event_type VARCHAR(20),
+    event_ts TIMESTAMPTZ DEFAULT now()
+);
+
+-- Grant schema usage
+GRANT USAGE ON SCHEMA public TO lab_readonly, lab_readwrite;
+
+-- Grant to read-only group
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO lab_readonly;
+
+-- Grant to read-write group
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO lab_readwrite;
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO lab_readwrite;
+
+-- Apply to future tables
+ALTER DEFAULT PRIVILEGES IN SCHEMA public
+  GRANT SELECT ON TABLES TO lab_readonly;
+
+ALTER DEFAULT PRIVILEGES IN SCHEMA public
+  GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO lab_readwrite;
+```
+
+### Step 4.3 — Test Role Access
+
+```bash
+# Test labapp (read-write)
+psql -h 127.0.0.1 -U labapp -d labdb -c "INSERT INTO products (product_name, price, stock_qty) VALUES ('Widget A', 9.99, 100);"
+
+# Test labreport (read-only) -- should succeed
+psql -h 127.0.0.1 -U labreport -d labdb -c "SELECT * FROM products;"
+
+# Test labreport INSERT -- should fail with permission denied
+psql -h 127.0.0.1 -U labreport -d labdb -c "INSERT INTO products (product_name, price) VALUES ('Unauthorized', 1.00);"
+```
+
+**Lab Question 4.1:** What error message do you receive when labreport attempts the INSERT? Record the exact SQLSTATE code.
 
 ---
 
-### Part 5 — Transactions vs. Batch Writes (20 points)
+## Part 5 — VACUUM and Table Statistics
 
-#### Step 8 — Written Analysis
+### Step 5.1 — Generate Dead Tuples
 
-**Deliverable 8 (20 points)**: In your lab report, write a structured comparison of Firestore transactions and batch writes addressing the following four points.
+Insert and update rows to create dead tuple bloat:
 
-First: describe the scenario where a transaction is required but a batch write is insufficient. Provide a concrete example using the products or reviews data from this lab.
+```sql
+\c labdb
 
-Second: describe a scenario where a batch write is the correct choice and using a transaction would be unnecessarily complex. Provide a concrete example.
+-- Insert seed data
+INSERT INTO products (product_name, price, stock_qty)
+SELECT 'Product ' || i, round((random() * 100)::numeric, 2), (random() * 1000)::int
+FROM generate_series(1, 10000) AS s(i);
 
-Third: both transactions and batch writes have a 500-document limit. Explain what you would do if your use case requires atomically writing more than 500 documents.
+-- Update all rows multiple times to create dead tuples
+UPDATE products SET stock_qty = stock_qty + 1;
+UPDATE products SET stock_qty = stock_qty + 1;
+UPDATE products SET stock_qty = stock_qty + 1;
+```
 
-Fourth: explain what happens when two concurrent Firestore transactions attempt to modify the same document simultaneously. Describe Firestore's automatic behavior and what the application must do to handle this.
+### Step 5.2 — Check Dead Tuple Count Before VACUUM
+
+```sql
+SELECT relname, n_live_tup, n_dead_tup,
+       round(100.0 * n_dead_tup / NULLIF(n_live_tup + n_dead_tup, 0), 1) AS dead_pct,
+       last_autovacuum, last_vacuum
+FROM pg_stat_user_tables
+WHERE relname = 'products';
+```
+
+Record the `n_dead_tup` value.
+
+### Step 5.3 — Run VACUUM ANALYZE
+
+```sql
+VACUUM ANALYZE products;
+
+-- Check again
+SELECT relname, n_live_tup, n_dead_tup,
+       last_vacuum
+FROM pg_stat_user_tables
+WHERE relname = 'products';
+```
+
+**Lab Question 5.1:** What happened to `n_dead_tup` after running VACUUM? Did the table size change on disk? Why or why not?
+
+### Step 5.4 — Monitor Transaction ID Age
+
+```sql
+SELECT datname, age(datfrozenxid) AS xid_age
+FROM pg_database
+ORDER BY xid_age DESC;
+```
+
+**Lab Question 5.2:** What is the current XID age for `labdb`? At what age should you begin to be concerned?
 
 ---
 
-### Lab Submission Checklist
+## Part 6 — pg_stat Monitoring
 
-- Deliverable 1 (10 pts) — Native mode database screenshot
-- Deliverable 2 (5 pts) — Written justification for Native mode selection
-- Deliverable 3 (15 pts) — Products collection screenshot and two written questions answered
-- Deliverable 4 (10 pts) — Sub-collection screenshot
-- Deliverable 5 (15 pts) — Composite index READY screenshot and two written questions answered
-- Deliverable 6 (5 pts) — Written explanation of Index Exemption
-- Deliverable 7 (20 pts) — Written Security Rules code and explanation
-- Deliverable 8 (20 pts) — Transaction vs. batch write analysis (four points)
+### Step 6.1 — Simulate Active Sessions
+
+Open a second terminal and run a long query:
+
+```bash
+sudo -u postgres psql -d labdb -c "SELECT pg_sleep(60);" &
+```
+
+In the first terminal, monitor from psql:
+
+```sql
+SELECT pid, usename, state, now() - query_start AS runtime, query
+FROM pg_stat_activity
+WHERE state != 'idle';
+```
+
+### Step 6.2 — Install pg_stat_statements
+
+```sql
+\c labdb
+
+-- The extension was included with postgresql-contrib
+CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
+```
+
+Then add to postgresql.conf and restart:
+
+```bash
+sudo bash -c "echo \"shared_preload_libraries = 'pg_stat_statements'\" >> /etc/postgresql/15/main/postgresql.conf"
+sudo systemctl restart postgresql
+```
+
+Run some queries and check statistics:
+
+```sql
+\c labdb
+
+SELECT * FROM products WHERE product_id < 100;
+SELECT product_name, price FROM products ORDER BY price DESC LIMIT 10;
+
+SELECT query, calls, total_exec_time, mean_exec_time
+FROM pg_stat_statements
+ORDER BY total_exec_time DESC
+LIMIT 5;
+```
 
 ---
 
-### Grading Rubric — 100 Points Total
+## Part 7 — PgBouncer Setup
 
-| Deliverable | Points | Criteria |
-|---|---|---|
-| 1 — Native mode screenshot | 10 | Database shown in Native mode |
-| 2 — Mode justification | 5 | Accurate feature reference for Native mode |
-| 3 — Products and questions | 15 | Collection screenshot shown; both questions answered accurately |
-| 4 — Sub-collection screenshot | 10 | Review document in sub-collection visible |
-| 5 — Composite index and questions | 15 | READY index shown; both questions answered accurately |
-| 6 — Index Exemption explanation | 5 | Correct definition and valid example |
-| 7 — Security Rules | 20 | Valid rules syntax; all policy requirements implemented; explanation accurate |
-| 8 — Transaction vs. batch analysis | 20 | All four points addressed with accurate Firestore behavior descriptions |
+### Step 7.1 — Install PgBouncer
+
+```bash
+sudo apt-get install -y pgbouncer
+```
+
+### Step 7.2 — Configure PgBouncer
+
+```bash
+sudo nano /etc/pgbouncer/pgbouncer.ini
+```
+
+Replace the content with:
+
+```ini
+[databases]
+labdb = host=127.0.0.1 port=5432 dbname=labdb
+
+[pgbouncer]
+listen_port = 6432
+listen_addr = 127.0.0.1
+auth_type = scram-sha-256
+auth_file = /etc/pgbouncer/userlist.txt
+pool_mode = transaction
+max_client_conn = 100
+default_pool_size = 5
+min_pool_size = 1
+reserve_pool_size = 2
+log_connections = 1
+log_disconnections = 1
+stats_period = 60
+```
+
+### Step 7.3 — Create the User List
+
+```bash
+# Generate scram-sha-256 hash for the application user
+sudo -u postgres psql -d labdb -t -c "SELECT concat('\"labapp\" \"', passwd, '\"') FROM pg_shadow WHERE usename='labapp';" | sudo tee /etc/pgbouncer/userlist.txt
+```
+
+### Step 7.4 — Start and Test PgBouncer
+
+```bash
+sudo systemctl enable pgbouncer
+sudo systemctl start pgbouncer
+sudo systemctl status pgbouncer
+
+# Connect through PgBouncer instead of directly to PostgreSQL
+psql -h 127.0.0.1 -p 6432 -U labapp -d labdb -c "SELECT count(*) FROM products;"
+```
+
+### Step 7.5 — Check Pool Statistics
+
+```bash
+psql -h 127.0.0.1 -p 6432 -U labapp pgbouncer -c "SHOW POOLS;"
+psql -h 127.0.0.1 -p 6432 -U labapp pgbouncer -c "SHOW STATS;"
+```
+
+**Lab Question 7.1:** In the SHOW POOLS output, what do the `cl_active`, `sv_active`, and `sv_idle` columns represent?
 
 ---
 
-Reference: cloud.google.com/learn
+## Lab Deliverables
+
+Submit a PDF containing:
+
+1. Screenshots of each step's output (pg_stat_user_tables before/after VACUUM, pg_stat_activity output, SHOW POOLS output).
+
+2. Written answers to all five Lab Questions.
+
+3. A copy of your final `pgbouncer.ini` and `pg_hba.conf` files.
+
+4. A brief paragraph (5–8 sentences) explaining why PgBouncer transaction pooling is incompatible with `LISTEN/NOTIFY` and what you would use instead if your application requires notifications.
+
+---
+
+## Grading Rubric
+
+| Component | Points |
+|---|---|
+| Part 1–2: Installation and configuration correct | 15 |
+| Part 3: pg_hba.conf with correct methods | 15 |
+| Part 4: Roles and privileges working as expected | 20 |
+| Part 5: VACUUM demonstration with before/after data | 20 |
+| Part 6: pg_stat_statements query results captured | 15 |
+| Part 7: PgBouncer running with SHOW POOLS output | 15 |
+| **Total** | **100** |

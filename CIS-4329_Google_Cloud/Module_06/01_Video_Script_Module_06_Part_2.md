@@ -1,205 +1,347 @@
-# Video Script — Module 06, Part 2
+# Video Script: Module 06 — Google Kubernetes Engine (Part 2 of 2)
 
-## CIS-4329: Google Cloud Platform | Texas Wesleyan University
+## Course: CIS-4329 Google Cloud Computing
 
-### Topic: Cloud CDN, URL Maps, Cloud Armor, and gcloud Commands
+## Texas Wesleyan University | Professor Nash
 
-### Estimated Duration: 10–12 minutes
+## Estimated Duration: 15 minutes
 
----
-
-## Introduction to Part 2
-
-Welcome back to Module 06. In Part 1 we covered the types of load balancers and the architecture of the Global HTTP(S) Load Balancer. In Part 2 we cover Cloud CDN, URL maps in more depth, Cloud Armor for DDoS protection, and the gcloud commands you will use in the lab.
+## Certification Alignment: Google Cloud Associate Cloud Engineer (ACE)
 
 ---
 
-## Section 1: Cloud CDN
+## Segment 1 — Recap and Agenda (1 minute)
 
-**[SHOW SLIDE: Map showing edge PoPs around the world with arrows showing content cached at edge instead of fetched from origin]**
+Welcome back. In Part 1 we covered GKE cluster types, node pools, and workload
+deployment. In Part 2 we cover:
 
-Cloud CDN — Content Delivery Network — caches your web content at Google's global edge Points of Presence (PoPs). When a user in Tokyo requests your website, instead of the request traveling all the way to your origin servers in `us-central1`, Cloud CDN serves the cached response from a nearby PoP in Tokyo. This dramatically reduces latency for users far from your origin.
+- Kubernetes Services and Ingress
+- Helm package manager
+- Horizontal Pod Autoscaler
+- Cluster autoscaling
+- gcloud and kubectl CLI walkthrough
+- ACE exam strategy for GKE
 
-Cloud CDN integrates directly with the Global HTTP(S) Load Balancer — you simply enable it on the backend service with a checkbox or a single gcloud flag. There is no separate CDN infrastructure to manage.
+---
 
-### What Cloud CDN Caches
+## Segment 2 — Kubernetes Services (3 minutes)
 
-Cloud CDN caches HTTP responses that meet certain criteria:
+### Why Services?
 
-- The response has a cache-control header with `public` and a `max-age` greater than zero
-- The response status is 200, 203, 206, 300, 301, 302, 307, or 308
-- The response is from a GET or HEAD request
+Pods are ephemeral — their IPs change every time they are replaced. A Service
+provides a stable IP address and DNS name that routes traffic to a set of pods
+matching a label selector.
 
-Images, JavaScript files, CSS files, and other static assets are the primary use case. API responses that vary per user (authenticated, personalized) are NOT appropriate for CDN caching without careful cache key configuration.
+### Service Types
 
-### Cache Keys
+#### ClusterIP (default)
 
-By default, Cloud CDN uses the full request URL as the cache key. Two requests for the same URL from different users get the same cached response. You can customize cache keys to include or exclude specific HTTP headers, query string parameters, or cookies — this allows more fine-grained control over what is cached and what bypasses the cache.
+Exposes the service on a stable internal IP within the cluster. Accessible only
+from within the cluster. Use for internal microservice-to-microservice
+communication.
 
-### Cache Invalidation
+#### NodePort
 
-When you update a static asset, users might still receive the old cached version from CDN edge nodes. You can either:
+Exposes the service on a static port on every node's external IP. Accessible
+from outside the cluster via `NODE_IP:NODE_PORT`. Rarely used in production.
 
-- Set short `max-age` values on responses so they expire quickly
-- Use cache busting — append a version number to asset URLs (`/app.js?v=2024`)
-- Manually invalidate the cache for specific paths using the Console or gcloud
+#### LoadBalancer
+
+Provisions a GCP External Network Load Balancer and assigns an external IP.
+Each LoadBalancer service creates a separate GCP load balancer — expensive if
+you have many services.
+
+#### ExternalName
+
+Maps the service to an external DNS name. Used for routing cluster traffic to
+external services.
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-app-svc
+spec:
+  type: LoadBalancer
+  selector:
+    app: web-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+```
 
 ```bash
-gcloud compute url-maps invalidate-cdn-cache my-url-map \
-  --path="/static/app.js" \
-  --host=www.example.com
+# Apply the service
+kubectl apply -f service.yaml
+
+# Check the external IP (wait for LB provisioning)
+kubectl get service web-app-svc --watch
+```
+
+### Ingress
+
+An Ingress resource provides HTTP/HTTPS routing to multiple services based on
+hostname and path. One Ingress creates a single GCP Application Load Balancer
+that routes to multiple backend services — much more efficient than multiple
+LoadBalancer services.
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: web-ingress
+  annotations:
+    kubernetes.io/ingress.class: "gce"
+spec:
+  rules:
+    - host: www.example.com
+      http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: api-svc
+                port:
+                  number: 80
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: web-app-svc
+                port:
+                  number: 80
+```
+
+**ACE Exam Tip:** Use Ingress (one LB, path-based routing) instead of multiple
+LoadBalancer services when you have several HTTP services. LoadBalancer services
+are appropriate for non-HTTP protocols like TCP databases.
+
+---
+
+## Segment 3 — Helm (2 minutes)
+
+### What is Helm?
+
+Helm is the package manager for Kubernetes. A Helm **chart** is a pre-packaged,
+configurable Kubernetes application. Instead of writing and maintaining dozens
+of YAML files, you install a chart with a single command.
+
+```bash
+# Add the bitnami Helm repository
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm repo update
+
+# Install nginx using Helm
+helm install my-nginx bitnami/nginx \
+  --namespace web \
+  --create-namespace \
+  --set service.type=LoadBalancer
+
+# List installed releases
+helm list --all-namespaces
+
+# Upgrade a release
+helm upgrade my-nginx bitnami/nginx \
+  --set replicaCount=3
+
+# Uninstall a release
+helm uninstall my-nginx --namespace web
+```
+
+Helm is widely used for deploying off-the-shelf software (databases, monitoring
+tools, ingress controllers) onto GKE clusters.
+
+---
+
+## Segment 4 — Autoscaling in GKE (3 minutes)
+
+### Horizontal Pod Autoscaler (HPA)
+
+The HPA automatically adjusts the number of pod replicas in a Deployment or
+ReplicaSet based on observed metrics.
+
+Default metric: CPU utilization relative to resource requests. Custom metrics
+via the Metrics Server or Cloud Monitoring adapter are also supported.
+
+```bash
+# Create an HPA for the web-app deployment
+kubectl autoscale deployment web-app \
+  --cpu-percent=70 \
+  --min=2 \
+  --max=10
+
+# View HPA status
+kubectl get hpa
+kubectl describe hpa web-app
+```
+
+Or as YAML:
+
+```yaml
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: web-app-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: web-app
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+```
+
+### Vertical Pod Autoscaler (VPA)
+
+The VPA automatically adjusts the CPU and memory requests and limits for
+containers based on actual usage. Useful when you are unsure of the right
+resource requests for a workload.
+
+### Cluster Autoscaler
+
+The Cluster Autoscaler (CA) adds or removes nodes from a node pool when:
+
+- Pods cannot be scheduled due to insufficient resources (scale up)
+- Nodes are underutilized and pods can be rescheduled elsewhere (scale down)
+
+The CA and HPA work together: the HPA creates more pods when load increases;
+the CA adds more nodes when there is no room for those pods.
+
+---
+
+## Segment 5 — gcloud and kubectl Walkthrough (4 minutes)
+
+### Cluster Management with gcloud
+
+```bash
+# Create an Autopilot cluster
+gcloud container clusters create-auto lab06-autopilot \
+  --region=us-central1
+
+# Create a Standard regional cluster
+gcloud container clusters create lab06-standard \
+  --region=us-central1 \
+  --num-nodes=2 \
+  --machine-type=e2-medium \
+  --enable-autoscaling \
+  --min-nodes=1 \
+  --max-nodes=5
+
+# List clusters
+gcloud container clusters list
+
+# Get credentials (configure kubectl)
+gcloud container clusters get-credentials lab06-standard \
+  --region=us-central1
+
+# Describe a cluster
+gcloud container clusters describe lab06-standard \
+  --region=us-central1
+
+# Upgrade a cluster's control plane
+gcloud container clusters upgrade lab06-standard \
+  --region=us-central1 \
+  --master
+
+# Delete a cluster
+gcloud container clusters delete lab06-standard \
+  --region=us-central1
+```
+
+### kubectl Essentials
+
+```bash
+# View cluster info
+kubectl cluster-info
+
+# List nodes
+kubectl get nodes -o wide
+
+# List all resources in a namespace
+kubectl get all -n default
+
+# Apply a manifest
+kubectl apply -f manifest.yaml
+
+# Delete resources from a manifest
+kubectl delete -f manifest.yaml
+
+# Scale a deployment
+kubectl scale deployment web-app --replicas=5
+
+# View logs for a pod
+kubectl logs POD_NAME
+
+# Stream logs
+kubectl logs -f POD_NAME
+
+# Execute a command inside a pod
+kubectl exec -it POD_NAME -- /bin/bash
+
+# Roll back a deployment
+kubectl rollout undo deployment/web-app
+
+# View rollout history
+kubectl rollout history deployment/web-app
+
+# Port-forward for local testing
+kubectl port-forward service/web-app-svc 8080:80
 ```
 
 ---
 
-## Section 2: URL Maps — Routing Logic
+## Segment 6 — ACE Exam Tips for GKE (1 minute)
 
-**[SHOW SLIDE: URL map routing table with host rules and path rules]**
+Key GKE patterns on the ACE exam:
 
-URL maps are the routing engine for the Global HTTP(S) Load Balancer. Let's look at their full capability.
-
-A URL map has:
-
-- Host rules: match based on the request `Host` header (e.g., `www.example.com` vs. `api.example.com`)
-- Path rules: for each host, match based on URL path prefixes (e.g., `/api/v1/` vs. `/static/`)
-
-Here is an example routing configuration:
-
-```text
-Host: www.example.com
-  /static/* → static-backend-service (with CDN enabled)
-  /api/*    → api-backend-service
-  /*        → web-backend-service (default)
-
-Host: admin.example.com
-  /*        → admin-backend-service
-```
-
-This allows you to run multiple logical services behind a single load balancer IP address. The host rule differentiates between domains; the path rule differentiates between parts of a domain.
+- **Standard vs. Autopilot**: Autopilot manages nodes; Standard you manage them.
+  Autopilot bills per pod request; Standard bills per node.
+- **Zonal vs. regional cluster**: Regional = 99.95% SLA, control plane replicated.
+  Production should use regional clusters.
+- **Service types**: ClusterIP for internal; LoadBalancer for external TCP/UDP;
+  Ingress for HTTP/HTTPS multi-service routing.
+- **HPA vs. VPA vs. Cluster Autoscaler**: HPA scales pods horizontally. VPA
+  resizes pod resources. CA scales nodes. All three can work together.
+- **kubectl get credentials**: `gcloud container clusters get-credentials`
+  is the command to configure kubectl for a GKE cluster.
+- **Node pool operations**: Adding a node pool does not restart the cluster.
+  Deleting a node pool drains and removes nodes.
 
 ---
 
-## Section 3: Cloud Armor
+## Summary — Module 06
 
-**[SHOW SLIDE: Cloud Armor positioned between internet and load balancer, filtering traffic]**
+Across both parts we covered:
 
-Cloud Armor is GCP's web application firewall (WAF) and DDoS protection service. It attaches to the Global External HTTP(S) Load Balancer's backend services as a security policy.
+- Kubernetes core objects: Pod, Deployment, Service, ConfigMap, Secret
+- GKE cluster architecture: Google-managed control plane
+- Standard vs. Autopilot and when to use each
+- Zonal vs. regional clusters and SLA differences
+- Node pools: multi-pool designs, taints and tolerations
+- Services: ClusterIP, NodePort, LoadBalancer, ExternalName
+- Ingress: path-based HTTP routing with a single load balancer
+- Helm: chart-based package management
+- HPA, VPA, and Cluster Autoscaler working together
+- gcloud and kubectl CLI workflows
 
-Cloud Armor can:
-
-- Block traffic from specific IP addresses or IP ranges (for example, block a known attacker's IP)
-- Allow traffic only from specific geographic regions (geo-blocking — block all traffic except from the US and EU)
-- Apply OWASP Top 10 preconfigured WAF rules (SQL injection, cross-site scripting, etc.)
-- Provide adaptive protection against large-scale DDoS attacks
-
-For the ACE exam: Cloud Armor is the answer when a question asks about blocking DDoS attacks, implementing a WAF, or geo-restricting traffic. Cloud Armor is NOT a load balancer itself — it attaches to a load balancer backend service as a security policy layer.
-
-```bash
-gcloud compute security-policies create my-armor-policy \
-  --description="Block malicious IPs"
-
-gcloud compute security-policies rules create 1000 \
-  --security-policy=my-armor-policy \
-  --action=deny-404 \
-  --src-ip-ranges=192.0.2.0/24
-
-gcloud compute backend-services update my-backend \
-  --security-policy=my-armor-policy \
-  --global
-```
-
----
-
-## Section 4: gcloud Load Balancing Commands
-
-**[SHOW CONSOLE: Cloud Shell with gcloud compute commands for load balancer setup]**
-
-Creating a complete load balancer involves several gcloud commands. Here is the sequence:
-
-Create a health check:
-
-```bash
-gcloud compute health-checks create http my-health-check \
-  --port=80 \
-  --request-path=/health
-```
-
-Create a backend service:
-
-```bash
-gcloud compute backend-services create my-backend-service \
-  --protocol=HTTP \
-  --port-name=http \
-  --health-checks=my-health-check \
-  --global
-```
-
-Add a MIG as a backend:
-
-```bash
-gcloud compute backend-services add-backend my-backend-service \
-  --instance-group=my-mig \
-  --instance-group-zone=us-central1-a \
-  --global
-```
-
-Create a URL map:
-
-```bash
-gcloud compute url-maps create my-url-map \
-  --default-service=my-backend-service
-```
-
-Create an HTTP target proxy:
-
-```bash
-gcloud compute target-http-proxies create my-http-proxy \
-  --url-map=my-url-map
-```
-
-Create a forwarding rule (frontend):
-
-```bash
-gcloud compute forwarding-rules create my-forwarding-rule \
-  --global \
-  --target-http-proxy=my-http-proxy \
-  --ports=80
-```
-
-List the load balancer's global forwarding rules to get the IP:
-
-```bash
-gcloud compute forwarding-rules list --global
-```
-
-Enable Cloud CDN on a backend service:
-
-```bash
-gcloud compute backend-services update my-backend-service \
-  --enable-cdn \
-  --global
-```
-
----
-
-## Module 06 Summary
-
-**[SHOW SLIDE: Summary bullet list]**
-
-Let's wrap up Module 06. GCP load balancers are chosen based on scope, layer, and traffic direction. The Global External HTTP(S) Load Balancer provides a single global anycast IP, HTTPS termination, URL-path routing, and integrates with Cloud CDN and Cloud Armor. Health checks require an ingress firewall rule from `35.191.0.0/16` and `130.211.0.0/22`. Components: frontend (IP + forwarding rule + target proxy), URL map, backend service, health check, and MIG backends.
-
-Cloud CDN caches content at edge PoPs to reduce latency. URL maps route based on host and path rules. Cloud Armor provides WAF and DDoS protection as a security policy on backend services.
-
-Key gcloud commands: `compute health-checks create`, `compute backend-services create`, `compute backend-services add-backend`, `compute url-maps create`, `compute target-http-proxies create`, `compute forwarding-rules create`.
-
-Complete the lab, take the quiz, and post to the discussion. Module 07 covers Google Kubernetes Engine.
+The lab will have you create a GKE cluster, deploy an application, configure
+a Service and Ingress, and set up an HPA.
 
 ---
 
 End of Part 2 — Module 06
 
-Course: CIS-4329 Google Cloud Platform | Texas Wesleyan University | Professor Nash
+Course: CIS-4329 Google Cloud Computing | Texas Wesleyan University | Professor Nash
 
 Certification Target: Google Cloud Associate Cloud Engineer
 
-Reference: cloud.google.com/learn
+Reference: cloud.google.com/kubernetes-engine/docs

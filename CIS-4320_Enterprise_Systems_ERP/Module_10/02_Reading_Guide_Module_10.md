@@ -1,61 +1,287 @@
-# Reading Guide: Module 10 - Customizing ERP Systems
+# Reading Guide: Module 10 — SAP Materials Management (MM Module)
 
-## Course: CIS-4320_Enterprise_Systems_ERP (Salesforce Certified Associate / SAP Certified Associate)
+## Course: CIS-4320 Enterprise Systems and ERP
 
----
+## Texas Wesleyan University | Professor Nash
 
-### Introduction
-
-Welcome to **Module 10 - Customizing ERP Systems**! One of the most important skills in enterprise systems work is knowing *when* to use configuration versus custom code — and understanding the specific tools each platform provides. This module covers the spectrum from no-code configuration settings through low-code automation tools to custom programming in SAP ABAP and Salesforce Apex.
-
-Customization decisions made during ERP implementation have long-term consequences: over-customization increases upgrade costs and introduces fragility. Both the SAP and Salesforce certification paths test your ability to distinguish standard configuration from custom development and choose the appropriate approach.
+## Certification Alignment: Salesforce Administrator / SAP S/4HANA Essentials
 
 ---
 
-### 1. High-Yield Glossary
+## Introduction
 
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-* **Low-code tools**: Platform-provided visual development environments that allow administrators and business analysts to build automation, forms, and integrations without writing traditional code. Salesforce Flow Builder and SAP BTP's low-code tools are the primary examples tested on their respective exams.
-* **Proprietary scripting (Salesforce Apex, SAP ABAP)**: Platform-specific programming languages used for custom logic that cannot be achieved through configuration or low-code tools. Apex is a Java-like language for Salesforce server-side logic; ABAP (Advanced Business Application Programming) is SAP's proprietary language for reports, enhancements, and integrations.
-* **Database triggers**: Code that executes automatically when a specific database event occurs (insert, update, delete). In Salesforce, Apex Triggers fire on DML operations on `sObject` records. In SAP ABAP, database triggers and Business Add-Ins (BAdIs) intercept standard transactions to inject custom logic.
-* **Validation rules**: Logic expressions that enforce data quality by blocking record saves when conditions are violated. In Salesforce, validation rules use formula syntax to evaluate field values and display error messages. In SAP, field-level validations are configured in customizing and reinforced by user exits.
+SAP Materials Management (MM) is the module that manages the complete procurement and inventory process — from recognizing a need through paying the vendor. MM is tightly integrated with FI (automatic financial postings), PP (production material supply), and SD (customer order fulfillment). This reading guide covers MM organizational structures, master data, the full Procure-to-Pay cycle, inventory valuation, and the key transaction codes tested on the SAP S/4HANA Essentials exam.
 
 ---
 
-### 2. Certification Exam Tips
+## Section 1 — Core Glossary
 
-* **Salesforce configuration vs. code:** The Associate exam strongly emphasizes declarative (no-code/low-code) solutions. Before reaching for Apex, always consider whether a Flow, Validation Rule, Formula Field, or Process-level setting can solve the problem. The exam reward order is: Workflow/Approval → Flow → Apex.
-* **Apex trigger best practices:** The Salesforce exam expects you to know the "one trigger per object" pattern and bulkification (handling collections of records, not single records, in trigger logic). Triggers that query inside loops cause governor limit violations.
-* **SAP ABAP vs. configuration:** In SAP implementations, the distinction between IMG (Implementation Guide) configuration and custom ABAP development is critical. Modification of SAP standard code ("modifications") is strongly discouraged; "enhancements" using BAdIs and User Exits are the approved extension approach.
-* **Upgrade impact of customization:** Every custom Apex class, ABAP program, or trigger must be retested after a platform upgrade. Heavy customization multiplies upgrade cost. The Salesforce exam emphasizes the advantage of Salesforce's upgrade-safe declarative tools.
-* **Study Resource:** Complete the Salesforce Trailhead module [Apex Basics & Database](https://trailhead.salesforce.com/content/learn/modules/apex_database) — a free, no-cost introduction to Apex programming that provides the code literacy needed to understand customization concepts tested on the Associate exam.
+**Plant**
+The central MM organizational unit representing a physical location where materials are produced, stored, or distributed. A Plant belongs to exactly one Company Code. All inventory balances, purchase orders, and production orders are Plant-specific.
+
+**Storage Location**
+A physical storage area within a Plant. Stock quantities are tracked at the Plant/Storage Location level. Examples: Raw Materials Warehouse, Finished Goods Area, Quality Inspection Zone.
+
+**Purchasing Organization**
+The organizational unit responsible for negotiating purchasing conditions and managing vendor relationships. Can be at the Company Code level (enterprise-wide purchasing) or Plant level (plant-specific purchasing).
+
+**Purchasing Group**
+An individual buyer or buyer team responsible for a specific material category. Purchasing Groups are assigned to Purchase Orders and used for reporting and workflow routing.
+
+**Material Master**
+The central data record for any material the company buys, produces, stores, or sells. Organized into views maintained by different departments: Basic Data, Purchasing, MRP, Accounting, Sales. Transaction MM01 creates; MM03 displays.
+
+**Valuation Class**
+A field in the Material Master Accounting view that links a material to G/L accounts. When goods are received or issued, SAP uses the Valuation Class to determine which G/L accounts to post to automatically — no manual account selection required.
+
+**Price Control**
+The method used to value inventory movements in the Material Master. Two options: Standard Price (S) — fixed cost; variances posted to Price Difference account. Moving Average Price (V) — recalculated with each goods receipt based on actual purchase price.
+
+**Vendor Master**
+The master data record for a vendor. In MM, the relevant views are: General Data (name, address), Company Code Data (payment terms, reconciliation account), and Purchasing Data (currency, Incoterms, purchasing organization). Transactions XK01 (create), XK03 (display).
+
+**Purchase Requisition (PR)**
+An internal document requesting authorization to purchase materials or services. Created manually (ME51N) or automatically by MRP. Has no legal standing with vendors. Must be converted to a Purchase Order.
+
+**Purchase Order (PO)**
+The legal commitment to purchase from a specific vendor. Contains vendor, material, quantity, price, delivery date, and plant. Created with ME21N. Drives the three-way match process.
+
+**Purchasing Info Record**
+A record (ME11) that stores the vendor-material price relationship: the last negotiated price, standard price, and price scales for quantity discounts. Used to auto-populate PO prices.
+
+**Goods Receipt (GR)**
+The physical receipt of materials from a vendor. Posted in SAP using transaction MIGO with Movement Type 101. Increases inventory stock and posts the GR/IR accounting entry.
+
+**Movement Type**
+A three-digit SAP code that classifies every inventory movement and determines the resulting G/L postings. Key movement types: 101 (GR for PO), 102 (GR reversal), 201 (GI to Cost Center), 261 (GI to Production Order), 301 (Plant-to-Plant transfer).
+
+**GR/IR Clearing Account**
+The Goods Receipt / Invoice Receipt clearing account. A balance sheet liability account that bridges the gap between when goods are received (GR) and when the vendor invoice is posted (IR). Credited at GR; debited at MIRO. Should net to zero when all open PO items are invoiced.
+
+**MIRO (Logistics Invoice Verification)**
+The SAP transaction for posting vendor invoices in the MM context. Performs three-way match: compares invoice to PO and GR. Posts: Debit GR/IR / Credit Accounts Payable. Generates a variance if price or quantity does not match.
+
+**Three-Way Match**
+The verification that a vendor invoice matches: (1) the approved Purchase Order (price and terms), (2) the Goods Receipt (quantity actually received). Any discrepancy generates a variance and may block payment.
+
+**MRP (Material Requirements Planning)**
+The SAP planning engine (in PP and MM) that analyzes production requirements, current stock levels, and open purchase orders to automatically generate Purchase Requisitions for materials that need to be replenished.
 
 ---
 
-### Required Readings & Videos
+## Section 2 — MM Organizational Structure
 
-To prepare for this module's topics, you must complete the following readings and videos:
+```text
+CLIENT
+  |
+  +-- COMPANY CODE 1000
+          |
+          +-- PLANT 1000 (Main Factory — Dallas)
+          |       |
+          |       +-- Storage Location 0001 (Raw Materials)
+          |       +-- Storage Location 0002 (Finished Goods)
+          |       +-- Storage Location 0003 (Quality Inspection)
+          |
+          +-- PLANT 1100 (Distribution Center — Houston)
+                  |
+                  +-- Storage Location 0001 (Inbound Dock)
+                  +-- Storage Location 0002 (Outbound Staging)
+```
 
-* **Required Reading:** Complete the Salesforce Trailhead module [Apex Basics & Database](https://trailhead.salesforce.com/content/learn/modules/apex_database) — a free introduction to Salesforce's proprietary server-side language, covering classes, triggers, and DML operations.
-* **Required Video:** Watch the video lecture on **Customizing ERP Systems** in the official course playlist: [Salesforce & SAP ERP Fundamentals Tutorial](https://www.youtube.com/playlist?list=PLD2549A0D756627C1).
+### MM Organizational Unit Comparison
+
+| Unit | Level | Scope |
+|---|---|---|
+| Company Code | Financial | Legal entity; owns balance sheet |
+| Plant | Operational | Physical location; owns inventory |
+| Storage Location | Physical | Storage area within plant |
+| Purchasing Organization | Procurement | Negotiates vendor terms |
+| Purchasing Group | Buyer | Responsible for material category |
 
 ---
 
-### Lab & Command Integration
+## Section 3 — Material Master View Reference
 
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
+| View | Maintained By | Key Fields |
+|---|---|---|
+| Basic Data 1 | Central/Master Data team | Material Number, Description, Base UoM, Material Group |
+| Purchasing | Purchasing | Purchasing Group, Order Unit, GR Processing Time |
+| MRP 1 | Production Planning | MRP Type, Lot Size Procedure, Reorder Point |
+| MRP 2 | Production Planning | Planned Delivery Time, Safety Stock, Scheduling Margin |
+| Accounting 1 | Finance/Controlling | Valuation Class, Price Control (S/V), Standard/Moving Avg Price |
+| Plant Data/Storage | Warehouse | Storage Location, Hazardous Material Info, Shelf Life |
+| Sales | Sales | Sales Unit, Item Category Group, Delivering Plant |
 
-* **Write a mock validation rule**: In your Salesforce Developer org, create a validation rule on the Opportunity object that blocks saving if the Close Date is in the past and the Stage is not "Closed Won" or "Closed Lost," and test it with sample records.
-* **Draft Apex trigger pseudo-code**: Write pseudo-code for an Apex trigger that fires after a Case is updated, checks if the Status field changed to "Closed," and sets a custom "Resolution Date" field to today's date. Identify the bulkification pattern required.
-* **Test trigger conditions**: Document three test scenarios (a new Case being created, a Case status changing to Closed, and a Case description being updated) and predict which of your trigger scenarios would fire for each.
+### Price Control Comparison
+
+| Method | Code | How Price Is Set | Variance Posting | Best For |
+|---|---|---|---|---|
+| Standard Price | S | Fixed cost set at start of period | Price Difference account | Finished goods, semi-finished goods |
+| Moving Average Price | V | Recalculated at each goods receipt | Absorbed into stock value | Raw materials, trading goods |
 
 ---
 
-### 3. Study Checklist
+## Section 4 — Procure-to-Pay Cycle
 
-* [ ] Read all glossary definitions and be able to give a real-world example of each customization type.
-* [ ] Complete [Apex Basics & Database](https://trailhead.salesforce.com/content/learn/modules/apex_database) on Trailhead (earn the badge).
-* [ ] Watch the video lecture on **Customizing ERP Systems** in [Salesforce & SAP ERP Fundamentals Tutorial](https://www.youtube.com/playlist?list=PLD2549A0D756627C1).
-* [ ] Complete the lab validation rule, Apex pseudo-code, and trigger test scenario exercises.
-* [ ] Proceed to the weekly quiz.
+### Complete P2P Process Flow
+
+```text
+[NEED IDENTIFIED]
+  Manual: User recognizes shortage
+  Automatic: MRP run generates planned orders
+        |
+        v
+[PURCHASE REQUISITION — ME51N]
+  Internal request document
+  Fields: Material, Quantity, Delivery Date, Plant, Cost Object
+  No legal standing; may require approval
+        |
+  Approved PR
+        |
+        v
+[PURCHASE ORDER — ME21N]
+  Legal commitment to vendor
+  Vendor + Material + Qty + Price + Delivery Date
+  References PR; sourced from Info Record or Contract
+  Account Assignment Category determines G/L target
+        |
+  PO sent to vendor
+        |
+        v
+[GOODS RECEIPT — MIGO, Movement Type 101]
+  Physical delivery from vendor
+  Verifies quantity and quality
+  Posts Material Document (inventory record)
+  Posts Accounting Document:
+    Dr: Inventory / Stock Account
+    Cr: GR/IR Clearing Account
+        |
+        v
+[INVOICE VERIFICATION — MIRO]
+  Vendor invoice received
+  Three-way match: Invoice vs. PO vs. GR
+  If match: Posts Accounting Document:
+    Dr: GR/IR Clearing Account
+    Cr: Accounts Payable
+  If variance: Invoice blocked; purchasing resolves
+        |
+        v
+[VENDOR PAYMENT — F110 (FI)]
+  Automatic Payment Program selects due invoices
+  Posts:
+    Dr: Accounts Payable
+    Cr: Bank
+```
+
+---
+
+## Section 5 — Key Accounting Entries in the P2P Cycle
+
+| Event | Transaction | Debit | Credit |
+|---|---|---|---|
+| Goods Receipt | MIGO (101) | Inventory / Stock Account | GR/IR Clearing Account |
+| Invoice Verification (matched) | MIRO | GR/IR Clearing Account | Accounts Payable |
+| Invoice Variance (price diff) | MIRO | GR/IR Clearing Account + Price Difference | Accounts Payable |
+| Vendor Payment | F110 | Accounts Payable | Bank Account |
+| Goods Issue to Production | MIGO (261) | Production Order / Cost Object | Inventory Account |
+| Goods Issue to Cost Center | MIGO (201) | Cost Center Expense | Inventory Account |
+| Return to Vendor | MIGO (122) | GR/IR Clearing Account | Inventory Account |
+
+---
+
+## Section 6 — Movement Type Reference
+
+| Movement Type | Description | Direction |
+|---|---|---|
+| 101 | Goods Receipt for Purchase Order | Into stock (from vendor) |
+| 102 | Reversal of GR for PO | Out of stock (GR correction) |
+| 122 | Return to Vendor | Out of stock (return delivery) |
+| 201 | Goods Issue to Cost Center | Out of stock (consumption) |
+| 261 | Goods Issue to Production Order | Out of stock (into manufacturing) |
+| 301 | Transfer Posting Plant to Plant (one-step) | Between plants |
+| 311 | Transfer Posting Storage Location to Storage Location | Within plant |
+| 561 | Initial Stock Entry (opening balance) | Into stock (no PO reference) |
+
+---
+
+## Section 7 — Three-Way Match Logic
+
+### Match Scenarios
+
+| Scenario | PO Price | GR Quantity | Invoice | Result |
+|---|---|---|---|---|
+| Perfect match | $100/unit | 500 units | $50,000 | Posts automatically; no variance |
+| Price variance | $100/unit | 500 units | $52,500 | Price difference of $2,500; may block invoice |
+| Quantity variance | $100/unit | 500 units | $55,000 (550 units) | 50 units not received; partial payment only |
+| Under-delivery | $100/unit | 450 units (of 500) | $45,000 | Posts for received quantity; remaining 50 open |
+
+### Tolerance Keys in MIRO
+
+SAP can be configured to automatically post invoices with small variances (within a tolerance percentage) without blocking them. Tolerances above the configured threshold block the invoice for manual review. This prevents small rounding differences from creating manual work while ensuring large discrepancies are investigated.
+
+---
+
+## Section 8 — Special Procurement Types
+
+| Type | Description | Key Characteristic |
+|---|---|---|
+| Standard Purchase | Buy from external vendor | Regular P2P cycle |
+| Consignment | Vendor stock stored at company premises | Liability triggered only when consumed (MIGO 411) |
+| Subcontracting | Company provides components; vendor assembles | Components issued to vendor with PO |
+| Stock Transport Order | Transfer between plants | Treated as internal purchase |
+| Service Procurement | Purchase services, not goods | Service Entry Sheet (ML81N) instead of GR |
+
+---
+
+## Section 9 — Transaction Code Master Reference
+
+| Transaction | Description |
+|---|---|
+| MM01 / MM03 | Create / Display Material Master |
+| XK01 / XK03 | Create / Display Vendor Master (all views) |
+| MK01 / MK03 | Create / Display Vendor Master (purchasing view only) |
+| ME11 | Create Purchasing Info Record |
+| ME51N | Create Purchase Requisition |
+| ME52N / ME53N | Change / Display Purchase Requisition |
+| ME21N | Create Purchase Order |
+| ME22N / ME23N | Change / Display Purchase Order |
+| MIGO | Goods Movement (GR, GI, Transfer) |
+| MIRO | Logistics Invoice Verification |
+| MIR7 | Park Vendor Invoice |
+| ME2M | Purchase Orders by Material |
+| MB52 | Warehouse Stocks of Material |
+| MB51 | Material Document List |
+| ME80FN | General Purchasing Analysis |
+
+---
+
+## Section 10 — Exam Tips
+
+> **Exam Tip 1 — Plant is the central MM unit.** Everything in MM belongs to a Plant: stock, purchase orders, production orders. A Plant belongs to exactly one Company Code. Multiple Plants can share one Company Code.
+
+> **Exam Tip 2 — GR/IR is the bridge account.** Goods Receipt credits GR/IR; Invoice Verification debits GR/IR. When both events are complete, GR/IR nets to zero. An open GR/IR balance means either a GR without an invoice (accrued liability) or an invoice without a GR (advance billing).
+
+> **Exam Tip 3 — MIGO is the goods movement transaction.** All inventory movements go through MIGO with the appropriate Movement Type. Know 101 (GR for PO), 201 (GI to Cost Center), 261 (GI to Production Order).
+
+> **Exam Tip 4 — MIRO performs three-way match.** Invoice vs. PO vs. GR. Variances can be within tolerance (auto-post) or outside tolerance (invoice blocked). This is the core AP control in an MM environment.
+
+> **Exam Tip 5 — Valuation Class drives automatic G/L posting.** The Material Master Accounting view Valuation Class determines which G/L accounts are updated for any movement. This is how SAP avoids manual account selection for every goods movement.
+
+> **Exam Tip 6 — Purchase Requisition is internal; Purchase Order is external.** A PR has no legal effect. A PO is a legal commitment to a vendor. Know the transaction codes: ME51N (PR), ME21N (PO).
+
+---
+
+## Section 11 — Study Checklist
+
+- Review the MM organizational structure diagram in Section 2.
+- Memorize the Material Master view table and what each view contains (Section 3).
+- Trace the complete P2P process flow in Section 4 without looking at labels.
+- Study the accounting entries table in Section 5 — know which accounts are debited and credited at each P2P step.
+- Memorize the key Movement Types in Section 6.
+- Review the three-way match scenarios in Section 7.
+- Memorize the transaction code master reference in Section 9.
+- Complete the Module 10 SAP exercises (sandbox or Learning Hub).
+- Watch the Module 10 video lecture.
+- Complete Lab 10.
+- Post to Discussion Forum 10 by Wednesday at 11:59 PM.
+- Complete Quiz 10.

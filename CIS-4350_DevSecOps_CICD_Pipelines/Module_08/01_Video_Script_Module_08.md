@@ -1,191 +1,263 @@
-# Video Script: Module 08 - SCA: Software Composition Analysis and Dependency Scanning
+# Video Script: Module 08 — Software Composition Analysis and Supply Chain Security
 
 ## Course: CIS-4350 DevSecOps and CI/CD Pipelines
 
+## Texas Wesleyan University | Professor Nash
+
+## Estimated Duration: 20–24 minutes
+
 ## Certification Alignment: DevSecOps Professional (DSOE)
 
-## Estimated Duration: 20-24 minutes
+---
 
-## Instructor: Professor Nash
+### SEGMENT 1 — Introduction (0:00–1:30)
+
+[SLIDE: Module 08 title card]
+
+Welcome to Module 08. In Module 07 we covered dependency scanning as one layer of application security testing. In this module we go deeper on the supply chain — the entire chain of trust from developer to end user. Supply chain attacks have become one of the most significant security threats of the decade. The SolarWinds attack in 2020 and the XZ Utils backdoor in 2024 demonstrated that compromising a single upstream component can affect thousands of organizations downstream.
+
+By the end of this module you'll understand SCA tools in depth, the two major SBOM formats, dependency confusion attacks, code signing for supply chain integrity, and the SLSA framework for supply chain levels.
 
 ---
 
-### [00:00 - 01:30] Opening and Module Overview
+### SEGMENT 2 — Software Composition Analysis in Depth (1:30–5:00)
 
-**Visual:** Instructor on camera, title card: "Module 08 — SCA: Software Composition Analysis and Dependency Scanning"
+[SLIDE: SCA tool architecture diagram]
 
-**Audio:**
+Software Composition Analysis — SCA — is a broader discipline than simple vulnerability scanning. SCA tools analyze:
 
-"Welcome back to CIS-4350. I'm Professor Nash. We have covered SAST and DAST for first-party application code. Now we're going to cover SCA — Software Composition Analysis — which addresses a different but equally critical risk: the open-source dependencies your application depends on.
+Open-source component inventory — which libraries are used, at which versions, including transitive dependencies.
 
-Modern applications are largely assembled from open-source components. A Python web service might import 200 packages. A Node.js app might have 1,000 transitive dependencies. Every one of those packages is a potential vulnerability source. By the end of this video you will understand what SCA is, how dependency graphs and transitive dependencies work, how to use Snyk and OWASP Dependency-Check in pipelines, and how to interpret and remediate CVE findings in dependencies."
+Vulnerability detection — which components have known CVEs in the NVD, GitHub Advisory Database, or OSS Index.
 
----
+License compliance — which open-source licenses are in use, whether they are compatible with the application's license, and whether any licenses impose copyleft requirements.
 
-### [01:30 - 06:00] The Dependency Risk Landscape
+Outdated component detection — which dependencies are significantly behind the current release, even without active CVEs.
 
-**Visual:** npm dependency tree visualization — 5 direct dependencies, 127 transitive
+Policy enforcement — configurable rules that fail builds on specific vulnerability conditions, license types, or age thresholds.
 
-**Audio:**
+Two leading commercial SCA platforms:
 
-"Let's start with why dependencies are a major security concern. When you `pip install flask` or `npm install express`, you get not just Flask or Express — you get their entire dependency trees. Flask depends on Jinja2, which depends on MarkupSafe. Express depends on dozens of packages, which depend on dozens more. These transitive dependencies — packages your dependencies depend on — are ones you never explicitly chose and may not even know exist in your project.
-
-The Log4Shell vulnerability in December 2021 — CVE-2021-44228 — is the canonical example of why this matters. Log4j was a Java logging library used as a transitive dependency by thousands of enterprise applications. Most application developers had no idea they were running Log4j. When the vulnerability was announced, organizations scrambled to audit millions of applications to determine exposure. Many could not answer the question 'do we use Log4j?' quickly because they had no SCA tooling.
-
-SCA solves this. SCA tools build a complete Software Bill of Materials (SBOM) — an inventory of every direct and transitive dependency in your application — and check each component against vulnerability databases like the National Vulnerability Database (NVD), the GitHub Advisory Database, and vendor-specific advisories. When a new CVE is published, the SCA tool can immediately identify which of your applications are affected."
-
----
-
-### [06:00 - 12:00] SCA Tools: Snyk and OWASP Dependency-Check
-
-**Visual:** Snyk scan output showing a CRITICAL CVE finding
-
-**Audio:**
-
-"The two SCA tools you need to know for the DevSecOps Professional exam are Snyk and OWASP Dependency-Check.
-
-**Snyk** is a commercial SCA platform (with a free tier) that scans package manifests (`package.json`, `requirements.txt`, `pom.xml`, `Gemfile.lock`) against its vulnerability database. Snyk provides remediation guidance — not just 'this package has a CVE' but 'upgrade from version 2.1.3 to 2.1.4 to remediate this CVE, and here are the patch notes.' Snyk integrates with GitHub as a pull request check, automatically opening PRs to update vulnerable dependencies.
-
-**[SHOW CODE]**
-
-Installing and running Snyk:
+Snyk is developer-focused. It integrates with IDEs, GitHub pull requests, and CI pipelines. Snyk's killer feature is prioritization — it uses reachability analysis to determine whether a vulnerable function in a library is actually called by your code, reducing false positive noise.
 
 ```bash
-# Install Snyk CLI
-npm install -g snyk
+# Snyk CLI scan
+snyk test --severity-threshold=high --json > snyk-results.json
 
-# Authenticate
-snyk auth
+# Test a specific package manifest
+snyk test --file=requirements.txt --package-manager=pip
 
-# Test for vulnerabilities in current project
-snyk test
+# Monitor a project (uploads to Snyk dashboard)
+snyk monitor --project-name=myapp
 
-# Test and fail if any HIGH or CRITICAL issues found
-snyk test --severity-threshold=high
-
-# Monitor the project for new vulnerabilities
-snyk monitor
+# In GitHub Actions
+- uses: snyk/actions/python@master
+  with:
+    args: --severity-threshold=high
+  env:
+    SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 ```
 
-`snyk test` exits non-zero when vulnerabilities at or above the threshold are found — making it a pipeline gate.
+Black Duck by Synopsys is the enterprise SCA platform. It is particularly strong in license compliance, legal risk assessment, and multi-language monorepo support. Black Duck's "Black Duck Binary Analysis" can scan compiled artifacts without access to source code.
 
-`snyk monitor` sends the current dependency snapshot to Snyk's platform, enabling continuous monitoring: when a new CVE is published that affects one of your snapshots, Snyk sends an alert even without a new deployment.
+---
 
-**OWASP Dependency-Check** is a free, open-source tool that scans a project's build artifacts and dependency manifests against the NVD. It is configured via the `dependency-check-maven` plugin, `dependency-check-gradle` plugin, or as a standalone CLI.
+### SEGMENT 3 — SBOM Formats: SPDX and CycloneDX (5:00–9:00)
 
-**[SHOW CODE]**
+[SLIDE: SPDX vs. CycloneDX feature comparison]
 
-Running OWASP Dependency-Check via the standalone script:
+Let's look at the two SBOM formats in more detail.
+
+SPDX — Software Package Data Exchange — was created by the Linux Foundation and became an ISO standard in 2021 (ISO/IEC 5962:2021). It originated in the license compliance world and has excellent license tracking capabilities. SPDX documents can be in JSON, RDF, YAML, or tag-value format.
+
+An SPDX JSON document has this structure:
+
+```json
+{
+  "spdxVersion": "SPDX-2.3",
+  "dataLicense": "CC0-1.0",
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "name": "myapp-v1.2.3",
+  "documentNamespace": "https://example.com/myapp-v1.2.3",
+  "packages": [
+    {
+      "SPDXID": "SPDXRef-Package-flask",
+      "name": "flask",
+      "versionInfo": "3.0.3",
+      "downloadLocation": "https://pypi.org/project/flask/3.0.3/",
+      "licenseConcluded": "BSD-3-Clause",
+      "externalRefs": [
+        {
+          "referenceCategory": "SECURITY",
+          "referenceType": "cpe23Type",
+          "referenceLocator": "cpe:2.3:a:palletsprojects:flask:3.0.3:*:*:*:*:*:*:*"
+        }
+      ]
+    }
+  ]
+}
+```
+
+CycloneDX was created by OWASP and is optimized for security use cases. It supports VEX (Vulnerability Exploitability Exchange) documents that accompany the SBOM to document which CVEs are and aren't exploitable in your specific deployment. CycloneDX is typically preferred for security tooling integration.
+
+```json
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2024-01-15T10:00:00Z",
+    "component": {
+      "type": "application",
+      "name": "myapp",
+      "version": "1.2.3"
+    }
+  },
+  "components": [
+    {
+      "type": "library",
+      "name": "flask",
+      "version": "3.0.3",
+      "purl": "pkg:pypi/flask@3.0.3",
+      "licenses": [{ "license": { "id": "BSD-3-Clause" } }]
+    }
+  ],
+  "vulnerabilities": []
+}
+```
+
+The key identifier in CycloneDX is the `purl` — Package URL — a standardized string format identifying a package by ecosystem, name, and version. `pkg:pypi/flask@3.0.3`, `pkg:npm/lodash@4.17.21`, `pkg:maven/org.springframework/spring-core@6.0.0`.
+
+---
+
+### SEGMENT 4 — Dependency Confusion Attacks (9:00–12:00)
+
+[SLIDE: Dependency confusion attack diagram]
+
+Dependency confusion is a supply chain attack technique discovered by security researcher Alex Birsan in 2021. It exploits how package managers resolve package names when both public and private registries are configured.
+
+Here's how it works: Your application uses a private internal package named `company-auth-utils`. This package exists only in your private registry. An attacker discovers the internal package name — perhaps through a leaked `package.json` or a public job posting. The attacker publishes a malicious package with the same name to the public npm registry (or PyPI) at a higher version number — say version 9.9.9.
+
+When your developer runs `npm install`, the package manager checks both the private registry and the public registry. It finds `company-auth-utils@9.9.9` on the public registry — a higher version than your private `company-auth-utils@1.2.3`. It downloads and installs the malicious public package.
+
+Birsan reported this vulnerability to dozens of companies including Apple, Microsoft, Shopify, and PayPal, and collected over $130,000 in bug bounties.
+
+Prevention strategies:
+
+Use scoped packages for internal packages — `@company/auth-utils` — which cannot be published to public npm by non-org members.
+
+Configure package manager registry pinning to always prefer the private registry for specific package name patterns.
+
+Use lock files (`package-lock.json`, `poetry.lock`, `Pipfile.lock`) to pin exact package versions and their integrity hashes.
+
+Enable Subresource Integrity verification — npm and pip can verify SHA hashes of downloaded packages.
+
+Use a repository manager (JFrog Artifactory, Nexus) as a pull-through proxy with explicit allowlisting of public packages.
 
 ```bash
-dependency-check.sh \
-  --project myapp \
-  --scan ./lib \
-  --format HTML \
-  --format JSON \
-  --out ./reports \
-  --failOnCVSS 7
-```
+# .npmrc configuration to use private registry for @company scope
+@company:registry=https://registry.company.com/
+//registry.company.com/:_authToken=${NPM_TOKEN}
 
-`--failOnCVSS 7` causes the tool to exit non-zero if any CVE with a CVSS score of 7.0 or higher is found — this covers HIGH and CRITICAL severity CVEs."
+# Block public registry for @company scope
+@company:registry=https://registry.company.com/
+//registry.npmjs.org/:always-auth=false
+```
 
 ---
 
-### [12:00 - 17:00] Integrating SCA into the CI/CD Pipeline
+### SEGMENT 5 — Code Signing for Supply Chain Integrity (12:00–15:30)
 
-**Visual:** GitHub Actions pipeline YAML with SCA job highlighted
+[SLIDE: Sigstore/cosign signature verification flow]
 
-**Audio:**
+Code signing provides cryptographic proof that an artifact was produced by a specific entity and has not been tampered with since signing. In a supply chain security context, signing covers:
 
-"SCA runs at the build stage — after the package manager downloads dependencies, but before the artifact is built. This is the right placement because dependencies are fully resolved at this stage, giving SCA the complete dependency graph to scan.
+Git commits — GPG or SSH signed commits prove authorship (covered in Module 02).
 
-**[SHOW CODE]**
+Container images — cosign signs images so consumers can verify they were produced by a trusted CI pipeline.
 
-Here is a GitHub Actions SCA job using Snyk:
+Release artifacts — JARs, Python wheels, npm packages can be signed and verified.
+
+The Sigstore project provides a transparent, auditable signing infrastructure. cosign integrates with GitHub Actions OIDC to enable keyless signing — the signing key is derived from the CI pipeline's identity token, not a long-lived private key.
 
 ```yaml
-sca-scan:
-  name: Dependency Vulnerability Scan
-  runs-on: ubuntu-latest
-  needs: build
-  steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.11'
-
-    - name: Install dependencies
-      run: pip install -r requirements.txt
-
-    - name: Run Snyk SCA scan
-      uses: snyk/actions/python@master
-      continue-on-error: true
-      env:
-        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      with:
-        args: --severity-threshold=high
-
-    - name: Upload Snyk results to GitHub Code Scanning
-      uses: github/codeql-action/upload-sarif@v3
-      with:
-        sarif_file: snyk.sarif
+# Keyless signing with cosign in GitHub Actions
+- name: Sign container image with cosign (keyless)
+  uses: sigstore/cosign-installer@v3
+  - run: |
+      cosign sign \
+        --yes \
+        myregistry.io/myapp:${{ github.sha }}
 ```
 
-And here is the equivalent using OWASP Dependency-Check:
+The resulting signature is stored in the container registry alongside the image and recorded in Sigstore's Rekor transparency log — a public, append-only log of all signatures.
+
+Consumers verify:
+
+```bash
+cosign verify \
+  --certificate-identity-regexp="https://github.com/myorg/myrepo" \
+  --certificate-oidc-issuer="https://token.actions.githubusercontent.com" \
+  myregistry.io/myapp:v1.2.3
+```
+
+This verifies that the image was signed by a GitHub Actions workflow in the `myorg/myrepo` repository.
+
+---
+
+### SEGMENT 6 — SLSA Framework (15:30–19:00)
+
+[SLIDE: SLSA levels pyramid — 1 to 4]
+
+SLSA — Supply-chain Levels for Software Artifacts — pronounced "salsa" — is a security framework developed by Google and now hosted by the OpenSSF. SLSA defines four levels of supply chain integrity, with higher levels requiring stronger guarantees.
+
+SLSA Level 1: Build process is scripted or automated. Basic documentation of the build process. Provides some protection against accidental tampering.
+
+SLSA Level 2: Version control is used for all source. Build service is used (not just developer machines). Provenance is generated — a signed document describing where the artifact came from and how it was built.
+
+SLSA Level 3: Source is verified — it came from version control and the build script is in the same repo. Build platform provides stronger security guarantees — isolated build environments.
+
+SLSA Level 4 (now merged into Level 3 in SLSA v1.0): Two-party review of all changes to source. Hermetic builds — builds are fully isolated and reproducible.
+
+Provenance is the key concept. A SLSA provenance document answers: Who built this? What source did they use? When was it built? What build system was used?
+
+GitHub Actions natively generates SLSA provenance for artifacts:
 
 ```yaml
-sca-owasp:
-  name: OWASP Dependency Check
-  runs-on: ubuntu-latest
-  needs: build
-  steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-    - name: Run OWASP Dependency-Check
-      uses: dependency-check/Dependency-Check_Action@main
-      with:
-        project: 'myapp'
-        path: '.'
-        format: 'SARIF'
-        out: 'reports'
-        args: >
-          --failOnCVSS 7
-          --enableRetired
-
-    - name: Upload Dependency-Check results
-      uses: github/codeql-action/upload-sarif@v3
-      with:
-        sarif_file: reports/dependency-check-report.sarif
+- name: Generate SLSA provenance
+  uses: actions/attest-build-provenance@v1
+  with:
+    subject-name: myregistry.io/myapp
+    subject-digest: sha256:abc123...
 ```
 
-A few notes on the design. `--enableRetired` flags deprecated packages that may not have CVEs yet but are no longer receiving security updates — important for proactive dependency hygiene. SARIF upload to GitHub Code Scanning integrates findings into the Security tab alongside SAST results."
+The provenance attestation is stored in the registry and can be verified by consumers:
+
+```bash
+gh attestation verify myregistry.io/myapp:v1.2.3 \
+  --owner myorg
+```
 
 ---
 
-### [17:00 - 20:30] CVE Triage and SBOM
+### SEGMENT 7 — Module Summary and Looking Ahead (19:00–21:00)
 
-**Visual:** CVSS score breakdown diagram and SBOM excerpt
+[SLIDE: Module 08 key takeaways]
 
-**Audio:**
+Module 08 summary.
 
-"When SCA finds vulnerabilities, you need a process for triaging them. Not every CVE requires immediate action.
+SCA tools — Snyk and Black Duck — provide vulnerability detection, license compliance, and policy enforcement for open-source dependencies. Snyk's reachability analysis reduces false positive noise.
 
-CVSS — Common Vulnerability Scoring System — provides a 0-10 severity score. CVEs with CVSS 9.0+ are Critical; 7.0-8.9 are High; 4.0-6.9 are Medium; 0-3.9 are Low. Critical and High findings should be remediated within defined SLAs — typically 24-72 hours for Critical, 7-14 days for High.
+SPDX is the ISO-standard SBOM format from the Linux Foundation with excellent license tracking. CycloneDX is the OWASP-standard format optimized for security use cases, including VEX support.
 
-The key triage question for each finding: is this vulnerability actually reachable? A CVE in a library you depend on may be in a code path you never call. If you use only the email-sending function of a package and the CVE is in its image-processing code, the vulnerability may not be reachable in your application. Snyk and some other tools provide reachability analysis to help with this.
+Dependency confusion attacks exploit package manager name resolution when public and private registries coexist. Use scoped packages, registry pinning, lock files, and repository managers to prevent this.
 
-SBOM — Software Bill of Materials — is a machine-readable inventory of every component in your application, including name, version, license, and known vulnerabilities. CycloneDX and SPDX are the two standard SBOM formats. Generating an SBOM is increasingly required for regulated industries and government software procurement. Snyk and OWASP Dependency-Check both support CycloneDX SBOM generation."
+Code signing with cosign and Sigstore provides cryptographic proof of artifact provenance. Keyless signing via GitHub Actions OIDC eliminates long-lived private keys.
+
+SLSA defines four levels of supply chain integrity. SLSA provenance documents where an artifact came from and how it was built. GitHub Actions can generate native SLSA provenance.
+
+In Module 09 — our final module — we address secrets management in depth: HashiCorp Vault, AWS Secrets Manager, Azure Key Vault, dynamic secrets, and secret rotation. See you there.
 
 ---
 
-### [20:30 - End] Closing and Exam Alignment
-
-**Visual:** Instructor on camera
-
-**Audio:**
-
-"For the exam: know that SCA scans third-party dependencies at the build stage. Know Snyk and OWASP Dependency-Check as the primary SCA tools. Know that `snyk test --severity-threshold=high` and `--failOnCVSS 7` are the pipeline gate configurations. Know what transitive dependencies are and why they are a risk. Know SBOM as the machine-readable dependency inventory and CycloneDX as a standard format. Know that Log4Shell is the canonical example of why SCA matters. See you in Module 09."
+*[END OF SCRIPT — Module 08]*

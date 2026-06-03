@@ -1,308 +1,394 @@
-# Reading Guide — Module 05
+# Reading Guide: Module 05 — Virtual Private Cloud Networking
 
-## CIS-4329: Google Cloud Platform | Texas Wesleyan University
+## Course: CIS-4329 Google Cloud Computing
 
-### Topic: Virtual Private Cloud (VPC) — Networking Fundamentals
-
-### Certification Target: Google Cloud Associate Cloud Engineer
+**Certification Alignment:** Google Cloud Associate Cloud Engineer (ACE)
 
 ---
 
-## Introduction
+## Overview
 
-VPC networking is one of the most tested domains on the Associate Cloud Engineer exam. This reading guide covers the GCP global VPC model, subnet configuration, firewall rules and their statefulness, routes, VPC peering (including its non-transitive behavior), Private Google Access, Cloud VPN, Cloud Interconnect, and the gcloud CLI commands for network administration. Study every table carefully — the ACE exam frequently uses scenario-based networking questions that require you to apply multiple concepts simultaneously.
+This reading guide covers GCP Virtual Private Cloud (VPC) networking. Networking
+is one of the broader ACE exam topic areas, covering VPC design, firewall rules,
+hybrid connectivity, and load balancing.
 
----
-
-## 1. GCP VPC Architecture
-
-### Global VPC vs. Regional Subnets
-
-| Concept | Scope | Notes |
-|---|---|---|
-| VPC Network | Global | Spans all regions; one namespace for routes and firewall rules |
-| Subnet | Regional | IP address range within one region |
-| Firewall Rule | VPC level, enforced per-VM | Applies to all VMs in VPC unless filtered by tag or SA |
-| Route | VPC level | Applies to all VMs unless filtered by tag |
-
-### Auto Mode vs. Custom Mode VPC
-
-| Feature | Auto Mode | Custom Mode |
-|---|---|---|
-| Subnet creation | Automatic — one per region | Manual — you create each subnet |
-| CIDR blocks | Predefined /20 blocks (10.x.x.x range) | You specify any CIDR |
-| New region support | Auto-creates subnet in new regions | No automatic expansion |
-| IP overlap risk | Risk when connecting to other networks | Full control — you prevent overlap |
-| Production use | Development and learning | Recommended for all production environments |
-
-### IP Address Types for VMs
-
-| Type | Scope | Persistence | Cost |
-|---|---|---|---|
-| Internal (private) IP | Within VPC | Persistent while VM running | Free |
-| Ephemeral external IP | Public internet | Released on VM stop/delete | Free (while VM running) |
-| Static external IP | Public internet | Persistent until you release it | Billed even when unattached |
+**Estimated Reading Time:** 55–65 minutes
 
 ---
 
-## 2. Firewall Rules
+## Section 1 — VPC Fundamentals
 
-### Implied Default Rules (Undeleteable)
+### 1.1 GCP VPC Architecture
 
-| Rule | Direction | Priority | Action | Applies To |
-|---|---|---|---|---|
-| Implied deny-all ingress | INGRESS | 65535 | DENY | All VMs |
-| Implied allow-all egress | EGRESS | 65535 | ALLOW | All VMs |
+GCP VPCs have several unique characteristics compared to other cloud providers:
 
-These rules always exist at the lowest priority. All custom rules override them.
+- **Global scope**: A VPC is a single global resource, not region-specific. One
+  VPC can span every GCP region simultaneously.
+- **Regional subnets**: Resources (VMs, GKE clusters, etc.) are attached to
+  regional subnets within the global VPC.
+- **Private RFC 1918 addressing**: Internal IPs use RFC 1918 ranges
+  (10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16).
+- **Software-defined**: VPCs are fully software-defined; there are no physical
+  routers to configure.
 
-### Firewall Rule Components
+### 1.2 Auto-mode vs. Custom-mode
 
-| Component | Values | Notes |
-|---|---|---|
-| Direction | INGRESS or EGRESS | Controls traffic direction |
-| Priority | 0–65535 | Lower number = higher priority; evaluated first |
-| Action | ALLOW or DENY | What to do when rule matches |
-| Protocol/Port | `tcp:80`, `udp:53`, `icmp`, `all` | Specific or all traffic |
-| Target | All, network tag, or service account | Which VMs the rule applies to |
-| Source (ingress) | IP range or source tag | Filter for inbound traffic origin |
-| Destination (egress) | IP range or destination tag | Filter for outbound traffic destination |
+#### Auto-mode VPC
 
-### Firewall Statefulness
+Automatically creates one /20 subnet in each GCP region when the VPC is
+created. All subnets use predefined IP ranges from 10.128.0.0/9.
 
-GCP firewall rules are stateful. For connection-oriented protocols like TCP:
+When to avoid auto-mode:
 
-- If an ingress rule allows a TCP connection to be established, return packets for that connection are automatically permitted
-- You do NOT need to create a separate egress rule to allow reply traffic
-- This is different from traditional stateless packet filtering ACLs
+- When connecting to on-premises networks (address conflicts likely)
+- When you need precise control over IP ranges
+- Production environments
 
-### Network Tags vs. Service Account Targets
+#### Custom-mode VPC
 
-| Targeting Method | When to Use |
-|---|---|
-| Network tag | When VMs are identified by role/function (web-tier, db-tier) |
-| Service account | When VMs are identified by the service account they run as (more secure, cannot be added by VM user) |
+No subnets are created automatically. You define every subnet explicitly.
 
-Service account targeting is more secure because only administrators with IAM permission to set service accounts on VMs can add that identity — unlike tags, which any user with access to modify VM metadata can apply.
-
-### Default VPC Firewall Rules
-
-The default VPC comes pre-configured with these rules:
-
-| Rule Name | Direction | Allows | From |
-|---|---|---|---|
-| default-allow-internal | INGRESS | All TCP/UDP/ICMP | Subnets within same VPC |
-| default-allow-ssh | INGRESS | TCP:22 | 0.0.0.0/0 |
-| default-allow-rdp | INGRESS | TCP:3389 | 0.0.0.0/0 |
-| default-allow-icmp | INGRESS | ICMP | 0.0.0.0/0 |
-
-In production custom VPCs, none of these default rules exist. You must create your own.
-
----
-
-## 3. Routes
-
-### System-Generated Routes
-
-| Route | Destination | Next Hop | Purpose |
-|---|---|---|---|
-| Default internet route | 0.0.0.0/0 | default-internet-gateway | Outbound internet access |
-| Local subnet routes | Per-subnet CIDR | local | Internal VPC communication |
-
-### Custom Static Routes
-
-You can create custom routes to:
-
-- Direct traffic to a VPN tunnel gateway
-- Route traffic through a VM acting as a network appliance
-- Override the default internet route for specific destinations
-
-Custom routes with tags: routes can be limited to VMs with specific network tags using the `--tags` flag.
-
-### Private Google Access
-
-Private Google Access enables VMs with only internal IPs to reach Google API endpoints (storage.googleapis.com, bigquery.googleapis.com, etc.) without routing through the public internet.
+Converting auto to custom is possible and irreversible:
 
 ```bash
-gcloud compute networks subnets update SUBNET \
-  --region=REGION \
-  --enable-private-ip-google-access
+gcloud compute networks update NETWORK_NAME --switch-to-custom-subnet-mode
 ```
 
-When to enable: always, for any subnet containing VMs that should not have external IPs but need to access Google Cloud services.
+### 1.3 Subnet Configuration
+
+Subnets have several configurable properties:
+
+- **Primary CIDR range**: IP range for VMs in this subnet
+- **Secondary CIDR ranges**: Additional ranges for GKE pods and services
+- **Private Google Access**: Allows VMs without external IPs to reach Google
+  APIs and services via Google's internal network
+- **VPC Flow Logs**: Captures network flow records to Cloud Logging
+- **Purpose**: Regular subnet, or Proxy-only (for internal load balancers)
+
+#### Subnet Reserved IPs
+
+Each subnet reserves 4 IP addresses:
+
+- `.0` — Network address
+- `.1` — Default gateway
+- `.254` — Unused (reserved for Google future use)
+- `.255` — Broadcast
+
+A /24 subnet provides 252 usable addresses.
 
 ---
 
-## 4. VPC Peering
+## Section 2 — Firewall Rules
 
-### What VPC Peering Does
+### 2.1 Rule Components
 
-- Connects two VPC networks (in the same or different projects) so VMs can communicate via internal IPs
-- Traffic stays on Google's private network
-- Both VPCs must peer with each other (bidirectional configuration required)
+| Component | Description |
+|---|---|
+| Network | Which VPC the rule applies to |
+| Priority | 0–65535; lower = higher priority |
+| Direction | INGRESS or EGRESS |
+| Action | ALLOW or DENY |
+| Target | VMs by tag, service account, or all instances |
+| Source (ingress) | IP ranges, tags, or service accounts of traffic origin |
+| Destination (egress) | IP ranges of traffic destination |
+| Protocols and ports | TCP, UDP, ICMP, or any |
 
-### Non-Transitive Peering — The Critical Exam Rule
+### 2.2 Implied Rules
 
-```text
-VPC-A <--> VPC-B  (peered)
-VPC-B <--> VPC-C  (peered)
-VPC-A             VPC-C  (NOT reachable — no direct peering)
-```
-
-For VPC-A to communicate with VPC-C, a direct peering between VPC-A and VPC-C must be created. There is no transitive routing through VPC-B.
-
-### Shared VPC
-
-Shared VPC is an alternative to peering for multi-project organizations:
-
-- One project is designated the "host project" and owns the VPC and subnets
-- Other "service projects" use the host project's VPC for their resources
-- Central IAM control of networking with decentralized project resource management
-- Requires `roles/compute.networkUser` in service projects
-
----
-
-## 5. Hybrid Connectivity
-
-### Cloud VPN
-
-| Type | Tunnels | SLA | Max Throughput | Use Case |
-|---|---|---|---|---|
-| Classic VPN | 1 tunnel | 99.9% | 3 Gbps per tunnel | Dev/test, lower-bandwidth |
-| HA VPN | 2 gateways, 4 tunnels | 99.99% | 3 Gbps per tunnel | Production hybrid |
-
-Cloud VPN uses IPsec to encrypt all traffic over the public internet. Requires compatible VPN gateway on-premises (hardware or software).
-
-### Cloud Interconnect
-
-| Type | Bandwidth | Physical Connection | Use Case |
+| Rule | Priority | Direction | Action |
 |---|---|---|---|
-| Dedicated Interconnect | 10 Gbps or 100 Gbps | Direct to Google PoP | High-bandwidth, enterprise |
-| Partner Interconnect | 50 Mbps to 10 Gbps | Through a service provider | Geographically flexible |
+| Implied deny all ingress | 65535 | INGRESS | DENY |
+| Implied allow all egress | 65535 | EGRESS | ALLOW |
 
-Cloud Interconnect does not use the public internet. Traffic flows directly between your facility and Google's network. No encryption at the IP layer by default (encryption provided by the physical connection security at the facility level, or by application-layer TLS).
+These rules cannot be deleted but can be overridden by creating rules with
+lower priority numbers.
 
-### Decision Table
+### 2.3 Tag-based vs. Service Account-based Targeting
 
-| Scenario | Correct Choice |
-|---|---|
-| Under 1.5 Gbps, budget-sensitive | Cloud VPN (HA VPN for production) |
-| Must avoid public internet entirely | Dedicated or Partner Interconnect |
-| Data center not near Google PoP | Partner Interconnect |
-| 10–100 Gbps direct enterprise connection | Dedicated Interconnect |
-| Connecting two GCP VPCs | VPC Peering or Shared VPC |
+#### Network tags
 
----
+Tags are arbitrary strings attached to VM instances. Firewall rules can target
+VMs with specific tags.
 
-## 6. gcloud Networking Command Reference
+- Tags are manually assigned and can be changed at any time
+- Any user with instance admin permissions can add/remove tags
+- Risk: A misconfigured VM can accidentally receive a sensitive tag
 
-### VPC and Subnet Operations
+#### Service account targeting
 
-| Command | Description |
-|---|---|
-| `gcloud compute networks create NAME --subnet-mode=custom` | Create a custom VPC |
-| `gcloud compute networks create NAME --subnet-mode=auto` | Create an auto-mode VPC |
-| `gcloud compute networks list` | List all VPCs |
-| `gcloud compute networks describe NAME` | View VPC details |
-| `gcloud compute networks subnets create NAME --network=VPC --region=R --range=CIDR` | Create a subnet |
-| `gcloud compute networks subnets list` | List all subnets |
-| `gcloud compute networks subnets update NAME --region=R --enable-private-ip-google-access` | Enable Private Google Access |
-| `gcloud compute networks delete NAME` | Delete a VPC (must have no subnets) |
+Rules target VMs running as a specific service account.
 
-### Firewall Rule Operations
+- More secure than tags — requires IAM permissions to change a VM's SA
+- Cannot mix SA targeting with IP range sources in the same rule
+- Preferred for production security-critical rules
 
-| Command | Description |
-|---|---|
-| `gcloud compute firewall-rules create NAME --direction=INGRESS --action=ALLOW --rules=tcp:PORT --source-ranges=CIDR --target-tags=TAG` | Create an ingress allow rule |
-| `gcloud compute firewall-rules list` | List all firewall rules |
-| `gcloud compute firewall-rules describe NAME` | View rule details |
-| `gcloud compute firewall-rules update NAME --priority=500` | Update rule priority |
-| `gcloud compute firewall-rules delete NAME` | Delete a firewall rule |
+### 2.4 Firewall Rule Best Practices
 
-### VM Tag Operations
+```bash
+# Restrict SSH to specific source ranges rather than 0.0.0.0/0
+gcloud compute firewall-rules create allow-ssh-restricted \
+  --network=custom-vpc \
+  --allow=tcp:22 \
+  --source-ranges=10.0.0.0/8 \
+  --target-tags=bastion
 
-| Command | Description |
-|---|---|
-| `gcloud compute instances add-tags VM --tags=TAG1,TAG2 --zone=Z` | Add network tags to a VM |
-| `gcloud compute instances remove-tags VM --tags=TAG1 --zone=Z` | Remove network tags from a VM |
+# Allow internal traffic between VMs in the same subnet
+gcloud compute firewall-rules create allow-internal \
+  --network=custom-vpc \
+  --allow=tcp,udp,icmp \
+  --source-ranges=10.10.0.0/24 \
+  --priority=1000
 
----
-
-## 7. ACE Exam Tips
-
-1. GCP VPCs are global — subnets are regional. A single VPC spans all regions without any special configuration. This is fundamentally different from AWS.
-
-2. Firewall rules are stateful. You only need an ingress rule for a service — return traffic is automatically permitted. Do not create matching egress rules for services that only need inbound access.
-
-3. VPC peering is non-transitive. A-to-B peering and B-to-C peering does not allow A-to-C communication. Each pair must have a direct peering relationship.
-
-4. The implied deny-all ingress rule cannot be deleted. It exists at priority 65535. Any allow rule with a lower priority number overrides it.
-
-5. Network tags target firewall rules at VM groups. Tag-based rules are the preferred pattern for production environments where VM membership in a tier changes over time.
-
-6. Private Google Access enables API access for VMs without external IPs. If a VM with only an internal IP cannot reach Cloud Storage or BigQuery, enabling Private Google Access on its subnet is the fix.
-
-7. Static external IPs are billed even when not attached to a VM. Always release unused static IPs.
-
-8. Cloud VPN uses IPsec over the public internet. Cloud Interconnect bypasses the internet entirely. If a scenario requires traffic to stay off the public internet, the answer is Interconnect.
-
----
-
-## 8. Network Topology Diagram Reference
-
-### Single-Region Custom VPC
-
-```text
-Custom VPC (global)
-  |
-  +-- Subnet: 10.10.0.0/24 (us-central1)
-       |
-       +-- VM web-1  (tag: web-tier, internal: 10.10.0.2)
-       +-- VM web-2  (tag: web-tier, internal: 10.10.0.3)
-       +-- VM db-1   (tag: db-tier,  internal: 10.10.0.4)
-
-Firewall Rules:
-  allow-https:  INGRESS, tcp:443, from 0.0.0.0/0, target-tag: web-tier
-  allow-db:     INGRESS, tcp:5432, from 10.10.0.0/24, target-tag: db-tier
-  allow-ssh:    INGRESS, tcp:22, from 35.235.240.0/20 (IAP range), all VMs
-```
-
-### Hybrid VPC with Cloud VPN
-
-```text
-On-Premises (10.0.0.0/8)
-       |
-  [IPsec Tunnel] (Cloud VPN)
-       |
-GCP VPC (global)
-  +-- Subnet: 192.168.1.0/24 (us-central1)
-       +-- VMs communicating with on-prem via private IPs
+# Deny all other ingress explicitly (overrides implied deny for visibility)
+gcloud compute firewall-rules create deny-all-ingress \
+  --network=custom-vpc \
+  --action=DENY \
+  --rules=all \
+  --direction=INGRESS \
+  --priority=65500
 ```
 
 ---
 
-## 9. Study Checklist
+## Section 3 — VPC Peering
 
-- [ ] Explain why GCP VPCs are global and give a practical benefit of this design
-- [ ] Describe the difference between auto-mode and custom-mode VPCs with a recommendation for each context
-- [ ] State the two implied default firewall rules that cannot be deleted
-- [ ] Explain firewall rule statefulness and why it matters for rule design
-- [ ] Create a firewall rule targeting VMs by network tag using gcloud
-- [ ] Explain why VPC peering is non-transitive with a three-VPC example
-- [ ] Describe Private Google Access and when it is required
-- [ ] Compare Cloud VPN and Cloud Interconnect on the dimensions of bandwidth, cost, and internet use
-- [ ] Create a custom VPC and subnet using gcloud
-- [ ] Apply a network tag to a VM using gcloud
-- [ ] Complete the Module 05 lab
-- [ ] Take the Module 05 quiz
-- [ ] Post your Module 05 discussion response
+### 3.1 Overview
+
+VPC peering creates a private connection between two VPCs. Traffic between
+peered VPCs uses GCP's internal network (not the internet) and is free for
+intra-region traffic.
+
+### 3.2 Key Constraints
+
+- **Non-transitive**: A→B peering and B→C peering does NOT give A access to C.
+- **No overlapping IP ranges**: Subnets in peered VPCs must not overlap.
+- **Subnet route exchange**: Primary subnet routes are automatically shared;
+  custom static routes are not shared unless explicitly configured.
+- **Both sides must accept**: Each VPC owner must create a peering configuration.
+
+### 3.3 Peering Commands
+
+```bash
+# From Project A
+gcloud compute networks peerings create peer-a-to-b \
+  --network=vpc-a \
+  --peer-project=project-b-id \
+  --peer-network=vpc-b
+
+# From Project B
+gcloud compute networks peerings create peer-b-to-a \
+  --network=vpc-b \
+  --peer-project=project-a-id \
+  --peer-network=vpc-a
+
+# Check peering status
+gcloud compute networks peerings list --network=vpc-a
+```
 
 ---
 
-End of Reading Guide — Module 05
+## Section 4 — Shared VPC
 
-Course: CIS-4329 Google Cloud Platform | Texas Wesleyan University | Professor Nash
+### 4.1 Architecture
 
-Certification Target: Google Cloud Associate Cloud Engineer
+Shared VPC uses a host project / service project model:
 
-Reference: cloud.google.com/learn
+```text
+Organization
+  ├── Host Project (owns VPC, subnets, firewall rules)
+  │     └── shared-vpc (subnets: prod-subnet, dev-subnet)
+  ├── Service Project A (app team)
+  │     └── VMs use prod-subnet in host project's VPC
+  └── Service Project B (data team)
+        └── VMs use dev-subnet in host project's VPC
+```
+
+### 4.2 IAM Roles for Shared VPC
+
+| Role | Where assigned | Effect |
+|---|---|---|
+| `roles/compute.networkAdmin` | Host project | Manage the shared VPC |
+| `roles/compute.networkUser` | Subnet in host project | Allow SA to create instances in subnet |
+| `roles/compute.xpnAdmin` | Organization | Enable/attach Shared VPC |
+
+### 4.3 Setup Commands
+
+```bash
+# Enable Shared VPC hosting on the host project
+gcloud compute shared-vpc enable HOST_PROJECT
+
+# Associate a service project
+gcloud compute shared-vpc associated-projects add SERVICE_PROJECT \
+  --host-project=HOST_PROJECT
+
+# Grant a service account in the service project access to a subnet
+gcloud compute networks subnets add-iam-policy-binding prod-subnet \
+  --region=us-central1 \
+  --project=HOST_PROJECT \
+  --member="serviceAccount:sa@SERVICE_PROJECT.iam.gserviceaccount.com" \
+  --role=roles/compute.networkUser
+```
+
+---
+
+## Section 5 — Hybrid Connectivity
+
+### 5.1 Cloud VPN
+
+Cloud VPN uses IPsec to create an encrypted tunnel between GCP and an
+on-premises network or another cloud provider, over the internet.
+
+| Feature | Classic VPN | HA VPN |
+|---|---|---|
+| SLA | 99.9% | 99.99% |
+| Routing | Static or dynamic (BGP) | Dynamic BGP only (requires Cloud Router) |
+| Tunnels | 1 per gateway | 2 per gateway (active/active) |
+| Throughput | Up to 3 Gbps | Up to 3 Gbps per tunnel |
+
+### 5.2 Cloud Router
+
+Cloud Router enables dynamic routing using BGP. Required for HA VPN and
+Cloud Interconnect.
+
+```bash
+# Create a Cloud Router
+gcloud compute routers create my-router \
+  --network=custom-vpc \
+  --region=us-central1 \
+  --asn=65001
+
+# View BGP sessions
+gcloud compute routers get-status my-router --region=us-central1
+```
+
+### 5.3 Cloud Interconnect
+
+| Type | Bandwidth | Physical location |
+|---|---|---|
+| Dedicated Interconnect | 10 Gbps or 100 Gbps per circuit | Google colocation facility |
+| Partner Interconnect | 50 Mbps to 50 Gbps | Service provider facility |
+
+Cloud Interconnect bypasses the internet entirely. Traffic flows on Google's
+private network between your premises and GCP. Required for scenarios with
+strict data-in-transit requirements or consistent high bandwidth.
+
+---
+
+## Section 6 — Load Balancing
+
+### 6.1 Load Balancer Selection Matrix
+
+| Load Balancer | Layer | Scope | Traffic |
+|---|---|---|---|
+| External Application LB | L7 | Global | External HTTP/HTTPS |
+| External Regional Application LB | L7 | Regional | External HTTP/HTTPS |
+| External Passthrough Network LB | L4 | Regional | External TCP/UDP |
+| Internal Application LB | L7 | Regional | Internal HTTP/HTTPS |
+| Internal Passthrough Network LB | L4 | Regional | Internal TCP/UDP |
+| Cross-region Internal Application LB | L7 | Multi-region | Internal HTTP/HTTPS |
+
+### 6.2 External Application Load Balancer (Global)
+
+The most commonly tested load balancer on the ACE exam:
+
+- Layer 7 HTTP/HTTPS
+- Global Anycast IP — traffic served from the PoP closest to the user
+- SSL termination at the LB edge
+- URL-based routing: route `/api/*` to one backend, `/static/*` to another
+- Cloud CDN integration
+- Cloud Armor integration for WAF and DDoS protection
+- Backend types: MIGs, NEGs (Network Endpoint Groups), Cloud Storage buckets
+
+### 6.3 Health Checks
+
+All load balancers use health checks to determine backend availability:
+
+```bash
+# Create an HTTP health check
+gcloud compute health-checks create http web-hc \
+  --port=80 \
+  --request-path=/health \
+  --check-interval=10 \
+  --timeout=5 \
+  --healthy-threshold=2 \
+  --unhealthy-threshold=3
+```
+
+---
+
+## Section 7 — Cloud Armor
+
+### 7.1 Overview
+
+Cloud Armor is GCP's DDoS protection and WAF service. It is enforced at
+Google's global edge network, before traffic reaches your backends.
+
+Integration points:
+
+- Attaches to backend services on External Application Load Balancer (global)
+- Cannot be used with internal load balancers or passthrough load balancers
+
+### 7.2 Security Policy Rules
+
+Rules are evaluated in priority order (lowest number first). A default rule
+at priority 2147483647 defines the default action (allow or deny).
+
+```bash
+# Allow traffic only from specific countries (geo restriction)
+gcloud compute security-policies rules create 500 \
+  --security-policy=my-policy \
+  --expression="origin.region_code == 'US'" \
+  --action=allow
+
+# Deny all other traffic (default deny)
+gcloud compute security-policies rules update 2147483647 \
+  --security-policy=my-policy \
+  --action=deny-403
+```
+
+---
+
+## Key Terms Glossary
+
+| Term | Definition |
+|---|---|
+| VPC | Virtual Private Cloud — global private network in GCP |
+| Subnet | Regional IP range within a VPC where resources are deployed |
+| Auto-mode VPC | VPC that automatically creates subnets in every region |
+| Custom-mode VPC | VPC where subnets are defined manually |
+| Firewall rule | Stateful rule allowing or denying traffic to/from VM instances |
+| Network tag | Label on a VM used to target firewall rules |
+| VPC peering | Direct private connection between two VPCs; non-transitive |
+| Shared VPC | Enterprise pattern connecting service projects to a host VPC |
+| Cloud VPN | IPsec encrypted tunnel over the internet to GCP |
+| HA VPN | High-availability VPN with 99.99% SLA and dual tunnels |
+| Cloud Router | Dynamic BGP routing for VPN and Interconnect |
+| Dedicated Interconnect | Physical 10/100 Gbps circuit to Google's network |
+| Partner Interconnect | Interconnect via a service provider |
+| Cloud Armor | DDoS protection and WAF for external application LB |
+| NEG | Network Endpoint Group — defines backends at IP:port level |
+
+---
+
+## ACE Exam Focus Areas — Module 05
+
+- Explain the difference between a VPC (global) and a subnet (regional).
+- Describe auto-mode vs. custom-mode VPCs and when to use each.
+- Explain firewall rule priority and how ALLOW/DENY interact.
+- Describe VPC peering non-transitivity with examples.
+- Explain the Shared VPC host/service project model.
+- Choose between Cloud VPN and Cloud Interconnect for a given scenario.
+- Select the correct load balancer type for a described use case.
+- Describe where Cloud Armor integrates and what it protects against.
+
+---
+
+## Further Reading
+
+- VPC overview: cloud.google.com/vpc/docs/vpc
+- Firewall rules: cloud.google.com/vpc/docs/firewalls
+- VPC peering: cloud.google.com/vpc/docs/vpc-peering
+- Shared VPC: cloud.google.com/vpc/docs/shared-vpc
+- Cloud VPN: cloud.google.com/network-connectivity/docs/vpn
+- Load balancing overview: cloud.google.com/load-balancing/docs/load-balancing-overview
+- Cloud Armor: cloud.google.com/armor/docs

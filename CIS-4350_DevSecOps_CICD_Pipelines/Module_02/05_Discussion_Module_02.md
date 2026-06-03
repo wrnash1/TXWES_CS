@@ -1,61 +1,70 @@
-# Discussion Forum: Module 02 - Version Control with Git and GitHub
+# Discussion Forum: Module 02 — Version Control Security and Git Best Practices
 
 ## Course: CIS-4350 DevSecOps and CI/CD Pipelines
+
+## Texas Wesleyan University | Professor Nash
 
 ## Certification Alignment: DevSecOps Professional (DSOE)
 
 ---
 
-## Overview
+## Discussion Overview
 
-This discussion applies Module 02 concepts — Git security fundamentals, branch protection rules, pre-commit hooks, and GitHub Actions workflow design — to real-world team scenarios. Read all three scenarios and respond to the one assigned to your group or the one of your choice. Initial post due Wednesday at 11:59 PM; peer responses due Sunday at 11:59 PM.
+Post your original response to one scenario below (minimum 175 words). Then reply substantively to at least two classmates' posts (minimum 75 words each). Original posts due Sunday 11:59 PM; peer replies due Tuesday 11:59 PM.
 
----
-
-## Scenario A: The Bypassed Hook
-
-A fintech startup has configured a pre-commit hook that runs Gitleaks secrets detection on every developer's machine. During a routine CI log review, a developer discovers that three AWS access keys were pushed to a feature branch last week. Investigation reveals the developer who pushed them used `git commit --no-verify` to skip the hook because it was "taking too long." The keys were active and have been in the repository for 7 days.
-
-In 175-225 words, address the following: Identify the two immediate remediation actions that must occur in the correct order and explain why the order matters. Then explain the systemic gap that allowed this situation to occur — specifically, what server-side control is missing and where in the pipeline it should be placed. Finally, propose one change to the pre-commit hook configuration that might reduce the developer's motivation to bypass it, while maintaining equivalent security. Use precise DevSecOps terminology in your response.
+Professor Nash note: Focus on the real-world trade-offs. Pre-commit hooks, branch protection, and secrets scanning all have failure modes and organizational costs. I want to see that you understand not just what a control does, but when it might fail and what compensating controls exist.
 
 ---
 
-## Scenario B: The Unprotected Main Branch
+## Scenario 1 — The Secrets Sprawl Audit
 
-A cloud services company has three developers committing directly to the main branch of their production infrastructure repository. There is no CI pipeline and no branch protection. A new DevSecOps engineer joins the team and identifies this as a critical risk. The lead developer argues that branch protection will slow down hotfixes and that "we all know what we're doing."
+Your company conducts an audit and discovers that over the past two years, 47 different API keys, database passwords, and OAuth tokens have been committed to internal Git repositories. Most were in feature branches that were eventually merged to main. Some secrets appear in repositories that multiple contractors had access to during their engagement. The security team wants to know: (1) how did this happen, (2) what do you do right now about the exposed secrets, and (3) what controls do you implement going forward to prevent recurrence?
 
-In 175-225 words, address the following: Explain the specific security risks of allowing direct pushes to main in an infrastructure repository — name at least two distinct risk scenarios. Then describe the branch protection settings you would recommend and explain how they can be configured to allow expedited hotfix processes without eliminating the security gate entirely. Address the lead developer's velocity concern directly using evidence from the DevSecOps feedback loop model. Use precise DevSecOps terminology in your response.
+Address all three questions. For question 2, describe the remediation order of operations — what do you do first, second, and third? For question 3, describe at least two specific technical controls from this module and explain why their combination is stronger than either alone. Consider the limitations of pre-commit hooks and explain what server-side or CI-based control complements them.
 
----
+### Scenario 1 — Peer Response Prompt
 
-## Scenario C: The Overprivileged Workflow
-
-A development team inherits a GitHub Actions workflow from a contractor. The workflow builds and deploys a containerized application. Reviewing the YAML, the new team lead notices the workflow has no `permissions:` block and uses a hardcoded personal access token (stored in plaintext in the YAML file) with organization-wide repository write access. The token belongs to a former contractor who has since left the company.
-
-In 175-225 words, address the following: Identify all security violations present in this workflow and explain the risk each creates. Describe the correct remediation for each violation using GitHub Actions security best practices. Explain what the `permissions:` block should contain for a build-and-deploy workflow and why the default (no permissions block) is considered insecure in GitHub Actions. Use precise DevSecOps terminology in your response.
+Your classmate proposed a remediation order. Is their ordering correct? Is there a step they missed? Consider what happens if a secret was used maliciously before it was discovered — does their plan account for that?
 
 ---
 
-## Discussion Rubric (10 Points Total)
+## Scenario 2 — Branching Strategy for a Regulated Industry
 
-### Initial Post (6 Points)
+You work at a fintech company that must comply with PCI-DSS. The compliance officer insists on a formal change management process: every code change must be reviewed by two qualified individuals, traced to an approved change ticket, and have documented test evidence before reaching production. Your development team currently uses trunk-based development and deploys to production 15 times per day.
 
-Due Wednesday at 11:59 PM. Your post must be 175-225 words, address all elements of your chosen scenario, and use precise DevSecOps terminology.
+The compliance officer proposes switching to GitFlow with a two-week release cycle to enable proper review. Your tech lead argues that GitFlow's long-lived branches actually increase security risk through branch drift and that the compliance requirements can be met with trunk-based development using strict branch protection rules, mandatory signed commits, and CI audit logs.
 
-- 5-6 pts: Thoroughly addresses all scenario elements with technical accuracy, clear explanations, and appropriate terminology. Meets the word count.
-- 3-4 pts: Addresses most scenario elements but lacks technical depth or precise terminology in one or more areas.
-- 0-2 pts: Incomplete, missing, or does not substantively address the scenario.
+Take a position. Is the compliance officer or the tech lead correct, or is the truth somewhere in between? How would you configure branch protection rules and CI pipeline requirements to meet PCI-DSS change management requirements while preserving developer velocity? Be specific about which branch protection settings you would enable and what the CI audit trail would look like.
 
-### Peer Responses (4 Points)
+### Scenario 2 — Peer Response Prompt
 
-Due Sunday at 11:59 PM. Respond to at least two classmates who chose different scenarios from yours.
-
-- 4 pts: Two substantive responses (at least 50 words each) that add technical content, offer an alternative approach, or connect the scenario to the reading guide or lab.
-- 2 pts: Only one substantive peer response, or both responses are superficial.
-- 0 pts: No peer responses submitted.
+Your classmate took a position on GitFlow vs. trunk-based development for PCI-DSS compliance. Do you agree? What specific PCI-DSS requirement (if you can identify one) is most difficult to satisfy with either approach?
 
 ---
 
-## Professor Nash Note
+## Scenario 3 — The Insider Threat and Commit Signing
 
-When discussing remediation, always specify the correct order of operations. For secrets exposure, many students correctly identify "remove from repository" but place it before "rotate the credential" — that ordering is wrong and leaves systems exposed during the window between removal and rotation. Precision in remediation sequencing is a tested skill on the DevSecOps Professional exam.
+A disgruntled employee with a developer's workstation access makes several commits to a critical payment processing repository impersonating a senior engineer before being detected. The commits introduce subtle logic errors that cause transaction amounts to be rounded down — a classic "salami attack." The commits were not signed, and the repository did not require signed commits.
+
+Analyze this scenario through the lens of the version control security controls covered in this module. Which specific controls, if implemented, would have prevented or detected this attack? Acknowledge the limits of signed commits — what do they prove and what do they not prove? If the attacker had also stolen the engineer's GPG private key along with their workstation access, what additional controls would have provided detection or prevention? Consider branch protection rules and code review requirements in your answer.
+
+### Scenario 3 — Peer Response Prompt
+
+Your classmate identified controls that would have prevented this attack. Are those controls sufficient, or does this scenario point to a defense-in-depth gap that no single version control security control can close?
+
+---
+
+## Grading Rubric
+
+| Criterion | Points |
+|---|---|
+| Original post addresses all parts of the chosen scenario | 3 |
+| Specific technical controls, tools, or configurations cited | 2 |
+| Trade-offs and control limitations acknowledged | 2 |
+| Peer reply 1 — adds new perspective, challenge, or missing element | 1.5 |
+| Peer reply 2 — adds new perspective, challenge, or missing element | 1.5 |
+| Total | 10 |
+
+---
+
+Discussion — Module 02 | CIS-4350 | Texas Wesleyan University | Professor Nash

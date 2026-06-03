@@ -1,135 +1,156 @@
-# Reading Guide — Module 04
+# Reading Guide: Module 04 — Cloud Storage
 
-## CIS-4329: Google Cloud Platform | Texas Wesleyan University
+## Course: CIS-4329 Google Cloud Computing
 
-### Topic: Cloud Storage — Buckets, Classes, and Lifecycle Policies
-
-### Certification Target: Google Cloud Associate Cloud Engineer
+**Certification Alignment:** Google Cloud Associate Cloud Engineer (ACE)
 
 ---
 
-## Introduction
+## Overview
 
-Cloud Storage is GCP's fully managed object storage service and a major ACE exam topic. This reading guide covers bucket configuration, storage classes, lifecycle policies, object versioning, signed URLs, retention policies, and the CLI commands for storage management. The exam tests both conceptual knowledge (which storage class for which scenario) and CLI knowledge (correct gsutil and gcloud storage syntax).
+This reading guide covers Google Cloud Storage — GCP's object storage service.
+Cloud Storage appears on the ACE exam in topics ranging from data management
+and access control to cost optimization and event-driven architecture.
 
----
-
-## 1. Object Storage vs. Other Storage Types
-
-| Storage Type | GCP Service | Best For | Key Characteristic |
-|---|---|---|---|
-| Object storage | Cloud Storage | Files, blobs, archives, media | Globally accessible, unlimited scale |
-| Block storage | Compute Engine Persistent Disks | OS drives, databases | Mountable as filesystem |
-| File storage | Cloud Filestore | Shared filesystem for VMs | NFS-compatible |
-| In-memory | Cloud Memorystore | Caching, session data | Sub-millisecond latency |
+**Estimated Reading Time:** 45–55 minutes
 
 ---
 
-## 2. Bucket Configuration
+## Section 1 — Object Storage Fundamentals
 
-### Bucket Location Types
+### 1.1 Buckets
 
-| Location Type | Example Value | Replication | Best For |
-|---|---|---|---|
-| Region | `us-central1` | Multiple zones in one region | Single-region workloads, lowest cost |
-| Dual-region | `nam4` (Iowa + South Carolina) | Two specific regions | Higher durability with specific region control |
-| Multi-region | `us`, `eu`, `asia` | Many regions in continent | Global apps, maximum availability |
+A bucket is the top-level container in Cloud Storage. Bucket properties:
 
-### Bucket Name Rules
+- **Name**: Globally unique across all of GCP; used in URLs
+  (`gs://bucket-name` and `storage.googleapis.com/bucket-name`)
+- **Location**: Regional, dual-region, or multi-region
+- **Default storage class**: Applied to new objects unless overridden
+- **Access control mode**: Uniform (IAM only) or fine-grained (IAM + ACLs)
+- **Versioning**: Enabled or disabled
+- **Retention policy**: Minimum retention period (for compliance)
+- **Encryption**: Google-managed keys (GMEK) or customer-managed (CMEK)
 
-- Globally unique across all GCP customers
-- 3 to 63 characters
-- Lowercase letters, numbers, hyphens, and underscores only
-- Must start and end with a letter or number
-- Cannot contain "google" or misleading domain names
-- Names that contain dots must be domain-verified
+### 1.2 Location Types
 
-### Access Control Models
-
-| Model | Description | Recommended |
+| Location type | Description | Use Case |
 |---|---|---|
-| Uniform bucket-level access | All objects governed by bucket IAM policy only; object ACLs disabled | Yes |
-| Fine-grained | Each object can have individual ACLs in addition to bucket IAM | Legacy only |
+| Regional | Single region (e.g., us-central1) | Lowest latency, lowest cost |
+| Dual-region | Two paired regions (e.g., NAM4 = Iowa + Virginia) | HA within a geo |
+| Multi-region | Continental area (us, eu, asia) | Global availability, highest cost |
+
+### 1.3 Objects
+
+An object is an immutable unit of data in Cloud Storage. Objects consist of:
+
+- **Object data**: The actual file bytes
+- **Object metadata**: Key-value attributes (content-type, size, custom headers)
+- **Object name**: The "path" within the bucket (slashes create logical folders)
+- **Generation number**: Unique per version when versioning is enabled
+
+Objects can be up to 5 TB in size. Objects cannot be partially updated —
+any modification replaces the entire object.
 
 ---
 
-## 3. Storage Classes
+## Section 2 — Storage Classes
 
-### Standard
+### 2.1 Class Comparison
 
-- Access frequency: Daily or more
-- Minimum storage duration: None
-- Retrieval fee: None
-- Use cases: Active website assets, user-uploaded content, frequently read data, application data
-
-### Nearline
-
-- Access frequency: Approximately once per month
-- Minimum storage duration: 30 days
-- Retrieval fee: Per-GB fee applies
-- Use cases: Monthly reports, monthly disaster recovery drills, data backups verified monthly
-
-### Coldline
-
-- Access frequency: Approximately once per quarter
-- Minimum storage duration: 90 days
-- Retrieval fee: Per-GB fee (higher than Nearline)
-- Use cases: Quarterly compliance archives, disaster recovery backups
-
-### Archive
-
-- Access frequency: Less than once per year
-- Minimum storage duration: 365 days
-- Retrieval fee: Per-GB fee (highest)
-- Use cases: 7-year financial records, regulatory long-term archives, rarely accessed historical data
-
-### Storage Class Cost Comparison
-
-| Class | Storage Cost | Retrieval Cost | Min Duration |
+| Class | Min Duration | Retrieval Fee | Typical Use |
 |---|---|---|---|
-| Standard | Highest | None | None |
-| Nearline | Lower than Standard | Low | 30 days |
-| Coldline | Lower than Nearline | Medium | 90 days |
-| Archive | Lowest | Highest | 365 days |
+| Standard | None | None | Frequently accessed data |
+| Nearline | 30 days | Per GB | Monthly backups |
+| Coldline | 90 days | Per GB (higher) | Quarterly archives |
+| Archive | 365 days | Per GB (highest) | Annual or compliance data |
 
-### Autoclass
+### 2.2 Minimum Storage Duration
 
-Autoclass automatically transitions objects between Standard, Nearline, Coldline, and Archive based on their actual access patterns. Objects not accessed for 30 days move to Nearline; not accessed for 90 days move to Coldline; not accessed for 365 days move to Archive. When an object is accessed, it is immediately promoted back to Standard. Use Autoclass when access patterns are unpredictable and you want GCP to optimize costs automatically.
+Minimum duration is a billing concept, not a restriction. You can delete a
+Coldline object before 90 days — but you are charged for the full 90 days.
+
+Example: You store 1 TB in Coldline for 45 days then delete it. You are billed
+for 90 days of storage.
+
+### 2.3 Dual-Region and Multi-Region Replication
+
+- **Regional buckets**: Data stored in one region. Lower cost. Use for workloads
+  requiring data residency in a specific location.
+- **Dual-region**: Replicates data across two paired regions. Provides
+  redundancy without global distribution.
+- **Multi-region** (`us`, `eu`, `asia`): Replicates data across multiple
+  regions in a continent. Highest availability; higher cost; data stays within
+  the continental boundary.
 
 ---
 
-## 4. Lifecycle Policies
+## Section 3 — Object Lifecycle Management
 
-### Policy Structure
+### 3.1 Lifecycle Rule Structure
 
-A lifecycle policy JSON document contains a `rule` array. Each rule has:
-
-- `action` — what to do: `SetStorageClass` or `Delete`
-- `condition` — when to do it
-
-### Condition Types
-
-| Condition | Type | Description |
-|---|---|---|
-| `age` | Integer (days) | Object is older than N days |
-| `createdBefore` | Date string | Object was created before a specific date |
-| `isLive` | Boolean | True = live version; False = noncurrent version |
-| `numNewerVersions` | Integer | Only apply when N or more newer versions exist |
-| `matchesStorageClass` | Array of strings | Only apply to objects with specific current storage class |
-
-### Example: Log Retention Policy
+A lifecycle configuration is a JSON document containing an array of rules.
+Each rule has a condition and an action.
 
 ```json
 {
   "lifecycle": {
     "rule": [
       {
-        "action": {"type": "SetStorageClass", "storageClass": "NEARLINE"},
-        "condition": {"age": 30, "matchesStorageClass": ["STANDARD"]}
+        "action": {
+          "type": "SetStorageClass",
+          "storageClass": "NEARLINE"
+        },
+        "condition": {
+          "age": 30,
+          "matchesStorageClass": ["STANDARD"]
+        }
       },
       {
-        "action": {"type": "SetStorageClass", "storageClass": "COLDLINE"},
-        "condition": {"age": 90, "matchesStorageClass": ["NEARLINE"]}
+        "action": {
+          "type": "Delete"
+        },
+        "condition": {
+          "age": 365,
+          "isLive": true
+        }
+      },
+      {
+        "action": {
+          "type": "Delete"
+        },
+        "condition": {
+          "numNewerVersions": 3,
+          "isLive": false
+        }
+      }
+    ]
+  }
+}
+```
+
+### 3.2 Condition Reference
+
+| Condition | Type | Description |
+|---|---|---|
+| `age` | Integer | Days since object creation |
+| `createdBefore` | Date string | Object created before this date |
+| `isLive` | Boolean | True = live version; false = noncurrent |
+| `matchesStorageClass` | Array | Object is in one of these classes |
+| `numNewerVersions` | Integer | Noncurrent versions with N newer versions |
+| `matchesPrefix` | Array | Object name starts with one of these prefixes |
+| `matchesSuffix` | Array | Object name ends with one of these suffixes |
+
+### 3.3 Applying Lifecycle Configuration
+
+```bash
+# Write lifecycle config to a file
+cat > lifecycle.json << 'EOF'
+{
+  "lifecycle": {
+    "rule": [
+      {
+        "action": {"type": "SetStorageClass", "storageClass": "NEARLINE"},
+        "condition": {"age": 30}
       },
       {
         "action": {"type": "Delete"},
@@ -138,195 +159,210 @@ A lifecycle policy JSON document contains a `rule` array. Each rule has:
     ]
   }
 }
+EOF
+
+# Apply to a bucket
+gcloud storage buckets update gs://BUCKET_NAME \
+  --lifecycle-file=lifecycle.json
+
+# View current lifecycle config
+gcloud storage buckets describe gs://BUCKET_NAME \
+  --format='value(lifecycle)'
 ```
-
-### Common Lifecycle Patterns
-
-| Business Requirement | Lifecycle Rule |
-|---|---|
-| Delete objects after 90 days | `Delete` action, `age: 90` |
-| Move to Archive after 1 year | `SetStorageClass: ARCHIVE`, `age: 365` |
-| Clean up old object versions | `Delete` action, `isLive: false`, `numNewerVersions: 2` |
-| Transition log files to cheapest class over time | Chain of SetStorageClass rules with increasing age |
 
 ---
 
-## 5. Object Versioning
+## Section 4 — Access Control
 
-When versioning is enabled on a bucket:
+### 4.1 Uniform vs. Fine-Grained Access
 
-- Each upload of an object with an existing name creates a new version, assigned a unique generation number
-- The newest upload is the "live" version
-- Previous uploads become "noncurrent" versions
-- Noncurrent versions are billed at the bucket's storage class rate
-- Noncurrent versions can be listed, downloaded, or permanently deleted
+#### Uniform bucket-level access (recommended)
 
-### Versioning and Deletion
-
-With versioning disabled: `gcloud storage rm gs://bucket/file.txt` permanently deletes the object.
-
-With versioning enabled: `gcloud storage rm gs://bucket/file.txt` creates a delete marker, making the object appear deleted. The object data is still stored as a noncurrent version. To permanently delete all versions, use the `-a` flag:
+- All access controlled through IAM policies on the bucket
+- ACLs cannot be set on individual objects
+- Consistent, auditable, simpler to manage
+- Enforces uniform access to all objects in the bucket
+- Can be enabled and, for 90 days after enablement, disabled (then permanent)
 
 ```bash
-gcloud storage rm -a gs://bucket/file.txt
+# Enable uniform bucket-level access
+gcloud storage buckets update gs://BUCKET_NAME \
+  --uniform-bucket-level-access
 ```
 
-### Managing Version Cost
+#### Fine-grained access (legacy)
 
-Enable versioning, then add a lifecycle rule to delete noncurrent versions after N days:
+- Allows per-object ACLs in addition to bucket-level IAM
+- Required for some legacy applications and interoperability scenarios
+- Harder to audit; two overlapping systems to manage
 
-```json
-{
-  "action": {"type": "Delete"},
-  "condition": {"isLive": false, "numNewerVersions": 1, "age": 30}
-}
+### 4.2 Making Buckets or Objects Public
+
+```bash
+# Make all current and future objects public
+gcloud storage buckets add-iam-policy-binding gs://BUCKET_NAME \
+  --member=allUsers \
+  --role=roles/storage.objectViewer
+
+# Make a single object public (fine-grained mode only)
+gcloud storage objects add-iam-policy-binding gs://BUCKET_NAME/OBJECT \
+  --member=allUsers \
+  --role=roles/storage.objectViewer
 ```
 
-This deletes noncurrent versions that are older than 30 days and have at least one newer version.
+### 4.3 Retention Policies
+
+A retention policy sets a minimum duration that objects must be retained before
+they can be deleted. Used for compliance requirements.
+
+```bash
+# Set a 7-year retention policy
+gcloud storage buckets update gs://BUCKET_NAME \
+  --retention-period=7y
+
+# Lock the retention policy (irreversible — cannot reduce or remove)
+gcloud storage buckets update gs://BUCKET_NAME \
+  --lock-retention-policy
+```
 
 ---
 
-## 6. Signed URLs
+## Section 5 — Signed URLs
 
-| Property | Value |
-|---|---|
-| Purpose | Temporary access to a specific object without requiring Google credentials |
-| Authentication | Cryptographic signature using a service account's private key |
-| Supported methods | GET (download), PUT (upload), DELETE |
-| Duration | Configurable, maximum 7 days (604800 seconds) |
-| Scope | Single specific object path |
+### 5.1 Overview
 
-### When to Use Signed URLs
+Signed URLs grant time-limited access to an object without requiring a Google
+account. The URL contains:
 
-- Share a private file with an external partner who has no Google Account
-- Allow a user to upload a file directly to Cloud Storage from a browser (avoiding upload through your backend server)
-- Provide a download link that expires automatically
+- The object path
+- An expiration timestamp
+- A cryptographic signature from a service account
 
-### Generating a Signed URL
+### 5.2 Generating Signed URLs
 
 ```bash
-gcloud storage sign-url gs://my-bucket/file.txt \
-  --duration=24h \
-  --private-key-file=service-account-key.json
-```
-
-Or using a service account's impersonation (no key file needed):
-
-```bash
-gcloud storage sign-url gs://my-bucket/file.txt \
+# Using gcloud with the attached service account
+gcloud storage sign-url gs://BUCKET_NAME/OBJECT \
   --duration=1h \
-  --impersonate-service-account=sa@project.iam.gserviceaccount.com
+  --region=us-central1
+
+# For upload (PUT) operation
+gcloud storage sign-url gs://BUCKET_NAME/upload-target.txt \
+  --duration=30m \
+  --method=PUT \
+  --content-type=text/plain \
+  --region=us-central1
+```
+
+Signed URLs support HTTP methods: GET (download), PUT (upload), DELETE.
+
+### 5.3 V4 Signing
+
+Use V4 signed URLs (the current standard):
+
+- Maximum expiration: 7 days
+- More secure than the deprecated V2 format
+- Required for requests signed without a service account key
+  (using the IAM signing API)
+
+---
+
+## Section 6 — Object Versioning
+
+### 6.1 How Versioning Works
+
+When versioning is enabled:
+
+- Each object has a **generation number** (assigned at creation or overwrite)
+- Overwriting an object creates a new generation; the old generation becomes
+  a noncurrent version
+- Deleting an object inserts a **delete marker** (noncurrent), making the
+  object invisible; it is not permanently deleted
+- Permanently deleting requires specifying the generation number
+
+### 6.2 Versioning Commands
+
+```bash
+# Enable versioning
+gcloud storage buckets update gs://BUCKET_NAME --versioning
+
+# List all versions
+gcloud storage ls -a gs://BUCKET_NAME/
+
+# Restore a noncurrent version (copy to a new object)
+gcloud storage cp \
+  "gs://BUCKET_NAME/OBJECT#GENERATION" \
+  gs://BUCKET_NAME/OBJECT
+
+# Permanently delete a specific version
+gcloud storage rm "gs://BUCKET_NAME/OBJECT#GENERATION"
 ```
 
 ---
 
-## 7. Retention Policies
+## Section 7 — Data Transfer Options
 
-### How Retention Policies Work
+### 7.1 Transfer Method Comparison
 
-A retention policy sets a minimum duration objects in a bucket must be retained. Until the retention period expires:
+| Method | Best For | Max Scale |
+|---|---|---|
+| gcloud storage / gsutil | Scripts, small-medium transfers | TBs |
+| Storage Transfer Service | Online transfers from S3, Azure, HTTP | PBs |
+| Transfer Appliance | Offline, on-premises large datasets | Up to 1 PB |
+| BigQuery Data Transfer | Scheduled SaaS to BigQuery loads | Varies |
 
-- Objects cannot be deleted
-- Objects cannot be overwritten (cannot be replaced with a newer version)
-- This restriction applies to ALL users including project owners and Storage Admins
+### 7.2 Storage Transfer Service
 
-### Locking a Retention Policy
-
-Once you lock a retention policy on a bucket, you cannot:
-
-- Shorten the retention period
-- Remove the retention policy
-- Delete the bucket unless all objects have met their retention period
-
-Even Google cannot override a locked retention policy. This makes it suitable for legal hold and compliance requirements where evidence of non-tampering is required.
-
-### Retention vs. Versioning vs. Lifecycle
-
-| Feature | Protects Against | Can Admin Override | Use Case |
-|---|---|---|---|
-| Object versioning | Accidental deletion/overwrite | Yes (admin can delete all versions) | Recovery window |
-| Lifecycle policy | N/A — it deletes objects | Yes (admin controls policy) | Cost management |
-| Retention policy | All deletions until period expires | No (hard lock, even with locked policy) | Regulatory compliance |
+```bash
+# Create a transfer job from AWS S3 to Cloud Storage
+gcloud transfer jobs create \
+  s3://source-bucket \
+  gs://destination-bucket \
+  --source-creds-file=aws-creds.json \
+  --schedule-starts=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+```
 
 ---
 
-## 8. gcloud Storage and gsutil Command Reference
+## Key Terms Glossary
 
-### Bucket Management
-
-| Command | Description |
+| Term | Definition |
 |---|---|
-| `gcloud storage buckets create gs://NAME --location=REGION --storage-class=CLASS` | Create a bucket |
-| `gcloud storage buckets describe gs://NAME` | View bucket configuration |
-| `gcloud storage buckets update gs://NAME --default-storage-class=NEARLINE` | Change default storage class |
-| `gcloud storage buckets update gs://NAME --versioning` | Enable versioning |
-| `gcloud storage buckets update gs://NAME --lifecycle-file=policy.json` | Apply lifecycle policy |
-| `gcloud storage buckets delete gs://NAME` | Delete an empty bucket |
-
-### Object Operations
-
-| Command | Description |
-|---|---|
-| `gcloud storage cp FILE gs://BUCKET/` | Upload a file |
-| `gcloud storage cp -r FOLDER/ gs://BUCKET/folder/` | Upload a folder recursively |
-| `gcloud storage cp gs://BUCKET/file.txt ./` | Download a file |
-| `gcloud storage ls gs://BUCKET/` | List objects |
-| `gcloud storage ls -a gs://BUCKET/` | List all versions including noncurrent |
-| `gcloud storage rm gs://BUCKET/file.txt` | Delete an object |
-| `gcloud storage mv gs://BUCKET/old.txt gs://BUCKET/new.txt` | Rename/move an object |
-
-### Access Management
-
-| Command | Description |
-|---|---|
-| `gcloud storage buckets add-iam-policy-binding gs://BUCKET --member=TYPE:ID --role=ROLE` | Grant a role on a bucket |
-| `gcloud storage buckets remove-iam-policy-binding gs://BUCKET --member=TYPE:ID --role=ROLE` | Remove a role from a bucket |
-| `gcloud storage buckets get-iam-policy gs://BUCKET` | View bucket IAM policy |
+| Bucket | Top-level container in Cloud Storage; globally unique name |
+| Object | Unit of data stored in a bucket; includes data and metadata |
+| Storage class | Billing tier based on access frequency |
+| Standard | Highest-cost class; for frequently accessed data |
+| Nearline | 30-day minimum; for monthly access patterns |
+| Coldline | 90-day minimum; for quarterly access patterns |
+| Archive | 365-day minimum; lowest cost; for annual or less access |
+| Lifecycle policy | Rules for automatic storage class transitions or deletions |
+| Signed URL | Time-limited URL granting access without requiring GCP credentials |
+| Versioning | Feature retaining previous object versions on overwrite/delete |
+| Uniform bucket-level access | IAM-only access control mode (no per-object ACLs) |
+| Retention policy | Minimum hold duration for objects (compliance use) |
+| Storage Transfer Service | Managed service for large-scale data transfers |
+| Transfer Appliance | Physical device for offline petabyte-scale data uploads |
 
 ---
 
-## 9. ACE Exam Tips
+## ACE Exam Focus Areas — Module 04
 
-1. Storage class selection follows access frequency. Monthly access = Nearline. Quarterly access = Coldline. Less than yearly = Archive. Frequently accessed = Standard. Minimum storage durations (30/90/365 days) and retrieval fees apply to Nearline, Coldline, and Archive — important for cost calculations.
-
-2. Lifecycle policies are the automatic solution. When a question asks how to automatically manage storage costs or automatically delete objects after N days, the answer is a lifecycle policy with the appropriate action and condition.
-
-3. Signed URLs are for external access without Google credentials. If a question says the recipient has no Google Account or asks about time-limited access, Signed URLs are the answer. Making a bucket public (`allUsers`) is never the correct answer for sharing with a specific external user.
-
-4. Retention policies enforce hard immutability. Object versioning allows recovery but admins can still permanently delete all versions. Only a retention policy (especially a locked one) prevents deletion by anyone.
-
-5. Uniform bucket-level access is recommended. Fine-grained ACLs are legacy. When a question asks how to simplify access management for a Cloud Storage bucket, enabling uniform access is the correct answer.
-
-6. Multi-region buckets cost slightly more than regional but provide higher availability for globally distributed reads. The `US` multi-region automatically replicates across multiple US regions — not just two.
-
-7. Autoclass is the automatic storage class optimizer. When a question describes unpredictable access patterns and asks how to optimize storage costs without manual intervention, Autoclass is the feature to suggest.
-
-8. Object versioning + lifecycle rules is the cost-safe combination. Enable versioning for recovery capability, then use lifecycle rules to delete noncurrent versions after a reasonable recovery window to prevent unbounded cost growth.
+- Select the correct storage class for a described access frequency.
+- Identify minimum storage duration charges for Nearline, Coldline, Archive.
+- Design a lifecycle policy to transition and delete objects automatically.
+- Distinguish uniform bucket-level access from fine-grained ACLs.
+- Describe signed URLs and when to use them vs. IAM.
+- Explain how versioning interacts with lifecycle policies.
+- Choose the appropriate data transfer method based on data volume and source.
+- Know that Cloud Storage provides millisecond access on all storage classes
+  (Archive is not tape).
 
 ---
 
-## 10. Study Checklist
+## Further Reading
 
-- [ ] State the four storage classes and their access frequency thresholds, minimum durations, and retrieval fee status
-- [ ] Explain the difference between regional, dual-region, and multi-region bucket locations
-- [ ] Describe the two access control models for Cloud Storage buckets and state which is recommended
-- [ ] Write a lifecycle policy JSON that transitions objects to Nearline at 30 days and deletes at 365 days
-- [ ] Explain how object versioning interacts with `gcloud storage rm`
-- [ ] Describe the use case for signed URLs and explain why making a bucket public is not equivalent
-- [ ] Explain the difference between object versioning and a retention policy for compliance purposes
-- [ ] Create a bucket using gcloud storage with a specific storage class and location
-- [ ] Upload and list objects in a bucket
-- [ ] Apply a lifecycle policy JSON to a bucket
-- [ ] Complete the Module 04 lab
-- [ ] Take the Module 04 quiz
-- [ ] Post your Module 04 discussion response
-
----
-
-End of Reading Guide — Module 04
-
-Course: CIS-4329 Google Cloud Platform | Texas Wesleyan University | Professor Nash
-
-Certification Target: Google Cloud Associate Cloud Engineer
-
-Reference: cloud.google.com/learn
+- Cloud Storage overview: cloud.google.com/storage/docs
+- Storage classes: cloud.google.com/storage/docs/storage-classes
+- Lifecycle management: cloud.google.com/storage/docs/lifecycle
+- Signed URLs: cloud.google.com/storage/docs/access-control/signed-urls
+- Storage Transfer Service: cloud.google.com/storage-transfer/docs

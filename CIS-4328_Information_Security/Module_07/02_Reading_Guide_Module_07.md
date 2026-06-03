@@ -1,49 +1,269 @@
-# Reading Guide: Module 07 - Network Security - Firewalls, IDS/IPS, VPNs
-## Course: CIS-4328_Information_Security (CompTIA Security+ SY0-701)
+# Reading Guide: Module 07 — Network Security Architecture
+
+## CIS-4328 Information Security | Texas Wesleyan University
+
+### CompTIA Security+ SY0-701 Alignment
 
 ---
 
-### Introduction
-Welcome to **Module 07 – Network Security: Firewalls, IDS/IPS, and VPNs**! This module covers the core network security controls that form the defensive perimeter of enterprise environments. SY0-701 tests your ability to select the right tool for a given scenario, understand how each device works, and distinguish between detection-only and prevention controls.
+## Overview
+
+This reading guide supports Module 07 of CIS-4328. It covers firewall types, IDS/IPS, DMZ design, proxy servers, load balancers, network segmentation, microsegmentation, zero-trust network architecture, NAC, and VPN configurations.
+
+All readings use zero-cost, openly licensed resources.
 
 ---
 
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
+## Learning Objectives
 
-*   **Stateful Firewall**: A firewall that tracks the state of active network connections (TCP three-way handshake, established sessions) and makes filtering decisions based on the full context of a connection, not just individual packets. Stateful inspection blocks unsolicited inbound packets that do not belong to an established session. This is the baseline standard for enterprise perimeter firewalls on SY0-701.
-*   **Next-Generation Firewall (NGFW)**: A firewall that combines traditional stateful inspection with deep packet inspection (DPI), application-layer visibility, intrusion prevention, SSL inspection, and identity-based policies. NGFWs can block Facebook but allow business applications on the same port — a capability that packet-filter firewalls lack. SY0-701 tests NGFW features in application control scenarios.
-*   **Intrusion Detection System (IDS)**: A passive monitoring device that analyzes network traffic or host activity and generates alerts when suspicious patterns are detected. An IDS does NOT block traffic — it only alerts. Signature-based IDS matches known attack patterns; anomaly-based IDS flags deviations from a baseline. False positives are a key IDS management challenge.
-*   **Intrusion Prevention System (IPS)**: An active inline device that sits in the traffic path, detects malicious activity, and automatically blocks or drops the offending traffic in real time. An IPS can generate false positives that block legitimate traffic — this is why tuning signatures and establishing baselines is critical before deployment.
-*   **VPN (Virtual Private Network)**: An encrypted tunnel that allows remote users or branch offices to communicate securely over an untrusted public network. Site-to-site VPNs connect entire networks; remote-access VPNs connect individual users. IPsec (tunnel or transport mode) and SSL/TLS VPNs are the two primary protocols tested on SY0-701.
-*   **Network Access Control (NAC)**: A security solution that enforces policy-based access to the network by verifying that connecting devices meet security requirements (OS patch level, antivirus status, certificates) before granting access. Non-compliant devices are redirected to a quarantine VLAN for remediation. NAC is a key Zero Trust enabling technology.
+By the end of this module, you will be able to:
 
----
+- Classify firewall types by capability (stateless, stateful, application-layer, NGFW, WAF).
 
-### 2. Certification Exam Tips
-*   **Domain Weight:** Network security controls fall under **Domain 3 – Security Architecture (18%)** and **Domain 4 – Security Operations (28%)** of SY0-701. Expect scenario questions asking you to choose between IDS/IPS, firewall types, and VPN protocols.
-*   **IDS vs. IPS in One Line:** IDS = monitor and alert (passive, out-of-band). IPS = monitor and block (active, inline). If the question asks which device stopped an attack, the answer is IPS. If it detected and reported but did not stop, the answer is IDS.
-*   **False Positive vs. False Negative:** False positive = legitimate traffic flagged as malicious (causes disruption). False negative = malicious traffic not detected (causes breach). For IPS, false positives are the greater operational concern because they block real users.
-*   **VPN Protocol Trap:** IPsec in tunnel mode encrypts the entire original packet including the IP header (used for site-to-site VPNs). IPsec in transport mode encrypts only the payload (used between hosts). SSL VPNs use TLS over port 443 and do not require a dedicated VPN client — useful for clientless remote access.
-*   **Study Resource:** Professor Messer's free [CompTIA Security+ SY0-701 study notes and video course](https://www.professormesser.com/) include firewall rule logic diagrams and IDS/IPS placement scenarios that directly mirror exam question formats.
+- Distinguish IDS from IPS by deployment model, detection method, and function.
 
----
+- Describe DMZ design using the dual-firewall architecture.
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the "Network Security" section in the OER Textbook: [Professor Messer's CompTIA Security+ SY0-701 Study Notes](https://www.professormesser.com/). Focus on device placement, traffic flow, and the difference between detection and prevention.
-*   **Required Video:** Watch the network security device video lectures in [Professor Messer's SY0-701 Course Playlist on YouTube](https://www.youtube.com/playlist?list=PLG49S3nxzAnl4Q7y9umx51bbtILyD4Syy). The videos include network diagrams showing where each device is placed in a typical enterprise architecture.
+- Explain the difference between forward proxy and reverse proxy.
+
+- Describe how load balancers contribute to availability and DDoS mitigation.
+
+- Apply network segmentation and microsegmentation to reduce lateral movement.
+
+- Describe the principles of zero-trust network architecture and contrast them with the perimeter model.
+
+- Explain NAC posture assessment and quarantine VLAN.
+
+- Compare site-to-site and remote access VPN, and evaluate the security implications of split tunneling.
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will configure basic firewall rules, analyze IDS alert logs, and verify VPN tunnel establishment. Understanding how to read firewall rule tables and IDS logs is a direct SY0-701 performance-based question skill.
+## Primary Readings
+
+### Reading 1 — NIST SP 800-41 Rev. 1: Guidelines on Firewalls and Firewall Policy
+
+Source: [https://csrc.nist.gov/publications/detail/sp/800-41/rev-1/final](https://csrc.nist.gov/publications/detail/sp/800-41/rev-1/final)
+
+Read: Chapter 2 (Firewall Overview) and Chapter 3 (Firewall Policy).
+
+Focus areas:
+
+- The evolution from packet filtering to stateful inspection to application-layer gateways.
+
+- The principle of implicit deny and default-deny policy design.
+
+- Ingress versus egress filtering and why both are necessary.
+
+### Reading 2 — CISA Zero Trust Maturity Model
+
+Source: [https://www.cisa.gov/zero-trust-maturity-model](https://www.cisa.gov/zero-trust-maturity-model)
+
+Read: The full document (approximately 24 pages).
+
+Focus areas:
+
+- The five pillars of zero trust: Identity, Devices, Networks, Applications/Workloads, Data.
+
+- The maturity stages: Traditional, Initial, Advanced, Optimal.
+
+- How microsegmentation relates to the Network pillar.
+
+### Reading 3 — NIST SP 800-207: Zero Trust Architecture
+
+Source: [https://csrc.nist.gov/publications/detail/sp/800-207/final](https://csrc.nist.gov/publications/detail/sp/800-207/final)
+
+Read: Section 2 (Zero Trust Basics) and Section 3 (Zero Trust Architecture Logical Components).
+
+Focus areas:
+
+- The Policy Enforcement Point (PEP) and Policy Decision Point (PDP) concepts.
+
+- How zero trust applies to enterprise network design.
+
+- The contrast between perimeter-based security and ZTA.
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms above and be able to choose the correct device type for any given network security scenario.
-- [ ] Read the "Network Security" section in [Professor Messer's SY0-701 Study Notes](https://www.professormesser.com/).
-- [ ] Watch the network security video lectures in [Professor Messer's SY0-701 Course Playlist](https://www.youtube.com/playlist?list=PLG49S3nxzAnl4Q7y9umx51bbtILyD4Syy).
-- [ ] Memorize: IDS = passive alert only; IPS = active inline block; NGFW = application-layer awareness.
-- [ ] Proceed to the weekly hands-on lab activity.
+## Supplemental Readings
+
+### Reading 4 — CISA IDS/IPS Overview
+
+Source: [https://www.cisa.gov/uscert/ncas/tips/ST04-015](https://www.cisa.gov/uscert/ncas/tips/ST04-015)
+
+Read: The full article.
+
+Focus areas:
+
+- Signature-based vs. anomaly-based detection trade-offs.
+
+- Network-based vs. host-based deployment models.
+
+- The role of IDS/IPS in a layered defense architecture.
+
+### Reading 5 — NIST SP 800-77 Rev. 1: Guide to IPsec VPNs
+
+Source: [https://csrc.nist.gov/publications/detail/sp/800-77/rev-1/final](https://csrc.nist.gov/publications/detail/sp/800-77/rev-1/final)
+
+Read: Chapter 2 (IPsec Architecture Overview).
+
+Focus areas:
+
+- IPsec Transport mode vs. Tunnel mode.
+
+- IKE (Internet Key Exchange) protocol overview.
+
+- Comparison to TLS-based VPN approaches.
+
+---
+
+## Concept Reference Tables
+
+### Table 1 — Firewall Type Comparison
+
+| Firewall Type | OSI Layer | Key Capability | Exam Trigger |
+|---|---|---|---|
+| Packet Filter | Layer 3/4 | IP/port-based rules; stateless | Legacy; simple ACLs |
+| Stateful Firewall | Layer 3/4 | Connection state tracking | Baseline for modern firewalls |
+| Application-Layer Gateway | Layer 7 | Protocol-aware; proxy function | Deep content inspection |
+| NGFW | Layer 3–7 | App ID, user identity, integrated IPS | "Identify apps regardless of port" |
+| WAF | Layer 7 (HTTP) | Web app protection; OWASP Top 10 | SQL injection, XSS protection |
+
+### Table 2 — IDS vs. IPS
+
+| Characteristic | IDS | IPS |
+|---|---|---|
+| Function | Detect and alert | Detect and block |
+| Placement | Out-of-band (SPAN/tap) | Inline (traffic flows through) |
+| Impact on traffic | None | Can block; inline failure affects traffic |
+| Fail behavior | N/A (passive) | Fail-open or fail-closed |
+| False positive risk | Alerts only; no traffic impact | Can block legitimate traffic |
+
+### Table 3 — Segmentation Models
+
+| Model | Scope | Technology | Security Benefit |
+|---|---|---|---|
+| VLAN segmentation | Zone-level | Managed switch VLANs | Separate broadcast domains |
+| Firewall zones | Zone-level | Firewall policies | Enforced traffic policy between zones |
+| Microsegmentation | Workload-level | SDN, host-based agents | Policy between individual workloads |
+| Zero Trust | End-to-end | Identity + device + policy | No implicit trust; verify all access |
+
+### Table 4 — VPN Comparison
+
+| Type | Scope | Protocol | Common Use |
+|---|---|---|---|
+| Site-to-site | Network-to-network | IPsec Tunnel mode | Branch office connectivity |
+| Remote access (IPsec) | Client-to-network | IPsec Transport mode | Legacy corporate remote access |
+| Remote access (TLS) | Client-to-application | TLS/HTTPS | Modern remote access; firewall-friendly |
+| ZTNA | Client-to-application | TLS + identity | Zero trust remote access; replaces VPN |
+
+---
+
+## Key Terms and Definitions
+
+**Firewall** — A network security device that monitors and controls incoming and outgoing traffic based on configured rules.
+
+**NGFW** — Next-Generation Firewall; combines stateful inspection with application awareness, user identity, and integrated IPS.
+
+**WAF** — Web Application Firewall; inspects HTTP/HTTPS traffic to protect web applications from application-layer attacks.
+
+**IDS** — Intrusion Detection System; passively monitors traffic and generates alerts on suspicious activity.
+
+**IPS** — Intrusion Prevention System; inline device that monitors and actively blocks suspicious traffic.
+
+**Signature-Based Detection** — Compares traffic against known attack signatures; cannot detect novel attacks.
+
+**Anomaly-Based Detection** — Compares traffic against a baseline; can detect novel attacks but generates more false positives.
+
+**False Positive** — An alert triggered by benign activity.
+
+**False Negative** — A failure to alert on actual malicious activity.
+
+**Fail-Open** — Device failure allows traffic to pass uninspected; prioritizes availability.
+
+**Fail-Closed** — Device failure blocks all traffic; prioritizes security.
+
+**DMZ** — Demilitarized Zone; a network segment hosting internet-accessible servers, isolated from the internal network.
+
+**Screened Subnet** — The technical term for a DMZ; a subnet filtered by one or more firewalls.
+
+**Forward Proxy** — Intermediary between internal users and the internet.
+
+**Reverse Proxy** — Intermediary between external clients and internal servers.
+
+**SSL Offloading** — Terminating TLS at the load balancer or reverse proxy to reduce backend server load.
+
+**Network Segmentation** — Dividing a network into separate zones with enforced access policies between them.
+
+**Microsegmentation** — Applying access policies between individual workloads, not just network zones.
+
+**Zero Trust** — Security model based on "never trust, always verify" regardless of network location.
+
+**ZTNA** — Zero Trust Network Access; provides application-specific access based on identity and device posture, replacing broad VPN access.
+
+**SDP** — Software-Defined Perimeter; makes resources invisible until authenticated; implements ZTNA principles.
+
+**NAC** — Network Access Control; enforces device security posture before granting network access.
+
+**Quarantine VLAN** — A restricted network segment for non-compliant devices where they can access only remediation resources.
+
+**Implicit Deny** — The default rule at the end of a firewall policy that denies all traffic not explicitly permitted.
+
+**Ingress Filtering** — Controlling inbound traffic.
+
+**Egress Filtering** — Controlling outbound traffic.
+
+**Split Tunneling** — VPN configuration where only corporate-bound traffic is encrypted through the VPN; internet traffic bypasses.
+
+**Full Tunneling** — VPN configuration where all traffic routes through the corporate VPN gateway.
+
+**VLAN** — Virtual LAN; a logical network segment within a physical switch infrastructure.
+
+---
+
+## Security+ Exam Alignment
+
+The following SY0-701 exam objectives are covered in this module:
+
+- 3.2 — Given a scenario, apply infrastructure security best practices.
+
+- 3.3 — Compare and contrast concepts and strategies to protect data.
+
+- 4.5 — Given a scenario, implement network security infrastructure.
+
+---
+
+## Critical Thinking Questions
+
+1. An organization has placed its web server in the DMZ and its database server on the internal network. The web application needs to query the database. What firewall rule would you add to the inner firewall to enable this? How would you write the rule to apply least privilege?
+
+2. A security team wants to detect lateral movement within the internal network. They have a SIEM, a NGFW at the perimeter, and no internal segmentation. What additional controls would most improve their ability to detect east-west (internal) lateral movement?
+
+3. An attacker has compromised a workstation in the finance department of a fully microsegmented network. The workstation can communicate with finance servers but cannot reach HR, IT, or payroll servers. Compare the blast radius of this attack in a microsegmented network versus a flat network with no internal segmentation.
+
+4. A company is evaluating replacing their remote access VPN with a ZTNA solution. What are the specific security advantages of ZTNA over traditional VPN? What challenges might the organization face during the transition?
+
+5. An IPS deployed inline at a hospital network is set to fail-closed. During a software update, the IPS crashes and all network traffic stops, including communications to patient monitoring systems. Evaluate this design decision. What change would you recommend, and how would you compensate for the reduced security that change introduces?
+
+---
+
+## Review Checklist
+
+Before taking the Module 07 quiz, verify you can do each of the following without notes:
+
+- Name the five firewall types and state the key capability that distinguishes each from the previous.
+
+- Explain why an IDS is out-of-band and an IPS is inline, and what consequence each placement has.
+
+- Describe the dual-firewall DMZ and explain which servers belong in it.
+
+- Distinguish forward proxy from reverse proxy by what each protects.
+
+- Explain implicit deny in your own words without using the term "firewall."
+
+- Describe microsegmentation and explain how it limits lateral movement compared to VLAN segmentation.
+
+- State the three zero-trust principles and apply them to a specific network scenario.
+
+---
+
+Module 07 Reading Guide — End

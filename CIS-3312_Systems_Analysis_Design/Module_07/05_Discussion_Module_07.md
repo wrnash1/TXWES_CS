@@ -1,78 +1,100 @@
-# Discussion Forum: Module 07 - Process Modeling with BPMN
+# Discussion Forum: Module 07 — Requirements Elicitation Techniques
 
-**Course:** CIS-3312 Systems Analysis and Design
-**Certification Alignment:** IIBA ECBA (Entry Certificate in Business Analysis)
-**Prepared by:** Professor Nash | Texas Wesleyan University
+## Course: CIS-3312 Systems Analysis and Design
 
----
+## Texas Wesleyan University | Professor Nash
 
-## Instructions
-
-Read all three scenarios below and choose ONE to respond to. Your initial post must address all three sub-questions for your chosen scenario.
-
-Initial Post: Due Wednesday at 11:59 PM (175–225 words)
-
-Peer Responses: Due Sunday at 11:59 PM (reply to at least two classmates who chose different scenarios; minimum 75 words each)
+**Certification Alignment:** IIBA ECBA
 
 ---
 
-## Scenario A: The Gateway Argument
+## Overview
 
-A BA team is modeling a mortgage approval process. After the applicant submits all required documents, three reviews must happen before a credit decision is made: an income verification, a credit score check, and a property appraisal. One BA on the team insists these should be connected by Exclusive Gateways — one review happens, and based on the result, the next review starts. Another BA says they should all run at the same time using a Parallel Gateway. A third BA suggests using an Inclusive Gateway because "sometimes the property appraisal is skipped for refinances." The team cannot agree and asks the lead BA to make the decision.
-
-Sub-questions:
-
-1. Evaluate each BA's argument. Which gateway type is correct for the three mandatory concurrent reviews, and why? Use the formal definition of each gateway type to justify your answer.
-2. The third BA raises a valid point about refinances skipping the property appraisal. If that scenario is confirmed as a real business rule, would it change the gateway selection? Explain what gateway would be appropriate if one of the three reviews is conditionally optional.
-3. After the three review paths complete, the process must wait for all of them before the credit decision can proceed. What BPMN element must appear at the point where the three paths rejoin, and what would happen if this element were omitted from the model?
+Requirements elicitation is where projects succeed or fail long before a line of code is written. The scenarios below present situations where BA judgment about elicitation technique, stakeholder management, and requirements quality determines whether a project delivers what the business actually needs. Apply the concepts from the module — do not simply restate definitions.
 
 ---
 
-## Scenario B: The Cross-Pool Violation
+## Scenario 1: The Articulate Stakeholder Problem
 
-A junior BA presents a BPMN collaboration diagram modeling the loan application process between a customer and a credit union. The diagram shows two pools: "Customer" and "Credit Union." Inside the Customer pool, activities include "Fill Out Application" and "Submit Application." Inside the Credit Union pool, activities include "Receive Application," "Review Documents," and "Issue Decision." The BA has connected "Submit Application" in the Customer pool to "Receive Application" in the Credit Union pool using a solid sequence flow arrow. A senior BA immediately flags this as a modeling violation.
+A BA is eliciting requirements for a new loan origination system at a regional bank. The senior loan officer — the primary stakeholder — is highly articulate, experienced, and enthusiastic. She has already sent the BA a detailed 12-page written document describing exactly how she wants the new system to work, including specific screen layouts, field names, and workflow sequences. The BA is tempted to use this document as the requirements specification and move forward quickly.
 
-Sub-questions:
+**Initial Post Prompt (Due Wednesday at 11:59 PM):**
 
-1. Identify the BPMN rule that has been violated. Explain specifically what the solid arrow represents in BPMN and why it cannot cross pool boundaries.
-2. Describe exactly what should replace the solid arrow in this diagram. Name the correct BPMN element, describe its appearance (shape, arrowhead type), and explain what it communicates about the customer-credit union relationship.
-3. The junior BA argues that using lanes instead of separate pools would allow sequence flow to connect the customer activities to the credit union activities without violating any rules. Evaluate this argument: would using lanes instead of pools solve the modeling problem? Explain the difference between pools and lanes and whether they are interchangeable in this scenario.
+In 175–225 words, respond to the following:
+
+- What are the risks of accepting the senior loan officer's 12-page document as the requirements specification without additional elicitation?
+- Which elicitation technique(s) would you use alongside or instead of relying on the written document, and why?
+- The senior loan officer is not the only stakeholder — the document reflects her perspective alone. How would you identify and engage the other stakeholders, and what might they need from the system that the loan officer's document does not address?
+
+**Peer Response Prompt (Due Sunday at 11:59 PM):**
+
+Respond to at least two classmates' posts (minimum 75 words each):
+
+- Evaluate whether their recommended elicitation technique mix adequately addresses the tacit knowledge risk
+- Add one specific type of stakeholder the loan officer's document likely does not represent and explain why their requirements matter
+- Discuss whether having a highly detailed upfront document from a key stakeholder is an advantage or a risk — and why
 
 ---
 
-## Scenario C: As-Is to To-Be
+## Scenario 2: The Observation Surprise
 
-A BA has been asked to improve a university's student grade appeal process. The as-is process works like this: a student fills out a paper appeal form and submits it to the department office. The department secretary manually logs the appeal in a spreadsheet. The department chair reviews the appeal and either resolves it or forwards it to the Dean's office. If forwarded, the Dean's office schedules a committee review. The committee meets, makes a decision, and a staff member mails the outcome letter to the student. The process takes an average of 6 weeks.
+A BA is assigned to a project to improve a warehouse management system for a food distributor. Before writing any requirements, the BA spends two days observing warehouse operations. On the first day, the BA notices that receiving staff have developed an unofficial paper-based tracking sheet they keep at the receiving dock. When asked about it, a receiving supervisor explains: "The system doesn't capture temperature readings at receipt, but the FDA requires us to document them. So we log temps on paper, and someone types them into a spreadsheet at the end of each shift." The BA checks the requirements document from the original system implementation — it says nothing about temperature tracking.
 
-Sub-questions:
+**Initial Post Prompt (Due Wednesday at 11:59 PM):**
 
-1. Identify at least three specific inefficiencies visible in the as-is process. For each one, describe why it slows the process down or introduces risk of error.
-2. Describe how you would model the to-be (future-state) process using BPMN to address the inefficiencies you identified. Specify at least two BPMN elements (other than basic tasks) you would add to the to-be model and explain what each one contributes.
-3. The BA's manager argues that a written narrative description of the improved process is sufficient — a BPMN diagram is unnecessary overhead. Construct a professional response defending the value of the BPMN to-be model over a narrative description for this specific scenario.
+In 175–225 words, respond to the following:
+
+- What does this observation finding reveal about the adequacy of the original requirements process, and what risk would have existed if the BA had gone straight to interviews without observing first?
+- Classify this finding — is it a gap in functional requirements, a regulatory compliance constraint, a data requirement, or some combination?
+- Describe the follow-up elicitation steps you would take to fully document this requirement and any related requirements it might surface.
+
+**Peer Response Prompt (Due Sunday at 11:59 PM):**
+
+Respond to at least two classmates' posts (minimum 75 words each):
+
+- Add one additional elicitation technique that would help fully capture the temperature tracking requirement and explain what it would reveal
+- Discuss what this scenario reveals about the relationship between document analysis and observation in elicitation sequencing
+- Evaluate whether the original project team's requirements failure was an elicitation technique problem or a stakeholder identification problem — or both
+
+---
+
+## Scenario 3: The Contradictory Requirements
+
+A BA is facilitating requirements elicitation for a new HR self-service portal. During individual stakeholder interviews, two conflicting requirements emerge:
+
+- The CHRO (Chief Human Resources Officer) requires that all employee salary information be visible to direct managers so they can manage their team's compensation budgeting.
+- The Employee Privacy Advocate (a representative from the employees' union) requires that individual salary information be accessible only to the employee and HR — not to direct managers.
+
+Both stakeholders have significant influence. The BA must now decide how to handle this conflict.
+
+**Initial Post Prompt (Due Wednesday at 11:59 PM):**
+
+In 175–225 words, respond to the following:
+
+- Describe how you would document this conflict in the requirements documentation — what format would you use to represent competing requirements clearly?
+- Would you attempt to resolve this conflict yourself, or would you escalate it? Who would you escalate to, and what information would you bring to that conversation?
+- Propose one potential compromise solution that might satisfy both stakeholders' core concern (the CHRO's need to manage compensation budgets and the union's concern about privacy), and explain whether this solution can be documented as a requirement or requires a higher-level decision first.
+
+**Peer Response Prompt (Due Sunday at 11:59 PM):**
+
+Respond to at least two classmates' posts (minimum 75 words each):
+
+- Evaluate whether their proposed compromise adequately addresses both stakeholders' underlying concerns — or whether it only partially satisfies each side
+- Discuss whether a JAD session would be appropriate to resolve this specific conflict, given the adversarial nature of the CHRO-union relationship
+- Add one regulatory consideration (such as applicable labor law or data privacy regulation) that might further constrain the resolution options
 
 ---
 
 ## Discussion Rubric (10 Points Total)
 
-### Initial Post (6 Points)
+**Initial Post (6 Points):**
 
-| Score | Criteria |
-|---|---|
-| 5–6 pts | Addresses all three sub-questions with specific evidence from the scenario. Uses correct BPMN terminology. Meets the 175–225 word count. |
-| 3–4 pts | Addresses most sub-questions but lacks specificity or misuses terminology. Slightly outside the word count. |
-| 1–2 pts | Addresses only one sub-question or provides only vague, generic responses. |
-| 0 pts | No initial post submitted by the deadline. |
+- 5–6 pts: Thoroughly addresses all prompt questions with accurate BABOK and elicitation terminology, substantive reasoning, and meets the word count requirement.
+- 3–4 pts: Addresses most prompt questions but lacks depth, accuracy, or sufficient use of course concepts.
+- 0–2 pts: Incomplete, off-topic, or missing initial post.
 
-### Peer Responses (4 Points)
+**Peer Responses (4 Points):**
 
-| Score | Criteria |
-|---|---|
-| 4 pts | Responds to at least two classmates who chose different scenarios. Each reply is at least 75 words and adds substantive analysis. |
-| 2 pts | Responds to only one classmate, or both responses are fewer than 75 words or superficial. |
-| 0 pts | No peer responses submitted. |
-
----
-
-## A Note from Professor Nash
-
-BPMN is a communication tool, not just a drawing exercise. The discipline of choosing the correct gateway forces you to articulate a business rule precisely — is this decision mutually exclusive? Do all these activities have to run, or only some of them? That clarity does not come from writing a paragraph about the process. It emerges from the act of modeling. The students who struggle with BPMN usually do so because they have not identified the business rules clearly enough to choose the right gateway. When the diagram is hard to draw, that is a signal — not about the diagram, but about your understanding of the process.
+- 4 pts: Substantive replies to at least two peers that advance the discussion with new analysis, challenges, or examples.
+- 2 pts: Replies to only one peer, or responses are superficial without meaningful addition to the conversation.
+- 0 pts: No peer responses submitted.

@@ -1,103 +1,211 @@
-# Quiz: Module 16 – Final Exam Prep and PSM I Certification
+# Quiz: Module 16 — PSM I Exam Preparation and Capstone
 
-## Course: CIS-3350_Software_Engineering_Agile (Professional Scrum Master (PSM I))
+## Course: CIS-3350 Software Engineering and Agile
+
+## Texas Wesleyan University | Professor Nash
+
+**Certification Alignment:** Scrum.org PSM I
 
 ---
 
 ### Question 1
 
-Which three pillars support Scrum's empirical process control theory?
+Which of the following correctly lists the three empirical pillars of Scrum as defined in the Scrum Guide?
 
-* A) Planning, Execution, and Review
-* B) Transparency, Inspection, and Adaptation
-* C) Commitment, Courage, and Focus
-* D) Velocity, Burndown, and Retrospective
+- A) Planning, Execution, Review
+- B) Transparency, Inspection, Adaptation
+- C) Communication, Collaboration, Continuous Improvement
+- D) Vision, Commitment, Delivery
 
-Correct Answer: B) Scrum's empirical foundation rests on Transparency (making work and process visible), Inspection (examining progress frequently), and Adaptation (adjusting when deviations are detected).
+Correct Answer: B) The Scrum Guide explicitly states that Scrum is founded on empiricism and Lean thinking, and that three pillars uphold every implementation of empirical process control: Transparency, Inspection, and Adaptation.
 
 Distractor Analysis:
 
-* *Why B is correct:* The Scrum Guide explicitly defines these three pillars as the foundation of Scrum's empirical approach. Every Scrum event and artifact implements one or more of these pillars.
-* *Why A is incorrect:* Planning, Execution, and Review are generic project management phases, not Scrum's empirical pillars.
-* *Why C is incorrect:* Commitment, Courage, and Focus are three of Scrum's five values — distinct from the three empirical pillars.
-* *Why D is incorrect:* Velocity, Burndown, and Retrospective are a mix of metrics tools and one Scrum event — not the foundational pillars of Scrum theory.
+- *Why B is correct:* These three pillars are the philosophical bedrock of Scrum. Every Scrum event, artifact, and accountability exists to enable one or more of these pillars. The Scrum Guide names them explicitly in the opening sections.
+- *Why A is incorrect:* Planning, Execution, Review describes a generic project lifecycle, not Scrum's empirical pillars. This sequence appears in waterfall and traditional project management, not in Scrum theory.
+- *Why C is incorrect:* Communication, Collaboration, and Continuous Improvement are values or practices associated with Agile broadly (the Agile Manifesto principles), not the Scrum Guide's three empirical pillars.
+- *Why D is incorrect:* Vision, Commitment, and Delivery are not Scrum Guide terms. These words appear in Agile marketing materials but are not the framework's foundational pillars.
 
 ---
 
 ### Question 2
 
-Which of the following is the most accurate definition of empiricism as it applies to Scrum?
+The Scrum Guide states that the Scrum Master "causes the removal of impediments." A Developer reports that a critical build tool has been broken for two days and the IT department has not responded to three tickets. What is the most appropriate Scrum Master action?
 
-* A) A management philosophy that bases project decisions on comprehensive upfront planning and fixed schedules.
-* B) The principle that knowledge comes from experience and that decisions should be grounded in what is observed and known, enabling frequent adaptation.
-* C) A software testing methodology that requires 100% automated test coverage before any code is deployed.
-* D) An organizational policy requiring all Scrum events to be conducted in person rather than remotely.
+- A) Fix the build tool directly since the Scrum Master is responsible for all technical impediments
+- B) Escalate the impediment by engaging the IT department's management chain and any other organizational levers available to resolve it quickly — the Scrum Master removes organizational impediments, not necessarily technical ones
+- C) Tell the Developer to find a workaround since the IT department is outside the Scrum Master's authority
+- D) Add the broken tool to the Product Backlog for the Product Owner to prioritize a fix
 
-Correct Answer: B)
+Correct Answer: B) The Scrum Master's impediment removal responsibility is organizational — using influence, coaching, and escalation to clear systemic blockers. A broken tool blocking an entire team for two days is an organizational impediment requiring escalation.
 
 Distractor Analysis:
 
-* *Why B is correct:* Empiricism in Scrum means the team learns from actual work — inspecting real Increments, real velocity, and real stakeholder feedback — rather than relying on predictions made at project start.
-* *Why A is incorrect:* Comprehensive upfront planning and fixed schedules are characteristics of plan-driven approaches like Waterfall — the opposite of Scrum's empirical stance.
-* *Why C is incorrect:* Test coverage requirements relate to the Definition of Done and TDD practices — not to the definition of empiricism.
-* *Why D is incorrect:* The Scrum Guide makes no prescription about in-person vs. remote events. Empiricism is a philosophical principle, not a meeting format policy.
+- *Why B is correct:* The Scrum Master serves the team by causing impediment removal — not necessarily fixing technical issues personally, but ensuring the organization addresses them promptly. This may involve escalation, direct engagement with other teams, or bringing the situation to management attention.
+- *Why A is incorrect:* The Scrum Master is not a technical specialist expected to fix infrastructure tools. Attempting to fix a build tool without the appropriate expertise or access could worsen the situation.
+- *Why C is incorrect:* "Outside my authority" is an excuse, not a response. The Scrum Master's value comes partly from their ability to navigate organizational boundaries and create urgency around team-blocking issues.
+- *Why D is incorrect:* Broken tooling is an impediment to Sprint execution, not a Product Backlog item for the Product Owner. Infrastructure and tooling issues belong in the operational sphere — not in the product development queue.
 
 ---
 
 ### Question 3
 
-Under what circumstances may a Sprint be cancelled, and who has the authority to cancel it?
+During Sprint Review, a stakeholder says: "This feature is not what I asked for six months ago." The Product Owner responds: "Our understanding of your needs has evolved — this is what the team determined was most valuable based on our learnings." Which Scrum principle does this exchange best illustrate?
 
-* A) Any Sprint may be cancelled by the Scrum Master if the team is not making sufficient progress toward the Sprint Goal.
-* B) A Sprint may be cancelled only if the Sprint Goal becomes obsolete, and only the Product Owner has authority to cancel it.
-* C) Developers may cancel the Sprint by consensus vote if they determine the Sprint Goal is unachievable within the timebox.
-* D) Stakeholders may cancel the Sprint during the Sprint Review if they are dissatisfied with the Increment's quality.
+- A) The Scrum Master's responsibility to mediate stakeholder conflicts
+- B) Empiricism — responding to what is learned throughout development rather than following a fixed plan
+- C) The Product Owner's authority to override stakeholder requests
+- D) The principle that stakeholders cannot change requirements once a project begins
 
-Correct Answer: B)
+Correct Answer: B) Scrum is built on empiricism: requirements evolve based on learning, feedback, and changing understanding of what creates value. The product's direction adapts as the team and stakeholders learn together.
 
 Distractor Analysis:
 
-* *Why B is correct:* The Scrum Guide is explicit: "A Sprint could be cancelled if the Sprint Goal becomes obsolete" and "Only the Product Owner has the authority to cancel the Sprint."
-* *Why A is incorrect:* The Scrum Master has no authority to cancel a Sprint. Sprint cancellation is the Product Owner's decision alone, and only when the Sprint Goal becomes obsolete.
-* *Why C is incorrect:* Developers do not have authority to cancel a Sprint. If they forecast the Sprint Goal is unachievable, they should discuss scope negotiation with the Product Owner — not cancel the Sprint.
-* *Why D is incorrect:* The Sprint Review occurs after the Sprint ends; it cannot cancel the Sprint. Stakeholders do not have Sprint cancellation authority regardless of timing.
+- *Why B is correct:* The Scrum Guide's empirical foundation means that fixed requirements set at the start of a project are contrary to Scrum's nature. What was requested six months ago reflected incomplete knowledge — the Scrum Team adapted to better information. This is a feature of Scrum, not a failure.
+- *Why A is incorrect:* The Scrum Master does not mediate product-level discussions between the Product Owner and stakeholders. The Product Owner owns the product direction and communicates with stakeholders directly.
+- *Why C is incorrect:* The Product Owner does not override stakeholders — they synthesize stakeholder input into a prioritized backlog. The exchange describes adaptation based on learning, not the Product Owner imposing their preferences.
+- *Why D is incorrect:* Scrum specifically enables requirements to change. The Sprint boundary provides stability within the Sprint, but between Sprints, the Product Backlog can change in any direction based on new information.
 
 ---
 
 ### Question 4
 
-A candidate preparing for the PSM I exam has been reading blog posts and Scrum practitioner guides that describe practices not mentioned in the Scrum Guide. When a PSM I question presents a conflict between a common Agile practice and the Scrum Guide's guidance, which should the candidate choose?
+The Scrum Guide says the Sprint Backlog "belongs to the Developers." What does this mean in practice?
 
-* A) The common Agile practice — because PSM I tests real-world knowledge, not textbook rules
-* B) The answer that seems most logical based on general project management principles
-* C) The Scrum Guide answer — because PSM I is based exclusively on the 2020 Scrum Guide
-* D) The answer that describes the most complex solution, as PSM I tests advanced Scrum knowledge
+- A) Developers write all Sprint Backlog items and do not need Product Owner input
+- B) Only Developers can modify the Sprint Backlog during the Sprint — they add, remove, or revise tasks as they learn more about their work
+- C) The Sprint Backlog is private documentation that stakeholders and the Product Owner are not allowed to view
+- D) Developers own the Sprint Backlog but must get Scrum Master approval before making any changes
 
-Correct Answer: C)
+Correct Answer: B) Developers own and maintain the Sprint Backlog as a living plan. They update it as they learn — decomposing items into tasks, adjusting effort estimates, adding or removing tasks — while remaining focused on the Sprint Goal.
 
 Distractor Analysis:
 
-* *Why C is correct:* Scrum.org explicitly states that PSM I assessments are based on the Scrum Guide. Practical adaptations, hybrid practices, and SAFe/LeSS additions are out of scope. When in doubt, the Scrum Guide is always the authoritative source.
-* *Why A is incorrect:* Real-world Scrum practice often deviates from the Scrum Guide for pragmatic reasons. The PSM I tests knowledge of the Scrum Guide, not the diversity of real-world implementations.
-* *Why B is incorrect:* General project management principles (like those from PMP) can directly contradict Scrum. For example, Scrum has no "project manager" role and does not use Gantt charts.
-* *Why D is incorrect:* PSM I questions reward precise Scrum Guide knowledge, not complexity. The correct answer is often the simpler, more minimalist Scrum option, not the most elaborate one.
+- *Why B is correct:* Developer ownership of the Sprint Backlog is the operational expression of self-management. No one outside the Developers tells them how to organize their work plan. The backlog evolves as the team's understanding deepens.
+- *Why A is incorrect:* Sprint Backlog items originate from the Product Backlog, which the Product Owner orders. Developers select items during Sprint Planning — they do not create Sprint Backlog items independently of the Product Backlog.
+- *Why C is incorrect:* The Sprint Backlog must be transparent to all stakeholders as part of Scrum's Transparency pillar. "Belonging to Developers" means ownership of maintenance and modification, not secrecy.
+- *Why D is incorrect:* The Scrum Master does not approve Sprint Backlog changes. Requiring Scrum Master approval would undermine Developer self-management and create a bottleneck. The Scrum Master's role is to coach and facilitate, not to gate team decisions.
 
 ---
 
 ### Question 5
 
-A Scrum Team has successfully delivered value for three years. The product has reached its end of life and the organization decides to retire it. What happens to the Product Backlog?
+A company asks its Scrum Teams to commit to a twelve-month feature roadmap at the start of each year so the Sales team can make promises to customers. How should the Scrum Master respond to this request?
 
-* A) The Scrum Master archives the Product Backlog as a historical record and maintains it for future reference indefinitely.
-* B) The Product Backlog is handed over to the Developers for long-term maintenance as a technical debt tracker.
-* C) The Product Backlog ceases to exist when the product is retired — it exists only as long as the product exists.
-* D) The Product Owner transfers the Product Backlog to the next product's backlog, combining all items regardless of relevance.
+- A) Comply — customer commitments are the organization's right and teams must support Sales
+- B) Refuse entirely — the Scrum Guide prohibits planning beyond a single Sprint
+- C) Help the organization understand the difference between a roadmap (a directional guide subject to change) and a commitment (a fixed promise); advocate for shorter-horizon commitments and transparent backlog visibility to support Sales without locking teams into potentially invalid plans
+- D) Ask the Product Owner to sign the roadmap since they own product decisions
 
-Correct Answer: C)
+Correct Answer: C) The Scrum Master serves the organization by coaching it toward empirical approaches. A twelve-month fixed commitment treats complex product development as predictable when it is not — leading to over-promising and under-delivering. The Scrum Master's role is to find a solution that serves both Sales and the team's empirical process.
 
 Distractor Analysis:
 
-* *Why C is correct:* The Product Backlog is an artifact tied to a specific product and its Product Goal. When the product is retired, the Product Backlog ends with it. It is not a permanent historical document — it is a living artifact serving an active product.
-* *Why A is incorrect:* The Scrum Guide does not assign the Scrum Master an archival responsibility for retired backlogs. Archiving decisions are an organizational concern, not a defined Scrum accountability.
-* *Why B is incorrect:* A retired product does not have ongoing Sprint work. Transferring the backlog to Developers as a technical debt tracker is not a Scrum-defined process.
-* *Why D is incorrect:* Products have separate Product Goals and Product Backlogs. Combining unrelated backlogs from a retired product into a new product creates noise and violates the principle of a clear, focused Product Goal.
+- *Why C is correct:* Twelve-month fixed commitments conflict with Scrum's empirical nature. The Scrum Master's job is not to say "no" but to help the organization find better ways to achieve their goals — in this case, giving Sales useful information without creating false certainty.
+- *Why A is incorrect:* Blindly complying with requests that undermine Scrum's empirical foundation fails the organization long-term. The Scrum Master's job includes coaching the organization, not just complying with requests.
+- *Why B is incorrect:* Refusing entirely and citing the Scrum Guide as prohibition is unhelpful and incorrect. The Scrum Guide does not prohibit roadmaps — it requires that plans be held empirically, subject to adaptation.
+- *Why D is incorrect:* While the Product Owner makes product decisions, the Scrum Master is responsible for coaching the organization on empirical practices. Both accountabilities are involved, but the Scrum Master should not deflect to the Product Owner.
+
+---
+
+### Question 6
+
+What is the correct sequence of events within a single Sprint?
+
+- A) Sprint Planning → Daily Scrums → Sprint Retrospective → Sprint Review
+- B) Sprint Planning → Daily Scrums → Sprint Review → Sprint Retrospective
+- C) Daily Scrums → Sprint Planning → Sprint Review → Sprint Retrospective
+- D) Sprint Review → Sprint Planning → Daily Scrums → Sprint Retrospective
+
+Correct Answer: B) The Scrum Guide specifies: Sprint Planning opens the Sprint; Daily Scrums happen throughout; Sprint Review inspects the product near the end; Sprint Retrospective is the final event before the next Sprint begins.
+
+Distractor Analysis:
+
+- *Why B is correct:* The Scrum Guide's ordering places the Sprint Retrospective after the Sprint Review. This sequence is intentional: the team first inspects the product (Review) with stakeholders, then inspects their own process (Retrospective) — both inform the next Sprint.
+- *Why A is incorrect:* This sequence places the Retrospective before the Review, which inverts the correct order. The Retrospective must come after the Review so the team can incorporate product feedback into their process reflection.
+- *Why C is incorrect:* Daily Scrums cannot precede Sprint Planning — there is no Sprint Backlog or Sprint Goal to inspect until Sprint Planning completes.
+- *Why D is incorrect:* Sprint Review cannot precede Sprint Planning because there is no Increment to review until a Sprint has been completed. This sequence is logically impossible within a single Sprint.
+
+---
+
+### Question 7
+
+The Scrum Guide states that the Scrum Team should be "cross-functional." What does this mean?
+
+- A) Team members must each know how to perform every technical task in the product
+- B) The team collectively has all the skills needed to create value each Sprint without depending on people outside the team
+- C) Team members come from multiple business departments such as Finance, Marketing, and Engineering
+- D) The team can work on multiple products simultaneously to maximize the organization's throughput
+
+Correct Answer: B) Cross-functional means the team, as a unit, has all skills needed to do the work — not that every individual has every skill. The team does not need to wait for external specialists to complete a Sprint.
+
+Distractor Analysis:
+
+- *Why B is correct:* The Scrum Guide defines cross-functional as the team collectively possessing all skills necessary to create a Done Increment each Sprint. This eliminates external dependencies that would block Sprint completion.
+- *Why A is incorrect:* Requiring every team member to have every skill is unrealistic and not what the Scrum Guide means. Specialization within the team is acceptable; the team as a whole must be self-sufficient.
+- *Why C is incorrect:* Cross-functional in Scrum refers to technical and product delivery skills, not organizational department representation. A Scrum Team composed entirely of engineers can be cross-functional if they collectively cover all needed capabilities.
+- *Why D is incorrect:* Working on multiple products simultaneously is the opposite of Focus — one of the five Scrum values. Scrum Teams are dedicated to one product at a time for maximum effectiveness.
+
+---
+
+### Question 8
+
+Which of the following is the most accurate description of what the PSM I exam primarily tests?
+
+- A) Memorization of specific Scrum Guide paragraphs word-for-word
+- B) Knowledge of popular Agile tools and platforms such as Jira, Azure DevOps, and Confluence
+- C) Ability to apply Scrum principles and Scrum Guide concepts to realistic team scenarios — selecting the most Scrum-consistent response
+- D) Mastery of SAFe, LeSS, and Nexus scaling framework details
+
+Correct Answer: C) The PSM I is a scenario-based assessment. Questions present realistic situations and require the test-taker to select the most Scrum-Guide-consistent response — distinguishing it from memorization-based tests.
+
+Distractor Analysis:
+
+- *Why C is correct:* Scrum.org explicitly designs the PSM I to test applied understanding, not rote memorization. The hardest questions present two plausible answers — and the correct one is the answer that most precisely matches the Scrum Guide's principles and language.
+- *Why A is incorrect:* Word-for-word memorization is insufficient. Students who memorize the Guide but do not understand the reasoning behind it fail on scenario questions where the "right answer" requires applying principles, not quoting text.
+- *Why B is incorrect:* The PSM I is tool-agnostic. The Scrum Guide does not mention any specific tools. Questions about Jira, Azure DevOps, or Confluence would not appear on the PSM I.
+- *Why D is incorrect:* SAFe, LeSS, and Nexus are Module 15 topics. The PSM I focuses on standard Scrum as defined in the Scrum Guide. Scaling framework expertise is tested on separate certifications (SAFe certifications, LeSS practitioner, etc.).
+
+---
+
+### Question 9
+
+A Developer is the only person on the Scrum Team who understands the database schema. They are planning to take a two-week vacation during Sprint 6. What should the Scrum Master do?
+
+- A) Ask the Product Owner to remove all database-related items from Sprint 6 to avoid risk
+- B) Coach the team toward collective code ownership and knowledge sharing practices — such as pair programming and documentation — so the team is not dependent on a single person
+- C) Assign the database work to the next most experienced Developer and adjust the Sprint velocity estimate
+- D) Postpone the Developer's vacation until the Sprint's database work is complete
+
+Correct Answer: B) A single point of knowledge failure is a systemic risk. The Scrum Master coaches the team toward practices that eliminate this fragility — collective code ownership, pair programming, documentation — rather than working around the problem short-term.
+
+Distractor Analysis:
+
+- *Why B is correct:* The Scrum Master does not manage individual assignments or vacation schedules. Their role is to identify systemic risks (knowledge silos) and coach the team toward sustainable practices that eliminate them. This is both the correct Scrum response and the correct engineering response.
+- *Why A is incorrect:* Removing all database work is a product decision that belongs to the Product Owner and the team together. The Scrum Master does not unilaterally modify Sprint scope. Also, this solution treats the symptom (one Sprint's risk) rather than the cause (knowledge silo).
+- *Why C is incorrect:* The Scrum Master does not assign work — that violates Developer self-management. Additionally, adjusting velocity estimates is a team activity during Sprint Planning, not a Scrum Master decision.
+- *Why D is incorrect:* Postponing the Developer's vacation is outside the Scrum Master's authority and would violate basic professional respect for team members' personal lives. This is exactly the kind of unhealthy management behavior Scrum's self-management model is designed to replace.
+
+---
+
+### Question 10
+
+At the end of the course, a student reflects: "I now understand that Scrum's events, artifacts, and accountabilities are not bureaucratic overhead — they are the minimum structure needed to make empiricism work at the speed of software development." Which concept does this reflection most accurately describe?
+
+- A) The Scrum Guide's position that Scrum replaces all other processes and should be followed without any adaptation
+- B) Scrum as a lightweight framework — intentionally incomplete — that provides the structure for empirical process control while allowing teams to choose their own techniques within it
+- C) The argument that simpler methodologies like Kanban are preferable to Scrum for most software teams
+- D) The principle that Scrum ceremonies should be shortened or eliminated whenever they reduce team velocity
+
+Correct Answer: B) The Scrum Guide opens by defining Scrum as "a lightweight framework" that is "purposefully incomplete" — it provides structure for empiricism but does not prescribe techniques. The student's reflection captures exactly this design intent.
+
+Distractor Analysis:
+
+- *Why B is correct:* The Scrum Guide's definition of Scrum as lightweight and intentionally incomplete is foundational. Every element — events, artifacts, accountabilities — serves the empirical pillars. Nothing is bureaucratic padding; everything has a purpose. Teams add their own techniques on top of this structure.
+- *Why A is incorrect:* The Scrum Guide does not claim Scrum replaces all other processes. It is a framework within which other practices and techniques can be employed. Scrum is one approach among several — appropriate for complex, adaptive work.
+- *Why C is incorrect:* The student's reflection defends Scrum's structure rather than arguing for simpler alternatives. Kanban is a legitimate practice but the reflection is about understanding Scrum's design philosophy, not comparing frameworks.
+- *Why D is incorrect:* The reflection argues the opposite: events are not overhead to be minimized, they are the mechanism for empiricism. Shortening events arbitrarily damages the feedback loops that make Scrum work.
+
+---
+
+End of Quiz — Module 16

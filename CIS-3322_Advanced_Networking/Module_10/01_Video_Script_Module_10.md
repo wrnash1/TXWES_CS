@@ -1,169 +1,292 @@
-# Video Script: Module 10 - Access Control Lists
+# Video Script: Module 10 — NAT and PAT
 
-**Course:** CIS-3322 Advanced Networking
-**Certification Alignment:** Cisco CCNA 200-301 (Domain 5: Security Fundamentals - 15%)
-**Estimated Duration:** 22 minutes
-**Recorded by:** Professor Nash | Texas Wesleyan University
+## Course: CIS-3322 Advanced Networking
 
----
+## Texas Wesleyan University | Professor Nash
 
-## Production Notes
+## Estimated Duration: 20–24 minutes
 
-- Record in 1080p with a clean slide backdrop
-- Use Packet Tracer 8.x for all ACL configuration and verification demonstrations
-- Show `show access-lists` output with match counters incrementing live
-- Insert [SHOW DIAGRAM] markers as full-screen overlays
-- Pause 2 seconds after each CCNA Exam Tip callout
+## Certification Alignment: Cisco CCNA 200-301
 
 ---
 
-## Section 1: What ACLs Do and Why They Matter [00:00 - 03:30]
+## Introduction (0:00–1:30)
 
-Welcome to Module 10. I am Professor Nash. Today we configure one of the most commonly used security tools in Cisco IOS: Access Control Lists.
+Welcome back to CIS-3322 Advanced Networking. I'm Professor Nash. Module 10 covers Network Address Translation and Port Address Translation — two mechanisms that have fundamentally shaped how the internet works with private IPv4 addressing.
 
-An ACL is an ordered list of rules. Each rule — called an Access Control Entry, or ACE — either permits or denies traffic based on criteria you define. The router processes each packet against the ACL entries from top to bottom. The first matching entry wins. If no entry matches, the implicit deny at the end drops the packet.
+[SHOW SLIDE: "Module 10 — NAT and PAT"]
 
-[SHOW DIAGRAM: A router with an interface labeled "Gi0/0 inbound." A stream of packets approaching the interface. Each packet is evaluated against ACL entries in order: first entry is checked (no match, arrow continues), second entry is checked (match, permit arrow goes through), and a final implicit deny block at the bottom stops any unmatched traffic]
+Without NAT, every device on a corporate network would need a globally routable public IP address. IPv4 address exhaustion made that impossible long ago. NAT allows thousands of internal hosts to share one or a small pool of public IP addresses when accessing the internet.
 
-ACLs are used for:
+By the end of this module you will be able to:
 
-- Traffic filtering: permit or deny specific traffic types
-- Route filtering: control what routes are advertised in routing protocols
-- VPN interesting traffic: define which traffic triggers a VPN tunnel
-- Quality of Service: classify traffic for QoS treatment
+- Explain the difference between static NAT, dynamic NAT, and PAT
 
-Today we focus on the security use case — filtering traffic at router interfaces.
+- Configure and verify all three NAT types on a Cisco IOS router
 
----
+- Understand inside local, inside global, outside local, and outside global address terminology
 
-## Section 2: Standard vs Extended ACLs [03:30 - 09:00]
+- Configure NAT64 for IPv6-to-IPv4 translation
 
-[SHOW DIAGRAM: Two columns. Left column labeled "Standard ACL" shows a packet with only the Source IP highlighted as the matching criteria. Right column labeled "Extended ACL" shows a packet with Source IP, Destination IP, Protocol, and Port Number all highlighted as matching criteria]
+- Troubleshoot common NAT failures using IOS verification commands
 
-There are two types of ACLs for traffic filtering:
+[PAUSE — 3 seconds]
 
-### Standard ACLs
-
-- Filter based on source IP address only
-- Cannot match destination, protocol, or port
-- Numbered range: 1 to 99 and 1300 to 1999
-- Placement rule: apply close to the destination
-
-Why close to the destination? Because a standard ACL can only see the source IP. If you place it close to the source, you might block traffic from that source to ALL destinations — including ones you want to allow. Placing it near the destination ensures you only block the specific traffic you intend.
-
-### Extended ACLs
-
-- Filter based on source IP, destination IP, protocol, and port number
-- Numbered range: 100 to 199 and 2000 to 2699
-- Placement rule: apply close to the source
-
-Why close to the source? Extended ACLs can precisely identify what traffic to block. Placing them at the source stops unwanted traffic immediately, before it wastes bandwidth crossing the network.
-
-CCNA Exam Tip: This placement rule is one of the most frequently tested ACL topics on the CCNA. Standard ACL = close to destination. Extended ACL = close to source. Memorize this.
+Let's start with the address translation concepts.
 
 ---
 
-## Section 3: ACL Syntax and Configuration [09:00 - 15:00]
+## Section 1: NAT Address Terminology (1:30–4:00)
 
-[SHOW DIAGRAM: Topology with R1 connecting to two LAN segments: 192.168.10.0/24 (Engineering) and 192.168.20.0/24 (Sales). A server at 192.168.30.1 is on a third segment. Arrow showing we want to block Sales from reaching the server but allow Engineering]
+[SHOW SLIDE: "NAT Address Types — Four Terms"]
 
-### Standard ACL Configuration
+Before configuring NAT you must understand four address terms. These appear on the CCNA exam in output interpretation questions.
 
-Block the Sales subnet (192.168.20.0/24) from reaching 192.168.30.0/24:
+**Inside local**: the private IP address assigned to an internal host as seen from inside the network. Example: 192.168.1.10.
 
-```ios
-R1(config)# access-list 10 deny 192.168.20.0 0.0.0.255
-R1(config)# access-list 10 permit any
-```
+**Inside global**: the public IP address that represents the internal host as seen from outside the network (the internet). Example: 203.0.113.5.
 
-Apply it close to the destination (the server's segment):
+**Outside global**: the public IP address of the external destination server as seen from outside. Example: 8.8.8.8.
 
-```ios
-R1(config)# interface GigabitEthernet0/2
-R1(config-if)# ip access-group 10 out
-```
+**Outside local**: the IP address of an external destination as seen from inside the network. In most deployments this equals the outside global.
 
-### Extended ACL Configuration
+[SHOW TOPOLOGY: Internal host 192.168.1.10 → R1 NAT router → Internet → Server 8.8.8.8]
 
-Block only Telnet (TCP port 23) from Sales to the server, while permitting everything else:
+When an internal host at 192.168.1.10 sends a packet to 8.8.8.8, the NAT router translates the source. The packet leaves R1 with source 203.0.113.5 (inside global). The reply comes back to 203.0.113.5 and R1 translates it back to 192.168.1.10 before forwarding it to the host.
 
-```ios
-R1(config)# access-list 110 deny tcp 192.168.20.0 0.0.0.255 host 192.168.30.1 eq 23
-R1(config)# access-list 110 permit ip any any
-```
+[PAUSE — 3 seconds]
 
-Apply it close to the source (Sales segment interface, inbound):
-
-```ios
-R1(config)# interface GigabitEthernet0/1
-R1(config-if)# ip access-group 110 in
-```
-
-CCNA Exam Tip: Every ACL has an implicit `deny any any` at the end. If your only ACL entry is a deny statement, all other traffic is also blocked. Always add an explicit `permit ip any any` at the end of an ACL unless your intent is to block everything that did not match a permit.
-
-### Named ACLs
-
-Named ACLs use descriptive names instead of numbers and allow individual entries to be deleted or resequenced:
-
-```ios
-R1(config)# ip access-list extended BLOCK_TELNET
-R1(config-ext-nacl)# deny tcp 192.168.20.0 0.0.0.255 any eq 23
-R1(config-ext-nacl)# permit ip any any
-```
-
-Named ACLs are easier to manage in production — you can remove a single entry by sequence number without deleting and recreating the entire ACL.
+Understanding these four terms is essential for reading `show ip nat translations` output.
 
 ---
 
-## Section 4: Wildcard Masks in ACLs [15:00 - 18:30]
+## Section 2: Static NAT (4:00–7:00)
 
-ACL wildcard masks follow the same logic as OSPF wildcard masks. A 0 bit means the address bit must match. A 1 bit means any value is accepted.
+[SHOW SLIDE: "Static NAT — One-to-One Permanent Mapping"]
 
-Examples:
+Static NAT creates a permanent one-to-one mapping between one inside local address and one inside global address. It is used when an internal server must always be reachable from the internet at a specific public IP address — for example, a web server or mail server.
 
-- `host 192.168.10.5` = exactly 192.168.10.5 (wildcard 0.0.0.0)
-- `192.168.10.0 0.0.0.255` = any address in the 192.168.10.0/24 range
-- `any` = all addresses (wildcard 255.255.255.255)
-- `192.168.0.0 0.0.255.255` = any address in the 192.168.0.0/16 range
+Configuration requires three steps:
 
-CCNA Exam Tip: The keyword `host` is shorthand for a wildcard of 0.0.0.0 — it matches exactly one IP address. The keyword `any` is shorthand for a wildcard of 255.255.255.255 — it matches all IP addresses. You will see both on the exam and must recognize them as wildcard shortcuts.
-
----
-
-## Section 5: Verification and Troubleshooting [18:30 - 22:00]
-
-Key verification commands:
-
-```ios
-R1# show access-lists
-R1# show ip interface GigabitEthernet0/1
-R1# show running-config | section access-list
-```
-
-### Interpreting show access-lists
+**Step 1: Define the static translation mapping.**
 
 ```text
-Extended IP access list 110
-    10 deny tcp 192.168.20.0 0.0.0.255 host 192.168.30.1 eq telnet (8 matches)
-    20 permit ip any any (1432 matches)
+Router(config)# ip nat inside source static 192.168.1.100 203.0.113.10
 ```
 
-The match counter shows how many packets matched each entry. A zero-match deny entry may indicate the ACL is never being hit — verify placement and direction.
+This tells the router: whenever you see traffic from inside source 192.168.1.100, translate it to 203.0.113.10. And whenever traffic arrives destined for 203.0.113.10, translate it to 192.168.1.100.
 
-### Common ACL Mistakes
+**Step 2: Mark the inside interface.**
 
-- Wrong direction (in vs out): use `show ip interface` to confirm the applied direction
-- ACL applied to wrong interface: check which interface faces the intended traffic
-- Implicit deny blocking all traffic: missing `permit ip any any` at the end
-- Shadowed entry: a deny statement earlier in the list is catching traffic that was intended to match a permit entry lower in the list
+```text
+Router(config)# interface GigabitEthernet0/0
+Router(config-if)# ip nat inside
+```
 
-For additional study, visit cisco.com/c/en/us/training-events/training-certifications and professormesser.com.
+**Step 3: Mark the outside interface.**
+
+```text
+Router(config)# interface GigabitEthernet0/1
+Router(config-if)# ip nat outside
+```
+
+[SHOW SLIDE: "Static NAT — Use Cases"]
+
+Static NAT is bidirectional by design. Internet users can initiate connections to the inside global address and the router forwards them to the internal server. This makes static NAT appropriate for hosting public-facing services on internal infrastructure.
 
 ---
 
-## End Card
+## Section 3: Dynamic NAT (7:00–10:00)
 
-Module 10 Complete
-Next: Module 11 - NAT and PAT Configurations
-Resources: cisco.com/c/en/us/training-events/training-certifications | professormesser.com
-Texas Wesleyan University | CIS-3322 Advanced Networking | Professor Nash
+[SHOW SLIDE: "Dynamic NAT — Pool of Public Addresses"]
+
+Dynamic NAT translates internal addresses to a pool of public addresses on a first-come, first-served basis. When an internal host initiates a connection, the router picks an available address from the pool and creates a temporary translation. When the connection ends, the address returns to the pool for reuse.
+
+Configuration steps:
+
+**Step 1: Define the pool of public addresses.**
+
+```text
+Router(config)# ip nat pool PUBLIC_POOL 203.0.113.20 203.0.113.30
+  netmask 255.255.255.0
+```
+
+**Step 2: Create an ACL to identify inside hosts that should be translated.**
+
+```text
+Router(config)# access-list 1 permit 192.168.1.0 0.0.0.255
+```
+
+**Step 3: Link the ACL to the pool.**
+
+```text
+Router(config)# ip nat inside source list 1 pool PUBLIC_POOL
+```
+
+**Step 4: Mark inside and outside interfaces** (same as static NAT).
+
+[SHOW SLIDE: "Dynamic NAT Limitation"]
+
+Dynamic NAT has a critical limitation: if all addresses in the pool are in use, additional inside hosts cannot get translated and their connections are dropped. Dynamic NAT is rarely used in enterprise environments today because PAT achieves much better address utilization.
+
+---
+
+## Section 4: PAT — Port Address Translation (10:00–14:00)
+
+[SHOW SLIDE: "PAT — Many-to-One Translation Using Port Numbers"]
+
+PAT, also called NAT overload, translates multiple inside addresses to a single outside IP address by using unique source port numbers to distinguish connections. This is how virtually every home router and most enterprise routers work today.
+
+When 100 internal hosts all send traffic through a PAT router using a single public IP, the router tracks each connection by creating a unique combination of the public IP plus a translated source port. Reply traffic comes back to the public IP with a specific port number, and the router knows exactly which internal host to forward it to.
+
+**PAT using an interface address:**
+
+```text
+Router(config)# access-list 1 permit 192.168.0.0 0.0.255.255
+Router(config)# ip nat inside source list 1 interface GigabitEthernet0/1 overload
+```
+
+The keyword `overload` enables PAT. Using `interface` instead of a pool means the router uses whatever IP address is currently assigned to that interface as the public translation address.
+
+**PAT using a pool:**
+
+```text
+Router(config)# ip nat pool PAT_POOL 203.0.113.1 203.0.113.1 netmask 255.255.255.0
+Router(config)# ip nat inside source list 1 pool PAT_POOL overload
+```
+
+[SHOW SLIDE: "PAT Port Tracking Table"]
+
+The PAT translation table entry looks like this:
+
+```text
+Pro Inside global        Inside local         Outside local        Outside global
+tcp 203.0.113.1:1024     192.168.1.10:55321   8.8.8.8:443          8.8.8.8:443
+tcp 203.0.113.1:1025     192.168.1.20:49812   8.8.8.8:443          8.8.8.8:443
+```
+
+Both internal hosts appear as the same public IP but with different source ports. The router uses those port numbers to sort return traffic back to the correct host.
+
+[PAUSE — 3 seconds]
+
+PAT supports approximately 65,000 simultaneous connections per public IP address based on the TCP/UDP port range. One public IP address can support a large enterprise.
+
+---
+
+## Section 5: NAT64 (14:00–16:00)
+
+[SHOW SLIDE: "NAT64 — IPv6 to IPv4 Translation"]
+
+NAT64 allows IPv6-only hosts to communicate with IPv4 destinations. As organizations migrate to IPv6, they need a mechanism to reach IPv4-only internet services. NAT64 provides that bridge.
+
+A NAT64-capable router translates IPv6 packets from internal IPv6 hosts into IPv4 packets before forwarding them to IPv4 destinations. The router maintains a translation state similar to PAT.
+
+The CCNA tests NAT64 at the conceptual level. You need to understand:
+
+- NAT64 translates between IPv6 and IPv4
+
+- It is used during IPv6 transition when IPv6 hosts must reach IPv4-only services
+
+- A companion protocol called DNS64 synthesizes AAAA records for IPv4 hosts so that IPv6 clients can resolve them
+
+The Cisco IOS command to enable NAT64 starts with:
+
+```text
+Router(config)# nat64 enable
+```
+
+However, full NAT64 configuration syntax is beyond CCNA scope. Know the concept and purpose.
+
+---
+
+## Section 6: NAT Verification Commands (16:00–18:30)
+
+[SHOW SLIDE: "NAT Verification — Key Commands"]
+
+The primary NAT verification commands are:
+
+```text
+Router# show ip nat translations
+Router# show ip nat translations verbose
+Router# show ip nat statistics
+Router# debug ip nat
+```
+
+`show ip nat translations` displays the current translation table. Each entry shows the protocol, inside global, inside local, outside local, and outside global addresses and port numbers.
+
+`show ip nat statistics` shows totals for translations created, expired, and failed. It also shows which interfaces are marked inside and outside.
+
+Sample output from `show ip nat statistics`:
+
+```text
+Total active translations: 47 (1 static, 46 dynamic; 46 extended)
+Outside interfaces: GigabitEthernet0/1
+Inside interfaces: GigabitEthernet0/0
+Hits: 12345  Misses: 0
+```
+
+`debug ip nat` shows real-time translation events. Be careful — on high-traffic routers this can generate thousands of lines per second. Use it in lab environments or during controlled maintenance windows.
+
+---
+
+## Section 7: NAT Troubleshooting (18:30–21:30)
+
+[SHOW SLIDE: "NAT Troubleshooting — Common Failures"]
+
+The most common NAT configuration mistakes are:
+
+**Missing inside or outside interface designation.** If you configure the translation rule but forget to apply `ip nat inside` and `ip nat outside` to interfaces, NAT never triggers. Check with `show ip nat statistics` — it shows which interfaces are marked.
+
+**ACL not matching the correct addresses.** If the ACL in the `ip nat inside source list` command does not match the source addresses of your internal hosts, those hosts are not translated. Use `show access-lists` to verify hit counts.
+
+**Routing after NAT.** After translation, the packet with the public source address must be routable to the internet. If there is no default route pointing toward the internet, translated packets are dropped.
+
+**Pool exhaustion with dynamic NAT.** If all pool addresses are in use, new translations fail silently. Monitor with `show ip nat statistics` and look for translation failure counters.
+
+[SHOW SLIDE: "NAT Troubleshooting Commands Summary"]
+
+```text
+Router# show ip nat translations
+Router# show ip nat statistics
+Router# show ip interface GigabitEthernet0/0
+Router# show access-lists 1
+Router# clear ip nat translation *
+```
+
+`clear ip nat translation *` removes all dynamic NAT translations. Use this during troubleshooting to force re-establishment of translations and confirm the configuration works correctly.
+
+[PAUSE — 3 seconds]
+
+---
+
+## Conclusion (21:30–23:00)
+
+[SHOW SLIDE: "Module 10 Summary"]
+
+Let's wrap up Module 10. Today you learned:
+
+- Static NAT creates permanent one-to-one mappings for hosting internal servers
+
+- Dynamic NAT maps internal hosts to a pool of public addresses — limited by pool size
+
+- PAT (overload) allows thousands of internal hosts to share one public IP using port numbers
+
+- The four NAT address terms: inside local, inside global, outside local, outside global
+
+- NAT64 bridges IPv6 hosts to IPv4 destinations during transition
+
+- Verify NAT with `show ip nat translations` and `show ip nat statistics`
+
+[SHOW SLIDE: "CCNA Exam Focus Areas"]
+
+For the CCNA exam: know how to read `show ip nat translations` output, identify PAT configuration by the `overload` keyword, and distinguish the four address types. These appear frequently in scenario and output interpretation questions.
+
+Your lab this module has you configure static NAT, PAT, and verify the translation table. The reading guide includes a complete command reference and troubleshooting checklist.
+
+[PAUSE — 3 seconds]
+
+See you in Module 11 where we cover DHCP and DNS. Take care.
+
+---
+
+*End of Module 10 Video Script*

@@ -1,53 +1,286 @@
-# Reading Guide: Module 14 - Storytelling with Data and Executive Reporting
-## Course: CIS-4336_Data_Analytics (CompTIA Data+)
+# Reading Guide: Module 14 — Machine Learning for Data Analysts
+
+## Course: CIS-4336 Data Analytics
+
+## Texas Wesleyan University | Professor Nash
+
+**Certification Alignment:** CompTIA Data+ (DA0-001)
 
 ---
 
 ### Introduction
-Welcome to **Module 14 - Storytelling with Data and Executive Reporting**! Producing a technically correct analysis is only half the analyst's job. The other half is communicating findings in a way that drives decisions. This module covers the data storytelling and executive communication skills tested on the **CompTIA Data+** exam: structuring an analytical narrative, choosing the right level of detail for an executive audience, designing reports that prioritize insight over raw data, and avoiding common communication pitfalls that obscure findings.
 
-Decision-makers at the executive level rarely want to see the underlying data or methodology — they need to understand what happened, why it matters, and what action is recommended. An analyst who can translate complex analysis into a clear, concise narrative with appropriate visuals is far more effective than one who produces technically sophisticated output that no one acts on.
+Welcome to **Module 14 — Machine Learning for Data Analysts**. This module provides the conceptual foundation in machine learning that the CompTIA Data+ exam expects and that modern analyst roles require. You will not become a machine learning engineer from one module, but you will understand what supervised and unsupervised learning are, how to prepare data for a model, what train-test split means and why it matters, and how to diagnose whether a model is overfitting or underfitting.
 
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **Data storytelling**: The practice of combining data, narrative text, and visualizations into a coherent presentation that leads an audience from a question or problem to a conclusion and recommended action. Effective data stories have a clear structure — context (what is the situation?), finding (what does the data show?), and implication (what should we do?). The best stories make a single, memorable point rather than presenting every finding equally.
-*   **Executive summary and audience calibration**: An executive summary presents the most important findings and recommendations first, in plain language, without requiring the reader to understand the analytical methodology. Executives need the "so what" — the business implication — not the "how." The full methodology, data tables, and technical details belong in an appendix for audiences who need them. Calibrating the depth and vocabulary of a report to the audience's background is a core communication skill.
-*   **Insight vs. data dump**: A report that lists every metric without interpretation is a data dump — it transfers work to the reader rather than delivering value. An insight-driven report contextualizes numbers: instead of "Q3 revenue was $4.2M," an insight states "Q3 revenue was $4.2M, 12% below target, driven by a 30% drop in enterprise renewals — renewals require immediate attention." The difference between data and insight is the explanation of significance.
-*   **Annotation and callout techniques**: Annotations — labels, callout boxes, reference lines, and arrows added directly to a chart — direct the reader's attention to the most important element. A reference line marking a target or threshold, or a callout box highlighting the single largest outlier, eliminates the need for the reader to scan the entire chart to find what matters. Annotations are especially critical in executive presentations where attention is limited.
-*   **Report design principles (signal vs. noise)**: Effective reports minimize visual clutter (noise) and maximize the prominence of key findings (signal). Noise includes excessive gridlines, decorative chart elements, redundant legends, and tables with dozens of columns where three would suffice. Every element of a report should earn its place by contributing to the reader's understanding of the core message.
+These concepts appear in Domain 3 of the Data+ exam and in job interviews for analyst roles at every level. The goal is fluent conceptual understanding, not code memorization.
 
 ---
 
-### 2. Certification Exam Tips
-*   **Domain weight:** Data communication and reporting questions appear in Domain 4 (Analytics and Reporting, ~23%) of the Data+ DA0-001 exam. The exam tests your ability to identify the appropriate report format, level of detail, and visualization for a given audience and purpose.
-*   **Exam trap — executive vs. technical audience:** The exam will describe a stakeholder type and ask which report style is appropriate. Executives need summaries with business implications and recommended actions. Technical teams need detailed methodologies, query results, and error analysis. If the question mentions "C-suite," "VP," or "director," the answer is a concise summary with key findings first.
-*   **Exam trap — insight vs. raw data presentation:** If a scenario asks what an analyst should add to a chart showing a downward trend to make it more actionable, the answer is context — annotations, a reference line showing the target, and a callout explaining the cause. Raw data tables without interpretation do not constitute insights.
-*   **Exam trap — when to use tables vs. charts:** Tables are appropriate when the audience needs precise values for specific data points or needs to look up individual records. Charts are appropriate when the audience needs to see patterns, trends, comparisons, or distributions. If a scenario asks how to show a month-over-month trend, the answer is a line chart, not a table.
-*   **Study Resource:** The data visualization communication chapters of [Introduction to Data Science by Rafael A. Irizarry](https://rafalab.github.io/dsbook/) address how to present findings clearly and honestly to different audiences. The [Data Analysis with Python Course by freeCodeCamp](https://www.youtube.com/watch?v=GPVsHOl2238) demonstrates building annotated charts and summary outputs that communicate findings effectively.
+### Learning Objectives
+
+By the end of this module you will be able to:
+
+* Distinguish supervised learning from unsupervised learning and give one example of each
+* Explain the purpose and workflow of scikit-learn's fit-predict API
+* Apply common feature engineering techniques: encoding, scaling, date decomposition, and log transformation
+* Implement a train-test split and explain why it is required for honest model evaluation
+* Compare classification and regression tasks and name one algorithm for each
+* Distinguish overfitting from underfitting and describe two remedies for each
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the data communication and visualization chapters in the OER Textbook: [Introduction to Data Science by Rafael A. Irizarry](https://rafalab.github.io/dsbook/). Focus on the sections covering presenting findings to non-technical audiences, structuring reports for impact, and the principles of honest, clear data communication.
-*   **Required Video:** Watch the data analysis and visualization sections of the [Data Analysis with Python Course by freeCodeCamp](https://www.youtube.com/watch?v=GPVsHOl2238), paying attention to how analysts structure their outputs, annotate charts to highlight key findings, and summarize results for different audiences.
+### Section 1: Types of Machine Learning
+
+#### Supervised Learning
+
+In supervised learning, every training example has a label — the correct answer the model is trying to predict. The model learns a mapping from input features to the label by minimizing prediction error across thousands of examples.
+
+Supervised learning divides into two sub-types based on the type of label:
+
+* **Classification** — the label is a category. Examples: spam or not spam; will churn or not; which product category does this image show?
+* **Regression** — the label is a continuous number. Examples: predicted sale price; next quarter's revenue; expected customer lifetime value.
+
+Common supervised learning algorithms:
+
+| Algorithm | Type | Characteristics |
+|---|---|---|
+| Logistic regression | Classification | Fast, interpretable, works well for linearly separable data |
+| Linear regression | Regression | Fast, interpretable, assumes linear relationship |
+| Decision tree | Classification or regression | Interpretable, prone to overfitting |
+| Random forest | Classification or regression | Reduces overfitting by averaging many trees; less interpretable |
+| Gradient boosting (XGBoost) | Classification or regression | High performance, complex, requires tuning |
+| K-nearest neighbors (KNN) | Classification or regression | Simple, no training phase, slow at prediction time |
+| Support vector machine (SVM) | Classification | Effective in high-dimensional spaces, requires feature scaling |
+
+#### Unsupervised Learning
+
+In unsupervised learning, the data has no labels. The algorithm finds structure — patterns, groupings, or compressed representations — without being told what to look for.
+
+The most common unsupervised task is **clustering**, which groups similar records together. K-means clustering assigns every record to one of k clusters by minimizing the distance from each record to its cluster center (centroid):
+
+```python
+from sklearn.cluster import KMeans
+model = KMeans(n_clusters=3, random_state=42)
+model.fit(X_scaled)
+labels = model.labels_
+```
+
+Other unsupervised techniques:
+
+* **Dimensionality reduction** — compresses many features into fewer dimensions while preserving variance. Principal Component Analysis (PCA) is the most common method.
+* **Anomaly detection** — identifies records significantly different from the majority; used for fraud detection and equipment failure prediction.
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Write a one-page executive summary of a sales analysis**: Structure the summary with findings first, then implications, then a recommended action — using plain language with no statistical jargon. Limit the visual to a single annotated chart.
-*   **Annotate a trend chart to direct reader attention**: Add a reference line marking the sales target, a callout box on the month with the largest drop, and a brief text annotation explaining the cause visible in the data.
-*   **Audit a data dump report for signal-to-noise ratio**: Review a sample report with 12 metrics tables and identify which three metrics most directly answer the stated business question, then redesign the report to lead with those three.
+### Section 2: scikit-learn Basics
+
+#### The Estimator API
+
+Every scikit-learn model implements the same four methods:
+
+* `fit(X, y)` — trains the model; for unsupervised models, `fit(X)` with no y
+* `predict(X)` — returns class labels for classifiers or numeric values for regressors
+* `predict_proba(X)` — returns class probabilities (classifiers only)
+* `score(X, y)` — returns the default metric (accuracy for classifiers, R² for regressors)
+
+This uniform interface means switching algorithms requires only one line change:
+
+```python
+# Compare two models by changing only this line
+model = LogisticRegression()
+# model = RandomForestClassifier(n_estimators=100)
+
+model.fit(X_train, y_train)
+predictions = model.predict(X_test)
+print(accuracy_score(y_test, predictions))
+```
+
+#### Evaluation Metrics
+
+For classification:
+
+* **Accuracy** — fraction of correct predictions. Misleading when classes are imbalanced.
+* **Precision** — of all predicted positives, how many are correct? Minimizes false positives.
+* **Recall** — of all actual positives, how many did the model find? Minimizes false negatives.
+* **F1 score** — harmonic mean of precision and recall; useful when both matter.
+* **Confusion matrix** — table showing true positives, true negatives, false positives, false negatives.
+
+For regression:
+
+* **MAE (Mean Absolute Error)** — average absolute difference between predicted and actual values.
+* **RMSE (Root Mean Squared Error)** — square root of average squared error; penalizes large errors more.
+* **R² (R-squared)** — proportion of variance in the target explained by the model; 1.0 is perfect.
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read the data communication chapters in [Introduction to Data Science by Rafael A. Irizarry](https://rafalab.github.io/dsbook/).
-- [ ] Watch the [Data Analysis with Python Course by freeCodeCamp](https://www.youtube.com/watch?v=GPVsHOl2238).
-- [ ] Review the lab instructions and understand what each task requires.
-- [ ] Proceed to the weekly hands-on lab activity.
+### Section 3: Feature Engineering
+
+#### Why Feature Engineering Matters
+
+Raw data rarely arrives ready for a model. Dates are strings. Categories are text. Numeric columns span different scales. Feature engineering converts raw data into model-ready numeric features and is where analytical judgment creates the most leverage on model quality.
+
+#### Encoding Categorical Variables
+
+One-hot encoding creates a binary column for each unique category value:
+
+```python
+df_encoded = pd.get_dummies(df, columns=['Region', 'Product'], drop_first=True)
+```
+
+`drop_first=True` removes one dummy column per variable to avoid the dummy variable trap (perfect multicollinearity).
+
+Ordinal encoding maps ordered categories to integers:
+
+```python
+from sklearn.preprocessing import OrdinalEncoder
+enc = OrdinalEncoder(categories=[['Small', 'Medium', 'Large']])
+df['size_encoded'] = enc.fit_transform(df[['size']])
+```
+
+#### Scaling Numeric Features
+
+Many algorithms are sensitive to feature scale. StandardScaler (Z-score normalization):
+
+```python
+from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)   # transform only — never fit on test set
+```
+
+MinMaxScaler (0–1 range):
+
+```python
+from sklearn.preprocessing import MinMaxScaler
+scaler = MinMaxScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+```
+
+#### Date Decomposition
+
+```python
+df['year'] = df['order_date'].dt.year
+df['month'] = df['order_date'].dt.month
+df['day_of_week'] = df['order_date'].dt.dayofweek
+df['is_weekend'] = df['day_of_week'].isin([5, 6]).astype(int)
+```
+
+#### Log Transformation
+
+For right-skewed numeric variables:
+
+```python
+import numpy as np
+df['log_revenue'] = np.log1p(df['revenue'])  # log1p handles zeros: log(1 + x)
+```
+
+#### Data Leakage Warning
+
+Data leakage occurs when information from the test set influences the training process. Always split first, then fit transformers on training data only, then apply (transform only) to the test set.
+
+---
+
+### Section 4: Train/Test Split and Cross-Validation
+
+#### The Train/Test Split
+
+```python
+from sklearn.model_selection import train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y,
+    test_size=0.2,
+    random_state=42,
+    stratify=y   # preserves class proportions in both sets
+)
+```
+
+`stratify=y` is important for classification tasks with imbalanced classes.
+
+#### Cross-Validation
+
+For small datasets, a single split may give unreliable estimates. K-fold cross-validation trains and evaluates the model k times on different data partitions:
+
+```python
+from sklearn.model_selection import cross_val_score
+scores = cross_val_score(model, X, y, cv=5, scoring='accuracy')
+print(f"CV accuracy: {scores.mean():.3f} +/- {scores.std():.3f}")
+```
+
+---
+
+### Section 5: Overfitting and Underfitting
+
+#### The Bias-Variance Tradeoff
+
+* **Bias** — systematic error from incorrect model assumptions. High bias produces underfitting.
+* **Variance** — sensitivity to training data fluctuations. High variance produces overfitting.
+
+#### Detecting Overfitting and Underfitting
+
+| Symptom | Training accuracy | Test accuracy | Diagnosis |
+|---|---|---|---|
+| Both low | 62% | 60% | Underfitting (high bias) |
+| Both high | 91% | 89% | Good fit |
+| High train, low test | 98% | 63% | Overfitting (high variance) |
+
+#### Remedies for Overfitting
+
+* Reduce model complexity
+* Get more training data
+* Apply regularization (Ridge or Lasso)
+* Use ensemble methods (random forest)
+* Early stopping during training
+
+#### Remedies for Underfitting
+
+* Use a more complex algorithm
+* Add more features through feature engineering
+* Reduce regularization strength
+* Train for more iterations
+
+---
+
+### Key Terms
+
+* **supervised learning** — machine learning where training data includes labeled examples.
+* **unsupervised learning** — machine learning where data has no labels; the algorithm finds structure independently.
+* **classification** — a supervised task where the label is a category.
+* **regression** — a supervised task where the label is a continuous number.
+* **clustering** — an unsupervised task that groups similar records without predefined labels.
+* **feature engineering** — transforming raw data into numeric input features suitable for a model.
+* **one-hot encoding** — converting a categorical variable into binary columns, one per category.
+* **scaling** — normalizing numeric features to a common range or distribution.
+* **train/test split** — dividing data into training (model learns) and test (model is evaluated) sets.
+* **data leakage** — when test set information contaminates the training process, producing overly optimistic results.
+* **overfitting** — a model that memorizes training data including noise; performs poorly on new data.
+* **underfitting** — a model too simple to capture real patterns; performs poorly on both training and new data.
+* **cross-validation** — evaluating a model across multiple data partitions for a more reliable accuracy estimate.
+* **bias** — systematic error from incorrect model assumptions; associated with underfitting.
+* **variance** — sensitivity to training data fluctuations; associated with overfitting.
+* **regularization** — a penalty on model complexity to reduce overfitting.
+* **confusion matrix** — a table of true positives, true negatives, false positives, and false negatives.
+
+---
+
+### Review Questions
+
+1. What is the difference between a classification task and a regression task? Give one real-world example of each.
+
+2. A model achieves 99% accuracy on training data but only 54% on test data. What is the diagnosis, and what are two approaches to fixing it?
+
+3. Why must you fit a StandardScaler on the training set only and never on the full dataset before splitting?
+
+4. Explain the purpose of cross-validation. When would you use it instead of a single train-test split?
+
+5. What is one-hot encoding and why is `drop_first=True` recommended?
+
+---
+
+### OER Resources
+
+* **Google Machine Learning Crash Course** — [developers.google.com/machine-learning/crash-course](https://developers.google.com/machine-learning/crash-course)
+* **scikit-learn documentation** — [scikit-learn.org/stable](https://scikit-learn.org/stable/)
+* **StatQuest with Josh Starmer — ML fundamentals playlist** — [youtube.com/c/joshstarmer](https://www.youtube.com/c/joshstarmer)
+* **Hands-On Machine Learning with Scikit-Learn — free preview** — Aurélien Géron, O'Reilly

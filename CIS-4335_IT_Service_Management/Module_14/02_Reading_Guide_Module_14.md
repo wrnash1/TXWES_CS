@@ -1,57 +1,245 @@
-# Reading Guide: Module 14 - Service Management Practices - IT Asset Management and Service Configuration Management
-## Course: CIS-4335_IT_Service_Management (ITIL 4 Foundation)
+# Reading Guide: Module 14 — Risk and Compliance in ITSM
+
+## Course: CIS-4335 IT Service Management
+
+## Texas Wesleyan University | Professor Nash
+
+**Certification Alignment:** ITIL 4 Foundation
 
 ---
 
-### Introduction
-Welcome to **Module 14 - Service Management Practices: IT Asset Management and Service Configuration Management**! These two practices provide the foundational visibility that all other ITIL 4 practices depend on. You cannot manage what you cannot see — and these practices ensure the organization has an accurate, up-to-date view of its IT assets and service components. This module covers the purpose of each practice, key definitions including configuration items and the CMDB, and how these practices connect to Change Enablement, Incident Management, and Problem Management.
+## Overview
 
-As a student, you will learn the distinction between IT assets and configuration items, understand how the Configuration Management Database (CMDB) supports service management, and explore how asset and configuration data flows into other practices. Make sure to complete the checklist and review the glossary terms before beginning the lab activity.
+Risk and compliance are not separate disciplines layered on top of IT service management — they are woven into it. Every change request includes a risk assessment. Every incident has a compliance dimension when sensitive data is involved. Every asset that is deployed or disposed of creates audit evidence. This module connects the risk and compliance frameworks that govern real-world IT organizations to the ITIL 4 practices you have been studying throughout this course.
 
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The ITIL 4 Foundation exam expects you to know these concepts precisely:
-
-*   **IT Asset Management**: The ITIL 4 practice whose purpose is to plan and manage the full lifecycle of all IT assets in order to help the organization maximize value, control costs, manage risks, support decision-making about purchase, reuse, retirement, and disposal, and meet regulatory and contractual requirements.
-*   **IT Asset**: Any financially valuable component that can contribute to the delivery of an IT product or service. IT assets include hardware (servers, laptops, network devices), software licenses, virtual assets, and cloud resources. They are tracked for financial and lifecycle purposes.
-*   **Service Configuration Management**: The ITIL 4 practice whose purpose is to ensure that accurate and reliable information about the configuration of services and the configuration items (CIs) that support them is available when and where it is needed.
-*   **Configuration Item (CI)**: Any component that needs to be managed in order to deliver an IT service. CIs include hardware, software, documentation, people, facilities, and relationships between components. CIs are recorded in the Configuration Management Database.
-*   **Configuration Management Database (CMDB)**: A database used to store configuration records throughout their lifecycle. The CMDB records CIs, their attributes, and the relationships between them. It provides the foundational data that supports Change Enablement, Incident Management, Problem Management, and other practices.
-*   **Configuration Record**: A document in the CMDB that contains the details of a CI. A configuration record typically includes the CI's type, owner, version, status, and its relationships to other CIs.
-*   **Asset vs. CI Distinction**: All CIs may be assets, but not all assets are CIs. An IT asset has financial value and is tracked through its lifecycle. A CI is tracked for operational service management purposes. A server is both an asset (financial value, depreciation, procurement) and a CI (operational relationships, incidents, changes). A software license may be an asset but not necessarily a CI.
+Use this guide alongside the Module 14 video lecture and ITIL 4 Foundation study resources.
 
 ---
 
-### 2. Certification Exam Tips
-*   **IT Asset Management vs. Service Configuration Management:** Two distinct practices that are often confused. Asset Management tracks financial value and lifecycle. Configuration Management tracks operational data and relationships for service delivery. Both use overlapping data but serve different purposes.
-*   **CMDB Is Not a Single Database:** The exam tests that the CMDB is a logical concept — it may be implemented as a single database or as a federated set of data stores. What matters is that the data is available, accurate, and reliable.
-*   **CIs Include Non-Technical Items:** A common exam trap assumes CIs are only hardware and software. ITIL 4 explicitly includes documentation, people, facilities, and service relationships as potential CIs.
-*   **CMDB Supports Multiple Practices:** Change Enablement uses the CMDB to assess the impact of proposed changes. Incident Management uses it to trace affected services. Problem Management uses it to identify common CIs involved in recurring incidents. Know these relationships.
-*   **Asset Lifecycle Includes Disposal:** IT Asset Management covers the full asset lifecycle — from procurement planning through retirement and disposal. The exam may test that disposal planning (including secure data destruction) is part of the practice.
-*   **Study Resource:** The Axelos ITIL 4 Foundation resources at [https://www.axelos.com/certifications/itil-service-management/itil-4-foundation](https://www.axelos.com/certifications/itil-service-management/itil-4-foundation) include official glossary definitions for IT asset, configuration item, and the CMDB.
-*   **Video Resource:** The [ITIL 4 Foundation Certification Complete Course Playlist](https://www.youtube.com/playlist?list=PLK-tWc9i-GZ5V68tH3pB2rWn3Bv-yP85W) on YouTube includes dedicated videos on IT Asset Management and Service Configuration Management with exam scenario examples.
+## Risk in ITSM
+
+### ITIL 4 Definition of Risk
+
+ITIL 4 defines risk as a possible event that could cause harm or loss, or affect the ability to achieve objectives. Risk has two defining characteristics:
+
+- **Likelihood** — how probable is the event
+- **Impact** — how severe would the consequences be
+
+Risk exposure is typically expressed as the product of likelihood and impact. A low-likelihood, high-impact risk may warrant more attention than a high-likelihood, low-impact risk, depending on the specific nature of the impact.
+
+### Risk Responses
+
+When a risk is identified and assessed, the organization must decide how to respond. ITIL 4 recognizes four risk response strategies:
+
+| Response | Description | When to Use |
+|---|---|---|
+| Avoid | Eliminate the activity or condition that creates the risk | When the risk exceeds acceptable tolerance and the activity is not essential |
+| Mitigate | Implement controls that reduce likelihood, impact, or both | Most common response — reduces risk to an acceptable level |
+| Transfer | Shift the financial consequences to another party (e.g., insurance, contracts) | When financial impact is the primary concern and the risk cannot be eliminated |
+| Accept | Acknowledge the risk and take no further action | When the cost of control exceeds the value of risk reduction and risk is within tolerance |
+
+### The Risk Register
+
+A risk register is the central management tool for tracking identified risks. In ITSM, risk registers exist at multiple levels:
+
+- **Service-level registers** track risks specific to individual services — availability risks, capacity risks, security risks
+- **Project-level registers** track risks in change and improvement initiatives
+- **Organizational registers** aggregate high-level strategic and operational risks for executive review
+
+A risk register entry contains: risk description, category, likelihood score, impact score, risk score, risk owner, response strategy, controls in place, and residual risk level.
+
+**Residual risk** is the risk that remains after controls are applied. No set of controls eliminates all risk — residual risk is what the organization accepts after implementing its chosen response.
+
+### ITIL 4 Risk Integration
+
+ITIL 4 does not treat risk as a standalone practice separate from service management — it embeds risk consideration throughout the Service Value System.
+
+**Change Enablement** requires that every change be assessed for risk before authorization. The change model for each change type (standard, normal, emergency) defines the level of risk assessment required.
+
+**Problem Management** analyzes the root causes of incidents and identifies the risks that vulnerabilities create if not addressed.
+
+**Continual Improvement** evaluates the risk of proposed improvements — an improvement initiative can introduce new dependencies, temporary instability, or resource constraints.
+
+**Service Level Management** identifies the risks to meeting SLA commitments — availability risks, capacity risks, third-party dependency risks.
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the chapters covering **IT Asset Management** and **Service Configuration Management** in the OER Textbook: [ITIL 4 Foundation Study Notes & Overviews](https://www.axelos.com/). Focus on the purpose of each practice, the definitions of IT asset and configuration item, and the role of the CMDB.
-*   **Required Video:** Watch the video lectures on **IT Asset Management** and **Service Configuration Management** in the official course playlist: [ITIL 4 Foundation Certification Complete Course Playlist](https://www.youtube.com/playlist?list=PLK-tWc9i-GZ5V68tH3pB2rWn3Bv-yP85W).
+## ISO 27001
+
+### What Is ISO 27001?
+
+ISO 27001 is the international standard for Information Security Management Systems (ISMS). It is published by the International Organization for Standardization (ISO) and the International Electrotechnical Commission (IEC). An organization certified to ISO 27001 has demonstrated to an independent auditor that it has established, implemented, maintained, and continually improved an ISMS that meets the standard's requirements.
+
+### The ISMS
+
+An Information Security Management System is a management framework that defines how an organization:
+
+- Identifies and assesses information security risks
+- Selects and implements controls to address those risks
+- Monitors and measures the effectiveness of those controls
+- Continually improves the system based on measurement and review
+
+The ISMS is not a technology product — it is a set of policies, processes, roles, and records that together constitute a systematic approach to managing information security.
+
+### ISO 27001 Structure
+
+ISO 27001 has two parts: the main body (Clauses 4–10) and Annex A.
+
+**Clauses 4–10** contain the mandatory requirements for the ISMS — context, leadership, planning, support, operation, performance evaluation, and improvement. These clauses apply to every organization regardless of size or industry.
+
+**Annex A** contains 114 controls organized into 14 domains. Organizations do not need to implement every control — they must document which controls they have selected and why in a document called the Statement of Applicability (SoA). Controls that are excluded must have a documented justification.
+
+### Key Annex A Domains for ITSM
+
+| Domain | Relevant ITSM Connection |
+|---|---|
+| A.8 — Asset Management | Maps to IT Asset Management practice |
+| A.9 — Access Control | User account management, privileged access, access reviews |
+| A.12 — Operations Security | Change management, malware protection, backup, logging |
+| A.16 — Incident Management | Aligns with ITIL 4 Incident Management practice |
+| A.15 — Supplier Relationships | Third-party access controls, vendor assessments |
+
+### Risk Assessment Under ISO 27001
+
+ISO 27001 requires a formal, documented risk assessment process. The key steps are:
+
+1. Identify information assets and their owners
+2. Identify threats to each asset (unauthorized access, data loss, system failure, natural disaster)
+3. Identify vulnerabilities that each threat could exploit
+4. Assess likelihood and impact for each threat-vulnerability combination
+5. Calculate risk scores
+6. Select controls from Annex A (or other sources) to address risks exceeding the organization's tolerance
+7. Document all decisions in the risk treatment plan and Statement of Applicability
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will apply these concepts in the following activities:
-*   **Classify assets and CIs**: Given a list of twenty IT components (servers, laptops, software licenses, documentation, network cables, contracts), classify each as an IT asset only, a CI only, or both, and justify your classification using ITIL 4 definitions.
-*   **Build a CMDB entry**: Using a provided CMDB template, create a configuration record for a sample server — including CI type, owner, version, status, hardware specifications, and at least three relationships to other CIs (such as the services it supports and the applications it hosts).
-*   **Map CMDB dependencies**: For a given scenario where a critical server experiences an incident, use a sample CMDB relationship map to identify all services and applications affected, and explain how this information supports faster incident resolution.
+## SOC 2
+
+### What Is SOC 2?
+
+SOC 2 — System and Organization Controls 2 — is an auditing framework developed by the American Institute of Certified Public Accountants (AICPA). It is used by service organizations — cloud providers, SaaS companies, managed service providers, data processing firms — to demonstrate that their controls meet defined standards for protecting customer data.
+
+SOC 2 evaluates controls against five Trust Services Criteria:
+
+| Criterion | Description | Mandatory? |
+|---|---|---|
+| Security | Protection against unauthorized access | Yes |
+| Availability | System availability for operation and use | No |
+| Processing Integrity | Completeness and accuracy of processing | No |
+| Confidentiality | Protection of confidential information | No |
+| Privacy | Collection and use of personal information | No |
+
+Security is the only mandatory criterion. Organizations select additional criteria based on their customer agreements and business context. A cloud infrastructure provider might include Availability; a company handling personal health data might include Privacy.
+
+### Type I vs. Type II Reports
+
+**SOC 2 Type I** evaluates whether the described controls are suitably designed at a specific point in time. It is a point-in-time snapshot.
+
+**SOC 2 Type II** evaluates whether the controls operated effectively over a defined period — typically six to twelve months. It demonstrates sustained operational performance, not just design adequacy.
+
+Most enterprise customers require SOC 2 Type II reports from their service providers because it provides evidence of consistent operation, not just design intent.
+
+### SOC 2 and ITSM Evidence
+
+SOC 2 auditors look for evidence that controls are operating consistently. ITIL 4 practices generate much of this evidence:
+
+- **Change Management tickets** — evidence that changes are authorized before deployment (Security criterion)
+- **Incident records** — evidence that security incidents are detected, logged, and resolved (Security criterion)
+- **Deployment records** — evidence that software testing and approval gates are followed (Processing Integrity criterion)
+- **Asset inventories** — evidence that systems processing customer data are identified and controlled (Security criterion)
+- **User access reviews** — evidence that access to systems is regularly reviewed and revoked for departed users (Security criterion)
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and memorize the definitions of IT asset, configuration item, CMDB, and the asset-vs-CI distinction.
-- [ ] Read the chapters covering **IT Asset Management** and **Service Configuration Management** in [ITIL 4 Foundation Study Notes & Overviews](https://www.axelos.com/).
-- [ ] Watch the video lectures on **IT Asset Management** and **Service Configuration Management** in [ITIL 4 Foundation Certification Complete Course Playlist](https://www.youtube.com/playlist?list=PLK-tWc9i-GZ5V68tH3pB2rWn3Bv-yP85W).
-- [ ] Review the activities outlined in the lab instructions.
-- [ ] Proceed to the weekly hands-on lab activity.
+## Audit Evidence Collection
+
+### What Auditors Look For
+
+An audit is an independent assessment of whether controls meet a defined standard. Auditors look for evidence that:
+
+1. Required policies and procedures exist and are formally approved
+2. Controls described in policies are actually implemented
+3. Controls are operating consistently — not just at audit time
+4. Exceptions are identified, documented, and remediated
+
+### Types of Audit Evidence
+
+**System-generated logs** are the most credible evidence type because they are created automatically during operations. Examples include: change management ticket history showing approvals, access logs showing authentication events, deployment logs showing what was deployed and when, and backup completion records.
+
+**Policy documents** demonstrate that required governance structures exist. Auditors verify that policies are current, formally approved, and distributed to relevant staff.
+
+**Configuration exports** show the actual technical state of systems. A firewall rule export, a user account list, or an encryption setting report demonstrates that technical controls are implemented and not just documented.
+
+**Staff interviews** verify that employees understand and follow policies. If a policy says all changes require CAB approval but staff consistently bypass the CAB for urgent changes, the interview will reveal the gap between policy and practice.
+
+### Continuous Evidence Readiness
+
+Organizations with mature compliance programs collect evidence continuously as a byproduct of normal operations. ITSM ticketing systems that record all changes, incidents, and service requests are continuously generating audit evidence. When an audit arrives, the evidence is organized and accessible — not assembled under pressure. This approach also enables proactive identification of control failures before they become audit findings.
+
+---
+
+## Gap Analysis
+
+A gap analysis compares the organization's current control state against the requirements of a target standard. The output is a structured inventory of gaps — where required controls are absent, inadequately designed, or not demonstrably operating.
+
+### Gap Analysis Process
+
+1. Define the target standard (ISO 27001, SOC 2, PCI-DSS, HIPAA, or internal policy)
+2. Document the organization's current controls for each requirement
+3. For each requirement, assess: Is the required control present? Is it adequately designed? Is there evidence it is operating?
+4. Record gaps — requirements where the answer to any assessment question is "no"
+5. Prioritize gaps by risk — high-impact gaps with no compensating control are the highest priority
+6. Build a remediation roadmap — assigning owners, timelines, and success criteria to each gap
+
+### Gap Analysis Output
+
+The gap analysis produces a report that includes: total number of requirements assessed, number and percentage of requirements met, list of identified gaps with descriptions, risk ratings for each gap, and recommended remediation actions. For ISO 27001 certification, the gap analysis output directly shapes the implementation roadmap and the initial Statement of Applicability.
+
+---
+
+## Compliance Dashboards
+
+A compliance dashboard provides a visual, consolidated view of the organization's compliance posture. Dashboards serve multiple stakeholders simultaneously:
+
+**IT Leadership** needs a strategic summary: What percentage of controls are implemented? How many open audit findings exist? What are the most significant risks? When are upcoming certification renewals?
+
+**Operations Teams** need tactical visibility: Which specific controls are failing? What remediation tasks are overdue? Which systems are out of compliance on a specific control?
+
+**Auditors** benefit from structured evidence summaries that reduce the time required to locate and verify evidence during an audit engagement.
+
+Effective compliance dashboards show control coverage percentage, control testing results (passed/failed/untested), open risk register items with scores and owners, outstanding audit findings with remediation timelines, and upcoming compliance milestones and deadlines.
+
+---
+
+## Key Terms for the ITIL 4 Foundation Exam
+
+| Term | Definition |
+|---|---|
+| Risk | A possible event that could cause harm or loss, or affect the ability to achieve objectives |
+| Risk register | A documented record of identified risks, their assessments, and response strategies |
+| Residual risk | The risk that remains after controls are applied |
+| ISMS | Information Security Management System — a management framework for systematically managing information security risk |
+| ISO 27001 | International standard for ISMS — requires formal risk assessment, control selection, and continual improvement |
+| Statement of Applicability | Document listing which ISO 27001 Annex A controls are selected, implemented, or excluded with justification |
+| SOC 2 | AICPA auditing framework evaluating controls against Trust Services Criteria |
+| SOC 2 Type I | Point-in-time assessment of control design adequacy |
+| SOC 2 Type II | Assessment of control operating effectiveness over a defined period |
+| Gap analysis | Comparison of current controls against a target standard to identify missing or inadequate controls |
+
+---
+
+## Study Questions
+
+1. What are the four risk response strategies in ITIL 4, and when is each appropriate?
+
+2. What is the difference between risk likelihood, risk impact, and residual risk?
+
+3. What is the Statement of Applicability in ISO 27001, and why does it matter?
+
+4. What is the difference between a SOC 2 Type I and Type II report? Which do enterprise customers typically require and why?
+
+5. How do ITSM ticketing systems generate SOC 2 audit evidence as a byproduct of normal operations?
+
+6. An organization is preparing for ISO 27001 certification. Describe the five steps of a risk assessment process under ISO 27001.
+
+7. What is the purpose of a compliance dashboard, and what three stakeholder groups does it serve?

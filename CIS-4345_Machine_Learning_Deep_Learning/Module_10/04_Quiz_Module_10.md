@@ -1,77 +1,217 @@
-# Quiz: Module 10 - Data Augmentation and Overfitting Prevention
-## Course: CIS-4345_Machine_Learning_Deep_Learning (TensorFlow Developer Certificate)
+# Quiz: Module 10 — Recurrent Neural Networks and LSTMs
+
+## Course: CIS-4345 Machine Learning and Deep Learning
+
+## Texas Wesleyan University | Professor Nash
+
+## Certification Alignment: TensorFlow Developer Certificate
 
 ---
 
-**Question 1**
-A developer adds `rotation_range=40` and `horizontal_flip=True` to the training `ImageDataGenerator` but not to the validation generator. Why is this the correct approach?
-*   A) Augmentation slows down validation; omitting it from the validation generator makes evaluation faster without affecting accuracy metrics.
-*   B) Augmentation should only be applied to training data to artificially increase training set diversity. Validation data must remain unmodified so that metrics reflect true generalization to unseen, real-world images.
-*   C) Keras automatically copies augmentation settings from the training generator to the validation generator, so specifying them in the validation generator would cause them to be applied twice.
-*   D) Augmentation cannot be applied to validation data because `flow_from_directory()` only supports `rescale` in the validation path.
-*   **Correct Answer:** B) Augmentation is a training-time technique. Modifying validation images with random rotations and flips would produce inconsistent validation metrics that do not reflect how the model performs on actual unseen data — defeating the purpose of having a validation set.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Performance is not the reason — augmentation is deliberately excluded from validation to maintain data integrity, not for speed. Even if speed were a concern, it would not justify distorting validation metrics.
-    *   *Why B is correct:* The validation generator should use only `rescale=1./255`. This is a standard pattern: `train_gen = ImageDataGenerator(rescale=1./255, rotation_range=40, horizontal_flip=True)` vs `val_gen = ImageDataGenerator(rescale=1./255)`.
-    *   *Why C is incorrect:* Keras generators are independent objects. Settings on one generator have no effect on another. Each generator is configured separately.
-    *   *Why D is incorrect:* `flow_from_directory()` accepts all `ImageDataGenerator` parameters for both training and validation generators. The reason to omit augmentation from validation is correctness, not a technical limitation.
+## Instructions
+
+Select the single best answer for each question. Each question is worth 10 points (100 points total).
 
 ---
 
-**Question 2**
-Which of the following is the most accurate definition of **Dropout** as a regularization technique?
-*   A) A weight penalty that adds the sum of squared weight values to the loss function during training, discouraging the network from learning large weight magnitudes.
-*   B) A training technique that randomly sets a specified fraction of neuron output activations to zero on each forward pass, preventing co-adaptation and forcing the network to learn more robust, distributed representations.
-*   C) A normalization layer that standardizes the activations within each mini-batch to zero mean and unit variance, stabilizing training and allowing higher learning rates.
-*   D) A learning rate scheduling technique that gradually reduces the learning rate when validation loss stops improving, preventing the optimizer from overshooting the loss minimum.
-*   **Correct Answer:** B) During training, `Dropout(rate=0.5)` randomly zeros out 50% of activations at each step. Because different neurons are dropped each time, the network cannot rely on any specific neuron and must develop redundant pathways. At inference (`model.predict()`), all neurons are active and outputs are scaled to compensate.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* This describes L2 regularization (weight decay), which operates on weight magnitudes through the loss function — a different mechanism from Dropout, which directly masks activations.
-    *   *Why B is correct:* Usage: `model.add(tf.keras.layers.Dense(128, activation='relu')); model.add(tf.keras.layers.Dropout(0.3))`. Typical exam rates: 0.2–0.5. Dropout is automatically disabled during `model.evaluate()` and `model.predict()`.
-    *   *Why C is incorrect:* This describes Batch Normalization (`tf.keras.layers.BatchNormalization`), a separate technique that normalizes activations per batch rather than randomly zeroing them.
-    *   *Why D is incorrect:* This describes a learning rate scheduler or `ReduceLROnPlateau` callback. Learning rate scheduling and Dropout are independent techniques that address different aspects of training stability.
+## Question 1
+
+What distinguishes a Recurrent Neural Network from a standard feedforward network?
+
+A. RNNs use convolutional filters to detect spatial patterns in input data.
+B. RNNs maintain a hidden state that is updated at each time step, allowing information to persist across the sequence.
+C. RNNs use batch normalization to stabilize training on sequential inputs.
+D. RNNs replace the activation function with a gating mechanism at every layer.
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- **A — Incorrect.** Convolutional filters are the defining feature of CNNs, not RNNs. CNNs detect spatial patterns; RNNs process temporal sequences through recurrent connections.
+- **B — Correct.** The hidden state `h_t` is the memory mechanism of an RNN. It is computed from both the current input `x_t` and the previous hidden state `h_(t-1)`, enabling information to persist across time steps.
+- **C — Incorrect.** Batch normalization is a regularization technique applicable to many architectures but is not what distinguishes RNNs from feedforward networks.
+- **D — Incorrect.** Gating mechanisms are a feature of LSTM and GRU cells specifically, not of RNNs in general. A SimpleRNN uses a plain activation function (typically tanh) with no gating.
 
 ---
 
-**Question 3**
-A developer adds L2 regularization to a Dense layer. Which Keras code is correct?
-*   A) `tf.keras.layers.Dense(64, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(0.01))`
-*   B) `tf.keras.layers.Dense(64, activation='relu', dropout=0.01)`
-*   C) `tf.keras.layers.Dense(64, activation='relu', weight_decay=0.01)`
-*   D) `tf.keras.layers.Dense(64, activation='relu', regularization='l2', lambda=0.01)`
-*   **Correct Answer:** A) The `kernel_regularizer` argument accepts a regularizer object. `tf.keras.regularizers.l2(0.01)` creates an L2 penalty with λ=0.01, which is added to the total loss during training. This penalizes large weight values without changing the forward pass computation.
-*   **Distractor Analysis:**
-    *   *Why A is correct:* L1 regularization uses `tf.keras.regularizers.l1(0.01)`. Both L1 and L2 can be combined with `tf.keras.regularizers.l1_l2(l1=0.01, l2=0.01)`. The regularizer is applied to the kernel (weight matrix), not the bias.
-    *   *Why B is incorrect:* The Dense layer has no `dropout` argument. Dropout is applied via a separate `tf.keras.layers.Dropout` layer added after the Dense layer.
-    *   *Why C is incorrect:* `weight_decay` is not a Keras Dense layer parameter. Weight decay is a concept sometimes used in optimizers (e.g., AdamW), but in Keras it is implemented via `kernel_regularizer`, not a direct layer argument.
-    *   *Why D is incorrect:* Keras has no `regularization` or `lambda` string arguments on Dense layers. The correct interface uses `kernel_regularizer=tf.keras.regularizers.l2(value)`.
+## Question 2
+
+During Backpropagation Through Time (BPTT), the vanishing gradient problem occurs when:
+
+A. The learning rate is set too high, causing the optimizer to overshoot the minimum.
+B. The gradient is multiplied by the recurrent weight matrix at each time step, causing it to shrink exponentially toward zero over many steps.
+C. The batch size is too small, introducing excessive noise into gradient estimates.
+D. The activation function produces outputs greater than 1, amplifying gradients at each step.
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- **A — Incorrect.** A high learning rate causes divergence or oscillation, which is a separate optimization problem unrelated to the structural cause of vanishing gradients.
+- **B — Correct.** In BPTT, the gradient at each step is multiplied by the transpose of `W_hh`. When the singular values of this matrix are less than 1, repeated multiplication drives the gradient exponentially toward zero, making it impossible for early time steps to contribute to learning.
+- **C — Incorrect.** Small batch size introduces gradient noise (high variance), which is a different problem. Vanishing gradients are a structural property of deep or long recurrent networks, not a batch-size effect.
+- **D — Incorrect.** Outputs greater than 1 amplify gradients — that describes the exploding gradient problem, which is the opposite of vanishing gradients.
 
 ---
 
-**Question 4**
-A CNN trained on 2,000 cat/dog images shows training accuracy of 99% and validation accuracy of 61% after 30 epochs. Which combination of techniques is most likely to close the generalization gap?
-*   A) Increase the number of Conv2D filters from 32 to 128 and add two more Dense layers to give the model more capacity to learn the decision boundary.
-*   B) Add `rotation_range=40, zoom_range=0.2, horizontal_flip=True` to the training generator, insert `Dropout(0.5)` after the Dense layer, and use `EarlyStopping(monitor='val_loss', patience=5)`.
-*   C) Change `optimizer='adam'` to `optimizer='sgd'` and increase the learning rate from 0.001 to 0.1 to escape local minima causing the overfitting.
-*   D) Reduce `epochs` from 30 to 5 so that the model does not have enough time to memorize the training data.
-*   **Correct Answer:** B) The 38-percentage-point training/validation gap with only 2,000 images is severe overfitting. Data augmentation increases effective training set diversity, Dropout reduces co-adaptation of neurons, and EarlyStopping stops training before the gap widens further — all three target overfitting from different angles.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Increasing model capacity (more filters, more layers) gives the network even more parameters to memorize the training data, which worsens overfitting. The problem is too much capacity relative to data, not too little capacity.
-    *   *Why B is correct:* This is the standard multi-technique overfitting fix for image classifiers with limited data. Augmentation effectively multiplies the training set; Dropout prevents neuron co-adaptation; EarlyStopping prevents the optimizer from spending epochs widening the gap.
-    *   *Why C is incorrect:* Overfitting is not caused by local minima — it is caused by insufficient regularization. Increasing the learning rate can destabilize training and cause divergence, not improve generalization.
-    *   *Why D is incorrect:* Stopping at epoch 5 would likely leave the model underfitted (high loss on both sets). The solution is not fewer epochs but better generalization through regularization techniques.
+## Question 3
+
+In a stacked two-layer LSTM model in Keras, which configuration is correct?
+
+A. Both LSTM layers should have `return_sequences=False`.
+B. Both LSTM layers should have `return_sequences=True`.
+C. The first LSTM layer should have `return_sequences=True`; the second should have `return_sequences=False`.
+D. The first LSTM layer should have `return_sequences=False`; the second should have `return_sequences=True`.
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- **A — Incorrect.** If the first LSTM layer returns only the final hidden state (shape `(batch, units)`), the second LSTM layer receives a 2-D tensor. LSTM layers expect a 3-D input `(batch, timesteps, features)` and will raise a shape error.
+- **B — Incorrect.** Having the second LSTM return sequences would output a 3-D tensor `(batch, timesteps, units)` that cannot be fed directly to a Dense layer without flattening or another reduction step.
+- **C — Correct.** The first LSTM layer uses `return_sequences=True` to pass the full sequence `(batch, timesteps, units)` to the second layer. The second LSTM uses `return_sequences=False` (default) to output only the final hidden state `(batch, units)` for the Dense layer.
+- **D — Incorrect.** This is reversed. Returning only the final state from the first layer gives the second LSTM a 2-D input, which is invalid.
 
 ---
 
-**Question 5**
-Which statement correctly describes the behavior of a `Dropout(0.4)` layer at training time versus inference time?
-*   A) At training time, 40% of activations are set to zero; at inference time, the same 40% are permanently zeroed to maintain consistency between training and evaluation.
-*   B) At training time, 40% of activations are randomly zeroed and the remaining activations are scaled up by 1/0.6 to preserve expected activation magnitude; at inference time, all activations pass through unchanged.
-*   C) At training time, all activations pass through unchanged; at inference time, 40% are randomly zeroed to simulate uncertainty in predictions.
-*   D) At training time, 40% of weights are set to zero permanently; at inference time, only the remaining 60% of weights participate in the forward pass.
-*   **Correct Answer:** B) Keras uses the "inverted dropout" implementation: dropped activations are zeroed and surviving activations are scaled up by 1/(1-rate) during training. This means no adjustment is needed at inference time — the expected sum of activations is the same at both training and test time, keeping inference behavior identical to a full network.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Dropout uses different random masks at each training step — the specific neurons dropped change every batch. Applying the same mask at inference would make the model deterministic on which neurons are suppressed, which is not how Dropout works.
-    *   *Why B is correct:* The scaling during training is automatic in Keras — you do not need to implement it. `model.predict()` and `model.evaluate()` automatically deactivate Dropout via Keras's learning phase flag.
-    *   *Why C is incorrect:* This reverses the actual behavior. Dropout is active during training (to prevent overfitting) and inactive during inference (to use the full network for prediction).
-    *   *Why D is incorrect:* Dropout operates on activations (layer outputs), not on weights. The weights are never set to zero by Dropout — they remain fully trainable. Only the output signals of randomly selected neurons are zeroed.
+## Question 4
+
+Which statement accurately describes the cell state in an LSTM?
+
+A. The cell state is equivalent to the hidden state and is passed to the next layer as the output.
+B. The cell state stores short-term working memory and is reset to zero at each time step.
+C. The cell state acts as a long-term memory conveyor belt, updated additively through the forget and input gates, which allows gradients to flow backward without repeated weight-matrix multiplication.
+D. The cell state is a scalar value that tracks the cumulative loss across all time steps.
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- **A — Incorrect.** The cell state `C_t` and the hidden state `h_t` are two distinct vectors in an LSTM. The hidden state `h_t` is the output passed to the next layer; the cell state is internal.
+- **B — Incorrect.** The hidden state is closer to "short-term working memory" in the LSTM analogy. The cell state persists across time steps and is not reset each step.
+- **C — Correct.** The cell state is updated as `C_t = f_t (elem) C_(t-1) + i_t (elem) g_t`. This additive update creates a gradient highway: gradients can flow from `C_t` back to `C_(t-1)` directly, avoiding the vanishing gradient problem that plagued vanilla RNNs.
+- **D — Incorrect.** The cell state has nothing to do with loss tracking. It is a learned vector of the same dimensionality as the hidden state.
+
+---
+
+## Question 5
+
+A GRU has fewer parameters than an LSTM of the same hidden size because:
+
+A. GRUs use smaller weight matrices by applying weight sharing across gates.
+B. GRUs eliminate the cell state and reduce from three gates to two, decreasing the number of weight matrices from four to three.
+C. GRUs apply dropout internally, which prunes unused parameters during training.
+D. GRUs use integer weights instead of floating-point weights to reduce memory usage.
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- **A — Incorrect.** Both GRUs and LSTMs share weights across time steps. GRUs do not apply additional weight sharing across gates — the parameter reduction comes from having fewer gates.
+- **B — Correct.** An LSTM has four weight matrices (forget, input, candidate, output). A GRU has three (reset, update, candidate) and merges the cell and hidden states into one. This reduces the parameter count by roughly 25% for the same hidden dimension.
+- **C — Incorrect.** Dropout is a regularization technique that sets activations to zero during training but does not remove or prune model parameters.
+- **D — Incorrect.** Both GRUs and LSTMs use standard floating-point weights. Integer quantization is a separate post-training optimization technique.
+
+---
+
+## Question 6
+
+What is the purpose of the `Bidirectional` wrapper in Keras?
+
+A. It trains two separate models and averages their predictions at inference time.
+B. It runs the recurrent cell forward through the sequence and backward through the sequence simultaneously, concatenating both output states.
+C. It alternates the direction of gradient flow each epoch to prevent vanishing gradients.
+D. It enables the model to process two input sequences at the same time through parameter sharing.
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- **A — Incorrect.** A Bidirectional layer is a single layer, not an ensemble of two separately trained models. Both directions share the same forward and training pass.
+- **B — Correct.** `Bidirectional(LSTM(64))` creates two LSTM cells: one reads the sequence from left to right, the other from right to left. Their hidden states are concatenated, doubling the effective output dimension to 128. This gives the model access to both past and future context at every position.
+- **C — Incorrect.** The Bidirectional wrapper does not alter gradient flow direction. It simply processes the sequence in two temporal directions.
+- **D — Incorrect.** Bidirectional processes a single sequence in two directions. It does not accept or process two separate sequences.
+
+---
+
+## Question 7
+
+When preparing a time series for an LSTM model, why is normalization important?
+
+A. Normalization converts categorical labels to numerical values required by LSTM gates.
+B. Normalization prevents the hidden state from growing unboundedly, since values are accumulated across many time steps, and large inputs destabilize the sigmoid and tanh activations in LSTM gates.
+C. Normalization is required by TensorFlow internally and will raise an error if skipped.
+D. Normalization improves the interpretability of the model's hidden states.
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- **A — Incorrect.** Label encoding is a preprocessing step for categorical variables and is unrelated to time series normalization or LSTM behavior.
+- **B — Correct.** LSTM gates use sigmoid and tanh activations that saturate outside the range roughly (-3, 3). If raw inputs are in the hundreds or thousands, these activations saturate immediately, producing near-zero gradients and preventing learning. Normalization keeps inputs in a range where the gates remain sensitive and gradients flow.
+- **C — Incorrect.** TensorFlow does not enforce normalization. Unnormalized inputs will run without errors but will typically produce poor training dynamics.
+- **D — Incorrect.** Normalization affects numerical scale, not interpretability. Hidden states in LSTMs are not directly interpretable regardless of input scaling.
+
+---
+
+## Question 8
+
+Which Keras callback combination is most appropriate for training an LSTM on a noisy time series?
+
+A. `ModelCheckpoint` with `save_best_only=False` and `LearningRateScheduler` with a fixed step decay.
+B. `EarlyStopping` with `restore_best_weights=True` and `ReduceLROnPlateau` to reduce the learning rate when validation loss plateaus.
+C. `TensorBoard` and `CSVLogger` only, to monitor training without interfering with the optimization process.
+D. `TerminateOnNaN` and `LambdaCallback` to print weights after each epoch.
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- **A — Incorrect.** `save_best_only=False` saves every epoch checkpoint, wasting disk space and not restoring best weights. Fixed step decay is less adaptive than `ReduceLROnPlateau` on noisy data.
+- **B — Correct.** `EarlyStopping` with `restore_best_weights=True` stops training when validation loss stops improving and reverts to the best epoch's weights, preventing overfitting. `ReduceLROnPlateau` adapts the learning rate dynamically when progress stalls, helping the optimizer escape flat regions in the loss landscape.
+- **C — Incorrect.** Logging callbacks are useful for monitoring but provide no optimization benefit. They are supplementary, not primary training control mechanisms.
+- **D — Incorrect.** `TerminateOnNaN` is a safety callback for catastrophic failure. Printing weights each epoch is a debugging tool, not a training strategy.
+
+---
+
+## Question 9
+
+A colleague trains a SimpleRNN on a sequence with 200 time steps and reports that the model learns short patterns well but fails to capture dependencies longer than 10–15 steps. What is the most likely cause?
+
+A. The batch size is too large, causing the model to memorize training examples.
+B. The hidden dimension is too small to store information about 200 time steps.
+C. The vanishing gradient problem prevents gradients from propagating back beyond the most recent time steps, so the model cannot learn long-range dependencies.
+D. The learning rate is too high, causing the model to skip over the optimal weights for long-range patterns.
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- **A — Incorrect.** Large batch size is associated with generalization issues, not the inability to learn long-range patterns within a sequence. This is a sequence modeling problem, not a memorization problem.
+- **B — Incorrect.** While hidden dimension size affects model capacity, the described failure pattern — learning short patterns but not long ones — is the classic signature of the vanishing gradient problem, not a capacity limitation.
+- **C — Correct.** This is the defining failure mode of vanilla RNNs. BPTT multiplies gradients by `W_hh` at each step; after 15–20 steps the gradient for earlier positions is effectively zero. The model receives no learning signal from inputs more than ~15 steps back, which is exactly the symptom described.
+- **D — Incorrect.** A high learning rate causes instability or oscillation uniformly across all time steps. It would not selectively prevent learning of long-range dependencies while allowing short-range learning.
+
+---
+
+## Question 10
+
+In the TensorFlow Developer Certificate context, what does the windowing function `make_windows(series, window_size=30, horizon=1)` produce?
+
+A. A dataset of 30 independent samples, each with one time step and one label.
+B. Overlapping input windows of length 30 with corresponding target values at `horizon` steps ahead, formatted as `(X, y)` arrays suitable for supervised sequence learning.
+C. A sliding average of the series over 30-step windows, reducing the sequence length by a factor of 30.
+D. A dataset split into 30 training folds for cross-validation with one held-out fold per iteration.
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- **A — Incorrect.** The function creates windows of 30 time steps each, not 30 one-step samples. Each row of X contains a full 30-step window, not a single time step.
+- **B — Correct.** The windowing function slides a window of size 30 across the series, creating overlapping input sequences. For each window at position `i`, the input `X[i]` is `series[i:i+30]` and the target `y[i]` is `series[i+30]` (for horizon=1). This converts the raw series into a supervised learning problem suitable for LSTM or GRU training.
+- **C — Incorrect.** That describes a moving average smoothing operation. The windowing function creates training examples, not a smoothed series.
+- **D — Incorrect.** That describes k-fold cross-validation splitting. The windowing function is a data preparation step for sequence modeling, not a cross-validation scheme.
+
+---
+
+*End of Quiz — Module 10*

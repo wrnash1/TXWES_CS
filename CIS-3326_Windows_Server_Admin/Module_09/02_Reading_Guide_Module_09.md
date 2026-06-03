@@ -1,58 +1,321 @@
-# Reading Guide: Module 09 - Windows Server Networking - Routing and Remote Access
+# Reading Guide: Module 09 — DNS and DHCP Services in Windows Server
 
-## Course: CIS-3326_Windows_Server_Admin (3326_Windows_Server_Admin - Microsoft Windows Server Administration (Active Directory))
+## Course: CIS-3326 Windows Server Administration
 
----
+## Texas Wesleyan University | Professor Nash
 
-### Introduction
-
-Welcome to **Module 09 – Windows Server Networking: Routing and Remote Access**! This week's study material covers the Routing and Remote Access Service (RRAS), which allows Windows Server to function as a software-based router, a VPN server, and a dial-up access point. Understanding RRAS is essential for AZ-800 exam scenarios involving site-to-site VPNs, remote worker access, and network address translation (NAT).
-
-As a student, you will learn how to configure VPN protocols, set up NAT for internet access sharing, and understand how DirectAccess and Always On VPN provide seamless remote connectivity for domain-joined clients. Make sure to complete the checklist and review the glossary terms before beginning the lab activity.
+**Certification Alignment:** Microsoft Windows Server Administration
 
 ---
 
-### 1. High-Yield Glossary
+## Overview
 
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-* **Routing and Remote Access Service (RRAS)**: A Windows Server role that provides software-based routing (LAN-to-LAN and WAN), VPN server functionality, and Network Address Translation (NAT). It is configured through the Routing and Remote Access MMC console or PowerShell.
-* **VPN Protocols — PPTP, L2TP/IPsec, SSTP, IKEv2**: Windows Server RRAS supports four VPN tunneling protocols. SSTP (uses HTTPS/port 443) is the most firewall-friendly. IKEv2 supports VPN Reconnect (automatically re-establishes connections after brief network interruptions). L2TP/IPsec provides strong encryption but requires pre-shared keys or certificates. PPTP is legacy and not recommended for new deployments.
-* **Network Address Translation (NAT)**: A routing function that translates private IP addresses on an internal network to a single public IP address for internet access. RRAS can act as a NAT device, allowing internal clients to reach the internet without each needing a public IP.
-* **DirectAccess**: A Windows feature (now superseded by Always On VPN) that provides transparent, always-on remote access for domain-joined Windows clients over IPv6 tunneled in HTTPS. No user intervention is required — the tunnel establishes automatically before logon.
-* **Always On VPN**: The modern Microsoft replacement for DirectAccess. It supports non-domain-joined devices, works with Windows 10/11 and later, and provides device tunnels (pre-logon) and user tunnels. It uses IKEv2 or SSTP and integrates with Microsoft Intune.
-* **RADIUS (Remote Authentication Dial-In User Service)**: An authentication, authorization, and accounting protocol. RRAS can act as a RADIUS client, forwarding authentication requests to a Network Policy Server (NPS) acting as the RADIUS server, centralizing access policy enforcement.
+Module 09 covers DNS and DHCP — the network identity services that underpin
+Active Directory. This reading guide provides reference tables for zone types,
+record types, scope options, DHCP failover, PowerShell commands, exam tips,
+a glossary, and a study checklist.
 
 ---
 
-### 2. Certification Exam Tips
+## 1. DNS Zone Types Reference
 
-* **VPN protocol selection by scenario**: AZ-800 will give a scenario and ask which VPN protocol to use. If the client is behind a restrictive firewall that blocks everything except port 443, the answer is SSTP. If mobile reconnection after brief outages is the requirement, the answer is IKEv2 with VPN Reconnect.
-* **Always On VPN vs. DirectAccess**: DirectAccess requires domain membership, Windows Enterprise edition, and an IPv6 infrastructure. Always On VPN works with any Windows 10/11 edition, non-domain devices, and pure IPv4 networks — making it the preferred answer for modern deployments.
-* **NPS as RADIUS for centralized policy**: When RRAS is configured as a RADIUS client pointing to NPS, all VPN authentication decisions are made centrally by NPS using Network Policies. This allows multi-factor authentication (MFA) and conditional access to be enforced on VPN connections.
-* **Microsoft Learn Reference**: Review RRAS and Always On VPN documentation at [Microsoft Learn – Routing and Remote Access Service](https://learn.microsoft.com/en-us/windows-server/remote/remote-access/ras/remote-access-service-ras) and [Microsoft Learn – Always On VPN](https://learn.microsoft.com/en-us/windows-server/remote/remote-access/vpn/always-on-vpn/always-on-vpn-overview).
+| Zone Type | Read-Write | Storage | Replication | Use Case |
+|---|---|---|---|---|
+| Primary | Yes | Flat file on one server | Zone transfer (manual) | Simple environments |
+| Secondary | No (read-only) | Flat file on one server | Zone transfer from primary | DNS redundancy |
+| Stub | Records NS/SOA/A only | Flat file or AD | Zone transfer | Point to delegated zone's NS records |
+| AD-Integrated Primary | Yes (multi-master) | Active Directory | AD replication (automatic) | All Windows domain environments |
 
----
-
-### Required Readings & Videos
-
-To prepare for this module's topics, you must complete the following readings and videos:
-
-* **Required Reading:** Read the RRAS and Always On VPN documentation at [Microsoft Learn: Remote Access Service (RAS)](https://learn.microsoft.com/en-us/windows-server/remote/remote-access/ras/remote-access-service-ras). Focus on VPN protocol options, NAT configuration, and the comparison between DirectAccess and Always On VPN.
-* **Required Video:** Watch the video lecture on **Windows Server Networking – Routing and Remote Access** in the official course playlist: [Windows Server Administration Course](https://www.youtube.com/playlist?list=PLvG40H4sL3h0n72gQJ_m8N7xN61tL6d5H).
+**AD-Integrated is always the correct choice for domain environments.** It
+provides secure dynamic updates, multi-master writes, and automatic replication
+without configuring zone transfers.
 
 ---
 
-### Lab & Command Integration
+## 2. DNS Dynamic Update Types
 
-In this week's hands-on lab, you will install and configure RRAS as a VPN server using IKEv2, create a VPN client connection from a test workstation, and verify connectivity. You will also configure NAT to allow internal clients to access the internet through a simulated external interface.
+| Setting | Behavior |
+|---|---|
+| None | Dynamic updates are disabled — all records must be added manually |
+| Nonsecure and Secure | Any client can register DNS records — not recommended |
+| Secure only | Only authenticated (domain-joined) clients can register records |
+
+**Best practice:** Use Secure only for AD-Integrated zones.
 
 ---
 
-### 3. Study Checklist
+## 3. DNS Record Types Quick Reference
 
-* [ ] Read the glossary terms and memorize their definitions.
-* [ ] Read the RRAS documentation at [Microsoft Learn: Remote Access Service (RAS)](https://learn.microsoft.com/en-us/windows-server/remote/remote-access/ras/remote-access-service-ras).
-* [ ] Watch the video lecture on **Windows Server Networking – Routing and Remote Access** in [Windows Server Administration Course](https://www.youtube.com/playlist?list=PLvG40H4sL3h0n72gQJ_m8N7xN61tL6d5H).
-* [ ] Review the commands outlined in the lab instructions.
-* [ ] Proceed to the weekly hands-on lab activity.
+| Record | Purpose | Example |
+|---|---|---|
+| A | Hostname to IPv4 | `DC1.txwes.edu` resolves to `192.168.10.10` |
+| AAAA | Hostname to IPv6 | `DC1.txwes.edu` resolves to `fe80::1` |
+| PTR | IP to hostname (reverse) | `10.10.168.192.in-addr.arpa` resolves to `DC1.txwes.edu` |
+| CNAME | Alias to canonical name | `www.txwes.edu` maps to `webserver.txwes.edu` |
+| MX | Mail exchange server | `txwes.edu` mail to `mail.txwes.edu` |
+| SRV | Service location (used by AD) | `_ldap._tcp.dc._msdcs.txwes.edu` maps to DC1 |
+| NS | Zone's name server | `txwes.edu` NS maps to `DC1.txwes.edu` |
+| SOA | Zone metadata (primary server, serial, TTL) | `txwes.edu` SOA maps to `DC1.txwes.edu` |
+
+SRV records are automatically created by Active Directory — do not modify them
+manually unless troubleshooting.
+
+---
+
+## 4. DNS Scavenging Timeline
+
+```text
+Record registered → No-refresh interval (7 days default)
+                    During this period: record cannot be refreshed (timestamp locked)
+                  → Refresh interval (7 days default)
+                    During this period: record MUST be refreshed or it becomes stale
+                  → Scavenging runs (every 7 days default)
+                    Stale records are deleted
+
+Total time to deletion: 7 + 7 + 7 = 21 days (default)
+```
+
+Both conditions must be true for a record to be scavenged:
+
+1. Scavenging is enabled on the DNS server.
+
+2. Aging is enabled on the specific DNS zone.
+
+---
+
+## 5. DHCP DORA Process
+
+```text
+Client                              DHCP Server
+  │                                      │
+  │──── DHCPDISCOVER (broadcast) ───────►│  "Is there a DHCP server?"
+  │◄─── DHCPOFFER ──────────────────────│  "Here is an available IP: 192.168.10.101"
+  │──── DHCPREQUEST (broadcast) ────────►│  "I accept that IP offer"
+  │◄─── DHCPACK ────────────────────────│  "Confirmed. Lease is yours for 8 days."
+  │
+  │  Client configures adapter with:
+  │  IP: 192.168.10.101, Mask, Gateway, DNS, Domain
+```
+
+The DHCPREQUEST is still a broadcast even though the client knows the server's
+address. This allows other DHCP servers that sent offers to reclaim their offered
+addresses.
+
+---
+
+## 6. DHCP Scope Options Reference
+
+| Option | Code | Value Delivered |
+|---|---|---|
+| Router (Default Gateway) | 003 | Default gateway IP address |
+| DNS Servers | 006 | DNS server IP addresses |
+| DNS Domain Name | 015 | Domain suffix (e.g., txwes.edu) |
+| WINS/NBNS Servers | 044 | WINS server address |
+| WINS/NBT Node Type | 046 | NetBIOS node type |
+
+Options can be set at three levels (highest priority wins):
+
+1. Server level — applies to all scopes on this server.
+
+2. Scope level — applies to this scope only.
+
+3. Reservation level — applies to a specific reserved client only.
+
+---
+
+## 7. DHCP Failover Modes Comparison
+
+| Feature | Hot Standby | Load Sharing |
+|---|---|---|
+| Primary role | One Active, one Standby | Both Active |
+| Address pool division | Active holds ~95%, Standby holds ~5% | Split by configured % (default 50/50) |
+| Failover trigger | Standby activates when Active is unreachable | Both always active |
+| Use case | DR and redundancy focus | Performance and redundancy combined |
+
+---
+
+## 8. DNS PowerShell Quick Reference
+
+```powershell
+# ── Zone Management ───────────────────────────────────────────────
+Get-DnsServerZone
+Add-DnsServerPrimaryZone -Name "txwes.edu" -ReplicationScope Domain -DynamicUpdate Secure
+Add-DnsServerPrimaryZone -NetworkId "192.168.10.0/24" -ReplicationScope Domain
+
+# ── Record Management ─────────────────────────────────────────────
+Add-DnsServerResourceRecordA `
+    -ZoneName "txwes.edu" -Name "host1" -IPv4Address "192.168.10.50"
+Add-DnsServerResourceRecordCName `
+    -ZoneName "txwes.edu" -Name "www" -HostNameAlias "host1.txwes.edu."
+Add-DnsServerResourceRecordPtr `
+    -ZoneName "10.168.192.in-addr.arpa" -Name "50" -PtrDomainName "host1.txwes.edu."
+Get-DnsServerResourceRecord -ZoneName "txwes.edu" -RRType A
+Remove-DnsServerResourceRecord -ZoneName "txwes.edu" -RRType A -Name "host1" `
+    -RecordData "192.168.10.50" -Force
+
+# ── Forwarders ────────────────────────────────────────────────────
+Add-DnsServerForwarder -IPAddress "8.8.8.8","8.8.4.4"
+Get-DnsServerForwarder
+Add-DnsServerConditionalForwarderZone -Name "partner.com" `
+    -MasterServers "10.200.1.10" -ReplicationScope Domain
+
+# ── Scavenging ────────────────────────────────────────────────────
+Set-DnsServerScavenging -ScavengingState $true -ScavengingInterval 7.00:00:00
+Set-DnsServerZoneAging -ZoneName "txwes.edu" -Aging $true
+Start-DnsServerScavenging -Force
+
+# ── Verification ──────────────────────────────────────────────────
+Resolve-DnsName -Name "DC1.txwes.edu"
+nslookup DC1.txwes.edu 192.168.10.10
+```
+
+---
+
+## 9. DHCP PowerShell Quick Reference
+
+```powershell
+# ── Server Authorization ──────────────────────────────────────────
+Add-DhcpServerInDC -DnsName "DC1.txwes.edu" -IPAddress 192.168.10.10
+Get-DhcpServerInDC
+
+# ── Scope Management ─────────────────────────────────────────────
+Add-DhcpServerv4Scope `
+    -Name "Main" -StartRange "192.168.10.100" -EndRange "192.168.10.200" `
+    -SubnetMask "255.255.255.0" -State Active
+Get-DhcpServerv4Scope
+
+# ── Exclusions ────────────────────────────────────────────────────
+Add-DhcpServerv4ExclusionRange `
+    -ScopeId "192.168.10.0" -StartRange "192.168.10.100" -EndRange "192.168.10.110"
+
+# ── Scope Options ─────────────────────────────────────────────────
+Set-DhcpServerv4OptionValue -ScopeId "192.168.10.0" `
+    -Router "192.168.10.1" -DnsServer "192.168.10.10" -DnsDomain "txwes.edu"
+
+# ── Reservations ──────────────────────────────────────────────────
+Add-DhcpServerv4Reservation -ScopeId "192.168.10.0" `
+    -IPAddress "192.168.10.150" -ClientId "00-11-22-33-44-55" -Name "Printer01"
+Get-DhcpServerv4Reservation -ScopeId "192.168.10.0"
+
+# ── Failover ──────────────────────────────────────────────────────
+Add-DhcpServerv4Failover -Name "Failover01" -PartnerServer "DC2.txwes.edu" `
+    -ScopeId "192.168.10.0" -Mode HotStandby -ServerRole Active -ReservePercent 5
+Get-DhcpServerv4Failover
+
+# ── Leases and Stats ──────────────────────────────────────────────
+Get-DhcpServerv4Lease -ScopeId "192.168.10.0"
+Get-DhcpServerv4ScopeStatistics -ScopeId "192.168.10.0"
+```
+
+---
+
+## 10. DNS and DHCP Architecture Overview
+
+```text
+Client (192.168.10.50)
+    │
+    │ Step 1: DHCP DORA → receives 192.168.10.50, GW 192.168.10.1, DNS 192.168.10.10
+    │ Step 2: DNS lookup → DC1.txwes.edu → 192.168.10.10
+    │ Step 3: DNS SRV → _ldap._tcp.dc._msdcs.txwes.edu → DC1
+    │
+    ▼
+DC1 (192.168.10.10)
+    ├── DNS Server
+    │     ├── Zone: txwes.edu (AD-Integrated, Secure Updates)
+    │     ├── Zone: 10.168.192.in-addr.arpa (reverse)
+    │     ├── Forwarder: 8.8.8.8
+    │     └── Conditional Forwarder: partner.com → 10.200.1.10
+    │
+    └── DHCP Server
+          ├── Scope: 192.168.10.100–200 (8-day lease)
+          ├── Exclusion: 192.168.10.100–109
+          ├── Reservation: 192.168.10.150 → 00-11-22-33-44-55
+          ├── Options: Router, DNS, DnsDomain
+          └── Failover: Hot Standby with DC2 (5% reserve)
+```
+
+---
+
+## 11. Exam Tips
+
+**Exam Tip 1** — AD-Integrated zones are multi-master with Secure dynamic
+updates. Any scenario requiring AD-level security or no-configuration replication
+points to AD-Integrated.
+
+**Exam Tip 2** — Scavenging requires enabling on both the server and the zone.
+A scenario where only one is enabled means stale records still accumulate.
+
+**Exam Tip 3** — DHCP servers must be authorized in AD. An unauthorized DHCP
+server is blocked from responding to domain clients. Clients that receive APIPA
+addresses (169.254.x.x) often have an unauthorized or unavailable DHCP server.
+
+**Exam Tip 4** — Reservations are MAC-address based. A reservation inside the
+scope range permanently binds one IP to one device. Other clients never receive
+that IP even if the reserved device is offline.
+
+**Exam Tip 5** — Hot Standby failover = one active, one passive (DR scenario).
+Load Sharing = both active with a split pool (performance + redundancy scenario).
+
+**Exam Tip 6** — SRV records are automatically registered by Active Directory.
+If AD clients cannot find domain controllers, verify that SRV records exist in
+DNS: `_ldap._tcp.dc._msdcs.<domain>` and `_kerberos._tcp.dc._msdcs.<domain>`.
+
+---
+
+## 12. Glossary
+
+| Term | Definition |
+|---|---|
+| DNS | Domain Name System — translates hostnames to IP addresses |
+| AD-Integrated zone | DNS zone stored in Active Directory; provides multi-master updates and automatic replication |
+| Stub zone | DNS zone containing only SOA, NS, and A records for the zone's name servers |
+| Secondary zone | Read-only DNS zone updated via zone transfer from a primary server |
+| Conditional Forwarder | DNS forwarder that routes queries for a specific domain to a specific server |
+| Scavenging | Automatic removal of stale dynamic DNS records based on no-refresh and refresh intervals |
+| DHCP | Dynamic Host Configuration Protocol — automatically assigns IP configuration to network clients |
+| Scope | A pool of IP addresses that a DHCP server can assign to clients on a subnet |
+| Exclusion range | A range of addresses within a scope that the DHCP server will not assign |
+| Reservation | A permanent IP-to-MAC address binding ensuring a device always receives the same IP |
+| Scope options | Additional configuration (gateway, DNS servers) delivered to DHCP clients with their lease |
+| Lease duration | The time period for which a DHCP-assigned IP address is valid |
+| DORA | Discover-Offer-Request-Acknowledge — the four-message DHCP handshake |
+| Superscope | A container grouping multiple DHCP scopes for multinetting scenarios |
+| DHCP Failover | A redundancy configuration pairing two DHCP servers to share scope information |
+| Hot Standby | DHCP failover mode where one server is active and one is passive |
+| Load Sharing | DHCP failover mode where both servers actively handle requests with a split address pool |
+| APIPA | Automatic Private IP Addressing — 169.254.x.x addresses assigned when no DHCP server responds |
+
+---
+
+## 13. Study Checklist
+
+- Watch Module 09 Part 1 video (DNS zone types, record types, forwarders, scavenging, DHCP DORA, scopes, failover)
+
+- Watch Module 09 Part 2 video (PowerShell installation, zone creation, record management, scope, reservations, failover, verification)
+
+- Know all DNS zone types and when to use each
+
+- Know AD-Integrated zone benefits over standard primary zones
+
+- Know the scavenging timeline and the two-level enablement requirement
+
+- Know the DORA handshake and every component of a DHCP scope
+
+- Know DHCP failover Hot Standby vs. Load Sharing
+
+- Review all PowerShell commands in Sections 8 and 9
+
+- Complete Lab 09 and submit required screenshots
+
+---
+
+## Additional Resources
+
+- [DNS overview for Windows Server](https://learn.microsoft.com/en-us/windows-server/networking/dns/dns-top)
+- [DHCP overview for Windows Server](https://learn.microsoft.com/en-us/windows-server/networking/technologies/dhcp/dhcp-top)
+- [DNS scavenging configuration](https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/cc753378(v=ws.11))
+- [DHCP failover configuration](https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/dn338978(v=ws.11))
+
+---
+
+*Review all sections before beginning Lab 09, Quiz 09, and Discussion 09.*

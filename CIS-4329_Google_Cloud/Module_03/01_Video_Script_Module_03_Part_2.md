@@ -1,211 +1,314 @@
-# Video Script — Module 03, Part 2
+# Video Script: Module 03 — Compute Engine (Part 2 of 2)
 
-## CIS-4329: Google Cloud Platform | Texas Wesleyan University
+## Course: CIS-4329 Google Cloud Computing
 
-### Topic: Compute Engine — Startup Scripts, Spot VMs, Managed Instance Groups, and gcloud CLI
+## Texas Wesleyan University | Professor Nash
 
-### Estimated Duration: 11–13 minutes
+## Estimated Duration: 15 minutes
 
----
-
-## Introduction to Part 2
-
-Welcome back to Module 03. In Part 1 we covered machine families, disk types, snapshots, and custom images. In Part 2 we go hands-on: startup scripts, pricing models including spot VMs, managed instance groups, and the gcloud compute commands you will use in the lab and on the ACE exam.
+## Certification Alignment: Google Cloud Associate Cloud Engineer (ACE)
 
 ---
 
-## Section 1: Startup Scripts
+## Segment 1 — Recap and Agenda (1 minute)
 
-**[SHOW CONSOLE: Create VM instance page, Metadata section with startup-script key highlighted]**
+Welcome back. In Part 1 we covered VM anatomy, machine families, disk types,
+images, and startup scripts. In Part 2 we cover:
 
-A startup script is a shell script that runs automatically when a Compute Engine VM boots for the first time — or every time it boots, depending on how you configure it. You pass the script using the `metadata` key `startup-script` or by providing a script file stored in Cloud Storage via the `startup-script-url` key.
+- Managed and unmanaged instance groups
+- Autoscaling policies
+- Preemptible and Spot VMs
+- Console and gcloud CLI for Compute Engine
+- ACE exam strategy for Compute Engine questions
 
-Startup scripts are useful for bootstrapping a VM — installing packages, configuring software, pulling application code from a repository, or registering the VM with a configuration management system.
+---
 
-Here is a simple startup script that installs Nginx and replaces the default page:
+## Segment 2 — Instance Groups (4 minutes)
+
+### Why Instance Groups?
+
+A single VM is a single point of failure. Instance groups let you manage
+multiple VMs as a single unit, enabling high availability, load balancing, and
+autoscaling.
+
+### Managed Instance Groups (MIGs)
+
+A Managed Instance Group (MIG) creates and manages identical VM instances based
+on an instance template. Key capabilities:
+
+- **Autoscaling** — Automatically add or remove VMs based on load
+- **Autohealing** — Detects unhealthy VMs and automatically recreates them
+- **Load balancing** — Integrates with GCP load balancers
+- **Rolling updates** — Update the instance template and roll changes across
+  the group with minimal downtime
+- **Multi-zone deployment** — Spread instances across multiple zones for HA
+
+Types of MIGs:
+
+- **Zonal MIG** — All instances in one zone; single zone failure takes down the
+  group
+- **Regional MIG** — Instances spread across all zones in a region; survives
+  individual zone failures; recommended for production
+
+### Instance Templates
+
+An instance template defines the configuration for all VMs in a MIG:
+
+- Machine type
+- Boot disk image and size
+- Network and subnet
+- Service account
+- Metadata (including startup scripts)
+- Labels and tags
+
+Instance templates are immutable — you cannot edit them. To change the
+configuration, create a new template and update the MIG to use it.
 
 ```bash
-gcloud compute instances create web-server-1 \
-  --zone=us-central1-a \
-  --machine-type=e2-micro \
-  --tags=http-server \
-  --metadata=startup-script='#! /bin/bash
-apt-get update
-apt-get install -y nginx
-echo "Hello from Texas Wesleyan" > /var/www/html/index.html
-systemctl restart nginx'
+# Create an instance template
+gcloud compute instance-templates create web-template \
+  --machine-type=e2-medium \
+  --image-family=debian-11 \
+  --image-project=debian-cloud \
+  --boot-disk-size=20GB \
+  --metadata=startup-script='#!/bin/bash
+apt-get update && apt-get install -y nginx
+systemctl start nginx'
+
+# Create a regional MIG using the template
+gcloud compute instance-groups managed create web-mig \
+  --template=web-template \
+  --size=3 \
+  --region=us-central1
 ```
 
-**[SHOW CONSOLE: gcloud command running in Cloud Shell]**
+### Unmanaged Instance Groups
 
-Notice the `--tags=http-server` flag. Tags are arbitrary labels applied to VMs. Firewall rules can target VMs by their network tags, so this tag tells GCP that this VM should receive HTTP traffic. We will cover VPC firewall rules in Module 05.
+An unmanaged instance group is a collection of heterogeneous VM instances that
+you manage manually. They do not support autoscaling or autohealing. Use cases:
 
-A startup script that is too long to pass inline can be stored in Cloud Storage:
+- Load balancing across VMs with different configurations
+- Legacy workloads that cannot use identical instance templates
 
-```bash
-gcloud compute instances create web-server-2 \
-  --zone=us-central1-a \
-  --machine-type=e2-micro \
-  --metadata=startup-script-url=gs://my-bucket/startup.sh
-```
-
-Startup scripts are powerful but have a limitation: they run every time the VM boots from scratch. If you need software to be available immediately without a boot delay, a custom image is more appropriate. For configuration that needs to be dynamic at boot time — like pulling the latest application code from Git — startup scripts are the right tool.
+**ACE Exam Tip:** The ACE exam almost always prefers managed instance groups
+over unmanaged for new architectures. Know the MIG capabilities (autoscaling,
+autohealing, rolling updates) and when to use zonal vs. regional MIGs.
 
 ---
 
-## Section 2: Pricing Models — On-Demand, Committed Use, Spot
+## Segment 3 — Autoscaling (3 minutes)
 
-**[SHOW SLIDE: Pricing model comparison table with cost and availability columns]**
+### Autoscaling Policies
 
-Compute Engine VMs can be billed in several ways.
+A MIG autoscaler adds or removes VMs based on metrics. Supported scaling
+signals include:
 
-### On-Demand
+- **CPU utilization** — Scale when average CPU across the group exceeds a
+  threshold (e.g., scale up when CPU > 70%)
+- **HTTP load balancing serving capacity** — Scale based on requests per second
+  or utilization
+- **Cloud Monitoring metrics** — Use any custom metric for scaling
+- **Cloud Pub/Sub queue depth** — Scale based on the number of unprocessed
+  messages in a Pub/Sub subscription
+- **Schedule-based scaling** — Set minimum instances for specific time windows
 
-The default billing model. You pay the standard per-second rate for the machine type. No commitment, no risk, full availability.
+### Autoscaling Configuration
 
-### Committed Use Discounts (CUDs)
+```bash
+# Enable autoscaling on a MIG
+gcloud compute instance-groups managed set-autoscaling web-mig \
+  --region=us-central1 \
+  --max-num-replicas=10 \
+  --min-num-replicas=2 \
+  --target-cpu-utilization=0.70 \
+  --cool-down-period=90
+```
 
-If you know you will need a certain amount of compute capacity for one or three years, you can purchase a commitment and receive a significant discount — up to 57% off for three-year commitments, about 37% for one-year. There are two types:
+Key parameters:
 
-Resource-based CUDs: you commit to a specific amount of vCPU and memory in a region. Any VM matching those resource specs gets the discount automatically, regardless of machine type.
+- `--min-num-replicas` — Never scale below this count (floor for availability)
+- `--max-num-replicas` — Never scale above this count (ceiling for cost control)
+- `--target-cpu-utilization` — Target average CPU as a decimal (0.70 = 70%)
+- `--cool-down-period` — Seconds to wait after scaling before evaluating again
 
-Spend-based CUDs: you commit to a minimum spend level per hour. Applicable to certain services.
+### Autohealing
 
-Use committed use discounts for production workloads that run continuously.
+Autohealing monitors VM health using a health check and recreates unhealthy
+instances. Configure it on the MIG with a health check:
 
-### Spot VMs (formerly Preemptible VMs)
+```bash
+# Create a health check
+gcloud compute health-checks create http web-health-check \
+  --port=80 \
+  --request-path=/health
 
-**[SHOW SLIDE: Spot VM savings — up to 91% discount with preemption risk shown]**
+# Set autohealing policy on the MIG
+gcloud compute instance-groups managed update web-mig \
+  --region=us-central1 \
+  --health-check=web-health-check \
+  --initial-delay=300
+```
 
-Spot VMs are the lowest-cost option in Compute Engine. They can be up to 91% cheaper than equivalent on-demand VMs. In exchange, Google can preempt (shut down) your Spot VM at any time, with only a 30-second shutdown notice. Google preempts Spot VMs when it needs the capacity for other customers.
+The `--initial-delay` gives newly started VMs time to complete startup before
+health checks begin. Without it, newly started VMs may be recreated before
+they finish booting.
 
-This makes Spot VMs ideal for fault-tolerant, retryable workloads:
+---
+
+## Segment 4 — Preemptible and Spot VMs (2 minutes)
+
+### Preemptible VMs
+
+Preemptible VMs are short-lived VM instances available at up to 91% discount.
+GCP can terminate (preempt) them at any time with a 30-second warning when it
+needs the capacity back.
+
+Constraints:
+
+- Maximum runtime of 24 hours (then automatically terminated)
+- Cannot be live-migrated
+- Cannot be set to automatically restart on maintenance
+
+Use cases:
 
 - Batch processing jobs
-- Video rendering and transcoding
-- Machine learning training runs
-- Any job that can checkpoint progress and restart from where it left off
+- Data pipelines
+- Scientific simulations
+- Fault-tolerant distributed workloads
 
-Spot VMs are NOT appropriate for:
+### Spot VMs
 
-- Databases
-- Web servers that must be continuously available
-- Any stateful service where interruption causes data loss or user-facing downtime
-
-**[PAUSE — Professor on camera]**
-
-The ACE exam loves Spot VM questions. The signal in the question is always "fault-tolerant," "retryable," or "batch processing." If you see those words and cost optimization is the goal, the answer is Spot VMs. If the question describes a database, an API server, or anything that cannot be interrupted, Spot VMs are wrong.
-
----
-
-## Section 3: Managed Instance Groups
-
-**[SHOW SLIDE: MIG architecture — load balancer distributing traffic to multiple identical VMs, autoscaler adjusting count]**
-
-A Managed Instance Group (MIG) is a collection of identical VMs that are managed as a single unit. You define an instance template — a blueprint for what each VM should look like: machine type, disk, image, startup script, network tags, service account. Then you create a MIG using that template.
-
-MIGs give you four important capabilities:
-
-**Autoscaling**: The MIG automatically adds or removes VMs based on CPU utilization, HTTP load balancing capacity, or custom Cloud Monitoring metrics. If traffic spikes at 3 AM, the MIG adds VMs. When traffic drops, it removes them.
-
-**Autohealing**: You define a health check — for example, "is port 80 responding with HTTP 200?" If a VM fails the health check, the MIG automatically replaces it with a new healthy VM. This is self-healing infrastructure.
-
-**Rolling updates**: When you update the instance template (for example, deploying a new application version), the MIG can roll out the update to VMs one batch at a time, keeping most of the fleet running during the update.
-
-**Multi-zone support**: A regional MIG can span multiple zones within a region. If a zone goes down, the MIG automatically redistributes traffic to the surviving zones.
-
-MIGs work together with Cloud Load Balancing — the load balancer distributes traffic to the healthy VMs in the MIG. This combination is the standard architecture for scalable, highly available web applications on GCP.
-
----
-
-## Section 4: gcloud Compute Commands
-
-**[SHOW CONSOLE: Cloud Shell with gcloud compute commands]**
-
-Here are the gcloud compute commands you will use most in this course:
-
-Create a VM:
+Spot VMs replaced preemptible VMs as the recommended short-lived VM type.
+Key difference: Spot VMs have no maximum 24-hour runtime limit. Otherwise
+similar pricing and constraints.
 
 ```bash
+# Create a preemptible VM
+gcloud compute instances create batch-vm \
+  --zone=us-central1-a \
+  --machine-type=n2-standard-4 \
+  --preemptible
+
+# Create a Spot VM (preferred)
+gcloud compute instances create batch-vm-spot \
+  --zone=us-central1-a \
+  --machine-type=n2-standard-4 \
+  --provisioning-model=SPOT
+```
+
+**ACE Exam Tip:** If a question describes a batch or fault-tolerant workload
+where interruptions are acceptable and cost is a priority, the answer involves
+preemptible or Spot VMs. If the workload must run continuously without
+interruption, preemptible VMs are not appropriate.
+
+---
+
+## Segment 5 — Console and gcloud CLI Walkthrough (4 minutes)
+
+### Creating a VM in the Console
+
+1. Navigate to **Compute Engine > VM Instances**.
+2. Click **Create Instance**.
+3. Configure:
+   - **Name**: `lab03-web-vm`
+   - **Region/Zone**: `us-central1 / us-central1-a`
+   - **Machine configuration**: E2, e2-medium
+   - **Boot disk**: Debian 11, 10 GB pd-balanced
+   - **Firewall**: Allow HTTP and HTTPS traffic
+4. Click **Create**.
+
+### Key gcloud Compute Commands
+
+```bash
+# Create a VM
 gcloud compute instances create my-vm \
   --zone=us-central1-a \
-  --machine-type=e2-micro \
+  --machine-type=e2-medium \
   --image-family=debian-11 \
-  --image-project=debian-cloud
-```
+  --image-project=debian-cloud \
+  --boot-disk-size=20GB \
+  --tags=http-server
 
-List all VMs in the active project:
-
-```bash
+# List instances
 gcloud compute instances list
-```
 
-Start and stop a VM:
+# Describe an instance
+gcloud compute instances describe my-vm --zone=us-central1-a
 
-```bash
-gcloud compute instances start my-vm --zone=us-central1-a
-gcloud compute instances stop my-vm --zone=us-central1-a
-```
-
-Delete a VM:
-
-```bash
-gcloud compute instances delete my-vm --zone=us-central1-a
-```
-
-SSH into a VM:
-
-```bash
+# SSH into an instance
 gcloud compute ssh my-vm --zone=us-central1-a
-```
 
-Take a snapshot of a disk:
+# Stop and start
+gcloud compute instances stop my-vm --zone=us-central1-a
+gcloud compute instances start my-vm --zone=us-central1-a
 
-```bash
+# Delete
+gcloud compute instances delete my-vm --zone=us-central1-a
+
+# Create a snapshot
 gcloud compute disks snapshot my-vm \
-  --snapshot-names=my-vm-snap-$(date +%Y%m%d) \
+  --zone=us-central1-a \
+  --snapshot-names=my-vm-snapshot-$(date +%Y%m%d)
+
+# Create a disk from a snapshot
+gcloud compute disks create restored-disk \
+  --source-snapshot=my-vm-snapshot-20260101 \
   --zone=us-central1-a
 ```
 
-Create a custom image from a disk:
+### Checking Startup Script Logs
 
 ```bash
-gcloud compute images create my-golden-image \
-  --source-disk=my-vm \
-  --source-disk-zone=us-central1-a \
-  --family=my-app-images
+# SSH in and view startup script output
+gcloud compute ssh my-vm --zone=us-central1-a
+# Then inside the VM:
+sudo journalctl -u google-startup-scripts.service
+# Or:
+sudo cat /var/log/syslog | grep startup-script
 ```
-
-List available public images for Debian:
-
-```bash
-gcloud compute images list --filter="family:debian"
-```
-
-**[SHOW CONSOLE: Each command running in Cloud Shell with output]**
-
-Pay attention to the `--zone` flag. Almost all `gcloud compute` commands require you to specify a zone. If you set `gcloud config set compute/zone us-central1-a`, that becomes the default and you can omit `--zone` from most commands. But in scripts and automation, always specify the zone explicitly to avoid errors.
 
 ---
 
-## Module 03 Summary
+## Segment 6 — ACE Exam Strategy for Compute Engine (1 minute)
 
-**[SHOW SLIDE: Summary bullet list]**
+Top ACE exam patterns for Module 03:
 
-Let's wrap up Module 03. Compute Engine is GCP's IaaS service. Machine families: E2 for general-purpose cost-sensitive workloads, N2 for high-performance general workloads, C2 for compute-intensive tasks, M2 for memory-intensive databases. Disk types: persistent disks survive VM stops; local SSDs are ephemeral. Snapshots are incremental backups for restore. Custom images create golden templates for fleet deployment.
+- **Machine family selection**: Match the described workload characteristics
+  to the right family. Memory-heavy → M2. GPU/ML → A2. Cost-sensitive → E2.
+- **Managed vs. unmanaged instance groups**: New architectures always use MIGs.
+- **Zonal vs. regional MIG**: Regional MIGs are recommended for production HA.
+- **Preemptible/Spot VM use cases**: Batch, fault-tolerant, cost-sensitive.
+  Never use for continuous/critical workloads.
+- **Autohealing initial delay**: Know why it matters.
+- **Instance templates are immutable**: To change config, create a new template.
+- **Terminated vs. deleted**: Terminated VMs still exist; you are still billed
+  for their persistent disks.
 
-Startup scripts automate VM configuration at boot. Spot VMs are up to 91% cheaper but can be preempted — ideal for fault-tolerant batch workloads. Committed use discounts save up to 57% for 1-3 year compute commitments. Managed Instance Groups provide autoscaling, autohealing, rolling updates, and multi-zone resilience.
+---
 
-Core gcloud commands: `gcloud compute instances create`, `list`, `stop`, `start`, `delete`, `ssh`, `gcloud compute disks snapshot`, `gcloud compute images create`.
+## Summary — Module 03
 
-Complete the lab, take the quiz, and post to the discussion. In Module 04 we move to Cloud Storage — buckets, storage classes, and lifecycle policies.
+Across both parts we covered:
+
+- VM anatomy, lifecycle states, and billing
+- Machine families and custom machine types
+- Disk types: standard, balanced, SSD, extreme, local SSD
+- Snapshots for backup and migration
+- OS images, custom images, and startup scripts
+- Managed instance groups: templates, autoscaling, autohealing, rolling updates
+- Zonal vs. regional MIGs
+- Preemptible and Spot VMs: economics and use cases
+- Console and gcloud CLI for all of the above
+
+The lab will have you create VMs, configure a managed instance group with
+autoscaling, and test startup scripts.
 
 ---
 
 End of Part 2 — Module 03
 
-Course: CIS-4329 Google Cloud Platform | Texas Wesleyan University | Professor Nash
+Course: CIS-4329 Google Cloud Computing | Texas Wesleyan University | Professor Nash
 
 Certification Target: Google Cloud Associate Cloud Engineer
 
-Reference: cloud.google.com/learn
+Reference: cloud.google.com/compute/docs

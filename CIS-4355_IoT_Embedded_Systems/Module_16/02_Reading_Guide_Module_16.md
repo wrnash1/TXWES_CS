@@ -1,53 +1,253 @@
-# Reading Guide: Module 16 - Final Exam Prep and IoT Security Capstone
-## Course: CIS-4355_IoT_Embedded_Systems (IoT & Embedded Security (General Principles))
+# Reading Guide: Module 16 — IoT Capstone Project and Certification Preparation
+
+## Course: CIS-4355 IoT and Embedded Systems
+
+## Texas Wesleyan University | Professor Nash
+
+Certification Alignment: IoT Fundamentals / Embedded Systems
 
 ---
 
-### Introduction
-Welcome to **Module 16 – Final Exam Prep and IoT Security Capstone**! This is the final module of CIS-4355. Rather than introducing new topics, this module synthesizes the full 16-week curriculum into a cohesive review framework and prepares you to apply integrated knowledge across all domains on the final exam and in the capstone project.
+## Learning Objectives
 
-The IoT security domain is inherently cross-disciplinary: a secure IoT deployment requires correct protocol selection (Modules 03–05), cloud platform authentication (Module 06), sensor data integrity (Module 07), edge compute security (Modules 08, 13), a thorough understanding of the OWASP IoT Top 10 threat model (Module 09), firmware security controls (Module 10), device lifecycle management (Module 11), data pipeline security (Module 12), IIoT/SCADA segmentation (Module 14), and regulatory compliance (Module 15). The final exam will present multi-domain scenarios that require you to reason across these layers simultaneously. This reading guide provides the cross-domain integration framework to prepare you for those scenarios.
+By the end of this module you should be able to:
 
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **IoT Defense-in-Depth Architecture**: The application of overlapping, independent security controls at the device layer (secure boot, hardware root of trust, firmware signing), the network layer (TLS 1.3, VLAN segmentation, firewall conduits, certificate-based mutual authentication), and the cloud/application layer (IoT policies with least privilege, device registry, encrypted storage). Defense in depth ensures that a failure at any single layer does not result in total system compromise — it is the architectural expression of the principle that no single control is sufficient.
-*   **Cross-Domain Attack Chain**: A real-world IoT attack scenario in which an attacker moves across multiple security domains to reach a high-value target. Example: (1) exploit a default credential on an internet-facing camera (OWASP IoT #1), (2) pivot through the corporate network because IoT devices are not VLAN-isolated (OWASP IoT #2), (3) reach an unpatched PLC with a known CVE (OWASP IoT #4/5), (4) send unauthenticated Modbus write commands to a safety system (OWASP ICS threat). Each step exploits a different module's security gap. Understanding these chains is the basis of the capstone threat modeling exercise.
-*   **Capstone Threat Model (STRIDE for IoT)**: STRIDE is a threat categorization framework: Spoofing (impersonating a device identity), Tampering (modifying firmware, sensor data, or commands in transit), Repudiation (denying actions due to absent audit logs), Information Disclosure (exposing telemetry or credentials), Denial of Service (disrupting device availability), Elevation of Privilege (gaining unauthorized control). Applying STRIDE to an IoT system architecture diagram produces a threat list that maps directly to OWASP IoT Top 10 categories and drives the security control selection covered throughout this course.
-*   **Exam Domain Coverage Map**: The final exam draws from all 16 modules: embedded hardware (Modules 01–02), IoT protocols (Modules 03–05), cloud platforms (Module 06), sensors (Module 07), edge computing (Module 08), OWASP IoT Top 10 (Module 09), firmware security (Module 10), device management (Module 11), data pipelines (Module 12), edge ML (Module 13), IIoT/SCADA (Module 14), standards and compliance (Module 15). High-frequency exam topics across modules: X.509 authentication, TLS, MQTT QoS, INT8 quantization, OWASP categories #1/#2/#7/#8, secure boot chain of trust, staged OTA rollout, Purdue Model levels, ETSI EN 303 645 Provision 1.
-*   **Zero-Trust for IoT**: A security model that eliminates implicit trust based on network location — every device must authenticate and every request must be authorized regardless of whether the device is inside or outside the corporate network perimeter. For IoT, zero-trust implementation requires: mutual TLS (mTLS) with per-device X.509 certificates, IoT policies granting only the specific MQTT topics a device publishes/subscribes to, continuous device health attestation (reported firmware version, secure boot status), and microsegmentation so a compromised device cannot reach other devices or cloud services beyond its authorized scope.
+- Design a complete four-tier IoT system architecture with documented security decisions
+- Write professional-quality architecture documentation including open issues and known limitations
+- Identify the key topic areas for AWS IoT Specialty and AZ-220 certifications and map them to course content
+- Develop a structured certification exam preparation plan
+- Articulate the three highest-priority security risks in any IoT system design
 
 ---
 
-### 2. Certification Exam Tips
-*   **Multi-domain scenario recognition:** The final exam presents scenarios that involve two or more modules' concepts. Strategy: first identify which OWASP IoT Top 10 categories are present, then identify which module's technical controls address each category. This two-step decomposition converts an apparently complex scenario into a checklist of familiar concepts.
-*   **Protocol selection decision rules:** Memorize: MQTT = TCP, pub/sub, port 1883/8883 (TLS), lightweight for constrained devices; CoAP = UDP, request/response, port 5683/5684 (DTLS), best for very constrained devices; HTTP/REST = TCP, stateful, high overhead; Zigbee = IEEE 802.15.4, AES-128, mesh, short range; LoRaWAN = chirp spread-spectrum, LPWAN, long range, duty-cycle limited; BLE = AES-128, "Just Works" pairing is MITM-vulnerable. Exam scenarios describe a constraint (battery, range, bandwidth, latency) and test which protocol is most appropriate.
-*   **Authentication method decision rules:** X.509 certificate = strongest device identity, required for AWS IoT Policy enforcement and mTLS; JWT (GCP IoT Core) = RSA/EC-signed short-lived token, suitable where cert management is complex; SAS token (Azure IoT Hub) = HMAC-SHA256 with expiry, simpler but requires shared secret management; API key = weakest, acceptable only for server-to-server internal calls. Exam questions presenting a scenario with "impersonation risk" or "shared credential blast radius" point toward X.509.
-*   **Compliance framework selection:** ETSI EN 303 645 = consumer IoT device baseline (EU/UK); NIST IR 8259A = U.S. federal IoT procurement baseline; IEC 62443 = ICS/SCADA industrial security; NIST SP 800-82 = U.S. guide for ICS security; California SB-327 = first U.S. law banning universal default passwords; EU CRA = mandatory EU regulation with market enforcement and patch/disclosure timelines. Exam scenarios describe a context (consumer device, industrial plant, federal agency) and test which framework applies.
-*   **Study Resource:** The [OWASP IoT Security Project Guides & Embedded Systems Wiki](https://owasp.org/www-project-internet-of-things/) — reviewing all 10 OWASP IoT Top 10 categories in a single session before the final exam is the highest-ROI study activity. Every exam scenario maps to at least one OWASP category, and the remediation for each category has been covered in a specific module.
+## Section 1 — Complete IoT System Design
+
+### The Four-Tier Architecture Model
+
+A production IoT system integrates four tiers, each with distinct responsibilities, communication contracts, and security boundaries.
+
+#### Tier 1 — Device Layer
+
+The device layer consists of the physical hardware running embedded firmware. The key design decisions at this tier are:
+
+- Microcontroller selection: capability (flash, SRAM, connectivity), power budget, security features (secure boot, hardware secure element)
+- Firmware architecture: RTOS task structure, priority assignments, inter-task communication primitives
+- Sensor interface: protocol selection (I2C, SPI, UART, analog ADC), sampling rate, data representation
+- On-device security: TLS certificate storage, firmware signing, secure boot configuration
+- Edge intelligence: TinyML models for on-device inference, reducing cloud communication frequency and cost
+
+The device layer is the most constrained and the most physically exposed tier. Security decisions made here — or not made — persist for the device's entire operational lifetime.
+
+#### Tier 2 — Gateway and Connectivity Layer
+
+The gateway layer bridges device communication protocols to cloud-scale infrastructure. For MQTT-based systems, this tier includes:
+
+- MQTT broker (Mosquitto, AWS IoT Core, Azure IoT Hub)
+- Transport security: TLS 1.3 on port 8883, device certificate validation
+- Authentication: mTLS with per-device X.509 certificates
+- Message routing: topic-based routing rules directing messages to appropriate processing services
+- Protocol translation: for devices using CoAP, HTTP, or proprietary protocols, gateway translates to the cloud backend's native protocol
+
+The gateway tier is the critical security boundary. Compromise of the gateway can expose all device traffic. The gateway must be hardened, monitored, and its certificates managed with the same rigor as any production-critical service.
+
+#### Tier 3 — Cloud Processing Layer
+
+The cloud processing tier receives telemetry from the gateway and performs:
+
+- Stream processing: real-time transformations, aggregations, and routing of incoming data
+- Storage: time-series database for telemetry, relational or document database for device metadata and configuration
+- Device management: device registry, device twins, OTA update orchestration
+- Analytics: batch processing for historical analysis, ML model training pipelines
+- Integration: APIs for dashboard consumption, webhook notifications for external systems
+
+Cloud tier design must account for scale: a fleet of 100,000 devices sending data every 30 seconds generates approximately 3,300 messages per second — requiring message ingestion infrastructure that can handle sustained high throughput.
+
+#### Tier 4 — Dashboard and Application Layer
+
+The dashboard tier provides human and system interfaces to the IoT data:
+
+- Operational dashboards: real-time visualization of fleet health, individual device status, time-series charts
+- Alert management: incident feed, acknowledgment workflow, escalation rules
+- Configuration interface: device twin management, OTA deployment controls
+- Reporting: historical analysis, compliance reporting, capacity planning
+
+Dashboard users have different needs: an operations engineer wants device-level drill-down; a VP wants aggregate KPIs; a security team wants audit logs. Good dashboard design serves multiple audiences without requiring role-specific custom builds.
+
+### Connecting the Tiers: Communication Contracts
+
+The interfaces between tiers must be explicitly documented as contracts — agreed-upon formats, protocols, and semantics. For the course capstone, the communication contracts are:
+
+**Device to broker:** MQTT over TLS on port 8883. Topics: `devices/{device_id}/telemetry`, `devices/{device_id}/shadow/reported`. Message format: JSON with fields `device_id`, `timestamp_ms`, sensor values, `firmware_version`. QoS: 1 (at-least-once delivery).
+
+**Broker to cloud processing:** Rule-based forwarding to time-series database ingestion endpoint. The rule matches topic `devices/+/telemetry` and extracts the payload.
+
+**Cloud processing to dashboard:** REST API or WebSocket subscription providing time-series data queries and real-time event streaming.
+
+These contracts ensure that changes to one tier do not silently break adjacent tiers — a device firmware update that changes the JSON field names must be accompanied by a corresponding cloud processing update.
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** The [OWASP IoT Security Project Guides & Embedded Systems Wiki](https://owasp.org/www-project-internet-of-things/) — complete a full review of all 10 OWASP IoT Top 10 categories and cross-reference each with the course module that covers its primary remediation. This integration exercise is the most effective preparation for multi-domain final exam questions.
-*   **Required Video:** The [IoT Course & Embedded Systems Tutorials by freeCodeCamp](https://www.youtube.com/watch?v=h0J8f60LdB0) — revisit any module segments covering topics you identified as weak during your domain coverage map review. Focus particularly on protocol comparison, cloud authentication methods, and the firmware security pipeline.
+## Section 2 — Architecture Documentation Standards
+
+### What Professional Documentation Contains
+
+Professional IoT system documentation serves three audiences simultaneously: engineers, security reviewers, and operations staff. Documentation that serves only one audience is incomplete.
+
+**For engineers:** Component descriptions with technology choices and version pins, API specifications for inter-tier interfaces, development environment setup instructions, and troubleshooting procedures for the most common failure modes.
+
+**For security reviewers:** Threat model documenting what assets are protected and against which threat actors, security control descriptions with justifications, known limitations and mitigations, and incident response procedures.
+
+**For operations staff:** Deployment architecture, monitoring dashboard description, alert definitions and response playbooks, and escalation procedures.
+
+### Architecture Decision Records
+
+An Architecture Decision Record (ADR) documents a significant technical choice: the context in which the decision was made, the options that were considered, the chosen option, and the reasoning for the choice. ADRs are written once and rarely updated — they preserve the institutional memory of *why* the system was built the way it was, which is invaluable when the original engineers have moved on.
+
+A minimal ADR for an IoT security decision:
+
+**Decision:** Use mTLS with per-device X.509 certificates for device authentication.
+
+**Context:** The system must authenticate 10,000 devices connecting to a shared MQTT broker over the public internet. Devices are deployed in physical locations accessible to adversaries.
+
+**Options considered:**
+
+- Username/password over TLS — simpler to implement, but a shared credential database is a high-value attack target
+- API key per device — better than shared passwords, but keys must be securely provisioned and rotated
+- Per-device X.509 certificates with mTLS — unique per device, no shared secret, hardware-backed on devices with secure elements
+
+**Decision rationale:** mTLS eliminates shared credential risk. Certificate compromise affects only one device. Certificate revocation provides fleet-level response capability. Hardware secure element storage prevents key extraction.
+
+**Limitations:** More complex initial provisioning. Certificate renewal must be managed before expiry.
+
+### Open Issues Documentation
+
+Many teams skip documenting known limitations because they feel it exposes weakness. The opposite is true: documented known issues demonstrate engineering maturity. Undocumented limitations become surprises during incidents.
+
+Format for open issues:
+
+- Issue description: what the gap is
+- Risk level: if exploited or triggered, what is the impact?
+- Planned resolution: when and how the issue will be addressed
+- Workaround: what mitigates the risk in the current state
 
 ---
 
-### Lab & Command Integration
-In this week's capstone lab, you will perform the following integrative exercises:
-*   **Build a threat model for a complete IoT system**: Given a system architecture diagram of a smart building deployment (temperature/occupancy sensors → Zigbee coordinator → edge gateway → MQTT broker → cloud platform → web dashboard), apply STRIDE to each component and data flow, produce a threat table mapping each threat to an OWASP IoT Top 10 category and a specific technical control from the course, and identify the top three highest-risk threat/control gaps.
-*   **Write a cross-domain security requirements document**: For the smart building system above, write five security requirements in the format "The system SHALL [control] in order to mitigate [threat] as defined by [standard/framework]." Each requirement must cite a different module's technical domain (e.g., authentication, firmware update, network segmentation, data encryption, anomaly detection).
-*   **Conduct a final exam mock review**: Complete the 16-question practice set (one question per module) provided in the course portal under timed conditions (32 minutes / 2 minutes per question). Review incorrect answers by tracing each back to the corresponding module's reading guide glossary and distractor analysis.
+## Section 3 — Certification Pathways
+
+### AWS Certified Specialty — IoT Core
+
+The AWS IoT Specialty exam validates the ability to design, implement, and maintain IoT solutions using AWS services. Key topic domains:
+
+**Domain 1 — IoT Architecture Design (24% of exam):** AWS IoT Core architecture, message broker, rules engine, device registry, device shadows. Greengrass for local processing. Choosing between IoT Core, IoT Greengrass, and IoT SiteWise for different use cases.
+
+**Domain 2 — Device Connectivity and Protocols (17%):** MQTT, HTTP, WebSocket connectivity to IoT Core. Topic naming conventions, QoS levels, persistent sessions. Offline behavior and message queuing.
+
+**Domain 3 — Processing and Acting on Device Data (20%):** IoT Rules Engine SQL syntax, rule actions (DynamoDB, S3, Lambda, SNS, SQS, Kinesis). Stream processing for real-time analytics. Lambda functions triggered by IoT rules.
+
+**Domain 4 — Security (22%):** IoT Core authentication (certificates, SigV4, custom authorizers). IoT Core authorization (policies, thing groups, policy variables). IoT Device Defender for fleet security monitoring and anomaly detection. Certificate management at scale.
+
+**Domain 5 — Device Management (17%):** Fleet Indexing and search, Device Jobs for OTA updates, Fleet Hub for operator dashboards, Device Provisioning methods (JITP, bulk provisioning, fleet provisioning).
+
+Course alignment: Domains 4 and 5 align directly with Modules 12 and 15. Domain 1 aligns with the four-tier architecture concepts in this module. Gaps to close before exam: AWS-specific service APIs, IoT Rules Engine SQL syntax, Greengrass component model.
+
+### AZ-220 Azure IoT Developer
+
+AZ-220 validates the ability to implement device provisioning, device communication, and IoT solutions using Azure services.
+
+**Key skill areas:**
+
+IoT Hub configuration: message routing, built-in endpoints, custom endpoints, enrichments. Device twin CRUD operations. IoT Hub device authentication and authorization.
+
+Device Provisioning Service (DPS): enrollment groups vs. individual enrollments, attestation mechanisms (TPM, X.509, symmetric key), automatic provisioning workflow, DPS-to-IoT-Hub allocation policies.
+
+Azure IoT Edge: IoT Edge runtime, module development and deployment, Edge hub for local routing, offline capability, nested IoT Edge topologies.
+
+Azure Stream Analytics: time window functions (tumbling, hopping, sliding), joins between streams and reference data, anomaly detection built-in functions.
+
+Course alignment: DPS content aligns with Module 15 provisioning. IoT Hub device twin aligns with the device shadow pattern. IoT Edge aligns with gateway concepts. Gaps: Azure-specific service configuration, Stream Analytics query language, ARM template deployments.
+
+### Entry-Level Certifications
+
+**Cisco Certified IoT Fundamentals** covers IoT concepts, networking (IPv6, 6LoWPAN, Wi-Fi, cellular), sensors, actuators, data processing, and security fundamentals. This course's content significantly exceeds the Cisco IoT Fundamentals scope — graduates should be prepared to pass this exam after completing Modules 1–8.
+
+**CompTIA IoT+** covers IoT hardware, protocols, connectivity, data management, and security fundamentals in a vendor-neutral framework. Approximately equivalent in scope to Cisco IoT Fundamentals. Recommended for students entering the field who want a recognized vendor-neutral credential before specializing.
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and create a personal cross-reference table mapping each term to its module number.
-- [ ] Review all 10 OWASP IoT Top 10 categories at [OWASP IoT Security Project Guides & Embedded Systems Wiki](https://owasp.org/www-project-internet-of-things/) and map each to a course module remediation.
-- [ ] Watch review sections of [IoT Course & Embedded Systems Tutorials by freeCodeCamp](https://www.youtube.com/watch?v=h0J8f60LdB0) covering any weak domains identified in your self-assessment.
-- [ ] Complete the capstone threat model lab exercise and the mock exam practice set.
-- [ ] Submit the capstone project deliverable per the course syllabus instructions before the final exam date.
+## Section 4 — Capstone Project Requirements
+
+### System Requirements
+
+The capstone project must demonstrate a complete, working four-tier IoT system:
+
+**Device tier requirements:**
+
+- FreeRTOS with at least two tasks at different priority levels
+- At least one physical or simulated sensor publishing over MQTT with TLS
+- Per-device X.509 certificate for mTLS authentication
+- Watchdog timer monitoring at least one task
+- Device shadow client that applies at least one configuration change received from the cloud
+
+**Gateway/broker tier requirements:**
+
+- Mosquitto or cloud MQTT broker configured for TLS on port 8883
+- Client certificate validation (require_certificate true or equivalent)
+- Messages successfully routing from device to cloud processing tier
+
+**Cloud processing tier requirements:**
+
+- Telemetry data stored in a time-series database or file-based equivalent
+- At least one alert condition implemented (threshold-based or anomaly-based)
+- Device registry with at least one device registered
+
+**Dashboard tier requirements:**
+
+- Visualization of at least 5 minutes of sensor data
+- Display of device connection status
+- Display of at least one alert that fired during the demonstration
+
+### Documentation Requirements
+
+**Architecture diagram:** Four-tier diagram with all components, communication paths, protocols, ports, and security mechanisms labeled.
+
+**Security analysis:** For each of the OWASP IoT Top 10 categories, classify your system as: (a) fully mitigated, (b) partially mitigated with explanation, or (c) not yet addressed with risk acknowledgment.
+
+**Architecture decision records:** At least three ADRs for significant technical choices made during the project.
+
+**Deployment documentation:** Step-by-step provisioning procedure for a new device, OTA update procedure, and decommissioning procedure.
+
+**Known limitations:** At least three documented open issues with risk level, planned resolution, and current workaround.
+
+---
+
+## Key Terms
+
+- **Four-tier IoT architecture** — device, gateway, cloud processing, dashboard
+- **Communication contract** — agreed protocol, format, and semantics between system tiers
+- **Architecture Decision Record (ADR)** — document recording a design decision, the options considered, and the rationale
+- **Threat model** — enumeration of assets, threat actors, and mitigations in a system design
+- **AWS Certified Specialty — IoT Core** — professional-level AWS IoT certification covering architecture, security, and fleet management
+- **AZ-220 Azure IoT Developer** — Microsoft associate-level certification covering IoT Hub, DPS, IoT Edge, and Stream Analytics
+- **Cisco IoT Fundamentals** — entry-level vendor-specific IoT certification
+- **CompTIA IoT+** — entry-level vendor-neutral IoT practitioner certification
+- **AWS IoT Device Defender** — AWS service for fleet-wide security monitoring and anomaly detection
+- **Azure Device Provisioning Service (DPS)** — Azure service for zero-touch device provisioning at scale
+- **IoT Edge** — Azure service for deploying cloud workloads to edge devices
+- **Capstone deliverables** — working system, architecture diagram, OWASP analysis, ADRs, deployment docs, known limitations
+
+---
+
+## Review Questions
+
+1. Name the four tiers of the IoT architecture model and describe the primary responsibility of each tier.
+2. What is a communication contract, and why must it be explicitly documented for each interface between tiers?
+3. What are the three audiences for IoT system documentation, and what questions does each audience need documentation to answer?
+4. What is an Architecture Decision Record, and what five elements does a complete ADR contain?
+5. Why should documentation include known limitations, even though doing so exposes engineering gaps?
+6. What percentage of the AWS IoT Specialty exam covers security, and which course modules most directly prepare for that domain?
+7. What is the Azure Device Provisioning Service, and which course module covers the same conceptual material?
+8. What is the difference between Cisco IoT Fundamentals and AZ-220 in terms of certification level and technical depth?
+9. List the five capstone deliverable categories and describe what must be included in the security analysis deliverable.
+10. A graduate completes this course and wants to pursue AWS IoT Specialty certification. They feel strong on security and fleet management but unfamiliar with AWS-specific services. What three-phase study plan would you recommend, and what resource would you use in each phase?
+
+---

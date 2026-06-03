@@ -1,5 +1,10 @@
-# Quiz: Module 14 – Cost Management and Billing
-## Course: CIS-4329 – Google Cloud Administration (Google Cloud Associate Cloud Engineer)
+# Quiz: Module 14 — Cost Management and Billing
+
+## Course: CIS-4329 Google Cloud Computing
+
+## Texas Wesleyan University | Professor Nash
+
+## Certification Alignment: Google Cloud Associate Cloud Engineer (ACE)
 
 ---
 
@@ -80,3 +85,125 @@ D) Security Command Center — run a storage asset inventory scan to list all bu
     *   *Why A is incorrect:* Cloud Monitoring tracks Cloud Storage operational metrics (bytes stored, request counts) but does not show cost data. Knowing which bucket is the largest does not directly identify which bucket is the most expensive — costs depend on storage class, operation type (Class A vs. Class B), and egress, not just data volume.
     *   *Why C is incorrect:* The Cloud Billing Reports page can show Cloud Storage costs at the project and SKU level, but it does not provide bucket-level cost attribution. You can see that Class A operations cost $400, but you cannot see which specific bucket generated those operations without the BigQuery detailed export.
     *   *Why D is incorrect:* Security Command Center's asset inventory lists storage buckets and their configurations (public access, encryption settings) — it is a security posture tool, not a cost analysis tool. It does not show billing charges, operation counts, or cost breakdowns by bucket.
+
+---
+
+### Instructions
+
+Select the single best answer for each question. Each question is worth 10 points.
+Total: 100 points.
+
+---
+
+### Question 6
+
+A company wants to attribute GCP costs to individual teams for chargeback purposes.
+The finance team needs to run SQL queries to see monthly spending broken down by team.
+What is the correct implementation?
+
+- A) Create separate GCP projects for each team; view costs by project in the Cloud
+  Billing Reports page
+- B) Apply resource labels with a `team` key to all billable resources, enable detailed
+  billing export to BigQuery, and query by the `labels.value` column
+- C) Assign each team a separate billing account and link their projects to it
+- D) Use Cloud Monitoring to create a cost dashboard filtered by resource owner
+
+Correct answer: B — Resource labels allow cost attribution within a project. When
+detailed billing export to BigQuery is enabled, label data appears as an array in the
+`labels` column, enabling SQL queries like `WHERE labels.key = 'team'`. Creating
+separate billing accounts per team is an option but adds administrative overhead and
+does not enable SQL analysis of costs. Cloud Monitoring does not contain billing data.
+
+---
+
+### Question 7
+
+A development team runs CI/CD test jobs on Compute Engine VMs. The jobs take 2–4 hours,
+can restart from any failure point, and run during business hours only. The team wants
+to reduce the compute cost for these test jobs by the maximum amount possible. Which
+option is most cost-effective?
+
+- A) Purchase a 1-year committed use discount for the vCPU and memory used by the VMs
+- B) Enable sustained use discounts by ensuring the VMs run for more than 25% of each
+  month
+- C) Switch the test VMs to Spot VM provisioning model
+- D) Move the test VMs to the cheapest region regardless of latency
+
+Correct answer: C — Spot VMs cost up to 91% less than on-demand pricing and are ideal
+for workloads that can tolerate interruption and restart. CI/CD test jobs that can restart
+from any failure point match this pattern exactly. CUDs would require paying for committed
+capacity even during off-hours when the VMs are not running, making them less efficient
+for part-time workloads. SUDs require VMs running more than 25% of the month, which may
+not apply to business-hours-only workloads.
+
+---
+
+### Question 8
+
+A team member asks: "We set up a Cloud Billing budget for $1,000. Why are we still being
+charged $1,200 this month?" What is the correct explanation?
+
+- A) The budget was configured incorrectly; a properly configured budget would have
+  stopped charges at $1,000
+- B) Cloud Billing budget alerts are notification-only and do not prevent resource usage
+  or cap charges; the budget sends alerts but does not stop any services
+- C) The overage is automatically added to next month's budget as a credit
+- D) The 20% overage is within the allowed variance; GCP automatically approves up to
+  20% over any configured budget
+
+Correct answer: B — This is the most commonly misunderstood Cloud Billing concept. A
+budget is a notification tool, not an enforcement mechanism. When spending exceeds the
+budget, GCP sends configured alerts but continues charging for all running resources.
+To actually stop charges at a threshold, you must configure a Pub/Sub notification on
+the budget and build a Cloud Function that calls the GCP API to stop resources or disable
+billing when triggered. There is no automatic credit, variance allowance, or enforcement.
+
+---
+
+### Question 9
+
+Your organization uses GCP across multiple teams. Each team has its own GCP project but
+all projects share one billing account. A new compliance requirement mandates that each
+team's cloud spending must not exceed a defined monthly limit, and teams must be
+automatically notified when they reach 80% of their limit. Which design meets this
+requirement?
+
+- A) Create one organization-wide budget with a single 80% threshold; all billing
+  administrators receive the notification
+- B) Create a separate per-project budget for each team's project with an 80% threshold
+  rule; configure notifications to each team's billing contact
+- C) Create a Cloud Monitoring alert that fires when project spending exceeds 80% of the
+  limit
+- D) Set the project-level billing account quota to limit spending per project
+
+Correct answer: B — Cloud Billing budgets support per-project scope. Creating a separate
+budget for each team's project, with thresholds configured to the team's limit and
+notifications routed to the team's contact, is the correct implementation. A single
+organization-wide budget would alert all admins together and not track individual team
+limits. Cloud Monitoring does not contain billing spend metrics. Project-level billing
+quotas are not a billing feature — GCP does not provide a "spend cap" quota at the
+project level.
+
+---
+
+### Question 10
+
+A data engineering team stores 200 TB of log files in a Cloud Storage Standard bucket.
+The files are queried heavily during the first 7 days after upload, occasionally in the
+following 30 days, and almost never after 60 days. The team wants to minimize storage
+costs without changing how files are accessed. Which solution is correct?
+
+- A) Move all files to Coldline storage to minimize monthly storage cost
+- B) Configure Object Lifecycle Management rules: transition to Nearline after 7 days,
+  Coldline after 30 days, and optionally Archive after 365 days
+- C) Enable versioning on the bucket to deduplicate files and reduce storage size
+- D) Create a second bucket in a cheaper region and copy old files to it
+
+Correct answer: B — Object Lifecycle Management automatically transitions objects to
+cheaper storage classes as they age, matching the access pattern. Standard is appropriate
+for the first 7 days; Nearline ($0.01/GB) for files accessed monthly; Coldline
+($0.004/GB) for files rarely accessed after 30 days. Moving everything immediately to
+Coldline would incur high retrieval costs for the actively queried recent files. Bucket
+versioning does not deduplicate content — it keeps multiple versions of each object,
+increasing storage. Copying to a different region adds egress costs and operational
+complexity.

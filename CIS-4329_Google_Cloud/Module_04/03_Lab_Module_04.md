@@ -1,372 +1,383 @@
-# Lab — Module 04
+# Lab: Module 04 — Cloud Storage
 
-## CIS-4329: Google Cloud Platform | Texas Wesleyan University
+## Course: CIS-4329 Google Cloud Computing
 
-### Topic: Cloud Storage — Buckets, Storage Classes, and Lifecycle Policies
-
-### Points: 100
+**Certification Alignment:** Google Cloud Associate Cloud Engineer (ACE)
 
 ---
 
 ## Lab Overview
 
-In this lab you will create Cloud Storage buckets with specific storage classes and location types, upload and manage objects, configure a lifecycle policy, enable object versioning, and test access with signed URLs and IAM bindings. These are core Cloud Storage skills for the Google Cloud ACE exam.
+In this lab you will create and configure Cloud Storage buckets, upload and
+manage objects, configure lifecycle policies, enable object versioning,
+generate signed URLs, and set up Pub/Sub notifications for storage events.
 
-All tasks use Cloud Shell and the gcloud storage CLI. Complete this lab in your `txwes-gcp-lab-[your initials]` project.
+**Estimated Time:** 75 minutes
 
-Estimated completion time: 60–75 minutes.
+**Prerequisites:**
+
+- Active GCP project with billing enabled
+- Cloud Shell access
+- Cloud Storage API enabled (usually enabled by default)
+
+**Learning Objectives:**
+
+By the end of this lab you will be able to:
+
+1. Create buckets with specific configurations
+2. Upload, download, and manage objects via gcloud
+3. Configure and test object lifecycle policies
+4. Enable and use object versioning
+5. Generate signed URLs for temporary access
+6. Configure Pub/Sub notifications for storage events
 
 ---
 
-## Prerequisites
+## Part 1 — Create and Configure Buckets (15 minutes)
 
-- Modules 01, 02, and 03 labs completed
-- Active project configured in Cloud Shell:
+### Step 1.1 — Set Environment Variables
 
 ```bash
-gcloud config list
+export PROJECT_ID=$(gcloud config get-value project)
+export BUCKET_MAIN="cis4329-lab04-${PROJECT_ID}"
+export BUCKET_ARCHIVE="cis4329-archive-${PROJECT_ID}"
+echo "Main bucket: gs://$BUCKET_MAIN"
+echo "Archive bucket: gs://$BUCKET_ARCHIVE"
 ```
 
-Confirm project, region, and zone are set.
-
----
-
-## Part 1: Create Buckets with Different Configurations (20 points)
-
-### Task 1.1 — Create a Regional Standard Bucket (10 points)
-
-Create a regional Standard bucket for active project assets:
+### Step 1.2 — Create the Main Bucket (Standard, Regional)
 
 ```bash
-gcloud storage buckets create gs://txwes-standard-[your-initials] \
+gcloud storage buckets create gs://$BUCKET_MAIN \
   --location=us-central1 \
-  --storage-class=STANDARD \
+  --default-storage-class=STANDARD \
   --uniform-bucket-level-access
+
+# Verify
+gcloud storage buckets describe gs://$BUCKET_MAIN
 ```
 
-Replace `[your-initials]` with your initials (e.g., `wn`). Bucket names must be globally unique — if you get a name conflict, append a number.
-
-Verify the bucket was created:
+### Step 1.3 — Create the Archive Bucket (Coldline, Regional)
 
 ```bash
-gcloud storage buckets describe gs://txwes-standard-[your-initials]
-```
-
-Note the `location`, `storageClass`, and `iamConfiguration.uniformBucketLevelAccess.enabled` fields in the output.
-
-Deliverable: Screenshot of the `gcloud storage buckets describe` output for your Standard bucket. Label it "Task 1.1".
-
-### Task 1.2 — Create a Nearline Bucket (10 points)
-
-Create a second bucket with Nearline storage class for backup files:
-
-```bash
-gcloud storage buckets create gs://txwes-nearline-[your-initials] \
+gcloud storage buckets create gs://$BUCKET_ARCHIVE \
   --location=us-central1 \
-  --storage-class=NEARLINE \
+  --default-storage-class=COLDLINE \
   --uniform-bucket-level-access
+
+gcloud storage buckets list
 ```
 
-Verify:
+### Step 1.4 — Upload Test Objects
 
 ```bash
-gcloud storage buckets describe gs://txwes-nearline-[your-initials] \
-  --format="value(storageClass, location)"
+# Create test files
+for i in 1 2 3 4 5; do
+  echo "This is test file number $i — created $(date)" > test-file-$i.txt
+done
+
+# Upload to the main bucket
+gcloud storage cp test-file-*.txt gs://$BUCKET_MAIN/
+
+# Upload a subdirectory
+mkdir -p logs/app
+echo "App log entry" > logs/app/app.log
+echo "Error log entry" > logs/app/error.log
+gcloud storage cp -r logs/ gs://$BUCKET_MAIN/
+
+# List bucket contents
+gcloud storage ls gs://$BUCKET_MAIN/
+gcloud storage ls gs://$BUCKET_MAIN/logs/app/
 ```
 
-Deliverable: Screenshot confirming the Nearline storage class and location. Label it "Task 1.2".
+### Step 1.5 — Download and Delete Objects
+
+```bash
+# Download a file
+gcloud storage cp gs://$BUCKET_MAIN/test-file-1.txt ./downloaded-file-1.txt
+cat downloaded-file-1.txt
+
+# Delete an object
+gcloud storage rm gs://$BUCKET_MAIN/test-file-5.txt
+
+# Verify deletion
+gcloud storage ls gs://$BUCKET_MAIN/
+```
 
 ---
 
-## Part 2: Upload and Manage Objects (20 points)
+## Part 2 — Object Lifecycle Policy (20 minutes)
 
-### Task 2.1 — Create and Upload Sample Files (10 points)
-
-Create several sample files to work with:
+### Step 2.1 — Create a Lifecycle Policy File
 
 ```bash
-echo "This is a web asset - logo.png simulation" > logo.txt
-echo "This is a monthly report for January" > report-jan.txt
-echo "This is a quarterly compliance archive" > compliance-q1.txt
-echo "This is an annual audit log for 2023" > audit-2023.txt
+cat > lifecycle.json << 'EOF'
+{
+  "lifecycle": {
+    "rule": [
+      {
+        "action": {
+          "type": "SetStorageClass",
+          "storageClass": "NEARLINE"
+        },
+        "condition": {
+          "age": 30,
+          "matchesStorageClass": ["STANDARD"]
+        }
+      },
+      {
+        "action": {
+          "type": "SetStorageClass",
+          "storageClass": "COLDLINE"
+        },
+        "condition": {
+          "age": 90,
+          "matchesStorageClass": ["NEARLINE"]
+        }
+      },
+      {
+        "action": {
+          "type": "Delete"
+        },
+        "condition": {
+          "age": 365
+        }
+      }
+    ]
+  }
+}
+EOF
 ```
 
-Upload all files to your Standard bucket:
+### Step 2.2 — Apply the Lifecycle Policy
 
 ```bash
-gcloud storage cp logo.txt gs://txwes-standard-[your-initials]/assets/
-gcloud storage cp report-jan.txt gs://txwes-standard-[your-initials]/reports/
-gcloud storage cp compliance-q1.txt gs://txwes-standard-[your-initials]/compliance/
-gcloud storage cp audit-2023.txt gs://txwes-standard-[your-initials]/archives/
+gcloud storage buckets update gs://$BUCKET_MAIN \
+  --lifecycle-file=lifecycle.json
+
+# Verify the policy was applied
+gcloud storage buckets describe gs://$BUCKET_MAIN \
+  --format=json | python3 -c "
+import sys, json
+bucket = json.load(sys.stdin)
+lifecycle = bucket.get('lifecycle', {})
+rules = lifecycle.get('rule', [])
+for i, rule in enumerate(rules):
+    print(f'Rule {i+1}: {rule}')
+"
 ```
 
-List the contents of your bucket to confirm all files uploaded:
+### Step 2.3 — Manually Change an Object's Storage Class
 
 ```bash
-gcloud storage ls gs://txwes-standard-[your-initials]/
+# Move test-file-2.txt to Nearline immediately
+gcloud storage objects update gs://$BUCKET_MAIN/test-file-2.txt \
+  --storage-class=NEARLINE
+
+# Verify the storage class changed
+gcloud storage objects describe gs://$BUCKET_MAIN/test-file-2.txt \
+  --format='value(storageClass)'
 ```
 
-Deliverable: Screenshot of the `gcloud storage ls` output showing all four object paths. Label it "Task 2.1".
+**Question 2.3:** If you delete `test-file-2.txt` tomorrow (it was just set to
+Nearline storage class), how many days of storage will you be charged for?
 
-### Task 2.2 — Copy an Object Between Buckets (10 points)
+---
 
-Copy the audit log from the Standard bucket to the Nearline bucket (simulating moving archive data):
+## Part 3 — Object Versioning (15 minutes)
+
+### Step 3.1 — Enable Versioning
 
 ```bash
+gcloud storage buckets update gs://$BUCKET_MAIN \
+  --versioning
+
+# Verify
+gcloud storage buckets describe gs://$BUCKET_MAIN \
+  --format='value(versioning.enabled)'
+```
+
+### Step 3.2 — Create Multiple Versions of an Object
+
+```bash
+# Upload initial version
+echo "Version 1 content" > versioned-file.txt
+gcloud storage cp versioned-file.txt gs://$BUCKET_MAIN/versioned-file.txt
+
+# Overwrite with version 2
+echo "Version 2 content" > versioned-file.txt
+gcloud storage cp versioned-file.txt gs://$BUCKET_MAIN/versioned-file.txt
+
+# Overwrite with version 3
+echo "Version 3 content" > versioned-file.txt
+gcloud storage cp versioned-file.txt gs://$BUCKET_MAIN/versioned-file.txt
+```
+
+### Step 3.3 — List All Versions
+
+```bash
+# List all versions (including noncurrent)
+gcloud storage ls -a gs://$BUCKET_MAIN/versioned-file.txt
+```
+
+Record all generation numbers from the output.
+
+### Step 3.4 — Restore a Previous Version
+
+```bash
+# Get the generation number of version 1 (the oldest)
+# Replace GENERATION_1 with the oldest generation number from Step 3.3
+
+# Restore version 1 to a new name
 gcloud storage cp \
-  gs://txwes-standard-[your-initials]/archives/audit-2023.txt \
-  gs://txwes-nearline-[your-initials]/archives/audit-2023.txt
+  "gs://$BUCKET_MAIN/versioned-file.txt#GENERATION_1" \
+  gs://$BUCKET_MAIN/versioned-file-restored.txt
+
+# Verify contents
+gcloud storage cp gs://$BUCKET_MAIN/versioned-file-restored.txt ./
+cat versioned-file-restored.txt
 ```
-
-Verify the file exists in the Nearline bucket:
-
-```bash
-gcloud storage ls gs://txwes-nearline-[your-initials]/
-```
-
-Deliverable: Screenshot of the listing in the Nearline bucket. Label it "Task 2.2".
 
 ---
 
-## Part 3: Lifecycle Policies (25 points)
+## Part 4 — Signed URLs (10 minutes)
 
-### Task 3.1 — Write a Lifecycle Policy JSON (10 points)
-
-Create a lifecycle policy file that implements the following rules:
-
-1. Move objects to Nearline storage after 30 days
-2. Move objects to Coldline storage after 90 days
-3. Delete all objects after 365 days
-
-Create the JSON file:
+### Step 4.1 — Create a Service Account for Signing
 
 ```bash
-cat > lifecycle-policy.json << 'EOF'
-{
-  "lifecycle": {
-    "rule": [
-      {
-        "action": {"type": "SetStorageClass", "storageClass": "NEARLINE"},
-        "condition": {
-          "age": 30,
-          "matchesStorageClass": ["STANDARD"]
-        }
-      },
-      {
-        "action": {"type": "SetStorageClass", "storageClass": "COLDLINE"},
-        "condition": {
-          "age": 90,
-          "matchesStorageClass": ["NEARLINE"]
-        }
-      },
-      {
-        "action": {"type": "Delete"},
-        "condition": {"age": 365}
-      }
-    ]
-  }
-}
-EOF
+# Create a dedicated service account for URL signing
+gcloud iam service-accounts create storage-signer \
+  --display-name="Storage URL Signer"
+
+export SIGNER_SA="storage-signer@${PROJECT_ID}.iam.gserviceaccount.com"
+
+# Grant storage viewer to the SA
+gcloud storage buckets add-iam-policy-binding gs://$BUCKET_MAIN \
+  --member="serviceAccount:$SIGNER_SA" \
+  --role=roles/storage.objectViewer
+
+# Grant your account permission to impersonate the SA
+gcloud iam service-accounts add-iam-policy-binding $SIGNER_SA \
+  --member="user:$(gcloud config get-value account)" \
+  --role=roles/iam.serviceAccountTokenCreator
 ```
 
-Display the file to confirm it is correct:
+### Step 4.2 — Generate a Signed URL
 
 ```bash
-cat lifecycle-policy.json
+# Generate a signed URL valid for 15 minutes
+gcloud storage sign-url gs://$BUCKET_MAIN/test-file-1.txt \
+  --duration=15m \
+  --impersonate-service-account=$SIGNER_SA
+
+# Test the URL with curl (replace URL below with output from command above)
+# curl "https://storage.googleapis.com/..."
 ```
 
-Deliverable: Screenshot of the `cat lifecycle-policy.json` output showing all three rules. Label it "Task 3.1".
-
-### Task 3.2 — Apply the Lifecycle Policy (10 points)
-
-Apply the lifecycle policy to your Standard bucket:
-
-```bash
-gcloud storage buckets update gs://txwes-standard-[your-initials] \
-  --lifecycle-file=lifecycle-policy.json
-```
-
-Verify the lifecycle configuration was applied:
-
-```bash
-gcloud storage buckets describe gs://txwes-standard-[your-initials] \
-  --format="yaml(lifecycle)"
-```
-
-Deliverable: Screenshot of the lifecycle output from the describe command. Label it "Task 3.2".
-
-### Task 3.3 — Add a Versioning Cleanup Rule (5 points)
-
-Create a second lifecycle policy that also includes a rule to delete noncurrent object versions after 7 days. Update `lifecycle-policy.json` to add this fourth rule:
-
-```bash
-cat > lifecycle-policy-v2.json << 'EOF'
-{
-  "lifecycle": {
-    "rule": [
-      {
-        "action": {"type": "SetStorageClass", "storageClass": "NEARLINE"},
-        "condition": {
-          "age": 30,
-          "matchesStorageClass": ["STANDARD"]
-        }
-      },
-      {
-        "action": {"type": "SetStorageClass", "storageClass": "COLDLINE"},
-        "condition": {
-          "age": 90,
-          "matchesStorageClass": ["NEARLINE"]
-        }
-      },
-      {
-        "action": {"type": "Delete"},
-        "condition": {"age": 365}
-      },
-      {
-        "action": {"type": "Delete"},
-        "condition": {"isLive": false, "numNewerVersions": 1, "age": 7}
-      }
-    ]
-  }
-}
-EOF
-```
-
-Deliverable: Screenshot of the v2 lifecycle JSON file showing all four rules. Label it "Task 3.3".
+**Question 4.2:** After the signed URL expires, what happens if someone
+tries to use it? Does this affect the object itself?
 
 ---
 
-## Part 4: Object Versioning (15 points)
+## Part 5 — Pub/Sub Notifications (15 minutes)
 
-### Task 4.1 — Enable Versioning (5 points)
-
-Enable object versioning on your Standard bucket:
+### Step 5.1 — Create a Pub/Sub Topic
 
 ```bash
-gcloud storage buckets update gs://txwes-standard-[your-initials] --versioning
+gcloud pubsub topics create storage-events
+
+# Create a subscription to receive messages
+gcloud pubsub subscriptions create storage-events-sub \
+  --topic=storage-events
 ```
 
-Confirm versioning is enabled:
+### Step 5.2 — Grant Cloud Storage Permission to Publish
 
 ```bash
-gcloud storage buckets describe gs://txwes-standard-[your-initials] \
-  --format="value(versioning.enabled)"
+# Get the Cloud Storage service agent email
+STORAGE_SA=$(gcloud storage service-agent --project=$PROJECT_ID)
+echo "Storage Service Agent: $STORAGE_SA"
+
+# Grant Pub/Sub publisher role
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+  --member="serviceAccount:$STORAGE_SA" \
+  --role=roles/pubsub.publisher
 ```
 
-The output should show `True`.
-
-Deliverable: Screenshot showing `True` in the output. Label it "Task 4.1".
-
-### Task 4.2 — Overwrite a File and List Versions (10 points)
-
-Overwrite the logo file to create a new version:
+### Step 5.3 — Create the Notification
 
 ```bash
-echo "This is the UPDATED logo.png simulation - version 2" > logo-v2.txt
-gcloud storage cp logo-v2.txt gs://txwes-standard-[your-initials]/assets/logo.txt
+gcloud storage buckets notifications create gs://$BUCKET_MAIN \
+  --topic=storage-events \
+  --event-types=OBJECT_FINALIZE,OBJECT_DELETE
+
+# List notifications
+gcloud storage buckets notifications list gs://$BUCKET_MAIN
 ```
 
-List all versions of the object (including noncurrent):
+### Step 5.4 — Test the Notification
 
 ```bash
-gcloud storage ls -a gs://txwes-standard-[your-initials]/assets/
+# Upload a file to trigger a notification
+echo "Notification test" > notification-test.txt
+gcloud storage cp notification-test.txt gs://$BUCKET_MAIN/
+
+# Pull messages from the subscription
+gcloud pubsub subscriptions pull storage-events-sub \
+  --limit=5 \
+  --auto-ack \
+  --format=json
 ```
-
-You should see two entries for `logo.txt` with different generation numbers — the original (noncurrent) and the new version (live).
-
-Deliverable: Screenshot of the `-a` listing showing two versions of `logo.txt`. Label it "Task 4.2".
 
 ---
 
-## Part 5: Cloud Storage IAM (15 points)
+## Lab Deliverables
 
-### Task 5.1 — Grant a Bucket-Level IAM Role (10 points)
+Submit a lab report containing:
 
-First, get your own account email:
+1. Output of `gcloud storage buckets list` showing both buckets.
+2. Output of `gcloud storage ls gs://BUCKET_MAIN/` showing uploaded objects.
+3. Screenshot of the lifecycle configuration applied to the main bucket.
+4. Output of `gcloud storage ls -a gs://BUCKET_MAIN/versioned-file.txt`
+   showing all generations.
+5. The signed URL generated in Part 4 (redacted if concerned about security —
+   it expires in 15 minutes regardless).
+6. Output of the Pub/Sub pull command showing at least one notification event.
+7. Answers to the lab questions.
 
-```bash
-gcloud config get-value account
-```
+**Lab Questions:**
 
-Grant yourself `roles/storage.objectViewer` on the Nearline bucket specifically (not at project level):
-
-```bash
-gcloud storage buckets add-iam-policy-binding \
-  gs://txwes-nearline-[your-initials] \
-  --member="user:YOUR_EMAIL" \
-  --role="roles/storage.objectViewer"
-```
-
-View the bucket's IAM policy to confirm:
-
-```bash
-gcloud storage buckets get-iam-policy gs://txwes-nearline-[your-initials]
-```
-
-Deliverable: Screenshot of the IAM policy output showing the objectViewer binding for your account. Label it "Task 5.1".
-
-### Task 5.2 — Uniform Access Verification (5 points)
-
-Verify that uniform bucket-level access prevents object-level ACL changes. Try to set an ACL on an object in the Standard bucket (this should fail because uniform access is enabled):
-
-```bash
-gcloud storage objects update gs://txwes-standard-[your-initials]/assets/logo.txt \
-  --predefined-acl=publicRead 2>&1
-```
-
-The command should return an error because uniform bucket-level access blocks object-level ACLs.
-
-Deliverable: Screenshot of the error message. Label it "Task 5.2". In your submission notes, explain in one sentence why this error occurred.
+1. You upload a 100 GB object to a Coldline bucket. After 45 days you decide
+   you no longer need the file and delete it. How many days of Coldline storage
+   are you billed for?
+2. Explain the difference between uniform bucket-level access and fine-grained
+   access control. For a new production bucket, which would you choose and why?
+3. A user has `roles/storage.objectViewer` on a bucket. Can they list the
+   contents of the bucket? Can they download objects? Can they delete objects?
+4. A partner company needs to download a file from your private bucket without
+   creating a Google account. What approach would you use and why?
+5. What is the purpose of object versioning, and why should you configure a
+   lifecycle policy alongside it?
 
 ---
 
-## Cleanup (5 points)
-
-Delete all objects in both buckets and then delete the buckets:
+## Cleanup
 
 ```bash
-gcloud storage rm -r gs://txwes-standard-[your-initials]/
-gcloud storage rm -r gs://txwes-nearline-[your-initials]/
-gcloud storage buckets delete gs://txwes-standard-[your-initials]
-gcloud storage buckets delete gs://txwes-nearline-[your-initials]
+# Delete all objects and buckets
+gcloud storage rm -r gs://$BUCKET_MAIN --quiet
+gcloud storage rm -r gs://$BUCKET_ARCHIVE --quiet
+
+# Delete Pub/Sub resources
+gcloud pubsub subscriptions delete storage-events-sub
+gcloud pubsub topics delete storage-events
+
+# Delete service account
+gcloud iam service-accounts delete $SIGNER_SA --quiet
 ```
-
-Deliverable: Screenshot of the successful bucket deletion messages. Label it "Cleanup".
-
----
-
-## Reflection Questions
-
-Answer in your submission document (2–4 sentences each):
-
-1. You applied a lifecycle policy that moves objects to Nearline after 30 days. If an object is deleted before 30 days (for example, after only 5 days), what charges does Cloud Storage bill for, and why?
-2. A team wants to enable versioning for recovery but is worried about storage cost growing unboundedly. What specific lifecycle rule would you add to prevent this?
-3. An external auditor needs to download one specific compliance report from your private bucket. The auditor has no Google Account. What Cloud Storage feature would you use, and what is the maximum duration you can set?
-
----
-
-## Grading Rubric
-
-| Task | Points | Criteria |
-|---|---|---|
-| 1.1 Standard bucket created and described | 10 | Describe output shows STANDARD class, uniform access enabled |
-| 1.2 Nearline bucket created and verified | 10 | Storage class NEARLINE confirmed |
-| 2.1 Files uploaded and listed | 10 | All four object paths visible in listing |
-| 2.2 Object copied to Nearline bucket | 10 | Nearline bucket listing shows audit file |
-| 3.1 Lifecycle JSON created with three rules | 10 | All three rules visible in cat output |
-| 3.2 Lifecycle policy applied and verified | 10 | Lifecycle config visible in describe output |
-| 3.3 Fourth versioning cleanup rule added | 5 | v2 JSON shows all four rules |
-| 4.1 Versioning enabled | 5 | Output shows True |
-| 4.2 Two versions visible in listing | 10 | Both generation numbers visible for logo.txt |
-| 5.1 Bucket IAM binding applied | 10 | IAM policy shows objectViewer for account |
-| 5.2 Uniform access blocks ACL | 5 | Error message shown and explained |
-| Cleanup | 5 | Both buckets deleted |
-| Total | 100 | |
 
 ---
 
 End of Lab — Module 04
 
-Course: CIS-4329 Google Cloud Platform | Texas Wesleyan University | Professor Nash
-
-Certification Target: Google Cloud Associate Cloud Engineer
+Course: CIS-4329 Google Cloud Computing | Texas Wesleyan University | Professor Nash

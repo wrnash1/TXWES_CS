@@ -1,307 +1,363 @@
-# Reading Guide: Module 07 - DynamoDB: NoSQL at Scale
+# Reading Guide: Module 07 — Amazon EC2 and Auto Scaling
 
-**Course:** CIS-4334 AWS Cloud Architecture
-**Certification Target:** AWS Solutions Architect Associate (SAA-C03)
+## Course: CIS-4334 AWS Cloud Architecture
+
+## Texas Wesleyan University | Professor Nash
+
+## Certification Alignment: AWS Solutions Architect — Associate (SAA-C03)
 
 ---
 
 ## Introduction
 
-Amazon DynamoDB is a cornerstone service for serverless and high-scale application architectures on AWS. The SAA-C03 exam tests DynamoDB across multiple dimensions: data modeling (key design, indexes), capacity planning (provisioned vs. on-demand), event-driven integrations (Streams, Lambda), and multi-region architecture (Global Tables). This reading guide provides the reference tables, design patterns, and exam decision frameworks needed to answer DynamoDB scenario questions accurately.
+Amazon EC2 is the most widely tested service on the AWS SAA-C03 exam. This reading guide provides the reference tables, decision frameworks, and architectural patterns you need to answer EC2 and Auto Scaling scenario questions correctly. Work through each section in order and complete the checklist before attempting the module quiz.
 
 ---
 
-## Section 1: DynamoDB Data Model
+## Section 1: EC2 Instance Families
 
-### 1.1 Core Concepts
+### 1.1 Instance Family Reference Table
 
-| Concept | DynamoDB Term | Relational Equivalent |
-|---|---|---|
-| Collection of items | Table | Table |
-| Single record | Item | Row |
-| Named field in an item | Attribute | Column |
-| Unique identifier (partition key only) | Simple primary key | Primary key |
-| Unique identifier (partition + sort) | Composite primary key | Composite primary key |
+| Family | Class | vCPU:Memory Ratio | Primary Use Cases | Exam Trigger Words |
+|--------|-------|-------------------|-------------------|--------------------|
+| T3 / T4g | General Purpose (Burstable) | Variable | Dev/test, low-traffic web servers | "burst," "low-cost," "variable CPU" |
+| M5 / M6i / M7g | General Purpose (Balanced) | 1:4 | App servers, mid-tier databases | "balanced," "general workload" |
+| C5 / C6g / C7i | Compute Optimized | 1:2 | Batch, HPC, media transcoding | "CPU-intensive," "high performance compute" |
+| R5 / R6g / R7i | Memory Optimized | 1:8 | In-memory DBs, real-time analytics | "large in-memory," "Redis at scale" |
+| X1e / X2idn | Memory Optimized (Large) | 1:32+ | SAP HANA, largest in-memory | "SAP HANA," "terabytes of RAM" |
+| I3 / I4i | Storage Optimized (NVMe) | Varies | NoSQL, high IOPS, low-latency I/O | "NVMe," "high IOPS," "low-latency storage" |
+| D3 / H1 | Storage Optimized (HDD) | Varies | Hadoop, sequential throughput | "sequential I/O," "data warehouse local" |
+| P3 / P4 | Accelerated (GPU) | Varies | ML training, deep learning | "GPU," "machine learning training" |
+| G4 / G5 | Accelerated (GPU Graphics) | Varies | Graphics rendering, game streaming | "graphics," "GPU rendering" |
+| Inf1 / Inf2 | Accelerated (Inferentia) | Varies | ML inference at low cost | "inference," "Inferentia" |
 
-DynamoDB is schema-less for non-key attributes. Two items in the same table can have completely different attribute sets, as long as each item has the required primary key attributes.
+### 1.2 Processor Suffix Reference
 
-### 1.2 Primary Key Design Patterns
+| Suffix | Processor | Key Benefit |
+|--------|-----------|-------------|
+| (none) | Intel Xeon | Broad software compatibility |
+| a | AMD EPYC | ~10% cost reduction vs. Intel equivalent |
+| g | AWS Graviton (ARM) | 20–40% better price-performance for compatible workloads |
+| i | Intel Ice Lake / Sapphire Rapids | Latest Intel generation |
 
-| Pattern | When to Use | Example |
-|---|---|---|
-| Partition key only | Each item accessed by a single, unique ID | UserId → User profile |
-| Partition + Sort key | Items grouped by a parent entity with sorting | CustomerId + OrderDate → Order history |
-| Hierarchical data | Partition = entity type, Sort = sub-entity | EntityType + EntityId → polymorphic table |
+### 1.3 Instance Sizing
 
-Good partition key design distributes writes evenly across partitions. A bad partition key (low cardinality, hot key) concentrates I/O on a single partition, causing throttling even if total provisioned capacity is sufficient.
-
-### 1.3 Partition Key Best Practices
-
-- High cardinality: many distinct values (UserId, OrderId) are better than low cardinality (Status: active/inactive)
-- Avoid hot keys: if all reads hit the same partition key (e.g., Today's date), the partition becomes a bottleneck
-- For time-series data: use a composite key where partition key is a high-cardinality entity ID and sort key is a timestamp
-
----
-
-## Section 2: Secondary Indexes
-
-### 2.1 LSI vs. GSI Comparison
-
-| Feature | Local Secondary Index (LSI) | Global Secondary Index (GSI) |
-|---|---|---|
-| Partition key | Same as base table | Any attribute |
-| Sort key | Different from base table | Any attribute (optional) |
-| Creation timing | At table creation only | At table creation or any time after |
-| Capacity sharing | Shares table's RCUs/WCUs | Separate RCUs/WCUs (provisioned) or on-demand |
-| Consistency | Strongly consistent reads possible | Eventually consistent only |
-| Maximum per table | 5 | 20 |
-| Item collection size limit | 10 GB per partition key | No limit |
-| Cross-partition queries | No (same partition as base) | Yes (global across all partitions) |
-
-### 2.2 Index Design Examples
-
-Base table: Orders
-
-| Attribute | Type | Key Role |
-|---|---|---|
-| CustomerId | String | Partition key |
-| OrderId | String | Sort key |
-| OrderDate | String | Attribute |
-| TotalAmount | Number | Attribute |
-| ProductCategory | String | Attribute |
-
-LSI — sort orders by TotalAmount within a customer's partition:
-
-- Partition key: CustomerId (same)
-- Sort key: TotalAmount (different sort key)
-- Query: all orders for customer C001 with amount > 100
-
-GSI — query orders by ProductCategory globally:
-
-- Partition key: ProductCategory
-- Sort key: OrderDate
-- Query: all orders for category "Electronics" in the last 30 days, across all customers
+Sizes follow a consistent doubling pattern within a family and generation: nano, micro, small, medium, large, xlarge, 2xlarge, 4xlarge, 8xlarge, 12xlarge, 16xlarge, 24xlarge, 32xlarge, 48xlarge, metal. Each size step approximately doubles vCPU and memory. Metal instances provide dedicated hardware with no hypervisor overhead.
 
 ---
 
-## Section 3: Capacity Modes
+## Section 2: Amazon Machine Images
 
-### 3.1 Capacity Unit Reference
+### 2.1 AMI Concepts
 
-| Operation | Strongly Consistent | Eventually Consistent |
-|---|---|---|
-| Read (up to 4 KB) | 1 RCU | 0.5 RCU |
-| Transactional Read | 2 RCUs | N/A |
-| Write (up to 1 KB) | 1 WCU | N/A |
-| Transactional Write | 2 WCUs | N/A |
+An AMI is a snapshot-based template containing:
 
-For items larger than the base size, the cost scales proportionally. A strongly consistent read of a 12 KB item costs 3 RCUs (12/4 = 3).
+- A root volume snapshot (the operating system and pre-installed software)
+- Launch permissions specifying which AWS accounts can use the AMI
+- Block device mappings specifying volumes to attach on launch
 
-### 3.2 Choosing Between Provisioned and On-Demand
+AMIs are registered in a specific AWS Region. The AMI ID format is `ami-` followed by 17 hex characters (e.g., `ami-0abcdef1234567890`). AMI IDs differ across regions even for the same underlying OS version.
 
-| Scenario | Recommended Mode |
-|---|---|
-| Steady, predictable traffic patterns | Provisioned with Auto Scaling |
-| New table with unknown traffic | On-demand |
-| Highly variable or spiky traffic | On-demand or Provisioned + Aggressively-configured Auto Scaling |
-| Cost-sensitive with predictable load | Provisioned (lower per-unit cost at scale) |
-| Development and testing | On-demand (no idle capacity charges) |
-| Infrequently accessed tables | On-demand |
+### 2.2 AMI Types by Source
 
-### 3.3 Auto Scaling for Provisioned Mode
+| AMI Source | Description | Trust Level | Best Use |
+|------------|-------------|-------------|----------|
+| AWS-provided | Maintained by Amazon, regularly patched | Highest | Starting point for all new instances |
+| AWS Marketplace | Vendor-provided, includes licensed software | High (vetted by AWS) | Licensed products (Cisco, Palo Alto, etc.) |
+| Community | Shared by third-party users | Low (not vetted) | Evaluate carefully before production use |
+| Custom (self-created) | Built from your own instance | Highest (you own it) | Golden image pattern, standardized fleets |
 
-Auto Scaling adjusts RCUs and WCUs to maintain a target utilization percentage:
+### 2.3 Golden Image Pattern
 
-- Default target utilization: 70%
-- Scaling responds to changes in consumed capacity metrics
-- Scale-out is faster than scale-in to avoid throttling during sudden spikes
-- Works with both read and write capacity independently
-- Does not instantly handle sudden, large spikes — there is a short lag before new capacity is active
+The golden image workflow is the standard enterprise practice for consistent EC2 deployments:
 
-For workloads with known sudden spikes, consider: on-demand mode, or pre-scaling before the expected event using scheduled DynamoDB capacity updates via AWS Application Auto Scaling.
+1. Launch a base instance from an AWS-provided AMI
+2. Install OS patches and hardening configurations
+3. Install and configure application dependencies
+4. Create an AMI from the running instance (this creates EBS snapshots of all attached volumes)
+5. Store the AMI ID in SSM Parameter Store for automated reference
+6. Reference the AMI in launch templates for Auto Scaling groups
+7. Periodically rebuild the golden image to incorporate new patches
+
+This pattern ensures every instance is identical from birth and eliminates configuration drift.
 
 ---
 
-## Section 4: DynamoDB Streams
+## Section 3: Placement Groups
 
-### 4.1 Stream View Types
+### 3.1 Placement Group Comparison
 
-| View Type | Contents |
-|---|---|
-| KEYS_ONLY | Only the key attributes of the modified item |
-| NEW_IMAGE | The entire item as it appears after the modification |
-| OLD_IMAGE | The entire item as it appeared before the modification |
-| NEW_AND_OLD_IMAGES | Both the new and old images of the item |
+| Feature | Cluster | Spread | Partition |
+|---------|---------|--------|-----------|
+| Goal | Low latency, high throughput | Fault isolation for individual instances | Fault isolation for groups of instances |
+| Scope | Single AZ | Multi-AZ capable | Multi-AZ capable |
+| Max instances | No hard limit | 7 per AZ | Hundreds per partition; up to 7 partitions per AZ |
+| Hardware sharing | Shared rack (intentional) | No rack sharing | Per-partition rack isolation |
+| Failure blast radius | Entire group if rack fails | Single instance | Single partition |
+| Best for | HPC, MPI, tightly-coupled parallel | Small sets of critical independent instances | Hadoop, Cassandra, Kafka |
 
-For audit logging, use NEW_AND_OLD_IMAGES to capture before and after state. For downstream processing of new records, NEW_IMAGE is sufficient.
+### 3.2 Placement Group Decision Tree
 
-### 4.2 Stream Processing Architecture
+```
+Is the workload tightly-coupled requiring max network performance?
+  Yes → Cluster Placement Group
 
-```text
-DynamoDB Table
-    |
-    | (item changes via Streams)
-    v
-DynamoDB Stream (24-hour retention)
-    |
-    | (event source mapping)
-    v
-AWS Lambda Function
-    |
-    | (process records)
-    v
-Target: Elasticsearch / SNS / S3 / Another DynamoDB table
+Is the workload a small set (<= 7 per AZ) of critical, isolated instances?
+  Yes → Spread Placement Group
+
+Is the workload a large distributed system needing rack-level fault isolation?
+  Yes → Partition Placement Group
+
+No performance or isolation requirements?
+  → No placement group needed
 ```
 
-Lambda processes stream records in batches. The Lambda function receives a batch of stream records, processes them, and acknowledges. If processing fails, the batch is retried. Failed batches can be sent to an SQS dead-letter queue for investigation.
+---
+
+## Section 4: EC2 Pricing Models
+
+### 4.1 Pricing Model Comparison
+
+| Model | Discount vs. On-Demand | Commitment | Interruption Risk | Best For |
+|-------|----------------------|------------|-------------------|----------|
+| On-Demand | None (baseline) | None | None | Unpredictable, short-term, dev/test |
+| Savings Plans (Compute) | Up to 66% | 1 or 3 years ($/hr) | None | Flexible steady-state across EC2/Lambda/Fargate |
+| Savings Plans (EC2 Instance) | Up to 72% | 1 or 3 years ($/hr) | None | Steady-state, single instance family in a region |
+| Reserved (Standard) | Up to 72% | 1 or 3 years | None | Fixed instance type, region, predictable usage |
+| Reserved (Convertible) | Up to 54% | 1 or 3 years | None | Steady-state with flexibility to change instance family |
+| Spot | Up to 90% | None | 2-minute notice | Fault-tolerant, interruptible, batch |
+
+### 4.2 Reserved Instance Payment Options
+
+| Payment Option | Upfront Cost | Monthly Cost | Total Discount |
+|----------------|-------------|--------------|----------------|
+| All Upfront | Highest | None | Highest |
+| Partial Upfront | Medium | Lower than No Upfront | Medium |
+| No Upfront | None | Highest (of RI options) | Lowest (still a discount vs. On-Demand) |
+
+All three options are cheaper than On-Demand for equivalent usage over the commitment period.
+
+### 4.3 Spot Instance Architecture Patterns
+
+Spot Instances are only appropriate for workloads designed to tolerate sudden interruption. Architectural patterns that enable Spot use:
+
+- **Checkpointing**: Write progress to S3 or DynamoDB periodically so work can resume from the last checkpoint after interruption
+- **Spot Fleet**: Launch a mix of instance types and Spot pools to reduce interruption probability
+- **Mixed instance groups**: Configure Auto Scaling groups with a blend of On-Demand (baseline) and Spot (burst) capacity
+- **Graceful shutdown**: Use the 2-minute interruption notice to save state and deregister from load balancers
+
+### 4.4 SAA-C03 Pricing Scenarios
+
+| Scenario | Correct Pricing Model |
+|----------|----------------------|
+| Nightly batch job, 6 hours, can be restarted | Spot Instances |
+| 24/7 production web app, predictable traffic | Savings Plans or Standard Reserved |
+| New application with unknown traffic pattern | On-Demand initially, move to Savings Plans after 3 months of data |
+| Development environment used business hours only | On-Demand (or Reserved if usage is high enough) |
+| Short-term project lasting 2 months | On-Demand |
+| Large HPC cluster running monthly 48-hour simulations | Spot Fleet |
+| Mission-critical database with no interruption tolerance | On-Demand or Reserved (NOT Spot) |
 
 ---
 
-## Section 5: DynamoDB Accelerator (DAX)
+## Section 5: Auto Scaling Groups
 
-### 5.1 DAX Architecture
+### 5.1 Launch Template vs. Launch Configuration
 
-DAX is a cluster of nodes deployed within your VPC. Your application code replaces the DynamoDB SDK client with the DAX client (same API). Read requests are served from DAX's item cache or query cache. Writes go directly to DynamoDB and the DAX cache is invalidated.
+| Feature | Launch Template | Launch Configuration |
+|---------|----------------|---------------------|
+| Versioning | Yes (multiple named versions) | No |
+| Spot instance diversification | Yes | No |
+| T-instance CPU credit specification | Yes | No |
+| Dedicated host configuration | Yes | No |
+| AWS recommendation | Preferred — use for all new ASGs | Deprecated |
+| Can be modified after creation | Yes (create new version) | No (immutable) |
 
-| Feature | DynamoDB Direct | DynamoDB + DAX |
-|---|---|---|
-| Read latency | Single-digit milliseconds | Microseconds |
-| Cost | RCU charges per read | DAX cluster hourly + reduced RCU charges |
-| Consistency | Strongly or eventually consistent | Eventually consistent only |
-| Write performance | Unchanged | Unchanged (writes go to DynamoDB) |
+Always use launch templates. Launch configurations are a legacy feature and do not support new EC2 capabilities.
 
-### 5.2 When to Use DAX vs. ElastiCache
+### 5.2 Scaling Policy Comparison
 
-| Factor | DAX | ElastiCache (Redis/Memcached) |
-|---|---|---|
-| API compatibility | DynamoDB-native | Generic cache (requires application logic) |
-| Data source | DynamoDB only | Any data source |
-| Cache invalidation | Automatic on write | Manual or TTL-based |
-| Use case | Accelerate DynamoDB reads | General application caching, session storage |
-| Best for | Read-heavy DynamoDB tables with repeated item access | Application session state, computed results, multi-source caching |
+| Policy Type | How It Works | Best For | Configuration Effort |
+|-------------|-------------|----------|---------------------|
+| Target Tracking | Maintains a metric at a target value (e.g., CPU at 50%) | Most workloads — recommended default | Low |
+| Step Scaling | Different actions at different alarm threshold breaches | When granular control over scaling steps is needed | Medium |
+| Scheduled Scaling | Pre-defined capacity changes at specified times | Known recurring traffic patterns | Low |
+| Predictive Scaling | ML-based forecast of future demand, proactive scaling | Cyclical workloads with consistent patterns | Low (setup), ML-managed |
+| Simple Scaling | Single action when alarm fires, then cooldown | Legacy — superseded by Target Tracking | Low |
 
----
+### 5.3 Auto Scaling Health Checks
 
-## Section 6: Global Tables
+Auto Scaling can use two sources for health checks:
 
-### 6.1 Global Tables Architecture
+- **EC2 health check**: Considers an instance unhealthy if it is stopped, terminated, or its status check fails. This is the default.
+- **ELB health check**: Also considers the Elastic Load Balancer's health check result. If the load balancer marks the instance as unhealthy (application-level failure), Auto Scaling will replace it. This is recommended for web-tier ASGs behind a load balancer.
 
-DynamoDB Global Tables create a multi-region active-active database. All replica tables share the same table name and schema. Writes to any replica are replicated to all other replicas using DynamoDB Streams internally.
+Always enable ELB health checks for Auto Scaling groups behind load balancers. EC2-only health checks will not detect application failures that the load balancer can detect.
 
-Conflict resolution: last-writer-wins based on timestamp. For applications where concurrent writes to the same item from different Regions could occur, implement application-level conflict resolution if business rules require it.
+### 5.4 ASG Termination Policy
 
-Requirements for Global Tables:
+The default termination policy when scaling in:
 
-- DynamoDB Streams must be enabled on the table
-- On-demand capacity mode or provisioned mode with Auto Scaling enabled
-- All replica tables must have the same table structure
+1. Select the AZ with the most instances
+2. Within that AZ, select the instance with the oldest launch template or launch configuration
+3. If a tie, select the instance closest to the next billing hour
 
-### 6.2 Global Tables vs. Cross-Region Read Replicas (RDS)
-
-| Feature | DynamoDB Global Tables | RDS Cross-Region Read Replica |
-|---|---|---|
-| Write capability | Active-active (all Regions accept writes) | Active-passive (only primary accepts writes) |
-| Replication | DynamoDB Streams (sub-second) | Asynchronous binary log replication |
-| Failover | Application changes endpoint | Manual promotion required |
-| Data model | Key-value/document (DynamoDB) | Relational (SQL) |
+This behavior helps balance AZs and ensures the fleet runs the most current launch template version.
 
 ---
 
-## Section 7: DynamoDB vs. RDS Decision Framework
+## Section 6: Lifecycle Hooks
 
-| Requirement | DynamoDB | RDS / Aurora |
-|---|---|---|
-| Millions of requests per second | Yes | Difficult at this scale |
-| Single-digit millisecond latency at scale | Yes | Challenging without caching |
-| Multi-table JOIN queries | No | Yes |
-| Complex ACID transactions across tables | Limited (single-table) | Yes (full SQL transactions) |
-| Schema flexibility (varied attributes) | Yes | No (fixed schema) |
-| SQL query language | No | Yes |
-| Known, simple access patterns | Yes | Works but over-engineered |
-| Ad-hoc analytical queries | Not well-suited | Better (with read replicas for reporting) |
-| Serverless/pay-per-request model | Yes | No (Aurora Serverless approximates this) |
+### 6.1 Lifecycle States
 
----
+| State | Trigger | Wait Duration | Action |
+|-------|---------|---------------|--------|
+| Pending:Wait | Instance is launched, before InService | Up to 48 hours (default 1 hour) | Run pre-launch automation |
+| Pending:Proceed | CompleteLifecycleAction called with CONTINUE | Immediate | Instance moves to InService |
+| Terminating:Wait | Instance selected for termination, before actual termination | Up to 48 hours (default 1 hour) | Run pre-termination automation |
+| Terminating:Proceed | CompleteLifecycleAction called with CONTINUE | Immediate | Instance proceeds to Terminated |
 
-## Section 8: SAA-C03 Exam Tips for Module 07
+If the lifecycle hook times out without receiving a CompleteLifecycleAction signal, the default action is ABANDON (instance is terminated during launch) or CONTINUE (instance proceeds to termination). Configure the default action based on your requirements.
 
-**Exam Tip 1 — GSI for non-key attribute queries:**
-If a scenario requires querying a DynamoDB table by an attribute that is not the partition key, the answer is always a Global Secondary Index. LSIs can only be created at table creation, so if the table already exists and needs a new query pattern, it must be a GSI.
+### 6.2 Lifecycle Hook Integration Patterns
 
-**Exam Tip 2 — DynamoDB Streams for Lambda triggers:**
-When a scenario asks how to automatically process DynamoDB writes (trigger processing when an item is created or updated), the answer involves DynamoDB Streams as the event source for a Lambda function.
+```
+Pattern 1 — Launch Hook with Lambda:
+  ASG launches instance
+    → Instance enters Pending:Wait
+    → EventBridge rule matches lifecycle event
+    → Lambda function triggered
+    → Lambda: installs agents, pulls config from Parameter Store
+    → Lambda calls CompleteLifecycleAction (CONTINUE)
+    → Instance enters InService
 
-**Exam Tip 3 — On-demand for unknown traffic:**
-For new tables or unpredictable workloads, on-demand capacity mode eliminates the risk of throttling from under-provisioning. Provisioned is more cost-efficient when traffic patterns are well understood.
-
-**Exam Tip 4 — DAX only helps with reads:**
-DAX accelerates DynamoDB reads. It does not improve write performance. If a scenario mentions write-heavy workloads, DAX is not the answer.
-
-**Exam Tip 5 — Global Tables for multi-region active-active:**
-If a scenario requires writing data in multiple Regions simultaneously with automatic replication (not just reading), DynamoDB Global Tables is the answer. RDS cross-region Read Replicas are active-passive (only one Region accepts writes).
-
-**Exam Tip 6 — Hot partition key design:**
-A partition key with low cardinality (Status: active/inactive) concentrates I/O on one or two partitions. At scale, this causes throttling even with sufficient total capacity. Design partition keys with high cardinality.
-
-**Exam Tip 7 — Strongly consistent reads cost more:**
-A strongly consistent read costs twice as many RCUs as an eventually consistent read for the same item size. Use eventually consistent reads when slight staleness is acceptable to reduce read costs.
-
-**Exam Tip 8 — TTL for automatic item expiration:**
-DynamoDB Time to Live (TTL) automatically deletes items after a specified timestamp attribute value. This is used for session data, temporary records, and expiring cache entries without requiring application-side deletion logic. TTL deletions are not counted against WCU capacity.
+Pattern 2 — Termination Hook with Lambda:
+  ASG selects instance for termination
+    → Instance enters Terminating:Wait
+    → EventBridge rule matches lifecycle event
+    → Lambda function triggered
+    → Lambda: ships logs to S3, deregisters from service discovery
+    → Lambda calls CompleteLifecycleAction (CONTINUE)
+    → Instance is terminated
+```
 
 ---
 
-## Section 9: Key CLI Commands for Module 07
+## Section 7: SAA-C03 Exam Tips for Module 07
 
-Describe a DynamoDB table:
+**Exam Tip 1 — Instance family triggers:**
+Match workload keywords to instance families. "CPU-intensive" → C-family. "Large in-memory" → R-family. "SAP HANA" → X-family. "High IOPS low latency local storage" → I-family. "GPU machine learning training" → P-family. "Burst workload, variable CPU" → T-family.
+
+**Exam Tip 2 — Spot never for stateful critical workloads:**
+Spot is only correct when the scenario explicitly states the workload is fault-tolerant, interruptible, or can be restarted. If the scenario mentions "critical," "stateful," "cannot be interrupted," or "production database," Spot is the wrong answer.
+
+**Exam Tip 3 — Savings Plans vs. Reserved:**
+Savings Plans are more flexible than Reserved Instances. If the scenario involves multiple instance types, regions, or also includes Lambda or Fargate, Compute Savings Plans is the better answer. If the scenario is a fixed single instance type in a single region with maximum discount, Standard Reserved is the answer.
+
+**Exam Tip 4 — Launch templates, not launch configurations:**
+Any question that asks about Auto Scaling configuration should reference launch templates. If a distractor answer offers "launch configuration," it is likely wrong for any scenario involving modern EC2 features.
+
+**Exam Tip 5 — Lifecycle hooks for pre-launch and pre-termination automation:**
+If a scenario describes running a script before an instance accepts traffic or before an instance is destroyed, the answer involves lifecycle hooks. Keywords: "before termination," "before InService," "drain connections," "upload logs before shutdown."
+
+**Exam Tip 6 — ELB health checks for web tiers:**
+For ASGs behind a load balancer, always enable ELB health checks in addition to EC2 health checks. EC2 health checks alone cannot detect application-level failures.
+
+**Exam Tip 7 — Spread placement group limit:**
+The maximum is 7 instances per Availability Zone for spread placement groups. If a scenario requires more than 7 isolated instances per AZ, spread groups cannot meet the requirement — consider Partition instead.
+
+**Exam Tip 8 — AMIs are regional:**
+AMIs must be copied to each target region before they can be used to launch instances in that region. Cross-region AMI copy is always required for multi-region deployments based on a single golden image.
+
+---
+
+## Section 8: Key CLI Commands
+
+Describe all EC2 instance types in a region:
 
 ```bash
-aws dynamodb describe-table \
-  --table-name MyTable \
-  --query "Table.{Name:TableName,Status:TableStatus,Keys:KeySchema,Capacity:ProvisionedThroughput}"
+aws ec2 describe-instance-types \
+  --filters "Name=instance-type,Values=m6g.*" \
+  --query "InstanceTypes[*].{Type:InstanceType,vCPU:VCpuInfo.DefaultVCpus,Memory:MemoryInfo.SizeInMiB}" \
+  --output table
 ```
 
-List all DynamoDB tables:
+Create a launch template:
 
 ```bash
-aws dynamodb list-tables --output table
+aws ec2 create-launch-template \
+  --launch-template-name MyAppTemplate \
+  --version-description "v1" \
+  --launch-template-data '{
+    "ImageId": "ami-0abcdef1234567890",
+    "InstanceType": "m6g.large",
+    "SecurityGroupIds": ["sg-0123456789abcdef0"],
+    "IamInstanceProfile": {"Name": "MyInstanceProfile"},
+    "UserData": "IyEvYmluL2Jhc2g="
+  }'
 ```
 
-Get an item by primary key:
+Create an Auto Scaling group:
 
 ```bash
-aws dynamodb get-item \
-  --table-name Users \
-  --key '{"UserId": {"S": "user001"}}'
+aws autoscaling create-auto-scaling-group \
+  --auto-scaling-group-name MyASG \
+  --launch-template "LaunchTemplateName=MyAppTemplate,Version=1" \
+  --min-size 2 \
+  --max-size 10 \
+  --desired-capacity 4 \
+  --availability-zones us-east-1a us-east-1b us-east-1c \
+  --health-check-type ELB \
+  --health-check-grace-period 300
 ```
 
-Query items with a partition key:
+Put a scaling policy (Target Tracking):
 
 ```bash
-aws dynamodb query \
-  --table-name Orders \
-  --key-condition-expression "CustomerId = :cid" \
-  --expression-attribute-values '{":cid": {"S": "C001"}}'
+aws autoscaling put-scaling-policy \
+  --auto-scaling-group-name MyASG \
+  --policy-name TargetTrackingCPU50 \
+  --policy-type TargetTrackingScaling \
+  --target-tracking-configuration '{
+    "PredefinedMetricSpecification": {
+      "PredefinedMetricType": "ASGAverageCPUUtilization"
+    },
+    "TargetValue": 50.0
+  }'
+```
+
+Create a lifecycle hook:
+
+```bash
+aws autoscaling put-lifecycle-hook \
+  --auto-scaling-group-name MyASG \
+  --lifecycle-hook-name MyTerminationHook \
+  --lifecycle-transition autoscaling:EC2_INSTANCE_TERMINATING \
+  --heartbeat-timeout 300 \
+  --default-result CONTINUE
 ```
 
 ---
 
-## Section 10: Study Checklist
+## Section 9: Study Checklist
 
-- [ ] Explain the difference between a simple primary key and a composite primary key with an example of each
-- [ ] Describe when to use an LSI vs. a GSI — include the creation timing difference
-- [ ] Explain why a low-cardinality partition key causes performance problems at scale
-- [ ] Compare provisioned and on-demand capacity modes on cost model and use case
-- [ ] Describe DynamoDB Streams view types and give a use case for NEW_AND_OLD_IMAGES
-- [ ] Explain when to use DAX and what type of reads it cannot accelerate
-- [ ] Describe how DynamoDB Global Tables resolve write conflicts
-- [ ] Identify three scenarios where DynamoDB is the better choice over RDS and three where RDS is better
-- [ ] Run the CLI commands in Section 9 and record the output
+- [ ] Name the EC2 instance family for each workload type: web server, SAP HANA, Hadoop, ML training, batch processing
+- [ ] Explain the CPU credit mechanism for T-family instances and when credits are earned vs. spent
+- [ ] Describe the golden image AMI workflow in sequence from base instance to Auto Scaling group deployment
+- [ ] Compare Cluster, Spread, and Partition placement groups on goal, instance limit, and blast radius
+- [ ] Explain the difference between Compute Savings Plans and EC2 Instance Savings Plans
+- [ ] Describe when Spot Instances are and are not appropriate, with an architectural pattern that enables Spot use
+- [ ] Compare launch templates and launch configurations; explain why launch templates are preferred
+- [ ] Describe the four Auto Scaling scaling policy types and identify the recommended default
+- [ ] Explain Auto Scaling health check types and when to enable ELB health checks
+- [ ] Describe lifecycle hooks: which states they intercept, common use cases, and how to signal completion
+- [ ] Run the CLI commands in Section 8 and record the output in your lab notes
 - [ ] Complete the Module 07 quiz with a score of at least 80 percent
-- [ ] Post your initial response in the Module 07 discussion forum by the Wednesday deadline
 
 ---
 
 ## References
 
-All certification study materials and exam registration: aws.amazon.com/certification
+All AWS certification study materials and exam registration: <aws.amazon.com/certification>
+
+*Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University.*

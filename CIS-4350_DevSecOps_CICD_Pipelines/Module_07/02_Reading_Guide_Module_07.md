@@ -1,200 +1,336 @@
-# Reading Guide: Module 07 - DAST: Dynamic Application Security Testing
+# Reading Guide: Module 07 — Application Security Testing in CI/CD
 
 ## Course: CIS-4350 DevSecOps and CI/CD Pipelines
+
+## Texas Wesleyan University | Professor Nash
 
 ## Certification Alignment: DevSecOps Professional (DSOE)
 
 ---
 
-## Introduction
+## Learning Objectives
 
-Module 07 covers DAST — Dynamic Application Security Testing — the runtime complement to SAST. DAST tests a deployed application by sending real HTTP requests and analyzing responses, finding vulnerabilities that only manifest during execution. Understanding DAST mechanics, OWASP ZAP, pipeline placement, and the comparison with SAST is essential for the DevSecOps Professional exam.
+After completing this reading guide, you will be able to:
 
----
-
-## Section 1: High-Yield Glossary
-
-**DAST (Dynamic Application Security Testing)** — Security testing that sends crafted HTTP requests to a running application and analyzes responses to detect runtime vulnerabilities. Requires a deployed application. Runs at the staging pipeline stage.
-
-**Spider (crawler)** — The DAST discovery phase where the tool systematically follows links, forms, and API endpoints to map the application's attack surface before testing begins.
-
-**Passive scanning** — A DAST mode that observes HTTP traffic without sending additional requests. Detects: missing security headers, insecure cookie attributes, information disclosure. Safe for any environment including production monitoring.
-
-**Active scanning** — A DAST mode that sends crafted attack payloads (SQL injection strings, XSS payloads, command injection, path traversal) to discovered parameters. Detects exploitable vulnerabilities. Must only be run against non-production environments.
-
-**OWASP ZAP (Zed Attack Proxy)** — The primary open-source DAST tool for DevSecOps pipelines, maintained by OWASP. Available at [https://owasp.org/www-project-zap/](https://owasp.org/www-project-zap/). Supports both passive and active scanning, authenticated scanning, CI/CD integration via Docker, and report generation.
-
-**zap-baseline.py** — A ZAP script that runs passive scanning plus a small subset of active checks. Fast (2-5 minutes), safe for staging environments. Recommended for CI/CD pipeline integration.
-
-**zap-full-scan.py** — A ZAP script that runs the complete active scanner against all discovered endpoints. Comprehensive but slow (30-90 minutes for complex applications). Run on a nightly or weekly schedule rather than every PR.
-
-**Authenticated scanning** — DAST that tests endpoints behind authentication by maintaining a valid session. Required to discover IDOR, broken object-level authorization, and other authenticated vulnerabilities.
-
-**IDOR (Insecure Direct Object Reference)** — A broken access control vulnerability where a user can access another user's resource by modifying an identifier (e.g., changing `/orders/12345` to `/orders/12346`). Detected by DAST, not SAST.
-
-**Security header** — An HTTP response header that instructs the browser to apply a security policy: Content-Security-Policy, Strict-Transport-Security, X-Frame-Options, X-Content-Type-Options, Referrer-Policy. Absence of required headers is detected by DAST passive scanning.
-
-**False positive (DAST context)** — A DAST finding that reports a vulnerability the application is not actually exploitable for. Common sources: scanner misinterpreting error messages, benign responses that match injection indicators. Managed via ZAP rules configuration files.
-
-**AJAX spider** — A ZAP component that uses a headless browser to discover endpoints in Single Page Applications (SPAs) where JavaScript dynamically renders content and navigation. Required for effective DAST of React/Angular/Vue applications.
-
-**Burp Suite Enterprise** — A commercial DAST platform from PortSwigger with advanced scanning capabilities, team collaboration features, and CI/CD integrations. The commercial alternative to ZAP for enterprise DevSecOps environments.
-
-**Security misconfiguration** — A vulnerability class (OWASP A05) where the application or its hosting environment is configured insecurely: missing security headers, default credentials, verbose error messages, unnecessarily exposed services. DAST is the primary detection tool for this class.
+- Explain the difference between SAST and DAST and describe what each finds
+- Configure SonarQube Quality Gates and Semgrep rule sets in CI pipelines
+- Run OWASP ZAP baseline and API scans in GitHub Actions against a staging environment
+- Configure OWASP Dependency-Check with CVSS quality gates
+- Generate SBOMs using Syft in CycloneDX and SPDX formats
+- Design a complete application security testing pipeline integrating all four types
 
 ---
 
-## Section 2: SAST vs. DAST vs. SCA Comparison
+## Section 1 — SAST vs. DAST vs. SCA: What Each Finds
 
-| Dimension | SAST | DAST | SCA |
+### 1.1 Testing Type Comparison
+
+| Attribute | SAST | DAST | SCA / Dependency Scan |
 |---|---|---|---|
-| Full name | Static Application Security Testing | Dynamic Application Security Testing | Software Composition Analysis |
-| Requires running application | No | Yes | No |
-| Primary target | First-party source code | Running application endpoints | Third-party dependencies |
-| Pipeline stage | Commit / Pull request | Staging | Build |
-| Finds | Insecure code patterns, injection flaws | Runtime flaws, auth issues, config errors | Known CVEs in libraries |
-| False positive rate | Higher | Lower | Low |
-| Unique to this tool | Code-level data flow vulnerabilities | Runtime behavior, IDOR, missing headers | Transitive dependency CVEs |
-| Representative tools | Semgrep, SonarQube, Checkmarx | OWASP ZAP, Burp Suite Enterprise | Snyk, OWASP Dependency-Check |
+| What is analyzed | Source code, bytecode | Running application | Dependency manifests and lock files |
+| Application running? | No | Yes (required) | No |
+| Pipeline timing | Early — before build | Late — after deploy to staging | Early — with or before build |
+| Vulnerabilities found | Code logic flaws | Runtime behavior flaws | Known CVEs in libraries |
+| False positive rate | Medium-high | Low-medium | Low |
+| Language dependency | Yes — language-specific rules | No | Yes — ecosystem-specific |
+| Example tool | Semgrep, SonarQube | OWASP ZAP | OWASP Dependency-Check |
+| Finding example | SQL injection in db.py:42 | XSS via /search?q= parameter | requests==2.18.0 → CVE-2023-32681 |
+
+### 1.2 Complementary Coverage
+
+No single testing type finds all vulnerabilities:
+
+- SAST finds the SQL injection but cannot tell if the parameterization bypass is exploitable through the running app's middleware
+- DAST finds that `/login` is vulnerable to brute force but cannot trace it to the source code line
+- SCA finds that PyYAML 5.3.1 has a code execution CVE but does not know if the vulnerable function is called
+
+Use all three for defense in depth.
 
 ---
 
-## Section 3: Vulnerability Classes by Detection Method
+## Section 2 — SAST: SonarQube
 
-| Vulnerability Class | SAST Detects | DAST Detects | Explanation |
-|---|---|---|---|
-| SQL Injection (code pattern) | Yes | Yes | SAST detects concatenation pattern; DAST detects via response analysis |
-| SQL Injection (stored, multi-step) | Partial | Yes | DAST tests the full request/response cycle |
-| XSS (reflected, obvious) | Yes | Yes | Both detect common patterns |
-| XSS (DOM-based, SPA) | Partial | Yes | DOM manipulation only visible at runtime |
-| Broken Authentication (rate limiting) | No | Yes | Rate limiting is runtime behavior |
-| IDOR / Broken Access Control | No | Yes | Authorization enforcement tested at runtime |
-| Missing Security Headers | No | Yes | Headers are in HTTP responses, not source code |
-| Insecure Cookie Attributes | Partial | Yes | Cookie flags tested via response inspection |
-| Hardcoded Credentials | Yes | No | Credentials in source code — SAST's strength |
-| Vulnerable Dependencies (CVEs) | No | No | SCA domain |
+### 2.1 SonarQube Architecture
 
----
+| Component | Description |
+|---|---|
+| SonarQube Server | Web UI and backend for storing results, rules, and Quality Gates |
+| Scanner | CLI tool that analyzes code and sends results to the server |
+| Quality Gate | Policy defining conditions that must pass for a scan to succeed |
+| Security Hotspot | Code pattern that may be a vulnerability — requires human review |
+| Vulnerability | Confirmed security weakness with CVSS rating |
 
-## Section 4: OWASP ZAP Pipeline Integration Reference
+### 2.2 Quality Gate Configuration
 
-### Baseline Scan (Recommended for All PRs/Deployments)
+```text
+SonarQube Quality Gate: Default DevSecOps Gate
 
-```bash
-docker run --rm ghcr.io/zaproxy/zaproxy:stable \
-  zap-baseline.py \
-  -t https://staging.myapp.com \
-  -r zap-baseline-report.html \
-  -l WARN
+Condition 1: New Blocker Issues = 0
+Condition 2: New Critical Issues = 0
+Condition 3: New Security Hotspots Reviewed = 100%
+Condition 4: Coverage on New Code >= 80%
+Condition 5: New Duplications <= 3%
 ```
 
-- `-t` — target URL
-- `-r` — HTML report output file
-- `-l WARN` — fail the scan if WARN or higher severity findings are discovered
+### 2.3 sonar-project.properties
 
-### Full Active Scan (Nightly/Weekly Schedule)
-
-```bash
-docker run --rm \
-  -v $(pwd)/reports:/zap/wrk \
-  ghcr.io/zaproxy/zaproxy:stable \
-  zap-full-scan.py \
-  -t https://staging.myapp.com \
-  -r zap-full-report.html \
-  -x zap-full-report.xml \
-  -l WARN
+```properties
+sonar.projectKey=org_myapp
+sonar.projectName=My Application
+sonar.sources=src/
+sonar.tests=tests/
+sonar.python.coverage.reportPaths=coverage.xml
+sonar.python.version=3.12
+sonar.exclusions=**/migrations/**,**/fixtures/**
+sonar.security.sources.jaas.loginConfig=
 ```
 
-### GitHub Actions Integration
+### 2.4 GitHub Actions Integration
 
 ```yaml
-- name: Run OWASP ZAP baseline scan
-  uses: zaproxy/action-baseline@v0.10.0
-  with:
-    target: 'https://staging.myapp.com'
-    fail_action: true
-    rules_file_name: '.zap/rules.tsv'
+- name: SonarQube scan and Quality Gate check
+  uses: SonarSource/sonarqube-scan-action@master
+  env:
+    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}
+
+- name: SonarQube Quality Gate check
+  uses: SonarSource/sonarqube-quality-gate-action@master
+  timeout-minutes: 5
+  env:
+    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 ```
 
-The `.zap/rules.tsv` file maps ZAP rule IDs to alert levels (IGNORE, INFO, WARN, FAIL), allowing per-rule configuration without disabling the scan.
+The Quality Gate action polls SonarQube until the analysis is complete and then fails the pipeline if the gate fails.
 
 ---
 
-## Section 5: CI/CD Pipeline Stage Comparison
+## Section 3 — SAST: Semgrep
 
-| Stage | Security Activity | Tool | Notes |
-|---|---|---|---|
-| Pre-commit | Secrets scanning | Gitleaks | Earliest gate |
-| Commit / PR | SAST | Semgrep, SonarQube | Code-level patterns |
-| Build | SCA | Snyk, OWASP Dependency-Check | Dependency CVEs |
-| Container build | Image scan | Trivy, Grype | OS + runtime CVEs |
-| Deploy to staging | DAST | OWASP ZAP | Runtime vulnerabilities |
-| IaC provisioning | IaC scan | Checkov, tfsec | Misconfiguration |
-| Production | Runtime monitoring | Falco, GuardDuty | Anomaly detection |
+### 3.1 Semgrep Rule Sets
 
----
-
-## Section 6: DAST Limitations Reference
-
-These limitations are tested on the DevSecOps Professional exam.
-
-| Limitation | Explanation | Mitigation |
+| Rule Set | Content | Use Case |
 |---|---|---|
-| Requires running application | Cannot run before staging deployment | Accept — this is by design for DAST |
-| Slow for complex apps | Full active scan: 30-90+ minutes | Use baseline in pipeline; full scan nightly |
-| SPA/AJAX coverage | Basic spider misses JS-rendered content | Use AJAX spider or API scan mode |
-| Authenticated endpoints | Unauthenticated scans miss auth vulnerabilities | Configure authenticated scanning |
-| Business logic flaws | ZAP cannot understand application logic | Supplement with manual penetration testing |
-| No source code access | Cannot detect code-level issues SAST finds | Pair with SAST — complementary tools |
+| `p/owasp-top-ten` | Rules covering all OWASP Top 10 categories | Baseline for all projects |
+| `p/python` | Python-specific security and quality rules | Python projects |
+| `p/flask` | Flask framework security rules | Flask web apps |
+| `p/django` | Django-specific rules | Django apps |
+| `p/javascript` | JavaScript security rules | Node.js, React |
+| `p/java` | Java security rules | Spring Boot, Jakarta |
+| `p/secrets` | Secret pattern detection | Any project |
+| `auto` | Automatically selects rules for detected languages | Quick start |
+
+### 3.2 Custom Semgrep Rules
+
+```yaml
+# .semgrep/custom_rules.yml
+rules:
+  - id: flask-debug-mode
+    pattern: app.run(debug=True)
+    message: Flask application is running with debug=True. Disable in production.
+    languages: [python]
+    severity: ERROR
+    metadata:
+      cwe: "CWE-94"
+      owasp: "A05:2021"
+
+  - id: hardcoded-secret-pattern
+    patterns:
+      - pattern: |
+          $SECRET = "..."
+      - metavariable-regex:
+          metavariable: $SECRET
+          regex: (?i)(password|secret|token|key|api_key)
+    message: Possible hardcoded secret in variable $SECRET
+    languages: [python, javascript, java]
+    severity: WARNING
+```
+
+### 3.3 Semgrep with Inline Suppression
+
+```python
+def dangerous_function(user_input):
+    query = "SELECT * FROM users WHERE id = " + user_input  # nosemgrep: sql-string-concat
+    # nosemgrep is tracked in code review — document why it's acceptable
+    cursor.execute(query)
+```
 
 ---
 
-## Section 7: Docker Security Best Practices Reference
+## Section 4 — DAST: OWASP ZAP
 
-These cross-cutting exam topics apply to DAST containerized environments as well.
+### 4.1 ZAP Scan Modes Comparison
 
-- DAST tools like ZAP are commonly run in Docker containers within CI/CD pipelines.
-- Apply the same container security principles: minimal base images, non-root user, no secrets in image layers.
-- ZAP's Docker image runs as a non-root user by default.
+| Mode | Scan Type | Duration | Safe for Staging? | Safe for Production? |
+|---|---|---|---|---|
+| Baseline | Passive only | ~2 min | Yes | Yes (no attack traffic) |
+| Full | Active attacks | 10–60 min | Yes | Never |
+| API | Active against OpenAPI spec | 5–30 min | Yes | Never |
+
+### 4.2 ZAP Rules File
+
+The rules file customizes which alerts are treated as failures:
+
+```text
+# zap-rules.tsv
+# Rule ID  Threshold (IGNORE/INFO/LOW/MEDIUM/HIGH)
+10202       IGNORE    # Absence of Anti-CSRF Tokens (false positive in API)
+10027       IGNORE    # Information Disclosure - Suspicious Comments
+40029       HIGH      # CSRF
+40018       HIGH      # SQL Injection
+40012       HIGH      # Cross-Site Scripting (Reflected)
+```
+
+### 4.3 ZAP Context File for Authenticated Scanning
+
+ZAP can scan authenticated pages by providing a session token:
+
+```yaml
+# zap-context.yml
+contexts:
+  - name: myapp-auth
+    urls:
+      - https://staging.myapp.com
+    authentication:
+      method: "bearer"
+      parameters:
+        loginUrl: "https://staging.myapp.com/api/auth/token"
+        loginRequestBody: '{"username":"test@example.com","password":"testpass"}'
+        tokenPath: "$.access_token"
+    sessionTokens:
+      - "Authorization"
+```
 
 ---
 
-## Section 8: DevSecOps Professional Exam Tips
+## Section 5 — Dependency Scanning: OWASP Dependency-Check
 
-1. **DAST pipeline stage** — DAST runs after deployment to staging. The exam tests this as the correct placement because DAST requires a running application.
+### 5.1 Supported Ecosystems
 
-2. **Passive vs. active scan** — Know the difference: passive scanning observes without sending payloads (safe for any environment); active scanning sends attack payloads (staging only). A question asking "what DAST mode is safe for production monitoring?" has the answer: passive scanning.
+| Ecosystem | File Analyzed |
+|---|---|
+| Python | requirements.txt, Pipfile.lock, setup.py |
+| Node.js | package.json, package-lock.json, yarn.lock |
+| Java | pom.xml, build.gradle, *.jar |
+| Ruby | Gemfile.lock |
+| .NET | .csproj, packages.config |
+| Go | go.sum, go.mod |
+| PHP | composer.lock |
 
-3. **What DAST finds that SAST misses** — Know the four categories: broken authentication (runtime behavior), IDOR (authorization enforcement), security misconfigurations (HTTP headers), and runtime XSS in SPAs. This comparison appears frequently on the exam.
+### 5.2 Suppression File for False Positives
 
-4. **zap-baseline.py vs. zap-full-scan.py** — Baseline is fast, safe, and appropriate for every CI pipeline run. Full scan is comprehensive but slow and appropriate for scheduled nightly/weekly runs.
-
-5. **fail_action: true / -l WARN** — These are the flags that make DAST a pipeline gate rather than an advisory report. Know that without these, ZAP exits with 0 (success) regardless of findings.
-
-6. **Authenticated DAST requirement** — Many critical vulnerabilities (IDOR, broken object-level authorization) only exist behind authentication. An unauthenticated DAST scan misses these. The exam tests when authenticated scanning is required.
-
-7. **OWASP ZAP project URL** — The exam may reference [https://owasp.org/www-project-zap/](https://owasp.org/www-project-zap/) as the authoritative DAST tool reference.
-
-8. **DAST does not replace penetration testing** — DAST cannot detect business logic vulnerabilities. Manual penetration testing is required for comprehensive coverage. The exam tests the complementary roles of DAST, SAST, and manual testing.
+```xml
+<!-- dependency-check-suppression.xml -->
+<suppressions>
+  <suppress>
+    <notes>CVE-2021-44228 (Log4Shell) suppressed - we use logback, not log4j</notes>
+    <cve>CVE-2021-44228</cve>
+  </suppress>
+  <suppress>
+    <notes>False positive - this jaxb library version does not contain the vuln</notes>
+    <packageUrl regex="true">^pkg:maven/com\.sun\.xml\.bind/.*$</packageUrl>
+    <cve>CVE-2022-40152</cve>
+  </suppress>
+</suppressions>
+```
 
 ---
 
-## Section 9: Required Reading
+## Section 6 — SBOM Generation and Use Cases
 
-- Review the OWASP ZAP project overview at [https://owasp.org/www-project-zap/](https://owasp.org/www-project-zap/).
-- Read the OWASP DevSecOps Guideline DAST section at [https://owasp.org/www-project-devsecops-guideline/](https://owasp.org/www-project-devsecops-guideline/).
+### 6.1 SBOM Format Comparison
+
+| Attribute | SPDX | CycloneDX |
+|---|---|---|
+| Maintained by | Linux Foundation | OWASP |
+| File formats | JSON, RDF, Tag-Value, YAML | JSON, XML, Protobuf |
+| Security focus | Moderate — compliance origin | High — security use cases primary |
+| License tracking | Excellent | Good |
+| VEX support | Limited | Yes — Vulnerability Exploitability Exchange |
+| Tool support | Broad | Broad + security-tool integrations |
+| EO 14028 compliance | Yes | Yes |
+
+### 6.2 Syft SBOM Generation
+
+```bash
+# Generate CycloneDX SBOM for a container image
+syft myapp:v1.2.3 -o cyclonedx-json=sbom-cyclonedx.json
+
+# Generate SPDX SBOM for source code
+syft dir:. -o spdx-json=sbom-spdx.json
+
+# Include license information
+syft myapp:v1.2.3 -o cyclonedx-json --source-name myapp --source-version v1.2.3
+
+# Scan SBOM for vulnerabilities immediately with Grype
+grype sbom:sbom-cyclonedx.json
+```
+
+### 6.3 SBOM in the Release Workflow
+
+```yaml
+release-with-sbom:
+  name: Release Artifact with SBOM
+  runs-on: ubuntu-latest
+  needs: [all-security-gates-passed]
+  steps:
+    - uses: actions/checkout@v4
+
+    - name: Build and push image
+      run: |
+        docker build -t myapp:${{ github.ref_name }} .
+        docker push myregistry.io/myapp:${{ github.ref_name }}
+
+    - name: Generate SBOM
+      uses: anchore/sbom-action@v0
+      with:
+        image: myregistry.io/myapp:${{ github.ref_name }}
+        format: cyclonedx-json
+        output-file: sbom-${{ github.ref_name }}.json
+
+    - name: Attach SBOM to GitHub Release
+      uses: softprops/action-gh-release@v2
+      with:
+        files: sbom-${{ github.ref_name }}.json
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
 
 ---
 
-## Section 10: Study Checklist
+## Exam Tips for DSOE Certification
 
-- [ ] Explain why DAST is necessary even when SAST is already integrated.
-- [ ] List four vulnerability classes that DAST finds but SAST typically misses.
-- [ ] Explain the difference between passive and active scanning in OWASP ZAP.
-- [ ] Describe where DAST belongs in the CI/CD pipeline and why.
-- [ ] Explain the difference between `zap-baseline.py` and `zap-full-scan.py`.
-- [ ] Explain three DAST limitations and their mitigations.
-- [ ] Describe what an authenticated DAST scan is and when it is required.
-- [ ] Review the OWASP ZAP project at [https://owasp.org/www-project-zap/](https://owasp.org/www-project-zap/).
-- [ ] Complete the Module 07 lab activity.
-- [ ] Attempt all 10 quiz questions and review distractor analysis for any incorrect answers.
+- SAST does not require a running application; DAST does — this is the most tested distinction.
+- SonarQube Quality Gate: the gate fails when conditions are violated; pipeline blocks on gate failure.
+- Semgrep `nosemgrep` comment suppresses a finding — it must be documented and is tracked in Git history.
+- OWASP ZAP baseline scan is passive (safe for production); full scan sends attack payloads (never run against production).
+- OWASP Dependency-Check `--failOnCVSS 7` exits with non-zero code when CVSS >= 7.0 — required for CI gate.
+- Syft generates SBOMs; Grype scans SBOMs for vulnerabilities. They are complementary tools from Anchore.
+- SPDX is from Linux Foundation; CycloneDX is from OWASP — both satisfy EO 14028 requirements.
+- CycloneDX supports VEX (Vulnerability Exploitability Exchange) — documents whether a vulnerability is actually exploitable.
+- SBOM use case: when a new CVE is published, query stored SBOMs to find affected releases without re-scanning.
+
+---
+
+## Key Terms Glossary
+
+| Term | Definition |
+|---|---|
+| SAST | Static Application Security Testing — analyzes source code without execution |
+| DAST | Dynamic Application Security Testing — tests a running application |
+| SonarQube | SAST platform with Quality Gates, vulnerability tracking, and code metrics |
+| Semgrep | Pattern-based SAST engine with YAML rule format |
+| Quality Gate | SonarQube policy that must pass for a build to be considered clean |
+| OWASP ZAP | Open-source DAST tool; baseline and full scan modes |
+| Baseline Scan | ZAP passive scan — no attack payloads; safe for production-adjacent environments |
+| Full Scan | ZAP active scan — sends attack payloads; staging environments only |
+| OWASP Dependency-Check | Free tool scanning dependency manifests against the NVD |
+| SBOM | Software Bill of Materials — machine-readable inventory of all software components |
+| Syft | Open-source SBOM generation tool supporting CycloneDX and SPDX |
+| Grype | Open-source vulnerability scanner that consumes SBOMs |
+| VEX | Vulnerability Exploitability Exchange — documents exploitability of CVEs in an SBOM |
+| NVD | National Vulnerability Database — NIST-maintained CVE database |
+
+---
+
+Reading Guide — Module 07 | CIS-4350 | Texas Wesleyan University | Professor Nash

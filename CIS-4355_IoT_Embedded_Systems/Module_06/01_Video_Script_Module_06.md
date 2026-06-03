@@ -1,192 +1,357 @@
-# Video Script – Module 06: IoT Cloud Platforms – AWS IoT Core, Azure IoT Hub, GCP IoT
+# Video Script: Module 06 — Microcontroller Programming
 
 **Course:** CIS-4355 IoT and Embedded Systems
-**Instructor:** Professor Nash
+
+**Institution:** Texas Wesleyan University | Professor Nash
+
 **Estimated Duration:** 20–24 minutes
-**Certification Alignment:** CompTIA IoT+ Domain 4 – Cloud and Data Management
+
+**Certification Alignment:** IoT Fundamentals / Embedded Systems
 
 ---
 
-## Segment 1: Introduction and Learning Objectives [00:00 – 02:00]
+## SEGMENT 1 — Introduction (0:00–1:30)
 
-Welcome to Module 06. I am Professor Nash. We have covered IoT architecture, hardware, programming, protocols, and wireless networks. Now we move to the cloud side — the platforms that manage thousands or millions of devices, receive their telemetry, and connect IoT data to business applications.
+Welcome back to CIS-4355. I'm Professor Nash, and today we are digging into one of the most hands-on topics in this entire course — microcontroller programming.
 
-The three dominant IoT cloud platforms are AWS IoT Core, Azure IoT Hub, and Google Cloud IoT. Each has a distinct architecture but shares common concepts: device registration, certificate-based authentication, MQTT ingestion, device shadow or digital twin state synchronization, and integration with cloud analytics pipelines.
+If you have never written code that directly controls a physical pin on a chip, today changes that. By the end of this video you will understand how to write C and C++ code in the Arduino IDE, how to work with GPIO pins, how to read analog sensors, how to generate PWM signals for motors and LEDs, and how to use interrupts to respond to hardware events in real time.
 
-By the end of this video you will be able to:
+We will also compare two of the most popular platforms you will use in this course: the classic Arduino Uno and the much more powerful ESP32. Knowing when to reach for each one is a real professional skill.
 
-- Describe the core components of AWS IoT Core including Things, Certificates, Policies, and Device Shadows.
-- Describe the core components of Azure IoT Hub including Device Twins, Message Routing, and IoT Edge.
-- Describe how GCP IoT Core uses JWT authentication and Pub/Sub for telemetry routing.
-- Compare the three platforms on authentication method, state synchronization model, and downstream integration.
-- Identify the security risks associated with shared device certificates and wildcard IoT policies.
+Let's get started.
 
 ---
 
-## Segment 2: Why Managed IoT Platforms? [02:00 – 04:30]
+## SEGMENT 2 — The Arduino IDE and Toolchain (1:30–4:00)
 
-[SHOW DIAGRAM]
+[SHOW HARDWARE: Arduino Uno board side-by-side with ESP32 DevKit on a white background, USB cables attached]
 
-Before we look at specific platforms, let us answer the fundamental question: why use a managed IoT platform at all instead of running your own MQTT broker?
+The Arduino IDE is the development environment that made embedded programming accessible to millions of people. When you write code here, a few things happen behind the scenes that are worth understanding.
 
-At 10 devices, a self-hosted Mosquitto broker on a small virtual machine works fine. At 10,000 devices, you are managing TLS certificate rotation, broker scaling, connection limits, message queuing, replay attack prevention, and integration with databases and analytics pipelines. At 10 million devices, a self-hosted solution requires a dedicated engineering team and massive infrastructure investment.
+First, your sketch — that is what Arduino calls a source file — is compiled by a version of GCC, the GNU Compiler Collection, targeting your specific microcontroller architecture. For the Uno, that is AVR. For the ESP32, that is Xtensa LX6 or RISC-V depending on which variant you have.
 
-Managed IoT platforms handle all of that. They provide:
+Second, the IDE links in the Arduino core library, which wraps low-level register operations into friendly function calls like `digitalWrite` and `analogRead`.
 
-- Horizontally scalable MQTT ingestion with no practical connection limits.
-- Certificate lifecycle management: provisioning, rotation, revocation.
-- Device state synchronization through shadow and twin documents.
-- Rule engines that route telemetry to databases, serverless functions, analytics pipelines, and other cloud services.
-- Global availability and disaster recovery without customer-managed infrastructure.
+Third, the compiled binary is uploaded over USB using a bootloader that lives in a reserved section of flash memory. On the Uno, that bootloader is Optiboot. On the ESP32, it is the Espressif bootloader.
 
-The tradeoff: vendor lock-in and ongoing per-message and per-device costs.
+Every Arduino sketch has exactly two required functions:
 
----
+```cpp
+void setup() {
+  // Runs once at power-on or reset
+}
 
-## Segment 3: AWS IoT Core [04:30 – 09:30]
+void loop() {
+  // Runs repeatedly, forever
+}
+```
 
-[SHOW DIAGRAM]
+`setup()` is where you configure pins, initialize serial communication, and connect to hardware. `loop()` is your main execution loop — it runs as fast as the processor allows unless you add delays.
 
-AWS IoT Core is Amazon Web Services' managed IoT ingestion platform and is among the most widely deployed enterprise IoT platforms globally.
-
-### Things and the Registry
-
-A Thing is a representation of a physical device in AWS IoT Core. The Things Registry stores metadata about each device: thing name, thing type, attributes such as location, model, and firmware version. Each Thing has a unique Thing Name used as the MQTT client ID and in topic patterns.
-
-### Certificates and Authentication
-
-AWS IoT Core uses mutual TLS with X.509 certificates for device authentication. Every device has its own unique certificate and private key. The certificate is presented during the TLS handshake. AWS IoT Core verifies it against a registered Certificate Authority.
-
-This is critical: every device must have a unique certificate. Sharing a single certificate across multiple devices is a severe security failure. If that shared certificate is compromised, every device using it must be immediately deprovisioned and re-credentialed.
-
-### IoT Policies
-
-An IoT Policy is a JSON document attached to a certificate that specifies what MQTT actions the device is authorized to perform. It uses IAM-style Allow and Deny rules.
-
-A secure per-device policy allows: Connect where the client ID matches the device Thing Name, Publish on the specific topic for this device only, Subscribe and Receive on the specific shadow delta topic for this device only.
-
-A common security mistake: using wildcard policies that allow `iot:*` on resource `*`, giving every device unrestricted access to every topic on the broker. One stolen certificate then compromises the entire fleet.
-
-### Device Shadow
-
-The Device Shadow is a JSON document that maintains the current and desired state of a device. It has two sections:
-
-The desired section: state set by the cloud application or operator, such as a target sampling rate or a firmware version to install.
-
-The reported section: state last reported by the device, such as current sensor reading or current firmware version installed.
-
-When a device is offline and the desired state is updated, the shadow persists the change. When the device reconnects, it receives a delta document containing only the properties where desired and reported differ. The device then applies the pending changes and updates the reported state.
-
-This solves the problem of reliable configuration delivery to intermittently connected devices — a core IoT operational challenge.
-
-### Rules Engine
-
-The Rules Engine listens to incoming MQTT messages and routes them to other AWS services based on SQL-like conditions. Examples: if a temperature reading exceeds a threshold, invoke a Lambda function to send an alert; write all telemetry to a DynamoDB table or Timestream time-series database; route critical events to SNS for notification.
+One important thing beginners miss: there is no operating system here. When `loop()` runs, it owns the CPU completely. There is no scheduler, no multitasking, no garbage collector. This is both a strength and a constraint. You have deterministic timing, but you must manage everything yourself.
 
 ---
 
-## Segment 4: Azure IoT Hub [09:30 – 14:00]
+## SEGMENT 3 — C/C++ for Embedded Systems (4:00–6:30)
 
-[SHOW DIAGRAM]
+Let me talk about the language itself. The Arduino ecosystem uses C and C++, but embedded C has important differences from desktop C.
 
-Azure IoT Hub is Microsoft's managed IoT platform, tightly integrated with the Azure ecosystem.
+First: memory is extremely tight. An Arduino Uno has only 2 kilobytes of SRAM and 32 kilobytes of flash. That sentence bears repeating — two kilobytes of RAM. A single integer array of 1,000 elements would consume 2 KB all by itself and crash your program.
 
-### Device Identity and Authentication
+Second: there is no dynamic memory allocator you should trust. On the Uno, using `malloc` or `new` in a long-running embedded program leads to heap fragmentation. Prefer stack-allocated variables and global arrays of known size.
 
-Azure IoT Hub supports three authentication methods:
+Third: the `PROGMEM` keyword lets you store read-only data in flash rather than SRAM. For string literals and lookup tables, this is essential on memory-constrained devices.
 
-X.509 certificates (recommended for production): the same mutual TLS model as AWS IoT Core.
+```cpp
+// Storing a string in flash memory on AVR
+#include <avr/pgmspace.h>
+const char greeting[] PROGMEM = "Hello from flash!";
+```
 
-SAS tokens (Shared Access Signatures): HMAC-SHA256 tokens with configurable expiry. Easier to generate on constrained devices but require careful rotation management. Do not set SAS token expiry beyond 24 hours for production deployments.
+Fourth: data types matter because registers are 8-bit on the Uno. Use `uint8_t`, `uint16_t`, and `uint32_t` from `<stdint.h>` for portable, predictable sizes.
 
-TPM attestation: used with Azure Device Provisioning Service for zero-touch provisioning at scale. The device's hardware TPM holds credentials that cannot be extracted.
+```cpp
+uint8_t  sensorId   = 42;      // 8-bit unsigned, 0-255
+uint16_t adcReading = 1023;    // 16-bit unsigned
+uint32_t timestamp  = 0;       // 32-bit unsigned, good for millis()
+```
 
-### Device Twin
+Fifth: global variables persist across loop iterations. This is how you share state between your main loop and interrupt service routines. Variables modified by ISRs must be declared `volatile`.
 
-The Azure IoT Hub Device Twin is conceptually equivalent to AWS Device Shadow. It is a JSON document with three sections:
+```cpp
+volatile bool buttonPressed = false;
+```
 
-Tags: metadata set by the cloud application, not visible to the device. Used for fleet management queries — for example, query all devices in building-A with firmware version older than 2.0.
-
-Desired properties: configuration values set by the cloud application, delivered to the device.
-
-Reported properties: current state reported by the device.
-
-The Device Twin persists across device disconnections. On reconnect, the device receives the delta between its last reported state and the current desired properties, applying any pending configuration changes.
-
-### Message Routing
-
-Azure IoT Hub's message routing engine directs incoming telemetry to multiple endpoints simultaneously based on message content conditions. Common endpoints: Azure Event Hubs for stream analytics, Azure Service Bus for enterprise messaging, Azure Storage for cold archiving, and Event Grid for serverless function triggers.
-
-### Azure IoT Edge
-
-Azure IoT Edge is Azure's edge computing runtime, allowing cloud-managed Docker container modules to run on gateway devices. IoT Edge handles local message routing between edge modules, cloud synchronization of module configurations, offline operation with local caching, and OTA updates of edge modules from the cloud.
+The `volatile` keyword tells the compiler not to cache this variable in a register — always read it fresh from memory, because hardware can change it at any time.
 
 ---
 
-## Segment 5: Google Cloud IoT Core [14:00 – 17:30]
+## SEGMENT 4 — GPIO: Digital I/O (6:30–9:00)
 
-[SHOW DIAGRAM]
+[SHOW HARDWARE: Arduino Uno with an LED on pin 13 and a pushbutton on pin 2, breadboard visible]
 
-GCP IoT Core is Google Cloud's managed IoT ingestion service. Its primary distinguishing feature is JWT-based device authentication rather than mTLS.
+GPIO stands for General-Purpose Input/Output. These are the numbered pins along the edge of your microcontroller board. Each pin can be configured as either an input or an output.
 
-### JWT Authentication
+You configure a pin's direction in `setup()` using `pinMode()`:
 
-Instead of mutual TLS with X.509 certificates, GCP IoT Core uses JWT (JSON Web Tokens) signed with an RSA or Elliptic Curve private key held by the device. The device generates a signed JWT and presents it as the MQTT password field during connection. GCP IoT Core verifies the JWT signature using the device's registered public key.
+```cpp
+void setup() {
+  pinMode(13, OUTPUT);        // LED
+  pinMode(2,  INPUT_PULLUP);  // Button with internal pull-up resistor
+}
+```
 
-JWT authentication is lighter weight than full mTLS — the TLS handshake is faster and does not require a CA infrastructure. However, JWTs expire (recommended: 24 hours or less), requiring devices to generate and submit a new JWT periodically.
+`INPUT_PULLUP` is worth understanding. Most microcontrollers have internal resistors that can be connected to the 3.3V or 5V rail. When a button is not pressed, the pin reads HIGH. When pressed and connected to ground, it reads LOW. This eliminates the need for an external pull-up resistor in many circuits.
 
-The security concern: if the JWT private key is extracted from device firmware (for example, by an attacker with physical access), the attacker can generate valid JWTs indefinitely until the key is manually rotated in the Device Registry.
+In `loop()`, you read and write pins:
 
-### Pub/Sub Integration
+```cpp
+void loop() {
+  int buttonState = digitalRead(2);
+  if (buttonState == LOW) {
+    digitalWrite(13, HIGH);  // LED on
+  } else {
+    digitalWrite(13, LOW);   // LED off
+  }
+}
+```
 
-GCP IoT Core routes all device telemetry to Google Cloud Pub/Sub topics. Pub/Sub provides durable, scalable, at-least-once message delivery. Downstream consumers subscribe to Pub/Sub topics: Cloud Functions for event-driven processing, BigQuery for analytics, Dataflow for stream processing.
+Timing note: `digitalWrite` on an Uno takes roughly 4 microseconds because it includes safety checks and pin-mapping lookups. If you need faster GPIO toggling — for bit-banging a protocol — you can write directly to port registers:
 
-The security risk: if a Pub/Sub topic subscription is misconfigured with public read access, all device telemetry is readable by any authenticated Google Cloud account. Always restrict Pub/Sub subscriptions to specific authorized service accounts.
+```cpp
+// AVR direct port manipulation — much faster
+PORTB |=  (1 << PB5);   // Set pin 13 HIGH
+PORTB &= ~(1 << PB5);   // Set pin 13 LOW
+```
 
-### Device Registry and State
-
-GCP IoT Core's Device Registry manages device configurations (delivered to the device) and device states (reported by the device). Conceptually equivalent to AWS Device Shadow and Azure Device Twin.
-
----
-
-## Segment 6: Cloud Platform Security Comparison [17:30 – 20:00]
-
-[SHOW DIAGRAM]
-
-Let me summarize the key security controls and risks across all three platforms.
-
-Authentication: AWS uses mTLS with X.509. Azure uses X.509, SAS tokens, or TPM. GCP uses JWT with RSA or EC keys. All three require per-device unique credentials.
-
-Transport: all three use TLS on MQTT port 8883 or HTTPS port 443. This is non-negotiable.
-
-Authorization: AWS uses IAM-style IoT Policies attached to certificates. Azure uses connection string access policies and shared access policies. GCP uses IAM roles on device registries and Pub/Sub topics.
-
-The universal critical principle: unique credentials per device with least-privilege policies limiting each device to its own topics and state documents only.
-
-Common security failures:
-
-- Shared device certificates across a fleet (one stolen cert compromises all devices).
-- Wildcard authorization policies giving every device full broker access.
-- Private keys stored in plaintext in firmware (OWASP IoT #1 and #7).
-- JWT expiry set to months rather than hours.
-- Pub/Sub or Event Hub endpoints with public read access.
+This is advanced territory, but it illustrates that the Arduino abstraction has a cost.
 
 ---
 
-## Segment 7: Summary and Lab Preview [20:00 – 22:00]
+## SEGMENT 5 — Analog I/O and ADC (9:00–11:00)
 
-AWS IoT Core uses mutual TLS with X.509, IoT Policies for authorization, Device Shadows for state synchronization, and a Rules Engine for downstream routing.
+Most physical world signals are not digital — they exist on a continuous spectrum. Temperature, light level, pressure — these all produce analog voltages. To read them, microcontrollers have an Analog-to-Digital Converter, or ADC.
 
-Azure IoT Hub uses X.509 or SAS token authentication, Device Twins with tags and desired and reported properties, Message Routing to Azure services, and IoT Edge for edge compute orchestration.
+The Uno's ADC is 10-bit, meaning it maps 0–5V to the integer range 0–1023. The ESP32's ADC is 12-bit, giving 0–4095 over 0–3.3V.
 
-GCP IoT Core uses JWT authentication with RSA or EC keys, routes to Pub/Sub for downstream consumers, and manages device configuration and state through a Device Registry.
+```cpp
+int rawValue = analogRead(A0);
+float voltage = rawValue * (5.0 / 1023.0);  // Convert to volts
+```
 
-All three share the same security principles: unique per-device credentials, TLS transport, and least-privilege access policies.
+A very common mistake: students assume the ADC is linear and perfectly accurate. In practice, ADC readings have noise — random fluctuations of a few counts. You will deal with this in Module 08 when we cover sensor calibration and smoothing.
 
-In this week's lab you will analyze AWS IoT Core policy documents for security violations, trace a Device Shadow synchronization sequence, and evaluate a GCP Pub/Sub access configuration for data exposure risks.
+For analog output, the Uno does not have a true DAC. Instead it uses PWM, which we cover in the next segment. The ESP32 does have a two-channel true DAC on pins 25 and 26:
 
-See you in Module 07 where we integrate real sensors end-to-end.
+```cpp
+// ESP32 true DAC output
+#include <driver/dac.h>
+dac_output_enable(DAC_CHANNEL_1);       // GPIO 25
+dac_output_voltage(DAC_CHANNEL_1, 128); // 0-255, maps to 0-3.3V
+```
 
 ---
 
-End of Module 06 Video Script
+## SEGMENT 6 — PWM: Pulse Width Modulation (11:00–13:00)
+
+[SHOW HARDWARE: Arduino with LED fading, oscilloscope screen showing PWM waveform at 50% duty cycle]
+
+PWM is one of the most useful techniques in embedded development. The idea is simple: instead of a true analog voltage, you switch a pin on and off very rapidly. The ratio of on-time to off-time is called the duty cycle.
+
+A 50% duty cycle means the pin is HIGH half the time and LOW half the time. If the switching happens fast enough — typically 500 Hz to 50 kHz — the average voltage seen by a load like an LED or motor is halfway between 0V and 5V.
+
+On the Arduino Uno, pins 3, 5, 6, 9, 10, and 11 support PWM. You use `analogWrite()` with a value from 0 to 255:
+
+```cpp
+void loop() {
+  // Fade LED up
+  for (int brightness = 0; brightness <= 255; brightness++) {
+    analogWrite(9, brightness);
+    delay(10);
+  }
+  // Fade LED down
+  for (int brightness = 255; brightness >= 0; brightness--) {
+    analogWrite(9, brightness);
+    delay(10);
+  }
+}
+```
+
+The ESP32 has a dedicated LEDC PWM peripheral that is much more flexible:
+
+```cpp
+// ESP32 LEDC PWM
+const int pwmPin     = 18;
+const int pwmChannel = 0;
+const int pwmFreq    = 5000;  // 5 kHz
+const int pwmRes     = 8;     // 8-bit: 0-255
+
+void setup() {
+  ledcSetup(pwmChannel, pwmFreq, pwmRes);
+  ledcAttachPin(pwmPin, pwmChannel);
+}
+
+void loop() {
+  ledcWrite(pwmChannel, 128);  // 50% duty cycle
+}
+```
+
+PWM is used for motor speed control, LED dimming, servo positioning, buzzer tones, and analog signal generation.
+
+---
+
+## SEGMENT 7 — Interrupts (13:00–16:00)
+
+Here is a problem: what if you need to respond to a button press immediately, no matter what the main loop is doing? You cannot just poll in `loop()` — if the loop has a 500ms delay for some other reason, you might miss a 10ms button press entirely.
+
+The solution is hardware interrupts. An interrupt temporarily pauses the main loop, jumps to a special function called an Interrupt Service Routine (ISR), runs it, then resumes where it left off.
+
+On the Arduino Uno, pins 2 and 3 support external interrupts. On the ESP32, any GPIO pin can be an interrupt source.
+
+```cpp
+volatile bool buttonFlag = false;
+
+void IRAM_ATTR buttonISR() {
+  buttonFlag = true;
+}
+
+void setup() {
+  Serial.begin(115200);
+  pinMode(2, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(2), buttonISR, FALLING);
+}
+
+void loop() {
+  if (buttonFlag) {
+    buttonFlag = false;
+    Serial.println("Button press detected!");
+  }
+}
+```
+
+Four critical ISR rules you must memorize:
+
+**Rule 1:** ISRs must be short. Do not read sensors or send serial data inside an ISR. Set a flag, then handle it in `loop()`.
+
+**Rule 2:** Variables shared between ISRs and main code must be `volatile`.
+
+**Rule 3:** On the ESP32, ISRs must be placed in IRAM using the `IRAM_ATTR` attribute, so they can execute even when flash is busy with other operations.
+
+**Rule 4:** Avoid `delay()` inside ISRs — it relies on the SysTick timer, which itself uses interrupts.
+
+Timer interrupts fire on a schedule rather than in response to a pin event. These are excellent for periodic tasks like sampling a sensor every 100 milliseconds without blocking the main loop.
+
+---
+
+## SEGMENT 8 — ESP32 vs Arduino Comparison (16:00–19:00)
+
+[SHOW HARDWARE: Side-by-side ESP32 DevKit V1 and Arduino Uno R3, labels pointing to key components]
+
+Let's do a direct comparison between the two platforms you will use most in this course.
+
+The Arduino Uno uses an ATmega328P microcontroller running at 16 MHz with a single core. It has 2 KB of SRAM, 32 KB of flash, and 1 KB of EEPROM. It runs at 5V. It has 14 digital I/O pins and 6 analog input pins. No wireless connectivity at all.
+
+The ESP32 uses a dual-core Xtensa LX6 processor running at up to 240 MHz. It has 520 KB of SRAM, typically 4 MB of flash, and a wide array of peripherals. It runs at 3.3V. It has up to 34 configurable GPIO pins, built-in Wi-Fi 802.11 b/g/n, Bluetooth 4.2 including BLE, a touch-sensing peripheral, a hall effect sensor, and two DAC channels.
+
+When should you use each?
+
+Use Arduino Uno when:
+
+- You need 5V logic compatibility with older sensors
+- The task is simple and power budget is generous
+- You are learning fundamentals without connectivity complexity
+- You need extremely predictable timing on a single task
+
+Use ESP32 when:
+
+- You need Wi-Fi or Bluetooth connectivity
+- You need more processing power for FFT, encryption, or signal processing
+- You have multiple concurrent tasks that benefit from dual-core operation
+- You need more GPIO pins or advanced peripherals
+
+One critical difference: the ESP32 runs FreeRTOS under the hood. This means you can create actual tasks with priorities and stack sizes, rather than relying on a single `loop()` function:
+
+```cpp
+// ESP32 FreeRTOS task
+void sensorTask(void *parameter) {
+  while (true) {
+    int reading = analogRead(34);
+    Serial.println(reading);
+    vTaskDelay(100 / portTICK_PERIOD_MS);  // Non-blocking 100ms delay
+  }
+}
+
+void setup() {
+  Serial.begin(115200);
+  xTaskCreatePinnedToCore(sensorTask, "SensorTask", 10000, NULL, 1, NULL, 1);
+}
+
+void loop() {
+  // Core 0 — can run independently
+}
+```
+
+This is fundamentally more powerful than the Arduino single-loop model.
+
+---
+
+## SEGMENT 9 — Memory Constraints and Best Practices (19:00–21:30)
+
+Memory management in embedded systems is a survival skill. Let me give you a quick checklist.
+
+Always monitor SRAM usage. The Arduino IDE shows flash usage but not always SRAM. Use this function to check free heap at runtime:
+
+```cpp
+// AVR (Uno) — free memory check
+extern int __heap_start, *__brkval;
+int freeMemory() {
+  int v;
+  return (int)&v - (__brkval == 0 ? (int)&__heap_start : (int)__brkval);
+}
+
+// ESP32 — free heap
+void printHeap() {
+  Serial.print("Free heap: ");
+  Serial.println(ESP.getFreeHeap());
+}
+```
+
+If your program crashes randomly, starts behaving erratically, or resets unexpectedly — suspect stack overflow from SRAM exhaustion.
+
+Best practices for memory-constrained embedded code:
+
+First: use the `F()` macro for string literals in Serial.print calls on Uno — this keeps strings in flash instead of copying them to SRAM:
+
+```cpp
+Serial.println(F("This string stays in flash memory"));
+```
+
+Second: avoid `String` objects on the Uno. They use dynamic allocation and fragment the heap. Use character arrays instead.
+
+Third: pre-allocate buffers at compile time. A global `char buf[64]` is always safer than runtime `String` concatenation.
+
+Fourth: on the ESP32, call `ESP.getFreeHeap()` regularly during development to catch memory leaks before they reach production.
+
+---
+
+## SEGMENT 10 — Wrap-Up and Preview (21:30–23:00)
+
+Let's recap what we covered today.
+
+We walked through the Arduino IDE toolchain and how a sketch gets compiled and uploaded. We discussed C and C++ for embedded systems — tight memory, volatile variables, and data type choices. We covered digital GPIO, analog ADC reads, PWM for simulated analog output, and hardware interrupts for real-time response.
+
+We compared the Arduino Uno and ESP32 side by side — knowing their trade-offs helps you make the right hardware choice for any project. And we finished with memory management best practices that will save you hours of debugging.
+
+In Module 07, we move up the stack to IoT communication protocols — MQTT, CoAP, HTTP, and WebSockets. You will learn how your embedded device talks to the internet and to other devices. That is where the "Internet" in IoT really begins.
+
+See you there.
+
+---
+
+## PRODUCTION NOTES
+
+- Slide transitions: cut between code segments, fade between hardware demonstrations
+- B-roll needed: close-up of Uno and ESP32 boards, USB cable insertion, LED fading demo, oscilloscope PWM waveform
+- Serial Monitor window capture: show live output when button pressed
+- Closed captions: auto-generate, verify technical terms (GPIO, PWM, ISR, SRAM, FreeRTOS)
+- Run time target: 22 minutes

@@ -1,67 +1,201 @@
-# Reading Guide: Module 08 – Cloud Run and App Engine: Serverless Compute
-## Course: CIS-4329 – Google Cloud Administration (Google Cloud Associate Cloud Engineer)
+# Reading Guide — Module 08
+
+## CIS-4329: Google Cloud Platform | Texas Wesleyan University
+
+### Topic: Cloud Run, App Engine, and Cloud Functions — Serverless Compute
+
+### Certification Target: Google Cloud Associate Cloud Engineer
 
 ---
 
-### Introduction
-Welcome to **Module 08 – Cloud Run and App Engine: Serverless Compute**! GCP offers multiple serverless platforms that let you deploy code without provisioning or managing servers. This module covers Cloud Run (for containerized workloads) and App Engine (for web application frameworks), explains when to choose each, and contrasts them with Cloud Functions and GKE. The ACE exam tests your ability to select the right compute platform for a given scenario and understand how these services handle scaling, concurrency, and traffic.
+## Introduction
+
+GCP's serverless compute portfolio — Cloud Functions, Cloud Run, and App Engine — is one of the highest-frequency ACE exam topic areas. The exam consistently presents scenarios requiring you to choose the correct platform. This reading guide provides a comprehensive comparison of all three platforms, their scaling behavior, deployment commands, and the key selection criteria that determine the correct answer on the exam.
 
 ---
 
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The ACE exam tests these concepts in scenario-based questions.
+## 1. Platform Comparison
 
-*   **Cloud Run**: A fully managed serverless platform that runs stateless containers. You provide a container image, Cloud Run handles provisioning, scaling (including scale-to-zero), and load balancing. Cloud Run bills per 100 milliseconds of CPU and memory consumed during request processing. Suitable for HTTP-driven services, APIs, and event-driven workloads.
+### Serverless Compute Overview
 
-*   **App Engine Standard Environment**: A PaaS runtime that supports specific language runtimes (Python, Java, Node.js, Go, PHP, Ruby) with automatic scaling and scale-to-zero. Code runs in a sandboxed environment; direct filesystem access and arbitrary background processes are restricted. Ideal for web apps using supported runtimes with minimal configuration overhead.
+| Feature | Cloud Functions | Cloud Run | App Engine Standard | App Engine Flexible |
+|---|---|---|---|---|
+| Deployment unit | Single function | Container image | Application source + app.yaml | Docker container |
+| Scale to zero | Yes | Yes | Yes | No |
+| Any language | No (8 runtimes) | Yes | No (6 runtimes) | Yes |
+| Container required | No | Yes | No | Yes |
+| Event-driven triggers | Yes (native) | Yes (via Pub/Sub push) | Via task queues | Via task queues |
+| Maximum execution time | 60 min (2nd gen) | 60 min | 10 min (standard) | Unlimited |
+| Background processes | No | No | No | Yes |
+| Filesystem access | /tmp only | Writable /tmp | Restricted | Full |
+| Billing unit | Per invocation | Per 100ms CPU/memory | Per instance-hour | Per VM-hour |
 
-*   **App Engine Flexible Environment**: Runs application code inside Docker containers on Compute Engine VMs. Supports custom runtimes, long-running background processes, and direct filesystem access. Does not scale to zero — at least one instance is always running. Use Flexible when the standard sandbox is too restrictive.
+### Scale-to-Zero Behavior
 
-*   **Service (Cloud Run)**: The primary deployment unit in Cloud Run. Each service has a stable HTTPS endpoint. You deploy new container images as Revisions. Traffic splitting allows you to route a percentage of requests to different revisions for canary or blue/green deployments.
+Scale-to-zero means the platform shuts down all instances when there are no active requests. You pay nothing during idle periods. The tradeoff is a cold start delay when the first request arrives after an idle period.
 
-*   **Concurrency**: The number of simultaneous requests a single Cloud Run container instance can handle. The default is 80. Setting concurrency to 1 forces one-request-per-instance behavior (matching Cloud Functions semantics). Adjusting concurrency affects how aggressively Cloud Run scales new instances.
-
-*   **Cloud Functions**: An event-driven serverless compute service that runs a single function in response to a trigger (HTTP request, Pub/Sub message, Cloud Storage event, Firestore write). Cloud Functions are not container-based and have shorter maximum execution times than Cloud Run. Best for lightweight glue code or event handlers.
-
----
-
-### 2. Certification Exam Tips
-
-*   **Choosing between Cloud Run, App Engine, and GKE**: The ACE exam presents scenarios to test platform selection. Key signals: containers + no server management + HTTP traffic → Cloud Run. Existing web framework (Django, Flask, Spring) + supported runtime + minimal config → App Engine Standard. Need DaemonSets, node-level control, or stateful workloads → GKE. Need fine-grained OS access → GKE or Compute Engine.
-
-*   **Scale-to-zero distinguishes Standard from Flexible**: App Engine Standard and Cloud Run both scale to zero (no instances when idle, no cost). App Engine Flexible keeps at least one instance running at all times, resulting in continuous billing even with no traffic.
-
-*   **Cloud Run traffic splitting for safe deployments**: The exam tests knowledge of Cloud Run's revision traffic-splitting feature. When you deploy a new revision, you can route 5% of traffic to the new version while 95% goes to the stable version — enabling canary testing before full rollout. Use `gcloud run services update-traffic` to manage splits.
-
-*   **App Engine versions and traffic migration**: App Engine also supports traffic splitting across versions with `gcloud app services set-traffic`. The exam may test whether you know the difference between `--splits` (gradual rollout) and `--migrate` (immediately shift all traffic to the new version).
-
-*   **Study Resource**: The freeCodeCamp ACE course covers Cloud Run and App Engine deployment patterns with live console demonstrations: [Google Cloud ACE Certification Course by freeCodeCamp](https://www.youtube.com/watch?v=UGRDM86MBIQ). Navigate to the Serverless Compute chapter using the video index.
+App Engine Flexible does NOT scale to zero. It always keeps at least one instance running, meaning continuous billing even with zero traffic.
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
+## 2. Cloud Run
 
-*   **Required Reading**: Review the Cloud Run overview including how services, revisions, and traffic splitting work: [Cloud Run Overview](https://cloud.google.com/run/docs/overview/what-is-cloud-run). Pay attention to the comparison table between Cloud Run and App Engine.
-*   **Required Reading**: Review App Engine environments, how Standard and Flexible differ, and how to deploy using `gcloud app deploy`: [App Engine Overview](https://cloud.google.com/appengine/docs/the-appengine-environments).
-*   **Required Video**: Watch the Serverless Compute segment of the ACE certification course: [Google Cloud ACE Certification Course by freeCodeCamp](https://www.youtube.com/watch?v=UGRDM86MBIQ). Navigate to the Cloud Run and App Engine chapter using the video index.
+### Key Concepts
+
+A Cloud Run service is a deployed container that receives HTTP requests. Each deployment creates a new revision — an immutable snapshot of the container image and configuration.
+
+```text
+Cloud Run Service
+├── Revision 1 (old) — 0% traffic
+├── Revision 2 (stable) — 90% traffic
+└── Revision 3 (new) — 10% traffic (canary)
+```
+
+### gcloud run Commands
+
+| Command | Description |
+|---|---|
+| `gcloud run deploy SVC --image=IMG --region=R` | Deploy or update a service |
+| `gcloud run services list --region=R` | List services |
+| `gcloud run services describe SVC --region=R` | Service details |
+| `gcloud run services update-traffic SVC --to-revisions=REV=PCT --region=R` | Traffic split |
+| `gcloud run services update-traffic SVC --to-latest --region=R` | Send all traffic to latest |
+| `gcloud run services delete SVC --region=R` | Delete service |
+| `gcloud run revisions list --service=SVC --region=R` | List revisions |
+
+### Concurrency and Scaling
+
+Default concurrency: 80 requests per instance. Set to 1 for CPU-intensive tasks. Use `--min-instances=1` to prevent cold starts at the cost of continuous billing for one warm instance.
+
+```bash
+gcloud run deploy my-service \
+  --image=IMAGE \
+  --concurrency=1 \
+  --max-instances=100 \
+  --min-instances=1 \
+  --region=us-central1
+```
 
 ---
 
-### Lab & Command Integration
-In this module's lab, you will deploy a containerized application to Cloud Run and a web application to App Engine. Key commands to practice:
+## 3. App Engine
 
-*   `gcloud run deploy my-service --image=gcr.io/PROJECT/IMAGE --region=us-central1 --platform=managed` — deploys a container image to Cloud Run
-*   `gcloud run services update-traffic my-service --to-revisions=REVISION=10` — routes 10% of traffic to a specific revision
-*   `gcloud app deploy app.yaml` — deploys an App Engine application from a configuration file
-*   `gcloud app services set-traffic default --splits=v2=1 --migrate` — migrates all App Engine traffic to a new version
+### Standard Environment app.yaml
+
+```yaml
+runtime: python39
+service: default
+
+automatic_scaling:
+  min_instances: 0
+  max_instances: 10
+  target_cpu_utilization: 0.65
+```
+
+### App Engine gcloud Commands
+
+| Command | Description |
+|---|---|
+| `gcloud app deploy app.yaml` | Deploy application |
+| `gcloud app deploy app.yaml --no-promote` | Deploy without shifting traffic |
+| `gcloud app services list` | List services |
+| `gcloud app versions list` | List all versions |
+| `gcloud app services set-traffic default --splits=V=1 --migrate` | Route all traffic to version V |
+| `gcloud app versions stop VERSION` | Stop a version |
+| `gcloud app versions delete VERSION` | Delete a version |
+| `gcloud app browse` | Open service URL in browser |
+
+### Traffic Splitting
+
+```bash
+gcloud app services set-traffic default \
+  --splits=v1=0.9,v2=0.1 \
+  --split-by=random
+```
+
+`--split-by` options: `random` (per-request), `ip` (sticky by client IP), `cookie` (sticky by session).
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and be able to explain each in your own words.
-- [ ] Read the [Cloud Run Overview](https://cloud.google.com/run/docs/overview/what-is-cloud-run) documentation page.
-- [ ] Read the [App Engine Overview](https://cloud.google.com/appengine/docs/the-appengine-environments) documentation page.
-- [ ] Watch the Serverless Compute segment of the [ACE Certification Course by freeCodeCamp](https://www.youtube.com/watch?v=UGRDM86MBIQ).
-- [ ] Complete the module lab: deploy a container to Cloud Run and a web app to App Engine.
-- [ ] Proceed to the weekly quiz.
+## 4. Cloud Functions
+
+### Trigger Types
+
+| Trigger | When it fires |
+|---|---|
+| HTTP | HTTPS request to function URL |
+| Pub/Sub | Message published to a topic |
+| Cloud Storage | Object created, updated, finalized, or deleted |
+| Firestore | Document created, updated, or deleted |
+| Cloud Scheduler | Cron-based schedule via Pub/Sub |
+
+### Deployment Command
+
+```bash
+gcloud functions deploy FUNCTION_NAME \
+  --gen2 \
+  --runtime=python311 \
+  --region=REGION \
+  --source=. \
+  --entry-point=FUNCTION_HANDLER \
+  --trigger-bucket=BUCKET_NAME
+```
+
+---
+
+## 5. Platform Selection Decision Rules
+
+Rule 1: Event from Cloud Storage, Pub/Sub, or Firestore + short execution + no container → Cloud Functions
+
+Rule 2: Container + serverless + any language + scale-to-zero → Cloud Run
+
+Rule 3: Source code + supported framework (Flask, Django, Spring) + no custom system libs → App Engine Standard
+
+Rule 4: Custom runtime + background threads + no scale-to-zero requirement → App Engine Flexible
+
+Rule 5: "No server management" eliminates Compute Engine and GKE. Use the other rules to choose among the serverless options.
+
+---
+
+## 6. ACE Exam Tips
+
+1. Scale-to-zero is the most tested behavioral difference. Standard and Cloud Run scale to zero; Flexible does not. "Pay only when requests are being handled" means Standard or Cloud Run, never Flexible.
+
+2. Cloud Run requires a container. If a scenario describes a simple Python Flask app with no custom dependencies, App Engine Standard is simpler — no Dockerfile needed.
+
+3. Traffic splitting is built into both Cloud Run and App Engine. Know both commands: `gcloud run services update-traffic` and `gcloud app services set-traffic`.
+
+4. Cloud Functions is the only native event-driven option. "Run code when a file is uploaded" or "process each Pub/Sub message" → Cloud Functions.
+
+5. App Engine Flexible is rarely the right ACE exam answer. Only choose it when the scenario requires custom system libraries, unlimited background processes, or full filesystem access.
+
+6. `--no-promote` in App Engine deploys a version without routing traffic to it — useful for staging before promotion.
+
+7. Cloud Run services can be triggered by events via Pub/Sub push or Eventarc. This is more complex than Cloud Functions but valid for containerized event-driven workloads.
+
+8. Cloud Functions 2nd gen is built on Cloud Run. For the ACE exam, treat them as separate services and select based on use case, not implementation.
+
+---
+
+## 7. Study Checklist
+
+- [ ] Explain the difference between Cloud Run, App Engine Standard, App Engine Flexible, and Cloud Functions and state when to use each
+- [ ] Describe what scale-to-zero means and which platforms support it
+- [ ] State the deployment unit for each platform (container, source code, function)
+- [ ] List the Cloud Functions trigger types and give a use case for each
+- [ ] Write a minimal app.yaml for App Engine Standard from memory
+- [ ] Explain Cloud Run traffic splitting and write the gcloud command to route 10% of traffic to a new revision
+- [ ] Apply the platform selection rules to a scenario you have not seen before
+- [ ] Complete the Module 08 lab
+- [ ] Take the Module 08 quiz
+- [ ] Post your Module 08 discussion response
+
+---
+
+End of Reading Guide — Module 08
+
+Course: CIS-4329 Google Cloud Platform | Texas Wesleyan University | Professor Nash
+
+Certification Target: Google Cloud Associate Cloud Engineer
+
+Reference: cloud.google.com/learn

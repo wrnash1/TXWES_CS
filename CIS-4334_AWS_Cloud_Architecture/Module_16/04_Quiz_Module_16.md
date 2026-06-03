@@ -1,78 +1,476 @@
-# Quiz: Module 16 - Final Exam Prep & AWS Solutions Architect Associate
-## Course: CIS-4334_AWS_Cloud_Architecture (AWS Certified Solutions Architect - Associate)
+# Quiz: Module 16 — SAA-C03 Exam Preparation (20 Practice Questions)
+
+## Course: CIS-4334 AWS Cloud Architecture
+
+## Texas Wesleyan University | Professor Nash
+
+**Certification Alignment:** AWS Solutions Architect — Associate (SAA-C03)
 
 ---
 
-**Question 1**
-A company needs to design a three-tier web application that can withstand the failure of any single Availability Zone without user-visible downtime. The application tier must scale automatically during traffic spikes. Which architecture correctly implements these requirements?
-*   A) Deploy all tiers in a single AZ with an Application Load Balancer; enable detailed monitoring to detect failures quickly.
-*   B) Deploy an ALB in two public subnets (one per AZ), EC2 instances in an Auto Scaling Group across two private subnets (one per AZ), and an RDS Multi-AZ instance in two isolated subnets (one per AZ).
-*   C) Deploy EC2 instances in a single AZ with a reserved instance commitment and daily RDS snapshots for recovery.
-*   D) Deploy a CloudFront distribution in front of a single EC2 instance; CloudFront's edge redundancy compensates for single-AZ backend failures.
-*   **Correct Answer:** B) Multi-AZ ALB, multi-AZ ASG, and RDS Multi-AZ together eliminate every single-AZ single point of failure across the web, application, and data tiers.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* A single-AZ deployment with an ALB is still a single fault domain — if that AZ fails, the entire application goes down regardless of monitoring. Detailed monitoring detects failures but does nothing to prevent them.
-    *   *Why B is correct:* This is the canonical three-tier HA architecture for SAA-C03. The ALB distributes traffic across both AZs; ASG maintains the desired instance count and replaces failed instances; RDS Multi-AZ provides synchronous standby and automatic failover. Every tier is fault-isolated across two AZs.
-    *   *Why C is incorrect:* A single-AZ deployment with Reserved Instances is a cost optimization, not an HA design. Reserved Instances guarantee capacity billing commitment, not AZ redundancy. Daily snapshots provide backup but require hours to restore — not "without user-visible downtime."
-    *   *Why D is incorrect:* CloudFront caches and delivers content from edge locations but it is NOT a substitute for backend high availability. If the single EC2 origin instance fails, CloudFront can serve cached responses briefly but ultimately returns errors for non-cached or dynamic requests. CloudFront does not run your application — it proxies to it.
+## Instructions
+
+This practice quiz contains 20 questions spanning all four SAA-C03 exam domains. It simulates exam-style questions with the same structure, distractor patterns, and domain coverage as the actual SAA-C03 exam. Attempt all questions before reviewing the answer key. Each question is worth 5 points (100 points total).
 
 ---
 
-**Question 2**
-Which of the following most accurately describes the SAA-C03 exam's four domain weightings?
-*   A) Compute Services (35%), Storage Services (25%), Database Services (25%), Networking (15%)
-*   B) Design Secure Architectures (30%), Design Resilient Architectures (26%), Design High-Performing Architectures (24%), Design Cost-Optimized Architectures (20%)
-*   C) IAM and Security (40%), Networking and VPC (30%), Compute and Serverless (20%), Databases and Storage (10%)
-*   D) Design Secure Architectures (25%), Design Resilient Architectures (25%), Design High-Performing Architectures (25%), Design Cost-Optimized Architectures (25%)
-*   **Correct Answer:** B) The official SAA-C03 exam guide specifies: Secure (30%), Resilient (26%), High-Performing (24%), Cost-Optimized (20%).
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* The SAA-C03 exam is organized by architectural dimensions (security, resilience, performance, cost), not by AWS service categories. AWS does not publish an exam guide organized by compute/storage/database/networking percentages.
-    *   *Why B is correct:* These are the exact domain weightings published in the official AWS SAA-C03 Exam Guide. Security being the highest-weighted domain (30%) reflects AWS's emphasis on security-first architecture thinking. Knowing these weightings helps candidates allocate study time proportionally.
-    *   *Why C is incorrect:* These percentages and category names do not match the official SAA-C03 exam guide. The actual domains are architectural quality dimensions, not AWS service families.
-    *   *Why D is incorrect:* An equal 25% split across four domains is not the actual SAA-C03 distribution. Security is disproportionately weighted at 30% because it appears as a requirement in almost every architectural scenario, even those primarily about resilience, performance, or cost.
+## Question 1 — Domain 1: Resilient Architectures
+
+A company runs a three-tier web application on EC2. The database is a single RDS MySQL instance in one Availability Zone. The company wants to achieve an RTO of under 10 minutes for a database AZ failure without application code changes. Which solution achieves this at the LOWEST cost?
+
+- A. Enable RDS Read Replicas in a second AZ and manually promote on failure
+- B. Enable RDS Multi-AZ on the existing instance
+- C. Migrate to Aurora Global Database with a secondary region
+- D. Create daily RDS snapshots and restore from the latest snapshot on failure
+
+### Q1 Answer: B
+
+### Q1 Analysis
+
+A is incorrect. Read Replicas use asynchronous replication and are not designed for automatic failover. Promoting a Read Replica is a manual process and can take longer than 10 minutes. They also do not meet the "without application code changes" requirement if the endpoint changes.
+
+B is correct. RDS Multi-AZ maintains a synchronous standby replica in a second AZ. On AZ failure, RDS automatically fails over to the standby in typically 60–120 seconds, well within the 10-minute RTO. The endpoint DNS name remains the same — no application changes required.
+
+C is incorrect. Aurora Global Database spans multiple AWS regions. This is appropriate for multi-region DR, not single-region AZ failure. It is also significantly more expensive than Multi-AZ.
+
+D is incorrect. Restoring from a snapshot creates a new RDS instance from scratch — this takes 20–40 minutes or more depending on database size, far exceeding the 10-minute RTO.
 
 ---
 
-**Question 3**
-A media company currently hosts a static website on on-premises servers. They want to migrate to AWS with the following requirements: global low-latency delivery to users worldwide, secure access to the S3 origin (no direct public S3 URL access), ability to filter malicious HTTP requests, and DDoS protection. Which combination of AWS services satisfies all four requirements?
-*   A) S3 static website hosting with public read access, Route 53 latency-based routing, and AWS Shield Standard.
-*   B) S3 bucket (private) with Origin Access Control, CloudFront distribution with WAF Web ACL and AWS Shield Standard (included automatically), and Route 53 for DNS.
-*   C) EC2 instances with an Application Load Balancer, CloudFront distribution, and AWS WAF on the ALB.
-*   D) S3 bucket with public read, Amazon CloudFront, and a Network Load Balancer for DDoS protection.
-*   **Correct Answer:** B) Private S3 + CloudFront OAC provides secure origin access; CloudFront delivers globally at low latency; WAF filters malicious requests; Shield Standard is automatically included with CloudFront.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* S3 static website hosting with public read access exposes the S3 URL directly — violating the "no direct public S3 URL access" requirement. Route 53 provides DNS but not CDN or WAF protection. Shield Standard is included but WAF is missing.
-    *   *Why B is correct:* This is the complete, production-grade static website architecture on AWS. OAC restricts S3 access to the CloudFront distribution only. CloudFront delivers from 400+ global edge locations. WAF Web ACL on the distribution filters SQL injection, XSS, and bot traffic. Shield Standard is automatically active on all CloudFront distributions at no additional cost.
-    *   *Why C is incorrect:* EC2 instances are unnecessary for a static website — this adds cost and operational overhead. A static website is purely S3-served content; no server-side compute is required. Adding EC2 violates the simplicity principle and increases cost without benefit.
-    *   *Why D is incorrect:* Network Load Balancers operate at Layer 4 and are not DDoS protection services — they are traffic distribution services. NLBs do not provide WAF, edge caching, or DDoS mitigation. Additionally, making S3 public undermines the origin security requirement.
+## Question 2 — Domain 3: Secure Architectures
+
+A company stores sensitive financial documents in an S3 bucket. The security team requires that all objects be encrypted with a customer-managed KMS key so that key usage is auditable via CloudTrail. They also want to enforce that objects CANNOT be uploaded without encryption. Which combination achieves both requirements?
+
+- A. Enable SSE-S3 default encryption and apply an S3 bucket policy denying uploads without `x-amz-server-side-encryption: AES256`
+- B. Enable SSE-KMS with a customer-managed key as the default encryption, and apply an S3 bucket policy denying uploads that do not specify `x-amz-server-side-encryption: aws:kms`
+- C. Enable SSE-S3 and enable CloudTrail data events on the bucket
+- D. Enable SSE-KMS and rely on default bucket encryption without a bucket policy
+
+### Q2 Answer: B
+
+### Q2 Analysis
+
+A is incorrect. SSE-S3 (`AES256`) uses AWS-managed keys and does not generate CloudTrail key usage events. The question requires a customer-managed KMS key with an audit trail.
+
+B is correct. SSE-KMS with a customer-managed key generates a CloudTrail event every time the key is used to encrypt or decrypt an object — providing the required audit trail. The S3 bucket policy with a Deny condition on requests missing `aws:kms` server-side-encryption ensures all uploads are encrypted. Default encryption alone does not prevent uploads with no encryption header.
+
+C is incorrect. SSE-S3 does not use KMS and does not generate CloudTrail key usage events. CloudTrail data events capture S3 API calls but not individual key usage.
+
+D is incorrect. Default encryption with SSE-KMS encrypts objects uploaded without an explicit encryption header. However, without the bucket policy, an object could theoretically be uploaded with SSE-S3 encryption instead of SSE-KMS, bypassing the KMS audit requirement.
 
 ---
 
-**Question 4**
-A startup receives inconsistent traffic — sometimes zero requests, sometimes thousands per second with no predictable pattern. They need a backend API that scales to zero when idle (no idle cost) and handles spikes automatically without pre-provisioning. Which compute approach satisfies these requirements?
-*   A) EC2 Auto Scaling with a minimum of 0 instances — the ASG scales from zero when traffic begins.
-*   B) AWS Lambda with API Gateway — Lambda scales automatically per request and costs nothing when idle, with no minimum provisioned capacity.
-*   C) Amazon ECS with Fargate — Fargate scales to minimum 1 task when idle to maintain readiness.
-*   D) EC2 Reserved Instances — commit to 1-year term for cost predictability; the reserved instance always runs.
-*   **Correct Answer:** B) Lambda + API Gateway scales to zero (no invocations = no charges) and scales horizontally to thousands of concurrent executions for spikes, making it ideal for unpredictable variable workloads.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* EC2 Auto Scaling with minimum 0 instances is technically possible, but "scale from zero" for EC2 is slow (2–3 minutes to launch, configure, and pass health checks) — inadequate for handling sudden traffic spikes. Additionally, there is no built-in HTTP request handling; you still need an ALB, which has a minimum hourly cost regardless of traffic.
-    *   *Why B is correct:* Lambda has no minimum provisioned instances. When there are zero invocations, there is zero cost. When traffic spikes, Lambda automatically provisions hundreds of concurrent execution environments within seconds. API Gateway routes HTTP requests to Lambda with no idle infrastructure cost. This is the "scale to zero" serverless pattern.
-    *   *Why C is incorrect:* Fargate ECS tasks have a minimum running task configuration to maintain service availability. While ECS Service Auto Scaling can scale to 1 task minimum, that 1 task has a continuous Fargate compute cost even during idle periods. Fargate does not scale to zero for long-running services.
-    *   *Why D is incorrect:* Reserved Instances require a 1- or 3-year commitment with continuous hourly billing regardless of utilization. For a workload with periods of zero traffic, Reserved Instances generate 100% idle cost during those periods — the worst cost outcome for variable workloads.
+## Question 3 — Domain 2: High-Performing Architectures
+
+A mobile app backend uses DynamoDB as its primary data store. Analytics queries on historical data are causing throttling on the DynamoDB table and degrading real-time user experience. The analytics queries read large amounts of data infrequently. Which solution addresses the performance issue with MINIMAL changes to the existing architecture?
+
+- A. Increase DynamoDB RCUs provisioned on the main table to handle analytics workload
+- B. Enable DynamoDB Streams and use Kinesis Firehose to deliver historical data to Amazon S3 for Athena queries
+- C. Add a DAX cluster in front of DynamoDB to accelerate analytics queries
+- D. Enable DynamoDB global tables in a second region for analytics
+
+### Q3 Answer: B
+
+### Q3 Analysis
+
+A is incorrect. Increasing RCUs raises the cost continuously to accommodate infrequent analytics queries. This does not solve the throttling architecture problem — it just makes throttling less frequent while paying for unused capacity.
+
+B is correct. DynamoDB Streams export change data to Kinesis Firehose, which delivers it to S3. Athena queries S3 directly without touching DynamoDB at all. Historical analytics are offloaded entirely from the operational DynamoDB table, eliminating interference with real-time users. S3 + Athena is also significantly cheaper for analytical queries than DynamoDB RCU consumption.
+
+C is incorrect. DAX is an in-memory cache that accelerates DynamoDB reads for frequently accessed items. Analytics queries read large, infrequently accessed historical data — DAX cache hit rates would be low, providing minimal benefit.
+
+D is incorrect. Global tables replicate the full DynamoDB table to a second region for multi-region writes. Querying the replica still consumes RCUs from the same table and does not offload the workload from the primary table's capacity.
 
 ---
 
-**Question 5**
-A solutions architect is finalizing an architecture review. The application stores user PII (Personally Identifiable Information) in an S3 bucket, uses RDS MySQL for transactional data, runs on EC2 in private subnets, and receives public traffic through an ALB. To satisfy a compliance audit requiring encryption of all data at rest with auditable key usage logs, which configuration is required?
-*   A) Enable S3 default encryption with SSE-S3, enable RDS encryption at creation using AWS-managed keys, and enable EBS encryption on EC2 volumes — no key audit logging configuration required.
-*   B) Enable SSE-KMS on the S3 bucket using a Customer Managed Key, enable RDS encryption at creation using a KMS CMK, and enable EBS volume encryption with a KMS CMK — KMS automatically logs all key usage to CloudTrail.
-*   C) Install PGP encryption on the EC2 instances and encrypt all data before writing to S3 and RDS; store PGP keys in EC2 instance local storage for fastest access.
-*   D) Enable S3 Transfer Acceleration for encrypted transfers to S3, enable RDS SSL connections, and configure VPC Flow Logs to record network traffic.
-*   **Correct Answer:** B) SSE-KMS with Customer Managed Keys on S3, RDS, and EBS provides encryption at rest across all data stores, and every KMS API call (GenerateDataKey, Decrypt) is automatically logged to CloudTrail — satisfying the key usage audit requirement.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* SSE-S3 and AWS-managed RDS encryption do encrypt data at rest, but key usage is NOT logged to CloudTrail for SSE-S3 or AWS-managed keys. The compliance requirement explicitly requires "auditable key usage logs," which is only provided by KMS Customer Managed Keys integrated with CloudTrail.
-    *   *Why B is correct:* KMS CMKs are the compliance answer for "auditable key usage." Every KMS API call — including the Decrypt calls made when reading S3 objects, RDS backups, or EBS snapshots — is logged to CloudTrail with the IAM principal identity, timestamp, and key ARN. This provides the complete audit trail required by PCI DSS, HIPAA, and SOC 2.
-    *   *Why C is incorrect:* Client-side PGP encryption is technically valid but requires the customer to manage all key material outside of AWS, is not integrated with CloudTrail for audit logging, and storing keys in EC2 instance local storage is a critical security anti-pattern (keys are lost if the instance terminates, and accessible to anyone with OS access).
-    *   *Why D is incorrect:* S3 Transfer Acceleration is a network performance feature for uploads; SSL/TLS on RDS is encryption in transit (not at rest); VPC Flow Logs capture network metadata. None of these address the encryption-at-rest or key audit logging requirements. In-transit encryption (TLS) and at-rest encryption (KMS) are complementary but separate requirements.
+## Question 4 — Domain 4: Cost-Optimized Architectures
 
+A startup runs a development environment with EC2 instances that are only used during business hours (8 AM–6 PM Monday–Friday). The instances are m5.xlarge and run a total of 50 hours per week. Which EC2 purchasing configuration minimizes cost?
+
+- A. Reserved Instances (1-year, All Upfront) for all instances
+- B. On-Demand Instances with scheduled stop/start via Lambda and EventBridge
+- C. Spot Instances with a persistent request
+- D. Dedicated Hosts with a 1-year commitment
+
+### Q4 Answer: B
+
+### Q4 Analysis
+
+A is incorrect. Reserved Instances provide a discount for committed, continuous usage. At 50 hours/week (30% of available hours), the RI commitment pays for idle capacity. The effective hourly cost with an RI is higher than On-Demand for a 30% utilization rate.
+
+B is correct. On-Demand instances stopped during non-business hours (nights and weekends) incur no instance-hour charges while stopped. A simple Lambda function triggered by EventBridge on a cron schedule can start and stop the instances automatically. With ~50 hours of weekly usage, On-Demand with stop/start is the most cost-effective approach.
+
+C is incorrect. Spot Instances can be interrupted at any time. A development environment that disappears mid-afternoon when a developer is actively working is unacceptable.
+
+D is incorrect. Dedicated Hosts are the most expensive EC2 option. They are used for per-socket software licensing requirements, which is not mentioned here.
+
+---
+
+## Question 5 — Domain 1: Resilient Architectures
+
+An application processes financial transactions. Requirements state that no transaction can be processed more than once and transactions must be processed in the order they were received. The processing Lambda function takes up to 45 seconds per transaction. Which SQS configuration satisfies ALL requirements?
+
+- A. SQS Standard queue with Visibility Timeout set to 60 seconds
+- B. SQS FIFO queue with Visibility Timeout set to 60 seconds and a DLQ
+- C. SQS Standard queue with a DLQ and deduplication logic in the Lambda function
+- D. SQS FIFO queue with a message group ID per transaction batch and Visibility Timeout set to 60 seconds
+
+### Q5 Answer: D
+
+### Q5 Analysis
+
+A is incorrect. SQS Standard queues provide best-effort ordering, not strict FIFO, and at-least-once delivery — not exactly-once. Financial transaction processing cannot accept out-of-order or duplicate processing.
+
+B is incorrect. A generic FIFO queue with a single message group would process all transactions strictly in order but sequentially (one at a time). For financial transactions, each independent transaction needs its own message group to enable parallel processing while maintaining per-group order. However, if transactions are truly globally sequential (no parallelism needed), B would work. The question does not specify independent groups.
+
+C is incorrect. SQS Standard queues cannot guarantee ordering regardless of Lambda deduplication logic.
+
+D is correct. SQS FIFO provides exactly-once processing and strict ordering. Using a message group ID per logical transaction batch allows parallel processing of independent batches while maintaining order within each group. Visibility Timeout of 60 seconds (greater than the 45-second processing time) prevents the message from becoming visible to other consumers while being processed.
+
+---
+
+## Question 6 — Domain 3: Secure Architectures
+
+A company's EC2 instances in private subnets need to access Amazon S3 without traversing the internet. The company also wants to ensure that S3 bucket access is restricted to requests originating from the VPC. Which TWO configurations achieve this? (Select TWO.)
+
+- A. Create an S3 VPC Gateway Endpoint and update the route tables in the private subnets
+- B. Configure the S3 bucket policy to deny requests where `aws:sourceVpce` does not match the endpoint ID
+- C. Configure the S3 bucket policy to allow only the EC2 instance IAM role
+- D. Enable S3 Transfer Acceleration on the bucket
+- E. Create a NAT Gateway in a public subnet and route S3 traffic through it
+
+### Q6 Answer: A and B
+
+### Q6 Analysis
+
+A is correct. An S3 Gateway VPC Endpoint routes S3 traffic from the VPC through the AWS private network. Traffic never traverses the public internet. Route table entries in the private subnets must be updated to direct S3-destined traffic to the endpoint.
+
+B is correct. Adding a bucket policy condition `"aws:sourceVpce": "vpce-xxxx"` (or `"aws:sourceVpc": "vpc-xxxx"`) denies requests from outside the VPC, ensuring only VPC-originating requests reach the bucket. This enforces the network-level access restriction at the bucket policy level.
+
+C is incorrect. Restricting the bucket policy to an EC2 IAM role controls who can access the bucket but does not prevent access from outside the VPC. An attacker with the same IAM credentials from outside the VPC could still access the bucket.
+
+D is incorrect. S3 Transfer Acceleration speeds up uploads from distant clients over the internet — it does not restrict access to VPC-originating traffic.
+
+E is incorrect. Routing S3 traffic through a NAT Gateway sends it over the internet, which is exactly what the question aims to avoid. NAT Gateway also incurs data processing charges per GB.
+
+---
+
+## Question 7 — Domain 2: High-Performing Architectures
+
+A global e-commerce company serves customers across North America, Europe, and Asia. Static product images and JavaScript bundles are served from an S3 bucket in us-east-1. Users in Asia report 3-4 second load times for the images. Which solution reduces Asia load times to under 500 ms with MINIMAL architectural changes?
+
+- A. Create S3 buckets in ap-southeast-1 and ap-northeast-1 and replicate objects via S3 Cross-Region Replication
+- B. Deploy an Application Load Balancer in ap-southeast-1 and configure it to proxy requests to the S3 bucket in us-east-1
+- C. Configure Amazon CloudFront with the S3 bucket as the origin and enable geo-restriction to all regions
+- D. Configure Amazon CloudFront with the S3 bucket as the origin, no geo-restriction
+
+### Q7 Answer: D
+
+### Q7 Analysis
+
+A is incorrect. Creating multiple S3 buckets with CRR requires updating application code to use different bucket URLs per region, or adding a routing layer. This is not "minimal architectural changes."
+
+B is incorrect. An ALB in ap-southeast-1 proxying to us-east-1 still sends every request across the Pacific — it adds the ALB hop without reducing latency.
+
+C is incorrect. Geo-restriction on CloudFront blocks specific countries or regions from accessing content — it does not optimize delivery to those regions. Restricting Asia defeats the purpose.
+
+D is correct. CloudFront caches static content at 450+ global edge locations. Users in Asia are served from the nearest edge location — typically within 20–50 ms. The first request for each object fetches from the S3 origin (us-east-1), but subsequent requests are served from cache. No application code changes are needed — CloudFront uses the existing S3 URL as origin. Origin Access Control (OAC) restricts direct S3 bucket access.
+
+---
+
+## Question 8 — Domain 1: Resilient Architectures
+
+A company wants to implement a disaster recovery strategy where a minimal set of AWS resources are always running in a secondary region to reduce recovery time. If a disaster occurs in the primary region, the team scales up the secondary region to full capacity within 15 minutes. Which DR strategy is described?
+
+- A. Backup and Restore
+- B. Multi-Site Active-Active
+- C. Pilot Light
+- D. Warm Standby
+
+### Q8 Answer: C
+
+### Q8 Analysis
+
+A is incorrect. Backup and Restore has no continuously running resources in the secondary region. All resources must be created from backups on disaster, resulting in hours-long RTO.
+
+B is incorrect. Multi-Site Active-Active runs full production capacity in two regions simultaneously with near-zero RTO. The description states "minimal set of resources" running, not full capacity.
+
+C is correct. Pilot Light maintains a minimal set of core infrastructure always running in the secondary region (database replication, a minimal instance or container). On disaster, scale up around the core. 15-minute RTO is consistent with Pilot Light.
+
+D is incorrect. Warm Standby runs a scaled-down but fully functional copy of the production environment — not a "minimal set" of core resources. Warm Standby provides shorter RTO (minutes) but at higher cost than Pilot Light.
+
+---
+
+## Question 9 — Domain 4: Cost-Optimized Architectures
+
+A data analytics company processes large datasets using EMR (Hadoop) clusters. Jobs run every night for 6 hours. Clusters are terminated after each job completes. The team has been using On-Demand EC2 instances for the core and task nodes. Which change reduces cost the MOST?
+
+- A. Purchase Reserved Instances for the task nodes since they run nightly
+- B. Use Spot Instances for the task nodes and On-Demand for the core nodes
+- C. Use Spot Instances for all nodes including core nodes
+- D. Switch from EMR to AWS Glue for ETL processing
+
+### Q9 Answer: B
+
+### Q9 Analysis
+
+A is incorrect. Reserved Instances for nightly 6-hour workloads represent 25% utilization (6 hours / 24 hours). At 25% utilization, the RI discount (up to 72%) does not offset the 75% idle capacity cost compared to On-Demand with automatic termination.
+
+B is correct. EMR best practice splits the cluster into core nodes (use On-Demand for reliability — losing core nodes can fail the job) and task nodes (use Spot for up to 90% discount — task nodes are stateless and can be replaced if interrupted). This achieves maximum savings while protecting the job from catastrophic failure.
+
+C is incorrect. Core nodes store HDFS data. If Spot Instances are interrupted on core nodes, HDFS data blocks are lost and the job fails. Using Spot for core nodes is inappropriate for reliable production workloads.
+
+D is incorrect. Switching to Glue is a refactoring decision that may not be feasible or desirable for Hadoop-dependent workloads. The question asks for the most cost-effective change within the existing EMR architecture.
+
+---
+
+## Question 10 — Domain 3: Secure Architectures
+
+A solutions architect is designing an architecture where Lambda functions need to access an RDS PostgreSQL database in a private subnet. The database credentials must not be hardcoded and must be automatically rotated every 30 days. Which approach satisfies BOTH requirements?
+
+- A. Store credentials in SSM Parameter Store (SecureString); manually rotate every 30 days using a Lambda function
+- B. Store credentials in AWS Secrets Manager and enable automatic rotation with the RDS rotation Lambda
+- C. Store credentials as Lambda environment variables encrypted with KMS; manually rotate every 30 days
+- D. Create an IAM role for Lambda with `rds:Connect` permissions; use IAM database authentication
+
+### Q10 Answer: B
+
+### Q10 Analysis
+
+A is incorrect. SSM Parameter Store does not support automatic rotation natively. Manual rotation every 30 days requires human intervention and creates an operational burden. The question requires automatic rotation.
+
+B is correct. AWS Secrets Manager stores the database credentials securely, integrated with KMS for encryption. The built-in RDS rotation Lambda function automatically rotates credentials on the configured schedule (every 30 days). Lambda functions retrieve the current credential from Secrets Manager at runtime using the Secrets Manager API — no hardcoded credentials.
+
+C is incorrect. Lambda environment variables cannot be automatically rotated. Environment variables require a Lambda function redeployment or explicit update to change their values.
+
+D is incorrect. IAM database authentication (using IAM role + RDS auth token) is an excellent approach that eliminates long-lived credentials entirely. However, it requires the Lambda function to generate a temporary auth token on each connection and requires RDS to have IAM authentication enabled. While technically valid, the question specifically asks about credentials management with rotation, which Secrets Manager directly addresses.
+
+---
+
+## Question 11 — Domain 2: High-Performing Architectures
+
+A media streaming company needs to serve live video to 500,000 concurrent viewers globally. The video stream originates from a single encoding server in us-east-1. Which architecture BEST handles the viewer scale?
+
+- A. Deploy ALBs in every region and use Route 53 geolocation routing to direct viewers to the nearest ALB
+- B. Use Amazon CloudFront with an EC2 origin and configure streaming with CloudFront's media streaming protocols
+- C. Use Amazon CloudFront with Amazon IVS (Interactive Video Service) or Elemental MediaPackage as origin
+- D. Deploy EC2 instances with an Elastic IP in every region and use Route 53 weighted routing
+
+### Q11 Answer: C
+
+### Q11 Analysis
+
+A is incorrect. ALBs in multiple regions with manual EC2 origin replication do not natively handle live video streaming at scale. This architecture requires significant custom engineering for stream distribution.
+
+B is incorrect. While CloudFront with an EC2 origin works for static content, a single EC2 origin cannot handle 500,000 concurrent live stream requests even with CloudFront caching, because live streams generate origin requests per viewer per segment.
+
+C is correct. MediaPackage (or IVS) is a managed video packaging and origination service designed for live streaming at massive scale. CloudFront distributes the packaged segments to 450+ edge locations globally, dramatically reducing origin load. This is the AWS reference architecture for large-scale live streaming.
+
+D is incorrect. Deploying EC2 in every region with Route 53 routing requires identical stream ingest and distribution infrastructure in every region — operationally complex and cost-prohibitive. This does not leverage AWS's managed media services.
+
+---
+
+## Question 12 — Domain 1: Resilient Architectures
+
+An application stores session state in a single EC2-hosted Redis cache. If the instance fails, all user sessions are lost and users must log in again. The operations team wants to eliminate this single point of failure. Which solution provides Redis session storage with automatic failover at the LOWEST operational overhead?
+
+- A. Deploy two EC2 instances running Redis with manual failover scripts
+- B. Use Amazon ElastiCache for Redis with Multi-AZ and automatic failover enabled
+- C. Use Amazon DynamoDB to store session data instead of Redis
+- D. Use Amazon RDS with a read replica in a second AZ for session storage
+
+### Q12 Answer: B
+
+### Q12 Analysis
+
+A is incorrect. Manual failover scripts add operational complexity and introduce human latency into the recovery process. This is the exact undifferentiated heavy lifting that managed services eliminate.
+
+B is correct. ElastiCache for Redis with Multi-AZ maintains a synchronous standby replica in a second AZ. On primary node failure, ElastiCache automatically promotes the standby in under 60 seconds. The endpoint DNS name remains the same. Zero operational overhead for failover management.
+
+C is incorrect. DynamoDB can store session data, but DynamoDB is a NoSQL database, not an in-memory cache. Sessions stored in DynamoDB have millisecond latency (vs. microsecond for Redis), and DynamoDB access costs more for high-frequency small reads than ElastiCache.
+
+D is incorrect. RDS is a relational database designed for durable structured data, not ephemeral session data. Using RDS for session storage is architecturally inappropriate and expensive for high-frequency short-lived data.
+
+---
+
+## Question 13 — Domain 3: Secure Architectures
+
+A company recently experienced a security incident where an EC2 instance was communicating with a known cryptocurrency mining command-and-control server. The security team wants to detect similar threats automatically in the future across all AWS accounts in their AWS Organization. Which service detects this threat and how should it be deployed?
+
+- A. Enable Amazon Inspector on all EC2 instances; scan for vulnerability CVEs
+- B. Enable Amazon GuardDuty at the organization level from the management account; enable all finding types
+- C. Enable AWS Config rules for network compliance across all accounts
+- D. Enable VPC Flow Logs and write custom CloudWatch Metric Filters to detect outbound connections to threat feeds
+
+### Q13 Answer: B
+
+### Q13 Analysis
+
+A is incorrect. Amazon Inspector scans for software vulnerabilities (CVEs), network reachability, and unintended network exposure. It does not monitor for active threat actor communication or cryptocurrency mining behavior at runtime.
+
+B is correct. GuardDuty specifically detects `CryptoCurrency:EC2/BitcoinTool.B!DNS` and similar findings by analyzing DNS logs and VPC Flow Logs using ML-based threat intelligence. Enabling GuardDuty at the organization level from the management account deploys it automatically across all member accounts and aggregates findings centrally.
+
+C is incorrect. AWS Config evaluates resource configurations for compliance policies (encrypted volumes, open security groups). It does not analyze network traffic for active threat actor communication.
+
+D is incorrect. Writing custom metric filters against Flow Logs to detect specific IPs from threat feeds is technically possible but requires maintaining a threat feed database, writing custom logic, and ongoing maintenance. This is an extremely high-operational-overhead solution compared to enabling GuardDuty.
+
+---
+
+## Question 14 — Domain 4: Cost-Optimized Architectures
+
+A company's AWS bill shows $4,200/month in NAT Gateway data processing charges. Investigation reveals that most of the traffic is EC2 instances in private subnets accessing Amazon S3 and DynamoDB. Which change eliminates the NAT Gateway charges for THIS specific traffic?
+
+- A. Move all EC2 instances from private subnets to public subnets
+- B. Create S3 and DynamoDB VPC Gateway Endpoints and update private subnet route tables
+- C. Replace the NAT Gateway with a NAT instance on a t3.micro for lower cost
+- D. Enable S3 Transfer Acceleration to bypass NAT Gateway
+
+### Q14 Answer: B
+
+### Q14 Analysis
+
+A is incorrect. Moving instances to public subnets introduces significant security risk by exposing them directly to the internet. This is not an acceptable cost optimization strategy for production workloads.
+
+B is correct. S3 and DynamoDB Gateway Endpoints route traffic through the AWS private network, bypassing the NAT Gateway entirely. There is no per-GB charge for Gateway Endpoint traffic. Route table entries direct S3/DynamoDB-destined traffic to the endpoint instead of the NAT Gateway. This can eliminate the majority of NAT Gateway data processing charges when S3 and DynamoDB are the primary traffic sources.
+
+C is incorrect. A NAT instance still processes the data — it just has a lower hourly rate than NAT Gateway. It does not eliminate the data processing charges and introduces management overhead (patching, HA configuration).
+
+D is incorrect. S3 Transfer Acceleration speeds up uploads from distant internet clients. It does not affect traffic routing between EC2 instances in private subnets and S3, and it does not bypass NAT Gateway.
+
+---
+
+## Question 15 — Domain 1: Resilient Architectures
+
+A global company runs a DynamoDB table used by applications in us-east-1. They want to expand to ap-southeast-1 so that users in Asia can write and read data with low latency, and data written in Asia is automatically available in North America within seconds. Which DynamoDB feature satisfies this requirement?
+
+- A. DynamoDB Read Replicas in ap-southeast-1
+- B. DynamoDB global tables with replicas in both regions
+- C. DynamoDB Streams with a Lambda function replicating writes to a second table in ap-southeast-1
+- D. DynamoDB Cross-Region Backup Restore from us-east-1 to ap-southeast-1 daily
+
+### Q15 Answer: B
+
+### Q15 Analysis
+
+A is incorrect. DynamoDB does not have Read Replicas in the same sense as RDS. DynamoDB global tables provide multi-region replication — there is no "Read Replica only" feature for cross-region DynamoDB.
+
+B is correct. DynamoDB global tables provide active-active, multi-region replication. Applications in both regions can write to their local replica, and DynamoDB automatically replicates changes to all other replicas typically within 1 second. This exactly satisfies the requirement for low-latency reads and writes in Asia with automatic propagation to North America.
+
+C is incorrect. Custom Lambda-based replication via DynamoDB Streams is brittle, adds latency, and introduces replication bugs and failure modes. AWS provides global tables as a managed solution specifically for this use case.
+
+D is incorrect. Daily backup restore provides data once per day, not within seconds. This provides no real-time replication.
+
+---
+
+## Question 16 — Domain 3: Secure Architectures
+
+A company needs to grant a third-party auditing firm temporary, read-only access to specific AWS resources in their account. The auditors use their own AWS account. Which approach follows AWS security best practices for this cross-account access?
+
+- A. Create an IAM user in the company's account with a long-term access key; share the access key with the auditors
+- B. Create an IAM role in the company's account with a trust policy allowing the auditing firm's AWS account to assume it
+- C. Create an IAM group with read-only permissions and add the auditors as IAM users in the company's account
+- D. Share AWS account root credentials temporarily with the auditing firm
+
+### Q16 Answer: B
+
+### Q16 Analysis
+
+A is incorrect. Long-term access keys are a security risk — they do not expire, can be accidentally exposed, and are not tied to specific individuals. Creating a shared key for an entire auditing firm provides no individual accountability.
+
+B is correct. An IAM Role with a cross-account trust policy allows the auditing firm to assume the role using their own IAM identities. Temporary credentials are generated for the session (maximum 12 hours). When the audit is complete, simply delete the trust policy or the role. No long-term credentials are created or shared.
+
+C is incorrect. Creating IAM users in the company's account for third-party personnel is an anti-pattern. Long-term credentials are created, and offboarding requires explicitly deleting each user account.
+
+D is incorrect. Sharing root credentials is never acceptable under any circumstances. Root credentials provide unrestricted access to all AWS services and resources.
+
+---
+
+## Question 17 — Domain 2: High-Performing Architectures
+
+An application runs on EC2 and writes large sequential log files to EBS. The volumes frequently hit IOPS limits, causing write throttling. The team wants to eliminate throttling for sequential writes at the lowest cost. Which EBS volume type change addresses this?
+
+- A. Switch from gp3 to io2 Block Express for maximum IOPS
+- B. Switch from gp3 to st1 (Throughput Optimized HDD)
+- C. Switch from gp3 to sc1 (Cold HDD)
+- D. Increase the gp3 volume size to automatically increase IOPS
+
+### Q17 Answer: B
+
+### Q17 Analysis
+
+A is incorrect. io2 Block Express is optimized for high random IOPS workloads (databases requiring up to 256,000 IOPS). Sequential log writes are a throughput-bound, not IOPS-bound, workload. io2 is significantly more expensive with no benefit for sequential writes.
+
+B is correct. st1 (Throughput Optimized HDD) is designed specifically for large, sequential workloads — Kafka logs, big data processing, ETL pipelines. It provides up to 500 MB/s throughput at a lower cost than SSD-based volumes. Throttling on sequential writes is eliminated by choosing the throughput-optimized volume type.
+
+C is incorrect. sc1 (Cold HDD) is for infrequent large sequential access — it provides lower throughput than st1 (up to 250 MB/s) and is not appropriate for active log write workloads.
+
+D is incorrect. gp3 IOPS and throughput are decoupled from volume size — you can configure IOPS independently. However, gp3 max throughput is 1,000 MB/s, which is sufficient for most workloads. If the issue is truly IOPS throttling on sequential writes, st1's throughput model is more appropriate and cheaper.
+
+---
+
+## Question 18 — Domain 1: Resilient Architectures
+
+A company processes insurance claims through a 7-step workflow: intake, validation, fraud check, underwriting, approval, payment, and notification. Each step is currently a Lambda function invoking the next via direct SDK call. The team reports that when any step fails, they cannot determine which step failed, and failed workflows cannot be resumed from the failed step without reprocessing the entire claim. Which AWS service change resolves BOTH issues?
+
+- A. Add CloudWatch Alarms on Lambda error metrics for each function
+- B. Migrate the workflow to AWS Step Functions Standard Workflow
+- C. Add SQS queues between every pair of Lambda functions
+- D. Enable X-Ray Active Tracing on all Lambda functions
+
+### Q18 Answer: B
+
+### Q18 Analysis
+
+A is incorrect. CloudWatch Alarms alert when a function errors but do not identify which step in a workflow failed for a specific execution, nor do they enable resuming from a failed step.
+
+B is correct. Step Functions provides: (1) full execution history showing exactly which state failed, what the input was, and what the error was; and (2) error handling with `Catch` and `Retry` blocks at each state that can route to failure compensation steps. Executions can be re-run from the beginning with corrected input, or human approval can be added at the failed step. Step Functions directly resolves both problems.
+
+C is incorrect. Adding SQS queues between Lambda functions improves decoupling but does not provide workflow visibility or the ability to resume a workflow from a specific failed step.
+
+D is incorrect. X-Ray tracing identifies where latency or errors occur within a single invocation. It does not provide workflow-level execution history across multiple Lambda functions over the course of a multi-step business process.
+
+---
+
+## Question 19 — Domain 4: Cost-Optimized Architectures
+
+A company runs 100 m5.2xlarge On-Demand EC2 instances continuously. AWS Compute Optimizer recommends downsizing 40 of them to m5.xlarge. The team accepts 30 of the recommendations but decides to keep 10 at m5.2xlarge due to an upcoming product launch driving higher load for 2 months. Which COMBINATION of purchasing options minimizes cost for the entire fleet?
+
+- A. All 100 instances: On-Demand
+- B. 30 downsized instances: 1-year EC2 Instance Savings Plan; 60 remaining m5.2xlarge: On-Demand
+- C. 30 downsized instances: 1-year EC2 Instance Savings Plan; 60 remaining m5.2xlarge: 1-year RI
+- D. 30 downsized instances: 1-year Compute Savings Plan; 60 remaining m5.2xlarge: 1-year Compute Savings Plan
+
+### Q19 Answer: D
+
+### Q19 Analysis
+
+A is incorrect. 100 instances continuously on On-Demand means paying full price with no commitment discounts. After the 2-month product launch, the 60 m5.2xlarge instances will likely be downsized — a Savings Plan on Compute covers that eventual transition.
+
+B is incorrect. On-Demand for 60 continuously running m5.2xlarge instances wastes the discount opportunity for steady-state workloads.
+
+C is incorrect. A 1-year RI for the 60 m5.2xlarge instances locks in that specific instance type for the full year. If the team downsizes those instances after the 2-month product launch, the RI commitment still charges for m5.2xlarge even if running smaller instances.
+
+D is correct. Compute Savings Plans apply to any EC2 instance family, size, OS, and tenancy. If the 60 m5.2xlarge instances are downsized after the product launch, the Compute Savings Plan automatically applies to the smaller instances. Maximum flexibility with up to 66% discount.
+
+---
+
+## Question 20 — Domain 3: Secure Architectures
+
+A company must ensure that an S3 bucket containing financial audit logs cannot have objects deleted or overwritten for 7 years, regardless of which IAM user or role (including the root account) makes the deletion request. Which S3 feature enforces this?
+
+- A. S3 Versioning with MFA Delete enabled
+- B. S3 Object Lock in Compliance mode with a 7-year retention period
+- C. S3 Object Lock in Governance mode with a 7-year retention period
+- D. S3 Bucket Policy denying `s3:DeleteObject` for all principals
+
+### Q20 Answer: B
+
+### Q20 Analysis
+
+A is incorrect. MFA Delete requires multi-factor authentication to permanently delete versioned objects or suspend versioning. It is a deterrent but can be disabled by an administrator with root account access. It does not prevent deletion by all principals including root.
+
+B is correct. S3 Object Lock in Compliance mode prevents ANY user, including the root account, from overwriting, deleting, or modifying the retention settings for the duration of the retention period. This is the only mechanism that truly protects against deletion by all principals for the retention duration. Compliance mode is required for SEC Rule 17a-4(f), FINRA, and similar regulations.
+
+C is incorrect. S3 Object Lock in Governance mode can be overridden by users with the `s3:BypassGovernanceRetention` IAM permission. This does not protect against authorized IAM administrators. Governance mode is appropriate when you want protection with an administrative override capability.
+
+D is incorrect. An S3 Bucket Policy denying DeleteObject can be modified or deleted by an IAM user or role with `s3:PutBucketPolicy` permission, including the root account. Bucket policies do not provide immutable protection.

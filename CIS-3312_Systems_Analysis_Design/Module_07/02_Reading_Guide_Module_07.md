@@ -1,184 +1,248 @@
-# Reading Guide: Module 07 - Process Modeling with BPMN
+# Reading Guide: Module 07 — Requirements Elicitation Techniques
 
-**Course:** CIS-3312 Systems Analysis and Design
-**Certification Alignment:** IIBA ECBA (Entry Certificate in Business Analysis)
-**Prepared by:** Professor Nash | Texas Wesleyan University
+## Course: CIS-3312 Systems Analysis and Design
 
----
+## Texas Wesleyan University | Professor Nash
 
-## Introduction
-
-Module 07 covers Business Process Model and Notation (BPMN), the international standard for modeling business processes. Maintained by the Object Management Group (OMG), BPMN provides a graphical language that bridges the communication gap between business stakeholders and technical teams. It is explicitly referenced in BABOK Guide v3 as a process modeling technique and is tested on the IIBA ECBA exam. BAs use BPMN to document current-state (as-is) and future-state (to-be) processes, identify inefficiencies, and communicate workflow logic with precision.
+**Certification Alignment:** IIBA ECBA
 
 ---
 
-## 1. Core Vocabulary
+## Overview
 
-### 1.1 Business Process Model and Notation (BPMN)
+Requirements elicitation is the process of discovering, drawing out, and capturing stakeholder needs. It is not a passive activity of simply asking people what they want — it is an active investigative discipline that uses structured techniques to surface stated needs, unstated assumptions, and tacit knowledge that stakeholders cannot always articulate directly.
 
-BPMN is an international standard (ISO/IEC 19510) for graphically modeling business processes. Every symbol in BPMN has a defined, standardized meaning — enabling consistent interpretation across organizations and industries. BPMN supports modeling at multiple levels: from high-level process overviews visible to executives to detailed flow diagrams used by developers for implementation.
-
-### 1.2 Event
-
-An event is something that happens during a process — a trigger or a result. Events are represented by circles. Three positional types exist: Start Events (thin circle — where the process begins), End Events (thick circle — where the process ends), and Intermediate Events (double-bordered circle — something that occurs mid-process). Event subtypes are indicated by icons inside the circle: envelope = message, clock = timer, lightning bolt = error.
-
-### 1.3 Activity
-
-An activity is work that is performed within a process. The two main activity types are Task (atomic, indivisible work — shown as a rounded rectangle) and Sub-process (compound activity containing its own internal flow — shown as a rounded rectangle with a plus sign at the bottom). Tasks can be typed: User Task (human action), Service Task (automated system action), Manual Task (physical action without system support).
-
-### 1.4 Gateway
-
-A gateway is a diamond shape that controls the routing of sequence flow — how the process branches and merges. Gateways are classified by their routing logic. The three gateways tested on the ECBA exam are Exclusive (X), Parallel (+), and Inclusive (O).
-
-### 1.5 Exclusive Gateway (XOR)
-
-An Exclusive Gateway (marked with X inside a diamond) routes flow along exactly one outgoing path based on a condition. The conditions on each outgoing path are mutually exclusive — only one can be true. When merging, an exclusive gateway passes through the first arriving token without waiting for others.
-
-### 1.6 Parallel Gateway (AND)
-
-A Parallel Gateway (marked with + inside a diamond) activates all outgoing paths simultaneously when splitting. When joining (merging), it waits until all incoming paths have completed before releasing the single outgoing flow. Use a parallel gateway when multiple activities must happen concurrently.
-
-### 1.7 Inclusive Gateway (OR)
-
-An Inclusive Gateway (marked with O inside a diamond) activates one or more outgoing paths based on which conditions are true. Unlike the exclusive gateway (exactly one), multiple paths may be active. The joining inclusive gateway waits for all active (triggered) paths to complete before proceeding.
-
-### 1.8 Pool
-
-A pool is a rectangular container representing a single participant in a process — an organization, department, or system. Each pool holds the complete internal process of that participant. Pools are used in collaboration diagrams to model interactions between two or more participants.
-
-### 1.9 Lane
-
-A lane is a subdivision within a pool. Lanes separate activities by role, department, or system within a single participant. All activities in a lane are performed by the role named on the lane. Lanes do not create separate participants — they organize responsibility within one participant.
-
-### 1.10 Sequence Flow
-
-Sequence flow is a solid arrow that represents the order of activities within a single pool. Sequence flow can only connect elements inside the same pool. Crossing a pool boundary with sequence flow is a BPMN rule violation.
-
-### 1.11 Message Flow
-
-Message flow is a dashed arrow with an open arrowhead that represents communication between two separate pools (participants). It crosses pool boundaries and carries a named message or data item. Message flow cannot connect elements within the same pool.
-
-### 1.12 As-Is and To-Be Process Models
-
-An as-is (current-state) process model documents how a process currently operates, including all its inefficiencies, redundancies, and pain points. A to-be (future-state) process model documents the improved process the organization wants to implement. BAs typically produce both — the gap between them defines the requirements for change.
+BABOK Guide v3 covers elicitation and collaboration as Knowledge Area 4 (KA 4). The IIBA ECBA exam tests knowledge of elicitation techniques and judgment about which technique is appropriate in different contexts. This guide organizes all key content for both exam preparation and practical application.
 
 ---
 
-## 2. BPMN Symbol Reference
+## Why Elicitation Is Challenging
 
-| Symbol | Shape | Meaning |
+Requirements elicitation is difficult for several reasons that are important to understand before studying specific techniques.
+
+### Tacit Knowledge
+
+Much of what experienced workers know is tacit — embedded in practice, habit, and muscle memory rather than in written documentation. When you ask a claims adjustor "how do you process a claim?" they may describe the standard path but forget to mention the three informal exception-handling rules they developed over years of experience. Observational techniques are specifically designed to surface this tacit knowledge.
+
+### Stakeholder Conflicts
+
+Different stakeholders have different needs, priorities, and constraints. The needs of a department manager (comprehensive reporting), a frontline worker (simple data entry screens), and an IT administrator (minimal integration complexity) may all be legitimate but may conflict with each other. The BA's role is to surface these conflicts during elicitation — not leave them to emerge during development or testing.
+
+### Requirements Uncertainty
+
+Stakeholders often do not know what they need until they see what they do not want. Abstract requirements discussions frequently produce vague answers. Showing stakeholders a concrete prototype — even a rough paper mockup — generates far more specific and useful feedback than asking them to describe requirements in the abstract.
+
+### Stated vs. Unstated Requirements
+
+Stakeholders state some requirements explicitly: "The system must process orders within 30 seconds." But many requirements are unstated because stakeholders assume them as obvious: "The system will, of course, not show one customer another customer's data." Unstated requirements are as binding as stated ones — the BA must actively probe for them.
+
+---
+
+## Elicitation Techniques
+
+### Interviews
+
+Interviews are one-on-one or small-group conversations between the BA and a stakeholder. They are the most flexible and widely used elicitation technique.
+
+**Interview types:**
+
+**Structured interviews** use a fixed set of questions asked in the same sequence to every participant. They are useful when comparing responses across multiple stakeholders, ensuring consistent topic coverage, and producing analyzable results. The limitation is that the fixed structure may prevent exploration of important unexpected topics.
+
+**Unstructured interviews** begin with an open-ended prompt and follow the conversation naturally. They are excellent for initial exploration when the BA does not yet know enough about the domain to ask specific questions. The limitation is that unstructured interviews are difficult to compare across participants.
+
+**Semi-structured interviews** combine a prepared set of core questions with freedom to probe and follow interesting responses. This is the most common BA approach in practice — it ensures key topics are covered while allowing the depth and flexibility needed to surface important insights.
+
+**Effective interview practices:**
+
+- Prepare open-ended questions in advance, organized by topic area
+- Begin with broad context-setting questions before narrowing to specifics
+- Use probing follow-ups: "Can you give me an example?" "What happens when that fails?"
+- Allow silence — stakeholders often provide important information when the interviewer pauses rather than rushing to the next question
+- Take notes or record the session (with permission); do not rely on memory alone
+- Send a summary to the stakeholder after the interview to confirm accuracy
+
+### Workshops
+
+Requirements workshops bring multiple stakeholders together in a facilitated session to elicit, discuss, and validate requirements collaboratively. Workshops are most effective when:
+
+- Requirements involve multiple departments or stakeholder groups whose perspectives must be reconciled
+- There is known conflict between stakeholder groups that needs structured resolution
+- Time pressure makes sequential individual interviews impractical
+- Group interaction is likely to generate ideas that no single stakeholder would produce alone
+
+The BA's role in a workshop is facilitator — managing discussion, keeping the group focused, ensuring all voices are heard (not just the loudest), capturing agreements and disagreements, and synthesizing outputs into documented requirements.
+
+**Workshop advantages:** Speed, group consensus, cross-functional visibility, immediate issue resolution.
+
+**Workshop risks:** Dominant personalities suppressing quieter stakeholders; groupthink; logistics complexity for large, distributed groups.
+
+### Joint Application Development (JAD)
+
+JAD is a structured workshop methodology developed for requirements elicitation in software development contexts. A JAD session follows a formal agenda with defined roles: Sponsor (articulates business objectives), Facilitator (manages the session), Subject Matter Experts (contribute domain knowledge), IT representatives (contribute technical constraints), and Scribe (documents all outputs).
+
+JAD sessions typically run one to three days and produce: a documented requirements specification, decision logs recording agreements reached, an issues log for items requiring further investigation, and participant sign-off on session outputs.
+
+JAD sessions are investment-intensive but compress the elicitation timeline significantly by resolving requirements in real time rather than through extended back-and-forth correspondence.
+
+### Observation
+
+Observation involves the BA watching how work is actually performed — in the actual work environment, during normal operations. The fundamental insight behind observation is that people describe their work as it is supposed to be performed; observation reveals how it is actually performed.
+
+**Passive observation:** The BA observes without participating or asking questions during the session. The goal is to see the natural flow of work without interference. Questions are saved for a structured debrief afterward.
+
+**Active observation (shadowing):** The BA accompanies the worker and asks questions during the session. This is useful for immediately clarifying what is being observed but may interrupt the natural flow of work.
+
+Observation is the technique most effective at surfacing tacit knowledge — the informal rules, workarounds, exception paths, and undocumented steps that experienced workers follow automatically. It is particularly valuable for understanding complex operational processes where the gap between documentation and practice is likely to be significant.
+
+**Observation is most effective when combined with interviews:** observe the process, then interview the worker about specific things you saw. This combination surfaces both what happens and why.
+
+### Document Analysis
+
+Document analysis involves reviewing existing artifacts to understand the current state, identify constraints, and extract requirements. Documents reviewed may include: current system documentation, process procedure manuals, regulatory requirements, sample reports and outputs, data dictionaries, organizational charts, audit reports, and prior project deliverables.
+
+**Value of document analysis:**
+
+- Identifies existing data structures that must be preserved, migrated, or replaced
+- Surfaces regulatory constraints that the new system must comply with
+- Provides baseline terminology and definitions used by the organization
+- Reveals what was previously attempted and why it succeeded or failed
+
+**Limitation:** Documents describe the intended state, not the actual state. A procedures manual that has not been updated in three years may not reflect how the process is actually executed. Document analysis must be validated through other techniques — particularly observation and interviews.
+
+### Surveys and Questionnaires
+
+Surveys enable the BA to collect requirements input from large numbers of stakeholders efficiently. They are most appropriate when:
+
+- The stakeholder population is large or geographically distributed
+- Quantitative data is needed to prioritize requirements or identify patterns across a population
+- Questions are well-defined enough to be answered without facilitation
+
+**Survey design principles:**
+
+| Question Type | Use Case | Limitation |
 |---|---|---|
-| Start Event | Thin circle | Process begins here |
-| End Event | Thick circle | Process ends here |
-| Intermediate Event | Double-bordered circle | Something happens mid-process |
-| Task | Rounded rectangle | Atomic unit of work |
-| Sub-process | Rounded rectangle with + | Compound activity with internal flow |
-| Exclusive Gateway | Diamond with X | Exactly one path; mutually exclusive |
-| Parallel Gateway | Diamond with + | All paths simultaneously |
-| Inclusive Gateway | Diamond with O | One or more paths |
-| Sequence Flow | Solid arrow | Flow of control within a pool |
-| Message Flow | Dashed arrow, open head | Communication between pools |
-| Pool | Large rectangle | Single participant container |
-| Lane | Subdivision of pool | Role or department within participant |
+| Closed questions (rating scale, yes/no, multiple choice) | Quantifiable, comparable data | May not capture nuance or unexpected answers |
+| Open questions (short answer, free text) | Richer narrative and context | Requires qualitative analysis; harder to compare |
+| Likert scale | Priority ranking, satisfaction measurement | Response set bias; depends on scale design |
+
+**Survey limitations:** Cannot probe unexpected responses in real time. If a stakeholder provides an unusual answer, the BA cannot follow up immediately. Surveys work best when paired with follow-up interviews for stakeholders who provided particularly important or unexpected responses.
+
+### Prototyping
+
+A prototype is a partial, preliminary representation of a system used to elicit and validate requirements through stakeholder interaction and feedback. Prototyping is based on the insight that stakeholders often cannot articulate requirements abstractly but can quickly and specifically react to a concrete representation.
+
+**Throwaway prototypes** (wireframes, paper mockups, low-fidelity screen mockups) are built quickly to generate feedback and then discarded. A wireframe showing proposed screen layout and navigation can be produced in hours and generates specific, actionable feedback about field placement, workflow, and missing functionality. Wireframes are not intended to be the actual system — they are conversation tools.
+
+**Evolutionary prototypes** are iteratively refined into increasingly complete representations. In Agile environments, evolutionary prototyping is common — working software is built in small increments with continuous stakeholder review.
+
+**When prototyping is most effective:**
+
+- Stakeholders struggle to articulate requirements in the abstract
+- The user interface is central to the requirements (screen layout, workflow, navigation)
+- Multiple design options need to be compared through stakeholder feedback
+- Requirements change frequently and iterative refinement is more efficient than upfront specification
 
 ---
 
-## 3. Gateway Comparison
+## Requirements Documentation
 
-| Gateway | Symbol | Splits to | Joins when | Use when |
-|---|---|---|---|---|
-| Exclusive (XOR) | X | Exactly one path | First token arrives | Conditions are mutually exclusive |
-| Parallel (AND) | + | All paths | All paths complete | Activities must run concurrently |
-| Inclusive (OR) | O | One or more paths | All active paths complete | Multiple conditions may be true |
+### Why Documentation Matters
 
----
+Verbal requirements agreements are insufficient. Documentation provides the shared reference that all project participants — business stakeholders, developers, testers, and management — can review, verify, and hold each other accountable to throughout the project lifecycle.
 
-## 4. BPMN Event Types
+### Quality Characteristics of Requirements
 
-| Event Position | Shape | Meaning |
-|---|---|---|
-| Start Event | Thin single circle | Initiates the process |
-| End Event | Thick single circle | Terminates the process |
-| Intermediate Event | Double-bordered circle | Occurs during the process |
-| Message Start | Thin circle with envelope icon | Process starts when a message is received |
-| Timer Start | Thin circle with clock icon | Process starts at a scheduled time |
-| Error End | Thick circle with lightning bolt icon | Process ends with an error condition |
-| Boundary Intermediate | Double circle attached to activity edge | Interrupts or catches an event on an activity |
+BABOK Guide v3 defines the quality characteristics of well-formed requirements:
 
----
+| Characteristic | Description |
+|---|---|
+| Clear | Unambiguous — only one interpretation is possible |
+| Complete | All necessary information is included; no gaps |
+| Consistent | No internal contradictions; aligned with other requirements |
+| Verifiable | Can be tested or demonstrated to be met or not met |
+| Traceable | Connected to the business need or stakeholder need that motivated it |
+| Feasible | Achievable within known constraints |
+| Prioritized | Relative importance is established |
 
-## 5. Sequence Flow vs. Message Flow
+### Requirements Levels
 
-| Attribute | Sequence Flow | Message Flow |
-|---|---|---|
-| Appearance | Solid arrow | Dashed arrow with open arrowhead |
-| Scope | Within one pool only | Between two different pools |
-| Represents | Order of activities | Communication between participants |
-| Rule if misused | Cannot cross pool boundary | Cannot stay within one pool |
+BABOK Guide v3 organizes requirements into four levels:
 
----
+**Business requirements** — describe why the organization needs a change; the goals and objectives the project must achieve.
 
-## 6. BPMN vs. DFD Comparison
+**Stakeholder requirements** — describe what stakeholders need from the solution to achieve the business requirements.
 
-| Dimension | BPMN | DFD |
-|---|---|---|
-| Models | Process flow — sequence, decisions, events | Data flow — how data moves and transforms |
-| Shows sequence | Yes — ordering of activities is explicit | No — data flows are not sequenced |
-| Multi-participant | Yes — pools and message flows | Limited — external entities, no internal multi-party |
-| Notation standard | OMG BPMN 2.0 (ISO 19510) | Yourdon-DeMarco or Gane-Sarson |
-| Primary BABOK technique | Business Process Modeling (KA 5) | Data Flow Diagrams (KA 5) |
+**Solution requirements** — describe what the solution must do and how it must perform. Solution requirements have two sub-types: functional requirements (what the system does) and non-functional requirements (quality attributes — performance, security, availability, usability).
+
+**Transition requirements** — describe what must happen to move from the current state to the future state — data migration, training, change management.
+
+### Documentation Formats
+
+Common formats include:
+
+- **Business Requirements Document (BRD)** — traditional document used in waterfall projects
+- **Software Requirements Specification (SRS)** — detailed technical specification of system behavior
+- **User stories** — Agile format: "As a [user role], I want [goal] so that [reason]"
+- **Use cases** — structured descriptions of how actors interact with the system to achieve goals
 
 ---
 
-## 7. As-Is and To-Be Analysis
+## Stakeholder Management
 
-When BAs model processes in BPMN, they typically produce two versions. The as-is model documents the current process with all its actual steps, handoffs, decisions, and participants — including inefficiencies. Common inefficiencies visible in as-is models include unnecessary handoffs between lanes or pools, sequential activities that could run in parallel, redundant approval steps, missing exception handling, and activities with no defined owner.
+### Stakeholder Identification
 
-The to-be model removes or improves these inefficiencies. Requirements for the new system are derived from the gap between the as-is and to-be models.
+A stakeholder is anyone with an interest in the project outcome — those who are affected by the solution, those who influence decisions about it, and those who have knowledge or authority needed for its success. Stakeholders include: direct users, business owners, IT staff, regulators, customers of the organization, and anyone else the system will affect.
 
----
+### Stakeholder Analysis
 
-## 8. Certification Exam Tips
+A stakeholder analysis maps stakeholders along dimensions of interest and influence:
 
-1. Gateway selection is the most frequently tested BPMN concept on the ECBA exam. Know the three gateways by symbol: X = exclusive (exactly one path), + = parallel (all paths), O = inclusive (one or more paths). When a question describes a branching scenario, identify whether the paths are mutually exclusive, all must run, or some combination may apply.
+- **High interest, high influence** — key partners requiring intensive, regular engagement
+- **High interest, low influence** — keep informed; their concerns are legitimate even if they cannot direct decisions
+- **Low interest, high influence** — keep satisfied; their support or opposition could determine project success
+- **Low interest, low influence** — monitor; minimal engagement required
 
-2. The sequence flow vs. message flow rule is directly tested. Sequence flow is a solid arrow that stays inside one pool. Message flow is a dashed arrow that crosses between pools. A sequence flow connecting elements in two different pools is always a modeling violation.
+### Managing Stakeholder Conflicts
 
-3. Event types are tested by icon. Know at minimum: thin circle = Start, thick circle = End, double circle = Intermediate. Know that message events use an envelope icon, timer events use a clock icon, and error events use a lightning bolt icon.
-
-4. Pools represent participants; lanes represent roles within a participant. If a question describes separate organizations, they need separate pools. If a question describes roles within one organization, they need lanes within one pool.
-
-5. A Parallel Gateway split must be matched with a Parallel Gateway join. If three paths are launched by a + gateway, a + gateway at the merge point waits for all three before proceeding. Mismatching gateway types at split and join is a common trap answer.
-
-6. BPMN appears in BABOK Guide v3 KA 5 under the Business Process Modeling technique. When a scenario involves modeling activity sequence, decisions, and participant responsibilities, business process modeling (BPMN) is the correct technique.
-
-7. As-is and to-be models are core BA deliverables. The as-is model reveals problems; the to-be model defines improvements. This distinction appears in BABOK KA 2 (Business Analysis Planning) and KA 6 (Solution Evaluation) as well as KA 5.
-
-8. Sub-processes are collapsed compound activities. A rounded rectangle with a + symbol at the bottom contains an entire internal process. This is used when a process is too detailed to show inline without cluttering the diagram.
+When stakeholder requirements conflict, the BA's role is not to arbitrate the conflict alone but to surface it clearly, document both positions, and escalate to an appropriate decision-maker. Options for resolving conflicts include: priority-based resolution (higher-priority stakeholder's need prevails), scope negotiation (both needs are met but in different ways or different phases), and compromise (both stakeholders accept a solution that partially meets each need).
 
 ---
 
-## 9. Required and Supplemental Reading
+## Key Terms for the IIBA ECBA Exam
 
-Required reading:
-
-- BABOK Guide v3, Chapter 10 (Techniques) — Business Process Modeling
-- BABOK Guide v3, KA 5: Requirements Analysis and Design Definition — Model Requirements task
-
-Supplemental reading:
-
-- OMG BPMN 2.0 Quick Reference Guide (free at omg.org) — gateway and event symbol summary
-- Lucidchart BPMN tutorial (free) — practical notation reference with interactive examples
+| Term | Definition |
+|---|---|
+| Elicitation | Process of drawing out and discovering stakeholder needs and requirements |
+| Tacit knowledge | Knowledge embedded in practice rather than explicit documentation |
+| Structured interview | Interview with a fixed set of questions in a defined sequence |
+| Semi-structured interview | Interview with core prepared questions plus adaptive follow-up |
+| JAD | Joint Application Development — structured workshop for collaborative requirements elicitation |
+| Passive observation | Watching work without participating or asking questions during the session |
+| Document analysis | Reviewing existing artifacts to extract requirements and constraints |
+| Survey | Questionnaire used to collect requirements input from large stakeholder populations |
+| Prototype | Preliminary system representation used to elicit and validate requirements |
+| Throwaway prototype | Low-fidelity mockup built for feedback, not intended as the final system |
+| Business requirements | Why the organization needs the change — goals and objectives |
+| Functional requirements | What the system must do |
+| Non-functional requirements | How the system must perform — quality attributes |
+| Traceable requirements | Requirements linked to the business need that motivated them |
 
 ---
 
-## 10. Study Checklist
+## Study Questions
 
-- [ ] Draw a simple BPMN process from memory using all four core element types (event, activity, gateway, flow).
-- [ ] Explain the difference between Exclusive, Parallel, and Inclusive Gateways with one example each.
-- [ ] Draw a two-pool collaboration diagram with message flows and sequence flows correctly placed.
-- [ ] Identify the three most common BPMN rule violations: sequence flow crossing pools, missing gateway join, black-hole activity.
-- [ ] Draw an as-is BPMN model for a simple scenario and identify at least two inefficiencies.
-- [ ] Watch the Module 07 video lecture.
-- [ ] Complete the Module 07 lab activity.
-- [ ] Post your initial discussion response by Wednesday at 11:59 PM.
+1. What is tacit knowledge, and which elicitation technique is most effective at surfacing it?
+
+2. What distinguishes a structured interview from a semi-structured interview?
+
+3. In what situation is a requirements workshop preferred over individual interviews?
+
+4. What is the difference between passive and active observation?
+
+5. A project involves collecting requirements from 400 frontline employees across 12 locations. Which elicitation technique is most appropriate for the initial data collection, and why?
+
+6. What are the five quality characteristics of well-formed requirements in BABOK Guide v3?
+
+7. What is the difference between a throwaway prototype and an evolutionary prototype?
+
+8. A stakeholder has high influence but low interest in the project. What is the appropriate stakeholder management strategy?

@@ -1,162 +1,274 @@
-# Quiz: Module 07 — Service Management Practices: Change Enablement
+# Quiz: Module 07 — The Service Value Chain
 
-**Course:** CIS-4335 IT Service Management — Texas Wesleyan University
-**Instructor:** Professor Nash
-**Total Questions:** 10
-**Certification Alignment:** ITIL 4 Foundation
+## Course: CIS-4335 IT Service Management
+
+## Texas Wesleyan University | Professor Nash
+
+## Total Questions: 10 | Points: 10 (1 pt each)
+
+## Certification Alignment: ITIL 4 Foundation
 
 ---
 
 ## Instructions
 
-Select the single best answer for each question. Each question is worth 10 points. Review the distractor analysis after submitting to reinforce exam-ready reasoning.
+Select the single best answer for each question. Questions are scenario-based and aligned
+to the ITIL 4 Foundation exam style. Each question is followed by the correct answer and
+a distractor analysis explaining why the other options are incorrect.
 
 ---
 
-## Question 1
+### Question 1
 
-What is the primary purpose of the Change Enablement practice in ITIL 4?
+A university IT department receives a request from the Provost's office to explore whether
+a new student advising portal could reduce administrative workload. The IT team begins
+interviewing stakeholders to understand requirements, business goals, and constraints.
 
-* A) To deploy all approved changes into the live environment as quickly as possible
-* B) To maximize the number of successful IT and service changes by ensuring that risks are properly assessed, authorizing changes to proceed, and managing the change schedule
-* C) To document all configuration items and maintain an accurate record of the current IT infrastructure
-* D) To restore normal service operation as quickly as possible following a disruption
+Which Service Value Chain activity is primarily taking place?
 
-Correct answer: B
+- A) Plan
+- B) Obtain/Build
+- C) Engage
+- D) Design and Transition
 
-Distractor analysis: B is correct because ITIL 4 defines the purpose of Change Enablement as maximizing successful changes through risk assessment, authorization, and change schedule management. A is incorrect because deploying changes into the live environment is the responsibility of Deployment Management, not Change Enablement. C is incorrect because documenting configuration items is the purpose of Service Configuration Management. D is incorrect because restoring service after a disruption is the purpose of Incident Management.
+#### Q1 Correct Answer: C — Engage
 
----
+#### Q1 Distractor Analysis
 
-## Question 2
-
-Which of the following most accurately describes a standard change in ITIL 4?
-
-* A) A change requiring full risk assessment and CAB approval before implementation
-* B) A change that must be implemented immediately to resolve a critical service failure, bypassing the normal authorization process
-* C) A pre-authorized, low-risk, well-understood change that follows a documented procedure and does not require individual authorization per occurrence
-* D) A customer-requested change that must be tracked through Service Request Management before authorization
-
-Correct answer: C
-
-Distractor analysis: C is correct because standard changes are pre-authorized as a class — the risk and procedure were assessed and approved when the change type was established, so individual occurrences do not require new authorization. A is incorrect because that describes a normal change. B is incorrect because that describes an emergency change, which still requires expedited authorization. D is incorrect because that describes a service request, which is a different practice.
+- A (Plan) is incorrect. Plan translates strategic direction across the organization, but
+  the activity here is direct stakeholder interaction to gather requirements — that is the
+  definition of Engage.
+- B (Obtain/Build) is incorrect. Obtain/Build is about acquiring or constructing service
+  components, not gathering stakeholder requirements.
+- D (Design and Transition) is incorrect. Design and Transition takes requirements as input
+  and designs solutions — it comes after Engage, not during requirements gathering.
 
 ---
 
-## Question 3
+### Question 2
 
-A company is planning to migrate its entire customer relationship management system from on-premises servers to a cloud platform. The migration affects 12 business units, carries significant risk of data loss if not executed correctly, and has never been performed in this organization. Which change type applies?
+An IT organization discovers through post-incident reviews that 40% of major incidents
+share a common root cause. The team creates an improvement initiative to redesign the
+monitoring strategy and update runbooks across all operational teams.
 
-* A) Standard change — cloud migrations are routine in modern IT and can be pre-authorized
-* B) Emergency change — the urgency of moving to cloud requires fast-tracking through an Emergency CAB
-* C) Normal change — the migration requires individual risk assessment and authorization, with CAB advisory input appropriate given the risk and scope
-* D) Normal change — the service owner submits it and the change is automatically approved after 72 hours with no response
+Which Service Value Chain activity best describes the creation of this improvement
+initiative?
 
-Correct answer: C
+- A) Deliver and Support
+- B) Improve
+- C) Plan
+- D) Design and Transition
 
-Distractor analysis: C is correct because a high-risk, high-impact change that has never been performed in this organization is a normal change requiring individual risk assessment and authorization. Given the scope and risk, CAB advisory input is appropriate. A is incorrect because cloud migrations at this scale and complexity are not pre-authorized standard changes. B is incorrect because emergency changes require an active incident or imminent critical failure — a planned migration does not qualify. D is incorrect because normal changes are never automatically approved by elapsed time.
+#### Q2 Correct Answer: B — Improve
 
----
+#### Q2 Distractor Analysis
 
-## Question 4
-
-What is the role of the Change Advisory Board (CAB) in ITIL 4?
-
-* A) The CAB holds final authorization authority over all normal changes and must approve every change before it can proceed
-* B) The CAB provides advisory support to the change authority by reviewing and making recommendations on high-risk or high-impact normal changes
-* C) The CAB is responsible for deploying approved changes and verifying that they succeeded
-* D) The CAB manages the change schedule and owns the coordination of all implementation windows
-
-Correct answer: B
-
-Distractor analysis: B is correct because ITIL 4 defines the CAB as an advisory body. It reviews high-risk or high-impact normal changes and makes recommendations to the change authority, which holds the actual authorization power. A is incorrect because the CAB does not authorize — this is the most common exam trap related to the CAB. C is incorrect because deploying and verifying changes is the responsibility of Deployment Management. D is incorrect because managing the change schedule is a Change Enablement activity broadly, not a specific CAB responsibility.
-
----
-
-## Question 5
-
-A zero-day vulnerability is being actively exploited in a production web server. A vendor-supplied patch is available. There is no time for a standard weekly CAB meeting. What is the correct approach under ITIL 4 Change Enablement?
-
-* A) Implement the patch immediately without authorization, then document and report it afterward
-* B) Wait for the next scheduled CAB meeting to ensure proper review before applying any patch
-* C) Classify this as an emergency change and obtain expedited authorization from an Emergency CAB or designated senior authority before or as close to implementation as possible
-* D) Classify this as a standard change because security patching is a routine pre-authorized activity
-
-Correct answer: C
-
-Distractor analysis: C is correct because ITIL 4 requires that emergency changes be authorized, even when the process is expedited. The Emergency CAB or a designated senior authority provides that authorization quickly. A is incorrect because implementing without any authorization violates Change Enablement principles — expedited authorization is not the same as no authorization. B is incorrect because waiting for a regular CAB cycle while active exploitation is occurring would cause ongoing harm. D is incorrect because a patch responding to active exploitation is not a routine pre-authorized activity — it is a response to an active security incident.
+- A (Deliver and Support) is incorrect. Deliver and Support handles day-to-day operations
+  and incident resolution. A systemic improvement initiative goes beyond operational
+  response and falls under Improve.
+- C (Plan) is incorrect. Plan deals with strategic direction. An improvement initiative
+  triggered by incident data is specifically an Improve output.
+- D (Design and Transition) is incorrect. Design and Transition designs and moves new or
+  changed services into production. Improve generates the initiative; Design and Transition
+  might later implement changes resulting from it.
 
 ---
 
-## Question 6
+### Question 3
 
-How does Change Enablement relate to Deployment Management in ITIL 4?
+Which statement BEST describes the relationship between the Service Value Chain (SVC) and
+a value stream?
 
-* A) They are the same practice with different names — both handle authorization and deployment of changes
-* B) Change Enablement assesses and authorizes the change; Deployment Management physically moves the change into the live environment
-* C) Deployment Management assesses and authorizes the change; Change Enablement executes the physical deployment
-* D) Change Enablement is used for software changes; Deployment Management is used for hardware changes
+- A) The SVC and a value stream are the same thing — both describe how services are created
+- B) A value stream is a specific sequence of SVC activities and practices designed to
+  produce a defined outcome for a given stakeholder scenario
+- C) A value stream is a diagram showing which IT tools are used during service delivery
+- D) The SVC is a subset of a value stream — each value stream contains several SVCs
 
-Correct answer: B
+#### Q3 Correct Answer: B
 
-Distractor analysis: B is correct because ITIL 4 distinguishes these as separate practices with complementary roles. Change Enablement is the governance layer — it assesses risk and authorizes changes. Deployment Management is the execution layer — it physically deploys the authorized change into production. A is incorrect because they are explicitly separate practices. C is incorrect because the roles are reversed — Change Enablement governs and Deployment Management executes. D is incorrect because the distinction is about governance versus execution, not about software versus hardware.
+#### Q3 Distractor Analysis
 
----
-
-## Question 7
-
-An IT team has a category of change they perform several times each week: applying approved security patches from the vendor's monthly patch list. The risk is well understood and a documented rollout procedure has been tested and validated. Which approach best reflects Change Enablement best practice for this change category?
-
-* A) Require a full CAB review for each patch application, since security patches always carry some risk
-* B) Establish this category as a standard change with pre-authorization, documented procedure, and periodic review to ensure the pre-authorization remains appropriate
-* C) Skip Change Enablement for routine patches since they are too frequent to go through any governance process
-* D) Classify each patch as an emergency change to expedite implementation and avoid bureaucratic delays
-
-Correct answer: B
-
-Distractor analysis: B is correct because the scenario describes a change type that meets the criteria for a standard change — well understood, documented procedure, validated, and recurring. Pre-authorizing it as a standard change allows efficient execution without bypassing governance. A is incorrect because requiring CAB review for every pre-tested patch application applies unnecessary governance overhead — this would violate Keep It Simple and Practical. C is incorrect because skipping Change Enablement entirely eliminates governance, which is not acceptable even for routine changes. D is incorrect because emergency changes are reserved for actual emergencies — routine patching is not an emergency.
+- A is incorrect. The SVC is the full model containing all six activities. A value stream
+  is a specific pathway through selected activities for a particular purpose.
+- C is incorrect. A value stream is not a tool map. It describes activities and practices,
+  not the technology stack.
+- D is incorrect. The relationship is reversed. The SVC is the overarching model; value
+  streams are specific instances within it.
 
 ---
 
-## Question 8
+### Question 4
 
-What is the purpose of the change schedule in Change Enablement?
+According to ITIL 4, which SVC activity has a relationship with every other activity in
+the Service Value Chain?
 
-* A) To document the risk assessment and rollback plan for each individual change
-* B) To record the results of the CAB advisory review for each change submitted
-* C) To list all authorized changes and their planned implementation dates, coordinating timing to prevent conflicts and communicate plans to stakeholders
-* D) To track the number of successful versus failed changes over a defined reporting period
+- A) Plan
+- B) Engage
+- C) Improve
+- D) Deliver and Support
 
-Correct answer: C
+#### Q4 Correct Answer: C — Improve
 
-Distractor analysis: C is correct because ITIL 4 defines the change schedule as a document listing authorized changes and planned dates, used to coordinate timing, prevent conflicts, and communicate to stakeholders. A is incorrect because risk assessments and rollback plans are part of the individual change record, not the change schedule. B is incorrect because CAB review recommendations are documented in the change record, not the change schedule. D is incorrect because tracking success rates is a metrics and reporting activity, not the purpose of the change schedule.
+#### Q4 Distractor Analysis
 
----
-
-## Question 9
-
-Which of the following scenarios most accurately illustrates the application of the Progress Iteratively with Feedback Guiding Principle to a large-scale normal change?
-
-* A) Deploying all components of a new enterprise resource planning system in a single weekend cutover to minimize total disruption time
-* B) Requiring CAB review for every individual change within a large program, regardless of risk level
-* C) Breaking the ERP deployment into phases — deploying one module at a time, measuring results, and using feedback to adjust the approach before deploying the next module
-* D) Submitting a single consolidated change request for all planned ERP changes to reduce administrative overhead
-
-Correct answer: C
-
-Distractor analysis: C is correct because Progress Iteratively with Feedback specifically directs organizations to organize work into manageable increments, measure results, and use feedback to improve subsequent iterations. Phased deployment with measurement between phases is a direct application of this principle. A is incorrect because a single all-at-once deployment has no feedback checkpoints and concentrates risk. B is incorrect because requiring maximum governance for every component regardless of risk violates Keep It Simple and Practical. D is incorrect because consolidating everything into one change request addresses administrative convenience, not iterative delivery.
+- A (Plan) is incorrect. Plan provides direction to other activities but does not have a
+  bidirectional relationship with all activities in the same way Improve does.
+- B (Engage) is incorrect. Engage interfaces primarily with external stakeholders and
+  routes inputs to other activities, but does not universally intersect every activity.
+- D (Deliver and Support) is incorrect. Deliver and Support interfaces with Engage,
+  Obtain/Build, and Design and Transition, but not with all activities equally.
 
 ---
 
-## Question 10
+### Question 5
 
-An organization has a documented change procedure for network switch replacements at branch offices. The procedure has been tested, the risk has been formally assessed and accepted, and the change authority has formally pre-approved the procedure. A branch experiences a switch failure and needs an immediate replacement. How should this change be handled?
+A software company's IT team purchases a commercial off-the-shelf SIEM tool. The team
+configures it, integrates it with existing infrastructure, and validates it against
+security requirements before deployment.
 
-* A) As an emergency change, because the branch is currently experiencing a service disruption and urgency is high
-* B) As a standard change, because the procedure is pre-authorized, well-understood, and documented — individual authorization is not required
-* C) As a normal change, because any change affecting live infrastructure requires individual risk assessment and CAB review
-* D) No change type applies because the switch replacement is a hardware repair, not a service change
+Which TWO SVC activities are most directly involved in this scenario?
 
-Correct answer: B
+- A) Plan and Engage
+- B) Obtain/Build and Design and Transition
+- C) Improve and Deliver and Support
+- D) Engage and Obtain/Build
 
-Distractor analysis: B is correct because the scenario describes a change type that has been formally pre-authorized — the procedure is documented, risk has been assessed and accepted, and the change authority has approved the category. This is the definition of a standard change. A is incorrect because the fact that there is urgency does not automatically make a change an emergency change if an appropriate pre-authorized procedure already exists for this situation. C is incorrect because pre-authorization means standard changes do not require individual CAB review per occurrence. D is incorrect because replacing a failed switch affects service continuity and is clearly within the scope of Change Enablement.
+#### Q5 Correct Answer: B — Obtain/Build and Design and Transition
+
+#### Q5 Distractor Analysis
+
+- A is incorrect. Plan provides direction and Engage gathers requirements, but neither
+  directly involves purchasing and configuring a tool.
+- C is incorrect. Improve and Deliver and Support become relevant after the tool is
+  deployed — they are not primary during acquisition and configuration.
+- D is incorrect. Engage may have gathered requirements earlier, but purchasing
+  (Obtain/Build) and configuration/validation (Design and Transition) are the primary
+  activities described here.
+
+---
+
+### Question 6
+
+ITIL 4 states that value is co-created between the service provider and the consumer.
+Which scenario BEST illustrates this principle?
+
+- A) An IT team deploys a self-service knowledge base, but no users access it because
+  they were never trained on it
+- B) An IT team deploys a self-service knowledge base and users actively resolve their
+  own issues using the articles, reducing call volume by 30%
+- C) An IT team deploys a self-service knowledge base and receives an award for
+  technical excellence in design
+- D) An IT team deploys a self-service knowledge base and the vendor confirms the
+  platform operates as specified
+
+#### Q6 Correct Answer: B
+
+#### Q6 Distractor Analysis
+
+- A is incorrect. When users do not engage with the service, value is not realized. This
+  scenario illustrates the absence of co-creation.
+- C is incorrect. A technical award recognizes the provider's work, not co-creation of
+  value with the consumer. Value requires realized outcomes.
+- D is incorrect. Vendor confirmation that the platform works per specification is a
+  quality check, not evidence of value co-creation with consumers.
+
+---
+
+### Question 7
+
+Which SVC activity is responsible for ensuring that new or changed services are properly
+tested, validated, and authorized before they are released into the live environment?
+
+- A) Obtain/Build
+- B) Improve
+- C) Design and Transition
+- D) Deliver and Support
+
+#### Q7 Correct Answer: C — Design and Transition
+
+#### Q7 Distractor Analysis
+
+- A (Obtain/Build) is incorrect. Obtain/Build produces or acquires the components, but
+  testing, validation, and authorization for release are Design and Transition
+  responsibilities.
+- B (Improve) is incorrect. Improve is concerned with continual enhancement across all
+  activities, not the release gate for new services.
+- D (Deliver and Support) is incorrect. Deliver and Support receives the completed,
+  authorized service and operates it — it does not perform release testing.
+
+---
+
+### Question 8
+
+A city government's IT department receives a complaint that an online permit portal has
+been unavailable for two hours. The service desk logs the incident, escalates it to the
+infrastructure team, and engineers work to restore the portal.
+
+Which SVC activity is the infrastructure team's restoration work an example of?
+
+- A) Engage
+- B) Design and Transition
+- C) Improve
+- D) Deliver and Support
+
+#### Q8 Correct Answer: D — Deliver and Support
+
+#### Q8 Distractor Analysis
+
+- A (Engage) is incorrect. Engage captures the user's initial report. The restoration
+  work itself is an operational activity within Deliver and Support.
+- B (Design and Transition) is incorrect. Design and Transition handles design and release,
+  not day-to-day incident resolution.
+- C (Improve) is incorrect. Improve would be involved if the team later analyzes the
+  incident pattern to prevent recurrence. Active resolution is Deliver and Support.
+
+---
+
+### Question 9
+
+Which of the following BEST describes the purpose of the Plan activity in the Service
+Value Chain?
+
+- A) To manage stakeholder relationships and intake service requests
+- B) To ensure a shared understanding of direction, current status, and improvement
+  priorities across all dimensions and services
+- C) To build or acquire the components needed to deliver services
+- D) To test and validate new services before they go live
+
+#### Q9 Correct Answer: B
+
+#### Q9 Distractor Analysis
+
+- A is incorrect. Managing stakeholder relationships and intaking requests is the purpose
+  of Engage, not Plan.
+- C is incorrect. Building or acquiring service components is the purpose of Obtain/Build.
+- D is incorrect. Testing and validating new services before release is the purpose of
+  Design and Transition.
+
+---
+
+### Question 10
+
+An organization's demand for IT services primarily enters the Service Value Chain through
+which activity?
+
+- A) Plan
+- B) Improve
+- C) Deliver and Support
+- D) Engage
+
+#### Q10 Correct Answer: D — Engage
+
+#### Q10 Distractor Analysis
+
+- A (Plan) is incorrect. Plan generates internal strategic demands but is not the primary
+  intake point for external customer and user demand.
+- B (Improve) is incorrect. Improve generates internal improvement demands from performance
+  data, but is not the primary intake for external stakeholder demand.
+- C (Deliver and Support) is incorrect. Deliver and Support fulfills demand — it does not
+  intake demand from external stakeholders. That role belongs to Engage.
+
+---
+
+Module 07 Quiz | CIS-4335 IT Service Management | Texas Wesleyan University

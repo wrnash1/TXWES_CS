@@ -1,67 +1,367 @@
-# Reading Guide: Module 07 – Kubernetes Engine (GKE): Cluster Management
-## Course: CIS-4329 – Google Cloud Administration (Google Cloud Associate Cloud Engineer)
+# Reading Guide: Module 07 — Cloud Run and Serverless Computing
+
+## Course: CIS-4329 Google Cloud Computing
+
+**Certification Alignment:** Google Cloud Associate Cloud Engineer (ACE)
 
 ---
 
-### Introduction
-Welcome to **Module 07 – Kubernetes Engine (GKE): Cluster Management**! Google Kubernetes Engine is GCP's managed Kubernetes service. This module covers cluster creation and configuration, node pools, workload deployment, services and ingress, autoscaling, and the difference between GKE Standard and Autopilot modes. The ACE exam tests your ability to select the right GKE configuration for a given scenario and understand how GKE integrates with other GCP services like IAM, Cloud Logging, and load balancers.
+## Overview
+
+This reading guide covers GCP's serverless compute platform: Cloud Run, Cloud
+Functions, App Engine, Eventarc, and Cloud Tasks. Serverless services are
+increasingly tested on the ACE exam as they represent the modern direction of
+application deployment on GCP.
+
+**Estimated Reading Time:** 50–60 minutes
 
 ---
 
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The ACE exam tests these concepts in scenario-based questions.
+## Section 1 — Cloud Run
 
-*   **Cluster**: The top-level GKE resource. A cluster consists of a control plane (managed by Google) and one or more node pools. The control plane runs the Kubernetes API server, scheduler, and etcd. In Standard mode you pay for nodes; in Autopilot mode you pay per pod resource request.
+### 1.1 Architecture
 
-*   **Node Pool**: A group of Compute Engine VMs within a cluster that share the same machine type, disk configuration, and labels. A cluster can have multiple node pools — for example, a general-purpose pool for web workloads and a high-memory pool for analytics jobs.
+Cloud Run is GCP's serverless container platform for running stateless HTTP
+workloads. It is built on Knative and runs on Google's managed infrastructure.
 
-*   **Pod**: The smallest deployable unit in Kubernetes. A pod wraps one or more containers and shares a network namespace and storage volumes. Pods are ephemeral — when they crash, the Deployment controller creates a replacement.
+Deployment model:
 
-*   **Deployment**: A Kubernetes controller that manages a desired number of identical pod replicas. Deployments support rolling updates (gradually replacing old pods with new ones) and rollbacks. Use `kubectl rollout undo deployment/NAME` to revert a failed update.
+- You build a container image and push it to Artifact Registry or Container
+  Registry
+- You deploy the image to Cloud Run as a service
+- Cloud Run manages instances, networking, and TLS termination
+- The service gets a stable HTTPS URL: `https://SERVICE-HASH-REGION.a.run.app`
 
-*   **Service**: A stable network endpoint that exposes a set of pods. `ClusterIP` services are internal-only. `NodePort` services expose a port on every node. `LoadBalancer` services provision a GCP External Load Balancer automatically. `ExternalName` services map to an external DNS name.
+### 1.2 Revisions and Traffic Splitting
 
-*   **Horizontal Pod Autoscaler (HPA)**: Automatically scales the number of pod replicas based on observed CPU utilization or custom metrics. HPA works with Deployments and ReplicaSets. Cluster Autoscaler separately scales the number of nodes in a node pool when pods cannot be scheduled due to insufficient capacity.
+Every `gcloud run deploy` creates a new immutable revision. Traffic can be split
+across revisions for canary deployments.
+
+```bash
+# Deploy a service (creates first revision)
+gcloud run deploy my-api \
+  --image=REGION-docker.pkg.dev/PROJECT/repo/my-api:v1 \
+  --region=us-central1 \
+  --allow-unauthenticated
+
+# Deploy new version (creates second revision)
+gcloud run deploy my-api \
+  --image=REGION-docker.pkg.dev/PROJECT/repo/my-api:v2 \
+  --region=us-central1 \
+  --no-traffic   # Don't send traffic to new revision yet
+
+# Canary: 10% to v2
+gcloud run services update-traffic my-api \
+  --region=us-central1 \
+  --to-revisions=my-api-v2=10,my-api-v1=90
+```
+
+### 1.3 Configuration Parameters
+
+| Parameter | Description | Default |
+|---|---|---|
+| `--cpu` | vCPU allocated per instance | 1 |
+| `--memory` | Memory per instance | 512Mi |
+| `--concurrency` | Max concurrent requests per instance | 80 |
+| `--max-instances` | Maximum number of instances | 1000 |
+| `--min-instances` | Warm instances to reduce cold starts | 0 |
+| `--timeout` | Max request duration | 300s |
+| `--port` | Port the container listens on | 8080 |
+
+### 1.4 Authentication
+
+Cloud Run services can be:
+
+- **Publicly accessible**: `--allow-unauthenticated` — anyone can invoke
+- **Authenticated only**: Requires a valid Google identity token in the
+  Authorization header; used for internal service-to-service calls
+
+```bash
+# Invoke an authenticated service using a service account token
+TOKEN=$(gcloud auth print-identity-token)
+curl -H "Authorization: Bearer $TOKEN" \
+  https://my-service-hash-uc.a.run.app/endpoint
+```
+
+### 1.5 VPC Connector
+
+To access VPC resources (Cloud SQL, Redis, private VMs) from Cloud Run, use
+a Serverless VPC Access connector:
+
+```bash
+# Create a VPC connector
+gcloud compute networks vpc-access connectors create my-connector \
+  --region=us-central1 \
+  --network=default \
+  --range=10.8.0.0/28
+
+# Deploy Cloud Run with VPC access
+gcloud run deploy my-service \
+  --image=... \
+  --region=us-central1 \
+  --vpc-connector=my-connector \
+  --vpc-egress=private-ranges-only
+```
 
 ---
 
-### 2. Certification Exam Tips
+## Section 2 — Cloud Functions
 
-*   **GKE Standard vs. Autopilot**: The ACE exam will describe a scenario and ask which mode is appropriate. Key signals: if the question mentions managing node pools, selecting machine types, or needing DaemonSets — Standard. If it mentions paying only for pod resources, no node management, or Google handles all infrastructure — Autopilot.
+### 2.1 Gen 1 vs. Gen 2
 
-*   **`kubectl` is required for GKE workload management**: Know that `gcloud container clusters get-credentials CLUSTER_NAME --region=REGION` populates `~/.kube/config` so `kubectl` commands work. Then use `kubectl apply -f deployment.yaml`, `kubectl get pods`, `kubectl describe pod POD_NAME`, and `kubectl logs POD_NAME`.
+| Feature | Gen 1 | Gen 2 |
+|---|---|---|
+| Infrastructure | Proprietary GCF runtime | Cloud Run + Eventarc |
+| Concurrency | 1 request per instance | Up to 1000 concurrent requests |
+| Max timeout | 540 seconds (9 min) | 3600 seconds (60 min) |
+| Max memory | 8 GiB | 32 GiB |
+| Traffic splitting | No | Yes (like Cloud Run) |
+| Event triggers | Direct bindings | Via Eventarc |
+| Preferred for new work | No | Yes |
 
-*   **LoadBalancer Service creates a Cloud Load Balancer**: When you create a Kubernetes Service of type `LoadBalancer` in GKE, GCP automatically provisions a Regional External TCP Load Balancer. For HTTP(S) with path-based routing, use an Ingress resource, which provisions a Global HTTP(S) Load Balancer.
+### 2.2 Trigger Types
 
-*   **Workload Identity for GKE IAM**: The recommended way to give GKE pods access to GCP APIs (like Cloud Storage or Pub/Sub) is Workload Identity — it links a Kubernetes Service Account to a GCP Service Account without needing key files. The ACE exam favors Workload Identity over manually mounting Service Account key JSON files.
+#### HTTP trigger
 
-*   **Study Resource**: The freeCodeCamp ACE course covers GKE cluster setup, workload deployment, and services: [Google Cloud ACE Certification Course by freeCodeCamp](https://www.youtube.com/watch?v=UGRDM86MBIQ). Supplement with the official GKE quickstart for hands-on familiarity with cluster creation commands.
+Function is invoked by an HTTP request (GET, POST, etc.).
+
+```python
+# main.py — HTTP trigger function
+import functions_framework
+
+@functions_framework.http
+def hello_world(request):
+    return "Hello, World!", 200
+```
+
+#### Background event trigger (Gen 1) / Eventarc trigger (Gen 2)
+
+Function is invoked in response to a GCP event.
+
+```python
+# main.py — Storage event trigger
+import functions_framework
+
+@functions_framework.cloud_event
+def process_upload(cloud_event):
+    data = cloud_event.data
+    bucket = data["bucket"]
+    name = data["name"]
+    print(f"New file: gs://{bucket}/{name}")
+```
+
+### 2.3 Deployment
+
+```bash
+# Gen 2 HTTP function
+gcloud functions deploy hello-fn \
+  --gen2 \
+  --runtime=python311 \
+  --region=us-central1 \
+  --source=. \
+  --entry-point=hello_world \
+  --trigger-http \
+  --allow-unauthenticated
+
+# Gen 2 Storage trigger
+gcloud functions deploy storage-fn \
+  --gen2 \
+  --runtime=python311 \
+  --region=us-central1 \
+  --source=. \
+  --entry-point=process_upload \
+  --trigger-event-filters="type=google.cloud.storage.object.v1.finalized" \
+  --trigger-event-filters="bucket=BUCKET_NAME" \
+  --service-account=fn-sa@PROJECT_ID.iam.gserviceaccount.com
+```
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
+## Section 3 — App Engine
 
-*   **Required Reading**: Review GKE cluster architecture including control plane, node pools, and the difference between Standard and Autopilot modes: [GKE Cluster Architecture](https://cloud.google.com/kubernetes-engine/docs/concepts/cluster-architecture).
-*   **Required Reading**: Review how Kubernetes Services of type LoadBalancer and Ingress interact with GCP load balancers: [GKE Services and Ingress](https://cloud.google.com/kubernetes-engine/docs/concepts/service).
-*   **Required Video**: Watch the GKE segment of the ACE certification course: [Google Cloud ACE Certification Course by freeCodeCamp](https://www.youtube.com/watch?v=UGRDM86MBIQ). Navigate to the Kubernetes Engine chapter using the video index.
+### 3.1 Standard vs. Flexible
+
+| Feature | Standard | Flexible |
+|---|---|---|
+| Container type | Sandbox (not Docker) | Docker container on GCE |
+| Scale to zero | Yes | No (min 1 instance) |
+| Startup time | Milliseconds | Minutes |
+| Supported runtimes | Fixed list (Python, Java, Go, etc.) | Any via Dockerfile |
+| OS access | Restricted | Full container |
+| Pricing when idle | $0 | Min 1 VM cost |
+
+### 3.2 app.yaml
+
+App Engine is configured via `app.yaml`:
+
+```yaml
+runtime: python311
+instance_class: F2
+automatic_scaling:
+  min_instances: 0
+  max_instances: 10
+  target_cpu_utilization: 0.6
+env_variables:
+  DB_HOST: "10.0.0.1"
+handlers:
+  - url: /static
+    static_dir: static/
+  - url: /.*
+    script: auto
+```
+
+### 3.3 Services and Versions
+
+App Engine supports multiple services (formerly "modules") within one
+application:
+
+```bash
+# Deploy to a named service
+gcloud app deploy service-api.yaml
+
+# Deploy to the default service
+gcloud app deploy app.yaml
+
+# Split traffic
+gcloud app services set-traffic default \
+  --splits=v2=90,v1=10 \
+  --split-by=random
+
+# Stop an old version (stops its billing)
+gcloud app versions stop v1 --service=default
+```
 
 ---
 
-### Lab & Command Integration
-In this module's lab, you will create a GKE cluster, deploy a containerized application, and expose it with a LoadBalancer Service. Key commands to practice:
+## Section 4 — Eventarc
 
-*   `gcloud container clusters create my-cluster --region=us-central1 --num-nodes=2` — creates a regional GKE cluster
-*   `gcloud container clusters get-credentials my-cluster --region=us-central1` — configures kubectl credentials
-*   `kubectl apply -f deployment.yaml` — deploys workloads from a manifest file
-*   `kubectl get services` — lists Services and their external IP addresses
+### 4.1 Event Flow
+
+```text
+Event Source → Eventarc → Destination
+(Cloud Storage, Pub/Sub, Audit Logs)    (Cloud Run, Cloud Functions Gen 2)
+```
+
+### 4.2 Trigger Configuration
+
+```bash
+# Create a trigger for Cloud Storage → Cloud Run
+gcloud eventarc triggers create gcs-trigger \
+  --location=us-central1 \
+  --destination-run-service=my-processor \
+  --destination-run-region=us-central1 \
+  --event-filters="type=google.cloud.storage.object.v1.finalized" \
+  --event-filters="bucket=my-bucket" \
+  --service-account=eventarc-sa@PROJECT_ID.iam.gserviceaccount.com
+
+# Create a trigger for Audit Log event (any API call)
+gcloud eventarc triggers create audit-trigger \
+  --location=us-central1 \
+  --destination-run-service=audit-logger \
+  --destination-run-region=us-central1 \
+  --event-filters="type=google.cloud.audit.log.v1.written" \
+  --event-filters="serviceName=compute.googleapis.com" \
+  --event-filters="methodName=v1.compute.instances.insert" \
+  --service-account=eventarc-sa@PROJECT_ID.iam.gserviceaccount.com
+```
+
+### 4.3 CloudEvents Format
+
+Eventarc delivers events in the CloudEvents format (CNCF standard). The event
+arrives at the Cloud Run service as an HTTP POST with:
+
+- `Content-Type: application/cloudevents+json`
+- Structured event payload in the request body
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and be able to explain each in your own words.
-- [ ] Read the [GKE Cluster Architecture](https://cloud.google.com/kubernetes-engine/docs/concepts/cluster-architecture) documentation page.
-- [ ] Read the [GKE Services and Ingress](https://cloud.google.com/kubernetes-engine/docs/concepts/service) documentation page.
-- [ ] Watch the GKE segment of the [ACE Certification Course by freeCodeCamp](https://www.youtube.com/watch?v=UGRDM86MBIQ).
-- [ ] Complete the module lab: create a cluster, deploy a workload, expose it as a LoadBalancer Service.
-- [ ] Proceed to the weekly quiz.
+## Section 5 — Cloud Tasks
+
+### 5.1 Queue and Task Model
+
+A Cloud Tasks **queue** holds tasks waiting to be executed. Each **task** specifies:
+
+- A target URL (Cloud Run, App Engine, or external HTTPS)
+- An HTTP method and body
+- An optional schedule time (future delivery)
+- Retry configuration
+
+### 5.2 Creating Tasks
+
+```bash
+# Create a task queue
+gcloud tasks queues create my-queue \
+  --location=us-central1
+
+# Create a task targeting a Cloud Run service
+gcloud tasks create-http-task \
+  --queue=my-queue \
+  --location=us-central1 \
+  --url=https://my-service-hash-uc.a.run.app/process \
+  --method=POST \
+  --body-content='{"order_id": "12345"}' \
+  --header=Content-Type:application/json \
+  --oidc-service-account-email=tasks-sa@PROJECT_ID.iam.gserviceaccount.com
+
+# Schedule a task for the future (ISO 8601 format)
+gcloud tasks create-http-task \
+  --queue=my-queue \
+  --location=us-central1 \
+  --url=https://my-service-hash-uc.a.run.app/remind \
+  --schedule-time=2026-12-31T23:00:00Z \
+  --method=POST
+```
+
+### 5.3 Cloud Tasks vs. Pub/Sub
+
+| Criteria | Use Cloud Tasks | Use Pub/Sub |
+|---|---|---|
+| Exactly one target | Yes | No (fan-out) |
+| Future scheduling | Yes | No |
+| Rate limiting | Yes (configurable) | No |
+| Multiple subscribers | No | Yes |
+| Best for | Task queues, deferred work | Event streaming, fan-out |
+
+---
+
+## Key Terms Glossary
+
+| Term | Definition |
+|---|---|
+| Cloud Run | Serverless container platform for stateless HTTP workloads |
+| Revision | Immutable snapshot of a Cloud Run service deployment |
+| Traffic splitting | Routing percentages of requests to different revisions |
+| Concurrency | Number of simultaneous requests handled by one Cloud Run instance |
+| Cold start | Latency when a new instance must be created for a request |
+| Cloud Functions | FaaS offering for event-driven single functions |
+| Gen 2 | Cloud Functions built on Cloud Run; higher concurrency, longer timeout |
+| App Engine Standard | Sandbox PaaS; scale to zero; fixed runtimes |
+| App Engine Flexible | Docker-based PaaS; custom runtimes; always-on |
+| Eventarc | Managed event routing from GCP services to Cloud Run / CF Gen 2 |
+| CloudEvents | CNCF standard event format used by Eventarc |
+| Cloud Tasks | Managed task queue with scheduling, rate limiting, and retry |
+| VPC connector | Serverless VPC Access for reaching private resources from Cloud Run |
+
+---
+
+## ACE Exam Focus Areas — Module 07
+
+- Identify when Cloud Run is the correct choice vs. GKE, Cloud Functions, or
+  App Engine.
+- Describe the difference between Cloud Functions Gen 1 and Gen 2.
+- Explain App Engine Standard vs. Flexible and when each applies.
+- Explain what Eventarc is and which services it routes events to.
+- Distinguish Cloud Tasks from Pub/Sub for a described messaging scenario.
+- Explain traffic splitting in Cloud Run and App Engine.
+- Describe what min-instances and max-instances control in Cloud Run.
+
+---
+
+## Further Reading
+
+- Cloud Run: cloud.google.com/run/docs
+- Cloud Functions: cloud.google.com/functions/docs
+- App Engine: cloud.google.com/appengine/docs
+- Eventarc: cloud.google.com/eventarc/docs
+- Cloud Tasks: cloud.google.com/tasks/docs
+- Serverless VPC Access: cloud.google.com/vpc/docs/serverless-vpc-access

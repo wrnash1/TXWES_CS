@@ -1,90 +1,198 @@
-# Quiz: Module 13 – Cloud Deployment Manager and Terraform on GCP
-## Course: CIS-4329 – Google Cloud Administration (Google Cloud Associate Cloud Engineer)
+# Quiz: Module 13 — CI/CD with Cloud Build and Artifact Registry
+
+## Course: CIS-4329 Google Cloud Computing
+
+## Texas Wesleyan University | Professor Nash
+
+## Certification Alignment: Google Cloud Associate Cloud Engineer (ACE)
 
 ---
 
-**Question 1**
-Your team wants to provision a set of GCP resources (a VPC network, a Compute Engine VM, and a Cloud Storage bucket) in a repeatable way so that the exact same environment can be created in dev, staging, and production projects. Changes should be tracked in source control and peer-reviewed before being applied. Which approach best implements this requirement?
+### Instructions
 
-A) Document the `gcloud` commands in a runbook and have an administrator execute them manually for each environment.
-B) Use Cloud Console to create the resources, then export the project configuration using `gcloud projects export`.
-C) Write Infrastructure as Code configuration files (using Terraform or Deployment Manager), commit them to a Git repository, and apply them per environment using the appropriate project flags.
-D) Create a Cloud Scheduler job that runs `gcloud` commands on a schedule to recreate the environment resources each week.
-
-*   **Correct Answer:** C) Write Infrastructure as Code configuration files (using Terraform or Deployment Manager), commit them to a Git repository, and apply them per environment using the appropriate project flags.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* A manual runbook is error-prone and cannot guarantee identical environments across dev, staging, and production. It also does not provide version control, change history, or peer review of infrastructure changes — the core benefits of IaC.
-    *   *Why B is incorrect:* `gcloud projects export` does not exist as a single command that produces a complete IaC-compatible configuration. Cloud Console resource creation is manual and does not produce version-controlled, reusable configuration files.
-    *   *Why D is incorrect:* Recreating resources on a schedule would cause data loss by deleting and replacing existing resources, and it would not track configuration changes over time. Scheduled recreation is not an IaC pattern.
+Select the single best answer for each question. Each question is worth 10 points.
+Total: 100 points.
 
 ---
 
-**Question 2**
-A Terraform engineer runs `terraform plan` and sees the following in the output for an existing Cloud Storage bucket:
+### Question 1
 
-```
-~ resource "google_storage_bucket" "logs" {
-    ~ storage_class = "STANDARD" -> "NEARLINE"
-}
-```
+A development team wants every push to the `main` branch to automatically build a Docker
+image and push it to Artifact Registry. Which Cloud Build feature enables this automation?
 
-What does this output indicate, and what happens when `terraform apply` is executed?
+- A) Cloud Build worker pools
+- B) Cloud Build triggers with a branch pattern
+- C) Cloud Build substitution variables
+- D) Cloud Build private pools
 
-A) The bucket will be destroyed and recreated in NEARLINE storage class, causing data loss.
-B) Terraform has detected a drift between the desired state (NEARLINE) and the recorded state (STANDARD); applying will update the bucket's storage class in place without destroying it.
-C) The plan output shows an error — Terraform cannot modify storage class on an existing bucket and the apply will fail.
-D) The `~` symbol means Terraform will skip this resource because no action is required.
-
-*   **Correct Answer:** B) Terraform has detected a drift between the desired state (NEARLINE) and the recorded state (STANDARD); applying will update the bucket's storage class in place without destroying it.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* The `~` symbol in Terraform plan output means the resource will be updated in place. Resources that must be destroyed and recreated are shown with `-/+` (destroy then create). Cloud Storage bucket storage class changes are applied in place without destroying the bucket or its data.
-    *   *Why C is incorrect:* Cloud Storage bucket storage class is a mutable property — it can be changed without recreating the bucket. Terraform's GCP provider supports this in-place update, so the apply will succeed.
-    *   *Why D is incorrect:* The `~` symbol means the resource will be modified. A `+` means create, `-` means destroy, and no symbol (or `=`) means no change. Skipped resources would show no entry at all in the plan output.
+Correct answer: B — Cloud Build triggers watch a repository and automatically start a
+build when specified events occur. A trigger with branch pattern `^main$` fires on every
+push to the `main` branch. Worker pools and private pools are compute configurations,
+not automation mechanisms. Substitution variables are used within a build config, not
+to start builds automatically.
 
 ---
 
-**Question 3**
-Your team uses Terraform to manage GCP infrastructure. A team member manually deleted a Cloud SQL instance from the Cloud Console, but the Terraform configuration and state file still reference it. When another team member runs `terraform plan`, what output does Terraform show for the deleted instance, and what does `terraform apply` do?
+### Question 2
 
-A) Terraform detects no change because the state file is the source of truth and the manual deletion is ignored.
-B) Terraform shows the instance as needing to be created (`+`) because it exists in the desired configuration but no longer exists in GCP; applying will recreate it.
-C) Terraform shows the instance as needing to be destroyed (`-`) because the state file is out of sync; applying will remove it from the state file.
-D) Terraform automatically updates the state file to reflect the manual deletion and shows no planned changes.
+In a `cloudbuild.yaml` file, two steps both have `waitFor: ['build-image']`. What is
+the effect?
 
-*   **Correct Answer:** B) Terraform shows the instance as needing to be created (`+`) because it exists in the desired configuration but no longer exists in GCP; applying will recreate it.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Terraform compares the state file against the actual GCP resources (by calling the GCP API) during `terraform plan` — it does not blindly trust the state file. When the instance is found to be missing in GCP, Terraform marks it for recreation.
-    *   *Why C is incorrect:* Terraform's goal is to make GCP match the desired configuration (the `.tf` files), not to match the current GCP state. Since the instance is in the `.tf` files, Terraform plans to create it — not remove it from state.
-    *   *Why D is incorrect:* Terraform does not automatically rewrite the state file to reflect manual changes detected during `plan`. You must explicitly run `terraform refresh` or `terraform state rm` to update the state file for manually deleted resources.
+- A) Both steps run sequentially after the build-image step
+- B) Both steps run in parallel after the build-image step completes
+- C) The second step waits for both the first step and build-image to complete
+- D) The build fails because two steps cannot share the same waitFor value
 
----
-
-**Question 4**
-Your organization wants to enforce that all Terraform state files for GCP projects are stored in a shared Cloud Storage bucket so that the entire infrastructure team can collaborate without state file conflicts. Which Terraform configuration block implements remote state storage in Cloud Storage?
-
-A) Add a `remote_state` block in `main.tf` pointing to the Cloud Storage bucket path.
-B) Configure a `backend "gcs"` block in the Terraform configuration specifying the bucket name and prefix, then run `terraform init` to migrate state.
-C) Set the `TF_STATE_BUCKET` environment variable to the Cloud Storage bucket name before running `terraform apply`.
-D) Run `gcloud storage cp terraform.tfstate gs://my-state-bucket/` after each `terraform apply` to manually sync the state file.
-
-*   **Correct Answer:** B) Configure a `backend "gcs"` block in the Terraform configuration specifying the bucket name and prefix, then run `terraform init` to migrate state.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* There is no `remote_state` configuration block in Terraform. The `terraform_remote_state` data source reads outputs from another state file — it does not configure where Terraform stores its own state. The `backend` block is the correct configuration for state storage location.
-    *   *Why C is incorrect:* `TF_STATE_BUCKET` is not a recognized Terraform environment variable. Terraform backend configuration is done in the `terraform` block of the configuration files, not through environment variables (though `TF_BACKEND_*` variables exist for some backends, the correct pattern is the `backend` block).
-    *   *Why D is incorrect:* Manually copying the state file after each apply creates a race condition in team environments — if two engineers run `apply` simultaneously, one overwrites the other's state changes. The `backend "gcs"` configuration provides native locking via Cloud Storage object versioning to prevent this.
+Correct answer: B — When multiple steps reference the same `waitFor` step ID, they all
+become eligible to run as soon as that step completes. Cloud Build executes eligible
+steps in parallel. This is the standard pattern for parallelizing push operations for
+multiple image tags after a single build step.
 
 ---
 
-**Question 5**
-A Cloud Deployment Manager configuration deploys a Compute Engine VM. After the initial deployment, a team member updates the configuration YAML to change the machine type from `n1-standard-2` to `n1-standard-4`. They then run `gcloud deployment-manager deployments update my-deployment --config=config.yaml`. What is the expected behavior?
+### Question 3
 
-A) Deployment Manager rejects the update because machine type is an immutable property and requires a new deployment.
-B) Deployment Manager compares the updated configuration against the existing deployment, stops the VM, changes its machine type to `n1-standard-4`, and restarts it — all within the same deployment.
-C) Deployment Manager deletes the entire deployment and all its resources, then recreates everything from scratch with the new configuration.
-C) Deployment Manager creates a second VM with the new machine type alongside the existing VM, then waits for manual confirmation before deleting the old one.
+A team wants to deploy container images from Cloud Build to an Artifact Registry
+repository. The build fails with a permission denied error on the push step. What is
+the most likely cause?
 
-*   **Correct Answer:** B) Deployment Manager compares the updated configuration against the existing deployment, stops the VM, changes its machine type to `n1-standard-4`, and restarts it — all within the same deployment.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Machine type on a Compute Engine VM can be changed while the VM is stopped — it is not an immutable property. Deployment Manager supports in-place updates to many VM properties by stopping and restarting the instance as part of the update operation.
-    *   *Why C (first) is incorrect:* Deployment Manager's `update` command performs an incremental update — it only modifies resources whose configuration has changed. It does not delete and recreate the entire deployment unless the changed property requires resource replacement.
-    *   *Why C (second) is incorrect:* Deployment Manager does not perform blue/green VM swaps or require manual confirmation during updates. It directly updates the existing resource according to the new configuration in a single atomic operation.
+- A) The Docker image tag format is incorrect
+- B) The Cloud Build service account has not been granted the Artifact Registry Writer role
+- C) Artifact Registry does not accept pushes from Cloud Build
+- D) The repository format is set to Maven instead of Docker
+
+Correct answer: B — Cloud Build executes with the permissions of the Cloud Build service
+account. By default this account does not have write access to Artifact Registry
+repositories. You must grant `roles/artifactregistry.writer` (or the equivalent
+predefined role) to the Cloud Build service account
+(`[PROJECT_NUMBER]@cloudbuild.gserviceaccount.com`).
+
+---
+
+### Question 4
+
+Which substitution variable in Cloud Build contains the first 7 characters of the Git
+commit hash that triggered the build?
+
+- A) `$COMMIT_SHA`
+- B) `$SHORT_SHA`
+- C) `$BUILD_ID`
+- D) `$REVISION_ID`
+
+Correct answer: B — `$SHORT_SHA` is the abbreviated 7-character commit hash.
+`$COMMIT_SHA` contains the full 40-character commit hash. `$BUILD_ID` is the Cloud Build
+build identifier (not a Git hash). `$REVISION_ID` is not a standard Cloud Build
+substitution variable.
+
+---
+
+### Question 5
+
+A team uses Artifact Registry to store Docker images. They want images older than 30 days
+that are not tagged with `stable` or `production` to be automatically deleted. Which
+Artifact Registry feature handles this?
+
+- A) Container Analysis vulnerability scanning
+- B) VPC Service Controls for the repository
+- C) Cleanup policies on the repository
+- D) Object lifecycle rules on the underlying Cloud Storage bucket
+
+Correct answer: C — Artifact Registry cleanup policies allow you to define rules that
+automatically delete images based on age, tags, or version count. Container Analysis is
+for vulnerability scanning. VPC Service Controls restrict network access. Artifact
+Registry does not use Cloud Storage bucket lifecycle rules — it manages storage
+internally.
+
+---
+
+### Question 6
+
+Which statement correctly describes the relationship between Cloud Build and Cloud Deploy?
+
+- A) Cloud Deploy replaces Cloud Build; you only need one service
+- B) Cloud Build handles building and testing (CI); Cloud Deploy handles delivery
+   pipeline management (CD)
+- C) Cloud Build is only for non-containerized applications; Cloud Deploy is for
+   containers
+- D) Cloud Deploy must be used; Cloud Build cannot deploy to GKE directly
+
+Correct answer: B — Cloud Build is the CI (Continuous Integration) service that builds,
+tests, and packages applications. Cloud Deploy is the CD (Continuous Delivery) service
+that manages delivery pipelines with targets, releases, rollouts, and approval gates.
+They are complementary. Cloud Build can also deploy directly to GKE via kubectl steps
+without Cloud Deploy, though Cloud Deploy provides more structured pipeline management.
+
+---
+
+### Question 7
+
+A team has a Cloud Deploy delivery pipeline with three targets: dev, staging, and
+production. The production target has `requireApproval: true`. A release is deployed
+to dev and staging successfully. What happens next?
+
+- A) The release automatically deploys to production after staging succeeds
+- B) The production rollout is created but waits for a designated approver to approve
+   before applying
+- C) The build fails because production approval is not configured in Cloud Build
+- D) Cloud Deploy sends an email to all project owners requesting approval
+
+Correct answer: B — When a Cloud Deploy target has `requireApproval: true`, the rollout
+to that target is created in a PENDING\_APPROVAL state. It does not proceed until a
+user with the `clouddeploy.approver` role approves the rollout via the Console or
+`gcloud deploy rollouts approve`. Cloud Deploy sends notifications via Pub/Sub or Cloud
+Monitoring alerts, not direct emails to project owners.
+
+---
+
+### Question 8
+
+What is the correct Docker image URL format for an image stored in Artifact Registry in
+the `us-central1` region?
+
+- A) `gcr.io/PROJECT_ID/REPOSITORY/IMAGE:TAG`
+- B) `docker.io/PROJECT_ID/REPOSITORY/IMAGE:TAG`
+- C) `us-central1-docker.pkg.dev/PROJECT_ID/REPOSITORY/IMAGE:TAG`
+- D) `us-central1.artifacts.googleapis.com/PROJECT_ID/REPOSITORY/IMAGE:TAG`
+
+Correct answer: C — Artifact Registry Docker repositories use the URL format
+`REGION-docker.pkg.dev/PROJECT_ID/REPOSITORY_NAME/IMAGE:TAG`. The old Container Registry
+format was `gcr.io/PROJECT_ID/IMAGE:TAG`. Artifact Registry is the replacement and uses
+the `pkg.dev` domain.
+
+---
+
+### Question 9
+
+A `cloudbuild.yaml` does not include a `timeout` field. What is the default maximum
+build duration?
+
+- A) 2 minutes
+- B) 10 minutes
+- C) 60 minutes
+- D) 24 hours
+
+Correct answer: B — The default Cloud Build timeout is 10 minutes. If a build exceeds
+10 minutes without an explicit `timeout` field, it is automatically cancelled. You can
+increase the timeout up to 24 hours by setting `timeout: '86400s'` in the build config.
+Complex builds (large Docker images, extensive test suites) often require a longer
+timeout.
+
+---
+
+### Question 10
+
+A team stores Docker images in Artifact Registry and wants to scan them for known
+vulnerabilities before deploying. Which GCP service integrates with Artifact Registry
+for this purpose?
+
+- A) Cloud Armor
+- B) Security Command Center
+- C) Container Analysis (Artifact Analysis)
+- D) Binary Authorization
+
+Correct answer: C — Container Analysis (also called Artifact Analysis) automatically
+scans Docker images pushed to Artifact Registry for known OS and package vulnerabilities.
+It integrates natively with Artifact Registry and publishes vulnerability findings to
+the Cloud Console. Binary Authorization enforces deploy-time policies based on image
+attestations. Cloud Armor protects HTTP endpoints. Security Command Center aggregates
+security findings but does not perform image scanning itself.

@@ -1,78 +1,228 @@
-# Quiz: Module 16 - Final Exam Prep & Project+ Certification
-## Course: CIS-3310_IT_Project_Management (CompTIA Project+ / PMI CAPM)
+# Quiz: Module 16 — Project+ Exam Preparation and Capstone
+
+## Course: CIS-3310 IT Project Management
+
+## Texas Wesleyan University | Professor Nash
+
+## Certification Alignment: CompTIA Project+ (PK0-005)
 
 ---
 
-**Question 1**
-A project manager is working on a network upgrade. The project has a BAC of $150,000, and at the current status date, the team has completed 50% of the work. The Planned Value (PV) for this date is $85,000, and the Actual Cost (AC) is $70,000. What is the Schedule Variance (SV)?
-*   A) SV = −$10,000 (behind schedule)
-*   B) SV = +$5,000 (ahead of schedule)
-*   C) SV = +$10,000 (under budget)
-*   D) SV = −$5,000 (over budget)
-*   **Correct Answer:** B) EV = 50% × $150,000 = $75,000. SV = EV − PV = $75,000 − $85,000 = Wait — SV = $75,000 − $85,000 = −$10,000. See corrected answer: A.
-*   **Correct Answer (revised):** A) EV = 50% × $150,000 = $75,000. SV = EV − PV = $75,000 − $85,000 = −$10,000. Negative SV = behind schedule.
-*   **Distractor Analysis:**
-    *   *Why A is correct:* EV = % complete × BAC = 0.50 × $150,000 = $75,000. SV = EV − PV = $75,000 − $85,000 = −$10,000. The project has completed less work than planned for this date, so it is behind schedule.
-    *   *Why B is incorrect:* SV = +$5,000 would require EV > PV ($80,000 > $85,000). The EV is $75,000 (less than the $85,000 PV), so SV is negative, not positive.
-    *   *Why C is incorrect:* CV = EV − AC = $75,000 − $70,000 = +$5,000 (under budget). This calculates CV, not SV. "Under budget" is a cost status, not a schedule status.
-    *   *Why D is incorrect:* SV = −$5,000 is not the correct arithmetic. The SV = $75,000 − $85,000 = −$10,000. Additionally, "over budget" describes CV, not SV.
+## Instructions
+
+Select the best answer for each question. Each question is worth 10 points.
+Total: 100 points. Time limit: 20 minutes.
 
 ---
 
-**Question 2**
-Which of the following best integrates the concepts of Scope, Schedule, and Cost management to provide an objective measure of project performance at a point in time?
-*   A) Qualitative Risk Analysis
-*   B) Earned Value Management (EVM)
-*   C) Stakeholder Engagement Planning
-*   D) Work Breakdown Structure (WBS) Decomposition
-*   **Correct Answer:** B) Earned Value Management (EVM) integrates scope (% work completed), schedule (PV from the schedule baseline), and cost (AC from the cost baseline) into a single, quantitative performance measurement framework.
-*   **Distractor Analysis:**
-    *   *Why B is correct:* EVM is the only PM technique that simultaneously measures cost efficiency (CPI), schedule efficiency (SPI), and overall project health. It is the integration mechanism connecting all three primary constraints.
-    *   *Why A is incorrect:* Qualitative Risk Analysis assesses and prioritizes risks using probability and impact ratings. It is a risk management tool, not an integrated performance measurement technique.
-    *   *Why C is incorrect:* Stakeholder Engagement Planning defines strategies for managing stakeholder communication and involvement. It does not measure project cost or schedule performance.
-    *   *Why D is incorrect:* WBS Decomposition is a scope management technique that breaks down project work into manageable components. It defines scope but does not measure integrated project performance.
+## Question 1
+
+A project manager has just been assigned to a new project. She wants to understand her
+formal authority to approve expenses and allocate team members. Which document should
+she review first?
+
+A. Work Breakdown Structure
+B. Project Management Plan
+C. Project Charter
+D. Stakeholder Register
+
+### Answer 1: C
+
+The Project Charter formally authorizes the project and empowers the PM to apply
+organizational resources. The PM should review it first to understand the scope of her
+authority. The Project Management Plan is developed after the Charter. The WBS and
+Stakeholder Register are planning outputs that come later.
 
 ---
 
-**Question 3**
-A project manager is reviewing the project's performance. The CPI is 1.05, the SPI is 0.92, and the project has one month remaining. Which statement best describes the project's status?
-*   A) The project is slightly under budget and slightly behind schedule — focus on schedule recovery
-*   B) The project is over budget and ahead of schedule — approve additional resources
-*   C) The project is perfectly on track — no action is needed
-*   D) The project should be closed immediately due to poor performance
-*   **Correct Answer:** A) CPI = 1.05 means slightly under budget (spending less than earned). SPI = 0.92 means slightly behind schedule (completing less work than planned). With one month remaining, the PM should focus on schedule recovery.
-*   **Distractor Analysis:**
-    *   *Why A is correct:* CPI > 1.0 = favorable (under budget). SPI < 1.0 = unfavorable (behind schedule). Both are close to 1.0 but the schedule variance is the active concern with one month left.
-    *   *Why B is incorrect:* Over budget requires CPI < 1.0. A CPI of 1.05 indicates the project is under budget (spending efficiently).
-    *   *Why C is incorrect:* A CPI of 1.05 is close to 1.0, but an SPI of 0.92 indicates a schedule delay that requires attention—not inaction—especially with one month remaining.
-    *   *Why D is incorrect:* Both index values are close to 1.0 and represent minor variances, not the kind of performance failure that would warrant project closure.
+## Question 2
+
+A project has a Budget at Completion of $500,000. At the current status date, the
+Earned Value is $200,000, the Planned Value is $250,000, and the Actual Cost is
+$180,000. What is the Schedule Performance Index and what does it indicate?
+
+A. SPI = 0.80; the project is behind schedule
+B. SPI = 1.11; the project is ahead of schedule
+C. SPI = 0.72; the project is over budget
+D. SPI = 1.39; the project is under budget
+
+### Answer 2: A
+
+SPI = EV / PV = $200,000 / $250,000 = 0.80. An SPI less than 1.0 means the project
+is behind schedule — it has earned less value than was planned for this point in time.
+SPI does not measure cost; that is CPI. CPI = EV / AC = 200,000 / 180,000 = 1.11,
+meaning the project is actually under budget, but the question asks specifically about SPI.
 
 ---
 
-**Question 4**
-Which of the following scenarios would most likely cause a project manager to recommend using an Agile approach rather than a traditional Waterfall (predictive) approach?
-*   A) A construction project to build a government office building following strict code requirements with a fixed budget
-*   B) A software development project for a startup whose product requirements are expected to evolve based on customer testing feedback every two weeks
-*   C) A network migration project with fully documented technical specifications, a fixed deadline, and a regulatory compliance requirement
-*   D) A hardware procurement project where the scope is fully known and the team must follow a formal procurement process
-*   **Correct Answer:** B) Agile is most appropriate when requirements are unclear or likely to change, customer feedback is needed rapidly, and iterative delivery adds value—exactly the conditions described in the startup scenario.
-*   **Distractor Analysis:**
-    *   *Why B is correct:* The Agile Manifesto's core value is "responding to change over following a plan." A startup product with evolving requirements and frequent customer feedback cycles is the ideal Agile project type.
-    *   *Why A is incorrect:* Government construction with strict regulatory codes, fixed budgets, and stable requirements is a classic Waterfall scenario—predictive planning with formal change control.
-    *   *Why C is incorrect:* A fully documented network migration with a fixed deadline and regulatory compliance requirements is better served by a predictive approach; compliance documentation requirements often conflict with Agile's minimal-documentation ethos.
-    *   *Why D is incorrect:* Hardware procurement with fully known scope and a formal procurement process is a well-defined, stable-scope project—appropriate for predictive (Waterfall) management, not Agile.
+## Question 3
+
+The project manager for a large infrastructure project adds a new contractor company
+as a project stakeholder midway through execution. The team currently has 14
+stakeholders. How many communication channels exist after adding the new stakeholder?
+
+A. 91
+B. 105
+C. 120
+D. 78
+
+### Answer 3: B
+
+With 14 stakeholders: N × (N−1) / 2 = 14 × 13 / 2 = 91 channels.
+After adding one stakeholder (N = 15): 15 × 14 / 2 = 105 channels.
+The question asks how many channels exist after adding the new stakeholder, so the
+answer is 105.
 
 ---
 
-**Question 5**
-At the end of a project, the project manager confirms all deliverables are accepted, all contracts are closed, project documents are archived, and the team has been formally released. Which PMI process group has just been completed?
-*   A) Executing
-*   B) Monitoring and Controlling
-*   C) Closing
-*   D) Planning
-*   **Correct Answer:** C) The Closing process group includes obtaining final acceptance of deliverables, closing contracts, archiving project records, releasing resources, and documenting lessons learned—all of which have just been completed.
-*   **Distractor Analysis:**
-    *   *Why C is correct:* Closing is the final process group. Its completion marks the official end of the project lifecycle. Key activities include final deliverable acceptance, contract closeout, administrative closure, and resource release.
-    *   *Why A is incorrect:* Executing is where the project work is performed, vendor agreements are managed, and the team implements the project management plan. It precedes Closing.
-    *   *Why B is incorrect:* Monitoring and Controlling runs throughout the project alongside Executing; it tracks performance, manages changes, and takes corrective action. It is not the final process group.
-    *   *Why D is incorrect:* Planning is the second process group, where the Project Management Plan is developed. It occurs at the beginning of the project, not after deliverables are accepted.
+## Question 4
+
+During a project retrospective, the team identifies that requirements changes were
+handled inconsistently — some were implemented immediately by developers, others
+went through formal review, and a few were rejected without assessment. Which process
+was most deficient on this project?
+
+A. Risk Management
+B. Integrated Change Control
+C. Quality Assurance
+D. Stakeholder Engagement
+
+### Answer 4: B
+
+Inconsistent handling of requirement changes is a direct symptom of a broken or
+absent Integrated Change Control process. ICC ensures all changes are assessed,
+reviewed by the CCB, and either approved with plan updates or formally rejected —
+with no informal or unilateral implementations. The other options are not the primary
+cause of the symptom described.
+
+---
+
+## Question 5
+
+A project manager is planning a six-month software development project. The
+requirements are expected to change frequently as users provide feedback during
+development. The team is experienced with iterative delivery. Which project management
+approach is most appropriate?
+
+A. Waterfall — because the timeline is defined
+B. Agile — because requirements are expected to evolve
+C. Waterfall — because the team is experienced
+D. Hybrid — because the project has a defined end date
+
+### Answer 5: B
+
+Evolving requirements and a team experienced in iterative delivery are the defining
+characteristics that favor an Agile approach. A fixed end date does not mandate
+waterfall — Agile projects have defined release targets too. The key driver is scope
+uncertainty and the need for continuous stakeholder feedback.
+
+---
+
+## Question 6
+
+An activity on the project network diagram has an early start of Day 10, a late start
+of Day 16, an early finish of Day 14, and a late finish of Day 20. What is the float
+for this activity, and is it on the critical path?
+
+A. Float = 6 days; not on the critical path
+B. Float = 0 days; on the critical path
+C. Float = 4 days; not on the critical path
+D. Float = 6 days; on the critical path
+
+### Answer 6: A
+
+Float = Late Start − Early Start = 16 − 10 = 6 days. (Alternatively: Late Finish −
+Early Finish = 20 − 14 = 6 days.) A float of 6 days means this activity can be delayed
+up to 6 days without affecting the project end date. Activities on the critical path
+have zero float, so this activity is not on the critical path.
+
+---
+
+## Question 7
+
+A project manager receives a request from a senior vice president to add a new feature
+to the system being built. The VP says, "Just get it done — I'll handle the paperwork
+later." The project manager is aware that the feature will add two weeks to the
+schedule and $30,000 to the budget. What should the project manager do?
+
+A. Implement the feature immediately because the VP has executive authority
+B. Submit a formal change request and wait for CCB approval before proceeding
+C. Implement the feature but document it as an exception to change control
+D. Reject the feature because it was not in the original scope
+
+### Answer 7: B
+
+Regardless of who requests a change, all scope changes must go through the Integrated
+Change Control process. The PM submits a formal change request documenting the impact
+on schedule and cost, the CCB reviews it, and work proceeds only after approval. A VP's
+verbal instruction does not substitute for the change control process.
+
+---
+
+## Question 8
+
+A Scrum team is at the end of Sprint 5. The team completed 28 story points. The
+Product Owner reviews the increment and says three user stories do not meet the
+acceptance criteria. The Scrum Master says the stories should still count because the
+team worked on them all sprint. What principle does the Scrum Master's position violate?
+
+A. Sprint time boxes are fixed
+B. The Definition of Done is the quality gate for every increment
+C. The Product Owner cannot reject work after the sprint ends
+D. Velocity should not include partial stories
+
+### Answer 8: B
+
+The Definition of Done defines the criteria every increment must meet to be considered
+complete. Stories that do not meet acceptance criteria do not satisfy the DoD and
+therefore do not count as completed work — regardless of the effort invested. The
+Scrum Master's position directly contradicts this core Scrum artifact.
+
+---
+
+## Question 9
+
+A project manager is conducting lessons learned at the end of a project. A team member
+asks, "Why are we doing this? The project is over." What is the most accurate and
+compelling reason the PM should give?
+
+A. Lessons learned are required by the contract and must be documented before payment
+B. Lessons learned are stored as organizational process assets and improve the performance of future projects
+C. Lessons learned satisfy the quality assurance audit requirement for this process group
+D. Lessons learned are used to calculate the final cost performance index for the project
+
+### Answer 9: B
+
+Lessons learned are stored in the organizational process assets repository and serve
+as reference inputs for future project planning. They represent the organization's
+accumulated institutional knowledge. While they are a closing process activity, their
+primary purpose and lasting value is improving future project outcomes.
+
+---
+
+## Question 10
+
+A project manager is deciding between three risk response options for a critical system
+security vulnerability risk: (1) purchase a cybersecurity insurance policy, (2) apply
+a software patch that reduces the probability of exploitation by 80%, (3) document the
+risk and monitor it without action. Which responses map correctly to Transfer, Mitigate,
+and Accept respectively?
+
+A. Insurance = Avoid; Patch = Mitigate; Monitor = Accept
+B. Insurance = Transfer; Patch = Mitigate; Monitor = Accept
+C. Insurance = Transfer; Patch = Avoid; Monitor = Accept
+D. Insurance = Mitigate; Patch = Transfer; Monitor = Avoid
+
+### Answer 10: B
+
+Transfer shifts the financial consequence of the risk to a third party — an insurance
+policy does exactly this. Mitigate reduces the probability or impact of the risk —
+an 80% probability reduction patch is a textbook mitigation. Accept means the team
+acknowledges the risk and takes no proactive action, monitoring it instead. Option B
+correctly maps all three strategies.
+
+---
+
+*End of Quiz — Module 16*
+
+*Texas Wesleyan University — CIS-3310 IT Project Management*

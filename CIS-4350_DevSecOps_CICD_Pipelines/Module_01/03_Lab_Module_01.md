@@ -1,233 +1,345 @@
-# Lab Activity: Module 01 - DevOps Fundamentals and the DevSecOps Mindset
+# Lab 01 — DevSecOps Toolchain Mapping and Pipeline Design
 
 ## Course: CIS-4350 DevSecOps and CI/CD Pipelines
 
-## Certification Alignment: DevSecOps Professional (DSOE)
+## Texas Wesleyan University | Professor Nash
 
-## Total Points: 100
+## Certification Alignment: DevSecOps Professional (DSOE)
 
 ---
 
-## Objectives
+## Lab Overview
 
-By completing this lab you will be able to:
+In this lab you will build a conceptual DevSecOps toolchain map, install and run two foundational tools (gitleaks and Trivy), and design a basic security-integrated CI pipeline in YAML. No cloud account is required. All tools run locally via Docker or native binary.
 
-- Construct a complete DevSecOps pipeline security map that places each tool class at the correct SDLC stage.
-- Analyze a sample GitHub Actions workflow and identify where security gates are missing.
-- Calculate the relative cost impact of late-stage vulnerability discovery.
-- Explain the shared responsibility model for a described organizational scenario.
+**Estimated Time:** 90 minutes
+
+**Difficulty:** Introductory
 
 ---
 
 ## Prerequisites
 
-Before beginning this lab, confirm the following:
-
-- You have access to a text editor or word processor for written deliverables.
-- You have a GitHub account (free tier is sufficient) for Part 3.
-- You have completed the Module 01 video and reading guide.
-- You have read the OWASP DevSecOps Guideline introduction at [https://owasp.org/www-project-devsecops-guideline/](https://owasp.org/www-project-devsecops-guideline/).
+- Git installed and configured (`git --version`)
+- Docker Desktop installed and running (`docker version`)
+- A text editor (VS Code recommended)
+- A GitHub account (free tier is sufficient)
 
 ---
 
-## Part 1: DevSecOps Pipeline Security Map (30 points)
+## Part 1 — Toolchain Mapping Exercise (20 minutes)
 
-### Part 1 Background
+### Objective
 
-A DevSecOps pipeline is only as strong as the security controls embedded within it. Your first task is to construct a complete security map for a standard CI/CD pipeline, justifying each control placement using shift-left principles.
+Map DevSecOps tools to the correct lifecycle phase. This exercise builds the mental model you'll need throughout the course.
 
-### Part 1 Instructions
+### Step 1.1 — Create Your Toolchain Map
 
-**Step 1: Fill in the pipeline security map.**
+Create a new directory and file:
 
-Using the template below, complete the Security Activity, Tool Examples, and Shift-Left Justification columns for each stage. Submit this as a completed table in a document or a filled-in Markdown table.
+```bash
+mkdir ~/devsecops-lab01 && cd ~/devsecops-lab01
+touch toolchain_map.md
+```
 
-| Pipeline Stage | Security Activity | Tool Examples | Shift-Left Justification |
+### Step 1.2 — Fill in the Toolchain Map
+
+Open `toolchain_map.md` and complete the following table. Use the Module 01 reading guide, your notes, or credible web sources. The first two rows are completed as examples.
+
+```markdown
+# DevSecOps Toolchain Map — [Your Name]
+
+| Lifecycle Phase | Activity | Tool(s) | Category |
 |---|---|---|---|
-| Developer workstation (pre-commit) | | | |
-| Code commit / Pull request | | | |
-| Build (dependency download) | | | |
-| Container image build | | | |
-| Staging environment (deployed app) | | | |
-| IaC provisioning | | | |
-| Production runtime | | | |
+| Plan | Threat modeling | STRIDE, MS Threat Modeling Tool | Threat Modeling |
+| Code | Secret scanning in IDE | gitleaks, Snyk IDE | Secrets Detection |
+| Build | | | |
+| Build | | | |
+| Test | | | |
+| Release | | | |
+| Deploy | | | |
+| Operate | | | |
+| Monitor | | | |
+```
 
-**Step 2: Annotate the cost curve.**
+Fill in at least two tools for each remaining phase. You should have a minimum of 16 rows when complete.
 
-On a separate page or section, sketch or describe the SDLC vulnerability cost curve. Mark where each security activity from your table intercepts the curve. Write 2-3 sentences explaining why catching a vulnerability at the pre-commit stage is less expensive than catching it at the staging or production stage.
+### Step 1.3 — Deliverable Check
 
-**Step 3: Identify two non-automated security activities.**
+Your completed `toolchain_map.md` must include at minimum:
 
-Name two DevSecOps security activities that are not automated pipeline scans — such as threat modeling or manual penetration testing. For each, state: (a) where in the SDLC it belongs, (b) why it cannot be fully automated, and (c) how it complements the automated controls in your pipeline map.
-
-### Part 1 Deliverable
-
-Submit your completed pipeline map table, cost curve annotation, and non-automated activity analysis as a single document (PDF, Word, or Markdown).
-
-### Part 1 Rubric
-
-| Criterion | Points |
-|---|---|
-| All 7 pipeline stages have a correct security activity and tool example | 14 |
-| Shift-left justification is technically accurate for each stage | 7 |
-| Cost curve annotation is correct and written explanation is clear | 5 |
-| Two non-automated activities are correctly identified and explained | 4 |
+- Two rows for Build (one SAST, one dependency scan)
+- One row for Test (DAST)
+- One row for Release (SBOM)
+- Two rows for Deploy (IaC scan + container scan)
+- One row for Operate (runtime security)
+- One row for Monitor (SIEM or log aggregation)
 
 ---
 
-## Part 2: Vulnerability Cost Analysis (25 points)
+## Part 2 — Secrets Scanning with gitleaks (25 minutes)
 
-### Part 2 Background
+### Part 2 Objective
 
-The economic case for shift-left security is a frequently tested topic on the DevSecOps Professional exam. This exercise reinforces the cost multiplier concept with a realistic scenario.
+Experience firsthand how secrets scanning prevents credential exposure in version control.
 
-### Part 2 Scenario
+### Step 2.1 — Create a Test Repository
 
-Your team ships a web application using a Python Flask backend. A developer accidentally commits a hardcoded AWS access key to the GitHub repository. The timeline below describes discovery at three different pipeline stages:
+```bash
+cd ~/devsecops-lab01
+git init secrets-demo
+cd secrets-demo
+git checkout -b main
+```
 
-- **Stage A — Pre-commit hook:** Developer notices immediately, removes the key from the staged file before the commit is finalized. Cost: 10 minutes of developer time.
-- **Stage B — CI pipeline SAST scan on pull request:** Scan flags the hardcoded credential. Developer must fix, recommit, and re-run the pipeline. Cost: 45 minutes of developer time plus 10 minutes of pipeline runtime.
-- **Stage C — Production security audit six months later:** Auditor finds the key in Git history. The key has been active and potentially exposed for 6 months. Required response: revoke and rotate the key in all environments, search CloudTrail logs for unauthorized API calls, file a security incident report, notify management, conduct a lessons-learned meeting. Cost: 3 days of developer time + 1 day of security team time + 1 day of operations team time.
+### Step 2.2 — Create a File with an Intentional Fake Secret
 
-### Part 2 Instructions
+```bash
+cat > config.py << 'EOF'
+# Application configuration
+DATABASE_HOST = "localhost"
+DATABASE_PORT = 5432
+# WARNING: Never commit real credentials — this is a demonstration only
+AWS_ACCESS_KEY_ID = "AKIAIOSFODNN7EXAMPLE"
+AWS_SECRET_ACCESS_KEY = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+EOF
+```
 
-**Step 1: Calculate dollar cost per stage.**
+```bash
+git add config.py
+git commit -m "Add application configuration"
+```
 
-Assume developer time costs $75/hour, security team time costs $100/hour, and operations team time costs $90/hour. Calculate the total dollar cost for Stage A, Stage B, and Stage C. Show your arithmetic.
+### Step 2.3 — Run gitleaks via Docker
 
-**Step 2: Compute the cost multipliers.**
+```bash
+docker run --rm -v "$(pwd):/repo" \
+  zricethezav/gitleaks:latest \
+  detect --source /repo --verbose
+```
 
-Calculate how many times more expensive Stage C is compared to Stage A. Then calculate how many times more expensive Stage C is compared to Stage B.
+### Step 2.4 — Observe Output
 
-**Step 3: Write a recommendation memo.**
+gitleaks will report findings similar to:
 
-In 100-150 words, write a memo addressed to a development team manager explaining why investing in pre-commit and CI pipeline secret scanning is economically justified based on your calculations. Use the specific dollar figures from Step 1.
+```text
+Finding:     AWS_ACCESS_KEY_ID = "AKIAIOSFODNN7EXAMPLE"
+Secret:      AKIAIOSFODNN7EXAMPLE
+RuleID:      aws-access-token
+Entropy:     3.58
+File:        config.py
+Line:        5
+Commit:      [sha]
+```
 
-### Part 2 Deliverable
+### Step 2.5 — Remediate and Re-scan
 
-Submit a document containing your Stage A/B/C cost calculations with arithmetic shown, the cost multiplier calculations, and the recommendation memo.
+Remove the secrets from `config.py`, replacing them with environment variable references:
 
-### Part 2 Rubric
+```python
+import os
+AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
+```
 
-| Criterion | Points |
-|---|---|
-| Stage A, B, and C costs calculated correctly with arithmetic shown | 9 |
-| Cost multipliers calculated correctly | 6 |
-| Recommendation memo is technically accurate and uses calculated figures | 7 |
-| Memo is professional in tone and within the 100-150 word target | 3 |
+Commit the fix, then re-run gitleaks. Confirm zero findings.
+
+```bash
+git add config.py
+git commit -m "Remove hardcoded credentials, use environment variables"
+docker run --rm -v "$(pwd):/repo" \
+  zricethezav/gitleaks:latest \
+  detect --source /repo --verbose
+```
+
+### Expected Result
+
+gitleaks reports: `leaks found: 0`
 
 ---
 
-## Part 3: Analyze a GitHub Actions Workflow (30 points)
+## Part 3 — Container Image Scanning with Trivy (25 minutes)
 
-### Part 3 Background
+### Part 3 Objective
 
-The following GitHub Actions workflow is used by a small development team. It runs on every push to `main`. Read the workflow carefully and answer the questions that follow.
+Scan a publicly available Docker image for known CVEs and interpret the severity report.
 
-**[SHOW CODE]**
+### Step 3.1 — Pull a Deliberately Vulnerable Image
+
+```bash
+docker pull python:3.8-slim
+```
+
+### Step 3.2 — Scan the Image with Trivy
+
+```bash
+docker run --rm \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  aquasec/trivy:latest image \
+  --severity HIGH,CRITICAL \
+  python:3.8-slim
+```
+
+### Step 3.3 — Interpret the Output
+
+Trivy produces a table like:
+
+```text
+python:3.8-slim (debian 11.x)
+Total: 42 (HIGH: 38, CRITICAL: 4)
+
+┌──────────────────┬───────────────┬──────────┬────────────────────────┐
+│ Library          │ Vulnerability │ Severity │ Installed / Fixed Ver  │
+├──────────────────┼───────────────┼──────────┼────────────────────────┤
+│ libssl1.1        │ CVE-2023-xxxx │ CRITICAL │ 1.1.1n / 1.1.1t        │
+└──────────────────┴───────────────┴──────────┴────────────────────────┘
+```
+
+### Step 3.4 — Compare to a Newer Image
+
+```bash
+docker run --rm \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  aquasec/trivy:latest image \
+  --severity HIGH,CRITICAL \
+  python:3.12-slim
+```
+
+Record the difference in HIGH and CRITICAL counts between the two scans in your lab report.
+
+### Step 3.5 — Export Scan Results as JSON
+
+```bash
+docker run --rm \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v "$(pwd):/output" \
+  aquasec/trivy:latest image \
+  --format json \
+  --output /output/trivy-report.json \
+  python:3.8-slim
+```
+
+---
+
+## Part 4 — Design a Basic Secure CI Pipeline (20 minutes)
+
+### Part 4 Objective
+
+Write a GitHub Actions workflow YAML that integrates gitleaks and Trivy as security gates.
+
+### Step 4.1 — Create the Workflow File
+
+```bash
+cd ~/devsecops-lab01
+mkdir -p .github/workflows
+touch .github/workflows/devsecops-pipeline.yml
+```
+
+### Step 4.2 — Write the Pipeline
+
+Paste the following into `devsecops-pipeline.yml`:
 
 ```yaml
-name: Build and Deploy
+name: DevSecOps Pipeline
 
 on:
   push:
-    branches:
-      - main
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
 
 jobs:
-  build:
+  secrets-scan:
+    name: Secrets Detection
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          fetch-depth: 0
 
-      - name: Install dependencies
-        run: pip install -r requirements.txt
+      - name: Run gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Run unit tests
-        run: pytest tests/
+  container-scan:
+    name: Container Image Scan
+    runs-on: ubuntu-latest
+    needs: secrets-scan
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
       - name: Build Docker image
-        run: docker build -t myapp:latest .
+        run: docker build -t app:${{ github.sha }} .
 
-      - name: Push to registry
-        run: |
-          docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
-          docker push myapp:latest
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: app:${{ github.sha }}
+          format: sarif
+          output: trivy-results.sarif
+          severity: CRITICAL,HIGH
+          exit-code: "1"
 
-      - name: Deploy to production
-        run: ./scripts/deploy.sh production
+      - name: Upload Trivy results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: trivy-results.sarif
 ```
 
-### Part 3 Instructions
+### Step 4.3 — Add a Minimal Dockerfile
 
-**Step 1: Identify missing security gates.**
-
-List all DevSecOps security controls that are absent from this workflow. For each missing control, state: the control type (SAST, SCA, secrets scan, container scan, etc.), where in the workflow it should be inserted (before or after which step), and why its absence represents a risk. You must identify at least five missing controls.
-
-**Step 2: Write the improved workflow.**
-
-Rewrite the complete workflow YAML adding the missing security gates you identified in Step 1. Add a comment above each new security step explaining its purpose.
-
-```yaml
-# Write your improved workflow here
+```bash
+cat > Dockerfile << 'EOF'
+FROM python:3.12-slim
+WORKDIR /app
+COPY . .
+RUN pip install --no-cache-dir -r requirements.txt 2>/dev/null || true
+CMD ["python", "-m", "http.server", "8080"]
+EOF
 ```
 
-**Step 3: Explain the trigger gap.**
+### Step 4.4 — Commit and Push to GitHub
 
-The workflow runs only on `push` to `main`. Explain why this trigger design is a DevSecOps problem. Describe the better trigger strategy and what additional protection it provides.
+Push the repository to GitHub and observe the Actions tab to see your pipeline execute.
 
-### Part 3 Deliverable
-
-Submit your list of missing controls, improved workflow YAML, and trigger gap explanation as a single document.
-
-### Part 3 Rubric
-
-| Criterion | Points |
-|---|---|
-| At least 5 missing controls correctly identified with accurate risk explanation | 15 |
-| Improved YAML is syntactically correct with controls at the right stages | 10 |
-| Trigger gap explanation is technically accurate | 5 |
+```bash
+git add .github/ Dockerfile
+git commit -m "Add DevSecOps CI pipeline with gitleaks and Trivy"
+git remote add origin https://github.com/YOUR_USERNAME/devsecops-lab01.git
+git push -u origin main
+```
 
 ---
 
-## Part 4: Shared Responsibility Scenario (15 points)
+## Deliverables
 
-### Part 4 Scenario
+Submit the following on Canvas:
 
-A mid-size SaaS company has three teams: Development (builds features), Operations (manages infrastructure), and Security (conducts audits and pen tests). They currently have no CI/CD pipeline security automation. After a production data breach caused by a SQL injection vulnerability, the CTO asks: "Whose fault is this, and what should each team do differently?"
-
-### Part 4 Instructions
-
-Write a structured response of 200-250 words that addresses all five points below:
-
-1. Explain why assigning blame to a single team misunderstands the DevSecOps shared responsibility model.
-2. Identify what the Development team should have done differently, specifying one concrete technical control.
-3. Identify what the Operations team should have done differently, specifying one concrete technical control.
-4. Identify what the Security team should have done differently, specifying one concrete change to their process or tooling.
-5. Describe how a feedback loop improvement would prevent the same class of vulnerability from recurring.
-
-### Part 4 Deliverable
-
-Submit your structured response addressing all five numbered points. Include your name, date, course number, and module number at the top of the document.
-
-### Part 4 Rubric
-
-| Criterion | Points |
-|---|---|
-| Correctly reframes blame using the shared responsibility model | 3 |
-| Development team recommendation is technically specific and correct | 3 |
-| Operations team recommendation is technically specific and correct | 3 |
-| Security team recommendation is technically specific and correct | 3 |
-| Feedback loop improvement is accurately described | 3 |
+1. `toolchain_map.md` — Completed with 16+ rows (Part 1)
+2. Screenshot of gitleaks finding the fake AWS credential (Part 2, Step 2.3)
+3. Screenshot of gitleaks reporting zero findings after remediation (Part 2, Step 2.5)
+4. Screenshot comparing Trivy HIGH/CRITICAL counts for python:3.8-slim vs python:3.12-slim (Part 3, Step 3.4)
+5. `devsecops-pipeline.yml` — Your completed workflow file (Part 4)
+6. Lab reflection (minimum 150 words): What surprised you about the number of vulnerabilities in a "standard" base image? How does this change your perspective on container image selection?
 
 ---
 
-## Submission Instructions
+## Grading Rubric
 
-Combine all four parts into a single submission document. Label each part clearly. Submit via the Canvas LMS assignment portal before the due date shown in Canvas.
+| Criterion | Points |
+|---|---|
+| Toolchain map — completeness (16+ rows, correct phases) | 20 |
+| gitleaks — secret detected and screenshot provided | 15 |
+| gitleaks — remediation confirmed with zero findings | 15 |
+| Trivy — both images scanned, count comparison recorded | 20 |
+| Pipeline YAML — syntactically correct, both jobs present | 20 |
+| Lab reflection — substantive, minimum 150 words | 10 |
+| **Total** | **100** |
+
+---
+
+Lab 01 | CIS-4350 | Texas Wesleyan University | Professor Nash

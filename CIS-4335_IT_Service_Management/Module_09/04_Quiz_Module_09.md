@@ -1,77 +1,293 @@
-# Quiz: Module 09 - Service Management Practices - Problem Management
-## Course: CIS-4335_IT_Service_Management (ITIL 4 Foundation)
+# Quiz: Module 09 — Problem and Change Management
+
+## Course: CIS-4335 IT Service Management
+
+## Texas Wesleyan University | Professor Nash
+
+## Total Questions: 10 | Points: 10 (1 pt each)
+
+## Certification Alignment: ITIL 4 Foundation
 
 ---
 
-**Question 1**
-What is the primary purpose of the Problem Management practice in ITIL 4?
-*   A) To restore normal service operation as quickly as possible following an unplanned service disruption.
-*   B) To reduce the likelihood and impact of incidents by identifying actual and potential causes of incidents and managing workarounds and known errors.
-*   C) To authorize and schedule all changes to IT services and infrastructure to minimize the risk of disruption.
-*   D) To fulfill user requests for standard services, such as password resets and software installations, within agreed timeframes.
-*   **Correct Answer:** B) The purpose of Problem Management is to reduce the likelihood and impact of incidents by identifying causes and managing workarounds and known errors.
-*   **Distractor Analysis:**
-    *   *Why B is correct:* ITIL 4 defines the purpose of Problem Management as reducing the likelihood and impact of incidents by identifying their actual and potential causes, and by managing workarounds and known errors. Unlike Incident Management, Problem Management focuses on prevention and root cause, not immediate restoration.
-    *   *Why A is incorrect:* Restoring normal service operation as quickly as possible is the purpose of Incident Management, not Problem Management. Problem Management addresses underlying causes after or in parallel with restoration.
-    *   *Why C is incorrect:* Authorizing and scheduling changes is the purpose of Change Enablement. Problem Management may raise change requests when a fix requires a change, but it does not authorize or schedule those changes.
-    *   *Why D is incorrect:* Fulfilling user requests for standard services is the purpose of Service Request Management. These are planned, expected activities — not problem investigations.
+## Instructions
+
+Select the single best answer for each question. Questions are scenario-based and aligned
+to the ITIL 4 Foundation exam style. Each question is followed by the correct answer and
+a distractor analysis explaining why the other options are incorrect.
 
 ---
 
-**Question 2**
-Which of the following most accurately describes a known error in ITIL 4?
-*   A) An incident that has been escalated to a senior technical team because first-line support was unable to restore service.
-*   B) A service disruption caused by a configuration error that was introduced during a recent change to the infrastructure.
-*   C) A problem that has been analyzed and for which the root cause is understood, but for which a permanent resolution has not yet been implemented.
-*   D) A risk identified during proactive problem analysis that has not yet caused any incidents.
-*   **Correct Answer:** C) A known error is a problem whose root cause is understood but for which no permanent fix has yet been applied.
-*   **Distractor Analysis:**
-    *   *Why C is correct:* ITIL 4 defines a known error as a problem that has been analyzed and has a documented root cause and workaround, but has not yet been permanently resolved. Known errors are recorded in the Known Error Database so service desk staff can apply workarounds efficiently without re-diagnosing the same issue.
-    *   *Why A is incorrect:* An escalated incident is still an incident — it describes a service disruption being handled through Incident Management. Escalation does not transform an incident into a known error.
-    *   *Why B is incorrect:* A service disruption caused by a recent change is an incident (and possibly a problem to be investigated). It becomes a known error only after root cause analysis has been completed and the cause is documented.
-    *   *Why D is incorrect:* That describes a potential problem identified through proactive Problem Management — a risk or vulnerability, not a known error. A known error requires that root cause analysis has already been completed.
+### Question 1
+
+An IT team has experienced the same application error four times in three weeks. Each
+time the application crashes, they restart it and service is restored. They have not
+investigated why the crashes occur.
+
+According to ITIL 4, what should the team do now?
+
+- A) Increase the priority of the incident each time it recurs
+- B) Raise a problem record and conduct a root cause analysis
+- C) Declare a major incident and activate the war room
+- D) Submit an emergency change request to patch the application
+
+#### Q1 Correct Answer: B
+
+#### Q1 Distractor Analysis
+
+- A is incorrect. Changing incident priority addresses response urgency, not the
+  underlying cause. The correct response to a recurring incident pattern is Problem
+  Management.
+- C is incorrect. Major incident declaration is triggered by current high-severity
+  business impact, not by recurrence history. The appropriate response here is raising
+  a problem record.
+- D is incorrect. An emergency change cannot be raised without first identifying what
+  needs to change. Problem Management must first identify the root cause before a fix
+  can be designed and a change raised.
 
 ---
 
-**Question 3**
-The service desk has received 47 tickets over the past month reporting that users are intermittently unable to connect to the corporate VPN. Each incident is resolved by restarting the user's VPN client — but the problem keeps recurring. What should the organization do next, and why?
-*   A) Continue resolving each incident individually with the restart workaround, since the incidents are being resolved within SLA targets.
-*   B) Raise a problem record to investigate the root cause of the recurring VPN failures and create a known error record with the documented workaround.
-*   C) Classify the issue as a major incident and convene an emergency response team to resolve it immediately.
-*   D) Submit a change request to replace the VPN system entirely, since repeated incidents indicate the technology is not fit for purpose.
-*   **Correct Answer:** B) Recurring incidents with a common pattern should trigger a problem record to investigate root cause and formally document the workaround as a known error.
-*   **Distractor Analysis:**
-    *   *Why B is correct:* Forty-seven recurring incidents with the same symptom and the same workaround is exactly the scenario that triggers Problem Management. A problem record should be raised to investigate the underlying cause (why does restarting the client fix it?). In the meantime, the restart workaround should be formally documented as a known error in the KEDB so service desk staff can apply it efficiently without re-diagnosing each time.
-    *   *Why A is incorrect:* Meeting SLA targets on individual incidents does not mean the problem is being managed. Without a problem record, the organization is spending ongoing effort resolving the same issue repeatedly and the root cause remains unaddressed.
-    *   *Why C is incorrect:* A major incident requires a significant, immediate business impact. Forty-seven individual VPN incidents resolved within SLA do not constitute a single major incident requiring emergency response.
-    *   *Why D is incorrect:* Replacing the entire VPN system is a significant, costly change that would not be justified without first completing root cause analysis. Root cause may reveal a simple configuration issue, software bug, or network setting — not a need for full replacement.
+### Question 2
+
+A problem has been analyzed. The root cause has been identified — a misconfigured load
+balancer — and a temporary workaround has been documented that allows services to
+continue with reduced performance. A permanent fix has been designed but not yet
+deployed.
+
+According to ITIL 4, what is the correct term for the current state of this problem?
+
+- A) Open incident
+- B) Known error
+- C) Resolved problem
+- D) Emergency change
+
+#### Q2 Correct Answer: B — Known Error
+
+#### Q2 Distractor Analysis
+
+- A (Open incident) is incorrect. An incident is an unplanned service interruption. This
+  situation involves a documented root cause and workaround — it has progressed beyond
+  incident status into Problem Management.
+- C (Resolved problem) is incorrect. A problem is only resolved when the permanent fix
+  has been deployed and verified. With the fix pending, the problem remains open as a
+  known error.
+- D (Emergency change) is incorrect. An emergency change is a type of change request, not
+  a problem state. The problem becomes a known error; a change record is what gets raised
+  to deploy the fix.
 
 ---
 
-**Question 4**
-A problem investigation has identified that a memory leak in a third-party application is the root cause of recurring server crashes. The vendor has acknowledged the defect but a patch will not be available for 60 days. The organization documents a workaround — restarting the affected service weekly — which prevents crashes. What is the correct status of this issue according to ITIL 4 Problem Management?
-*   A) The problem is closed because a workaround has been implemented and service is stable.
-*   B) The problem is closed because root cause has been identified and documented.
-*   C) The issue is now a known error — root cause is understood, a workaround is in place, and error control manages it until the vendor patch is applied.
-*   D) The issue remains an open incident because the server crashes have not been permanently resolved.
-*   **Correct Answer:** C) With root cause understood and a workaround in place but no permanent fix yet, this is a known error managed through error control.
-*   **Distractor Analysis:**
-    *   *Why C is correct:* Once root cause analysis is complete and the cause is documented, a problem transitions to known error status. The workaround is documented in the KEDB, and error control monitors the situation until the permanent fix (the vendor patch) is implemented. The problem/known error record remains open during this period.
-    *   *Why A is incorrect:* A workaround restores service but does not permanently resolve the underlying cause. The problem record — now a known error record — remains open until the permanent fix is applied.
-    *   *Why B is incorrect:* Identifying and documenting root cause moves the issue from problem to known error status — it does not close it. The record stays open until the permanent resolution is implemented.
-    *   *Why D is incorrect:* Individual incidents caused by the crashes may be closed once the workaround stabilizes service. But the underlying problem/known error is distinct from those individual incidents and remains open under Problem Management.
+### Question 3
+
+Which of the following BEST distinguishes proactive problem management from reactive
+problem management?
+
+- A) Proactive problem management is performed by senior staff; reactive is performed by
+  the service desk
+- B) Reactive problem management is triggered by incidents; proactive problem management
+  identifies potential causes before incidents occur
+- C) Proactive problem management involves the CAB; reactive problem management does not
+- D) Reactive problem management uses the 5 Whys; proactive uses the fishbone diagram
+
+#### Q3 Correct Answer: B
+
+#### Q3 Distractor Analysis
+
+- A is incorrect. ITIL 4 does not distinguish problem management types by staff level.
+  Both types can involve any appropriate technical staff.
+- C is incorrect. The CAB is a Change Enablement body, not a Problem Management one.
+  Neither type of problem management inherently involves the CAB.
+- D is incorrect. Both RCA techniques can be used for either type of problem management.
+  The choice of technique depends on the problem's complexity, not whether it is reactive
+  or proactive.
 
 ---
 
-**Question 5**
-Which of the following correctly describes the relationship between Problem Management and Change Enablement in ITIL 4?
-*   A) Problem Management and Change Enablement are independent practices that never interact — changes are initiated only by project teams, not by problem investigations.
-*   B) When Problem Management identifies a permanent fix that requires a change to infrastructure or services, it raises a change request that is authorized and managed through Change Enablement.
-*   C) Problem Management has its own change authority and can authorize infrastructure changes directly without involving Change Enablement.
-*   D) Change Enablement triggers Problem Management by raising a problem record every time a change causes an incident in the live environment.
-*   **Correct Answer:** B) Problem Management raises change requests for permanent fixes, which are then authorized and managed through Change Enablement.
-*   **Distractor Analysis:**
-    *   *Why B is correct:* When Problem Management determines that a permanent fix requires a change to the infrastructure, application, or service, it raises a change request. That request is then assessed, authorized, and managed through Change Enablement. Problem Management identifies what needs to change; Change Enablement governs how and when that change occurs.
-    *   *Why A is incorrect:* Problem Management and Change Enablement interact regularly. Root cause fixes frequently require changes to infrastructure, configuration, or software — making the handoff from Problem Management to Change Enablement a standard workflow.
-    *   *Why C is incorrect:* Problem Management does not hold change authority. Authorization of changes — including those raised to fix known errors — belongs to Change Enablement and the designated change authority.
-    *   *Why D is incorrect:* While Change Enablement does consider incident and problem data (for example, when assessing risk of a change), it does not automatically raise problem records. Changes that cause incidents may trigger reactive Problem Management, but this is not described as Change Enablement triggering Problem Management.
+### Question 4
+
+During a 5 Whys analysis, an IT team asks: "Why did the server run out of disk space?"
+and answers "Because log files were never purged." They then ask why log files were never
+purged and discover the automated cleanup job was disabled during a maintenance window
+six months ago and was never re-enabled.
+
+Which ITIL 4 practice's absence contributed most directly to this root cause?
+
+- A) Incident Management
+- B) Service Level Management
+- C) Change Enablement
+- D) Service Desk
+
+#### Q4 Correct Answer: C — Change Enablement
+
+#### Q4 Distractor Analysis
+
+- A (Incident Management) is incorrect. Incident Management would have responded to the
+  disk-full symptom, not prevented the root cause. The root cause is a configuration
+  change made during maintenance that was never properly tracked or reversed.
+- B (Service Level Management) is incorrect. SLM governs service quality agreements and
+  reviews, not the operational execution of maintenance tasks and configuration tracking.
+- D (Service Desk) is incorrect. The service desk handles user contacts and incident
+  logging. The root cause here is an untracked configuration modification — a Change
+  Enablement gap.
+
+---
+
+### Question 5
+
+A financial services firm needs to apply a critical security patch to their trading
+platform. A zero-day vulnerability has been publicly disclosed and is being actively
+exploited. The patch has not been tested internally, and the trading platform is live
+with active users.
+
+Which change type BEST applies to this situation?
+
+- A) Standard change
+- B) Normal change
+- C) Emergency change
+- D) Authorized change
+
+#### Q5 Correct Answer: C — Emergency Change
+
+#### Q5 Distractor Analysis
+
+- A (Standard change) is incorrect. Standard changes are pre-authorized, low-risk, and
+  follow documented repeatable procedures. An untested patch during an active exploit
+  does not qualify as standard.
+- B (Normal change) is incorrect. Normal changes require full CAB review and scheduling.
+  The urgency of an active exploit does not allow the time required for normal change
+  process.
+- D (Authorized change) is incorrect. "Authorized change" is not a recognized ITIL 4
+  change type. The three types are standard, normal, and emergency.
+
+---
+
+### Question 6
+
+Which of the following is the PRIMARY purpose of the Known Error Database (KEDB)?
+
+- A) To store all closed problem records for historical reference
+- B) To track the status of all in-progress change requests
+- C) To provide documented workarounds that enable faster incident resolution while
+  permanent fixes are pending
+- D) To record all incidents by category and resolution time
+
+#### Q6 Correct Answer: C
+
+#### Q6 Distractor Analysis
+
+- A is incorrect. The KEDB stores known errors — problems with identified root causes and
+  documented workarounds — not all closed problem records. Closed problems where the fix
+  has been deployed are removed or archived from the active KEDB.
+- B is incorrect. Change request tracking is a Change Enablement function, not the
+  purpose of the KEDB.
+- D is incorrect. Incident records are maintained in the IT service management tool's
+  incident module, not in the KEDB.
+
+---
+
+### Question 7
+
+A systems administrator wants to add a new DNS record following a standard procedure
+that has been used dozens of times without incident. The procedure is fully documented,
+tested, and has pre-authorization from the Change Manager.
+
+Which change type and process applies?
+
+- A) Normal change — must be submitted to the CAB for review
+- B) Emergency change — DNS changes always require urgent handling
+- C) Standard change — pre-authorized, low-risk, follows documented procedure
+- D) Standard change — but a rollback plan must first be approved by the CAB
+
+#### Q7 Correct Answer: C
+
+#### Q7 Distractor Analysis
+
+- A is incorrect. Standard changes do not require CAB review — they are pre-authorized
+  precisely because they are well understood, low-risk, and repeatable.
+- B is incorrect. The emergency change type is for urgent, unplanned situations. A
+  routine DNS record addition following a known procedure is not an emergency.
+- D is incorrect. Standard changes do not require CAB approval of rollback plans.
+  The pre-authorization covers the procedure including its rollback steps.
+
+---
+
+### Question 8
+
+Which of the following BEST describes the purpose of the Change Schedule?
+
+- A) A list of all incidents and their resolution times for the current month
+- B) An authorized timeline of all approved changes, used to prevent conflicts and
+  support business planning
+- C) A prioritized backlog of change requests awaiting CAB review
+- D) A project plan for major IT initiatives approved by the executive steering committee
+
+#### Q8 Correct Answer: B
+
+#### Q8 Distractor Analysis
+
+- A is incorrect. The Change Schedule tracks approved changes, not incident records.
+  Incident records are managed in the incident management module.
+- C is incorrect. Change requests awaiting CAB review are in the change pipeline or
+  change queue, not the Change Schedule. The Change Schedule contains only authorized,
+  approved changes.
+- D is incorrect. The Change Schedule is an operational tool for managing IT changes, not
+  a strategic project plan. Major projects may have entries in the Change Schedule but
+  the schedule itself is not a project management artifact.
+
+---
+
+### Question 9
+
+After a major incident is resolved, the post-incident review identifies three systemic
+factors that contributed to the outage. Which practice takes primary responsibility for
+investigating these factors and preventing recurrence?
+
+- A) Incident Management
+- B) Change Enablement
+- C) Problem Management
+- D) Monitoring and Event Management
+
+#### Q9 Correct Answer: C — Problem Management
+
+#### Q9 Distractor Analysis
+
+- A (Incident Management) is incorrect. Incident Management's goal is restoration.
+  After restoration, the baton passes to Problem Management for root cause investigation.
+- B (Change Enablement) is incorrect. Change Enablement may be involved later to
+  implement the fix, but it does not perform root cause analysis.
+- D (Monitoring and Event Management) is incorrect. Monitoring detects and categorizes
+  events. It feeds information into incident and problem management but does not itself
+  conduct root cause analysis or manage the problem lifecycle.
+
+---
+
+### Question 10
+
+An organization's IT team is conducting a quarterly architecture review. They identify
+that their primary database server has no redundancy — if it fails, the entire ERP system
+goes down. No incident has occurred yet.
+
+Which type of problem management activity is this?
+
+- A) Reactive problem management — triggered by an existing incident
+- B) Proactive problem management — identifying a potential cause of future incidents
+- C) Change Enablement — assessing risk of a proposed modification
+- D) Service Level Management — reviewing compliance with SLA targets
+
+#### Q10 Correct Answer: B — Proactive Problem Management
+
+#### Q10 Distractor Analysis
+
+- A (Reactive problem management) is incorrect. Reactive problem management is triggered
+  by existing incidents. No incident has occurred here — the team is identifying a
+  vulnerability before it causes a problem.
+- C (Change Enablement) is incorrect. No change is being proposed or assessed. The team
+  is identifying a risk through an architecture review — a proactive Problem Management
+  activity.
+- D (Service Level Management) is incorrect. SLM focuses on agreed service targets and
+  their measurement. Identifying a redundancy gap is a technical risk identification
+  activity within Problem Management.
+
+---
+
+Module 09 Quiz | CIS-4335 IT Service Management | Texas Wesleyan University

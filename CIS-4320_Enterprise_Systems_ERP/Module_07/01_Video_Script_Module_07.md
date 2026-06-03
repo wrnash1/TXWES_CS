@@ -56,7 +56,7 @@ Fifth: Cases. A Case represents a customer issue, question, or complaint that ne
 
 [SHOW DIAGRAM: An entity-relationship style diagram. Lead (top left) with a dashed arrow labeled 'Lead Conversion' pointing to three boxes: Account, Contact, Opportunity. Below Account: Cases (linked to Account and Contact). Arrows labeled '1:M' from Account to Contact, Account to Opportunity, Account to Case. Note at bottom: 'All five objects are standard objects in Salesforce — no custom development required.']
 
-The Lead conversion process is important for the exam. When a salesperson qualifies a Lead — meaning the prospect is real, has budget, and is interested — they convert the Lead. Salesforce converts the Lead record into three linked records: an Account for the company, a Contact for the person, and an Opportunity for the potential deal. The original Lead record is marked 'Converted' and remains in the system for reporting."
+The Lead conversion process is important for the exam. When a salesperson qualifies a Lead — meaning the prospect is real, has budget, and is interested — they convert the Lead. Salesforce converts the Lead record into three linked records: an Account for the company, a Contact for the person, and an Opportunity for the potential deal. The original Lead record is marked Converted and remains in the system for reporting."
 
 ---
 
@@ -68,7 +68,7 @@ Cut to slide: "Sales Cloud — Managing the Pipeline."
 
 An Opportunity moves through a series of stages that represent where you are in the sales process. Each stage has a Probability percentage — a built-in forecast of likelihood to close. A typical Sales Cloud stage sequence might look like this: Prospecting at 10%, Qualification at 20%, Needs Analysis at 40%, Proposal/Price Quote at 60%, Negotiation at 80%, Closed Won at 100%, Closed Lost at 0%.
 
-[SHOW DIAGRAM: A horizontal pipeline visualization showing stages as boxes from left to right: Prospecting (10%) → Qualification (20%) → Needs Analysis (40%) → Proposal (60%) → Negotiation (80%) → Closed Won (100%). Below the pipeline, a bar chart showing number of deals at each stage. A caption: 'Forecast Amount = Opportunity Amount × Stage Probability.']
+[SHOW DIAGRAM: A horizontal pipeline visualization showing stages as boxes from left to right: Prospecting (10%) through Qualification (20%) through Needs Analysis (40%) through Proposal (60%) through Negotiation (80%) through Closed Won (100%). Below the pipeline, a bar chart showing number of deals at each stage. A caption: 'Forecast Amount = Opportunity Amount x Stage Probability.']
 
 Salesforce builds pipeline reports and forecasts from this data automatically. The sales manager can see every open opportunity, which stage it is in, who owns it, when it is expected to close, and what the forecasted revenue is — all from a real-time dashboard.
 
@@ -88,7 +88,7 @@ A Case lifecycle works like this: a customer contacts support by phone, email, w
 
 Service Level Agreements — SLAs — are managed in Service Cloud through a feature called Entitlements and Milestones. An Entitlement defines what level of service a customer is entitled to based on their support contract — for example, Priority 1 issues resolved within 4 hours, Priority 2 within 24 hours. A Milestone is a checkpoint that tracks whether those SLA times are being met. If a Case is approaching its resolution deadline, Service Cloud can automatically escalate it to a senior agent or a manager.
 
-[SHOW DIAGRAM: Case lifecycle flow. Box 1: 'Case Created' (phone/email/chat). Arrow to Box 2: 'Case Assigned' (queue or agent). Arrow to Box 3: 'Investigation and Customer Communication.' Arrow to Box 4: 'Resolution Posted.' Arrow to Box 5: 'Case Closed — CSAT Survey Sent.' Below the flow, a parallel SLA timeline: 'SLA Clock Starts → Milestone 1: First Response Within 2 Hours → Milestone 2: Resolution Within 24 Hours → SLA Met or Escalated.']
+[SHOW DIAGRAM: Case lifecycle flow. Box 1: 'Case Created' (phone/email/chat). Arrow to Box 2: 'Case Assigned' (queue or agent). Arrow to Box 3: 'Investigation and Customer Communication.' Arrow to Box 4: 'Resolution Posted.' Arrow to Box 5: 'Case Closed — CSAT Survey Sent.' Below the flow, a parallel SLA timeline: 'SLA Clock Starts to Milestone 1: First Response Within 2 Hours to Milestone 2: Resolution Within 24 Hours to SLA Met or Escalated.']
 
 Knowledge Base integration is another key Service Cloud capability. When an agent resolves a Case, they can link it to a Knowledge Article — a documented solution. Future agents handling similar issues can search the Knowledge Base and find the resolution without starting from scratch. Over time, the Knowledge Base becomes the institutional memory of every issue the support team has ever resolved.
 
@@ -104,7 +104,7 @@ Cut to slide: "CRM + ERP — The Complete Customer Journey."
 
 Step one: A prospect becomes a qualified Lead in Salesforce. Step two: The Lead is converted to Account, Contact, and Opportunity. Step three: The sales rep builds a Quote in Salesforce using the Products catalog. Step four: The customer accepts the proposal and the Opportunity is marked Closed Won. Step five: The closed Opportunity triggers an Order record in Salesforce. Step six: The Order flows via integration to the SAP SD module where a Sales Order is created. Step seven: SAP SD triggers MM inventory management to check stock availability. Step eight: SAP posts the delivery, goods issue, and revenue recognition to FI. Step nine: The customer's payment in SAP FI AR flows back to Salesforce to update the Account's payment status.
 
-[SHOW DIAGRAM: Two swim lanes. Top lane labeled 'Salesforce CRM': Lead → Account/Contact/Opportunity → Quote → Closed Won → Order. Bottom lane labeled 'SAP ERP': Sales Order (SD) → Inventory Check (MM) → Goods Issue (MM) → Revenue Recognition (FI) → Customer Payment (FI-AR). A vertical dashed line between the lanes labeled 'Integration Layer (API/Middleware)' with arrows crossing in both directions at the Order/Sales Order boundary and at the Payment boundary.]
+[SHOW DIAGRAM: Two swim lanes. Top lane labeled 'Salesforce CRM': Lead then Account/Contact/Opportunity then Quote then Closed Won then Order. Bottom lane labeled 'SAP ERP': Sales Order (SD) then Availability Check (MM) then Goods Issue (MM) then Revenue Recognition (FI) then Customer Payment (FI-AR). A vertical dashed line between the lanes labeled 'Integration Layer (API/Middleware)' with arrows crossing in both directions at the Order/Sales Order boundary and at the Payment boundary.]
 
 The integration layer in the middle — labeled here as API or Middleware — is where most CRM-ERP integration projects succeed or fail. The data formats, field mappings, error handling, and timing of data transfers must all be carefully designed. We will cover integration architecture in detail in Module 11."
 

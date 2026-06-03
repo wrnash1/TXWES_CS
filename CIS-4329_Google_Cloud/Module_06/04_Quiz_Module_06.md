@@ -1,235 +1,245 @@
-# Quiz — Module 06
+# Quiz: Module 06 — Google Kubernetes Engine (GKE)
 
-## CIS-4329: Google Cloud Platform | Texas Wesleyan University
+## Course: CIS-4329 Google Cloud Computing
 
-### Topic: Cloud Load Balancing and Cloud CDN
+**Certification Alignment:** Google Cloud Associate Cloud Engineer (ACE)
 
-### 10 Questions | 10 Points Each | Total: 100 Points
+---
+
+## Instructions
+
+Select the best answer for each question. Each question is worth 10 points.
+This quiz covers GKE cluster types, node pools, Kubernetes workloads, Services,
+Ingress, autoscaling, and Helm.
 
 ---
 
 ## Question 1
 
-Your company runs a web application that serves users across North America, Europe, and Asia. You need a single global IP address that routes users to the nearest healthy backend automatically, supports HTTPS termination, and can route `/api` requests to one set of VMs and `/static` requests to another. Which load balancer type is correct?
+A development team wants to deploy containerized applications on GKE. They do
+not want to manage node provisioning, scaling, or maintenance. Billing should
+be based on actual pod resource consumption rather than node capacity.
+Which GKE cluster mode should they use?
 
-A. Regional TCP/UDP Network Load Balancer
+- A) Standard cluster with node pool autoscaling
+- B) Autopilot cluster
+- C) Zonal Standard cluster with fixed node count
+- D) Standard cluster with preemptible nodes
 
-B. Internal HTTP(S) Load Balancer
+**Correct Answer:** B
 
-C. Global External HTTP(S) Load Balancer
-
-D. Regional External HTTP(S) Load Balancer
-
-Correct Answer: C
-
-Distractor Analysis:
-
-- Why A is incorrect: A TCP/UDP Network Load Balancer operates at Layer 4 and cannot perform URL-based routing, HTTPS termination, or global anycast distribution.
-- Why B is incorrect: The Internal HTTP(S) Load Balancer is for private traffic between services inside a VPC — it does not have a public IP and cannot serve external users.
-- Why D is incorrect: A Regional External HTTP(S) Load Balancer serves one region only and cannot provide a single global IP that routes users across continents to the nearest backend.
+**Explanation:** GKE Autopilot manages node provisioning, scaling, and
+maintenance on behalf of the user. Billing is based on pod CPU and memory
+requests rather than node VM costs. This is exactly the model the question
+describes. Standard clusters (options A, C, D) require the user to manage node
+pools even when autoscaling is enabled, and bill per node regardless of pod
+utilization.
 
 ---
 
 ## Question 2
 
-You have configured a Global HTTP(S) Load Balancer with a Managed Instance Group backend. Users report intermittent 502 errors. You check the load balancer logs and see that the health check is failing. Which firewall rule is most likely missing?
+You need to run a pod only on nodes in a specific GKE node pool that has GPUs.
+The node pool was created with the taint `gpu=true:NoSchedule`. What must
+the pod spec include to be scheduled on those nodes?
 
-A. An egress rule allowing the VMs to send health check responses to Google's servers.
+- A) A node affinity rule specifying the node pool name
+- B) A toleration matching `gpu=true:NoSchedule`
+- C) A resource request for GPU units
+- D) A label `nodePool: gpu-pool` on the pod
 
-B. An ingress rule allowing TCP traffic from `35.191.0.0/16` and `130.211.0.0/22` to reach the backend VMs on the health check port.
+**Correct Answer:** B
 
-C. An ingress rule allowing all internet traffic to port 80 on the backend VMs.
-
-D. A rule allowing the load balancer's frontend IP to communicate with the backend VMs directly.
-
-Correct Answer: B
-
-Distractor Analysis:
-
-- Why A is incorrect: GCP firewall rules are stateful — if the inbound health check probe is allowed, the outbound response is automatically permitted without a separate egress rule.
-- Why C is incorrect: Opening port 80 to all internet traffic is overly broad and not required for health checks; only the specific Google health check probe ranges need access to the health check port.
-- Why D is incorrect: The Global HTTP(S) Load Balancer is a distributed proxy — there is no single load balancer frontend IP that connects to backends. Health check traffic originates from Google's dedicated health check IP ranges, not from a frontend IP.
+**Explanation:** Taints on nodes prevent pods from being scheduled unless the
+pod has a matching toleration. The taint `gpu=true:NoSchedule` requires a
+toleration with key=`gpu`, value=`true`, effect=`NoSchedule`. Without this
+toleration, the scheduler ignores those nodes. Node affinity (option A) is for
+preference-based scheduling, not hard restrictions via taints.
 
 ---
 
 ## Question 3
 
-Your application serves a large number of static images and JavaScript files that rarely change. Users worldwide are reporting slow page load times. You already have a Global HTTP(S) Load Balancer in place. Which feature can you enable to reduce latency and origin server load with minimal configuration changes?
+Your GKE cluster has 10 pods running. The Horizontal Pod Autoscaler scales
+the deployment to 20 pods due to high CPU. The 10 new pods stay in Pending
+state. What is the most likely cause and what resolves it automatically?
 
-A. Enable session affinity on the backend service to pin users to the same VM.
+- A) The pods are misconfigured; a cluster administrator must fix the YAML
+- B) The node pool has reached its maximum node count; you must manually
+     add nodes
+- C) The Cluster Autoscaler detects the pending pods and adds nodes to the
+     pool, up to the configured maximum
+- D) The HPA and Cluster Autoscaler cannot run simultaneously
 
-B. Add a second backend MIG in each region to handle local traffic.
+**Correct Answer:** C
 
-C. Enable Cloud CDN on the backend service to cache static content at Google's edge nodes.
-
-D. Switch to a Network Load Balancer, which has lower latency than the HTTP(S) Load Balancer.
-
-Correct Answer: C
-
-Distractor Analysis:
-
-- Why A is incorrect: Session affinity routes the same user to the same backend VM to preserve state — it does not cache content at the edge or reduce global latency for static assets.
-- Why B is incorrect: Adding more MIGs increases backend capacity and reduces regional load, but users still retrieve content from your origin servers; it does not cache content at the network edge close to users.
-- Why D is incorrect: Network Load Balancers operate at Layer 4 and have no concept of HTTP caching; Cloud CDN only works with the Global HTTP(S) Load Balancer, making a switch away counterproductive.
+**Explanation:** When pods cannot be scheduled because no node has sufficient
+resources, the Cluster Autoscaler detects the pending pods and adds new nodes to
+the node pool (up to the configured maximum). The HPA and Cluster Autoscaler
+are designed to work together — HPA creates more pods, CA provides the nodes
+to run them. If the maximum node count is already reached, CA cannot add more
+nodes, but that is a configuration limit, not the "most likely" cause described.
 
 ---
 
 ## Question 4
 
-You need to load balance internal traffic between a set of microservices running on Compute Engine VMs within the same VPC. The microservices communicate using HTTP/2 (gRPC). No public IP addresses should be involved. Which load balancer type is correct?
+A microservices application has three services deployed on GKE: `frontend`,
+`api`, and `admin`. You want to expose all three over HTTP from a single
+external IP address, routing based on path:
+`/api/*` → api service, `/admin/*` → admin service, `/` → frontend. What
+Kubernetes resource achieves this most efficiently?
 
-A. Global External HTTP(S) Load Balancer with an SSL certificate
+- A) Three separate LoadBalancer services, each with a different external IP
+- B) Three NodePort services with a custom nginx proxy VM
+- C) One Ingress resource with path-based routing rules
+- D) One ClusterIP service with port forwarding
 
-B. Regional External TCP/UDP Network Load Balancer
+**Correct Answer:** C
 
-C. Internal HTTP(S) Load Balancer
-
-D. Cloud Armor policy attached to an internal backend service
-
-Correct Answer: C
-
-Distractor Analysis:
-
-- Why A is incorrect: The Global External HTTP(S) Load Balancer has a public IP and is designed for external internet traffic — it is not appropriate for internal VPC microservice traffic with no public exposure.
-- Why B is incorrect: The Regional External TCP/UDP Network Load Balancer also has a public-facing frontend and is designed for external traffic; it does not provide an internal-only load balancing endpoint.
-- Why D is incorrect: Cloud Armor is a web application firewall layer that attaches to load balancers for DDoS protection and rule-based filtering — it is not a load balancer itself and cannot distribute traffic.
+**Explanation:** An Ingress resource defines HTTP/HTTPS routing rules based on
+hostname and path, routing to multiple backend services through a single GCP
+Application Load Balancer with one external IP. This is more efficient and
+cost-effective than creating three separate LoadBalancer services (option A),
+each of which provisions a separate GCP load balancer.
 
 ---
 
 ## Question 5
 
-A backend VM in your HTTP(S) Load Balancer's Managed Instance Group is receiving traffic even though its application has crashed and it is returning HTTP 500 errors. What configuration change will cause the load balancer to stop sending traffic to this unhealthy instance?
+What is the key command to configure kubectl to communicate with a GKE cluster
+after the cluster is created?
 
-A. Add a Cloud Armor security policy to block 5xx responses from reaching users.
+- A) `kubectl config set-context GKE_CLUSTER_NAME`
+- B) `gcloud container clusters get-credentials CLUSTER_NAME --region REGION`
+- C) `kubectl apply -f cluster-credentials.yaml`
+- D) `gcloud auth configure-docker`
 
-B. Configure a URL map rule to redirect `/error` paths away from the broken instance.
+**Correct Answer:** B
 
-C. Configure an HTTP health check on the backend service that checks for HTTP 200 responses, so the failing VM is automatically marked unhealthy and removed from rotation.
-
-D. Enable Cloud CDN caching so that previously cached 200 responses are served instead of the live 500 errors.
-
-Correct Answer: C
-
-Distractor Analysis:
-
-- Why A is incorrect: Cloud Armor security policies filter incoming requests based on IP addresses, geo-location, and request attributes — they do not inspect backend response codes or control which backend VMs receive traffic.
-- Why B is incorrect: URL map rules route traffic based on request path patterns — they do not monitor backend health or dynamically reroute traffic based on runtime errors from a specific VM.
-- Why D is incorrect: Cloud CDN caches successful responses but does not serve stale cached content instead of live backend errors when the backend is still reachable but returning 5xx; health checks are the correct mechanism for removing failed instances from rotation.
+**Explanation:** `gcloud container clusters get-credentials` fetches the cluster
+credentials from the GKE API and writes them to the kubectl configuration file
+(`~/.kube/config`). This configures the current kubectl context to point to
+the specified GKE cluster. `kubectl config` (option A) manipulates existing
+kubeconfig entries but cannot fetch new GKE credentials.
 
 ---
 
 ## Question 6
 
-You are designing a load balancer architecture for a new SaaS platform. The platform must serve traffic from a single global IP address, route requests for `app.example.com/api` to one set of VMs and `app.example.com/static` to a CDN-enabled backend, and protect against SQL injection attacks. Which combination of GCP services meets all three requirements?
+You deploy a GKE cluster with the control plane in a single zone. A zone
+outage occurs. What is the impact on workloads running in the cluster?
 
-A. Regional External HTTP(S) Load Balancer, URL map with path rules, VPC firewall rules
+- A) Pods continue running because they are on worker nodes in healthy zones
+- B) The cluster API server is unavailable; existing pods continue running but
+     no new pods can be scheduled and no management operations are possible
+- C) All pods are immediately terminated because the control plane is down
+- D) GKE automatically migrates the control plane to a healthy zone
 
-B. Global External HTTP(S) Load Balancer, URL map with path rules, Cloud Armor WAF policy
+**Correct Answer:** B
 
-C. External TCP Proxy Load Balancer, URL map with host rules, Cloud Armor security policy
-
-D. Global External HTTP(S) Load Balancer, Cloud CDN on all backends, Identity-Aware Proxy
-
-Correct Answer: B
-
-Distractor Analysis:
-
-- Why A is incorrect: A Regional External HTTP(S) Load Balancer does not provide a global anycast IP, which is a stated requirement. VPC firewall rules cannot perform SQL injection detection; that requires Cloud Armor's preconfigured WAF rules.
-- Why C is incorrect: The External TCP Proxy Load Balancer operates at Layer 4 and does not understand HTTP paths, so URL map path-based routing is not supported. SQL injection protection requires a Layer 7 WAF.
-- Why D is incorrect: Identity-Aware Proxy (IAP) provides authentication and access control for internal users — it does not provide SQL injection protection. Cloud Armor is the WAF service for OWASP Top 10 protections.
+**Explanation:** In a zonal cluster, the control plane runs in a single zone.
+If that zone fails, the Kubernetes API server is unreachable — you cannot
+deploy, scale, or delete workloads. However, pods already running on worker
+nodes in healthy zones continue to run because they do not need the API server
+for normal operation. This is why regional clusters (with control plane in 3
+zones) are recommended for production.
 
 ---
 
 ## Question 7
 
-Which Cloud CDN cache mode causes CDN to cache responses only when the origin server explicitly includes a `Cache-Control: public, max-age=N` header in the response?
+A ClusterIP service is created for a database pod. A developer reports that
+they cannot connect to the database from outside the cluster. What is the
+expected behavior and how should they access it?
 
-A. FORCE_CACHE_ALL
+- A) ClusterIP services are not routable; the database should be exposed
+     as a LoadBalancer service
+- B) ClusterIP services are only accessible within the cluster; to access
+     from outside, use port-forward for dev/test or a LoadBalancer/Ingress
+     for production
+- C) ClusterIP services require a firewall rule to be opened externally
+- D) The service is misconfigured; all GKE services are externally accessible
 
-B. CACHE_ALL_STATIC
+**Correct Answer:** B
 
-C. USE_ORIGIN_HEADERS
-
-D. BYPASS_CACHE
-
-Correct Answer: C
-
-Distractor Analysis:
-
-- Why A is incorrect: `FORCE_CACHE_ALL` caches all cacheable responses regardless of origin headers — it overrides the origin's cache-control directives and caches responses that might not normally be cached. This is the aggressive mode, not the header-respecting mode.
-- Why B is incorrect: `CACHE_ALL_STATIC` automatically caches responses with static content file extensions (`.jpg`, `.css`, `.js`, etc.) regardless of cache-control headers. It does not require the origin to send explicit cache headers.
-- Why D is incorrect: `BYPASS_CACHE` is not a valid Cloud CDN cache mode. The three valid modes are `USE_ORIGIN_HEADERS`, `CACHE_ALL_STATIC`, and `FORCE_CACHE_ALL`.
+**Explanation:** ClusterIP is the default service type and provides a stable
+internal IP accessible only from within the cluster. This is the correct
+type for a database that should not be externally accessible. For development
+and testing, `kubectl port-forward` can tunnel cluster traffic to a local port.
+For production external access, a LoadBalancer service or Ingress is needed —
+though exposing a database externally is rarely advisable.
 
 ---
 
 ## Question 8
 
-Your company's security team requires DDoS protection and the ability to block traffic from specific countries on your public web application. The application runs behind a Global HTTP(S) Load Balancer. Which GCP service provides both of these capabilities?
+What is the purpose of specifying `resources.requests.cpu` in a pod spec?
 
-A. VPC firewall rules with geo-based IP range blocklists
+- A) It caps the maximum CPU the container can use
+- B) It tells the Kubernetes scheduler how much CPU capacity the pod needs
+     to be placed on a node with sufficient resources
+- C) It creates a CPU billing alert in Cloud Monitoring
+- D) It reserves a dedicated CPU core on the host node
 
-B. Cloud Armor security policies with geo-based filtering and adaptive protection
+**Correct Answer:** B
 
-C. Private Google Access with allowlists for approved country IP ranges
-
-D. Identity-Aware Proxy with conditional access policies based on user location
-
-Correct Answer: B
-
-Distractor Analysis:
-
-- Why A is incorrect: VPC firewall rules operate on IP addresses and ranges but do not natively understand geographic regions. Maintaining country-level IP blocklists manually is operationally impractical and does not provide DDoS adaptive protection.
-- Why C is incorrect: Private Google Access enables VMs without external IPs to reach Google APIs — it is a routing feature, not a security policy service, and provides no traffic filtering or DDoS protection.
-- Why D is incorrect: Identity-Aware Proxy controls access to applications based on authenticated user identity and can use access levels, but it is not a WAF or DDoS protection service. It does not inspect traffic at the network level for attack patterns.
+**Explanation:** Resource requests inform the Kubernetes scheduler of the
+minimum resources a pod needs. The scheduler uses requests to find a node with
+enough available capacity. Requests also affect HPA scaling (the target
+utilization is calculated relative to requests) and Cluster Autoscaler decisions.
+Resource limits (option A) cap maximum usage. Requests do not reserve dedicated
+hardware — they are hints to the scheduler.
 
 ---
 
 ## Question 9
 
-You need to connect a Cloud Run service as a backend to a Global HTTP(S) Load Balancer so that it can be served at a custom domain with Cloud CDN enabled. What type of backend must you use?
+Your team uses Helm to manage a third-party monitoring stack on GKE. A new
+version of the Helm chart is released with configuration changes. You want
+to upgrade the deployment but must be able to roll back immediately if
+something breaks. What Helm command performs the upgrade?
 
-A. A Managed Instance Group in the region where Cloud Run is deployed
+- A) `helm install monitoring bitnami/prometheus --replace`
+- B) `helm upgrade monitoring bitnami/prometheus`
+- C) `kubectl apply -f prometheus-chart.yaml`
+- D) `helm delete monitoring && helm install monitoring bitnami/prometheus`
 
-B. A Zonal Network Endpoint Group pointing to the Cloud Run service's internal IP
+**Correct Answer:** B
 
-C. A Serverless Network Endpoint Group pointing to the Cloud Run service
-
-D. A backend bucket pointing to the Cloud Run service URL as an origin
-
-Correct Answer: C
-
-Distractor Analysis:
-
-- Why A is incorrect: A Managed Instance Group contains Compute Engine VM instances — it cannot represent a serverless Cloud Run service. Cloud Run is not a VM and does not run inside a MIG.
-- Why B is incorrect: A Zonal NEG points to individual VM instances or container endpoints in a specific zone — it does not support Cloud Run, which is a serverless service without a fixed IP address.
-- Why D is incorrect: A backend bucket points to a Cloud Storage bucket for static content serving. It is not designed to proxy requests to a Cloud Run service URL.
+**Explanation:** `helm upgrade` upgrades an existing release to a new chart
+version or configuration. Helm tracks release history automatically, so if
+the upgrade causes issues, you can immediately roll back with
+`helm rollback monitoring [REVISION]`. Option D (delete and reinstall) loses
+the release history and creates downtime.
 
 ---
 
 ## Question 10
 
-A developer runs the complete sequence of gcloud commands to create a Global HTTP(S) Load Balancer. The forwarding rule is created and the external IP is assigned. After 5 minutes, curl requests to the load balancer IP return HTTP 200 responses from the backend VMs. The developer then deletes the health check firewall rule. What happens next?
+A GKE Autopilot cluster is being considered for a security-sensitive
+production workload. Which statement about Autopilot's security model
+is accurate?
 
-A. The load balancer immediately begins returning 503 Service Unavailable to all users.
+- A) Autopilot provides weaker security than Standard clusters because you
+     cannot configure node-level settings
+- B) Autopilot enforces security hardening automatically — privileged containers
+     are not allowed and node SSH access is restricted
+- C) Autopilot clusters do not support Workload Identity Federation
+- D) Autopilot clusters require manual firewall rule configuration to restrict
+     inter-pod traffic
 
-B. Health check probes begin failing; after the unhealthy threshold of consecutive failures is reached, backends are marked unhealthy and traffic stops being served.
+**Correct Answer:** B
 
-C. Nothing changes — the load balancer cached the last known healthy state and continues routing traffic indefinitely.
-
-D. The load balancer automatically creates a replacement firewall rule to restore health check connectivity.
-
-Correct Answer: B
-
-Distractor Analysis:
-
-- Why A is incorrect: The transition from healthy to unhealthy is not instantaneous. The health check must fail a configurable number of consecutive times (the unhealthy threshold, default 2) before a backend is marked unhealthy and removed from rotation. There is a delay measured in seconds to minutes depending on the check interval.
-- Why C is incorrect: GCP load balancers do not cache health state indefinitely. Health checks run continuously on the configured interval. If probes cannot reach the backend VMs due to a missing firewall rule, the check fails and the backend health state degrades on the next check cycle.
-- Why D is incorrect: GCP does not automatically modify firewall rules in response to health check failures. The responsibility for maintaining the correct firewall rules belongs to the operator. GCP's health check system reports the failure but does not self-heal the firewall configuration.
+**Explanation:** GKE Autopilot enforces security hardening as part of its
+managed model. Privileged containers are rejected by default, host namespaces
+cannot be shared, and SSH access to nodes is not permitted. These restrictions
+are consistent and cannot be accidentally loosened by a misconfigured deployment.
+This can actually be a security advantage over Standard clusters where teams
+might enable privileged containers inadvertently.
 
 ---
 
 End of Quiz — Module 06
 
-Course: CIS-4329 Google Cloud Platform | Texas Wesleyan University | Professor Nash
-
-Certification Target: Google Cloud Associate Cloud Engineer
+Course: CIS-4329 Google Cloud Computing | Texas Wesleyan University | Professor Nash

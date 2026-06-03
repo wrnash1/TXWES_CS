@@ -1,217 +1,256 @@
-# Video Script: Module 07 - Azure Database Services
+# Video Script: Module 07 — Azure Compute Services
 
-**Course:** CIS-4331 Azure Cloud | Texas Wesleyan University
-**Instructor:** Professor Nash
-**Estimated Duration:** 20-24 minutes
-**AZ-900 Domain:** Describe Azure Architecture and Services (35-40% of exam)
+## Course: CIS-4331 Azure Cloud Computing
 
----
+## Texas Wesleyan University | Professor Nash
 
-## [00:00 - 01:30] Opening and Learning Objectives
+## Estimated Duration: 20–24 minutes
 
-**[INSTRUCTOR ON CAMERA — title card: "Module 07: Azure Database Services"]**
-
-Welcome to Module 07. I'm Professor Nash. Today we cover Azure Database Services — the managed database offerings that let you run SQL Server, PostgreSQL, MySQL, MariaDB, and globally distributed NoSQL databases without managing database engine software yourself.
-
-Azure's database services are a critical section of AZ-900. The exam tests your ability to match database scenarios to the correct Azure service and to understand the fundamental differences between relational and non-relational databases.
-
-By the end of this module you will be able to:
-
-- Describe Azure SQL Database and its relationship to SQL Server
-- Compare Azure SQL Database, Azure SQL Managed Instance, and SQL Server on Azure VM
-- Describe Azure Cosmos DB and explain its globally distributed architecture
-- Identify Azure Database for PostgreSQL, MySQL, and MariaDB as open-source managed offerings
-- Choose the appropriate database service for a given scenario
-- Explain the difference between relational and non-relational data models
+## Certification Alignment: Microsoft Azure Fundamentals (AZ-900)
 
 ---
 
-## [01:30 - 05:00] Relational vs. Non-Relational Databases
+## Opening (0:00–1:00)
 
-**[SLIDE: "Two Data Models for AZ-900"]**
+Welcome back to CIS-4331 Azure Cloud Computing at Texas Wesleyan University. I'm Professor Nash, and today we are covering Module 07: Azure Compute Services.
 
-Before we look at specific Azure services, let's establish the foundational distinction between relational and non-relational databases — because this distinction determines which Azure database service you recommend in any scenario.
+Compute is at the heart of everything you do in the cloud. Whether you are running a web application, processing data, containerizing microservices, or writing serverless event-driven functions — Azure compute services are what make it possible. By the end of this session, you will understand the major compute options available in Azure, when to use each one, and how they map to real-world scenarios you will encounter on the AZ-900 exam.
 
-**Relational databases** store data in structured tables with rows and columns. Relationships between tables are defined by foreign keys. The schema (table structure) is defined before data is inserted. Relational databases use SQL (Structured Query Language) for queries. ACID properties — Atomicity, Consistency, Isolation, Durability — ensure data integrity.
-
-Example: A banking system stores customers in one table, accounts in another, and transactions in a third. A transaction query joins all three tables to show a customer's full account history.
-
-Azure relational database services: Azure SQL Database, Azure SQL Managed Instance, Azure Database for PostgreSQL, Azure Database for MySQL.
-
-**Non-relational databases** (often called NoSQL) do not use fixed schemas or table-and-column structures. They store data in flexible formats: documents (JSON), key-value pairs, column families, or graphs. They trade ACID guarantees for flexibility and horizontal scalability.
-
-Example: An IoT platform stores millions of sensor readings per minute. Each reading has a slightly different set of fields depending on the sensor type. A document database accommodates this variable schema without requiring table schema changes.
-
-Azure non-relational database service: Azure Cosmos DB.
+Let's get into it.
 
 ---
 
-## [05:00 - 11:00] Azure SQL Database
+## Section 1: Azure Virtual Machines (1:00–5:30)
 
-**[SLIDE: "Azure SQL Database"]**
+### What Is a Virtual Machine?
 
-Azure SQL Database is a fully managed PaaS relational database built on the latest stable version of Microsoft SQL Server. It handles backup, patching, high availability, and scaling automatically — you manage your schemas and queries, not the database engine infrastructure.
+An Azure Virtual Machine, or VM, is an Infrastructure-as-a-Service offering. That means Microsoft manages the physical hardware — the servers, the networking, the data center — but you are responsible for the operating system, the runtime, the middleware, and your applications.
 
-Key characteristics:
+Think of it like renting an apartment. The building owner handles plumbing, roofing, and the foundation. You are responsible for what is inside your unit.
 
-**Fully managed PaaS:** No OS, no SQL Server installation, no patching. Microsoft manages the entire stack below your database.
+VMs are ideal when you need:
 
-**Built on SQL Server:** Uses the same T-SQL dialect, same compatibility levels, same tools (SQL Server Management Studio, Azure Data Studio). Migrating an existing SQL Server database is often straightforward.
+- Full control over the operating system configuration
+- Custom software that cannot run in a managed service
+- Lift-and-shift migrations from on-premises environments
 
-**Deployment options:**
+### VM Sizing
 
-Single Database — an isolated database with its own resources and its own DTU or vCore allocation. Best for new cloud applications.
+Azure organizes VMs into families or series based on workload type. Here are the major ones you need to know.
 
-Elastic Pool — multiple databases share a pool of compute and storage resources. Best when multiple databases have variable and unpredictable utilization patterns — they share the pool rather than each sitting idle.
+**General Purpose** — Balanced CPU-to-memory ratio. Use these for development, testing, and small-to-medium databases. Examples: D-series, B-series (burstable).
 
-**Compute models:**
+**Compute Optimized** — High CPU-to-memory ratio. Use for batch processing, web servers, analytics. Example: F-series.
 
-DTU (Database Transaction Unit) model: pre-packaged bundles of compute, storage, and I/O. Simple pricing, less flexible.
+**Memory Optimized** — High memory-to-CPU ratio. Use for large relational databases, in-memory caches. Examples: E-series, M-series.
 
-vCore model: independently configure CPU, memory, and storage. Enables Azure Hybrid Benefit (use existing SQL Server licenses). Preferred for new deployments.
+**Storage Optimized** — High disk throughput and I/O. Use for Big Data, SQL, and NoSQL databases. Example: L-series.
 
-**High availability:** Built-in zone-redundant configuration available in premium tiers. Automatic failover with no data loss.
+**GPU** — Specialized for graphics rendering and machine learning training. Example: N-series.
 
-**[SHOW PORTAL — Navigate to Azure SQL Database creation blade]**
+[SHOW AZURE PORTAL] Navigate to Virtual Machines > Create. Point out the Size selector, show the filter by workload type, and highlight the vCPU/RAM/cost columns. Filter to show only D-series. Point out the cost-per-hour estimate.
 
-Here in the Portal, creating a SQL Database requires specifying a server (logical container for one or more databases), the compute tier, and backup settings. Notice the comparison between DTU and vCore models — for most scenarios, vCore gives more flexibility.
+### Availability Sets
 
-**[SLIDE: "Azure SQL Database vs. SQL Server on Azure VM"]**
+One of the most critical topics for the AZ-900 exam is high availability. What happens if the physical server hosting your VM fails?
 
-A common exam question: when do you use Azure SQL Database versus SQL Server on an Azure VM?
+An Availability Set protects against two types of failures.
 
-Azure SQL Database (PaaS) characteristics:
+**Fault Domains** — A fault domain is a group of hardware that shares a common power source and network switch. Azure spreads your VMs across up to 3 fault domains. If one rack loses power, your other VMs are unaffected.
 
-- No OS management
-- Automatic patching, backup, HA
-- Supports most SQL Server features
-- Cannot access OS or SQL Server agent jobs natively
+**Update Domains** — When Azure performs planned maintenance, it restarts VMs in one update domain at a time. Your VMs are spread across up to 20 update domains, so your application stays running during maintenance windows.
 
-SQL Server on Azure VM (IaaS) characteristics:
+Key rule: VMs in an Availability Set must be in the same region and same datacenter. This provides rack-level fault isolation but not geographic redundancy.
 
-- Full SQL Server instance with all features
-- Full OS access
-- Can run SQL Server Agent, linked servers, CLR, etc.
-- You manage OS patching, backups, and HA configuration
-- Required for: applications needing SQL Server Agent, cross-database transactions, features not supported in Azure SQL Database
+[SHOW AZURE PORTAL] Navigate to Virtual Machines > Create > Availability Options dropdown. Show the difference between Availability Set, Availability Zone, and No Infrastructure Redundancy options.
 
-If the scenario mentions needing a specific SQL Server feature not available in PaaS, or needing OS-level access, the answer is SQL Server on Azure VM.
+### Availability Zones
 
-**[SLIDE: "Azure SQL Managed Instance"]**
+Availability Zones are physically separate datacenters within the same Azure region. Each zone has its own power, cooling, and networking. Azure recommends at least three zones per region.
 
-Azure SQL Managed Instance is the middle tier between SQL Database and SQL Server on VM. It provides near-100% compatibility with on-premises SQL Server while still being a fully managed PaaS service. Managed Instance supports:
+When you deploy a VM to an Availability Zone, you are protected against an entire datacenter failure — not just a rack failure.
 
-- SQL Server Agent jobs
-- Linked servers
-- Cross-database queries within the same instance
-- CLR (Common Language Runtime)
-- Service Broker
+The SLA for VMs deployed across Availability Zones is 99.99%, versus 99.95% for VMs in an Availability Set.
 
-Use Managed Instance for: migrating existing SQL Server applications with advanced features that Azure SQL Database does not support, when full IaaS management is not desired.
+### Virtual Machine Scale Sets
 
----
+What happens when your application gets too much traffic for a single VM? You need to scale out — add more VMs automatically. That is what Scale Sets do.
 
-## [11:00 - 16:00] Azure Cosmos DB
+An Azure Virtual Machine Scale Set allows you to deploy and manage a group of identical, load-balanced VMs. Key features include:
 
-**[SLIDE: "Azure Cosmos DB — Globally Distributed NoSQL"]**
+- Auto-scaling based on CPU, memory, or custom metrics
+- Support for up to 1,000 VM instances (or 600 for custom images)
+- Integration with Azure Load Balancer and Application Gateway
+- Rolling upgrades — update VMs in batches without downtime
 
-Azure Cosmos DB is Microsoft's globally distributed, multi-model NoSQL database service. It is the most premium and most powerful database service in Azure's portfolio — and one of the most AZ-900-tested.
-
-Key characteristics that distinguish Cosmos DB from every other Azure database service:
-
-**Global distribution:** With a few clicks or CLI commands, you can replicate your data to any Azure region worldwide. Users in Tokyo get data from a replica in Japan East. Users in Dallas get data from a replica in South Central US. Latency for reads is in single-digit milliseconds globally.
-
-**Multi-model:** Cosmos DB natively supports multiple data models through different APIs:
-
-- Core SQL API (documents, JSON — the most common)
-- MongoDB API (compatible with MongoDB applications)
-- Cassandra API (compatible with Apache Cassandra applications)
-- Gremlin API (graph data)
-- Table API (compatible with Azure Table Storage)
-
-**Five consistency models:** This is a key AZ-900 differentiator. Cosmos DB lets you choose the consistency-vs-latency trade-off:
-
-- Strong: Read returns the most recently committed write. Highest latency.
-- Bounded Staleness: Reads lag behind writes by a configurable time or version count.
-- Session: Consistent reads within a client session.
-- Consistent Prefix: Reads never see out-of-order writes.
-- Eventual: Lowest latency, weakest consistency. Replicas eventually converge.
-
-**SLA commitments:** Cosmos DB provides 99.999% SLA (five nines) for multi-region read and write availability. This is the highest SLA of any Azure database service.
-
-**[SLIDE: "When to Use Cosmos DB"]**
-
-Use Cosmos DB for:
-
-- Applications requiring global low-latency reads and writes
-- Applications with variable or unpredictable schema (documents, JSON)
-- IoT platforms with massive ingestion rates
-- Gaming applications requiring single-digit millisecond response times
-- Multi-model data (your app uses both document and graph queries)
-- Applications already built on MongoDB, Cassandra, or Gremlin that need managed infrastructure
-
-Do not use Cosmos DB for:
-
-- Standard relational/SQL workloads (use Azure SQL Database)
-- Budget-sensitive applications with predictable structured data (Cosmos DB is expensive)
+[SHOW AZURE PORTAL] Navigate to Virtual Machine Scale Sets > Create. Show the scaling policy tab. Point out the minimum, maximum, and default instance counts. Show the scale-out rule builder using CPU percentage threshold.
 
 ---
 
-## [16:00 - 19:00] Open-Source Database Services
+## Section 2: Azure App Service (5:30–9:00)
 
-**[SLIDE: "Azure Database for PostgreSQL, MySQL, and MariaDB"]**
+### What Is App Service?
 
-Azure provides fully managed versions of the three major open-source relational databases:
+Azure App Service is a Platform-as-a-Service compute option for hosting web applications, REST APIs, and mobile backends. With App Service, you do not manage the underlying VMs, operating systems, or runtime patches. You deploy your code and Azure handles the rest.
 
-**Azure Database for PostgreSQL:** Fully managed PostgreSQL with automatic backups, scaling, and high availability. Supports PostgreSQL extensions. Available in Flexible Server configuration (more control) and previously as Single Server (now retired for new deployments). PostgreSQL is popular for its ANSI SQL compliance and advanced features.
+Supported runtimes include .NET, Java, Node.js, Python, PHP, and Ruby. You can deploy from GitHub, Azure DevOps, local Git, or a container image.
 
-**Azure Database for MySQL:** Fully managed MySQL. Flexible Server configuration. Supports MySQL 5.7 and 8.0. Popular for web applications — the "M" in LAMP and MEAN stacks.
+### App Service Plans
 
-**Azure Database for MariaDB:** Fully managed MariaDB, a community-developed MySQL fork. Available as a fully managed service. MariaDB is popular in the open-source community for its GPL license.
+Your App Service app runs on an App Service Plan, which defines the underlying compute resources. Plans are organized into pricing tiers.
 
-All three services provide: automatic backups, built-in high availability, automatic patching, vertical and horizontal scaling, and Azure Active Directory authentication.
+**Free and Shared tiers** — Development and testing only. Your app shares resources with other customers. No SLA is provided.
 
-**[SLIDE: "Open-Source Database Comparison"]**
+**Basic tier** — Dedicated compute. Supports custom domains and SSL. No auto-scaling.
 
-| Service | Engine | AZ-900 Use Case Signal |
-|---|---|---|
-| Azure SQL Database | SQL Server (T-SQL) | Microsoft stack, existing SQL Server, enterprise |
-| Azure Database for PostgreSQL | PostgreSQL | Open-source, advanced SQL compliance |
-| Azure Database for MySQL | MySQL | LAMP stack, web applications |
-| Azure Database for MariaDB | MariaDB | Open-source MySQL fork |
-| Azure Cosmos DB | NoSQL multi-model | Global distribution, variable schema, NoSQL |
+**Standard tier** — Production workloads. Adds auto-scaling, deployment slots, and daily backups.
 
----
+**Premium tier** — Enhanced performance, more scale instances, VNet integration, and larger storage.
 
-## [19:00 - 22:30] Lab Preview and Exam Alignment
+**Isolated tier** — Maximum isolation. The app runs in a dedicated Azure Virtual Network called an App Service Environment. Used for highly regulated industries that require private network isolation.
 
-**[SLIDE: "Module 07 Lab"]**
+[SHOW AZURE PORTAL] Navigate to App Service > Create. Walk through the runtime stack dropdown. Show the App Service Plan selector and the pricing tiers comparison view. Point out the SKU and size selection. Highlight the monthly cost estimate.
 
-In today's lab, you will create an Azure SQL Database using the Azure Portal and connect to it using the built-in Query Editor. You will create a table, insert sample data, and run basic queries. This hands-on experience demonstrates the PaaS database model — you interact with a fully functional SQL database without ever touching a server OS.
+### Deployment Slots
 
-**[SLIDE: "AZ-900 Exam Alignment"]**
+Deployment slots are a powerful feature available on Standard tier and above. They allow you to deploy a new version of your application to a staging slot, test it in a production-like environment, and then swap the staging slot with production — with zero downtime.
 
-The highest-frequency database exam topics:
-
-- Azure SQL Database is PaaS — no OS management. SQL Server on VM is IaaS — full OS access.
-- Cosmos DB's global distribution with single-digit millisecond latency is its primary differentiator. If a scenario mentions "global" and "low latency" together, Cosmos DB is likely the answer.
-- Cosmos DB supports five consistency levels — this is unique among Azure database services.
-- Azure Database for PostgreSQL/MySQL/MariaDB are fully managed open-source database engines.
+If something goes wrong after the swap, you can swap back immediately. This is called a blue/green deployment pattern.
 
 ---
 
-## [22:30 - 24:00] Closing
+## Section 3: Azure Functions (9:00–12:00)
 
-**[INSTRUCTOR ON CAMERA]**
+### Serverless Compute
 
-You now understand Azure's database landscape — from SQL Server to open-source relational databases to globally distributed NoSQL with Cosmos DB. The relational vs. non-relational distinction is fundamental, and the PaaS vs. IaaS distinction (SQL Database vs. SQL Server on VM) appears on every AZ-900 exam I have seen reviewed.
+Azure Functions is a serverless compute service. You write a function — a small piece of code — and Azure handles provisioning, scaling, and infrastructure. You are billed only for the time your function is executing and the number of executions.
 
-In Module 08, we start the security and identity section of the course with Microsoft Entra ID — the identity backbone of Azure and Microsoft 365. I will see you there.
+This is the extreme end of the managed service spectrum. Functions are event-driven: they run in response to HTTP requests, timer schedules, messages from a queue, changes in a database, or new files uploaded to storage.
+
+### When to Use Functions
+
+Azure Functions are ideal for:
+
+- Short-lived tasks that complete in seconds or minutes
+- Event processing pipelines
+- Scheduled automation tasks such as nightly report generation
+- Lightweight APIs where you pay per request
+
+Azure Functions are NOT ideal for:
+
+- Long-running processes that exceed the default execution timeout
+- Applications requiring complex state management
+- Workloads requiring persistent connections or real-time sockets
+
+### Hosting Plans for Functions
+
+Azure Functions has three hosting plans you should know for AZ-900.
+
+**Consumption Plan** — Fully serverless. Scales to zero when idle. You pay only when code runs. One million free executions per month are included. This is the default and most cost-effective option for unpredictable workloads.
+
+**Premium Plan** — Pre-warmed instances eliminate cold starts. Supports VNet integration and longer execution timeouts. Best for latency-sensitive functions.
+
+**Dedicated (App Service) Plan** — Functions run on your existing App Service plan. Useful when you want predictable costs and already pay for idle App Service capacity.
+
+[SHOW AZURE PORTAL] Navigate to Function App > Create. Show the Hosting Plan dropdown. Point out the Runtime Stack options. Show the region selector. After creation, show the Functions list and the code + test editor for an HTTP trigger function. Run a test request and show the response in the portal.
 
 ---
 
-**References:**
+## Section 4: Azure Container Instances (12:00–15:00)
 
-- learn.microsoft.com/en-us/azure/azure-sql/database/sql-database-paas-overview
-- learn.microsoft.com/en-us/azure/cosmos-db/introduction
-- learn.microsoft.com/en-us/azure/postgresql/flexible-server/overview
+### Containers vs. Virtual Machines
+
+Before we talk about Azure Container Instances, let's ground ourselves on what a container is. Containers package application code with its dependencies — libraries, frameworks, and runtime — into a portable unit. Unlike VMs, containers share the host operating system kernel, which makes them much lighter and faster to start.
+
+The leading container runtime is Docker. Container images are stored in registries such as Azure Container Registry or Docker Hub.
+
+### Azure Container Instances
+
+Azure Container Instances, or ACI, is the fastest and simplest way to run a container in Azure — with no virtual machine management required.
+
+ACI is ideal for:
+
+- Simple tasks and batch jobs
+- Build agents in CI/CD pipelines
+- Development and testing environments
+- Short-lived workloads that need an isolated container environment
+
+Key characteristics of ACI:
+
+- Containers start in seconds
+- Billed per second of execution
+- Supports both Linux and Windows containers
+- Can mount Azure File Shares for persistent storage
+- No orchestration complexity — just run one container or a small group
+
+What ACI does NOT provide: it does not orchestrate containers across multiple hosts, does not manage failover across nodes, and does not provide advanced networking between dozens of microservices. For those needs, you require Kubernetes.
+
+[SHOW AZURE PORTAL] Navigate to Container Instances > Create. Show the image source options: Docker Hub, Azure Container Registry, and private registry. Show the CPU and memory allocation fields. Show the networking tab and the DNS name label option. Point out Restart Policy options: Always, On Failure, and Never.
+
+---
+
+## Section 5: Azure Kubernetes Service Overview (15:00–18:30)
+
+### What Is Kubernetes?
+
+Kubernetes — often abbreviated K8s — is an open-source container orchestration platform. It automates deploying, scaling, and operating containerized applications across a cluster of machines.
+
+When you have dozens or hundreds of containers that need to communicate, self-heal, scale independently, and receive rolling updates — that is when you need Kubernetes.
+
+### Azure Kubernetes Service
+
+Azure Kubernetes Service, or AKS, is Microsoft's managed Kubernetes offering. Azure manages the Kubernetes control plane — the scheduler, API server, and etcd database — at no additional cost. You pay only for the worker node VMs that run your containers.
+
+Key AKS concepts for AZ-900:
+
+**Cluster** — The entire AKS deployment, consisting of a control plane and one or more node pools.
+
+**Node** — A VM in the cluster that runs your workloads.
+
+**Pod** — The smallest deployable unit in Kubernetes. A pod wraps one or more containers that share networking and storage.
+
+**Deployment** — A Kubernetes object that manages a desired state for a set of replicated pods.
+
+**Service** — Exposes pods to network traffic, either internally within the cluster or externally via a public load balancer.
+
+### When to Use AKS vs. ACI
+
+Use ACI when you have a simple, short-lived container job with no orchestration requirements and you need fast startup with minimal configuration.
+
+Use AKS when you are running a microservices architecture, need auto-scaling across a fleet of containers, require rolling deployments with zero downtime, or need production-grade container orchestration.
+
+[SHOW AZURE PORTAL] Navigate to Kubernetes Services > Create. Show the cluster preset configurations: Dev/Test versus Production. Show the node pool configuration — VM size, node count, and auto-scaling range. Point out the Networking tab showing Container Network Interface plugin options. Show the Monitoring tab with Azure Monitor and Container Insights integration.
+
+---
+
+## Section 6: Choosing the Right Compute Service (18:30–20:30)
+
+One of the most common AZ-900 exam question patterns is: given a scenario, which compute service should be used? Here is a simple decision framework.
+
+**Do you need full OS control or custom software with special OS-level configuration?** Use Virtual Machines.
+
+**Are you deploying a web app, REST API, or mobile backend and do NOT want to manage infrastructure?** Use App Service.
+
+**Do you have event-driven, short-lived code triggered by HTTP requests, timers, or messages?** Use Azure Functions.
+
+**Do you need to quickly run a single container without managing infrastructure?** Use Azure Container Instances.
+
+**Are you running a complex multi-container microservices application that needs orchestration, auto-scaling, and self-healing?** Use Azure Kubernetes Service.
+
+Memorize this decision framework. It will help you on both the exam and in your career when advising stakeholders on the right architecture.
+
+---
+
+## Closing (20:30–21:30)
+
+Let's recap what we covered today. We walked through Azure Virtual Machines — sizing families, availability sets, availability zones, and scale sets. We explored Azure App Service as a PaaS web hosting platform with deployment slots for zero-downtime releases. We covered Azure Functions for serverless, event-driven workloads. We introduced Azure Container Instances for fast, simple container execution. And we got an overview of Azure Kubernetes Service for production container orchestration.
+
+In your lab this week, you will create a virtual machine using the Azure portal and deploy a simple web app using Azure App Service — hands-on practice with the two most foundational compute services.
+
+In your quiz, watch for questions about the difference between fault domains and update domains, the SLA percentages for availability options, and the right compute service for a given scenario.
+
+See you in Module 08, where we cover Azure Networking. Take care.
+
+---
+
+*End of Script — Module 07*

@@ -1,78 +1,243 @@
-# Quiz: Module 07 - DynamoDB – NoSQL at Scale
-## Course: CIS-4334_AWS_Cloud_Architecture (AWS Certified Solutions Architect - Associate)
+# Quiz: Module 07 — Amazon EC2 and Auto Scaling
+
+## Course: CIS-4334 AWS Cloud Architecture
+
+## Texas Wesleyan University | Professor Nash
+
+## Certification Alignment: AWS Solutions Architect — Associate (SAA-C03)
+
+**Instructions:** Select the single best answer for each question. Each question is worth 10 points.
 
 ---
 
-**Question 1**
-A social media platform stores user activity events in DynamoDB. The table is being heavily throttled despite having sufficient total provisioned capacity. Investigation reveals that 80% of all requests target items associated with the top 5 most-followed celebrity accounts. What is the root cause and the recommended fix?
-*   A) The table's total provisioned WCU is too low; increase provisioned capacity to 10x the current value.
-*   B) The partition key is a low-cardinality attribute (e.g., celebrity account ID), creating hot partitions. Redesign the key using a higher-cardinality attribute or add a random suffix to distribute traffic.
-*   C) DynamoDB does not support high write volumes; migrate to RDS Aurora for write-heavy workloads.
-*   D) Enable DynamoDB Streams to fan out the writes across multiple tables and reduce per-table throughput.
-*   **Correct Answer:** B) The hot partition problem occurs when a low-cardinality or skewed partition key concentrates traffic on a small number of physical partitions, exhausting their local throughput even when the total table capacity appears sufficient.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Increasing total provisioned capacity does not solve hot partition throttling. DynamoDB distributes capacity across partitions; if most traffic hits the same few partitions, adding global capacity to under-loaded partitions does not relieve the hot ones.
-    *   *Why B is correct:* Hot partitions are the classic DynamoDB design flaw for the SAA-C03 exam. When a small number of partition key values receive disproportionate traffic, those partitions exhaust their local RCU/WCU allocation. Solutions include choosing a high-cardinality key, adding a random suffix (write sharding), or using a composite key that distributes requests across more partitions.
-    *   *Why C is incorrect:* DynamoDB is designed for massive write throughput. The problem is the key design, not the service's capability. Migrating to Aurora would add SQL complexity and likely perform worse at this scale with these access patterns.
-    *   *Why D is incorrect:* DynamoDB Streams capture a change log of table modifications for event-driven processing (e.g., triggering Lambda). Streams do not distribute write load across multiple tables or relieve hot partition throttling.
+### Question 1
+
+A genomics company needs to run large-scale protein folding simulations. Each simulation requires 64 vCPUs with intensive parallel computation and low latency between compute nodes. The simulation runs for 12–24 hours. Which EC2 configuration is MOST appropriate?
+
+A. R6g.16xlarge instances in a Spread placement group
+
+B. C6g.16xlarge instances in a Cluster placement group
+
+C. M6i.16xlarge instances with no placement group
+
+D. I3.16xlarge instances in a Partition placement group
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. R-family is memory-optimized; protein folding simulations are CPU-intensive, not memory-heavy. Spread groups maximize fault isolation but add latency, not reduce it.
+- B is correct. C-family (Compute Optimized) provides the highest CPU-to-memory ratio. Cluster placement group delivers the lowest inter-node network latency required for parallel HPC workloads. Graviton processors provide price-performance advantage.
+- C is incorrect. M-family is balanced general purpose, not optimized for compute-intensive workloads. No placement group wastes the potential for low-latency inter-node communication.
+- D is incorrect. I3 is Storage Optimized for high-IOPS workloads. Partition groups are for large distributed systems, not tightly-coupled HPC.
 
 ---
 
-**Question 2**
-Which of the following is the most accurate description of **DynamoDB Global Tables**?
-*   A) A DynamoDB feature that creates read-only replicas in additional Regions, with all writes directed to a single primary Region.
-*   B) A managed multi-Region, multi-active replication feature that makes a DynamoDB table writable in every configured Region, providing low-latency local reads and writes globally with automatic conflict resolution.
-*   C) A cross-account DynamoDB backup feature that replicates table snapshots to a secondary AWS account for disaster recovery.
-*   D) A feature that partitions a single DynamoDB table across multiple AZs within one Region to improve single-Region throughput.
-*   **Correct Answer:** B) DynamoDB Global Tables provide multi-Region, multi-active (active-active) replication where every Region hosts a fully writable replica, enabling global low-latency access and built-in disaster recovery.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Global Tables are multi-active — all Region replicas accept writes simultaneously. There is no single "primary Region" concept. This description incorrectly describes a read-only replica pattern.
-    *   *Why B is correct:* Global Tables is the SAA-C03 answer for "globally distributed application with low-latency reads AND writes, with automatic regional failover." The active-active model means any Region failure does not require a manual failover because all other Regions continue operating independently.
-    *   *Why C is incorrect:* This describes a cross-account backup scenario, which is not what Global Tables does. Global Tables is live replication for active traffic, not backup/restore.
-    *   *Why D is incorrect:* DynamoDB automatically spans storage across multiple AZs within a Region by default — this is a baseline durability feature, not Global Tables. Global Tables is specifically about extending the table to multiple Regions.
+### Question 2
+
+A company's Auto Scaling group is configured with minimum 2, maximum 10, and desired 4 instances. A Target Tracking policy is set to maintain average CPU at 60%. CPU climbs to 85% for 5 minutes. What action does Auto Scaling take?
+
+A. Terminates instances to reduce CPU load
+
+B. Launches additional instances until average CPU returns to approximately 60%
+
+C. Does nothing because the desired capacity is already set to 4
+
+D. Sends a notification but does not change instance count until manually approved
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. Scaling in (terminating instances) would increase CPU per instance, making the problem worse. Auto Scaling scales out when CPU exceeds the target.
+- B is correct. Target Tracking scaling automatically calculates how many instances to add to bring the average CPU back to the target value of 60%. The ASG increases desired capacity and launches new instances up to the maximum of 10.
+- C is incorrect. Target Tracking overrides the static desired capacity by adjusting it dynamically in response to metric changes.
+- D is incorrect. Target Tracking scaling policies act automatically without manual approval.
 
 ---
 
-**Question 3**
-A gaming application reads DynamoDB item data millions of times per second to serve real-time game state lookups. The current DynamoDB response latency of 5 milliseconds is too slow for the sub-millisecond requirement. Which solution reduces read latency to microseconds with the least code change?
-*   A) Enable DynamoDB Read Replicas in the same Region for parallel read processing.
-*   B) Migrate the game state data to Amazon ElastiCache for Redis and point the application to the Redis endpoint.
-*   C) Deploy DynamoDB Accelerator (DAX) in front of the DynamoDB table; DAX is API-compatible with DynamoDB and requires minimal code changes.
-*   D) Enable DynamoDB Streams and pre-compute game state in Lambda functions, storing results in S3.
-*   **Correct Answer:** C) DAX is an in-memory, DynamoDB-API-compatible cache that reduces read latency from milliseconds to microseconds, with the application needing only to change the endpoint URL from DynamoDB to the DAX cluster.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* DynamoDB does not have a concept of "Read Replicas" in the same way RDS does. Globally, DynamoDB achieves read scaling via Global Tables (multi-Region) or DAX (caching). There is no same-Region read replica to enable.
-    *   *Why B is incorrect:* ElastiCache for Redis is a valid caching solution, but it requires building a separate cache population and invalidation layer — significant code change. DAX is API-compatible with DynamoDB and requires only changing the client endpoint, making it the "least code change" answer.
-    *   *Why C is correct:* DAX is designed precisely for this scenario: existing DynamoDB workloads needing sub-millisecond latency. The DAX client uses the same API as the DynamoDB SDK. The application replaces the DynamoDB endpoint with the DAX cluster endpoint — typically a one-line configuration change.
-    *   *Why D is incorrect:* Pre-computing results with Lambda and storing in S3 introduces significant architectural complexity, eventual consistency delays, and S3 latency (which is not sub-millisecond). This does not solve the real-time latency requirement.
+### Question 3
+
+A company runs a content rendering farm. Render jobs take 2–4 hours each and can be re-submitted if an instance is lost. The farm runs hundreds of instances simultaneously only during business hours on weekdays. Which EC2 pricing model minimizes cost?
+
+A. On-Demand Instances
+
+B. Standard Reserved Instances with 3-year No Upfront
+
+C. Spot Instances
+
+D. Compute Savings Plans
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- A is incorrect. On-Demand provides no discount and is the most expensive option for this volume of compute.
+- B is incorrect. Reserved Instances commit to continuous usage. A workload that only runs during business hours on weekdays has very low utilization relative to a 3-year commitment, making it inefficient.
+- C is correct. The workload is fault-tolerant (jobs can be re-submitted), runs in large batches, and is a textbook Spot use case. Spot provides up to 90% discount for interruptible workloads.
+- D is incorrect. Savings Plans are for continuous steady-state workloads. They provide continuous discounts, not batch discounts. Spot remains cheaper for fault-tolerant workloads.
 
 ---
 
-**Question 4**
-A serverless application has highly unpredictable DynamoDB traffic — sometimes zero requests for hours, then thousands of requests per second during promotional events. Which DynamoDB capacity mode is most cost-effective for this pattern?
-*   A) Provisioned capacity with Auto Scaling configured to scale between 1 and 10,000 WCU.
-*   B) DynamoDB On-Demand capacity mode, which automatically handles any request volume and bills per request with no minimum charge.
-*   C) Provisioned capacity without Auto Scaling, set at the maximum expected peak load of 10,000 WCU.
-*   D) Provisioned capacity with reserved capacity purchased for 3 years to minimize the per-WCU cost.
-*   **Correct Answer:** B) On-Demand mode eliminates the cost of idle provisioned capacity, billing only per actual request — perfect for zero-to-peak unpredictable traffic.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Provisioned capacity with Auto Scaling has a minimum capacity charge even when the table is idle. Auto Scaling also has scale-up lag — it adjusts based on CloudWatch metrics over a period of time, which may not respond fast enough to sudden traffic spikes.
-    *   *Why B is correct:* On-Demand mode is the SAA-C03 answer for unpredictable or spiky workloads. You pay per read/write request unit consumed, with no minimum or idle charges. The table handles any traffic volume instantly without capacity planning.
-    *   *Why C is incorrect:* Provisioning at peak (10,000 WCU) and leaving it static means paying for all that capacity during the hours of zero activity — the highest possible cost for this traffic pattern.
-    *   *Why D is incorrect:* Reserved capacity for 3 years offers the lowest per-unit cost but requires a minimum hourly commitment. For a workload with hours of zero traffic, reserved capacity means paying for unused capacity constantly — the worst cost outcome for this scenario.
+### Question 4
+
+An engineer needs to ensure a new EC2 instance installs application monitoring agents and verifies connectivity to a configuration database before it begins receiving traffic from the load balancer. Which feature enables this?
+
+A. EC2 User Data script executed at boot
+
+B. Auto Scaling warm pool
+
+C. Auto Scaling launch lifecycle hook (EC2_INSTANCE_LAUNCHING)
+
+D. Load balancer health check grace period
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- A is incorrect. User Data scripts run at boot but the instance still enters InService after the health check grace period regardless of script completion. There is no mechanism to hold the instance in Pending:Wait based on script success or failure.
+- B is incorrect. Warm pools pre-initialize instances to reduce launch latency but do not provide a mechanism to gate InService entry on application-level verification.
+- C is correct. A launch lifecycle hook puts the instance in Pending:Wait state, allowing automation via Lambda triggered by EventBridge to run the monitoring agent installation and connectivity verification. Only after CompleteLifecycleAction(CONTINUE) does the instance enter InService.
+- D is incorrect. The grace period delays health check evaluation, not InService entry. It does not gate on custom script execution.
 
 ---
 
-**Question 5**
-A user session management service stores session tokens in DynamoDB. Sessions should automatically expire and be deleted 24 hours after creation to prevent the table from growing indefinitely. Which DynamoDB feature handles this automatically at no additional cost?
-*   A) DynamoDB Streams — configure a Lambda function triggered by stream events to delete items older than 24 hours.
-*   B) DynamoDB TTL (Time to Live) — set a TTL attribute on each item with a Unix timestamp 24 hours in the future; DynamoDB automatically deletes expired items.
-*   C) S3 Lifecycle policies — export DynamoDB data to S3 nightly and use S3 expiration rules to delete old sessions.
-*   D) AWS Config rules — create a rule that identifies DynamoDB items older than 24 hours and triggers an auto-remediation Lambda to delete them.
-*   **Correct Answer:** B) DynamoDB TTL is a native feature that automatically deletes items whose TTL attribute timestamp has passed, at no additional charge, making it the correct tool for session expiration.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Using DynamoDB Streams with Lambda to delete old items is a valid pattern but adds operational complexity, Lambda invocation costs, and the need to manage the deletion logic. TTL achieves the same result natively with zero code and at no cost.
-    *   *Why B is correct:* TTL is designed exactly for this use case. You set a numeric attribute (e.g., `expiresAt`) on each item containing the Unix epoch expiration timestamp. DynamoDB scans for and deletes expired items in the background within approximately 48 hours of expiration, at no charge. TTL is the canonical answer for session stores, temporary tokens, and auto-expiring records.
-    *   *Why C is incorrect:* Exporting DynamoDB to S3 nightly adds significant operational complexity and latency — sessions are not deleted for up to 24 hours plus the export interval. S3 Lifecycle policies apply to S3 objects, not DynamoDB items.
-    *   *Why D is incorrect:* AWS Config evaluates resource configuration compliance and can trigger remediations, but it is not designed for application-level data lifecycle management within DynamoDB tables. Config rules operate on AWS resource configurations (e.g., "is this S3 bucket public?"), not individual DynamoDB item attributes.
+### Question 5
 
+An architect is designing an EC2 deployment for three critical components: a primary RDS database proxy, a secondary standby database proxy, and a bastion host. The requirement is that a single hardware failure must never affect more than one component. All three instances must be in the same AWS Region. Which placement group is MOST appropriate?
+
+A. Cluster placement group
+
+B. Partition placement group with three partitions
+
+C. Spread placement group
+
+D. No placement group required
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- A is incorrect. Cluster groups intentionally pack instances on the same hardware for low latency, maximizing the blast radius of any hardware failure.
+- B is incorrect. Partition groups are designed for large distributed systems. Three instances is below the minimum where partitions add value over spread groups. Spread is simpler and more appropriate for this small set.
+- C is correct. Spread placement groups place each instance on completely separate hardware (separate rack, power, and network). Three instances is well within the 7-per-AZ limit. A single hardware failure can only affect one of the three instances.
+- D is incorrect. Without a placement group, AWS may place multiple instances on the same underlying hardware, violating the isolation requirement.
+
+---
+
+### Question 6
+
+A company has used Standard Reserved Instances for their EC2 fleet for three years. Their architecture is shifting from a fixed instance type to a mix of instance families and will also start using AWS Lambda functions. Which option provides the MOST flexible discount going forward?
+
+A. Convertible Reserved Instances
+
+B. Compute Savings Plans
+
+C. EC2 Instance Savings Plans
+
+D. Scheduled Reserved Instances
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. Convertible Reserved Instances allow exchanging for different EC2 instance types but do not apply to Lambda or Fargate. They also require manual exchange actions.
+- B is correct. Compute Savings Plans apply automatically across all EC2 instance types, sizes, regions, and operating systems, as well as AWS Lambda and AWS Fargate. They provide the broadest coverage for a mixed and evolving architecture.
+- C is incorrect. EC2 Instance Savings Plans are scoped to a specific instance family in a specific region. They offer the same maximum discount as Standard Reserved but without cross-family flexibility and without Lambda coverage.
+- D is incorrect. Scheduled Reserved Instances are a legacy feature for known recurring schedules and do not address the flexibility or Lambda coverage requirements.
+
+---
+
+### Question 7
+
+An Auto Scaling group is configured with EC2 health checks only. An application bug causes an instance to return HTTP 500 errors for all requests while the EC2 instance itself remains running and passes its system status check. What happens?
+
+A. Auto Scaling immediately replaces the unhealthy instance
+
+B. Auto Scaling does not replace the instance because the EC2 health check passes
+
+C. The load balancer terminates the instance directly
+
+D. CloudWatch automatically triggers a scale-in event
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. Auto Scaling can only replace the instance automatically if it is configured with ELB health checks. EC2-only health checks cannot detect application-level failures.
+- B is correct. The EC2 health check only evaluates whether the underlying EC2 instance hardware and operating system are functional. An application returning HTTP 500 does not fail the EC2 status check. With EC2-only health checks, Auto Scaling considers this instance healthy.
+- C is incorrect. Load balancers stop sending traffic to unhealthy targets but cannot terminate EC2 instances directly.
+- D is incorrect. CloudWatch alarms can trigger scaling policies but will not automatically identify and replace individual unhealthy instances based on application response codes.
+
+---
+
+### Question 8
+
+A company creates a custom AMI from a configured EC2 instance in us-east-1. They want to launch identical instances in eu-west-1. What step is required?
+
+A. Share the AMI with the eu-west-1 region using AMI permissions
+
+B. Copy the AMI to eu-west-1 using the CopyImage API
+
+C. Export the AMI to an S3 bucket and import it in eu-west-1
+
+D. Use the same AMI ID in eu-west-1 because AMI IDs are globally unique
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. AMI sharing (making an AMI public or sharing with another account) does not make it available in a different region. Sharing controls access, not region availability.
+- B is correct. AMIs are regional resources. The CopyImage API replicates the AMI and its underlying EBS snapshots to the target region. The copied AMI receives a new region-specific AMI ID.
+- C is incorrect. VM Import/Export exists for migrating on-premises VMs to AWS. It is not the correct method for copying an existing AWS AMI between regions. CopyImage is the purpose-built operation.
+- D is incorrect. AMI IDs are region-specific, not globally unique. The same AMI ID does not exist in a different region.
+
+---
+
+### Question 9
+
+An Auto Scaling group has a scheduled scaling policy that sets desired capacity to 8 at 8:00 AM and back to 2 at 6:00 PM every weekday. The business also wants to handle unexpected traffic spikes above the 8-instance level. Which combination BEST meets this requirement?
+
+A. Two Scheduled Scaling policies only
+
+B. Two Scheduled Scaling policies and one Target Tracking policy
+
+C. One Predictive Scaling policy only
+
+D. Two Step Scaling policies triggered by CloudWatch alarms
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. Scheduled scaling handles the known pattern but provides no mechanism to scale beyond 8 instances if demand unexpectedly spikes above what 8 instances can handle.
+- B is correct. Scheduled scaling manages the predictable daily pattern. Target Tracking adds a dynamic layer that can scale beyond 8 instances if unexpected demand exceeds the target metric value. Multiple scaling policy types can coexist on the same ASG.
+- C is incorrect. Predictive Scaling uses historical patterns to forecast and pre-scale. It requires historical data and may not respond well to truly unexpected spikes. It also does not give the clean time-based 8-instance floor.
+- D is incorrect. Step Scaling alone could handle spikes but does not provide the clean time-based capacity changes that Scheduled Scaling provides for the known daily pattern.
+
+---
+
+### Question 10
+
+A developer asks why they should use a launch template instead of a launch configuration when creating a new Auto Scaling group. Which TWO reasons are MOST accurate? (Select TWO)
+
+A. Launch templates support versioning; launch configurations are immutable
+
+B. Launch configurations support Spot instance diversification; launch templates do not
+
+C. Launch templates can specify T-instance CPU credit options; launch configurations cannot
+
+D. Launch configurations are required for ELB integration; launch templates are not
+
+**Correct Answer: A and C**
+
+**Distractor Analysis:**
+
+- A is correct. Launch templates support multiple named versions, allowing configuration updates and rollbacks. Launch configurations cannot be modified after creation.
+- B is incorrect. This is backwards. Launch templates support Spot instance diversification. Launch configurations do not support this feature.
+- C is correct. Launch templates support T-instance CPU credit specification (standard vs. unlimited mode). Launch configurations do not expose this option.
+- D is incorrect. Both launch templates and launch configurations can be used with Elastic Load Balancing. ELB integration is configured at the ASG level.
+
+---
+
+*Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University.*

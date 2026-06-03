@@ -1,75 +1,226 @@
-# Quiz: Module 14 - Storytelling with Data and Executive Reporting
-## Course: CIS-4336_Data_Analytics (CompTIA Data+)
+# Quiz: Module 14 — Machine Learning for Data Analysts
+
+## Course: CIS-4336 Data Analytics
+
+## Texas Wesleyan University | Professor Nash
+
+**Certification Alignment:** CompTIA Data+ (DA0-001)
+
+**Instructions:** Select the single best answer for each question. Each question is worth 10 points.
 
 ---
 
-**Question 1**
-A VP of Sales asks an analyst to present last quarter's performance at the executive leadership meeting. The VP has 10 minutes and needs to know whether the team hit its targets and what the biggest issue was. Which report format is most appropriate?
-*   A) A 40-page detailed report with raw transaction tables, methodology notes, and SQL queries used to pull the data.
-*   B) A one-page executive summary leading with whether the target was met, the top finding, and a single recommended action — supported by one annotated chart.
-*   C) A spreadsheet with all 12 regional sales figures, month-over-month comparisons for every product line, and a pivot table for the VP to explore.
-*   D) A live dashboard with 15 KPI tiles so the VP can drill down into any metric that interests them during the meeting.
-*   **Correct Answer:** B) A one-page executive summary leading with whether the target was met, the top finding, and a single recommended action — supported by one annotated chart.
-*   **Distractor Analysis:**
-    *   *Why correct:* Executive audiences need the conclusion first — did we hit target or not, and what is the single most important finding? A one-page summary with a focused chart respects limited time and delivers a clear decision-enabling message.
-    *   A) A 40-page report transfers all analytical work to the reader — the VP would have to read through methodology to find the answer. C) A pivot table spreadsheet requires the reader to do their own analysis, which is the analyst's job. D) A 15-KPI dashboard is designed for self-service exploration, not for a time-constrained meeting where a specific question must be answered quickly.
+### Question 1
+
+A data team wants to predict whether a customer will cancel their subscription in the next 30 days. The training dataset includes historical customer records, each labeled with whether the customer actually churned. Which type of machine learning task is this?
+
+A) Unsupervised clustering — groups customers by similarity without a target label.
+
+B) Supervised classification — uses labeled examples (churned or not) to train a model that predicts a category for new customers.
+
+C) Supervised regression — predicts a continuous numeric value rather than a category.
+
+D) Dimensionality reduction — compresses features into fewer dimensions; does not predict a target.
+
+#### Q1 Correct Answer: B
+
+#### Q1 Distractor Analysis
+
+A is incorrect because the data has labels. C is incorrect because the output (churned or not churned) is a category, not a number. D is an unsupervised transformation technique, not a prediction task.
 
 ---
 
-**Question 2**
-In data communication, which of the following most accurately defines **data storytelling**?
-*   A) The process of creating interactive dashboards that let business users explore data and self-serve answers to their own analytical questions.
-*   B) The practice of combining data findings, narrative explanation, and visualizations into a structured presentation that moves an audience from a problem or question to a conclusion and recommended action.
-*   C) A data quality technique that validates whether reported metrics are consistent across different source systems before including them in a report.
-*   D) The process of documenting the lineage of a dataset — tracking where data originated, how it was transformed, and who approved it for use in reports.
-*   **Correct Answer:** B) The practice of combining data findings, narrative explanation, and visualizations into a structured presentation that moves an audience from a problem or question to a conclusion and recommended action.
-*   **Distractor Analysis:**
-    *   *Why B is correct:* Data storytelling is a communication discipline — it structures analysis into a narrative with context, findings, and implications that an audience can follow and act on. The combination of data, words, and visuals working together toward a clear message is what distinguishes a story from a report or a dashboard.
-    *   *Why A is incorrect:* Creating interactive dashboards for self-service exploration describes BI dashboard design — a tool-building task, not the communication practice of storytelling.
-    *   *Why C is incorrect:* Validating metrics across source systems describes a data quality reconciliation process, not a communication technique.
-    *   *Why D is incorrect:* Documenting data origin, transformation, and approval describes data lineage — a governance and provenance practice, not storytelling.
+### Question 2
+
+An analyst applies `StandardScaler.fit_transform()` to the entire dataset before calling `train_test_split()`. What problem does this introduce?
+
+A) The scaler will fail to run if it encounters null values in the dataset.
+
+B) StandardScaler only works on integer columns; float columns require MinMaxScaler.
+
+C) Test set statistics influence the scaler's mean and standard deviation, causing data leakage and overly optimistic test performance.
+
+D) The train-test split will become non-random because the scaler sorts the data by value.
+
+#### Q2 Correct Answer: C
+
+#### Q2 Distractor Analysis
+
+A describes a separate null-handling issue unrelated to leakage. B is false; StandardScaler works on all numeric types. D is false; scaler does not sort data.
 
 ---
 
-**Question 3**
-An analyst presents a bar chart showing monthly website traffic over 12 months. The chart has no title, the y-axis label says "Count," and the single month with an unusually high spike (due to a viral marketing campaign) is indistinguishable from the other bars without explanation. What is the most effective improvement to make the chart actionable for an executive audience?
-*   A) Add a data table below the chart listing the exact traffic number for each of the 12 months.
-*   B) Change the chart type from a bar chart to a pie chart to show each month's share of annual traffic.
-*   C) Add a descriptive title, rename the y-axis to "Monthly Visitors," and add an annotation callout on the spike month explaining it was driven by the viral campaign.
-*   D) Remove the chart entirely and replace it with a written paragraph describing the traffic numbers.
-*   **Correct Answer:** C) Add a descriptive title, rename the y-axis to "Monthly Visitors," and add an annotation callout on the spike month explaining it was driven by the viral campaign.
-*   **Distractor Analysis:**
-    *   *Why C is correct:* A clear title tells the reader what they are looking at. A descriptive axis label removes ambiguity about the unit. An annotation on the spike directs the reader's attention to the most interesting data point and explains the cause — converting raw data into an insight.
-    *   *Why A is incorrect:* Adding a 12-row data table transforms the chart into a data dump. Precise numbers are rarely needed in an executive presentation; the trend and the spike are what matter.
-    *   *Why B is incorrect:* A pie chart showing each month's share of annual traffic would hide the spike entirely — proportional slices summing to 100% are not suited to showing a temporal trend or identifying outliers.
-    *   *Why D is incorrect:* Replacing a chart with a paragraph loses the visual pattern that makes the spike immediately obvious. Charts communicate distributional and trend information far more efficiently than prose for executive audiences.
+### Question 3
+
+A random forest model achieves 97% accuracy on the training set and 64% accuracy on the test set. What is the most likely diagnosis?
+
+A) Underfitting — the model is too simple to learn the patterns in the training data.
+
+B) Overfitting — the model memorized the training data including noise and does not generalize to new data.
+
+C) Data leakage — test data was used during training, producing artificially high training accuracy.
+
+D) Class imbalance — the high training accuracy reflects the majority class baseline rather than learning.
+
+#### Q3 Correct Answer: B
+
+#### Q3 Distractor Analysis
+
+A is incorrect; underfitting shows low accuracy on both training and test sets. C could produce high test accuracy, not low test accuracy. D typically appears as uniformly high accuracy with low recall on the minority class — the scenario describes a large gap between training and test accuracy, which is the signature of overfitting.
 
 ---
 
-**Question 4**
-An analyst produces a quarterly report for the CFO that contains 18 pages of revenue tables broken down by product, region, channel, customer segment, and sales rep — with no summary section. The CFO responds: "I don't know what to do with this." What is the primary problem with the report?
-*   A) The report uses bar charts instead of line charts for the revenue data.
-*   B) The report is a data dump — it presents raw data without interpretation, forcing the CFO to do the analytical work rather than delivering decision-ready insights.
-*   C) The report is too short and needs more detail about individual transaction records.
-*   D) The report uses the wrong visualization type for financial data — all revenue figures should be presented in scatter plots.
-*   **Correct Answer:** B) The report is a data dump — it presents raw data without interpretation, forcing the CFO to do the analytical work rather than delivering decision-ready insights.
-*   **Distractor Analysis:**
-    *   *Why B is correct:* A data dump transfers the burden of analysis to the reader. The CFO's response — "I don't know what to do with this" — is the classic signal that no insights or recommended actions were provided. The fix is to lead with the three most important findings and a clear implication for each, then place the supporting detail tables in an appendix.
-    *   *Why A is incorrect:* The choice of bar vs. line chart is a secondary concern. The fundamental problem is the absence of interpretation and actionable summary — a format issue, not a chart type issue.
-    *   *Why C is incorrect:* Adding more detail would make the problem worse. The report already overwhelms the reader with undifferentiated detail. The solution is less raw data and more interpretation.
-    *   *Why D is incorrect:* Revenue data should be presented in bar or line charts depending on whether the comparison is categorical or time-based. Scatter plots show correlation between two numeric variables — they are not appropriate for revenue summaries.
+### Question 4
+
+Which of the following is an example of unsupervised learning?
+
+A) Training a model on past loan applications labeled as approved or rejected to predict future approvals.
+
+B) Using a decision tree to predict house sale prices from square footage, location, and number of rooms.
+
+C) Grouping retail customers into segments based on purchase frequency and average order value without predefined segment labels.
+
+D) Using logistic regression to classify email as spam or not spam from labeled training examples.
+
+#### Q4 Correct Answer: C
+
+#### Q4 Distractor Analysis
+
+A is supervised classification with labeled training examples. B is supervised regression with a numeric target. D is supervised classification with labeled spam examples. C has no labels — the algorithm discovers the groups independently.
 
 ---
 
-**Question 5**
-An analyst builds a slide for the CEO showing a line chart of monthly churn rate over 18 months. The chart has subtle gridlines, the most recent three months show a clear upward trend, and the slide title reads "Chart 7: Monthly Churn Rate Data." What two changes would most improve the slide's impact for an executive audience?
-*   A) Replace the line chart with a data table showing exact churn percentages for all 18 months, and add a second chart showing gross revenue in the same slide.
-*   B) Rewrite the slide title as an insight statement (e.g., "Customer Churn Has Accelerated Over the Past 3 Months — Action Required") and add an annotation callout on the upward trend segment explaining when it began and by how much churn increased.
-*   C) Remove the gridlines entirely and change the chart color from blue to red to indicate urgency, then add a legend explaining what the line represents.
-*   D) Add the underlying SQL query used to pull the churn data as a footnote, and include a second slide with the full methodology for how churn rate is calculated.
-*   **Correct Answer:** B) Rewrite the slide title as an insight statement (e.g., "Customer Churn Has Accelerated Over the Past 3 Months — Action Required") and add an annotation callout on the upward trend segment explaining when it began and by how much churn increased.
-*   **Distractor Analysis:**
-    *   *Why B is correct:* A slide title that states the insight — not just the metric name — tells executives the conclusion immediately, even before they read the chart. An annotation on the upward trend segment makes the finding impossible to miss and quantifies the change, converting a trend into an actionable finding.
-    *   *Why A is incorrect:* Replacing the chart with an 18-row data table loses the visual trend pattern that makes the acceleration immediately obvious. Adding a second chart overloads the slide with two competing messages for an executive audience that needs one clear point per slide.
-    *   *Why C is incorrect:* While removing gridlines reduces noise, it alone does not add insight. Changing colors and adding a legend address aesthetics, not the core problem that the slide title is neutral and no annotation explains the finding.
-    *   *Why D is incorrect:* Adding SQL queries and methodology slides is appropriate for a technical audience, not for a CEO presentation. Executive audiences need the conclusion and its implication — methodology belongs in a technical appendix.
+### Question 5
+
+An analyst needs to include a `contract_type` column with values Month-to-Month, One Year, and Two Year in a logistic regression model. What is the correct encoding approach?
+
+A) Assign integers 1, 2, 3 to the three values — this is ordinal encoding and is appropriate because logistic regression requires numeric inputs.
+
+B) Apply one-hot encoding to create binary dummy columns, using `drop_first=True` to avoid perfect multicollinearity.
+
+C) Leave the column as a string; logistic regression in scikit-learn handles text columns automatically.
+
+D) Drop the column entirely because categorical variables cannot be used in regression models.
+
+#### Q5 Correct Answer: B
+
+#### Q5 Distractor Analysis
+
+A is inappropriate for nominal categories without a natural order — contract type has no inherent numeric order and assigning integers implies one type is "greater than" another. C is false; scikit-learn requires numeric input. D is unnecessarily discards a potentially predictive feature.
+
+---
+
+### Question 6
+
+Which evaluation metric is most appropriate when minimizing false negatives is the priority? For example, a medical screening test that must not miss patients who have a disease.
+
+A) Accuracy — measures overall correctness but treats false negatives and false positives equally.
+
+B) Precision — measures the fraction of positive predictions that are correct; optimizes against false positives.
+
+C) Recall — measures the fraction of actual positives that were detected; minimizing false negatives directly maximizes recall.
+
+D) R² — a regression metric measuring explained variance; not applicable to classification.
+
+#### Q6 Correct Answer: C
+
+#### Q6 Distractor Analysis
+
+A treats both error types equally and does not prioritize false negatives. B optimizes for false positives (precision) not false negatives. D is a regression metric that does not apply.
+
+---
+
+### Question 7
+
+What does `stratify=y` do in `train_test_split(X, y, test_size=0.2, stratify=y)`?
+
+A) It sorts the data by the target variable before splitting so the training set contains the earliest examples.
+
+B) It ensures the proportion of each class in the target variable is preserved in both the training and test sets.
+
+C) It oversamples the minority class to create a balanced training set.
+
+D) It applies class weights so the model penalizes errors on minority class examples more heavily.
+
+#### Q7 Correct Answer: B
+
+#### Q7 Distractor Analysis
+
+A describes sorting, which stratify does not do. C describes a resampling technique (SMOTE); stratify only preserves existing proportions during the split. D describes class_weight parameter, not stratify.
+
+---
+
+### Question 8
+
+A K-means clustering model is run on customer transaction data with `n_clusters=4`. What does the model output?
+
+A) Four class probability scores for each customer, summing to 1.0.
+
+B) A single numeric prediction for each customer representing their expected spend.
+
+C) A cluster label (0, 1, 2, or 3) for each customer indicating which group the algorithm assigned them to.
+
+D) Four decision boundaries that separate customer segments by the most important feature.
+
+#### Q8 Correct Answer: C
+
+#### Q8 Distractor Analysis
+
+A describes predict_proba output from a classifier, not clustering. B describes regression output. D describes a decision tree boundary, not K-means output.
+
+---
+
+### Question 9
+
+An analyst wants to reduce overfitting in a decision tree model without switching to a different algorithm. Which approach is most appropriate?
+
+A) Increase the maximum tree depth to allow the model to learn more complex patterns.
+
+B) Remove the train-test split so the model trains on all available data.
+
+C) Reduce the maximum tree depth or set a minimum number of samples required to split a node, limiting the model's complexity.
+
+D) Apply one-hot encoding to all features, which reduces the feature space and prevents memorization.
+
+#### Q9 Correct Answer: C
+
+#### Q9 Distractor Analysis
+
+A would increase overfitting by making the tree more complex. B removes the ability to detect overfitting; it does not reduce it. D changes the feature representation but does not directly constrain tree complexity or prevent leaf-level memorization.
+
+---
+
+### Question 10
+
+Which combination of training and test accuracy best represents a well-fitted model with no significant overfitting or underfitting?
+
+A) Training accuracy: 99.8%, Test accuracy: 54.2% — large gap indicates overfitting.
+
+B) Training accuracy: 58.3%, Test accuracy: 57.1% — both low indicates underfitting.
+
+C) Training accuracy: 87.4%, Test accuracy: 85.1% — small gap with high absolute performance indicates good generalization.
+
+D) Training accuracy: 100.0%, Test accuracy: 100.0% — perfect scores indicate the model learned a trivial dataset or there is data leakage.
+
+#### Q10 Correct Answer: C
+
+#### Q10 Distractor Analysis
+
+A shows a 45-point gap between training and test accuracy — a clear overfitting signature. B shows both metrics below 60% — underfitting. D should not be trusted; 100% accuracy on both sets almost always indicates data leakage or a trivial problem, not a genuinely well-trained model.
+
+---
+
+### Answer Key
+
+| Question | Correct Answer |
+|---|---|
+| 1 | B |
+| 2 | C |
+| 3 | B |
+| 4 | C |
+| 5 | B |
+| 6 | C |
+| 7 | B |
+| 8 | C |
+| 9 | C |
+| 10 | C |

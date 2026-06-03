@@ -1,264 +1,305 @@
-# Video Script: Module 07 - File and Print Services (Part 2 of 2)
+# Video Script: Module 07 — Active Directory User and Group Management (Part 2 of 2)
 
 ## Course: CIS-3326 Windows Server Administration
 
-## Texas Wesleyan University
+## Texas Wesleyan University | Professor Nash
+
+## Estimated Duration: 15 minutes
+
+## Certification Alignment: Microsoft Windows Server Administration
 
 ---
 
-**Recorded by:** Professor Nash | Texas Wesleyan University
+## Introduction
 
-**Module:** 07 - File and Print Services
+Welcome back. I am Professor Nash.
 
-**Part:** 2 of 2 — Demonstrations, PowerShell Commands, Exam Tips, and Lab Preview
+In Part 1 we covered OU structure design, user account fundamentals, group types
+and scopes, the AGDLP nesting strategy, and bulk provisioning concepts.
 
-**Estimated Duration:** 11 minutes
+In Part 2 we put all of that to work. We will build an OU structure, create
+users and groups using both the GUI and PowerShell, run a bulk provisioning
+script from a CSV file, and practice account management tasks including disabling,
+unlocking, and moving accounts.
 
-**Certification Alignment:** AZ-800 (Administering Windows Server Hybrid Core Infrastructure)
-
----
-
-### [SEGMENT 1 — Recap and Demo Overview]
-
-Welcome back to Module 07. In Part 1 we covered SMB file sharing, the Share + NTFS permission interaction, DFS Namespaces and Replication, FSRM quotas and file screening, Shadow Copies, and Print Management. In Part 2 I will demonstrate creating and configuring a file share with PowerShell, setting NTFS permissions, installing FSRM, configuring a quota and file screen, enabling shadow copies, and walking through Print Management.
+Let us get started.
 
 ---
 
-### [SEGMENT 2 — Demo: Install File Services Role and Create a Share]
+## Section 1: Building the OU Structure with PowerShell
 
-**[SHOW SCREEN: PowerShell console on Windows Server]**
-
-[Alt-text: PowerShell console showing Install-WindowsFeature and New-SmbShare commands with output confirming share creation.]
+The first step in any new AD environment is building the OU hierarchy. Open
+PowerShell as a Domain Administrator.
 
 ```powershell
-# Install File Server role with management tools
-Install-WindowsFeature -Name FS-FileServer -IncludeManagementTools
+# Create the root OU
+New-ADOrganizationalUnit -Name "TXWES" -Path "DC=txwes,DC=edu" `
+    -ProtectedFromAccidentalDeletion $true
 
-# Install DFS Namespaces and DFS Replication
-Install-WindowsFeature -Name FS-DFS-Namespace, FS-DFS-Replication -IncludeManagementTools
+# Create department OUs under TXWES
+$rootPath = "OU=TXWES,DC=txwes,DC=edu"
 
-# Install File Server Resource Manager
-Install-WindowsFeature -Name FS-Resource-Manager -IncludeManagementTools
+New-ADOrganizationalUnit -Name "IT"             -Path $rootPath -ProtectedFromAccidentalDeletion $true
+New-ADOrganizationalUnit -Name "Faculty"        -Path $rootPath -ProtectedFromAccidentalDeletion $true
+New-ADOrganizationalUnit -Name "Students"       -Path $rootPath -ProtectedFromAccidentalDeletion $true
+New-ADOrganizationalUnit -Name "ServiceAccounts"-Path $rootPath -ProtectedFromAccidentalDeletion $true
 
-# Verify installation
-Get-WindowsFeature -Name FS-FileServer, FS-DFS-Namespace, FS-DFS-Replication, FS-Resource-Manager |
-    Select-Object Name, InstallState
+# Create sub-OUs under IT
+$itPath = "OU=IT,OU=TXWES,DC=txwes,DC=edu"
+New-ADOrganizationalUnit -Name "Admins"   -Path $itPath -ProtectedFromAccidentalDeletion $true
+New-ADOrganizationalUnit -Name "Helpdesk" -Path $itPath -ProtectedFromAccidentalDeletion $true
 
-# Create the share directory
-New-Item -Path "C:\Shares\HR_Docs" -ItemType Directory -Force
+# Verify the OU structure
+Get-ADOrganizationalUnit -Filter * | Select-Object Name, DistinguishedName | Sort-Object DistinguishedName
+```
 
-# Create an SMB share
-New-SmbShare `
-    -Name "HR_Docs" `
-    -Path "C:\Shares\HR_Docs" `
-    -Description "HR Department Documents" `
-    -FullAccess "CORP\Domain Admins" `
-    -ReadAccess "CORP\HR_Group"
+The `-ProtectedFromAccidentalDeletion $true` flag prevents an administrator from
+accidentally deleting an OU with a simple `Remove-ADOrganizationalUnit` call.
+This is a best practice for any production OU.
 
-# Verify the share
-Get-SmbShare -Name "HR_Docs" | Select-Object Name, Path, Description
+---
+
+## Section 2: Creating Individual Users with New-ADUser
+
+Now let us create a user account with the attributes we discussed in Part 1.
+
+```powershell
+# Create a single user account
+New-ADUser `
+    -Name               "Jane Smith" `
+    -GivenName          "Jane" `
+    -Surname            "Smith" `
+    -SamAccountName     "jsmith" `
+    -UserPrincipalName  "jsmith@txwes.edu" `
+    -DisplayName        "Jane Smith" `
+    -Department         "IT" `
+    -Title              "Systems Administrator" `
+    -Path               "OU=Admins,OU=IT,OU=TXWES,DC=txwes,DC=edu" `
+    -AccountPassword    (ConvertTo-SecureString "P@ssw0rd123!" -AsPlainText -Force) `
+    -ChangePasswordAtLogon $true `
+    -Enabled            $true
+
+# Verify the user was created
+Get-ADUser -Identity "jsmith" -Properties Department, Title, UserPrincipalName |
+    Select-Object Name, SamAccountName, UserPrincipalName, Department, Title, Enabled
+```
+
+Notice `-ChangePasswordAtLogon $true`. This is a best practice for new accounts
+— force users to set their own password on first login so IT never retains their
+credentials.
+
+---
+
+## Section 3: Creating Groups with New-ADGroup
+
+Next, create the security groups we need for AGDLP access management.
+
+```powershell
+$groupBase = "OU=IT,OU=TXWES,DC=txwes,DC=edu"
+
+# Create a Global security group for IT Admins role
+New-ADGroup `
+    -Name          "G_IT_Admins" `
+    -GroupScope    Global `
+    -GroupCategory Security `
+    -Description   "IT Administrators — role-based global group" `
+    -Path          $groupBase
+
+# Create a Domain Local security group for file share permissions
+New-ADGroup `
+    -Name          "DL_ITShare_FullControl" `
+    -GroupScope    DomainLocal `
+    -GroupCategory Security `
+    -Description   "IT file share — Full Control permission holder" `
+    -Path          $groupBase
+
+# Add jsmith to the Global group
+Add-ADGroupMember -Identity "G_IT_Admins" -Members "jsmith"
+
+# Nest the Global group inside the Domain Local group (AGDLP pattern)
+Add-ADGroupMember -Identity "DL_ITShare_FullControl" -Members "G_IT_Admins"
+
+# Verify group membership
+Get-ADGroupMember -Identity "G_IT_Admins"   | Select-Object Name, objectClass
+Get-ADGroupMember -Identity "DL_ITShare_FullControl" | Select-Object Name, objectClass
+```
+
+Note the `-GroupScope` and `-GroupCategory` parameters. Missing either one
+creates the wrong type of group. The exam tests these parameters specifically.
+
+---
+
+## Section 4: Bulk Provisioning from a CSV File
+
+This is where PowerShell really shines. In a real environment you might receive
+an HR export with 300 new employees. Here is how to handle it.
+
+First, imagine a CSV file named `new_users.csv` with these columns:
+
+```text
+FirstName,LastName,Department,OU
+Alice,Johnson,Faculty,OU=Faculty,OU=TXWES,DC=txwes,DC=edu
+Bob,Williams,IT,OU=Helpdesk,OU=IT,OU=TXWES,DC=txwes,DC=edu
+Carol,Brown,Students,OU=Students,OU=TXWES,DC=txwes,DC=edu
+```
+
+Now the PowerShell import loop:
+
+```powershell
+# Import users from CSV
+$users = Import-Csv -Path "C:\Scripts\new_users.csv"
+
+foreach ($user in $users) {
+    # Build the sAMAccountName: first initial + last name, lowercase
+    $sam = ($user.FirstName.Substring(0,1) + $user.LastName).ToLower()
+    $upn = "$sam@txwes.edu"
+
+    # Create the user
+    New-ADUser `
+        -Name              "$($user.FirstName) $($user.LastName)" `
+        -GivenName         $user.FirstName `
+        -Surname           $user.LastName `
+        -SamAccountName    $sam `
+        -UserPrincipalName $upn `
+        -DisplayName       "$($user.FirstName) $($user.LastName)" `
+        -Department        $user.Department `
+        -Path              $user.OU `
+        -AccountPassword   (ConvertTo-SecureString "Welcome1!" -AsPlainText -Force) `
+        -ChangePasswordAtLogon $true `
+        -Enabled           $true
+
+    Write-Host "Created: $sam in $($user.OU)" -ForegroundColor Green
+}
+
+# Verify all users were created
+Get-ADUser -Filter * -SearchBase "OU=TXWES,DC=txwes,DC=edu" |
+    Select-Object Name, SamAccountName, Enabled
+```
+
+This loop creates every user in the CSV in seconds. In a real migration, the CSV
+might come from your HR system with 2,000 rows — the same script handles it
+without modification.
+
+---
+
+## Section 5: Account Management Operations
+
+Let us walk through the most common account management tasks.
+
+```powershell
+# ── Disable an account ──────────────────────────────────────────────
+Disable-ADAccount -Identity "jsmith"
+# Verify
+Get-ADUser -Identity "jsmith" | Select-Object Name, Enabled
+
+# ── Re-enable an account ────────────────────────────────────────────
+Enable-ADAccount -Identity "jsmith"
+
+# ── Unlock a locked account ─────────────────────────────────────────
+Unlock-ADAccount -Identity "jsmith"
+# Check lockout status
+Get-ADUser -Identity "jsmith" -Properties LockedOut, BadLogonCount |
+    Select-Object Name, LockedOut, BadLogonCount
+
+# ── Reset a password ────────────────────────────────────────────────
+Set-ADAccountPassword -Identity "jsmith" `
+    -NewPassword (ConvertTo-SecureString "NewP@ss456!" -AsPlainText -Force) `
+    -Reset
+Set-ADUser -Identity "jsmith" -ChangePasswordAtLogon $true
+
+# ── Move a user to a different OU ───────────────────────────────────
+Move-ADObject `
+    -Identity "CN=Jane Smith,OU=Admins,OU=IT,OU=TXWES,DC=txwes,DC=edu" `
+    -TargetPath "OU=Helpdesk,OU=IT,OU=TXWES,DC=txwes,DC=edu"
+
+# ── Find all disabled accounts ──────────────────────────────────────
+Search-ADAccount -AccountDisabled | Select-Object Name, SamAccountName
+
+# ── Find all locked accounts ────────────────────────────────────────
+Search-ADAccount -LockedOut | Select-Object Name, SamAccountName
+```
+
+The `Search-ADAccount` cmdlet is extremely useful for helpdesk audits. You can
+quickly find all locked or disabled accounts across the entire domain.
+
+---
+
+## Section 6: Verifying Group Membership and Effective Access
+
+Before wrapping up, let us verify our AGDLP chain is correct.
+
+```powershell
+# Check which groups a user belongs to (direct membership)
+Get-ADPrincipalGroupMembership -Identity "jsmith" |
+    Select-Object Name, GroupScope, GroupCategory
+
+# Check nested group membership (all groups, including inherited)
+(Get-ADUser "jsmith" -Properties MemberOf).MemberOf
+
+# List all members of a group
+Get-ADGroupMember -Identity "G_IT_Admins" -Recursive |
+    Select-Object Name, objectClass
+
+# Check if a specific user is in a group
+(Get-ADUser "jsmith" -Properties MemberOf).MemberOf -match "G_IT_Admins"
 ```
 
 ---
 
-### [SEGMENT 3 — Demo: Configure NTFS Permissions]
+## Section 7: Exam Tips
 
-**[SHOW SCREEN: PowerShell showing NTFS ACL configuration]**
+Here are the certification exam tips for this module:
 
-[Alt-text: PowerShell console showing Get-Acl and Set-Acl commands setting NTFS permissions on the HR_Docs folder.]
+**Exam Tip 1** — `New-ADUser` requires the `-Path` parameter to place users in
+the correct OU. Without it, users land in the default CN=Users container, which
+cannot have Group Policy linked to it.
 
-```powershell
-# Get the current NTFS ACL
-$acl = Get-Acl -Path "C:\Shares\HR_Docs"
+**Exam Tip 2** — Group scope rules. Global groups can only contain members from
+the **same domain**. Domain Local groups can contain members from **any domain**.
+Universal groups can contain members from **any domain in the forest**. This
+appears on the exam in the form of a scenario asking which scope is appropriate
+for a given cross-domain access situation.
 
-# Create a new access rule: HR_Group gets Modify rights, inherited
-$rule = New-Object System.Security.AccessControl.FileSystemAccessRule(
-    "CORP\HR_Group",
-    "Modify",
-    "ContainerInherit,ObjectInherit",
-    "None",
-    "Allow"
-)
+**Exam Tip 3** — Security vs. Distribution. Only Security groups can be assigned
+to NTFS or share permissions. Distribution groups are email-only. If a scenario
+asks about assigning file permissions, the answer always involves a Security group.
 
-# Add the rule and apply it
-$acl.SetAccessRule($rule)
-Set-Acl -Path "C:\Shares\HR_Docs" -AclObject $acl
+**Exam Tip 4** — AGDLP order matters: Accounts into Global, Global into Domain
+Local, Domain Local gets the Permission. Reversing this order does not work
+— you cannot put a Domain Local group inside a Global group.
 
-# Verify NTFS permissions
-(Get-Acl -Path "C:\Shares\HR_Docs").Access |
-    Select-Object IdentityReference, FileSystemRights, AccessControlType
-```
+**Exam Tip 5** — `-ProtectedFromAccidentalDeletion $true` on OUs is a best
+practice. The exam may ask what prevents an accidental `Remove-ADOrganizationalUnit`
+— this property is the answer.
 
-With Share permissions set to Read for HR_Group and NTFS permissions set to Modify, the effective network permission is Read — the most restrictive of the two.
-
----
-
-### [SEGMENT 4 — Demo: FSRM Quota and File Screen]
-
-**[SHOW SCREEN: PowerShell showing FSRM quota and file screen commands]**
-
-[Alt-text: PowerShell console showing New-FsrmQuota and New-FsrmFileScreen commands with confirmation output.]
-
-```powershell
-# Create a 5 GB hard quota on the HR share
-New-FsrmQuota `
-    -Path "C:\Shares\HR_Docs" `
-    -Size 5GB `
-    -SoftLimit $false `
-    -Description "5 GB hard quota for HR Documents share"
-
-# Verify quota
-Get-FsrmQuota -Path "C:\Shares\HR_Docs"
-
-# Create a file screen blocking audio and video files (Active screen)
-New-FsrmFileScreen `
-    -Path "C:\Shares\HR_Docs" `
-    -IncludeGroup "Audio and Video Files" `
-    -Active $true
-
-# Verify file screen
-Get-FsrmFileScreen -Path "C:\Shares\HR_Docs"
-```
-
-The `-Active $true` parameter creates an Active Screen that blocks the file types. Setting `-Active $false` would create a Passive Screen that only logs events without blocking.
+**Exam Tip 6** — `Search-ADAccount` is the PowerShell tool for finding disabled,
+locked-out, expired, or inactive accounts. Know this cmdlet for troubleshooting
+scenarios on the exam.
 
 ---
 
-### [SEGMENT 5 — Demo: Enable Volume Shadow Copies]
+## Wrap-Up
 
-**[SHOW SCREEN: PowerShell showing shadow copy configuration]**
+In this two-part module we covered:
 
-[Alt-text: PowerShell console showing vssadmin and New-ScheduledTask commands for configuring Volume Shadow Copy Service on a volume.]
+- Designing and creating an OU structure with `New-ADOrganizationalUnit`.
 
-```powershell
-# Enable shadow copies on C: volume
-# This is typically done through the GUI, but can be scripted:
-$volume = "C:"
+- Creating individual user accounts with `New-ADUser` and all key attributes.
 
-# Check current shadow copy status
-vssadmin list shadows /for=$volume
+- Creating security groups with `New-ADGroup` using correct scopes and categories.
 
-# Create a shadow copy immediately
-vssadmin create shadow /for=$volume
+- Implementing the AGDLP nesting pattern with `Add-ADGroupMember`.
 
-# To configure scheduled shadow copies via GUI:
-# Right-click the volume in Computer Management > Configure Shadow Copies
-# Set schedule (default: 7:00 AM and 12:00 PM daily)
-# Set storage limit (recommended: 10% of volume size)
+- Bulk provisioning hundreds of users from a CSV file using `Import-Csv` and a
+  `foreach` loop.
 
-# View all shadow copies
-vssadmin list shadows
+- Managing the account lifecycle: disable, enable, unlock, password reset, and
+  move with the AD cmdlet set.
 
-# Restore from shadow copy — from the client side
-# Right-click folder > Properties > Previous Versions tab
-```
+- Verifying membership with `Get-ADPrincipalGroupMembership` and
+  `Get-ADGroupMember`.
 
----
+Head to the Reading Guide for reference tables, then complete Lab 07 where you
+will build this entire structure from scratch in your own lab environment.
 
-### [SEGMENT 6 — Demo: Create a DFS Namespace]
-
-**[SHOW SCREEN: PowerShell showing DFS namespace creation commands]**
-
-[Alt-text: PowerShell console showing New-DfsnRoot and New-DfsnFolder commands creating a domain-based DFS namespace.]
-
-```powershell
-# Create a domain-based DFS namespace root
-New-DfsnRoot `
-    -Path "\\corp.local\Files" `
-    -TargetPath "\\DC1\Files" `
-    -Type DomainV2 `
-    -Description "Corporate file namespace"
-
-# Add a folder to the namespace pointing to the HR share
-New-DfsnFolder `
-    -Path "\\corp.local\Files\HR" `
-    -TargetPath "\\DC1\HR_Docs" `
-    -Description "HR Department Documents"
-
-# Verify the namespace
-Get-DfsnRoot -Path "\\corp.local\Files"
-Get-DfsnFolder -Path "\\corp.local\Files\*"
-```
-
-Users can now access `\\corp.local\Files\HR` and be transparently redirected to `\\DC1\HR_Docs`.
-
----
-
-### [SEGMENT 7 — Demo: Print Management]
-
-**[SHOW SCREEN: Print Management console showing adding a printer and sharing it]**
-
-[Alt-text: Print Management console with the Add Printer Wizard open, showing a network printer being added and its share name configured as HR_Printer.]
-
-```powershell
-# Install Print and Document Services role
-Install-WindowsFeature -Name Print-Services -IncludeManagementTools
-
-# Add a local printer port (for a network printer connected via TCP/IP)
-Add-PrinterPort -Name "IP_192.168.10.50" -PrinterHostAddress "192.168.10.50"
-
-# Add a printer using the port
-Add-Printer `
-    -Name "HR_HP_LaserJet" `
-    -DriverName "HP LaserJet Universal Printing PCL 6" `
-    -PortName "IP_192.168.10.50" `
-    -Shared $true `
-    -ShareName "HR_Printer" `
-    -Published $true
-
-# Verify the printer
-Get-Printer -Name "HR_HP_LaserJet" | Select-Object Name, ShareName, Published, DriverName
-```
-
-The `-Published $true` parameter publishes the printer to Active Directory so users can search for it in ADUC.
-
----
-
-### [SEGMENT 8 — Exam Tips]
-
-**[SHOW SCREEN: Exam tips slide for Module 07]**
-
-**Exam Tip 1:** The most restrictive permission rule. When a user accesses a share over the network, evaluate Share and NTFS permissions separately, then take the most restrictive. Share=Read + NTFS=Full Control = Read over the network. Share=Full Control + NTFS=Read = Read over the network.
-
-**Exam Tip 2:** DFSN vs. DFSR. DFS Namespaces creates the unified virtual path. DFS Replication keeps the content synchronized. They are complementary but independent — you can have one without the other.
-
-**Exam Tip 3:** FSRM quota types. Hard quota blocks writes when the limit is reached. Soft quota sends a notification but allows writes to continue. Match the type to the scenario: "prevent" = hard, "notify" = soft.
-
-**Exam Tip 4:** FSRM Active vs. Passive file screen. Active Screen blocks the file types entirely. Passive Screen logs the event but allows the file. Match to the scenario: "block executables" = Active, "audit for media files" = Passive.
-
-**Exam Tip 5:** Shadow Copies are not a backup. They protect against accidental deletion or modification on a running server. They do not protect against hardware failure, ransomware that encrypts the shadow copies, or server loss.
-
-**Exam Tip 6:** Best practice for share permissions is Full Control for Everyone or Authenticated Users at the Share level, then restrict with NTFS permissions. This avoids the double-permission management problem and leverages NTFS's superior granularity.
-
----
-
-### [SEGMENT 9 — Lab Preview]
-
-**[SHOW SCREEN: Lab 07 instructions document]**
-
-This week's lab walks you through installing the File Server role and FSRM on DC1, creating a share with correct NTFS permissions, creating a 5 GB hard quota, configuring an Active File Screen for executables, enabling shadow copies on the C: volume, and creating a DFS namespace with one folder target.
-
-Your deliverables are screenshots of the share permissions, the FSRM quota, the file screen, and the DFS namespace folder.
-
----
-
-### [SEGMENT 10 — Module 07 Summary]
-
-**[SHOW SCREEN: Summary slide]**
-
-File services in Windows Server use SMB for sharing. NTFS and Share permissions both apply to network access, with the most restrictive combination being effective. DFS Namespaces creates a unified virtual path hiding the underlying server topology. DFS Replication keeps content synchronized across servers. FSRM manages quotas and blocks unwanted file types. Shadow Copies enable self-service recovery. Print Management centralizes printer deployment and driver distribution.
-
-Module 08 covers Remote Desktop Services — the role that enables session-based desktop delivery and application publishing. See you there.
-
----
-
-### Additional Resources
-
-- [SMB file sharing overview](https://learn.microsoft.com/en-us/windows-server/storage/file-server/file-server-smb-overview)
-- [DFS Namespaces overview](https://learn.microsoft.com/en-us/windows-server/storage/dfs-namespaces/dfs-overview)
-- [File Server Resource Manager](https://learn.microsoft.com/en-us/windows-server/storage/fsrm/fsrm-overview)
-- [Print and Document Services](https://learn.microsoft.com/en-us/windows-server/administration/windows-server-roles-features/print-and-document-services-overview)
-
----
-
-*End of Part 2. Proceed to the Reading Guide, Lab, Quiz, and Discussion for Module 07.*
+See you in Module 08 — Group Policy Objects.

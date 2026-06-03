@@ -1,53 +1,423 @@
-# Reading Guide: Module 11 - Big Data Concepts – Hadoop and Spark
-## Course: CIS-4336_Data_Analytics (CompTIA Data+)
+# Reading Guide: Module 11 — SQL for Data Analytics
+
+## Course: CIS-4336 Data Analytics
+
+## Texas Wesleyan University | Professor Nash
+
+## Certification Alignment: CompTIA Data+ (DA0-001) — Domain 3: Data Analysis
 
 ---
 
-### Introduction
-Welcome to **Module 11 - Big Data Concepts: Hadoop and Spark**! Traditional databases and single-machine analytics tools hit their limits when datasets grow to terabytes or petabytes. Big data technologies like Hadoop and Spark distribute storage and computation across clusters of commodity machines, enabling analytics at a scale that would be impossible on a single server. This module covers the big data concepts tested on the **CompTIA Data+** exam: the defining characteristics of big data, the Hadoop ecosystem, how Spark improves on Hadoop for in-memory processing, and how these technologies fit into modern data pipelines.
+## Overview
 
-Understanding big data architecture helps analysts recognize when a problem requires distributed infrastructure, interpret data pipelines built by data engineers, and communicate intelligently with platform teams about the systems that generate and store the data they analyze.
-
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **The 3 Vs of big data (volume, velocity, variety)**: Volume refers to the sheer scale of data — datasets too large to store or process on a single machine. Velocity refers to the speed at which data is generated and must be processed — streaming sensor data, real-time transactions, and social media feeds require near-instant ingestion. Variety refers to the diversity of data types — structured tables, unstructured text, images, logs, and JSON all arriving from different sources.
-*   **Hadoop and HDFS**: Apache Hadoop is an open-source framework for distributed storage and batch processing of large datasets. The Hadoop Distributed File System (HDFS) splits files into blocks and distributes them across multiple nodes in a cluster, with replication for fault tolerance. MapReduce, Hadoop's original processing model, breaks a computation into a map phase (applying a function to each data chunk in parallel) and a reduce phase (aggregating the results).
-*   **Apache Spark**: A fast, general-purpose distributed processing engine that improves on MapReduce by performing computations in memory (RAM) rather than writing intermediate results to disk. Spark is 10–100x faster than Hadoop MapReduce for iterative algorithms and interactive queries. Spark supports batch processing, streaming, SQL queries (Spark SQL), machine learning (MLlib), and graph processing — all within the same engine.
-*   **Data lake vs. data warehouse**: A data lake is a centralized repository that stores raw data in its native format — structured, semi-structured, and unstructured — without schema enforcement at ingestion ("schema on read"). A data warehouse stores cleaned, structured, schema-enforced data optimized for analytical queries ("schema on write"). Data lakes are flexible and cheap for raw storage; warehouses are optimized for fast, reliable business reporting.
-*   **ETL and ELT pipelines**: ETL (Extract, Transform, Load) extracts data from source systems, transforms it (cleans, joins, aggregates), and loads it into a target warehouse. ELT (Extract, Load, Transform) loads raw data into the target first, then transforms it using the warehouse's processing power. Cloud-scale data platforms increasingly favor ELT because compute is cheap and preserving raw data provides flexibility.
+This guide covers the advanced SQL techniques every data analyst must master: aggregations, GROUP BY with HAVING, window functions, CTEs, and subqueries. The CompTIA Data+ exam tests SQL knowledge throughout Domain 3. More importantly, these are the exact techniques you will use in every analytical role. Work through each code example and verify you understand what it produces before moving on.
 
 ---
 
-### 2. Certification Exam Tips
-*   **Domain weight:** Big data and pipeline concepts appear in Domain 2 (Data Collection and Management, ~25%) and Domain 3 (Data Mining, ~23%) of the Data+ DA0-001 exam. Questions about data storage architectures and processing frameworks are common.
-*   **Exam trap — Hadoop vs. Spark:** Hadoop MapReduce is a disk-based batch processing system; it is reliable but slow for iterative or interactive workloads. Spark is in-memory and much faster, especially for machine learning and real-time analytics. If an exam scenario asks which technology is better for iterative ML training or real-time stream processing, the answer is Spark.
-*   **Exam trap — data lake vs. data warehouse:** A data lake stores raw, unstructured or semi-structured data with schema applied at read time. A data warehouse stores clean, structured data with a predefined schema applied at write time. If the scenario describes storing diverse raw data sources cheaply before any transformation, the answer is data lake. If it describes fast, reliable BI reporting on cleaned data, the answer is data warehouse.
-*   **Exam trap — ETL vs. ELT:** ETL transforms data before loading — traditional, used when the target warehouse has limited compute. ELT loads first then transforms — modern, used with cloud platforms (BigQuery, Redshift, Snowflake) where compute is elastic. The exam may present a scenario and ask which pipeline pattern applies.
-*   **Study Resource:** The data engineering and big data chapters of [Introduction to Data Science by Rafael A. Irizarry](https://rafalab.github.io/dsbook/) cover distributed data concepts and pipeline architecture. The [Data Analysis with Python Course by freeCodeCamp](https://www.youtube.com/watch?v=GPVsHOl2238) demonstrates data pipeline thinking in Python that translates directly to understanding what Spark and Hadoop automate at scale.
+## Section 1: SQL Execution Order
+
+Understanding the logical order SQL executes clauses is essential for debugging and writing correct queries.
+
+| Step | Clause | What Happens |
+|------|--------|--------------|
+| 1 | FROM | Identifies the source tables |
+| 2 | JOIN | Combines rows from joined tables |
+| 3 | WHERE | Filters individual rows |
+| 4 | GROUP BY | Groups remaining rows by specified columns |
+| 5 | HAVING | Filters groups after aggregation |
+| 6 | SELECT | Computes output columns including aggregates |
+| 7 | ORDER BY | Sorts the final result |
+| 8 | LIMIT/TOP | Restricts the number of output rows |
+
+**Key implication:** Because WHERE executes before GROUP BY, you cannot use aggregate functions in a WHERE clause. Use HAVING instead to filter based on aggregate results.
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the data engineering and distributed systems chapters in the OER Textbook: [Introduction to Data Science by Rafael A. Irizarry](https://rafalab.github.io/dsbook/). Focus on the sections covering large-scale data storage architectures, pipeline design, and the distinction between batch and streaming processing.
-*   **Required Video:** Watch the data pipeline and engineering sections of the [Data Analysis with Python Course by freeCodeCamp](https://www.youtube.com/watch?v=GPVsHOl2238), which demonstrates data ingestion, transformation, and loading workflows in Python that parallel the logic of distributed big data systems.
+## Section 2: Aggregate Functions and GROUP BY
+
+### Core Aggregate Functions
+
+| Function | Description | NULL handling |
+|----------|-------------|---------------|
+| `COUNT(*)` | Counts all rows including NULLs | Includes NULLs |
+| `COUNT(col)` | Counts non-null values in a column | Excludes NULLs |
+| `SUM(col)` | Sums numeric values | Ignores NULLs |
+| `AVG(col)` | Arithmetic mean of non-null values | Ignores NULLs |
+| `MIN(col)` | Smallest value | Ignores NULLs |
+| `MAX(col)` | Largest value | Ignores NULLs |
+
+### GROUP BY Rules
+
+- Every non-aggregated column in SELECT must appear in GROUP BY
+- GROUP BY can reference multiple columns — each unique combination becomes one group
+- You can GROUP BY expressions: `GROUP BY EXTRACT(YEAR FROM order_date)`
+
+```sql
+-- Revenue by region and year
+SELECT
+    region,
+    EXTRACT(YEAR FROM order_date) AS order_year,
+    COUNT(*)                      AS order_count,
+    ROUND(SUM(amount), 2)         AS total_revenue,
+    ROUND(AVG(amount), 2)         AS avg_order
+FROM orders
+GROUP BY region, EXTRACT(YEAR FROM order_date)
+ORDER BY order_year, total_revenue DESC;
+```
+
+### HAVING Clause
+
+HAVING filters groups after GROUP BY and aggregation. It can use aggregate functions.
+
+```sql
+-- Sales reps with total revenue over $200,000
+SELECT
+    sales_rep,
+    COUNT(*)       AS order_count,
+    SUM(amount)    AS total_revenue
+FROM orders
+GROUP BY sales_rep
+HAVING SUM(amount) > 200000
+ORDER BY total_revenue DESC;
+```
+
+### WHERE vs. HAVING
+
+| Clause | Filters | Can Use Aggregates? | Executes |
+|--------|---------|---------------------|---------|
+| WHERE | Individual rows | No | Before GROUP BY |
+| HAVING | Groups | Yes | After GROUP BY |
+
+Common pattern — WHERE and HAVING in the same query:
+
+```sql
+-- Revenue by sales rep in 2024 where total revenue > $150,000
+SELECT
+    sales_rep,
+    SUM(amount) AS total_revenue
+FROM orders
+WHERE EXTRACT(YEAR FROM order_date) = 2024
+GROUP BY sales_rep
+HAVING SUM(amount) > 150000
+ORDER BY total_revenue DESC;
+```
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Design an ETL pipeline for a multi-source dataset**: Identify the extract source (database + CSV), the transformation steps (join, filter, type cast), and the load target (data warehouse table), then document each step with its input and output schema.
-*   **Compare data lake and data warehouse storage approaches**: Given a scenario with three data sources (structured orders, semi-structured JSON events, unstructured log files), determine which sources should land in a data lake first and which should be loaded directly to a warehouse.
-*   **Explain the Spark in-memory advantage**: Describe a scenario where a MapReduce job running 50 iterations of a machine learning algorithm would be impractical, and explain why Spark's in-memory caching of intermediate results solves the performance problem.
+## Section 3: Window Functions
+
+Window functions compute values across a set of rows related to the current row without collapsing the result set.
+
+### Syntax
+
+`function_name([args]) OVER ([PARTITION BY col1, col2] [ORDER BY col3] [frame_clause])`
+
+- `OVER` — required; marks this as a window function
+- `PARTITION BY` — divides rows into independent partitions; omit to apply across all rows
+- `ORDER BY` — defines row order within each partition
+- Frame clause — optional; defines the sliding window (e.g., rolling 7-day average)
+
+### ROW_NUMBER
+
+Assigns a unique sequential integer starting at 1 within each partition. Ties receive different numbers.
+
+```sql
+-- Rank each customer's orders by amount, highest first
+SELECT
+    customer_id,
+    order_id,
+    amount,
+    ROW_NUMBER() OVER (
+        PARTITION BY customer_id
+        ORDER BY amount DESC
+    ) AS customer_order_rank
+FROM orders;
+```
+
+### RANK
+
+Assigns the same rank to tied rows. After tied rows, the next rank skips numbers equal to the count of tied rows.
+
+```sql
+-- Rank all orders by amount (ties share rank; gaps follow)
+SELECT
+    order_id,
+    amount,
+    RANK() OVER (ORDER BY amount DESC) AS revenue_rank
+FROM orders;
+```
+
+Example: If three rows tie for rank 1, the next row receives rank 4 (not 2).
+
+### DENSE_RANK
+
+Same as RANK for ties, but no gaps — the next rank after a tie is always consecutive.
+
+```sql
+-- Dense rank: no gaps after ties
+SELECT
+    order_id,
+    amount,
+    DENSE_RANK() OVER (ORDER BY amount DESC) AS dense_rev_rank
+FROM orders;
+```
+
+Example: If three rows tie for rank 1, the next row receives rank 2 (not 4).
+
+### ROW_NUMBER vs. RANK vs. DENSE_RANK
+
+| Data: amounts 100, 100, 100, 80 | ROW_NUMBER | RANK | DENSE_RANK |
+|---------------------------------|-----------|------|------------|
+| First 100 | 1 | 1 | 1 |
+| Second 100 | 2 | 1 | 1 |
+| Third 100 | 3 | 1 | 1 |
+| 80 | 4 | 4 | 2 |
+
+### LAG and LEAD
+
+LAG returns the value from a preceding row in the partition. LEAD returns the value from a following row.
+
+`LAG(column, offset, default) OVER (PARTITION BY ... ORDER BY ...)`
+
+```sql
+-- Month-over-month revenue change
+SELECT
+    order_month,
+    monthly_revenue,
+    LAG(monthly_revenue, 1, 0) OVER (ORDER BY order_month) AS prev_month,
+    monthly_revenue - LAG(monthly_revenue, 1, 0)
+        OVER (ORDER BY order_month)                        AS mom_change
+FROM (
+    SELECT
+        DATE_TRUNC('month', order_date) AS order_month,
+        SUM(amount)                     AS monthly_revenue
+    FROM orders
+    GROUP BY DATE_TRUNC('month', order_date)
+) monthly;
+```
+
+### Running Total with Frame Clause
+
+```sql
+-- Cumulative revenue over time
+SELECT
+    order_date,
+    amount,
+    SUM(amount) OVER (
+        ORDER BY order_date
+        ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+    ) AS cumulative_revenue
+FROM orders;
+```
+
+Frame clause keywords:
+
+- `UNBOUNDED PRECEDING` — from the start of the partition
+- `CURRENT ROW` — the current row
+- `n PRECEDING` / `n FOLLOWING` — n rows before/after the current row
+- `UNBOUNDED FOLLOWING` — to the end of the partition
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read the data engineering chapters in [Introduction to Data Science by Rafael A. Irizarry](https://rafalab.github.io/dsbook/).
-- [ ] Watch the [Data Analysis with Python Course by freeCodeCamp](https://www.youtube.com/watch?v=GPVsHOl2238).
-- [ ] Review the lab instructions and understand what each task requires.
-- [ ] Proceed to the weekly hands-on lab activity.
+## Section 4: Common Table Expressions (CTEs)
+
+### CTE Syntax
+
+```sql
+WITH cte1 AS (
+    SELECT ...
+),
+cte2 AS (
+    SELECT ... FROM cte1 ...
+)
+SELECT * FROM cte2;
+```
+
+CTEs are named temporary result sets that:
+
+- Exist only for the duration of the single query
+- Can be referenced multiple times in the main query (computed once)
+- Can reference earlier CTEs in the same WITH clause
+- Make complex multi-step logic readable and maintainable
+
+### CTE vs. Subquery vs. Temp Table
+
+| Feature | CTE | Subquery | Temp Table |
+|---------|-----|----------|-----------|
+| Readability | High | Low (nested) | High |
+| Reusable in same query | Yes | No | Yes |
+| Persists after query | No | No | Yes (session) |
+| Recursive queries | Yes | No | No |
+| Performance | Usually same as subquery | Same as CTE | Materialized |
+
+### Multi-CTE Example
+
+```sql
+-- Top-spending customer per region with their order count
+WITH customer_totals AS (
+    SELECT
+        customer_id,
+        region,
+        COUNT(*)    AS order_count,
+        SUM(amount) AS total_spend
+    FROM orders
+    GROUP BY customer_id, region
+),
+ranked_customers AS (
+    SELECT
+        customer_id,
+        region,
+        order_count,
+        total_spend,
+        RANK() OVER (PARTITION BY region ORDER BY total_spend DESC) AS spend_rank
+    FROM customer_totals
+)
+SELECT region, customer_id, order_count, total_spend
+FROM ranked_customers
+WHERE spend_rank = 1
+ORDER BY total_spend DESC;
+```
+
+---
+
+## Section 5: Subqueries
+
+### Types of Subqueries
+
+| Type | Location | Description |
+|------|----------|-------------|
+| Scalar | SELECT or WHERE | Returns exactly one value |
+| Table/derived | FROM | Returns a result set used as a table |
+| Correlated | WHERE | References outer query; executes per outer row |
+| EXISTS | WHERE | Returns true/false based on subquery result |
+
+### Scalar Subquery in WHERE
+
+```sql
+-- Orders above the overall average amount
+SELECT order_id, customer_id, amount
+FROM orders
+WHERE amount > (SELECT AVG(amount) FROM orders)
+ORDER BY amount DESC;
+```
+
+### Derived Table (Subquery in FROM)
+
+```sql
+-- Customers with above-average total spend
+SELECT c.customer_name, totals.total_spend
+FROM customers c
+JOIN (
+    SELECT customer_id, SUM(amount) AS total_spend
+    FROM orders
+    GROUP BY customer_id
+) totals ON c.customer_id = totals.customer_id
+WHERE totals.total_spend > (
+    SELECT AVG(rep_total)
+    FROM (
+        SELECT customer_id, SUM(amount) AS rep_total
+        FROM orders GROUP BY customer_id
+    ) inner_avg
+)
+ORDER BY totals.total_spend DESC;
+```
+
+This query is significantly cleaner when rewritten with CTEs — which is exactly why CTEs are preferred in modern SQL.
+
+### Correlated Subquery
+
+A correlated subquery references the outer query's alias and executes once per outer row. Use cautiously on large tables due to performance.
+
+```sql
+-- Orders where amount exceeds that customer's average
+SELECT o.order_id, o.customer_id, o.amount
+FROM orders o
+WHERE o.amount > (
+    SELECT AVG(o2.amount)
+    FROM orders o2
+    WHERE o2.customer_id = o.customer_id
+)
+ORDER BY o.customer_id, o.amount DESC;
+```
+
+---
+
+## Section 6: Analytical Query Patterns
+
+### Percentile of a Value
+
+```sql
+-- What percentile is each order in overall revenue distribution?
+SELECT
+    order_id,
+    amount,
+    PERCENT_RANK() OVER (ORDER BY amount) AS pct_rank,
+    CUME_DIST()    OVER (ORDER BY amount) AS cumulative_dist
+FROM orders;
+```
+
+### Moving Average
+
+```sql
+-- 3-period rolling average of daily revenue
+SELECT
+    order_date,
+    daily_revenue,
+    AVG(daily_revenue) OVER (
+        ORDER BY order_date
+        ROWS BETWEEN 2 PRECEDING AND CURRENT ROW
+    ) AS rolling_3day_avg
+FROM (
+    SELECT order_date, SUM(amount) AS daily_revenue
+    FROM orders
+    GROUP BY order_date
+) daily;
+```
+
+### First/Last Value per Group
+
+```sql
+-- First and last order date per customer
+SELECT DISTINCT
+    customer_id,
+    FIRST_VALUE(order_date) OVER (
+        PARTITION BY customer_id ORDER BY order_date ASC
+    ) AS first_order_date,
+    LAST_VALUE(order_date) OVER (
+        PARTITION BY customer_id ORDER BY order_date ASC
+        ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+    ) AS last_order_date
+FROM orders;
+```
+
+---
+
+## Section 7: Data+ Exam Tips
+
+**Tip 1:** WHERE vs. HAVING — this is one of the most-tested SQL distinctions. WHERE filters rows before GROUP BY; HAVING filters groups after GROUP BY. Aggregate functions cannot appear in WHERE.
+
+**Tip 2:** ROW_NUMBER vs. RANK vs. DENSE_RANK — know the tie-handling behavior for each. Exam scenarios present tied data and ask which function produces which output.
+
+**Tip 3:** LAG and LEAD — know that LAG accesses previous rows and LEAD accesses future rows. Know the three-argument form: `LAG(col, offset, default)`.
+
+**Tip 4:** CTE syntax — know the `WITH cte_name AS (...)` structure and that multiple CTEs are separated by commas, not semicolons.
+
+**Tip 5:** `COUNT(*)` counts all rows including NULLs. `COUNT(column)` counts only non-null values. This distinction appears in exam questions about NULL handling.
+
+**Tip 6:** Window functions use `OVER()` — if you see `OVER (PARTITION BY ...)` in a SQL snippet, it is a window function. If the answer choices discuss "collapsing rows," that is GROUP BY, not a window function.
+
+---
+
+## Practice Problems
+
+**Problem 1:** Write a query that returns each region's total revenue, average order value, and number of orders, but only for regions that had more than 50 orders.
+
+**Problem 2:** Write a CTE-based query that finds the top-3 sales reps by total revenue in each region. Use RANK() and filter to rank <= 3.
+
+**Problem 3:** Write a query using LAG that shows each month's revenue and the change from the prior month, for the year 2024 only.
+
+**Problem 4:** What is the difference in output between `ROW_NUMBER()` and `RANK()` when five rows share the same value in the ORDER BY column?
+
+---
+
+End of Module 11 Reading Guide

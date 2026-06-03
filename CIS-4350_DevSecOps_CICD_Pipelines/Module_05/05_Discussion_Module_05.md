@@ -1,61 +1,68 @@
-# Discussion Forum: Module 05 - Container Orchestration Security: Kubernetes
+# Discussion Forum: Module 05 — Kubernetes Security
 
 ## Course: CIS-4350 DevSecOps and CI/CD Pipelines
+
+## Texas Wesleyan University | Professor Nash
 
 ## Certification Alignment: DevSecOps Professional (DSOE)
 
 ---
 
-## Overview
+## Discussion Overview
 
-This discussion applies Module 05 concepts — Kubernetes RBAC, Security Contexts, Network Policies, and API server security — to realistic operational scenarios. Read all three scenarios and respond to the one assigned to your group or the one of your choice. Initial post due Wednesday at 11:59 PM; peer responses due Sunday at 11:59 PM.
+Post your original response to one scenario below (minimum 175 words). Then reply substantively to at least two classmates' posts (minimum 75 words each). Original posts due Sunday 11:59 PM; peer replies due Tuesday 11:59 PM.
 
----
-
-## Scenario A: The Over-Privileged Deployment Pipeline
-
-A startup's DevOps engineer sets up a CI/CD pipeline that deploys to Kubernetes. To avoid permission errors during initial setup, they give the pipeline's service account the built-in `cluster-admin` ClusterRole. The pipeline works perfectly and they never revisit the configuration. Eighteen months later, a supply chain attack compromises one of the GitHub Actions used in the pipeline, and the malicious action exfiltrates the service account token. The attacker now has `cluster-admin` on the production cluster.
-
-In 175-225 words, address the following: Identify what an attacker with `cluster-admin` can do in this cluster — be specific about at least three distinct high-impact actions. Describe the RBAC configuration that should have been in place from the beginning: which specific RBAC objects would you create, what verbs on what resources would you grant, and what scope (namespace vs. cluster) would you use for a pipeline that only needs to update deployments in the `production` namespace? Finally, explain how this incident illustrates the principle of least privilege applied to CI/CD credentials.
+Professor Nash note: Kubernetes security is where theory and practice diverge most dramatically. Textbook configurations often break real applications in ways that require careful tuning. I want to see responses that acknowledge the operational reality of migrating production workloads to restrictive security profiles — not just the security ideal.
 
 ---
 
-## Scenario B: The Flat Network Incident
+## Scenario 1 — The PSA Migration Crisis
 
-A financial services company runs a Kubernetes cluster with 15 microservices. One service handles payment processing and stores card data. Another service handles marketing email campaigns. A security researcher performing an authorized penetration test compromises the marketing email service through a vulnerability in its Node.js dependencies. From the compromised marketing pod, the researcher is able to reach and query the payment service's database directly using standard network tools, exfiltrating test card data. The cluster has no Network Policies.
+Your organization is migrating 200 microservices from a Kubernetes 1.20 cluster (with PodSecurityPolicies) to Kubernetes 1.26 (PSP removed, using Pod Security Admission). The security team wants to enable the Restricted profile on all production namespaces. The platform team has run a compatibility scan and discovered that 67 of the 200 services fail the Restricted profile for one of three reasons: running as root, using host path volumes, or needing specific Linux capabilities for networking operations.
 
-In 175-225 words, address the following: Explain precisely why the researcher was able to reach the payment database from the marketing pod — what Kubernetes default behavior enabled this? Describe the Network Policy implementation that would have prevented lateral movement from the marketing namespace to the payment namespace, including the specific policy types (Ingress, Egress) and selectors needed. Explain how the defense-in-depth principle applies here — what other controls (beyond Network Policies) would reduce the risk of data exfiltration even if a pod is compromised?
+Design a migration strategy. How do you use the PSA `warn` and `audit` labels before `enforce`? How do you prioritize which of the 67 non-compliant services to fix first? For the services that legitimately need capabilities or host path access, what is the correct long-term pattern? What is your go-live timeline and what rollback plan do you have if enforcing Restricted causes production outages? Reference specific PSA label configurations and compliant pod spec patterns from this module.
 
----
+### Scenario 1 — Peer Response Prompt
 
-## Scenario C: The Kubernetes Secret Exposure
-
-A DevSecOps engineer audits a Kubernetes cluster and discovers that the team has been treating Kubernetes Secrets as secure storage for database credentials. The team believes that because they used `kubectl create secret`, the credentials are encrypted. Another engineer argues that all Secrets should be stored in HashiCorp Vault instead, but the team lead dismisses this as "over-engineering."
-
-In 175-225 words, address the following: Explain what the team misunderstands about Kubernetes Secret storage — specifically, how Secrets are stored in etcd by default and what "base64 encoding" means versus encryption. Identify two scenarios where an attacker could retrieve the Secret value despite the team's belief that it is protected. Evaluate the engineer's Vault proposal — is it over-engineering or appropriate security hardening? Describe the middle-ground solution (encryption at rest via EncryptionConfiguration) that would significantly improve security without requiring a Vault deployment.
+Your classmate proposed a migration timeline. Is their timeline realistic for 67 non-compliant services? What risk does rushing this migration introduce, and what risk does delaying it introduce?
 
 ---
 
-## Discussion Rubric (10 Points Total)
+## Scenario 2 — RBAC Privilege Escalation Incident
 
-### Initial Post (6 Points)
+During a security incident investigation, your team discovers that an attacker who compromised a single pod in the `payments` namespace was able to escalate to full `cluster-admin` access. Your investigation reveals the pod's ServiceAccount had a RoleBinding that allowed `create` on `clusterrolebindings` in the `kube-system` namespace. The attacker used this to bind `cluster-admin` to a new ServiceAccount they created.
 
-Due Wednesday at 11:59 PM. Your post must be 175-225 words, address all elements of your chosen scenario, and use precise Kubernetes and DevSecOps terminology.
+Analyze this incident. What RBAC misconfiguration enabled the privilege escalation? What RBAC design principle was violated? How would you audit your cluster to discover similar over-permissioned service accounts? Reference the `kubectl auth can-i --list` commands from this module. What is the broader lesson about which Kubernetes verbs are considered "escalation verbs" and should never be granted to application service accounts? Propose a post-incident RBAC policy that would prevent this class of attack.
 
-- 5-6 pts: Thoroughly addresses all scenario elements with technical accuracy, clear explanations, and appropriate terminology. Meets the word count.
-- 3-4 pts: Addresses most elements but lacks technical depth in one or more areas.
-- 0-2 pts: Incomplete, missing, or does not substantively address the scenario.
+### Scenario 2 — Peer Response Prompt
 
-### Peer Responses (4 Points)
-
-Due Sunday at 11:59 PM. Respond to at least two classmates who chose different scenarios.
-
-- 4 pts: Two substantive responses (at least 50 words each) that add technical content, propose an alternative approach, or cite a specific reading guide concept.
-- 2 pts: Only one substantive response, or both are superficial.
-- 0 pts: No peer responses submitted.
+Your classmate proposed a post-incident RBAC policy. Does their policy close the specific escalation vector described? What residual risk remains after their proposed controls are implemented?
 
 ---
 
-## Professor Nash Note
+## Scenario 3 — Network Policy and Service Mesh Trade-offs
 
-Scenario A connects directly to a real attack pattern: over-privileged CI/CD service accounts are one of the most common Kubernetes security findings in enterprise security audits. When writing your RBAC configuration in your response, use the actual RBAC verb names (`update`, `patch`, `get`, `list`) rather than vague descriptions. Precision matters — "read access" is not the same as "get + list + watch", and the exam will test whether you know the difference.
+Your security team has implemented default-deny Network Policies across all namespaces. Three weeks later, a critical incident reveals that network policy debugging is causing significant operational pain: inter-service communication is regularly broken by misconfigured policies, and on-call engineers spend hours tracing which Network Policy is blocking traffic during incidents. The platform team proposes replacing Network Policies with a service mesh (Istio or Linkerd) to handle both network security and observability.
+
+Evaluate this trade-off. What does a service mesh provide that Network Policies do not? What do Network Policies provide that a service mesh does not? Are they complementary or competing solutions? What is the operational cost of each approach for a team of 10 engineers managing 50 microservices? If you were advising this team, would you recommend keeping Network Policies, migrating to a service mesh, or using both? Be specific about which capabilities of Istio or Linkerd are relevant to this security problem and what the implementation complexity looks like.
+
+### Scenario 3 — Peer Response Prompt
+
+Your classmate recommended a specific approach. What is the single biggest risk of their recommended approach that they may have underweighted in their analysis?
+
+---
+
+## Grading Rubric
+
+| Criterion | Points |
+|---|---|
+| Original post addresses all parts of the chosen scenario | 3 |
+| Specific Kubernetes resources, commands, or configurations cited | 2 |
+| Operational trade-offs and migration realities acknowledged | 2 |
+| Peer reply 1 — substantive challenge or extension | 1.5 |
+| Peer reply 2 — substantive challenge or extension | 1.5 |
+| Total | 10 |
+
+---
+
+Discussion — Module 05 | CIS-4350 | Texas Wesleyan University | Professor Nash

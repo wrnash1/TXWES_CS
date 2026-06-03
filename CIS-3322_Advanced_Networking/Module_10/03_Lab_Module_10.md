@@ -1,19 +1,22 @@
-# Lab Activity: Module 10 - Access Control Lists
+# Lab Activity: Module 10 — NAT and PAT
 
-**Course:** CIS-3322 Advanced Networking
-**Certification Alignment:** Cisco CCNA 200-301 (Domain 5: Security Fundamentals - 15%)
-**Tool:** Cisco Packet Tracer 8.x
-**Estimated Time:** 60-75 minutes
-**Total Points:** 100
-**Prepared by:** Professor Nash | Texas Wesleyan University
+## Course: CIS-3322 Advanced Networking
+
+## Texas Wesleyan University | Professor Nash
+
+## Certification Alignment: Cisco CCNA 200-301
+
+## Tool: Cisco Packet Tracer 8.x
+
+## Estimated Time: 60–75 minutes
+
+## Total Points: 100
 
 ---
 
 ## Overview
 
-In this lab you will configure standard and extended ACLs on a multi-segment router topology in Cisco Packet Tracer. Part 1 configures a standard ACL to restrict inter-VLAN traffic. Part 2 configures an extended ACL to permit specific services while blocking others. You will verify ACL behavior by testing permitted and denied traffic, and you will interpret `show access-lists` match counters.
-
-This lab maps to CCNA 200-301 exam objectives 5.6 (configure and verify access control lists).
+In this lab you will configure static NAT to make an internal web server reachable from the internet, configure PAT to allow internal LAN hosts to share a single public IP for outbound internet access, and verify both configurations using NAT translation table commands. You will also work through two troubleshooting scenarios targeting the most common NAT misconfiguration patterns. This lab maps directly to CCNA 200-301 IP Services exam objectives.
 
 ---
 
@@ -21,202 +24,267 @@ This lab maps to CCNA 200-301 exam objectives 5.6 (configure and verify access c
 
 By completing this lab you will be able to:
 
-- Configure a standard numbered ACL and apply it close to the destination
-- Configure an extended numbered ACL and apply it close to the source
-- Use the `host` and `any` keywords in ACL entries
-- Verify ACL match counters using `show access-lists`
-- Verify applied ACLs using `show ip interface`
-- Diagnose a blocked traffic problem caused by implicit deny
+- Configure static NAT mapping for an internal server
+- Configure PAT using an outside interface address with the overload keyword
+- Apply `ip nat inside` and `ip nat outside` to correct interfaces
+- Verify NAT operation using `show ip nat translations` and `show ip nat statistics`
+- Interpret PAT translation table entries including inside local, inside global, and port numbers
+- Diagnose and repair two common NAT misconfigurations
 
 ---
 
 ## Equipment List
 
-- 1x Cisco 1941 Router (R1)
-- 3x Cisco Catalyst 2960-24TT Switches (SW1, SW2, SW3)
-- 4x PCs (PC-A, PC-B, PC-C, PC-D)
-- 1x Server (Server-A)
-- Straight-through Ethernet cables
+- 2x Cisco 1941 Routers (R1 acting as NAT router, ISP simulating internet)
+- 1x Cisco Catalyst 2960-24TT Switch (SW1)
+- 3x Internal PCs (PC-A, PC-B, PC-C)
+- 1x Internal Server (SRV-INT — web server to be statically NATted)
+- 1x External Server (SRV-EXT — simulates internet destination, hosted on ISP segment)
+- Straight-through Ethernet cables for LAN connections
+- Crossover or straight-through cable for R1–ISP WAN link
 
 ---
 
-## Topology
+## Topology Description
 
 ```text
-PC-A (192.168.10.11) --SW1--+
-PC-B (192.168.10.12) --SW1--+--Gi0/0 (192.168.10.1)--R1--Gi0/1 (192.168.20.1)--SW2--PC-C (192.168.20.11)
-                                                        |
-                                                   Gi0/2 (192.168.30.1)
-                                                        |
-                                                       SW3
-                                                        |
-                                               Server-A (192.168.30.5)
-                                                PC-D (192.168.30.11)
+PC-A (192.168.1.10) ---|
+PC-B (192.168.1.20) ---+-- SW1 -- R1 Gi0/0 (192.168.1.1)
+PC-C (192.168.1.30) ---|         R1 Gi0/1 (203.0.113.1/30) -- ISP Gi0/0 (203.0.113.2/30)
+SRV-INT (192.168.1.100)|                                        ISP Gi0/1 -- SRV-EXT (8.8.8.8)
+
+NAT Translations:
+  Static: SRV-INT 192.168.1.100 <--> 203.0.113.10 (public server IP)
+  PAT:    PC-A/B/C 192.168.1.x  --> 203.0.113.1  (interface address, overload)
 ```
-
-### IP Address Table
-
-| Device | Interface / NIC | IP Address | Subnet Mask | Default Gateway |
-|---|---|---|---|---|
-| R1 | Gi0/0 | 192.168.10.1 | 255.255.255.0 | — |
-| R1 | Gi0/1 | 192.168.20.1 | 255.255.255.0 | — |
-| R1 | Gi0/2 | 192.168.30.1 | 255.255.255.0 | — |
-| PC-A | NIC | 192.168.10.11 | 255.255.255.0 | 192.168.10.1 |
-| PC-B | NIC | 192.168.10.12 | 255.255.255.0 | 192.168.10.1 |
-| PC-C | NIC | 192.168.20.11 | 255.255.255.0 | 192.168.20.1 |
-| Server-A | NIC | 192.168.30.5 | 255.255.255.0 | 192.168.30.1 |
-| PC-D | NIC | 192.168.30.11 | 255.255.255.0 | 192.168.30.1 |
 
 ---
 
-## Part 1: Standard ACL Configuration
+## IP Address Table
 
-### Objective
-
-Block all traffic from the 192.168.20.0/24 network (Sales, PC-C) from reaching the 192.168.30.0/24 network (Server segment). All other traffic should be permitted.
-
-### Step 1: Verify Baseline Connectivity
-
-Before any ACL configuration, verify end-to-end connectivity:
-
-- PC-A ping PC-C (should succeed)
-- PC-A ping Server-A (should succeed)
-- PC-C ping Server-A (should succeed)
-
-Document the results.
-
-### Step 2: Create Standard ACL 10
-
-On R1, create the standard ACL to deny the Sales subnet and permit everything else:
-
-```ios
-R1# configure terminal
-R1(config)# access-list 10 deny 192.168.20.0 0.0.0.255
-R1(config)# access-list 10 permit any
-```
-
-### Step 3: Apply ACL 10 Close to the Destination
-
-Apply the ACL outbound on the interface facing the server segment (Gi0/2):
-
-```ios
-R1(config)# interface GigabitEthernet0/2
-R1(config-if)# ip access-group 10 out
-R1(config-if)# end
-```
-
-### Step 4: Verify ACL Application
-
-```ios
-R1# show ip interface GigabitEthernet0/2
-```
-
-Confirm the output shows:
-
-```text
-Outgoing access list is 10
-```
-
-### Step 5: Test ACL Behavior
-
-- PC-C ping Server-A — should be BLOCKED (denied by ACL 10)
-- PC-C ping PC-D — should be BLOCKED (same outbound ACL on Gi0/2)
-- PC-A ping Server-A — should SUCCEED (192.168.10.x is not denied)
-
-### Step 6: Verify ACL Match Counters
-
-```ios
-R1# show access-lists
-```
-
-Expected output:
-
-```text
-Standard IP access list 10
-    10 deny 192.168.20.0 0.0.0.255 (X matches)
-    20 permit any (Y matches)
-```
-
-The match counter on the deny entry should have increased from the blocked pings.
+| Device  | Interface | IP Address     | Subnet Mask     | Notes                        |
+|---------|-----------|----------------|-----------------|------------------------------|
+| R1      | Gi0/0     | 192.168.1.1    | 255.255.255.0   | Inside LAN interface         |
+| R1      | Gi0/1     | 203.0.113.1    | 255.255.255.252 | Outside WAN interface        |
+| ISP     | Gi0/0     | 203.0.113.2    | 255.255.255.252 | WAN link to R1               |
+| ISP     | Gi0/1     | 8.8.8.1        | 255.255.255.0   | External segment             |
+| SRV-EXT | NIC       | 8.8.8.8        | 255.255.255.0   | GW 8.8.8.1 — external target |
+| PC-A    | NIC       | 192.168.1.10   | 255.255.255.0   | GW 192.168.1.1               |
+| PC-B    | NIC       | 192.168.1.20   | 255.255.255.0   | GW 192.168.1.1               |
+| PC-C    | NIC       | 192.168.1.30   | 255.255.255.0   | GW 192.168.1.1               |
+| SRV-INT | NIC       | 192.168.1.100  | 255.255.255.0   | GW 192.168.1.1               |
 
 ---
 
-## Part 2: Extended ACL Configuration
+## Part 1: Baseline Configuration
 
-### Extended ACL Objective
+### Step 1: Configure R1 Interfaces and Default Route
 
-Block only Telnet (TCP port 23) from the 192.168.10.0/24 network to Server-A (192.168.30.5). Permit all other traffic, including HTTP, ICMP (ping), and all other sources.
+Configure hostnames and all interface IP addresses. Enable all interfaces with `no shutdown`. Add a default route on R1 pointing to the ISP:
 
-### Step 7: Create Extended ACL 110
-
-```ios
-R1# configure terminal
-R1(config)# access-list 110 deny tcp 192.168.10.0 0.0.0.255 host 192.168.30.5 eq 23
-R1(config)# access-list 110 permit ip any any
-```
-
-### Step 8: Remove the Standard ACL from Gi0/2
-
-Before applying the extended ACL, remove ACL 10 from Gi0/2:
-
-```ios
-R1(config)# interface GigabitEthernet0/2
-R1(config-if)# no ip access-group 10 out
-```
-
-### Step 9: Apply ACL 110 Close to the Source
-
-Apply the extended ACL inbound on the interface facing the source subnet (Gi0/0):
-
-```ios
+```text
+R1(config)# hostname R1
 R1(config)# interface GigabitEthernet0/0
-R1(config-if)# ip access-group 110 in
-R1(config-if)# end
+R1(config-if)# ip address 192.168.1.1 255.255.255.0
+R1(config-if)# no shutdown
+R1(config-if)# exit
+R1(config)# interface GigabitEthernet0/1
+R1(config-if)# ip address 203.0.113.1 255.255.255.252
+R1(config-if)# no shutdown
+R1(config-if)# exit
+R1(config)# ip route 0.0.0.0 0.0.0.0 203.0.113.2
 ```
 
-### Step 10: Test Extended ACL Behavior
+### Step 2: Configure ISP Router
 
-- PC-A ping Server-A — should SUCCEED (ICMP is permitted by `permit ip any any`)
-- PC-A Telnet to Server-A — should be BLOCKED by the deny tcp entry
-- PC-C ping Server-A — should SUCCEED (source is 192.168.20.x, not matched by deny entry)
-
-### Step 11: Verify Extended ACL Match Counters
-
-```ios
-R1# show access-lists 110
+```text
+ISP(config)# hostname ISP
+ISP(config)# interface GigabitEthernet0/0
+ISP(config-if)# ip address 203.0.113.2 255.255.255.252
+ISP(config-if)# no shutdown
+ISP(config-if)# exit
+ISP(config)# interface GigabitEthernet0/1
+ISP(config-if)# ip address 8.8.8.1 255.255.255.0
+ISP(config-if)# no shutdown
+ISP(config-if)# exit
+ISP(config)# ip route 203.0.113.0 255.255.255.248 203.0.113.1
 ```
 
-Confirm match counters on both entries have incremented as expected.
+The ISP static route covers the 203.0.113.0/29 range (including .10 used for static NAT) and points back to R1.
+
+### Step 3: Verify WAN Reachability
+
+From R1, ping the ISP interface and the external server:
+
+```text
+R1# ping 203.0.113.2
+R1# ping 8.8.8.8
+```
+
+Both pings should succeed from R1's perspective before NAT is configured. Note that pings from PC-A to SRV-EXT will fail at this stage because no NAT is configured yet.
 
 ---
 
-## Part 3: Troubleshooting Scenarios
+## Part 2: Static NAT Configuration
 
-Work through each scenario and document your analysis.
+### Step 4: Configure the Static NAT Mapping
 
-### Scenario A: All Traffic Blocked by ACL
+Map internal server SRV-INT (192.168.1.100) to public address 203.0.113.10:
 
-An engineer configures the following ACL on R1 and applies it inbound on Gi0/0:
-
-```ios
-access-list 120 deny tcp 192.168.10.0 0.0.0.255 host 192.168.30.5 eq 23
+```text
+R1(config)# ip nat inside source static 192.168.1.100 203.0.113.10
 ```
 
-After application, all traffic from PC-A fails — including pings to all destinations. Explain why and write the missing command to fix it.
+### Step 5: Mark NAT Interfaces
 
-Expected answer: The ACL has a deny entry but no permit entry. The implicit deny at the end of every ACL drops all unmatched traffic. Add `access-list 120 permit ip any any` after the deny entry to allow all traffic that is not Telnet to 192.168.30.5.
+```text
+R1(config)# interface GigabitEthernet0/0
+R1(config-if)# ip nat inside
+R1(config-if)# exit
+R1(config)# interface GigabitEthernet0/1
+R1(config-if)# ip nat outside
+R1(config-if)# exit
+```
 
-### Scenario B: ACL Applied in Wrong Direction
+### Step 6: Verify Static NAT Entry
 
-An engineer creates extended ACL 130 to block traffic from 192.168.20.0/24 to Server-A and applies it `out` on Gi0/0 instead of `in`. Explain what traffic is affected and whether the ACL achieves the intended result.
+```text
+R1# show ip nat translations
+```
 
-Expected answer: Outbound on Gi0/0 filters traffic leaving R1 toward the 192.168.10.0/24 segment — the opposite direction from what was intended. The ACL would affect traffic going toward the Engineering network, not traffic coming from the Sales network toward the server. The correct application is `in` on Gi0/1 (the Sales interface) or `out` on Gi0/2 (the server interface). Direction must match the traffic flow being filtered.
+Expected output before any traffic:
 
-### Scenario C: Standard ACL in Wrong Location
+```text
+Pro  Inside global    Inside local     Outside local    Outside global
+---  203.0.113.10     192.168.1.100    ---              ---
+```
 
-An engineer wants to block only PC-C (192.168.20.11) from reaching Server-A (192.168.30.5). They configure `access-list 1 deny host 192.168.20.11` and apply it inbound on Gi0/0 (the Engineering interface). Explain the problem and the correct placement.
+The static entry appears immediately without requiring any traffic to trigger it, which confirms the mapping is configured correctly.
 
-Expected answer: Applying this standard ACL inbound on Gi0/0 filters traffic coming from the Engineering segment, not the Sales segment where PC-C is located. The ACL is applied to the wrong interface — it must be applied outbound on Gi0/2 (close to the destination, the server segment) or inbound on Gi0/1 (the Sales interface directly). Standard ACLs cannot identify the destination, so they must be placed as close to the destination as possible to avoid unintentionally blocking traffic to other destinations.
+### Step 7: Test Static NAT from External Server
+
+From SRV-EXT, ping 203.0.113.10:
+
+```text
+SRV-EXT> ping 203.0.113.10
+```
+
+Expected result: 5 successful replies. R1 intercepts the packet destined for 203.0.113.10, translates the destination to 192.168.1.100, and forwards it to SRV-INT.
+
+Verify the translation table shows an active TCP/ICMP entry after the test traffic:
+
+```text
+R1# show ip nat translations
+```
+
+---
+
+## Part 3: PAT Configuration
+
+### Step 8: Create ACL Identifying Inside Hosts
+
+```text
+R1(config)# access-list 1 permit 192.168.1.0 0.0.0.255
+```
+
+### Step 9: Configure PAT Using Interface Address
+
+```text
+R1(config)# ip nat inside source list 1 interface GigabitEthernet0/1 overload
+```
+
+The `overload` keyword enables PAT. The `interface GigabitEthernet0/1` directive instructs the router to use the current IP address of that interface (203.0.113.1) as the inside global address for all translated sessions.
+
+### Step 10: Test PAT from Multiple Internal Hosts
+
+From PC-A, PC-B, and PC-C, ping SRV-EXT simultaneously:
+
+```text
+PC-A> ping 8.8.8.8
+PC-B> ping 8.8.8.8
+PC-C> ping 8.8.8.8
+```
+
+All pings should succeed.
+
+### Step 11: Verify PAT Translation Table
+
+```text
+R1# show ip nat translations
+```
+
+Expected output showing PAT entries for all three PCs sharing the same inside global address (203.0.113.1) with different port numbers:
+
+```text
+Pro  Inside global        Inside local         Outside local    Outside global
+icmp 203.0.113.1:512      192.168.1.10:512     8.8.8.8:512      8.8.8.8:512
+icmp 203.0.113.1:513      192.168.1.20:512     8.8.8.8:512      8.8.8.8:512
+icmp 203.0.113.1:514      192.168.1.30:512     8.8.8.8:512      8.8.8.8:512
+---  203.0.113.10          192.168.1.100        ---              ---
+```
+
+All three PC addresses translate to 203.0.113.1 with unique identifier values. The static NAT entry for SRV-INT remains at the bottom.
+
+### Step 12: View NAT Statistics
+
+```text
+R1# show ip nat statistics
+```
+
+Record: total active translations, hits count, inside interfaces, and outside interfaces listed in the output.
+
+---
+
+## Part 4: Troubleshooting Scenarios
+
+### Troubleshooting Scenario A — Missing Interface Marking
+
+Remove the `ip nat inside` designation from Gi0/0, clear the translation table, and attempt to ping from PC-A:
+
+```text
+R1(config)# interface GigabitEthernet0/0
+R1(config-if)# no ip nat inside
+
+R1# clear ip nat translation *
+```
+
+From PC-A, ping SRV-EXT:
+
+```text
+PC-A> ping 8.8.8.8
+```
+
+Expected result: ping fails. Run `show ip nat statistics` and `show ip nat translations`. Record your observations.
+
+Written question: Explain why removing `ip nat inside` from the LAN interface prevents PAT from working even though the PAT rule and ACL are still configured. What does the router use interface markings for during the NAT decision process?
+
+Restore the configuration before proceeding:
+
+```text
+R1(config)# interface GigabitEthernet0/0
+R1(config-if)# ip nat inside
+```
+
+### Troubleshooting Scenario B — ACL Mismatch
+
+Modify ACL 1 so it does not match the internal subnet. Replace the permit with a non-matching entry:
+
+```text
+R1(config)# no access-list 1
+R1(config)# access-list 1 permit 10.10.10.0 0.0.0.255
+R1# clear ip nat translation *
+```
+
+From PC-A, ping SRV-EXT. Expected result: ping fails. Run `show access-lists 1` and confirm zero hit counts. Run `show ip nat translations` and confirm no dynamic entries are created.
+
+Written question: Explain why the ACL mismatch prevents NAT from occurring and describe how you would use `show access-lists` and `show ip nat translations` together to diagnose this failure in a production environment.
+
+Restore the correct ACL:
+
+```text
+R1(config)# no access-list 1
+R1(config)# access-list 1 permit 192.168.1.0 0.0.0.255
+```
 
 ---
 
@@ -224,23 +292,26 @@ Expected answer: Applying this standard ACL inbound on Gi0/0 filters traffic com
 
 Submit the following as a single PDF or Word document in Canvas:
 
-1. Screenshot of baseline connectivity test (before ACL) showing successful pings
-2. Screenshot of `show access-lists` after Part 1 showing the standard ACL with match counters
-3. Screenshot of failed PC-C to Server-A ping (blocked by ACL 10)
-4. Screenshot of `show access-lists 110` showing extended ACL match counters after Part 2 tests
-5. Written answers to Troubleshooting Scenarios A, B, and C (3-5 sentences each)
+1. Screenshot of `show ip nat translations` after Step 6 showing the static NAT entry
+2. Screenshot of successful ping from SRV-EXT to 203.0.113.10 (Step 7)
+3. Screenshot of `show ip nat translations` after Step 11 showing PAT entries for all three PCs
+4. Screenshot of `show ip nat statistics` output from Step 12
+5. Written answer for Troubleshooting Scenario A (4–6 sentences)
+6. Written answer for Troubleshooting Scenario B (4–6 sentences)
 
 ---
 
-## Grading Rubric (100 Points)
+## Grading Rubric
 
-| Component | Points | Criteria |
-|---|---|---|
-| Standard ACL Configuration | 20 | ACL 10 created; applied outbound on Gi0/2 |
-| Standard ACL Verification | 15 | show access-lists shows deny entry with match counters; PC-C blocked |
-| Extended ACL Configuration | 20 | ACL 110 created; applied inbound on Gi0/0 |
-| Extended ACL Verification | 15 | show access-lists 110 shows both entries with match counters; Telnet blocked, ping allowed |
-| Baseline and Post-ACL Tests | 15 | Screenshots showing permitted and denied traffic behavior |
-| Troubleshooting Scenarios | 15 | Correct analysis for all three scenarios (5 pts each) |
+| Component                               | Points | Criteria                                                              |
+|-----------------------------------------|--------|-----------------------------------------------------------------------|
+| Baseline connectivity verified          | 10     | R1 can ping ISP and SRV-EXT before NAT configuration                 |
+| Static NAT mapping configured           | 15     | Correct ip nat inside source static command; entry in translation table|
+| Interface markings applied              | 10     | ip nat inside on Gi0/0; ip nat outside on Gi0/1                      |
+| Static NAT verified from external host  | 15     | SRV-EXT successfully pings 203.0.113.10                              |
+| PAT configuration correct               | 15     | Correct ACL, ip nat inside source list ... overload command           |
+| PAT translation table shows port reuse  | 15     | Three PCs share 203.0.113.1 with unique ports in show output          |
+| Troubleshooting Scenario A              | 10     | Correct explanation of interface marking requirement                  |
+| Troubleshooting Scenario B              | 10     | Correct explanation of ACL mismatch diagnosis using show commands     |
 
-Partial credit awarded for demonstrably attempted but incomplete work.
+Partial credit is awarded for demonstrably attempted but incomplete work.

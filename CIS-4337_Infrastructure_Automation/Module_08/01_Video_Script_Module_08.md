@@ -1,248 +1,395 @@
-# CIS-4337 Infrastructure Automation
+# Video Script: Module 08 — Terraform State Management
 
-## Module 08: Provisioners and Null Resources
+## Course: CIS-4337 Infrastructure Automation
 
-### Video Script — Estimated Runtime: 20–24 Minutes
+## Texas Wesleyan University | Professor Nash
 
----
+## Estimated Duration: 20–24 minutes
 
-## Section 1: Introduction — 0:00–1:30
-
-Welcome back to CIS-4337. I am Professor Nash. In this module we cover provisioners and the `null_resource` type — powerful escape hatches that let Terraform execute arbitrary commands during resource lifecycle operations.
-
-By the end of this video you will understand what provisioners are, when to use them, the three provisioner types (`local-exec`, `remote-exec`, and `file`), provisioner failure behavior and the `on_failure` argument, the `null_resource` and its `triggers` map, and HashiCorp's guidance on when provisioners should and should not be used.
-
-Provisioners appear on the Terraform Associate 003 exam in Domain 8 (Read, generate, and modify configuration).
+## Certification Alignment: HashiCorp Terraform Associate (003)
 
 ---
 
-## Section 2: What Are Provisioners — 1:30–4:30
+## Introduction (0:00 – 1:30)
 
-Provisioners are blocks inside resource blocks that execute scripts or commands at specific points in a resource's lifecycle: after creation or before destruction.
+Welcome back. I'm Professor Nash and this is Module 08 of CIS-4337, Infrastructure Automation.
 
-HashiCorp describes provisioners as a "last resort." Their guidance is clear: use cloud-native alternatives whenever they exist. For bootstrapping EC2 instances, use `user_data`. For Azure VMs, use `custom_data`. For Kubernetes pods, use init containers. Provisioners are appropriate only when no native provider argument exists for the task.
+In Module 07 you learned to parameterize Terraform with variables and outputs. Now we need to answer a foundational question: how does Terraform remember what it has already built?
 
-Why is this the recommendation? Two reasons.
+The answer is **state**. Terraform state is the mechanism that maps your configuration to real-world infrastructure. Without it, every `terraform plan` would look at your `.tf` files and assume nothing has been created yet.
 
-First, provisioner execution is opaque to Terraform's plan. The `terraform plan` output does not show what a provisioner will do or verify it will succeed. The plan says the resource will be created — it says nothing about the script that runs afterward.
+By the end of this module you will be able to:
 
-Second, provisioner execution is not retryable by design. If the script fails, the resource is tainted, not retried. This creates operational complexity in large deployments.
+- Explain what `terraform.tfstate` is and why it exists
+- Configure remote state backends including S3, Azure Blob, and GCS
+- Implement state locking to prevent concurrent modifications
+- Use all major `terraform state` subcommands
+- Apply security best practices to protect state files
 
-With that context, let me explain when provisioners are genuinely necessary and how to use them correctly.
+Let's get into it.
+
+[PAUSE]
 
 ---
 
-## Section 3: local-exec Provisioner — 4:30–8:30
+## Section 1: What Is Terraform State (1:30 – 4:30)
 
-The `local-exec` provisioner runs a command on the machine where Terraform is executing — your laptop, a CI runner, or a Terraform Cloud worker. It does not connect to the provisioned resource.
+When you run `terraform apply`, Terraform creates or modifies real infrastructure and then records what it created in a file called `terraform.tfstate`. This JSON file is the single source of truth for Terraform about the current state of your managed resources.
 
-**[SHOW CODE]**
+[SHOW TERMINAL]
 
-```hcl
-resource "aws_instance" "web" {
-  ami           = data.aws_ami.amazon_linux.id
-  instance_type = "t3.micro"
+Let's look at a simplified excerpt from a state file:
 
-  provisioner "local-exec" {
-    command = "echo 'Instance ${self.id} created in ${self.availability_zone}' >> deployment.log"
-  }
-
-  provisioner "local-exec" {
-    when    = destroy
-    command = "echo 'Instance ${self.id} is being destroyed' >> deployment.log"
-  }
-}
-```
-
-Key arguments:
-
-- `command` — the shell command to execute (required).
-- `when = destroy` — runs the provisioner before destruction instead of after creation.
-- `working_dir` — the directory in which to execute the command.
-- `interpreter` — the interpreter to use (default: `["/bin/sh", "-c"]` on Linux/macOS, `["cmd", "/C"]` on Windows).
-- `environment` — a map of environment variables to set for the command.
-
-The `self` reference inside a provisioner refers to the containing resource's attributes.
-
-A common use case for `local-exec` is triggering an Ansible playbook against a newly created instance:
-
-**[SHOW CODE]**
-
-```hcl
-resource "aws_instance" "app" {
-  ami           = data.aws_ami.amazon_linux.id
-  instance_type = "t3.micro"
-
-  provisioner "local-exec" {
-    command = "ansible-playbook -i '${self.public_ip},' ./playbooks/configure-app.yml"
-    environment = {
-      ANSIBLE_HOST_KEY_CHECKING = "False"
+```json
+{
+  "version": 4,
+  "terraform_version": "1.5.7",
+  "resources": [
+    {
+      "mode": "managed",
+      "type": "aws_instance",
+      "name": "web",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "attributes": {
+            "id": "i-0abc123def456789",
+            "instance_type": "t3.micro",
+            "public_ip": "54.234.12.45",
+            "ami": "ami-0c55b159cbfafe1f0"
+          }
+        }
+      ]
     }
-  }
+  ]
 }
 ```
+
+Terraform uses this file to:
+
+- Know which resources exist and their current attribute values
+- Compute a diff between desired state (your `.tf` files) and actual state
+- Track resource dependencies for safe ordering
+- Store sensitive output values and resource metadata
+
+[PAUSE]
+
+### What Happens Without State
+
+Without state, Terraform has no memory. Every plan would compare your configuration against nothing — resulting in a proposal to create every resource again. That would be catastrophic in production.
+
+State is also why `terraform plan` is fast — Terraform does not call every cloud API to check current resource status on every run. It reads the state file and uses it as a cached snapshot.
+
+[PAUSE]
 
 ---
 
-## Section 4: remote-exec Provisioner — 8:30–12:00
+## Section 2: Local State and Its Limitations (4:30 – 6:30)
 
-The `remote-exec` provisioner connects to a newly created resource over SSH or WinRM and runs commands on that machine. It requires a `connection` block to establish the connection.
+By default, Terraform writes state to a file named `terraform.tfstate` in your working directory. This is **local state** — it lives on the machine running Terraform.
 
-**[SHOW CODE]**
+Local state works fine when you are the only person working on an infrastructure project and always running from the same machine. But in a team, local state causes immediate problems:
 
-```hcl
-resource "aws_instance" "web" {
-  ami                    = data.aws_ami.amazon_linux.id
-  instance_type          = "t3.micro"
-  key_name               = aws_key_pair.deployer.key_name
-  vpc_security_group_ids = [aws_security_group.ssh.id]
+- **Concurrent modifications**: Two engineers running `terraform apply` at the same time will corrupt state
+- **Lost state**: If the state file is deleted or the machine is lost, Terraform loses track of all resources
+- **No history**: You cannot see who changed what or roll back to a previous state
+- **Secret exposure**: State files often contain sensitive values; local files are hard to audit
 
-  connection {
-    type        = "ssh"
-    host        = self.public_ip
-    user        = "ec2-user"
-    private_key = file("~/.ssh/id_rsa")
-  }
+These problems are why remote backends exist.
 
-  provisioner "remote-exec" {
-    inline = [
-      "sudo yum update -y",
-      "sudo yum install -y httpd",
-      "sudo systemctl start httpd",
-      "sudo systemctl enable httpd"
-    ]
-  }
-}
-```
-
-The `inline` argument accepts a list of commands executed sequentially. Alternatively, use `script` (a path to a local script file to upload and execute) or `scripts` (a list of paths).
-
-**[SHOW CODE]**
-
-```hcl
-provisioner "remote-exec" {
-  script = "./bootstrap.sh"
-}
-```
+[PAUSE]
 
 ---
 
-## Section 5: file Provisioner — 12:00–13:30
+## Section 3: Remote State Backends (6:30 – 11:00)
 
-The `file` provisioner copies a local file or directory to the remote resource over SSH or WinRM. It requires a `connection` block.
+A backend is where Terraform stores its state file. When you configure a remote backend, the state is stored in a shared, durable location instead of your local filesystem.
 
-**[SHOW CODE]**
+### The backend Block
 
 ```hcl
-resource "aws_instance" "app" {
-  # ... instance config ...
-
-  connection {
-    type        = "ssh"
-    host        = self.public_ip
-    user        = "ec2-user"
-    private_key = file("~/.ssh/id_rsa")
-  }
-
-  provisioner "file" {
-    source      = "configs/app.conf"
-    destination = "/etc/app/app.conf"
+terraform {
+  backend "s3" {
+    bucket         = "my-company-tfstate"
+    key            = "prod/web-app/terraform.tfstate"
+    region         = "us-east-1"
+    encrypt        = true
+    dynamodb_table = "terraform-state-lock"
   }
 }
 ```
 
-The `file` provisioner itself does not execute the copied file. It is typically combined with a `remote-exec` provisioner that runs the file after copying it.
+This configuration tells Terraform to store state in an S3 bucket and use a DynamoDB table for locking. We will cover locking in a moment.
 
----
+[PAUSE]
 
-## Section 6: Provisioner Failure Behavior — 13:30–16:00
+### S3 Backend
 
-When a provisioner command exits with a non-zero status code, Terraform's default behavior is:
-
-1. The resource is marked as **tainted** in the state file.
-2. The current apply halts.
-3. On the next `terraform apply`, Terraform plans to destroy and recreate the tainted resource, then run the provisioner again.
-
-You can change this behavior with the `on_failure` argument:
-
-**[SHOW CODE]**
+S3 is the most common backend for AWS users. The bucket must exist before you run `terraform init`.
 
 ```hcl
-provisioner "local-exec" {
-  command    = "notify-external-system.sh ${self.id}"
-  on_failure = continue
-}
-```
-
-With `on_failure = continue`, Terraform logs the error but proceeds with the apply. Use this for non-critical side-effects where failure should not block the deployment.
-
-The two valid values are `fail` (default) and `continue`.
-
----
-
-## Section 7: The null_resource — 16:00–20:00
-
-The `null_resource` is a resource from the `hashicorp/null` provider that creates no real infrastructure but can have provisioners and lifecycle rules attached to it.
-
-The key feature is the `triggers` argument — a map of values that, when changed, cause Terraform to destroy and recreate the `null_resource`, thereby re-running its provisioners.
-
-**[SHOW CODE]**
-
-```hcl
-resource "null_resource" "ansible_provisioner" {
-  triggers = {
-    instance_id   = aws_instance.web.id
-    script_hash   = filemd5("./playbooks/configure.yml")
-  }
-
-  provisioner "local-exec" {
-    command = "ansible-playbook -i '${aws_instance.web.public_ip},' ./playbooks/configure.yml"
-    environment = {
-      ANSIBLE_HOST_KEY_CHECKING = "False"
-    }
+terraform {
+  backend "s3" {
+    bucket  = "acme-terraform-state"
+    key     = "environments/prod/app/terraform.tfstate"
+    region  = "us-east-1"
+    encrypt = true
   }
 }
 ```
 
-This pattern re-runs the Ansible playbook whenever:
+Best practices for S3 backends:
 
-1. The EC2 instance is replaced (its ID changes).
-2. The Ansible playbook file content changes (`filemd5` detects the change).
+- Enable versioning on the bucket so you can recover previous state
+- Enable server-side encryption at the bucket level
+- Restrict bucket access with IAM policies — only Terraform runners should write to it
+- Never put the bucket in the same Terraform configuration you are using it to manage
 
-The `null_resource` pattern cleanly decouples provisioner execution from the resource's own lifecycle. The EC2 instance does not need to be tainted or recreated just to re-run configuration management.
+[PAUSE]
 
-Using `timestamp()` as a trigger forces the null_resource to re-run on every apply:
+### Azure Blob Backend
 
-**[SHOW CODE]**
+For Azure users, the equivalent is Azure Blob Storage:
 
 ```hcl
-resource "null_resource" "always_run" {
-  triggers = {
-    always_run = timestamp()
-  }
-
-  provisioner "local-exec" {
-    command = "date >> always-runs.log"
+terraform {
+  backend "azurerm" {
+    resource_group_name  = "rg-terraform-state"
+    storage_account_name = "acmetfstate"
+    container_name       = "tfstate"
+    key                  = "prod/app/terraform.tfstate"
   }
 }
 ```
 
+Azure provides built-in blob lease locking, so you do not need a separate locking resource like you do with S3/DynamoDB.
+
+[PAUSE]
+
+### GCS Backend
+
+For Google Cloud users:
+
+```hcl
+terraform {
+  backend "gcs" {
+    bucket = "acme-terraform-state"
+    prefix = "prod/app"
+  }
+}
+```
+
+GCS provides object versioning and native locking via object metadata. Enable versioning on the bucket as with S3.
+
+[PAUSE]
+
 ---
 
-## Section 8: Closing — 20:00–21:00
+## Section 4: State Locking (11:00 – 13:30)
 
-Provisioners are a last resort. Prefer cloud-native alternatives: `user_data` for EC2 bootstrapping, `custom_data` for Azure, Kubernetes init containers for pods.
+State locking prevents two Terraform processes from modifying state simultaneously. Without locking, concurrent applies can corrupt the state file — a scenario that is extremely difficult to recover from.
 
-The three provisioner types: `local-exec` (runs on the Terraform runner), `remote-exec` (runs on the provisioned resource over SSH/WinRM), `file` (copies files to the provisioned resource).
+[SHOW TERMINAL]
 
-Default failure behavior: taint the resource and halt apply. Override with `on_failure = continue`.
+When Terraform acquires a lock, you will see this message at the start of an operation:
 
-The `null_resource` creates no infrastructure but runs provisioners when its `triggers` map changes.
+```
+Acquiring state lock. This may take a few moments...
+```
 
-In Module 09 we cover Terraform Cloud and Terraform Enterprise. Complete the reading guide, lab, quiz, and discussion first.
+If another process holds the lock, Terraform waits. If it times out, it shows an error with the Lock ID.
 
-See you in Module 09.
+### DynamoDB Locking for S3
+
+For the S3 backend you must create a DynamoDB table separately:
+
+```hcl
+resource "aws_dynamodb_table" "tf_lock" {
+  name         = "terraform-state-lock"
+  billing_mode = "PAY_PER_REQUEST"
+  hash_key     = "LockID"
+
+  attribute {
+    name = "LockID"
+    type = "S"
+  }
+}
+```
+
+Then reference it in the backend:
+
+```hcl
+backend "s3" {
+  bucket         = "acme-terraform-state"
+  key            = "prod/app/terraform.tfstate"
+  region         = "us-east-1"
+  encrypt        = true
+  dynamodb_table = "terraform-state-lock"
+}
+```
+
+### Force-Unlock
+
+If a Terraform process is killed mid-apply, the lock may be left in place. Use `terraform force-unlock` to release it:
+
+```bash
+terraform force-unlock LOCK-ID-FROM-ERROR-MESSAGE
+```
+
+Use this carefully — only when you are certain no other process is running.
+
+[PAUSE]
 
 ---
 
-End of Script — Module 08
+## Section 5: Terraform State Commands (13:30 – 18:00)
+
+Terraform provides several subcommands for inspecting and manipulating state directly. These are essential for operations work.
+
+[SHOW TERMINAL]
+
+### terraform state list
+
+Lists all resources currently tracked in state:
+
+```bash
+terraform state list
+```
+
+Example output:
+
+```
+aws_instance.web
+aws_security_group.web_sg
+aws_s3_bucket.assets
+data.aws_ami.ubuntu
+```
+
+### terraform state show
+
+Shows all attributes of a specific resource:
+
+```bash
+terraform state show aws_instance.web
+```
+
+This outputs the full attribute map of the resource as Terraform knows it — extremely useful for debugging.
+
+[PAUSE]
+
+### terraform state mv
+
+Renames or moves a resource in state without destroying and recreating it. This is essential when you refactor your configuration:
+
+```bash
+# Rename a resource
+terraform state mv aws_instance.web aws_instance.app_server
+
+# Move a resource into a module
+terraform state mv aws_instance.web module.compute.aws_instance.web
+```
+
+**Important**: Always run `terraform plan` after a `state mv` to confirm the change has the effect you expect.
+
+[PAUSE]
+
+### terraform state rm
+
+Removes a resource from Terraform's tracking without destroying the actual infrastructure. Use this when you want Terraform to "forget" about a resource — for example, when you are migrating a resource to a different state file.
+
+```bash
+terraform state rm aws_instance.web
+```
+
+After this command, running `terraform plan` will show a plan to create `aws_instance.web` because Terraform no longer knows it exists.
+
+[PAUSE]
+
+### terraform state pull and push
+
+You can download or upload the entire state file manually:
+
+```bash
+# Download state to stdout
+terraform state pull > backup.tfstate
+
+# Upload a local state file to the configured backend
+terraform state push backup.tfstate
+```
+
+Use `pull` to create backups. Use `push` only in emergency recovery situations — it bypasses locking.
+
+[PAUSE]
+
+---
+
+## Section 6: State File Security (18:00 – 21:00)
+
+The state file is one of the most sensitive artifacts in your infrastructure. It contains:
+
+- Resource IDs and ARNs
+- IP addresses and DNS names
+- Database connection strings
+- Passwords and API keys (even sensitive variables are stored in plain text)
+
+[SHOW TERMINAL]
+
+Best practices for state security:
+
+1. **Never commit state to version control**: Add `terraform.tfstate` and `terraform.tfstate.backup` to `.gitignore`
+
+2. **Encrypt state at rest**: Use S3 with `encrypt = true` and AWS KMS; Azure Blob and GCS encrypt by default
+
+3. **Encrypt state in transit**: All major backends use TLS; never use HTTP-only backends
+
+4. **Restrict access with IAM**: Only CI/CD pipelines and authorized operators should have write access to the state bucket
+
+5. **Enable versioning**: S3 bucket versioning, GCS object versioning, or Azure soft-delete allows rollback
+
+6. **Audit access**: Enable S3 access logging or GCS audit logs to track who reads the state file
+
+```gitignore
+# .gitignore
+terraform.tfstate
+terraform.tfstate.backup
+*.tfstate
+*.tfstate.*
+.terraform/
+```
+
+[PAUSE]
+
+---
+
+## Summary and Exam Tips (21:00 – 23:00)
+
+Here is what we covered in Module 08:
+
+- `terraform.tfstate` is the JSON file mapping configuration to real infrastructure
+- Local state is suitable only for solo, single-machine use
+- Remote backends (S3, Azure Blob, GCS) enable team collaboration and durability
+- State locking prevents concurrent modification; S3 uses DynamoDB; Azure and GCS have native locking
+- `terraform state list`, `show`, `mv`, `rm`, `pull`, `push` are the core state manipulation commands
+- State files contain sensitive data and must be encrypted, access-controlled, and never committed to Git
+
+**For the Terraform Associate exam**, remember:
+
+- The S3 backend requires a separate DynamoDB table for locking — it is NOT built in
+- `terraform state rm` removes from tracking; it does NOT destroy the real resource
+- `terraform state mv` is used for refactoring without destroy/recreate cycles
+- `force-unlock` requires the Lock ID from the error message
+- State is always in the backend you configure; the default is local (current directory)
+
+[PAUSE]
+
+---
+
+## Closing (23:00 – 24:00)
+
+State management is what separates Terraform beginners from practitioners. Once your infrastructure is in production, the state file is as important as the infrastructure itself. Treat it with the same care.
+
+In Module 09 we dive into Terraform Modules — the mechanism for organizing, reusing, and sharing your infrastructure code. It is one of the most powerful features of Terraform.
+
+See you there.
+
+[END OF SCRIPT]

@@ -1,53 +1,313 @@
-# Reading Guide: Module 13 - Data Classification and Privacy Management
-## Course: CIS-4315_Cyber_Governance_Risk_Compliance (ISACA Certified Information Security Manager (CISM))
+# Reading Guide: Module 13 — Business Continuity Planning
+
+## Course: CIS-4315 Cyber Governance, Risk, and Compliance
+
+## Texas Wesleyan University | Professor Nash
 
 ---
 
-### Introduction
-Welcome to **Module 13 - Data Classification and Privacy Management**! This module covers vendor and third-party risk management — the discipline of identifying, assessing, and managing the security risks introduced when organizations share data or access with external parties. Third-party risk is a growing area of CISM Domain 2 importance as supply chain attacks and vendor breaches increase.
+## Overview
 
-The CISM exam emphasizes that organizations cannot outsource accountability for information security. Even when business processes are delegated to vendors, the originating organization remains responsible for the security of its information.
-
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **Third-party risk**: The potential for harm to an organization's information assets, operations, or reputation resulting from activities or failures of external parties (vendors, suppliers, partners, contractors) who access, process, or manage organizational data or systems. Third-party risk is a subset of operational risk that has grown with cloud adoption and outsourcing.
-*   **Vendor assessment**: A structured process for evaluating a vendor's security posture, policies, and controls before and during a business relationship. Assessments may include security questionnaires, SOC 2 report reviews, onsite audits, or penetration test results, and are used to determine whether the vendor's security meets the organization's requirements.
-*   **SOC 2 reports**: Service Organization Control 2 (SOC 2) reports, defined by the AICPA, provide independent auditor assessments of a service organization's controls related to Security, Availability, Processing Integrity, Confidentiality, and Privacy Trust Services Criteria. SOC 2 Type I evaluates control design at a point in time; SOC 2 Type II evaluates operating effectiveness over a review period (typically 6–12 months).
-*   **Service Level Agreements (SLAs)**: Contractual commitments defining the expected performance, availability, and security standards that a vendor must meet, along with the remedies if those standards are not achieved. SLAs provide a contractual mechanism for enforcing security requirements on third parties.
-*   **Security questionnaires**: Standardized sets of questions used to assess a vendor's security controls, policies, and practices during the onboarding and periodic review process. Common frameworks include the Standardized Information Gathering (SIG) questionnaire and CAIQ (Cloud Assessment and Information Questionnaire).
+This reading guide supports Module 13 and aligns with the CISM review materials covering Business Continuity and Disaster Recovery concepts. Business Continuity Planning (BCP) is a management discipline that ensures critical organizational functions remain operational — or recover rapidly — during and after a disruptive event. This module builds foundational knowledge required for the CISM exam and for practical application in enterprise security management roles.
 
 ---
 
-### 2. Certification Exam Tips
-*   **Accountability Cannot Be Outsourced:** A core CISM principle: when an organization contracts with a vendor, it retains accountability for the security of its data. If the vendor breaches data, the organization is still responsible to regulators and customers. The exam tests this accountability concept frequently.
-*   **SOC 2 Type I vs. Type II:** The CISM exam tests this distinction. Type I = design at a point in time (snapshot); Type II = operating effectiveness over a period (movie). Type II provides stronger assurance and is generally preferred for ongoing vendor relationships.
-*   **Vendor Risk Tiers:** Not all vendors require the same level of scrutiny. Organizations should tier vendors by their access level and data sensitivity: Tier 1 (critical data/access, full assessment), Tier 2 (limited access, questionnaire + SLA), Tier 3 (no data access, minimal review).
-*   **Study Resource:** [NIST SP 800-161 Rev. 1: Cybersecurity Supply Chain Risk Management](https://csrc.nist.gov/publications/detail/sp/800-161/rev-1/final) — This free NIST publication provides comprehensive guidance on managing cybersecurity risks in supply chains and vendor relationships, directly relevant to CISM third-party risk management.
+## Learning Objectives
+
+By the end of this module, you will be able to:
+
+1. Explain the purpose, scope, and regulatory drivers of Business Continuity Planning.
+
+2. Conduct a Business Impact Analysis using a structured five-step methodology.
+
+3. Define Recovery Point Objective (RPO), Recovery Time Objective (RTO), and Maximum Tolerable Period of Disruption (MTPD) and explain the relationships among them.
+
+4. Compare and contrast continuity strategies by cost, speed, and applicability.
+
+5. Describe the eight-section structure of a complete Business Continuity Plan document.
+
+6. Differentiate tabletop, simulation, and full-interruption tests by purpose, disruption level, cost, and frequency.
+
+7. Explain BCP maintenance requirements and triggers.
 
 ---
 
-### Required Readings & Videos
-*   **Required Reading:** [NIST SP 800-161 Rev. 1: Cybersecurity Supply Chain Risk Management](https://csrc.nist.gov/publications/detail/sp/800-161/rev-1/final) — This free NIST publication covers supply chain risk identification, vendor assessment practices, contract requirements, and ongoing monitoring. Review Section 2 (Fundamentals of C-SCRM) for exam-relevant vendor risk concepts.
-*   **Required Video:** Watch the video lecture on **Data Classification and Privacy Management** in the official course playlist: [ISACA CISM / Cyber GRC Course Playlist](https://www.youtube.com/playlist?list=PLbnu8t2G_vG0V7kC0V3n_nU9Y3S-4K178).
+## Section 1: The Business Case for Business Continuity Planning
+
+### 1.1 Defining BCP
+
+Business Continuity Planning is the proactive process of developing documented procedures and strategies that allow an organization to continue delivering critical products and services at a predefined acceptable level following a disruption. The discipline draws from ISO 22301 (the international standard for business continuity management systems), NIST SP 800-34 (federal information system contingency planning guidance), and the ISACA CISM Review Manual.
+
+BCP is not synonymous with disaster recovery. Disaster recovery is a technical subset of BCP focused on restoring IT systems and data after a failure. BCP encompasses the full organizational response — people, facilities, processes, supply chains, communications, and technology.
+
+### 1.2 Regulatory and Business Drivers
+
+Organizations pursue BCP for several interconnected reasons.
+
+**Regulatory compliance:** Financial services firms follow FFIEC Business Continuity Management guidance. Healthcare organizations comply with HIPAA contingency planning requirements. Critical infrastructure operators follow NERC CIP standards. Federal agencies follow NIST SP 800-34.
+
+**Customer contractual requirements:** Enterprise service agreements increasingly include business continuity provisions. Customers may require demonstrated BCP capability as a condition of contract.
+
+**Insurance and risk management:** Cyber liability and business interruption insurance policies increasingly require evidence of a tested BCP.
+
+**Organizational resilience:** Beyond compliance, BCP enables organizations to compete effectively during a disruption by maintaining service delivery when competitors cannot.
+
+### 1.3 Scope of BCP
+
+BCP scope is determined by the BIA process described in Section 2. Scope decisions include which business units and processes are covered, which supporting systems and infrastructure are included, which geographic locations are addressed, and which threat scenarios are considered. Scope should be risk-informed and aligned with organizational strategy.
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will apply third-party risk management concepts through the following activities:
-*   **Evaluate vendor security disclosures**: Review a provided sample SOC 2 Type II report excerpt and identify: (1) the Trust Services Criteria covered, (2) any exceptions noted by the auditor, and (3) what questions you would ask the vendor about each exception.
-*   **Review and interpret control deficiencies in a mock SOC 2 report**: Given a sample SOC 2 Type II report with three noted exceptions, assess the risk each exception poses to your organization and document whether each is acceptable, requires compensating controls, or is grounds for vendor re-evaluation.
-*   **Draft vendor SLA security requirements**: Create a security addendum to a cloud services SLA, specifying minimum requirements for incident notification timeline, audit rights, data return/destruction on contract end, and access control standards.
+## Section 2: Business Impact Analysis Methodology
 
+### 2.1 Purpose and Positioning
+
+The Business Impact Analysis (BIA) is the analytical foundation of the entire BCP program. It answers two questions: Which functions are critical? And what happens to the organization if each function is unavailable?
+
+Without a valid BIA, recovery time objectives are arbitrary, strategy investments are misaligned, and the resulting plan will not meet real organizational needs.
+
+### 2.2 Step 1 — Identifying Critical Business Processes
+
+The BIA begins by inventorying all business processes and identifying those that are critical. Methods include structured interviews with department heads, review of process documentation and service catalogs, survey instruments distributed to managers, and workshop sessions that facilitate cross-functional discussion.
+
+A process is considered critical if its unavailability would result in material financial loss, regulatory violation, safety risk, or significant reputational harm within the MTPD timeframe.
+
+### 2.3 Step 2 — Identifying Dependencies
+
+Every critical process depends on supporting resources. Dependencies include technology (applications, databases, network infrastructure), facilities (office space, specialized equipment, utilities), personnel (key individuals whose knowledge or authorization is required), and suppliers and vendors (third-party services that enable the process).
+
+Dependency mapping reveals single points of failure — resources whose loss would disable multiple critical processes simultaneously. These single points of failure receive priority attention in strategy development.
+
+### 2.4 Step 3 — Quantifying Impact Over Time
+
+Impact quantification is the most analytically demanding step. The team constructs an impact timeline, estimating consequences at discrete time intervals: one hour, four hours, twenty-four hours, seventy-two hours, seven days, and thirty days.
+
+Impact categories include:
+
+- **Financial:** Direct revenue loss, additional operating costs, penalties.
+
+- **Regulatory:** Fines, reporting violations, license risk.
+
+- **Reputational:** Customer attrition, press coverage, brand damage.
+
+- **Contractual:** SLA penalties, contract termination rights.
+
+- **Safety:** Physical harm to employees or the public.
+
+Quantification should be as specific as possible. Estimated revenue loss per hour of downtime for each critical process transforms a qualitative exercise into a defensible business case.
+
+### 2.5 Step 4 — Defining Recovery Objectives
+
+Recovery objectives are derived directly from the impact timeline. The key questions are: At what point does financial impact become unacceptable? At what point does regulatory non-compliance occur? At what point does safety risk emerge?
+
+The answers establish the Maximum Tolerable Period of Disruption for each process. The RTO for each process must be less than or equal to its MTPD.
+
+RPO is established by answering: How much data can the organization afford to lose? This is determined by the financial and operational impact of data recreation versus the cost of more frequent backup.
+
+### 2.6 Step 5 — Assigning Recovery Priorities
+
+With RTOs established, processes are ranked by recovery priority. A common tier model assigns Tier 1 (mission critical, recover within minutes to hours) to processes like payment processing, emergency dispatch, and life-safety systems. Tier 2 (essential, recover within hours to one day) covers email, order management, and customer support. Tier 3 (important, tolerate one to several days) covers reporting and non-essential tools. Tier 4 (deferrable) can operate manually or suspend entirely for extended periods.
+
+Priority tiers drive budget allocation, strategy selection, and test planning.
 
 ---
 
-### 3. Study Checklist
-- [ ] Know the difference between SOC 2 Type I and Type II and when each provides sufficient assurance.
-- [ ] Understand that accountability for data security cannot be transferred to vendors.
-- [ ] Read [NIST SP 800-161 Rev. 1](https://csrc.nist.gov/publications/detail/sp/800-161/rev-1/final), Section 2 on supply chain risk fundamentals.
-- [ ] Watch the video lecture on **Data Classification and Privacy Management** in [ISACA CISM / Cyber GRC Course Playlist](https://www.youtube.com/playlist?list=PLbnu8t2G_vG0V7kC0V3n_nU9Y3S-4K178).
-- [ ] Complete the lab activity on SOC 2 review and vendor SLA security requirements.
-- [ ] Proceed to the Module 13 quiz.
+## Section 3: RPO, RTO, and MTPD
+
+### 3.1 Recovery Point Objective
+
+RPO defines the maximum acceptable age of recovered data following a disruption. It is measured in time and represents a data loss tolerance threshold.
+
+**Example:** A financial transaction system with an RPO of fifteen minutes must have data replication or backup mechanisms that capture new transactions at least every fifteen minutes.
+
+RPO directly determines backup frequency, replication technology selection, and storage architecture.
+
+### 3.2 Recovery Time Objective
+
+RTO defines the maximum time allowed to restore a business function to an acceptable minimum service level following a disruption. It is measured in time from the moment of failure to the moment of acceptable restoration.
+
+**Example:** A customer portal with an RTO of four hours must have recovery procedures, trained personnel, and infrastructure capable of restoring the portal within four hours of any covered disruption.
+
+RTO directly determines alternate site strategy, automation investment in recovery procedures, and staffing and on-call requirements.
+
+### 3.3 Maximum Tolerable Period of Disruption
+
+MTPD defines the absolute maximum duration of unavailability before consequences become irreversible. MTPD is always greater than or equal to RTO. The gap between RTO and MTPD is the recovery safety margin — the time available if recovery takes longer than planned.
+
+The key relationship to remember: RPO drives backup strategy (data currency at recovery), RTO drives site and infrastructure strategy (speed of restoration), and MTPD is the absolute business constraint (the ceiling RTO must not exceed).
+
+### 3.4 Work Recovery Time
+
+Work Recovery Time (WRT) is the time required to reconcile, reconstruct, or reprocess data and transactions after systems are restored. Total recovery time equals RTO plus WRT. Both must fit within MTPD.
+
+---
+
+## Section 4: Continuity Strategies
+
+### 4.1 Strategy Selection Framework
+
+Continuity strategy selection is a cost-benefit decision. Higher recovery speed requires higher investment. The BIA provides the business case: if the financial impact of one hour of downtime exceeds the annualized cost of a hot standby system, the hot standby is economically justified.
+
+Strategies are not mutually exclusive. A mature BCP program applies different strategies to different tiers of processes based on individual RTO thresholds and cost constraints.
+
+### 4.2 Redundant Systems and High Availability
+
+High availability architectures maintain a parallel system that can assume load immediately when the primary fails. Techniques include active-active clustering, geographic load balancing, and real-time synchronous replication. Recovery times are measured in seconds to minutes. Capital and operational costs are highest.
+
+### 4.3 Alternate Site Operations
+
+The organization maintains or contracts access to a secondary facility. Staff and operations relocate to the alternate site. Recovery times typically range from hours to days depending on site readiness. Module 14 covers the three alternate site types — hot, warm, and cold — in detail.
+
+### 4.4 Manual Workarounds
+
+Some processes can temporarily operate without technology using paper forms, manual calculations, or telephone procedures. Manual workarounds are inexpensive but have limited capacity and higher error rates. They are appropriate for lower-priority processes with longer MTPs and for bridging the gap during technology recovery.
+
+### 4.5 Mutual Aid Agreements
+
+Two or more organizations agree to provide reciprocal assistance during a disruption by sharing facilities, staff, or computing resources. Key risks include simultaneous regional disasters and capacity limitations when both parties are affected.
+
+### 4.6 Cloud-Based Continuity
+
+Cloud platforms enable organizations to maintain standby environments without owning dedicated infrastructure. Capabilities range from basic backup-and-restore (data in cloud storage, systems rebuilt on demand) to pilot light (minimal cloud environment running that scales up rapidly) to warm standby (scaled-down replica running continuously) to multi-site active-active (full production capacity in multiple cloud regions simultaneously).
+
+Cloud strategies reduce capital expenditure but introduce vendor dependency and require contractual alignment between cloud provider SLAs and organizational RTOs.
+
+---
+
+## Section 5: BCP Plan Structure
+
+### 5.1 Document Requirements
+
+A BCP must be complete, current, accessible, and actionable. Complete means it contains all information needed for execution. Current means it reflects the current state of the organization. Accessible means it can be retrieved when primary systems are unavailable. Actionable means its procedures are specific enough to execute under pressure.
+
+### 5.2 Standard BCP Sections
+
+**Section 1 — Purpose, Scope, and Objectives:** Defines the plan's intent, what it covers, and the outcomes it is designed to achieve.
+
+**Section 2 — Roles and Responsibilities:** Names the Business Continuity Manager, Crisis Management Team, departmental recovery leads, and their alternates. Each role must have a designated backup.
+
+**Section 3 — Activation Criteria and Procedures:** Defines the thresholds and events that trigger plan activation and specifies who holds activation authority.
+
+**Section 4 — Communication Procedures:** Details how internal stakeholders, customers, regulators, and the media are notified. Includes out-of-band communication methods because primary systems may be unavailable.
+
+**Section 5 — Recovery Procedures by Business Unit:** Contains step-by-step runbooks for each critical function. Runbooks must be granular enough to execute under stress.
+
+**Section 6 — Resource Requirements:** Lists facilities, equipment, materials, contracts, and personnel needed to execute recovery. Includes procurement lead times and vendor contact information.
+
+**Section 7 — Test and Exercise Schedule:** Documents planned exercises with types, scopes, and scheduling. Ensures testing is systematic rather than ad hoc.
+
+**Section 8 — Plan Maintenance and Review Cycle:** Defines the review schedule, update ownership, version control process, and distribution mechanism.
+
+---
+
+## Section 6: BCP Testing
+
+### 6.1 Why Testing Is Non-Negotiable
+
+Untested plans contain unknown gaps. Testing reveals procedural errors, missing resources, outdated contact information, and capability shortfalls before an actual incident does. ISACA and ISO 22301 both require organizations to test their BCPs on a regular basis.
+
+### 6.2 Tabletop Exercises
+
+A tabletop exercise is a facilitated discussion in which key personnel walk through a scenario without activating systems or relocating staff. A moderator presents the initial scenario and subsequent injects. Participants discuss what they would do at each decision point.
+
+Tabletop exercises are low-cost and low-risk. They are effective for training new team members, identifying procedural gaps, and testing the decision-making logic of the plan. Recommended frequency is quarterly or semi-annually.
+
+### 6.3 Simulation Exercises
+
+A simulation exercise — also called a functional exercise — requires participants to perform actual recovery actions in a controlled environment. Communications are activated, staff may travel to alternate sites, and systems may be partially restored. The simulation validates that procedures work in practice, not just in theory. Recommended frequency is annually.
+
+### 6.4 Full-Interruption Tests
+
+A full-interruption test — also called a live cutover or full-scale test — involves actually shutting down primary systems or facilities and recovering entirely through alternate means. This is the highest-fidelity test and the most resource-intensive. If recovery fails during the test, the organization faces real downtime.
+
+Full-interruption tests are appropriate for Tier 1 processes in mature BCP programs with executive sponsorship and explicit risk acceptance. Recommended frequency is annual or biannual for critical systems.
+
+### 6.5 Test Documentation
+
+Every exercise and test generates documentation. Pre-test documentation covers scope, objectives, participants, scenario, and evaluation criteria. During-test documentation captures observations, timelines, and issues encountered. Post-test documentation records lessons learned, gaps identified, and corrective actions with owners and due dates.
+
+Corrective actions must feed back into plan updates. Testing without remediation provides false assurance.
+
+---
+
+## Section 7: BCP Maintenance
+
+### 7.1 Scheduled Reviews
+
+BCP documents should be formally reviewed at minimum annually. The review team examines whether organizational changes, technology changes, or regulatory updates have invalidated any assumptions or procedures.
+
+### 7.2 Triggered Reviews
+
+Specific events require immediate plan review: mergers, acquisitions, or divestitures; significant technology infrastructure changes; facility relocations or additions; changes in key personnel filling named BCP roles; new or revised regulatory requirements; and lessons learned from actual incidents or exercises.
+
+### 7.3 Ownership and Version Control
+
+Each BCP section must have a named owner accountable for its accuracy. The Business Continuity Manager coordinates review cycles and enforces update deadlines. All updates must be version-controlled, dated, and archived. Distribution records must confirm that current versions have reached all plan holders.
+
+---
+
+## Key Terms
+
+- **Business Continuity Plan (BCP):** Documented procedures enabling an organization to maintain or resume critical functions during and after a disruption.
+
+- **Business Impact Analysis (BIA):** Systematic analysis of business functions and their dependencies to quantify the impact of disruption and establish recovery objectives.
+
+- **Recovery Point Objective (RPO):** Maximum acceptable data loss measured in time.
+
+- **Recovery Time Objective (RTO):** Maximum time allowed to restore a function to acceptable service levels.
+
+- **Maximum Tolerable Period of Disruption (MTPD):** Absolute maximum downtime before consequences become irreversible. Also called Maximum Tolerable Downtime (MTD).
+
+- **Work Recovery Time (WRT):** Time needed to reconcile data and processes after system restoration.
+
+- **Tabletop Exercise:** Discussion-based BCP test; no system activation.
+
+- **Simulation Exercise:** Functional test involving actual procedure execution in a controlled environment.
+
+- **Full-Interruption Test:** Live cutover test of full recovery from primary to alternate systems.
+
+- **High Availability (HA):** Architecture designed to minimize or eliminate downtime through redundancy.
+
+---
+
+## Review Questions
+
+1. What is the primary difference between Business Continuity Planning and Disaster Recovery?
+
+2. In the BIA process, what is the purpose of constructing an impact timeline?
+
+3. If an organization's RTO is six hours and its MTPD is twenty-four hours, what is the recovery safety margin?
+
+4. Which continuity strategy is most appropriate for a Tier 1 payment processing system with an RTO of fifteen minutes?
+
+5. What are the conditions that make full-interruption testing inappropriate for a given organization?
+
+6. Name three events that should trigger an immediate BCP review outside the annual cycle.
+
+7. Explain how WRT affects total recovery time relative to RTO and MTPD.
+
+---
+
+## Study Checklist
+
+- [ ] Define RPO, RTO, MTPD, and WRT and explain the relationships among them.
+
+- [ ] Explain the five steps of the BIA methodology.
+
+- [ ] Compare the three testing types by disruption level, cost, and frequency.
+
+- [ ] Describe each of the eight sections of a BCP document.
+
+- [ ] Review NIST SP 800-34 (contingency planning overview) for exam context.
+
+- [ ] Watch the Module 13 video lecture.
+
+- [ ] Complete the Module 13 Lab.
+
+- [ ] Proceed to the Module 13 Quiz and Discussion.
+
+---
+
+## Alignment to CISM Exam Domains
+
+This module primarily supports CISM Domain 4: Information Security Incident Management, which includes business continuity and disaster recovery planning as core knowledge areas. Students preparing for the CISM exam should review the ISACA CISM Review Manual sections on BIA methodology, recovery strategy selection, and plan testing requirements.

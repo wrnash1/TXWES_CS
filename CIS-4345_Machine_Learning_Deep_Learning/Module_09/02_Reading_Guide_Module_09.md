@@ -1,58 +1,369 @@
-# Reading Guide: Module 09 - Natural Language Processing with TensorFlow
-## Course: CIS-4345_Machine_Learning_Deep_Learning (TensorFlow Developer Certificate)
+# Reading Guide: Module 09 — Natural Language Processing with TensorFlow
+
+## Course: CIS-4345 Machine Learning and Deep Learning
+
+## Texas Wesleyan University | Professor Nash
+
+## Certification Alignment: TensorFlow Developer Certificate
 
 ---
 
-### Introduction
-Welcome to **Module 09 - Natural Language Processing with TensorFlow**! Natural Language Processing (NLP) is one of the four core task categories on the TensorFlow Developer Certificate exam. Unlike images or numeric tables, text data must be converted into numbers before it can be fed into a neural network. This module covers the complete text preprocessing pipeline — tokenization, padding, and embedding — and how to combine these steps with LSTM or Dense layers to build sentiment analysis and text classification models.
+## Learning Objectives
 
-You will learn to use `tf.keras.preprocessing.text.Tokenizer`, `pad_sequences`, and `tf.keras.layers.Embedding` to transform raw text into fixed-length integer sequences that models can learn from.
+By the end of this module you will be able to:
 
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **Tokenizer**: A Keras utility that builds a vocabulary from a corpus of text and converts sentences into sequences of integer token IDs. Key parameters: `num_words` limits the vocabulary to the top N most frequent words; `oov_token='<OOV>'` assigns a special ID to words not seen during `fit_on_texts()`. Usage: `tokenizer = Tokenizer(num_words=10000, oov_token='<OOV>'); tokenizer.fit_on_texts(train_sentences); sequences = tokenizer.texts_to_sequences(train_sentences)`.
-
-*   **`pad_sequences`**: A function that converts a list of variable-length integer sequences into a 2D numpy array of uniform length by adding zeros (or truncating). `padding='post'` adds zeros at the end; `padding='pre'` (default) adds zeros at the beginning. `truncating='post'` removes tokens from the end of sequences that exceed `maxlen`. Usage: `padded = pad_sequences(sequences, maxlen=200, padding='post', truncating='post')`.
-
-*   **Word embedding**: A dense vector representation of a word that captures semantic relationships — words with similar meanings have similar vectors. Unlike one-hot encoding (which is sparse and has no semantic structure), embeddings are learned during training. The `tf.keras.layers.Embedding(input_dim, output_dim, input_length)` layer learns these vectors automatically.
-
-*   **`word_index`**: A dictionary attribute of the Keras Tokenizer that maps each word string to its integer token ID, e.g., `{'the': 1, 'cat': 2, ...}`. The `<OOV>` token is typically assigned ID 1 when `oov_token` is set. `len(tokenizer.word_index)` gives the full vocabulary size including all words seen during training.
-
-*   **Sequence classification**: An NLP task where the model takes a fixed-length integer sequence (a padded tokenized sentence) as input and outputs a class label or probability. For binary sentiment analysis (positive/negative), the output layer is `Dense(1, activation='sigmoid')` with `loss='binary_crossentropy'`. For multi-class text classification, the output is `Dense(num_classes, activation='softmax')` with `loss='sparse_categorical_crossentropy'`.
-
-*   **`TextVectorization` layer**: A Keras preprocessing layer (TF 2.x) that integrates tokenization and vocabulary building directly into the model graph. Unlike the standalone `Tokenizer`, `TextVectorization` can be included as the first model layer, enabling the full text-to-prediction pipeline to be exported and deployed as a single SavedModel artifact.
+1. Tokenize raw text using `Tokenizer` and `TextVectorization`.
+2. Pad and truncate integer sequences to a fixed length using `pad_sequences`.
+3. Explain how the `Embedding` layer maps integers to dense vectors.
+4. Build a complete text classification model from raw text to prediction.
+5. Implement a binary sentiment analysis model on the IMDB dataset.
+6. Compare bag-of-words (`GlobalAveragePooling1D`) vs. sequential (`LSTM`) text encoders.
 
 ---
 
-### 2. Certification Exam Tips
-*   **Full NLP Pipeline:** The TF exam NLP pattern is: `Tokenizer.fit_on_texts(train)` → `texts_to_sequences()` → `pad_sequences(maxlen, padding='post')` → `Embedding(vocab_size, embed_dim, input_length) → LSTM/Dense → output`. Know each step and its role.
-*   **vocab_size off-by-one:** When creating the Embedding layer, use `vocab_size = len(tokenizer.word_index) + 1` (not `len(word_index)`) because token IDs start at 1, not 0, so index 0 is reserved for padding.
-*   **OOV token matters:** Always set `oov_token='<OOV>'` so that test sentences with unseen words receive a defined token ID rather than being silently dropped. Dropped tokens change sequence lengths and cause shape mismatches.
-*   **Study Resource:** The [TensorFlow NLP with TensorFlow tutorial](https://www.tensorflow.org/tutorials/text/word_embeddings) at tensorflow.org covers word embeddings and sequence models with the exact Keras API used on the exam. The free [Natural Language Processing with TensorFlow course on Coursera](https://www.coursera.org/learn/natural-language-processing-tensorflow) by Laurence Moroney (a Google engineer who helped design the TF exam) is one of the most exam-aligned NLP resources available.
+## Section 1 — The NLP Preprocessing Pipeline
+
+### Why Text Needs Special Handling
+
+Images are already numerical — pixels are integers in [0, 255]. Text is categorical: the word "terrible" is not numerically related to "great" in any meaningful way. To train a neural network on text, we must build a bridge from strings to numbers that preserves semantic information.
+
+The full pipeline is:
+
+```text
+Raw text → Tokenize → Integer sequences → Pad/Truncate → Embed → Model
+```
+
+Each stage has a specific responsibility. Skipping any stage produces incorrect input shapes or semantically meaningless inputs.
+
+### Why Not One-Hot Encoding?
+
+One-hot encoding assigns each word a vector of length `vocab_size` with a single `1` and all other values `0`. For a vocabulary of 10,000 words, every word becomes a 10,000-dimensional sparse vector. Problems:
+
+- Storage: `25000 * 200 * 10000 = 50 billion` float values for 25,000 IMDB reviews.
+- No semantic structure: "good" and "great" have orthogonal vectors with zero similarity.
+- Embeddings solve both problems: a 64-dimensional dense vector per word, learned during training.
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Work through the [TensorFlow word embeddings tutorial](https://www.tensorflow.org/tutorials/text/word_embeddings) and the [text classification tutorial](https://www.tensorflow.org/tutorials/keras/text_classification) at tensorflow.org. These free official tutorials cover Tokenizer, pad_sequences, Embedding layers, and sequence classification — all directly tested on the exam.
-*   **Required Video:** Watch the NLP lecture in the course playlist: [Machine Learning with Python & TensorFlow Course](https://www.youtube.com/watch?v=cKzgMFG5HpU). This covers tokenization, vocabulary building, padding, and building LSTM-based text classifiers with `tf.keras`.
+## Section 2 — Tokenizer (Legacy API)
+
+### Building the Vocabulary
+
+```python
+from tensorflow.keras.preprocessing.text import Tokenizer
+
+train_sentences = [
+    "I loved this movie it was fantastic",
+    "This film was terrible and boring",
+    "An amazing performance by the entire cast",
+    "Complete waste of time do not watch"
+]
+
+tokenizer = Tokenizer(num_words=1000, oov_token="<OOV>")
+tokenizer.fit_on_texts(train_sentences)
+
+# word_index maps every word to an integer ID
+print(tokenizer.word_index)
+# {'<OOV>': 1, 'was': 2, 'this': 3, 'the': 4, ...}
+```
+
+### Key Parameters
+
+| Parameter | Default | Purpose |
+|---|---|---|
+| `num_words` | None (all words) | Cap vocabulary at N most frequent words |
+| `oov_token` | None | Token inserted for words not in vocabulary |
+| `lower` | True | Convert text to lowercase before tokenizing |
+| `filters` | punctuation chars | Characters removed before tokenizing |
+
+### Converting Text to Sequences
+
+```python
+from tensorflow.keras.preprocessing.sequence import pad_sequences
+
+sequences = tokenizer.texts_to_sequences(train_sentences)
+# [[3, 4, 5, 6, 7, 2, 8], [3, 9, 2, 10, 11, 12], ...]
+
+padded = pad_sequences(sequences, maxlen=20, padding='post', truncating='post')
+print(padded.shape)   # (4, 20)
+```
+
+### pad_sequences Parameters
+
+| Parameter | Options | Effect |
+|---|---|---|
+| `maxlen` | int | Target sequence length |
+| `padding` | `'pre'` (default), `'post'` | Where to add zeros |
+| `truncating` | `'pre'` (default), `'post'` | Where to cut long sequences |
+| `value` | 0 (default) | Value used for padding |
+
+The exam commonly tests whether students know that `padding='pre'` is the default. For LSTM models, `padding='post'` is generally preferred because it places real tokens at the beginning of the sequence where the LSTM processes them first.
+
+### The OOV Token Problem
+
+```python
+# Suppose "phenomenal" was not in training data
+test_sentence = ["the film was phenomenal"]
+test_seq = tokenizer.texts_to_sequences(test_sentence)
+# Without oov_token: [[4, 9, 2]]    — "phenomenal" is dropped
+# With oov_token:    [[4, 9, 2, 1]] — "phenomenal" → ID 1 (<OOV>)
+```
+
+Dropped tokens change sequence lengths and can cause shape mismatches. Always set `oov_token`.
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Tokenize and pad a text dataset**: Create a `Tokenizer(num_words=10000, oov_token='<OOV>')`, call `fit_on_texts(train_sentences)`, convert to sequences with `texts_to_sequences()`, and pad with `pad_sequences(maxlen=200, padding='post')`.
-*   **Build an NLP classification model**: Define `Sequential([Embedding(vocab_size+1, 64, input_length=200), LSTM(64), Dense(1, activation='sigmoid')])` and compile with `binary_crossentropy`.
-*   **Visualize embeddings**: After training, extract the embedding weight matrix with `model.layers[0].get_weights()[0]` and use the [TensorFlow Embedding Projector](https://projector.tensorflow.org/) to visualize word clusters in 2D or 3D space.
+## Section 3 — TextVectorization (Modern API)
+
+### Comparison: Tokenizer vs TextVectorization
+
+| Feature | `Tokenizer` | `TextVectorization` |
+|---|---|---|
+| API generation | Legacy (Keras 1.x era) | Modern (TF 2.x) |
+| Returns | Python object | Keras layer |
+| Embedded in model | No | Yes |
+| Runs on GPU | No | Yes |
+| Exported with model | No (requires separate save) | Yes (part of model graph) |
+| Exam relevance | High (still tested) | High (preferred pattern) |
+
+### Using TextVectorization
+
+```python
+import tensorflow as tf
+
+vectorize_layer = tf.keras.layers.TextVectorization(
+    max_tokens=10000,            # vocabulary size
+    output_mode='int',           # return integer IDs
+    output_sequence_length=200   # pad/truncate to this length
+)
+
+# adapt() builds the vocabulary — call ONLY on training data
+train_text_ds = tf.data.Dataset.from_tensor_slices(train_sentences)
+vectorize_layer.adapt(train_text_ds)
+
+# Check vocabulary
+vocab = vectorize_layer.get_vocabulary()
+print(f"Vocabulary size: {len(vocab)}")
+print(f"First 10 tokens: {vocab[:10]}")
+# ['', '[UNK]', 'the', 'was', ...]
+# Index 0 = padding; Index 1 = [UNK] (out-of-vocabulary)
+```
+
+### output_mode Options
+
+| Mode | Output | Use Case |
+|---|---|---|
+| `'int'` | Integer sequence | Embedding-based models |
+| `'binary'` | Multi-hot vector | Bag-of-words logistic regression |
+| `'count'` | Word count vector | Naive Bayes-style models |
+| `'tf_idf'` | TF-IDF weighted vector | Classical NLP baselines |
 
 ---
 
-### 3. Study Checklist
-*   [ ] Read the glossary terms and write the full NLP preprocessing pipeline from memory (Tokenizer → pad_sequences → Embedding).
-*   [ ] Work through the [TensorFlow word embeddings tutorial](https://www.tensorflow.org/tutorials/text/word_embeddings) and [text classification tutorial](https://www.tensorflow.org/tutorials/keras/text_classification).
-*   [ ] Watch the NLP lecture in the [Machine Learning with Python & TensorFlow Course](https://www.youtube.com/watch?v=cKzgMFG5HpU).
-*   [ ] Complete the Module 09 lab: tokenize, pad, embed, and classify text with an LSTM.
-*   [ ] Proceed to the Module 09 quiz.
+## Section 4 — The Embedding Layer
+
+### How Embedding Works
+
+The `Embedding` layer is a trainable lookup table. Conceptually:
+
+```text
+Input integer 42 → Look up row 42 of weight matrix W → Return 64-dimensional vector
+```
+
+The weight matrix `W` has shape `(vocab_size, embedding_dim)` and is updated by backpropagation during training. Words that appear in similar contexts (surrounding words) are pushed toward similar vectors — this is the origin of semantic similarity in learned embeddings.
+
+### Constructor Parameters
+
+```python
+embedding_layer = tf.keras.layers.Embedding(
+    input_dim=10001,     # vocabulary size + 1 (index 0 reserved for padding)
+    output_dim=64,       # dimensionality of each embedding vector
+    input_length=200,    # sequence length (required for Sequential API)
+    mask_zero=True       # propagate padding mask to downstream layers
+)
+```
+
+The off-by-one rule: if your vocabulary contains 10,000 words, token IDs range from 1 to 10,000. Index 0 is used for padding. Therefore `input_dim` must be `10001` (= `vocab_size + 1`).
+
+### Output Shape
+
+```python
+# Input: integer sequence of shape (batch_size, sequence_length)
+# Example: (32, 200) — batch of 32 reviews, each 200 tokens
+
+# After Embedding(10001, 64):
+# Output shape: (32, 200, 64)
+# Each of the 200 token positions now has a 64-dimensional vector
+```
+
+### What Follows the Embedding Layer
+
+| Aggregation Layer | Output Shape | Notes |
+|---|---|---|
+| `GlobalAveragePooling1D()` | `(batch, 64)` | Average across all positions; simple, fast |
+| `GlobalMaxPooling1D()` | `(batch, 64)` | Max across positions; captures strongest feature |
+| `LSTM(64)` | `(batch, 64)` | Sequential processing; captures word order |
+| `GRU(64)` | `(batch, 64)` | Faster than LSTM; comparable quality |
+| `Flatten()` | `(batch, 200*64)` | Full concatenation; fixed input length required |
+
+---
+
+## Section 5 — Text Classification Architectures
+
+### Architecture 1 — Bag-of-Embeddings (Fast Baseline)
+
+```python
+model = tf.keras.Sequential([
+    tf.keras.layers.Embedding(10001, 64, input_length=200),
+    tf.keras.layers.GlobalAveragePooling1D(),     # average across positions
+    tf.keras.layers.Dense(64, activation='relu'),
+    tf.keras.layers.Dropout(0.4),
+    tf.keras.layers.Dense(1, activation='sigmoid')
+])
+
+model.compile(
+    optimizer='adam',
+    loss='binary_crossentropy',
+    metrics=['accuracy']
+)
+```
+
+GlobalAveragePooling1D produces a single vector by averaging all token embeddings. This is effectively a bag-of-words model — word order is lost. It trains quickly and performs well for simple sentiment tasks.
+
+### Architecture 2 — LSTM Classifier
+
+```python
+model = tf.keras.Sequential([
+    tf.keras.layers.Embedding(10001, 64, input_length=200, mask_zero=True),
+    tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(64)),
+    tf.keras.layers.Dense(64, activation='relu'),
+    tf.keras.layers.Dropout(0.4),
+    tf.keras.layers.Dense(1, activation='sigmoid')
+])
+```
+
+`Bidirectional` wraps the LSTM to process the sequence in both forward and backward directions, concatenating both hidden states. This captures context from both sides of each word and typically improves accuracy by 2–5% on sentiment tasks.
+
+### Architecture 3 — TextVectorization Inside the Model
+
+```python
+# Build a model that accepts raw strings
+string_input = tf.keras.Input(shape=(1,), dtype=tf.string)
+x = vectorize_layer(string_input)
+x = tf.keras.layers.Embedding(len(vectorize_layer.get_vocabulary()), 64)(x)
+x = tf.keras.layers.GlobalAveragePooling1D()(x)
+x = tf.keras.layers.Dense(64, activation='relu')(x)
+x = tf.keras.layers.Dropout(0.3)(x)
+output = tf.keras.layers.Dense(1, activation='sigmoid')(x)
+
+export_model = tf.keras.Model(string_input, output)
+export_model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+```
+
+This model accepts raw strings at prediction time:
+
+```python
+predictions = export_model.predict(["The film was outstanding!"])
+```
+
+---
+
+## Section 6 — Complete IMDB Sentiment Workflow
+
+### Loading and Preprocessing
+
+```python
+import tensorflow as tf
+import numpy as np
+
+# Load IMDB — already integer-encoded
+(x_train, y_train), (x_test, y_test) = tf.keras.datasets.imdb.load_data(
+    num_words=10000
+)
+
+# Inspect a sample
+print(f"Training samples: {len(x_train)}")
+print(f"Sequence lengths (first 5): {[len(s) for s in x_train[:5]]}")
+
+# Pad to fixed length
+MAXLEN = 200
+x_train = tf.keras.preprocessing.sequence.pad_sequences(
+    x_train, maxlen=MAXLEN, padding='post', truncating='post'
+)
+x_test = tf.keras.preprocessing.sequence.pad_sequences(
+    x_test, maxlen=MAXLEN, padding='post', truncating='post'
+)
+print(f"x_train shape: {x_train.shape}")   # (25000, 200)
+```
+
+### Training and Evaluation
+
+```python
+VOCAB_SIZE = 10001
+EMBED_DIM  = 64
+
+model = tf.keras.Sequential([
+    tf.keras.layers.Embedding(VOCAB_SIZE, EMBED_DIM, input_length=MAXLEN),
+    tf.keras.layers.GlobalAveragePooling1D(),
+    tf.keras.layers.Dense(64, activation='relu'),
+    tf.keras.layers.Dropout(0.3),
+    tf.keras.layers.Dense(1, activation='sigmoid')
+])
+
+model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+
+callbacks = [
+    tf.keras.callbacks.EarlyStopping(
+        monitor='val_loss', patience=3, restore_best_weights=True
+    )
+]
+
+history = model.fit(
+    x_train, y_train,
+    epochs=20,
+    batch_size=128,
+    validation_split=0.2,
+    callbacks=callbacks
+)
+
+loss, acc = model.evaluate(x_test, y_test)
+print(f"Test accuracy: {acc:.4f}")
+```
+
+---
+
+## Key Vocabulary
+
+| Term | Definition |
+|---|---|
+| Tokenization | Splitting text into tokens and assigning each an integer ID |
+| Vocabulary | The complete set of unique tokens known to the tokenizer |
+| `oov_token` | Special token assigned to words not seen during vocabulary fitting |
+| Padding | Adding zeros to short sequences to reach a target length |
+| Truncation | Removing tokens from sequences that exceed the target length |
+| `Embedding` | A trainable lookup table mapping integer IDs to dense vectors |
+| `input_dim` | The vocabulary size; must equal `vocab_size + 1` |
+| `output_dim` | The dimensionality of each embedding vector |
+| `mask_zero` | Flag that propagates padding masks to downstream recurrent layers |
+| `adapt()` | Method that fits `TextVectorization` vocabulary on training data |
+| `GlobalAveragePooling1D` | Averages embedding vectors across all sequence positions |
+| Sentiment analysis | Binary or multi-class classification of text emotional tone |
+
+---
+
+## Review Questions
+
+1. Why must `input_dim` in the `Embedding` layer equal `vocab_size + 1`?
+2. What is the output shape of `Embedding(10001, 64)` given input shape `(32, 200)`?
+3. When should you use `GlobalAveragePooling1D` instead of `LSTM` after an `Embedding` layer?
+4. What happens to unknown words if `oov_token` is not set in `Tokenizer`?
+5. What is the difference between `padding='pre'` and `padding='post'`, and which is better for LSTM models?
+6. Why must `adapt()` be called only on training data, never on test data?
+7. What is the advantage of embedding `TextVectorization` inside the model vs. using it externally?
+8. For multi-class text classification with 5 categories, what activation and loss function should you use?
+
+---
+
+Texas Wesleyan University — CIS-4345 Machine Learning and Deep Learning
+
+Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University.

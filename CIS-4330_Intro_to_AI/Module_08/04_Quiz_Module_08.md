@@ -1,75 +1,257 @@
-# Quiz: Module 08 - Azure Machine Learning Studio
-## Course: CIS-4330_Intro_to_AI (AI-900 (Microsoft Azure AI Fundamentals))
+# Quiz: Module 08 — Natural Language Processing with Azure
+
+## Course: CIS-4330 Introduction to Artificial Intelligence
+
+## Texas Wesleyan University | Professor Nash
+
+## AI-900 Domain: Describe features of Natural Language Processing workloads on Azure
 
 ---
 
-**Question 1**
-What activation function is typically used in the hidden layers of modern neural networks to prevent vanishing gradients?
-*   A) Sigmoid
-*   B) Rectified Linear Unit (ReLU)
-*   C) Tanh
-*   D) Step function
-*   **Correct Answer:** B) ReLU outputs max(0, x) — it passes positive values unchanged and zeros out negatives, which prevents vanishing gradients and speeds up training in deep networks.
-*   **Distractor Analysis:**
-    *   *Why correct:* ReLU avoids the saturation problem of Sigmoid and Tanh, where gradients shrink toward zero and prevent earlier layers from learning effectively.
-    *   Sigmoid and Tanh both saturate (output near 0 or ±1) for large inputs, causing vanishing gradients. The step function is non-differentiable and cannot be used with backpropagation.
+## Instructions
+
+Select the best answer for each question. Each question is worth 10 points. Submit through the course LMS.
 
 ---
 
-**Question 2**
-In the context of neural network training, which of the following is the most accurate definition of **backpropagation**?
-*   A) An algorithm that calculates the gradient of the loss function with respect to each network weight by propagating the error signal backward from the output layer, then uses gradient descent to update the weights and reduce prediction error.
-*   B) A no-code Azure Machine Learning feature that automatically evaluates multiple algorithms and hyperparameter combinations to find the best-performing model for a given dataset and task.
-*   C) A preprocessing technique that transforms numeric input features to a comparable scale (0–1 or zero mean/unit variance) so that distance-based and gradient-based algorithms converge correctly.
-*   D) A regularization method that randomly drops a fraction of neurons during each training step to prevent co-adaptation and reduce overfitting in deep neural networks.
-*   **Correct Answer:** A) An algorithm that calculates the gradient of the loss function with respect to each network weight by propagating the error signal backward from the output layer, then uses gradient descent to update the weights and reduce prediction error.
-*   **Distractor Analysis:**
-    *   *Why A is correct:* Backpropagation is the core training algorithm for neural networks — it computes per-weight gradients efficiently using the chain rule of calculus, enabling gradient descent to adjust every weight in the network.
-    *   *Why B is incorrect:* This describes Azure AutoML — a cloud platform feature, not the neural network training algorithm.
-    *   *Why C is incorrect:* This describes feature scaling (normalization/standardization) — a data preprocessing step, not the backpropagation learning algorithm.
-    *   *Why D is incorrect:* This describes Dropout regularization — a technique to prevent overfitting, not the mechanism by which a network learns from errors.
+## Question 1
+
+A marketing team receives thousands of product reviews daily. They want to automatically determine whether each review is positive, negative, or neutral, and also identify which specific product features customers mention positively or negatively. Which Azure AI Language feature covers both requirements?
+
+A. Key phrase extraction
+
+B. Named entity recognition
+
+C. Sentiment analysis with opinion mining enabled
+
+D. Conversational Language Understanding
+
+### Q1 — Correct Answer
+
+C. Sentiment analysis with opinion mining enabled
+
+### Q1 — Distractor Analysis
+
+- A is incorrect: Key phrase extraction identifies important topics but does not return sentiment labels or scores.
+- B is incorrect: NER identifies entity categories such as Person, Organization, and Location. It does not evaluate sentiment or associate opinions with product features.
+- D is incorrect: CLU classifies user intents and extracts entities from conversational input. It is not designed for bulk review analysis.
 
 ---
 
-**Question 3**
-A developer needs to **train a machine learning model on labeled training data**. Which command is most appropriate?
-*   A) model.fit(X_train, y_train)
-*   B) predictions = model.predict(X_test)
-*   C) accuracy = accuracy_score(y_test, predictions)
-*   D) import pandas as pd; df = pd.read_csv('data.csv')
-*   **Correct Answer:** A) model.fit(X_train, y_train)
-*   **Distractor Analysis:**
-    *   *Why A is correct:* `model.fit(X_train, y_train)` passes the feature matrix and target labels to the model, allowing it to learn the mapping between inputs and outputs.
-    *   *Why B is incorrect:* `model.predict()` generates predictions from a trained model; the model must be fitted first before it can predict.
-    *   *Why C is incorrect:* `accuracy_score()` evaluates predictions against true labels — it is an evaluation step, not a training step.
-    *   *Why D is incorrect:* This loads a CSV file into a DataFrame — data loading, not model training.
+## Question 2
+
+A developer needs to extract all person names, company names, dates, and dollar amounts from a large collection of legal contracts stored as plain text. Which Azure AI Language feature is most appropriate?
+
+A. Sentiment analysis
+
+B. Text summarization — extractive
+
+C. Named entity recognition
+
+D. Conversational Language Understanding — entity extraction
+
+### Q2 — Correct Answer
+
+C. Named entity recognition
+
+### Q2 — Distractor Analysis
+
+- A is incorrect: Sentiment analysis returns emotional tone. It does not identify or categorize named entities such as person names or monetary values.
+- B is incorrect: Extractive summarization selects important sentences; it does not extract structured entity data.
+- D is incorrect: CLU entity extraction is designed for conversational user input, not bulk document processing. It requires a trained project with custom utterances.
 
 ---
 
-**Question 4**
-A neural network's validation loss is significantly higher than its training loss after many epochs. The model performs well on training data but poorly on unseen examples. Which action most directly resolves this?
-*   A) Apply regularization (L1/L2 or Dropout), reduce the number of hidden layers or neurons, or gather more training data to improve generalization.
-*   B) Ensure preprocessing scalers are fitted only on training data, then applied to test data to prevent data leakage.
-*   C) Use mean or median imputation to fill missing values in the dataset before retraining.
-*   D) Reboot the training environment and reinitialize the model weights from scratch.
-*   **Correct Answer:** A) Apply regularization (L1/L2 or Dropout), reduce the number of hidden layers or neurons, or gather more training data to improve generalization.
-*   **Distractor Analysis:**
-    *   *Why A is correct:* A large gap between training loss and validation loss is the hallmark of overfitting — the model has memorized training data rather than learning generalizable patterns. Regularization, architecture simplification, and more data all reduce overfitting.
-    *   *Why B is incorrect:* Preventing data leakage addresses inflated validation scores from improper preprocessing — the opposite problem (validation appears too good, not too bad).
-    *   *Why C is incorrect:* Missing value imputation resolves NaN errors; it does not address high model variance from overfitting.
-    *   *Why D is incorrect:* Rebooting and reinitializing weights would simply restart the same overfitting process; it does not change the model's capacity or the training data.
+## Question 3
+
+What is the key difference between Azure AI Language and Azure AI Translator?
+
+A. Azure AI Language performs translation; Azure AI Translator performs sentiment analysis
+
+B. Azure AI Language provides NLP tasks such as sentiment analysis and NER; Azure AI Translator is a separate service focused on translating text between languages
+
+C. They are two names for the same service and share the same endpoint
+
+D. Azure AI Translator is a feature within Azure AI Language and uses the same API key
+
+### Q3 — Correct Answer
+
+B. Azure AI Language provides NLP tasks such as sentiment analysis and NER; Azure AI Translator is a separate service focused on translating text between languages
+
+### Q3 — Distractor Analysis
+
+- A is incorrect: The roles are reversed. Language Service handles NLP; Translator handles translation.
+- C is incorrect: They are distinct Azure services with separate endpoints, pricing, and resource types.
+- D is incorrect: Translator is a standalone service, not a feature of Azure AI Language. It requires its own resource and credentials.
 
 ---
 
-**Question 5**
-Attackers are sending images with imperceptible pixel-level perturbations to a deployed Azure Custom Vision model, causing safety equipment to be misclassified as absent. Which defense best mitigates this **adversarial example** attack?
-*   A) Train the model with adversarial examples included in the training set and implement input validation and filtering before inference.
-*   B) Apply differential privacy to the training data and rate-limit the public inference API.
-*   C) Enable full disk encryption on all client endpoints submitting images to the API.
-*   D) Store model weights in an Azure Key Vault and rotate the inference API key on a 90-day schedule.
-*   **Correct Answer:** A) Train the model with adversarial examples included in the training set and implement input validation and filtering before inference.
-*   **Distractor Analysis:**
-    *   *Why A is correct:* Adversarial training exposes the model to perturbed inputs during training, building robustness to crafted noise. Input filtering can also detect statistically anomalous images before they reach the model.
-    *   *Why B is incorrect:* Differential privacy defends against model inversion attacks (training data reconstruction from outputs) — not adversarial perturbations applied at inference time.
-    *   *Why C is incorrect:* Disk encryption protects data at rest; it has no effect on manipulated image payloads submitted through a live API.
-    *   *Why D is incorrect:* Securing model weights and rotating API keys protect the pipeline's access controls but do not make the model robust against crafted adversarial inputs from authorized users or compromised systems.
+## Question 4
+
+In Conversational Language Understanding (CLU), a user sends the message: "Book me a flight to Dallas on Friday." The model should return an intent of BookFlight and extract entities for Destination and TravelDate. What is the term for this training example message used to teach the model?
+
+A. An intent
+
+B. An utterance
+
+C. A feature
+
+D. A token
+
+### Q4 — Correct Answer
+
+B. An utterance
+
+### Q4 — Distractor Analysis
+
+- A is incorrect: An intent is the label assigned to the utterance (BookFlight), not the example message itself.
+- C is incorrect: A feature in CLU refers to a characteristic used by the model during training; it is not the name for a training example.
+- D is incorrect: A token is a unit from tokenization (individual word or subword). A full training example sentence is an utterance.
+
+---
+
+## Question 5
+
+A company builds a customer service bot. When users ask "What is your return policy?" the bot should retrieve a specific answer from the company's FAQ document. When users say "I want to cancel my order," the bot should trigger a cancellation workflow. Which combination of Azure services best handles both requirements?
+
+A. Two separate CLU projects — one for questions, one for commands
+
+B. Azure AI Language Question Answering for FAQ retrieval and CLU for intent-based commands
+
+C. Azure AI Translator for FAQ retrieval and Azure AI Language for commands
+
+D. A single CLU project with one intent per FAQ question
+
+### Q5 — Correct Answer
+
+B. Azure AI Language Question Answering for FAQ retrieval and CLU for intent-based commands
+
+### Q5 — Distractor Analysis
+
+- A is incorrect: CLU is designed for intent classification and entity extraction, not for retrieving answers from documents. Using CLU for FAQ questions would require manually creating an intent for every possible question.
+- C is incorrect: Azure AI Translator handles language translation, not FAQ retrieval or intent recognition.
+- D is incorrect: Creating one intent per FAQ question in CLU is an antipattern — it does not scale and is exactly the problem Question Answering solves.
+
+---
+
+## Question 6
+
+Azure AI Language's sentiment analysis returns confidence scores of 0.72 positive, 0.18 neutral, and 0.10 negative for a document. What does this mean?
+
+A. 72 words in the document are positive, 18 are neutral, and 10 are negative
+
+B. The model is 72% confident the overall document sentiment is positive
+
+C. The document must be labeled positive because 0.72 is greater than 0.50
+
+D. The scores indicate the percentage of sentences in each sentiment category
+
+### Q6 — Correct Answer
+
+B. The model is 72% confident the overall document sentiment is positive
+
+### Q6 — Distractor Analysis
+
+- A is incorrect: Confidence scores are probabilities, not word counts.
+- C is incorrect: While the model would label the document as positive given these scores, the explanation is wrong — the label reflects the highest probability, but the threshold is not always 0.50 and the system does not "must" assign positive.
+- D is incorrect: The three scores are model confidence values for the overall document sentiment, not sentence counts.
+
+---
+
+## Question 7
+
+A healthcare company wants to store anonymized patient support chat transcripts for quality analysis. Before storage, they need to remove all patient names, phone numbers, and medical record numbers from the text. Which Azure AI Language feature should they use?
+
+A. Named entity recognition — standard output
+
+B. Key phrase extraction
+
+C. PII detection with text redaction enabled
+
+D. Text summarization — abstractive
+
+### Q7 — Correct Answer
+
+C. PII detection with text redaction enabled
+
+### Q7 — Distractor Analysis
+
+- A is incorrect: Standard NER identifies entity categories but does not redact the text. You would receive the detected entities but the original text remains unchanged.
+- B is incorrect: Key phrase extraction surfaces important topics. It does not identify or remove sensitive personal information.
+- D is incorrect: Abstractive summarization generates a shortened version of the text but does not systematically identify or remove PII.
+
+---
+
+## Question 8
+
+A CLU model is evaluated and shows 0.95 precision and 0.60 recall for the CancelOrder intent. What is the most accurate interpretation?
+
+A. The model almost always correctly identifies CancelOrder when it predicts it, but misses 40% of actual CancelOrder utterances
+
+B. The model catches 95% of all CancelOrder utterances but incorrectly labels many non-cancel utterances as CancelOrder
+
+C. The model's overall accuracy is the average of 0.95 and 0.60
+
+D. Precision and recall above 0.50 indicate the model is ready for production without further improvement
+
+### Q8 — Correct Answer
+
+A. The model almost always correctly identifies CancelOrder when it predicts it, but misses 40% of actual CancelOrder utterances
+
+### Q8 — Distractor Analysis
+
+- B is incorrect: This describes high recall and low precision, which is the opposite of the values given.
+- C is incorrect: Overall accuracy is not the average of precision and recall. The harmonic mean (F1 score) is the standard combined metric, and it would be approximately 0.74 in this case.
+- D is incorrect: The threshold for "production ready" depends on the use case. A recall of 0.60 means the model misses four out of ten genuine cancellation requests, which would likely be unacceptable in a commercial system.
+
+---
+
+## Question 9
+
+Which of the following statements about the None intent in a CLU project is correct?
+
+A. The None intent is optional and can be omitted if all user inputs will always match a defined intent
+
+B. The None intent captures inputs that do not match any defined application intent, preventing false matches
+
+C. The None intent is automatically populated by Azure and cannot be edited
+
+D. Adding utterances to the None intent reduces the model's accuracy for other intents
+
+### Q9 — Correct Answer
+
+B. The None intent captures inputs that do not match any defined application intent, preventing false matches
+
+### Q9 — Distractor Analysis
+
+- A is incorrect: The None intent is strongly recommended in all CLU projects. Without it, the model is forced to assign every input to one of the defined intents, resulting in false positives for off-topic queries.
+- C is incorrect: You must manually add diverse utterances to the None intent. It is not automatically populated.
+- D is incorrect: Adding good None utterances improves the model overall by teaching it to distinguish in-scope and out-of-scope inputs. It does not reduce accuracy for other intents.
+
+---
+
+## Question 10
+
+A content platform wants to automatically generate a three-sentence summary of each article that preserves exact wording from the source text and can be audited to verify accuracy. Which summarization approach should they use?
+
+A. Abstractive summarization, because it produces more fluent sentences
+
+B. Extractive summarization, because it selects existing sentences from the source and can be traced back to the original
+
+C. Key phrase extraction, because it returns the most important phrases from the text
+
+D. Opinion mining, because it identifies the most positive statements in the document
+
+### Q10 — Correct Answer
+
+B. Extractive summarization, because it selects existing sentences from the source and can be traced back to the original
+
+### Q10 — Distractor Analysis
+
+- A is incorrect: Abstractive summarization generates new sentences that may rephrase or combine source content, making exact-wording auditing impossible.
+- C is incorrect: Key phrase extraction returns phrases, not complete sentences, and does not produce a coherent summary.
+- D is incorrect: Opinion mining identifies aspect-level sentiment and is not a summarization technique.
+
+---
+
+End of Quiz — Module 08

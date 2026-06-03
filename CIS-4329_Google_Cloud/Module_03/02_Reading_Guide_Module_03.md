@@ -1,329 +1,403 @@
-# Reading Guide — Module 03
+# Reading Guide: Module 03 — Compute Engine
 
-## CIS-4329: Google Cloud Platform | Texas Wesleyan University
+## Course: CIS-4329 Google Cloud Computing
 
-### Topic: Compute Engine — VM Instances and Machine Types
-
-### Certification Target: Google Cloud Associate Cloud Engineer
+**Certification Alignment:** Google Cloud Associate Cloud Engineer (ACE)
 
 ---
 
-## Introduction
+## Overview
 
-Compute Engine is GCP's Infrastructure as a Service offering and a major ACE exam domain. This reading guide covers machine families, disk types, pricing models, managed instance groups, and the gcloud commands for VM lifecycle management. Study every section — the ACE exam tests both conceptual knowledge (which machine type for which workload) and CLI knowledge (correct flags and command syntax).
+This reading guide covers Google Compute Engine (GCE) — GCP's IaaS offering.
+Compute Engine questions appear on every ACE exam. You need to understand
+machine types, disk options, instance groups, autoscaling, and the economics
+of different VM pricing models.
+
+**Estimated Reading Time:** 50–60 minutes
 
 ---
 
-## 1. Machine Families
+## Section 1 — Virtual Machine Anatomy
 
-### General-Purpose Families
+### 1.1 Core Components
 
-| Family | Processor | Best For | Notes |
-|---|---|---|---|
-| E2 | Variable (shared core) | Dev, low-traffic web, cost-sensitive | Lowest cost; shared CPU scheduling |
-| N1 | Intel Skylake/Broadwell | Legacy general workloads | Older generation; still widely used |
-| N2 | Intel Cascade Lake | Production web apps, mid-tier databases | Higher sustained performance than E2 |
-| N2D | AMD EPYC Rome/Milan | Same as N2, AMD hardware | Often slightly cheaper than N2 |
-| T2D | AMD EPYC Milan | Scale-out, web serving | Good price-performance for horizontal scale |
+Every Compute Engine instance is defined by:
 
-### Compute-Optimized Families
+- **Machine type** — vCPU and memory configuration
+- **Boot disk** — Persistent disk with the operating system
+- **Zone** — Isolated data center where the VM runs
+- **VPC network and subnet** — Network connectivity
+- **Service account** — GCP identity for API calls from within the VM
+- **Firewall tags** — Used to apply firewall rules to the instance
+- **Metadata** — Key-value pairs including startup scripts
 
-| Family | Best For | Key Characteristic |
+### 1.2 Instance Lifecycle
+
+| State | Description | Billed for Compute |
 |---|---|---|
-| C2 | HPC, game servers, scientific simulation | Highest per-core performance (Intel) |
-| C2D | Same as C2, AMD hardware | AMD EPYC, high frequency |
+| PROVISIONING | Resources being allocated | No |
+| STAGING | Booting | No |
+| RUNNING | Fully operational | Yes |
+| STOPPING | Shutting down | No |
+| TERMINATED | Stopped; exists; not running | No |
+| SUSPENDED | Memory saved to disk | No (storage yes) |
+| DELETED | Permanently removed | No |
 
-### Memory-Optimized Families
+A TERMINATED instance still occupies its persistent disk (billed for storage)
+and its static IP (billed if unused). Only a DELETED instance fully releases
+all resources.
 
-| Family | RAM Range | Best For |
+### 1.3 Live Migration
+
+When Google needs to perform maintenance on the physical host, Compute Engine
+can live-migrate your running VM to a different host with no downtime. This
+happens transparently for most VM types.
+
+Live migration is not available for:
+
+- Preemptible and Spot VMs
+- VMs with GPUs attached
+- VMs with local SSD attached (maintenance causes VM to stop, not migrate)
+
+---
+
+## Section 2 — Machine Families
+
+### 2.1 General-Purpose
+
+| Series | Best For | Key Characteristic |
 |---|---|---|
-| M2 | Up to 12 TB | SAP HANA, large in-memory databases |
-| M3 | Up to 3.8 TB | In-memory analytics, large caches |
+| E2 | Web serving, dev/test, small databases | Shared-core options; lowest cost |
+| N1 | General workloads; GPU/TPU support | First-gen; supports all add-ons |
+| N2 | Balanced compute | Intel Cascade Lake; 20% better than N1 |
+| N2D | Balanced compute, parallel workloads | AMD EPYC; slightly cheaper than N2 |
+| T2D | Scale-out workloads | AMD EPYC; high throughput |
 
-### Accelerator-Optimized Family
+### 2.2 Compute-Optimized
 
-The A2 family includes NVIDIA GPUs. Used for machine learning training, inference, and GPU compute. Not covered in depth on the standard ACE exam but worth knowing exists.
+| Series | Best For |
+|---|---|
+| C2 | Single-thread HPC, gaming servers |
+| C2D | Highly parallel HPC |
+| C3 | Next-generation compute with DDR5 memory |
 
-### Custom Machine Types
+### 2.3 Memory-Optimized
 
-You can create a custom machine type with any combination of vCPU count and memory, within certain limits. This allows you to fit a VM precisely to workload requirements without paying for excess capacity. Custom types are available in most N-series families.
+| Series | Max Memory | Best For |
+|---|---|---|
+| M1 | 3.8 TB | Large in-memory databases |
+| M2 | 12 TB | SAP HANA, large analytics |
+| M3 | 30 TB | Largest in-memory workloads |
+
+### 2.4 Accelerator-Optimized
+
+| Series | GPU | Best For |
+|---|---|---|
+| A2 | NVIDIA A100 | ML training and inference |
+| G2 | NVIDIA L4 | Graphics, video transcoding, ML inference |
+
+### 2.5 Custom Machine Types
+
+Custom machine types allow you to specify exact vCPU and memory values:
 
 ```bash
+# Create a VM with custom machine type: 4 vCPUs, 16 GB RAM
 gcloud compute instances create custom-vm \
   --zone=us-central1-a \
-  --custom-cpu=6 \
-  --custom-memory=12GB
+  --custom-cpu=4 \
+  --custom-memory=16GB \
+  --image-family=debian-11 \
+  --image-project=debian-cloud
 ```
 
----
+Rules for custom machine types:
 
-## 2. Disk Storage Types
-
-### Persistent Disk Types
-
-| Type | Identifier | Technology | Best For | IOPS |
-|---|---|---|---|---|
-| Standard | pd-standard | HDD | Batch, sequential I/O | Low |
-| Balanced | pd-balanced | SSD | General production workloads | Medium |
-| SSD | pd-ssd | SSD | High-transaction databases | High |
-| Extreme | pd-extreme | SSD | Maximum I/O, very high-TPS databases | Highest |
-
-All persistent disk types share these properties:
-
-- Network-attached (not physically on the VM's host machine)
-- Data survives VM stop, restart, and deletion (unless deleted explicitly)
-- Can be resized online (increase only — no decrease)
-- Can be attached to multiple VMs in read-only mode
-- Encrypted at rest by default with Google-managed keys
-
-### Local SSD
-
-| Property | Value |
-|---|---|
-| Interface | NVMe (fast) |
-| Performance | Highest IOPS available in GCP |
-| Persistence | Ephemeral — data lost on VM stop/crash/migration |
-| Attachment | Fixed at VM creation time |
-| Size | 375 GB per disk; up to 24 disks per VM |
-| Best For | Scratch data, temp caches, data reconstructable from persistent storage |
-
-Local SSDs cannot be detached and re-attached to another VM. They are tied to the VM's physical host.
-
-### Disk Persistence Summary
-
-| Storage Type | VM Stop | VM Delete | VM Live Migration |
-|---|---|---|---|
-| Persistent Disk | Data preserved | Data preserved (disk not deleted unless requested) | No impact |
-| Local SSD | Data LOST | Data LOST | Data LOST |
+- Minimum: 1 vCPU
+- Memory must be a multiple of 256 MB
+- Default: 0.9 GB to 6.5 GB memory per vCPU
+- Extended memory: up to 8 GB per vCPU with `--custom-extensions`
 
 ---
 
-## 3. Snapshots and Custom Images
+## Section 3 — Disk Types
 
-### Snapshots
+### 3.1 Persistent Disk
 
-| Property | Value |
-|---|---|
-| Purpose | Point-in-time backup of a persistent disk |
-| Storage location | Cloud Storage (managed by GCP) |
-| Incremental | Yes — first snapshot is full; subsequent are incremental |
-| Cross-region | Yes — can restore to a different zone or region |
-| Consistent | Best taken from a stopped disk; application-consistent snapshots require quiescing writes |
-| gcloud command | `gcloud compute disks snapshot DISK --snapshot-names=NAME` |
+Persistent Disk (PD) is network-attached block storage. It persists
+independently of the VM lifecycle.
 
-### Custom Images
-
-| Property | Value |
-|---|---|
-| Purpose | Bootable disk image template for fleet deployment |
-| Source | Existing disk, snapshot, another image, or RAW file in Cloud Storage |
-| Scope | Available across the project (or organization with shared image families) |
-| Families | Images can be grouped into families; the latest image in a family is returned by `--image-family` |
-| gcloud command | `gcloud compute images create NAME --source-disk=DISK` |
-
-### Snapshot vs. Custom Image Decision
-
-| Scenario | Correct Tool |
-|---|---|
-| Backup disk before a risky software upgrade | Snapshot |
-| Disaster recovery restore point | Snapshot |
-| Deploy 100 identical pre-configured VMs | Custom Image |
-| Share a golden OS configuration with another team | Custom Image |
-| Restore a disk to a previous state | Snapshot |
-
----
-
-## 4. Pricing Models
-
-### On-Demand Pricing
-
-Pay per second (minimum 1 minute) for the machine type at the standard rate. No commitment, fully flexible.
-
-### Committed Use Discounts
-
-| Commitment | Discount vs. On-Demand | Notes |
+| Type | Backing | Use Case |
 |---|---|---|
-| 1 year | ~37% | Billed monthly regardless of usage |
-| 3 year | ~57% | Billed monthly regardless of usage |
+| pd-standard | HDD | Sequential I/O; archives; low-cost storage |
+| pd-balanced | SSD | General purpose; boot disks |
+| pd-ssd | SSD | Databases; low-latency applications |
+| pd-extreme | SSD | Highest IOPS; demanding database workloads |
 
-Commitment types:
+Persistent Disk properties:
 
-- Resource-based: commit to vCPU/memory in a region; any matching VM gets the discount
-- Spend-based: commit to a minimum spend per hour; applies to certain services
+- Can be resized online (increase only; cannot shrink)
+- Can be attached to multiple VMs in read-only mode simultaneously
+- Maximum size: 64 TB per disk
+- Encrypted at rest by default; optionally customer-managed keys (CMEK)
 
-### Spot VMs
+### 3.2 Local SSD
 
-| Property | Value |
-|---|---|
-| Discount | Up to 91% vs. on-demand |
-| Risk | Can be preempted by Google at any time |
-| Notice | 30-second shutdown notice before preemption |
-| Max runtime | 24 hours per session |
-| Best for | Fault-tolerant batch jobs, ML training, video processing, data pipelines |
-| Avoid for | Databases, web servers, any stateful service requiring continuous availability |
+Local SSD is NVMe-based storage physically attached to the host machine.
 
-### Sustained Use Discounts
+- 375 GB per partition; up to 24 partitions per VM (9 TB total)
+- Very high IOPS and very low latency
+- Data is NOT persistent across VM stops, restarts, or live migrations
+- Use for: temporary data, caches, scratch space, shuffle storage for Spark
 
-Automatically applied to on-demand N1, N2, N2D, and E2 VMs. No commitment needed. If a VM runs for more than 25% of the month, a discount is automatically applied. Runs at full month: discount up to 30%. These do NOT apply to committed use instances or Spot VMs.
+### 3.3 Snapshot Best Practices
 
----
-
-## 5. Managed Instance Groups (MIGs)
-
-### MIG Architecture
-
-```text
-Instance Template (defines VM spec)
-        |
-Managed Instance Group (manages fleet)
-        |
-  +-----------+-----------+
-  |           |           |
- VM-1        VM-2        VM-3
-  (us-central1-a) (us-central1-b) (us-central1-c)
-```
-
-### MIG Capabilities
-
-| Feature | Description |
-|---|---|
-| Autoscaling | Adds/removes VMs based on CPU, LB capacity, or custom metrics |
-| Autohealing | Replaces unhealthy VMs automatically based on health check results |
-| Rolling updates | Deploys new instance templates one batch at a time without downtime |
-| Blue-green deployment | Create two MIGs, shift traffic with load balancer, then delete old MIG |
-| Stateful MIGs | Preserve per-instance disks and network IPs across updates (for stateful workloads) |
-| Regional MIGs | Span multiple zones in a region for zone-failure resilience |
-
-### Instance Templates
-
-An instance template is a reusable definition for VM properties:
-
-- Machine type
-- Boot disk image and type
-- Network and subnet
-- Network tags
-- Service account
-- Startup script metadata
-
-Instance templates are immutable after creation. To update a MIG's configuration, create a new template and apply it via rolling update.
-
----
-
-## 6. gcloud compute Command Reference
-
-### Instance Lifecycle
-
-| Command | Description |
-|---|---|
-| `gcloud compute instances create NAME --zone=Z --machine-type=TYPE` | Create a VM |
-| `gcloud compute instances list` | List all VMs in the project |
-| `gcloud compute instances describe NAME --zone=Z` | Show VM details |
-| `gcloud compute instances start NAME --zone=Z` | Start a stopped VM |
-| `gcloud compute instances stop NAME --zone=Z` | Stop a running VM |
-| `gcloud compute instances delete NAME --zone=Z` | Delete a VM |
-| `gcloud compute ssh NAME --zone=Z` | SSH into a VM |
-| `gcloud compute instances add-metadata NAME --metadata=KEY=VALUE` | Add or update metadata |
-
-### Disk Operations
-
-| Command | Description |
-|---|---|
-| `gcloud compute disks list` | List all disks in the project |
-| `gcloud compute disks snapshot DISK --snapshot-names=NAME` | Create a snapshot |
-| `gcloud compute disks create NAME --source-snapshot=SNAP --zone=Z` | Create disk from snapshot |
-| `gcloud compute disks resize NAME --size=SIZE_GB --zone=Z` | Increase disk size |
-
-### Image Operations
-
-| Command | Description |
-|---|---|
-| `gcloud compute images list --filter="family:debian"` | List Debian public images |
-| `gcloud compute images create NAME --source-disk=DISK --source-disk-zone=Z` | Create custom image from disk |
-| `gcloud compute images deprecate NAME --state=DEPRECATED` | Mark image as deprecated |
-
-### Instance Template and MIG
-
-| Command | Description |
-|---|---|
-| `gcloud compute instance-templates create TEMPLATE --machine-type=TYPE --image-family=IMG --image-project=PRJ` | Create instance template |
-| `gcloud compute instance-groups managed create MIG --template=TEMPLATE --size=N --zone=Z` | Create zonal MIG |
-| `gcloud compute instance-groups managed set-autoscaling MIG --max-num-replicas=10 --target-cpu-utilization=0.6` | Configure autoscaling |
-
----
-
-## 7. Startup Script Reference
-
-### Passing a Script Inline
+Snapshots are incremental backups of persistent disks:
 
 ```bash
+# Create a snapshot
+gcloud compute disks snapshot DISK_NAME \
+  --zone=ZONE \
+  --snapshot-names=SNAPSHOT_NAME
+
+# Create a disk from a snapshot
+gcloud compute disks create NEW_DISK \
+  --source-snapshot=SNAPSHOT_NAME \
+  --zone=TARGET_ZONE
+
+# List snapshots
+gcloud compute snapshots list
+
+# Delete a snapshot
+gcloud compute snapshots delete SNAPSHOT_NAME
+```
+
+Snapshot storage is billed separately from disk storage.
+
+---
+
+## Section 4 — OS Images and Startup Scripts
+
+### 4.1 Image Types
+
+- **Public images**: Maintained by Google (Debian, Ubuntu, CentOS, RHEL, Windows,
+  etc.) or Google Cloud Marketplace partners
+- **Custom images**: Created from an existing disk, another image, or a snapshot;
+  stored in your project
+- **Machine images**: Capture the entire VM state including all disks,
+  configuration, and metadata; used for VM cloning and migration
+
+### 4.2 Image Families
+
+Using an image family always references the latest non-deprecated version:
+
+```bash
+# Using an image family (recommended)
 gcloud compute instances create my-vm \
-  --zone=us-central1-a \
-  --machine-type=e2-micro \
-  --metadata=startup-script='#!/bin/bash
-  apt-get update && apt-get install -y nginx'
-```
+  --image-family=debian-11 \
+  --image-project=debian-cloud
 
-### Passing a Script from Cloud Storage
-
-```bash
+# Using a specific image version (pinned)
 gcloud compute instances create my-vm \
-  --zone=us-central1-a \
-  --machine-type=e2-micro \
-  --metadata=startup-script-url=gs://my-bucket/setup.sh
+  --image=debian-11-bullseye-v20231010 \
+  --image-project=debian-cloud
 ```
 
-### Viewing Startup Script Output
+### 4.3 Startup Scripts
+
+Startup scripts run automatically when a VM boots.
+
+Delivery methods:
+
+- Inline via `--metadata=startup-script='...'`
+- File via `--metadata-from-file=startup-script=script.sh`
+- Cloud Storage via `--metadata=startup-script-url=gs://bucket/script.sh`
 
 ```bash
-gcloud compute instances get-serial-port-output my-vm --zone=us-central1-a
+# Create VM with startup script from a file
+cat > startup.sh << 'EOF'
+#!/bin/bash
+apt-get update -y
+apt-get install -y apache2
+systemctl enable apache2
+systemctl start apache2
+echo "<h1>Hello from $(hostname)</h1>" > /var/www/html/index.html
+EOF
+
+gcloud compute instances create web-vm \
+  --zone=us-central1-a \
+  --machine-type=e2-medium \
+  --image-family=debian-11 \
+  --image-project=debian-cloud \
+  --metadata-from-file=startup-script=startup.sh \
+  --tags=http-server
 ```
 
-The serial port output captures all boot-time console messages including startup script output. Useful for debugging failed startups.
+---
+
+## Section 5 — Instance Groups
+
+### 5.1 Managed Instance Groups (MIGs)
+
+MIGs are the foundation of scalable, highly available Compute Engine deployments.
+
+MIG capabilities:
+
+- **Autoscaling**: Add/remove VMs automatically based on signals
+- **Autohealing**: Detect and recreate unhealthy VMs using health checks
+- **Load balancing integration**: Native integration with GCP load balancers
+- **Rolling updates**: Update the instance template across the group gradually
+- **Canary deployments**: Test a new template on a subset of instances first
+- **Stateful workloads**: Preserve instance name, disks, and metadata across
+  updates (stateful MIGs)
+
+### 5.2 Instance Templates
+
+Instance templates are immutable configuration blueprints for MIG VMs:
+
+```bash
+# Create an instance template
+gcloud compute instance-templates create web-template \
+  --machine-type=e2-medium \
+  --image-family=debian-11 \
+  --image-project=debian-cloud \
+  --boot-disk-size=20GB \
+  --network=default \
+  --tags=http-server \
+  --metadata-from-file=startup-script=startup.sh
+
+# List templates
+gcloud compute instance-templates list
+
+# Describe a template
+gcloud compute instance-templates describe web-template
+```
+
+### 5.3 Creating and Managing MIGs
+
+```bash
+# Create a regional MIG
+gcloud compute instance-groups managed create web-mig \
+  --template=web-template \
+  --size=3 \
+  --region=us-central1
+
+# List MIG instances
+gcloud compute instance-groups managed list-instances web-mig \
+  --region=us-central1
+
+# Update MIG to use a new template (rolling update)
+gcloud compute instance-groups managed rolling-action start-update web-mig \
+  --version=template=web-template-v2 \
+  --region=us-central1 \
+  --max-unavailable=1
+
+# Scale the MIG manually
+gcloud compute instance-groups managed resize web-mig \
+  --size=5 \
+  --region=us-central1
+```
+
+### 5.4 Autoscaling
+
+```bash
+# Set autoscaling policy
+gcloud compute instance-groups managed set-autoscaling web-mig \
+  --region=us-central1 \
+  --max-num-replicas=10 \
+  --min-num-replicas=2 \
+  --target-cpu-utilization=0.70 \
+  --cool-down-period=90
+
+# Remove autoscaling
+gcloud compute instance-groups managed stop-autoscaling web-mig \
+  --region=us-central1
+```
+
+### 5.5 Autohealing
+
+```bash
+# Create a health check
+gcloud compute health-checks create http web-health-check \
+  --port=80 \
+  --request-path=/health \
+  --check-interval=10 \
+  --timeout=5 \
+  --healthy-threshold=2 \
+  --unhealthy-threshold=3
+
+# Attach health check to MIG
+gcloud compute instance-groups managed update web-mig \
+  --region=us-central1 \
+  --health-check=web-health-check \
+  --initial-delay=300
+```
 
 ---
 
-## 8. ACE Exam Tips
+## Section 6 — Preemptible and Spot VMs
 
-1. Spot VMs are for fault-tolerant batch workloads only. Signal words in ACE questions: "fault-tolerant," "retryable," "batch," "can restart." Disqualifying words: "database," "web server," "must remain available," "stateful."
+### 6.1 Comparison
 
-2. Persistent disk data survives VM deletion unless you check "Delete boot disk when instance is deleted." Local SSD data is always lost on VM stop or deletion.
+| Feature | Regular VM | Preemptible VM | Spot VM |
+|---|---|---|---|
+| Price | Full price | Up to 91% off | Up to 91% off |
+| Can be interrupted | No | Yes (30-sec warning) | Yes (30-sec warning) |
+| Max runtime | None | 24 hours | None |
+| Live migration | Yes | No | No |
+| Auto-restart | Yes | No | No |
 
-3. Custom images are for fleet deployment; snapshots are for backup and restore. If the scenario says "roll back," choose snapshot. If it says "deploy identical VMs," choose custom image.
+### 6.2 Handling Preemption
 
-4. The default Compute Engine service account has `roles/editor`. Creating a VM without specifying a service account will use this default — a security concern in production.
+When GCP preempts a VM, the VM receives a 30-second shutdown signal
+(ACPI G2 Soft Off). Best practices:
 
-5. Committed use discounts (CUDs) require no machine-type lock-in for resource-based CUDs. You commit to vCPU and memory in a region and any matching VM gets the discount automatically.
-
-6. Regional MIGs span multiple zones and survive zone failures. Zonal MIGs are in a single zone and do not survive zone failures.
-
-7. The `--image-family` flag with `gcloud compute instances create` automatically selects the latest image in the family. Use this instead of hardcoding specific image versions to ensure you always get security patches.
-
-8. MIG autohealing requires a health check. Without a configured health check, autohealing does not know when a VM is unhealthy and cannot replace it.
-
----
-
-## 9. Study Checklist
-
-- [ ] Name the four main machine families and their use cases without notes
-- [ ] Explain the difference between pd-standard, pd-balanced, pd-ssd, and local SSD
-- [ ] State what happens to persistent disk data and local SSD data when a VM is stopped
-- [ ] Explain the difference between a snapshot and a custom image with a real scenario for each
-- [ ] Describe when to use Spot VMs and when not to
-- [ ] Explain the three types of compute pricing models: on-demand, committed use, spot
-- [ ] Describe the four capabilities MIGs provide: autoscaling, autohealing, rolling updates, multi-zone
-- [ ] Run `gcloud compute instances create` with machine type and zone flags
-- [ ] Run `gcloud compute disks snapshot` on a VM's disk
-- [ ] Run `gcloud compute images create` from a disk
-- [ ] Complete the Module 03 lab
-- [ ] Take the Module 03 quiz
-- [ ] Post your Module 03 discussion response
+- Handle the SIGTERM signal and checkpoint work before shutdown
+- Design jobs to be resumable from the last checkpoint
+- Use a managed instance group to automatically replace preempted VMs
 
 ---
 
-End of Reading Guide — Module 03
+## Key Terms Glossary
 
-Course: CIS-4329 Google Cloud Platform | Texas Wesleyan University | Professor Nash
+| Term | Definition |
+|---|---|
+| Machine type | vCPU and memory specification for a VM |
+| Machine family | Category of machine types optimized for a workload type |
+| Custom machine type | VM with user-specified vCPU and memory values |
+| Persistent Disk | Network-attached block storage that persists across VM lifecycle |
+| Local SSD | High-performance ephemeral storage physically on the host |
+| Snapshot | Incremental point-in-time backup of a persistent disk |
+| Image | Bootable disk template used to create a VM boot disk |
+| Image family | Pointer to the latest version of an image series |
+| Startup script | Script that runs automatically when a VM boots |
+| MIG | Managed Instance Group — fleet of identical VMs managed as a unit |
+| Instance template | Immutable configuration blueprint for VMs in a MIG |
+| Autoscaling | Automatic adjustment of MIG size based on defined signals |
+| Autohealing | Automatic VM recreation when a health check detects an unhealthy VM |
+| Preemptible VM | Short-lived, low-cost VM that can be interrupted by Google |
+| Spot VM | Successor to preemptible VM; same interruption model, no 24-hour limit |
 
-Certification Target: Google Cloud Associate Cloud Engineer
+---
 
-Reference: cloud.google.com/learn
+## ACE Exam Focus Areas — Module 03
+
+- Recommend the correct machine family for a described workload.
+- Explain the difference between a TERMINATED and DELETED instance.
+- Identify appropriate disk type for workload I/O requirements.
+- Describe when to use local SSD vs. persistent disk.
+- Explain why instance templates are immutable and how to update a MIG.
+- Choose regional vs. zonal MIG for given availability requirements.
+- Identify valid autoscaling signals (CPU, HTTP, Pub/Sub, custom metrics).
+- Describe preemptible and Spot VM use cases and limitations.
+- Explain the purpose of the autohealing initial delay.
+
+---
+
+## Further Reading
+
+- Compute Engine overview: cloud.google.com/compute/docs
+- Machine families: cloud.google.com/compute/docs/machine-resource
+- Disk types: cloud.google.com/compute/docs/disks
+- Instance groups: cloud.google.com/compute/docs/instance-groups
+- Preemptible VMs: cloud.google.com/compute/docs/instances/preemptible
+- Spot VMs: cloud.google.com/compute/docs/instances/spot

@@ -1,49 +1,294 @@
-# Reading Guide: Module 14 - Deployment to AWS
-## Course: CIS-3340_Full_Stack_Web_Dev (AWS Certified Developer - Associate)
+# Reading Guide: Module 14 — Cloud Deployment with AWS
+
+**Course:** CIS-3340 Full Stack Web Development
+**Certification Alignment:** AWS Certified Developer — Associate (DVA-C02)
+**Texas Wesleyan University | Professor Nash**
 
 ---
 
-### Introduction
-Welcome to **Module 14 - Deployment to AWS**! This module covers the practical steps for deploying a full-stack web application to Amazon Web Services using core services tested on the AWS Certified Developer – Associate exam. You will learn how to host static React front-ends on Amazon S3, run Node.js backend servers on EC2 instances, configure security groups for network access control, and use the PM2 process manager to keep your Node.js application running in production. These are foundational AWS deployment skills that underpin the serverless and container architectures covered in subsequent modules.
+## Introduction
+
+This module covers deploying a full-stack application to AWS. You will serve the React frontend from S3 and CloudFront, run the Express API on Elastic Beanstalk, and connect to a managed PostgreSQL database on Amazon RDS. These are the core deployment services tested on the DVA-C02 exam and used in production full-stack applications.
 
 ---
 
-### 1. High-Yield Glossary
-Review these essential definitions carefully before beginning the lab and quiz:
+## 1. Three-Tier AWS Architecture
 
-*   **AWS S3**: Amazon Simple Storage Service; a highly durable, scalable object storage service. For full-stack deployments, S3 hosts static website assets (HTML, CSS, JavaScript bundles) from React production builds. A bucket is configured with static website hosting enabled, a public read bucket policy, and — when used with CloudFront — an Origin Access Control (OAC) so the bucket remains private except to CloudFront. S3 storage classes (Standard, Intelligent-Tiering, Glacier) and lifecycle rules are heavily tested on DVA-C02.
-*   **EC2 hosting**: Amazon Elastic Compute Cloud; a service providing resizable virtual machines (instances) for running server-side application code. For a Node.js/Express backend, you launch an EC2 instance (commonly Amazon Linux 2 or Ubuntu), install Node.js, clone your repository, install dependencies, and start the application. EC2 instance types (`t2.micro`, `t3.small`, etc.), AMIs, key pairs for SSH access, and instance metadata are all DVA-C02 exam topics.
-*   **Security groups**: Virtual stateful firewalls attached to EC2 instances (and other AWS resources like RDS, Lambda, ELB) that control inbound and outbound network traffic using allow-rules for protocol, port range, and source/destination. Security groups are stateful — allowing inbound traffic automatically allows the corresponding return traffic. By default, all inbound traffic is blocked and all outbound traffic is allowed. Common configurations: allow SSH (port 22) from your IP, allow HTTP (port 80) and HTTPS (port 443) from `0.0.0.0/0`.
-*   **Public ports**: The TCP port numbers that an application listens on and that security group inbound rules must explicitly allow for external access. Port 22 (SSH), 80 (HTTP), 443 (HTTPS), and custom application ports (3000, 8080) are common. In production, a reverse proxy (Nginx or Apache) typically listens on port 80/443 and forwards to the application port — avoiding the need to run Node.js as root (which would be required to listen on ports below 1024).
-*   **PM2 service manager**: A Node.js production process manager that keeps applications running after crashes, restarts on server reboot (`pm2 startup`), provides a cluster mode for multi-core CPU utilization, and offers built-in log management. Key commands: `pm2 start app.js`, `pm2 list`, `pm2 logs`, `pm2 restart`, `pm2 stop`. PM2 is the standard way to run Node.js applications on EC2 and is an exam-relevant tool for understanding production Node.js deployments.
+### Service Roles
 
----
+| Tier | Service | Role |
+|---|---|---|
+| Frontend | S3 + CloudFront | Host React static assets; serve from global edge locations |
+| API | Elastic Beanstalk | Manage EC2 instances running Node.js/Express |
+| Database | Amazon RDS | Managed PostgreSQL; automated backups and failover |
 
-### 2. Certification Exam Tips
-*   **DVA-C02 Core AWS Services:** EC2, S3, and IAM are the foundational services covered in the very first domain of the DVA-C02 exam. For EC2: know instance families, AMIs, key pairs, user data scripts, Elastic IPs, and EBS volumes. For S3: know bucket policies, ACLs, versioning, lifecycle rules, presigned URLs, and transfer acceleration. For IAM: know users, roles, policies, and the principle of least privilege.
-*   **S3 + CloudFront is the Standard Static Site Pattern:** The exam frequently tests the S3 + CloudFront architecture for serving static websites. Know that CloudFront distributions can cache S3 objects globally at edge locations, that cache invalidation (`/*`) is required after deployments, and that OAC/OAI restricts direct S3 access to CloudFront only.
-*   **Study Resource:** The AWS Free Tier provides 750 hours/month of t2.micro EC2 and 5 GB of S3 storage — sufficient to complete all labs in this module at no cost. [AWS Free Tier](https://aws.amazon.com/free/) and the [AWS Management Console](https://console.aws.amazon.com/) are the primary hands-on resources for this module.
+### Request Flow
 
----
-
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read Part 3 covering **Deployment** in the OER Textbook: [Full Stack Open by University of Helsinki](https://fullstackopen.com/en/part3) — this section covers deploying a Node.js backend and React frontend to various cloud platforms including AWS.
-*   **Required Video:** Watch the AWS deployment section of the [Full Stack Web Development Course by freeCodeCamp on YouTube](https://www.youtube.com/watch?v=nu_pCVPKzTk) — covering S3 static hosting, EC2 setup, and security group configuration.
+```text
+1. User browser → CloudFront edge (serves React SPA from cache)
+2. React app → Elastic Beanstalk load balancer → EC2 (Express)
+3. Express → RDS PostgreSQL (private VPC connection)
+4. RDS → Express → browser (JSON response)
+```
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will deploy a full-stack application to AWS:
-*   **Deploy static build files to AWS S3 bucket**: Run `npm run build` on your React application, create an S3 bucket with static website hosting enabled, and upload the `build/` directory using the AWS CLI (`aws s3 sync build/ s3://your-bucket-name --delete`) or the AWS Management Console.
-*   **Launch a virtual Linux instance on AWS EC2**: Launch a `t2.micro` Amazon Linux 2 instance from the EC2 console, download the `.pem` key pair, and SSH in with `ssh -i key.pem ec2-user@<public-ip>`. Install Node.js using `nvm` and clone your Express API repository.
-*   **Configure inbound security rules for HTTP/SSH ports**: In the EC2 Security Groups console, add an inbound rule allowing TCP port 22 from your current IP address and TCP port 3000 (or 80) from `0.0.0.0/0` — then verify connectivity with `curl http://<ec2-public-ip>:3000`.
+## 2. Amazon S3 for Static Website Hosting
+
+### Setup Steps
+
+1. Create S3 bucket — uncheck "Block all public access"
+2. Enable static website hosting: index document = `index.html`, error document = `index.html`
+3. Apply a bucket policy allowing public `s3:GetObject`
+4. Upload the contents of the React `dist/` folder
+
+### Bucket Policy
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::your-bucket-name/*"
+    }
+  ]
+}
+```
+
+### Why the Error Document Must Be index.html
+
+S3 serves files by exact key match. A request for `/books/42` looks for an object named `books/42` — which does not exist. S3 returns its "error document." If the error document is `index.html`, the React SPA loads and React Router handles the `/books/42` route client-side.
+
+Without this setting, direct navigation to any React route other than `/` returns an S3 error page.
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and understand their definitions in context.
-- [ ] Read Part 3 covering **Deployment** in [Full Stack Open by University of Helsinki](https://fullstackopen.com/en/part3).
-- [ ] Watch the AWS deployment section of the [Full Stack Web Development Course by freeCodeCamp](https://www.youtube.com/watch?v=nu_pCVPKzTk).
-- [ ] Create an [AWS Free Tier account](https://aws.amazon.com/free/) if you do not already have one — required for lab activities in this and subsequent modules.
-- [ ] Proceed to the weekly hands-on lab activity.
+## 3. Amazon CloudFront
+
+### Purpose
+
+CloudFront is a Content Delivery Network (CDN). It caches your S3 files at over 400 edge locations worldwide. Users receive files from the nearest edge, reducing latency significantly.
+
+### Distribution Configuration
+
+| Setting | Value |
+|---|---|
+| Origin domain | S3 static website endpoint (not bucket ARN) |
+| Viewer protocol policy | Redirect HTTP to HTTPS |
+| Default root object | `index.html` |
+
+### Custom Error Responses (SPA Routing Fix)
+
+| HTTP Error Code | Response Page Path | HTTP Response Code |
+|---|---|---|
+| `403` | `/index.html` | `200` |
+| `404` | `/index.html` | `200` |
+
+This is the CloudFront equivalent of the S3 error document setting. It returns `index.html` for any path that does not match a file in S3, letting React Router handle routing.
+
+### Cache Invalidation
+
+After uploading new files to S3, CloudFront edge caches may still serve the previous version until the TTL expires. Force immediate refresh:
+
+```text
+CloudFront Console → Distribution → Invalidations → Create → /*
+```
+
+Create an invalidation for `/*` after every production deployment.
+
+### Content-Hash Filenames
+
+Vite generates asset filenames with a content hash (e.g., `index-Bx3LvQ2C.js`). When code changes, the hash changes, and CloudFront caches the new file automatically because the filename is different. Only `index.html` needs to be invalidated — it does not have a hash.
+
+---
+
+## 4. Vite Environment Variables
+
+```bash
+# .env.development  (used by npm run dev)
+VITE_API_URL=http://localhost:3000
+
+# .env.production  (used by npm run build)
+VITE_API_URL=https://your-eb-env.elasticbeanstalk.com
+```
+
+```javascript
+// In React components
+const API_URL = import.meta.env.VITE_API_URL;
+
+fetch(`${API_URL}/api/books`)
+```
+
+### Rules
+
+- Variables must be prefixed with `VITE_` to be included in the browser bundle
+- Values are embedded at build time — changing them requires a rebuild
+- Never put secrets (database passwords, JWT secret) in `VITE_` variables — they become part of the public JavaScript bundle
+
+---
+
+## 5. AWS Elastic Beanstalk
+
+### What It Does
+
+Elastic Beanstalk is a Platform as a Service (PaaS) that manages the infrastructure for running web applications. You provide application code; Elastic Beanstalk provisions:
+
+- EC2 instances
+- Load balancer
+- Auto-scaling group
+- Health monitoring and alerts
+- Rolling deployments
+
+### Deployment Package
+
+Elastic Beanstalk expects a `.zip` file of your application code without `node_modules`. It runs `npm install` from your `package.json` during deployment.
+
+```bash
+# Create deployment zip (Mac/Linux)
+zip -r app.zip . -x "node_modules/*" -x ".env" -x "*.git*"
+```
+
+Never include `.env` in the deployment zip. Set environment variables directly in the Elastic Beanstalk configuration.
+
+### Required package.json Script
+
+```json
+{
+  "scripts": {
+    "start": "node index.js"
+  }
+}
+```
+
+Elastic Beanstalk for Node.js runs `npm start` to start the application.
+
+### Environment Variables in Elastic Beanstalk
+
+Set all secrets and configuration in the Elastic Beanstalk environment:
+
+```text
+EB Console → Environment → Configuration → Software → Environment properties
+```
+
+| Variable | Value |
+|---|---|
+| `NODE_ENV` | `production` |
+| `PORT` | `8080` (EB default for Node.js) |
+| `DB_HOST` | `your-db.abc123.us-east-1.rds.amazonaws.com` |
+| `DB_PORT` | `5432` |
+| `DB_NAME` | `bookstore` |
+| `DB_USER` | `postgres` |
+| `DB_PASSWORD` | (your RDS password) |
+| `JWT_SECRET` | (your secret) |
+| `ALLOWED_ORIGIN` | `https://your-cloudfront-domain.net` |
+
+---
+
+## 6. Amazon RDS for PostgreSQL
+
+### What It Manages
+
+| Feature | AWS Handles |
+|---|---|
+| Automated backups | Daily snapshots + transaction logs |
+| Multi-AZ failover | Automatic standby in a second AZ |
+| Patch management | OS and PostgreSQL version patches |
+| Storage scaling | Auto-expand with Storage Autoscaling |
+
+### Network Security
+
+RDS should be in a **private subnet** — not accessible from the internet. Only resources inside the same VPC (like your Elastic Beanstalk EC2 instances) can connect.
+
+```text
+Public Internet → (blocked) → RDS
+Elastic Beanstalk EC2 (same VPC) → (allowed) → RDS
+```
+
+Configure the RDS security group to allow inbound TCP on port 5432 only from the Elastic Beanstalk security group.
+
+### Connection String
+
+The RDS endpoint replaces `localhost` in your `pg` Pool configuration:
+
+```javascript
+const pool = new Pool({
+  host:     process.env.DB_HOST,   // RDS endpoint
+  port:     parseInt(process.env.DB_PORT) || 5432,
+  database: process.env.DB_NAME,
+  user:     process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  ssl:      { rejectUnauthorized: false } // required for RDS
+});
+```
+
+The `ssl` option is required when connecting to RDS from Elastic Beanstalk.
+
+### RDS Proxy
+
+When Lambda functions scale to many concurrent instances, each creates a new database connection. RDS has a fixed maximum connection limit. RDS Proxy maintains a persistent connection pool between Lambda and RDS, multiplexing many Lambda invocations through fewer actual database connections. No application code changes required.
+
+---
+
+## 7. HTTPS and SSL/TLS
+
+CloudFront provides HTTPS automatically using AWS Certificate Manager (ACM) SSL certificates. For a custom domain:
+
+1. Request a certificate in ACM for `app.example.com`
+2. Validate via DNS (add a CNAME record to your domain)
+3. Attach the certificate to your CloudFront distribution
+4. Create a Route 53 alias record pointing `app.example.com` to the CloudFront distribution
+
+For the Elastic Beanstalk API endpoint, attach an ACM certificate to the load balancer and configure HTTPS on port 443.
+
+---
+
+## 8. Deployment Workflow Summary
+
+```text
+1. npm run build          → produces dist/ folder
+2. Upload dist/ to S3     → overwrite existing files
+3. Invalidate CloudFront  → /* invalidation
+4. zip Express project    → exclude node_modules, .env
+5. Deploy zip to EB       → EB runs npm install + npm start
+6. Verify health          → EB console shows "OK" status
+```
+
+---
+
+## 9. Exam and Interview Tips
+
+1. S3 static website hosting requires the error document to be `index.html` for React SPAs — otherwise direct navigation to any non-root route returns an S3 error.
+
+2. CloudFront custom error responses (403/404 → `/index.html` with 200) solve the SPA routing problem at the CDN level when the S3 origin is an OAI bucket (not a static website endpoint).
+
+3. `VITE_` prefix is required for environment variables to appear in the browser bundle. Variables without the prefix are not included. Never put secrets in `VITE_` variables.
+
+4. Elastic Beanstalk runs `npm start` — make sure your `package.json` has a `start` script pointing to `node index.js` or equivalent.
+
+5. Never deploy `.env` to Elastic Beanstalk. Set environment variables through the EB console or `eb setenv`.
+
+6. RDS should be in a private subnet with no public access. Allow inbound port 5432 only from the EB security group.
+
+7. Add `ssl: { rejectUnauthorized: false }` to the `pg` Pool when connecting to RDS from Elastic Beanstalk.
+
+8. CloudFront cache invalidation on `/*` is required after every deployment. Content-hash filenames (Vite default) only require invalidating `index.html` in production pipelines.
+
+---
+
+## 10. Study Checklist
+
+- [ ] Create an S3 bucket with static website hosting enabled and error document set to `index.html`
+- [ ] Apply a bucket policy that allows public `s3:GetObject`
+- [ ] Create a CloudFront distribution with custom error responses for 403 and 404
+- [ ] Build the React app with `npm run build` and upload `dist/` contents to S3
+- [ ] Create a CloudFront cache invalidation after uploading new files
+- [ ] Configure `VITE_API_URL` in `.env.production` and verify `import.meta.env.VITE_API_URL` is used in fetch calls
+- [ ] Create an Elastic Beanstalk Node.js environment and deploy the Express application as a zip
+- [ ] Set all environment variables in Elastic Beanstalk (never commit `.env`)
+- [ ] Create an RDS PostgreSQL instance in the same VPC as Elastic Beanstalk with no public access
+- [ ] Add `ssl: { rejectUnauthorized: false }` to the `pg` Pool for RDS connections
+- [ ] Run the schema SQL on RDS and verify the Express API can query it
+- [ ] Confirm the deployed full-stack app loads, authenticates, and persists data end-to-end

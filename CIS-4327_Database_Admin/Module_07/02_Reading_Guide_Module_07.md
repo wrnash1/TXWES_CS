@@ -1,50 +1,297 @@
-# Reading Guide: Module 07 - BigQuery – Data Warehouse and Analytics
-## Course: CIS-4327_Database_Admin (4327_Database_Admin - Google Cloud Professional Cloud Database Engineer)
+# Reading Guide: Module 07 — MySQL and Cloud SQL
+
+## Course: CIS-4327 Database Administration
+
+**Certification Alignment:** Google Cloud Professional Database Engineer
 
 ---
 
-### Introduction
-Welcome to **Module 07 - BigQuery – Data Warehouse and Analytics**! This week you will study Google BigQuery, GCP's fully managed, serverless enterprise data warehouse. BigQuery is one of the most frequently tested services on the GCP Professional Cloud Database Engineer exam because database engineers are frequently asked to select it (or rule it out) as the appropriate GCP service for a given analytics workload.
+## Overview
 
-BigQuery is not an OLTP database — it cannot replace Cloud SQL or Spanner for transactional workloads. However, for analytics, reporting, and large-scale data querying, it is unmatched in capability and simplicity of operation.
-
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **BigQuery**: A fully managed, serverless data warehouse that enables SQL analytics over petabyte-scale datasets. BigQuery uses a columnar storage format called Capacitor, separates storage from compute, and charges by bytes processed (on-demand pricing) or by reserved slot capacity. It is not designed for transactional (OLTP) workloads.
-*   **Columnar Storage**: BigQuery stores each column of a table separately on disk rather than storing complete rows together. When a query selects only 3 of 100 columns, BigQuery reads only 3% of the data, dramatically reducing I/O and query cost. This is why `SELECT *` in BigQuery is expensive — always specify the columns you need.
-*   **Serverless Architecture**: BigQuery allocates compute resources (slots) automatically when you submit a query. You never provision, patch, or scale servers. Thousands of workers are assigned to execute a query in parallel and then released, making petabyte-scale queries feasible in seconds. This is a key exam differentiator — unlike Cloud SQL, there are no instances to manage.
-*   **Partitioned Tables**: BigQuery tables can be partitioned by ingestion time, a DATE/TIMESTAMP column, or an integer range. Queries that filter on the partition column scan only the relevant partitions, dramatically reducing bytes processed and cost. The exam tests knowledge of partition types and partition pruning.
-*   **Clustered Tables**: After partitioning, BigQuery can cluster a table by up to four columns. Clustering sorts and co-locates rows with the same cluster column values within each partition, making queries that filter on cluster columns even more efficient. Clustering and partitioning are complementary techniques.
+This reading guide accompanies the Module 07 video lectures and lab. MySQL is one of the most widely deployed databases in the world and is a primary engine option on Cloud SQL. This guide reinforces InnoDB internals, MySQL user management, and all Cloud SQL configuration concepts tested on the Google Cloud Professional Database Engineer exam.
 
 ---
 
-### 2. Certification Exam Tips
-*   **BigQuery vs. OLTP Services**: The exam consistently presents analytics scenarios and asks you to distinguish BigQuery from Cloud SQL/Spanner. Key signals that BigQuery is the answer: "analyze historical data", "run ad-hoc SQL queries on terabytes", "BI dashboards", "data warehouse", "no connection management needed". Key signals BigQuery is wrong: "transactional", "row-level updates", "sub-millisecond latency", "online application".
-*   **Partitioning and Clustering**: Expect at least one question on which combination of partitioning and clustering reduces cost and improves performance for a described query pattern. Partition on the date column used in `WHERE` clauses; cluster on the high-cardinality columns used in `WHERE` and `JOIN` clauses within each partition.
-*   **Slot Reservations vs. On-Demand**: On-demand pricing charges per TB processed. Flat-rate (slot reservations) pricing is better for predictable, high-volume workloads. The exam may ask you to recommend a pricing model for a given usage pattern.
-*   **BigQuery ML and Federated Queries**: Know that BigQuery ML lets you train and run ML models using SQL, and that Federated Queries let BigQuery directly query data in Cloud Spanner, Cloud SQL, Cloud Storage, and Bigtable without copying data into BigQuery.
-*   **Study Resource:** The official BigQuery documentation is the exam-authoritative reference: [BigQuery Documentation – Google Cloud](https://cloud.google.com/bigquery/docs). The freeCodeCamp SQL course reinforces SQL syntax for BigQuery queries: [SQL and Database Administration – freeCodeCamp](https://www.youtube.com/watch?v=HXV3zeQKqGY).
+## Section 1 — MySQL Architecture Recap
+
+### 1.1 Layer Summary
+
+| Layer | Components | Key Responsibility |
+|---|---|---|
+| Connection Layer | Thread manager, thread cache, authentication | Accept and authenticate client connections |
+| SQL Layer | Parser, optimizer, execution engine | Parse, optimize, and execute SQL |
+| Storage Engine Layer | InnoDB, MyISAM, Memory, etc. | Physical read/write, locking, transactions |
+
+The storage engine abstraction is MySQL's defining architectural feature. The SQL layer passes data operations to whichever engine manages a given table.
+
+### 1.2 Thread Cache
+
+MySQL reuses idle threads via the thread cache (`thread_cache_size`). A value of 16–32 is appropriate for most workloads. Monitor `Threads_created` status variable — high values relative to `Connections` indicate the thread cache is too small:
+
+```sql
+SHOW GLOBAL STATUS LIKE 'Threads%';
+SHOW GLOBAL STATUS LIKE 'Connections';
+```
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Use *Database Design* by Adrienne Watt to understand the relational model and SQL that BigQuery's standard SQL dialect is built on: [Database Design by Adrienne Watt](https://opentextbc.ca/dbdesign01/).
-*   **Required Video:** This comprehensive free video lecture covers SQL fundamentals, data warehouse concepts, and query optimization techniques that apply directly to BigQuery: [SQL and Database Administration – freeCodeCamp](https://www.youtube.com/watch?v=HXV3zeQKqGY).
+## Section 2 — InnoDB Deep Dive
+
+### 2.1 Buffer Pool
+
+The InnoDB buffer pool is the most performance-critical memory structure. It caches:
+
+- Data pages (16 KB default page size)
+- Index pages
+- Change buffer pages
+- Adaptive hash index entries
+
+Target: `innodb_buffer_pool_size` = 70–80% of dedicated server RAM.
+
+For buffer pools larger than 1 GB, increase `innodb_buffer_pool_instances` (one per GB, up to 8) to reduce contention on the pool mutex.
+
+Monitor buffer pool efficiency:
+
+```sql
+SHOW GLOBAL STATUS LIKE 'Innodb_buffer_pool%';
+-- Key metric: Innodb_buffer_pool_read_requests vs Innodb_buffer_pool_reads
+-- Hit rate = (read_requests - reads) / read_requests * 100
+-- Target: > 99%
+```
+
+### 2.2 Redo Log
+
+The InnoDB redo log is a circular log stored in `ib_logfile0` and `ib_logfile1`. Changes are written here before being applied to data pages. During crash recovery, InnoDB replays the redo log to bring the data files to a consistent state.
+
+`innodb_log_file_size` controls the size of each redo log file. Larger redo logs mean fewer checkpoints and better write throughput but slower crash recovery. A starting value of 1–2 GB per file is common for busy OLTP systems.
+
+In MySQL 8.0.30+, redo log files are managed dynamically (`innodb_redo_log_capacity`) rather than static file pairs.
+
+### 2.3 Doublewrite Buffer
+
+Before InnoDB writes a page to its final location, it first writes the page to the doublewrite buffer (a sequential write). If a crash occurs mid-page-write (a partial page write), InnoDB can recover the page from the doublewrite buffer. This protects against torn page corruption on systems without atomic 16 KB writes.
+
+On filesystems and hardware that guarantee atomic writes (like AWS EBS with ext4+FUA, or certain NVMe configurations), the doublewrite buffer can be disabled (`innodb_doublewrite = OFF`) for performance. On Cloud SQL, Google handles this at the infrastructure layer.
+
+### 2.4 Change Buffer
+
+The change buffer reduces I/O by batching writes to secondary index pages. When a row is inserted, updated, or deleted, the change to a non-unique secondary index that is not currently in the buffer pool is buffered in the change buffer and merged lazily. This avoids random I/O for each secondary index update.
+
+### 2.5 MVCC and Undo Logs
+
+InnoDB maintains undo log records for each changed row. Active transactions read old row versions from the undo log, ensuring consistent reads. Long-running transactions accumulate large undo logs, which can cause performance degradation — always commit or roll back transactions promptly.
+
+Monitor undo log history length:
+
+```sql
+SELECT count FROM information_schema.INNODB_METRICS
+WHERE name = 'trx_rseg_history_len';
+```
+
+Values above 10,000 indicate long-running uncommitted transactions. Values above 1,000,000 are a serious problem.
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will create a BigQuery dataset and table, load data from Cloud Storage, run `SELECT` queries with and without partition filters to observe cost differences, create a clustered and partitioned table, and run EXPLAIN on a query to view its execution plan.
+## Section 3 — MySQL vs. MyISAM Decision Matrix
+
+| Feature | InnoDB | MyISAM |
+|---|---|---|
+| Transactions | Full ACID | None |
+| Locking | Row-level | Table-level |
+| Foreign keys | Enforced | Not supported |
+| Crash recovery | Automatic (redo log) | Manual repair required |
+| Full-text search | Yes (since 5.6) | Yes |
+| MVCC | Yes | No |
+| Cloud SQL support | Yes | No |
+| Recommended for | All production tables | Not recommended |
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read the SQL and data modeling chapters in [Database Design by Adrienne Watt](https://opentextbc.ca/dbdesign01/).
-- [ ] Watch the SQL and data warehouse segments in [SQL and Database Administration – freeCodeCamp](https://www.youtube.com/watch?v=HXV3zeQKqGY).
-- [ ] Review the BigQuery partitioning and clustering steps in the lab instructions.
-- [ ] Proceed to the weekly hands-on lab activity.
+## Section 4 — MySQL User and Privilege Management
+
+### 4.1 User Account Identity
+
+MySQL accounts are `'user'@'host'` pairs. These are completely distinct accounts:
+
+- `'alice'@'localhost'` — Alice connecting from the local machine
+- `'alice'@'%'` — Alice connecting from any host
+- `'alice'@'10.0.1.0/255.255.255.0'` — Alice from a specific subnet
+
+### 4.2 Authentication Plugins
+
+| Plugin | MySQL Default | Cloud SQL Default | Security |
+|---|---|---|---|
+| `caching_sha2_password` | 8.0+ | No | Strong |
+| `mysql_native_password` | 5.7 | Yes | Moderate |
+| `sha256_password` | Optional | No | Strong |
+
+Cloud SQL retains `mysql_native_password` as the default for broad client compatibility. The exam may test this difference.
+
+### 4.3 Privilege Levels
+
+```sql
+-- Show current user's privileges
+SHOW GRANTS FOR CURRENT_USER();
+
+-- Show another user's privileges
+SHOW GRANTS FOR 'appuser'@'10.0.1.5';
+
+-- Revoke specific privilege
+REVOKE INSERT ON myapp.orders FROM 'appuser'@'10.0.1.5';
+
+-- Drop user entirely
+DROP USER 'olduser'@'%';
+```
+
+### 4.4 MySQL 8.0 Roles
+
+```sql
+-- Mandatory roles (applied automatically at login)
+SET PERSIST mandatory_roles = 'app_read';
+
+-- View active roles in session
+SELECT CURRENT_ROLE();
+```
+
+---
+
+## Section 5 — Cloud SQL for MySQL Configuration
+
+### 5.1 Instance Tiers
+
+| Tier | vCPUs | RAM | Use Case |
+|---|---|---|---|
+| db-f1-micro | shared | 0.6 GB | Development only |
+| db-g1-small | shared | 1.7 GB | Light dev/test |
+| db-n1-standard-2 | 2 | 7.5 GB | Small production |
+| db-n1-standard-8 | 8 | 30 GB | Medium production |
+| db-n1-highmem-32 | 32 | 208 GB | Large OLTP |
+
+### 5.2 Important Database Flags for Cloud SQL MySQL
+
+| Flag | Recommended Value | Notes |
+|---|---|---|
+| `innodb_buffer_pool_size` | 70-75% of RAM (bytes) | Most impactful performance flag |
+| `max_connections` | 200–500 | Balance with available RAM |
+| `slow_query_log` | ON | Enable in production |
+| `long_query_time` | 1 | Log queries taking > 1 second |
+| `log_queries_not_using_indexes` | ON | Identify full table scans |
+| `character_set_server` | utf8mb4 | Support full Unicode including emoji |
+| `collation_server` | utf8mb4_unicode_ci | Case-insensitive Unicode collation |
+
+### 5.3 Backup Configuration
+
+Cloud SQL for MySQL automated backups use `mysqldump` for the initial export and binary log positions for PITR. Backups are stored in Google-managed Cloud Storage and retained for 7 days by default (configurable 1–365 days).
+
+```bash
+# Configure backup retention
+gcloud sql instances patch my-mysql-ha \
+  --backup-start-time=02:00 \
+  --retained-backups-count=14 \
+  --retained-transaction-log-days=7 \
+  --project=my-gcp-project
+```
+
+---
+
+## Section 6 — High Availability Architecture
+
+### 6.1 HA with Regional Persistent Disk
+
+Cloud SQL HA in the regional configuration uses Google's **regional persistent disk** technology. Both the primary and standby share the same underlying disk, replicated synchronously across two zones. This means:
+
+- Failover is fast (no data replay needed)
+- RPO (Recovery Point Objective) ≈ 0 — no data loss
+- RTO (Recovery Time Objective) ≈ 60–120 seconds
+
+### 6.2 HA vs. Read Replica Comparison
+
+| Feature | HA Standby | Read Replica |
+|---|---|---|
+| Purpose | Failover resilience | Read scalability |
+| Replication type | Synchronous | Asynchronous |
+| Can serve reads? | No | Yes |
+| Auto-promotes on failure? | Yes | No (manual) |
+| Cross-region? | No (same region) | Yes |
+| Additional cost | Yes (doubles instance cost) | Yes (separate instance) |
+
+---
+
+## Section 7 — Cloud SQL Auth Proxy Deep Dive
+
+### 7.1 Security Model
+
+The Auth Proxy eliminates three common security risks:
+
+1. **No need to whitelist application server IPs** — the proxy authenticates via IAM, not network location.
+2. **No need to manage SSL certificates manually** — the proxy handles TLS encryption automatically.
+3. **Short-lived credentials** — IAM tokens expire and rotate automatically.
+
+### 7.2 Connection Name Format
+
+```text
+PROJECT_ID:REGION:INSTANCE_NAME
+```
+
+Example: `my-company-prod:us-central1:mysql-primary`
+
+### 7.3 Private IP Architecture (Production Recommended)
+
+```text
+VPC Network
+├── App Server (10.0.1.5)    ─────────────────────────────┐
+│                                                           │
+├── Cloud SQL Private IP (10.1.0.3)  ◄────── Private Service Access
+│   (no public IP)
+└── Cloud NAT (for outbound only)
+```
+
+Private IP requires configuring Private Service Access (VPC peering to the `servicenetworking.googleapis.com` network) before creating the Cloud SQL instance.
+
+---
+
+## Section 8 — Key Terms
+
+| Term | Definition |
+|---|---|
+| InnoDB | MySQL's default transactional storage engine |
+| Buffer pool | InnoDB's in-memory page cache |
+| Redo log | InnoDB's crash recovery log (analogous to PostgreSQL WAL) |
+| MVCC | Multi-Version Concurrency Control in InnoDB |
+| Doublewrite buffer | Protects against partial page write corruption |
+| Cloud SQL HA | Regional standby with automatic failover |
+| Read replica | Async replication target for read offloading |
+| Cloud SQL Auth Proxy | IAM-authenticated encrypted tunnel to Cloud SQL |
+| Binary log | MySQL replication and PITR log |
+| ROW binlog format | Records full before/after row images; recommended for replication |
+
+---
+
+## Study Questions
+
+1. Why is `innodb_flush_log_at_trx_commit = 2` faster than `= 1`? What is the risk?
+
+2. Explain the difference between a Cloud SQL HA standby and a read replica in terms of replication type and automatic failover capability.
+
+3. A MySQL account `'alice'@'%'` exists. A new account `'alice'@'localhost'` is created. Alice connects from localhost — which account is used and why?
+
+4. What is the role of the doublewrite buffer, and when might you safely disable it?
+
+5. Why does Cloud SQL use `mysql_native_password` as the default authentication plugin instead of `caching_sha2_password`?
+
+6. Describe the three security benefits of the Cloud SQL Auth Proxy over direct SSL connections with authorized networks.
+
+---
+
+## Certification Exam Checklist
+
+Before the exam, confirm you can answer these:
+
+- [ ] `innodb_buffer_pool_size` sizing rule for dedicated MySQL server
+- [ ] Difference between HA standby and read replica (sync vs async, auto-failover)
+- [ ] gcloud command to create a Cloud SQL MySQL instance with HA enabled
+- [ ] Cloud SQL Auth Proxy connection name format and IAM role required
+- [ ] Binary log requirement for PITR and replication
+- [ ] MySQL user identity format: `'user'@'host'`
+- [ ] `binlog_format = ROW` recommendation and why
+- [ ] Private IP vs authorized networks tradeoffs

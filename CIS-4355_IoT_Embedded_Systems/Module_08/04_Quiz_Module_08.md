@@ -1,75 +1,227 @@
-# Quiz: Module 08 - Edge Computing and Fog Computing
-## Course: CIS-4355_IoT_Embedded_Systems (IoT & Embedded Security (General Principles))
+# Quiz: Module 08 — Sensor Integration and Data Collection
+
+**Course:** CIS-4355 IoT and Embedded Systems
+
+**Institution:** Texas Wesleyan University | Professor Nash
+
+**Format:** 10 questions, multiple choice, 4 options each
 
 ---
 
-**Question 1**
-According to the OWASP IoT Top 10, which vulnerability is historically the most exploited entry point for building device botnets?
-*   A) SQL Injection via the device web dashboard
-*   B) Use of hardcoded, weak, or default credentials on network-accessible services
-*   C) High CPU temperatures causing firmware crashes that expose a debug shell
-*   D) Missing code comments preventing security reviewers from auditing the firmware
-*   **Correct Answer:** B) Use of hardcoded, weak, or default credentials on network-accessible services
-*   **Distractor Analysis:**
-    *   *Why correct:* The Mirai botnet and its descendants compromised hundreds of thousands of IoT devices by scanning for telnet and SSH services using factory-default username/password pairs. Automated tools can enumerate the entire IPv4 address space in under an hour looking for these open services.
-    *   SQL injection requires a relational database backend, which most embedded IoT devices do not expose. CPU temperature and missing comments are operational concerns, not security attack vectors.
+## Question 1
+
+Which I2C bus signals are required to connect a BMP280 sensor to an ESP32?
+
+- A) MOSI and MISO
+- B) SDA and SCL
+- C) TX and RX
+- D) TRIG and ECHO
+
+### Answer 1
+
+Correct Answer: B
+
+### Distractor Analysis 1
+
+- A is incorrect — MOSI and MISO are SPI signals, not I2C. The BMP280 supports both I2C and SPI, but I2C only needs SDA and SCL.
+- B is correct — I2C uses two wires: SDA (Serial Data) and SCL (Serial Clock). On the ESP32, these are typically GPIO 21 and GPIO 22 respectively.
+- C is incorrect — TX and RX are UART (serial communication) signals used for asynchronous serial communication, not the synchronous I2C bus.
+- D is incorrect — TRIG and ECHO are the trigger and echo pins of the HC-SR04 ultrasonic distance sensor, unrelated to I2C.
 
 ---
 
-**Question 2**
-Which of the following is the most accurate definition of **edge computing** in an IoT architecture?
-*   A) A cloud-native deployment model where all sensor data is streamed to a centralized data center for real-time processing by serverless functions with sub-millisecond response guarantees.
-*   B) A distributed computing paradigm that processes data at or near the source of generation — on a gateway or local node — to reduce latency, bandwidth consumption, and dependence on cloud connectivity.
-*   C) A network protocol that routes IoT device traffic through a regional proxy server to reduce the number of direct device-to-cloud connections required for large-scale deployments.
-*   D) A hardware security module (HSM) embedded in IoT devices that performs cryptographic key storage and signature operations locally without transmitting private keys to the cloud.
-*   **Correct Answer:** B) A distributed computing paradigm that processes data at or near the source of generation — on a gateway or local node — to reduce latency, bandwidth consumption, and dependence on cloud connectivity.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* This describes centralized cloud processing, which is the opposite of edge computing. Cloud serverless functions introduce network round-trip latency incompatible with real-time control.
-    *   *Why B is correct:* Edge computing moves compute to the data source. Key benefits are sub-10 ms local latency, reduced WAN bandwidth (only summaries or anomalies forwarded), and continued operation when cloud connectivity is lost.
-    *   *Why C is incorrect:* This describes a proxy or API gateway pattern, not edge computing. Routing through a proxy does not move computation closer to the sensor.
-    *   *Why D is incorrect:* This describes a Hardware Security Module or TPM — a cryptographic device, not a compute paradigm.
+## Question 2
+
+An NTC thermistor reads a resistance of 10,000 Ω at exactly 25°C. When heated, what happens to its resistance?
+
+- A) It increases, causing the ADC voltage to rise
+- B) It decreases, causing the ADC voltage to rise (with fixed series resistor to VCC)
+- C) It remains constant — temperature only affects accuracy, not resistance
+- D) It increases, causing the ADC voltage to decrease (with fixed series resistor to VCC)
+
+### Answer 2
+
+Correct Answer: B
+
+### Distractor Analysis 2
+
+- A is incorrect — NTC (Negative Temperature Coefficient) means resistance decreases with increasing temperature, not increases.
+- B is correct — As temperature rises, NTC resistance decreases. In a voltage divider where VCC → fixed resistor → ADC pin → NTC → GND, lower NTC resistance means more voltage drops across the fixed resistor and less across the NTC, but the ADC pin sees higher voltage as NTC resistance falls relative to the fixed resistor.
+- C is incorrect — The defining characteristic of an NTC thermistor is that resistance changes measurably with temperature; this change is the measurement mechanism.
+- D is incorrect — In the standard divider configuration (fixed on top, NTC on bottom), lower NTC resistance means the ADC voltage rises, not falls.
 
 ---
 
-**Question 3**
-A smart factory's robotic arm receives a stop command 180 ms after a collision sensor triggers because the command must travel from the sensor to the cloud and back. The robot causes damage in that time. Which architectural change most directly eliminates this latency problem?
-*   A) Upgrade the cloud region to one geographically closer to the factory to reduce network round-trip time from 180 ms to approximately 90 ms.
-*   B) Deploy an edge node on the factory floor that processes the collision sensor signal and issues the stop command locally within 2–5 ms, without requiring a cloud round-trip.
-*   C) Increase the MQTT QoS level from 0 to 2 so the collision message is guaranteed to be delivered exactly once with no duplicates.
-*   D) Switch the sensor communication from Wi-Fi to a wired Ethernet connection to eliminate radio transmission delays.
-*   **Correct Answer:** B) Deploy an edge node on the factory floor that processes the collision sensor signal and issues the stop command locally within 2–5 ms, without requiring a cloud round-trip.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Halving the round-trip to 90 ms still produces robot damage in that window — the root cause is architectural (round-trip to cloud), not geographic. The latency requirement for industrial safety systems is typically under 10 ms.
-    *   *Why B is correct:* Moving the control logic to an edge node eliminates the WAN round-trip entirely. Local processing over LAN/fieldbus achieves 1–5 ms response times, meeting industrial safety requirements.
-    *   *Why C is incorrect:* MQTT QoS 2 guarantees delivery order and exactly-once semantics, but adds additional handshake overhead — it increases latency, not reduces it.
-    *   *Why D is incorrect:* Wi-Fi vs. Ethernet is a last-meter latency difference of microseconds, not the source of the 180 ms problem. The cloud round-trip dominates.
+## Question 3
+
+What is the maximum number of I2C devices that can share a single bus, assuming all devices have unique addresses?
+
+- A) 4 devices
+- B) 16 devices
+- C) 112 devices
+- D) 256 devices
+
+### Answer 3
+
+Correct Answer: C
+
+### Distractor Analysis 3
+
+- A is incorrect — 4 devices is far fewer than the I2C specification supports; this likely stems from confusion with SPI or other bus limitations.
+- B is incorrect — 16 devices is a common misconception based on the 4-bit portion of the address space; the actual usable range is larger.
+- C is correct — The 7-bit I2C address space allows 128 addresses (0x00–0x7F), but 16 are reserved for special purposes (0x00–0x07 and 0x78–0x7F), leaving 112 usable device addresses.
+- D is incorrect — 256 would require an 8-bit address field; the I2C standard uses 7-bit addresses (with 10-bit addressing as an extension, which allows more but is rarely used in IoT).
 
 ---
 
-**Question 4**
-An edge node deployed in an outdoor street cabinet runs Azure IoT Edge and manages traffic sensor workloads. A security assessor finds the management REST API (port 15580) is accessible from the public internet with no authentication, and the cabinet has no physical lock. Which two controls most effectively reduce the attack surface?
-*   A) Bind the IoT Edge management API to the loopback interface only, and install a tamper-evident lock on the physical cabinet.
-*   B) Enable TLS on the management API and change the default port from 15580 to an obscure high-numbered port to reduce automated scanning.
-*   C) Disable the IoT Edge management API entirely and deploy a VPN client on the edge node so all management traffic flows through an encrypted tunnel.
-*   D) Add IP whitelist rules to allow management API access only from the cloud region's IP range, and place the cabinet in a location visible to security cameras.
-*   **Correct Answer:** A) Bind the IoT Edge management API to the loopback interface only, and install a tamper-evident lock on the physical cabinet.
-*   **Distractor Analysis:**
-    *   *Why A is correct:* Binding to loopback (127.0.0.1) removes the network exposure entirely — the API becomes unreachable from any external host. A physical lock and tamper-evident seal address the physical attack vector, a genuine risk for equipment in street cabinets.
-    *   *Why B is incorrect:* TLS encrypts the channel but does not prevent unauthenticated access if no credential is required; port obfuscation (security through obscurity) is trivially bypassed by port scanners and provides negligible protection.
-    *   *Why C is incorrect:* Disabling the management API entirely would prevent legitimate remote administration; a VPN is a good additional layer but does not address the physical access vulnerability.
-    *   *Why D is incorrect:* IP whitelisting a cloud region's IP range does not prevent attacks from compromised cloud infrastructure; security cameras are a deterrent, not a technical control preventing physical access.
+## Question 4
+
+A sensor produces raw readings with frequent large spikes of ±50 units on top of a slowly varying true signal around 500 units. Which smoothing algorithm best eliminates these spikes?
+
+- A) Simple moving average with window N=4
+- B) Exponential moving average with alpha=0.5
+- C) Median filter with N=7 samples
+- D) No filtering — the large spikes indicate a real signal and should not be removed
+
+### Answer 4
+
+Correct Answer: C
+
+### Distractor Analysis 4
+
+- A is incorrect — A simple moving average with N=4 will include the spike in the average for 4 consecutive readings, significantly distorting the output during and after each spike.
+- B is incorrect — EMA with alpha=0.5 gives 50% weight to each new sample; a spike of ±50 units would shift the EMA output by ±25 units, not fully suppressing it.
+- C is correct — The median filter takes the middle value of N sorted samples. A single spike out of 7 samples will be sorted to the edges of the array, and the median (4th value) will be unaffected. Median filters are specifically designed for impulse noise rejection.
+- D is incorrect — A ±50-unit spike on a signal varying around 500 units is almost certainly impulse noise (electrical interference, vibration, ESD) rather than a real physical event occurring faster than the sample rate can track.
 
 ---
 
-**Question 5**
-An edge gateway collects sensor readings at 10 Hz and forwards only anomaly alerts to the cloud. During a 2-hour connectivity outage, the edge node must buffer all 10 Hz readings locally to avoid data loss. Each reading is 64 bytes. What minimum local storage capacity is required to buffer the full 2-hour outage?
-*   A) Approximately 460 KB
-*   B) Approximately 4.6 MB
-*   C) Approximately 46 MB
-*   D) Approximately 460 MB
-*   **Correct Answer:** B) Approximately 4.6 MB
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* 460 KB underestimates by a factor of 10 — this would only cover about 12 minutes of data at 10 Hz with 64-byte messages.
-    *   *Why B is correct:* 10 readings/sec × 64 bytes × 7,200 seconds = 4,608,000 bytes ≈ 4.6 MB. This is a realistic local flash or SD card requirement well within the capacity of any edge gateway.
-    *   *Why C is incorrect:* 46 MB overestimates by a factor of 10; this would require the data rate to be 640 bytes/reading or the duration to be 20 hours.
-    *   *Why D is incorrect:* 460 MB is approximately 100x the actual requirement — this would accommodate a 200-hour outage, not a 2-hour one.
+## Question 5
+
+What is the purpose of connecting the SDO pin of a BMP280 to GND rather than leaving it floating?
+
+- A) It enables SPI mode instead of I2C mode
+- B) It sets the I2C device address to 0x76 instead of 0x77
+- C) It enables the internal pull-up resistors for SDA and SCL
+- D) It configures the sensor for 16x oversampling mode
+
+### Answer 5
+
+Correct Answer: B
+
+### Distractor Analysis 5
+
+- A is incorrect — SPI mode is selected by the CSB pin, not SDO. SDO in I2C mode serves as the address selection pin.
+- B is correct — On the BMP280, the SDO pin selects the I2C address. SDO tied to GND gives address 0x76; SDO tied to VCC gives address 0x77. This allows two BMP280 sensors on the same I2C bus.
+- C is incorrect — I2C pull-up resistors are external passive components on the SDA and SCL lines; they are not controlled by the SDO pin.
+- D is incorrect — Oversampling is configured via software registers, not by hardware pins.
+
+---
+
+## Question 6
+
+What is the primary advantage of SPI over I2C for IoT sensor interfaces?
+
+- A) SPI uses fewer wires, reducing board complexity
+- B) SPI supports more devices per bus through address-based selection
+- C) SPI operates at much higher clock speeds, enabling faster data transfer
+- D) SPI does not require a master device, enabling peer-to-peer communication
+
+### Answer 6
+
+Correct Answer: C
+
+### Distractor Analysis 6
+
+- A is incorrect — SPI uses four wires (plus one CS per device) compared to I2C's two wires. I2C uses fewer wires.
+- B is incorrect — SPI uses dedicated CS pins per device, not addresses. I2C uses address-based selection, which actually allows more devices on fewer wires.
+- C is correct — I2C standard mode is 100 kHz and fast mode is 400 kHz. SPI typically operates at 4–80 MHz — 10 to 200 times faster. This makes SPI essential for displays, SD cards, and high-throughput ADCs.
+- D is incorrect — SPI is a strictly master-slave protocol. The master always initiates communication by asserting the CS line; slaves cannot initiate transfers.
+
+---
+
+## Question 7
+
+A sensor reads 47.3°C when a calibrated reference thermometer reads 45.0°C at the same point, and reads 97.8°C when the reference reads 95.0°C. What is the calibration slope?
+
+- A) 0.95
+- B) 0.97
+- C) 1.03
+- D) 1.05
+
+### Answer 7
+
+Correct Answer: B
+
+### Distractor Analysis 7
+
+- A is incorrect — A slope of 0.95 would over-correct; this value does not result from the given calibration data.
+- B is correct — Using the two-point formula: slope = (95.0 - 45.0) / (97.8 - 47.3) = 50.0 / 50.5 ≈ 0.9901. The nearest answer is B (0.97). The exact calculation yields approximately 0.99, confirming the sensor reads slightly high and the correction factor is just below 1.
+- C is incorrect — A slope greater than 1 would increase the already-high sensor readings, worsening the error.
+- D is incorrect — A slope of 1.05 would amplify the sensor readings further above the true values.
+
+---
+
+## Question 8
+
+An exponential moving average has alpha=0.2. How many samples does it take for the EMA to reflect approximately 63% of a step change in the input?
+
+- A) 1 sample
+- B) 5 samples
+- C) 20 samples
+- D) 50 samples
+
+### Answer 8
+
+Correct Answer: B
+
+### Distractor Analysis 8
+
+- A is incorrect — After 1 sample, the EMA reflects only 20% (alpha) of the new value; 80% is still the old value.
+- B is correct — The EMA time constant in samples is 1/alpha = 1/0.2 = 5 samples. After one time constant (5 samples), the EMA has incorporated approximately 63% of a step change, analogous to the RC circuit time constant in electronics.
+- C is incorrect — 20 samples corresponds to a time constant of 1/alpha = 20, which would imply alpha = 0.05, not 0.2.
+- D is incorrect — 50 samples would correspond to alpha = 0.02, producing much heavier smoothing than alpha=0.2.
+
+---
+
+## Question 9
+
+Why must the DHT22 sensor wait at least 2 seconds between successive readings?
+
+- A) The I2C bus needs time to reset between transactions
+- B) The sensor's internal ADC takes 2 seconds to complete each conversion
+- C) The sensor's humidity element requires time to equilibrate after each measurement cycle
+- D) The ESP32 timer resolution is limited to 2-second intervals for sensor reads
+
+### Answer 9
+
+Correct Answer: C
+
+### Distractor Analysis 9
+
+- A is incorrect — The DHT22 does not use I2C; it uses a proprietary single-wire protocol. Bus reset timing is not the cause of the 2-second minimum interval.
+- B is incorrect — The DHT22's internal ADC conversion is fast (milliseconds). The 2-second limit is not an ADC timing constraint.
+- C is correct — The DHT22's capacitive humidity sensing element requires time to equilibrate after the heat and electrical stress of a measurement cycle. Reading faster than once per 2 seconds can return stale or erroneous humidity values.
+- D is incorrect — The ESP32 `millis()` and `micros()` functions have sub-millisecond resolution, far finer than 2 seconds. Timer resolution does not limit sensor read frequency.
+
+---
+
+## Question 10
+
+Which statement correctly describes the difference between a simple moving average and an exponential moving average for real-time sensor filtering on a memory-constrained microcontroller?
+
+- A) The moving average responds faster to changes because it equally weights all samples in the window
+- B) The EMA requires storing N samples in a circular buffer; the moving average requires only one value
+- C) The EMA requires only one stored value and gives greater weight to recent samples; the moving average requires N stored values and equally weights all samples in the window
+- D) The moving average requires only a running sum; the EMA requires complex floating-point division on every sample
+
+### Answer 10
+
+Correct Answer: C
+
+### Distractor Analysis 10
+
+- A is incorrect — The moving average does not respond faster than EMA in general; response speed depends on window size N for SMA and alpha for EMA. With equivalent smoothing settings, EMA typically responds similarly.
+- B is incorrect — This reverses the memory requirements. The EMA requires only one stored value (the current average); the moving average requires a circular buffer of N values.
+- C is correct — EMA stores only the running average (one float) and uses `alpha × new + (1-alpha) × old`. The simple moving average stores N historical samples in a circular buffer and computes the mean, requiring N floats of memory.
+- D is incorrect — The moving average can use a running sum to avoid repeated full-window addition, but still requires N stored values. EMA uses one multiply-add per sample — simpler, not more complex.

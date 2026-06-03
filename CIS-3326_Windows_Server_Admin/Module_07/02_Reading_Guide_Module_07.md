@@ -1,304 +1,295 @@
-# Reading Guide: Module 07 - File and Print Services
+# Reading Guide: Module 07 — Active Directory User and Group Management
 
 ## Course: CIS-3326 Windows Server Administration
 
 ## Texas Wesleyan University | Professor Nash
 
----
-
-### Overview
-
-Module 07 covers the File and Storage Services and Print and Document Services roles — the two roles most end users interact with daily. This reading guide provides reference tables, permission interaction diagrams, PowerShell command references, exam tips, a glossary, and a study checklist.
-
-**Certification Alignment:** AZ-800 — "Configure and manage file services" and "Configure and manage print services"
+**Certification Alignment:** Microsoft Windows Server Administration
 
 ---
 
-### 1. File and Storage Services Role Services
+## Overview
 
-| Role Service | Purpose |
-|---|---|
-| File Server | Base role for creating and managing SMB shares |
-| DFS Namespaces | Virtual namespace aggregating shares under a single UNC path |
-| DFS Replication | Multi-master folder replication engine (uses RDC) |
-| File Server Resource Manager | Quota management, file screening, storage reports |
-| Work Folders | Sync server-stored files to user devices |
-| iSCSI Target Server | Provides iSCSI block storage targets |
-| Storage Replica | Block-level volume replication for DR and HA |
+Module 07 covers Active Directory user and group management — the daily
+operational foundation of every Windows domain. This reading guide provides
+reference tables for OU design, group scopes, the AGDLP pattern, PowerShell
+command references, exam tips, a glossary, and a study checklist.
 
 ---
 
-### 2. SMB Protocol Versions
+## 1. Organizational Unit Design Patterns
 
-| Version | Windows Version | Key Features |
+| Pattern | Top-Level OUs | Best For |
 |---|---|---|
-| SMB 1.0 | Windows XP/Server 2003 | Legacy; disabled by default in Server 2019/2022 |
-| SMB 2.0 | Windows Vista/Server 2008 | Reduced command count, larger reads |
-| SMB 2.1 | Windows 7/Server 2008 R2 | Opportunistic locking improvements |
-| SMB 3.0 | Windows 8/Server 2012 | Encryption, multichannel, SMB Direct (RDMA) |
-| SMB 3.1.1 | Windows 10/Server 2016+ | Pre-auth integrity checks, AES-128-GCM encryption |
+| Geography-based | Locations (Dallas, Chicago) | Decentralized IT, multi-site orgs |
+| Function-based | Departments (IT, Finance, HR) | Centralized IT, consistent policy |
+| Hybrid | Mix of geography and function | Large enterprises |
 
-**Key point:** SMB 1.0 should be disabled in all modern environments due to security vulnerabilities (exploited by WannaCry ransomware). SMB 3.x encryption provides in-transit protection without a VPN.
+**Key rule:** OUs — not CN=Users or CN=Computers containers — should hold all
+managed objects. Built-in containers cannot have Group Policy linked directly.
 
 ---
 
-### 3. Share Permissions vs. NTFS Permissions
+## 2. User Account Key Attributes
 
-| Attribute | Share Permissions | NTFS Permissions |
+| Attribute | LDAP Name | Notes |
 |---|---|---|
-| Applies to | Network access only | Local AND network access |
-| Granularity | Three levels: Read, Change, Full Control | Six standard levels plus Special Permissions |
-| Set in | Sharing tab / `New-SmbShare` | Security tab / `Set-Acl` |
-| Inheritance | Not inherited | Inherited from parent folders |
-| Effective permission | Most restrictive of both | Most restrictive of both |
-
-**Effective permission rule for network access:**
-
-```text
-Effective = Most Restrictive of (Share Permission AND NTFS Permission)
-
-Example 1:  Share = Read,         NTFS = Full Control  →  Effective = Read
-Example 2:  Share = Full Control, NTFS = Read          →  Effective = Read
-Example 3:  Share = Change,       NTFS = Modify        →  Effective = Change (Change ≈ Modify)
-Example 4:  Share = Full Control, NTFS = Full Control  →  Effective = Full Control
-```
-
-**Best practice:** Set Share permissions to Full Control for Authenticated Users. Use NTFS permissions exclusively for access control. This eliminates double-permission management.
+| Username (logon) | sAMAccountName | Max 20 chars; unique in domain |
+| Email-style logon | userPrincipalName (UPN) | Unique in forest; preferred for modern auth |
+| Display name | displayName | Shown in address books and Global Catalog |
+| Employee ID | employeeID | Links to HR systems |
+| Manager | manager | Distinguished name of the manager object |
+| Distinguished name | distinguishedName | Full LDAP path; auto-generated |
 
 ---
 
-### 4. NTFS Permission Levels Reference
+## 3. Group Types
 
-| Permission | Files | Folders |
-|---|---|---|
-| Full Control | Read, write, execute, delete, change permissions, take ownership | All file permissions plus delete subfolders |
-| Modify | Read, write, execute, delete | Read, write, create, delete (not change permissions) |
-| Read and Execute | Read file contents, run executables | List contents, read attributes, run programs |
-| List Folder Contents | N/A | List folder contents only |
-| Read | Read file contents and attributes | Read folder attributes and list contents |
-| Write | Write to existing files | Create files and subfolders |
-
----
-
-### 5. DFS Namespace Types
-
-| Type | Storage | Path Format | Fault Tolerance |
+| Type | Can Assign Permissions | Email Distribution | Use Case |
 |---|---|---|---|
-| Domain-Based (v2) | AD DS | `\\corp.local\Files` | Yes — multiple namespace servers |
-| Stand-alone | Single server | `\\SRV-FS-01\Files` | No — single point of failure |
+| Security | Yes | Yes (in Exchange environments) | File, printer, and resource access control |
+| Distribution | No | Yes | Email mailing lists only |
 
-**Domain-Based namespaces** are stored in AD DS and replicated to all servers hosting the namespace. Recommended for production environments.
-
-**Folder Targets** are the actual UNC share paths that a DFS folder maps to. Multiple targets for the same folder provide site affinity (clients are directed to the nearest server) and redundancy.
-
----
-
-### 6. DFS Replication Key Concepts
-
-| Concept | Description |
-|---|---|
-| Replication Group | A set of servers that replicate one or more folders |
-| Replicated Folder | The folder being kept in sync across members |
-| Remote Differential Compression (RDC) | Sends only changed file blocks, not entire files |
-| Staging Folder | Temporary area for outgoing and incoming replication data |
-| Conflict Resolution | Last-writer-wins; losing version moved to ConflictAndDeleted |
-| Initial Sync | First full replication can be seeded from a backup to avoid large transfers |
+**Rule of thumb:** When in doubt, create a Security group. It does everything a
+Distribution group does, plus permission assignment.
 
 ---
 
-### 7. FSRM Feature Summary
+## 4. Group Scopes Reference
 
-| Feature | Types | Effect |
-|---|---|---|
-| Quota Management | Hard (blocks writes), Soft (notification only) | Limits disk space per folder or user |
-| File Screening | Active (blocks file types), Passive (logs only) | Controls file types that can be saved |
-| Storage Reports | Automated or manual | Reports on disk usage, large files, duplicates |
+| Scope | Members Can Come From | Can Be Used In | Global Catalog Impact |
+|---|---|---|---|
+| Domain Local | Same domain, other domains, trusted forests | Same domain only | Not replicated to GC |
+| Global | Same domain only | Any domain in forest | Replicated to GC (membership not included) |
+| Universal | Any domain in the forest | Any domain in forest | Membership replicated to GC |
 
-**FSRM PowerShell quick reference:**
-
-```powershell
-# Create a hard quota
-New-FsrmQuota -Path "C:\Shares\HR" -Size 5GB -SoftLimit $false
-
-# Create an active file screen blocking executables
-New-FsrmFileScreen -Path "C:\Shares\HR" -IncludeGroup "Executable Files" -Active $true
-
-# List available file groups
-Get-FsrmFileGroup | Select-Object Name
-
-# Generate a storage report
-New-FsrmStorageReport -Name "LargeFiles" -Namespace "C:\Shares" -ReportType LargeFiles
-```
+**Universal group membership** is replicated to every Global Catalog domain
+controller in the forest. Frequent membership changes cause replication traffic.
+Use Universal groups only when cross-domain membership is genuinely required.
 
 ---
 
-### 8. Shadow Copies (Previous Versions)
-
-| Parameter | Default / Recommendation |
-|---|---|
-| Maximum shadow copies per volume | 64 |
-| Recommended storage allocation | 10% of volume size |
-| Default schedule | 7:00 AM and 12:00 PM daily |
-| Storage location | Same volume or separate volume |
-
-**Shadow Copies protect against:** Accidental file deletion, accidental overwrites, corruption of individual files.
-
-**Shadow Copies do NOT protect against:** Volume-level hardware failure, server loss, ransomware that targets shadow copies, data corruption below the volume level.
-
-**Key point:** Shadow Copies are not a backup. They are a self-service recovery mechanism for common accidental changes.
-
----
-
-### 9. Print Services Reference
-
-| Concept | Description |
-|---|---|
-| Print Server | Windows Server hosting shared printers; handles spooling and driver distribution |
-| Print Spooler | Windows service that queues and manages print jobs |
-| Printer Driver | Software that converts print data to printer-specific language |
-| Driver Distribution | Clients automatically download the correct driver when connecting to a shared printer |
-| AD Publishing | Printers published to AD can be searched by name, location, or capability |
-| Printer Pooling | Multiple physical printers presented as one shared printer; jobs distributed to first available |
-| Branch Office Printing | Enables clients to spool directly to a local printer when WAN to print server is slow |
-
----
-
-### 10. File and Print Services PowerShell Reference
-
-```powershell
-# ── SMB Shares ──────────────────────────────────────────────────────
-# Create a share
-New-SmbShare -Name "Data" -Path "C:\Shares\Data" -FullAccess "Domain Admins" -ReadAccess "Authenticated Users"
-
-# List all shares
-Get-SmbShare | Select-Object Name, Path, Description
-
-# Remove a share
-Remove-SmbShare -Name "Data" -Force
-
-# View share permissions
-Get-SmbShareAccess -Name "Data"
-
-# ── NTFS Permissions ─────────────────────────────────────────────────
-# View NTFS permissions
-(Get-Acl -Path "C:\Shares\Data").Access | Select-Object IdentityReference, FileSystemRights
-
-# Add an NTFS permission
-$acl = Get-Acl -Path "C:\Shares\Data"
-$rule = New-Object System.Security.AccessControl.FileSystemAccessRule("CORP\G_HRReaders","ReadAndExecute","ContainerInherit,ObjectInherit","None","Allow")
-$acl.AddAccessRule($rule)
-Set-Acl -Path "C:\Shares\Data" -AclObject $acl
-
-# ── DFS ──────────────────────────────────────────────────────────────
-# Create a domain-based namespace
-New-DfsnRoot -Path "\\corp.local\Files" -TargetPath "\\DC1\Files" -Type DomainV2
-
-# Add a folder to the namespace
-New-DfsnFolder -Path "\\corp.local\Files\HR" -TargetPath "\\DC1\HR_Docs"
-
-# List namespace folders
-Get-DfsnFolder -Path "\\corp.local\Files\*"
-
-# ── Print Services ───────────────────────────────────────────────────
-# Add a printer port for a TCP/IP network printer
-Add-PrinterPort -Name "IP_192.168.10.50" -PrinterHostAddress "192.168.10.50"
-
-# Add and share a printer
-Add-Printer -Name "HR_Printer" -DriverName "HP Universal Printing PCL 6" `
-    -PortName "IP_192.168.10.50" -Shared $true -ShareName "HR_Print" -Published $true
-
-# List all printers
-Get-Printer | Select-Object Name, ShareName, Published, DriverName
-```
-
----
-
-### 11. File Services Architecture Reference
+## 5. AGDLP Nesting Strategy
 
 ```text
-\\corp.local\Files          ← DFS Namespace root (Domain-Based)
-    │
-    ├── \HR                 ← DFS Folder → \\DC1\HR_Docs    (Folder Target)
-    │                                   → \\FS2\HR_Docs     (Alternate Target)
-    │
-    ├── \Finance            ← DFS Folder → \\DC1\Finance_Docs
-    │
-    └── \IT                 ← DFS Folder → \\DC1\IT_Docs
+Accounts   → Global group  → Domain Local group  → Permission on Resource
+(users)      (role-based)    (resource-based)       (NTFS or share)
 
-Each Folder Target is an SMB Share on a physical server.
-NTFS permissions on the physical folder control actual access.
-Share permissions on the SMB share apply at the network boundary.
-DFSR can keep \\DC1\HR_Docs and \\FS2\HR_Docs synchronized.
+Example:
+jsmith  ──►  G_IT_Admins  ──►  DL_ITShare_FullControl  ──►  Full Control on \\DC1\IT
+```
+
+**In multi-domain forests extend to AGUDLP:**
+
+```text
+Accounts → Global → Universal → Domain Local → Permission
+```
+
+Benefits of AGDLP:
+
+- Add a user to a Global group once; they inherit all resources that Domain
+  Local group controls.
+
+- Change permissions on one Domain Local group; all role-based Global groups
+  inside it inherit the change.
+
+- Clear separation between who (Global) and what resource (Domain Local).
+
+---
+
+## 6. New-ADUser Parameter Reference
+
+```powershell
+New-ADUser `
+    -Name               "First Last" `
+    -GivenName          "First" `
+    -Surname            "Last" `
+    -SamAccountName     "firstlast" `
+    -UserPrincipalName  "firstlast@domain.com" `
+    -DisplayName        "First Last" `
+    -Department         "IT" `
+    -Title              "Job Title" `
+    -Path               "OU=IT,OU=ROOT,DC=domain,DC=com" `
+    -AccountPassword    (ConvertTo-SecureString "P@ss!" -AsPlainText -Force) `
+    -ChangePasswordAtLogon $true `
+    -Enabled            $true
+```
+
+**Critical parameters:**
+
+- `-Path` — omitting this places the user in CN=Users (no GPO support).
+
+- `-AccountPassword` with `ConvertTo-SecureString` — required; cannot pass plain
+  text.
+
+- `-Enabled $true` — new accounts are disabled by default without this flag.
+
+---
+
+## 7. New-ADGroup Parameter Reference
+
+```powershell
+New-ADGroup `
+    -Name          "GroupName" `
+    -GroupScope    Global | DomainLocal | Universal `
+    -GroupCategory Security | Distribution `
+    -Description   "Description text" `
+    -Path          "OU=IT,OU=ROOT,DC=domain,DC=com"
+```
+
+| GroupScope value | Creates |
+|---|---|
+| `Global` | Global scope group |
+| `DomainLocal` | Domain Local scope group |
+| `Universal` | Universal scope group |
+
+---
+
+## 8. Account Management PowerShell Quick Reference
+
+```powershell
+# ── Create ───────────────────────────────────────────────────────────
+New-ADUser            -Name "..." -SamAccountName "..." -Enabled $true ...
+New-ADGroup           -Name "..." -GroupScope Global -GroupCategory Security ...
+New-ADOrganizationalUnit -Name "..." -Path "DC=domain,DC=com"
+
+# ── Modify ───────────────────────────────────────────────────────────
+Set-ADUser            -Identity "sam" -Department "NewDept" -Title "NewTitle"
+Set-ADAccountPassword -Identity "sam" -NewPassword (...) -Reset
+Add-ADGroupMember     -Identity "GroupName" -Members "sam1","sam2"
+Remove-ADGroupMember  -Identity "GroupName" -Members "sam1" -Confirm:$false
+Move-ADObject         -Identity "CN=..." -TargetPath "OU=NewOU,..."
+
+# ── Enable / Disable / Unlock ────────────────────────────────────────
+Enable-ADAccount      -Identity "sam"
+Disable-ADAccount     -Identity "sam"
+Unlock-ADAccount      -Identity "sam"
+
+# ── Query ────────────────────────────────────────────────────────────
+Get-ADUser            -Identity "sam" -Properties *
+Get-ADUser            -Filter {Department -eq "IT"} -SearchBase "OU=IT,..."
+Get-ADGroup           -Identity "GroupName" -Properties Members
+Get-ADGroupMember     -Identity "GroupName" -Recursive
+Get-ADPrincipalGroupMembership -Identity "sam"
+Search-ADAccount      -AccountDisabled
+Search-ADAccount      -LockedOut
+Search-ADAccount      -AccountExpired
+
+# ── Bulk import ──────────────────────────────────────────────────────
+$users = Import-Csv "users.csv"
+foreach ($u in $users) { New-ADUser -Name "$($u.First) $($u.Last)" ... }
 ```
 
 ---
 
-### 12. Exam Tips
+## 9. Bulk Provisioning CSV Template
 
-**Exam Tip 1:** The most restrictive permission applies for network access. Always evaluate Share and NTFS permissions separately, then take the most restrictive result. Local console access is NTFS only.
+```text
+FirstName,LastName,Department,Title,OU
+Alice,Johnson,Faculty,Professor,OU=Faculty,OU=TXWES,DC=txwes,DC=edu
+Bob,Williams,IT,Help Desk Tech,OU=Helpdesk,OU=IT,OU=TXWES,DC=txwes,DC=edu
+Carol,Brown,Students,Student,OU=Students,OU=TXWES,DC=txwes,DC=edu
+```
 
-**Exam Tip 2:** DFS Namespaces vs. DFS Replication. DFSN = the virtual path (namespace). DFSR = the content synchronization engine. You can use each independently. The exam will test whether you know which one provides the unified path and which one keeps data in sync.
-
-**Exam Tip 3:** FSRM quota hard vs. soft. Hard = blocks writes when limit reached. Soft = notifications only. The scenario will describe whether writes should be blocked or just alerted — use that to select the type.
-
-**Exam Tip 4:** FSRM Active vs. Passive file screen. Active blocks the file. Passive logs it. If the scenario says "prevent users from saving," use Active. If it says "audit" or "report on," use Passive.
-
-**Exam Tip 5:** Shadow Copies are not a replacement for backup. They are an adjunct for self-service recovery. A question about recovering from a failed RAID array or a ransomware attack requires a proper backup, not Shadow Copies.
-
-**Exam Tip 6:** SMB 1.0 is a security vulnerability and should be disabled. The exam may present a scenario where legacy SMB 1.0 is enabled and ask how to harden the server — the answer is to disable SMB 1.0.
-
-**Exam Tip 7:** Printer driver distribution. When a Windows client connects to a shared printer on a Windows print server, the driver is downloaded automatically. This is the key advantage of a central print server over direct-IP printing.
-
-**Exam Tip 8:** DFS Folder Targets with multiple targets support site affinity. Clients in a site are directed to the folder target on a server in the same AD site, reducing WAN traffic for file access.
+Name convention formula: `$sam = ($row.FirstName[0] + $row.LastName).ToLower()`
 
 ---
 
-### 13. Glossary
+## 10. Account Lifecycle Reference
+
+| Action | Cmdlet | When to Use |
+|---|---|---|
+| Create | `New-ADUser` | Onboarding |
+| Disable | `Disable-ADAccount` | Termination, leave of absence |
+| Enable | `Enable-ADAccount` | Return from leave |
+| Unlock | `Unlock-ADAccount` | Lockout after failed logins |
+| Reset password | `Set-ADAccountPassword -Reset` | Helpdesk request |
+| Move | `Move-ADObject` | Department transfer |
+| Delete | `Remove-ADUser` | 30-90 days after disabling |
+
+**Best practice:** Never delete immediately. Disable first, then delete after a
+waiting period to allow for audit trail preservation.
+
+---
+
+## 11. Exam Tips
+
+**Exam Tip 1** — Global groups can only contain members from the **same domain**.
+This is the most commonly tested scope restriction. If the scenario involves users
+from multiple domains, the answer requires Universal or Domain Local groups.
+
+**Exam Tip 2** — AGDLP order is fixed. Accounts go into Global groups. Global
+groups go into Domain Local groups. Domain Local groups get the permission.
+Reversing any step (e.g., putting Domain Local inside Global) is not allowed.
+
+**Exam Tip 3** — Security groups can be used for both permissions and email
+distribution. Distribution groups can only be used for email. If you see a
+scenario about assigning NTFS or share permissions, the answer is always a
+Security group.
+
+**Exam Tip 4** — `-ProtectedFromAccidentalDeletion $true` is the parameter that
+prevents accidental OU deletion. Enabling this is a best practice and exam answer
+for "how do you prevent accidental OU removal."
+
+**Exam Tip 5** — `Search-ADAccount` with `-AccountDisabled`, `-LockedOut`, or
+`-AccountExpired` is the PowerShell approach to bulk account auditing. Know these
+flags for exam scenarios about finding accounts in various states.
+
+**Exam Tip 6** — Universal group membership is replicated to the **Global
+Catalog**. Frequent changes to Universal group membership cause excessive GC
+replication traffic. The exam may ask which scope to avoid using heavily in a
+large multi-site forest.
+
+**Exam Tip 7** — The `-Enabled $true` parameter is required to create an active
+account. Without it, `New-ADUser` creates a disabled account even if all other
+parameters are correct.
+
+---
+
+## 12. Glossary
 
 | Term | Definition |
 |---|---|
-| SMB | Server Message Block — network file sharing protocol used by all Windows file and print sharing |
-| NTFS | New Technology File System — the Windows file system providing ACL-based permissions |
-| ACL | Access Control List — the list of permissions on an NTFS object |
-| Share Permission | Permission applied at the network share boundary — applies to remote access only |
-| NTFS Permission | Permission applied to the file system object — applies to local and remote access |
-| DFS | Distributed File System — umbrella term for DFS Namespaces and DFS Replication |
-| DFSN | DFS Namespaces — creates a virtual folder hierarchy mapping to physical share paths |
-| DFSR | DFS Replication — keeps folder contents synchronized across multiple servers using RDC |
-| RDC | Remote Differential Compression — sends only changed file blocks to reduce replication bandwidth |
-| Folder Target | The actual UNC path to a physical share that a DFS folder maps to |
-| FSRM | File Server Resource Manager — manages quotas, file screening, and storage reports |
-| Hard Quota | FSRM quota type that blocks writes when the limit is reached |
-| Soft Quota | FSRM quota type that sends notifications but does not block writes |
-| Active Screen | FSRM file screen that actively blocks files matching the defined file groups |
-| Passive Screen | FSRM file screen that logs events but does not block files |
-| Shadow Copy | Point-in-time snapshot of a volume used for Previous Versions file recovery |
-| Print Server | A Windows Server hosting shared printers, handling spooling and driver distribution |
-| Print Spooler | Windows service that queues and manages print jobs |
-| Printer Pooling | Multiple physical printers presented as a single shared printer |
+| Active Directory (AD) | Microsoft's directory service for managing users, computers, and resources in a Windows domain |
+| Organizational Unit (OU) | A container in Active Directory used to organize objects and apply Group Policy |
+| Distinguished Name (DN) | The full LDAP path identifying an object's exact location in the directory |
+| sAMAccountName | The pre-Windows 2000 logon name; must be unique in the domain; max 20 characters |
+| UPN | User Principal Name — email-format logon name; must be unique in the forest |
+| Security Group | AD group type used to assign permissions to resources; can also receive email |
+| Distribution Group | AD group type for email lists only; cannot be used to assign permissions |
+| Domain Local Group | Group scope; can have members from any domain; used for permissions in one domain |
+| Global Group | Group scope; members from same domain only; used for role organization |
+| Universal Group | Group scope; members from any domain; membership stored in Global Catalog |
+| AGDLP | Accounts — Global — Domain Local — Permissions; Microsoft's recommended nesting model |
+| Global Catalog | A partial replica of all objects in the forest; stores Universal group membership |
+| Bulk Provisioning | Creating multiple user accounts at once, typically from a CSV file using PowerShell |
 
 ---
 
-### 14. Study Checklist
+## 13. Study Checklist
 
-- Watch Module 07 Part 1 video (concepts: SMB, permissions, DFS, FSRM, Shadow Copies, Print Services)
-- Watch Module 07 Part 2 video (PowerShell demos, exam tips, lab preview)
-- Memorize the Share + NTFS effective permission rule and practice the four examples in Section 3
-- Know the difference between DFSN and DFSR and when each is used
-- Know the four FSRM combinations: Hard/Soft quota, Active/Passive file screen
-- Understand what Shadow Copies protect against and what they do not
-- Review all PowerShell commands in Section 10
+- Watch Module 07 Part 1 video (OU design, user attributes, group types and scopes, AGDLP, bulk provisioning overview)
+
+- Watch Module 07 Part 2 video (PowerShell demos: OUs, users, groups, bulk CSV, account management)
+
+- Memorize the three group scopes, their membership rules, and where each can assign permissions
+
+- Draw the AGDLP chain from scratch without looking at notes
+
+- Know every key parameter of `New-ADUser` and `New-ADGroup`
+
+- Know `Search-ADAccount` flags: `-AccountDisabled`, `-LockedOut`, `-AccountExpired`
+
 - Complete Lab 07 and submit required screenshots
 
 ---
 
-### Additional Resources
+## Additional Resources
 
-- [SMB file sharing overview](https://learn.microsoft.com/en-us/windows-server/storage/file-server/file-server-smb-overview)
-- [DFS Namespaces overview](https://learn.microsoft.com/en-us/windows-server/storage/dfs-namespaces/dfs-overview)
-- [DFS Replication overview](https://learn.microsoft.com/en-us/windows-server/storage/dfs-replication/dfsr-overview)
-- [File Server Resource Manager](https://learn.microsoft.com/en-us/windows-server/storage/fsrm/fsrm-overview)
-- [Print and Document Services](https://learn.microsoft.com/en-us/windows-server/administration/windows-server-roles-features/print-and-document-services-overview)
+- [Active Directory Users and Groups overview](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-groups)
+- [New-ADUser documentation](https://learn.microsoft.com/en-us/powershell/module/activedirectory/new-aduser)
+- [New-ADGroup documentation](https://learn.microsoft.com/en-us/powershell/module/activedirectory/new-adgroup)
+- [Best practices for securing Active Directory](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/plan/security-best-practices/best-practices-for-securing-active-directory)
 
 ---
 

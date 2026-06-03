@@ -1,0 +1,125 @@
+# Reading Guide: Module 03 — Linux Filesystem Hierarchy Standard
+
+## Course: CIS-3325 OS Administration Linux
+
+## Texas Wesleyan University | Professor Nash
+
+## Certification Alignment: CompTIA Linux+ (XK0-005)
+
+---
+
+### Introduction
+
+Module 3 covers the Linux Filesystem Hierarchy Standard (FHS) and the tools used to read, find, and process file content. The FHS is the map of the Linux directory tree — administrators who know it can find configuration files, logs, and system resources immediately, without guessing. The file-reading and searching tools introduced in Part 2 are the day-to-day instruments of Linux administration.
+
+---
+
+### 1. High-Yield Glossary
+
+- **FHS (Filesystem Hierarchy Standard)**: A specification maintained by the Linux Foundation that defines the directory structure and directory contents in Linux and Unix-like operating systems.
+- **`/`**: The root directory. The top of the directory tree. Everything on a Linux system is under `/`.
+- **`/bin`**: Essential user binaries. Commands required before other filesystems are mounted: `ls`, `cp`, `mv`, `bash`, `grep`. Often symlinked to `/usr/bin` on modern distros.
+- **`/sbin`**: System administration binaries typically run by root: `fdisk`, `mkfs`, `mount`, `ip`, `shutdown`.
+- **`/usr`**: User system resources. Contains the majority of user programs (`/usr/bin`), system programs (`/usr/sbin`), libraries (`/usr/lib`), and locally installed software (`/usr/local`).
+- **`/usr/local`**: For software compiled and installed manually (not from the package manager). Takes precedence over system tools in PATH.
+- **`/etc`**: System-wide configuration files. Editable text files that control system behavior. No binaries should be in `/etc`.
+- **`/var`**: Variable data that grows over time: logs (`/var/log`), databases (`/var/lib`), mail queues (`/var/spool`), caches (`/var/cache`).
+- **`/var/log`**: Log files directory. Subdirectories for specific services (e.g., `/var/log/apache2`).
+- **`/tmp`**: Temporary files writable by all users. Cleared at reboot. Sticky bit is set.
+- **`/home`**: User home directories. Each user gets `/home/username`.
+- **`/root`**: Home directory for the root superuser. Separate from `/home`.
+- **`/opt`**: Optional/add-on application software packages. Third-party software installed outside the package manager.
+- **`/mnt`**: Temporary mount point for manually mounted filesystems.
+- **`/media`**: Mount points for automatically mounted removable devices (USB drives, optical discs).
+- **`/dev`**: Device files. `/dev/sda` (first hard drive), `/dev/null` (discard), `/dev/zero` (null bytes), `/dev/random` (random data).
+- **`/dev/null`**: A special file that discards all data written to it. Reading returns EOF. Used to suppress command output: `command > /dev/null 2>&1`.
+- **`/proc`**: Virtual filesystem exposing kernel and process information. Not on disk. Generated at runtime. Key files: `/proc/cpuinfo`, `/proc/meminfo`, `/proc/uptime`.
+- **`/sys`**: Virtual filesystem (sysfs) exposing kernel objects, devices, and driver parameters.
+- **`cat`**: Concatenate and print. Shows entire file content to terminal. Best for short files.
+- **`less`**: Page-through file viewer. `/` to search, `n` next match, `q` to quit. Handles files of any size efficiently.
+- **`more`**: Older page-through viewer. Forward-only navigation. Largely superseded by `less`.
+- **`head`**: Shows the first N lines of a file. Default 10. `-n 20` for 20 lines.
+- **`tail`**: Shows the last N lines of a file. Default 10. `-f` flag follows the file in real time for live log monitoring.
+- **`find`**: Searches the filesystem for files matching criteria. Key options: `-name` (case-sensitive), `-iname` (case-insensitive), `-type f` (files only), `-type d` (dirs only), `-size +10M` (larger than 10 MB), `-mtime -7` (modified in last 7 days), `-exec` (run command on each result).
+- **`locate`**: Fast filename search using a pre-built database. Run `sudo updatedb` to refresh. Cannot search by size, permissions, or modification time.
+- **`updatedb`**: Rebuilds the locate database. Run as root.
+- **Glob (file globbing)**: Shell pattern expansion before a command executes. `*` = any string, `?` = one character, `[abc]` = one of the listed characters. Processed by the shell, not by the command.
+- **stdin (fd 0)**: Standard input. Default source: keyboard.
+- **stdout (fd 1)**: Standard output. Default destination: terminal.
+- **stderr (fd 2)**: Standard error. Default destination: terminal.
+- **`>` (redirect stdout)**: Sends stdout to a file, overwriting it.
+- **`>>` (append stdout)**: Appends stdout to a file without overwriting.
+- **`2>` (redirect stderr)**: Sends stderr to a file.
+- **`2>&1`**: Redirects stderr to the same destination as stdout.
+- **`<` (redirect stdin)**: Reads stdin from a file.
+- **`|` (pipe)**: Connects stdout of one command to stdin of the next.
+- **`tee`**: Reads stdin and writes to both stdout and a file simultaneously. Useful for saving output while still seeing it on screen.
+
+---
+
+### 2. FHS Quick Reference
+
+| Directory | Purpose | Key Contents |
+|---|---|---|
+| `/bin` | Essential user binaries | `ls`, `cp`, `bash`, `grep` |
+| `/sbin` | System admin binaries | `fdisk`, `mount`, `ip` |
+| `/etc` | Configuration files | `passwd`, `shadow`, `fstab`, `sshd_config` |
+| `/home` | User home directories | `/home/username` |
+| `/root` | Root user home | Root's config files |
+| `/tmp` | Temporary files | Cleared on reboot, sticky bit set |
+| `/var/log` | Log files | `syslog`, `auth.log`, `secure` |
+| `/var/lib` | Application state | MySQL data, package databases |
+| `/opt` | Third-party software | Google Chrome, vendor apps |
+| `/dev` | Device files | `sda`, `null`, `zero`, `random` |
+| `/proc` | Kernel/process info | `cpuinfo`, `meminfo`, `uptime` |
+| `/sys` | Hardware/driver info | Network interfaces, block devices |
+
+---
+
+### 3. find Command Quick Reference
+
+| Task | Command |
+|---|---|
+| Find by name | `find /path -name "filename"` |
+| Case-insensitive | `find /path -iname "filename"` |
+| Files only | `find /path -type f` |
+| Directories only | `find /path -type d` |
+| Larger than 10 MB | `find /path -size +10M` |
+| Modified last 7 days | `find /path -mtime -7` |
+| Run command on results | `find /path -name "*.log" -exec ls -lh {} \;` |
+| Suppress permission errors | `find /path ... 2>/dev/null` |
+
+---
+
+### 4. Standard Streams and Redirection
+
+| Operator | Effect |
+|---|---|
+| `>` | Redirect stdout to file (overwrite) |
+| `>>` | Redirect stdout to file (append) |
+| `2>` | Redirect stderr to file |
+| `2>&1` | Redirect stderr to stdout |
+| `< file` | Redirect file to stdin |
+| `\|` | Pipe stdout to next command's stdin |
+| `tee file` | Write to stdout and file simultaneously |
+
+---
+
+### Required Readings and Videos
+
+- **Required Reading**: [The Linux Command Line by William Shotts](https://linuxcommand.org/tlcl.php) — Chapters 3, 5, 6, and 7. Chapter 3: exploring the system (FHS); Chapter 5: redirection; Chapter 6: pipelines; Chapter 7: seeing the world as the shell sees it (globbing).
+- **Required Video**: [LearnLinuxTV — Linux Fundamentals](https://www.youtube.com/playlist?list=PLT98CRl2KxEG0QLjR-8t7k3S4I15Z1A78), Episodes 7–9. These cover the filesystem hierarchy, working with files, and basic redirection.
+
+---
+
+### Study Checklist
+
+- [ ] Name the purpose of each major FHS directory from memory.
+- [ ] Explain the difference between `/bin` and `/usr/bin`.
+- [ ] Identify the correct log file path for authentication events on Ubuntu and on RHEL.
+- [ ] Demonstrate `find` with at least three different criteria combined.
+- [ ] Explain the difference between `locate` and `find`.
+- [ ] Write a pipeline that reads a log file, filters for errors, and saves the output to a file.
+- [ ] Explain what `2>/dev/null` does and when you would use it.
+- [ ] Complete the Module 3 lab.
+- [ ] Complete the Module 3 quiz.

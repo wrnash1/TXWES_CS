@@ -1,28 +1,65 @@
-# Discussion Forum: Module 15 - Well-Architected Framework
-## Course: CIS-4334_AWS_Cloud_Architecture (AWS Certified Solutions Architect - Associate)
+# Discussion: Module 15 — AWS Migration and Hybrid Architectures
+
+## Course: CIS-4334 AWS Cloud Architecture
+
+## Texas Wesleyan University | Professor Nash
+
+**Certification Alignment:** AWS Solutions Architect — Associate (SAA-C03)
 
 ---
 
-## Discussion Prompt
-Consider the following real-world scenario or technical concept:
-*   **Topic Focus:** **Well-Architected Framework** (specifically focusing on: `The 6 pillars: Operational Excellence, Security, Reliability, Performance Efficiency, Cost Optimization, Sustainability.`)
+## Overview
 
-**Your Tasks:**
-1.  **Initial Post (Due Wednesday at 11:59 PM):** In 150-200 words, explain how you would apply Well-Architected Framework in an enterprise system. Address the following:
-    *   What is the primary benefit of utilizing this configuration or standard in a production environment?
-    *   Identify one common security concern or operational challenge related to this topic, and suggest a best-practice mitigation strategy.
-2.  **Peer Responses (Due Sunday at 11:59 PM):** Read through your classmates' posts and write constructive replies (at least 50 words each) to at least two peers. In your replies:
-    *   Provide feedback on their proposed mitigation strategy.
-    *   Share an alternative approach or add context from your own research or lab exercises.
+This week's discussion asks you to apply migration and hybrid architecture reasoning to realistic enterprise scenarios. Choose ONE of the three scenarios below. Write an initial post of 175–225 words, then respond substantively to at least TWO classmates who selected different scenarios.
 
 ---
 
-## Discussion Rubric (10 Points Total)
-*   **Initial Post (6 Points):**
-    *   *5-6 pts:* Thoroughly addresses all prompt questions with technical accuracy, clear explanations, and appropriate terminology. Meets the word count.
-    *   *3-4 pts:* Addresses some prompt questions, but lacks detail or technical accuracy.
-    *   *0-2 pts:* Incomplete or missing initial post.
-*   **Peer Responses (4 Points):**
-    *   *4 pts:* Responds constructively to at least two peers, contributing meaningful additions to the conversation.
-    *   *2 pts:* Responds to only one peer, or comments are superficial (e.g., "Good post!").
-    *   *0 pts:* No peer responses submitted.
+## Scenario A — Choosing the Right Migration Strategy
+
+A regional hospital system is planning to migrate its IT infrastructure to AWS over 24 months. The portfolio includes: (1) a modern electronic health records (EHR) system built on .NET and SQL Server that processes real-time patient data 24/7; (2) a legacy radiology imaging system running on Windows Server 2008 R2 that the vendor no longer supports; (3) a commercial HR management platform with a 3-year SaaS contract signed last year; (4) a custom Python analytics pipeline that runs nightly batch jobs; (5) a VMware-based internal wiki server used by 50 staff.
+
+In your post, assign one of the 7 R migration strategies to each of the five systems and justify your choice for each with at least one technical or business reason. Identify which system presents the highest technical risk during migration and explain why. Address the compliance implication of HIPAA for the EHR system specifically: does the migration strategy change based on compliance requirements?
+
+---
+
+## Scenario B — Direct Connect vs. VPN Design
+
+A logistics company processes 500 GB of shipment data per day between its on-premises warehouse management system and AWS. The data includes proprietary route optimization algorithms that the company considers highly confidential. The company's on-premises network team has no experience managing BGP or physical colocation infrastructure. They have a reliable 1 Gbps internet connection at headquarters. Their AWS architect is evaluating Direct Connect (10 Gbps dedicated, 12-week lead time, $3,000/month) versus Site-to-Site VPN ($0.05/hour + data transfer, setup in 1 hour).
+
+In your post, recommend one connectivity option with a full technical and business justification. Address: Is 500 GB/day within the bandwidth of a Site-to-Site VPN? Does encryption matter differently for these two options? What does the 12-week Direct Connect lead time mean for the migration timeline? If you choose VPN, what is the specific risk you accept, and how could you mitigate it architecturally?
+
+---
+
+## Scenario C — Hybrid Architecture for a Factory Floor
+
+An automotive manufacturer runs robotic welding equipment controlled by software that requires sub-10ms response time to a compute backend. The factory has poor internet connectivity but a reliable private fiber connection to a regional data center. The manufacturer wants to use AWS services (EC2, ECS, S3) for the compute backend but cannot move the control system to a cloud region because latency to the nearest region is 45ms.
+
+In your post, propose an AWS architecture that satisfies the latency requirement while still using AWS managed services and the AWS console for management. Address: Which AWS product eliminates the latency problem? What network path does control traffic take to the compute backend? What happens to factory operations if the connection from the factory to the AWS infrastructure is interrupted? How does AWS Outposts differ architecturally from simply running your own servers in the data center, and what is the business value of that difference?
+
+---
+
+## Peer Response Guidelines
+
+When responding to classmates:
+
+- Identify one technical justification in their recommendation that is well-reasoned and explain why
+- Raise one risk or constraint they did not address — be specific about the service or architectural detail
+- If they chose a different scenario, connect a concept from your scenario to theirs
+
+Responses must be 75–100 words and engage with the technical content.
+
+---
+
+## Grading Rubric (10 points)
+
+| Criterion | Points |
+|---|---|
+| Initial post assigns or applies specific AWS services or strategies to the scenario | 3 |
+| At least two technical or business trade-offs explicitly addressed | 2 |
+| Initial post is 175–225 words | 1 |
+| First peer response is substantive (75–100 words, technical engagement) | 2 |
+| Second peer response is substantive (75–100 words, technical engagement) | 2 |
+
+### Total: 10 points
+
+Posts are due by 11:59 PM Wednesday. Peer responses are due by 11:59 PM Sunday.

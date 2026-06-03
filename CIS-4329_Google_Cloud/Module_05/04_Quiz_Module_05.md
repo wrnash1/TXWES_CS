@@ -1,235 +1,239 @@
-# Quiz — Module 05
+# Quiz: Module 05 — Virtual Private Cloud Networking
 
-## CIS-4329: Google Cloud Platform | Texas Wesleyan University
+## Course: CIS-4329 Google Cloud Computing
 
-### Topic: Virtual Private Cloud (VPC) — Networking Fundamentals
+**Certification Alignment:** Google Cloud Associate Cloud Engineer (ACE)
 
-### 10 Questions | 10 Points Each | Total: 100 Points
+---
+
+## Instructions
+
+Select the best answer for each question. Each question is worth 10 points.
+This quiz covers VPC architecture, subnets, firewall rules, VPC peering,
+Shared VPC, hybrid connectivity, load balancing, and Cloud Armor.
 
 ---
 
 ## Question 1
 
-A developer on your team is unable to connect to a new Compute Engine VM on port 22 (SSH). The VM has a public IP address and is running in a custom VPC with no preconfigured firewall rules. What is the most likely cause and the correct fix?
+Which statement correctly describes the scope of a GCP VPC network?
 
-A. The VM's operating system SSH service is not running; reboot the VM to restore it.
+- A) A VPC is scoped to a single zone and must be replicated to other zones
+- B) A VPC is scoped to a single region and subnets automatically span all
+     zones within that region
+- C) A VPC is a global resource; subnets within it are regional
+- D) A VPC is scoped to a single project and cannot span multiple regions
 
-B. There is no ingress firewall rule in the VPC allowing TCP port 22 from the developer's source IP; create one targeting the VM's network tag.
+**Correct Answer:** C
 
-C. The VM does not have a network tag assigned, so all SSH connections are globally blocked regardless of firewall rules.
-
-D. Custom VPCs block all external traffic by default; you must contact Google Support to unlock SSH access.
-
-Correct Answer: B
-
-Distractor Analysis:
-
-- Why A is incorrect: While it is theoretically possible for the SSH daemon to be stopped, the most common and expected cause of a new VM being unreachable on port 22 in a custom VPC is the absence of a firewall rule. Custom VPCs have no default SSH allow rule — unlike the default VPC, which does.
-- Why C is incorrect: The absence of a network tag does not block SSH connections in isolation. Firewall rules can target all instances or use tags. The underlying cause is the absence of an ingress allow rule for port 22, not the absence of a tag.
-- Why D is incorrect: Custom VPCs do not require Google Support to enable SSH access. The implied deny-all ingress rule is a configuration baseline, and you add your own explicit allow rules. No special unlocking procedure is needed.
+**Explanation:** GCP VPCs are global resources — a single VPC can have subnets
+in any or all GCP regions simultaneously. The subnets themselves are regional
+resources. This is unique to GCP compared to AWS and Azure, where VPCs are
+region-scoped. This global nature allows a VM in us-central1 to communicate
+privately with a VM in europe-west1 on the same VPC.
 
 ---
 
 ## Question 2
 
-Your organization has two GCP VPC networks: `vpc-production` and `vpc-analytics`. You configure VPC peering between them. You also configure VPC peering between `vpc-analytics` and a third network, `vpc-data-lake`. Can VMs in `vpc-production` communicate with VMs in `vpc-data-lake` through `vpc-analytics`?
+You have two firewall rules on the same VPC targeting the same VM:
 
-A. Yes, because VPC peering is transitive — traffic flows through any connected network automatically.
+- Rule A: ALLOW TCP:22, priority 800
+- Rule B: DENY TCP:22, priority 1000
 
-B. Yes, but only if you add a custom static route in `vpc-analytics` pointing to `vpc-data-lake`.
+What is the effective behavior when someone tries to SSH to that VM?
 
-C. No, because VPC peering is non-transitive — `vpc-production` needs a direct peering with `vpc-data-lake` to reach it.
+- A) DENY — the deny rule overrides the allow rule
+- B) ALLOW — the allow rule wins because lower priority number wins
+- C) DENY — when rules conflict, deny always wins regardless of priority
+- D) ALLOW — the most recently created rule takes precedence
 
-D. No, because the VPCs have overlapping subnet CIDR ranges, which GCP always prevents from communicating.
+**Correct Answer:** B
 
-Correct Answer: C
-
-Distractor Analysis:
-
-- Why A is incorrect: GCP VPC peering is explicitly and permanently non-transitive. This is a documented architectural constraint, not a configurable option. Traffic does not flow through an intermediate peered VPC under any circumstances.
-- Why B is incorrect: Adding a custom static route in `vpc-analytics` does not enable transitive communication. GCP's routing architecture blocks peered VPCs from serving as transit paths regardless of any route configuration changes.
-- Why D is incorrect: The question does not indicate that the VPCs have overlapping CIDRs, and the question is asking about the correct reason for the connectivity limitation. The correct reason is non-transitivity, not CIDR overlap. (Overlapping CIDRs would prevent peering from being established at all, which is a separate scenario.)
+**Explanation:** In GCP firewall rules, lower priority number means higher
+priority. Rule A with priority 800 is evaluated before Rule B with priority
+1000. Since Rule A allows TCP:22, traffic is permitted and Rule B is never
+reached. GCP does not have a "deny always wins" tie-breaker — it strictly uses
+numeric priority.
 
 ---
 
 ## Question 3
 
-You need to allow internet traffic on port 443 (HTTPS) to reach only the web-tier VMs in your VPC. Your web-tier VMs all have the network tag `https-server`. Which firewall rule configuration is most appropriate?
+Your organization has three GCP VPCs: VPC-Alpha, VPC-Beta, and VPC-Gamma.
+You configure VPC peering between Alpha and Beta, and between Beta and Gamma.
+A VM in VPC-Alpha tries to connect to a VM in VPC-Gamma using its private IP.
+What happens?
 
-A. Create an ingress rule allowing TCP:443 from `0.0.0.0/0`, targeting all instances in the VPC with no tag filter.
+- A) The connection succeeds because Beta acts as a transit network
+- B) The connection fails because VPC peering is non-transitive
+- C) The connection succeeds if you enable transitive peering in the console
+- D) The connection succeeds if the IP ranges do not overlap
 
-B. Create an ingress rule allowing TCP:443 from `0.0.0.0/0`, with a target tag of `https-server`.
+**Correct Answer:** B
 
-C. Create an egress rule allowing TCP:443 from `0.0.0.0/0`, with a target tag of `https-server`.
-
-D. Delete the implied deny-all ingress rule and create a custom allow rule for TCP:443 on all instances.
-
-Correct Answer: B
-
-Distractor Analysis:
-
-- Why A is incorrect: Applying an ingress rule for TCP:443 to all instances in the VPC would open port 443 on every VM — including database VMs, internal microservices, and administrative systems. This violates the principle of least exposure and creates unnecessary attack surface.
-- Why C is incorrect: An egress rule controls traffic flowing outbound from the VMs, not inbound internet traffic arriving at VMs from the internet. Allowing inbound HTTPS connections requires an ingress rule, not an egress rule.
-- Why D is incorrect: The implied deny-all ingress rule cannot be deleted or disabled. It is a permanent baseline in every GCP VPC and exists at the lowest priority (65535). You add explicit allow rules on top of it — you cannot remove the baseline.
+**Explanation:** GCP VPC peering is non-transitive. Alpha peers with Beta and
+Beta peers with Gamma, but that does not give Alpha any access to Gamma. To
+allow Alpha-Gamma communication, you must explicitly create a peering
+relationship between Alpha and Gamma. There is no "transitive peering" setting
+in GCP.
 
 ---
 
 ## Question 4
 
-Your company's on-premises data center needs to access GCP resources in your VPC using private IP addresses. The connection must be encrypted in transit, and the expected maximum bandwidth requirement is approximately 500 Mbps. Which connectivity option is most appropriate?
+A large enterprise wants multiple project teams to deploy GCP resources into a
+centrally managed network. The network team should own firewall rules and
+subnets, while each project team manages only their own VMs. Which GCP feature
+best implements this model?
 
-A. Assign public IP addresses to all GCP VMs and connect over the public internet using TLS at the application layer.
+- A) VPC peering between each team's project and the network team's project
+- B) Shared VPC with the network team's project as the host project
+- C) Giving the network team `roles/owner` on all project teams' projects
+- D) Creating a separate VPC in each project and using static routes to connect
 
-B. Configure Cloud VPN with HA VPN tunnels that encrypt traffic using IPsec over the public internet.
+**Correct Answer:** B
 
-C. Provision a Dedicated Interconnect for a private, direct physical fiber connection to Google's network.
-
-D. Use VPC peering between your on-premises network and the GCP VPC.
-
-Correct Answer: B
-
-Distractor Analysis:
-
-- Why A is incorrect: Routing traffic over the public internet using application-layer TLS does not create an encrypted network tunnel, does not use private IPs between sites, and exposes your GCP resources to public internet discovery and scanning.
-- Why C is incorrect: Dedicated Interconnect provides 10 Gbps or 100 Gbps circuits and is designed for organizations with very high bandwidth requirements. At 500 Mbps, Cloud VPN is the appropriate and more cost-effective choice. Dedicated Interconnect would be significantly over-engineered and more expensive for this bandwidth level.
-- Why D is incorrect: VPC peering connects two GCP VPC networks to each other over Google's internal network. It cannot connect an on-premises data center to a GCP VPC. On-premises connectivity requires Cloud VPN or Cloud Interconnect.
+**Explanation:** Shared VPC is designed exactly for this use case. The host
+project owns the VPC, subnets, firewall rules, and routes. Service projects
+(the individual team projects) can deploy VMs into the host VPC's subnets
+without being able to modify the network configuration. This provides
+centralized network governance with decentralized resource ownership.
 
 ---
 
 ## Question 5
 
-A VM in your VPC has an external IP address and a default route pointing to the internet gateway. The VM cannot reach the internet. Which firewall issue is most likely causing the problem?
+A company needs to connect its on-premises data center to GCP. The connection
+requires a consistent 5 Gbps bandwidth with low latency, and the company's
+security policy prohibits traffic from traversing the public internet.
+Which connectivity option should they choose?
 
-A. There is no egress firewall rule explicitly allowing outbound traffic, and the implied default egress is deny-all.
+- A) Cloud VPN with static routing
+- B) Cloud VPN with HA VPN
+- C) Dedicated Interconnect
+- D) Direct SSH tunnels over the internet
 
-B. There is no ingress firewall rule allowing return traffic from the internet, which blocks replies from reaching the VM.
+**Correct Answer:** C
 
-C. The VM's internal IP is not within the subnet's CIDR range, preventing the route table from forwarding traffic.
-
-D. The external IP address is ephemeral and expired after 60 minutes, blocking all outbound connections.
-
-Correct Answer: A
-
-Distractor Analysis:
-
-- Why B is incorrect: GCP firewall rules are stateful. If outbound traffic is allowed, the corresponding inbound reply packets for established connections are automatically permitted without a separate ingress rule. You do not need an ingress rule for return traffic from an outbound-initiated connection.
-- Why C is incorrect: GCP automatically assigns VM internal IPs from the subnet CIDR during creation. It is not possible to create a VM with an IP address outside its subnet's CIDR range through normal GCP operations.
-- Why D is incorrect: Ephemeral external IPs do not expire on a timer during the VM's lifetime. They persist as long as the VM is running. They are released only when the VM is stopped or deleted, not based on a time duration.
+**Explanation:** Dedicated Interconnect provides a physical circuit (10 Gbps
+or 100 Gbps) between the company's network and Google's network. Traffic never
+traverses the public internet. Cloud VPN (options A and B) uses IPsec encryption
+over the internet, which violates the security policy. Partner Interconnect
+would also work but Dedicated Interconnect is the direct answer for 5+ Gbps
+with no internet transit.
 
 ---
 
 ## Question 6
 
-A security engineer wants to ensure that only Compute Engine VMs running as a specific service account (`web-sa@project.iam.gserviceaccount.com`) can accept database connections on port 5432. Which firewall rule target is most appropriate?
+You need to deploy a globally distributed web application that serves users in
+North America, Europe, and Asia. The application uses HTTPS, needs SSL
+termination at the edge, and must be protected against DDoS attacks.
+Which load balancer type should you use?
 
-A. Target all instances in the VPC and restrict the source range to the web tier subnet CIDR.
+- A) External Passthrough Network Load Balancer (regional)
+- B) Internal Application Load Balancer
+- C) External Application Load Balancer (global)
+- D) External Regional Application Load Balancer
 
-B. Target instances by network tag `web-tier` and create a corresponding firewall rule using that tag.
+**Correct Answer:** C
 
-C. Target instances by the service account `web-sa@project.iam.gserviceaccount.com` as the target in the firewall rule.
-
-D. Target instances by hostname using a DNS-based firewall rule for the service account's email address.
-
-Correct Answer: C
-
-Distractor Analysis:
-
-- Why A is incorrect: Targeting all instances allows any VM to accept database connections, not just the web-tier service VMs. Restricting by source CIDR limits the origin but does not restrict which VMs can receive the connection.
-- Why B is incorrect: Network tags can be applied by any user who has permission to modify VM metadata, which includes the VM owner. This is less secure than service account targeting because a malicious or compromised VM user could add the tag to a VM they control.
-- Why D is incorrect: GCP firewall rules do not support DNS-based or hostname-based targeting. Firewall rules operate on IP addresses, IP ranges, network tags, and service accounts — not on hostnames or DNS names.
+**Explanation:** The External Application Load Balancer (global) is the correct
+choice. It is a Layer 7 load balancer with a global Anycast IP that serves
+traffic from Google's edge PoPs closest to users worldwide. It handles HTTPS
+with SSL termination at the edge and integrates with Cloud Armor for DDoS
+protection. The regional options do not serve global users from edge PoPs.
+Internal load balancers are not accessible from the internet.
 
 ---
 
 ## Question 7
 
-You have a VM with no external IP address. The VM needs to call the Cloud Storage API to read data from a bucket. The VM cannot connect to the API. What is the most likely cause and the simplest fix?
+A firewall rule uses `target-tags=web-server` to apply to specific VMs.
+A developer accidentally adds the `web-server` tag to a database VM.
+What is the security implication, and how could this risk be mitigated?
 
-A. The VM's service account does not have `roles/storage.objectViewer` on the bucket — grant the role.
+- A) No risk — tags only affect outbound traffic
+- B) The database VM would now be exposed to the same inbound traffic allowed
+     for web servers; use service account-based targeting instead of tags to
+     mitigate
+- C) Tags cannot be accidentally assigned — they require an IAM permission
+     not held by developers
+- D) The database VM would lose its database firewall rules automatically
 
-B. Private Google Access is not enabled on the VM's subnet — enable it so VMs without external IPs can reach Google APIs.
+**Correct Answer:** B
 
-C. The VM's firewall rules do not allow egress on port 443 to `storage.googleapis.com` — add an egress rule.
-
-D. The VM needs a static external IP address before it can call any Google API.
-
-Correct Answer: B
-
-Distractor Analysis:
-
-- Why A is incorrect: While an IAM role is also needed to access the bucket, the scenario describes a connectivity failure, not a permission failure. Private Google Access controls whether VMs without external IPs can reach Google API endpoints at the network level. The IAM role would only matter after the network path is established.
-- Why C is incorrect: The implied default in a VPC is allow-all egress. A specific egress firewall rule for port 443 is not needed unless the VPC has a custom deny egress rule. The issue is Private Google Access routing, not a firewall rule.
-- Why D is incorrect: VMs without external IPs are a security best practice, not a limitation. Private Google Access exists specifically to allow VMs without external IPs to reach Google APIs through Google's internal network. A static external IP is not required.
+**Explanation:** Network tags are simple strings that can be added or removed by
+anyone with `compute.instances.setTags` permission (included in `roles/compute.instanceAdmin`).
+Adding the wrong tag to a VM incorrectly exposes it to the associated firewall
+rules. Using service account-based targeting instead of tags mitigates this
+risk because changing a VM's service account requires a separate, more
+privileged IAM action.
 
 ---
 
 ## Question 8
 
-An architect designs an environment with three VPCs: `corp-vpc`, `dev-vpc`, and `shared-services-vpc`. They configure VPC peering between `corp-vpc` and `shared-services-vpc`, and between `dev-vpc` and `shared-services-vpc`. VMs in `shared-services-vpc` can communicate with both other VPCs. What is true about communication between `corp-vpc` and `dev-vpc`?
+Which two IP ranges must be permitted in your ingress firewall rules to allow
+GCP load balancer health checks to reach your backend VMs?
 
-A. VMs in `corp-vpc` can communicate with VMs in `dev-vpc` because they both peer with `shared-services-vpc`.
+- A) 10.0.0.0/8 and 172.16.0.0/12 (private RFC 1918 ranges)
+- B) 35.191.0.0/16 and 130.211.0.0/22 (GCP health checker ranges)
+- C) 0.0.0.0/0 (allow all internet)
+- D) The external IP of the load balancer only
 
-B. VMs in `corp-vpc` cannot communicate with VMs in `dev-vpc` unless a direct peering is created between them.
+**Correct Answer:** B
 
-C. VMs in `corp-vpc` can communicate with VMs in `dev-vpc` if a custom route is added to `shared-services-vpc`.
-
-D. VMs in `corp-vpc` can communicate with VMs in `dev-vpc` if the `shared-services-vpc` admin configures route advertisement.
-
-Correct Answer: B
-
-Distractor Analysis:
-
-- Why A is incorrect: VPC peering is non-transitive. A peering between `corp-vpc` and `shared-services-vpc`, and between `dev-vpc` and `shared-services-vpc`, does not create any path between `corp-vpc` and `dev-vpc`. They need a direct peer.
-- Why C is incorrect: Adding custom routes to `shared-services-vpc` does not enable transitive traffic flow between the other two VPCs. GCP's VPC peering architecture is designed to prevent transit routing through an intermediate peered VPC regardless of route configuration.
-- Why D is incorrect: Route advertisement in GCP VPC peering affects whether routes are exchanged between the peered pair. It does not create transitive routing paths through the advertising VPC. `corp-vpc` and `dev-vpc` would still need a direct peering.
+**Explanation:** GCP health checkers send probes from the ranges 35.191.0.0/16
+and 130.211.0.0/22. If these ranges are not permitted in the ingress firewall
+rules on the appropriate port, the health checker cannot reach the VM, the VM
+is marked unhealthy, and the load balancer stops sending traffic to it.
 
 ---
 
 ## Question 9
 
-You are creating a firewall rule to allow SSH access to VMs in a production VPC. You want to use Google's Identity-Aware Proxy (IAP) service for secure browser-based SSH so that VMs do not need external IP addresses. What source IP range should the firewall rule use to allow IAP-tunneled SSH connections?
+Private Google Access is enabled on a subnet. What does this allow?
 
-A. `0.0.0.0/0` — allow SSH from anywhere on the internet
+- A) VMs in the subnet can access private services in other GCP projects
+- B) VMs in the subnet without external IPs can still reach Google APIs and
+     services such as Cloud Storage and BigQuery
+- C) The subnet is made private and no external IPs can be assigned to VMs
+- D) VMs in the subnet can access on-premises resources via Cloud VPN
 
-B. `35.235.240.0/20` — the IP range used by Google's IAP service
+**Correct Answer:** B
 
-C. The CIDR range of the production subnet only
-
-D. The external IP address of each developer's workstation
-
-Correct Answer: B
-
-Distractor Analysis:
-
-- Why A is incorrect: Using `0.0.0.0/0` as the source for SSH exposes port 22 to the entire internet, which is a significant security risk even in hardened environments. The purpose of using IAP is to restrict SSH access to the Google IAP service IP range, not to open it to everyone.
-- Why C is incorrect: Restricting SSH to the subnet CIDR would only allow SSH connections originating from inside the same subnet. IAP-tunneled connections originate from Google's IAP servers, which are not in your subnet.
-- Why D is incorrect: Developer workstations change IP addresses (working remotely, VPNs, coffee shops), making per-workstation IP allowlisting operationally impractical and requiring constant updates. IAP handles authentication so you do not need to manage source IPs.
+**Explanation:** Private Google Access allows VM instances in a subnet to
+communicate with Google APIs and services (Cloud Storage, BigQuery, Pub/Sub,
+etc.) using only their internal IP address — no external IP required. Without
+Private Google Access, a VM with no external IP cannot reach Google's public
+API endpoints.
 
 ---
 
 ## Question 10
 
-Which statement most accurately describes the difference between the default VPC and a custom VPC created with `--subnet-mode=custom` in GCP?
+An engineer creates a new custom-mode VPC. No firewall rules have been added.
+A VM is deployed in the VPC and assigned an external IP. Another user tries
+to SSH to the VM from the internet. What happens?
 
-A. The default VPC has no firewall rules; a custom VPC is pre-populated with rules that allow SSH and HTTP by default.
+- A) The SSH connection succeeds because GCP allows SSH by default
+- B) The SSH connection fails because the custom VPC has an implied deny all
+     ingress rule at priority 65535 and no explicit allow rule for SSH
+- C) The SSH connection succeeds if the VM has a valid external IP address
+- D) The SSH connection fails because custom VPCs do not support external IPs
 
-B. The default VPC automatically creates one subnet per region with predefined CIDR ranges and includes pre-configured firewall rules allowing SSH, RDP, and ICMP from anywhere; a custom VPC starts with no subnets and no firewall rules beyond the implied defaults.
+**Correct Answer:** B
 
-C. A custom VPC is regional; the default VPC is global.
-
-D. The default VPC and custom VPCs are functionally identical — the only difference is the name assigned at creation time.
-
-Correct Answer: B
-
-Distractor Analysis:
-
-- Why A is incorrect: This reverses the reality. The default VPC does have pre-configured firewall rules. A new custom VPC has no custom firewall rules — only the two implied defaults (deny-all ingress and allow-all egress) that exist in every VPC.
-- Why C is incorrect: Both the default VPC and custom VPCs are global resources in GCP. All GCP VPCs span all regions regardless of how they are created. The scope difference between them is about subnet creation mode, not network geographic scope.
-- Why D is incorrect: The default VPC and custom VPCs are meaningfully different in their initial configuration. The default VPC comes with auto-created subnets in every region and pre-configured firewall rules. A custom VPC starts empty. These differences are operationally significant for production environments.
+**Explanation:** Every GCP VPC has an implied deny all ingress rule at
+priority 65535. In a custom-mode VPC, there are no automatically created
+firewall rules (unlike the default VPC). Without an explicit rule allowing
+TCP:22, all inbound traffic — including SSH — is blocked by the implied deny.
+The engineer must create a firewall rule explicitly allowing SSH.
 
 ---
 
 End of Quiz — Module 05
 
-Course: CIS-4329 Google Cloud Platform | Texas Wesleyan University | Professor Nash
-
-Certification Target: Google Cloud Associate Cloud Engineer
+Course: CIS-4329 Google Cloud Computing | Texas Wesleyan University | Professor Nash

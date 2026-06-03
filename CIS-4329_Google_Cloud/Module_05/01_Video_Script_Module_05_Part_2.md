@@ -1,207 +1,300 @@
-# Video Script — Module 05, Part 2
+# Video Script: Module 05 — Virtual Private Cloud Networking (Part 2 of 2)
 
-## CIS-4329: Google Cloud Platform | Texas Wesleyan University
+## Course: CIS-4329 Google Cloud Computing
 
-### Topic: VPC Peering, Hybrid Connectivity, Private Google Access, and CLI
+## Texas Wesleyan University | Professor Nash
 
-### Estimated Duration: 11–12 minutes
+## Estimated Duration: 15 minutes
 
----
-
-## Introduction to Part 2
-
-Welcome back to Module 05. In Part 1 we covered VPC architecture, subnet configuration, firewall rules, and routes. In Part 2 we cover VPC peering, Private Google Access, Cloud VPN, Cloud Interconnect, and the gcloud commands for network management.
+## Certification Alignment: Google Cloud Associate Cloud Engineer (ACE)
 
 ---
 
-## Section 1: VPC Peering
+## Segment 1 — Recap and Agenda (1 minute)
 
-**[SHOW SLIDE: Two VPCs labeled vpc-A and vpc-B with a peering arrow between them, private traffic flowing across]**
+Welcome back. In Part 1 we covered VPC architecture, subnets, firewall rules,
+and routes. In Part 2 we cover:
 
-VPC peering allows two separate GCP VPC networks to communicate using private IP addresses. Traffic between peered VPCs travels over Google's private internal network — never over the public internet.
+- VPC peering
+- Shared VPC
+- Cloud VPN and Cloud Interconnect
+- Load balancing types
+- Cloud Armor
 
-Use VPC peering when:
+---
 
-- You have separate projects (development, production) that need to communicate
-- You want to share a centralized service (like a database) across multiple project VPCs
-- You are using Shared VPC (covered below)
+## Segment 2 — VPC Connectivity: Peering and Shared VPC (4 minutes)
 
-### Critical ACE Exam Fact: VPC Peering is Non-Transitive
+### VPC Peering
 
-**[SHOW SLIDE: Three VPCs A-B-C with peering A-to-B and B-to-C, but red X between A and C]**
+VPC peering connects two VPCs so that instances in each can communicate using
+private IP addresses. The VPCs can be in the same project, different projects,
+or different organizations.
 
-This is one of the most frequently tested networking facts on the ACE exam. VPC peering is NOT transitive.
+Characteristics of VPC peering:
 
-If VPC A is peered with VPC B, and VPC B is peered with VPC C, VMs in VPC A cannot communicate with VMs in VPC C. The peering relationship exists only between directly connected pairs. For A to communicate with C, you must create a direct peering between A and C.
+- **Non-transitive**: If VPC A peers with VPC B, and VPC B peers with VPC C,
+  VPC A cannot communicate with VPC C through VPC B. Each peering must be
+  established directly.
+- **No IP range overlap**: Peered VPCs cannot have overlapping IP ranges.
+- **Routes**: Subnet routes are automatically exchanged between peered VPCs.
+  Custom static routes are not shared by default.
+- **Symmetric**: Both sides must configure a peering request. Peering is active
+  only when both sides accept.
+
+```bash
+# Peer VPC-A to VPC-B (run in VPC-A's project)
+gcloud compute networks peerings create vpc-a-to-b \
+  --network=vpc-a \
+  --peer-project=project-b \
+  --peer-network=vpc-b \
+  --auto-create-routes
+
+# Peer VPC-B to VPC-A (run in VPC-B's project — both sides required)
+gcloud compute networks peerings create vpc-b-to-a \
+  --network=vpc-b \
+  --peer-project=project-a \
+  --peer-network=vpc-a \
+  --auto-create-routes
+```
+
+**ACE Exam Tip:** VPC peering is non-transitive. If a question involves three
+VPCs that need to communicate, you need three separate peering relationships
+(A-B, B-C, A-C), not a chain.
 
 ### Shared VPC
 
-Shared VPC is a related concept. It allows you to share a single VPC (the host project's VPC) across multiple GCP projects (service projects). All service project VMs use the host project's VPC, subnets, and firewall rules. This gives central network administration control over a multi-project organization while allowing individual project teams to deploy their own resources.
+Shared VPC connects multiple GCP projects to a common, centrally managed VPC
+network. It has two components:
 
-Shared VPC is administered by setting a project as the host project and then granting `roles/compute.networkUser` to service account principals in the service projects.
+- **Host project**: Owns the Shared VPC network and subnets. Network
+  administrators in the host project manage all networking.
+- **Service projects**: Projects that are attached to the host project. VMs in
+  service projects can use subnets in the host VPC.
 
----
+Benefits of Shared VPC:
 
-## Section 2: Private Google Access
-
-**[SHOW SLIDE: VM without external IP using Private Google Access to reach storage.googleapis.com via internal path]**
-
-By default, a VM that has no external IP address cannot reach Google APIs or services like Cloud Storage, BigQuery, or Cloud Logging. Private Google Access solves this.
-
-When Private Google Access is enabled on a subnet, VMs in that subnet with only internal IP addresses can reach Google APIs and services through Google's internal network. The VMs do not need external IPs and their traffic never leaves Google's network.
-
-Enable Private Google Access on a subnet:
+- Central network management while delegating resource creation to teams
+- Consistent firewall rules across all service projects
+- Service project teams cannot modify network configuration
 
 ```bash
-gcloud compute networks subnets update my-subnet \
-  --region=us-central1 \
-  --enable-private-ip-google-access
+# Enable Shared VPC on the host project (requires organization admin)
+gcloud compute shared-vpc enable HOST_PROJECT_ID
+
+# Attach a service project
+gcloud compute shared-vpc associated-projects add SERVICE_PROJECT_ID \
+  --host-project=HOST_PROJECT_ID
 ```
 
-Private Google Access is a critical feature for security-hardened environments where VMs are intentionally provisioned without external IPs to reduce attack surface. You still need Private Google Access enabled to let those VMs call GCS, BigQuery, or the Pub/Sub API.
-
-For the ACE exam: if a question describes VMs without external IPs that cannot reach Cloud Storage or other Google services, enabling Private Google Access on the subnet is the solution.
+**ACE Exam Tip:** Shared VPC requires an Organization node. It cannot be used
+with personal Gmail accounts. When a question involves centralizing network
+management across multiple projects in an enterprise, the answer is Shared VPC.
 
 ---
 
-## Section 3: Cloud VPN
+## Segment 3 — Cloud VPN and Cloud Interconnect (3 minutes)
 
-**[SHOW SLIDE: On-premises network connected to GCP VPC via VPN tunnel over the internet with IPsec shield icon]**
+### Cloud VPN
 
-Cloud VPN creates an encrypted IPsec tunnel between your on-premises network and your GCP VPC over the public internet. It allows private IP communication between on-premises resources and GCP resources as if they were on the same network.
+Cloud VPN connects your on-premises network to GCP using encrypted IPsec VPN
+tunnels over the public internet.
 
-There are two Cloud VPN configurations:
+Types:
 
-### Classic VPN
-
-Classic VPN uses a single tunnel with a single gateway. It supports up to 3 Gbps throughput per tunnel. Classic VPN has a lower SLA and is suitable for development environments and lower-bandwidth requirements.
-
-### HA VPN (High Availability VPN)
-
-HA VPN uses two VPN gateways, each with two tunnel endpoints, for a total of four possible tunnels. It provides a 99.99% availability SLA. HA VPN is required for production environments with high-availability requirements.
-
-When to use Cloud VPN:
-- Bandwidth requirement under 1.5–3 Gbps
-- Budget-sensitive hybrid connectivity
-- Encrypting traffic over the public internet is acceptable
+- **Classic VPN**: Single tunnel; up to 3 Gbps; supports static routing only
+- **HA VPN**: Two tunnels per gateway for 99.99% SLA; requires Cloud Router
+  for dynamic BGP routing; recommended for production
 
 ```bash
-gcloud compute vpn-tunnels create my-vpn-tunnel \
-  --peer-address=PEER_IP \
-  --shared-secret=MY_SECRET \
-  --target-vpn-gateway=my-vpn-gateway \
+# Create an HA VPN gateway
+gcloud compute vpn-gateways create ha-vpn-gw \
+  --network=lab05-vpc \
   --region=us-central1
+
+# Create a Cloud Router for dynamic routing
+gcloud compute routers create ha-vpn-router \
+  --network=lab05-vpc \
+  --region=us-central1 \
+  --asn=65001
 ```
+
+Use Cloud VPN when:
+
+- Bandwidth requirement is under ~10 Gbps
+- The connection is over the internet and encryption is acceptable
+- Budget constraints favor a software VPN over dedicated circuits
+
+### Cloud Interconnect
+
+Cloud Interconnect provides a dedicated, physical connection between your
+on-premises network and Google's network. Two types:
+
+- **Dedicated Interconnect**: 10 Gbps or 100 Gbps physical circuit terminated
+  at a Google colocation facility. Lowest latency; highest cost.
+- **Partner Interconnect**: Connect through a service provider at lower
+  bandwidth (50 Mbps to 50 Gbps). More flexible; available in more locations.
+
+Cloud Interconnect traffic does not traverse the public internet. It stays on
+Google's private network from your premises to GCP.
+
+**ACE Exam Tip:** Use Cloud VPN for moderate bandwidth over the internet.
+Use Cloud Interconnect when you need dedicated, consistent, high-bandwidth
+connectivity (10+ Gbps) or when data must not travel over the public internet.
 
 ---
 
-## Section 4: Cloud Interconnect
+## Segment 4 — Load Balancing (4 minutes)
 
-**[SHOW SLIDE: On-premises data center connected to Google PoP with dedicated physical cable, no internet involved]**
+### GCP Load Balancer Types
 
-Cloud Interconnect provides a direct physical connection to Google's network — bypassing the public internet entirely. There are two types:
+GCP offers multiple load balancer types organized by traffic type, scope, and
+whether they are external or internal.
 
-### Dedicated Interconnect
+#### External Global Load Balancers
 
-A private physical fiber connection between your data center and a Google colocation facility (Point of Presence). Available in 10 Gbps and 100 Gbps increments. For organizations requiring multi-gigabit bandwidth to GCP with consistent, low-latency performance.
+- **External Application Load Balancer (HTTP/S LB)**: Layer 7; routes HTTP
+  and HTTPS traffic globally. Supports URL-based routing, Cloud CDN, SSL
+  termination, and Cloud Armor. Uses Google's global Anycast network.
+- **External Proxy Network Load Balancer**: Layer 4 TCP/SSL; for non-HTTP
+  traffic that requires global routing.
 
-### Partner Interconnect
+#### External Regional Load Balancers
 
-If your data center is not located near a Google colocation facility, you work with a network service provider (partner) who has a direct connection to Google. You get a sub-1Gbps to 10Gbps connection through the partner's infrastructure. More flexible geographically but with an added provider in the middle.
+- **External Regional Application Load Balancer**: Layer 7 HTTP/S but scoped
+  to a region.
+- **External Regional Network Load Balancer (passthrough)**: Layer 4; passes
+  traffic directly to backends. Very high performance; preserves client IP.
 
-### VPN vs. Interconnect Decision
+#### Internal Load Balancers
 
-| Requirement | Correct Choice |
+- **Internal Application Load Balancer**: Layer 7; for internal HTTP/S
+  services between VMs within the VPC.
+- **Internal Passthrough Network Load Balancer**: Layer 4; for internal TCP/UDP;
+  commonly used in front of internal services and third-party network appliances.
+
+### Choosing the Right Load Balancer
+
+| Use case | Load balancer type |
 |---|---|
-| Under 1.5 Gbps, budget sensitive | Cloud VPN (HA VPN for production) |
-| 1.5 Gbps to 10 Gbps, consistent performance | Partner Interconnect |
-| 10 Gbps to 100 Gbps, highest performance | Dedicated Interconnect |
-| Traffic must stay off public internet entirely | Dedicated or Partner Interconnect |
-
----
-
-## Section 5: gcloud Networking Commands
-
-**[SHOW CONSOLE: Cloud Shell with gcloud compute networking commands]**
-
-Create a custom VPC:
+| Global HTTPS web app with CDN | External Application LB (Global) |
+| Internal microservice HTTP API | Internal Application LB |
+| TCP traffic, preserve client IP | External Passthrough Network LB |
+| Internal database cluster TCP | Internal Passthrough Network LB |
 
 ```bash
-gcloud compute networks create my-vpc \
-  --subnet-mode=custom
-```
+# Create a backend service for an HTTP load balancer
+gcloud compute backend-services create web-backend \
+  --protocol=HTTP \
+  --port-name=http \
+  --health-checks=web-health-check \
+  --global
 
-Create a subnet in the VPC:
+# Add instance group to the backend service
+gcloud compute backend-services add-backend web-backend \
+  --instance-group=web-mig \
+  --instance-group-region=us-central1 \
+  --global
 
-```bash
-gcloud compute networks subnets create my-subnet \
-  --network=my-vpc \
-  --region=us-central1 \
-  --range=10.10.0.0/24
-```
+# Create a URL map
+gcloud compute url-maps create web-url-map \
+  --default-service=web-backend
 
-List networks:
+# Create target HTTP proxy
+gcloud compute target-http-proxies create web-http-proxy \
+  --url-map=web-url-map
 
-```bash
-gcloud compute networks list
-```
-
-List subnets:
-
-```bash
-gcloud compute networks subnets list
-```
-
-Create a firewall rule:
-
-```bash
-gcloud compute firewall-rules create allow-ssh-internal \
-  --direction=INGRESS \
-  --priority=1000 \
-  --network=my-vpc \
-  --action=ALLOW \
-  --rules=tcp:22 \
-  --source-ranges=10.10.0.0/24
-```
-
-List firewall rules:
-
-```bash
-gcloud compute firewall-rules list
-```
-
-Describe a firewall rule:
-
-```bash
-gcloud compute firewall-rules describe allow-ssh-internal
-```
-
-Enable Private Google Access on a subnet:
-
-```bash
-gcloud compute networks subnets update my-subnet \
-  --region=us-central1 \
-  --enable-private-ip-google-access
+# Create forwarding rule (the load balancer's external IP)
+gcloud compute forwarding-rules create web-lb-rule \
+  --load-balancing-scheme=EXTERNAL \
+  --global \
+  --target-http-proxy=web-http-proxy \
+  --ports=80
 ```
 
 ---
 
-## Module 05 Summary
+## Segment 5 — Cloud Armor (1 minute)
 
-**[SHOW SLIDE: Summary bullet list]**
+### What is Cloud Armor?
 
-Let's wrap up Module 05. GCP VPCs are global; subnets are regional. Auto mode creates predefined subnets; custom mode gives full IP control. The implied default is deny-all ingress, allow-all egress. Firewall rules use direction, priority, action, target (tags or service accounts), and protocol/port. Network tags target firewall rules at logical VM groups.
+Cloud Armor is GCP's distributed denial-of-service (DDoS) protection and Web
+Application Firewall (WAF) service. It integrates with the External Application
+Load Balancer.
 
-VPC peering is non-transitive. Private Google Access lets VMs without external IPs reach Google APIs. Cloud VPN creates IPsec tunnels over the public internet — HA VPN for production with 99.99% SLA. Dedicated Interconnect provides direct physical connections at 10–100 Gbps. Partner Interconnect goes through a service provider for sub-10 Gbps needs.
+Capabilities:
 
-Complete the lab, take the quiz, and post to the discussion. Module 06 covers Cloud Load Balancing and Cloud CDN.
+- **DDoS protection**: Automatically mitigates volumetric DDoS attacks
+- **IP allowlist/denylist**: Block or allow specific IP ranges
+- **Preconfigured WAF rules**: ModSecurity-compatible rules for OWASP Top 10
+  attacks (SQL injection, XSS, etc.)
+- **Rate limiting**: Limit requests per IP per second
+- **Adaptive Protection**: ML-based real-time attack detection
+
+```bash
+# Create a Cloud Armor security policy
+gcloud compute security-policies create web-armor-policy \
+  --description="WAF policy for web application"
+
+# Add a rule to block a specific IP
+gcloud compute security-policies rules create 1000 \
+  --security-policy=web-armor-policy \
+  --expression="inIpRange(origin.ip, '192.0.2.0/24')" \
+  --action=deny-403
+
+# Attach the policy to a backend service
+gcloud compute backend-services update web-backend \
+  --security-policy=web-armor-policy \
+  --global
+```
+
+**ACE Exam Tip:** Cloud Armor attaches to backend services on the External
+Application Load Balancer. It cannot be used with internal load balancers or
+passthrough load balancers.
+
+---
+
+## Segment 6 — ACE Exam Tips for Networking (1 minute)
+
+Key networking patterns on the ACE exam:
+
+- **VPC is global; subnets are regional**: This is unique to GCP.
+- **Auto mode vs. custom mode**: Custom is recommended for production.
+- **VPC peering is non-transitive**: Three VPCs need three peering connections.
+- **Shared VPC vs. VPC peering**: Shared VPC = central management, separate
+  projects use host network. Peering = independent VPCs connect directly.
+- **Cloud VPN vs. Interconnect**: VPN = internet-based, encrypted. Interconnect
+  = dedicated circuit, no internet transit.
+- **Load balancer selection**: Match the scenario to the correct LB type.
+  External HTTPS with global distribution = External Application LB.
+- **Firewall rule priority**: Lower number = higher priority.
+
+---
+
+## Summary — Module 05
+
+Across both parts we covered:
+
+- VPC architecture: global VPC, regional subnets, auto vs. custom mode
+- Subnets: IP ranges, Private Google Access, secondary ranges for GKE
+- Firewall rules: direction, priority, tag and SA targeting
+- Routes: static and dynamic routing with Cloud Router
+- VPC peering: non-transitive, no IP overlap, both sides required
+- Shared VPC: host project / service project model for enterprise
+- Cloud VPN: HA VPN for 99.99% SLA
+- Cloud Interconnect: dedicated and partner for high-bandwidth connectivity
+- Load balancing types: global, regional, external, internal, L4 vs. L7
+- Cloud Armor: DDoS protection and WAF
+
+The lab will have you create a custom VPC, configure firewall rules, deploy
+VMs, and configure a load balancer.
 
 ---
 
 End of Part 2 — Module 05
 
-Course: CIS-4329 Google Cloud Platform | Texas Wesleyan University | Professor Nash
+Course: CIS-4329 Google Cloud Computing | Texas Wesleyan University | Professor Nash
 
 Certification Target: Google Cloud Associate Cloud Engineer
 
-Reference: cloud.google.com/learn
+Reference: cloud.google.com/vpc/docs

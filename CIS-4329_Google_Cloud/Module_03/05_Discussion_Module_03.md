@@ -1,95 +1,110 @@
-# Discussion — Module 03
+# Discussion: Module 03 — Compute Engine
 
-## CIS-4329: Google Cloud Platform | Texas Wesleyan University
+## Course: CIS-4329 Google Cloud Computing
 
-### Topic: Compute Engine Architecture and VM Design Decisions
-
----
-
-## Instructions
-
-Read all three scenarios below. Choose one scenario to address in your initial post. In your peer responses, you may respond to classmates who chose any scenario.
-
-Initial Post due: Wednesday at 11:59 PM Central
-
-Peer Responses due: Sunday at 11:59 PM Central
+**Certification Alignment:** Google Cloud Associate Cloud Engineer (ACE)
 
 ---
 
-## Scenario A — The Lift-and-Shift Migration
+## Overview
 
-A mid-size logistics company is migrating its on-premises application server fleet to Google Cloud. The fleet consists of 30 Windows Server 2019 VMs and 20 Linux (CentOS 7) VMs. Each VM has been manually configured with company-specific software, security baselines, and monitoring agents installed over the past three years. The IT team wants to minimize reboot time, maintain configuration consistency across all VMs, and reduce the manual effort of re-configuring each VM after migration. They have a three-month timeline.
+This discussion asks you to apply Compute Engine concepts to realistic
+infrastructure design problems. The scenarios below represent the kind of
+architectural decisions cloud engineers make daily and that appear in ACE
+exam scenario questions.
 
-In 175–225 words, address the following:
+**Due:** See course calendar for deadlines.
 
-- Which Compute Engine feature would you use to preserve the current VM configurations and deploy them consistently to GCP? Explain your choice.
-- Would you use startup scripts, custom images, or both? Justify your approach.
-- What machine families would you evaluate for the Windows and Linux workloads, and what information would you need to select the right machine type for each?
-
----
-
-## Scenario B — The Cost-Optimized Analytics Platform
-
-A university research department runs a genomics data processing pipeline that executes 8-hour batch jobs twice per week. Each job spawns 200 worker VMs that process data in parallel and write results to Cloud Storage. The jobs are fully fault-tolerant — if a VM fails mid-job, the pipeline detects it and retries that segment on a new VM. The department has a tight annual budget and needs to minimize per-job compute costs.
-
-In 175–225 words, address the following:
-
-- Which Compute Engine pricing model should the department use for the worker VMs and why?
-- What machine family is most appropriate for CPU-intensive genomics computation?
-- The department runs these jobs only twice per week for 8 hours each. Would committed use discounts make sense here? Show your reasoning.
-- What architecture would you use to automatically provision 200 VMs at job start and tear them down when the job completes?
+**Grading:** Initial post (60 points) + two peer responses (20 points each) = 100 points
 
 ---
 
-## Scenario C — The High-Availability Web Application
+## Prompt A — Infrastructure Design for High Availability (Choose One)
 
-A startup is deploying its first production web application on GCP. The application must remain available even if a single data center (zone) experiences a hardware failure. The startup expects to handle 1,000 to 10,000 simultaneous users during peak hours, with low traffic overnight. The team has no dedicated infrastructure staff and wants to minimize manual scaling operations.
+A regional e-commerce company runs its web storefront on a single Compute
+Engine VM in `us-central1-a`. The VM uses a pd-standard boot disk and has no
+backups. Traffic spikes during sales events — sometimes to 10x the baseline
+load — and the site has gone down during two major sales in the past year.
 
-In 175–225 words, address the following:
+In your post, design a Compute Engine architecture that addresses these problems:
 
-- Which Compute Engine feature would you use to automatically scale the VM fleet up and down based on user demand? Name the specific feature and explain how it works.
-- How would you deploy the web servers across multiple zones to survive a zone failure? Name the specific architecture.
-- The startup's developers have a custom Nginx configuration with their application baked in. How would they ensure all auto-scaled VMs start with the exact same configuration?
-- What disk type would you use for the application VMs, and would you use local SSDs for the application data?
-
----
-
-## Peer Response Guidelines
-
-Your peer responses must be at least 50 words each. A strong peer response does at least one of the following:
-
-- Identifies a trade-off the classmate did not mention in their design
-- Suggests a specific gcloud command or Console workflow the classmate could use to implement part of their solution
-- Questions an assumption in the classmate's machine type or pricing choice and proposes an alternative
-- Connects the scenario to something learned in the lab exercise
-
-Responses that consist only of agreement without substantive technical content receive no credit.
+1. Describe your complete Compute Engine configuration, including:
+   - Machine family and type you would choose and why
+   - Disk type(s) and why
+   - Instance group type (zonal vs. regional MIG) and zone placement
+2. Design an autoscaling policy. Specify:
+   - Minimum and maximum instance counts and your reasoning
+   - Which autoscaling signal you would use and the target value
+   - Cool-down period and why it matters during traffic spikes
+3. Explain how you would create a backup and recovery strategy using
+   Compute Engine features. Include snapshot policy recommendations.
+4. Describe how startup scripts fit into the new architecture. What would
+   your startup script do, and how would it be delivered to instances?
 
 ---
 
-## Grading Rubric — 10 Points Total
+## Prompt B — Cost Optimization Analysis (Choose One)
 
-Initial Post — 6 Points:
+Your company runs a mixed compute workload on GCP with the following components:
 
-- 5–6 pts: Addresses all sub-questions with accurate Compute Engine terminology, names specific GCP features (custom images, MIGs, Spot VMs, etc.), and provides justified reasoning for each choice. 175–225 words.
-- 3–4 pts: Addresses most sub-questions but uses vague terminology or lacks justification for design choices.
-- 1–2 pts: Addresses only one sub-question or contains significant factual errors about Compute Engine.
-- 0 pts: Initial post not submitted by the Wednesday deadline.
+- 8 web servers running 24/7 serving production traffic
+- A machine learning training job that runs 3 hours per day
+- A nightly data pipeline that processes files for 5 hours; retries on failure
+- A development environment used 8 hours per day, Monday–Friday only
+- A database server that must never be interrupted
 
-Peer Responses — 4 Points:
+Analyze the cost-optimization strategy for each workload:
 
-- 4 pts: Two responses submitted by Sunday, each at least 50 words, each contributing specific technical additions.
-- 2 pts: Only one qualifying response, or both are superficial.
-- 0 pts: No peer responses submitted.
+1. For each workload, recommend the appropriate VM pricing model
+   (on-demand, committed use discount, sustained use discount, Spot VM, or
+   preemptible VM). Justify each choice.
+2. For the development environment, describe how autoscaling and scheduled
+   scaling could reduce costs. Include specific parameters in your answer.
+3. Explain the risk/reward trade-off of using Spot VMs for the data pipeline.
+   What design patterns would you implement to make it production-safe?
+4. Calculate the approximate monthly cost impact of your recommendations
+   compared to running all workloads on on-demand e2-standard-4 VMs. Use
+   the GCP Pricing Calculator at cloud.google.com/products/calculator and
+   document your assumptions.
 
 ---
 
-Professor Nash note: Compute Engine architecture decisions involve real trade-offs between cost, availability, maintainability, and performance. In your posts, go beyond naming features — explain why you chose each feature over alternatives. "I would use a Managed Instance Group because it provides autoscaling" is a start, but "I would use a regional MIG because it spans three zones and will automatically redistribute traffic if zone us-central1-a fails" shows you understand the actual resilience benefit.
+## Response Requirements
+
+Your initial post must be at least 300 words and include:
+
+- Specific GCP machine types or families by name (e.g., `e2-medium`, `n2-standard-4`)
+- Quantitative reasoning where applicable (instance counts, percentages, costs)
+- At least one trade-off you considered and rejected, with explanation
+
+Your two peer responses must each be at least 100 words and do one of the
+following:
+
+- Identify a workload requirement the original post may have overlooked
+- Propose a different configuration and explain the trade-off
+- Challenge a cost or availability assumption with evidence or reasoning
+
+---
+
+## Discussion Tips
+
+- The GCP pricing calculator is your friend. Use it to get real numbers
+  before making cost-based arguments.
+- The ACE exam often presents scenarios with two plausible answers. Practice
+  articulating why one is better than the other in a specific context.
+- Think about failure modes. For every design choice, ask: what happens when
+  this component fails?
+
+---
+
+## Reflection Question (Optional — Extra Credit)
+
+Compare a managed instance group with autoscaling to a Kubernetes deployment
+with the Horizontal Pod Autoscaler. In what scenarios would you choose one
+over the other, and what are the operational trade-offs? Minimum 150 words.
 
 ---
 
 End of Discussion — Module 03
 
-Course: CIS-4329 Google Cloud Platform | Texas Wesleyan University | Professor Nash
-
-Certification Target: Google Cloud Associate Cloud Engineer
+Course: CIS-4329 Google Cloud Computing | Texas Wesleyan University | Professor Nash

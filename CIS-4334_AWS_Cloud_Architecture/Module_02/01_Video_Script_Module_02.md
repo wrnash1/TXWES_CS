@@ -186,7 +186,7 @@ Resource-based policies enable cross-account access without requiring role assum
 
 In the lab this week you will write an IAM policy for a least-privilege scenario and analyze an existing policy for over-permissions — skills tested directly on the SAA-C03 exam.
 
-For your certification study: aws.amazon.com/certification.
+For your certification study: <aws.amazon.com/certification>
 
 ---
 

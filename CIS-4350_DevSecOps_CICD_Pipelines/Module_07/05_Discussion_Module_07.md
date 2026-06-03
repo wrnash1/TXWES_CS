@@ -1,63 +1,68 @@
-# Discussion Forum: Module 07 - DAST: Dynamic Application Security Testing
+# Discussion Forum: Module 07 — Application Security Testing in CI/CD
 
 ## Course: CIS-4350 DevSecOps and CI/CD Pipelines
+
+## Texas Wesleyan University | Professor Nash
 
 ## Certification Alignment: DevSecOps Professional (DSOE)
 
 ---
 
-## Overview
+## Discussion Overview
 
-This discussion applies Module 07 concepts — DAST mechanics, OWASP ZAP, passive vs. active scanning, pipeline placement, and the SAST/DAST/SCA triad — to realistic operational scenarios. Read all three scenarios and respond to the one assigned to your group or the one of your choice. Initial post due Wednesday at 11:59 PM; peer responses due Sunday at 11:59 PM.
+Post your original response to one scenario below (minimum 175 words). Then reply substantively to at least two classmates' posts (minimum 75 words each). Original posts due Sunday 11:59 PM; peer replies due Tuesday 11:59 PM.
 
----
-
-## Scenario A: The Production Active Scan Incident
-
-A junior DevSecOps engineer, trying to demonstrate security value to management, configures OWASP ZAP's full active scan to run against the production URL `https://app.company.com` on a daily schedule. Two days after deployment, customer service receives calls from users who cannot log in. Investigation reveals that ZAP's brute-force detection testing has triggered account lockout for thousands of user accounts, and a ZAP SQL injection payload in a search field has corrupted a subset of production database records.
-
-In 175-225 words, address the following: Identify the specific technical errors the engineer made in this configuration — name the ZAP scan mode, the target environment, and the missing control that would have prevented each incident. Describe the correct DAST pipeline architecture that provides equivalent security coverage without the production risk: which environment, which scan mode, and which schedule. Finally, explain what the engineer should have done instead of running active scans against production — what monitoring-oriented DAST capability is appropriate for a production environment?
+Professor Nash note: Application security testing is a domain with genuine expert disagreement about trade-offs — especially between SAST false positive rates, DAST pipeline integration challenges, and the coverage gap that exists even when all three testing types are in place. I want to see you engage with these real tensions rather than presenting idealized solutions.
 
 ---
 
-## Scenario B: The SAST-Only Argument
+## Scenario 1 — The SAST False Positive Crisis
 
-A startup CTO argues: "We run Semgrep on every PR. It catches SQL injection, XSS, and hardcoded credentials. Adding DAST would just be redundant testing that slows down our pipeline. We are a five-person team and cannot afford 45-minute pipeline runs."
+Your organization deploys Semgrep with the `p/owasp-top-ten` rule set across 15 microservices. In the first two weeks, developers report that 68% of Semgrep findings are false positives — code that is flagged as SQL injection or XSS but is not actually vulnerable in context. Developer sentiment toward the security scanning program is turning negative. Three teams have started adding `nosemgrep` comments to everything flagged without reviewing the finding.
 
-A security engineer responds: "SAST and DAST are not redundant — they find completely different vulnerability classes."
+Diagnose what went wrong and propose a recovery plan. What factors typically cause high false positive rates in SAST tools? What is the difference between a false positive and an accepted risk, and how does your response differ for each? How do you tune Semgrep rule sets to reduce noise without creating blind spots? What process changes would you implement to ensure that `nosemgrep` suppressions receive appropriate review? Reference specific Semgrep configuration options and suppression practices from the reading guide.
 
-In 175-225 words, address the following: Support the security engineer's position by identifying three specific vulnerability classes that their SAST-covered Semgrep scan would miss that DAST would catch. For each, explain precisely why the vulnerability is only detectable at runtime. Then address the CTO's velocity concern directly: propose a DAST integration approach that adds meaningful security coverage without the 45-minute pipeline duration problem, citing the specific ZAP tool and configuration that makes this achievable.
+### Scenario 1 — Peer Response Prompt
 
----
-
-## Scenario C: The Authenticated DAST Gap
-
-A healthcare application processes patient records accessible only after login. A DevSecOps team integrates ZAP baseline scan into their CI/CD pipeline targeting the staging URL. After six months of weekly scans, a penetration tester discovers an IDOR vulnerability: any authenticated user can access any other patient's records by modifying the patient ID in the URL. The ZAP scans never flagged this vulnerability.
-
-In 175-225 words, address the following: Explain precisely why the ZAP scans missed the IDOR vulnerability — what configuration gap caused this? Describe the specific DAST configuration change required to detect IDOR vulnerabilities: what does authenticated DAST mean technically, what does ZAP need to be provided to perform authenticated scanning, and what scan capability specifically tests IDOR patterns? Discuss whether automated DAST alone is sufficient for discovering all IDOR vulnerabilities in a complex healthcare application, or whether supplementary testing is required.
+Your classmate proposed specific tuning steps. Do their proposed tuning changes reduce false positives or do they create security blind spots? What evidence would you want to see before accepting their proposal?
 
 ---
 
-## Discussion Rubric (10 Points Total)
+## Scenario 2 — DAST in a Microservices Environment
 
-### Initial Post (6 Points)
+You are tasked with implementing DAST scanning across a microservices application that has 23 individual services, each with its own REST API. All services are deployed together in a staging Kubernetes cluster. A complete OWASP ZAP full scan of all 23 services takes 4 hours — far too long for a pull request pipeline. The security team insists that DAST is a requirement for compliance.
 
-Due Wednesday at 11:59 PM. Your post must be 175-225 words, address all elements of your chosen scenario, and use precise DAST and DevSecOps terminology.
+Design a practical DAST strategy for this environment. Which services should get full scans vs. baseline scans, and on what criteria? How do you integrate DAST into the pipeline without blocking developers for 4 hours? Consider scheduled DAST vs. PR-triggered DAST, risk-based scan scope selection, parallel scanning, and the trade-off between scan coverage and pipeline speed. Reference the ZAP scan modes from this module and propose specific GitHub Actions trigger configurations. What compliance evidence does this approach generate, and is it sufficient to satisfy a SOC 2 or PCI-DSS auditor?
 
-- 5-6 pts: Thoroughly addresses all scenario elements with technical accuracy, clear explanations, and appropriate terminology. Meets the word count.
-- 3-4 pts: Addresses most elements but lacks technical depth in one or more areas.
-- 0-2 pts: Incomplete, missing, or does not substantively address the scenario.
+### Scenario 2 — Peer Response Prompt
 
-### Peer Responses (4 Points)
-
-Due Sunday at 11:59 PM. Respond to at least two classmates who chose different scenarios.
-
-- 4 pts: Two substantive responses (at least 50 words each) that add technical depth, propose an alternative approach, or cite a specific reading guide concept.
-- 2 pts: Only one substantive response, or both are superficial.
-- 0 pts: No peer responses submitted.
+Your classmate proposed a risk-based approach to which services get full scans. What is the risk of their selection criteria? Is there a service type that their criteria would incorrectly exclude from full scanning?
 
 ---
 
-## Professor Nash Note
+## Scenario 3 — The Log4Shell Response
 
-Scenario A involves a common error made by engineers who understand DAST tools but not the operational constraints of their deployment. When discussing Scenario A, do not just say "don't scan production" — explain specifically what each ZAP mode does that caused each specific incident (account lockouts and database corruption are two distinct problems with two distinct causes). Precision in incident analysis is a skill the exam and real-world DevSecOps practice both require.
+In December 2021, the Log4Shell vulnerability (CVE-2021-44228 — CVSS 10.0) was disclosed. Organizations using Apache Log4j in Java applications needed to identify and patch within hours. Organizations with mature DevSecOps programs responded in hours; those without took days or weeks.
+
+Analyze how a mature SBOM program would have improved the Log4Shell response. If every release since 2019 had an associated CycloneDX SBOM, what exact steps would your incident response team take within the first 2 hours of disclosure? Compare this to the response at an organization without SBOMs — how do they determine which applications are affected? What dependency scanning tools would have caught this in the pipeline before deployment, and why did many organizations deploying Log4j not catch it? (Hint: consider the difference between direct and transitive dependencies.) Reference Syft, Grype, and OWASP Dependency-Check from this module.
+
+### Scenario 3 — Peer Response Prompt
+
+Your classmate described an SBOM-based response process. How long does their described process actually take for an organization with 500 applications? What is the bottleneck in their process?
+
+---
+
+## Grading Rubric
+
+| Criterion | Points |
+|---|---|
+| Original post addresses all parts of the chosen scenario | 3 |
+| Specific tools, configurations, or pipeline patterns cited | 2 |
+| Trade-offs and real-world constraints acknowledged | 2 |
+| Peer reply 1 — substantive challenge or extension | 1.5 |
+| Peer reply 2 — substantive challenge or extension | 1.5 |
+| Total | 10 |
+
+---
+
+Discussion — Module 07 | CIS-4350 | Texas Wesleyan University | Professor Nash

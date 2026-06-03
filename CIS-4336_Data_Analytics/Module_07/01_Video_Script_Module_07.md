@@ -1,159 +1,341 @@
-# Video Script — Module 07: Data Visualization Principles and Chart Types
+# Video Script: Module 07 — Statistical Analysis and Visualization
 
-**Course:** CIS-4336 Data Analytics — Texas Wesleyan University
-**Instructor:** Professor Nash
-**Estimated Runtime:** 20–24 minutes
-**Certification Alignment:** CompTIA Data+ DA0-001 — Domain 4: Visualization
+## Course: CIS-4336 Data Analytics
 
----
+## Texas Wesleyan University | Professor Nash
 
-## Segment 1 — Introduction (2 minutes)
+## Estimated Duration: 20–24 minutes
 
-Welcome back to CIS-4336. I am Professor Nash, and this is Module 07: Data Visualization Principles and Chart Types.
-
-Data visualization is where analysis becomes communication. A technically correct analysis that cannot be understood by its audience has failed. Visualization translates numbers into visual forms that human perception can process rapidly — patterns, comparisons, trends, and outliers become visible in seconds.
-
-By the end of this module, you will be able to:
-
-- Apply the core principles of effective data visualization
-- Select the appropriate chart type for a given data scenario
-- Identify common visualization mistakes and their consequences
-- Distinguish between charts that show comparison, composition, distribution, and relationship
-- Apply these concepts to Data+ DA0-001 Domain 4 exam questions
-
-Domain 4 — Visualization — comprises approximately 21 percent of the Data+ exam. It is the largest single domain by weight.
+## Certification Alignment: CompTIA Data+ (DA0-001)
 
 ---
 
-## Segment 2 — Core Visualization Principles (3 minutes)
+## Segment 1: Introduction (0:00–1:30)
 
-Before choosing a chart type, you need to understand the principles that separate effective visualizations from misleading or confusing ones.
+Welcome back to CIS-4336 Data Analytics. I'm Professor Nash, and today we are tackling one of the most foundational topics in the field — statistical analysis and data visualization.
 
-**Principle 1: Match the chart to the analytical question.** The chart type should serve the question being asked. Is the question about trend over time? Comparison between categories? Distribution of values? Relationship between two variables? Each question has a preferred chart family.
+Think about it this way: data without statistics is just noise. Statistics give us a language to describe what we see, measure how confident we are, and communicate findings to decision-makers. Visualization takes those statistics and makes them immediately understandable — even to someone who has never opened a spreadsheet.
 
-**Principle 2: Maximize the data-to-ink ratio.** Edward Tufte's foundational principle states that every drop of ink on a chart should represent data. Remove gridlines that add no value, remove 3D effects that distort perception, remove decorative elements that compete with data.
+By the end of today you will be able to calculate and interpret descriptive statistics, understand measures of central tendency and spread, use correlation to describe relationships between variables, and select the right chart type for any given dataset.
 
-**Principle 3: Avoid misleading scales.** A y-axis that does not start at zero exaggerates differences between bars. A truncated axis can make a small change look dramatic. Always examine axes before interpreting a chart — and always build your own charts with honest scales.
+These concepts map directly to Domain 2 of the CompTIA Data+ exam, which covers data analysis and statistics. Expect three to five exam questions on this material.
 
-**Principle 4: Use color purposefully.** Color should encode information, not decorate. Use distinct hues to distinguish categories. Use sequential color scales (light to dark) for numeric magnitude. Use diverging color scales (two-hue gradient through a neutral midpoint) for data that has a meaningful center (like positive vs. negative values).
+[PAUSE — Slide: Module 07 Learning Objectives]
 
-**Principle 5: Reduce cognitive load.** The reader should not have to work hard to understand your chart. Eliminate legends when you can label data directly. Write a descriptive title that states the main finding, not just the variables. Annotate significant data points.
-
-[SHOW CHART: Side-by-side comparison — a cluttered chart with 3D bars, decorative background, redundant legend, and unlabeled axes on the left; a clean redesigned version of the same data on the right with direct labels, minimal gridlines, and a descriptive title]
+Let's get started.
 
 ---
 
-## Segment 3 — Comparison Charts (3 minutes)
+## Segment 2: Descriptive Statistics Overview (1:30–4:00)
 
-Comparison charts answer the question: how do these values rank relative to each other?
+Descriptive statistics summarize and describe the main features of a dataset. They do not make predictions — that is inferential statistics, covered in Module 08. Descriptive statistics simply tell us what the data looks like right now.
 
-**Bar chart (vertical or horizontal)** is the default choice for comparing values across discrete categories. Vertical bars (column chart) work best when category labels are short. Horizontal bars work best when labels are long.
+There are three categories you need to know.
 
-Key rules for bar charts: always start the y-axis at zero. The length of a bar encodes value — truncating the axis makes small differences appear large.
+First: **measures of central tendency** — mean, median, and mode. These describe the center of your data.
 
-**Grouped bar chart** compares multiple series across categories side by side. Use when you need to compare two or three metrics across the same categories.
+Second: **measures of spread** — range, variance, and standard deviation. These describe how spread out or tightly clustered the data is.
 
-**Stacked bar chart** shows both the total and the composition of each category simultaneously. Use when both part-to-whole and total-to-total comparisons matter.
+Third: **measures of shape** — skewness and kurtosis. These describe the symmetry and peak-ness of your distribution.
 
-[SHOW CHART: Three side-by-side examples — simple bar chart for regional revenue, grouped bar chart for revenue by region by year, and stacked bar chart for revenue composition by product category within each region]
+[SHOW CHART — Normal distribution bell curve with labels for mean, standard deviation bands]
 
----
+[PAUSE]
 
-## Segment 4 — Trend and Time Series Charts (2 minutes)
+Let me give you a concrete example. Suppose you work for a retail company and you have monthly sales figures for 10 stores:
 
-Time series charts answer the question: how does this value change over time?
+`42000, 38000, 55000, 41000, 39000, 44000, 52000, 37000, 60000, 47000`
 
-**Line chart** is the standard for continuous time series data. Connect measurements chronologically and the slope of the line communicates direction and rate of change. Multiple lines on the same chart compare trends across different groups or metrics.
-
-**Area chart** fills the region beneath the line. Use for emphasizing volume or cumulative magnitude over time. Stacked area charts show composition changing over time.
-
-**Avoid bar charts for time series.** While technically possible, bar charts force the reader to compare bar heights rather than following a continuous line — the line chart is perceptually more efficient for temporal data.
-
-[SHOW CHART: Line chart showing monthly revenue trend over 24 months with annotations marking key business events — product launch, price change, seasonal dip]
+Before you can understand what is happening, you need to summarize this data. That is exactly what descriptive statistics do.
 
 ---
 
-## Segment 5 — Distribution Charts (2 minutes)
+## Segment 3: Measures of Central Tendency (4:00–7:30)
 
-Distribution charts answer the question: how are these values spread across the range?
+### The Mean
 
-**Histogram** groups continuous data into equal-width bins and shows frequency per bin. Reveals distribution shape, modality, center, and spread. The bin width choice significantly affects interpretation — too few bins hide detail; too many bins add noise.
+The mean — the arithmetic average — sums all values and divides by the count.
 
-**Box plot** displays the five-number summary (minimum, Q1, median, Q3, maximum) and marks outliers beyond 1.5 times IQR. Excellent for comparing distributions across multiple groups on the same chart.
+`mean = sum(x) / n`
 
-**Violin plot** combines the box plot with a kernel density estimate — showing the full shape of the distribution. More informative than a box plot when distribution shape matters.
+For our store data, the sum is 455,000 and n equals 10, so `mean = 455000 / 10 = 45500`.
 
-[SHOW CHART: Three charts side by side showing the same salary data as a histogram, a box plot, and a violin plot — comparing what each reveals and hides about the distribution]
+The mean is sensitive to outliers. If one store had an extraordinary month at $200,000, the mean would jump dramatically even though nine stores were unchanged.
 
----
+[PAUSE]
 
-## Segment 6 — Relationship Charts (2 minutes)
+### The Median
 
-Relationship charts answer the question: how do two or more variables co-vary?
+The median is the middle value when data is sorted. With an even count, the median is the average of the two middle values.
 
-**Scatter plot** plots one numeric variable on each axis and one point per observation. Reveals linear or non-linear relationships, clusters, and outliers. The relationship between two variables and the direction and strength of correlation are visually apparent.
+Sorted: `37000, 38000, 39000, 41000, 42000, 44000, 47000, 52000, 55000, 60000`
 
-**Bubble chart** extends the scatter plot by encoding a third numeric variable as the size (area) of each point. Use sparingly — more than three numeric dimensions create visual complexity that most readers cannot parse.
+The two middle values are 42,000 and 44,000. So `median = (42000 + 44000) / 2 = 43000`.
 
-**Heatmap** displays a matrix of values using color intensity. Useful for correlation matrices, confusion matrices, and geographic grids.
+The median is resistant to outliers. When data is skewed — think income data, where a few billionaires exist — the median is a better representation of the typical value than the mean.
 
-[SHOW CHART: Scatter plot showing training hours vs. sales revenue with a fitted trend line, correlation coefficient annotated, and two labeled outlier points]
+[PAUSE]
 
----
+### The Mode
 
-## Segment 7 — Composition Charts (2 minutes)
+The mode is the most frequently occurring value. In our dataset, every value is unique, so there is no mode. But consider survey responses on a 1–5 scale — the mode tells you which rating was given most often. The mode is the only measure of central tendency that applies to categorical data.
 
-Composition charts answer the question: what is the part-to-whole breakdown?
+[SHOW CHART — Side-by-side: symmetric distribution (mean = median) vs. right-skewed distribution (mean > median)]
 
-**Pie chart** shows the proportion of each category within a whole. Use only when you have five or fewer categories and the comparison is between individual slices rather than across multiple charts. Humans are poor at estimating angles — avoid pie charts when precise comparison matters.
-
-**Donut chart** is a variation of the pie chart with a hollow center. The center space can display a key metric.
-
-**Treemap** displays hierarchical composition using nested rectangles sized by value. Effective for large numbers of categories.
-
-**Waterfall chart** shows how an initial value is built up or broken down by successive positive and negative contributions. Used for financial analysis (revenue bridge, budget variance).
-
-[SHOW CHART: Side-by-side comparison of the same five-category composition data shown as a pie chart vs. a horizontal bar chart — demonstrating why the bar chart is easier to read for precise comparison]
+**Data+ Exam Tip:** Know when to use each measure. Use mean for symmetric data without outliers. Use median for skewed data or data with outliers. Use mode for categorical data.
 
 ---
 
-## Segment 8 — Chart Selection Decision Guide (2 minutes)
+## Segment 4: Measures of Spread (7:30–11:00)
 
-[SHOW CHART: Chart selection tree — top-level branches: Comparison, Trend over Time, Distribution, Relationship, Composition — each branch leads to two to three recommended chart types with one-line descriptions]
+Understanding the center is only half the picture. Two datasets can have identical means but look completely different if one is tightly clustered and the other is wildly spread out.
 
-The exam will present a data scenario and ask you to select the most appropriate chart. Apply this decision process:
+### Range
 
-First, identify what question the chart needs to answer. Then match the question type to the chart family. Then select the specific chart based on the number of variables and the number of categories.
+`range = maximum - minimum`
 
-Common exam traps:
+For our sales data: `range = 60000 - 37000 = 23000`.
 
-- Using a pie chart with many categories — bar chart is better
-- Using a bar chart for time series — line chart is better
-- Using a line chart for unrelated categories — bar chart is better
-- Using a 3D chart of any type — flat versions are always more accurate
+The range is simple but fragile. One extreme value can make it misleading.
+
+[PAUSE]
+
+### Variance
+
+Variance measures the average squared deviation from the mean. We square deviations so that positive and negative differences do not cancel each other out.
+
+Population variance: `variance = sum((x - mean)^2) / n`
+
+Sample variance uses Bessel's correction — dividing by `n - 1` — to produce an unbiased estimate of population variance.
+
+`sample_variance = sum((x - mean)^2) / (n - 1)`
+
+For our sales data, the sample variance is approximately 72,277,778.
+
+[PAUSE]
+
+### Standard Deviation
+
+Standard deviation is the square root of variance, bringing us back to original units.
+
+`std_dev = sqrt(variance)`
+
+`std_dev = sqrt(72277778) ≈ 8502`
+
+A typical store's sales fall within about $8,502 of the $45,500 mean. That is an actionable number you can use to benchmark low-performing stores.
+
+[SHOW CHART — Bell curve: mean ± 1 SD covers 68%, mean ± 2 SD covers 95%, mean ± 3 SD covers 99.7%]
+
+This is the **68-95-99.7 rule**, also called the empirical rule. It applies to normally distributed data. For the Data+ exam, memorize all three percentages.
+
+[PAUSE]
+
+### Interquartile Range
+
+The IQR spans the middle 50% of data — from the 25th percentile (Q1) to the 75th percentile (Q3).
+
+`IQR = Q3 - Q1`
+
+The IQR is used to detect outliers. Any value below `Q1 - (1.5 * IQR)` or above `Q3 + (1.5 * IQR)` is flagged. You will see this rule illustrated in box plots throughout your analytics career.
 
 ---
 
-## Segment 9 — Exam Alignment and Closing (2 minutes)
+## Segment 5: Correlation (11:00–13:30)
 
-Module 07 maps to Data+ exam Domain 4 — Visualization — the largest domain at approximately 21 percent of the exam. Expect scenario-based questions that ask you to:
+Correlation measures the strength and direction of the linear relationship between two numeric variables.
 
-- Select the most appropriate chart type for a described dataset and question
-- Identify visualization errors that mislead the audience
-- Interpret a described visualization and identify what it communicates
-- Recognize when a chart's design choices introduce bias or distortion
+The most common measure is the **Pearson correlation coefficient**, denoted `r`.
 
-For exam preparation, review the official objectives at comptia.org and Professor Messer's study materials at professormesser.com.
+`r = sum((x - mean_x)(y - mean_y)) / sqrt(sum((x - mean_x)^2) * sum((y - mean_y)^2))`
 
-Your Module 07 assignments:
+The value of `r` always falls between -1 and +1.
 
-- Complete the Reading Guide — focus on the chart selection guide and the visualization mistakes reference
-- Complete Lab 07 — you will match five data scenarios to chart types and justify each selection
-- Complete the ten-question quiz
-- Post to the Discussion Board by Wednesday and respond to two classmates by Sunday
+- `r = +1` — perfect positive linear relationship
+- `r = -1` — perfect negative linear relationship
+- `r = 0` — no linear relationship
 
-See you in Module 08, where we cover business intelligence tools including Power BI and Tableau.
+[SHOW CHART — Four scatter plots: r=+1, r=-1, r=+0.7, r=0]
+
+[PAUSE]
+
+General interpretation guidelines:
+
+- `|r| >= 0.9` — very strong
+- `0.7 <= |r| < 0.9` — strong
+- `0.5 <= |r| < 0.7` — moderate
+- `0.3 <= |r| < 0.5` — weak
+- `|r| < 0.3` — negligible
+
+**Critical warning:** Correlation does not imply causation. Two variables can move together for entirely unrelated reasons. The classic example: ice cream sales and drowning incidents both rise in summer — but eating ice cream does not cause drowning. Both respond to a third variable: temperature.
+
+[PAUSE]
+
+When data is ordinal or not normally distributed, use **Spearman rank correlation** instead. It ranks each variable first, then computes Pearson correlation on the ranks.
 
 ---
 
-End of Module 07 Video Script — Estimated runtime: 22 minutes
+## Segment 6: Data Visualization Types (13:30–17:30)
+
+Choosing the right chart is one of the most practical skills in data analytics. A chart that fits the data communicates insight instantly. A chart that mismatches the data confuses and misleads.
+
+[SHOW CHART — Chart selection decision tree]
+
+### Bar Charts
+
+Bar charts compare discrete categories. The length or height of each bar represents a quantity.
+
+- **Vertical bar chart**: comparing values across categories at a single point in time
+- **Horizontal bar chart**: when category labels are long or there are many categories
+- **Grouped bar chart**: comparing multiple series across categories simultaneously
+- **Stacked bar chart**: showing part-to-whole relationships within each category
+
+Example: quarterly sales by region. Each region is a category; bar height is total sales.
+
+[PAUSE]
+
+### Line Charts
+
+Line charts show trends over time. The x-axis is a time dimension; the y-axis is a continuous measure.
+
+Use line charts when:
+
+- You have a continuous time series
+- You want to show direction and rate of change
+- You are comparing two or more trends on the same scale
+
+Do not use a line chart for unordered categories — the connecting lines imply a false sense of continuity.
+
+[PAUSE]
+
+### Scatter Plots
+
+Scatter plots show the relationship between two continuous variables. Each point represents one observation.
+
+Scatter plots reveal:
+
+- Correlation direction and strength
+- Clusters of similar data points
+- Outliers that deviate from the main pattern
+
+Adding a trend line — a regression line — helps viewers see the overall direction of the relationship.
+
+[PAUSE]
+
+### Histograms
+
+A histogram shows the distribution of a single numeric variable. The x-axis divides the range into bins (intervals); the y-axis shows the count or frequency within each bin.
+
+Histograms reveal:
+
+- Whether data is symmetric or skewed
+- The approximate center and spread
+- Multiple peaks, indicating a bimodal distribution
+- Outliers on either tail
+
+[SHOW CHART — Histogram with right skew labeled, long tail to the right]
+
+**Do not confuse histograms with bar charts.** Histograms show distributions of continuous data — bars are adjacent with no gaps. Bar charts compare discrete categories — gaps between bars are acceptable and common.
+
+[PAUSE]
+
+### Choosing the Right Chart
+
+Match your analytical question to the correct visual:
+
+- Comparing categories → bar chart
+- Showing trends over time → line chart
+- Showing relationships between two variables → scatter plot
+- Showing the distribution of one variable → histogram
+- Showing part-to-whole composition → pie chart or stacked bar
+- Showing geographic patterns → map/choropleth chart
+- Showing many variables at once → heatmap or parallel coordinates
+
+[SHOW CHART — Summary table of chart types with use cases]
+
+---
+
+## Segment 7: Applying Statistics in SQL (17:30–19:30)
+
+You can compute descriptive statistics directly in SQL — a critical skill for analysts who work in database environments.
+
+[PAUSE]
+
+```sql
+-- Descriptive statistics for store sales
+SELECT
+    COUNT(sales_amount)                   AS record_count,
+    AVG(sales_amount)                     AS mean_sales,
+    MIN(sales_amount)                     AS min_sales,
+    MAX(sales_amount)                     AS max_sales,
+    MAX(sales_amount) - MIN(sales_amount) AS sales_range,
+    STDDEV(sales_amount)                  AS std_dev_sales,
+    VARIANCE(sales_amount)                AS variance_sales
+FROM store_monthly_sales
+WHERE sale_month = '2024-01';
+```
+
+[PAUSE]
+
+Most SQL dialects support `STDDEV()` and `VARIANCE()` as built-in aggregate functions. When working in databases that lack these, compute variance manually:
+
+```sql
+-- Manual population variance
+SELECT AVG(POWER(sales_amount - avg_sales, 2)) AS pop_variance
+FROM (
+    SELECT
+        sales_amount,
+        AVG(sales_amount) OVER () AS avg_sales
+    FROM store_monthly_sales
+) sub;
+```
+
+[PAUSE]
+
+For percentiles — needed for IQR, median, and quartile analysis — use `PERCENTILE_CONT`:
+
+```sql
+-- Median and quartiles
+SELECT
+    PERCENTILE_CONT(0.25) WITHIN GROUP (ORDER BY sales_amount) AS q1,
+    PERCENTILE_CONT(0.50) WITHIN GROUP (ORDER BY sales_amount) AS median_sales,
+    PERCENTILE_CONT(0.75) WITHIN GROUP (ORDER BY sales_amount) AS q3
+FROM store_monthly_sales;
+```
+
+---
+
+## Segment 8: Module Summary and Exam Prep (19:30–21:00)
+
+Let me bring everything together.
+
+[PAUSE]
+
+Descriptive statistics describe your data. Key measures:
+
+- Central tendency: mean, median, mode
+- Spread: range, variance, standard deviation, IQR
+- Correlation: Pearson r for linear relationships
+
+Visualization rules:
+
+- Bar chart for category comparison
+- Line chart for trends over time
+- Scatter plot for relationships between variables
+- Histogram for distributions of a single variable
+
+For the CompTIA Data+ exam, focus on:
+
+- When to use median vs. mean (skewed vs. symmetric data)
+- The empirical rule: 68-95-99.7
+- Correlation coefficient range and interpretation scale
+- Chart selection based on data type and analytical question
+
+Your lab this week uses Python pandas to compute these statistics on a real retail dataset and builds visualizations with matplotlib. Your quiz covers all material in this module.
+
+I will see you in Module 08, where we move from describing data to predicting it.
+
+[PAUSE — End card with Texas Wesleyan University branding]
+
+---
+
+End of Module 07 Video Script

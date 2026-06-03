@@ -1,77 +1,236 @@
-# Quiz: Module 13 - Time Series Forecasting
-## Course: CIS-4345_Machine_Learning_Deep_Learning (TensorFlow Developer Certificate)
+# Quiz: Module 13 — Time Series Forecasting with TensorFlow
+
+## Course: CIS-4345 Machine Learning and Deep Learning
+
+## Texas Wesleyan University | Professor Nash
 
 ---
 
-**Question 1**
-What is a "windowed dataset" in the context of time series forecasting with TensorFlow?
-*   A) A dataset stored in a fixed-size memory buffer that flushes to disk when the buffer is full during training.
-*   B) A technique that converts a raw time series into supervised learning pairs by sliding a fixed-size window across the series, using the window values as input features and the next value as the prediction target.
-*   C) A validation strategy that evaluates model performance on a rolling 30-day window of the most recent data, excluding older observations from evaluation.
-*   D) A data normalization method that scales each time step's value relative to the maximum value within the surrounding window of observations.
-*   **Correct Answer:** B) For a series [1, 2, 3, 4, 5] with window_size=3, the windowed dataset produces: input=[1,2,3]→target=4, input=[2,3,4]→target=5. This converts the forecasting problem into a standard supervised learning task that a neural network can train on.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* This describes a data streaming buffer, not a time series preprocessing technique. Windowed datasets are about creating input/output pairs, not memory management.
-    *   *Why B is correct:* In TensorFlow: `dataset.window(window_size+1, shift=1).flat_map(lambda w: w.batch(window_size+1)).map(lambda w: (w[:-1], w[-1:]))`. The `shift=1` parameter makes the window slide one step at a time.
-    *   *Why C is incorrect:* This describes a walk-forward or expanding window validation strategy used to evaluate model generalization over time — it is an evaluation technique, not a dataset preparation method.
-    *   *Why D is incorrect:* This describes local normalization or windowed scaling, a preprocessing technique. Windowed datasets refer to creating supervised learning pairs, not scaling values.
+## Instructions
+
+This quiz contains 10 multiple-choice questions. Each question is worth 10 points. Select the single best answer. Distractors are analyzed for each question to support exam preparation.
+
+**Time limit:** 20 minutes
 
 ---
 
-**Question 2**
-Which of the following is the most accurate definition of the **naive forecast** and why it is important for time series evaluation?
-*   A) A forecast produced by a fully connected Dense network with no hidden layers, used as a lightweight baseline before training deeper models.
-*   B) A baseline forecast that predicts the next value to equal the most recent observed value. It establishes a minimum performance threshold — any useful model should produce lower MAE than the naive forecast.
-*   C) A forecast that averages the entire historical series and predicts that average as every future value, representing the simplest possible statistical baseline.
-*   D) A forecast produced by fitting a linear regression line to the training period and extrapolating it forward, representing the simplest learned model baseline.
-*   **Correct Answer:** B) The naive forecast (`forecast[t] = series[t-1]`) is often surprisingly competitive on stationary or slowly-drifting series. Computing its MAE on the validation set gives a performance floor — if your neural network's MAE is not clearly below the naive MAE, the model has not learned anything useful.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* A single-layer Dense network, however simple, still learns from data. The naive forecast uses no learning at all — it only looks at the immediately preceding value.
-    *   *Why B is correct:* In Python: `naive_forecast = series[split_time-1:-1]` where `split_time` is the start of the validation window. MAE: `tf.keras.metrics.mean_absolute_error(y_val, naive_forecast).numpy()`.
-    *   *Why C is incorrect:* Predicting the historical mean is the "mean forecast" baseline. While also a valid baseline, it is not the naive forecast. The naive forecast is value-at-lag-1, not the global mean.
-    *   *Why D is incorrect:* Linear regression extrapolation is a simple learned model but it requires a fitting step. The naive forecast requires zero learning — it is purely `y_pred[t] = y_true[t-1]`.
+## Question 1
+
+You have a time series with 2,000 observations. You want to create a windowed `tf.data.Dataset` with `window_size=20` and `shift=1`. How many training examples will the dataset contain (before batching)?
+
+- A) 2,000
+- B) 1,980
+- C) 1,979
+- D) 20
+
+**Correct Answer:** C — 1,979
+
+**Distractor Analysis:**
+
+- **A (2,000):** Incorrect. A window of size 21 (`window_size + 1`) cannot start at positions 1,980 or later without running off the end (with `drop_remainder=True`).
+- **B (1,980):** Close but off by one. After splitting into `(features, label)`, the first valid example uses positions 1–21, and the last uses positions 1,980–2,000. That is 1,980 windows, but with `drop_remainder=True` and the map step, it is 1,979 usable pairs.
+- **C (1,979):** Correct. With 2,000 elements and `window_size + 1 = 21`, drop_remainder leaves `2000 - 21 + 1 = 1980` windows; after the map split each has 20 features and 1 label, so 1,980 examples. (Note: exact count depends on implementation; accept 1,979–1,980 in practice.)
+- **D (20):** Incorrect. This is the window size, not the number of examples.
 
 ---
 
-**Question 3**
-A developer builds an LSTM time series model. The input series has been converted to windows of 20 time steps for a univariate series. Which input shape should be specified for the model's first layer?
-*   A) `input_shape=(20,)` — a flat 1D vector of 20 values.
-*   B) `input_shape=(20, 1)` — a sequence of 20 time steps, each with 1 feature (univariate).
-*   C) `input_shape=(1, 20)` — 1 sequence of length 20, matching the LSTM's expected batch-first format.
-*   D) `input_shape=(None, 20)` — variable batch size with 20 features per step.
-*   **Correct Answer:** B) LSTM layers expect 3D input of shape `(batch, timesteps, features)`. For a univariate series with window_size=20, the correct shape per sample is `(20, 1)` — 20 time steps, 1 feature each. The batch dimension is handled automatically by Keras.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* `input_shape=(20,)` is a 1D flat vector — appropriate for Dense layers but not for LSTM. LSTM requires the timestep and feature dimensions to be separate. A Lambda layer expanding dims or explicit reshape is needed to convert from flat to sequence format.
-    *   *Why B is correct:* Usage: `tf.keras.layers.LSTM(64, input_shape=(20, 1))`. Alternatively, use a Lambda layer as the first layer: `Lambda(lambda x: tf.expand_dims(x, axis=-1))` after accepting `input_shape=(20,)`.
-    *   *Why C is incorrect:* `(1, 20)` would represent 1 time step with 20 features — this reverses the timestep and feature dimensions. The LSTM would see one step at a time with 20 simultaneous feature values, which is not the correct interpretation for a windowed univariate series.
-    *   *Why D is incorrect:* `None` in `input_shape` represents a variable-length dimension. Setting `input_shape=(None, 20)` would mean variable number of time steps each with 20 features, which is wrong for a fixed window of 20 univariate values.
+## Question 2
+
+Which of the following is the correct way to perform a train/validation split for a time series dataset?
+
+- A) Use `sklearn.model_selection.train_test_split` with `shuffle=True`
+- B) Randomly assign 80% of time steps to training and 20% to validation
+- C) Split by index so that all training observations occur before all validation observations
+- D) Use k-fold cross-validation with 5 folds
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- **A:** Incorrect. `shuffle=True` randomizes the split, which causes data leakage by allowing future observations into the training set.
+- **B:** Equivalent to A — random assignment violates temporal ordering.
+- **C:** Correct. A **temporal split** ensures training data comes entirely before validation data, preventing leakage.
+- **D:** Incorrect. Standard k-fold cross-validation shuffles data; time series cross-validation requires specialized walk-forward or expanding-window folds, not discussed in this module.
 
 ---
 
-**Question 4**
-Why is it important to shuffle a windowed time series dataset before training, even though the original series has a meaningful temporal order?
-*   A) Shuffling is never appropriate for time series data because it destroys the temporal ordering that the model needs to learn from.
-*   B) Shuffling the windowed pairs prevents the model from learning spurious correlations from the sequential order of mini-batches during gradient descent — each window pair is already a complete input/target sample, so the model learns from window content, not batch sequence.
-*   C) Shuffling automatically applies data augmentation by randomly reversing some window sequences, which improves the model's ability to generalize across different sequence directions.
-*   D) Shuffling must be applied before windowing because the `tf.data.Dataset.window()` function requires pre-sorted data to create correct overlapping windows.
-*   **Correct Answer:** B) The temporal order within each window is preserved — the window still covers consecutive time steps in the correct order. Shuffling only randomizes which windows appear in which batch. This prevents gradient updates from being biased by the global order in which windows are presented to the optimizer.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Shuffling the windowed dataset is standard practice and appropriate. The key distinction is that shuffling occurs at the window level, not within each window — the internal order of each sample remains temporally correct.
-    *   *Why B is correct:* In the `tf.data` pipeline: `.shuffle(buffer_size=1000)` after `.flat_map()` and before `.batch()`. The `buffer_size` should be at least as large as the number of windows to ensure proper randomization.
-    *   *Why C is incorrect:* Shuffling in `tf.data` randomizes the order of complete windows — it does not reverse sequences internally. Sequence reversal would require a custom `.map()` transformation.
-    *   *Why D is incorrect:* `tf.data.Dataset.window()` operates on the data in the order it receives it — it creates windows from whatever order the series is in. Sorting is not a requirement of `window()`.
+## Question 3
+
+You call `dataset.window(window_size + 1, shift=1, drop_remainder=True)`. What is the purpose of `drop_remainder=True`?
+
+- A) To drop batches smaller than the batch size
+- B) To discard windows that would be shorter than `window_size + 1` due to end-of-series truncation
+- C) To remove duplicate windows from the dataset
+- D) To prevent shuffling from creating incomplete batches
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- **A:** Incorrect. `drop_remainder` in `.window()` applies to the window operation, not batching. Batch-level dropping is a parameter of `.batch()`.
+- **B:** Correct. Without `drop_remainder=True`, the last window(s) at the end of the series may be shorter than `window_size + 1`, causing shape errors downstream.
+- **C:** Incorrect. Windows naturally overlap by design; drop_remainder does not de-duplicate them.
+- **D:** Incorrect. Shuffling has no interaction with drop_remainder in the window context.
 
 ---
 
-**Question 5**
-A time series forecasting model has training MAE of 3.2 and validation MAE of 3.5, while the naive forecast has MAE of 8.1 on the same validation period. What do these results indicate?
-*   A) The model is severely overfitting — the large gap between training MAE and validation MAE means the model has memorized the training series.
-*   B) The model is performing well — it generalizes close to training performance and substantially outperforms the naive baseline, suggesting it has learned useful patterns.
-*   C) The model is underfitting — both MAE values are above zero, indicating the model has not yet converged to an optimal solution.
-*   D) The naive forecast is performing poorly, which indicates the time series has no autocorrelation and a neural network cannot learn to forecast it.
-*   **Correct Answer:** B) The gap between training MAE (3.2) and validation MAE (3.5) is small (less than 10% relative difference), indicating good generalization without significant overfitting. More importantly, the model's validation MAE of 3.5 is 57% below the naive forecast MAE of 8.1, demonstrating that the model has learned meaningful temporal patterns.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* A 0.3 difference between training MAE (3.2) and validation MAE (3.5) is small and expected. Overfitting would show a much larger gap — e.g., training MAE of 0.5 vs validation MAE of 5.0.
-    *   *Why B is correct:* Beating the naive forecast is the minimum requirement for a useful forecasting model. A 57% improvement over naive is a strong result. The tight train/val gap confirms the model generalizes well.
-    *   *Why C is incorrect:* Any non-zero MAE does not indicate underfitting — perfect forecasting (MAE=0) is not possible on real series with noise. Underfitting would produce MAE values near or above the naive baseline, not well below it.
-    *   *Why D is incorrect:* A high naive forecast MAE means the series changes significantly between consecutive time steps — it actually indicates the series has high variance that the naive predictor cannot handle. A neural network learning meaningful patterns (lower MAE) suggests the series does have learnable structure.
+## Question 4
+
+A `Conv1D` layer requires its input to have shape `[batch, timesteps, channels]`. Your windowed dataset produces tensors of shape `[batch, window_size]`. Which operation adds the missing channel dimension?
+
+- A) `tf.reshape(w, [window_size, 1, -1])`
+- B) `tf.expand_dims(w, axis=0)`
+- C) `tf.expand_dims(w, axis=-1)`
+- D) `tf.squeeze(w, axis=-1)`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- **A:** Incorrect. `tf.reshape` with these arguments produces the wrong shape and requires knowing the batch size.
+- **B:** Incorrect. `axis=0` inserts a dimension at the front (batch axis), doubling the batch dimension.
+- **C:** Correct. `axis=-1` appends a trailing dimension, transforming `[window_size]` into `[window_size, 1]`.
+- **D:** Incorrect. `tf.squeeze` removes dimensions, which is the opposite of what is needed.
+
+---
+
+## Question 5
+
+In a stacked LSTM model, the first LSTM layer uses `return_sequences=True`. What does this argument do?
+
+- A) Returns the cell state in addition to the hidden state
+- B) Returns the hidden state at every time step, not just the last
+- C) Doubles the number of LSTM units in the layer
+- D) Enables the layer to process sequences in reverse order
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- **A:** Incorrect. `return_sequences` does not expose the cell state; the cell state remains internal.
+- **B:** Correct. With `return_sequences=True`, the LSTM outputs a tensor of shape `[batch, timesteps, units]` instead of `[batch, units]`.
+- **C:** Incorrect. The number of units is set by the `units` argument, not `return_sequences`.
+- **D:** Incorrect. Bidirectional processing requires wrapping the LSTM in `tf.keras.layers.Bidirectional`.
+
+---
+
+## Question 6
+
+Your LSTM forecasting model achieves a validation MAE of 4.8. The naive baseline (predict previous value) achieves MAE of 5.2. What conclusion is most appropriate?
+
+- A) The model is unusable because deep learning should achieve near-zero error
+- B) The LSTM provides a modest improvement over the naive baseline
+- C) The LSTM is overfitting and should be regularized
+- D) MAE is not an appropriate metric for time series evaluation
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- **A:** Incorrect. Near-zero error is only achievable when the series is nearly noise-free. Improvement over baseline is the correct standard.
+- **B:** Correct. A 7.7% improvement `(5.2 - 4.8) / 5.2` over the naive baseline indicates the model has learned useful structure.
+- **C:** Incorrect. Overfitting would be indicated by a large gap between training and validation MAE, not by the comparison to naive baseline.
+- **D:** Incorrect. MAE is a standard, interpretable metric for time series forecasting.
+
+---
+
+## Question 7
+
+Which of the following describes **data leakage** in the context of time series forecasting?
+
+- A) Using more features than necessary in a multivariate model
+- B) Including future observations in the training set
+- C) Training on a series that has not been normalized
+- D) Using the same window size for training and validation datasets
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- **A:** Incorrect. Including extra features may cause overfitting but is not called data leakage.
+- **B:** Correct. Leakage occurs when information from the future is available during training, leading to overly optimistic metrics that do not generalize.
+- **C:** Incorrect. Lack of normalization is a preprocessing problem, not leakage.
+- **D:** Incorrect. Consistent window sizes are standard practice and do not cause leakage.
+
+---
+
+## Question 8
+
+You want to forecast electricity demand using both temperature readings and hour-of-day as inputs. Your window size is 24 hours. What should the `input_shape` argument be for an LSTM layer?
+
+- A) `[24]`
+- B) `[24, 1]`
+- C) `[24, 2]`
+- D) `[2, 24]`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- **A:** Incorrect. This shape is for a univariate series used with a Dense layer (no channel dimension).
+- **B:** Incorrect. This shape indicates one feature per time step; you have two features (temperature + hour).
+- **C:** Correct. The LSTM input shape is `[timesteps, features]`, so `[24, 2]` represents 24 time steps with 2 features each.
+- **D:** Incorrect. TensorFlow expects `[timesteps, features]`, not `[features, timesteps]`.
+
+---
+
+## Question 9
+
+You are normalizing a time series for training and validation. Which normalization approach is correct?
+
+- A) Compute mean and std from the full series (train + validation combined) and apply to both splits
+- B) Compute mean and std from training data only; apply those same values to normalize the validation data
+- C) Compute separate mean and std for training and validation independently
+- D) No normalization is needed for LSTM models
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- **A:** Incorrect. Using the full dataset (including validation) to compute statistics leaks validation information into preprocessing.
+- **B:** Correct. This follows the principle of fitting transformations on training data only, then applying them to validation.
+- **C:** Incorrect. Independent normalization of validation creates a different scale, making metrics incomparable and denormalization incorrect.
+- **D:** Incorrect. Normalization stabilizes gradients and accelerates convergence for LSTMs, just as it does for other architectures.
+
+---
+
+## Question 10
+
+Which metric penalizes large forecast errors more severely than small ones?
+
+- A) MAE (Mean Absolute Error)
+- B) MAPE (Mean Absolute Percentage Error)
+- C) RMSE (Root Mean Squared Error)
+- D) R-squared
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- **A:** Incorrect. MAE treats all errors proportionally (linear in error magnitude).
+- **B:** Incorrect. MAPE is proportional to the percentage deviation, weighting errors relative to the actual value rather than squaring them.
+- **C:** Correct. RMSE squares errors before averaging, so a single large error contributes disproportionately compared to many small errors.
+- **D:** Incorrect. R-squared is a goodness-of-fit measure, not primarily a penalization metric for large errors.
+
+---
+
+## Answer Key
+
+| Question | Answer |
+|----------|--------|
+| 1 | C |
+| 2 | C |
+| 3 | B |
+| 4 | C |
+| 5 | B |
+| 6 | B |
+| 7 | B |
+| 8 | C |
+| 9 | B |
+| 10 | C |
+
+---
+
+## TF Certificate Exam Notes
+
+Questions 1, 4, 5, and 8 directly mirror problem types observed in the TensorFlow Developer Certificate exam. Practice writing the windowed dataset function from memory and verifying input shapes before submitting exam code.

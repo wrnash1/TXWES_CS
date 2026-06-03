@@ -1,245 +1,365 @@
-# Reading Guide: Module 03 - CI/CD Concepts: Jenkins, GitHub Actions, GitLab CI
+# Reading Guide: Module 03 — Continuous Integration and Security Gates
 
 ## Course: CIS-4350 DevSecOps and CI/CD Pipelines
+
+## Texas Wesleyan University | Professor Nash
 
 ## Certification Alignment: DevSecOps Professional (DSOE)
 
 ---
 
-## Introduction
+## Learning Objectives
 
-Module 03 broadens the CI/CD perspective from GitHub Actions alone to the three most widely used pipeline platforms in enterprise DevSecOps: Jenkins, GitHub Actions, and GitLab CI. Understanding the architectural differences, security characteristics, and pipeline syntax of each platform is a high-weight topic on the DevSecOps Professional exam. This reading guide provides the comparison tables, configuration references, and exam tips needed to answer scenario-based questions about pipeline design across platforms.
+After completing this reading guide, you will be able to:
 
----
-
-## Section 1: High-Yield Glossary
-
-**Continuous Integration (CI)** — The practice of automatically building and testing every code commit, providing rapid feedback on whether the change integrates correctly with the existing codebase.
-
-**Continuous Delivery (CD)** — An extension of CI where every passing build is automatically prepared for deployment to a production-like environment. A human approval step precedes actual production deployment.
-
-**Continuous Deployment** — An extension of CD where every passing build is automatically deployed to production without manual approval. Requires high confidence in automated testing and security gates.
-
-**Pipeline** — The ordered sequence of automated stages (build, test, scan, deploy) that a code change passes through from commit to deployment.
-
-**Stage** — A logical grouping of pipeline jobs. In GitLab CI and Jenkins, stages execute sequentially while jobs within a stage run in parallel. In GitHub Actions, stages are approximated with `needs:` dependencies between jobs.
-
-**Job** — The unit of work in a CI/CD pipeline. A job runs on a specific runner or agent and contains one or more steps or script commands.
-
-**Agent (Jenkins) / Runner (GitHub Actions, GitLab CI)** — The compute environment that executes pipeline jobs. May be shared (hosted by the platform) or self-hosted (managed by the organization).
-
-**Jenkinsfile** — A text file defining a Jenkins pipeline, stored in the root of the source code repository. Supports Declarative (structured, recommended) and Scripted (Groovy-based, flexible) syntax.
-
-**Declarative Pipeline** — The recommended Jenkins pipeline syntax. Uses a structured `pipeline {}` block with predefined sections: agent, stages, stage, steps, post. More readable and auditable than Scripted Pipelines.
-
-**Scripted Pipeline** — The original Jenkins pipeline syntax. Written in Groovy, more flexible but harder to review for security misconfigurations due to arbitrary code execution capability.
-
-**GitLab Runner** — The process that executes GitLab CI jobs. Can run as a shared runner (managed by GitLab.com), group runner, or project-specific runner. Supports Docker, shell, Kubernetes, and other executors.
-
-**GitLab CI template** — A reusable pipeline definition that can be included in `.gitlab-ci.yml` using the `include:` keyword. GitLab provides pre-built security scanning templates (SAST, DAST, dependency scanning) that add security jobs to any pipeline with a single line.
-
-**`needs:` keyword (GitHub Actions)** — Defines explicit job dependencies in a GitHub Actions workflow. A job with `needs: [job-a, job-b]` will not start until both job-a and job-b complete successfully.
-
-**`parallel {}` block (Jenkins)** — Executes multiple Jenkins stages simultaneously within a single parent stage, reducing total pipeline duration.
-
-**`withCredentials` (Jenkins)** — A Jenkins pipeline step that securely injects stored credentials into a block of steps as environment variables. Credentials are masked in build logs.
-
-**SAST template (GitLab)** — A built-in GitLab CI template that adds SAST scanning to a pipeline by including `template: Security/SAST.gitlab-ci.yml`. Available in GitLab Ultimate.
-
-**Supply chain attack (CI/CD context)** — An attack that compromises the pipeline by injecting malicious code into a shared action, plugin, or dependency used by the pipeline itself. Mitigated by pinning actions to commit SHAs and auditing third-party plugins.
+- Describe the five-layer CI pipeline architecture and the role of each layer
+- Write GitHub Actions and GitLab CI pipeline configurations with security stages
+- Differentiate build trigger strategies for feature branches vs. pull requests vs. releases
+- Configure SAST and dependency scanning quality gates with CVSS thresholds
+- Protect pipeline configuration files using CODEOWNERS and reusable workflows
+- Explain the security risks of unprotected pipeline-as-code files
 
 ---
 
-## Section 2: CI/CD Platform Comparison
+## Section 1 — CI Pipeline Architecture
 
-| Dimension | Jenkins | GitHub Actions | GitLab CI |
-|---|---|---|---|
-| Pipeline file | Jenkinsfile | `.github/workflows/*.yml` | `.gitlab-ci.yml` |
-| Pipeline syntax | Declarative (Groovy DSL) or Scripted Groovy | YAML | YAML |
-| Hosted runners | Self-hosted only | GitHub-hosted or self-hosted | GitLab-shared or self-hosted |
-| Plugin ecosystem | 1,800+ plugins (attack surface) | Actions Marketplace | GitLab built-in + community |
-| Built-in security scanning | Via plugins (OWASP DC, SonarQube) | Via Actions Marketplace | Built-in SAST/DAST templates (Ultimate) |
-| Credentials storage | Jenkins Credentials Manager | GitHub Secrets | GitLab CI/CD Variables |
-| Credential injection | `withCredentials()` block | `${{ secrets.NAME }}` | `$VARIABLE_NAME` in script |
-| Stage parallelism | `parallel {}` block | `needs:` dependency graph | Jobs in same stage run in parallel |
-| Pipeline-as-Code | Yes (Jenkinsfile in repo) | Yes (YAML in repo) | Yes (YAML in repo) |
-| Deployment gates | `when { branch 'main' }` | `if:` condition on job | `only:` / `rules:` on job |
-| Supply chain risk | Plugin vulnerabilities | Malicious Marketplace Actions | Included templates, dependencies |
+### 1.1 The Five Pipeline Layers
+
+| Layer | Jobs | Failure Impact |
+|---|---|---|
+| Source | Checkout, credential validation | Pipeline does not start |
+| Build | Compile, package, install deps | Downstream layers cannot run |
+| Test | Unit tests, integration tests | Code logic errors caught |
+| Scan | SAST, dependency scan, secrets scan, container scan | Security gate — blocks on findings |
+| Report | SARIF upload, badge update, metrics | Non-blocking — informational |
+
+### 1.2 Job Parallelism Design
+
+Security scans can run in parallel with tests to minimize total pipeline time:
+
+```text
+checkout
+    ├── unit-tests          (parallel)
+    ├── sast-scan           (parallel)
+    ├── secrets-scan        (parallel)
+    └── dependency-scan     (parallel)
+        └── container-build (needs: unit-tests)
+            └── image-scan  (needs: container-build)
+```
+
+### 1.3 Pipeline Failure Semantics
+
+When any job in a required path fails, all downstream jobs that `need` it are automatically skipped or cancelled. This is the enforcement mechanism for security gates — a SAST failure prevents the container from being built and pushed.
 
 ---
 
-## Section 3: Pipeline Stage Comparison — Security Gate Placement
+## Section 2 — GitHub Actions Deep Dive
 
-The following table shows how security gates map to pipeline stages across the three platforms. The gate placement is identical conceptually; only the syntax differs.
+### 2.1 Workflow Syntax Reference
 
-| Security Gate | Jenkins Stage | GitHub Actions Job | GitLab CI Job |
-|---|---|---|---|
-| Secrets detection | Security Scan stage, parallel | `security-scan` job, pre-deploy | `secret-detection` job, test stage |
-| SAST | Security Scan stage, parallel | `security-scan` job | `sast` job, test stage |
-| SCA / dependency check | Security Scan stage, parallel | `security-scan` job | `dependency-scanning` job, test stage |
-| Container image scan | Deploy Prep stage | Separate `container-scan` job | `container-scanning` job |
-| DAST | Post-deploy stage (staging) | Separate `dast` job | `dast` job, staging stage |
-| IaC scan | Pre-deploy stage | `iac-scan` job | `iac-security` job |
+| Element | Purpose | Example |
+|---|---|---|
+| `on` | Trigger events | `push`, `pull_request`, `schedule` |
+| `jobs` | Parallel execution units | `build:`, `scan:` |
+| `needs` | Job dependency chain | `needs: [build, test]` |
+| `runs-on` | Runner OS | `ubuntu-latest`, `windows-latest` |
+| `uses` | Reference a reusable action or workflow | `actions/checkout@v4` |
+| `run` | Shell command | `pip install -r requirements.txt` |
+| `env` | Job-level environment variables | `PYTHON_VERSION: "3.12"` |
+| `secrets` | Reference GitHub Secrets | `${{ secrets.SNYK_TOKEN }}` |
+| `if` | Conditional job execution | `if: github.ref == 'refs/heads/main'` |
+| `continue-on-error` | Allow job to fail without failing workflow | `continue-on-error: true` |
+| `permissions` | Restrict GITHUB_TOKEN scope | `contents: read` |
 
----
-
-## Section 4: GitHub Actions Multi-Job Pipeline Structure Reference
-
-A multi-stage pipeline in GitHub Actions uses job dependencies via `needs:` to enforce sequential execution between stages while allowing parallel execution within a stage. The security-critical rule: the deploy job must `needs:` both the test job and the security-scan job. If either fails, deployment is blocked.
+### 2.2 Security-Hardened Workflow Template
 
 ```yaml
+name: Secure CI — Hardened
+
+on:
+  pull_request:
+    branches: [main]
+
+# Minimal permissions by default
+permissions:
+  contents: read
+  security-events: write
+
 jobs:
-  build:
-    # runs first, no dependencies
-  test:
-    needs: build
-    # runs after build
-  security-scan:
-    needs: build
-    # runs in parallel with test, after build
-  deploy:
-    needs: [test, security-scan]
-    # runs only after BOTH test and security-scan pass
-    if: github.ref == 'refs/heads/main'
+  sast:
+    name: SAST — Semgrep
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - name: Checkout at PR head (not merge commit)
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Run Semgrep
+        uses: returntocorp/semgrep-action@v1
+        with:
+          config: >-
+            p/owasp-top-ten
+            p/python
+          generateSarif: "1"
+
+      - name: Upload SARIF to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: semgrep.sarif
+```
+
+### 2.3 Pinning Action Versions
+
+Always pin actions to a specific commit SHA for supply chain security, not just a version tag (tags are mutable):
+
+```yaml
+# Insecure — tag is mutable
+- uses: actions/checkout@v4
+
+# Secure — pinned to immutable SHA
+- uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+```
+
+For audit purposes, use a tool like `pin-github-action` or Dependabot's `github-actions` ecosystem to automate SHA pinning and updates.
+
+### 2.4 Reusable Workflows for Centralized Security Gates
+
+```yaml
+# .github/workflows/security-gates.yml (in org/security-workflows repo)
+on:
+  workflow_call:
+    inputs:
+      fail-on-severity:
+        required: false
+        type: string
+        default: "HIGH,CRITICAL"
+
+jobs:
+  semgrep:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: returntocorp/semgrep-action@v1
+        with:
+          config: p/owasp-top-ten
+
+  dependency-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dependency-check/Dependency-Check_Action@main
+        with:
+          project: app
+          path: .
+          format: SARIF
+          args: --failOnCVSS 7
+```
+
+Teams consume it:
+
+```yaml
+# In each team's repo
+jobs:
+  security:
+    uses: org/security-workflows/.github/workflows/security-gates.yml@main
+    secrets: inherit
 ```
 
 ---
 
-## Section 5: Jenkins Declarative Pipeline Structure Reference
+## Section 3 — GitLab CI Deep Dive
 
-A Jenkins Declarative pipeline organizes work into sequential stages. Security stages should appear before deploy stages. The `parallel {}` block allows multiple security scans to run simultaneously within one stage.
+### 3.1 GitLab CI Syntax Reference
 
-```groovy
-pipeline {
-    agent any
-    stages {
-        stage('Build')   { steps { /* build commands */ } }
-        stage('Test')    { steps { /* test commands */ } }
-        stage('Security Scan') {
-            parallel {
-                stage('Secrets') { steps { /* gitleaks */ } }
-                stage('SAST')    { steps { /* semgrep  */ } }
-                stage('SCA')     { steps { /* snyk     */ } }
+| Element | Purpose |
+|---|---|
+| `stages` | Ordered list of pipeline stages |
+| `image` | Docker image for the job |
+| `script` | Shell commands to execute |
+| `only` / `rules` | Conditions for job execution |
+| `artifacts` | Files persisted between stages |
+| `cache` | Files cached between pipeline runs |
+| `include` | Import external YAML templates |
+| `needs` | DAG-style job dependencies (bypass stage ordering) |
+| `variables` | CI/CD variables |
+| `environment` | Deployment target |
+
+### 3.2 Built-in Security Templates
+
+GitLab provides pre-built security templates in the Auto DevOps template library:
+
+| Template | Tools Included |
+|---|---|
+| `Security/SAST.gitlab-ci.yml` | Bandit (Python), Brakeman (Ruby), ESLint Security (JS), Semgrep |
+| `Security/Dependency-Scanning.gitlab-ci.yml` | Gemnasium, retire.js, bundler-audit |
+| `Security/Secret-Detection.gitlab-ci.yml` | Gitleaks |
+| `Security/Container-Scanning.gitlab-ci.yml` | Trivy |
+| `Security/DAST.gitlab-ci.yml` | OWASP ZAP |
+
+### 3.3 GitLab Security Dashboard
+
+GitLab Ultimate includes a Security Dashboard that aggregates findings from all pipeline scans across projects. It supports:
+
+- Vulnerability management workflows (triage, dismiss, create issue)
+- Compliance dashboards for audit evidence
+- Merge request security widget showing new findings introduced by the branch
+
+---
+
+## Section 4 — Build Triggers and Their Security Implications
+
+### 4.1 Trigger Strategy by Branch Type
+
+| Trigger | Scan Scope | Target Duration | Gate Strictness |
+|---|---|---|---|
+| Push to feature branch | Secrets scan, fast SAST (changed files) | < 5 min | Warn on Medium, fail on Critical |
+| Pull request to main | Full SAST, dep scan, secrets, license | < 15 min | Fail on High+Critical |
+| Push to main | Full scan + container build/scan | < 20 min | Fail on High+Critical |
+| Release tag | All scans + SBOM + signing | < 30 min | Fail on any severity |
+| Scheduled (nightly) | DAST, supply chain, license audit | No limit | Report only |
+
+### 4.2 Pull Request Security Event
+
+The most important trigger is the pull request. GitHub Actions supports:
+
+```yaml
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [main, develop]
+```
+
+The `synchronize` type triggers on every new commit pushed to the PR branch, ensuring re-scanning when code changes.
+
+---
+
+## Section 5 — Security Quality Gates
+
+### 5.1 CVSS Score Reference
+
+| CVSS Score | Severity | Typical Gate Action |
+|---|---|---|
+| 9.0–10.0 | Critical | Always fail pipeline |
+| 7.0–8.9 | High | Fail pipeline (mature orgs) |
+| 4.0–6.9 | Medium | Warn; fail after grace period |
+| 0.1–3.9 | Low | Informational only |
+| 0.0 | None | No action |
+
+### 5.2 Phased Quality Gate Adoption
+
+Start with Critical only to establish the gate without overwhelming teams:
+
+- Phase 1 (Month 1–2): Fail on CVSS 9.0+ (Critical only)
+- Phase 2 (Month 3–4): Fail on CVSS 7.0+ (High and Critical)
+- Phase 3 (Month 5–6): Warn on CVSS 4.0+ (Medium), fail on 7.0+
+- Phase 4 (Month 7+): Full compliance — fail on any unexcepted finding
+
+### 5.3 SARIF — Standard Output Format
+
+Static Analysis Results Interchange Format (SARIF) is the JSON schema standard for security tool output. GitHub and GitLab both consume SARIF files to populate their Security tabs.
+
+```json
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "Semgrep",
+          "version": "1.x"
+        }
+      },
+      "results": [
+        {
+          "ruleId": "python.flask.security.injection.tainted-sql-string",
+          "level": "error",
+          "message": { "text": "Possible SQL injection via string concatenation" },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": { "uri": "app/db.py" },
+                "region": { "startLine": 42 }
+              }
             }
+          ]
         }
-        stage('Deploy') {
-            when { branch 'main' }
-            steps { /* deploy commands */ }
-        }
+      ]
     }
-    post {
-        failure { /* notify security team */ }
-    }
+  ]
 }
 ```
 
 ---
 
-## Section 6: GitLab CI Pipeline Structure Reference
+## Section 6 — Pipeline Security
 
-GitLab CI uses stages defined at the top of `.gitlab-ci.yml`. Jobs assigned to the same stage run in parallel; stages execute sequentially.
+### 6.1 Protecting Pipeline Configuration
+
+| Risk | Control |
+|---|---|
+| Developer edits pipeline to disable security gates | CODEOWNERS + required review for `.github/workflows/` |
+| Malicious pull request executes arbitrary code | Use `pull_request_target` only with care; restrict `secrets` access |
+| Third-party action supply chain attack | Pin actions to commit SHA; audit new actions |
+| Exposed secrets in pipeline logs | Never `echo` secrets; use `::add-mask::` for dynamic values |
+| Overly permissive GITHUB_TOKEN | Set `permissions: contents: read` at workflow level; override per-job |
+
+### 6.2 Secrets in Pipelines
 
 ```yaml
-stages:
-  - build
-  - test
-  - security
-  - deploy
+# Never do this
+- run: snyk test --token=abc123def456
 
-build-job:
-  stage: build
-  script: [pip install -r requirements.txt]
-
-test-job:
-  stage: test
-  script: [pytest tests/]
-
-sast:
-  stage: security
-  include:
-    - template: Security/SAST.gitlab-ci.yml
-
-dependency-scan:
-  stage: security
-  include:
-    - template: Security/Dependency-Scanning.gitlab-ci.yml
-
-deploy-staging:
-  stage: deploy
-  script: [./scripts/deploy.sh staging]
-  rules:
-    - if: $CI_COMMIT_BRANCH == "main"
+# Correct — reference from secrets store
+- run: snyk test
+  env:
+    SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 ```
 
----
+### 6.3 Environment Protection Rules
 
-## Section 7: SAST vs. DAST vs. SCA Comparison
+For deployment jobs, use GitHub Environments with protection rules:
 
-| Dimension | SAST | DAST | SCA |
-|---|---|---|---|
-| Full name | Static Application Security Testing | Dynamic Application Security Testing | Software Composition Analysis |
-| Requires running application | No | Yes | No |
-| Primary target | First-party source code | Running application endpoints | Third-party dependencies |
-| Pipeline stage | Commit / Pull request | Staging | Build |
-| Finds | Insecure code patterns | Runtime flaws, auth issues | Known CVEs in libraries |
-| Representative tools | Semgrep, SonarQube, Checkmarx | OWASP ZAP, Burp Suite Enterprise | Snyk, OWASP Dependency-Check |
+- Required reviewers: one or more people must approve the deployment
+- Wait timer: minimum delay before deployment runs
+- Deployment branches: restrict which branches can deploy
 
 ---
 
-## Section 8: Jenkins Security Configuration Reference
+## Exam Tips for DSOE Certification
 
-Jenkins requires explicit security hardening after installation. Key settings for the exam:
-
-- Enable security on first launch — configure an admin account immediately.
-- Use LDAP or SAML for authentication in enterprise environments.
-- Install Role-Based Authorization Strategy plugin for fine-grained permissions.
-- Disable Script Console access for non-admin users (Groovy execution risk).
-- Use Credentials Manager with `withCredentials()` — never store secrets as plaintext environment variables.
-- Restrict Groovy sandbox execution for untrusted Scripted Pipelines.
-- Update all plugins regularly — Jenkins CVEs are frequently published.
-- Minimize installed plugins — every plugin is potential attack surface.
-
----
-
-## Section 9: Supply Chain Risk in CI/CD Pipelines
-
-Supply chain attacks targeting CI/CD pipelines are a growing threat. Key exam topics:
-
-- **GitHub Actions pinning** — Pin third-party actions to a commit SHA (e.g., `uses: actions/checkout@a5ac7e5`) rather than a mutable tag (`@v4`) to prevent a compromised tag from delivering malicious code.
-- **Jenkins plugin vetting** — Only install plugins from the official Jenkins update center. Review plugin source code for sensitive API access before installation.
-- **GitLab template verification** — Community-contributed templates should be reviewed before inclusion. GitLab's official security templates (under `Security/`) are maintained by GitLab and are safe to include.
-- **Poisoned pipeline execution** — An attacker with write access to a branch can modify the pipeline YAML to exfiltrate secrets or deploy malicious artifacts. Restrict who can modify pipeline files.
+- Know the five pipeline layers and what security activities belong in each.
+- GitHub Actions jobs run in parallel by default within a workflow; use `needs` for sequencing.
+- GitLab CI stages are sequential; jobs within a stage are parallel.
+- SARIF is the standard output format for security tools — know what it is and why it matters.
+- Quality gates: fail on CVSS 9.0+ Critical minimum; mature orgs extend to 7.0+ High.
+- Action version pinning to SHA prevents supply chain attacks on CI pipelines.
+- Reusable workflows centralize security enforcement and prevent gate bypass.
+- `GITHUB_TOKEN` permissions should follow least-privilege — set `permissions: contents: read` by default.
+- CODEOWNERS + branch protection prevents developers from disabling security gates in pipeline YAML.
 
 ---
 
-## Section 10: DevSecOps Professional Exam Tips
+## Key Terms Glossary
 
-1. **Pipeline file locations** — Know the exact file path for each platform: `.github/workflows/*.yml`, `.gitlab-ci.yml`, `Jenkinsfile`. The exam tests this directly.
-
-2. **Stage execution order** — In GitLab CI, stages defined in the `stages:` array execute sequentially. Jobs within the same stage execute in parallel. In GitHub Actions, parallelism is controlled by `needs:` dependencies.
-
-3. **Deploy gate pattern** — Know that the deploy job must depend on both test and security-scan jobs. If security-scan is not in the `needs:` list, failing security scans do not block deployment.
-
-4. **`withCredentials` vs. environment variables** — In Jenkins, `withCredentials()` is the secure pattern. Plaintext env vars in Jenkinsfiles are a security misconfiguration. The exam tests this distinction.
-
-5. **GitLab include templates** — Know that `include: template: Security/SAST.gitlab-ci.yml` adds SAST to a GitLab pipeline with one line. This is a common correct answer for "how do you add SAST to a GitLab pipeline" questions.
-
-6. **Declarative vs. Scripted** — Know that Declarative Jenkins pipelines are preferred for DevSecOps because their structured syntax is auditable. Scripted pipelines allow arbitrary Groovy execution, which is a security risk.
-
-7. **`if:` condition on GitHub Actions deploy job** — Know that `if: github.ref == 'refs/heads/main' && github.event_name == 'push'` restricts deployment to main-branch pushes only, preventing PR-triggered deployments.
-
-8. **Supply chain pin pattern** — Know that pinning to a commit SHA is more secure than pinning to a tag. Tags are mutable; commit SHAs are immutable.
+| Term | Definition |
+|---|---|
+| CI Pipeline | Automated sequence of jobs triggered by code changes |
+| Quality Gate | Policy-enforced threshold that blocks pipeline on failing checks |
+| SARIF | Static Analysis Results Interchange Format — JSON standard for tool output |
+| GitHub Actions | Native CI/CD platform for GitHub; workflows in `.github/workflows/` |
+| GitLab CI | Native CI/CD for GitLab; configuration in `.gitlab-ci.yml` |
+| Reusable Workflow | GitHub Actions workflow callable from other repositories |
+| GITHUB_TOKEN | Auto-generated short-lived token scoped to the current repository |
+| Build Trigger | Event that initiates a pipeline run |
+| CVSS | Common Vulnerability Scoring System — 0–10 severity scale |
+| Pipeline as Code | CI/CD configuration stored in version control |
 
 ---
 
-## Section 11: Study Checklist
-
-- [ ] Explain the structural difference between GitHub Actions workflow jobs and GitLab CI stages.
-- [ ] List the Jenkins Declarative pipeline sections in order: pipeline, agent, stages, stage, steps, post.
-- [ ] Explain why `needs: [test, security-scan]` on the deploy job makes security scanning mandatory.
-- [ ] Describe the `withCredentials()` pattern and why it is preferred over plaintext env vars in Jenkins.
-- [ ] Explain what a supply chain attack on a CI/CD pipeline looks like and how action pinning mitigates it.
-- [ ] Reconstruct the GitLab CI `stages:` pattern for a four-stage pipeline from memory.
-- [ ] Read the OWASP DevSecOps Guideline CI/CD integration section at [https://owasp.org/www-project-devsecops-guideline/](https://owasp.org/www-project-devsecops-guideline/).
-- [ ] Complete the Module 03 lab activity (full four-stage pipeline YAML).
-- [ ] Attempt all 10 quiz questions and review distractor analysis for any incorrect answers.
+Reading Guide — Module 03 | CIS-4350 | Texas Wesleyan University | Professor Nash

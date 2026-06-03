@@ -1,61 +1,331 @@
-# Reading Guide: Module 11 - Enterprise Application Integration (EAI)
+# Reading Guide: Module 11 — SAP Production Planning (PP Module)
 
-## Course: CIS-4320_Enterprise_Systems_ERP (Salesforce Certified Associate / SAP Certified Associate)
+## Course: CIS-4320 Enterprise Systems and ERP
 
----
+## Texas Wesleyan University | Professor Nash
 
-### Introduction
-
-Welcome to **Module 11 - Enterprise Application Integration (EAI)**! No enterprise runs on a single system. A typical large organization has an ERP for back-office operations, a CRM for customer management, an HCM platform for HR, an e-commerce system, and dozens of specialized tools — all of which need to exchange data reliably. Enterprise Application Integration is the discipline of connecting these systems so data flows correctly between them without manual re-entry.
-
-This module covers integration architecture patterns (point-to-point vs. hub-and-spoke), the API standards used (REST and SOAP), and the role of middleware platforms like MuleSoft in translating and routing data between disparate systems. These concepts appear on both the Salesforce and SAP certification paths.
+## Certification Alignment: Salesforce Administrator / SAP S/4HANA Essentials
 
 ---
 
-### 1. High-Yield Glossary
+## Introduction
 
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-* **EAI principles**: The foundational design concepts for connecting enterprise applications — including loose coupling (systems should not depend directly on each other's internal implementation), data transformation (converting formats between systems), and reliable message delivery (ensuring no transaction is lost in transit).
-* **REST/SOAP APIs**: The two dominant web service standards for system-to-system communication. REST (Representational State Transfer) uses HTTP verbs (GET, POST, PUT, DELETE) and JSON payloads; it is lightweight and widely used in modern cloud integrations. SOAP (Simple Object Access Protocol) uses XML envelopes and WSDL contracts; it is older, more formal, and still common in enterprise middleware and SAP integrations.
-* **Middleware brokers (MuleSoft)**: Integration platforms that act as central message brokers, receiving data from one system, transforming it to the required format, and routing it to destination systems. MuleSoft Anypoint Platform is Salesforce's owned integration platform; SAP Integration Suite (formerly SAP Cloud Platform Integration) is SAP's equivalent.
-* **Data transformation schemas**: Mapping definitions that specify how fields in a source system correspond to fields in a target system — including data type conversions, field renaming, and value lookups. Transformations are configured in the middleware layer so neither source nor target system requires modification.
+SAP Production Planning (PP) is the module that manages the complete manufacturing process — from defining product structure and production methods through planning material needs and executing production on the shop floor. PP integrates tightly with MM (material supply), FI (cost postings), and CO (variance analysis). This reading guide covers the five core PP topics tested on the SAP S/4HANA Essentials exam: Bill of Materials, Work Centers, Routings, MRP, and Production Orders.
 
 ---
 
-### 2. Certification Exam Tips
+## Section 1 — Core Glossary
 
-* **Salesforce Certified Associate focus:** The exam tests your understanding of how Salesforce connects to external systems. Know that Salesforce exposes REST and SOAP APIs for external systems to call, and that Connected Apps and OAuth 2.0 are the authentication mechanism for API access. MuleSoft is Salesforce's recommended integration platform.
-* **Integration patterns:** Know the difference between real-time (synchronous) integration — where the calling system waits for a response — and batch (asynchronous) integration — where records are collected and sent in bulk on a schedule. ERP-to-CRM nightly data syncs are typically batch; order placement confirmations are typically real-time.
-* **SAP iDoc:** SAP uses Intermediate Documents (iDocs) as its legacy message format for system-to-system communication. iDocs are still widely used for EDI (Electronic Data Interchange) with trading partners. Modern SAP integrations increasingly use REST APIs through SAP Integration Suite.
-* **Point-to-point vs. hub-and-spoke:** Point-to-point integration connects each pair of systems directly; n systems require n(n-1)/2 connections. Hub-and-spoke (middleware) centralizes all connections through one broker, reducing total connections to n. Exam scenarios testing scalability always favor hub-and-spoke.
-* **Study Resource:** Complete the Salesforce Trailhead module [Integration Architecture](https://trailhead.salesforce.com/content/learn/modules/integration-architecture) — a free module covering REST, SOAP, and MuleSoft integration patterns applicable to the Associate and Administrator exam paths.
+**Bill of Materials (BOM)**
+A structured list of all components, sub-assemblies, and raw materials required to produce one unit of a finished product, with quantities for each component. The BOM defines the material inputs to production. Transactions CS01 (create), CS03 (display), CS11 (multi-level explosion).
+
+**Single-Level BOM**
+Shows only the immediate children of a finished product. Sub-assemblies appear as single line items without showing their own components.
+
+**Multi-Level BOM**
+Explodes all levels of the product structure — finished product, sub-assemblies, and raw materials. Used by MRP to calculate total requirements across the entire product hierarchy.
+
+**Base Quantity**
+The quantity of the finished product the BOM is defined for — typically 1 unit. All component quantities are proportional to the base quantity. MRP scales all requirements by multiplying the BOM quantities by the planned production quantity.
+
+**Work Center**
+The PP representation of a machine, workstation, or production team where manufacturing operations are performed. Contains capacity data (available hours), scheduling data (setup and run times), and costing data (activity type rates). Transactions CR01 (create), CR03 (display).
+
+**Routing**
+The ordered sequence of production operations required to manufacture a product. Each operation references a Work Center and defines standard processing times. Routings drive scheduling, capacity planning, and production costing. Transactions CA01 (create), CA03 (display).
+
+**Operation**
+A numbered step in a Routing. Operations are numbered in increments of 10 (10, 20, 30...) to allow insertions. Each operation specifies: Work Center, control key, standard values (setup time, machine time, labor time).
+
+**Standard Values**
+The planned time parameters for each Routing operation: setup time (per lot), machine time (per unit or per lot), labor time (per unit). Used for scheduling and as the basis for production cost calculation.
+
+**MRP (Material Requirements Planning)**
+The SAP planning engine that calculates what materials need to be procured or produced, in what quantities, and by when — based on demand requirements, current stock levels, and open procurement or production orders. MRP transactions: MD01 (plant-level run), MD02 (single material), MD04 (Stock/Requirements List).
+
+**Independent Requirement**
+A demand for a finished product that originates externally — from a sales order or a planned independent requirement (forecast). Independent requirements drive MRP calculations at the finished goods level.
+
+**Dependent Requirement**
+A demand for a component or raw material that is derived by exploding the BOM of a finished product. Generated automatically by MRP when it explodes the BOM to calculate component needs.
+
+**Planned Order**
+A procurement proposal generated by MRP for in-house manufactured materials. A Planned Order is a system suggestion — it must be converted to a Production Order before manufacturing can begin.
+
+**Purchase Requisition (PP-generated)**
+A procurement proposal generated by MRP for externally procured materials. Flows directly to SAP MM where a buyer converts it to a Purchase Order. This is the PP-to-MM integration handoff.
+
+**Lot Size**
+The rule in the Material Master MRP view that determines how MRP rounds order quantities. Common lot sizes: EX (exact lot size — order exactly what is needed), FX (fixed lot size — always order the same quantity), MB (minimum lot size — never order less than a minimum amount).
+
+**Safety Stock**
+A buffer quantity of material maintained to protect against supply delays or unexpected demand spikes. Defined in the Material Master MRP 2 view. MRP treats safety stock as a minimum inventory floor — if stock drops below safety stock, a replenishment order is generated.
+
+**Production Order**
+The formal shop floor authorization to manufacture a specific quantity of a material by a specific date. Created by converting a Planned Order (CO40) or directly (CO01). Contains the BOM components, Routing operations, scheduled dates, and cost plan.
+
+**Production Order Status**
+The lifecycle state of a Production Order. Standard statuses: CRTD (Created), REL (Released to shop floor), CONF (Confirmed — operations reported), TECO (Technically Complete), CLSD (Closed and settled).
+
+**Order Confirmation (CO11N)**
+The transaction used by shop floor workers or supervisors to report actual quantities produced, scrap generated, and actual times used at each Routing operation.
+
+**Order Settlement (KO88)**
+The transaction that closes a Production Order financially by comparing actual costs to standard costs and posting any variance to FI variance accounts.
+
+**Production Variance**
+The difference between the actual cost of production (actual materials consumed + actual machine and labor times × Work Center rates) and the standard cost of the finished goods produced. Unfavorable variances indicate higher-than-planned production costs.
 
 ---
 
-### Required Readings & Videos
+## Section 2 — PP Organizational and Master Data Hierarchy
 
-To prepare for this module's topics, you must complete the following readings and videos:
-
-* **Required Reading:** Complete the Salesforce Trailhead module [Integration Architecture](https://trailhead.salesforce.com/content/learn/modules/integration-architecture) — a free module explaining how Salesforce integrates with external systems using REST, SOAP, and platform events.
-* **Required Video:** Watch the video lecture on **Enterprise Application Integration** in the official course playlist: [Salesforce & SAP ERP Fundamentals Tutorial](https://www.youtube.com/playlist?list=PLD2549A0D756627C1).
+```text
+PLANT (PP Operational Unit)
+  |
+  +-- MATERIAL MASTER (MRP views)
+  |       MRP Type, Lot Size, Safety Stock
+  |       In-House Production Time
+  |
+  +-- BILL OF MATERIALS (CS01)
+  |       Component 1: quantity, unit
+  |       Component 2: quantity, unit
+  |       Sub-assembly: quantity (with its own BOM)
+  |
+  +-- WORK CENTER (CR01)
+  |       Capacity (hours/shift)
+  |       Cost Rates (per activity type)
+  |       Scheduling Parameters
+  |
+  +-- ROUTING (CA01)
+          Operation 10: Work Center A, 15 min setup, 2 min/unit
+          Operation 20: Work Center B, 10 min setup, 8 min/unit
+          Operation 30: Work Center C, 5 min setup, 3 min/unit
+```
 
 ---
 
-### Lab & Command Integration
+## Section 3 — BOM Structure Reference
 
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
+### BOM Header Fields
 
-* **Map database values to JSON API formats**: Given a sample SAP vendor master record (with fields in SAP-format naming conventions), write a JSON payload that represents the same vendor data in a REST API format suitable for creating a Salesforce Account record.
-* **Draft middleware broker mapping definitions**: Create a field mapping table showing how five fields from a Salesforce Opportunity record (Name, Amount, CloseDate, StageName, AccountId) map to the corresponding fields in a hypothetical ERP sales order record.
-* **Trace REST integrations**: Document the full request-response cycle for a REST API call that retrieves a Salesforce Account record by ID — including the HTTP method, endpoint URL structure, authentication header, and expected JSON response format.
+| Field | Description |
+|---|---|
+| Material | The finished product or assembly this BOM defines |
+| Plant | The plant where this BOM is valid |
+| BOM Usage | Purpose: 1=Production, 5=Sales, 6=Costing |
+| Valid From | Date from which BOM is active |
+| Base Quantity | Quantity of the finished product the BOM is defined for |
+
+### BOM Item Fields
+
+| Field | Description |
+|---|---|
+| Item Number | Sequential identifier for the component |
+| Component | Material number of the required part |
+| Quantity | Amount of the component needed per base quantity |
+| Unit of Measure | Unit for the quantity (kg, EA, L, m) |
+| Item Category | L=Stock item (from inventory), N=Non-stock, R=Variable size |
+| Scrap % | Expected scrap allowance for this component |
+
+### Single-Level vs. Multi-Level BOM
+
+```text
+SINGLE-LEVEL BOM for FG-BRACKET-001 (1 unit):
+  - TIT-BAR-001 (Titanium Bar Stock): 2.5 kg
+  - BOLT-M8 (Bolt Set): 12 EA
+  - SA-FRAME (Sub-assembly Frame): 1 EA   <-- shown as 1 unit, not exploded
+
+MULTI-LEVEL BOM EXPLOSION:
+  FG-BRACKET-001 (1 unit)
+    TIT-BAR-001: 2.5 kg
+    BOLT-M8: 12 EA
+    SA-FRAME (1 EA)
+      STL-PLATE-001 (Steel Plate): 0.8 kg   <-- sub-assembly components shown
+      WELD-ROD-003: 0.1 kg
+      RIVET-4MM: 8 EA
+```
 
 ---
 
-### 3. Study Checklist
+## Section 4 — MRP Logic and Calculation
 
-* [ ] Read all glossary definitions and be able to explain the difference between REST and SOAP in one sentence each.
-* [ ] Complete [Integration Architecture](https://trailhead.salesforce.com/content/learn/modules/integration-architecture) on Trailhead (earn the badge).
-* [ ] Watch the video lecture on **Enterprise Application Integration** in [Salesforce & SAP ERP Fundamentals Tutorial](https://www.youtube.com/playlist?list=PLD2549A0D756627C1).
-* [ ] Complete the lab JSON mapping, field translation table, and REST call trace exercises.
-* [ ] Proceed to the weekly quiz.
+### MRP Calculation Steps
+
+| Step | Description | SAP Action |
+|---|---|---|
+| 1 — Gross Requirement | Total demand from independent requirements | Read sales orders and PIRs |
+| 2 — Available Stock | Current warehouse stock + open orders | Read inventory and open POs/PRs/Prod Orders |
+| 3 — Net Requirement | Gross Requirement minus Available Stock | Calculate shortage quantity |
+| 4 — Lot Sizing | Apply lot size rule to net requirement | Round to fixed lot, minimum lot, or exact |
+| 5 — Procurement Proposal | Generate Planned Order (produced) or PR (purchased) | Create MRP elements in MD04 |
+| 6 — Scheduling | Calculate start and finish dates using lead times | Apply production/delivery times |
+| 7 — BOM Explosion | Cascade requirements to sub-assembly and component level | Generate dependent requirements |
+
+### MRP Type Reference
+
+| MRP Type Code | Description | Use Case |
+|---|---|---|
+| PD | MRP (standard demand-driven) | Finished goods and components with predictable demand |
+| VB | Reorder Point Planning (manual) | Slow-moving materials; planner sets reorder point manually |
+| VM | Reorder Point Planning (automatic) | Automatic reorder point based on historical consumption |
+| ND | No Planning | Materials excluded from MRP; managed manually |
+
+### Material Master MRP Key Fields
+
+| Field | View | Description |
+|---|---|---|
+| MRP Type | MRP 1 | Planning method (PD, VB, VM, ND) |
+| Lot Size | MRP 1 | Order quantity rounding rule (EX, FX, MB, etc.) |
+| Minimum Lot Size | MRP 1 | Minimum order quantity under MB lot sizing |
+| Reorder Point | MRP 1 | Stock level that triggers a replenishment (VB type only) |
+| Safety Stock | MRP 2 | Buffer inventory floor; MRP replenishes if stock falls below |
+| Planned Delivery Time | MRP 2 | External procurement lead time in calendar days |
+| In-House Production Time | MRP 2 | Manufacturing lead time in calendar days |
+| Scheduling Margin Key | MRP 2 | Float times before and after production for scheduling buffer |
+
+---
+
+## Section 5 — Production Order Lifecycle
+
+```text
+[PLANNED ORDER created by MRP]
+         |
+         | CO40: Convert Planned Order to Production Order
+         | or CO01: Create Production Order directly
+         v
+[CRTD — CREATED]
+  BOM components reserved in MM
+  Routing operations scheduled
+  Planned cost calculated
+         |
+         | Release order (CO02 or automatic)
+         v
+[REL — RELEASED]
+  Shop floor can begin production
+  Goods Issue allowed (MIGO 261)
+         |
+         | Post Goods Issue: components withdrawn from inventory
+         | Operations confirmed (CO11N): actual times reported
+         v
+[CONF — CONFIRMED]
+  Actual times logged
+  Actual costs accumulating on order
+         |
+         | Post Goods Receipt: finished goods enter inventory (MIGO 101)
+         v
+[TECO — TECHNICALLY COMPLETE]
+  Production finished
+  No more goods movements or confirmations
+         |
+         | KO88: Order Settlement
+         v
+[CLSD — CLOSED]
+  Actual vs. standard cost variance posted to FI
+  Order archived
+```
+
+---
+
+## Section 6 — Production Order Accounting Entries
+
+| Event | Transaction | Debit | Credit |
+|---|---|---|---|
+| Goods Issue to Prod Order | MIGO (261) | Production Order (WIP) | Raw Materials Inventory |
+| Goods Receipt from Prod Order | MIGO (101) | Finished Goods Inventory | Production Order (WIP) |
+| Order Settlement — favorable | KO88 | Production Order (close WIP) | Variance Account (favorable) |
+| Order Settlement — unfavorable | KO88 | Variance Account (unfavorable) | Production Order (close WIP) |
+
+---
+
+## Section 7 — PP to MM to FI Integration Flow
+
+```text
+[DEMAND MANAGEMENT — MD61]
+  Planned Independent Requirements entered
+         |
+         v
+[MRP RUN — MD01]
+  BOM exploded to component level
+  Net requirements calculated
+         |
+  In-house materials: Planned Orders
+  Purchased materials: Purchase Requisitions
+         |              |
+         v              v
+[PRODUCTION          [MM PROCUREMENT]
+ ORDER — CO01]        PR → PO (ME21N)
+         |              Goods Receipt (MIGO 101)
+  GI: MIGO 261          Invoice (MIRO)
+  Components consumed    Payment (F110)
+         |
+  GR: MIGO 101
+  Finished goods in stock
+         |
+  KO88 Settlement
+         |
+         v
+[FI POSTING]
+  Variance account updated
+  Inventory asset updated
+  WIP cleared to zero
+```
+
+---
+
+## Section 8 — Transaction Code Master Reference
+
+| Transaction | Description |
+|---|---|
+| CS01 / CS03 | Create / Display Bill of Materials |
+| CS11 | Display Multi-Level BOM Explosion |
+| CS15 | Where-Used List for a Component |
+| CR01 / CR03 | Create / Display Work Center |
+| CA01 / CA03 | Create / Display Routing |
+| CA60 | Where-Used List for Routing |
+| MD61 | Create Planned Independent Requirements (demand plan) |
+| MD01 | MRP Run (Plant Level) |
+| MD02 | MRP Run (Single Material) |
+| MD04 | Stock/Requirements List |
+| MD05 | MRP List (last MRP run result snapshot) |
+| CO01 | Create Production Order |
+| CO02 / CO03 | Change / Display Production Order |
+| CO40 | Convert Planned Order to Production Order |
+| CO11N | Production Order Confirmation |
+| MIGO (261) | Goods Issue to Production Order |
+| MIGO (101) | Goods Receipt from Production Order |
+| KO88 | Production Order Settlement |
+| COOIS | Production Order Information System (reporting) |
+
+---
+
+## Section 9 — Exam Tips
+
+> **Exam Tip 1 — BOM and Routing are the two PP master data pillars.** BOM = what materials are needed. Routing = how the product is made (which machines, in what sequence, for how long). Both must exist before a Production Order can be created.
+
+> **Exam Tip 2 — MRP generates Planned Orders and Purchase Requisitions.** For in-house produced materials: Planned Orders. For externally purchased materials: Purchase Requisitions. Know the difference and where each flows next.
+
+> **Exam Tip 3 — MD04 is the production planner's daily tool.** The Stock/Requirements List shows every MRP element — demands, supplies, and available stock balance — over time for one material. A negative available quantity means a shortage requiring action.
+
+> **Exam Tip 4 — Production Order status sequence.** CRTD (created) → REL (released) → CONF (confirmed) → TECO (technically complete) → CLSD (closed). Know what activities are allowed and blocked at each status.
+
+> **Exam Tip 5 — Movement Type 261 is goods issue to a Production Order.** Movement Type 101 for production is goods receipt from a Production Order into finished goods inventory. Know both movement types and the resulting accounting entries.
+
+> **Exam Tip 6 — Order Settlement compares actual to standard cost.** KO88 settles the Production Order. The difference between actual production cost and standard cost is the production variance. Unfavorable variances indicate manufacturing inefficiency.
+
+---
+
+## Section 10 — Study Checklist
+
+- Review the PP master data hierarchy diagram in Section 2.
+- Memorize the BOM field table and understand single-level vs. multi-level BOM differences.
+- Trace the MRP calculation steps in Section 4 and understand what each step produces.
+- Study the Material Master MRP key fields table in Section 4.
+- Review the Production Order lifecycle in Section 5 — know all five statuses.
+- Study the accounting entries table in Section 6.
+- Trace the PP-to-MM-to-FI integration flow in Section 7.
+- Memorize the transaction code master reference in Section 8.
+- Watch the Module 11 video lecture.
+- Complete Lab 11.
+- Post to Discussion Forum 11 by Wednesday at 11:59 PM.
+- Complete Quiz 11.

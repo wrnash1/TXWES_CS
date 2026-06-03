@@ -1,28 +1,120 @@
-# Discussion Forum: Module 11 - Functions/PubSub
-## Course: CIS-4329_Google_Cloud (Google Cloud Associate Cloud Engineer)
+# Discussion: Module 11 — Infrastructure as Code on GCP
+
+## Course: CIS-4329 Google Cloud Computing
+
+## Texas Wesleyan University | Professor Nash
+
+## Certification Alignment: Google Cloud Associate Cloud Engineer (ACE)
 
 ---
 
-## Discussion Prompt
-Consider the following real-world scenario or technical concept:
-*   **Topic Focus:** **Functions/PubSub**
+### Overview
 
-**Your Tasks:**
-1.  **Initial Post (Due Wednesday at 11:59 PM):** In 150-200 words, explain how you would apply Functions/PubSub in an enterprise system. Address the following:
-    *   What is the primary benefit of utilizing this configuration or standard in a production environment?
-    *   Identify one common security concern or operational challenge related to this topic, and suggest a best-practice mitigation strategy.
-2.  **Peer Responses (Due Sunday at 11:59 PM):** Read through your classmates' posts and write constructive replies (at least 50 words each) to at least two peers. In your replies:
-    *   Provide feedback on their proposed mitigation strategy.
-    *   Share an alternative approach or add context from your own research or lab exercises.
+This discussion asks you to evaluate an infrastructure management scenario and recommend
+an IaC strategy. You will apply the Deployment Manager and Terraform concepts from
+Module 11 and reflect on the broader discipline of treating infrastructure like code.
+
+**Initial post due**: Thursday at 11:59 PM Central
+
+**Peer responses due**: Sunday at 11:59 PM Central
 
 ---
 
-## Discussion Rubric (10 Points Total)
-*   **Initial Post (6 Points):**
-    *   *5-6 pts:* Thoroughly addresses all prompt questions with technical accuracy, clear explanations, and appropriate terminology. Meets the word count.
-    *   *3-4 pts:* Addresses some prompt questions, but lacks detail or technical accuracy.
-    *   *0-2 pts:* Incomplete or missing initial post.
-*   **Peer Responses (4 Points):**
-    *   *4 pts:* Responds constructively to at least two peers, contributing meaningful additions to the conversation.
-    *   *2 pts:* Responds to only one peer, or comments are superficial (e.g., "Good post!").
-    *   *0 pts:* No peer responses submitted.
+### Scenario
+
+A startup called CloudSwift is building a SaaS platform on GCP. Their current situation:
+
+- All infrastructure was created manually by one developer over six months using the
+  Cloud Console
+- No documentation exists for what resources exist or how they are configured
+- The development, staging, and production environments have configuration drift — they
+  are no longer identical
+- The company recently hired two additional cloud engineers who need to provision
+  resources independently without stepping on each other's work
+- Leadership wants all infrastructure changes reviewed before they reach production
+- The company plans to expand to AWS within 18 months for redundancy
+
+The team is debating two approaches:
+
+**Option A**: Adopt Cloud Deployment Manager. Write YAML configurations for all existing
+resources, deploy them as Deployment Manager deployments, and enforce a policy that all
+future changes go through configuration files.
+
+**Option B**: Adopt Terraform with the GCP provider and a GCS remote state backend.
+Write HCL for all existing resources, use `terraform import` to bring existing resources
+under management, and configure a CI/CD pipeline that runs `terraform plan` on pull
+requests.
+
+---
+
+### Response Requirements
+
+#### Part 1: Tool Recommendation
+
+Recommend either Option A or Option B for CloudSwift. In 4–5 sentences, justify your
+recommendation by referencing at least three specific technical factors from the scenario
+that make your chosen tool the better fit.
+
+#### Part 2: State Management Plan
+
+For your recommended tool, describe the state management strategy in 3–4 sentences. If
+you chose Terraform, explain the remote state configuration and how concurrent-apply
+conflicts will be prevented. If you chose Deployment Manager, explain how you would
+handle the lack of a local state file and how you would track deployment history.
+
+#### Part 3: Handling Existing Resources
+
+The existing infrastructure was all created manually. In 3–4 sentences, describe the
+process for bringing those existing resources under IaC management with your chosen tool.
+What is the first step? What risks exist during this transition?
+
+#### Part 4: Reflection
+
+Have you ever experienced the problems described in CloudSwift's scenario — configuration
+drift, undocumented infrastructure, or conflicting changes from multiple team members?
+Describe the situation in 2–3 sentences and explain how IaC would have helped (or does
+help). Hypothetical scenarios are acceptable.
+
+---
+
+### Grading Criteria
+
+| Criterion | Points |
+|---|---|
+| Part 1: Justified tool recommendation with 3 specific technical factors | 30 |
+| Part 2: Correct and specific state management strategy | 25 |
+| Part 3: Accurate process for bringing existing resources under IaC | 25 |
+| Part 4: Thoughtful reflection | 5 |
+| Peer response 1: Substantive technical engagement | 7 |
+| Peer response 2: Substantive technical engagement | 8 |
+| **Total** | **100** |
+
+---
+
+### Peer Response Guidelines
+
+A substantive peer response does at least one of the following:
+
+- Argues for the other tool with specific technical reasons (e.g., challenges a Terraform
+  recommendation with a Deployment Manager advantage, or vice versa)
+- Identifies a technical gap or risk in the state management plan
+- Adds a specific Terraform or Deployment Manager feature or command that would help
+  with the existing-resource transition
+- Raises a consideration about the AWS expansion plan that affects the tool choice
+
+---
+
+### Discussion Hints
+
+The 18-month AWS expansion is a significant clue. Consider what changes when your
+infrastructure spans two cloud providers and whether your recommended tool still works.
+
+For the existing resources, think about what `terraform import` requires — it is not
+a one-command migration. Each resource needs a written resource block in your `.tf` files
+before import, and complex resources like managed instance groups have multiple sub-
+resources to import individually.
+
+For Deployment Manager, the equivalent of "importing" existing resources is writing a
+new configuration that matches the existing resource state and creating a deployment.
+However, Deployment Manager then owns those resources — deleting the deployment deletes
+them. This requires careful planning.

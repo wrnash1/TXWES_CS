@@ -1,52 +1,197 @@
-# Reading Guide: Module 15 - Containerization – Docker Basics on Linux
-## Course: CIS-3325_OS_Admin (CompTIA Linux+ XK0-005)
+# Reading Guide: Module 15 - Containerization: Docker Basics on Linux
+
+## CIS-3325 OS Administration | Texas Wesleyan University
+
+**Certification Alignment:** CompTIA Linux+ (XK0-005)
+**Exam Domain:** Domain 4.0 - Automation and Scripting
 
 ---
 
-### Introduction
-Welcome to **Module 15 – Containerization: Docker Basics on Linux**! This week covers container fundamentals — how Docker differs from virtual machines, the Docker architecture (daemon, client, images, containers, registries), essential `docker` commands, and Dockerfile basics. Containerization is tested on CompTIA Linux+ XK0-005 under Domain 4.0 (Scripting, Containers, and Automation).
+### Glossary
 
-As you work through this material you will learn how to pull and run container images, manage the container lifecycle, inspect running containers, and understand the key differences between container isolation and full virtualization.
+**Container** - A running instance of a Docker image. Uses Linux namespaces and cgroups for isolation. Shares the host kernel. Starts in milliseconds. Has a writable layer on top of the read-only image.
 
----
+**Image** - A read-only template used to create containers. Built from a Dockerfile. Stored in layers. Multiple containers can run from the same image simultaneously.
 
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
+**Namespace** - A Linux kernel feature that provides isolated views of system resources (PIDs, network interfaces, mounts, users, hostnames) for each container.
 
-*   **Container vs virtual machine**: A container is a lightweight, isolated process running on the host Linux kernel using namespaces (process, network, filesystem isolation) and cgroups (resource limits). Containers share the host kernel — they do not boot a separate OS. A virtual machine includes a full guest OS and requires a hypervisor, making VMs heavier but more strongly isolated. Containers start in milliseconds; VMs take seconds to minutes. The exam tests this distinction directly.
-*   **Docker architecture**: Docker uses a client-server model. The **Docker daemon** (`dockerd`) runs as a background service managing containers and images. The **Docker client** (`docker` CLI) sends commands to the daemon. **Images** are read-only templates stored in layers; **containers** are running instances of images. The **Docker Hub** registry (`hub.docker.com`) is the default public repository for images. Private registries can be hosted on-premises.
-*   **Core `docker` commands**: `docker pull nginx` downloads an image from Docker Hub. `docker run -d -p 80:80 nginx` starts a container in detached mode, mapping host port 80 to container port 80. `docker ps` lists running containers; `docker ps -a` lists all including stopped. `docker stop <id>` gracefully stops a container; `docker rm <id>` removes a stopped container. `docker images` lists locally cached images; `docker rmi <image>` removes an image.
-*   **`docker exec` and `docker logs`**: `docker exec -it <container> /bin/bash` opens an interactive shell inside a running container (useful for troubleshooting). `docker logs <container>` displays stdout/stderr output from a container — the primary way to view application logs in a containerized environment. `docker inspect <container>` outputs detailed JSON metadata about a container including network settings, mounts, and environment variables.
-*   **Dockerfile basics**: A `Dockerfile` is a text file of instructions that defines how to build a custom image. Key instructions: `FROM ubuntu:22.04` (base image), `RUN apt-get install -y nginx` (execute a command during build), `COPY index.html /var/www/html/` (copy files from host), `EXPOSE 80` (document the port the app listens on), `CMD ["nginx", "-g", "daemon off;"]` (default command when container starts). Build with `docker build -t myimage:1.0 .`.
-*   **Docker volumes and networking**: By default, container filesystems are ephemeral — data is lost when the container is removed. **Volumes** (`docker run -v /host/path:/container/path`) provide persistent storage by mounting host directories or named volumes into containers. Docker creates a default bridge network; containers on the same bridge can communicate by name when using user-defined networks. `docker network ls` lists networks; `docker network inspect <name>` shows connected containers.
+**cgroup (control group)** - A Linux kernel feature that limits and accounts for the CPU, memory, disk I/O, and network resources available to a set of processes.
 
----
+**Dockerfile** - A text file containing instructions for building a Docker image. Each instruction creates a new image layer.
 
-### 2. Certification Exam Tips
-*   **Domain alignment:** Containerization maps to Linux+ Domain 4.0 (Scripting, Containers, and Automation). Expect 4–6 questions on container vs VM differences, core `docker` commands, image/container lifecycle, and basic Dockerfile syntax.
-*   **Container vs VM isolation trap:** The exam frequently asks which statement is true about containers vs VMs. Key answer: containers share the host kernel; VMs do not. A container cannot run a different OS kernel than the host — a Linux host can run Linux containers but not Windows containers natively.
-*   **`docker run` flag trap:** `-d` = detached (background), `-it` = interactive with TTY (for shell access), `-p host:container` = port mapping, `-v` = volume mount, `--name` = assign a name. The exam presents a `docker run` command and asks what a specific flag does.
-*   **Image vs container distinction:** An image is immutable and stored on disk; a container is a running (or stopped) instance of an image. `docker ps` shows containers, not images. `docker images` shows images, not containers. Confusing these is a common exam trap.
-*   **`docker stop` vs `docker rm`:** `docker stop` sends SIGTERM then SIGKILL to stop a running container — the container still exists in stopped state. `docker rm` deletes the stopped container. Both steps are required to fully clean up a container. `docker rm -f` forces removal of a running container.
-*   **Study Resource:** [The Linux Command Line by William Shotts](https://linuxcommand.org/tlcl.php) provides foundational Linux knowledge (processes, filesystems, networking) that underpins container concepts. [Linux Essentials Course by LearnLinuxTV](https://www.youtube.com/playlist?list=PLT98CRl2KxEG0QLjR-8t7k3S4I15Z1A78) includes video demonstrations of Docker installation, image management, container lifecycle commands, and Dockerfile builds in a live Linux environment.
+**Docker Hub** - The default public registry for Docker images. Images are pulled from Docker Hub when no registry is specified.
+
+**Volume** - Docker-managed persistent storage stored in `/var/lib/docker/volumes/`. Survives container removal. Preferred over bind mounts for production data.
+
+**Bind mount** - Maps a specific host directory into a container. Changes on either side are immediately visible on the other. Common in development workflows.
+
+**Port mapping** - Publishing a container port on the host using `-p HOST_PORT:CONTAINER_PORT`. Makes the containerized service accessible from outside the container.
+
+**Build context** - The directory passed to `docker build`. Files referenced in `COPY` instructions must exist in the build context.
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Review the processes and virtualization chapters of the free OER textbook [The Linux Command Line by William Shotts](https://linuxcommand.org/tlcl.php) to reinforce the Linux process and filesystem concepts that containerization builds upon.
-*   **Required Video:** Watch the Docker and containerization videos in the [Linux Essentials Course by LearnLinuxTV](https://www.youtube.com/playlist?list=PLT98CRl2KxEG0QLjR-8t7k3S4I15Z1A78), a free YouTube playlist that demonstrates Docker installation, image pulls, container management, and Dockerfile basics with live examples.
+### Container vs VM Comparison
+
+| Feature | Container | Virtual Machine |
+|---------|-----------|----------------|
+| Kernel | Shares host kernel | Full guest OS kernel |
+| Isolation mechanism | Namespaces + cgroups | Hypervisor hardware boundary |
+| Startup time | Milliseconds | Seconds to minutes |
+| Image size | Megabytes | Gigabytes |
+| Security isolation | Weaker (shared kernel) | Stronger (full OS boundary) |
+| Portability | High | Hypervisor-dependent |
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab you will install Docker, pull the `nginx` image with `docker pull nginx`, run it with `docker run -d -p 8080:80 nginx`, verify it is running with `docker ps`, inspect logs with `docker logs`, exec into the container with `docker exec -it`, and stop and remove it with `docker stop` and `docker rm`.
+### Docker Installation (Ubuntu)
+
+```bash
+sudo apt install -y docker.io
+sudo systemctl enable --now docker
+sudo usermod -aG docker $USER
+```
+
+After `usermod`, log out and back in for the docker group to take effect.
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Review the relevant chapters in [The Linux Command Line by William Shotts](https://linuxcommand.org/tlcl.php).
-- [ ] Watch the Docker videos in [Linux Essentials Course by LearnLinuxTV](https://www.youtube.com/playlist?list=PLT98CRl2KxEG0QLjR-8t7k3S4I15Z1A78).
-- [ ] Review the commands outlined in the lab instructions.
-- [ ] Proceed to the weekly hands-on lab activity.
+### Essential Docker CLI Commands
+
+| Command | Purpose |
+|---------|---------|
+| `docker images` | List local images |
+| `docker pull IMAGE` | Download image from registry |
+| `docker run IMAGE` | Create and start a container |
+| `docker run -d IMAGE` | Run detached (background) |
+| `docker run -it IMAGE CMD` | Run interactive with TTY |
+| `docker run -p H:C IMAGE` | Map host port H to container port C |
+| `docker run --name NAME IMAGE` | Assign a container name |
+| `docker run -v VOL:PATH IMAGE` | Mount volume at PATH |
+| `docker run -e KEY=VAL IMAGE` | Set environment variable |
+| `docker run --rm IMAGE` | Auto-remove container when it stops |
+| `docker ps` | List running containers |
+| `docker ps -a` | List all containers (including stopped) |
+| `docker stop NAME` | Stop a running container (SIGTERM) |
+| `docker start NAME` | Start a stopped container |
+| `docker restart NAME` | Stop + start |
+| `docker rm NAME` | Remove a stopped container |
+| `docker rm -f NAME` | Force remove (stop + delete) |
+| `docker rmi IMAGE` | Remove an image |
+| `docker logs NAME` | Show container stdout/stderr |
+| `docker logs -f NAME` | Follow log output |
+| `docker exec -it NAME bash` | Open interactive shell in container |
+| `docker exec NAME CMD` | Run command in running container |
+| `docker inspect NAME` | Show detailed container/image JSON |
+| `docker stats` | Live resource usage for all containers |
+
+---
+
+### Docker Volume Commands
+
+| Command | Purpose |
+|---------|---------|
+| `docker volume create NAME` | Create a named volume |
+| `docker volume ls` | List volumes |
+| `docker volume inspect NAME` | Show volume details |
+| `docker volume rm NAME` | Remove a volume |
+| `docker volume prune` | Remove all unused volumes |
+
+Volume mount syntax: `-v NAME:CONTAINER_PATH`
+
+Bind mount syntax: `-v /host/path:/container/path`
+
+---
+
+### Docker Network Commands
+
+| Command | Purpose |
+|---------|---------|
+| `docker network ls` | List networks |
+| `docker network create NAME` | Create a custom bridge network |
+| `docker network inspect NAME` | Show network details |
+| `docker network connect NET CONTAINER` | Connect container to network |
+| `docker network rm NAME` | Remove a network |
+
+Containers on a custom bridge network can resolve each other by container name. Containers on the default `bridge` network cannot resolve by name — IP only.
+
+---
+
+### Dockerfile Instruction Reference
+
+| Instruction | Purpose |
+|-------------|---------|
+| `FROM IMAGE` | Set base image (must be first instruction) |
+| `RUN CMD` | Execute command during build; creates a layer |
+| `COPY SRC DEST` | Copy files from build context into image |
+| `ADD SRC DEST` | Like COPY; also handles URLs and tar extraction |
+| `ENV KEY=VALUE` | Set environment variable |
+| `EXPOSE PORT` | Document port (does not publish to host) |
+| `CMD ["CMD","ARG"]` | Default command; overridable with `docker run CMD` |
+| `ENTRYPOINT ["CMD"]` | Fixed entry command; CMD provides arguments |
+| `WORKDIR PATH` | Set working directory for subsequent instructions |
+| `USER NAME` | Set user for subsequent instructions |
+| `LABEL key=value` | Add metadata to the image |
+
+---
+
+### Docker Build and Push Workflow
+
+```bash
+docker build -t myapp:1.0 .
+docker tag myapp:1.0 user/myapp:1.0
+docker login
+docker push user/myapp:1.0
+docker pull user/myapp:1.0
+```
+
+---
+
+### Image Management Commands
+
+| Command | Purpose |
+|---------|---------|
+| `docker image prune` | Remove dangling (untagged) images |
+| `docker image prune -a` | Remove all unused images |
+| `docker save -o FILE.tar IMAGE` | Export image to tar file |
+| `docker load -i FILE.tar` | Import image from tar file |
+| `docker system df` | Show disk usage |
+| `docker system prune` | Remove stopped containers, unused networks, dangling images |
+| `docker system prune -a` | Also remove all unused images |
+
+---
+
+### Exam Tips
+
+1. Containers share the host kernel via namespaces and cgroups. VMs have a full guest OS on a hypervisor. This is the most fundamental distinction and is directly tested.
+
+2. `docker ps` shows only running containers. `docker ps -a` shows all. `docker stop` does not delete. `docker rm` is required to delete. Confusing stop with delete is a common exam trap.
+
+3. `-p HOST:CONTAINER` maps ports. `-v NAME:PATH` mounts volumes. `-e KEY=VALUE` sets environment variables. `-d` runs detached. `-it` runs interactive with TTY. Know all five flags.
+
+4. `docker logs NAME` reads stdout/stderr from the container's main process. `docker exec -it NAME bash` opens a shell inside a running container. These are different operations.
+
+5. Volumes in `/var/lib/docker/volumes/` survive container removal. Bind mounts map host directories directly. Use volumes for databases in production; bind mounts for development source code.
+
+6. Dockerfile: `FROM` is always first. `RUN` creates a new layer. `COPY` copies from the build context on the host. `EXPOSE` only documents a port — it does not publish it. `CMD` is the default command.
+
+7. The build context is the directory passed to `docker build`. `COPY` can only reference files within the build context. Files outside it cause "not found in build context" errors.
+
+8. `docker system prune` removes stopped containers, unused networks, and dangling images. Adding `-a` also removes all unused images. Use `docker system df` to see what is consuming disk space before pruning.
+
+---
+
+### Study Checklist
+
+Before the quiz and lab, confirm you can do all of the following without looking them up:
+
+* Explain how containers differ from VMs in terms of kernel sharing and isolation mechanism
+* Run a container in detached mode with port mapping and a named volume
+* View running containers and all containers including stopped ones
+* Stop, start, and remove a container
+* Open an interactive shell inside a running container with docker exec
+* View container log output and follow it in real time
+* Write a minimal Dockerfile with FROM, RUN, COPY, EXPOSE, and CMD
+* Build an image from a Dockerfile
+* Explain the difference between a Docker volume and a bind mount
+* Remove stopped containers and unused images with docker system prune

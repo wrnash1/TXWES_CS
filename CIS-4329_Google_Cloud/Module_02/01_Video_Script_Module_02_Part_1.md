@@ -1,127 +1,138 @@
-# Video Script — Module 02, Part 1
+# Video Script: Module 02 — IAM and Access Control in GCP (Part 1 of 2)
 
-## CIS-4329: Google Cloud Platform | Texas Wesleyan University
+## Course: CIS-4329 Google Cloud Computing
 
-### Topic: IAM — Principals, Roles, and the Policy Model
+## Texas Wesleyan University | Professor Nash
 
-### Estimated Duration: 13–15 minutes
+## Estimated Duration: 15 minutes
 
----
-
-## Introduction
-
-Welcome to Module 02. I'm Professor Nash, and today we are going deep into Identity and Access Management — IAM. If Module 01 was about where things live in GCP, Module 02 is about who can touch them. IAM is arguably the most important topic in this entire course, and it is the most heavily tested domain on the Google Cloud Associate Cloud Engineer exam. Get this module right and you will carry that advantage through every other module.
-
-By the end of Part 1 you will understand the principal model — who can be granted access — and the complete role system — what access they can have. In Part 2 we will cover service accounts in depth, IAM conditions, audit logging, and best-practice patterns.
+## Certification Alignment: Google Cloud Associate Cloud Engineer (ACE)
 
 ---
 
-## Section 1: The IAM Model
+## Segment 1 — Introduction (1 minute)
 
-**[SHOW SLIDE: Three-column diagram labeled "Who (Principal)", "What (Role)", "Where (Resource)"]**
+Welcome to Module 02. This module covers Identity and Access Management — IAM —
+which is one of the most heavily tested topic areas on the Google Cloud Associate
+Cloud Engineer exam.
 
-IAM answers one question: who can do what on which resource? Every IAM policy binding has three components:
+In Part 1 we cover the IAM conceptual model: who can do what on which resource.
+We look at the three types of IAM roles, how policies work, service accounts,
+and the newer features like IAM Conditions and Workload Identity Federation.
 
-- A principal — the identity being granted access
-- A role — the collection of permissions being granted
-- A resource — the GCP resource the policy is attached to
-
-Let's work through each component.
-
----
-
-## Section 2: Principals
-
-**[SHOW SLIDE: List of principal types with their identifier prefixes]**
-
-A principal is any identity that can be granted access in GCP. There are five principal types you must know for the ACE exam.
-
-The first is a Google Account — a specific individual identified by their email address. Example: `william.nash@txwes.edu`. This represents a human user. In IAM policy JSON, a Google Account is prefixed with `user:`.
-
-The second is a Service Account — a special account used by applications and workloads, not by humans. Service accounts have email-format identifiers like `my-app@my-project.iam.gserviceaccount.com`. In IAM policy JSON, service accounts are prefixed with `serviceAccount:`. We will cover service accounts in detail in Part 2.
-
-The third is a Google Group — a named collection of Google Accounts and Service Accounts. When you grant a role to a group, all current and future members of that group inherit that role automatically. This is the recommended way to manage access for teams because you add and remove individuals from the group rather than modifying IAM policies directly.
-
-The fourth is a Google Workspace or Cloud Identity domain — all users in a specific domain such as `txwes.edu`. In IAM policy JSON this is prefixed with `domain:`. Granting a role to a domain grants it to every user in that domain. Use this carefully.
-
-The fifth special identifiers are `allAuthenticatedUsers` and `allUsers`. The `allAuthenticatedUsers` identifier means any Google account that is authenticated — essentially any signed-in Google user on the internet. The `allUsers` identifier means completely unauthenticated public access — any request, from anyone, with no sign-in required.
-
-**[PAUSE — Professor on camera]**
-
-The distinction between `allAuthenticatedUsers` and `allUsers` is a classic ACE exam trap. `allUsers` means the entire public internet with no login required. `allAuthenticatedUsers` means anyone who signs in with any Google account. Neither is appropriate for sensitive or internal data. The ACE exam will present scenarios asking which of these identifiers makes a Cloud Storage bucket or an API endpoint publicly accessible — and the answer is `allUsers` for truly public, `allAuthenticatedUsers` for "any Google account."
+Pay close attention. IAM questions make up a significant portion of the ACE exam.
 
 ---
 
-## Section 3: The Three Categories of Roles
+## Segment 2 — IAM Fundamentals (4 minutes)
 
-**[SHOW SLIDE: Three-tier role hierarchy — Basic, Predefined, Custom]**
+### The IAM Model
 
-Roles are bundles of permissions. A permission is a single atomic action, like `compute.instances.create` or `storage.objects.get`. You never grant individual permissions directly to principals — you grant roles, which contain permissions.
+Google Cloud IAM answers one question: who can do what on which resource?
 
-GCP has three categories of roles.
+- **Who** — a principal (a person, a group, a service account, or a domain)
+- **Can do what** — a role (a collection of permissions)
+- **On which resource** — a GCP resource (project, bucket, VM, etc.)
 
-### Basic Roles
+An IAM policy is the binding that ties a principal to a role on a resource.
 
-**[SHOW SLIDE: Basic roles table — Viewer, Editor, Owner with a one-line summary of each]**
+### Principals
 
-Basic roles — also called primitive roles — are the original, coarse-grained roles that predate the modern IAM system. There are three:
+GCP recognizes the following principal types:
 
-`roles/viewer` grants read-only access to all resources in the project. The holder can view configuration, list resources, and read data, but cannot create, modify, or delete anything.
+- **Google Account** — An individual user's Google identity (`user:alice@example.com`)
+- **Service Account** — A non-human identity used by applications and VMs
+  (`serviceAccount:myapp@project.iam.gserviceaccount.com`)
+- **Google Group** — A named collection of Google Accounts and service accounts
+  (`group:team@example.com`)
+- **Google Workspace Domain** — All users in a Google Workspace domain
+  (`domain:example.com`)
+- **allAuthenticatedUsers** — Any authenticated Google account
+- **allUsers** — Anyone on the internet, including unauthenticated users
 
-`roles/editor` grants read and write access to most resources. The holder can create, modify, and delete most resources but cannot manage IAM policies themselves.
+**ACE Exam Tip:** `allUsers` grants public access. Never use it on sensitive
+resources. The ACE exam often includes questions about unintended public access.
 
-`roles/owner` grants full control including IAM policy management and billing. The holder can add and remove IAM bindings, link billing accounts, and delete the project itself.
+### Permissions
 
-Basic roles are convenient but dangerous. Granting `roles/editor` to someone gives them write access to every service in the project — Compute Engine, Cloud Storage, Cloud SQL, BigQuery, Pub/Sub — whether they need that access or not. For production environments, basic roles violate the principle of least privilege. The ACE exam will frequently present scenarios where basic roles are the wrong answer precisely because they are too broad.
+A permission is the most granular unit in IAM. Permissions follow this format:
+
+```text
+service.resource.verb
+```
+
+Examples:
+
+- `compute.instances.create` — permission to create Compute Engine VMs
+- `storage.buckets.delete` — permission to delete Cloud Storage buckets
+- `iam.serviceAccounts.actAs` — permission to act as a service account
+
+Permissions are never granted directly to principals. They are grouped into roles,
+and roles are granted to principals.
+
+---
+
+## Segment 3 — IAM Role Types (5 minutes)
+
+GCP has three categories of IAM roles.
+
+### Primitive Roles (Basic Roles)
+
+Primitive roles predate IAM and were the original access control mechanism.
+There are three primitive roles:
+
+- `roles/owner` — Full control of all resources plus billing management
+- `roles/editor` — Create and modify all resources (no billing management)
+- `roles/viewer` — Read-only access to all resources
+
+**Why to avoid primitive roles:** They are extremely broad. Granting someone
+`roles/editor` on a project gives them the ability to modify every resource in
+that project. The ACE exam and GCP best practices strongly recommend using
+predefined or custom roles instead.
 
 ### Predefined Roles
 
-**[SHOW SLIDE: Table of predefined roles organized by service]**
+Predefined roles are curated by Google for specific services and job functions.
+They bundle the exact permissions needed for a particular task, following the
+principle of least privilege.
 
-Predefined roles are purpose-built roles created and maintained by Google for specific services. They follow the naming pattern `roles/SERVICE.ROLENAME`. Here are the most important ones for the ACE exam:
+Examples:
 
-For Compute Engine:
+- `roles/compute.instanceAdmin.v1` — Full control of Compute Engine instances
+- `roles/compute.viewer` — Read-only access to Compute Engine
+- `roles/storage.admin` — Full control of Cloud Storage
+- `roles/storage.objectViewer` — Read objects in Cloud Storage
+- `roles/container.developer` — Deploy and manage workloads in GKE
+- `roles/logging.viewer` — View log entries in Cloud Logging
+- `roles/iam.securityReviewer` — View IAM policies across all resources
 
-- `roles/compute.instanceAdmin.v1` — manage VM instances: start, stop, create, delete
-- `roles/compute.viewer` — view Compute Engine resources with no write access
-- `roles/compute.networkAdmin` — manage network resources: VPCs, subnets, firewalls
-
-For Cloud Storage:
-
-- `roles/storage.objectAdmin` — create, read, update, delete objects in any bucket in the project
-- `roles/storage.objectViewer` — read objects and list bucket contents
-- `roles/storage.admin` — full control including bucket creation and deletion
-
-For IAM itself:
-
-- `roles/iam.serviceAccountUser` — attach service accounts to resources (impersonate them)
-- `roles/iam.serviceAccountAdmin` — create and manage service accounts
-- `roles/iam.securityReviewer` — view IAM policies across the project (read-only)
-
-For Cloud SQL:
-
-- `roles/cloudsql.client` — connect to Cloud SQL instances but not administer them
-- `roles/cloudsql.admin` — full Cloud SQL administration including instance creation
-
-Predefined roles are automatically updated by Google when new GCP features introduce new permissions. If you hold `roles/compute.instanceAdmin.v1` and Google releases a new Compute Engine feature with new permissions, your role may be updated to include those permissions automatically.
+There are hundreds of predefined roles. For the ACE exam, focus on roles for
+the services covered in this course: Compute Engine, Cloud Storage, GKE,
+Cloud Run, and IAM itself.
 
 ### Custom Roles
 
-**[SHOW CONSOLE: Navigate to IAM and Admin > Roles > Create Role]**
+Custom roles allow you to define exactly which permissions to bundle. They are
+used when no predefined role fits the least-privilege requirement.
 
-Custom roles let you create a role with exactly the permissions you specify — no more, no less. Custom roles can be created at the Organization level or at the Project level. They cannot be created at the Folder level — this is an ACE exam detail worth memorizing.
+Custom roles can be created at two levels:
 
-Custom roles are the gold standard for least-privilege access. If an application only needs to read Pub/Sub messages and write to BigQuery, you can create a custom role with exactly those two permissions.
+- **Project level** — Applicable only within that project
+- **Organization level** — Applicable across the organization
 
-The maintenance trade-off: predefined roles are updated automatically by Google. Custom roles are NOT automatically updated. When Google adds new permissions for new features, you must manually add them to your custom roles if your workloads need them.
+**ACE Exam Tip:** Custom roles cannot include all permissions. Some permissions
+are restricted to specific roles (e.g., primitive roles) and cannot be added to
+custom roles. When a question asks how to grant exactly the permissions needed
+with no extras, the answer is a custom role.
 
 ---
 
-## Section 4: IAM Policy Structure
+## Segment 4 — IAM Policies (3 minutes)
 
-**[SHOW SLIDE: IAM policy JSON with bindings array highlighted]**
+### Policy Structure
 
-An IAM policy is a JSON document attached to a resource. It contains a list of bindings, a version number, and an etag. Here is what a minimal IAM policy looks like:
+An IAM policy is a JSON document that binds principals to roles on a resource.
+Each binding specifies one role and one or more principals.
 
 ```json
 {
@@ -129,57 +140,108 @@ An IAM policy is a JSON document attached to a resource. It contains a list of b
     {
       "role": "roles/storage.objectViewer",
       "members": [
-        "user:student@txwes.edu",
-        "group:analysts@txwes.edu"
+        "user:alice@example.com",
+        "group:devs@example.com"
       ]
     },
     {
-      "role": "roles/storage.admin",
+      "role": "roles/compute.instanceAdmin.v1",
       "members": [
-        "serviceAccount:backup@my-project.iam.gserviceaccount.com"
+        "serviceAccount:myapp@project.iam.gserviceaccount.com"
       ]
     }
   ],
-  "etag": "BwX1fakeEtag==",
-  "version": 1
+  "etag": "BwXmhg2..."
 }
 ```
 
-The `etag` field is a concurrency control mechanism. When you read a policy and then write it back, GCP checks that the etag you submit matches the current server-side etag. If another administrator changed the policy between your read and your write, the etags will not match and GCP will reject your write — preventing accidental overwrites. This is especially important in automated scripts and Terraform configurations.
+### Policy Inheritance
+
+As covered in Module 01, IAM policies are inherited downward through the resource
+hierarchy. A policy set at the Organization level is effective at all projects
+and resources below it.
+
+### IAM Conditions
+
+IAM Conditions allow you to add attribute-based access control on top of role
+bindings. Common condition attributes include:
+
+- **Resource type** — Apply the role only to specific resource types
+- **Resource name** — Apply the role only to resources matching a name pattern
+- **Date/time** — Grant access only during a specific time window
+- **IP address** — Restrict access to specific IP ranges
+
+Example use case: Grant a contractor `roles/editor` only until a specific
+project end date. After the date passes, the binding is automatically ineffective.
+
+**ACE Exam Tip:** IAM Conditions are evaluated at policy enforcement time.
+They do not delete or modify bindings after expiration — the binding persists
+but its condition is no longer satisfied, so access is denied.
 
 ---
 
-## Section 5: The Principle of Least Privilege
+## Segment 5 — Service Accounts (2 minutes)
 
-**[SHOW SLIDE: Venn diagram — "permissions needed" circle and "permissions granted" circle with small overlap labeled "correct" and large overlap labeled "overprivileged"]**
+### What is a Service Account?
 
-The principle of least privilege is the single most important IAM design principle. Every principal should be granted only the minimum permissions needed to perform their job — nothing more.
+A service account is a special type of Google account intended to represent
+a non-human user — typically an application, VM, or automated process.
 
-In practice this means:
+Service accounts have two roles in IAM:
 
-- Prefer predefined roles over basic roles for any production use
-- Create custom roles when no predefined role is a precise fit
-- Grant roles at the most specific resource level possible — a storage bucket grant instead of a project grant when only one bucket is involved
-- Avoid granting `roles/owner` to service accounts
-- Avoid granting `roles/editor` to human users in production
-- Prefer granting roles to Google Groups rather than individual users, so that offboarding a user means removing them from the group rather than auditing every IAM binding across every project
+1. **As a principal** — You grant roles to a service account, giving it
+   permissions to access GCP resources.
+2. **As a resource** — You grant the `iam.serviceAccounts.actAs` permission
+   to users or other service accounts, controlling who can use the service
+   account.
 
-The ACE exam presents scenarios and asks which IAM configuration is most appropriate. The correct answer is almost always the option that grants the narrowest predefined role at the most specific level in the hierarchy that still accomplishes the task.
+### Types of Service Accounts
+
+- **User-managed service accounts** — Created by you in your project.
+  Format: `NAME@PROJECT_ID.iam.gserviceaccount.com`
+- **Default service accounts** — Automatically created when you enable certain
+  APIs (e.g., App Engine, Compute Engine). These have broad permissions by
+  default — a security concern.
+- **Google-managed service accounts** — Used internally by Google services.
+  You generally do not interact with these.
+
+### Service Account Keys
+
+Service accounts can authenticate using two methods:
+
+- **Short-lived credentials** (recommended) — Access tokens generated by the
+  metadata server or Workload Identity Federation
+- **Service account keys** (avoid when possible) — Long-lived JSON key files
+  that can be downloaded
+
+**ACE Exam Tip:** GCP best practice strongly discourages creating and
+downloading service account keys. Keys are a security risk if mishandled.
+Use Workload Identity Federation or attached service accounts instead.
 
 ---
 
-## Closing — Part 1
+## Summary — Part 1
 
-To summarize Part 1: IAM answers who can do what on which resource. Principals are the identities — Google Accounts, Service Accounts, Groups, domains, or public identifiers. Roles contain permissions — basic roles are coarse-grained, predefined roles are service-specific, and custom roles are tailored to exact needs. IAM policies are JSON documents with bindings that pair roles to members. The etag prevents concurrent write conflicts. Always apply least privilege.
+In Part 1 we covered:
 
-In Part 2 we will cover service accounts, IAM conditions, workload identity federation, and the gcloud commands for managing IAM policies.
+- The IAM model: who can do what on which resource
+- Principal types: Google Accounts, service accounts, groups, domains
+- The three role categories: primitive, predefined, and custom
+- IAM policy structure and inheritance
+- IAM Conditions for attribute-based access
+- Service accounts: as principals and as resources
+
+In Part 2 we will look at Workload Identity Federation, Cloud Audit Logs, and
+walk through IAM configuration in the Cloud Console and with gcloud.
+
+See you in Part 2.
 
 ---
 
 End of Part 1 — Module 02
 
-Course: CIS-4329 Google Cloud Platform | Texas Wesleyan University | Professor Nash
+Course: CIS-4329 Google Cloud Computing | Texas Wesleyan University | Professor Nash
 
 Certification Target: Google Cloud Associate Cloud Engineer
 
-Reference: cloud.google.com/learn
+Reference: cloud.google.com/iam/docs

@@ -1,37 +1,270 @@
-# Lab Activity: Module 10 - Route 53 & CloudFront CDN
-## Course: CIS-4334_AWS_Cloud_Architecture (AWS Certified Solutions Architect - Associate)
+# Lab Activity: Module 10 — SQS, SNS, and Event-Driven Architecture
+
+**Course:** CIS-4334 AWS Cloud Architecture
+**Certification Target:** AWS Solutions Architect Associate (SAA-C03)
+**Estimated Time:** 60–75 minutes
+**Instructor:** Professor Nash
 
 ---
 
-## Objective
-Configure and verify systems matching the operational parameters of **Route 53 & CloudFront CDN**.
+## Objectives
+
+By the end of this lab you will be able to:
+
+- Create SQS Standard and FIFO queues and configure visibility timeout, long polling, and a Dead-Letter Queue
+- Build an SNS topic and subscribe two SQS queues to demonstrate the fan-out pattern
+- Observe message isolation between subscribers and DLQ redrive behavior
+- Analyze architecture scenarios and select the correct messaging service for a given requirement
 
 ---
 
 ## Prerequisites
-*   Ensure you have access to a terminal or a runtime environment matching the course requirements (e.g., Linux, macOS, Windows, or a cloud/web terminal).
-*   Ensure you have administrative privileges if required to install packages or configure system services.
+
+- AWS Management Console access with IAM permissions for SQS, SNS, and CloudWatch
+- AWS CLI installed and configured (`aws configure`)
+- A text editor for recording resource ARNs and queue URLs
 
 ---
 
-## Step-by-Step Instructions
-1. **Configure Route 53 weighted routing rules**
-   * *Instruction:* Execute this step inside your terminal environment. Verify the command completes without errors.
-2. **Create a CloudFront distribution profile**
-   * *Instruction:* Execute this step inside your terminal environment. Verify the command completes without errors.
-3. **Verify content delivery latency improvements**
-   * *Instruction:* Execute this step inside your terminal environment. Verify the command completes without errors.
+## Part 1 — SQS Queue Configuration and Visibility Timeout
+
+### Step 1.1 — Create the Source Queue
+
+In the SQS console, create a Standard queue named `orders-processing`.
+
+Set the following parameters:
+
+- Visibility timeout: 30 seconds
+- Message retention period: 4 days
+- Receive message wait time: 20 seconds (enables long polling)
+
+Record the queue URL. You will need it in subsequent steps.
+
+### Step 1.2 — Create a Dead-Letter Queue
+
+Create a second Standard queue named `orders-processing-dlq`. Use default settings — this queue requires no special configuration because it is the destination for failed messages.
+
+Record the queue URL and ARN.
+
+### Step 1.3 — Configure the Redrive Policy
+
+Return to the `orders-processing` queue settings. In the Dead-letter queue section, enable the redrive policy:
+
+- Set the DLQ to `orders-processing-dlq`
+- Set `maxReceiveCount` to 3
+
+This means: after a message has been received 3 times without being deleted, SQS moves it to the DLQ automatically.
+
+### Step 1.4 — Send Test Messages via CLI
+
+Send five messages to the source queue:
+
+```bash
+for i in 1 2 3 4 5; do
+  aws sqs send-message \
+    --queue-url <orders-processing-queue-url> \
+    --message-body "{\"orderId\": \"ORD-00$i\", \"amount\": $((i * 25))}"
+done
+```
+
+### Step 1.5 — Observe Visibility Timeout Behavior
+
+Receive one message from the queue:
+
+```bash
+aws sqs receive-message \
+  --queue-url <orders-processing-queue-url> \
+  --wait-time-seconds 5
+```
+
+Record the `ReceiptHandle` from the response. Immediately attempt to receive another message from the same queue and observe that only 4 messages are visible — the received message is hidden during the visibility timeout.
+
+Wait 35 seconds (longer than the 30-second visibility timeout) and receive again. Observe that the first message reappears, now with a new `ReceiptHandle`.
+
+### Step 1.6 — Simulate DLQ Redrive
+
+Receive the same message three more times without deleting it (the `ApproximateReceiveCount` attribute will increment with each receive). After the third receive, wait for the visibility timeout to expire.
+
+Check the `orders-processing-dlq` queue for messages:
+
+```bash
+aws sqs receive-message \
+  --queue-url <orders-processing-dlq-url> \
+  --attribute-names All
+```
+
+Confirm the message has been moved to the DLQ and inspect its `ApproximateReceiveCount` attribute.
+
+### Part 1 Analysis Questions
+
+Answer these questions in your lab report:
+
+1. What does the `ApproximateReceiveCount` attribute track and why is it the mechanism SQS uses to determine when to redirect to the DLQ?
+2. A message processing function takes up to 8 minutes. The visibility timeout is set to 30 seconds. What problem does this cause and what is the correct configuration?
+3. Why does SQS assign a new `ReceiptHandle` each time a message becomes visible and is received?
 
 ---
 
-## Troubleshooting Guide
-*   *Error:* `Permission Denied`
-    * *Fix:* Remember to run administrative command sequences using `sudo` or execute with administrative privileges (e.g., Run as Administrator on Windows).
-*   *Error:* `Command Not Found`
-    * *Fix:* Verify your environmental path settings, or double-check if the utility package is installed.
+## Part 2 — SNS Fan-Out to SQS Queues
+
+### Step 2.1 — Create Two Subscriber Queues
+
+Create two Standard SQS queues:
+
+- `inventory-service-queue`
+- `analytics-service-queue`
+
+Both should use default settings. Record both queue ARNs.
+
+### Step 2.2 — Create an SNS Topic
+
+In the SNS console, create a Standard topic named `order-events`.
+
+Record the topic ARN.
+
+### Step 2.3 — Subscribe Both Queues to the Topic
+
+For each queue, create an SQS subscription on the `order-events` topic:
+
+1. In the SNS console, choose Create subscription.
+2. Set Protocol to Amazon SQS.
+3. Enter the SQS queue ARN.
+4. Leave the filter policy blank for now.
+
+SNS will attempt to confirm the subscription. For SQS subscriptions, confirmation is automatic.
+
+### Step 2.4 — Grant SNS Permission to Write to Each Queue
+
+For each SQS queue, attach a queue policy that allows SNS to send messages. The policy must be added to the SQS queue's Access Policy, not the SNS topic policy.
+
+The required statement for each queue:
+
+```json
+{
+  "Effect": "Allow",
+  "Principal": {
+    "Service": "sns.amazonaws.com"
+  },
+  "Action": "sqs:SendMessage",
+  "Resource": "<queue-arn>",
+  "Condition": {
+    "ArnEquals": {
+      "aws:SourceArn": "<order-events-topic-arn>"
+    }
+  }
+}
+```
+
+### Step 2.5 — Publish a Test Event to the SNS Topic
+
+```bash
+aws sns publish \
+  --topic-arn <order-events-topic-arn> \
+  --message '{"orderId": "ORD-0099", "customerId": "C-42", "amount": 199.99}' \
+  --message-attributes '{"eventType": {"DataType": "String", "StringValue": "ORDER_PLACED"}}'
+```
+
+### Step 2.6 — Verify Fan-Out Delivery
+
+Receive messages from both subscriber queues and verify that each received an identical copy of the order event:
+
+```bash
+aws sqs receive-message --queue-url <inventory-service-queue-url>
+aws sqs receive-message --queue-url <analytics-service-queue-url>
+```
+
+Both queues should contain the same message body. This demonstrates the fan-out: one SNS publish resulted in two independent SQS deliveries.
+
+### Step 2.7 — Add a Message Filter Policy
+
+Return to the `analytics-service-queue` subscription in SNS. Add this filter policy:
+
+```json
+{
+  "eventType": ["ORDER_PLACED"]
+}
+```
+
+Publish a second message with `eventType = INVENTORY_UPDATED`:
+
+```bash
+aws sns publish \
+  --topic-arn <order-events-topic-arn> \
+  --message '{"itemSku": "SKU-888", "newQuantity": 50}' \
+  --message-attributes '{"eventType": {"DataType": "String", "StringValue": "INVENTORY_UPDATED"}}'
+```
+
+Check both queues. The `inventory-service-queue` (no filter policy) receives the message. The `analytics-service-queue` (filter: `ORDER_PLACED` only) does not receive the `INVENTORY_UPDATED` message.
+
+### Part 2 Analysis Questions
+
+Answer these questions in your lab report:
+
+1. You published one message to the SNS topic and both SQS queues each received a copy. Explain why this does not cause "duplicate processing" — how does each downstream service use its copy differently?
+2. If the `analytics-service-queue` consumer is offline for 6 hours, what happens to the messages queued in `analytics-service-queue`? How does this differ from what would happen if the analytics service subscribed directly to the SNS topic without an SQS intermediary?
+3. A new reporting service needs to receive all order events. Without SNS fan-out, what change would be required to the order-placement application code? With SNS fan-out, what is the only change required?
+
+---
+
+## Part 3 — Architecture Analysis
+
+For each scenario below, identify the most appropriate AWS messaging service (SQS Standard, SQS FIFO, SNS, EventBridge, or Kinesis Data Streams) and justify your selection with specific service characteristics.
+
+### Scenario A
+
+A mobile game records player score events at a rate of 50,000 events per second. Three teams consume the data independently: the anti-cheat team, the leaderboard team, and the data science team. All three teams must be able to replay the last 7 days of events if they need to reprocess. No team's consumption affects the others.
+
+Which service? ________________
+
+Justification (write 3–5 sentences addressing throughput, multiple independent consumers, and replay capability):
+
+### Scenario B
+
+A bank processes wire transfers. Each transfer must be processed in exactly the order it was received per customer account. Duplicate processing of a single transfer is unacceptable — it would result in double-debiting customer accounts.
+
+Which service? ________________
+
+Justification (write 3–5 sentences addressing ordering requirements and duplicate prevention):
+
+### Scenario C
+
+An e-commerce platform needs to trigger five downstream services whenever a new order is placed: fraud detection, inventory reservation, shipment scheduling, customer notification, and revenue analytics. Each service needs durable, independent processing with automatic retry if it fails temporarily.
+
+Which service? ________________
+
+Justification (write 3–5 sentences addressing fan-out, durability, and consumer independence):
+
+### Scenario D
+
+An operations team wants to automatically remediate EC2 instances that transition to a stopped state unexpectedly. When any EC2 instance in the account changes state to "stopped," a Lambda function should immediately run a diagnostic and attempt restart.
+
+Which service? ________________
+
+Justification (write 3–5 sentences explaining why SNS or SQS cannot originate this trigger and what makes this service the correct choice):
 
 ---
 
 ## Deliverables
-1. Document your completed steps with screenshots or terminal output logs showing successful execution.
-2. Submit your completion report to your Canvas LMS assignment portal for grading.
+
+Submit to the Canvas assignment portal:
+
+1. Screenshots of the SQS console showing the `orders-processing` queue configuration (visibility timeout, DLQ assignment, redrive policy).
+2. CLI output showing the DLQ receiving the failed message from Step 1.6.
+3. CLI output from Step 2.6 showing both queues receiving the fan-out message.
+4. CLI output from Step 2.7 showing the filter policy preventing delivery to the analytics queue.
+5. Written responses to all Part 1 and Part 2 analysis questions.
+6. Architecture Analysis responses for Scenarios A through D (service selection and justification).
+
+---
+
+## Clean Up
+
+To avoid ongoing charges, delete the following resources after completing the lab:
+
+- SQS queues: `orders-processing`, `orders-processing-dlq`, `inventory-service-queue`, `analytics-service-queue`
+- SNS topic: `order-events`
+- SNS subscriptions (deleted automatically when topic is deleted)
+
+---
+
+*Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University.*

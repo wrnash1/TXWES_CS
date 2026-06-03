@@ -1,78 +1,243 @@
-# Quiz: Module 11 - ECS, EKS, and Container Architecture
-## Course: CIS-4334_AWS_Cloud_Architecture (AWS Certified Solutions Architect - Associate)
+# Quiz: Module 11 — AWS IAM and Security Architecture
+
+## Course: CIS-4334 AWS Cloud Architecture
+
+## Texas Wesleyan University | Professor Nash
+
+## Certification Alignment: AWS Solutions Architect — Associate (SAA-C03)
+
+**Instructions:** Select the single best answer for each question. Each question is worth 10 points.
 
 ---
 
-**Question 1**
-A startup with no Kubernetes expertise needs to run a set of containerized microservices on AWS. The team wants to avoid managing EC2 instances entirely and pay only for the compute consumed by running containers. Which combination of services best meets these requirements?
-*   A) Amazon EKS with EC2 managed node groups — the team manages the Kubernetes worker nodes.
-*   B) Amazon ECS with AWS Fargate — Fargate provisions and manages the underlying compute automatically; the team defines only CPU and memory per task.
-*   C) Amazon EC2 with Docker Compose — install Docker on EC2 instances and manage containers manually.
-*   D) Amazon EKS with AWS Fargate — EKS on Fargate eliminates node management while providing Kubernetes-native tooling.
-*   **Correct Answer:** B) ECS with Fargate is the simplest path for teams without Kubernetes expertise — no EC2 instances to manage, no Kubernetes control plane to understand, and billing only for active container compute.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* EKS with EC2 managed node groups still requires Kubernetes knowledge for deployment configuration (pods, deployments, services). Managed node groups reduce but do not eliminate EC2 management. This contradicts the "no Kubernetes expertise" requirement.
-    *   *Why B is correct:* ECS is simpler than EKS for teams without Kubernetes background — Task Definitions and Services are straightforward AWS constructs. Fargate eliminates EC2 provisioning and management. This combination precisely matches "no EC2 management + pay per consumed compute."
-    *   *Why C is incorrect:* Self-managing Docker Compose on EC2 instances requires EC2 management (patching, sizing, availability), container orchestration (no auto-recovery, no load balancing), and significant operational overhead. This is the most complex and least scalable option.
-    *   *Why D is incorrect:* EKS on Fargate is a valid option that eliminates node management, but it still requires Kubernetes expertise to configure deployments, services, ingress controllers, and RBAC. The "no Kubernetes expertise" requirement makes ECS a better fit.
+### Question 1
+
+A Lambda function needs to read secret values from AWS Secrets Manager. A developer suggests embedding an IAM user's access key in the Lambda function's environment variables. A solutions architect objects. What is the CORRECT approach?
+
+A. Store the access key in an encrypted S3 bucket and have Lambda retrieve it at runtime
+
+B. Assign an IAM execution role to the Lambda function with permissions to access Secrets Manager
+
+C. Use a hardcoded access key in the Lambda code but rotate it every 90 days
+
+D. Use Secrets Manager to store the IAM access key and have Lambda retrieve it (circular)
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. Retrieving an access key from S3 still involves long-term credentials — now stored in S3 rather than environment variables. It adds complexity without solving the fundamental problem.
+- B is correct. Lambda supports IAM execution roles, which provide temporary credentials via AWS STS automatically. The Lambda service injects temporary credentials for the role into the execution environment. The function calls Secrets Manager using these temporary credentials without any hardcoded keys.
+- C is incorrect. Hardcoded long-term access keys are a security risk regardless of rotation frequency. Rotation creates a manual process, and if the code repository is leaked, the key is exposed. Temporary credentials from IAM roles are the AWS-endorsed pattern.
+- D is incorrect. Using Secrets Manager to store the IAM key creates a circular dependency — the Lambda needs credentials to access Secrets Manager, which stores the credentials it needs to access Secrets Manager. The solution is to eliminate the long-term credential entirely using an execution role.
 
 ---
 
-**Question 2**
-Which of the following is the most accurate description of **AWS Fargate** in the context of ECS and EKS?
-*   A) A container image registry that stores and versions Docker images for use by ECS and EKS deployments.
-*   B) A serverless container compute engine where AWS provisions and manages the underlying EC2 instances, and you specify only the CPU and memory requirements for each container task.
-*   C) A Kubernetes-managed node group that automatically patches and updates EC2 worker node operating systems on behalf of the cluster administrator.
-*   D) A monitoring service that tracks container resource usage and automatically right-sizes CPU and memory allocations for running ECS tasks.
-*   **Correct Answer:** B) Fargate is a serverless compute engine for containers — you define resource requirements per task, and AWS handles all underlying infrastructure provisioning, scaling, and patching.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* This describes Amazon ECR (Elastic Container Registry), which is a separate service from Fargate. ECR stores images; Fargate runs them.
-    *   *Why B is correct:* Fargate decouples container workload definition from infrastructure management. No EC2 instances appear in your account for Fargate tasks — AWS manages the compute fleet. You only configure `cpu` and `memory` in the ECS Task Definition (or Kubernetes pod spec for EKS Fargate profiles).
-    *   *Why C is incorrect:* This partially describes EKS Managed Node Groups — a feature that automates EC2 node updates within an EKS cluster. It is not Fargate, and it still involves EC2 instances.
-    *   *Why D is incorrect:* This describes container resource monitoring and optimization, which is not a Fargate feature. AWS Compute Optimizer can recommend right-sizing for ECS tasks, but Fargate itself is the compute layer, not a monitoring or optimization service.
+### Question 2
+
+A company uses AWS Organizations with an SCP attached to the Production OU that denies `ec2:RunInstances` for any instance type other than t3.micro, t3.small, and m6i.large. An IAM admin in a Production OU member account has an IAM policy with `ec2:RunInstances` on all resources with no conditions. They attempt to launch a c6g.xlarge instance and it fails. Why?
+
+A. The IAM admin's policy does not include the correct ARN for c6g.xlarge instances
+
+B. The SCP restricts the effective permissions in the member account even though the IAM policy allows it
+
+C. c6g.xlarge is not available in the Production OU's region
+
+D. The IAM admin needs a Permission Boundary that explicitly allows c6g.xlarge
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. EC2 RunInstances is specified by resource ARN in the policy — there is no instance-type-specific ARN condition in the IAM policy. The IAM policy grants the action on all resources.
+- B is correct. SCPs define the maximum permissions available to all principals in a member account. Even if an IAM policy grants a permission, the SCP restricts what permissions can be exercised. The effective permissions are the intersection of SCP-allowed and IAM-allowed. The SCP's implicit deny on c6g.xlarge overrides the IAM allow.
+- C is incorrect. The scenario doesn't mention region availability, and instance availability is not determined by OU membership.
+- D is incorrect. Permission Boundaries are IAM constructs, not SCP constructs. They define maximum permissions for an IAM user or role. The issue here is the SCP, not a missing permission boundary.
 
 ---
 
-**Question 3**
-A company's ECS containerized application needs to read configuration secrets stored in AWS Secrets Manager and write processed data to an S3 bucket. The security team requires that no credentials are hardcoded in container images or environment variables. Which approach is most secure?
-*   A) Store AWS access keys as ECS Task Definition environment variables and rotate them quarterly.
-*   B) Assign an IAM Task Role to the ECS Task Definition; the container retrieves temporary credentials from the Task Metadata Endpoint automatically when making AWS API calls.
-*   C) Bake the AWS credentials into the Docker image at build time using a build argument, ensuring they are not exposed at runtime.
-*   D) Store credentials in an S3 bucket and configure the container to download them at startup using a `wget` command in the container entrypoint.
-*   **Correct Answer:** B) IAM Task Roles inject temporary, automatically rotating credentials into the running container via the ECS Task Metadata Endpoint — no static credentials needed anywhere in the pipeline.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Hardcoding access keys in Task Definition environment variables stores long-term credentials in ECS task definitions, which may be visible in CloudTrail, console access logs, and CI/CD pipelines. Keys require manual rotation. This is an IAM anti-pattern.
-    *   *Why B is correct:* IAM Task Roles are the ECS equivalent of EC2 Instance Profiles. The AWS SDK inside the container automatically retrieves short-lived STS credentials from the Task Metadata Endpoint without any configuration. This is the zero-credential-exposure best practice for container-to-AWS service authentication.
-    *   *Why C is incorrect:* Credentials embedded in a Docker image are visible to anyone with access to the image, including in the image layers. Docker image history commands can expose credentials even after layers are "removed." This is a critical security anti-pattern.
-    *   *Why D is incorrect:* Storing credentials in S3 and downloading them at startup creates a chicken-and-egg problem (how does the container authenticate to S3 to get the credentials?) and still results in credentials written to container memory. IAM Task Roles eliminate this entirely.
+### Question 3
+
+A security engineer discovers that an S3 bucket policy has a statement with `"Principal": "*"` and `"Action": "s3:GetObject"`. The IAM policies for all IAM users in the account explicitly deny `s3:GetObject` on this bucket. Can unauthenticated public requests access objects in this bucket?
+
+A. No — the IAM explicit deny overrides the bucket policy allow for all requests
+
+B. Yes — for public (unauthenticated) requests, resource-based policies are evaluated alone and the bucket policy allow takes effect
+
+C. No — `"Principal": "*"` does not include unauthenticated requests
+
+D. Yes — IAM policies only apply to authenticated requests from the same account; a public request bypasses IAM entirely
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. IAM policies apply to IAM principals (authenticated users, roles). Unauthenticated public requests do not have an IAM identity, so IAM deny policies cannot be applied to them. The S3 bucket policy is the only applicable policy for public requests.
+- B is correct. When an unauthenticated (public) request is made, there is no IAM principal associated with it. AWS evaluates only the resource-based policy (bucket policy). The bucket policy allows `s3:GetObject` for `"Principal": "*"` (which includes unauthenticated requests). IAM identity-based deny policies do not apply to requests with no IAM identity. Note: for this to work, the bucket's Block Public Access settings must also be disabled.
+- C is incorrect. `"Principal": "*"` in an S3 bucket policy does include unauthenticated (anonymous) requests in addition to authenticated ones.
+- D is incorrect in its framing but points toward the correct concept. The reason public access works is because unauthenticated requests have no IAM principal, not because IAM is "bypassed."
 
 ---
 
-**Question 4**
-An organization runs containerized workloads using Amazon EKS. They have microservices written in Go, Python, and Java that require different base images and must be independently deployable without redeploying the entire cluster. Which Kubernetes concept supports this independent deployment model?
-*   A) Kubernetes DaemonSets — run one pod of each service per cluster node, ensuring each node runs all services simultaneously.
-*   B) Kubernetes Deployments — define the desired state (number of replicas, container image) for each microservice independently; rolling updates replace containers one at a time without downtime.
-*   C) Kubernetes StatefulSets — deploy each microservice with a stable network identifier and persistent volume per pod.
-*   D) Kubernetes CronJobs — schedule each microservice to run on a fixed schedule and exit after completion.
-*   **Correct Answer:** B) Kubernetes Deployments allow each microservice to be defined, versioned, and updated independently using rolling update strategies — the standard pattern for independent microservice deployments.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* DaemonSets run one pod per node across the entire cluster — used for node-level agents like log collectors or monitoring daemons. DaemonSets are not appropriate for general application microservices.
-    *   *Why B is correct:* Kubernetes Deployments are the standard workload resource for stateless microservices. Each service has its own Deployment YAML specifying its container image, replicas, and update strategy. A rolling update (`strategy: RollingUpdate`) replaces old pods with new ones incrementally, enabling zero-downtime deployments of individual services without touching others.
-    *   *Why C is incorrect:* StatefulSets are designed for stateful applications that require stable network identities and persistent storage (e.g., databases, Kafka). Stateless microservices (web services, APIs) should use Deployments, not StatefulSets.
-    *   *Why D is incorrect:* Kubernetes CronJobs run pods on a scheduled basis and terminate after completion — appropriate for batch jobs, report generation, or cleanup tasks. They are not appropriate for long-running microservices that need to continuously serve traffic.
+### Question 4
+
+A company needs to encrypt data stored in an S3 bucket. The security policy requires that they control who can use the encryption key, that all key usage is logged in CloudTrail, and that they can rotate the key material annually. Which KMS key type meets ALL these requirements?
+
+A. AWS Owned Key
+
+B. AWS Managed Key
+
+C. Customer Managed Key (CMK)
+
+D. S3-Managed Key (SSE-S3)
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- A is incorrect. AWS Owned Keys are managed entirely by AWS. The customer has no visibility into key policies, key usage, or rotation schedules. CloudTrail does not log AWS Owned Key usage in the customer's account.
+- B is incorrect. AWS Managed Keys are managed by AWS on behalf of the service. You cannot configure custom key policies (so you cannot control who uses the key), and you cannot configure rotation — AWS rotates them on a fixed 3-year schedule. Key usage is logged in CloudTrail but you cannot customize the key policy.
+- C is correct. Customer Managed Keys allow you to: configure a custom key policy controlling which principals can use the key, view all key usage in CloudTrail (every Encrypt/Decrypt call), and enable annual key rotation. CMKs satisfy all three requirements.
+- D is incorrect. SSE-S3 (AES-256) uses S3-managed keys. You have no control over the key, no custom key policy, and no CloudTrail visibility into individual key usage.
 
 ---
 
-**Question 5**
-A company runs ECS Fargate tasks that process uploaded images. The workload is light during weekdays (10 tasks) and peaks on weekends (up to 200 tasks). The team wants automatic scaling without manual intervention. Which ECS configuration achieves this?
-*   A) Set the ECS Service desired count to 200 permanently to ensure capacity is always available for peak weekend loads.
-*   B) Configure ECS Service Auto Scaling with a Target Tracking policy on a CloudWatch metric such as CPU utilization or ALB requests per target; ECS automatically adjusts the desired task count within configured min/max bounds.
-*   C) Create two separate ECS Services — one with 10 tasks for weekdays and one with 200 tasks for weekends — and manually switch between them each week.
-*   D) Enable Fargate Spot instances and rely on Spot capacity to automatically provide additional tasks during peak periods.
-*   **Correct Answer:** B) ECS Service Auto Scaling with Target Tracking dynamically adjusts the desired task count in response to demand, scaling up for weekend peaks and scaling back down during weekday lows.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Running 200 tasks at all times when only 10 are needed on weekdays wastes 190 tasks' worth of Fargate compute costs. For a 5-day weekday + 2-day weekend cycle, this represents roughly 71% cost waste. This contradicts cost optimization principles.
-    *   *Why B is correct:* ECS Service Auto Scaling uses Application Auto Scaling to adjust the ECS Service's desired count between minimum and maximum bounds based on CloudWatch metrics. Target Tracking policies (e.g., maintain 50% average CPU) scale out proactively as load increases and scale in when load decreases — achieving the automated scaling requirement.
-    *   *Why C is incorrect:* Manually switching between two services every week is operationally untenable, error-prone, and does not handle gradual traffic increases or unexpected mid-week spikes. Auto Scaling exists precisely to eliminate manual capacity management.
-    *   *Why D is incorrect:* Fargate Spot provides discounted compute for interruption-tolerant workloads but does not automatically provide more tasks — Spot only affects the pricing and interruption model for the tasks the ECS Service requests. Service Auto Scaling controls how many tasks are requested; Fargate Spot controls whether those tasks run on Spot capacity.
+### Question 5
 
+An analyst reports that a production EC2 instance has been making DNS requests to a known malware command-and-control domain. The security team needs to investigate whether the instance has been compromised. Which AWS service MOST LIKELY generated the finding that identified this activity?
+
+A. AWS CloudTrail
+
+B. Amazon Inspector
+
+C. Amazon GuardDuty
+
+D. AWS Config
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- A is incorrect. CloudTrail records AWS API calls (management plane operations). It does not analyze DNS traffic or detect connections to C2 domains. CloudTrail would not generate this type of network-level finding.
+- B is incorrect. Amazon Inspector scans EC2 instances and container images for software vulnerabilities (known CVEs) and unintended network exposure. It does not monitor runtime DNS traffic for C2 communication.
+- C is correct. GuardDuty analyzes DNS logs (captured by the Route 53 Resolver DNS logs feature and VPC Flow Logs) and uses threat intelligence feeds to detect DNS lookups to known malicious domains. The specific finding `Backdoor:EC2/C&CActivity` or similar GuardDuty findings are generated for EC2 instances making DNS requests to known C2 infrastructure.
+- D is incorrect. AWS Config tracks configuration changes to AWS resources (was this security group modified? was this S3 bucket made public?). It does not monitor DNS traffic or detect C2 communication.
+
+---
+
+### Question 6
+
+A company wants a centralized dashboard that shows security findings from GuardDuty, Amazon Inspector, and Amazon Macie across all accounts in their AWS Organization. They also want the dashboard to score their overall security posture against the CIS AWS Foundations benchmark. Which service provides this?
+
+A. Amazon GuardDuty (with multi-account delegation)
+
+B. AWS Security Hub
+
+C. AWS CloudTrail (with cross-account log aggregation)
+
+D. Amazon CloudWatch (with a custom dashboard)
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. GuardDuty with multi-account delegation aggregates GuardDuty findings across accounts, but it does not consolidate findings from Inspector, Macie, or other services. It also does not evaluate compliance against security benchmarks like CIS AWS Foundations.
+- B is correct. AWS Security Hub is specifically designed to aggregate security findings from GuardDuty, Inspector, Macie, IAM Access Analyzer, AWS Config, and third-party tools into a single view. It evaluates resources against security standards including CIS AWS Foundations, AWS FSBP, and PCI DSS, and generates a security score. Multi-account aggregation is supported via a delegated administrator account.
+- C is incorrect. CloudTrail is an audit log service. It records API calls but does not aggregate security findings, evaluate compliance benchmarks, or provide a security posture score.
+- D is incorrect. CloudWatch is a monitoring and observability service. You can build custom dashboards for operational metrics, but it has no native capability to aggregate security findings or evaluate against security frameworks.
+
+---
+
+### Question 7
+
+A company's web application is experiencing HTTP request floods from multiple IP addresses that appear to be an automated attack. The requests are syntactically valid HTTP requests targeting the application's login endpoint at a rate of 10,000 requests per minute from a single IP. Which service provides the MOST direct protection?
+
+A. AWS Shield Standard
+
+B. Amazon GuardDuty
+
+C. AWS WAF with a rate-based rule
+
+D. Amazon Inspector
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- A is incorrect. Shield Standard protects against volumetric network and transport layer (Layer 3 and 4) DDoS attacks — SYN floods, UDP reflection, and similar attacks that target network bandwidth. An HTTP request flood using valid HTTP syntax is a Layer 7 application attack, which Shield Standard does not directly mitigate.
+- B is incorrect. GuardDuty detects threats by analyzing logs. It would detect the attack in its findings, but it does not block traffic in real time. GuardDuty is a detection service, not a blocking service.
+- C is correct. WAF operates at Layer 7 (application layer) and can be attached to an Application Load Balancer, CloudFront, or API Gateway. A rate-based rule in WAF counts requests from a single IP within a 5-minute window and blocks the IP when the count exceeds the configured threshold. This directly blocks the automated request flood.
+- D is incorrect. Inspector scans for software vulnerabilities and network exposure. It does not inspect live HTTP traffic or block application-layer attacks.
+
+---
+
+### Question 8
+
+A company wants to ensure that no member account in their AWS Organization can disable CloudTrail or GuardDuty, even if an account administrator has IAM AdministratorAccess. What is the CORRECT control to enforce this?
+
+A. IAM Permission Boundaries attached to the AdministratorAccess role in each member account
+
+B. A Service Control Policy attached to the organizational root that denies CloudTrail and GuardDuty disable actions
+
+C. AWS Config rules that automatically re-enable CloudTrail if it is disabled
+
+D. GuardDuty alerts that notify when CloudTrail is stopped
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. Permission Boundaries limit the maximum permissions of an IAM entity. They must be applied to specific IAM users and roles and do not prevent root users from taking actions. They also must be manually maintained for each account. An SCP is a simpler, more comprehensive enforcement mechanism.
+- B is correct. SCPs attached to the organizational root apply to all member accounts and all principals (except the management account). An SCP with explicit deny on `cloudtrail:StopLogging`, `cloudtrail:DeleteTrail`, `guardduty:DeleteDetector`, and `guardduty:DisassociateFromMasterAccount` prevents any principal in any member account from disabling these services, regardless of their IAM permissions.
+- C is incorrect. AWS Config can detect and remediate misconfigurations automatically, but this is reactive — CloudTrail would be briefly disabled before Config detects and re-enables it. The SCP prevention is proactive — the disable action never succeeds.
+- D is incorrect. GuardDuty alerts are detective, not preventive. You would be notified after CloudTrail was stopped, not prevented from stopping it.
+
+---
+
+### Question 9
+
+A company stores customer financial records in an S3 bucket with Server-Side Encryption using a Customer Managed KMS Key (SSE-KMS). They need to ensure that even if a malicious AWS administrator in their account deletes the KMS key, the records cannot be permanently lost. Which KMS feature protects against accidental or malicious key deletion?
+
+A. KMS key rotation, which creates a new key if the old one is deleted
+
+B. KMS key deletion requires a minimum pending window (7–30 days) before permanent deletion
+
+C. KMS key replication, which automatically copies the key to another region
+
+D. KMS key versioning, which retains previous key material indefinitely
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. Key rotation creates a new version of the key material for future encryptions — it does not prevent deletion or recover a deleted key. Rotation and deletion are independent operations.
+- B is correct. KMS enforces a mandatory pending deletion window of 7 to 30 days. During this window, the key is disabled but not yet deleted, and you can cancel the deletion. This provides a safety net to recover from accidental or unauthorized deletion requests. The company should also monitor CloudTrail for `ScheduleKeyDeletion` API calls and configure a CloudWatch alarm to alert immediately.
+- C is incorrect. KMS does not have an automatic cross-region key replication feature. Multi-Region KMS keys exist but require explicit configuration and are a separate feature from deletion protection.
+- D is incorrect. KMS does not have a "key versioning" feature that retains key material versions independently after deletion. Key rotation retains old key material to decrypt previously encrypted data, but this is within the same key — deleting the key deletes all versions.
+
+---
+
+### Question 10
+
+An architect is reviewing an IAM policy. The policy has two statements: Statement 1 with `"Effect": "Allow"` on `s3:*` for all S3 resources, and Statement 2 with `"Effect": "Deny"` on `s3:DeleteObject` for all S3 resources. What can a user with only this policy attached do?
+
+A. The user can perform all S3 actions including DeleteObject because Allow was listed before Deny
+
+B. The user can perform all S3 actions except DeleteObject because the explicit Deny overrides the Allow for that action
+
+C. The user cannot perform any S3 actions because a Deny statement exists in the policy
+
+D. The user can DeleteObject only if they explicitly request it; otherwise the Deny applies
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. Statement order in an IAM policy JSON document does not affect evaluation. AWS evaluates all statements simultaneously, not sequentially. An explicit Deny in any statement overrides any Allow for the same action, regardless of order.
+- B is correct. The Allow on `s3:*` permits all S3 actions. However, the explicit Deny on `s3:DeleteObject` overrides the Allow specifically for that action. The net effect is: all S3 actions allowed EXCEPT `s3:DeleteObject`, which is explicitly denied. This is how you implement "allow all except one specific action" in IAM.
+- C is incorrect. A Deny in one statement does not block all actions — only the specific actions matched by the Deny statement's `Action` element. All other S3 actions remain allowed by the Allow statement.
+- D is incorrect. IAM policy evaluation is not interactive — there is no concept of "explicitly requesting" an action to bypass a Deny. An explicit Deny in an IAM policy is unconditional within the policy scope.
+
+---
+
+*Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University.*

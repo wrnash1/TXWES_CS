@@ -1,83 +1,215 @@
-# Quiz: Module 08 - SCA – Software Composition Analysis and Dependency Scanning
+# Quiz: Module 08 - SCA: Software Composition Analysis and Dependency Scanning
 
-## Course: CIS-4350_DevSecOps_CICD_Pipelines (Certified DevSecOps Professional (CDP))
+## Course: CIS-4350 DevSecOps and CI/CD Pipelines
 
----
-
-**Question 1**
-What is the primary function of a Software Composition Analysis (SCA) tool?
-
-* A) To analyze the application's UI design for accessibility compliance issues
-* B) To identify open-source and third-party dependencies with known security vulnerabilities (CVEs) in both direct and transitive packages
-* C) To optimize network throughput between microservices in a Kubernetes cluster
-* D) To compile Python packages from source into optimized bytecode for faster runtime execution
-* **Correct Answer:** B) SCA scans dependency definition files (e.g., `package.json`, `requirements.txt`) against vulnerability databases and reports which component versions have known CVEs.
-* **Distractor Analysis:**
-  * *Why B is correct:* SCA tools inventory all packages — direct and transitive — and cross-reference each version against the NVD, GitHub Advisory Database, and other CVE sources, producing a prioritized list of vulnerabilities to remediate.
-  * *Why A is incorrect:* UI accessibility compliance is evaluated by tools like axe or Lighthouse, not SCA scanners. SCA focuses on software component security, not user interface design.
-  * *Why C is incorrect:* Network throughput optimization between microservices is a Kubernetes networking and service mesh concern (Istio, Linkerd). SCA operates at the dependency inventory layer, not the runtime network layer.
-  * *Why D is incorrect:* Compiling Python packages to bytecode is a Python runtime optimization performed by the interpreter. SCA analyzes installed package versions for CVEs and does not perform compilation.
+## Certification Alignment: DevSecOps Professional (DSOE)
 
 ---
 
-**Question 2**
-Which of the following most accurately describes license compliance in the context of Software Composition Analysis?
+### Question 1
 
-* A) The process of verifying that all CI/CD pipeline job execution licenses are within the paid tier limits of the CI platform
-* B) The SCA practice of inventorying the open-source licenses of all dependencies — identifying copyleft licenses (GPL, AGPL) that may impose legal requirements on the application's distribution model
-* C) A Kubernetes resource policy that limits the number of pod replicas a deployment is licensed to run in a given namespace
-* D) A cryptographic certificate chain validation step that verifies the authenticity of package signatures before installation
-* **Correct Answer:** B) License compliance in SCA ensures that open-source components with copyleft or restrictive licenses are identified before they impose unexpected legal obligations on the product.
-* **Distractor Analysis:**
-  * *Why B is correct:* Copyleft licenses like GPL require that derivative works also be open-sourced. SCA tools generate license inventories and flag components whose licenses conflict with the organization's usage model, enabling legal review before those packages are shipped to customers.
-  * *Why A is incorrect:* CI platform billing tiers are a commercial and operational concern. License compliance in SCA refers to software licensing of open-source components, not CI platform subscription tiers.
-  * *Why C is incorrect:* Kubernetes resource policies (LimitRange, ResourceQuota) control CPU, memory, and replica counts in namespaces. These are operational controls unrelated to software license auditing.
-  * *Why D is incorrect:* Package signature verification (e.g., `pip` hash checking, `npm` integrity fields) is a supply chain integrity control. While related to supply chain security, it is distinct from open-source license compliance analysis.
+At which CI/CD pipeline stage should SCA scanning run?
 
----
+- A) At the code commit stage, before any tests run, to catch vulnerable packages as early as possible
+- B) At the build stage, after the package manager has resolved and downloaded dependencies, giving the tool the full dependency graph
+- C) After deployment to staging, because dependencies are only fully resolved in a deployed environment
+- D) After deployment to production, because the production runtime reveals all loaded libraries
 
-**Question 3**
-A Node.js application's `package.json` lists `express@4.17.1` as a direct dependency. An SCA scan reports a CRITICAL CVE in `lodash@4.17.4` — a package that `express` depends on but is not listed in `package.json`. What concept does this illustrate, and what is the correct response?
+#### Q1 Correct Answer
 
-* A) This is a false positive because `lodash` is not a direct dependency; the team should suppress the finding and continue development
-* B) This illustrates transitive (indirect) dependency vulnerability exposure; the correct response is to upgrade `express` to a version that depends on a patched `lodash` version, or add a direct `lodash` override to the project's dependency resolution
-* C) This finding indicates that the SCA scanner is misconfigured; only direct dependencies should be scanned for CVEs
-* D) This is a SAST finding, not an SCA finding; switch to a SAST tool to properly remediate the lodash issue
-* **Correct Answer:** B) Transitive dependency vulnerabilities are real and exploitable regardless of whether the package is directly listed in the manifest; the application ships the vulnerable `lodash` code and must be remediated by upgrading the dependency chain.
-* **Distractor Analysis:**
-  * *Why B is correct:* The Log4Shell vulnerability (CVE-2021-44228) demonstrated the catastrophic risk of transitive dependencies. A transitive CVE means the vulnerable code is present in the deployed application and is reachable — it must be treated with the same urgency as a direct dependency vulnerability.
-  * *Why A is incorrect:* Suppressing a CRITICAL transitive CVE because the package is not directly listed ignores a real, exploitable vulnerability. Transitive dependencies are shipped in the application's `node_modules` and are fully present at runtime.
-  * *Why C is incorrect:* SCA tools are specifically designed to scan the full dependency tree including transitive dependencies. Limiting SCA to direct dependencies only would miss a large and historically significant category of vulnerability.
-  * *Why D is incorrect:* SCA is the correct tool for dependency CVE analysis. SAST analyzes source code for coding vulnerabilities; it does not track package versions against CVE databases.
+B — SCA tools need the fully resolved dependency graph to scan accurately. The package manager resolves and downloads all transitive dependencies during the build stage. This is when the complete dependency tree is available for analysis.
+
+#### Q1 Distractor Analysis
+
+- *Why A is incorrect:* At the commit stage, the dependency graph has not been resolved. SCA cannot scan packages that have not yet been downloaded by the package manager.
+- *Why C is incorrect:* The build stage resolves dependencies before deployment. Waiting until staging deployment delays the feedback loop unnecessarily.
+- *Why D is incorrect:* Running SCA against production introduces unnecessary risk and delays finding vulnerabilities until after deployment. SCA should gate the build, not production.
 
 ---
 
-**Question 4**
-A DevSecOps team generates a Software Bill of Materials (SBOM) as part of their pipeline. A new critical CVE is published for `openssl@1.1.1`. How does the SBOM help the team respond?
+### Question 2
 
-* A) The SBOM automatically patches all affected systems by downloading and applying the new OpenSSL version
-* B) The SBOM provides an immediate inventory of which applications include OpenSSL and which version, allowing the team to quickly identify all affected services without manually inspecting every codebase
-* C) The SBOM notifies the OpenSSL maintainers of the team's affected deployment, triggering an automated patch release
-* D) The SBOM generates a pull request in each affected repository to update the OpenSSL dependency automatically
-* **Correct Answer:** B) An SBOM is a structured inventory of all software components and versions in each application; when a new CVE is disclosed, the SBOM enables rapid triage — identifying affected applications in minutes rather than hours of manual review.
-* **Distractor Analysis:**
-  * *Why B is correct:* SBOM formats (CycloneDX, SPDX) list every component with its version and license; querying `openssl@1.1.1` across all SBOMs immediately surfaces every application that ships the vulnerable version, enabling prioritized incident response.
-  * *Why A is incorrect:* SBOMs are read-only inventory documents; they do not perform automated patching. Patching requires developer action or automated PR tooling (like Dependabot) separate from SBOM generation.
-  * *Why C is incorrect:* SBOMs are internal organizational artifacts; they are not shared with upstream maintainers as part of their generation. Upstream notifications happen through CVE disclosure processes, not SBOM generation.
-  * *Why D is incorrect:* Automated dependency update PRs are generated by tools like Dependabot or Renovate, not by SBOMs. An SBOM is an inventory document, not an automation trigger.
+What is a transitive dependency?
+
+- A) A dependency that is imported in multiple source files within the same project
+- B) A package that your direct dependency requires, which you did not explicitly declare in your manifest
+- C) A dependency that has been deprecated but continues to function in the current runtime
+- D) A package that is only loaded conditionally based on environment variables at runtime
+
+#### Q2 Correct Answer
+
+B — A transitive dependency is a package pulled in by your direct dependencies, not one you explicitly chose. Because you never declared it, you may not know it exists in your application, making it a common source of hidden CVE exposure.
+
+#### Q2 Distractor Analysis
+
+- *Why A is incorrect:* Importing a package in multiple files is a code organization pattern, not a dependency classification. Direct vs. transitive refers to how the dependency was introduced, not how often it is referenced.
+- *Why C is incorrect:* Deprecated packages are a separate category. A deprecated package may be direct or transitive, and being deprecated is not the definition of a transitive dependency.
+- *Why D is incorrect:* Conditional loading at runtime describes optional or lazy-loaded dependencies. Whether a dependency is transitive is determined by the dependency graph, not by whether it is conditionally loaded.
 
 ---
 
-**Question 5**
-An SCA scan of a Python application identifies the following vulnerable dependency: `Pillow==9.0.0` with CVE-2023-44271 (CRITICAL, image processing denial of service). The latest patched version is `Pillow==10.0.1`. Which remediation steps correctly address this vulnerability within a DevSecOps pipeline?
+### Question 3
 
-* A) Add a suppression entry for CVE-2023-44271 in the SCA configuration file so future scans no longer report it as a finding
-* B) Upgrade `requirements.txt` to specify `Pillow>=10.0.1`, run the SCA scan again to verify no CRITICAL findings remain, and merge the fix through the normal PR process so the pipeline validates the remediation
-* C) Remove Pillow from the application entirely and replace all image processing functionality with custom-written code
-* D) Deploy a web application firewall rule that blocks all HTTP requests containing image files so the Pillow vulnerability cannot be triggered
-* **Correct Answer:** B) Upgrading the dependency to the patched version and re-running the SCA scan confirms the remediation — the pipeline gate validates the fix before the change is merged and deployed.
-* **Distractor Analysis:**
-  * *Why B is correct:* Dependency version upgrades are the canonical SCA remediation. Specifying `>=10.0.1` in the requirements file, rebuilding the environment, and verifying the scan passes is the complete, correct DevSecOps workflow for a dependency CVE.
-  * *Why A is incorrect:* Suppressing the CVE removes the finding from reports without fixing the vulnerability. The application continues to ship the vulnerable Pillow version, leaving users exposed.
-  * *Why C is incorrect:* Replacing a well-tested library with custom-written image processing code introduces significant new risk — custom code is far more likely to contain vulnerabilities than a patched, widely reviewed open-source library.
-  * *Why D is incorrect:* A WAF rule blocking image file uploads is an overly broad compensating control that breaks application functionality. It also does not address all attack vectors for an image processing CVE; some vulnerabilities can be triggered through non-obvious image payloads.
+A `snyk test` command exits with a non-zero code in a GitHub Actions pipeline. What is the correct interpretation?
+
+- A) The Snyk authentication token has expired and must be renewed before the scan can complete
+- B) The scan found vulnerabilities at or above the configured severity threshold, indicating a pipeline gate failure
+- C) The `requirements.txt` file is malformed and Snyk cannot parse the dependency manifest
+- D) The scan completed successfully but found zero vulnerabilities, using non-zero to indicate a clean result
+
+#### Q3 Correct Answer
+
+B — `snyk test` exits non-zero when it finds vulnerabilities meeting the threshold set by `--severity-threshold`. This non-zero exit code is the mechanism that fails the CI/CD pipeline job, acting as a security gate that prevents the build from proceeding.
+
+#### Q3 Distractor Analysis
+
+- *Why A is incorrect:* An authentication failure produces a specific error message and a distinct exit code. A non-zero exit from a completed scan means findings were detected, not an auth failure.
+- *Why C is incorrect:* A manifest parsing error would also fail the scan, but the typical non-zero exit in a properly configured scan means vulnerabilities were found, not a parse error.
+- *Why D is incorrect:* A clean scan with zero findings exits with code 0, indicating success. Non-zero specifically signals a failure condition — vulnerable dependencies detected.
+
+---
+
+### Question 4
+
+Which command would you use in a CI/CD pipeline to fail the build when any HIGH or CRITICAL severity CVEs are found in Python dependencies?
+
+- A) `snyk test --file=requirements.txt --package-manager=pip --severity-threshold=medium`
+- B) `snyk test --file=requirements.txt --package-manager=pip --severity-threshold=high`
+- C) `snyk test --file=requirements.txt --package-manager=pip --severity-threshold=critical`
+- D) `snyk test --file=requirements.txt --package-manager=pip --fail-on=all`
+
+#### Q4 Correct Answer
+
+B — `--severity-threshold=high` causes `snyk test` to exit non-zero when any HIGH or CRITICAL severity CVE is found. CVSS High is 7.0-8.9 and Critical is 9.0-10.0. Using `high` as the threshold catches both tiers.
+
+#### Q4 Distractor Analysis
+
+- *Why A is incorrect:* `--severity-threshold=medium` would fail the build on MEDIUM, HIGH, and CRITICAL findings. This is a lower threshold that would likely produce too many failures for teams with older dependencies.
+- *Why C is incorrect:* `--severity-threshold=critical` would only fail on CRITICAL (CVSS 9.0+) findings, allowing HIGH severity CVEs (CVSS 7.0-8.9) to pass. HIGH severity CVEs represent significant risk and should also gate the build.
+- *Why D is incorrect:* `--fail-on=all` is not the correct Snyk flag syntax for severity threshold gating. The correct parameter is `--severity-threshold`.
+
+---
+
+### Question 5
+
+Log4Shell (CVE-2021-44228) became the canonical example of why SCA tooling is essential. Which specific characteristic of Log4j's presence in enterprise applications made it so difficult to identify exposure without SCA?
+
+- A) Log4j was a direct dependency explicitly declared in every affected application's `pom.xml`
+- B) Log4j was primarily included as a transitive dependency by frameworks like Spring and Elasticsearch, making it invisible without an SBOM
+- C) Log4j was a commercial library with restricted license terms that prevented it from appearing in open-source manifests
+- D) Log4j was bundled inside compiled JAR artifacts at the operating system level, bypassing application-level dependency management
+
+#### Q5 Correct Answer
+
+B — Log4j was widely used as a transitive dependency — pulled in automatically by frameworks, application servers, and middleware. Application developers often had no idea Log4j was in their runtime. Without SCA tooling that inventories transitive dependencies, organizations could not quickly determine which applications were affected.
+
+#### Q5 Distractor Analysis
+
+- *Why A is incorrect:* If Log4j had been a direct dependency explicitly declared in every manifest, it would have been visible in package files. The crisis arose precisely because it was hidden as a transitive dependency.
+- *Why C is incorrect:* Log4j is an open-source Apache project under the Apache License. License restrictions played no role in its widespread use or the difficulty of identifying exposure.
+- *Why D is incorrect:* While some JARs do shade (embed) Log4j, the primary exposure vector was through the standard Maven/Gradle dependency resolution process, not OS-level bundling.
+
+---
+
+### Question 6
+
+What is the difference between `snyk test` and `snyk monitor`?
+
+- A) `snyk test` scans Python projects; `snyk monitor` scans Node.js projects
+- B) `snyk test` is a one-time CI pipeline scan that exits with a code indicating findings; `snyk monitor` sends a dependency snapshot to Snyk for continuous monitoring that alerts on new CVEs published after the scan
+- C) `snyk test` runs in the developer's local environment; `snyk monitor` runs only inside GitHub Actions workflows
+- D) `snyk test` fails the build on any finding; `snyk monitor` only fails the build on CRITICAL findings
+
+#### Q6 Correct Answer
+
+B — `snyk test` performs a point-in-time scan and exits non-zero on findings — the CI gate. `snyk monitor` sends the dependency snapshot to Snyk's platform. When new CVEs are subsequently published that affect a recorded snapshot, Snyk sends alerts even without a new pipeline run. `snyk monitor` addresses the window between deployments.
+
+#### Q6 Distractor Analysis
+
+- *Why A is incorrect:* Both commands support multiple ecosystems. The language is determined by the project type, not by which Snyk command is used.
+- *Why C is incorrect:* Both commands can run in any environment — local development or CI. The distinction is what each command does, not where it runs.
+- *Why D is incorrect:* The threshold behavior is controlled by `--severity-threshold`, not by the choice between `test` and `monitor`. `snyk monitor` does not perform build gating — it enables continuous monitoring.
+
+---
+
+### Question 7
+
+The OWASP Dependency-Check GitHub Action is configured with `--failOnCVSS 7`. A scan finds three CVEs: one with CVSS 6.5, one with CVSS 7.8, and one with CVSS 9.1. What is the pipeline outcome?
+
+- A) The pipeline passes because the majority of findings (two out of three) are below the threshold
+- B) The pipeline fails because the CVEs with scores of 7.8 and 9.1 meet or exceed the threshold of 7.0
+- C) The pipeline passes because CVSS 7.8 is below the CRITICAL threshold of 9.0
+- D) The pipeline fails on the CVSS 9.1 finding only, because `--failOnCVSS 7` requires a score strictly greater than 7
+
+#### Q7 Correct Answer
+
+B — `--failOnCVSS 7` causes OWASP Dependency-Check to exit non-zero when any CVE with a CVSS score of 7.0 or higher is found. This threshold covers both HIGH (7.0-8.9) and CRITICAL (9.0-10.0) severities. Two of the three findings (7.8 and 9.1) meet or exceed this threshold, so the pipeline fails.
+
+#### Q7 Distractor Analysis
+
+- *Why A is incorrect:* Pipeline gate decisions are not made by majority vote among findings. Any single finding at or above the threshold triggers failure.
+- *Why C is incorrect:* `--failOnCVSS 7` is not limited to CRITICAL findings. A CVSS score of 7.8 is HIGH severity and meets the `--failOnCVSS 7` threshold.
+- *Why D is incorrect:* `--failOnCVSS 7` triggers on scores greater than or equal to 7.0, not strictly greater than 7. A score of exactly 7.0 would also trigger the failure.
+
+---
+
+### Question 8
+
+What is an SBOM, and which two standard formats are recognized for regulatory and government compliance?
+
+- A) A Software Build Order Map, used to document the sequence of compilation steps; standard formats are YAML and TOML
+- B) A Software Bill of Materials, a machine-readable inventory of all components in a software artifact; standard formats are CycloneDX and SPDX
+- C) A Software Baseline Optimization Model, used for performance profiling; standard formats are JSON and XML
+- D) A Software Binary Object Manifest, used for container image layer tracking; standard formats are OCI and Docker Hub
+
+#### Q8 Correct Answer
+
+B — An SBOM (Software Bill of Materials) is a machine-readable inventory of all components in an application: package names, versions, suppliers, and licenses. CycloneDX (OWASP-maintained) and SPDX (Linux Foundation) are the two recognized standard formats. SBOMs are increasingly required by government procurement regulations and compliance frameworks.
+
+#### Q8 Distractor Analysis
+
+- *Why A is incorrect:* SBOM stands for Software Bill of Materials, not Build Order Map. The formats YAML and TOML are generic configuration serialization formats, not SBOM standards.
+- *Why C is incorrect:* SBOM is not related to performance profiling. The described meaning and formats are fabricated.
+- *Why D is incorrect:* Container image layer tracking uses OCI manifests and Docker image specs, which are separate from SBOM standards. SBOM tracks software component inventory, not binary layer structure.
+
+---
+
+### Question 9
+
+What is reachability analysis in the context of SCA, and how does it affect CVE triage decisions?
+
+- A) Reachability analysis determines whether a vulnerable package can be downloaded from the internet, affecting whether it can be installed in air-gapped environments
+- B) Reachability analysis determines whether the vulnerable code path in a flagged dependency is actually invoked by the application, reducing false positives by filtering CVEs in code paths that are never called
+- C) Reachability analysis measures network connectivity between the CI server and the vulnerability database, ensuring scan results are current
+- D) Reachability analysis identifies whether a CVE affects the production environment or only the development environment based on dependency scope
+
+#### Q9 Correct Answer
+
+B — Reachability analysis examines whether the application actually calls the vulnerable function in a flagged dependency. A library may contain a CVE in its RSA cryptography code, but if the application only uses the library's AES functions and never calls the RSA functions, the vulnerable code path is unreachable. Reachability analysis reduces triage noise by deprioritizing CVEs in unreachable code paths.
+
+#### Q9 Distractor Analysis
+
+- *Why A is incorrect:* Network accessibility of package repositories is unrelated to reachability analysis. Reachability analysis is about application code paths, not network connectivity to registries.
+- *Why C is incorrect:* Connectivity to the vulnerability database is a tool configuration concern. Reachability analysis is a static and dynamic analysis technique for determining code path execution.
+- *Why D is incorrect:* Development vs. production scope is controlled by dependency scope flags (`devDependencies`, `--dev`). Reachability analysis is about whether vulnerable code paths are executed, not about which environment a package belongs to.
+
+---
+
+### Question 10
+
+A development team runs `snyk test` in their GitHub Actions pipeline on every PR. A new critical CVE is published in a library used by their application at 2:00 AM on a Tuesday. Their next PR is submitted at 11:00 AM on Thursday. What is the earliest the team will be alerted to the new CVE if they are using only `snyk test`?
+
+- A) Immediately at 2:00 AM Tuesday, because Snyk monitors the repository in real time
+- B) At 11:00 AM Thursday when the next PR triggers the pipeline and `snyk test` runs against the current dependency manifest
+- C) At 2:00 AM Tuesday plus 24 hours, because Snyk caches scan results for 24 hours before flagging new CVEs
+- D) Never, because `snyk test` only detects CVEs that existed when the dependency was first declared
+
+#### Q10 Correct Answer
+
+B — `snyk test` is a point-in-time scan that runs when the pipeline is triggered. If the pipeline only runs on PR submission, the team will not discover the new CVE until the next PR triggers the pipeline. This gap — from CVE publication to next pipeline run — is the window that `snyk monitor` addresses by enabling alerting outside the pipeline run schedule.
+
+#### Q10 Distractor Analysis
+
+- *Why A is incorrect:* `snyk test` does not monitor the repository in real time. It is a CLI command that runs when explicitly invoked. Real-time alerting is the function of `snyk monitor`.
+- *Why C is incorrect:* Snyk does not delay CVE flagging by 24 hours. A caching delay of this type is not how Snyk operates; `snyk test` checks against Snyk's current vulnerability database at scan time.
+- *Why D is incorrect:* `snyk test` checks the current package versions against the vulnerability database at the time of the scan. It will catch CVEs published after the dependency was declared, as long as the scan runs after the CVE was published.

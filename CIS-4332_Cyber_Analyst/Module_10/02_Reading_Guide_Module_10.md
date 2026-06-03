@@ -1,50 +1,258 @@
-# Reading Guide: Module 10 - Digital Forensics – Evidence Collection and Chain of Custody
-## Course: CIS-4332_Cyber_Analyst (CompTIA CySA+)
+# Reading Guide: Module 10 — Digital Forensics: Evidence Collection and Chain of Custody
+
+## Course: CIS-4332 Cyber Analyst
+
+## Texas Wesleyan University | Professor Nash
+
+## Certification Alignment: CompTIA CySA+ (CS0-003)
 
 ---
 
-### Introduction
-Welcome to **Module 10 - Digital Forensics – Evidence Collection and Chain of Custody**! This module covers how analysts and forensic investigators collect, preserve, and document digital evidence from compromised systems in a manner that maintains legal admissibility and investigative integrity. You will learn the order of volatility, forensic acquisition methods, chain of custody documentation requirements, and write-blocker usage. These topics are tested under **Domain 3: Incident Response and Management (20%)** of the CompTIA CySA+ CS0-003 exam.
+## Introduction
 
-As a student, you will learn how to prioritize evidence collection by volatility, create forensically sound disk images, and maintain proper documentation throughout an investigation. Complete the glossary review and study checklist before beginning the lab activity.
-
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **Order of Volatility**: The principle that digital evidence should be collected in order from most volatile (most likely to be lost) to least volatile (most persistent). The standard order is: CPU registers and cache → RAM (running processes, network connections, encryption keys) → swap/page file → disk storage → remote logs → archived media. CySA+ exam questions frequently ask which evidence source should be collected first — the answer is always the most volatile one that has not yet been captured.
-*   **Chain of Custody**: A documented, unbroken record of who collected, handled, transferred, or analyzed a piece of evidence and when. Chain of custody documentation must be maintained from the moment evidence is collected through its presentation in any legal or disciplinary proceeding. A gap or undocumented handoff in the chain can render evidence inadmissible. CySA+ tests chain of custody as a required component of any formal forensic investigation.
-*   **Write Blocker**: A hardware or software device that prevents any write operations from being sent to a storage device during forensic acquisition, ensuring the source media is not modified. Using a write blocker is required to maintain the forensic integrity of disk evidence — acquiring a disk image without one may alter file system metadata (access timestamps) and make the evidence legally challengeable.
+Digital forensics is the discipline of collecting, preserving, analyzing, and presenting digital evidence in a manner that maintains its integrity and legal admissibility. Every SOC analyst encounters forensic evidence — whether they are acquiring RAM from a compromised workstation, reviewing a disk image for attacker artifacts, or ensuring that a legal hold is honored during an active investigation. This module covers the foundational forensic concepts tested on the CySA+ exam: the order of volatility, forensic imaging, write blockers, hash verification, chain of custody, legal holds, and the key Windows forensic artifact categories.
 
 ---
 
-### 2. Certification Exam Tips
-*   **Focus Area – Evidence Volatility (Domain 3):** CySA+ CS0-003 consistently tests the order of volatility. Know that RAM must be collected before the system is powered off, because shutdown destroys all volatile memory contents. If a scenario asks what to collect first from a running compromised system, the answer is a memory image (RAM dump), not a disk image.
-*   **Scenario Trap – Forensic Image vs. Live System:** Working directly on a compromised system's original disk (without imaging it first) risks altering evidence. The forensically correct procedure is to create a bit-for-bit image of the disk using a write blocker, then analyze the image — never the original. CySA+ tests this distinction in forensic methodology questions.
-*   **Legal Hold vs. Evidence Preservation:** Legal hold is a directive to preserve all relevant data when litigation is anticipated — it applies broadly to backups, emails, and logs. Forensic evidence preservation is the technical act of collecting and imaging specific artifacts for investigation. CySA+ may test whether you correctly distinguish these two concepts and know when each is required.
-*   **Study Resource:** The CertifyBreakfast CySA+ playlist includes digital forensics concepts, evidence collection procedures, and chain of custody requirements mapped to CS0-003 objectives: [CertifyBreakfast CompTIA CySA+ Complete Playlist](https://www.youtube.com/playlist?list=PL1Y3F-rCypPM3S7PjJvHjTqP684FwJd0W). This free resource covers forensic acquisition workflows and volatility ordering exercises.
+## Section 1 — Order of Volatility
+
+### 1.1 Volatility Hierarchy
+
+| Priority | Evidence Source | Volatility Level | What Is Lost on Shutdown |
+|---|---|---|---|
+| 1 (Most volatile) | RAM / Physical Memory | Extreme | Active processes, injected code, decrypted keys, cleartext credentials, active network connections |
+| 2 | Network State | Very High | ARP cache, routing table, active TCP/UDP connection table |
+| 3 | Running Process List | High | Process names, PIDs, command-line arguments, parent-child relationships |
+| 4 | Temporary File System | Moderate | Open file handles, swap/pagefile content (partially) |
+| 5 | Disk (Non-volatile Storage) | Low | Hard drive and SSD contents persist through power cycle |
+| 6 | Remote Logs / External | Very Low | SIEM logs, cloud logs, network device logs — accessible after the endpoint is shut down |
+| 7 (Least volatile) | Archived / Physical | Minimal | Removable media, printed records, optical discs |
+
+### 1.2 RAM Acquisition Priority
+
+RAM contains evidence that is investigatively irreplaceable:
+
+- Active malware processes (including fileless malware that exists only in memory)
+- Injected code from process injection attacks (may not appear on disk at all)
+- Decrypted file encryption keys (may allow ransomware file decryption if captured in time)
+- Cleartext credentials extracted from LSASS memory by credential dumping tools
+- Established C2 network connections with current attacker IP addresses
+- Interactive shell sessions with attacker command history
+
+RAM acquisition tools: WinPmem (Windows, open-source), DumpIt (Windows), Volatility Framework (for analysis of memory images), LiME (Linux Memory Extractor — kernel module for Linux systems).
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the section covering **Digital Forensics and Evidence Handling** in the OER Textbook: [CompTIA CySA+ CS0-003 Exam Reference Library](https://www.comptia.org/). The official CompTIA reference details evidence collection procedures, chain of custody requirements, and forensic acquisition techniques tested on the exam.
-*   **Required Video:** Watch the video lecture on **Digital Forensics – Evidence Collection and Chain of Custody** in the official course playlist: [CertifyBreakfast CompTIA CySA+ Complete Playlist](https://www.youtube.com/playlist?list=PL1Y3F-rCypPM3S7PjJvHjTqP684FwJd0W). This playlist includes demonstrations of memory acquisition, disk imaging, and chain of custody documentation.
+## Section 2 — Forensic Imaging
+
+### 2.1 Forensic Image Types
+
+| Type | Description | Use Case |
+|---|---|---|
+| Bit-stream image (raw/dd) | Sector-by-sector copy of entire media including unallocated space | Maximum compatibility; can be analyzed by any tool |
+| E01 (EnCase Evidence File) | Bit-stream image with embedded metadata, verification hashes, and optional compression | Professional DFIR investigations; court-accepted format |
+| AFF4 | Open standard with embedded metadata and strong hash verification | Modern format gaining adoption in DFIR community |
+| Logical image | Copy of only allocated (accessible) files — not unallocated space | Triage when full bit-stream is not feasible; misses deleted data |
+
+### 2.2 Write Blockers
+
+| Type | Description | Reliability | Use Case |
+|---|---|---|---|
+| Hardware write blocker | Dedicated hardware device between suspect drive and workstation | Highest — hardware enforced | All court-admissible forensic acquisitions |
+| Software write blocker | OS-level configuration to mount drive read-only | Lower — subject to software bugs | Lab or training environments; less preferred for litigation |
+
+Without a write blocker, connecting a drive to any operating system causes writes:
+
+- Windows: volume mounts, access timestamps update, recycle bin registry writes, prefetch cache updates
+- Linux: journal recovery, mount record updates, device scan writes
+
+A drive touched without a write blocker has been forensically contaminated. Hash verification will detect the change if the drive was previously hashed.
+
+### 2.3 Forensic Acquisition Tools
+
+| Tool | Platform | License | Key Features |
+|---|---|---|---|
+| FTK Imager | Windows | Free | E01 and raw imaging, hash verification, basic file preview |
+| dd / dcfldd | Linux/Unix | Free (built-in) | Raw disk imaging; dcfldd adds hashing and logging |
+| Autopsy | Windows/Linux | Open-source | Full forensic suite — imaging, artifact analysis, timeline |
+| WinPmem | Windows | Open-source | RAM acquisition |
+| Volatility Framework | Windows/Linux | Open-source | RAM image analysis — process listing, network connections, malware detection |
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Acquire a memory image from a running virtual machine**: Using a memory acquisition tool (e.g., WinPmem on Windows or `dd if=/dev/mem` on Linux), capture a RAM image from a lab VM into a file, record the acquisition start/end timestamps and the MD5/SHA-256 hash of the resulting image file, and document these in a chain of custody form.
-*   **Create a forensic disk image using a write blocker**: Attach a lab USB drive through a hardware or software write blocker, use `dd` or FTK Imager to create a bit-for-bit image, generate a hash of both the source drive and the resulting image to verify they match, and document any discrepancies.
-*   **Complete a chain of custody form for both acquired artifacts**: Using the provided template, fill in collector name, collection date/time, device description, acquisition method, hash values, and handling notes — then review a second student's completed form to identify any documentation gaps that could affect evidence admissibility.
+## Section 3 — Hash Verification
+
+### 3.1 Forensic Hash Process
+
+```text
+HASH VERIFICATION WORKFLOW
+
+Step 1: Before acquisition
+  - If possible, hash source media before beginning acquisition
+  - Document: algorithm (MD5 / SHA-256), source hash value, tool used, timestamp, analyst
+
+Step 2: After acquisition
+  - Hash the forensic image immediately after creation
+  - Compare source hash to image hash
+  - If hashes match: image is forensically sound — bit-for-bit identical
+  - If hashes do not match: re-acquire; document the discrepancy
+
+Step 3: On transfer
+  - When image is handed to another analyst or moved to another system:
+    Receiving party re-hashes the image
+    Compare received hash to documented source hash
+    Document both parties' names, timestamps, and hash comparison result
+
+Step 4: Documentation
+  - All hash values recorded on chain of custody form
+  - Algorithm, tool, analyst, and timestamp for each hash event
+```
+
+### 3.2 Hash Algorithm Comparison
+
+| Algorithm | Output Length | Collision Resistance | Recommended Use |
+|---|---|---|---|
+| MD5 | 128-bit | Known collisions | Widely supported; acceptable for internal investigations |
+| SHA-1 | 160-bit | Deprecated | Avoid — theoretical collision attacks demonstrated |
+| SHA-256 | 256-bit | Strong | Recommended for any litigation-anticipated investigation |
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read the section covering **Digital Forensics and Evidence Handling** in the [CompTIA CySA+ CS0-003 Exam Reference Library](https://www.comptia.org/).
-- [ ] Watch the video lecture on **Digital Forensics – Evidence Collection and Chain of Custody** in the [CertifyBreakfast CompTIA CySA+ Complete Playlist](https://www.youtube.com/playlist?list=PL1Y3F-rCypPM3S7PjJvHjTqP684FwJd0W).
-- [ ] Review the evidence acquisition commands and chain of custody documentation steps outlined in the lab instructions.
-- [ ] Proceed to the weekly hands-on lab activity.
+## Section 4 — Chain of Custody
+
+### 4.1 Chain of Custody Form Components
+
+| Component | What Is Documented |
+|---|---|
+| Evidence identification | Item number, description, source (device name, serial number, hostname, location) |
+| Collection details | Date, time, location of collection; collecting analyst's name and signature |
+| Acquisition hash | MD5 or SHA-256 hash of collected evidence at time of acquisition |
+| Storage location | Where evidence is stored; storage access restrictions |
+| Transfer record | Each transfer: transferring party, receiving party, date, time, reason, both signatures |
+| Analysis record | Each analysis session: analyst name, start/end time, tools used, actions performed |
+| Final disposition | Return to owner, retained per policy, or destroyed — with signature and date |
+
+### 4.2 Chain of Custody Failures
+
+| Failure | Consequence |
+|---|---|
+| Undocumented transfer | Gap in custody record — evidence may be challenged as tampered |
+| Missing signature on transfer | Receiving party cannot attest to what they received; custody broken |
+| Analysis on original (not image) | Source evidence modified; original cannot serve as reference |
+| Hash mismatch not investigated | Evidence integrity cannot be confirmed; may be inadmissible |
+| Unsecured storage | Access by unauthorized parties — custody broken |
+| Missing timestamp | Cannot establish sequence of events; evidence handling questioned |
+
+---
+
+## Section 5 — Legal Holds
+
+### 5.1 Legal Hold vs. Chain of Custody
+
+| Concept | Definition | Who Issues | Purpose |
+|---|---|---|---|
+| Legal Hold (Litigation Hold) | Directive to preserve all potentially relevant data in anticipation of litigation or regulatory investigation | Legal counsel | Prevent spoliation; satisfy e-discovery obligations |
+| Chain of Custody | Documented record of evidence handling from collection to disposition | IR team / Forensic examiner | Maintain evidence integrity for admissibility |
+
+Legal hold and chain of custody are complementary. A legal hold tells you what to preserve. Chain of custody documents how you preserved and handled it.
+
+### 5.2 Spoliation
+
+Spoliation is the destruction, alteration, or failure to preserve evidence subject to a legal hold.
+
+Consequences of spoliation:
+
+- Court sanctions against the organization
+- Adverse inference jury instructions (jury told to assume the destroyed evidence was harmful to the organization)
+- Case dismissal in extreme cases
+- Regulatory fines for compliance-related data destruction
+
+What constitutes spoliation: wiping systems, overwriting logs, deleting backups, reformatting drives, running cleanup tools on systems subject to legal hold. Even automated data deletion (log rotation, backup rotation) must be suspended for data covered by the hold.
+
+---
+
+## Section 6 — Windows Forensic Artifacts
+
+### 6.1 Key Windows Artifact Reference
+
+| Artifact | Location | What It Reveals |
+|---|---|---|
+| Registry | HKCU, HKLM hives | Run key persistence, recently run programs, USB devices, user activity |
+| Windows Event Log | C:\Windows\System32\winevt\Logs\ | Authentication, process creation (4688), service install (7045), account creation (4720) |
+| Master File Table ($MFT) | Root of NTFS volume | File names, sizes, timestamps (including deleted files) |
+| Prefetch Files | C:\Windows\Prefetch\ | Execution history — programs run including deleted executables |
+| Browser History/Cache | User profile AppData | URLs visited, files downloaded, timestamps |
+| LNK Files (Shortcuts) | User profile Recent | Recently accessed files — reveals attacker document activity |
+| Jump Lists | User profile AppData\Roaming | Recently opened files per application |
+| NTFS Timestamps | $MFT entries | Created, Modified, Accessed, Entry Modified — detectable timestamp tampering |
+| Pagefile.sys / Swapfile.sys | C:\ | Partial volatile memory content that was paged to disk |
+
+### 6.2 Key Windows Event IDs
+
+| Event ID | Log | Description | Forensic Significance |
+|---|---|---|---|
+| 4624 | Security | Successful logon | Authentication trail — lateral movement detection |
+| 4625 | Security | Failed logon | Brute force / credential stuffing detection |
+| 4648 | Security | Logon with explicit credentials | Pass-the-hash, credential reuse detection |
+| 4672 | Security | Special privileges assigned to new logon | Privileged access events |
+| 4688 | Security | Process creation (requires audit policy) | Malicious process execution tracking |
+| 4720 | Security | User account created | Attacker-created backdoor account |
+| 4732 | Security | User added to privileged group | Privilege escalation |
+| 7045 | System | Service installed | Malicious service installation for persistence |
+| 4104 | PowerShell | PowerShell script block logging | Encoded/obfuscated PowerShell command content |
+
+---
+
+## CySA+ Exam Tips
+
+Exam Tip 1: Order of volatility — always collect RAM first. Any scenario question presenting a running compromised system will test whether you know that RAM is collected before disk. Shutdown before RAM collection is always wrong.
+
+Exam Tip 2: Write blockers prevent source drive modification during acquisition. Hardware write blockers are more reliable than software. Without a write blocker, connecting a drive modifies it.
+
+Exam Tip 3: Hash verification proves image integrity, not evidence admissibility. Matching hashes confirm the image is bit-for-bit identical to the source. Admissibility also requires chain of custody documentation.
+
+Exam Tip 4: Chain of custody is about documentation of who handled the evidence. Legal hold is about the requirement to preserve data. These are distinct concepts that the exam tests separately.
+
+Exam Tip 5: Spoliation — destroying data subject to a legal hold — has serious legal consequences. If a legal hold is in effect, no system in scope can be wiped until legal counsel confirms the relevant evidence has been preserved.
+
+Exam Tip 6: Analysis is always performed on the forensic copy — never on the original. The original is preserved in secure storage. Modifying the original destroys evidence integrity and breaks chain of custody.
+
+Exam Tip 7: Windows Prefetch files record execution history including deleted executables. This is one of the most forensically valuable artifact types for proving that a malware binary was run even after the attacker deleted it.
+
+Exam Tip 8: Event ID 4688 (process creation) requires audit policy to be enabled. Many organizations do not have this enabled by default. When a scenario asks why attacker process activity is not visible in Windows Event Logs, the answer is usually that process creation auditing was not configured.
+
+---
+
+## Glossary
+
+- AFF4: Advanced Forensic Framework 4 — open forensic image format with embedded metadata and hash verification
+- Chain of Custody: Documented record of every person who had custody of evidence, when, and what they did with it
+- E01: EnCase Evidence File — compressed forensic image format with embedded metadata and hash verification
+- FTK Imager: Free forensic acquisition tool for creating E01 and raw disk images with hash verification
+- Legal Hold: Directive from legal counsel to preserve data relevant to anticipated or active litigation
+- MFT: Master File Table — NTFS index of all files on a volume, including deleted files
+- Order of Volatility: Principle that evidence must be collected from most volatile to least volatile to preserve maximum data
+- Prefetch: Windows execution cache storing run history for recently executed programs
+- Spoliation: Destruction or alteration of evidence subject to a legal hold — can result in court sanctions
+- Volatile Evidence: Data that exists only in active system state and is permanently lost on shutdown
+- Volatility Framework: Open-source tool for analyzing memory images to identify processes, connections, and malware
+- Write Blocker: Hardware or software device that prevents write operations from reaching source media during forensic acquisition
+
+---
+
+## Study Checklist
+
+- [ ] List the order of volatility from most to least volatile and explain what is lost at each level
+- [ ] Explain why RAM must be acquired before shutting down a compromised system
+- [ ] Describe the purpose of a write blocker and explain why hardware is preferred over software
+- [ ] Describe the forensic hash verification process and what matching hashes confirm
+- [ ] List the seven components of a complete chain of custody form
+- [ ] Describe three chain of custody failures and their consequences
+- [ ] Explain the difference between a legal hold and chain of custody
+- [ ] Define spoliation and describe two examples of actions that constitute spoliation
+- [ ] Name four Windows forensic artifact types and describe what each reveals
+- [ ] Name four Windows Event IDs and their forensic significance
+- [ ] Review all eight exam tips
+- [ ] Complete the Module 10 Lab
+- [ ] Complete the Module 10 Quiz
+- [ ] Post initial response to the Module 10 Discussion by Wednesday at 11:59 PM

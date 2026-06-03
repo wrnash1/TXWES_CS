@@ -1,317 +1,381 @@
-# Lab 09: PostgreSQL Integration with Express
+# Lab 09: React Student Dashboard
 
-**Course:** CIS-3340 Full Stack Web Development
-**Module:** 09 - Relational Databases with PostgreSQL
-**Texas Wesleyan University | Professor Nash**
-**Total Points:** 100
+## Course: CIS-3340 Full Stack Web Development
+
+## Texas Wesleyan University | Professor Nash
+
+## Estimated Time: 90–120 minutes
 
 ---
 
-## Overview
+## Objectives
 
-In this lab you will connect the Express bookstore server from Module 08 to a real PostgreSQL database. You will create the database schema, seed data, replace in-memory arrays with async database queries, and verify SQL injection protection. By the end you will have a persistent, database-backed REST API.
+By completing this lab you will:
+
+- Scaffold a React project with Vite
+- Write JSX with conditional rendering and list rendering
+- Build functional components with props
+- Manage state with `useState`
+- Fetch data with `useEffect`
+- Compose multiple components into a complete Student Dashboard
 
 ---
 
 ## Prerequisites
 
-- PostgreSQL installed locally (version 14 or higher — run `psql --version` to verify)
-- Completion of Lab 08 (or the provided starter code)
-- VS Code with Thunder Client or Postman
+- Node.js 18+ installed (`node --version` to verify)
+- Module 09 video lecture and reading guide completed
+- VS Code with the ES7+ React/Redux/React-Native Snippets extension (optional but helpful)
 
 ---
 
-## Part 1: Database Setup
+## Part 1: Project Setup (10 minutes)
 
-### Step 1: Create the Database and Tables
+### Step 1 — Scaffold the project
 
-Open a terminal and connect to the PostgreSQL server:
+Open a terminal in your development folder and run:
 
 ```bash
-psql -U postgres
+npm create vite@latest lab09-dashboard -- --template react
+cd lab09-dashboard
+npm install
+npm run dev
 ```
 
-Run the following SQL to create the database, connect to it, and create the tables:
+Open `http://localhost:5173` in your browser. You should see the default Vite + React page.
 
-```sql
-CREATE DATABASE bookstore;
-\c bookstore
+### Step 2 — Clean the starter files
 
-CREATE TABLE authors (
-  id         SERIAL PRIMARY KEY,
-  name       VARCHAR(255) NOT NULL,
-  country    VARCHAR(100),
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
+Replace the contents of `src/App.jsx` with:
 
-CREATE TABLE books (
-  id         SERIAL PRIMARY KEY,
-  title      VARCHAR(255) NOT NULL,
-  author_id  INTEGER NOT NULL REFERENCES authors(id) ON DELETE CASCADE,
-  year       INTEGER CHECK (year BETWEEN 1000 AND 2100),
-  genre      VARCHAR(100),
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
+```jsx
+function App() {
+  return (
+    <div>
+      <h1>Student Dashboard</h1>
+    </div>
+  );
+}
+
+export default App;
 ```
 
-Verify the tables were created:
+Replace the contents of `src/index.css` with:
 
-```sql
-\dt
+```css
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Arial, sans-serif; background: #f4f6f9; color: #222; }
+.container { max-width: 1100px; margin: 0 auto; padding: 24px; }
+.card {
+  background: #fff;
+  border: 1px solid #dde1e7;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+.badge-green { background: #d4edda; color: #155724; }
+.badge-yellow { background: #fff3cd; color: #856404; }
+.badge-red { background: #f8d7da; color: #721c24; }
 ```
 
-You should see both `authors` and `books` in the output. Screenshot this terminal output.
-
-### Step 2: Seed the Database
-
-Run this SQL to insert the initial data:
-
-```sql
-INSERT INTO authors (name, country) VALUES
-  ('Robert C. Martin', 'USA'),
-  ('Andy Hunt', 'USA'),
-  ('Kyle Simpson', 'USA'),
-  ('Martin Fowler', 'UK');
-
-INSERT INTO books (title, author_id, year, genre) VALUES
-  ('Clean Code', 1, 2008, 'Software Engineering'),
-  ('The Pragmatic Programmer', 2, 1999, 'Software Engineering'),
-  ('You Don''t Know JS', 3, 2015, 'JavaScript'),
-  ('Refactoring', 4, 1999, 'Software Engineering');
-```
-
-Verify the seed data with a JOIN query:
-
-```sql
-SELECT b.id, b.title, b.year, b.genre, a.name AS author
-FROM books b
-INNER JOIN authors a ON a.id = b.author_id
-ORDER BY b.year;
-```
-
-Screenshot the query result. You should see 4 rows.
+Delete `src/App.css` and `src/assets/react.svg`. Remove any imports for those files from `App.jsx` and `main.jsx`.
 
 ---
 
-## Part 2: Connect Node.js to PostgreSQL
+## Part 2: Static Data and Component Structure (20 minutes)
 
-### Step 3: Install Dependencies
+### Step 3 — Create the data file
 
-In your `lab08-express` project folder (copy it to `lab09-postgres` first):
+Create `src/data/students.js`:
 
-```bash
-npm install pg dotenv
+```js
+export const students = [
+  { id: 1, name: 'Alice Johnson', major: 'Computer Science', gpa: 3.8, status: 'active', enrolled: 2022 },
+  { id: 2, name: 'Bob Martinez', major: 'Information Systems', gpa: 2.9, status: 'probation', enrolled: 2021 },
+  { id: 3, name: 'Carol Chen', major: 'Computer Science', gpa: 3.5, status: 'active', enrolled: 2023 },
+  { id: 4, name: 'David Kim', major: 'Cybersecurity', gpa: 3.1, status: 'active', enrolled: 2022 },
+  { id: 5, name: 'Emma Davis', major: 'Information Systems', gpa: 1.8, status: 'at-risk', enrolled: 2023 },
+];
 ```
 
-### Step 4: Create db.js
+### Step 4 — Build the StatusBadge component
 
-Create a file called `db.js` in the project root:
+Create `src/components/StatusBadge.jsx`:
 
-```javascript
-// db.js
-const { Pool } = require('pg');
-require('dotenv').config();
+```jsx
+function StatusBadge({ status }) {
+  const classes = {
+    active: 'badge badge-green',
+    probation: 'badge badge-yellow',
+    'at-risk': 'badge badge-red',
+  };
 
-const pool = new Pool({
-  host:     process.env.DB_HOST     || 'localhost',
-  port:     parseInt(process.env.DB_PORT) || 5432,
-  database: process.env.DB_NAME     || 'bookstore',
-  user:     process.env.DB_USER     || 'postgres',
-  password: process.env.DB_PASSWORD || ''
-});
+  return (
+    <span className={classes[status] || 'badge'}>
+      {status}
+    </span>
+  );
+}
 
-pool.on('error', (err) => {
-  console.error('Unexpected PostgreSQL error:', err.message);
-});
-
-// TODO 1: Export the pool so route files can import it
-module.exports = /* YOUR CODE HERE */;
+export default StatusBadge;
 ```
 
-Complete TODO 1 — export the pool object.
+### Step 5 — Build the StudentCard component
 
-### Step 5: Create .env
+Create `src/components/StudentCard.jsx`:
 
-Create a `.env` file in the project root. Fill in your actual PostgreSQL credentials:
+```jsx
+import StatusBadge from './StatusBadge';
 
-```text
-DB_HOST=localhost
-DB_PORT=5432
-DB_NAME=bookstore
-DB_USER=postgres
-DB_PASSWORD=
+function StudentCard({ name, major, gpa, status, enrolled }) {
+  return (
+    <div className="card">
+      <h3>{name}</h3>
+      <p>Major: {major}</p>
+      <p>GPA: {gpa.toFixed(2)} &nbsp; <StatusBadge status={status} /></p>
+      <p style={{ fontSize: '0.85rem', color: '#666' }}>Enrolled: {enrolled}</p>
+    </div>
+  );
+}
+
+export default StudentCard;
 ```
-
-Verify that `.env` is listed in `.gitignore`. If it is not, add it now.
-
-### Step 6: Add dotenv to index.js
-
-At the very top of `index.js`, add:
-
-```javascript
-require('dotenv').config();
-```
-
-This must be the first line — before any other `require()` calls — so that `process.env` variables are available when `db.js` is loaded.
 
 ---
 
-## Part 3: Implement Database-Backed Routes
+## Part 3: Rendering a List (15 minutes)
 
-### Step 7: Update routes/books.js
+### Step 6 — Build the StudentList component
 
-Replace the in-memory array implementation with database queries. The file structure stays the same — only the route handler bodies change.
+Create `src/components/StudentList.jsx`:
 
-Start with the GET all books route:
+```jsx
+import StudentCard from './StudentCard';
 
-```javascript
-const pool = require('../db');
-
-// TODO 2: GET / — query the database for all books with author name
-// Use a JOIN between books and authors tables
-// Return status 200 with the rows array
-router.get('/', async (req, res, next) => {
-  try {
-    // YOUR CODE HERE
-  } catch (err) {
-    next(err);
+function StudentList({ students }) {
+  if (students.length === 0) {
+    return <p>No students match your filter.</p>;
   }
-});
+
+  return (
+    <div>
+      {students.map(student => (
+        <StudentCard key={student.id} {...student} />
+      ))}
+    </div>
+  );
+}
+
+export default StudentList;
 ```
 
-The SQL query should select `b.id`, `b.title`, `b.year`, `b.genre`, and `a.name AS author` with an INNER JOIN on `author_id`. Order by `b.title`.
+### Step 7 — Wire up App.jsx
 
-Implement the remaining routes using this template:
+Update `src/App.jsx` to import the data and render the list:
 
-```javascript
-// TODO 3: GET /:id — find one book by id using $1 parameter
-// Return 404 if rows.length === 0
-router.get('/:id', async (req, res, next) => {
-  try {
-    // YOUR CODE HERE
-  } catch (err) {
-    next(err);
-  }
-});
+```jsx
+import { students } from './data/students';
+import StudentList from './components/StudentList';
 
-// TODO 4: POST / — insert a new book; use RETURNING * to get the created row
-// Required fields: title, author_id (already validated by requireFields middleware)
-router.post('/', requireFields(['title', 'author_id']), async (req, res, next) => {
-  try {
-    // YOUR CODE HERE
-  } catch (err) {
-    next(err);
-  }
-});
+function App() {
+  return (
+    <div className="container">
+      <h1>Student Dashboard</h1>
+      <p>{students.length} students enrolled</p>
+      <StudentList students={students} />
+    </div>
+  );
+}
 
-// TODO 5: PUT /:id — update title, year, genre; use RETURNING *
-// Return 404 if rowCount === 0
-router.put('/:id', requireFields(['title']), async (req, res, next) => {
-  try {
-    // YOUR CODE HERE
-  } catch (err) {
-    next(err);
-  }
-});
-
-// TODO 6: DELETE /:id — delete by id; return 204 on success, 404 if rowCount === 0
-router.delete('/:id', async (req, res, next) => {
-  try {
-    // YOUR CODE HERE
-  } catch (err) {
-    next(err);
-  }
-});
+export default App;
 ```
 
-### Step 8: Update routes/authors.js
-
-Replace the in-memory authors array with database queries. Implement these three routes:
-
-```javascript
-// GET / — all authors
-// GET /:id — one author or 404
-// POST / — insert author with RETURNING *
-```
-
-Use `requireFields(['name'])` on the POST route.
+Save and verify all five student cards render in the browser.
 
 ---
 
-## Part 4: Add a Nested Route
+## Part 4: Adding State — Filter and Search (25 minutes)
 
-### Step 9: Get Books by Author
+### Step 8 — Add filter state to App.jsx
 
-Add this route to `routes/authors.js` after the existing routes:
+Update `src/App.jsx` to add a status filter:
 
-```javascript
-// GET /api/authors/:authorId/books — list books by a specific author
-router.get('/:authorId/books', async (req, res, next) => {
-  try {
-    // TODO 7: First verify the author exists; return 404 if not found.
-    // Then query books WHERE author_id = $1.
-    // Return status 200 with the books array.
-  } catch (err) {
-    next(err);
-  }
-});
+```jsx
+import { useState } from 'react';
+import { students } from './data/students';
+import StudentList from './components/StudentList';
+
+function App() {
+  const [filter, setFilter] = useState('all');
+  const [search, setSearch] = useState('');
+
+  const visible = students.filter(s => {
+    const matchesFilter = filter === 'all' || s.status === filter;
+    const matchesSearch = s.name.toLowerCase().includes(search.toLowerCase())
+      || s.major.toLowerCase().includes(search.toLowerCase());
+    return matchesFilter && matchesSearch;
+  });
+
+  return (
+    <div className="container">
+      <h1>Student Dashboard</h1>
+
+      <div style={{ marginBottom: '16px', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+        <input
+          type="text"
+          placeholder="Search by name or major..."
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          style={{ padding: '8px', borderRadius: '4px', border: '1px solid #ccc', flexGrow: 1 }}
+        />
+        <select
+          value={filter}
+          onChange={e => setFilter(e.target.value)}
+          style={{ padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
+        >
+          <option value="all">All Statuses</option>
+          <option value="active">Active</option>
+          <option value="probation">Probation</option>
+          <option value="at-risk">At Risk</option>
+        </select>
+      </div>
+
+      <p>Showing {visible.length} of {students.length} students</p>
+      <StudentList students={visible} />
+    </div>
+  );
+}
+
+export default App;
 ```
 
-Complete TODO 7. The route should:
-
-1. Query `SELECT * FROM authors WHERE id = $1` with `req.params.authorId`
-2. Return `404` if the author is not found
-3. Query `SELECT * FROM books WHERE author_id = $1 ORDER BY year` with the author ID
-4. Return `200` with the books array
+Test: type "Computer Science" in the search box. Type "alice". Change the status dropdown to "At Risk".
 
 ---
 
-## Part 5: Test All Endpoints
+## Part 5: useEffect — Simulated Data Fetch (20 minutes)
 
-### Step 10: Verify the API
+### Step 9 — Create a mock API utility
 
-Start the server with `npm run dev`. Test each endpoint with Thunder Client:
+Create `src/api/mockFetch.js`:
 
-| Request | Expected Status | Notes |
-|---|---|---|
-| `GET /api/books` | 200 | Returns 4 books with author names |
-| `GET /api/books/1` | 200 | Returns Clean Code |
-| `GET /api/books/999` | 404 | Error object |
-| `POST /api/books` (valid) | 201 | `author_id: 1` in body; Location header present |
-| `POST /api/books` (missing title) | 400 | Validation error |
-| `PUT /api/books/1` | 200 | Updated book returned |
-| `DELETE /api/books/4` | 204 | Empty body |
-| `DELETE /api/books/4` again | 404 | Already deleted |
-| `GET /api/authors` | 200 | Returns 4 authors |
-| `GET /api/authors/1/books` | 200 | Returns books by Robert C. Martin |
-| `GET /api/authors/999/books` | 404 | Author not found |
+```js
+import { students } from '../data/students';
 
-Screenshot each response.
-
-### Step 11: Verify SQL Injection Protection
-
-In Thunder Client, send a GET request to:
-
-```text
-GET /api/books/1'; DROP TABLE books; --
+// Simulates a network delay of 800ms
+export function fetchStudents() {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve([...students]), 800);
+  });
+}
 ```
 
-The server should return `404 Not Found` (not a server error). The parameterized query treats the entire string as a data value, not SQL. Screenshot the response.
+### Step 10 — Use useEffect in App.jsx
+
+Replace the static import of `students` with a `useEffect` fetch. Update `src/App.jsx`:
+
+```jsx
+import { useState, useEffect } from 'react';
+import { fetchStudents } from './api/mockFetch';
+import StudentList from './components/StudentList';
+
+function App() {
+  const [allStudents, setAllStudents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [filter, setFilter] = useState('all');
+  const [search, setSearch] = useState('');
+
+  useEffect(() => {
+    fetchStudents()
+      .then(data => {
+        setAllStudents(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []);
+
+  const visible = allStudents.filter(s => {
+    const matchesFilter = filter === 'all' || s.status === filter;
+    const matchesSearch =
+      s.name.toLowerCase().includes(search.toLowerCase()) ||
+      s.major.toLowerCase().includes(search.toLowerCase());
+    return matchesFilter && matchesSearch;
+  });
+
+  if (loading) return <div className="container"><p>Loading students...</p></div>;
+  if (error) return <div className="container"><p style={{ color: 'red' }}>Error: {error}</p></div>;
+
+  return (
+    <div className="container">
+      <h1>Student Dashboard</h1>
+
+      <div style={{ marginBottom: '16px', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+        <input
+          type="text"
+          placeholder="Search by name or major..."
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          style={{ padding: '8px', borderRadius: '4px', border: '1px solid #ccc', flexGrow: 1 }}
+        />
+        <select
+          value={filter}
+          onChange={e => setFilter(e.target.value)}
+          style={{ padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
+        >
+          <option value="all">All Statuses</option>
+          <option value="active">Active</option>
+          <option value="probation">Probation</option>
+          <option value="at-risk">At Risk</option>
+        </select>
+      </div>
+
+      <p>Showing {visible.length} of {allStudents.length} students</p>
+      <StudentList students={visible} />
+    </div>
+  );
+}
+
+export default App;
+```
+
+Verify that the loading state appears for approximately 800ms before the list renders.
+
+---
+
+## Expected Output
+
+When complete, your application should display:
+
+- A "Loading students..." message for ~800ms on initial load
+- Five student cards after loading
+- Each card shows: name, major, GPA formatted to two decimal places, a color-coded status badge, and enrollment year
+- The search input filters cards in real time by name or major
+- The status dropdown filters cards by status
+- The count above the list updates as filters change
 
 ---
 
 ## Deliverables
 
-Submit to Canvas:
+Submit a zip file containing your entire `lab09-dashboard` project folder (excluding `node_modules`). Your submission must include:
 
-1. `db.js` — pool configuration file
-2. `routes/books.js` — database-backed books routes
-3. `routes/authors.js` — database-backed authors routes including nested route
-4. `.env` — with your credentials (note: in a real project never submit this; exception for this lab only for grading)
-5. Screenshot: `\dt` output showing both tables in psql
-6. Screenshot: JOIN query result in psql showing 4 seeded books
-7. Thunder Client screenshots for all 11 test cases
-8. Screenshot: SQL injection test returning 404 (not 500)
+1. `src/App.jsx` — with `useState`, `useEffect`, filter logic
+2. `src/components/StudentCard.jsx`
+3. `src/components/StudentList.jsx`
+4. `src/components/StatusBadge.jsx`
+5. `src/api/mockFetch.js`
+6. `src/data/students.js`
 
 ---
 
@@ -319,15 +383,11 @@ Submit to Canvas:
 
 | Criterion | Points |
 |---|---|
-| Database schema created with correct constraints (PK, FK, NOT NULL, CHECK) | 10 |
-| `db.js` exports Pool with credentials from environment variables | 10 |
-| `GET /api/books` returns books with author names (JOIN query) | 10 |
-| `GET /api/books/:id` returns correct 200 or 404 | 5 |
-| `POST /api/books` inserts and returns new row with RETURNING * | 15 |
-| `PUT /api/books/:id` updates and returns row or 404 | 10 |
-| `DELETE /api/books/:id` returns 204 or 404 using rowCount | 10 |
-| Authors routes (GET all, GET one, POST) database-backed | 10 |
-| Nested route `GET /api/authors/:authorId/books` functional | 10 |
-| SQL injection test returns 404 (not 500 or server error) | 5 |
-| psql screenshots showing schema and seed data | 5 |
+| Project scaffolds and runs without errors | 15 |
+| All five student cards render with correct data | 20 |
+| StatusBadge renders correct color for each status | 15 |
+| Search input filters list in real time | 15 |
+| Status dropdown filter works correctly | 15 |
+| useEffect used for data loading with loading state | 15 |
+| Code quality: no console errors, no direct state mutation | 5 |
 | **Total** | **100** |

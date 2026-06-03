@@ -1,101 +1,96 @@
-# Reading Guide: Module 07 – WAN and Cloud Connectivity
+# Reading Guide: Module 07 — WAN and Cloud Connectivity
 
-## CIS-3321 Network Administration | CompTIA Network+ (N10-008)
+## Course: CIS-3321 Network Administration
 
-## Texas Wesleyan University | Professor Nash
+Certification Alignment: CompTIA Network+ (N10-008)
 
 ---
 
 ### Introduction
 
-Module 07 bridges local area networking and the broader infrastructure that connects sites, remote users, and cloud services. The CompTIA Network+ exam tests WAN technology identification, cloud service model boundaries (IaaS/PaaS/SaaS), and VPN protocol selection. You must be able to match a business scenario to the correct WAN type, identify the cloud model that best fits a given responsibility requirement, and select the correct VPN protocol for a given network constraint (such as a firewall that blocks all but port 443).
+Module 07 expands the course scope from local area networks to wide area connectivity and cloud infrastructure. The CompTIA Network+ exam tests WAN technologies under Domain 1: Networking Concepts and Domain 2: Network Implementation. You must be able to select the appropriate WAN service for a given scenario, distinguish cloud service and deployment models by customer responsibility, and match each VPN technology to its correct use case, port, and protocol. This reading guide organizes all key concepts, comparison tables, and exam tips for the Module 07 video lectures.
 
 ---
 
 ### 1. Core Vocabulary
 
-**WAN (Wide Area Network)** — A network spanning a large geographic area, typically using carrier-provided services to connect sites in different cities or countries.
+WAN (Wide Area Network) — A network that connects sites across cities, countries, or continents using carrier-provided services. WANs span geographic areas too large for LAN technologies.
 
-**MPLS (Multiprotocol Label Switching)** — A carrier WAN service that routes packets using short labels rather than IP addresses, enabling traffic engineering and guaranteed QoS. Used for enterprise branch connectivity requiring predictable latency.
+MPLS (Multiprotocol Label Switching) — A carrier WAN service that forwards packets using short path labels rather than IP addresses. Provides guaranteed Quality of Service (QoS) with defined traffic classes. Runs on dedicated carrier infrastructure, not the public internet.
 
-**DSL (Digital Subscriber Line)** — Broadband internet over copper telephone lines. ADSL (Asymmetric DSL) provides faster download than upload. Best-effort service; no QoS guarantees. Distance-limited from the carrier's central office.
+DSL (Digital Subscriber Line) — Broadband over copper telephone lines. ADSL provides asymmetric speeds (faster download than upload). Best-effort service with no QoS guarantees. Performance degrades with distance from the carrier central office.
 
-**ADSL** — Asymmetric DSL. Download speeds are faster than upload speeds. Typical residential and small office WAN connection type.
+Cable / DOCSIS — Broadband over cable television coaxial infrastructure. Bandwidth is shared among neighbors on the same cable segment. Best-effort service.
 
-**DOCSIS (Data Over Cable Service Interface Specification)** — The standard for delivering broadband internet over cable television coaxial infrastructure. Bandwidth is shared among subscribers on the same cable segment. Best-effort service.
+Metro Ethernet — A carrier service delivering Ethernet connectivity between sites in the same metropolitan area over fiber. High bandwidth (100 Mbps to 10 Gbps) with defined SLAs.
 
-**Metro Ethernet** — A carrier service delivering high-bandwidth Ethernet connectivity between sites in the same metropolitan area over fiber infrastructure. Provides defined SLAs. The customer interface is a standard Ethernet port.
+SD-WAN (Software-Defined WAN) — A modern approach using software control to intelligently route traffic across multiple WAN connections based on real-time conditions and application policy.
 
-**SD-WAN (Software-Defined WAN)** — An overlay technology that uses software control to dynamically route traffic across multiple WAN links (MPLS, internet, LTE) based on application policy and real-time link conditions.
+T1 — A dedicated leased-line circuit providing 1.544 Mbps of fixed bandwidth across 24 DS0 channels. Point-to-point with no sharing.
 
-**T1** — A dedicated digital circuit providing 1.544 Mbps across 24 DS0 channels. A leased-line WAN technology providing fixed, guaranteed bandwidth.
+T3 — A dedicated leased-line circuit providing 44.736 Mbps.
 
-**T3** — A dedicated digital circuit providing 44.736 Mbps across 28 T1 channels. Higher-capacity leased-line option.
+Circuit-Switched — A WAN model where a dedicated path is established on demand for the duration of a session, then released. Example: legacy PSTN and ISDN.
 
-**Frame Relay** — A legacy packet-switched WAN technology using virtual circuits and committed information rates (CIR). Largely replaced by MPLS. Still exam-relevant for recognition.
+Packet-Switched — A WAN model where data is divided into packets that share network infrastructure. Examples: MPLS, Frame Relay, ATM.
 
-**ATM (Asynchronous Transfer Mode)** — A legacy cell-switched technology using fixed 53-byte cells. Used in older WAN backbones and some DSL infrastructure. Exam-relevant for recognition.
+Frame Relay — A legacy packet-switched WAN technology using virtual circuits defined by Committed Information Rate (CIR). Largely replaced by MPLS and Metro Ethernet.
 
-**CIR (Committed Information Rate)** — The guaranteed minimum bandwidth on a Frame Relay virtual circuit.
+ATM (Asynchronous Transfer Mode) — A legacy cell-switched technology using fixed 53-byte cells. Used in older backbone networks and some DSL infrastructure.
 
-**VPN (Virtual Private Network)** — A secure, encrypted logical connection over an untrusted network (typically the internet) that simulates a private leased-line connection.
+IaaS (Infrastructure as a Service) — Cloud model where the provider delivers virtualized compute, storage, and networking. The customer manages the operating system and above.
 
-**Site-to-Site VPN** — Connects two entire networks. VPN gateways at each site establish the tunnel; end-user devices need no VPN software.
+PaaS (Platform as a Service) — Cloud model where the provider manages the infrastructure, OS, middleware, and runtime. The customer manages only application code and data.
 
-**Remote-Access VPN** — Connects an individual user's device to a corporate network. Requires a VPN client on the user's device.
+SaaS (Software as a Service) — Cloud model where the provider manages the complete application. The customer configures settings and uses the software through a browser or client.
 
-**IPsec (Internet Protocol Security)** — A Layer 3 protocol suite for authenticating and encrypting IP packets. Used for site-to-site and remote-access VPNs.
+Public Cloud — Infrastructure owned and operated by a third-party provider, shared among multiple customers. Examples: AWS, Microsoft Azure, Google Cloud Platform.
 
-**IPsec Transport Mode** — Encrypts only the IP payload; leaves the original IP header (source and destination addresses) in plaintext. Used for host-to-host encryption.
+Private Cloud — Infrastructure dedicated to a single organization. Provides greater control for regulated industries.
 
-**IPsec Tunnel Mode** — Encrypts the entire original IP packet (header + payload) and wraps it in a new outer IP header using VPN gateway addresses. Used for site-to-site VPNs. Hides internal IP addresses from the transit network.
+Hybrid Cloud — A combination of public and private cloud environments connected by secure links. Sensitive workloads remain in the private cloud; variable demand bursts to the public cloud.
 
-**AH (Authentication Header)** — An IPsec sub-protocol providing authentication and integrity. Does not encrypt the payload.
+Community Cloud — Shared infrastructure among organizations with common requirements, such as federal agencies sharing a government-authorized platform.
 
-**ESP (Encapsulating Security Payload)** — An IPsec sub-protocol providing encryption, authentication, and integrity for the payload. The standard choice for VPN encryption.
+VPN (Virtual Private Network) — A secure, encrypted logical connection across an untrusted network (typically the public internet) that simulates a private leased-line connection.
 
-**IKE (Internet Key Exchange)** — The protocol that negotiates IPsec security associations. IKEv1 uses two phases; IKEv2 is more efficient. Uses UDP port 500; NAT traversal uses UDP port 4500.
+IPsec (Internet Protocol Security) — The dominant protocol suite for VPN encryption at Layer 3. Operates in Transport mode or Tunnel mode.
 
-**GRE (Generic Routing Encapsulation)** — A tunneling protocol that encapsulates any network layer protocol inside an IP packet. Provides no encryption. Uses IP Protocol 47 (not TCP or UDP). Often combined with IPsec to add encryption.
+IPsec Transport Mode — Only the IP payload is encrypted. The original IP header remains in plaintext. Used for host-to-host communications.
 
-**L2TP (Layer 2 Tunneling Protocol)** — A tunneling protocol that encapsulates Layer 2 frames. Provides no encryption by itself. Almost always deployed as L2TP/IPsec, where IPsec provides encryption. Uses UDP port 1701.
+IPsec Tunnel Mode — The entire original IP packet (header and payload) is encrypted and encapsulated inside a new outer IP packet with VPN gateway addresses. Used for site-to-site VPNs.
 
-**SSL/TLS VPN** — A VPN that uses TLS encryption and operates over TCP port 443. Traverses restrictive firewalls that allow only HTTPS. Supports full-tunnel, split-tunnel, and clientless browser-based modes.
+AH (Authentication Header) — An IPsec sub-protocol providing authentication and integrity. Does not encrypt the payload.
 
-**Split Tunneling** — A VPN configuration where only corporate-bound traffic routes through the VPN tunnel; other internet traffic goes directly to the internet. Reduces corporate bandwidth load but bypasses corporate security controls.
+ESP (Encapsulating Security Payload) — An IPsec sub-protocol providing encryption, authentication, and integrity for the payload. The component that actually encrypts data.
 
-**Full Tunnel** — A VPN configuration where all traffic routes through the VPN, including general internet browsing. All traffic is inspected by corporate security controls.
+IKE (Internet Key Exchange) — The protocol used to negotiate and establish IPsec security associations. IKEv2 is simplified and more efficient than IKEv1. Uses UDP port 500 for key exchange and UDP port 4500 for NAT traversal (NAT-T).
 
-**VPN Concentrator** — A dedicated device that terminates multiple remote-access VPN sessions at the corporate network edge.
+GRE (Generic Routing Encapsulation) — A Cisco tunneling protocol that encapsulates any network layer protocol inside an IP packet. Provides no encryption. Uses IP Protocol 47. Often combined with IPsec to add encryption.
 
-**IaaS (Infrastructure as a Service)** — Cloud service model where the provider delivers compute, storage, and networking. The customer manages OS and everything above.
+L2TP (Layer 2 Tunneling Protocol) — A tunneling protocol providing no encryption by itself. Almost always combined with IPsec (L2TP/IPsec) for remote-access VPNs. Uses UDP port 1701.
 
-**PaaS (Platform as a Service)** — Cloud service model where the provider manages infrastructure, OS, and runtime. The customer manages only the application and data.
+SSL/TLS VPN — A VPN using Transport Layer Security over TCP port 443. Traverses restrictive firewalls that block IPsec ports. Supports full-tunnel mode, split-tunnel mode, and clientless browser-based mode.
 
-**SaaS (Software as a Service)** — Cloud service model where the provider manages and delivers a complete application. The customer configures settings and uses the software.
+Full-Tunnel VPN — All traffic from the remote device is routed through the VPN tunnel, including general internet browsing. Corporate security controls inspect all traffic.
 
-**Public Cloud** — Cloud infrastructure owned by a third-party provider and shared among multiple customers (multi-tenant).
+Split-Tunnel VPN — Only corporate network traffic is routed through the VPN tunnel. Internet traffic goes directly from the user's device. Reduces corporate bandwidth usage but bypasses corporate security for internet-bound traffic.
 
-**Private Cloud** — Cloud infrastructure dedicated to a single organization. Provides greater control and security.
-
-**Hybrid Cloud** — A combination of public and private cloud environments connected by secure links.
-
-**Community Cloud** — Cloud infrastructure shared among organizations with common compliance, mission, or regulatory requirements.
+VPN Concentrator — A dedicated device or software function that terminates multiple VPN client connections at the corporate network edge.
 
 ---
 
 ### 2. WAN Technology Comparison Table
 
-| Technology | Type | Bandwidth | QoS Guarantee | Best For |
-|------------|------|-----------|---------------|----------|
-| MPLS | Packet-switched carrier | 10 Mbps – 10 Gbps | Yes — defined traffic classes | Enterprise branch, VoIP, video |
-| DSL (ADSL) | Broadband (copper) | Up to ~100 Mbps | No — best effort | Small office, home office |
-| Cable/DOCSIS | Broadband (coax) | Up to 1 Gbps | No — shared/best effort | Small office, home office |
-| Metro Ethernet | Carrier Ethernet (fiber) | 100 Mbps – 10 Gbps | Yes — defined SLA | Intra-city multi-site |
-| T1 Leased Line | Dedicated point-to-point | 1.544 Mbps | Yes — dedicated | Critical single-site uplinks |
-| T3 Leased Line | Dedicated point-to-point | 44.736 Mbps | Yes — dedicated | High-capacity site links |
-| SD-WAN | Overlay (multiple links) | Variable | Policy-based | Modern enterprise WAN |
-| Frame Relay | Packet-switched (legacy) | Variable (CIR) | CIR guaranteed | Legacy — exam recognition only |
+| Technology | Type | QoS | Bandwidth Typical | Use Case |
+|------------|------|-----|-------------------|----------|
+| MPLS | Packet-switched (dedicated carrier) | Guaranteed | 1 Mbps – 10 Gbps | Enterprise branch office with VoIP/video |
+| DSL/ADSL | Broadband over copper | Best-effort | 1 – 40 Mbps downstream | Small office, home office |
+| Cable/DOCSIS | Broadband over coax | Best-effort | 50 – 1000 Mbps | Small office, home office |
+| Metro Ethernet | Carrier fiber Ethernet | SLA-defined | 100 Mbps – 10 Gbps | Same-city inter-building connectivity |
+| SD-WAN | Software-defined multi-link | Policy-based | Varies | Modern enterprise WAN replacement/supplement |
+| T1 Leased Line | Dedicated point-to-point | Dedicated | 1.544 Mbps | Legacy guaranteed-bandwidth circuit |
+| T3 Leased Line | Dedicated point-to-point | Dedicated | 44.736 Mbps | Legacy high-bandwidth backbone |
 
 ---
 
@@ -103,96 +98,95 @@ Module 07 bridges local area networking and the broader infrastructure that conn
 
 | Layer | IaaS | PaaS | SaaS |
 |-------|------|------|------|
-| Application | Customer | Customer | Provider |
-| Runtime/Middleware | Customer | Provider | Provider |
+| Physical hardware | Provider | Provider | Provider |
+| Hypervisor / Networking | Provider | Provider | Provider |
 | Operating System | Customer | Provider | Provider |
-| Virtualization | Provider | Provider | Provider |
-| Physical Hardware | Provider | Provider | Provider |
+| Middleware / Runtime | Customer | Provider | Provider |
+| Application code | Customer | Customer | Provider |
 | Data | Customer | Customer | Customer |
-
-Key rule: In IaaS, the customer manages OS and above. In PaaS, the customer manages application and data only. In SaaS, the customer only configures and uses.
-
----
-
-### 4. Cloud Deployment Model Comparison
-
-| Model | Who Owns Infrastructure | Shared | Security/Control | Use Case |
-|-------|------------------------|--------|-----------------|----------|
-| Public | Third-party provider | Multi-tenant | Lower control | General workloads, startups |
-| Private | Organization | Single-tenant | Highest control | Regulated industries |
-| Hybrid | Both | Mixed | Balanced | Sensitive + variable workloads |
-| Community | Shared group | Group members | Shared controls | Government, healthcare consortiums |
+| Configuration / Settings | Customer | Customer | Customer (limited) |
 
 ---
 
-### 5. VPN Protocol Comparison Table
+### 4. VPN Protocol Comparison Table
 
-| Protocol | Layer | Encryption | Ports/Protocol | Site-to-Site | Remote Access |
-|----------|-------|------------|----------------|-------------|---------------|
-| IPsec Tunnel | 3 | AES/3DES (ESP) | UDP 500, UDP 4500 (NAT-T) | Yes | Yes |
-| IPsec Transport | 3 | AES/3DES (ESP) | UDP 500 | No | Host-to-host only |
-| GRE | 3 | None | IP Protocol 47 | Yes (no encryption) | No |
-| GRE over IPsec | 3 | IPsec ESP | IP 47 + UDP 500/4500 | Yes | No |
-| L2TP/IPsec | 2+3 | IPsec ESP | UDP 1701, UDP 500/4500 | No | Yes |
-| SSL/TLS VPN | 4–7 | TLS | TCP 443 | No | Yes |
-| PPTP | 2 | MPPE (weak) | TCP 1723, GRE 47 | No | Legacy only |
+| Protocol | OSI Layer | Encryption | Port or Protocol | Primary Use Case |
+|----------|-----------|------------|-----------------|-----------------|
+| IPsec | Layer 3 | AES or 3DES | UDP 500 (IKE), UDP 4500 (NAT-T) | Site-to-site and remote-access VPN |
+| GRE | Layer 3 | None natively | IP Protocol 47 | Tunnel non-IP or multicast traffic |
+| L2TP/IPsec | Layer 2 + 3 | IPsec encryption | UDP 1701 (L2TP) + UDP 500/4500 | Remote-access VPN (legacy OS) |
+| SSL/TLS VPN | Layer 4–7 | TLS | TCP 443 | Remote access, clientless browser VPN |
 
 ---
 
-### 6. IPsec Mode Comparison
+### 5. IPsec Modes Comparison
 
 | Feature | Transport Mode | Tunnel Mode |
 |---------|---------------|-------------|
 | What is encrypted | Payload only | Entire original packet (header + payload) |
-| Original IP header | Visible (plaintext) | Hidden (encrypted inside outer packet) |
-| Outer IP header | Uses original source/destination | Uses VPN gateway addresses |
-| Use case | Host-to-host encryption | Site-to-site VPN |
-| Internal addresses visible | Yes | No |
+| Original IP header | Visible in plaintext | Hidden inside outer packet |
+| Outer IP header | Not added | New header with VPN gateway IPs |
+| Typical use | Host-to-host encryption | Site-to-site VPN |
+| Source/destination IPs visible to transit | Yes | No |
+
+---
+
+### 6. Cloud Deployment Model Comparison
+
+| Model | Owner | Tenancy | Key Characteristic |
+|-------|-------|---------|-------------------|
+| Public | Third-party provider | Multi-tenant (shared) | Pay-per-use, no capital expense |
+| Private | Single organization | Exclusive | Maximum control, higher cost |
+| Hybrid | Mixed | Mixed | Combines private security with public elasticity |
+| Community | Multiple organizations | Shared among members | Common compliance requirement (HIPAA, FedRAMP) |
 
 ---
 
 ### 7. Certification Exam Tips
 
-Tip 1: MPLS provides guaranteed QoS — it is the correct answer when a scenario requires predictable latency for VoIP or video over a WAN. DSL and cable are best-effort.
+Tip 1: MPLS is the correct answer whenever a scenario requires guaranteed QoS for VoIP, video conferencing, or ERP traffic over a WAN. DSL and cable are best-effort — they cannot guarantee latency.
 
-Tip 2: IPsec Tunnel mode is used for site-to-site VPNs and hides the original IP header. Transport mode is used for host-to-host and leaves the original IP header visible. This distinction is directly tested.
+Tip 2: The IaaS/PaaS/SaaS boundary question is always about customer responsibility. The key phrase is "wants to deploy code without managing servers" — that is PaaS. "Needs to control the OS" — that is IaaS. "Just uses an application" — that is SaaS.
 
-Tip 3: SSL/TLS VPN uses TCP 443. When the exam describes a firewall that allows only port 80 and 443, and a remote user needs VPN access, the answer is SSL/TLS VPN. IPsec and L2TP require ports that would be blocked.
+Tip 3: IPsec Tunnel mode is always used for site-to-site VPNs. When the exam says "hide the internal source and destination IP addresses from the transit network," the answer is Tunnel mode. Transport mode leaves the original IP header visible.
 
-Tip 4: GRE by itself provides no encryption. GRE is purely an encapsulation mechanism. When combined with IPsec, the combination provides both encapsulation of multiprotocol traffic and encryption.
+Tip 4: GRE provides encapsulation with no encryption. When a scenario says "the GRE tunnel traffic must be protected," the solution is to add IPsec to the GRE tunnel (GRE over IPsec).
 
-Tip 5: PaaS is the cloud model where developers deploy code without managing virtual machines or OS. The boundary: customer manages application + data only. IaaS requires OS management. SaaS provides a pre-built application.
+Tip 5: SSL/TLS VPN uses TCP 443. This is the answer whenever a scenario describes a restrictive firewall (hotel, coffee shop, guest Wi-Fi) that only allows port 80 and 443. IPsec and L2TP/IPsec use ports that would be blocked.
 
-Tip 6: Full-tunnel VPN routes all traffic through the corporate network, including internet browsing. Split-tunnel sends only corporate traffic through the VPN. Full-tunnel provides more security but uses more corporate bandwidth.
+Tip 6: Split tunneling reduces corporate bandwidth usage but introduces a security risk — internet traffic bypasses corporate security controls. Full tunneling forces all traffic through the corporate firewall but adds latency for internet browsing.
 
-Tip 7: Frame Relay and ATM are legacy WAN technologies. They appear on the exam for identification only — you need to recognize what they are, not configure them.
+Tip 7: IKE runs over UDP 500. NAT traversal (NAT-T) shifts to UDP 4500 when IPsec endpoints are behind NAT. Both port numbers appear on the exam.
 
-Tip 8: Private cloud provides the highest control and security but requires capital investment. Public cloud provides elasticity and pay-per-use but requires trust in provider isolation. Hybrid combines both.
+Tip 8: Frame Relay and ATM are legacy technologies that still appear on the Network+ exam for recognition purposes. Frame Relay uses CIR (Committed Information Rate). ATM uses fixed 53-byte cells.
 
 ---
 
 ### 8. Required Reading and Viewing
 
-Required Reading: Computer Networking: Principles, Protocols and Practice — read the sections on WAN technologies and VPNs. Focus on the IPsec protocol suite and SSL/TLS tunneling mechanisms.
+Required Reading: Computer Networking: Principles, Protocols and Practice — read the sections on wide area networks, cloud networking, and VPN technologies. Focus on the IPsec protocol suite and the differences between cloud service models.
 
-Required Viewing: Professor Messer's Network+ N10-008 video series — watch the WAN technologies, cloud computing models, and VPN technologies segments. Available free at professormesser.com.
+Required Viewing: Professor Messer's Network+ N10-008 video series — watch the WAN types, cloud concepts, IPsec, and VPN tunneling segments. Available free at professormesser.com.
 
-Supplemental Reference: CompTIA official N10-008 exam objectives at comptia.org — review Domain 1.0 Network Fundamentals for WAN and cloud objectives and Domain 4.0 Network Security for VPN objectives.
+Supplemental Reference: CompTIA official N10-008 exam objectives — Domain 1.2 (cloud concepts), Domain 2.2 (WAN connectivity), Domain 2.7 (VPN and remote access). Focus on the IPsec modes, VPN protocol ports, and cloud service model boundaries.
 
 ---
 
 ### 9. Study Checklist
 
-- [ ] Identify each WAN technology (MPLS, DSL, cable, Metro Ethernet, T1/T3) by type, speed, and QoS capability
-- [ ] Explain why MPLS is preferred over DSL/cable for enterprise VoIP connectivity
-- [ ] Distinguish IaaS, PaaS, and SaaS by customer responsibility boundary
-- [ ] Identify the four cloud deployment models and their use cases
-- [ ] Explain the difference between IPsec Tunnel mode and Transport mode — what each encrypts and when each is used
-- [ ] Explain why SSL/TLS VPN traverses restrictive firewalls when IPsec and L2TP cannot
-- [ ] Define GRE — what it encapsulates, what it does not provide, and its IP protocol number
-- [ ] Explain split tunneling vs. full tunneling — the security and bandwidth tradeoffs of each
-- [ ] Watch Professor Messer's WAN, cloud, and VPN segments at professormesser.com
-- [ ] Complete the Lab 07 VPN and WAN connectivity exercises
+- [ ] Name all five WAN technology types covered in Module 07 and state which provides guaranteed QoS
+- [ ] Explain why DSL and cable are classified as best-effort WAN services
+- [ ] State the bandwidth of a T1 circuit and explain how it differs from an MPLS service
+- [ ] Distinguish IaaS, PaaS, and SaaS by the layer at which customer responsibility begins
+- [ ] Name the four cloud deployment models and describe the defining characteristic of each
+- [ ] Explain IPsec Transport mode vs. Tunnel mode — what is encrypted, what is visible, and when each is used
+- [ ] State the function of AH vs. ESP in the IPsec protocol suite
+- [ ] List the port numbers used by IKE and NAT-T for IPsec
+- [ ] Explain why GRE is often combined with IPsec and what each protocol contributes
+- [ ] State the TCP port used by SSL/TLS VPN and explain why it traverses restrictive firewalls
+- [ ] Describe full-tunnel vs. split-tunnel VPN — advantages and security trade-offs of each
+- [ ] Explain what a VPN concentrator does and where it is placed in the network
+- [ ] Complete Lab 07 and answer all lab questions
 - [ ] Post your Module 07 Discussion initial response by Wednesday at 11:59 PM
 - [ ] Complete the Module 07 Quiz
 

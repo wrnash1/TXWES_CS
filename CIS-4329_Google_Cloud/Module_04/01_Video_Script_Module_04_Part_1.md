@@ -1,133 +1,182 @@
-# Video Script — Module 04, Part 1
+# Video Script: Module 04 — Cloud Storage (Part 1 of 2)
 
-## CIS-4329: Google Cloud Platform | Texas Wesleyan University
+## Course: CIS-4329 Google Cloud Computing
 
-### Topic: Cloud Storage — Buckets, Storage Classes, and Object Management
+## Texas Wesleyan University | Professor Nash
 
-### Estimated Duration: 13–14 minutes
+## Estimated Duration: 15 minutes
 
----
-
-## Introduction
-
-Welcome to Module 04. I'm Professor Nash, and today we are covering Cloud Storage — Google's object storage service. Cloud Storage is one of the most fundamental services in GCP. It stores unstructured data: images, videos, log files, backups, static website assets, big data files, and more. It is also where many GCP services — like Dataflow, BigQuery, and Cloud Functions — read and write data.
-
-Cloud Storage is heavily tested on the ACE exam. By the end of this module you will understand buckets, storage classes, the lifecycle policy system, object versioning, signed URLs, retention policies, and IAM for storage. Let's start with the fundamentals.
+## Certification Alignment: Google Cloud Associate Cloud Engineer (ACE)
 
 ---
 
-## Section 1: Object Storage Basics
+## Segment 1 — Introduction (1 minute)
 
-**[SHOW SLIDE: Object storage vs. block storage vs. file storage comparison]**
+Welcome to Module 04. This module covers Google Cloud Storage — GCP's object
+storage service and one of the most versatile services in the entire platform.
 
-Before we dig into Cloud Storage, let me clarify what object storage is and why it is different from the disk types we covered in Module 03.
+Cloud Storage is used for everything from serving website assets to archiving
+compliance records to staging data for analytics pipelines. It integrates with
+nearly every other GCP service.
 
-Block storage (like Compute Engine persistent disks) stores data as raw blocks on a virtual drive. You format it with a filesystem, mount it, and interact with it like a local disk. It is good for operating systems and databases.
-
-File storage (like Cloud Filestore) presents a network file system. Multiple VMs can mount the same file system and access it like a shared drive.
-
-Object storage stores data as discrete objects, each identified by a unique key (the object name) within a bucket. Objects are not organized in a true directory hierarchy — the "folder" structure you see in the Console is just a display convention based on the `/` character in object names. Object storage is ideal for data that you write once and read many times: backups, media files, machine learning datasets, archives.
-
-Cloud Storage buckets have no capacity limits. You can store petabytes in a single bucket and pay only for what you actually store.
-
----
-
-## Section 2: Buckets
-
-**[SHOW CONSOLE: Cloud Storage > Buckets page, then Create Bucket dialog]**
-
-A bucket is the top-level container for your data in Cloud Storage. Every object must belong to a bucket. When you create a bucket, you configure:
-
-**Bucket name** — globally unique across all of Google Cloud. Not just unique in your project or your organization — unique across every GCP customer in the world. Bucket names form part of the public URL for objects, so they must follow DNS naming rules.
-
-**Location type** — where your data is stored:
-
-- Region: stored in a single region (e.g., `us-central1`). Lowest storage cost. Data is replicated across zones within the region.
-- Dual-region: stored in two specific regions. Higher durability, lower latency reads from both regions. Higher cost than single region.
-- Multi-region: stored redundantly across a large geographic area (e.g., `us` covers multiple US regions). Highest availability. Useful for globally distributed apps.
-
-**Storage class** — the access frequency tier. We will cover this in detail in the next section.
-
-**Access control** — either uniform (all objects in the bucket share bucket-level IAM) or fine-grained (allows object-level ACLs in addition to bucket-level IAM). Google recommends uniform access control.
+In Part 1 we cover the storage classes, bucket configuration, object lifecycle
+management, and access control. In Part 2 we go hands-on with the console and
+gcloud CLI and cover signed URLs and data transfer options.
 
 ---
 
-## Section 3: Storage Classes
+## Segment 2 — Cloud Storage Fundamentals (3 minutes)
 
-**[SHOW SLIDE: Storage class comparison table with access frequency, minimum storage duration, cost comparison]**
+### Object Storage vs. Block Storage
 
-The storage class determines the cost structure for your data. Cloud Storage has four classes:
+Cloud Storage is object storage, not block storage. This is a fundamental
+distinction:
 
-### Standard
+- **Block storage** (Compute Engine Persistent Disk): Low-level, mounts as a
+  filesystem, read/write at the byte level. Used as VM disks.
+- **Object storage** (Cloud Storage): Files stored as discrete objects with
+  metadata. Accessed via HTTP API or CLI. Not mountable as a filesystem without
+  a special adapter.
 
-Use for: data that is accessed frequently — daily or multiple times per day. Examples: website images, user-uploaded content, active application data.
+Object storage is ideal for:
 
-Cost: highest per-GB storage cost, no retrieval fee, no minimum storage duration.
+- Large, unstructured data (images, videos, log files)
+- Data that is written once and read many times
+- Long-term archival
+- Serving static website content
+- Input/output data for batch processing
 
-### Nearline
+### Buckets and Objects
 
-Use for: data accessed approximately once per month. Examples: monthly reports, data backups that you test once a month.
+Every piece of data in Cloud Storage is an **object**. Objects are stored in
+**buckets**.
 
-Cost: lower per-GB storage than Standard. Retrieval fee per GB. 30-day minimum storage duration — if you store an object for less than 30 days and delete it, you are billed as if it was stored for 30 days.
+- A **bucket** is a container for objects. Buckets have globally unique names —
+  no two buckets in all of GCP (across all projects and customers) can share
+  the same name.
+- An **object** consists of data (the file contents) plus metadata (name, size,
+  content type, custom attributes, etc.).
+- Object names can include slashes, which creates the appearance of a directory
+  hierarchy. However, there are no actual directories — it is all a flat
+  namespace.
 
-### Coldline
+### Key Bucket Properties
 
-Use for: data accessed approximately once per quarter. Examples: disaster recovery backups, quarterly compliance archives.
+When creating a bucket you configure:
 
-Cost: lower than Nearline. Higher retrieval fee per GB. 90-day minimum storage duration.
-
-### Archive
-
-Use for: data accessed less than once per year. Examples: 7-year financial records, regulatory archives, long-term audit logs.
-
-Cost: lowest per-GB storage of all classes. Highest retrieval fee. 365-day minimum storage duration.
-
-**[PAUSE — Professor on camera]**
-
-The ACE exam will describe a scenario — "data accessed once a year for 7 years" — and ask you to pick the right storage class. Archive is almost always the answer for anything accessed less than once a year. The key is the access frequency, not the retention duration. And remember: the less frequently accessed classes have minimum storage durations and retrieval fees. If you store something in Archive for one month and then retrieve it, you pay the retrieval fee AND the 365-day minimum storage bill.
-
-### Autoclass
-
-Autoclass is a newer feature that automatically transitions objects between storage classes based on their actual access patterns. Objects that are not accessed move to cheaper classes over time. Objects that are accessed get promoted back to Standard. This is useful when you have a mix of data with unpredictable access patterns and you want GCP to optimize costs automatically without you writing lifecycle policies.
+- **Name** — Globally unique; used in the bucket URL
+- **Location type** — Regional, dual-region, or multi-region
+- **Storage class** — Default class for new objects
+- **Access control** — Uniform (IAM only) or fine-grained (IAM + ACLs)
+- **Versioning** — Keep multiple versions of objects
+- **Encryption** — Google-managed or customer-managed (CMEK)
 
 ---
 
-## Section 4: Lifecycle Policies
+## Segment 3 — Storage Classes (4 minutes)
 
-**[SHOW SLIDE: Lifecycle policy diagram — objects aging from Standard to Nearline to Coldline to Archive to Delete]**
+Cloud Storage has four storage classes designed for different access frequency
+and retention patterns. All classes offer the same latency and durability
+(eleven nines — 99.999999999%).
 
-**[SHOW CONSOLE: Cloud Storage > Bucket > Lifecycle tab, then rule creation dialog]**
+### Standard Storage
 
-Lifecycle policies automate the management of objects over time. A lifecycle policy is a set of rules attached to a bucket. Each rule has a condition and an action.
+- **Best for**: Frequently accessed data, short-term storage
+- **Monthly storage cost**: Highest of the four classes
+- **Retrieval cost**: None
+- **Minimum storage duration**: None
 
-Conditions can be based on:
+Use Standard for data accessed regularly — active application data, frequently
+read files, hot data for analytics.
 
-- `age` — number of days since the object was created
-- `createdBefore` — objects created before a specific date
-- `isLive` — whether the object is the live version or a noncurrent (older) version
-- `numNewerVersions` — how many newer versions of the object exist
-- `matchesStorageClass` — only apply to objects currently in a specific storage class
+### Nearline Storage
 
-Actions:
+- **Best for**: Data accessed less than once per month
+- **Monthly storage cost**: Lower than Standard
+- **Retrieval cost**: Per-GB retrieval fee applies
+- **Minimum storage duration**: 30 days
 
-- `SetStorageClass` — transition the object to a different (typically cheaper) storage class
-- `Delete` — permanently delete the object
+Use Nearline for backups, disaster recovery data, or content you might access
+monthly. If you delete an object before 30 days, you are still charged for
+30 days.
 
-Example use cases:
+### Coldline Storage
 
-- Automatically move log files from Standard to Coldline after 30 days and delete after 1 year
-- Delete all noncurrent (old) versions of files after 7 days (object versioning cleanup)
-- Move infrequently-accessed data to Archive after 90 days of no access
+- **Best for**: Data accessed less than once per quarter (90 days)
+- **Monthly storage cost**: Lower than Nearline
+- **Retrieval cost**: Higher per-GB retrieval fee than Nearline
+- **Minimum storage duration**: 90 days
 
-Here is a lifecycle rule in JSON format:
+Use Coldline for compliance archives, long-term backups accessed rarely.
+
+### Archive Storage
+
+- **Best for**: Data accessed less than once per year
+- **Monthly storage cost**: Lowest of all classes
+- **Retrieval cost**: Highest retrieval fee; retrieval latency in milliseconds
+  (still not tape — objects are available immediately)
+- **Minimum storage duration**: 365 days
+
+Use Archive for regulatory compliance data, legal holds, and true cold archives.
+Note: Archive class still provides millisecond access — it is not tape storage.
+The cost model penalizes frequent access, not access speed.
+
+### Comparison Table
+
+| Class | Min Duration | Best Access Pattern | Storage Cost | Retrieval Cost |
+|---|---|---|---|---|
+| Standard | None | Daily/hourly | Highest | None |
+| Nearline | 30 days | Monthly | Medium | Low |
+| Coldline | 90 days | Quarterly | Low | Medium |
+| Archive | 365 days | Yearly | Lowest | Highest |
+
+**ACE Exam Tip:** The ACE exam frequently presents cost-optimization scenarios.
+Know which class to recommend based on stated access frequency. Minimum
+storage duration charges are a common exam trap.
+
+---
+
+## Segment 4 — Object Lifecycle Management (3 minutes)
+
+Lifecycle policies let you automatically transition objects between storage
+classes or delete objects based on age or other conditions — without writing
+any code.
+
+### Lifecycle Rules
+
+A lifecycle rule has two components:
+
+- **Condition** — When the rule applies
+- **Action** — What to do when the condition is met
+
+#### Conditions
+
+- `age` — Object is older than N days
+- `createdBefore` — Object was created before a specific date
+- `isLive` — Applies only to live or noncurrent (versioned) objects
+- `matchesStorageClass` — Object is in a specific storage class
+- `numNewerVersions` — Number of newer versions of this object that exist
+
+#### Actions
+
+- `SetStorageClass` — Transition to a different storage class
+- `Delete` — Delete the object (or noncurrent version)
+
+### Example Lifecycle Policy
+
+A common pattern for log archival:
 
 ```json
 {
   "lifecycle": {
     "rule": [
       {
+        "action": {"type": "SetStorageClass", "storageClass": "NEARLINE"},
+        "condition": {"age": 30, "matchesStorageClass": ["STANDARD"]}
+      },
+      {
         "action": {"type": "SetStorageClass", "storageClass": "COLDLINE"},
-        "condition": {"age": 30}
+        "condition": {"age": 90, "matchesStorageClass": ["NEARLINE"]}
       },
       {
         "action": {"type": "Delete"},
@@ -138,22 +187,74 @@ Here is a lifecycle rule in JSON format:
 }
 ```
 
-This policy moves all objects to Coldline after 30 days and deletes them after 365 days.
+This policy transitions objects from Standard to Nearline at 30 days, to
+Coldline at 90 days, and deletes them at 1 year.
+
+**ACE Exam Tip:** Lifecycle policies apply to existing and future objects.
+When you set a policy, it is evaluated against all current objects.
 
 ---
 
-## Closing — Part 1
+## Segment 5 — Access Control (2 minutes)
 
-To summarize Part 1: Cloud Storage is GCP's object storage service. Objects live in buckets. Buckets are globally named and can be regional, dual-region, or multi-regional. Storage classes (Standard, Nearline, Coldline, Archive) trade access cost for storage cost based on access frequency. Lifecycle policies automate object transitions and deletion based on age, versioning, or storage class conditions.
+### IAM vs. ACLs
 
-In Part 2 we will cover object versioning, IAM for Cloud Storage, signed URLs, retention policies, and the gsutil and gcloud storage CLI commands.
+Cloud Storage supports two access control systems that can coexist, but GCP
+recommends uniform bucket-level access (IAM only) for new buckets.
+
+- **Uniform bucket-level access (IAM)**: All access is controlled via IAM
+  policies on the bucket. Applies to all objects. Consistent, auditable.
+  Recommended.
+- **Fine-grained access (IAM + ACLs)**: Each object can have its own ACL
+  in addition to bucket-level IAM. More granular but harder to audit.
+  Legacy mode for interoperability with older applications.
+
+### Key IAM Roles for Cloud Storage
+
+- `roles/storage.admin` — Full control of buckets and objects
+- `roles/storage.objectAdmin` — Full control of objects; no bucket management
+- `roles/storage.objectCreator` — Upload objects; cannot read or delete
+- `roles/storage.objectViewer` — Read objects; no modification
+- `roles/storage.legacyBucketReader` — Read bucket metadata and list objects
+
+### Making a Bucket or Object Public
+
+To make all objects in a bucket publicly readable:
+
+```bash
+gcloud storage buckets add-iam-policy-binding gs://BUCKET_NAME \
+  --member=allUsers \
+  --role=roles/storage.objectViewer
+```
+
+**ACE Exam Tip:** Using uniform bucket-level access prevents ACLs from being
+used on individual objects, which makes the security model simpler and more
+auditable. The exam often tests whether you know to use uniform access for
+new architectures.
+
+---
+
+## Summary — Part 1
+
+In Part 1 we covered:
+
+- Cloud Storage fundamentals: objects, buckets, and global namespace
+- The four storage classes: Standard, Nearline, Coldline, Archive
+- When to use each class and the minimum storage duration charges
+- Object lifecycle policies: conditions and actions for automated tiering
+- Access control: IAM uniform access vs. fine-grained ACLs
+
+In Part 2 we cover signed URLs, Pub/Sub notifications, data transfer
+options, and the gcloud CLI for Cloud Storage.
+
+See you in Part 2.
 
 ---
 
 End of Part 1 — Module 04
 
-Course: CIS-4329 Google Cloud Platform | Texas Wesleyan University | Professor Nash
+Course: CIS-4329 Google Cloud Computing | Texas Wesleyan University | Professor Nash
 
 Certification Target: Google Cloud Associate Cloud Engineer
 
-Reference: cloud.google.com/learn
+Reference: cloud.google.com/storage/docs

@@ -1,60 +1,331 @@
-# Reading Guide: Module 14 - Terraform in CI/CD Pipelines
+# Reading Guide: Module 14 — Multi-Cloud Provisioning with Terraform
 
-## Course: CIS-4337_Infrastructure_Automation (HashiCorp Certified: Terraform Associate)
+## Course: CIS-4337 Infrastructure Automation
 
----
+## Texas Wesleyan University | Professor Nash
 
-### Introduction
-
-Welcome to **Module 14 - Terraform in CI/CD Pipelines**! This week's study material focuses on automating Terraform workflows inside continuous integration and continuous delivery systems such as GitHub Actions and GitLab CI. Running Terraform in pipelines enables consistent, auditable, and repeatable infrastructure deployments triggered by code changes — a core pattern in modern DevOps and a topic tested on the Terraform Associate exam.
-
-As a student, you will learn how to structure a CI/CD pipeline for Terraform, which flags and environment variables are required for non-interactive execution, how to gate applies behind plan review steps, how to validate and lint configurations automatically, and the security considerations for storing credentials in pipeline environments. Make sure to complete the checklists and review the glossary terms before beginning the lab activity.
+**Certification Alignment:** HashiCorp Terraform Associate (003)
 
 ---
 
-### 1. High-Yield Glossary
+## Overview
 
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
+This reading guide covers Terraform's multi-provider and multi-cloud capabilities. You will understand how to configure multiple providers, use provider aliasing for multi-region and multi-account scenarios, manage provider version constraints, and evaluate the architectural patterns and trade-offs of multi-cloud infrastructure.
 
-* **GitHub Actions**: A CI/CD automation platform built into GitHub that executes workflows defined in YAML files stored under `.github/workflows/`. Each workflow consists of jobs containing steps that run shell commands or reusable actions. For Terraform, workflows typically include steps for `terraform init`, `terraform validate`, `terraform plan`, and (on merge) `terraform apply -auto-approve`.
-* **GitLab CI**: GitLab's built-in CI/CD system configured via a `.gitlab-ci.yml` file at the repository root. Pipelines are divided into stages (e.g., validate, plan, apply), with each stage running one or more jobs in parallel or sequence. GitLab CI supports manual approval gates between stages, which is the standard pattern for gating Terraform applies.
-* **non-interactive execution (`-auto-approve`)**: The `-auto-approve` flag passed to `terraform apply` that suppresses the interactive confirmation prompt, allowing the command to run to completion without waiting for user input. This flag is required in all automated CI/CD pipelines because pipeline runners have no interactive terminal to accept the confirmation.
-* **linting and validation**: Automated checks run against Terraform configuration before planning or applying. `terraform validate` checks that all configuration files are syntactically correct and internally consistent. `terraform fmt -check` verifies that files conform to the canonical HCL formatting style. Third-party tools such as `tflint` and `checkov` add provider-specific rule checks and security scanning.
+**Estimated reading time:** 55–70 minutes
 
 ---
 
-### 2. Certification Exam Tips
+## Section 1: Provider Configuration Fundamentals
 
-* **`-auto-approve` is required in pipelines:** The exam tests knowledge of why `terraform apply` must include `-auto-approve` in automated contexts. Without it, the command blocks indefinitely waiting for `yes` input that a pipeline runner cannot provide. Know that this flag bypasses the safety confirmation step and should be paired with a required plan-review gate earlier in the pipeline.
-* **Credential injection via environment variables:** Pipelines must supply cloud provider credentials without hardcoding them in `.tf` files. The standard pattern is to store secrets in the CI platform's secret store (GitHub Actions secrets, GitLab CI variables) and inject them as environment variables (e.g., `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, or `TF_VAR_` prefixed variables) available to the Terraform process.
-* **`TF_VAR_` prefix for variable injection:** Terraform reads environment variables prefixed with `TF_VAR_` and maps them to input variables of the same name. For example, `TF_VAR_region=us-east-1` sets the `region` input variable. This is the recommended way to pass secrets and environment-specific values into Terraform from CI pipelines without using `.tfvars` files.
-* **Study Resource:** The HashiCorp documentation on automating Terraform covers the full recommended CI/CD workflow including plan files, approval gates, and credential patterns: [Automate Terraform — HashiCorp Developer Docs](https://developer.hashicorp.com/terraform/tutorials/automation/automate-terraform).
+### 1.1 The Provider Block
+
+Every Terraform provider requires a `provider` block that configures how Terraform connects to that service. The provider block specifies authentication, region or location, and any provider-specific settings.
+
+```hcl
+provider "aws" {
+  region = "us-east-2"
+}
+
+provider "azurerm" {
+  features {}
+  subscription_id = var.azure_subscription_id
+  tenant_id       = var.azure_tenant_id
+}
+
+provider "google" {
+  project = var.gcp_project_id
+  region  = "us-central1"
+}
+```
+
+The `features {}` block in the Azure provider is required even if empty — it was introduced to allow future feature flags without breaking existing configurations.
+
+### 1.2 The required_providers Block
+
+All providers used in a configuration must be declared in the `terraform` block's `required_providers` section:
+
+```hcl
+terraform {
+  required_version = ">= 1.5.0"
+
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 3.0"
+    }
+    google = {
+      source  = "hashicorp/google"
+      version = "~> 5.0"
+    }
+  }
+}
+```
+
+The `source` field uses the format `<registry>/<namespace>/<type>`. For official providers hosted on the Terraform Registry, the format is `hashicorp/<type>`. Community providers follow `<namespace>/<type>`. Third-party providers may be hosted on private registries with a full hostname prefix.
+
+### 1.3 Multi-Provider Dependency Management
+
+Terraform's dependency graph operates across all providers. When an Azure resource needs the output of an AWS resource — for example, an Azure Private Link endpoint pointing to an AWS service IP address — Terraform automatically determines the creation order. The AWS resource is created first, its output is captured, and that value flows into the Azure resource creation.
+
+This cross-provider dependency tracking is one of the most powerful features of Terraform's declarative model. You declare the desired state and Terraform figures out the execution order regardless of which cloud each resource lives in.
 
 ---
 
-### Required Readings & Videos
+## Section 2: Provider Aliasing
 
-To prepare for this module's topics, you must complete the following readings and videos:
+### 2.1 Default and Aliased Providers
 
-* **Required Reading:** Read the HashiCorp tutorial on automating Terraform in CI/CD systems, which covers the recommended pipeline structure, plan file usage, and credential injection patterns: [Automate Terraform — HashiCorp Developer Docs](https://developer.hashicorp.com/terraform/tutorials/automation/automate-terraform).
-* **Required Video:** Watch the video lecture on **Terraform in CI/CD Pipelines** in the official course playlist, which demonstrates writing a GitHub Actions workflow YAML file that runs `terraform init`, `terraform validate`, `terraform plan`, and `terraform apply -auto-approve` as separate pipeline steps: [HashiCorp Terraform Associate Complete Course](https://www.youtube.com/watch?v=V53S9wB5SgA).
+When a Terraform configuration contains only one `provider` block for a given provider type, that block is the default provider for all resources of that type. When a configuration needs multiple instances of the same provider — different regions or different accounts — provider aliasing is required.
+
+A provider block with no `alias` attribute is the default. All resource blocks that do not specify a `provider` meta-argument use the default provider. A provider block with an `alias` attribute must be explicitly referenced in each resource that uses it.
+
+```hcl
+provider "aws" {
+  region = "us-east-2"
+}
+
+provider "aws" {
+  alias  = "west"
+  region = "us-west-2"
+}
+
+resource "aws_vpc" "east" {
+  cidr_block = "10.0.0.0/16"
+}
+
+resource "aws_vpc" "west" {
+  cidr_block = "10.1.0.0/16"
+  provider   = aws.west
+}
+```
+
+The `aws_vpc.east` resource uses the default (us-east-2) provider. The `aws_vpc.west` resource uses the aliased (us-west-2) provider.
+
+### 2.2 Passing Aliases to Modules
+
+When a child module needs to use an aliased provider from its parent, you pass the provider using the `providers` map in the module block:
+
+```hcl
+module "east_app" {
+  source = "./modules/app"
+
+  providers = {
+    aws = aws.primary
+  }
+}
+
+module "west_app" {
+  source = "./modules/app"
+
+  providers = {
+    aws = aws.west
+  }
+}
+```
+
+This allows you to deploy the same module configuration in two different regions or accounts by simply changing which provider alias the module receives. The module itself does not need to know about aliasing — it just uses `provider "aws"` normally, and the parent configuration controls which provider instance it gets.
+
+### 2.3 Multi-Account Cross-Cloud Aliasing
+
+In enterprise environments, Terraform configurations often span multiple AWS accounts and multiple Azure subscriptions. The full pattern uses `assume_role` in AWS and `subscription_id` in Azure:
+
+```hcl
+provider "aws" {
+  alias  = "networking"
+  region = "us-east-2"
+  assume_role {
+    role_arn = "arn:aws:iam::111111111111:role/TerraformExecutor"
+  }
+}
+
+provider "aws" {
+  alias  = "workloads"
+  region = "us-east-2"
+  assume_role {
+    role_arn = "arn:aws:iam::222222222222:role/TerraformExecutor"
+  }
+}
+
+provider "azurerm" {
+  alias           = "prod_subscription"
+  features        {}
+  subscription_id = "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
+}
+```
+
+Each provider instance authenticates independently with its own credentials or assumed role. The CI pipeline runner needs permission to assume all roles used in the configuration.
 
 ---
 
-### Lab & Command Integration
+## Section 3: Provider Version Constraints
 
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
+### 3.1 Semantic Versioning
 
-* **Write a GitHub Actions YAML workflow file**: Create `.github/workflows/terraform.yml` with jobs for `terraform init`, `terraform fmt -check`, `terraform validate`, `terraform plan -out=tfplan`, and `terraform apply tfplan`. Configure the workflow to trigger on `push` to the `main` branch and on `pull_request` events. Inject AWS credentials using `env:` variables sourced from GitHub Actions secrets.
-* **Run `terraform validate` in the pipeline workflow**: Add a dedicated validation step that runs `terraform validate` after `terraform init`. Confirm the step exits with code 0 on valid configuration and non-zero on a syntax error. Introduce a deliberate error and observe the pipeline fail at the validate step before reaching plan.
-* **Configure automated plan output on pull requests**: Add a step that runs `terraform plan -out=tfplan` and posts the plan summary as a pull request comment using the `actions/github-script` action or a community Terraform action. Verify the PR shows the plan diff before a reviewer approves the merge.
+Terraform providers follow semantic versioning: `MAJOR.MINOR.PATCH`. The conventions are:
+
+- MAJOR version changes introduce breaking changes — resources or arguments may be renamed, removed, or change behavior
+- MINOR version changes add new resources or arguments without breaking existing configurations
+- PATCH version changes fix bugs without adding or removing functionality
+
+Understanding this convention is essential for choosing version constraints.
+
+### 3.2 Constraint Operators
+
+| Operator | Example | Meaning |
+|----------|---------|---------|
+| `=` | `= 5.12.3` | Exactly this version only |
+| `!=` | `!= 5.0.0` | Any version except this one |
+| `>` | `> 5.0.0` | Greater than this version |
+| `>=` | `>= 5.0.0` | This version or newer |
+| `<` | `< 6.0.0` | Older than this version |
+| `<=` | `<= 5.12.3` | This version or older |
+| `~>` | `~> 5.0` | Pessimistic constraint — 5.x only |
+
+The `~>` operator is the most important. `~> 5.0` allows `5.0.0`, `5.1.0`, `5.12.3` but not `6.0.0`. `~> 5.12.3` allows `5.12.3`, `5.12.4`, `5.12.10` but not `5.13.0`.
+
+Using `~> MAJOR.MINOR` is the recommended production practice — it allows patch updates for bug fixes while preventing minor and major version jumps.
+
+### 3.3 The Lock File
+
+The `.terraform.lock.hcl` file records the resolved provider versions and their content hashes. Example entry:
+
+```hcl
+provider "registry.terraform.io/hashicorp/aws" {
+  version     = "5.12.0"
+  constraints = "~> 5.0"
+  hashes = [
+    "h1:...",
+    "zh:...",
+  ]
+}
+```
+
+The `h1:` hash is a hash of the zip archive. The `zh:` hashes are per-platform hashes for the specific binary. When another engineer runs `terraform init`, Terraform downloads the same version and verifies it matches the recorded hashes — preventing supply chain attacks where a provider binary is tampered with.
+
+The lock file must be committed to version control. Running `terraform init -upgrade` updates the lock file to the newest version satisfying the constraints.
 
 ---
 
-### 3. Study Checklist
+## Section 4: Cross-Cloud Architecture Patterns
 
-* [ ] Read the glossary terms and understand each definition well enough to explain it in your own words.
-* [ ] Read the automation tutorial at [Automate Terraform — HashiCorp Developer Docs](https://developer.hashicorp.com/terraform/tutorials/automation/automate-terraform).
-* [ ] Watch the video lecture on **Terraform in CI/CD Pipelines** in [HashiCorp Terraform Associate Complete Course](https://www.youtube.com/watch?v=V53S9wB5SgA).
-* [ ] Review the commands outlined in the lab instructions.
-* [ ] Proceed to the weekly hands-on lab activity.
+### 4.1 Active-Active Multi-Cloud
+
+In active-active multi-cloud, both providers simultaneously serve production traffic. This is the most resilient and most expensive pattern.
+
+Implementation with Terraform uses module composition:
+
+- A shared `app_tier` module defines the application infrastructure in provider-agnostic terms where possible
+- The root module calls `app_tier` twice with different provider aliases
+- A global load balancer (AWS Global Accelerator, Azure Front Door, or Cloudflare) distributes traffic between both cloud deployments
+- Terraform manages all components including the global load balancer configuration
+
+The challenge of active-active is data consistency. Application databases cannot usually be active-active across clouds without a globally distributed database service (CockroachDB, Azure Cosmos DB, or Spanner). Terraform provisions the database cluster, but the application architecture must be designed for multi-master replication.
+
+### 4.2 Primary-Failover
+
+Primary-failover is the most practical starting point for multi-cloud resilience. The primary cloud runs the production workload. The failover cloud runs a warm standby — provisioned and ready but not serving traffic.
+
+DNS-based failover uses health checks on the primary endpoint. When health checks fail, the DNS routing policy automatically switches traffic to the failover endpoint. AWS Route 53, Azure Traffic Manager, and GCP Cloud DNS all support health-check-based failover.
+
+Terraform provisions the health checks and routing policies alongside the infrastructure. This ensures the failover mechanism is always configured correctly and not subject to manual error.
+
+### 4.3 Best-of-Breed Service Selection
+
+The pragmatic multi-cloud pattern selects each cloud provider for specific workloads where it offers a genuine advantage:
+
+- AWS for compute-intensive workloads, Lambda serverless, and the broadest service catalog
+- Azure for Microsoft 365 integration, Azure Active Directory SSO, and Windows Server workloads
+- GCP for BigQuery data warehousing, Vertex AI, and Anthos multi-cloud Kubernetes
+
+Terraform provisions all resources across all three clouds and manages the cross-cloud networking. The operational challenge is team expertise — someone must understand each cloud deeply.
+
+---
+
+## Section 5: Multi-Cloud DNS
+
+### 5.1 DNS as the Multi-Cloud Routing Layer
+
+DNS is the universally available routing mechanism that works across cloud boundaries. A DNS record can point to any IP address regardless of which cloud hosts it. Health-check-based DNS routing allows automatic failover without changing the application.
+
+### 5.2 Route 53 with Multi-Cloud Endpoints
+
+AWS Route 53 health checks can monitor any TCP or HTTP endpoint, including endpoints in Azure or GCP. The routing policy determines traffic distribution:
+
+- **Simple routing**: a single record pointing to one endpoint — no failover
+- **Weighted routing**: distribute traffic by percentage across multiple endpoints
+- **Latency-based routing**: route each request to the endpoint with the lowest latency for that client
+- **Failover routing**: primary and secondary designation with automatic failover on health check failure
+
+Terraform manages Route 53 records with routing policies through `aws_route53_record` with the appropriate routing policy block. A health check targeting an Azure endpoint uses `aws_route53_health_check` with the Azure IP address or hostname.
+
+### 5.3 Third-Party DNS Providers
+
+Teams already using Cloudflare, NS1, or another DNS provider can use the corresponding Terraform provider instead of Route 53. The `cloudflare` provider manages DNS records, load balancing pools, and health checks. The multi-cloud DNS configuration looks the same from a Terraform perspective — resource blocks and provider references — regardless of which DNS service backs it.
+
+---
+
+## Section 6: Multi-Cloud Trade-offs
+
+### 6.1 Complexity Costs
+
+Multi-cloud infrastructure multiplies operational complexity. Engineers must be proficient in multiple cloud platforms. Security policies must be implemented consistently across platforms with different IAM models. Incident response must span multiple cloud consoles and CLIs.
+
+### 6.2 Cost Considerations
+
+Data transfer costs between cloud providers are significant. AWS charges for data leaving its network (egress). Azure and GCP do the same. An active-active multi-cloud setup with continuous data replication can have substantial egress costs that eliminate the cost savings from cloud competition.
+
+Accurately modeling the total cost of a multi-cloud architecture requires including:
+
+- Compute costs in each cloud
+- Storage costs in each cloud
+- Egress/ingress costs between clouds
+- Additional operational tooling costs (unified observability, multi-cloud management platforms)
+
+### 6.3 When to Use Multi-Cloud
+
+Multi-cloud is justified when:
+
+- Regulatory requirements mandate no single cloud provider dependency
+- A specific cloud service has a capability not available anywhere else (e.g., Azure OpenAI for specific enterprise contract terms)
+- Business continuity requirements mandate survival of a complete cloud provider outage
+- An acquisition brought an existing cloud footprint that must be integrated
+
+Multi-cloud is not justified when the primary motivation is "avoiding vendor lock-in" as an abstract goal. Every Terraform module for cloud-specific resources is already cloud-specific — true cloud portability requires using only the lowest common denominator services, which sacrifices the very capabilities that make each cloud valuable.
+
+---
+
+## Key Terms
+
+- **Provider alias**: a named instance of a provider allowing multiple regions, accounts, or subscriptions
+- **required_providers**: block in the `terraform` configuration declaring all providers and version constraints
+- **Pessimistic constraint (`~>`)**: allows patch and minor updates within a major version
+- **Lock file (`.terraform.lock.hcl`)**: records resolved provider versions and content hashes
+- **assume_role**: AWS provider configuration that causes Terraform to assume a specific IAM role before making API calls
+- **Active-active multi-cloud**: both clouds simultaneously serving production traffic
+- **Primary-failover**: one cloud serves production; the other is a warm standby with automatic DNS failover
+- **Egress cost**: charges for data leaving a cloud provider's network to the internet or another provider
+
+---
+
+## Review Questions
+
+1. What is the difference between a default provider and an aliased provider? How do resources reference each?
+
+2. What does the `~>` version constraint operator mean, and why is it the recommended choice for production configurations?
+
+3. Explain how the `.terraform.lock.hcl` file prevents supply chain attacks on provider binaries.
+
+4. Describe the primary-failover multi-cloud pattern and how DNS-based routing enables automatic failover.
+
+5. What are the `providers` map argument on a module block and when is it required?
+
+6. List two genuine business justifications for multi-cloud architecture and two scenarios where it adds complexity without proportional benefit.
+
+---
+
+End of Module 14 Reading Guide

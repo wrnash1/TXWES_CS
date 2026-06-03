@@ -1,88 +1,373 @@
-# Quiz: Module 09 - Windows Server Networking - Routing and Remote Access
+# Quiz: Module 09 — DNS and DHCP Services in Windows Server
 
-## Course: CIS-3326_Windows_Server_Admin (3326_Windows_Server_Admin - Microsoft Windows Server Administration (Active Directory))
+## Course: CIS-3326 Windows Server Administration
 
----
+## Texas Wesleyan University | Professor Nash
 
-### Question 1
-
-A remote worker needs to connect to the corporate network from home. The home internet provider uses a firewall that blocks all ports except 80 and 443. Which VPN protocol supported by Windows Server RRAS can establish a VPN tunnel under these restrictive conditions?
-
-A) L2TP/IPsec, because it is the most secure option and is supported by all RRAS deployments.
-B) PPTP, because it uses port 1723 which is rarely blocked by consumer firewalls.
-C) SSTP (Secure Socket Tunneling Protocol), because it tunnels VPN traffic inside HTTPS on port 443.
-D) IKEv2, because it uses UDP port 500 which passes through NAT-traversal on most firewalls.
-
-* **Correct Answer:** C) SSTP (Secure Socket Tunneling Protocol), because it tunnels VPN traffic inside HTTPS on port 443.
-* **Distractor Analysis:**
-  * *Why A is incorrect:* L2TP/IPsec uses UDP ports 500, 1701, and 4500 — all of which may be blocked by restrictive firewalls that only allow ports 80 and 443.
-  * *Why B is incorrect:* PPTP uses TCP port 1723 and GRE protocol 47. Restrictive firewalls often block both, and PPTP is also considered cryptographically weak and is not recommended for new deployments.
-  * *Why D is incorrect:* IKEv2 uses UDP ports 500 and 4500. While it supports NAT traversal, these ports would typically be blocked by a firewall that only allows ports 80 and 443.
+**Certification Alignment:** Microsoft Windows Server Administration
 
 ---
 
-### Question 2
+## Instructions
 
-A mobile workforce uses Windows 11 laptops that are Azure AD-joined (not domain-joined). The organization wants to provide always-on VPN connectivity that establishes a device tunnel before logon and a user tunnel after logon. Which remote access solution supports this configuration?
-
-A) DirectAccess, which provides always-on transparent connectivity for domain-joined Windows Enterprise clients.
-B) Always On VPN, which supports both device tunnels and user tunnels and works with Azure AD-joined non-domain devices.
-C) SSTP VPN with pre-logon authentication configured through RRAS Connection Manager profiles.
-D) Web Application Proxy (WAP) in pass-through mode, which provides pre-authentication for VPN clients.
-
-* **Correct Answer:** B) Always On VPN, which supports both device tunnels and user tunnels and works with Azure AD-joined non-domain devices.
-* **Distractor Analysis:**
-  * *Why A is incorrect:* DirectAccess requires domain membership, Windows Enterprise edition, and an IPv6 infrastructure (or IPv6-over-IPv4 tunneling). It does not support Azure AD-joined or non-domain-joined devices.
-  * *Why C is incorrect:* SSTP is a tunneling protocol, not an always-on solution with pre-logon device tunnel capability. Connection Manager profiles can configure SSTP but do not provide the device tunnel + user tunnel architecture of Always On VPN.
-  * *Why D is incorrect:* Web Application Proxy is a reverse proxy for publishing internal web applications externally. It is not a VPN solution and does not establish a network-layer tunnel for device connectivity.
+Select the single best answer for each question. Each question is worth 10 points.
 
 ---
 
-### Question 3
+## Question 1
 
-A Windows Server is configured as a NAT router using RRAS. Internal client computers use private IP addresses in the 10.0.0.0/8 range. An internal client initiates a web request to an external website. What does the NAT service do with the packet?
+You are configuring DNS for a new Windows Server domain. Your manager requires that
+only domain-joined computers be allowed to register DNS records automatically, and
+that DNS records replicate to all domain controllers without manual zone transfer
+configuration. Which DNS zone type and dynamic update setting satisfy both requirements?
 
-A) It encrypts the packet and forwards it to the external website using a VPN tunnel established by RRAS.
-B) It replaces the internal source IP address with the server's public IP address and tracks the mapping so it can forward return packets back to the correct internal client.
-C) It broadcasts the request to all internal clients and forwards whichever response arrives first to the requesting client.
-D) It discards the packet because private IP addresses are not routable on the internet and cannot be translated by software.
+A. Standard Primary zone with Nonsecure and Secure dynamic updates
 
-* **Correct Answer:** B) It replaces the internal source IP address with the server's public IP address and tracks the mapping so it can forward return packets back to the correct internal client.
-* **Distractor Analysis:**
-  * *Why A is incorrect:* NAT and VPN are separate functions. RRAS can perform both, but NAT alone does not encrypt traffic — it only translates IP addresses. A VPN tunnel is a separate configuration from NAT.
-  * *Why C is incorrect:* NAT maintains a state table mapping each internal client's IP:port pair to a unique external port on the NAT device's public IP. It does not broadcast requests — each connection is tracked individually and responses are forwarded to the originating internal client only.
-  * *Why D is incorrect:* The entire purpose of NAT is to translate unroutable private IP addresses to a publicly routable address — this is precisely what NAT does and why it exists. Discarding the packet is the opposite of NAT's function.
+B. AD-Integrated Primary zone with Secure dynamic updates
+
+C. Secondary zone with Nonsecure dynamic updates
+
+D. Stub zone with Secure dynamic updates
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- **A** — Standard Primary stores data in a flat file and requires manual zone
+  transfer configuration for replication. Nonsecure and Secure allows
+  unauthenticated clients to register records, violating the requirement.
+
+- **B** — Correct. AD-Integrated stores DNS in Active Directory, replicating
+  automatically with AD replication. Secure dynamic updates require domain
+  credentials, allowing only domain-joined computers to register records.
+
+- **C** — Secondary zones are read-only and cannot accept dynamic updates at all.
+
+- **D** — Stub zones contain only SOA, NS, and glue A records. They do not
+  accept dynamic registrations from clients.
 
 ---
 
-### Question 4
+## Question 2
 
-An organization's RRAS VPN server is configured with Network Policy Server (NPS) as a RADIUS server for centralized authentication. A user reports being denied VPN access even though their AD account is active and their password is correct. Which component and tool should the administrator check first?
+Your DNS administrator enables scavenging on the DNS server using
+`Set-DnsServerScavenging -ScavengingState $true`. The next day, stale records
+are still accumulating in the `txwes.edu` zone. What is the most likely cause?
 
-A) Check the VPN client's adapter settings on the user's laptop — the denial is likely caused by a misconfigured DNS suffix.
-B) Check the NPS event logs on the Network Policy Server for a specific Event ID 6273 (Access-Reject) entry that includes the reason code for the denial.
-C) Restart the RRAS service on the VPN server — authentication denials during peak hours are typically caused by service memory leaks.
-D) Reset the user's dial-in permissions in Active Directory Users and Computers to "Allow access" to override all NPS policies.
+A. The scavenging interval is set to 0 days
 
-* **Correct Answer:** B) Check the NPS event logs on the Network Policy Server for a specific Event ID 6273 (Access-Reject) entry that includes the reason code for the denial.
-* **Distractor Analysis:**
-  * *Why A is incorrect:* A DNS suffix misconfiguration on the client adapter would cause name resolution failures after a VPN connection is established — it would not prevent authentication and VPN connection establishment in the first place.
-  * *Why C is incorrect:* Restarting services without evidence is an undirected troubleshooting approach that causes brief service disruption for all users. The NPS event log provides specific reason codes that pinpoint the exact policy condition causing the denial.
-  * *Why D is incorrect:* Setting dial-in permission to "Allow access" overrides NPS Network Policy decisions for that user, which could bypass legitimate security controls such as MFA requirements or device compliance checks. This is a heavy-handed fix that should only be used after confirming NPS policies are correctly configured.
+B. Zone-level aging has not been enabled on the `txwes.edu` zone
+
+C. The DNS Server service must be restarted before scavenging takes effect
+
+D. Scavenging only applies to secondary zones, not AD-Integrated zones
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- **A** — A scavenging interval of 0 would disable the schedule, but the
+  question states scavenging was enabled with the cmdlet. The fundamental
+  issue is that both conditions must be met.
+
+- **B** — Correct. Scavenging requires two independent settings: server-level
+  scavenging enabled AND zone-level aging enabled on each specific zone.
+  Enabling only the server has no effect on individual zones.
+
+- **C** — The DNS Server service does not need to be restarted; scavenging
+  settings take effect immediately.
+
+- **D** — Scavenging applies to any zone type, including AD-Integrated zones.
 
 ---
 
-### Question 5
+## Question 3
 
-A site-to-site VPN is configured between two offices using RRAS on both ends. After a brief internet outage at one site, the VPN tunnel does not automatically re-establish, requiring the administrator to manually restart the RRAS service. Which VPN protocol should the administrator configure instead to enable automatic tunnel re-establishment after network interruptions?
+A technician installs the DHCP Server role on a member server in the `txwes.edu`
+domain. After creating and activating a scope, client computers receive
+169.254.x.x addresses instead of addresses from the scope. What is the most
+likely cause?
 
-A) PPTP, because its stateless design allows it to automatically reconnect after any network interruption.
-B) L2TP/IPsec with pre-shared key authentication, because the pre-shared key eliminates certificate-dependent reconnection delays.
-C) IKEv2 with the VPN Reconnect (MOBIKE) feature, which is specifically designed to re-establish VPN tunnels automatically after network interruptions.
-D) SSTP, because its use of HTTPS makes it resilient to any network interruption and it reconnects transparently.
+A. The DHCP scope exclusion range is configured incorrectly
 
-* **Correct Answer:** C) IKEv2 with the VPN Reconnect (MOBIKE) feature, which is specifically designed to re-establish VPN tunnels automatically after network interruptions.
-* **Distractor Analysis:**
-  * *Why A is incorrect:* PPTP has no built-in reconnection intelligence. After an internet outage, the PPTP session state is lost and the tunnel must be re-established from scratch — it does not reconnect automatically. Additionally, PPTP's weak encryption makes it unsuitable for production use.
-  * *Why B is incorrect:* L2TP/IPsec also does not have automatic tunnel re-establishment built in. When the IPsec Security Associations expire or are disrupted, the tunnel requires re-negotiation, which in practice means manual intervention or a client-side reconnect trigger.
-  * *Why D is incorrect:* SSTP uses HTTPS/port 443 to traverse firewalls and maintain connections through NAT, but it does not have a built-in reconnection mechanism equivalent to IKEv2's MOBIKE extension for surviving network interruptions without user or administrator action.
+B. The DHCP server has not been authorized in Active Directory
+
+C. The DNS domain name scope option has not been configured
+
+D. The lease duration is set too short
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- **A** — An incorrect exclusion range would reduce available addresses but
+  would not cause clients to receive APIPA addresses.
+
+- **B** — Correct. APIPA addresses (169.254.x.x) indicate the client received
+  no DHCP response. In a Windows domain, the DHCP Server service detects
+  whether the server is authorized in AD. An unauthorized server does not
+  respond to client requests.
+
+- **C** — A missing DNS domain name option (Option 015) would cause the client
+  to lack a DNS suffix but would not prevent IP assignment.
+
+- **D** — Lease duration affects how long an IP is held, not whether the
+  server responds at all.
+
+---
+
+## Question 4
+
+A campus printer must always receive IP address 192.168.10.150 from DHCP. The
+network administrator creates a DHCP reservation for the printer's MAC address
+bound to 192.168.10.150. A new technician notices that 192.168.10.150 is within
+the scope range (192.168.10.100–200) and manually configures the printer with a
+static IP of 192.168.10.150, removing it from DHCP. What risk does this create?
+
+A. The DHCP server will assign 192.168.10.150 to another client because the
+   reservation was removed
+
+B. The reservation address is still never assigned to other DHCP clients, so
+   there is no risk
+
+C. Clients that previously communicated with the printer will lose connectivity
+   because the PTR record will be deleted
+
+D. The DHCP scope will automatically expand to avoid the static address
+
+**Correct Answer: A**
+
+**Distractor Analysis:**
+
+- **A** — Correct. A DHCP reservation binds a specific IP to a MAC address and
+  prevents that IP from being assigned to any other client. If the reservation
+  is removed (or the printer is taken off DHCP), the IP re-enters the dynamic
+  pool and may be assigned to another device, causing an IP conflict.
+
+- **B** — The reservation prevents re-assignment only while it exists. Without
+  the reservation entry, the DHCP server has no mechanism to protect that IP.
+
+- **C** — PTR record deletion is unrelated to the reservation mechanism and
+  does not cause IP conflicts.
+
+- **D** — DHCP scopes do not automatically expand or contract based on static
+  assignments outside the server's reservation table.
+
+---
+
+## Question 5
+
+You need to configure two DHCP servers so that if the primary server fails,
+the secondary server immediately begins responding to client requests using
+the same scope. During normal operation only the primary server responds.
+Which DHCP failover mode should you configure?
+
+A. Load Sharing with a 50/50 pool split
+
+B. Hot Standby with the primary server as Active
+
+C. Load Sharing with a 95/5 pool split
+
+D. Hot Standby with the secondary server as Active
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- **A** — Load Sharing keeps both servers active simultaneously and splits
+  the address pool. This does not match the requirement for only the primary
+  to respond during normal operation.
+
+- **B** — Correct. Hot Standby mode designates one server as Active (handles
+  all leases during normal operation) and one as Standby (only activates when
+  the Active server is unreachable). This matches the described requirement.
+
+- **C** — A 95/5 Load Sharing split resembles Hot Standby in pool size but
+  still keeps both servers active for 5% of requests.
+
+- **D** — If the secondary is Active in Hot Standby, the primary becomes the
+  Standby. This inverts the desired behavior.
+
+---
+
+## Question 6
+
+You add a conditional forwarder for `partner.com` pointing to `10.200.1.10`
+using `Add-DnsServerConditionalForwarderZone -ReplicationScope Domain`. A user
+queries `www.partner.com`. How does DC1 resolve this name?
+
+A. DC1 queries root hints and walks the DNS hierarchy to find `partner.com`
+
+B. DC1 forwards the query directly to `10.200.1.10` without querying root hints
+
+C. DC1 checks the local zone cache and returns NXDOMAIN if no record is found
+
+D. DC1 forwards the query to the standard forwarder (8.8.8.8) before trying
+   the conditional forwarder
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- **A** — Root hints are used only when no forwarder matches the queried
+  domain. A conditional forwarder for `partner.com` matches `www.partner.com`
+  and takes precedence over root hints.
+
+- **B** — Correct. A conditional forwarder routes all queries matching the
+  configured domain name directly to the specified server. The query for
+  `www.partner.com` matches the `partner.com` conditional forwarder and is
+  sent to `10.200.1.10`.
+
+- **C** — NXDOMAIN would only be returned if the local server were authoritative
+  for the zone. The conditional forwarder delegates external queries.
+
+- **D** — Conditional forwarders take precedence over standard forwarders.
+  A query matching a conditional forwarder domain is sent to the conditional
+  forwarder's target, not the standard forwarder.
+
+---
+
+## Question 7
+
+After promoting DC1 as the first domain controller for `txwes.edu`, a
+technician reports that client computers can resolve hostnames but cannot log
+on to the domain. You run `Resolve-DnsName -Name "_ldap._tcp.dc._msdcs.txwes.edu"
+-Type SRV` and receive no results. What is the most likely cause?
+
+A. The DHCP server has not been authorized in Active Directory
+
+B. The reverse lookup zone has not been created
+
+C. The SRV records for Active Directory were not registered in DNS
+
+D. The conditional forwarder for `txwes.edu` is misconfigured
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- **A** — DHCP authorization affects IP address assignment. Clients can
+  already resolve hostnames, meaning they have connectivity and DNS is working
+  for A records.
+
+- **B** — The reverse lookup zone handles IP-to-hostname lookups. Its absence
+  does not prevent SRV record registration or domain logon.
+
+- **C** — Correct. Active Directory relies on SRV records such as
+  `_ldap._tcp.dc._msdcs.txwes.edu` for clients to locate domain controllers.
+  If the `netlogon` service on DC1 did not register these records, or if DNS
+  has a problem accepting dynamic updates, domain logon fails.
+
+- **D** — A conditional forwarder routes external queries. The `txwes.edu`
+  zone is local; a conditional forwarder would not affect internal SRV record
+  resolution.
+
+---
+
+## Question 8
+
+A DHCP scope covers 192.168.10.100–192.168.10.200. An exclusion range is
+configured for 192.168.10.100–192.168.10.109. A reservation is configured for
+192.168.10.150 bound to MAC `00-AA-BB-CC-DD-EE`. Which addresses can the DHCP
+server dynamically assign to clients without reservations?
+
+A. 192.168.10.100–192.168.10.200 minus 192.168.10.150
+
+B. 192.168.10.110–192.168.10.200
+
+C. 192.168.10.110–192.168.10.149 and 192.168.10.151–192.168.10.200
+
+D. 192.168.10.100–192.168.10.109 and 192.168.10.150
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- **A** — This ignores the exclusion range. The excluded addresses
+  (100–109) are withheld from the dynamic pool.
+
+- **B** — This correctly removes the excluded range but ignores the
+  reservation. A reserved address is never dynamically assigned to a
+  non-matching client.
+
+- **C** — Correct. The exclusion removes .100–.109 from the pool. The
+  reservation removes .150 from dynamic assignment. The remaining dynamic
+  pool is .110–.149 and .151–.200.
+
+- **D** — These are the excluded and reserved addresses — the opposite
+  of what is dynamically assignable.
+
+---
+
+## Question 9
+
+A network administrator enables DNS scavenging with default intervals:
+no-refresh 7 days, refresh 7 days, scavenging 7 days. A workstation registers
+a DNS record on Monday and is decommissioned the same day without removing its
+DNS record. Assuming the scavenging cycle runs on schedule, on what day is the
+stale record deleted?
+
+A. The following Monday (7 days later)
+
+B. The Monday after that (14 days later)
+
+C. Monday three weeks later (21 days later)
+
+D. Monday four weeks later (28 days later)
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- **A** — 7 days covers only the no-refresh interval. The record cannot
+  even be refreshed during this period, let alone deleted.
+
+- **B** — 14 days covers the no-refresh and refresh intervals. The record
+  becomes stale at 14 days, but the scavenging cycle has not run yet.
+
+- **C** — Correct. Total time = no-refresh (7) + refresh (7) + scavenging
+  interval (7) = 21 days. The record becomes eligible for deletion after
+  14 days, and scavenging deletes it when the next scavenging cycle runs at
+  day 21.
+
+- **D** — 28 days exceeds the correct calculation. The scavenging interval
+  adds 7 days after the record becomes stale, not 14.
+
+---
+
+## Question 10
+
+You configure a DHCP reservation for a device at scope level. You also configure
+scope-level Option 006 (DNS Servers) with `192.168.10.10`. You configure a
+reservation-level Option 006 with `192.168.10.10` and `192.168.10.11`. Which
+DNS servers will the reserved device receive?
+
+A. Only `192.168.10.10` from the scope-level option
+
+B. Only `192.168.10.10` and `192.168.10.11` from the reservation-level option
+
+C. Both options are merged, so the device receives three DNS server entries
+
+D. The server-level option overrides reservation-level options
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- **A** — Scope-level options are overridden by reservation-level options
+  when both configure the same option code. The higher-specificity level wins.
+
+- **B** — Correct. DHCP option precedence from lowest to highest is:
+  server level, scope level, reservation level. Reservation-level options
+  override scope-level options for the same option code. The device receives
+  Option 006 from the reservation.
+
+- **C** — DHCP options are not merged across levels for the same option code.
+  The highest-priority level's value replaces lower-level values.
+
+- **D** — Server-level options are the lowest priority, overridden by both
+  scope-level and reservation-level options.
+
+---
+
+*Submit answers to Canvas by the due date shown in the course schedule.*

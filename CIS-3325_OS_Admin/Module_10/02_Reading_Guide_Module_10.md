@@ -1,52 +1,201 @@
 # Reading Guide: Module 10 - SSH and Remote Access Security
-## Course: CIS-3325_OS_Admin (CompTIA Linux+ XK0-005)
+
+## CIS-3325 OS Administration | Texas Wesleyan University
+
+**Certification Alignment:** CompTIA Linux+ (XK0-005)
+**Exam Domain:** Domain 2.0 - Security
 
 ---
 
-### Introduction
-Welcome to **Module 10 – SSH and Remote Access Security**! This week covers secure remote administration of Linux systems — the SSH protocol, key-based authentication, SSH configuration hardening, file transfer with `scp` and `sftp`, and port forwarding. SSH is tested extensively on CompTIA Linux+ XK0-005 under both Domain 1.0 (System Management) and Domain 2.0 (Security).
+### Glossary
 
-As you work through this material you will learn how to generate and deploy SSH key pairs, restrict root login, configure the SSH daemon, transfer files securely, and apply hardening best practices that protect remote access from brute-force and credential-based attacks.
+**SSH (Secure Shell)** - An encrypted network protocol for remote terminal access, file transfer, and port forwarding. Replaced insecure protocols like Telnet and rsh.
 
----
+**Host Key** - A server's permanent key pair used to identify it to SSH clients. The public half is sent to clients during connection; clients store it in ~/.ssh/known_hosts.
 
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
+**Key Pair** - A matched set of a private key and a public key. The private key proves identity; the public key is distributed to servers. Mathematically linked: only the holder of the private key can prove ownership.
 
-*   **SSH (Secure Shell)**: A cryptographic network protocol for secure remote login, command execution, and file transfer over an unsecured network. SSH replaces Telnet and rsh, which transmit data in cleartext. The SSH daemon (`sshd`) listens on TCP port 22 by default. Clients connect with the `ssh user@host` command. All traffic between client and server is encrypted using negotiated symmetric keys established via asymmetric key exchange.
-*   **SSH key-based authentication**: An authentication method that uses a cryptographic key pair instead of a password. The user generates a key pair with `ssh-keygen` — a private key (kept on the client, never shared) and a public key. The public key is copied to the server's `~/.ssh/authorized_keys` file using `ssh-copy-id user@host`. When the client connects, the server challenges with a message that only the holder of the private key can decrypt, proving identity without transmitting a password.
-*   **`/etc/ssh/sshd_config`**: The main configuration file for the SSH daemon. Critical security directives: `PermitRootLogin no` (disables direct root SSH login), `PasswordAuthentication no` (forces key-based authentication), `Port 2222` (changes the listening port), `AllowUsers alice bob` (restricts which users may log in via SSH). After editing, restart the daemon with `systemctl restart sshd`.
-*   **`scp` and `sftp`**: Secure file transfer tools built on SSH. `scp source user@host:/dest` copies files between hosts using SSH encryption, similar to `cp` syntax. `sftp user@host` opens an interactive FTP-like session over SSH for browsing and transferring files. Both tools authenticate using the same SSH credentials (key or password) as the `ssh` command.
-*   **SSH port forwarding (tunneling)**: A feature that forwards network connections through an encrypted SSH session. Local forwarding (`ssh -L 8080:internalserver:80 user@jumphost`) makes a remote service available on a local port. Remote forwarding (`ssh -R`) exposes a local port on the remote server. Used to bypass firewalls or encrypt traffic for insecure protocols.
-*   **`~/.ssh/` directory and permissions**: SSH enforces strict file permission requirements for security. The `~/.ssh/` directory must be mode `700` (owner read/write/execute only). The `authorized_keys` file must be mode `600` (owner read/write only). The private key file must also be mode `600`. If permissions are too permissive, SSH will refuse to use the keys and log a warning.
+**authorized_keys** - A file in ~/.ssh/ on the server that lists public keys whose owners are allowed to log in as that user without a password.
 
----
+**known_hosts** - A file in ~/.ssh/ on the client that stores the host keys of previously connected servers. Used to detect man-in-the-middle attacks.
 
-### 2. Certification Exam Tips
-*   **Domain alignment:** SSH and remote access map to Linux+ Domain 1.0 (System Management) and Domain 2.0 (Security). Expect 4–6 questions on key generation, `sshd_config` directives, and hardening.
-*   **`ssh-keygen` output files:** The exam tests which file is the public key. `ssh-keygen` produces two files: `id_rsa` (private key — never leave the client) and `id_rsa.pub` (public key — copied to the server). Confusing which goes to the server is a common trap.
-*   **`sshd_config` directive trap:** `PermitRootLogin no` prevents root from logging in via SSH but does not disable the root account itself. `PasswordAuthentication no` forces key-only login — if set before deploying keys to a user, that user will be locked out. Know the order of operations.
-*   **Port 22 hardening:** Changing the SSH port (`Port 2222`) is security through obscurity — it reduces automated scan noise but does not prevent a determined attacker. The exam may ask which configuration change provides the greatest security improvement: the answer is `PasswordAuthentication no` (disabling password auth) or deploying key-based authentication, not just changing the port.
-*   **`ssh-copy-id` vs manual key deployment:** `ssh-copy-id user@host` appends the public key to `~/.ssh/authorized_keys` with correct permissions. Manually copying the key with incorrect permissions on `~/.ssh/` (e.g., mode 755) causes silent authentication failures. The exam tests permission troubleshooting for SSH key auth.
-*   **Study Resource:** [The Linux Command Line by William Shotts](https://linuxcommand.org/tlcl.php) covers SSH and secure file transfer in chapter 17. [Linux Essentials Course by LearnLinuxTV](https://www.youtube.com/playlist?list=PLT98CRl2KxEG0QLjR-8t7k3S4I15Z1A78) includes video walkthroughs of SSH key generation, `sshd_config` hardening, and `scp`/`sftp` usage in a live environment.
+**sshd_config** - The SSH server daemon configuration file at /etc/ssh/sshd_config. Controls what the server accepts.
+
+**ssh_config** - The SSH client configuration file at /etc/ssh/ssh_config. Can be overridden by ~/.ssh/config for per-user settings.
+
+**Port Forwarding** - Using SSH to tunnel other protocols through an encrypted SSH connection. Local forwarding: remote service accessible locally. Remote forwarding: local service accessible through remote server.
+
+**scp (Secure Copy)** - A command-line tool for copying files over SSH. Non-interactive.
+
+**rsync** - A file synchronization tool that transfers only changed blocks. Can use SSH as transport. More efficient than scp for large directory synchronization.
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read chapter 17 of the free OER textbook [The Linux Command Line by William Shotts](https://linuxcommand.org/tlcl.php), covering SSH, `scp`, and secure remote access concepts on Linux systems.
-*   **Required Video:** Watch the SSH and remote access videos in the [Linux Essentials Course by LearnLinuxTV](https://www.youtube.com/playlist?list=PLT98CRl2KxEG0QLjR-8t7k3S4I15Z1A78), a free YouTube playlist that demonstrates key generation, server configuration, and secure file transfer with live examples.
+### SSH Key Algorithms
+
+| Algorithm | Key Option | Security | Notes |
+|-----------|-----------|---------|-------|
+| Ed25519 | -t ed25519 | Highest | Recommended for all new keys |
+| RSA | -t rsa -b 4096 | High | Use 4096-bit minimum; widely compatible |
+| ECDSA | -t ecdsa | Good | Elliptic curve; smaller than RSA |
+| DSA | -t dsa | Weak | Deprecated; do not use |
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab you will generate an SSH key pair with `ssh-keygen`, copy the public key to a remote host using `ssh-copy-id`, connect without a password, edit `/etc/ssh/sshd_config` to disable password authentication and root login, restart `sshd`, and transfer a file with `scp`.
+### SSH File Locations and Required Permissions
+
+| File | Location | Permissions | Purpose |
+|------|----------|------------|---------|
+| ~/.ssh/ | Client and server | 700 | SSH configuration directory |
+| ~/.ssh/id_ed25519 | Client only | 600 | Private key (never copy to server) |
+| ~/.ssh/id_ed25519.pub | Client | 644 | Public key (safe to distribute) |
+| ~/.ssh/authorized_keys | Server | 600 | List of trusted public keys |
+| ~/.ssh/known_hosts | Client | 600 | Server host key fingerprints |
+| ~/.ssh/config | Client | 600 | Per-user client configuration |
+| /etc/ssh/sshd_config | Server | 600 | SSH server configuration |
+| /etc/ssh/ssh_config | Client | 644 | System-wide client configuration |
+
+SSH enforces these permissions strictly. If ~/.ssh/ is 755 or authorized_keys is 644,
+key-based authentication will fail.
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read chapter 17 in [The Linux Command Line by William Shotts](https://linuxcommand.org/tlcl.php).
-- [ ] Watch the SSH videos in [Linux Essentials Course by LearnLinuxTV](https://www.youtube.com/playlist?list=PLT98CRl2KxEG0QLjR-8t7k3S4I15Z1A78).
-- [ ] Review the commands outlined in the lab instructions.
-- [ ] Proceed to the weekly hands-on lab activity.
+### Key-Based Authentication Workflow
+
+1. Generate key pair on the client: ssh-keygen -t ed25519
+2. Copy public key to server: ssh-copy-id user@server
+3. Verify: ssh user@server (should connect without password)
+4. Confirm permissions: chmod 700 ~/.ssh && chmod 600 ~/.ssh/authorized_keys
+5. (Optional) Disable password auth after confirming keys work: PasswordAuthentication no in sshd_config
+
+---
+
+### sshd_config Hardening Reference
+
+| Directive | Hardened Value | Effect |
+|-----------|---------------|--------|
+| PermitRootLogin | no | Completely block root SSH login |
+| PasswordAuthentication | no | Require key-based auth; blocks brute-force |
+| PubkeyAuthentication | yes | Enable key-based authentication |
+| AllowUsers | user1 user2 | Whitelist; all others denied |
+| AllowGroups | sshusers | Alternative to AllowUsers |
+| Port | 2222 (or other) | Non-standard port reduces scan noise |
+| ListenAddress | management_IP | Only listen on specific interface |
+| MaxAuthTries | 3 | Reduce before lockout |
+| LoginGraceTime | 30 | Seconds to complete auth (default 120) |
+| X11Forwarding | no | Disable GUI forwarding if not needed |
+| Banner | /etc/ssh/banner | Display legal notice before login |
+
+After every sshd_config change:
+1. Test syntax: sudo sshd -t
+2. Restart service: sudo systemctl restart sshd
+
+---
+
+### scp Command Reference
+
+| Command | Purpose |
+|---------|---------|
+| scp file user@host:/path/ | Copy local file to remote |
+| scp user@host:/path/file /local/ | Copy remote file to local |
+| scp -r /dir/ user@host:/path/ | Copy directory recursively |
+| scp -P PORT file user@host:/path/ | Use non-standard port (capital P) |
+| scp user1@host1:/path user2@host2:/path | Copy between two remote hosts |
+
+---
+
+### rsync Command Reference
+
+| Flag | Meaning |
+|------|---------|
+| -a | Archive: preserves permissions, timestamps, owner, group, symlinks |
+| -v | Verbose: show files being transferred |
+| -z | Compress data in transit |
+| -n | Dry run: show what would happen without making changes |
+| --delete | Remove destination files not in source (makes destination a mirror) |
+| -e "ssh -p PORT" | Use SSH with a specific port |
+| --progress | Show transfer progress per file |
+| -P | Same as --partial --progress |
+
+---
+
+### SSH Port Forwarding
+
+Local port forwarding (-L):
+
+```bash
+ssh -L LOCAL_PORT:REMOTE_HOST:REMOTE_PORT user@jump_server
+```
+
+Traffic to localhost:LOCAL_PORT is forwarded through jump_server to REMOTE_HOST:REMOTE_PORT.
+
+Remote port forwarding (-R):
+
+```bash
+ssh -R REMOTE_PORT:LOCAL_HOST:LOCAL_PORT user@remote_server
+```
+
+Traffic to REMOTE_PORT on remote_server is forwarded back to LOCAL_PORT on your local machine.
+
+Useful flags:
+- -N: No remote command (tunnel only)
+- -f: Run in background
+
+---
+
+### ~/.ssh/config Syntax
+
+```
+Host ALIAS
+    HostName IP_OR_HOSTNAME
+    User USERNAME
+    Port PORT_NUMBER
+    IdentityFile PATH_TO_PRIVATE_KEY
+    ServerAliveInterval 60
+    ServerAliveCountMax 3
+```
+
+- Host ALIAS: the name you use with the ssh command
+- Host *: applies to all connections
+- ServerAliveInterval: seconds between keepalive probes
+- Permissions must be 600
+
+---
+
+### Exam Tips
+
+1. Private key stays on the client. Public key goes to the server's authorized_keys. This is the most fundamental SSH concept and is directly tested.
+
+2. ~/.ssh must be 700. Private keys and authorized_keys must be 600. If these permissions are wrong, SSH silently falls back to password auth or refuses to connect.
+
+3. sshd_config is on the server; it controls what the server accepts. ssh_config is on the client; it controls how the client behaves. They are not the same file.
+
+4. Always run sshd -t after editing sshd_config. A syntax error in sshd_config can make sshd refuse to restart, locking you out of remote access.
+
+5. PasswordAuthentication no should only be set after verifying that key-based authentication works. Disabling passwords before setting up keys will lock everyone out.
+
+6. scp uses -P (capital P) for port. ssh uses -p (lowercase). This difference appears on the exam.
+
+7. rsync -n is a dry run that shows what would be transferred without making changes. Always use -n before --delete to preview what will be removed.
+
+8. SSH REMOTE HOST IDENTIFICATION HAS CHANGED is a security warning indicating the server's host key has changed. Investigate before proceeding — this can indicate a MITM attack or a server rebuild.
+
+---
+
+### Study Checklist
+
+Before the quiz and lab, confirm you can do all of the following without looking them up:
+
+- Generate an Ed25519 key pair with ssh-keygen
+- Copy a public key to a server with ssh-copy-id
+- Set correct permissions on ~/.ssh/ and authorized_keys
+- Explain the difference between id_ed25519 and id_ed25519.pub
+- Describe what happens when you SSH to a server for the first time
+- Explain what known_hosts does and when its warning appears
+- List five sshd_config directives and their hardening values
+- Test sshd_config syntax without restarting the service
+- Use scp to copy a file to and from a remote server
+- Use rsync for directory synchronization with and without --delete
+- Explain local port forwarding with a specific use case
+- Create a ~/.ssh/config entry for a frequently accessed server
+- Explain the SSH agent and its purpose

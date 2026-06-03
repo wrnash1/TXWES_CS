@@ -1,68 +1,353 @@
-# Reading Guide: Module 09 - CloudFront, Route 53, and Global Acceleration
-## Course: CIS-4334_AWS_Cloud_Architecture (AWS Certified Solutions Architect - Associate)
+# Reading Guide: Module 09 — AWS Databases
+
+## Course: CIS-4334 AWS Cloud Architecture
+
+## Texas Wesleyan University | Professor Nash
+
+## Certification Alignment: AWS Solutions Architect — Associate (SAA-C03)
 
 ---
 
-### Introduction
-Welcome to **Module 09 - CloudFront, Route 53, and Global Acceleration**! This module covers the AWS services that deliver content and route traffic globally with low latency. Amazon CloudFront is the AWS Content Delivery Network (CDN) that caches content at over 400 Points of Presence worldwide. Amazon Route 53 is the authoritative DNS service with advanced routing policies for high availability and geographic distribution. AWS Global Accelerator improves application performance by routing traffic through AWS's private global network rather than the public internet. These services are key components of high-availability and global-reach architectures on the SAA-C03 exam.
+## Introduction
+
+AWS provides purpose-built database services for relational, key-value, document, in-memory, graph, and analytics workloads. Selecting the right database is one of the most frequently tested skills on the SAA-C03 exam. This guide provides reference tables, architectural decision trees, and exam tips for all six database services covered in Module 09.
 
 ---
 
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
+## Section 1: Amazon RDS
 
-*   **Amazon CloudFront**: A managed global CDN that caches copies of content (HTML, CSS, images, videos, API responses) at Edge Locations close to users, reducing origin server load and decreasing latency. CloudFront distributions can have multiple origins (S3 buckets, ALBs, custom HTTP origins). Cache behavior settings control which paths are cached, for how long (TTL), and which HTTP headers/cookies affect cache keys. CloudFront also provides DDoS protection via AWS Shield Standard at no extra cost, and integrates with AWS WAF for application-layer protection.
+### 1.1 Supported Engines
 
-*   **Route 53 Routing Policies**: Route 53 supports seven routing policies for different traffic management needs. Simple: one record, one value. Weighted: distribute traffic proportionally across multiple endpoints (A/B testing, gradual migrations). Latency-Based: route to the Region with the lowest network latency for the client. Failover: primary and secondary endpoints with health check-based automatic failover. Geolocation: route based on the user's country or continent. Geoproximity: route based on geographic proximity with optional traffic bias. Multivalue Answer: return multiple healthy records for basic client-side load balancing.
+| Engine | Notable Characteristics |
+|--------|------------------------|
+| MySQL | Open source; wide compatibility; up to 5 read replicas |
+| PostgreSQL | Advanced SQL features; JSONB support; up to 5 read replicas |
+| MariaDB | MySQL fork; open source; community-driven |
+| Oracle | Enterprise licensing; Bring Your Own License (BYOL) or License Included |
+| Microsoft SQL Server | Windows-native; Express/Web/Standard/Enterprise editions |
+| Amazon Aurora | AWS cloud-native; MySQL or PostgreSQL compatible; covered in Section 2 |
 
-*   **Route 53 Health Checks**: Monitors the health of endpoints (HTTP, HTTPS, TCP) and DNS failover targets. When a health check fails, Route 53 stops routing traffic to the unhealthy endpoint (for Failover routing) or adjusts weighted distributions. Health checks can also monitor CloudWatch alarms for calculated health states. Combining health checks with Failover routing is the AWS-native active-passive disaster recovery DNS pattern.
+### 1.2 Multi-AZ vs. Read Replicas
 
-*   **AWS Global Accelerator**: A network-layer service that routes user traffic through the AWS global network (rather than the public internet) to the nearest AWS edge location, then over AWS's private backbone to the application endpoint. Global Accelerator provides two static Anycast IP addresses that serve as a fixed entry point for the application regardless of Region. It improves performance for TCP/UDP applications and provides automatic failover when an endpoint becomes unhealthy. Unlike CloudFront (which caches content), Global Accelerator does not cache — it improves network routing for dynamic, non-cacheable traffic.
+| Feature | Multi-AZ | Read Replicas |
+|---------|----------|---------------|
+| Primary purpose | High availability and failover | Read scaling and load reduction |
+| Replication type | Synchronous | Asynchronous |
+| Standby/replica accessible for reads | No (standby is passive) | Yes (separate endpoint) |
+| Failover | Automatic (60–120 seconds) | Manual promotion |
+| Cross-region | No (single region only) | Yes (cross-region supported) |
+| Number of standbys/replicas | 1 standby | Up to 5 (MySQL, PostgreSQL); 15 (Aurora) |
+| Increases read capacity | No | Yes |
+| Increases write capacity | No | No (writes always go to primary) |
 
-*   **CloudFront Origin Access Control (OAC)**: A security mechanism that restricts direct S3 bucket access, ensuring that users can only retrieve S3 content through the CloudFront distribution (not by guessing the S3 URL). OAC replaces the older Origin Access Identity (OAI) and allows CloudFront to sign requests to S3 using AWS SigV4. Combined with S3 Block Public Access, OAC ensures the S3 bucket is never directly public-accessible.
+**Critical exam distinction:** Multi-AZ is for availability (not performance). Read Replicas are for read performance (not availability by default — must be manually promoted).
 
----
+### 1.3 RDS Automated Backups and Snapshots
 
-### 2. Certification Exam Tips
+| Feature | Automated Backups | Manual Snapshots |
+|---------|------------------|------------------|
+| Retention period | 1–35 days | Retained indefinitely until deleted |
+| Scope | Full + incremental (transaction logs) | Full snapshot |
+| Point-in-time restore | Yes (to any second within retention period) | No (restore to snapshot point only) |
+| Deleted with instance | Yes | No |
+| Storage location | S3 (managed by AWS) | S3 (managed by AWS) |
 
-*   **SAA-C03 Domain Relevance:** CloudFront, Route 53, and Global Accelerator appear primarily in Design High-Performing Architectures (24%) and Design Resilient Architectures (26%). "Reduce latency for global users" questions almost always involve CloudFront or Global Accelerator.
+### 1.4 RDS Encryption
 
-*   **CloudFront vs. Global Accelerator:** CloudFront caches content at edge locations — best for static assets, video, and cacheable API responses. Global Accelerator routes traffic through AWS's private backbone without caching — best for dynamic content, real-time APIs, gaming, and VoIP. The exam distinguishes these by whether caching is needed.
+Encryption at rest uses AWS KMS. Encryption must be enabled at creation time — you cannot add encryption to an existing unencrypted RDS instance directly. To encrypt an unencrypted instance: create a snapshot, copy the snapshot with encryption enabled, restore from the encrypted snapshot.
 
-*   **Route 53 Failover vs. Latency-Based Routing:** Failover routing = active-passive HA with health checks (one primary, one secondary endpoint). Latency-based routing = active-active routing to the lowest-latency Region (no health-check-based failover unless combined with health checks). The exam describes a scenario and expects you to pick the correct policy.
-
-*   **CloudFront TTL and Cache Invalidation:** Objects are cached at edge locations for the duration of the TTL. To force an update before TTL expires, create a CloudFront invalidation (costs money per path). Better practice is to use versioned file names or cache-busting query strings so CloudFront treats new versions as new objects.
-
-*   **Geolocation vs. Latency-Based Routing:** Geolocation routes based on where the DNS query originates (country/continent) — used for serving locale-specific content or compliance-driven content restrictions. Latency-based routing routes based on actual network latency measurement — used purely for performance optimization. These are distinct features that the exam tests by scenario.
-
-*   **Study Resource:** The CloudFront and Route 53 documentation provides comprehensive coverage of all routing policies and distribution configuration: [Amazon CloudFront Developer Guide](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/). The [Route 53 Developer Guide](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/) covers all routing policies with decision tree guidance.
-
----
-
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-
-*   **Required Reading:** Read the CloudFront and Route 53 chapters in the AWS Solutions Architect study materials. Review the [Amazon CloudFront FAQs page](https://aws.amazon.com/cloudfront/faqs/) and [Amazon Route 53 FAQs page](https://aws.amazon.com/route53/faqs/). The [AWS Whitepapers & Guides](https://aws.amazon.com/whitepapers/) contains the "AWS Best Practices for DDoS Resiliency" whitepaper, which covers CloudFront's role in DDoS mitigation.
-
-*   **Required Video:** Watch the CloudFront, Route 53, and Global Accelerator module in the official course playlist, focusing on the OAC pattern for S3 origin security and the comparison of all seven Route 53 routing policies: [AWS Certified Solutions Architect Associate Course](https://www.youtube.com/watch?v=Ia-UEYYR44s).
-
----
-
-### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-
-*   **Create a CloudFront distribution with an S3 origin and OAC:** Deploy a static website to S3, configure a CloudFront distribution with the S3 bucket as origin, and enable Origin Access Control. Verify that direct S3 URL access is blocked while CloudFront URLs work correctly.
-
-*   **Configure Route 53 latency-based routing across two Regions:** Deploy identical EC2 instances in us-east-1 and eu-west-1, create an Application Load Balancer in each Region, and configure Route 53 latency-based routing records pointing to each ALB. Use `dig` or online DNS tools to confirm that queries from different geographic locations resolve to the nearer Region.
-
-*   **Set up Route 53 health checks and failover routing:** Configure a health check on the primary endpoint, create a Failover routing policy with primary and secondary records, and test by disabling the primary endpoint to observe automatic DNS failover to the secondary.
+Read Replicas of an encrypted master are always encrypted. The Multi-AZ standby inherits the encryption of the primary.
 
 ---
 
-### 3. Study Checklist
-- [ ] Read and be able to define all five glossary terms in your own words.
-- [ ] Review all seven Route 53 routing policies at [https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy.html](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy.html).
-- [ ] Understand CloudFront vs. Global Accelerator use cases at [https://aws.amazon.com/global-accelerator/faqs/](https://aws.amazon.com/global-accelerator/faqs/).
-- [ ] Watch the CloudFront/Route 53/Global Accelerator video lecture in [AWS Certified Solutions Architect Associate Course](https://www.youtube.com/watch?v=Ia-UEYYR44s).
-- [ ] Complete the hands-on lab creating a CloudFront distribution with OAC and Route 53 failover routing.
-- [ ] Proceed to the weekly quiz.
+## Section 2: Amazon Aurora
+
+### 2.1 Aurora Architecture Differentiators
+
+| Feature | RDS (MySQL/PostgreSQL) | Aurora |
+|---------|----------------------|--------|
+| Storage | EBS volumes per instance | Distributed shared storage (3 AZs, 6 copies) |
+| Max read replicas | 5 | 15 |
+| Failover time | 60–120 seconds | ~30 seconds (replica promotion) |
+| Storage auto-growth | No (manual resize) | Yes (10 GB to 128 TB automatic) |
+| Multi-master | No | Yes (Aurora Multi-Master for active-active writes) |
+| Serverless option | No | Aurora Serverless v2 (auto-scales ACUs) |
+| Performance vs. community engine | Baseline | 5x MySQL, 3x PostgreSQL |
+
+### 2.2 Aurora Endpoints
+
+| Endpoint Type | Behavior | Use Case |
+|---------------|----------|----------|
+| Cluster Writer Endpoint | Always points to current primary | Application writes |
+| Cluster Reader Endpoint | Load-balances across all read replicas | Application reads |
+| Instance Endpoint | Points to specific instance | Direct access for maintenance |
+| Custom Endpoint | Points to a subset of instances | Route specific query types to specific replicas |
+
+### 2.3 Aurora Global Database
+
+Aurora Global Database spans multiple AWS Regions with a single primary region for writes. Up to 5 secondary read-only regions with sub-second replication lag. In a disaster recovery scenario, a secondary region can be promoted to primary in under 1 minute — this is Aurora's RPO/RTO-minimizing DR architecture.
+
+---
+
+## Section 3: Amazon DynamoDB
+
+### 3.1 Primary Key Types
+
+| Key Type | Components | Query Operation | Example |
+|----------|------------|-----------------|---------|
+| Simple (Partition key only) | Partition key (hash) | GetItem only | UserId → User profile |
+| Composite (Partition + Sort) | Partition key + Sort key | GetItem or Query | CustomerId + OrderDate → Order history |
+
+### 3.2 Index Comparison
+
+| Feature | Local Secondary Index (LSI) | Global Secondary Index (GSI) |
+|---------|---------------------------|------------------------------|
+| Partition key | Same as base table | Any attribute |
+| Sort key | Different from base table | Any attribute |
+| Created when | Table creation only | Any time |
+| Capacity | Shares base table | Independent (separate RCUs/WCUs) |
+| Strong consistency | Yes | Eventually consistent only |
+| Max per table | 5 | 20 |
+
+### 3.3 Capacity Modes
+
+| Mode | Billing | Best For |
+|------|---------|----------|
+| Provisioned | Per RCU/WCU provisioned | Predictable, steady traffic — more cost-efficient at scale |
+| On-Demand | Per request | Unpredictable, bursty, new applications |
+
+Capacity unit reference:
+
+- 1 RCU = 1 strongly consistent read/sec for items up to 4 KB (or 2 eventually consistent reads)
+- 1 WCU = 1 write/sec for items up to 1 KB
+
+### 3.4 DynamoDB Feature Reference
+
+| Feature | Description | Use Case |
+|---------|-------------|----------|
+| DynamoDB Streams | Change log of item modifications (24-hour retention) | Trigger Lambda on item change |
+| DAX | In-memory read cache (microsecond reads) | Read-heavy, repeated item access |
+| Global Tables | Multi-region active-active replication | Global user base, active-active DR |
+| TTL | Auto-delete items after timestamp attribute expires | Session data, temporary records |
+| Transactions | ACID transactions across multiple items/tables | Financial workflows requiring all-or-nothing writes |
+
+### 3.5 Partition Key Design Best Practices
+
+Hot partition keys cause throttling even when total provisioned capacity appears sufficient. A hot key occurs when most requests target the same partition key value.
+
+Good partition key design:
+
+- Use high cardinality attributes (UserId, OrderId, SessionId)
+- Avoid low cardinality (Status: active/inactive concentrates 50% of traffic on each of two partitions)
+- For time-series data: combine a high-cardinality ID with a timestamp as a composite key
+
+---
+
+## Section 4: Amazon ElastiCache
+
+### 4.1 Redis vs. Memcached Comparison
+
+| Feature | Redis | Memcached |
+|---------|-------|-----------|
+| Data structures | Strings, hashes, lists, sets, sorted sets | Strings only |
+| Persistence | Yes (RDB snapshots, AOF logging) | No |
+| Replication | Yes | No |
+| Multi-AZ failover | Yes (automatic) | No |
+| Cluster sharding | Yes (Redis Cluster mode) | Yes (client-side) |
+| Pub/Sub messaging | Yes | No |
+| Geospatial indexing | Yes | No |
+| Multi-threading | No (single-threaded) | Yes |
+| Backup and restore | Yes | No |
+
+### 4.2 ElastiCache Use Case Patterns
+
+| Use Case | Engine | Pattern |
+|----------|--------|---------|
+| Database read cache | Redis or Memcached | Cache query results; reduce DB load |
+| Session store | Redis | TTL-based expiration; replication for HA |
+| Leaderboard | Redis | Sorted sets for ranked lists |
+| Rate limiting | Redis | Atomic increment on request counters |
+| Pub/Sub messaging | Redis | Publisher/subscriber channels |
+| Simple high-throughput cache | Memcached | Pure key-value; multi-threaded |
+
+### 4.3 Caching Strategies
+
+| Strategy | Description | Pros | Cons |
+|----------|-------------|------|------|
+| Lazy Loading | Load to cache only on miss | Cache only holds requested data | Miss penalty on first request |
+| Write-Through | Update cache on every write | Cache always current | Write overhead; unused data may be cached |
+| TTL | Expire cached items after a fixed duration | Controls staleness | May serve stale data near TTL expiry |
+
+---
+
+## Section 5: Amazon Redshift
+
+### 5.1 Redshift vs. RDS
+
+| Feature | Redshift | RDS |
+|---------|----------|-----|
+| Optimized for | OLAP (analytical queries) | OLTP (transactional operations) |
+| Storage format | Columnar | Row-based |
+| Query pattern | Aggregate, scan, join large tables | Frequent small reads/writes |
+| Scale | Petabyte | Terabyte |
+| Typical query time | Seconds to minutes | Milliseconds |
+| SQL compatibility | Yes (PostgreSQL-compatible) | Yes (engine-specific) |
+
+### 5.2 Key Redshift Features
+
+| Feature | Description |
+|---------|-------------|
+| Redshift Spectrum | Query data in S3 without loading into Redshift |
+| Redshift Serverless | Auto-provisions capacity; pay per query |
+| RA3 nodes | Separate compute from managed storage (S3) |
+| Materialized Views | Pre-computed query results for dashboard acceleration |
+| Data Sharing | Share live data across Redshift clusters without copying |
+| AQUA | Advanced Query Accelerator — hardware-based query acceleration |
+
+---
+
+## Section 6: Amazon Neptune
+
+### 6.1 Neptune Overview
+
+| Feature | Description |
+|---------|-------------|
+| Graph models supported | Property Graph (Gremlin traversal), RDF (SPARQL queries) |
+| Availability | Multi-AZ with up to 15 read replicas |
+| Storage | Shared distributed storage (same as Aurora) |
+| Use cases | Social networks, fraud detection, knowledge graphs, recommendations |
+
+### 6.2 Graph vs. Relational Decision
+
+| Scenario | Best Database |
+|----------|--------------|
+| Traversing relationships between entities (who knows whom) | Neptune |
+| Detecting fraud via transactional relationship patterns | Neptune |
+| Building a recommendation engine based on user/product relationships | Neptune |
+| Complex SQL queries with known schema | RDS or Aurora |
+| Key-value lookups at high scale | DynamoDB |
+
+---
+
+## Section 7: Database Selection Decision Framework
+
+### 7.1 Primary Decision Matrix
+
+| Requirement | Database |
+|-------------|----------|
+| Relational SQL; Oracle or SQL Server | RDS |
+| MySQL/PostgreSQL; need > 5 replicas or serverless scaling | Aurora |
+| Single-digit millisecond NoSQL at any scale | DynamoDB |
+| Reduce database read load; cache hot data | ElastiCache |
+| Petabyte analytics; business intelligence; OLAP | Redshift |
+| Graph traversal; relationships between entities | Neptune |
+
+### 7.2 Exam Decision Triggers
+
+| Keyword or Phrase | Answer |
+|-------------------|--------|
+| "High availability, automatic failover, same region" | RDS Multi-AZ |
+| "Read scaling, reduce primary load" | RDS Read Replicas or Aurora read replicas |
+| "MySQL compatible, faster failover, automatic storage scaling" | Aurora |
+| "Serverless database, variable workload" | Aurora Serverless v2 |
+| "Millions of requests/sec, single-digit ms, NoSQL" | DynamoDB |
+| "Query non-key attribute in existing DynamoDB table" | GSI |
+| "Microsecond DynamoDB read latency" | DAX |
+| "DynamoDB multi-region active-active" | DynamoDB Global Tables |
+| "Reduce RDS/Aurora read latency, cache hot rows" | ElastiCache |
+| "Session store with high availability" | ElastiCache Redis |
+| "Simple cache, no HA needed" | ElastiCache Memcached |
+| "Data warehouse, business intelligence, OLAP" | Redshift |
+| "Social network, fraud detection, graph" | Neptune |
+
+---
+
+## Section 8: SAA-C03 Exam Tips for Module 09
+
+**Exam Tip 1 — Multi-AZ is NOT for read scaling:**
+Multi-AZ provides high availability. The standby does not serve reads. If a scenario asks how to improve read performance, Multi-AZ is never the answer. Read Replicas or ElastiCache are the answers.
+
+**Exam Tip 2 — Read Replicas are NOT automatically promoted:**
+If the primary RDS instance fails, Read Replicas are not automatically promoted to primary. Multi-AZ is. Read Replicas require a manual promotion step. Cross-region Read Replicas can be manually promoted for regional DR.
+
+**Exam Tip 3 — Aurora's shared storage means faster failover:**
+Aurora failover is faster than RDS Multi-AZ because the promoted replica already has access to all committed data in the shared storage layer. It does not need to replay transaction logs.
+
+**Exam Tip 4 — GSI can be added after table creation; LSI cannot:**
+If the scenario says an existing DynamoDB table needs a new query pattern, the answer must be GSI. LSIs are only creatable at table creation time.
+
+**Exam Tip 5 — DAX is read-only acceleration:**
+DAX accelerates DynamoDB reads. It does not help with write-heavy workloads. DAX returns eventually consistent results only. Strongly consistent reads bypass DAX.
+
+**Exam Tip 6 — Redis for HA cache; Memcached for simple cache:**
+Redis supports replication, Multi-AZ failover, persistence, and complex data structures. If a scenario mentions session storage, leaderboards, pub/sub, or "highly available cache," the answer is Redis. If it says "simple distributed cache with no persistence needed," Memcached may be the answer.
+
+**Exam Tip 7 — Redshift for OLAP only:**
+Redshift is not an OLTP database. If a scenario mentions "frequent transactional reads and writes" or "operational database," Redshift is not the answer. Redshift is for historical data analysis, reporting, and BI queries.
+
+**Exam Tip 8 — Neptune for relationships:**
+Neptune appears less frequently on the exam than other databases, but the trigger words are unmistakable: "graph database," "social network," "fraud detection via relationships," "knowledge graph," or "recommendation engine based on user relationships."
+
+---
+
+## Section 9: Key CLI Commands
+
+Describe an RDS instance:
+
+```bash
+aws rds describe-db-instances \
+  --db-instance-identifier mydb \
+  --query "DBInstances[0].{Engine:Engine,Class:DBInstanceClass,MultiAZ:MultiAZ,Status:DBInstanceStatus}"
+```
+
+Create an RDS Read Replica:
+
+```bash
+aws rds create-db-instance-read-replica \
+  --db-instance-identifier mydb-replica \
+  --source-db-instance-identifier mydb \
+  --db-instance-class db.t3.medium \
+  --availability-zone us-east-1b
+```
+
+Describe DynamoDB table:
+
+```bash
+aws dynamodb describe-table \
+  --table-name MyTable \
+  --query "Table.{Name:TableName,Status:TableStatus,Keys:KeySchema,GSIs:GlobalSecondaryIndexes}"
+```
+
+Create an ElastiCache Redis cluster:
+
+```bash
+aws elasticache create-cache-cluster \
+  --cache-cluster-id my-redis \
+  --engine redis \
+  --cache-node-type cache.t3.micro \
+  --num-cache-nodes 1
+```
+
+---
+
+## Section 10: Study Checklist
+
+- [ ] Explain the difference between RDS Multi-AZ and Read Replicas — purpose, replication type, and failover behavior
+- [ ] Describe Aurora's shared storage architecture and how it differs from standard RDS
+- [ ] Explain the Aurora failover process and why it is faster than RDS Multi-AZ failover
+- [ ] Compare DynamoDB GSIs and LSIs on creation timing, partition key flexibility, and consistency
+- [ ] Explain DAX: what it accelerates, what it cannot accelerate, and when not to use it
+- [ ] Compare ElastiCache Redis and Memcached on persistence, replication, data structures, and use cases
+- [ ] Describe when to use Redshift versus RDS for a given analytical workload
+- [ ] Identify the three Neptune use case patterns from the exam trigger word list
+- [ ] Complete the database selection decision matrix from memory, covering all six services
+- [ ] Run the CLI commands in Section 9 and record the output
+- [ ] Complete the Module 09 quiz with a score of at least 80 percent
+
+---
+
+## References
+
+All AWS certification study materials and exam registration: aws.amazon.com/certification
+
+*Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University.*

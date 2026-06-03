@@ -1,67 +1,260 @@
-# Reading Guide: Module 10 – Pub/Sub and Cloud Functions: Event-Driven Architecture
-## Course: CIS-4329 – Google Cloud Administration (Google Cloud Associate Cloud Engineer)
+# Reading Guide: Module 10 — Cloud Operations: Monitoring and Logging
+
+## Course: CIS-4329 Google Cloud Computing
+
+## Texas Wesleyan University | Professor Nash
+
+## Certification Alignment: Google Cloud Associate Cloud Engineer (ACE)
 
 ---
 
-### Introduction
-Welcome to **Module 10 – Pub/Sub and Cloud Functions: Event-Driven Architecture**! Event-driven architectures decouple services by passing messages through an intermediary rather than calling each other directly. This module covers Cloud Pub/Sub for reliable asynchronous messaging, Cloud Functions for serverless event handlers, and Eventarc for routing events from GCP services to Cloud Run or Cloud Functions. The ACE exam tests your ability to design event pipelines, configure subscriptions, and select the right trigger type for a given scenario.
+### Overview
+
+This reading guide accompanies the Module 10 video lectures on Cloud Operations. It
+covers Cloud Monitoring, Cloud Logging, Cloud Trace, Cloud Profiler, and Error Reporting.
+
+**Estimated reading time**: 60–75 minutes
 
 ---
 
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The ACE exam tests these concepts in scenario-based questions.
+### Learning Objectives
 
-*   **Cloud Pub/Sub**: A fully managed, globally distributed message queue service. Publishers send messages to a **topic**; subscribers receive messages through **subscriptions**. Pub/Sub guarantees at-least-once delivery — a message may be delivered more than once, so consumers should be idempotent. Messages are retained for up to 7 days if unacknowledged.
+After completing this module's readings you will be able to:
 
-*   **Topic**: The named resource in Pub/Sub to which publishers send messages. A single topic can have multiple subscriptions, allowing the same message to be delivered to multiple independent consumers (fan-out pattern).
-
-*   **Subscription**: A named resource representing a stream of messages from a single topic. Pull subscriptions require the subscriber to call the Pub/Sub API to retrieve messages. Push subscriptions have Pub/Sub deliver messages to an HTTPS endpoint (such as a Cloud Run service or App Engine app) automatically.
-
-*   **Cloud Functions (1st/2nd gen)**: A serverless, event-driven compute service. A function is triggered by an event (HTTP request, Pub/Sub message, Cloud Storage object finalization, Firestore document change) and executes in an isolated, ephemeral environment. 2nd generation Cloud Functions are built on Cloud Run and support longer timeouts (up to 60 minutes) and higher concurrency.
-
-*   **Eventarc**: A GCP service that routes events from over 90 GCP event sources (including Audit Log events, Cloud Storage, Pub/Sub) to Cloud Run services or Cloud Functions 2nd gen targets using CloudEvents format. Eventarc simplifies connecting GCP service events to serverless handlers without writing custom Pub/Sub notification code.
-
-*   **Dead Letter Topic**: A Pub/Sub topic configured on a subscription to receive messages that could not be successfully delivered after a maximum number of delivery attempts. Use a dead letter topic to capture and investigate failed messages without losing them.
+- Describe the Cloud Operations product family and each service's purpose
+- Configure Cloud Monitoring dashboards, uptime checks, and alerting policies
+- Create log sinks to export logs to Cloud Storage, BigQuery, and Pub/Sub
+- Write Logging Query Language filters to find specific log entries
+- Explain the four types of audit logs and their default retention and cost
+- Describe the purpose of Cloud Trace, Cloud Profiler, and Error Reporting
+- Install the Ops Agent on a GCE VM to collect memory and disk metrics
 
 ---
 
-### 2. Certification Exam Tips
+### Required Reading 1: Cloud Monitoring
 
-*   **Pull vs. Push subscriptions — know when to use each**: Pull is appropriate when the subscriber controls its own consumption rate (e.g., a batch processing job). Push is appropriate when you want Pub/Sub to proactively deliver messages to an HTTP endpoint without the subscriber polling — use push for Cloud Run or App Engine backends that should react immediately to messages.
+**Source**: Google Cloud Documentation — Cloud Monitoring Overview
 
-*   **At-least-once delivery requires idempotent consumers**: The ACE exam tests this. Pub/Sub can redeliver the same message if the acknowledgment deadline expires before the subscriber calls `acknowledge()`. Design your Cloud Functions and subscriber code to handle duplicate messages safely (e.g., check if the record already exists before inserting).
+**URL**: `https://cloud.google.com/monitoring/docs/monitoring-overview`
 
-*   **Cloud Functions trigger types**: Know the three most common triggers tested on the ACE exam: HTTP trigger (HTTPS endpoint), Cloud Storage trigger (object finalize/delete/archive/metadataUpdate), and Pub/Sub trigger (message published to a topic). The exam may ask which trigger to use for a given event source.
+#### Cloud Monitoring Key Terms
 
-*   **Pub/Sub message ordering**: By default, Pub/Sub does not guarantee message ordering across partitions. Enable **message ordering** on a subscription and publish with an ordering key if your use case requires messages from the same entity to be processed in sequence.
+- **Metric**: A time-series measurement of a resource attribute (e.g., CPU utilization,
+  request latency, disk bytes written)
+- **Metric type**: A fully qualified string identifying the metric, such as
+  `compute.googleapis.com/instance/cpu/utilization`
+- **Time series**: A sequence of data points for a metric collected at regular intervals
+- **Alerting policy**: Defines a condition, a duration, and one or more notification
+  channels; fires when the condition is met for the specified duration
+- **Notification channel**: Destination for alert notifications; options include email,
+  PagerDuty, Slack, SMS, Pub/Sub, and webhooks
+- **Uptime check**: A synthetic probe that verifies endpoint availability from multiple
+  global locations
+- **Ops Agent**: The recommended unified agent for collecting OS-level metrics (memory,
+  disk, process) and application logs from GCE VMs
 
-*   **Study Resource**: The freeCodeCamp ACE course covers Pub/Sub architecture and Cloud Functions deployment with hands-on examples: [Google Cloud ACE Certification Course by freeCodeCamp](https://www.youtube.com/watch?v=UGRDM86MBIQ). Navigate to the Pub/Sub and Cloud Functions chapter using the video index.
+#### Cloud Monitoring ACE Exam Focus Points
+
+- GCE VMs do NOT report memory utilization or disk utilization to Cloud Monitoring by
+  default — the Ops Agent must be installed
+- An alerting policy can target a log-based metric, allowing alerts on log patterns
+- Uptime checks use multiple global probe locations; GCP marks an endpoint down when a
+  majority of probers fail
+- Workspaces can aggregate monitoring data from multiple GCP projects into one view
+- Alert conditions have a `duration` field — the condition must be met continuously for
+  this duration before the alert fires (prevents false positives from momentary spikes)
+
+#### Cloud Monitoring Review Questions
+
+1. Which agent must you install on a GCE VM to report memory utilization to Cloud
+   Monitoring?
+2. What is the purpose of a notification channel in an alerting policy?
+3. What does the `duration` field in an alerting condition control?
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
+### Required Reading 2: Cloud Logging
 
-*   **Required Reading**: Review the Pub/Sub overview including topics, subscriptions, pull vs. push delivery, and dead letter topics: [Cloud Pub/Sub Overview](https://cloud.google.com/pubsub/docs/overview). The delivery model and subscription types are directly exam-relevant.
-*   **Required Reading**: Review how Cloud Functions are triggered, configured, and deployed, including the difference between 1st and 2nd generation: [Cloud Functions Overview](https://cloud.google.com/functions/docs/concepts/overview).
-*   **Required Video**: Watch the Pub/Sub and Cloud Functions segment of the ACE certification course: [Google Cloud ACE Certification Course by freeCodeCamp](https://www.youtube.com/watch?v=UGRDM86MBIQ). Navigate to the Event-Driven Architecture chapter using the video index.
+**Source**: Google Cloud Documentation — Cloud Logging Overview
+
+**URL**: `https://cloud.google.com/logging/docs/overview`
+
+#### Cloud Logging Key Terms
+
+- **Log entry**: A single structured record written to Cloud Logging; includes a payload,
+  resource descriptor, severity, and timestamp
+- **Log bucket**: Storage location for log entries within Cloud Logging; `_Default` and
+  `_Required` buckets are created automatically
+- **Log sink**: A configuration that routes matching log entries to an external
+  destination (Cloud Storage, BigQuery, Pub/Sub, or another log bucket)
+- **Log exclusion**: A filter applied in the log router that permanently drops matching
+  entries before ingestion
+- **Log router**: Processes all incoming log entries through sinks and exclusions in
+  sequence
+- **Logs Explorer**: The Cloud Console UI for querying and viewing log entries
+- **Writer identity**: The service account that a log sink uses to write to its
+  destination; must be granted appropriate permissions on the destination
+
+#### Log Bucket Defaults
+
+| Bucket | Retention | Notes |
+|---|---|---|
+| `_Required` | 400 days | Audit logs; cannot be shortened or deleted |
+| `_Default` | 30 days | All other logs; retention is configurable |
+
+#### Cloud Logging ACE Exam Focus Points
+
+- Exclusions permanently drop log entries — they will not appear anywhere, including
+  in sinks
+- After creating a sink, you must grant the sink's writer identity write access to the
+  destination (Cloud Storage: `storage.objectCreator`; BigQuery: `bigquery.dataEditor`)
+- The `--use-partitioned-tables` flag for BigQuery sinks creates date-partitioned tables,
+  which reduces query cost
+- Log sinks can have inclusion filters to export only matching entries (e.g., only
+  audit logs, only ERROR severity)
+- Organization-level sinks aggregate logs from all projects in an organization
+
+#### Cloud Logging Review Questions
+
+1. What must you do after creating a log sink before it can write to its destination?
+2. What is the difference between a log exclusion and a log sink with an inclusion
+   filter?
+3. What is the default retention period for logs in the `_Default` log bucket?
 
 ---
 
-### Lab & Command Integration
-In this module's lab, you will create a Pub/Sub topic and subscription, publish messages, and deploy a Cloud Function triggered by the topic. Key commands to practice:
+### Required Reading 3: Audit Logs
 
-*   `gcloud pubsub topics create my-topic` — creates a Pub/Sub topic
-*   `gcloud pubsub subscriptions create my-sub --topic=my-topic` — creates a pull subscription
-*   `gcloud pubsub topics publish my-topic --message="hello"` — publishes a test message
-*   `gcloud functions deploy my-function --runtime=python311 --trigger-topic=my-topic --entry-point=handle_message` — deploys a Cloud Function with a Pub/Sub trigger
+**Source**: Google Cloud Documentation — Cloud Audit Logs
+
+**URL**: `https://cloud.google.com/logging/docs/audit`
+
+#### Audit Log Key Terms
+
+- **Admin Activity logs**: Record API calls and administrative actions that modify
+  resources (e.g., create VM, delete bucket); always enabled; always free; retained 400
+  days
+- **Data Access logs**: Record API calls that read resource data or metadata; disabled
+  by default; must be enabled per service; may incur charges at high volume
+- **System Event logs**: Record Google-initiated system events such as live migration;
+  always enabled; free; retained 400 days
+- **Policy Denied logs**: Record when access is denied by VPC Service Controls or Cloud
+  Armor; always enabled; free
+
+#### Audit Log ACE Exam Focus Points
+
+- Admin Activity logs are always on — you cannot disable them
+- Data Access logs are off by default — enable them only for services where you need
+  data-level audit trails
+- All four audit log types are written to the `_Required` bucket with 400-day retention
+- Data Access logs for BigQuery are enabled by default because BigQuery data access is
+  already audited at no charge; other services require manual enablement
+- Audit logs can be exported via log sinks for long-term retention beyond 400 days
+
+#### Audit Log Review Questions
+
+1. Which audit log type records when a user creates or deletes a GCE instance?
+2. Which audit log type must be explicitly enabled per service?
+3. Where are all four audit log types stored within Cloud Logging?
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and be able to explain each in your own words.
-- [ ] Read the [Cloud Pub/Sub Overview](https://cloud.google.com/pubsub/docs/overview) documentation page.
-- [ ] Read the [Cloud Functions Overview](https://cloud.google.com/functions/docs/concepts/overview) documentation page.
-- [ ] Watch the Event-Driven Architecture segment of the [ACE Certification Course by freeCodeCamp](https://www.youtube.com/watch?v=UGRDM86MBIQ).
-- [ ] Complete the module lab: create a Pub/Sub topic and deploy a Cloud Function with a Pub/Sub trigger.
-- [ ] Proceed to the weekly quiz.
+### Required Reading 4: Cloud Trace and Cloud Profiler
+
+**Source**: Google Cloud Documentation — Cloud Trace Overview
+
+**URL**: `https://cloud.google.com/trace/docs/overview`
+
+#### Cloud Trace Key Terms
+
+- **Distributed trace**: A record of a request's journey across multiple services,
+  capturing the latency of each hop
+- **Span**: A single named and timed unit of work within a trace (e.g., one database
+  query, one HTTP call)
+- **Trace ID**: A unique identifier that links all spans belonging to the same request
+- **Latency distribution**: Cloud Trace analyzes traces and shows percentile latency
+  (p50, p95, p99) to surface high-latency outliers
+
+#### Cloud Profiler Key Terms
+
+- **CPU profiling**: Samples the call stack to identify which functions consume the most
+  CPU time
+- **Heap profiling**: Samples memory allocation to identify which code paths allocate
+  the most memory
+- **Flame graph**: Visualization of profiling data showing the call hierarchy and
+  relative time or memory spent in each function
+
+#### Trace and Profiler ACE Exam Focus Points
+
+- Cloud Trace is for latency analysis — "which part of the request is slow?"
+- Cloud Profiler is for performance optimization — "which function uses the most CPU
+  or memory?"
+- App Engine, Cloud Run, and GKE integrate with Cloud Trace automatically when using
+  supported frameworks
+- Cloud Profiler requires a client library and a brief initialization call in application
+  code; it operates continuously with less than 1% overhead
+
+---
+
+### Required Reading 5: Error Reporting
+
+**Source**: Google Cloud Documentation — Error Reporting Overview
+
+**URL**: `https://cloud.google.com/error-reporting/docs/overview`
+
+#### Error Reporting Key Terms
+
+- **Error group**: A cluster of similar exceptions/crashes grouped by stack trace
+  signature
+- **First seen / last seen**: Timestamps tracking when the error group was first observed
+  and when it most recently occurred
+- **New error alert**: Error Reporting notifies you when a new error group appears that
+  has not been seen before
+
+#### Error Reporting ACE Exam Focus Points
+
+- Error Reporting automatically integrates with App Engine, Cloud Functions, Cloud Run,
+  and GKE — no configuration required for these services
+- For GCE VMs, errors must be written to Cloud Logging in a structured format that Error
+  Reporting can parse
+- Error Reporting does NOT replace Cloud Monitoring alerts — it specifically focuses on
+  exceptions and crashes, not metric thresholds
+
+---
+
+### Cloud Operations Summary
+
+| Service | Primary purpose | ACE trigger phrase |
+|---|---|---|
+| Cloud Monitoring | Metrics, dashboards, alerts | "Alert when CPU exceeds 80%" |
+| Cloud Logging | Log storage, routing, querying | "Export logs to BigQuery" |
+| Cloud Trace | Request latency analysis | "Identify slow API endpoints" |
+| Cloud Profiler | CPU/memory profiling | "Identify CPU hotspots in code" |
+| Error Reporting | Exception aggregation | "Alert on new application errors" |
+
+---
+
+### Pre-Lab Checklist
+
+Before starting Lab 10, confirm you can answer yes to each item:
+
+- I can explain what the Ops Agent does and why it is needed for GCE memory metrics
+- I understand the difference between a log sink and a log exclusion
+- I know that Admin Activity audit logs are always enabled and free
+- I can write a basic Logging Query Language filter
+- I understand that after creating a sink I must grant permissions to the writer identity
+
+---
+
+### Additional Resources
+
+- Cloud Monitoring documentation:
+  `https://cloud.google.com/monitoring/docs`
+- Cloud Logging documentation:
+  `https://cloud.google.com/logging/docs`
+- Ops Agent installation:
+  `https://cloud.google.com/stackdriver/docs/solutions/agents/ops-agent`
+- Logging Query Language reference:
+  `https://cloud.google.com/logging/docs/view/logging-query-language`
+- ACE exam guide:
+  `https://cloud.google.com/certification/guides/cloud-engineer`

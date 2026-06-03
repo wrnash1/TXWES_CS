@@ -1,28 +1,61 @@
-# Discussion Forum: Module 12 - Drift Management & Importing
-## Course: CIS-4337_Infrastructure_Automation (HashiCorp Certified: Terraform Associate)
+# Discussion Forum: Module 12 — Terraform and CI/CD Pipelines
+
+## Course: CIS-4337 Infrastructure Automation
+
+## Texas Wesleyan University | Professor Nash
+
+**Certification Alignment:** HashiCorp Terraform Associate (003)
 
 ---
 
-## Discussion Prompt
-Consider the following real-world scenario or technical concept:
-*   **Topic Focus:** **Drift Management & Importing** (specifically focusing on: `Infrastructure drift, importing existing resources (`terraform import`), drift reconciliation.`)
+## Instructions
 
-**Your Tasks:**
-1.  **Initial Post (Due Wednesday at 11:59 PM):** In 150-200 words, explain how you would apply Drift Management & Importing in an enterprise system. Address the following:
-    *   What is the primary benefit of utilizing this configuration or standard in a production environment?
-    *   Identify one common security concern or operational challenge related to this topic, and suggest a best-practice mitigation strategy.
-2.  **Peer Responses (Due Sunday at 11:59 PM):** Read through your classmates' posts and write constructive replies (at least 50 words each) to at least two peers. In your replies:
-    *   Provide feedback on their proposed mitigation strategy.
-    *   Share an alternative approach or add context from your own research or lab exercises.
+Choose one of the three scenarios below. Write an initial post of 175–225 words responding to the scenario prompt. Then write two peer responses of 75–100 words each that add substantive new information, ask a clarifying question, or respectfully challenge an assumption in the original post. Use the 10-point rubric at the bottom of this page to self-assess before submitting.
 
 ---
 
-## Discussion Rubric (10 Points Total)
-*   **Initial Post (6 Points):**
-    *   *5-6 pts:* Thoroughly addresses all prompt questions with technical accuracy, clear explanations, and appropriate terminology. Meets the word count.
-    *   *3-4 pts:* Addresses some prompt questions, but lacks detail or technical accuracy.
-    *   *0-2 pts:* Incomplete or missing initial post.
-*   **Peer Responses (4 Points):**
-    *   *4 pts:* Responds constructively to at least two peers, contributing meaningful additions to the conversation.
-    *   *2 pts:* Responds to only one peer, or comments are superficial (e.g., "Good post!").
-    *   *0 pts:* No peer responses submitted.
+## Scenario A: The Hotfix Dilemma
+
+Your company runs a production Kubernetes cluster provisioned with Terraform. At 2:00 AM, a misconfigured security group blocks traffic to the cluster. The on-call engineer fixes the security group manually through the AWS console to restore service. By morning, `terraform plan` shows drift — the state no longer matches the live configuration.
+
+Discuss: What is the correct process for resolving this drift? Should the team accept the manual change into Terraform state, revert it, or do something else? What policy changes would prevent this situation in the future without sacrificing the ability to respond to incidents quickly?
+
+---
+
+## Scenario B: Security Scanning Gate Design
+
+Your team is adding tfsec and Checkov to an existing GitHub Actions pipeline that already has validate and plan jobs. A senior engineer suggests running both security scanners in the plan job to keep the pipeline simple. A junior engineer argues they should run in a separate, earlier job that blocks plan from starting.
+
+Discuss: Which approach do you recommend and why? Consider pipeline speed, feedback quality, and the blast radius of a missed security finding. What severity threshold would you set for hard-failing the pipeline versus reporting-only?
+
+---
+
+## Scenario C: OIDC Migration
+
+Your organization currently stores AWS IAM access keys as GitHub Actions secrets for all Terraform pipelines. A security audit flags these as long-lived credentials that violate the principle of least privilege and increase breach impact. The security team asks you to migrate all pipelines to OIDC-based authentication within 30 days.
+
+Discuss: What are the technical steps required to complete this migration? What are the risks of the transition period when some pipelines use OIDC and others still use static keys? How would you prioritize which pipelines to migrate first?
+
+---
+
+## Sample Peer Response Starters
+
+- "You raised an important point about drift resolution. I would add that..."
+- "I chose the same scenario and reached a different conclusion about the severity threshold because..."
+- "Your OIDC migration plan is solid. One risk you may not have considered is..."
+
+---
+
+## Discussion Rubric — 10 Points Total
+
+| Criterion | Points | Description |
+|-----------|--------|-------------|
+| Scenario accuracy | 2 | Initial post correctly identifies and addresses the core technical problem in the scenario |
+| Depth of analysis | 2 | Post goes beyond surface-level description and explains trade-offs or consequences |
+| Use of module concepts | 2 | Post accurately applies vocabulary and concepts from Module 12 (drift, OIDC, security scanning, etc.) |
+| Peer response 1 | 2 | First peer response adds new information, asks a clarifying question, or substantively engages with the original post |
+| Peer response 2 | 2 | Second peer response meets the same standard as peer response 1 and is not a simple agreement |
+
+---
+
+End of Module 12 Discussion

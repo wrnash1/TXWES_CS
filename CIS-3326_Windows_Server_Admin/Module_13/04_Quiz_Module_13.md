@@ -1,88 +1,165 @@
-# Quiz: Module 13 - Windows Server Backup and Recovery
+# Quiz: Module 13 — Storage Spaces and Advanced Storage
 
-## Course: CIS-3326_Windows_Server_Admin (3326_Windows_Server_Admin - Microsoft Windows Server Administration (Active Directory))
+## Course: CIS-3326 Windows Server Administration
+
+## Texas Wesleyan University | Professor Nash
+
+## Certification Alignment: Microsoft Windows Server Administration
+
+---
+
+Instructions: Select the best answer for each question. Each question is worth 10 points.
 
 ---
 
 ### Question 1
 
-A domain controller has been infected with malware that deleted several Active Directory user objects two days ago. The AD Recycle Bin feature is enabled on the domain. Backups exist but restoring from backup would require taking the DC offline. Which recovery method should the administrator use first?
+You need to create a storage solution that can survive two simultaneous disk failures. Which Storage Spaces resiliency type and minimum disk count should you choose?
 
-A) Perform a non-authoritative restore by booting the DC in Directory Services Restore Mode (DSRM) and restoring from the most recent backup tape.
-B) Use `Restore-ADObject` in PowerShell to recover the deleted objects from the AD Recycle Bin without taking the DC offline or performing any backup restoration.
-C) Seize all five FSMO roles to a healthy DC, then rebuild the infected DC from scratch and re-join it to the domain.
-D) Perform an authoritative restore by booting in DSRM, restoring the backup, and running `ntdsutil` to mark the deleted objects as authoritative before rebooting.
+- A) Two-way mirror with 2 disks
+- B) Three-way mirror with 5 disks
+- C) Single parity with 3 disks
+- D) Simple space with 4 disks
 
-* **Correct Answer:** B) Use `Restore-ADObject` in PowerShell to recover the deleted objects from the AD Recycle Bin without taking the DC offline or performing any backup restoration.
-* **Distractor Analysis:**
-  * *Why A is incorrect:* A non-authoritative restore from backup would recover the DC's AD database to the backup state, but since the deletion already replicated to all other DCs, the restored objects would be overwritten again by inbound replication. Non-authoritative restore is appropriate for database corruption, not for recovering deleted objects that have already replicated.
-  * *Why C is incorrect:* Seizing FSMO roles and rebuilding the DC is a drastic, time-consuming operation appropriate for permanent DC failure — not for a malware incident where AD Recycle Bin can recover specific deleted objects in seconds without any downtime.
-  * *Why D is incorrect:* An authoritative restore would work but requires booting the DC into DSRM (offline), restoring a backup, marking objects authoritative with `ntdsutil`, and rebooting — a lengthy process. When AD Recycle Bin is enabled, `Restore-ADObject` accomplishes the same result faster and without any outage.
+**Answer**: B
+
+**Explanation**: A three-way mirror writes three copies of all data and requires a minimum of five disks. It can survive two simultaneous disk failures. Single parity can only survive one failure. Simple spaces provide no redundancy.
 
 ---
 
 ### Question 2
 
-A Windows Server administrator runs a full Windows Server Backup of a domain controller each night. The next morning, the server's C: drive fails completely. The administrator needs to restore the server to full operation, including the OS, installed roles, and all configuration. Which Windows Server Backup restore type should be performed?
+In an iSCSI configuration, which component is the client that connects to and consumes block storage?
 
-A) System State restore, which recovers only the Active Directory database, SYSVOL, Registry, and boot files without restoring the full OS installation.
-B) Bare-Metal Recovery (BMR), which restores the full server image — including the OS, installed roles, and all data — to new or replacement hardware.
-C) File and Folder restore, which recovers individual files from the backup to a specified destination path.
-D) Critical Volume restore, which restores only the volumes marked as critical by the backup job, excluding user data volumes.
+- A) iSCSI target
+- B) iSCSI LUN
+- C) iSCSI initiator
+- D) iSCSI portal
 
-* **Correct Answer:** B) Bare-Metal Recovery (BMR), which restores the full server image — including the OS, installed roles, and all data — to new or replacement hardware.
-* **Distractor Analysis:**
-  * *Why A is incorrect:* System State restore recovers AD-specific data (ntds.dit, SYSVOL, Registry, COM+ Class Registration, and boot files) but requires a functioning OS to be present. It cannot be used when the C: drive has failed and the OS is gone.
-  * *Why C is incorrect:* File and Folder restore recovers individual files or folders to a target path — it requires a running OS and is used for data recovery scenarios, not for rebuilding a failed system drive from scratch.
-  * *Why D is incorrect:* Critical Volume restore recovers volumes that are necessary for the OS to boot (typically C:) but does not include user data volumes. In practice, a full BMR restore is the correct choice when the goal is complete server recovery on new hardware after a total drive failure.
+**Answer**: C
+
+**Explanation**: The iSCSI initiator is the client — the server that connects to the storage. The iSCSI target is the storage server that presents LUNs. A LUN is the logical unit of storage presented by the target. A portal is a network endpoint (IP address and port) used to discover targets.
 
 ---
 
 ### Question 3
 
-An administrator accidentally modifies the default domain password policy GPO, lowering the minimum password length from 12 to 6 characters, and the change replicates to all domain controllers. A backup of the domain controller from before the change exists. Which restore procedure correctly undoes only the GPO change without affecting any other AD objects created since the backup?
+You are configuring Storage Replica between two servers. The destination volume is accessible during normal replication. A colleague wants to use it for read-only backups. Is this possible?
 
-A) Perform a non-authoritative restore of the DC from backup — replication from other DCs will automatically restore the correct GPO settings after the DC reboots.
-B) Perform an authoritative restore in DSRM: restore the backup, use `ntdsutil` to mark the specific GPO object as authoritative with a higher USN, then reboot so the corrected GPO replicates outward to all other DCs.
-C) Delete the current default domain password policy GPO and re-create it manually with the correct settings using the Group Policy Management Console.
-D) Run `gpupdate /force` on all domain controllers to force them to re-read the backup copy of the GPO from SYSVOL.
+- A) Yes — the destination volume is accessible read-write during replication
+- B) Yes — the destination volume is accessible read-only during replication
+- C) No — the destination volume is mounted as read-only and inaccessible while replication is active
+- D) No — the destination volume must be offline during replication
 
-* **Correct Answer:** B) Perform an authoritative restore in DSRM: restore the backup, use `ntdsutil` to mark the specific GPO object as authoritative with a higher USN, then reboot so the corrected GPO replicates outward to all other DCs.
-* **Distractor Analysis:**
-  * *Why A is incorrect:* A non-authoritative restore alone would not restore the correct GPO. After the DC reboots from a non-authoritative restore, inbound replication from peer DCs would overwrite the restored GPO with the current (incorrect) version, since all other DCs already hold the modified GPO with a higher USN.
-  * *Why C is incorrect:* Manually re-creating the default domain password policy GPO is possible but risky — the default domain policy GPO has a fixed GUID (`31B2F340-016D-11D2-945F-00C04FB984F9`) and contains many settings beyond password policy. Manual recreation risks missing settings that were not modified and does not follow the recommended authoritative restore procedure.
-  * *Why D is incorrect:* `gpupdate /force` re-applies the current GPO settings from SYSVOL — it does not revert GPO contents to a previous backup state. Running it after the incorrect change would simply re-enforce the wrong 6-character minimum on all machines.
+**Answer**: C
+
+**Explanation**: While Storage Replica is actively replicating, the destination volume is mounted in a read-only state that is inaccessible to file system operations. The volume can only be accessed after a failover, when it becomes the new source.
 
 ---
 
 ### Question 4
 
-An organization's Recovery Time Objective (RTO) for its primary file server is 4 hours and its Recovery Point Objective (RPO) is 1 hour. The current backup strategy runs a full backup weekly on Sunday and incremental backups each weekday night. The file server fails on Friday afternoon. Approximately how much data could be lost, and does the current strategy meet the RPO?
+Which file system supports automatic detection and correction of silent data corruption (bit rot) when used with Storage Spaces mirroring?
 
-A) Up to 5 days of data could be lost because only the full Sunday backup is used for recovery; incremental backups are not used in a bare-metal restore scenario.
-B) Up to approximately 18 hours of data could be lost (since Thursday night's incremental backup), which exceeds the 1-hour RPO; the backup strategy does not meet the RPO requirement.
-C) Up to approximately 18 hours of data could be lost (since Thursday night's incremental), which does not meet the 1-hour RPO. The strategy should be changed to hourly or continuous data protection backups.
-D) No data would be lost because incremental backups include all changed files and the restore chain Sunday + Mon + Tue + Wed + Thu incrementals covers the full dataset up to Friday morning.
+- A) NTFS
+- B) FAT32
+- C) exFAT
+- D) ReFS
 
-* **Correct Answer:** C) Up to approximately 18 hours of data could be lost (since Thursday night's incremental), which does not meet the 1-hour RPO. The strategy should be changed to hourly or continuous data protection backups.
-* **Distractor Analysis:**
-  * *Why A is incorrect:* Incremental backups are used in restoration; the restore chain is Sunday full + Monday through Thursday incrementals. The data loss is not 5 days — it is approximately the time elapsed since Thursday night's last incremental, which is roughly 18 hours of work on Friday.
-  * *Why B is incorrect:* The first part of answer B correctly identifies the data loss window, but it stops at noting the RPO is not met without prescribing the corrective action. Answer C is more complete and actionable for an exam scenario.
-  * *Why D is incorrect:* While the restore chain is correct, D incorrectly claims no data would be lost. Friday's work (from after Thursday night's backup until the failure) is not captured in any backup and would be lost. The RPO is not met.
+**Answer**: D
+
+**Explanation**: ReFS stores integrity checksums for data and metadata. When used with Storage Spaces mirroring, if a checksum mismatch is detected (indicating bit rot), ReFS automatically uses the mirror copy to correct the corrupted data. NTFS does not store checksums and cannot perform self-healing.
 
 ---
 
 ### Question 5
 
-An administrator needs to restore a deleted Organizational Unit (OU) that contained 300 user accounts. The domain does not have the AD Recycle Bin feature enabled. A system state backup taken 24 hours ago exists. Which procedure correctly restores the OU and its user accounts without deleting user accounts created in other OUs since the backup?
+An administrator needs to format a new volume to host Hyper-V virtual machine files and wants the fastest possible Hyper-V checkpoint creation. Which file system should be used?
 
-A) Restore Active Directory from the system state backup in a non-authoritative mode — replication will restore only the deleted OU while preserving newer objects on other DCs.
-B) Boot the DC into Directory Services Restore Mode (DSRM), restore the system state backup non-authoritatively, then use `ntdsutil` to perform an authoritative restore of only the deleted OU subtree, and reboot to allow inbound replication to update all other objects.
-C) Run `Get-ADOrganizationalUnit -Filter * | Restore-ADObject` in PowerShell to recover the OU and its contents from the deleted objects container.
-D) Create a new OU with the same name, then import the 300 user accounts from a CSV file exported before the deletion occurred.
+- A) NTFS with compression enabled
+- B) FAT32 for maximum compatibility
+- C) ReFS to take advantage of block clone technology
+- D) exFAT for large file support
 
-* **Correct Answer:** B) Boot the DC into Directory Services Restore Mode (DSRM), restore the system state backup non-authoritatively, then use `ntdsutil` to perform an authoritative restore of only the deleted OU subtree, and reboot to allow inbound replication to update all other objects.
-* **Distractor Analysis:**
-  * *Why A is incorrect:* A purely non-authoritative restore restores the backup database on that DC, but when the DC reboots and reconnects to the domain, inbound replication from other DCs will overwrite the restored OU and user objects with their current state (deleted), since the deletion already replicated with a higher USN. Non-authoritative restore alone does not recover deleted objects.
-  * *Why C is incorrect:* `Restore-ADObject` works from the AD Recycle Bin — it does not function without the Recycle Bin enabled. When the Recycle Bin is not enabled, deleted objects are fully stripped of most attributes after a configurable tombstone period and cannot be recovered this way.
-  * *Why D is incorrect:* Manually creating an OU and importing user accounts from a CSV would require a pre-existing export with all 300 users' attributes (passwords, group memberships, profile paths, etc.). This approach is incomplete, error-prone, and does not restore SID-based permissions, group memberships, or account history — all of which are preserved by an authoritative restore.
+**Answer**: C
+
+**Explanation**: ReFS supports block clone, which allows Hyper-V to create checkpoints almost instantly by creating metadata-only references to disk blocks rather than copying data. On NTFS, checkpoint creation requires physically copying differencing disk data, which is slower.
+
+---
+
+### Question 6
+
+A server administrator wants to use BitLocker on a server that will reboot automatically overnight for patching. Manual PIN entry is not feasible. Which BitLocker configuration should be used?
+
+- A) TPM + PIN protector
+- B) TPM + USB key protector
+- C) TPM with Network Unlock
+- D) Recovery password only
+
+**Answer**: C
+
+**Explanation**: BitLocker Network Unlock automatically unlocks a TPM-protected drive during boot when the server is connected to the corporate network. No PIN or USB key entry is required. If the server boots outside the corporate network (theft scenario), the auto-unlock fails and a PIN or recovery key is required.
+
+---
+
+### Question 7
+
+What is the primary purpose of the log volume in a Storage Replica partnership?
+
+- A) To store a backup copy of all replicated data
+- B) To track changes and ensure write-order fidelity during replication
+- C) To cache reads from the destination volume
+- D) To store Storage Replica configuration and policy files
+
+**Answer**: B
+
+**Explanation**: The Storage Replica log volume records write operations in order, ensuring that the destination volume receives changes in the correct sequence. It acts as a write-ahead log. Microsoft recommends placing the log volume on fast SSD or NVMe storage to avoid becoming a bottleneck.
+
+---
+
+### Question 8
+
+Which of the following is a limitation of ReFS compared to NTFS?
+
+- A) ReFS cannot store files larger than 256 TB
+- B) ReFS cannot be used on volumes larger than 1 TB
+- C) ReFS does not support being used as the operating system boot volume
+- D) ReFS does not support files larger than 4 GB
+
+**Answer**: C
+
+**Explanation**: ReFS cannot be used for the Windows operating system boot volume. This is one of its key limitations compared to NTFS. ReFS supports very large files (up to 35 PB) and very large volumes, but it cannot host a bootable Windows installation.
+
+---
+
+### Question 9
+
+You have a Storage Spaces pool with three 1 TB disks and create a two-way mirror virtual disk. Approximately how much usable storage is available for data?
+
+- A) 3 TB — all disks used for data
+- B) 2 TB — one disk holds parity
+- C) 1.5 TB — data is split across all three disks with one copy
+- D) 1 TB — each write is stored on two disks, leaving one disk worth of usable capacity
+
+**Answer**: C
+
+**Explanation**: A two-way mirror stores two copies of data across available disks. With 3 TB of raw capacity split into two copies, approximately 1.5 TB of usable space is available. The storage efficiency of a two-way mirror is roughly 50%, but with three disks, the third disk provides additional resilience beyond a strict 1:1 mirror.
+
+---
+
+### Question 10
+
+You need to secure sensitive files on a shared file server so that even the local administrator cannot read them, while allowing the specific user who created them transparent access. Which technology provides this protection?
+
+- A) BitLocker Drive Encryption
+- B) NTFS permissions
+- C) Encrypting File System (EFS)
+- D) Storage Spaces parity
+
+**Answer**: C
+
+**Explanation**: EFS encrypts files using the user's certificate-based key. The encryption is transparent to the user who encrypted the file. Even local administrators cannot read EFS-encrypted files without the correct private key. BitLocker protects the entire volume but does not restrict per-user access to individual files.
+
+---
+
+End of Quiz — Module 13

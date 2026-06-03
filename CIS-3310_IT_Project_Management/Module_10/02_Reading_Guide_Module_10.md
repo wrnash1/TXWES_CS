@@ -1,160 +1,218 @@
-# Reading Guide: Module 10 – Procurement Management
+# Reading Guide: Module 10 — Earned Value Management
 
-**Course:** CIS-3310 IT Project Management
-**Certification Alignment:** CompTIA Project+ (PK0-005) | PMBOK 6th and 7th Editions
-**Prepared by:** Professor Nash | Texas Wesleyan University
+## Course: CIS-3310 IT Project Management
+
+## Texas Wesleyan University | Professor Nash
+
+## Certification Alignment: CompTIA Project+ (PK0-005)
 
 ---
 
 ## Introduction
 
-Procurement Management covers the processes for acquiring products, services, or results from outside the project team. The Project+ exam tests contract types and their risk distribution, make-or-buy analysis, solicitation document types, Statement of Work components, and procurement closure requirements. This reading guide provides the reference tables and exam tips you need.
+Earned Value Management (EVM) is the Project+ exam's most calculation-intensive topic. This reading guide provides every formula, interpretation rule, and worked example you need to master the material. Study the formula table, work through the practice problems, and use the exam tips to recognize question types before reading the answer choices.
 
 ---
 
-## 1. High-Yield Glossary
+## Section 1 — High-Yield Glossary
 
-### Procurement Management Plan
+### Budget at Completion (BAC)
 
-A component of the Project Management Plan that documents how procurement activities will be conducted, including contract types to be used, criteria for make-or-buy decisions, vendor selection criteria, and how contracts will be administered and closed.
+The total authorized budget for the entire project. Established during planning and used as the denominator in EAC calculations. BAC does not change unless a formal approved scope change is processed.
 
-### Make-or-Buy Analysis
+### Planned Value (PV)
 
-A decision-making technique used to determine whether a product, service, or component should be produced internally (make) or acquired from an external source (buy). Considers cost, expertise, schedule, strategic value, and available capacity.
+Also called Budgeted Cost of Work Scheduled (BCWS). The approved budget for the work that was scheduled to be accomplished by the measurement date. Calculated as `BAC × planned % complete`.
 
-### Statement of Work (SOW)
+### Earned Value (EV)
 
-A detailed narrative description of the products, services, or results to be delivered under a contract. Defines scope, deliverables, location of work, acceptance criteria, and applicable standards. Included in or attached to the contract.
+Also called Budgeted Cost of Work Performed (BCWP). The approved budget for the work that has actually been completed as of the measurement date. Calculated as `BAC × actual % complete`. EV is not the same as AC — it is the budgeted value of completed work, not the money spent.
 
-### Request for Proposal (RFP)
+### Actual Cost (AC)
 
-A solicitation document used when the buyer needs the seller to propose a technical and management approach in addition to price. Used for complex procurements where the solution is not fully defined.
+Also called Actual Cost of Work Performed (ACWP). The total cost actually incurred for work accomplished during a given time period. Sourced from accounting records.
 
-### Request for Quotation (RFQ)
+### Schedule Variance (SV)
 
-A solicitation document used when the scope is well-defined and the buyer primarily wants competitive pricing. Used for commodity purchases or standard services.
+The difference between earned value and planned value. Formula: `SV = EV - PV`. Positive = ahead of schedule; negative = behind schedule.
 
-### Invitation for Bid (IFB)
+### Cost Variance (CV)
 
-A solicitation document used in public-sector or formal procurement contexts where sellers submit sealed bids and the award typically goes to the lowest compliant price.
+The difference between earned value and actual cost. Formula: `CV = EV - AC`. Positive = under budget; negative = over budget.
 
-### Fixed-Price Contract
+### Schedule Performance Index (SPI)
 
-A contract type in which the seller agrees to deliver a defined scope for a defined price. The seller bears the cost risk. Best used when scope is clearly defined.
+A ratio measuring schedule efficiency. Formula: `SPI = EV / PV`. Values above 1.0 indicate ahead-of-schedule performance; below 1.0 indicates behind-schedule performance.
 
-### Cost-Reimbursable Contract
+### Cost Performance Index (CPI)
 
-A contract type in which the buyer pays the seller's actual costs plus a fee. The buyer bears the cost risk. Best used when scope is uncertain or cannot be fully defined.
+A ratio measuring cost efficiency. Formula: `CPI = EV / AC`. Values above 1.0 indicate under-budget performance; below 1.0 indicates over-budget performance. CPI is the most predictive single EVM metric.
 
-### Time and Material (T&M) Contract
+### Estimate at Completion (EAC)
 
-A hybrid contract type in which the buyer pays a fixed rate per unit of labor plus actual material costs. Risk is shared. Often used for staff augmentation or maintenance work.
+A forecast of the total project cost at completion. Multiple calculation methods exist depending on the assumption about future performance.
 
-### Source Selection Criteria
+### Estimate to Complete (ETC)
 
-The defined factors used to evaluate seller proposals objectively. May include technical capability, past performance, management approach, price, references, and risk.
+The expected cost needed to finish all remaining project work. Formula: `ETC = EAC - AC`.
 
-### Procurement Closure
+### Variance at Completion (VAC)
 
-The formal process of confirming that all contracted work is complete and accepted, all payments are settled, and the contract is formally closed with documentation. Verbal agreement is insufficient.
+The projected budget surplus or deficit at project completion. Formula: `VAC = BAC - EAC`. Negative VAC indicates a projected overrun.
 
----
+### To-Complete Performance Index (TCPI)
 
-## 2. Procurement Process Reference
-
-| Process | Process Group | Key Output | Purpose |
-|---|---|---|---|
-| Plan Procurement Management | Planning | Procurement Management Plan, SOW, source selection criteria | Define procurement approach and requirements |
-| Conduct Procurements | Executing | Selected sellers, contract awards | Issue solicitations, evaluate proposals, award contracts |
-| Control Procurements | Monitoring and Controlling | Work performance reports, change requests, closed procurements | Monitor vendor performance, administer contracts, close procurements |
+The cost efficiency ratio that must be achieved on remaining work to meet a budget target. Formula: `TCPI = (BAC - EV) / (BAC - AC)` (to meet BAC) or `(BAC - EV) / (EAC - AC)` (to meet EAC). Values above 1.0 indicate an increasingly difficult target.
 
 ---
 
-## 3. Contract Type Comparison
+## Section 2 — Complete EVM Formula Reference
 
-| Contract Type | Who Bears Cost Risk | When to Use | Buyer's Advantage | Buyer's Risk |
-|---|---|---|---|---|
-| Fixed-Price Lump Sum (FPLS) | Seller | Well-defined scope | Predictable cost | Unclear scope causes disputes |
-| Fixed-Price Incentive Fee (FPIF) | Seller (primarily) | Defined scope with performance targets | Rewards efficiency | Incentive fee increases buyer cost |
-| FP with Economic Price Adjustment (FP-EPA) | Seller | Long-duration contracts | Price stability over time | Market adjustments may increase cost |
-| Cost Plus Fixed Fee (CPFF) | Buyer | R&D, undefined scope | Seller motivated to complete work | Buyer pays all cost overruns |
-| Cost Plus Incentive Fee (CPIF) | Buyer (primarily) | Performance-sensitive, undefined scope | Incentive aligns seller with buyer goals | Buyer pays base costs regardless |
-| Cost Plus Award Fee (CPAF) | Buyer | Subjective performance measurement | Buyer controls award fee judgment | Seller has less cost control motivation |
-| Time and Material (T&M) | Shared | Staff augmentation, short-term work | Flexible for uncertain scope | No incentive for seller efficiency |
-
----
-
-## 4. Make-or-Buy Decision Factors
-
-| Factor | Favors Make (Internal) | Favors Buy (External) |
-|---|---|---|
-| Expertise | Internal team has required skills | Specialized expertise not available internally |
-| Cost | Internal is more economical | External is more economical |
-| Schedule | Internal team has available capacity | Faster to procure than to build |
-| Control | High need for direct control | Lower control acceptable |
-| Strategy | Core competency or competitive advantage | Non-core activity |
-| Intellectual property | IP must remain internal | IP can be shared or is not sensitive |
+| Metric | Formula | Interpretation |
+|--------|---------|----------------|
+| PV | `BAC × Planned % Complete` | Budgeted value of planned work |
+| EV | `BAC × Actual % Complete` | Budgeted value of completed work |
+| SV | `EV - PV` | (+) ahead of schedule; (–) behind schedule |
+| CV | `EV - AC` | (+) under budget; (–) over budget |
+| SPI | `EV / PV` | (>1.0) ahead; (<1.0) behind; (=1.0) on track |
+| CPI | `EV / AC` | (>1.0) under budget; (<1.0) over budget |
+| EAC (CPI trend) | `BAC / CPI` | Forecast assuming current efficiency continues |
+| EAC (new estimate) | `AC + ETC` | Forecast using fresh bottom-up estimate |
+| EAC (planned rate) | `AC + (BAC - EV)` | Optimistic forecast; assumes remaining work at planned rate |
+| ETC | `EAC - AC` | Remaining cost to finish |
+| VAC | `BAC - EAC` | (+) projected savings; (–) projected overrun |
+| TCPI (to BAC) | `(BAC - EV) / (BAC - AC)` | Efficiency needed to finish within original budget |
 
 ---
 
-## 5. Solicitation Document Comparison
+## Section 3 — Sign Rules and Index Interpretation
 
-| Document | Used When | Selection Basis |
-|---|---|---|
-| RFP (Request for Proposal) | Scope is complex or not fully defined; technical approach matters | Technical solution, management approach, price, past performance |
-| RFQ (Request for Quotation) | Scope is well-defined; primary criterion is price | Price and compliance with specifications |
-| IFB (Invitation for Bid) | Formal public procurement; sealed bids required | Lowest compliant price |
+### The Universal Sign Rule
 
----
+All EVM variances use the same sign convention: negative is bad, positive is good.
 
-## 6. Statement of Work vs. Contract
+- Negative SV: behind schedule (EV < PV — you accomplished less than planned)
+- Negative CV: over budget (EV < AC — you spent more than the work is worth)
+- Negative VAC: projected cost overrun at completion
 
-| Document | Purpose | Contains |
-|---|---|---|
-| Statement of Work (SOW) | Defines the technical work to be performed | Scope, deliverables, acceptance criteria, performance location, standards |
-| Contract | Creates the legal agreement between buyer and seller | SOW, payment terms, schedule, change control, warranties, dispute resolution |
+### The Index Threshold Rule
 
-Both are required. The SOW defines what will be done; the contract establishes the legal obligations.
+All EVM indices use the same threshold: below 1.0 is bad, above 1.0 is good, exactly 1.0 is on target.
 
----
+| SPI Value | Schedule Status | CPI Value | Cost Status |
+|-----------|-----------------|-----------|-------------|
+| > 1.0 | Ahead of schedule | > 1.0 | Under budget |
+| = 1.0 | On schedule | = 1.0 | On budget |
+| < 1.0 | Behind schedule | < 1.0 | Over budget |
 
-## 7. Certification Exam Tips
+### Why CPI Matters Most
 
-**Tip 1 — Fixed-Price = seller risk; Cost-Reimbursable = buyer risk:**
-This is the most-tested procurement concept. If the exam describes a scenario where the buyer wants to limit cost exposure, Fixed-Price is the answer. If scope is unclear and the buyer is willing to pay actual costs, Cost-Reimbursable is the answer.
-
-**Tip 2 — T&M has shared but increasing buyer risk:**
-Time and Material contracts may seem low-risk because billing is incremental, but without a not-to-exceed (NTE) clause, the buyer's total cost is uncapped. T&M is appropriate for short-duration or staff augmentation work where scope cannot be fixed.
-
-**Tip 3 — SOW is not the contract:**
-The Statement of Work is a deliverable definition document attached to the contract. The contract is the legally binding agreement. Exam questions sometimes test whether students know which document defines work scope versus which creates legal obligations.
-
-**Tip 4 — Make-or-buy is a Planning activity:**
-Make-or-buy analysis happens in Plan Procurement Management, not in Conduct Procurements. The decision about whether to buy precedes the decision about how to buy.
-
-**Tip 5 — RFP vs. RFQ:**
-RFP is used when technical approach matters and scope is complex. RFQ is used when scope is defined and price is the primary differentiator. The exam presents scenarios that signal which document is appropriate.
-
-**Tip 6 — Procurement closure requires documentation:**
-A verbal agreement that work is complete does not close a contract. Formal procurement closure requires written confirmation that all deliverables are accepted, all payments are settled, and the contract is formally closed.
-
-**Tip 7 — Control Procurements is Monitoring and Controlling:**
-Students sometimes confuse Control Procurements with Executing. Control Procurements is the process that monitors vendor performance throughout the contract — it belongs in Monitoring and Controlling.
-
-**Tip 8 — Source selection criteria are set before proposals are received:**
-Evaluation criteria must be defined and documented before proposals arrive to ensure objective evaluation and avoid post-hoc rationalization. Setting criteria after receiving proposals is a procurement integrity violation.
+Research on completed projects consistently shows that CPI stabilizes after approximately 20% of the project is complete. A CPI of 0.80 at 20% completion almost never recovers to 1.0 by project end. This makes early CPI readings the most reliable single predictor of final project cost.
 
 ---
 
-## 8. Study Checklist
+## Section 4 — EAC Formula Selection Guide
 
-- [ ] Name the three Procurement Management processes and their process groups
-- [ ] Explain the risk distribution for Fixed-Price, Cost-Reimbursable, and T&M contracts
-- [ ] Distinguish RFP from RFQ from IFB and identify when each is appropriate
-- [ ] Describe the make-or-buy analysis and its output
-- [ ] Explain what a Statement of Work contains and how it relates to the contract
-- [ ] Define procurement closure and explain why formal documentation is required
-- [ ] List three factors that favor making internally vs. buying externally
-- [ ] Complete the Module 10 Lab activity
-- [ ] Take the Module 10 Quiz
+The Project+ exam frequently tests which EAC formula to use based on stated assumptions. Use this decision table.
+
+| Exam Language | EAC Formula | Assumption |
+|---------------|-------------|------------|
+| "Assuming current performance continues" | `BAC / CPI` | Future efficiency equals past efficiency |
+| "Using a new bottom-up estimate" | `AC + ETC` | Past overruns are sunk; fresh estimate for remaining |
+| "Assuming remaining work at planned rate" | `AC + (BAC - EV)` | Past overruns are sunk; future work as originally planned |
+| No assumption stated | `BAC / CPI` | Default — most commonly tested |
+
+---
+
+## Section 5 — Worked Practice Problem
+
+### Problem Setup
+
+The Clearwater Network Modernization project has the following data at the end of month 4:
+
+- Total project budget: $800,000
+- Planned completion at month 4: 35%
+- Actual completion at month 4: 28%
+- Actual spending at month 4: $230,000
+
+### Step 1 — Calculate Base Values
+
+- BAC = $800,000
+- `PV = $800,000 × 0.35 = $280,000`
+- `EV = $800,000 × 0.28 = $224,000`
+- AC = $230,000
+
+### Step 2 — Calculate Variances
+
+- `SV = EV - PV = $224,000 - $280,000 = -$56,000` — behind schedule
+- `CV = EV - AC = $224,000 - $230,000 = -$6,000` — over budget
+
+### Step 3 — Calculate Indices
+
+- `SPI = EV / PV = $224,000 / $280,000 = 0.80`
+- `CPI = EV / AC = $224,000 / $230,000 = 0.974` (approximately 0.97)
+
+### Step 4 — Forecast
+
+- `EAC = BAC / CPI = $800,000 / 0.974 = $821,355`
+- `ETC = EAC - AC = $821,355 - $230,000 = $591,355`
+- `VAC = BAC - EAC = $800,000 - $821,355 = -$21,355`
+
+### Interpretation
+
+The project is significantly behind schedule (SPI 0.80 — only 80% of planned work accomplished). Cost efficiency is slightly below target (CPI 0.97 — getting 97 cents of value per dollar spent). The schedule problem is more severe than the cost problem. Forecasted overrun at completion is approximately $21,355 if current cost efficiency continues.
+
+---
+
+## Section 6 — EVM Status Interpretation Matrix
+
+| SPI | CPI | Project Status |
+|-----|-----|----------------|
+| > 1.0 | > 1.0 | Ahead of schedule and under budget — ideal |
+| > 1.0 | < 1.0 | Ahead of schedule but over budget — cost problem |
+| < 1.0 | > 1.0 | Behind schedule but under budget — schedule problem |
+| < 1.0 | < 1.0 | Behind schedule and over budget — serious concern |
+| = 1.0 | = 1.0 | Perfectly on track — uncommon in practice |
+
+---
+
+## Section 7 — Project+ Exam Tips
+
+**Tip 1 — EV is the key variable in every formula:**
+EV appears in SV, CV, SPI, and CPI. If you can identify EV correctly, you can calculate every other metric. EV = `BAC × actual % complete` — always convert percentage to dollars using BAC.
+
+**Tip 2 — Negative variance equals bad; index below 1.0 equals bad:**
+This single rule applies to every EVM metric without exception. Memorize it and apply it mechanically when checking your answer's reasonableness.
+
+**Tip 3 — AC is just spending — it has no "earned" component:**
+Students frequently confuse EV and AC. AC comes from the accounting system and reflects money paid out. EV is a calculated value based on completed scope. They are equal only when cost efficiency is exactly 1.0.
+
+**Tip 4 — Match the EAC formula to the stated assumption:**
+"Current performance continues" = `BAC / CPI`. "New estimate provided" = `AC + ETC`. "Remaining work at original planned rate" = `AC + (BAC - EV)`. The exam will specify the assumption — read carefully.
+
+**Tip 5 — SV and CV both start with EV minus something:**
+`SV = EV - PV` (EV minus Planned Value). `CV = EV - AC` (EV minus Actual Cost). Keep EV in the first position always.
+
+**Tip 6 — SPI and CPI both start with EV divided by something:**
+`SPI = EV / PV`. `CPI = EV / AC`. EV is always the numerator.
+
+**Tip 7 — TCPI above 1.0 means difficult remaining target:**
+A TCPI of 1.20 means you need to work 20% more efficiently than you have been to meet the budget target. A TCPI well above 1.0 late in the project is often a signal that the budget target is unrealistic.
+
+**Tip 8 — VAC is BAC minus EAC, not the other way around:**
+`VAC = BAC - EAC`. If EAC > BAC, VAC is negative (overrun). Students sometimes reverse this and get the wrong sign.
+
+---
+
+## Section 8 — Study Checklist
+
+- [ ] Define PV, EV, and AC in your own words without using abbreviations
+- [ ] Write the formulas for SV, CV, SPI, and CPI from memory
+- [ ] State the sign rule for all variances and the threshold rule for all indices
+- [ ] List three EAC formulas and identify when each applies
+- [ ] Write the formulas for ETC and VAC from memory
+- [ ] Work through the Clearwater practice problem without looking at the solution
+- [ ] Interpret the four SPI/CPI combinations from the status matrix
+- [ ] Complete the Module 10 Lab spreadsheet exercise
+- [ ] Take the Module 10 Quiz (10 questions, EVM focus)
 - [ ] Post Module 10 Discussion initial response by Wednesday at 11:59 PM

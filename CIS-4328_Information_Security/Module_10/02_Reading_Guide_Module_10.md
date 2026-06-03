@@ -1,49 +1,252 @@
-# Reading Guide: Module 10 - Wireless and Mobile Security
-## Course: CIS-4328_Information_Security (CompTIA Security+ SY0-701)
+# Reading Guide: Module 10 — Application Security
+
+## Course: CIS-4328 Information Security
+
+**Certification Alignment:** CompTIA Security+ (SY0-701)
 
 ---
 
-### Introduction
-Welcome to **Module 10 – Wireless and Mobile Security**! Wireless networks and mobile devices introduce unique attack surfaces that differ from wired infrastructure. SY0-701 tests wireless security in Domain 3 (Security Architecture) and Domain 4 (Security Operations) — expect scenario questions on selecting the correct Wi-Fi security protocol, identifying wireless attack types, and securing mobile device deployments.
+## Overview
+
+This reading guide supports Module 10: Application Security. You will study the OWASP Top 10, the secure software development lifecycle, testing methodologies, and code signing. These topics map to Security+ Domain 4 (Application Security) and appear throughout real-world security assessments and breach investigations.
+
+**Estimated reading and study time:** 2.5 to 3 hours
 
 ---
 
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
+## Learning Objectives
 
-*   **WPA3 (Wi-Fi Protected Access 3)**: The current generation Wi-Fi security standard, replacing WPA2. WPA3-Personal uses Simultaneous Authentication of Equals (SAE) instead of the Pre-Shared Key (PSK) handshake, eliminating offline dictionary attacks against captured handshakes. WPA3-Enterprise uses 192-bit cryptographic strength. SY0-701 tests WPA3 as the correct answer whenever the question asks for the strongest or most current wireless security protocol.
-*   **Evil Twin Attack**: A wireless attack in which an attacker deploys a rogue access point with the same SSID (network name) as a legitimate network, tricking nearby devices into connecting to the attacker's AP instead. Once connected, all traffic flows through the attacker, enabling credential theft and man-in-the-middle interception. Mitigation includes 802.1X certificate-based authentication and VPN enforcement on untrusted networks.
-*   **Deauthentication (Deauth) Attack**: A wireless denial-of-service attack that exploits the unauthenticated management frames in 802.11 by sending forged deauthentication frames to disconnect legitimate clients from an access point. The disconnected clients may then reconnect to an evil twin. WPA3 and 802.11w (Management Frame Protection) protect against deauth attacks by authenticating management frames.
-*   **Mobile Device Management (MDM)**: A software platform that allows IT administrators to remotely configure, monitor, enforce security policies on, and wipe mobile devices (smartphones, tablets) enrolled in the corporate environment. MDM capabilities tested on SY0-701 include remote wipe, containerization (separating corporate and personal data), geofencing, screen lock enforcement, and application allowlisting.
-*   **Bluetooth Attack Types**: SY0-701 tests three Bluetooth attacks: Bluejacking — unsolicited messages sent to a discoverable device (nuisance, not a data theft attack); Bluesnarfing — unauthorized access to data (contacts, emails, calendar) on a Bluetooth device without pairing consent; Bluebugging — full remote control of a device's functions (calls, messages) via a Bluetooth exploit. Mitigation: disable Bluetooth when not in use; use non-discoverable mode.
-*   **BYOD (Bring Your Own Device) Security**: A mobile security policy model where employees use personal devices for work. BYOD introduces risks of mixing personal and corporate data, loss of corporate data when employees leave, and unmanaged device vulnerabilities. Security controls include MDM enrollment, containerization, network access control (NAC), and acceptable use policies that define what the organization can and cannot do to a personal device.
+By the end of this module you should be able to:
 
----
-
-### 2. Certification Exam Tips
-*   **Domain Weight:** Wireless and mobile security falls under **Domain 3 – Security Architecture (18%)** and **Domain 4 – Security Operations (28%)** of SY0-701. Expect scenario questions comparing Wi-Fi security protocols and selecting MDM controls for a given mobile risk.
-*   **Wireless Protocol Order:** WEP (broken, never use) → WPA (TKIP, deprecated) → WPA2 (AES/CCMP, acceptable) → WPA3 (SAE, current standard). If a question asks for the strongest available protocol, WPA3 is correct. If a legacy device cannot support WPA3, WPA2-AES is the next best choice — never WEP or WPA-TKIP.
-*   **Evil Twin vs. Rogue AP:** A rogue AP is any unauthorized access point connected to the corporate network (an insider threat — someone plugging in a cheap AP). An evil twin is an external attacker's AP mimicking a legitimate SSID to capture client connections. Both are detected by wireless intrusion detection systems (WIDS), but they represent different threats.
-*   **MDM Scenario Trap:** Questions about lost/stolen devices test remote wipe. Questions about separating corporate email from personal apps test containerization. Questions about restricting device use to a geographic area test geofencing. Match the control to the specific risk described.
-*   **Study Resource:** Professor Messer's free [CompTIA Security+ SY0-701 study notes and video course](https://www.professormesser.com/) include wireless protocol comparison tables, Bluetooth attack summaries, and MDM policy scenarios that map directly to SY0-701 exam questions.
+- Identify and describe each of the ten OWASP Top 10 vulnerability categories.
+- Explain the mechanisms behind injection, XSS, IDOR, and SSRF attacks.
+- Compare static application security testing (SAST) and dynamic application security testing (DAST).
+- Describe the phases of a secure software development lifecycle.
+- Explain what code signing proves and what it does not prove.
+- Identify security controls appropriate for each OWASP category.
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the "Wireless and Mobile Security" section in the OER Textbook: [Professor Messer's CompTIA Security+ SY0-701 Study Notes](https://www.professormesser.com/). Focus on Wi-Fi protocol evolution, wireless attack types, and mobile device management controls.
-*   **Required Video:** Watch the wireless and mobile security video lectures in [Professor Messer's SY0-701 Course Playlist on YouTube](https://www.youtube.com/playlist?list=PLG49S3nxzAnl4Q7y9umx51bbtILyD4Syy). The videos include network diagrams showing evil twin attack flows and MDM architecture in enterprise deployments.
+## Required Reading
+
+### OER Textbook Sections
+
+Refer to the ZTC_OER_Reading_Materials list for open-access chapter links. For this module read:
+
+- **OWASP Top 10 2021** — Full document (free at owasp.org/Top10)
+- **OWASP Testing Guide v4.2** — Chapter 1: Introduction to the OWASP Testing Guide
+- **NIST SP 800-64** — Security Considerations in the System Development Life Cycle, Sections 2 and 3
+- **Professor Messer Security+ SY0-701 Study Guide** — Domain 4 sections on application security
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will analyze wireless network configurations, identify insecure protocols in a simulated environment, and evaluate MDM policy settings for a BYOD scenario. Recognizing weak wireless configurations and selecting appropriate remediation is a direct SY0-701 performance-based question skill.
+## Section A — OWASP Top 10 (2021)
+
+The OWASP Top 10 is the industry-standard reference for web application security risk. The 2021 edition reflects data from thousands of organizations and hundreds of security firms. Each category has an assigned identifier (A01 through A10), example attack scenarios, and recommended countermeasures.
+
+### A01 — Broken Access Control
+
+Access control enforces the rule that authenticated users may only access resources and perform actions within their intended permissions. Broken Access Control moved to number one in 2021, appearing in 94 percent of applications tested. The key subtypes are:
+
+- **Vertical privilege escalation**: A regular user accesses admin functions.
+- **Horizontal privilege escalation / IDOR**: A user accesses another user's resources by manipulating an ID in the request.
+- **Forced browsing**: Accessing URLs that are not linked but are accessible without authorization.
+
+The primary countermeasure is server-side enforcement of access control checks on every protected resource, every time.
+
+### A02 — Cryptographic Failures
+
+This category captures failures in protecting data in transit and at rest. Key failure modes include:
+
+- Transmitting sensitive data over HTTP (unencrypted).
+- Using deprecated algorithms: MD5, SHA-1, DES, 3DES, RC4.
+- Storing passwords as plain text or reversibly encrypted rather than using one-way hashing with a salt.
+- Generating weak random values for cryptographic functions.
+
+Current recommendations include TLS 1.2 or 1.3 for transport, bcrypt or Argon2 for password hashing, and AES-256-GCM for symmetric encryption of stored sensitive data.
+
+### A03 — Injection
+
+Injection flaws occur when the interpreter cannot distinguish between code/commands and data. Subtypes include SQL injection, LDAP injection, OS command injection, and template injection.
+
+Parameterized queries are the primary defense against SQL injection. The key principle is that user-supplied data must never be directly concatenated into query or command strings.
+
+### A04 — Insecure Design
+
+Insecure design covers architectural weaknesses that no implementation fix can fully address. Threat modeling during the design phase is the countermeasure. The STRIDE methodology — Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege — provides a structured approach to identifying design-level threats.
+
+### A05 — Security Misconfiguration
+
+This category spans all layers of the stack: network, platform, web server, application server, database, and framework. Common misconfigurations include:
+
+- Default credentials on databases, admin panels, or network devices.
+- Directory listing enabled on web servers.
+- Verbose error messages or stack traces exposed to users.
+- Overly permissive cloud storage policies (public S3 buckets).
+- Unnecessary features, ports, or services enabled.
+
+Automated configuration management and hardening baselines are the primary countermeasures.
+
+### A06 — Vulnerable and Outdated Components
+
+Applications depend on third-party libraries, frameworks, and runtime environments. Each dependency may carry known vulnerabilities. Key concepts:
+
+- **CVE (Common Vulnerabilities and Exposures)**: A public list of known software vulnerabilities maintained by MITRE.
+- **CVSS (Common Vulnerability Scoring System)**: A numerical score (0–10) that rates the severity of CVEs.
+- **SBOM (Software Bill of Materials)**: A formal list of all components in a software product, enabling rapid identification of affected systems when new CVEs are published.
+
+### A07 — Identification and Authentication Failures
+
+Authentication failures include weak password policies, missing multi-factor authentication, broken session management, and insecure credential storage. Two specific attack types to know:
+
+- **Credential stuffing**: Using lists of known username/password pairs from previous breaches to automate login attempts against other sites.
+- **Session fixation**: An attacker establishes a known session token and tricks the victim into using it, gaining access after the victim authenticates.
+
+### A08 — Software and Data Integrity Failures
+
+This category covers scenarios where applications rely on plugins, libraries, or updates from untrusted sources without integrity verification. Supply chain attacks, where malicious code is inserted into the software build or distribution process, fall under this category.
+
+Subresource Integrity (SRI) is a browser mechanism that verifies the integrity of externally loaded JavaScript by comparing a cryptographic hash in the HTML tag to the actual file hash.
+
+### A09 — Security Logging and Monitoring Failures
+
+Without adequate logging, breaches go undetected for extended periods. Effective logging requires:
+
+- Recording all authentication attempts (success and failure).
+- Capturing the source IP, timestamp, and user identity for all security-relevant events.
+- Storing logs on a separate, protected system the application cannot modify.
+- Alerting on anomalous patterns in near real-time.
+
+A SIEM (Security Information and Event Management) system centralizes log collection and applies correlation rules to detect threats.
+
+### A10 — Server-Side Request Forgery (SSRF)
+
+SSRF forces the server to make outbound HTTP requests to attacker-chosen destinations. In cloud environments, SSRF frequently targets the instance metadata service (IMDS) at 169.254.169.254 to retrieve IAM credentials. Countermeasures include URL allow-listing, blocking RFC-1918 addresses in outbound requests, and restricting outbound network access from application servers.
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms above and be able to select the correct wireless security protocol and mobile control for any given scenario.
-- [ ] Read the "Wireless and Mobile Security" section in [Professor Messer's SY0-701 Study Notes](https://www.professormesser.com/).
-- [ ] Watch the wireless and mobile security video lectures in [Professor Messer's SY0-701 Course Playlist](https://www.youtube.com/playlist?list=PLG49S3nxzAnl4Q7y9umx51bbtILyD4Syy).
-- [ ] Memorize: WPA3 = SAE, strongest; Evil Twin = rogue SSID clone; Bluesnarfing = data theft via Bluetooth; MDM remote wipe = lost device response.
-- [ ] Proceed to the weekly hands-on lab activity.
+## Section B — Secure Software Development Lifecycle
+
+The Secure SDLC integrates security activities into every phase rather than treating security as a final gate.
+
+### Phase 1 — Requirements
+
+Security requirements are gathered alongside functional requirements. This includes identifying applicable regulations (PCI-DSS for payment card data, HIPAA for health data, GDPR for personal data of EU residents), conducting an initial data classification, and capturing security acceptance criteria for each user story.
+
+### Phase 2 — Design
+
+Threat modeling identifies potential attack vectors before implementation. The output of threat modeling is a list of threats with associated mitigations designed into the architecture. Data flow diagrams (DFDs) identify trust boundaries where data crosses from one zone to another.
+
+Secure design principles applied in this phase:
+
+- **Least privilege**: Components receive only the permissions they require.
+- **Defense in depth**: Multiple layers of controls so no single failure is catastrophic.
+- **Fail-safe defaults**: Default behavior denies access; access must be explicitly granted.
+- **Separation of duties**: No single component or user controls an entire sensitive workflow.
+- **Economy of mechanism**: Simple designs are easier to analyze and secure than complex ones.
+
+### Phase 3 — Development
+
+Secure coding standards provide language-specific guidelines. Peer code review with a security checklist ensures a second developer validates security-relevant code paths. Pre-commit hooks prevent secrets — API keys, passwords, private keys — from entering version control.
+
+### Phase 4 — Testing
+
+Security testing includes SAST, DAST, and penetration testing. Security test cases derived from the threat model are executed alongside functional tests. Acceptance criteria include passing SAST and DAST scans with no critical or high findings.
+
+### Phase 5 — Deployment
+
+Hardened build pipelines sign artifacts and verify integrity before deploying to production. Configuration baselines are applied to infrastructure. Deployment to production requires formal change approval.
+
+### Phase 6 — Maintenance
+
+Vulnerability management monitors CVEs in all components and applies patches within defined SLAs based on severity. Bug bounty or responsible disclosure programs allow external researchers to report vulnerabilities safely.
+
+---
+
+## Section C — SAST vs. DAST
+
+| Attribute | SAST | DAST |
+|---|---|---|
+| What it tests | Source code or compiled binary | Running application |
+| Testing approach | White-box | Black-box |
+| When in SDLC | Early (development, CI) | Late (staging, pre-prod) |
+| Can find | Logic flaws, hardcoded secrets, unsafe functions | Runtime bugs, auth bypasses, injection in live app |
+| Cannot find | Runtime-only issues | Code-level logic errors |
+| Example tools | SonarQube, Checkmarx, Semgrep | OWASP ZAP, Burp Suite, Nikto |
+
+IAST (Interactive Application Security Testing) instruments the application at runtime, combining code-level visibility with runtime context.
+
+---
+
+## Section D — Code Signing
+
+Code signing uses asymmetric cryptography to bind a software publisher's identity to a software artifact.
+
+**Process:**
+
+1. Developer obtains a code-signing certificate from a trusted CA (Comodo, DigiCert, etc.).
+2. Before release, the developer hashes the compiled binary.
+3. The developer encrypts the hash with their private key, producing a digital signature.
+4. The signature and certificate are embedded in or distributed alongside the binary.
+5. End users or operating systems verify the signature by decrypting with the publisher's public key and comparing hashes.
+
+**What code signing guarantees:**
+
+- **Authenticity**: The binary was signed by the holder of the private key.
+- **Integrity**: The binary has not changed since signing.
+
+**What code signing does not guarantee:**
+
+- The software is free of malware or vulnerabilities.
+- The private key has not been compromised.
+
+The SolarWinds supply chain attack illustrates this limitation — attackers signed malicious code with the legitimate SolarWinds key because they compromised the build environment.
+
+---
+
+## Key Terms
+
+- **OWASP**: Open Web Application Security Project
+- **IDOR**: Insecure Direct Object Reference
+- **SSRF**: Server-Side Request Forgery
+- **XSS**: Cross-Site Scripting (reflected, stored, DOM-based)
+- **SQL Injection**: Injection of SQL code through unsanitized input
+- **Parameterized query**: A query that separates code from data, preventing injection
+- **SAST**: Static Application Security Testing (white-box)
+- **DAST**: Dynamic Application Security Testing (black-box)
+- **IAST**: Interactive Application Security Testing
+- **Threat modeling**: Structured analysis of threats during design phase
+- **STRIDE**: Spoofing, Tampering, Repudiation, Information Disclosure, DoS, Elevation of Privilege
+- **SBOM**: Software Bill of Materials
+- **CVE**: Common Vulnerabilities and Exposures
+- **CVSS**: Common Vulnerability Scoring System
+- **Code signing**: Digital signature applied to software to prove origin and integrity
+- **DevSecOps**: Development, Security, and Operations integrated practice
+- **Shift left**: Moving security testing earlier in the development lifecycle
+- **SRI**: Subresource Integrity
+- **IMDS**: Instance Metadata Service (cloud metadata endpoint)
+
+---
+
+## Review Questions
+
+1. What is IDOR and what access control check does it bypass?
+2. Explain the difference between reflected XSS and stored XSS.
+3. Why does parameterized querying prevent SQL injection?
+4. What does A08 (Software and Data Integrity Failures) have in common with supply chain attacks?
+5. Compare SAST and DAST: what does each test, when is each applied, and what type of issues does each find?
+6. In a DAST test, what does "black-box" mean?
+7. What two properties does code signing guarantee, and what does it fail to guarantee?
+8. Define "shift left" in the context of application security.
+9. What is a threat model and which phase of the SDLC should it occur in?
+10. Why is A09 (Logging and Monitoring Failures) in the OWASP Top 10 even though it is not an attack technique itself?
+
+---
+
+## Certification Exam Tip
+
+Security+ SY0-701 Domain 4 tests OWASP categories, secure development concepts, and testing methodologies. Pay close attention to the SAST versus DAST comparison — exam questions frequently ask which tool applies to which scenario and what "white-box" versus "black-box" means. Know code signing as a supply chain control and be able to explain its limitations.
+
+---
+
+*End of Reading Guide — Module 10*

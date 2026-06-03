@@ -146,7 +146,7 @@ Automated backups support point-in-time recovery. Manual snapshots persist until
 
 In the lab this week you will explore RDS configuration using the AWS CLI and design a HA database architecture. The Reading Guide has a complete RDS vs. Aurora comparison table, backup strategy reference, and security checklist.
 
-For your certification study: aws.amazon.com/certification.
+For your certification study: <aws.amazon.com/certification>
 
 ---
 

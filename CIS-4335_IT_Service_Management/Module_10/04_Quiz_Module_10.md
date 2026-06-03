@@ -1,77 +1,288 @@
-# Quiz: Module 10 - Service Management Practices - Service Desk
-## Course: CIS-4335_IT_Service_Management (ITIL 4 Foundation)
+# Quiz: Module 10 — Service Level Management and SLAs
+
+## Course: CIS-4335 IT Service Management
+
+## Texas Wesleyan University | Professor Nash
+
+## Total Questions: 10 | Points: 10 (1 pt each)
+
+## Certification Alignment: ITIL 4 Foundation
 
 ---
 
-**Question 1**
-What is the primary purpose of the Service Desk practice in ITIL 4?
-*   A) To investigate the root causes of recurring incidents and implement permanent fixes to prevent recurrence.
-*   B) To capture demand for incident resolution and service requests and serve as the single point of contact between the service provider and users.
-*   C) To authorize and schedule all standard, normal, and emergency changes to IT services and infrastructure.
-*   D) To monitor IT services and infrastructure for events that may indicate a degradation or failure in service quality.
-*   **Correct Answer:** B) The Service Desk serves as the single point of contact between service provider and users, capturing demand for incident resolution and service requests.
-*   **Distractor Analysis:**
-    *   *Why B is correct:* ITIL 4 defines the Service Desk as the practice that captures demand for incident resolution and service requests and communicates status updates and service information to users. Its defining characteristic is providing a single, reliable point of contact for all user interactions with IT services.
-    *   *Why A is incorrect:* Investigating root causes of recurring incidents is the purpose of Problem Management. The Service Desk may raise problem records but does not own root cause analysis.
-    *   *Why C is incorrect:* Authorizing and scheduling changes is the purpose of Change Enablement. The Service Desk may receive and log requests that result in changes, but the authorization process belongs to Change Enablement.
-    *   *Why D is incorrect:* Monitoring services for events is the purpose of Monitoring and Event Management. The Service Desk receives user-reported issues — it does not perform infrastructure monitoring.
+## Instructions
+
+Select the single best answer for each question. Questions are scenario-based and aligned
+to the ITIL 4 Foundation exam style. Each question is followed by the correct answer and
+a distractor analysis explaining why the other options are incorrect.
 
 ---
 
-**Question 2**
-Which of the following most accurately describes the concept of "shift-left" in the context of the ITIL 4 Service Desk practice?
-*   A) A geographic strategy where the Service Desk physically relocates to be closer to the users it supports.
-*   B) A staffing model where Service Desk agents rotate between day and night shifts to provide extended coverage hours.
-*   C) A strategy that moves resolution capability closer to users through self-service options, knowledge articles, and enhanced first-line resolution, reducing the need to escalate to specialist teams.
-*   D) A change management approach where all requests are submitted directly to development teams, bypassing the Service Desk entirely.
-*   **Correct Answer:** C) Shift-left moves resolution capability closer to users through self-service, knowledge articles, and stronger first-line resolution to reduce escalations.
-*   **Distractor Analysis:**
-    *   *Why C is correct:* Shift-left is a deliberate strategy to reduce the cost and time of resolving common issues by empowering users and first-line staff to resolve them without escalation. This includes self-service portals, searchable knowledge bases, and training Service Desk staff to resolve a broader range of issues at first contact.
-    *   *Why A is incorrect:* Shift-left is not a geographic concept — it refers to moving resolution capability in the support hierarchy, not physical relocation of staff.
-    *   *Why B is incorrect:* Shift patterns and extended coverage hours are a staffing and scheduling consideration, not the shift-left strategy. The term "shift" in shift-left refers to shifting work along the support hierarchy, not work schedule shifts.
-    *   *Why D is incorrect:* Bypassing the Service Desk entirely eliminates the single point of contact, which contradicts Service Desk practice principles. Shift-left enhances the Service Desk — it does not remove it from the process.
+### Question 1
+
+An IT service provider has agreed with a hospital client that the patient records system
+will be available 99.9% of the time each month. This agreement is documented and signed
+by both the IT Director and the hospital's Chief Operating Officer.
+
+Which ITIL 4 term BEST describes this agreement?
+
+- A) Operational Level Agreement (OLA)
+- B) Underpinning Contract (UC)
+- C) Service Level Agreement (SLA)
+- D) Service Level Requirement (SLR)
+
+#### Q1 Correct Answer: C — Service Level Agreement (SLA)
+
+#### Q1 Distractor Analysis
+
+- A (OLA) is incorrect. An OLA is an internal agreement between teams within the same
+  IT organization. This agreement is between the IT provider and an external customer.
+- B (UC) is incorrect. A UC is a contract with a third-party supplier. The hospital is
+  a customer, not a supplier.
+- D (SLR) is incorrect. A Service Level Requirement is the customer's expression of
+  need before an agreement is reached. This is the finalized, signed agreement — an SLA.
 
 ---
 
-**Question 3**
-A global technology company operates in North America, Europe, and Asia-Pacific. It needs 24/7 Service Desk coverage for users across all three regions. The company wants to avoid the high cost of staffing a single large 24/7 center and prefers to use its existing regional offices. Which Service Desk staffing model best fits this requirement?
-*   A) Local Service Desk — place dedicated Service Desk staff at each individual office to serve only that location's users.
-*   B) Centralized Service Desk — consolidate all Service Desk staff into one large center that handles all global users around the clock.
-*   C) Follow-the-Sun — distribute Service Desk teams across regional offices in different time zones so that each team covers the active business hours of its region, providing seamless 24/7 coverage globally.
-*   D) Virtual Service Desk — use technology to present a unified service experience, with agents working remotely from home offices in a single time zone.
-*   **Correct Answer:** C) Follow-the-sun distributes teams across time zones so each covers its region's active hours, providing cost-effective 24/7 global coverage.
-*   **Distractor Analysis:**
-    *   *Why C is correct:* The follow-the-sun model leverages existing regional offices by having each team work standard business hours in its time zone. As one team's day ends, the next region's team takes over, providing continuous 24/7 coverage without requiring any single center to staff overnight shifts.
-    *   *Why A is incorrect:* A local Service Desk at each office provides local coverage but does not inherently provide 24/7 support, and the fragmentation across offices creates duplication and inconsistency.
-    *   *Why B is incorrect:* A centralized model consolidates staff but would require a single location to cover all 24 hours, which is exactly what the company wants to avoid. Centralization does not solve the 24/7 coverage challenge efficiently.
-    *   *Why D is incorrect:* A virtual Service Desk can provide geographic flexibility, but agents working in one time zone still cannot provide true 24/7 coverage without overnight staffing. Virtual staffing addresses location, not time zone coverage.
+### Question 2
+
+A company's SLA promises 99.5% monthly availability for its HR system. In November, the
+system was unavailable for 5.4 hours. November has 720 hours.
+
+What was the actual availability percentage, and was the SLA target met?
+
+- A) 99.25% — SLA breached
+- B) 99.5% — SLA met exactly
+- C) 99.75% — SLA met
+- D) 98.9% — SLA breached
+
+#### Q2 Correct Answer: A — 99.25%, SLA breached
+
+#### Q2 Distractor Analysis
+
+- B is incorrect. The calculation: ((720 − 5.4) / 720) × 100 = 99.25%, which is below
+  the 99.5% target. The SLA was breached.
+- C is incorrect. 99.75% would require only 1.8 hours of downtime. With 5.4 hours
+  of downtime the actual figure is 99.25%.
+- D is incorrect. 98.9% would require approximately 7.9 hours of downtime. The actual
+  downtime was 5.4 hours, producing 99.25%.
 
 ---
 
-**Question 4**
-A user contacts the Service Desk by phone to report that they cannot access the company's payroll application. The Service Desk agent logs the issue, attempts several standard troubleshooting steps, and cannot resolve the problem. The agent escalates the ticket to the Application Support team. Which activity best describes what the Service Desk has performed in this interaction?
-*   A) Problem Management — the Service Desk has identified a recurring issue and escalated it for root cause investigation.
-*   B) Change Enablement — the Service Desk has submitted a change request to restore the payroll application.
-*   C) Service Desk practice — the agent acted as the single point of contact, logged and classified the incident, applied standard troubleshooting, and routed it to the appropriate resolution team.
-*   D) Service Request Management — the user requested access to the payroll application and the Service Desk fulfilled the standard service request.
-*   **Correct Answer:** C) The Service Desk acted as the single point of contact, logged and classified the incident, and routed it appropriately — all core Service Desk activities.
-*   **Distractor Analysis:**
-    *   *Why C is correct:* The scenario describes the core Service Desk activities: receiving a user contact, logging and classifying the issue as an incident, applying first-line troubleshooting, and escalating to the appropriate team when first-line resolution is not possible. This is the Service Desk practice executing its defined role.
-    *   *Why A is incorrect:* Problem Management investigates root causes of recurring incidents. A single report of a payroll access issue does not automatically trigger Problem Management, and the escalation to Application Support is not a root cause investigation.
-    *   *Why B is incorrect:* The Service Desk did not submit a change request. Logging and escalating an incident is an Incident Management activity facilitated by the Service Desk, not a Change Enablement activity.
-    *   *Why D is incorrect:* The user did not request something new — they reported an unplanned inability to access an existing service. That is an incident, not a service request. Service Request Management handles planned, expected requests.
+### Question 3
+
+The service desk team has an internal commitment to the infrastructure team: they will
+provide first-line triage and documentation for all escalated server incidents within
+30 minutes of receipt.
+
+Which ITIL 4 term describes this internal commitment?
+
+- A) Service Level Agreement (SLA)
+- B) Underpinning Contract (UC)
+- C) Operational Level Agreement (OLA)
+- D) Key Performance Indicator (KPI)
+
+#### Q3 Correct Answer: C — Operational Level Agreement (OLA)
+
+#### Q3 Distractor Analysis
+
+- A (SLA) is incorrect. An SLA is between the service provider and a customer. This is
+  an internal commitment between two teams within the same IT organization.
+- B (UC) is incorrect. A UC is with a third-party external supplier. Both the service
+  desk and infrastructure team are internal IT teams.
+- D (KPI) is incorrect. A KPI is a performance measurement metric, not an agreement.
+  This is a documented commitment between teams — an OLA.
 
 ---
 
-**Question 5**
-Which of the following statements about the Service Desk practice in ITIL 4 is CORRECT?
-*   A) The Service Desk is responsible only for logging tickets — all diagnosis and resolution activity is performed exclusively by specialist technical teams.
-*   B) The Service Desk practice applies only to large organizations with dedicated IT departments; small organizations should manage user contacts informally.
-*   C) The Service Desk is a practice that provides a single point of contact for users and handles both incidents and service requests, and its effectiveness is enhanced by empathy, communication skills, and broad service knowledge.
-*   D) The Service Desk must be physically co-located with users and cannot operate remotely or through self-service channels.
-*   **Correct Answer:** C) The Service Desk provides a single point of contact for both incidents and service requests, and is most effective when staff combine empathy, communication skills, and service knowledge.
-*   **Distractor Analysis:**
-    *   *Why C is correct:* ITIL 4 emphasizes that the Service Desk is more than a logging function — it is a human-centered practice that handles both incidents and service requests, manages user expectations, and delivers value through strong communication and empathy alongside technical knowledge. It is also positioned as suitable for organizations of any size.
-    *   *Why A is incorrect:* Modern Service Desks are expected to resolve a broad range of issues at first contact, especially with shift-left strategies. Limiting the Service Desk to logging only undermines its purpose and increases cost.
-    *   *Why B is incorrect:* ITIL 4 does not limit the Service Desk practice to large organizations. Any organization that provides services to users benefits from having a defined single point of contact, regardless of scale.
-    *   *Why D is incorrect:* ITIL 4 explicitly supports virtual and remote Service Desk models, as well as self-service channels. Physical co-location is one option (local staffing model) but is not a requirement of the practice.
+### Question 4
+
+An IT organization's SLA with a manufacturing company promises 99.8% availability for
+the production management system. The IT organization hosts the system on a cloud
+platform whose contract guarantees 99.5% availability.
+
+Which statement BEST describes the risk created by this arrangement?
+
+- A) There is no risk — the cloud provider's 99.5% guarantee is sufficient for any SLA
+- B) The Underpinning Contract does not adequately support the SLA; a cloud outage at
+  or above 0.2% could cause an SLA breach
+- C) The SLA should be revised to 99.5% to match the cloud contract
+- D) This is an OLA misalignment, not a UC issue
+
+#### Q4 Correct Answer: B
+
+#### Q4 Distractor Analysis
+
+- A is incorrect. The 0.3% gap between the UC (99.5%) and the SLA (99.8%) means the
+  provider has committed more to the customer than the supplier has committed to the
+  provider. Any cloud outage exceeding the UC allowance causes an SLA breach.
+- C is incorrect. Revising the SLA down to match the UC would reduce the commitment to
+  the customer. The correct response is to either renegotiate the UC upward or accept
+  the risk knowingly — not automatically reduce customer expectations.
+- D is incorrect. A UC is specifically the contract with a third-party supplier. This is
+  a UC alignment issue, not an OLA issue (which governs internal teams).
+
+---
+
+### Question 5
+
+An IT team discovers at the end of the month that they breached the availability SLA for
+the finance system by 0.4%. The SLA report is scheduled to go out to the customer in
+two weeks. The team resolves the underlying incident and considers waiting until the
+report to inform the customer.
+
+According to ITIL 4 best practice, what should the team do?
+
+- A) Wait for the monthly report — this is the agreed communication channel for SLA results
+- B) Inform the customer of the breach proactively as soon as it is confirmed
+- C) Request that the breach be excluded from this month's report since the system has
+  been restored
+- D) Raise the breach internally only; customers should not be informed of individual
+  breaches
+
+#### Q5 Correct Answer: B
+
+#### Q5 Distractor Analysis
+
+- A is incorrect. Waiting for the monthly report is not consistent with ITIL 4 best
+  practice. Proactive communication when a breach occurs — not when it is scheduled to
+  be reported — is the standard that builds customer trust.
+- C is incorrect. Excluding breach data from SLA reports is dishonest and fundamentally
+  undermines the purpose of service level reporting.
+- D is incorrect. Customers have the right to know when service commitments are not met.
+  Concealing breach information from customers is contrary to every ITIL 4 guiding
+  principle, especially "Be transparent."
+
+---
+
+### Question 6
+
+Which of the following BEST describes the purpose of an Experience Level Agreement (XLA)?
+
+- A) To replace SLAs with user experience targets that eliminate the need for technical
+  measurement
+- B) To measure the quality of user experience as a complement to technical SLA metrics
+- C) To define the experience standards for IT staff during incident response
+- D) To document the agreed experience between IT teams in place of an OLA
+
+#### Q6 Correct Answer: B
+
+#### Q6 Distractor Analysis
+
+- A is incorrect. XLAs complement SLAs — they do not replace them. Technical measurements
+  remain necessary; XLAs add an experience dimension alongside them.
+- C is incorrect. XLAs measure the experience of service consumers (users and customers),
+  not IT staff operations.
+- D is incorrect. XLAs are not internal IT agreements. They measure end-user experience
+  and are relevant to the customer-facing service relationship.
+
+---
+
+### Question 7
+
+A service review meeting agenda includes reviewing performance against SLA targets,
+discussing the previous month's P1 incidents, reviewing upcoming changes that will
+affect the customer, and updating action items.
+
+Which ITIL 4 practice does this meeting belong to?
+
+- A) Incident Management
+- B) Problem Management
+- C) Service Level Management
+- D) Change Enablement
+
+#### Q7 Correct Answer: C — Service Level Management
+
+#### Q7 Distractor Analysis
+
+- A (Incident Management) is incorrect. Incident Management governs the response to
+  individual incidents. The service review meeting is a governance and relationship
+  management activity within SLM.
+- B (Problem Management) is incorrect. Problem Management may be discussed at the meeting
+  (open known errors), but the meeting itself is an SLM governance mechanism.
+- D (Change Enablement) is incorrect. Upcoming changes may be reviewed at the meeting,
+  but the meeting's purpose — assessing service performance and managing the customer
+  relationship — is an SLM function.
+
+---
+
+### Question 8
+
+A customer satisfaction survey asks users: "How easy was it to get your IT issue
+resolved?" on a 1–7 scale. The results are tracked monthly and included in SLA reports.
+
+Which XLA measurement method does this represent?
+
+- A) Net Promoter Score (NPS)
+- B) Customer Effort Score (CES)
+- C) Post-interaction satisfaction survey
+- D) Outcome-based measurement
+
+#### Q8 Correct Answer: B — Customer Effort Score (CES)
+
+#### Q8 Distractor Analysis
+
+- A (NPS) is incorrect. Net Promoter Score asks "How likely are you to recommend IT
+  services to a colleague?" on a 0–10 scale. This question asks about ease of resolution,
+  not likelihood to recommend.
+- C (Post-interaction satisfaction survey) is a broader category that could include many
+  question types. The specific "How easy was it?" framing on a 1–7 scale is the defining
+  characteristic of CES.
+- D (Outcome-based measurement) is incorrect. Outcome-based measurement asks whether the
+  user could complete their work after the resolution — a functional question, not an
+  effort/ease question.
+
+---
+
+### Question 9
+
+Which of the following is NOT a required component of a well-designed SLA according
+to ITIL 4 Service Level Management?
+
+- A) Availability target expressed as a percentage
+- B) Priority-based resolution targets for P1 through P5
+- C) A list of all IT staff responsible for delivering the service
+- D) A breach notification timeline and method
+
+#### Q9 Correct Answer: C
+
+#### Q9 Distractor Analysis
+
+- A is incorrect as a choice — availability targets ARE a required component of an SLA.
+  This option describes something that belongs in an SLA.
+- B is incorrect as a choice — priority-based resolution targets ARE required. SLAs must
+  define response and resolution commitments by priority level.
+- D is incorrect as a choice — breach notification IS required. Customers must know how
+  and when they will be informed of breaches.
+- C is the correct answer because a list of individual IT staff is not an SLA component.
+  SLAs define commitments and governance structures, not personnel rosters. Staff
+  assignments belong in operational documentation, not customer agreements.
+
+---
+
+### Question 10
+
+According to ITIL 4, which of the following BEST describes why OLA targets must be
+tighter than SLA targets?
+
+- A) OLAs are more important than SLAs and therefore require higher standards
+- B) The SLA represents the total available time; OLA targets must leave margin for
+  service desk handling and other activities within the overall resolution window
+- C) OLAs are audited by external bodies; SLAs are only internal documents
+- D) Tighter OLA targets allow IT teams to charge higher prices for their services
+
+#### Q10 Correct Answer: B
+
+#### Q10 Distractor Analysis
+
+- A is incorrect. OLAs and SLAs serve different purposes and neither is inherently more
+  important. The SLA is the customer-facing commitment; OLAs support that commitment
+  internally.
+- C is incorrect. The opposite is true in most organizations — SLAs are external customer
+  agreements that may be subject to audit and contractual penalties. OLAs are internal.
+- D is incorrect. OLA targets are operational performance standards, not pricing mechanisms.
+  They exist to ensure the SLA can be reliably met, not to justify charges.
+
+---
+
+Module 10 Quiz | CIS-4335 IT Service Management | Texas Wesleyan University

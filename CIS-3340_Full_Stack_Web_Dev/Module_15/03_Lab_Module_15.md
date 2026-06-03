@@ -1,37 +1,332 @@
-# Lab Activity: Module 15 - Web Sockets
-## Course: CIS-3340_Full_Stack_Web_Dev (AWS Certified Developer - Associate)
+# Lab 15: Real-Time Project Notifications with Socket.io
+
+## Course: CIS-3340 Full Stack Web Development
+
+## Texas Wesleyan University | Professor Nash
+
+## Estimated Time: 90–120 minutes
 
 ---
 
-## Objective
-Configure and verify systems matching the operational parameters of **Web Sockets**.
+## Objectives
+
+By completing this lab you will:
+
+- Add Socket.io to an Express server that already has REST routes and JWT auth
+- Build a `NotificationPanel` React component that receives live push notifications
+- Authenticate WebSocket connections using JWT in Socket.io middleware
+- Use rooms to scope notifications to individual users
+- Test real-time delivery by opening two browser windows simultaneously
 
 ---
 
 ## Prerequisites
-*   Ensure you have access to a terminal or a runtime environment matching the course requirements (e.g., Linux, macOS, Windows, or a cloud/web terminal).
-*   Ensure you have administrative privileges if required to install packages or configure system services.
+
+- Lab 13 complete (Express API with JWT authentication)
+- Module 15 video and reading guide complete
+- Two terminal windows available (server + React dev server)
 
 ---
 
-## Step-by-Step Instructions
-1. **Configure Socket.io servers**
-   * *Instruction:* Execute this step inside your terminal environment. Verify the command completes without errors.
-2. **Listen to websocket connection event triggers**
-   * *Instruction:* Execute this step inside your terminal environment. Verify the command completes without errors.
-3. **Broadcast events to connected clients**
-   * *Instruction:* Execute this step inside your terminal environment. Verify the command completes without errors.
+## Part 1: Install Socket.io (5 minutes)
+
+### Step 1 — Install server package
+
+In your `lab13-auth` directory (or a copy renamed `lab15-notifications`):
+
+```bash
+npm install socket.io
+```
+
+### Step 2 — Install client package
+
+In your React project (the Vite frontend from Lab 13 or earlier):
+
+```bash
+npm install socket.io-client
+```
 
 ---
 
-## Troubleshooting Guide
-*   *Error:* `Permission Denied`
-    * *Fix:* Remember to run administrative command sequences using `sudo` or execute with administrative privileges (e.g., Run as Administrator on Windows).
-*   *Error:* `Command Not Found`
-    * *Fix:* Verify your environmental path settings, or double-check if the utility package is installed.
+## Part 2: Upgrade the Express Server (20 minutes)
+
+### Step 3 — Wrap app in an http.Server
+
+Open `server.js` (or `app.js` — whichever file calls `app.listen`).
+
+Find this line:
+
+```js
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+```
+
+Replace it with:
+
+```js
+const http = require('http');
+const { Server } = require('socket.io');
+
+const server = http.createServer(app);
+
+// TODO 1: Create the Socket.io Server instance.
+// - Pass `server` as the first argument.
+// - Configure cors with:
+//     origin: process.env.FRONTEND_URL || 'http://localhost:5173'
+//     methods: ['GET', 'POST']
+// Assign the result to a variable named `io`.
+const io = /* YOUR CODE HERE */;
+
+server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+```
+
+### Step 4 — Add Socket.io authentication middleware
+
+Below the `io` declaration, add:
+
+```js
+const jwt = require('jsonwebtoken');
+
+// TODO 2: Add io.use() middleware to authenticate WebSocket connections.
+// - Read the token from socket.handshake.auth.token
+// - If no token is present, call next(new Error('Authentication required'))
+// - Call jwt.verify(token, process.env.JWT_SECRET)
+// - On success: assign the decoded payload to socket.data.user, then call next()
+// - On failure (catch): call next(new Error('Invalid token'))
+io.use((socket, next) => {
+  /* YOUR CODE HERE */
+});
+```
+
+### Step 5 — Add connection handler with user rooms
+
+After the `io.use()` middleware:
+
+```js
+io.on('connection', (socket) => {
+  const user = socket.data.user;
+  console.log(`WS connected: ${user.email} (${socket.id})`);
+
+  // TODO 3: Join a room named after the user's userId so that
+  // notifications can be sent to a specific user.
+  // Use socket.join() with a room name of `user:${user.userId}`.
+  /* YOUR CODE HERE */
+
+  socket.on('disconnect', () => {
+    console.log(`WS disconnected: ${user.email}`);
+  });
+});
+```
+
+### Step 6 — Export `io` for use in route handlers
+
+At the bottom of `server.js`, before `module.exports` (if you have one), add:
+
+```js
+module.exports = { app, server, io };
+```
+
+If `server.js` does not use `module.exports`, you will pass `io` differently in Step 8.
+
+---
+
+## Part 3: Emit Notifications from REST Routes (20 minutes)
+
+### Step 7 — Update app.js to accept io
+
+If your routes are in separate files, you need to pass `io` to the route that will emit notifications. The pattern is to attach `io` to the Express `app` object so any route can access it:
+
+In `server.js`, after creating `io`:
+
+```js
+app.set('io', io);
+```
+
+In any route handler that needs to emit:
+
+```js
+const io = req.app.get('io');
+```
+
+### Step 8 — Emit a notification when a new project note is created
+
+Open `routes/notes.js` (or your equivalent POST route for creating notes or action items).
+
+Find the route handler for `POST /api/notes` (or equivalent). After saving the new item successfully, add:
+
+```js
+// TODO 4: Emit a real-time notification to the note's target user.
+// - Get io: const io = req.app.get('io')
+// - Emit to room `user:${targetUserId}` (use the userId of the note's owner)
+// - Event name: 'new_notification'
+// - Payload: { type: 'NOTE_CREATED', message: 'A new note was added to your project', projectId, createdAt: new Date().toISOString() }
+/* YOUR CODE HERE */
+```
+
+If your API does not have a notes route, use the POST /api/students or POST /api/books route from a previous lab and emit a notification to the currently authenticated user (`req.user.userId`).
+
+---
+
+## Part 4: Create the Socket Singleton (10 minutes)
+
+### Step 9 — Create src/socket.js in your React project
+
+```js
+// src/socket.js
+import { io } from 'socket.io-client';
+
+const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || 'http://localhost:3000';
+
+// TODO 5: Create the socket instance.
+// - Call io(SOCKET_URL, { autoConnect: false })
+// - This prevents a connection before the user logs in.
+// Export the result as a named export `socket`.
+export const socket = /* YOUR CODE HERE */;
+```
+
+### Step 10 — Update .env.development
+
+Add to your Vite `.env.development` file:
+
+```text
+VITE_SOCKET_URL=http://localhost:3000
+```
+
+---
+
+## Part 5: Build the NotificationPanel Component (25 minutes)
+
+### Step 11 — Create src/components/NotificationPanel.jsx
+
+```jsx
+// src/components/NotificationPanel.jsx
+import { useState, useEffect } from 'react';
+import { socket } from '../socket';
+
+// TODO 6: Complete the NotificationPanel component.
+// Requirements:
+// - Accept a `token` prop (the user's JWT from localStorage or auth context)
+// - On mount:
+//     a) Set socket.auth = { token } so the server can authenticate the connection
+//     b) Call socket.connect()
+//     c) Register a listener for 'new_notification' that prepends the new notification
+//        to the notifications array using the functional updater form:
+//        setNotifications(prev => [data, ...prev])
+// - On unmount:
+//     a) Call socket.off('new_notification')
+//     b) Call socket.disconnect()
+// - Render a list of notifications. Each item shows notification.message and notification.createdAt.
+// - If notifications.length === 0, render <p>No notifications</p>
+
+function NotificationPanel({ token }) {
+  const [notifications, setNotifications] = useState([]);
+
+  useEffect(() => {
+    /* YOUR CODE HERE */
+  }, [token]);
+
+  return (
+    <div className="notification-panel">
+      <h3>Notifications</h3>
+      {/* YOUR JSX HERE */}
+    </div>
+  );
+}
+
+export default NotificationPanel;
+```
+
+### Step 12 — Add connection status indicator
+
+Extend `NotificationPanel` to track whether the socket is connected:
+
+```jsx
+// TODO 7: Add a connected state variable (useState(false)).
+// - Register socket.on('connect', ...) to set connected to true
+// - Register socket.on('disconnect', ...) to set connected to false
+// - Register socket.on('connect_error', (err) => console.error('WS auth failed:', err.message))
+// - Clean up all three listeners in the useEffect return function
+// - Render a status badge: if connected show a green dot and "Live", else a grey dot and "Offline"
+```
+
+---
+
+## Part 6: Wire NotificationPanel into the App (10 minutes)
+
+### Step 13 — Add NotificationPanel to App.jsx
+
+In your `App.jsx` (or wherever the authenticated layout lives):
+
+```jsx
+import NotificationPanel from './components/NotificationPanel';
+
+// In your JSX, after the user is authenticated:
+{user && <NotificationPanel token={localStorage.getItem('token')} />}
+```
+
+---
+
+## Part 7: Testing (15 minutes)
+
+### Step 14 — Manual test sequence
+
+Start both servers:
+
+```bash
+# Terminal 1 — Express server
+npm run dev
+
+# Terminal 2 — React dev server
+npm run dev
+```
+
+Open two browser windows. Log in as the same user in both windows. In one window, create a new note (or trigger the POST route from Step 8). Verify the notification appears in the `NotificationPanel` in **both** windows within 1–2 seconds without refreshing.
+
+### Step 15 — Test authentication rejection
+
+In the browser console of a logged-in window, run:
+
+```js
+socket.disconnect();
+socket.auth = { token: 'invalid.token.here' };
+socket.connect();
+```
+
+The `NotificationPanel` status badge should show "Offline" and the server console should log the rejected connection attempt.
+
+### Expected Behavior
+
+| Action | Expected result |
+|---|---|
+| User logs in, NotificationPanel mounts | Status badge shows "Live" (green) |
+| POST request creates a note | `new_notification` event received; notification appears without refresh |
+| Two windows open for same user | Both windows receive the notification |
+| Invalid token used | `connect_error` logged; status shows "Offline" |
+| Component unmounts (navigate away) | `socket.disconnect()` called; no active connection |
 
 ---
 
 ## Deliverables
-1. Document your completed steps with screenshots or terminal output logs showing successful execution.
-2. Submit your completion report to your Canvas LMS assignment portal for grading.
+
+Submit your project zip (excluding `node_modules`). Required files:
+
+1. `server.js` — Socket.io Server creation, `io.use()` auth middleware, `connection` handler with room join (TODOs 1–3)
+2. Route file with notification emit (TODO 4)
+3. `src/socket.js` — singleton socket instance (TODO 5)
+4. `src/components/NotificationPanel.jsx` — connection, listener, cleanup, status badge (TODOs 6–7)
+5. Screenshot or screen recording showing a notification appearing in two browser windows simultaneously
+
+---
+
+## Grading Rubric
+
+| Criterion | Points |
+|---|---|
+| Socket.io Server created with CORS config and http.Server wrapping | 15 |
+| `io.use()` middleware authenticates token and rejects invalid tokens | 20 |
+| User joins personal room on connection | 10 |
+| POST route emits `new_notification` to correct user room | 15 |
+| `socket.js` singleton with `autoConnect: false` | 10 |
+| `NotificationPanel` connects, listens, and cleans up correctly | 20 |
+| Status badge reflects live/offline state | 5 |
+| Two-window screenshot demonstrates real-time delivery | 5 |
+| **Total** | **100** |

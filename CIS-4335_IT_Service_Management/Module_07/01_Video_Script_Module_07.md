@@ -1,192 +1,361 @@
-# Video Script: Module 07 — Service Management Practices: Change Enablement
+# Video Script: Module 07 — The Service Value Chain
 
-**Course:** CIS-4335 IT Service Management — Texas Wesleyan University
-**Instructor:** Professor Nash
-**Estimated Duration:** 20–24 minutes
-**Certification Alignment:** ITIL 4 Foundation
+## Course: CIS-4335 IT Service Management
 
----
+## Texas Wesleyan University | Professor Nash
 
-## Section 1: Introduction (approximately 2 minutes)
+## Estimated Duration: 20–24 minutes
 
-Welcome back to CIS-4335. I am Professor Nash, and this is Module 07: Change Enablement.
-
-If you have ever seen an IT team bring down a production system on a Friday afternoon trying to apply a routine patch, you already understand why Change Enablement exists. Change is one of the most common sources of service disruption in IT — and it is also one of the most necessary activities. Systems need patches. Configurations need updating. New features need deploying. The question is never whether to change. The question is how to change safely.
-
-This module covers one of the most heavily tested topics on the ITIL 4 Foundation exam. Change Enablement is almost certain to appear in multiple exam questions. By the end of this session, you will know the purpose of the practice, the three types of changes, the role of the Change Advisory Board, and how Change Enablement connects to Deployment Management and Release Management.
-
-Let us get started.
+## Certification Alignment: ITIL 4 Foundation
 
 ---
 
-## Section 2: What Is Change Enablement? (approximately 3 minutes)
+## Introduction (0:00–1:30)
 
-ITIL 4 defines the purpose of Change Enablement as maximizing the number of successful IT and service changes by ensuring that risks are properly assessed, authorizing changes to proceed, and managing the change schedule.
+Welcome back to CIS-4335 IT Service Management. I'm Professor Nash, and today we are
+diving into one of the most important structural models in the entire ITIL 4 framework:
+the **Service Value Chain**.
 
-There are three key ideas in that definition. First: maximize successful changes. Not minimize changes. Not eliminate risk. Maximize success. ITIL 4 is not trying to stop organizations from changing — it is trying to help them change safely and effectively.
+If you have been following along, you know that ITIL 4 introduced the Service Value System,
+or SVS. The Service Value Chain sits at the heart of that system. It is the operating model
+that describes how demand from customers is converted into real, tangible value.
 
-Second: risks are properly assessed. Every change carries some risk. Even a simple password reset carries a small risk of error. Change Enablement requires that those risks be understood before the change is authorized. The level of risk determines what kind of assessment is needed.
+Think of it as the engine inside the car. The SVS is the car. The Service Value Chain is
+the engine that makes it move.
 
-Third: manage the change schedule. Not all changes can happen at the same time without conflict. A change schedule coordinates when changes will occur, who is responsible, and how they relate to other changes already planned.
+[SHOW DIAGRAM: ITIL 4 Service Value System overview — highlight the Service Value Chain in the center]
 
-[SHOW DIAGRAM]
+By the end of this module, you will be able to name and describe all six activities of the
+Service Value Chain, explain how they interconnect, trace how demand flows through the chain
+to produce value, and understand the concept of value streams. These are all testable topics
+on the ITIL 4 Foundation exam.
 
-Let me also address terminology. In ITIL v3, this practice was called Change Management. In ITIL 4, the name changed to Change Enablement. The shift in language is intentional — ITIL 4 frames the practice as enabling change rather than managing (or gatekeeping) it. The word "enablement" signals that the practice is designed to support successful change, not block it.
-
----
-
-## Section 3: What Is a Change? (approximately 2 minutes)
-
-Before we go further, let us be precise about what ITIL 4 means by a change.
-
-A change is the addition, modification, or removal of anything that could have a direct or indirect effect on services.
-
-Notice how broad that definition is. A change is not just a code deployment or a server upgrade. It includes changes to configurations, to network settings, to documentation, to processes — anything that could affect a service directly or indirectly.
-
-This breadth matters because it means Change Enablement must be applied broadly. A configuration change to a firewall rule can take down a service just as effectively as a botched software deployment. Both require assessment before implementation.
+[PAUSE]
 
 ---
 
-## Section 4: The Three Types of Changes (approximately 5 minutes)
+## Section 1: What Is the Service Value Chain? (1:30–4:00)
 
-ITIL 4 identifies three types of changes. This is the most heavily tested area of Change Enablement on the exam, so pay close attention.
+The Service Value Chain is a flexible operating model for creating, delivering, and
+continually improving services. ITIL 4 defines it as a set of **six interconnected activities**
+that together transform inputs — demand, resources, components — into outputs and ultimately
+into value for customers and stakeholders.
 
-### Standard Changes
+The six activities are:
 
-A standard change is a pre-authorized, low-risk, well-understood change that follows a documented procedure. Because the risk and the steps have already been assessed and formally approved, standard changes do not require individual authorization each time they are performed.
+- **Plan**
+- **Improve**
+- **Engage**
+- **Design and Transition**
+- **Obtain/Build**
+- **Deliver and Support**
 
-Examples of standard changes: adding a new user account, resetting a password, applying a tested security patch from a pre-approved patch list, upgrading a browser to the current supported version.
+[SHOW DIAGRAM: The six SVC activities arranged in the ITIL 4 oval chain diagram]
 
-The key characteristic is pre-authorization. Someone — the appropriate change authority — has already reviewed the risk and the procedure and said: whenever this situation arises, you may proceed with this documented approach without coming back to us for individual approval. Standard changes are handled efficiently precisely because the hard work of assessment was done upfront, once, when the change type was established.
+Here is the critical insight that separates ITIL 4 from ITIL v3: these activities are **not
+a linear pipeline**. They are not Step 1, Step 2, Step 3 in order. Any activity can receive
+inputs from or send outputs to any other activity, depending on the situation.
 
-### Normal Changes
+That flexibility is intentional. It allows the Service Value Chain to support many different
+approaches — Agile, DevOps, Waterfall, or hybrid. You combine the activities in different
+sequences to create what ITIL calls **value streams**.
 
-A normal change is any change that requires individual assessment and authorization before implementation. Normal changes have not been pre-authorized as a class. Each one must be reviewed on its own merits — scope, risk, timing, potential impact.
+[PAUSE]
 
-The appropriate change authority for a normal change depends on the level of risk and impact. A low-risk, low-impact normal change might be authorized by a single IT manager. A high-risk, high-impact change — such as upgrading a core banking system or migrating a hospital's electronic health record platform — might require review by the Change Advisory Board and authorization by senior IT leadership.
-
-Normal changes are the largest category in most organizations. Not every change is low-risk enough to pre-authorize, and not every change is an emergency.
-
-### Emergency Changes
-
-An emergency change is a change that must be implemented as quickly as possible to resolve a major incident or prevent a critical service failure. The urgency is driven by a real and immediate risk to service continuity or security.
-
-The classic examples: a zero-day vulnerability is actively being exploited; a production database is corrupted and a configuration rollback is needed immediately; a network outage requires an emergency routing change.
-
-Emergency changes still require authorization. ITIL 4 is clear on this point. The process is expedited — often through an Emergency Change Advisory Board or a single senior authority with the power to authorize quickly — but authorization is not skipped. After implementation, the emergency change must be fully documented and reviewed.
-
-[SHOW DIAGRAM]
-
-Let me put these three types side by side so the distinctions are clear.
-
-Standard changes: pre-authorized, low risk, well understood, documented procedure, no individual review required.
-
-Normal changes: individual assessment required, authorization by appropriate authority, level of review depends on risk and impact.
-
-Emergency changes: immediate need, expedited authorization, still authorized before or as close to implementation as possible, full documentation after.
-
-The exam will test whether you can read a scenario and correctly identify which type applies. The signal words are: pre-authorized or routine for standard; requires individual assessment for normal; major incident or critical failure for emergency.
+Let me give you a practical anchor. Imagine a university IT department. Every day, students
+submit help desk tickets, faculty request new software, and administrators need reports. The
+Service Value Chain is the model that describes how IT processes all of those demands —
+from intake to resolution to improvement — as a connected, value-producing system.
 
 ---
 
-## Section 5: The Change Advisory Board (approximately 3 minutes)
+## Section 2: The Activity — Plan (4:00–6:00)
 
-The Change Advisory Board — commonly called the CAB — is a group that provides advisory support to the change authority by reviewing and making recommendations on high-risk or high-impact normal changes.
+Let us walk through each activity in detail, starting with **Plan**.
 
-I want to underline the word advisory. The CAB does not authorize changes. It advises the change authority. The change authority is the individual or group with the actual power to approve or reject the change. The CAB brings expertise and perspective to help that authority make a well-informed decision.
+Plan ensures a shared understanding of the vision, current status, and improvement
+direction for all four dimensions of service management and all products and services.
 
-This distinction shows up on the ITIL 4 Foundation exam with some regularity. If a question says the CAB authorizes changes, that answer is wrong. The CAB advises. The change authority authorizes.
+[SHOW DIAGRAM: Plan activity — inputs and outputs]
 
-Who sits on a CAB? Membership depends on the change being reviewed. For a major infrastructure change, the CAB might include IT infrastructure leads, security staff, the service owner, and a business representative. For a change to a customer-facing application, the CAB might include application owners, the service desk manager, and a customer relationship manager. The CAB is not a fixed standing committee with permanent membership — it is composed of whoever has relevant expertise for the change at hand.
+Think of Plan as the steering wheel. Without it, the other five activities have no direction.
+Plan produces:
 
-For emergency changes, the regular CAB process is too slow. Many organizations maintain an Emergency CAB — a smaller, on-call group of senior decision-makers who can be convened quickly to authorize emergency changes.
+- Portfolios and strategic decisions
+- Architectural and policy decisions
+- Improvement plans
 
----
+Inputs to Plan come from all other activities and from the Governance component of the SVS.
+Demand also flows in — demand is the starting trigger. Stakeholders signal what they need,
+and Plan translates that signal into strategic direction.
 
-## Section 6: The Change Schedule (approximately 2 minutes)
+A key point for the exam: Plan is not just a one-time project kickoff. It is a **continuous
+activity**. As the environment changes, as technology evolves, as stakeholder needs shift,
+the Plan activity recalibrates.
 
-The change schedule is a document that lists all authorized changes and their planned implementation dates. Its purpose is to coordinate changes across the organization, minimize conflicts, and communicate to stakeholders when changes are coming.
-
-Without a change schedule, two teams might independently schedule changes that affect the same system at the same time. Or a high-risk change might be scheduled during a peak business period with no awareness that the business unit has a major customer event that day.
-
-The change schedule serves several purposes: it helps the CAB and change authority identify conflicts before they become incidents; it allows the service desk to anticipate upcoming changes and prepare for potential calls; it communicates planned maintenance to affected users; and it provides a record for post-change review.
-
-In some organizations the change schedule is called the forward schedule of changes (FSC) — you may see this term, especially in contexts that reference ITIL v3.
-
----
-
-## Section 7: Change Enablement and Other Practices (approximately 3 minutes)
-
-Change Enablement does not operate in isolation. It connects directly to several other ITIL 4 practices, and the exam tests your ability to distinguish them.
-
-### Change Enablement vs. Deployment Management
-
-This is the most commonly tested relationship. Change Enablement assesses and authorizes the change. Deployment Management physically moves the change into the live environment.
-
-Think of it this way: Change Enablement is the governance layer. Deployment Management is the execution layer. Change Enablement answers the question: should this change happen, and when? Deployment Management answers the question: how do we actually put it in place?
-
-A change can be authorized by Change Enablement and then handed to Deployment Management for execution. These are two separate activities handled by two separate practices.
-
-### Change Enablement vs. Release Management
-
-Release Management plans and schedules the deployment of new or changed services. It groups changes into releases and manages the sequencing of what goes out when. Change Enablement authorizes the individual changes that make up those releases. They work together: Release Management structures the delivery; Change Enablement governs the risk.
-
-### Change Enablement and Service Configuration Management
-
-Change Enablement depends on knowing the current state of the environment when assessing risk. Service Configuration Management maintains a record of configuration items — the components that make up services — and their relationships. If the configuration data is accurate, Change Enablement can make better-informed risk assessments. If the data is stale or incomplete, risk assessments may miss important dependencies.
-
-[SHOW DIAGRAM]
+[PAUSE]
 
 ---
 
-## Section 8: Applying Guiding Principles to Change Enablement (approximately 2 minutes)
+## Section 3: The Activity — Improve (6:00–8:00)
 
-Let us connect Change Enablement to the Guiding Principles.
+Next is **Improve**. Improve ensures continual improvement of products, services, and
+practices across all value chain activities and the four dimensions of service management.
 
-Focus on Value: Every change should ultimately trace back to a business need or a service improvement. Change for the sake of change adds risk without benefit. The change authority should ask: what value does this change deliver?
+[SHOW DIAGRAM: Improve activity — positioned as touching all other activities with double-headed arrows]
 
-Progress Iteratively with Feedback: Large, sweeping changes carry higher risk than incremental ones. Where possible, changes should be decomposed into smaller, lower-risk increments. Each increment can be assessed, implemented, and reviewed before the next proceeds.
+Improve is the only activity that has a relationship with **every other activity**. It
+literally spans the entire chain. This is ITIL 4's structural commitment to the guiding
+principle "Always improve."
 
-Keep It Simple and Practical: Change Enablement processes should be proportionate to risk. A heavyweight approval process for a standard password reset adds bureaucracy without adding safety. A light-touch process for a major infrastructure change fails to manage real risk. Match the process to the level of risk.
+What does Improve produce?
 
-Optimize and Automate: Many standard changes can be automated. Automated standard changes reduce the risk of human error, increase consistency, and free up human attention for higher-risk decisions.
+- Improvement initiatives and plans
+- Value chain performance information
+- Improvement status reports
 
----
+Improve receives inputs from monitoring data, stakeholder feedback, performance assessments,
+and lessons learned from incidents and problems. It feeds improvement plans back into Plan,
+Engage, Design and Transition, Obtain/Build, and Deliver and Support.
 
-## Section 9: Common Exam Scenarios (approximately 2 minutes)
+A real-world analogy: think of Improve as the quality assurance team that observes every
+department and continuously recommends enhancements. No process is exempt from improvement.
 
-Let me walk through the scenario patterns you will see on the exam.
-
-Scenario pattern one: you are given a description of a change and asked to classify it as standard, normal, or emergency. Apply the criteria we covered. Pre-authorized routine activity equals standard. Requires individual risk assessment equals normal. Active incident or critical failure driving urgency equals emergency.
-
-Scenario pattern two: you are given a situation involving the CAB and asked whether the CAB should approve or authorize. The CAB advises. It never authorizes. If the answer choice says the CAB approves the change, that answer is wrong.
-
-Scenario pattern three: a scenario describes an activity — such as physically rolling out new software to desktops — and asks whether that is Change Enablement or Deployment Management. If the scenario is about authorizing or assessing, it is Change Enablement. If it is about executing the physical or technical move into production, it is Deployment Management.
-
-Scenario pattern four: an emergency patch is needed immediately. The question asks what should happen. The answer is: classify as emergency change, obtain expedited authorization (ECAB or senior authority), implement, then document and review. You do not skip authorization. You do not wait for the regular CAB cycle. You do not implement first and document later without obtaining any authorization.
-
----
-
-## Section 10: Module Summary (approximately 1 minute)
-
-Let me summarize what we covered today.
-
-Change Enablement's purpose is to maximize successful changes through risk assessment, authorization, and schedule management.
-
-A change is the addition, modification, or removal of anything that could directly or indirectly affect services.
-
-There are three types of changes: standard (pre-authorized, low-risk), normal (individual assessment required), and emergency (expedited authorization for critical situations).
-
-The CAB is an advisory body — it provides recommendations to the change authority, which holds the actual authorization power.
-
-The change schedule coordinates authorized changes to prevent conflicts and communicate to stakeholders.
-
-Change Enablement authorizes; Deployment Management executes.
-
-Complete the reading guide, then work through the lab. The lab will ask you to classify a set of proposed changes, draft a change record for a normal change, and analyze which scenarios require CAB involvement. These are exactly the kinds of analysis the ITIL 4 Foundation exam expects you to perform.
-
-See you in the discussion forum.
+[PAUSE]
 
 ---
 
-End of Module 07 Video Script
+## Section 4: The Activity — Engage (8:00–10:00)
+
+**Engage** provides a good understanding of stakeholder needs, transparency, and continual
+engagement and good relationships with all stakeholders.
+
+[SHOW DIAGRAM: Engage activity — two-way arrows to external stakeholders outside the SVC boundary]
+
+Engage is the front door of the Service Value Chain. All external stakeholder input —
+customer requirements, user feedback, partner communications, supplier contracts — enters
+the chain through Engage.
+
+Engage produces:
+
+- Consolidated stakeholder requirements passed to Design and Transition
+- Service requests routed to Deliver and Support
+- Contract and agreement input sent to Obtain/Build
+- Feedback and performance information sent to Improve
+
+Key point: Engage handles **demand** from customers and users. When a user calls the service
+desk, that is Engage in action. When a product manager interviews stakeholders to understand
+what they need, that is Engage. When IT communicates service status back to the business,
+that is also Engage.
+
+[PAUSE]
+
+Engage is two-directional. It is not just about receiving requests — it is about maintaining
+ongoing, transparent relationships so that value expectations are aligned.
+
+For the Foundation exam, remember: Engage is where **demand enters** and where **value is
+communicated back** to stakeholders.
+
+---
+
+## Section 5: The Activity — Design and Transition (10:00–12:30)
+
+**Design and Transition** ensures that products and services continually meet stakeholder
+expectations for quality, costs, and time-to-market.
+
+[SHOW DIAGRAM: Design and Transition — inputs from Engage and Plan, outputs to Obtain/Build and Deliver and Support]
+
+This activity covers everything involved in designing new or changed services and moving
+them into production. It includes:
+
+- Service and solution design
+- Testing and validation
+- Release management
+- Transition planning and documentation
+
+Design and Transition receives requirements from Engage, strategic direction from Plan, and
+components from Obtain/Build. It produces tested, validated, documented service components
+that are ready to be operated and supported.
+
+One thing that surprises students: Design and Transition is **not just IT architecture**.
+It includes process design, workforce planning, supplier agreements, and user documentation.
+All four dimensions must be addressed.
+
+[PAUSE]
+
+A key exam concept: Design and Transition is responsible for ensuring that changes are
+properly assessed, tested, and authorized before moving to production. This is where
+Change Management practices plug into the value chain.
+
+---
+
+## Section 6: The Activity — Obtain/Build (12:30–14:30)
+
+**Obtain/Build** ensures that service components are available when and where they are
+needed and that they meet agreed specifications.
+
+[SHOW DIAGRAM: Obtain/Build — inputs from Design and Transition, outputs flowing back to Design and Transition and forward to Deliver and Support]
+
+This activity is about acquiring or constructing the components that services require —
+hardware, software, cloud services, trained staff, and documentation.
+
+Obtain/Build asks: Should we make it or buy it? Should we build infrastructure in-house or
+procure from a cloud vendor? Should we write custom software or purchase off-the-shelf?
+
+Outputs flow to:
+
+- Design and Transition — for testing and integration
+- Deliver and Support — for operational deployment
+
+Inputs come from:
+
+- Plan — strategic direction and budget alignment
+- Design and Transition — specifications and requirements
+- Engage — contract and supplier requirements from partners
+
+[PAUSE]
+
+Notice that Obtain/Build does not exist in isolation. A component built here must meet
+specifications established in Design and Transition and must serve operational needs in
+Deliver and Support.
+
+---
+
+## Section 7: The Activity — Deliver and Support (14:30–16:30)
+
+**Deliver and Support** ensures that services are delivered and supported according to
+agreed specifications and stakeholders' expectations.
+
+[SHOW DIAGRAM: Deliver and Support — the operational activity closest to the user, with outputs flowing to Engage]
+
+This is the operational heartbeat of IT. Every day, services must run reliably. Incidents
+must be resolved. Service requests must be fulfilled. Users must receive the value they
+were promised.
+
+Deliver and Support receives:
+
+- Service components from Obtain/Build
+- New or changed services from Design and Transition
+- Service requests from Engage
+
+It produces:
+
+- Services delivered to customers and users
+- Resolved incidents and fulfilled requests
+- Operational performance data flowing back to Improve
+
+Key practices that operate within Deliver and Support include Incident Management, Service
+Request Fulfillment, Service Desk, and Monitoring and Event Management. We will explore all
+of these in Module 08.
+
+[PAUSE]
+
+---
+
+## Section 8: Value Streams Explained (16:30–18:30)
+
+Now that you understand each activity, let us talk about **value streams**.
+
+A value stream is a specific combination of value chain activities and practices, carefully
+sequenced to create a particular outcome for a specific stakeholder scenario. Think of it
+as a recipe that uses ingredients from the six SVC activities.
+
+[SHOW DIAGRAM: Two example value streams — one for incident resolution, one for new service deployment]
+
+**Example Value Stream 1 — Incident Resolution:**
+
+1. Engage — User reports an incident through the service desk
+2. Deliver and Support — Service desk logs, diagnoses, and resolves the incident
+3. Improve — Trend data from incidents feeds the improvement register
+
+A simple three-activity stream producing one unit of value: the user's service is restored.
+
+**Example Value Stream 2 — New Service Deployment:**
+
+1. Engage — Stakeholder requirements are gathered
+2. Plan — Strategic decision is made to fund the new service
+3. Obtain/Build — Infrastructure and components are provisioned
+4. Design and Transition — Service is designed, tested, and authorized
+5. Deliver and Support — Service goes live and is operated
+6. Improve — Post-launch performance is monitored and optimized
+
+More complex, but every activity is purposeful.
+
+[PAUSE]
+
+The flexibility of value streams is one of ITIL 4's greatest strengths. Organizations can
+define their own streams to match their unique context, culture, and tools. There is no
+single prescribed sequence. That is a deliberate design choice.
+
+---
+
+## Section 9: Demand and Value Flows (18:30–20:30)
+
+Let us close with the big picture: how **demand** enters the chain and how **value** exits it.
+
+[SHOW DIAGRAM: SVS overview — Demand on the left, Value on the right, Service Value Chain in the center]
+
+Demand flows in from external sources — customers, users, partners — through the Engage
+activity. It also flows internally through the Plan and Improve activities, which generate
+strategic and improvement demands that feed back into the chain.
+
+Value flows out in multiple forms:
+
+- **Outcomes** — the results stakeholders actually care about
+- **Products and services** — the tangible deliverables
+- **Cost reductions** — value delivered through efficiency
+- **Risk reductions** — value delivered through reliability and compliance
+
+Value is co-created. ITIL 4 is emphatic on this point. The service provider does not produce
+value alone. The customer must consume and use the service for value to materialize. A
+perfectly built service that nobody uses creates no value.
+
+[PAUSE]
+
+The entire Service Value Chain is designed around this co-creation principle. Every activity
+contributes to enabling the customer to realize outcomes. Engage aligns expectations. Plan
+provides direction. Obtain/Build and Design and Transition create capable components.
+Improve makes the chain better over time. Deliver and Support keeps promises every day.
+
+---
+
+## Module Summary and Exam Tips (20:30–22:00)
+
+Let us summarize the key points from Module 07.
+
+The Service Value Chain has **six activities**: Plan, Improve, Engage, Design and Transition,
+Obtain/Build, and Deliver and Support.
+
+These activities are **not sequential** — they are interconnected and flexible, allowing
+organizations to design value streams for specific outcomes.
+
+**Demand enters through Engage** from external stakeholders, and through Plan and Improve
+internally. **Value exits** as outcomes, products, services, cost reductions, and risk
+reductions.
+
+**Value streams** are specific sequences of activities and practices designed to produce
+a particular outcome. Every organization designs its own streams for its unique context.
+
+[SHOW DIAGRAM: Summary reference table — six activities, primary purpose, and key inputs/outputs]
+
+For the ITIL 4 Foundation exam, know:
+
+- The name and purpose of each of the six activities
+- That Improve touches all other activities
+- That Engage is the primary interface with external stakeholders
+- The difference between a value stream and the Service Value Chain itself
+- That value is co-created between provider and consumer
+
+[PAUSE]
+
+Next module, Module 08, we move into specific ITIL Management Practices: the Service Desk,
+Incident Management, and Monitoring and Event Management. These practices plug directly
+into the Deliver and Support activity we covered today.
+
+Great work this module. I will see you in Module 08.
+
+---
+
+*End of Module 07 Video Script*
+
+*Estimated delivery: 22 minutes at average instructional pace*

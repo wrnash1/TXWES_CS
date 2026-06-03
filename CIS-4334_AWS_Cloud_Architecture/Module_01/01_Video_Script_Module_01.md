@@ -157,7 +157,7 @@ Region selection factors: compliance first, latency second, service availability
 
 In the lab this week, you will use the AWS CLI to explore Regions and Availability Zones hands-on. In the Reading Guide, you will find detailed exam tips, service comparison tables, and a study checklist.
 
-For your certification study, the official SAA-C03 exam guide and practice resources are available at aws.amazon.com/certification. I will see you in the next module.
+For your certification study, the official SAA-C03 exam guide and practice resources are available at <aws.amazon.com/certification> I will see you in the next module.
 
 ---
 

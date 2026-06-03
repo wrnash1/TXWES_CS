@@ -1,81 +1,243 @@
-# Quiz: Module 08 - Microsoft Entra ID (Azure AD) Basics
+# Quiz: Module 08 — Azure Networking
 
-## Course: CIS-4331_Azure_Cloud (Microsoft Azure Fundamentals (AZ-900))
+## Course: CIS-4331 Azure Cloud Computing
 
----
+## Texas Wesleyan University | Professor Nash
 
-**Question 1**
-What is the primary function of Microsoft Entra ID?
+## AZ-900 Domain: Describe Azure Architecture and Services (35–40% of exam)
 
-* A) Network routing and DNS
-* B) Identity and Access Management
-* C) Database storage
-* D) Host virtualization
-* **Correct Answer:** B) Entra ID (formerly Azure Active Directory) handles authentication and access management for cloud identities.
-* **Distractor Analysis:**
-  * *Why correct:* Entra ID is Microsoft's cloud-based identity provider — it authenticates users and controls access to Azure, Microsoft 365, and third-party applications.
-  * *Why A/C/D are incorrect:* Entra ID is not a network routing, database, or virtualization service.
+**Instructions:** Select the single best answer for each question. Each question is worth 10 points. Total: 100 points.
 
 ---
 
-**Question 2**
-Which of the following most accurately describes **groups** in Microsoft Entra ID?
+### Question 1
 
-* A) Collections of user accounts used to manage access to Azure resources at scale — assigning permissions to a group grants those permissions to all members, simplifying administration compared to per-user assignments.
-* B) Isolated directory instances that represent separate organizations, each with its own tenant ID and domain name.
-* C) Authentication tokens issued to users after successful sign-in, containing claims about the user's identity and permissions.
-* D) Physical server clusters that host the Microsoft Entra ID directory service within a specific Azure region.
-* **Correct Answer:** A) Groups are collections of users that enable centralized access management — permissions assigned to the group apply to all members.
-* **Distractor Analysis:**
-  * *Why A is correct:* Groups are the standard mechanism for scaling access management in Entra ID rather than assigning permissions to individual users.
-  * *Why B is incorrect:* That describes an Entra ID Tenant, not a group.
-  * *Why C is incorrect:* That describes an access token or JWT claim — not a group object.
-  * *Why D is incorrect:* Microsoft Entra ID is a cloud service; customers do not manage or see the physical server infrastructure.
+A company wants to connect all of its Azure Virtual Networks in three different Azure regions so resources can communicate privately across regions. Which Azure networking feature enables this?
 
----
+A. Azure VPN Gateway with Site-to-Site connections
 
-**Question 3**
-A company has on-premises Windows Server Active Directory and wants employees to use the same username and password for both on-premises resources and Microsoft 365 in the cloud. Which tool enables this hybrid identity scenario?
+B. Global VNet Peering
 
-* A) Azure Active Directory Domain Services (AADDS)
-* B) Microsoft Entra Connect (Azure AD Connect)
-* C) Azure Virtual Network DNS
-* D) Microsoft Entra External Identities (B2C)
-* **Correct Answer:** B) Microsoft Entra Connect synchronizes on-premises Active Directory identities to Entra ID, enabling a single identity for both on-premises and cloud services.
-* **Distractor Analysis:**
-  * *Why B is correct:* Entra Connect (formerly Azure AD Connect) is the specific tool for directory synchronization between on-premises AD and Entra ID.
-  * *Why A is incorrect:* Azure AD Domain Services provides managed domain services in the cloud (Kerberos, LDAP) but is not the synchronization tool for hybrid identity.
-  * *Why C is incorrect:* Azure Virtual Network DNS handles name resolution for Azure resources — it does not sync identities.
-  * *Why D is incorrect:* External Identities (B2C) is for customer-facing applications with consumer account authentication — not for enterprise hybrid identity.
+C. Azure ExpressRoute circuits
+
+D. Network Security Groups with VNet service tags
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- **A (VPN Gateway):** VPN Gateway can connect VNets via VNet-to-VNet connections, but VNet Peering is the simpler, lower-latency, lower-cost method for cross-region VNet connectivity without gateway overhead. Not the best answer.
+- **B (Global VNet Peering) — CORRECT:** Global VNet Peering connects VNets in different Azure regions, enabling private IP communication with low latency and without routing through the public internet or a gateway. It is the recommended method for cross-region VNet connectivity.
+- **C (ExpressRoute):** ExpressRoute connects on-premises networks to Azure — not Azure VNets to each other. It requires a connectivity provider circuit. Not applicable here.
+- **D (NSG with VNet service tags):** NSGs control traffic filtering, not VNet connectivity. Service tags are used in NSG rules to reference IP ranges — they do not enable cross-VNet communication. Incorrect.
 
 ---
 
-**Question 4**
-Which Microsoft Entra ID license tier is required to use Conditional Access policies?
+### Question 2
 
-* A) Free tier — included with all Azure subscriptions
-* B) Microsoft Entra ID P1 or P2
-* C) Microsoft 365 E3 only
-* D) Azure AD B2C consumer tier
-* **Correct Answer:** B) Conditional Access is an Entra ID P1 feature and is included in Microsoft 365 plans that include Entra ID P1 or P2 licensing.
-* **Distractor Analysis:**
-  * *Why B is correct:* Conditional Access requires at minimum Entra ID P1 (or equivalent Microsoft 365 plans like E3/E5). The Free tier does not include Conditional Access.
-  * *Why A is incorrect:* The Free tier provides basic user/group management and limited SSO but does not include Conditional Access.
-  * *Why C is incorrect:* While M365 E3 does include Entra ID P1, Conditional Access is tied to the P1 license level, not exclusively to E3.
-  * *Why D is incorrect:* Azure AD B2C is for external consumer identity — it has separate licensing and does not map to Conditional Access for employee identities.
+An NSG has the following inbound rules: AllowHTTP (priority 100, Allow, port 80), DenyWeb (priority 90, Deny, port 80). A request arrives on port 80. What happens?
+
+A. The request is allowed because AllowHTTP has a lower priority number
+
+B. The request is denied because DenyWeb has a lower priority number and is processed first
+
+C. Both rules apply and the request is allowed because Allow takes precedence over Deny
+
+D. Azure generates an error because two rules target the same port
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- **A:** Incorrect. Lower priority numbers are processed FIRST. Priority 90 is lower than 100, so DenyWeb is processed before AllowHTTP.
+- **B — CORRECT:** NSG rules are processed in ascending priority order — lowest number first. Priority 90 (DenyWeb) is evaluated before priority 100 (AllowHTTP). The request matches the Deny rule at priority 90 and is blocked. Processing stops there.
+- **C:** Incorrect. NSG rules stop processing at the first match. There is no "Allow overrides Deny" logic — the first matching rule wins.
+- **D:** Incorrect. Azure allows multiple NSG rules targeting the same port. Priority ordering determines which rule is applied.
 
 ---
 
-**Question 5**
-An external contractor needs temporary access to a company's Azure portal resources. The contractor has their own Microsoft account. Which Entra ID feature enables this without creating a full internal user account?
+### Question 3
 
-* A) Microsoft Entra ID P2 Privileged Identity Management
-* B) Microsoft Entra B2B guest access
-* C) Entra Connect password hash synchronization
-* D) Azure AD Domain Services Kerberos delegation
-* **Correct Answer:** B) Microsoft Entra B2B guest access allows external users with their own Microsoft or organizational accounts to be invited as guests with specific resource permissions.
-* **Distractor Analysis:**
-  * *Why B is correct:* B2B guest access lets you invite external identities using their existing accounts — no need to create or manage separate credentials in your tenant.
-  * *Why A is incorrect:* PIM manages just-in-time elevation of privileged roles for existing internal users — it is not for external identity access.
-  * *Why C is incorrect:* Password hash sync is for synchronizing on-premises AD users to Entra ID — it does not address external contractor access.
-  * *Why D is incorrect:* Kerberos delegation is an on-premises authentication protocol — it does not apply to external contractor Azure portal access.
+A financial services company requires a dedicated, private network connection from its on-premises data center to Azure with guaranteed bandwidth of 10 Gbps and no traffic exposure to the public internet. Which service meets these requirements?
+
+A. Azure VPN Gateway (VpnGw5 SKU)
+
+B. Azure ExpressRoute
+
+C. Azure Virtual WAN
+
+D. Azure Application Gateway
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- **A (VPN Gateway VpnGw5):** VpnGw5 supports up to 10 Gbps throughput, but VPN Gateway traffic travels over the public internet (encrypted via IPsec). The requirement explicitly states "no traffic exposure to the public internet." Incorrect.
+- **B (ExpressRoute) — CORRECT:** ExpressRoute provides a private, dedicated circuit between on-premises and Azure that bypasses the public internet entirely. It supports up to 100 Gbps and provides consistent, low latency. This is the correct answer for "private dedicated" and "no public internet."
+- **C (Azure Virtual WAN):** Virtual WAN is a networking service for connecting branches and VNets at scale. It does not itself provide a private dedicated circuit from on-premises to Azure. Incorrect.
+- **D (Application Gateway):** Application Gateway is a Layer 7 load balancer and WAF — it handles inbound HTTP/HTTPS traffic from the internet to backend resources, not on-premises to Azure connectivity. Incorrect.
+
+---
+
+### Question 4
+
+A web application team needs to route requests to `/api/` endpoints to one backend VM pool and all other requests to a different backend VM pool. Which Azure networking service supports this URL path-based routing?
+
+A. Azure Load Balancer
+
+B. Azure Traffic Manager
+
+C. Azure Application Gateway
+
+D. Azure VPN Gateway
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- **A (Azure Load Balancer):** Azure Load Balancer operates at Layer 4 and uses a 5-tuple hash for distribution. It has no awareness of URL paths or HTTP content. It cannot route based on `/api/` vs. other paths. Incorrect.
+- **B (Azure Traffic Manager):** Traffic Manager is a DNS-based global load balancer for routing users to different Azure endpoints across regions. It does not inspect URL paths for routing within a single application. Incorrect.
+- **C (Application Gateway) — CORRECT:** Application Gateway operates at Layer 7 and supports path-based routing rules. You can configure routing rules to send requests with `/api/` to one backend pool and all other requests to a different backend pool.
+- **D (VPN Gateway):** VPN Gateway is for hybrid network connectivity between on-premises and Azure. It has no role in web traffic routing or HTTP load balancing. Incorrect.
+
+---
+
+### Question 5
+
+How many IP addresses does Azure reserve in each subnet, and why?
+
+A. 3 — network address, gateway, broadcast
+
+B. 5 — network address, default gateway, two Azure DNS IPs, and broadcast
+
+C. 4 — network address, gateway, DNS, and broadcast
+
+D. 2 — network address and broadcast only
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- **A:** Incorrect. Azure reserves 5 addresses, not 3. The count matches CIDR standard plus Azure-specific reservations.
+- **B — CORRECT:** Azure reserves 5 IP addresses in every subnet: (1) the network address (x.x.x.0), (2) the default gateway (x.x.x.1), (3) Azure DNS mapping (x.x.x.2), (4) Azure DNS mapping (x.x.x.3), and (5) the broadcast address (x.x.x.255 for a /24). This means a /24 subnet has 251 usable addresses, not 256.
+- **C:** Incorrect. The count is 5, not 4.
+- **D:** Incorrect. Standard CIDR reserves network address and broadcast (2), but Azure adds 3 more for gateway and DNS, totaling 5.
+
+---
+
+### Question 6
+
+A company wants to protect its web applications from OWASP Top 10 threats such as SQL injection and cross-site scripting. Which Azure networking service provides this protection?
+
+A. Azure Firewall with FQDN filtering
+
+B. Network Security Group with custom rules
+
+C. Azure Application Gateway with Web Application Firewall tier
+
+D. Azure Load Balancer Standard tier
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- **A (Azure Firewall):** Azure Firewall provides FQDN filtering and threat intelligence but is designed for controlling outbound traffic from VNets and network-level filtering, not for protecting web applications from OWASP application-layer attacks. Incorrect.
+- **B (NSG with custom rules):** NSGs filter traffic based on IP addresses and ports. They have no awareness of HTTP payload content such as SQL injection patterns in query strings. Incorrect.
+- **C (Application Gateway with WAF) — CORRECT:** The Web Application Firewall (WAF) tier of Azure Application Gateway provides managed rules based on OWASP Core Rule Sets (CRS). It inspects HTTP/HTTPS payloads and blocks SQL injection, XSS, and other OWASP Top 10 attacks.
+- **D (Load Balancer Standard):** Azure Load Balancer Standard provides enhanced networking features but operates at Layer 4 and has no application-layer inspection capability. It does not include a WAF. Incorrect.
+
+---
+
+### Question 7
+
+Which subnet name is required when deploying an Azure VPN Gateway, and which subnet name is required for Azure Firewall?
+
+A. VpnGatewaySubnet and FirewallSubnet
+
+B. GatewaySubnet and AzureFirewallSubnet
+
+C. AzureGateway and AzureFirewall
+
+D. VPNSubnet and FWSubnet
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- **A:** Incorrect. The exact names are GatewaySubnet and AzureFirewallSubnet. Azure will reject gateway or firewall deployment if the subnet names are different.
+- **B — CORRECT:** Azure VPN Gateway and ExpressRoute Gateway require a subnet named exactly `GatewaySubnet`. Azure Firewall requires a subnet named exactly `AzureFirewallSubnet` (minimum /26). These names are enforced by the Azure platform.
+- **C:** Incorrect. These are not valid Azure reserved subnet names.
+- **D:** Incorrect. These are not valid Azure reserved subnet names.
+
+---
+
+### Question 8
+
+Remote employees need to securely access Azure Virtual Network resources from their home computers. Which VPN connection type is designed for this individual client-to-VNet scenario?
+
+A. Site-to-Site VPN
+
+B. VNet-to-VNet VPN
+
+C. Point-to-Site VPN
+
+D. ExpressRoute Direct
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- **A (Site-to-Site VPN):** S2S VPN connects an entire on-premises network to Azure via a VPN device. It is designed for network-to-network connectivity, not individual client devices. Incorrect.
+- **B (VNet-to-VNet VPN):** VNet-to-VNet connects Azure VNets to each other — not client computers to Azure. Incorrect.
+- **C (Point-to-Site VPN) — CORRECT:** P2S VPN connects individual client computers to an Azure VNet using a software VPN client. It is specifically designed for remote workers who need to access Azure resources securely from home or other locations.
+- **D (ExpressRoute Direct):** ExpressRoute Direct is a high-bandwidth dedicated circuit option for ExpressRoute. It connects data centers and large enterprise networks to Azure — not individual client computers. Incorrect.
+
+---
+
+### Question 9
+
+A team needs to prevent resources in a specific subnet from initiating any outbound connections to the internet, while still allowing inbound responses to connection requests that originated within the VNet. Which Azure service can most precisely enforce this at the subnet level?
+
+A. Azure Firewall with application rules
+
+B. A Network Security Group with an outbound Deny rule for the Internet service tag
+
+C. VNet Peering with no route to the internet
+
+D. Azure Private Endpoints for all services
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- **A (Azure Firewall):** While Azure Firewall can achieve this, it requires deploying a firewall instance and routing all traffic through it — significantly more infrastructure and cost for a simple subnet-level outbound block. An NSG is the direct, simpler, correct answer for subnet-level control.
+- **B — CORRECT:** An NSG outbound rule with Deny action targeting the Internet service tag (or destination * with port Any) at a priority lower than 65001 (the AllowInternetOutBound default) will block outbound internet traffic from the subnet. NSG outbound rules are applied at the subnet level and are the direct mechanism for this requirement.
+- **C (VNet Peering):** Peering connects VNets but does not control outbound internet access from subnets. Removing a route to the internet would require User-Defined Routes with a black hole, not peering. Incorrect.
+- **D (Private Endpoints):** Private Endpoints give resources a private IP in the VNet for specific Azure services. They do not prevent internet outbound traffic from a subnet. Incorrect.
+
+---
+
+### Question 10
+
+Azure DNS Private Zones are used for which primary purpose?
+
+A. Registering public domain names for Azure web applications
+
+B. Providing name resolution for resources within Azure Virtual Networks without exposing DNS to the public internet
+
+C. Filtering DNS requests to block access to malicious websites
+
+D. Routing users to the closest Azure region based on DNS latency
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- **A:** Incorrect. Azure DNS does not register domain names. It hosts DNS zones. Public registration is done through a domain registrar. Private DNS zones are specifically for internal VNet name resolution, not public domain registration.
+- **B — CORRECT:** Azure Private DNS Zones provide name resolution for resources within VNets. Private zones can be linked to VNets for automatic VM hostname registration and internal service discovery without any public internet exposure.
+- **C (DNS filtering for malicious sites):** DNS-based threat protection is available through Azure Firewall's DNS proxy with threat intelligence, not Azure DNS Private Zones. Incorrect.
+- **D (Route users to closest region):** Routing users based on latency is the function of Azure Traffic Manager (DNS-based global routing). Azure DNS Private Zones are for internal VNet resolution only. Incorrect.
+
+---
+
+*Quiz 08 — Module 08: Azure Networking | CIS-4331 | Texas Wesleyan University*

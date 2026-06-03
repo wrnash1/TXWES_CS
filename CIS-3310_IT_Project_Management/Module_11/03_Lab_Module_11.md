@@ -1,173 +1,192 @@
-# Lab Activity: Module 11 – Stakeholder Management
+# Lab Activity: Module 11 — Risk Management
 
-**Course:** CIS-3310 IT Project Management
-**Certification Alignment:** CompTIA Project+ (PK0-005)
-**Total Points:** 100
-**Prepared by:** Professor Nash | Texas Wesleyan University
+## Course: CIS-3310 IT Project Management
+
+## Texas Wesleyan University | Professor Nash
+
+## Certification Alignment: CompTIA Project+ (PK0-005)
+
+## Total Points: 100
 
 ---
 
 ## Lab Overview
 
-In this lab you will apply Module 11 stakeholder management concepts through three activities: building a Stakeholder Register, applying the Power/Interest Grid, and developing stakeholder engagement strategies. All deliverables are written documents — no software is required.
+In this lab you will build a complete risk register for a realistic IT project scenario. The lab progresses through the full risk management process: identification, qualitative analysis, response planning, and monitoring setup. You will use a spreadsheet to structure the risk register and submit a written analysis interpreting your findings.
 
-Submit all work as a single PDF or Word document to the Canvas assignment portal.
+Submit your completed risk register spreadsheet and written analysis as a single PDF or zipped package to the Canvas Module 11 Lab assignment.
 
 ---
 
 ## Scenario Background
 
-Lakeview Unified School District is implementing a new Learning Management System (LMS) to replace the current fragmented mix of individual teacher websites and email-based assignment distribution. The new LMS will be used by teachers, students, and parents district-wide across 14 schools and approximately 18,000 students. Implementation will occur over one academic year.
+Meridian Financial Services is migrating its core banking platform from an on-premises legacy system to a cloud-based Software as a Service (SaaS) solution. The project has a budget of $2,500,000 and a 14-month timeline. The go-live target is tied to a regulatory compliance deadline — a six-month delay would trigger a $500,000 regulatory penalty.
 
-The following stakeholders have been identified or can be inferred from the scenario:
+Key project facts:
 
-- Superintendent of Schools — executive sponsor; strongly supportive; authority to approve and fund
-- Chief Information Officer (CIO) — technical oversight; managing competing infrastructure projects; moderate interest in this specific project
-- Deputy Superintendent for Curriculum — deep interest in ensuring pedagogical alignment; skeptical that technology alone will improve outcomes
-- IT Director — responsible for infrastructure and deployment; supportive but concerned about resource bandwidth
-- Teachers Union President — represents 1,200 teachers; concerns about additional workload and training obligations during contract year; currently resistant
-- Elementary School Principals (7) — varied; some enthusiastic, several concerned about training burden; generally neutral
-- Middle and High School Principals (7) — generally supportive; see current system as inadequate
-- Classroom Teachers (1,200) — high interest as primary daily users; mixed attitudes; many resistant to change
-- Students (18,000) — will use the system daily; limited formal authority; generally positive if the system is easy to use
-- Parents/Guardians — will use the system to monitor student assignments and grades; high interest; no direct project authority
-- LMS Vendor Project Manager — external; responsible for implementation delivery; high influence during deployment phase
-- State Department of Education — oversight role for student data privacy; regulatory authority; not involved in day-to-day project
-- Local School Board Members (7) — approve budget; meet monthly; limited operational involvement but significant political authority
+- The legacy system has 22 years of transaction data, some of which uses non-standard data formats
+- Three critical vendor integrations must be rebuilt from scratch
+- The internal IT team has limited cloud experience — only two team members have worked in cloud environments
+- The regulatory compliance team has never participated in a technology migration of this scale
+- The vendor providing the SaaS platform has 47 successful banking migrations but no prior work with Meridian's specific legacy system
+- Two key subject matter experts (SMEs) are scheduled to retire 8 months into the project
 
 ---
 
-## Part 1: Stakeholder Register
+## Part 1 — Risk Identification
 
 ### Part 1 Objective
 
-Build a complete Stakeholder Register for the Lakeview LMS implementation project.
+Identify at least eight project risks using the scenario details.
 
 ### Part 1 Instructions
 
-Complete the Stakeholder Register below for at least ten distinct stakeholders or stakeholder groups from the scenario. For each entry, complete all columns.
+Review the scenario background and identify at least eight risks. For each risk, complete the first five columns of the risk register template below. You must identify at least two opportunities (positive risks) in addition to threats.
 
-Engagement level scale: Unaware (UN), Resistant (R), Neutral (N), Supportive (S), Leading (L).
+Use the Risk Breakdown Structure categories: Technical, Organizational, External, or Project Management.
 
-| Stakeholder | Role | Key Interests | Power (H/M/L) | Interest (H/M/L) | Current Engagement | Desired Engagement |
-|---|---|---|---|---|---|---|
-| Superintendent of Schools | | | | | | |
-| CIO | | | | | | |
-| Deputy Supt. for Curriculum | | | | | | |
-| Teachers Union President | | | | | | |
-| Elementary Principals (7) | | | | | | |
-| Classroom Teachers (1,200) | | | | | | |
-| Students (18,000) | | | | | | |
-| Parents/Guardians | | | | | | |
-| LMS Vendor PM | | | | | | |
-| State Dept. of Education | | | | | | |
+| Risk ID | Risk Description | Category | Risk Cause | Potential Effect |
+|---------|-----------------|----------|-----------|-----------------|
+| R-001 | | | | |
+| R-002 | | | | |
+| R-003 | | | | |
+| R-004 | | | | |
+| R-005 | | | | |
+| R-006 | | | | |
+| R-007 | | | | |
+| R-008 | | | | |
 
-You may add additional stakeholder rows for any stakeholders not listed above.
+Add additional rows if you identify more than eight risks.
 
-After completing the register, answer the following question in 2–3 sentences:
+**Question 1-A:** You used scenario review to identify these risks. Name two other risk identification techniques from the reading guide that would be valuable for this project, and explain specifically why each is appropriate given the project's characteristics.
 
-Question 1-A: Looking at your engagement level assessments, which stakeholder or group represents the largest gap between current and desired engagement? What makes this gap particularly significant for project success?
+**Part 1 Point Value:** 20 points
 
-**Part 1 Point Value:** 30 points
-
-Grading breakdown:
-
-- Register completion (20 pts): All 10 rows populated; all columns completed; current/desired engagement levels are plausible given scenario descriptions
-- Question 1-A (10 pts): Correct identification of largest gap; explanation tied to project success implications
+- Eight or more risks identified with descriptions (8 pts)
+- At least two opportunities included (4 pts)
+- Risk categories correctly assigned (4 pts)
+- Question 1-A: Two appropriate techniques with scenario-specific justification (4 pts)
 
 ---
 
-## Part 2: Power/Interest Grid Analysis
+## Part 2 — Qualitative Risk Analysis
 
 ### Part 2 Objective
 
-Apply the Power/Interest Grid to prioritize stakeholder management strategies.
+Assign probability and impact scores to each identified risk and calculate risk priority scores.
 
 ### Part 2 Instructions
 
-#### Component 2-A: Grid Placement
+Using the probability and impact scales below, assign scores to each risk and calculate the risk score. Then classify each risk as High (Red), Medium (Yellow), or Low (Green) priority based on the heat map thresholds from the reading guide.
 
-Using the Power and Interest ratings from your Stakeholder Register in Part 1, place each stakeholder into the appropriate Power/Interest Grid quadrant. You do not need to draw the grid — simply list each stakeholder under the correct quadrant heading.
+Probability scale: Very Low = 0.10, Low = 0.30, Medium = 0.50, High = 0.70, Very High = 0.90
 
-Manage Closely (High Power / High Interest):
+Impact scale (on cost/schedule): Very Low = 0.05, Low = 0.10, Medium = 0.20, High = 0.40, Very High = 0.80
 
-Keep Satisfied (High Power / Low Interest):
+| Risk ID | Probability | Impact | Risk Score (`P × I`) | Priority Zone | Risk Owner |
+|---------|------------|--------|---------------------|--------------|------------|
+| R-001 | | | | | |
+| R-002 | | | | | |
+| R-003 | | | | | |
+| R-004 | | | | | |
+| R-005 | | | | | |
+| R-006 | | | | | |
+| R-007 | | | | | |
+| R-008 | | | | | |
 
-Keep Informed (Low Power / High Interest):
+**Question 2-A:** Identify your top two highest-priority risks (highest risk scores). For each, explain in two to three sentences why you assigned the probability and impact scores you did, referencing specific facts from the scenario.
 
-Monitor (Low Power / Low Interest):
+**Question 2-B:** The retiring SMEs risk: what probability and impact scores did you assign, and why? How does the specific scenario constraint — that they retire at month 8 of a 14-month project — affect the urgency of this risk even if its score is not the highest?
 
-#### Component 2-B: Analysis Questions
+**Part 2 Point Value:** 30 points
 
-Answer each question in 2–3 sentences.
-
-Question 2-B-1: The Classroom Teachers are 1,200 people with high interest but limited individual authority. How did you classify them, and is this classification always an accurate reflection of their actual influence on project success? Explain the difference between formal authority and informal influence.
-
-Question 2-B-2: The State Department of Education has regulatory authority but very low day-to-day involvement. What is the risk of placing them in the Monitor or Keep Satisfied quadrant and then not following through on the management strategy? What specific action should the PM take to address this stakeholder?
-
-**Part 2 Point Value:** 35 points
-
-Grading breakdown:
-
-- Component 2-A: Grid placement (20 pts): All stakeholders placed in a defensible quadrant consistent with Part 1 ratings (2 pts each for 10 stakeholders)
-- Component 2-B-1 (8 pts): Correct quadrant cited; formal vs. informal influence distinction explained accurately
-- Component 2-B-2 (7 pts): Risk of under-engaging high-power stakeholder identified; specific action recommended
+- Probability and impact scores assigned for all risks (8 pts)
+- Risk score calculations correct (8 pts)
+- Priority zone classifications correct based on score (6 pts)
+- Risk owners assigned (2 pts)
+- Question 2-A: Top two risks justified with scenario evidence (4 pts)
+- Question 2-B: SME risk analysis with urgency discussion (2 pts)
 
 ---
 
-## Part 3: Stakeholder Engagement Strategies
+## Part 3 — Risk Response Planning
 
 ### Part 3 Objective
 
-Develop specific engagement strategies for three high-priority stakeholders.
+Select and document a response strategy for each high- and medium-priority risk.
 
 ### Part 3 Instructions
 
-Select three stakeholders from your register who represent the most significant engagement challenges (at least one should be Resistant, and at least one should have a significant gap between current and desired engagement).
+For every risk classified as High or Medium priority in Part 2, complete the response planning columns below. For Low priority risks, you may use "Accept — watchlist."
 
-For each selected stakeholder, complete the engagement strategy template below.
+| Risk ID | Priority | Response Strategy | Specific Response Actions | Contingency Plan | Residual Risk After Response |
+|---------|----------|------------------|--------------------------|-----------------|------------------------------|
+| | | | | | |
 
-#### Engagement Strategy Template
+For the Response Strategy column, use one of: Avoid, Transfer, Mitigate, Accept (Active), Accept (Passive), Escalate, Exploit, Share, Enhance.
 
-- Stakeholder:
-- Current Engagement Level:
-- Desired Engagement Level:
-- Root Cause of Gap (why is there a gap between current and desired?):
-- Engagement Strategy (describe the approach — what will the PM do?):
-- Key Actions (list at least three specific, actionable steps):
-- Success Indicator (how will the PM know the strategy is working?):
-- Timeline (when will the PM expect to see movement toward the desired level?):
+After completing the table, answer the following:
 
-After completing all three strategy templates, answer the following question in 3–4 sentences:
+**Question 3-A:** Select one high-priority risk and describe a secondary risk that your chosen response strategy could create. Add this secondary risk to your register as a new row (R-SEC-01) with its own probability, impact, and response strategy.
 
-Question 3-A: The Teachers Union President is Resistant. A colleague suggests that the best approach is to avoid confrontation by routing all communications to teachers through school principals rather than engaging the union directly. Evaluate this approach using stakeholder engagement principles. Is avoidance a sound strategy for a Resistant stakeholder with significant influence?
+**Question 3-B:** The regulatory penalty risk (a $500,000 fine for a six-month delay) is essentially a risk about cost consequences of schedule failure. Would you use Avoid, Transfer, or Mitigate as the primary strategy for this type of risk? Justify your choice in three to four sentences.
 
 **Part 3 Point Value:** 35 points
 
-Grading breakdown:
+- Response strategies assigned for all high/medium risks (10 pts)
+- Response actions are specific and actionable (8 pts)
+- Contingency plans documented for active-acceptance risks (6 pts)
+- Secondary risk identified and added to register (5 pts)
+- Question 3-A: Secondary risk correctly connected to a specific response action (3 pts)
+- Question 3-B: Strategy selection justified with risk management principles (3 pts)
 
-- Three engagement strategy templates (9 pts each): Root cause analysis specific and credible (2 pts); engagement strategy coherent (2 pts); three specific actions listed (3 pts); success indicator defined (2 pts)
-- Question 3-A (8 pts): Avoidance strategy evaluated accurately; correct principle applied; recommendation is PMI-aligned
+---
+
+## Part 4 — Risk Monitoring Setup
+
+### Part 4 Objective
+
+Define monitoring triggers and a review schedule for the top three risks.
+
+### Part 4 Instructions
+
+Select the three highest-priority risks from your register. For each, define a risk trigger (the early warning sign that the risk is about to materialize) and specify how frequently the risk should be reviewed.
+
+| Risk ID | Risk Description | Risk Trigger | Review Frequency | Escalation Threshold |
+|---------|-----------------|-------------|-----------------|----------------------|
+| | | | | |
+| | | | | |
+| | | | | |
+
+The Escalation Threshold column should describe the condition at which the risk moves from PM-level management to sponsor or executive-level attention.
+
+**Question 4-A:** In two to three sentences, explain the difference between a risk trigger and a risk audit. When would you call a risk audit on this project, and who should conduct it?
+
+**Part 4 Point Value:** 15 points
+
+- Three risks documented with triggers (6 pts)
+- Review frequencies are specific and realistic (3 pts)
+- Escalation thresholds defined (3 pts)
+- Question 4-A: Trigger vs. audit distinction correct; audit timing and ownership addressed (3 pts)
 
 ---
 
 ## Deliverables Summary
 
-Compile the following into one submission document:
+Submit the following as a single PDF or zipped package:
 
-1. Stakeholder Register with Question 1-A response (Part 1)
-2. Power/Interest Grid placement list with Questions 2-B-1 and 2-B-2 responses (Part 2)
-3. Three stakeholder engagement strategy templates with Question 3-A response (Part 3)
-
-Submit as a single PDF or Word document to the Canvas Module 11 Lab assignment.
+1. Completed risk register spreadsheet covering Parts 1, 2, and 3 (all columns populated)
+2. Risk monitoring table from Part 4
+3. Written responses to all six questions (1-A, 2-A, 2-B, 3-A, 3-B, 4-A)
 
 ---
 
 ## Grading Rubric Summary
 
 | Section | Points | Key Criteria |
-|---|---|---|
-| Part 1: Stakeholder Register | 30 | 10 rows complete; engagement levels plausible; gap analysis answered |
-| Part 2: Power/Interest Grid | 35 | All stakeholders placed; informal influence distinction explained; regulatory risk addressed |
-| Part 3: Engagement Strategies | 35 | Three templates with root cause, strategy, actions, and success indicator; avoidance critique answered |
+|---------|--------|--------------|
+| Part 1: Risk Identification | 20 | Eight risks, two opportunities, correct categories |
+| Part 2: Qualitative Analysis | 30 | Scores assigned, calculations correct, justified |
+| Part 3: Response Planning | 35 | Strategies assigned, secondary risk documented |
+| Part 4: Monitoring Setup | 15 | Triggers defined, escalation thresholds included |
 | **Total** | **100** | |

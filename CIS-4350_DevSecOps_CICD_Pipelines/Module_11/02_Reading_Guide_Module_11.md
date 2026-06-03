@@ -1,61 +1,160 @@
-# Reading Guide: Module 11 - Container Image Scanning – Trivy and Grype
+# Reading Guide: Module 11 - Container Image Scanning: Trivy and Grype
 
-## Course: CIS-4350_DevSecOps_CICD_Pipelines (Certified DevSecOps Professional (CDP))
+## Course: CIS-4350 DevSecOps and CI/CD Pipelines
 
----
-
-### Introduction
-
-Welcome to **Module 11 - Container Image Scanning – Trivy and Grype**! This module covers container image vulnerability scanning as the pipeline security gate that checks built Docker images for known CVEs in OS packages and application dependencies before they are pushed to a registry or deployed. Unlike SCA (which scans source dependency manifests), container image scanners analyze the actual filesystem layers of a built image — finding vulnerabilities in system libraries, language runtimes, and application packages as they exist inside the container. Trivy and Grype are the two dominant open-source tools in this space and are heavily tested on the CDP exam.
+## Certification Alignment: DevSecOps Professional (DSOE)
 
 ---
 
-### 1. High-Yield Glossary
+## Introduction
 
-Review these essential definitions carefully. The CDP certification exam expects you to recognize and apply these concepts in scenario-based questions:
-
-* **Secret scanning**: In the context of container image scanning, the automated detection of secrets (API keys, certificates, passwords) that may have been inadvertently embedded in image layers during the build process. Trivy includes a secret scanning mode that checks image layer contents for credential patterns, complementing the source-level secret scanning covered in Module 09.
-
-* **Git leaks prevention**: The pre-image-build controls (pre-commit hooks, SAST secret scanning, `.dockerignore` configuration) that prevent secrets from entering a container image in the first place. If a secret appears in a `COPY . .` layer because it was present in the build context, git leaks prevention at the source stage is the upstream fix.
-
-* **HashiCorp Vault (in container context)**: The secrets management platform used to inject runtime secrets into containers without embedding them in image layers. In Kubernetes deployments, Vault Agent Injector or the Vault CSI provider injects secrets as in-memory files or environment variables at pod startup — ensuring the container image itself never contains secrets.
-
-* **Encrypted environment variables**: Secrets injected into container runtime environments (Kubernetes Secrets, Docker environment flags, CI/CD secrets) rather than baked into image layers. Encrypted at rest in Kubernetes etcd (with envelope encryption enabled), these variables provide runtime credential access without image-layer exposure.
+Module 11 covers container image scanning — the DevSecOps control that identifies CVEs in OS packages and language packages bundled inside container images. While SCA scans your declared dependency manifest, container image scanning scans the full runtime artifact: every binary and library present in every layer of the image. This module covers Trivy (Aqua Security) and Grype (Anchore) as the two primary tools, and pipeline integration patterns for gating builds on vulnerability findings.
 
 ---
 
-### 2. Certification Exam Tips
+## Section 1: High-Yield Glossary
 
-* **SCA vs. Image Scanning**: The CDP exam distinguishes between SCA (scans dependency manifest files in source code) and container image scanning (scans the actual installed packages inside a built image layer). An image may contain packages not listed in `requirements.txt` — OS-level libraries, language runtimes, indirect pip installs — that SCA would miss. Both tools are needed.
-* **Trivy Scan Targets**: Trivy can scan container images (`trivy image myapp:latest`), filesystem directories (`trivy fs .`), Git repositories (`trivy repo`), Kubernetes clusters (`trivy k8s`), and IaC files (`trivy config .`). The CDP exam tests which scan target to use in a given scenario.
-* **CRITICAL Severity Gate**: Standard DevSecOps pipeline configuration fails the image push job on CRITICAL severity CVEs (`trivy image --exit-code 1 --severity CRITICAL myapp:latest`). Know the Trivy exit code behavior and how it integrates with pipeline pass/fail logic.
-* **Study Resource**: The [Trivy documentation](https://aquasecurity.github.io/trivy/) covers all scan targets, severity filtering, output formats (JSON, SARIF, table), and CI/CD integration examples — review the "Integrations" section for CDP pipeline configuration questions.
+**Container image scanning** — Automated scanning of a container image's OS packages and language packages against vulnerability databases. Scans the complete runtime artifact, including packages from the base image and every layer added during the build.
+
+**Trivy** — An open-source vulnerability scanner from Aqua Security. Scans container images, filesystems, Git repositories, and Kubernetes clusters. Checks OS packages (apk, apt, rpm) and language packages (pip, npm, Maven, gems, Go modules). The most widely deployed container scanner.
+
+**Grype** — An open-source container image and filesystem scanner from Anchore. Produces a clean tabular output showing package, installed version, fixed version, and severity. Supports `--only-fixed` to filter unfixable findings.
+
+**`--exit-code 1`** — Trivy CLI flag that causes the process to exit with code 1 when any CVE matching the severity filter is found. This non-zero exit code fails the CI/CD pipeline job.
+
+**`--fail-on`** — Grype CLI flag equivalent to Trivy's `--exit-code 1`. `grype --fail-on high` exits non-zero when any HIGH or CRITICAL CVE is found.
+
+**`--ignore-unfixed`** — Trivy CLI flag that excludes CVEs for which no patched version is available. Reduces pipeline noise by focusing on actionable, remediable findings.
+
+**`--only-fixed`** — Grype CLI flag equivalent to Trivy's `--ignore-unfixed`. Filters the output to show only CVEs with an available fix version.
+
+**OS package CVE** — A vulnerability in a package provided by the container's operating system base image (Alpine apk packages, Debian apt packages, RHEL rpm packages). Remediated by updating the base image to a newer version.
+
+**Language package CVE** — A vulnerability in an application dependency installed via a package manager (pip, npm, Maven). Remediated by updating the dependency version in the manifest.
+
+**Base image currency** — The practice of regularly updating the `FROM` base image in a Dockerfile to include OS security patches. Critical because base images receive OS CVE fixes as patches are released by the OS maintainer.
+
+**Image digest pinning** — Using `FROM python:3.11-slim@sha256:abc...` instead of `FROM python:3.11-slim` to lock to a specific immutable image version. Provides reproducibility but requires explicit update PRs when base images are patched.
+
+**SBOM from image** — Trivy can generate an SBOM in CycloneDX format from a container image, producing a complete machine-readable inventory of every package in the image.
+
+**Anchore** — The company that maintains Grype and Syft (an SBOM generation tool). The Anchore suite provides image scanning (Grype), SBOM generation (Syft), and enterprise policy enforcement.
+
+**Syft** — Anchore's open-source SBOM generation tool. Generates CycloneDX and SPDX SBOMs from container images and filesystems. Works alongside Grype: Syft generates the package inventory, Grype checks the inventory against vulnerability databases.
 
 ---
 
-### Required Readings & Videos
+## Section 2: Trivy vs. Grype Comparison
 
-To prepare for this module's topics, you must complete the following readings and videos:
-
-* **Required Reading**: Read the [Trivy documentation Getting Started guide](https://aquasecurity.github.io/trivy/latest/getting-started/overview/) — covers Trivy installation, scanning container images and filesystems, severity filtering, output format options, and GitHub Actions integration. Focus on image scanning and the `--exit-code` and `--severity` options used to configure pipeline gates.
-* **Required Video**: Watch the container image scanning segment of [CI/CD Pipeline & DevSecOps Course by freeCodeCamp](https://www.youtube.com/watch?v=scEDHsr3APg) — demonstrates building a Docker image in a CI pipeline, running Trivy against it, interpreting vulnerability output, and configuring the scan as a blocking pipeline gate before the image push step.
+| Dimension | Trivy | Grype |
+|---|---|---|
+| Maintainer | Aqua Security | Anchore |
+| License | Apache 2.0 | Apache 2.0 |
+| Scanning targets | Container images, filesystems, Git repos, K8s clusters | Container images, filesystems, directories, OCI layouts |
+| OS package support | Alpine, Debian, Ubuntu, RHEL, CentOS, Amazon Linux, SUSE | Alpine, Debian, Ubuntu, RHEL, CentOS, Amazon Linux |
+| Language package support | Python, Node, Java, Ruby, Go, Rust | Python, Node, Java, Ruby, Go, .NET |
+| Pipeline exit code flag | `--exit-code 1` | `--fail-on high` |
+| Unfixed CVE filter | `--ignore-unfixed` | `--only-fixed` |
+| SARIF output | Yes | Yes |
+| SBOM generation | Yes (CycloneDX) | Via Syft |
+| GitHub Action | `aquasecurity/trivy-action` | `anchore/scan-action` |
+| Kubernetes cluster scan | Yes | No |
 
 ---
 
-### Lab & Command Integration
+## Section 3: Container Scanning Pipeline Placement
 
-In this week's hands-on lab, you will integrate container image scanning into a CI/CD pipeline by:
-
-* **Configure GitHub Actions secrets variables**: Configure registry authentication credentials (GitHub Container Registry token or Docker Hub credentials) as GitHub Actions secrets, referenced in the workflow as `${{ secrets.REGISTRY_TOKEN }}` to authenticate the image push step that follows a successful scan.
-* **Run a git leak scan detecting exposed tokens**: Run `trivy image --scanners secret myapp:latest` against a locally built image to detect any secrets inadvertently embedded in image layers, validating that `.dockerignore` properly excludes credential files from the build context.
-* **Verify secrets masking in logs**: Add `trivy image --exit-code 1 --severity HIGH,CRITICAL --format sarif --output trivy-results.sarif myapp:latest` as a pipeline step and confirm that: (a) the step fails when HIGH/CRITICAL CVEs are present, (b) SARIF output is uploaded as a GitHub Code Scanning result, and (c) the image push step only executes when the Trivy step passes.
+| Stage | Scan Target | Tool | Gate |
+|---|---|---|---|
+| Build | Newly built image before push | Trivy / Grype | Fail on HIGH/CRITICAL |
+| Registry push | Images on push to ECR/GCR | ECR scan-on-push, GCR Artifact Registry | Alert on new CVEs |
+| Continuous monitoring | Running images in Kubernetes | Trivy operator, Anchore Enterprise | Alert, optional admission block |
+| Pre-deployment | Image pulled for staging | Trivy / Grype in deploy job | Block deploy if new CVEs found |
 
 ---
 
-### 3. Study Checklist
+## Section 4: CVE Triage Decision Framework
 
-* [ ] Read the glossary terms and understand the difference between SCA (source dependency scanning) and container image scanning (installed package scanning).
-* [ ] Read the Trivy documentation at [https://aquasecurity.github.io/trivy/](https://aquasecurity.github.io/trivy/).
-* [ ] Watch the container image scanning segment of [CI/CD Pipeline & DevSecOps Course by freeCodeCamp](https://www.youtube.com/watch?v=scEDHsr3APg).
-* [ ] Complete the Trivy pipeline integration and severity-gated image push in the lab activity.
-* [ ] Proceed to the weekly hands-on lab activity.
+| Finding Type | Remediation Path | Pipeline Gate Behavior |
+|---|---|---|
+| CRITICAL with fix available | Upgrade package or base image immediately | Fail build |
+| HIGH with fix available | Upgrade in current sprint | Fail build |
+| CRITICAL/HIGH with no fix | Accept risk, document in risk register | Report, do not fail (use `--ignore-unfixed`) |
+| MEDIUM with fix available | Track in backlog, fix in next sprint | Report only |
+| LOW | Track in backlog | Report only |
+
+---
+
+## Section 5: Base Image Security Practices
+
+| Practice | Description | Tool |
+|---|---|---|
+| Use minimal base images | Alpine, Debian slim, distroless — fewer packages means fewer CVE surface | Dockerfile linter (Hadolint) |
+| Pin base image versions | Specify minor version (`python:3.11-slim`), not just major (`python:3`) | Dependabot |
+| Rebuild regularly | Even with pinned tags, rebuild periodically to pick up OS patch updates | Scheduled pipeline |
+| Update base images via PR | Dependabot automatically opens PRs when base image digest changes | Dependabot |
+| Multi-stage builds | Final image contains only runtime artifacts, not build tools | Dockerfile review |
+
+---
+
+## Section 6: SCA vs. Container Image Scanning Comparison
+
+| Dimension | SCA | Container Image Scanning |
+|---|---|---|
+| What is scanned | Dependency manifest (`requirements.txt`, `package.json`) | Complete image filesystem — all packages in all layers |
+| Stage | Build (before image build) | After image build, before push |
+| Finds | CVEs in declared application dependencies | CVEs in OS packages, runtime packages, AND application packages |
+| Scope | Application packages only | OS + language runtime + application |
+| Tools | Snyk, OWASP Dependency-Check | Trivy, Grype |
+| Remediation | Update manifest | Update manifest or base image |
+
+---
+
+## Section 7: Kubernetes RBAC Model Reference
+
+Container image scanning principles connect to Kubernetes security.
+
+- Trivy can scan running Kubernetes clusters: `trivy k8s --report summary cluster`.
+- Admission controllers can block deployment of images with unresolved HIGH/CRITICAL CVEs.
+- Image digest pinning in Kubernetes manifests ensures the scanned image version is the deployed image version.
+
+---
+
+## Section 8: DevSecOps Professional Exam Tips
+
+1. **Trivy `--exit-code 1`** — Know that `--exit-code 1` is the Trivy pipeline gate flag. Without it, Trivy reports findings but exits with code 0, which does not fail the pipeline.
+
+2. **Grype `--fail-on`** — Know that `grype --fail-on high` is the Grype equivalent of `trivy --exit-code 1 --severity HIGH,CRITICAL`. Both cause non-zero exit on HIGH or CRITICAL findings.
+
+3. **`--ignore-unfixed` vs. `--only-fixed`** — Know that these flags filter out CVEs with no available patch. This is important for avoiding pipeline paralysis caused by unfixable OS CVEs in base images.
+
+4. **OS packages vs. language packages** — Know that container image scanning checks both. OS CVEs come from the base image; language CVEs come from pip/npm/Maven. Remediation path differs: OS CVEs require a base image update, language CVEs require a dependency version update.
+
+5. **`needs: build` ordering** — Know that the container scan job must declare `needs: build` to ensure the image exists before the scanner runs. Scanning before build would fail because there is no image to scan.
+
+6. **Trivy scope** — Know that Trivy scans more than just containers. It also scans filesystems, Git repositories, and Kubernetes clusters. This broader scope distinguishes it from Grype.
+
+7. **SBOM from images** — Know that both Trivy and Grype/Syft can generate CycloneDX SBOMs from container images. This provides a machine-readable inventory of all packages present in the deployed container.
+
+8. **SCA and image scanning are complementary** — SCA scans the manifest before the image is built; image scanning scans the full artifact after the image is built. They can find different packages because the image may contain packages installed by the base image that are not in any manifest.
+
+---
+
+## Section 9: Required Reading
+
+- Review the Aqua Security Trivy documentation at [https://aquasecurity.github.io/trivy/](https://aquasecurity.github.io/trivy/).
+
+---
+
+## Section 10: Study Checklist
+
+- [ ] Explain what container image scanning finds that SCA does not.
+- [ ] Name the two primary container image scanners and one distinguishing CLI flag for each.
+- [ ] Explain what `--ignore-unfixed` does and when to use it.
+- [ ] Describe the pipeline placement for container image scanning relative to the build and push steps.
+- [ ] Explain the CVE triage decision: when does a finding fail the build vs. when is it reported only.
+- [ ] Explain why base image currency matters and how Dependabot addresses it.
+- [ ] Identify two SARIF upload steps in a container scan pipeline and explain why `if: always()` is needed.
+- [ ] Review the Trivy documentation at [https://aquasecurity.github.io/trivy/](https://aquasecurity.github.io/trivy/).
+- [ ] Complete the Module 11 lab activity.
+- [ ] Attempt all 10 quiz questions and review distractor analysis for any incorrect answers.

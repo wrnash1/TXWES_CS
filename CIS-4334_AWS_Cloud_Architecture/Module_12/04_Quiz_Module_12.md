@@ -1,78 +1,246 @@
-# Quiz: Module 12 - Elastic Beanstalk, CloudFormation, and IaC
-## Course: CIS-4334_AWS_Cloud_Architecture (AWS Certified Solutions Architect - Associate)
+# Quiz: Module 12 — Serverless Architecture on AWS
+
+## Course: CIS-4334 AWS Cloud Architecture
+
+## Texas Wesleyan University | Professor Nash
+
+**Certification Alignment:** AWS Solutions Architect — Associate (SAA-C03)
 
 ---
 
-**Question 1**
-What is the purpose of AWS CloudFormation?
-*   A) A monitoring service that collects CloudWatch metrics and automatically remediates configuration drift.
-*   B) An Infrastructure as Code service that provisions and manages AWS resources from declarative YAML or JSON templates, enabling repeatable, version-controlled infrastructure deployments.
-*   C) A code deployment service that automates rolling application updates to EC2 instances and Lambda functions.
-*   D) A database migration service that converts on-premises schema definitions into AWS RDS configurations.
-*   **Correct Answer:** B) AWS CloudFormation is an IaC service that provisions all resources in a template as a managed stack, enabling consistent, repeatable, version-controlled infrastructure.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* CloudFormation does have Drift Detection, but its primary purpose is infrastructure provisioning and lifecycle management — not monitoring or auto-remediation. CloudWatch + AWS Config handle monitoring and remediation.
-    *   *Why B is correct:* CloudFormation is AWS's native IaC service. Templates declare the desired state; CloudFormation determines the actions needed (create, update, delete) to reach that state. Stacks ensure all resources are managed as a unit with automatic rollback on failure.
-    *   *Why C is incorrect:* This describes AWS CodeDeploy, a deployment automation service for application code. CloudFormation manages infrastructure resources, not application code deployment lifecycle.
-    *   *Why D is incorrect:* This describes AWS Database Migration Service (DMS) or Schema Conversion Tool (SCT). CloudFormation can create RDS instances but does not migrate schemas or convert database structures.
+## Instructions
+
+Select the best answer for each question. Each question is worth 10 points. Answer key and distractor analysis follow each question.
 
 ---
 
-**Question 2**
-Which of the following is the most accurate description of a **CloudFormation Change Set**?
-*   A) A CloudFormation stack copy that maintains the last 10 successful stack configurations for rollback purposes.
-*   B) A preview of the proposed changes CloudFormation will make to a stack — showing which resources will be added, modified, or replaced — before the changes are executed.
-*   C) A CloudFormation policy document that restricts which resources in a stack can be modified during updates.
-*   D) An automated test suite that validates CloudFormation template syntax and logical dependencies before deployment.
-*   **Correct Answer:** B) A Change Set shows the specific AWS resources that will be created, modified, or deleted when a stack update is applied, allowing review before execution.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* CloudFormation does not maintain a history of stack copies. It maintains deployment history (previous template versions and events), but a Change Set is a forward-looking preview of pending changes, not a historical record.
-    *   *Why B is correct:* Change Sets are essential for production stack governance. They show not just what will change but the nature of the change (e.g., whether a resource will be updated in-place vs. replaced, which would cause downtime or data loss). Change Sets are the answer when the exam asks "how do you safely review infrastructure changes before applying them?"
-    *   *Why C is incorrect:* This describes a Stack Policy — a JSON document that protects specific resources from update or replacement during stack operations. Stack Policies and Change Sets are different features with different purposes.
-    *   *Why D is incorrect:* CloudFormation linting and template validation is handled by `aws cloudformation validate-template` (syntax only) or cfn-lint (third-party). A Change Set is not a test suite — it is a preview of live changes against an existing deployed stack.
+## Question 1
+
+A Lambda function processes images uploaded to S3. A Python library takes 4 seconds to initialize. Users report that occasional requests take 6–7 seconds while most complete in under 2 seconds. Which action MOST effectively eliminates the long-tail latency?
+
+- A. Increase the Lambda function memory to 10,240 MB
+- B. Enable Provisioned Concurrency for the Lambda function
+- C. Package the library as a Lambda Layer
+- D. Set Reserved Concurrency to 100
+
+### Q1 Answer: B
+
+### Q1 Analysis
+
+A is incorrect. Increasing memory speeds up CPU-bound work but does not eliminate cold starts. Slow initialization is the problem, not processing speed.
+
+B is correct. Provisioned Concurrency pre-initializes execution environments including all Init phase code. These environments are always warm, eliminating cold start latency.
+
+C is incorrect. Lambda Layers reorganize deployment packages but do not eliminate initialization time. The library still runs during the Init phase whether it arrives via a layer or a ZIP.
+
+D is incorrect. Reserved Concurrency caps maximum concurrent executions. It does not warm environments or prevent cold starts.
 
 ---
 
-**Question 3**
-A developer team deploys a Python Flask web application on AWS. They want the infrastructure (EC2, ALB, ASG, RDS) to be automatically provisioned without writing CloudFormation templates or learning AWS infrastructure details. The application code deployment and environment configuration should be manageable through a simple CLI command. Which AWS service best meets this requirement?
-*   A) AWS CloudFormation with nested stacks — organize the infrastructure into modular templates that developers can deploy with a single `cloudformation deploy` command.
-*   B) AWS Elastic Beanstalk — upload the application code, and Beanstalk automatically provisions and manages the underlying EC2, ALB, and ASG infrastructure for the chosen platform.
-*   C) AWS CodePipeline with CodeBuild — set up a CI/CD pipeline that builds and deploys application artifacts to pre-provisioned EC2 instances.
-*   D) Amazon EKS with Fargate — containerize the Flask application and deploy it to a managed Kubernetes cluster.
-*   **Correct Answer:** B) Elastic Beanstalk is designed for developers who want to deploy application code without managing infrastructure. It automatically provisions and configures all required AWS resources for the chosen platform (Python in this case).
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Writing CloudFormation templates — even with nested stacks — requires significant AWS infrastructure knowledge. This contradicts the requirement of not learning AWS infrastructure details. CloudFormation is for infrastructure engineers, not application developers who want abstraction.
-    *   *Why B is correct:* Elastic Beanstalk is the AWS PaaS offering. Developers run `eb deploy` or upload a ZIP file, and Beanstalk handles EC2 provisioning, load balancer creation, Auto Scaling configuration, and health monitoring. The team focuses on Python code, not infrastructure YAML.
-    *   *Why C is incorrect:* CodePipeline + CodeBuild is a CI/CD pipeline service for build and deployment automation. It does not provision infrastructure — it requires infrastructure (EC2 instances, ECS, Lambda) to already exist as deployment targets. This does not eliminate the need for infrastructure knowledge.
-    *   *Why D is incorrect:* Containerizing the application with EKS adds significant operational complexity (Kubernetes expertise, Dockerfile, Helm charts, RBAC configuration). This is the opposite of "without learning AWS infrastructure details."
+## Question 2
+
+An e-commerce platform publishes an `OrderPlaced` event that must trigger three independent downstream systems simultaneously — inventory, fulfillment, and analytics. Each system must process the event independently without affecting the others. Which architecture BEST satisfies these requirements?
+
+- A. Publish to an SQS FIFO queue; all three systems poll the same queue
+- B. Publish to an SNS topic with three SQS queue subscriptions, one per system
+- C. Publish to EventBridge; create one rule targeting all three Lambda functions directly
+- D. Chain three Lambda functions so each passes the event to the next
+
+### Q2 Answer: B
+
+### Q2 Analysis
+
+A is incorrect. A single SQS queue allows only one consumer to process each message. The three systems cannot independently consume the same message from one queue.
+
+B is correct. The SNS fan-out to SQS pattern delivers the event to all three queues simultaneously. Each queue buffers messages independently, and each system scales and fails independently.
+
+C is incorrect. Direct Lambda invocation from EventBridge provides no durable buffering. A downstream Lambda failure loses the event unless a DLQ is configured on each function separately.
+
+D is incorrect. Chaining Lambda functions creates tight coupling and sequential processing. If one function fails, downstream functions do not execute.
 
 ---
 
-**Question 4**
-A DevOps team uses CloudFormation to manage a production VPC stack. A junior engineer manually changes a security group rule directly in the AWS Console without updating the CloudFormation template. The team discovers the discrepancy during a security audit. Which CloudFormation feature identifies this inconsistency?
-*   A) CloudFormation Stack Policies — configure a policy to alert when resources are modified outside of CloudFormation.
-*   B) CloudFormation Drift Detection — detects differences between the expected resource configuration (template) and the actual live resource configuration.
-*   C) AWS Config — enable the `cloudformation-stack-drift-detection-check` managed rule to monitor for manual changes.
-*   D) CloudFormation Change Sets — run a Change Set with the original template to identify which resources differ from the deployed state.
-*   **Correct Answer:** B) CloudFormation Drift Detection compares each resource's actual configuration in AWS against the configuration defined in the deployed CloudFormation template, identifying manually made changes.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Stack Policies restrict which resources can be updated or replaced during a CloudFormation stack update — they are a preventive control, not a detective control. Stack Policies do not detect changes made directly in the console.
-    *   *Why B is correct:* Drift Detection is the purpose-built feature for identifying when a deployed stack's resources have been modified outside of CloudFormation. You initiate drift detection (`detect-stack-drift`), and CloudFormation compares each resource's live state against the template-defined state, marking modified resources as DRIFTED.
-    *   *Why C is incorrect:* AWS Config continuously records resource configuration changes and can detect drift-like scenarios, but the `cloudformation-stack-drift-detection-check` rule is not a standard AWS managed Config rule. CloudFormation's native Drift Detection is the more direct and accurate answer for this specific use case.
-    *   *Why D is incorrect:* A Change Set previews proposed template changes against the deployed stack. It does not detect out-of-band manual changes to the deployed resources. Change Sets compare the template you submit against the last-deployed template, not against the actual live resource configuration.
+## Question 3
+
+A developer needs a Lambda function to compute the exact delta of attribute changes on every DynamoDB item update, requiring both old and new values. Which DynamoDB Streams view type should be configured?
+
+- A. KEYS_ONLY
+- B. NEW_IMAGE
+- C. OLD_IMAGE
+- D. NEW_AND_OLD_IMAGES
+
+### Q3 Answer: D
+
+### Q3 Analysis
+
+A is incorrect. KEYS_ONLY provides only key attributes — no attribute values before or after the change.
+
+B is incorrect. NEW_IMAGE provides the full item after modification but does not include the previous state.
+
+C is incorrect. OLD_IMAGE provides the full item before modification but does not include the new state.
+
+D is correct. NEW_AND_OLD_IMAGES includes the complete before-state and after-state of each modified item, enabling delta computation.
 
 ---
 
-**Question 5**
-A solutions architect designs a multi-environment deployment system. The same CloudFormation template must deploy a development environment (t3.micro EC2, no Multi-AZ RDS) and a production environment (m5.xlarge EC2, Multi-AZ RDS, deletion protection). How should the architect parameterize this to avoid maintaining two separate templates?
-*   A) Create two separate CloudFormation templates — one for dev and one for prod — and deploy each independently.
-*   B) Use CloudFormation `Parameters` and `Conditions` in a single template. Parameters accept user input (e.g., `Environment: dev|prod`); Conditions evaluate the parameter and conditionally configure resources (e.g., `EnableMultiAZ: !Equals [!Ref Environment, prod]`).
-*   C) Deploy the dev stack first, then manually modify the stack in the console to change resource types for production.
-*   D) Use CloudFormation Stack Sets to deploy the same identical template to both environments simultaneously in different accounts.
-*   **Correct Answer:** B) CloudFormation Parameters accept environment-specific input values; Conditions evaluate those inputs to conditionally set resource properties or enable/disable resources — enabling a single template to serve multiple environments.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Two separate templates create a maintenance burden — every change must be made in both templates. They also risk divergence over time. Single-template parameterization is the IaC best practice.
-    *   *Why B is correct:* Parameters + Conditions is the standard CloudFormation pattern for multi-environment templates. The `Conditions` section defines logical tests (e.g., `IsProduction: !Equals [!Ref Environment, prod]`), and resource properties reference those conditions with `!If [IsProduction, m5.xlarge, t3.micro]`. This is a high-frequency SAA-C03 exam pattern.
-    *   *Why C is incorrect:* Manually modifying a CloudFormation-managed stack in the console introduces drift and breaks the IaC paradigm. This is exactly the anti-pattern CloudFormation Drift Detection is designed to catch.
-    *   *Why D is incorrect:* CloudFormation Stack Sets deploy the same template to multiple accounts/Regions — used for multi-account governance policies, not for deploying different environment configurations from the same template. Stack Sets do not provide the conditional logic needed to change instance types between dev and prod.
+## Question 4
 
+A company's REST API on API Gateway and Lambda spikes to 8,000 requests per second during flash sales. Backend Lambda functions must never receive more than 2,000 concurrent executions to protect downstream databases. Which configuration achieves this?
+
+- A. Set API Gateway stage throttling to 2,000 RPS
+- B. Set Reserved Concurrency on the Lambda function to 2,000
+- C. Enable Provisioned Concurrency set to 2,000
+- D. Set the Lambda timeout to 1 second
+
+### Q4 Answer: B
+
+### Q4 Analysis
+
+A is incorrect. API Gateway throttling limits requests per second (rate) but does not cap concurrent Lambda executions. High concurrency can still occur when many overlapping requests are in flight simultaneously.
+
+B is correct. Reserved Concurrency sets a hard maximum on concurrent executions for the function. Invocations exceeding this limit receive a 429 throttling error.
+
+C is incorrect. Provisioned Concurrency pre-warms environments but does not cap concurrency. The function can still exceed 2,000 concurrent executions dynamically.
+
+D is incorrect. Reducing timeout causes functions to fail faster but does not limit the number of concurrent invocations.
+
+---
+
+## Question 5
+
+A company uses an HTTP API on API Gateway. They want to allow only requests from users authenticated through their corporate identity provider using OAuth 2.0 JWT tokens. Which authorizer type is MOST appropriate?
+
+- A. IAM authorizer
+- B. Cognito User Pool authorizer
+- C. Lambda authorizer
+- D. JWT authorizer (HTTP API native)
+
+### Q5 Answer: D
+
+### Q5 Analysis
+
+A is incorrect. IAM authorizers require AWS Signature Version 4 signing. Corporate IdP users do not generate AWS credentials.
+
+B is incorrect. Cognito User Pool authorizers validate tokens issued by Amazon Cognito only. The scenario specifies a third-party corporate IdP.
+
+C is incorrect. A Lambda authorizer could work but requires writing and maintaining custom authorization code. HTTP APIs support native JWT authorizers that validate OIDC/OAuth 2.0 JWTs natively.
+
+D is correct. HTTP API JWT authorizers validate JWTs from any OIDC-compliant identity provider by configuring the `issuer` and `audience` claims. No custom Lambda code is required.
+
+---
+
+## Question 6
+
+A financial services application requires payment processing messages to be handled in strict first-in-first-out order with no duplicate processing at 500 messages per second. Which SQS configuration should be used?
+
+- A. Standard queue with a DLQ
+- B. FIFO queue without batching
+- C. FIFO queue with batching (10 messages per batch)
+- D. Standard queue with Visibility Timeout set to 0
+
+### Q6 Answer: C
+
+### Q6 Analysis
+
+A is incorrect. Standard queues provide best-effort ordering, not strict FIFO. Duplicate messages can occur. A DLQ does not change delivery semantics.
+
+B is incorrect. FIFO queues without batching support only 300 TPS. At 500 TPS the queue would throttle.
+
+C is correct. FIFO queues with batching support up to 3,000 TPS, covering 500 TPS. FIFO queues guarantee strict ordering and exactly-once processing within each message group.
+
+D is incorrect. Setting Visibility Timeout to 0 on a Standard queue does not provide ordering or exactly-once delivery.
+
+---
+
+## Question 7
+
+An application uses Step Functions to coordinate a multi-step order workflow. A business analyst must review and approve high-value orders before fulfillment proceeds. Approval may take up to 48 hours. Which Step Functions feature handles this requirement?
+
+- A. Wait state with a 48-hour duration
+- B. Task state with `.waitForTaskToken` integration
+- C. Choice state with a 48-hour timeout
+- D. Express Workflow with a human activity task
+
+### Q7 Answer: B
+
+### Q7 Analysis
+
+A is incorrect. A Wait state pauses for a fixed duration and resumes automatically — it does not wait for human input or external confirmation.
+
+B is correct. The `.waitForTaskToken` pattern pauses execution until an external system calls `SendTaskSuccess` or `SendTaskFailure` with the task token. Standard Workflows can wait up to one year.
+
+C is incorrect. Choice states evaluate data conditions to branch — they do not pause for external input.
+
+D is incorrect. Express Workflows have a maximum duration of 5 minutes. A 48-hour approval window requires a Standard Workflow.
+
+---
+
+## Question 8
+
+A Lambda function triggered by SQS processes batches of 10 messages. One specific message format causes an unhandled exception. All 10 messages are retried repeatedly. Which change ensures only the failing message is retried while the other 9 are deleted?
+
+- A. Set the SQS Visibility Timeout to 0 seconds
+- B. Return `batchItemFailures` in the Lambda response reporting only the failing message ID
+- C. Switch from SQS Standard to a FIFO queue
+- D. Increase the Lambda timeout to 15 minutes
+
+### Q8 Answer: B
+
+### Q8 Analysis
+
+A is incorrect. Setting Visibility Timeout to 0 makes all messages immediately visible again after receipt, worsening the retry storm for all 10 messages.
+
+B is correct. Returning `batchItemFailures` with the failing message's `itemIdentifier` tells Lambda to delete successfully processed messages and return only the failing one to the queue for retry.
+
+C is incorrect. Switching queue type changes ordering and deduplication but does not affect partial batch failure handling. FIFO queues block subsequent message groups when one fails.
+
+D is incorrect. Extending the timeout gives more execution time but does not change how the function reports partial failures to SQS.
+
+---
+
+## Question 9
+
+A company uses EventBridge to route order events to different Lambda functions based on the `orderType` attribute — `RETAIL` to Lambda A and `WHOLESALE` to Lambda B. Which EventBridge feature enables this content-based routing without a routing Lambda?
+
+- A. Event bus resource policy
+- B. Two rules with event pattern matching on the `orderType` field
+- C. Schema Registry auto-discovery
+- D. EventBridge Pipes with a filter
+
+### Q9 Answer: B
+
+### Q9 Analysis
+
+A is incorrect. Event bus resource policies control which AWS accounts can publish to the bus — they are not used for content-based routing.
+
+B is correct. Create two EventBridge rules: one matching `{"detail": {"orderType": ["RETAIL"]}}` targeting Lambda A, and one matching `{"detail": {"orderType": ["WHOLESALE"]}}` targeting Lambda B. EventBridge evaluates both rules against every event.
+
+C is incorrect. Schema Registry discovers and documents event schemas but does not route events.
+
+D is incorrect. EventBridge Pipes connect a single source to a single target. Two pipes would still be required, adding complexity compared to standard rules.
+
+---
+
+## Question 10
+
+A Lambda function's 180 MB deployment package causes 3.2-second cold starts for a real-time API. Provisioned Concurrency has not been approved due to cost. Which TWO actions would reduce cold start duration? (Select TWO.)
+
+- A. Move infrequently used library imports to inside the handler function
+- B. Increase Reserved Concurrency from 10 to 100
+- C. Remove unused dependencies to reduce the deployment package size
+- D. Switch to a container image deployment format
+- E. Change the function timeout from 30 seconds to 15 minutes
+
+### Q10 Answer: A and C
+
+### Q10 Analysis
+
+A is correct. Moving heavy imports inside the handler defers their execution out of the Init phase, reducing initialization duration on cold starts.
+
+B is incorrect. Increasing Reserved Concurrency changes the capacity cap for the function but does not affect initialization time.
+
+C is correct. Smaller packages download faster during environment initialization. Removing unused libraries directly reduces the Init phase duration.
+
+D is incorrect. Container images support larger packages but do not inherently reduce initialization time and can increase it due to image-pull overhead.
+
+E is incorrect. Changing the timeout affects maximum execution duration per invocation, not cold start initialization time.

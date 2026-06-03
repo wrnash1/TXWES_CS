@@ -1,69 +1,257 @@
-# Reading Guide: Module 16 - Final Exam Prep & AWS Solutions Architect Associate
-## Course: CIS-4334_AWS_Cloud_Architecture (AWS Certified Solutions Architect - Associate)
+# Reading Guide: Module 16 — SAA-C03 Exam Preparation and Capstone
+
+## Course: CIS-4334 AWS Cloud Architecture
+
+## Texas Wesleyan University | Professor Nash
+
+**Certification Alignment:** AWS Solutions Architect — Associate (SAA-C03)
 
 ---
 
-### Introduction
-Welcome to **Module 16 - Final Exam Prep & AWS Solutions Architect Associate (SAA-C03)**! This module is your comprehensive review and exam readiness assessment for the AWS Certified Solutions Architect – Associate certification. You will consolidate knowledge across all 15 prior modules, practice high-difficulty scenario-based questions, refine exam time management strategies, and walk through the full exam registration and preparation process. The SAA-C03 exam is 65 questions over 130 minutes — this module ensures you are ready.
+## Learning Objectives
+
+By the end of this module, you will be able to:
+
+1. Identify the four SAA-C03 exam domains and their percentage weightings
+2. Apply the correct AWS service or architectural pattern to scenario questions in all four domains
+3. Distinguish between similar services using key differentiating criteria
+4. Use elimination strategies to narrow multiple-choice options on exam questions
+5. Identify common distractor patterns used in SAA-C03 exam questions
+6. Create a personal study plan targeting individual knowledge gaps
 
 ---
 
-### 1. High-Yield Glossary
-Review these essential definitions carefully. These represent the highest-priority cross-domain concepts for the SAA-C03 exam:
+## Section 1: Exam Structure and Scoring
 
-*   **SAA-C03 Exam Domain Weightings**: The SAA-C03 exam is divided into four domains: Domain 1 – Design Secure Architectures (30%), Domain 2 – Design Resilient Architectures (26%), Domain 3 – Design High-Performing Architectures (24%), Domain 4 – Design Cost-Optimized Architectures (20%). Security is the most heavily weighted domain. Knowing the domain percentages helps prioritize study time — spend 30% of prep on security, 26% on resilience, etc.
+### 1.1 Exam Facts
 
-*   **Cross-Service Integration Patterns**: The SAA-C03 exam heavily tests how multiple AWS services work together. Critical patterns include: S3 + CloudFront + OAC (secure static site delivery), SQS + Lambda (decoupled event processing), SNS + SQS fan-out (parallel processing), API Gateway + Lambda + DynamoDB (serverless CRUD API), EC2 + ALB + ASG + Multi-AZ RDS (multi-tier HA web app), VPC + NAT Gateway + Private Subnets (secure compute). Practice drawing these architectures from memory.
+| Attribute | Value |
+|---|---|
+| Number of questions | 65 (scored + unscored pilot) |
+| Time limit | 130 minutes |
+| Passing score | 720 / 1000 |
+| Question format | Single-answer and multi-select multiple choice |
+| Exam delivery | Pearson VUE (test center or online proctored) |
+| Exam fee | $150 USD |
 
-*   **Service Comparison Decision Trees**: Many SAA-C03 questions require choosing between similar services. Key comparisons: ECS vs. EKS (AWS-native simplicity vs. Kubernetes portability), ALB vs. NLB (Layer 7 content routing vs. Layer 4 extreme performance), RDS vs. DynamoDB (relational SQL vs. NoSQL at scale), CloudFront vs. Global Accelerator (cacheable content vs. dynamic/non-cacheable traffic), S3 Standard vs. S3 Glacier (active access vs. archival), SQS vs. SNS (pull queue for one consumer vs. push fan-out to many).
+### 1.2 Domain Weightings
 
-*   **High-Availability Design Principles**: AWS HA architecture always involves: deploying across multiple AZs, using managed services with built-in redundancy (ALB, RDS Multi-AZ, DynamoDB), eliminating single points of failure, designing for automatic recovery (ASG health checks, RDS failover, Route 53 health checks), and decoupling components (SQS buffers, Lambda event-driven processing). Any architecture with a single instance, single AZ, or synchronous tight coupling is likely an anti-pattern in exam answers.
+| Domain | Topic | Weight |
+|---|---|---|
+| 1 | Design Resilient Architectures | 26% |
+| 2 | Design High-Performing Architectures | 24% |
+| 3 | Design Secure Architectures | 30% |
+| 4 | Design Cost-Optimized Architectures | 20% |
 
-*   **Cost Optimization Decision Framework**: Exam cost optimization questions follow a pattern. For compute: Spot (interruptible batch) > Reserved (steady baseline) > Savings Plans (flexible committed usage) > On-Demand (unpredictable). For storage: Glacier Deep Archive (rarely accessed archival) < Glacier Flexible Retrieval < Standard-IA (monthly access) < Standard (frequent access). For databases: Aurora Serverless (variable traffic) vs. RDS Reserved (steady-state). For delivery: Lambda (per-invocation) vs. EC2 (running instances) vs. Fargate (per-second containers).
+Domain 3 (Security) is the highest-weighted domain at 30%. Allocate proportionally more study time to IAM, encryption, network security, and data protection.
 
----
+### 1.3 Scoring Model
 
-### 2. Certification Exam Tips
-
-*   **SAA-C03 Exam Format**: 65 questions (multiple choice and multiple response), 130 minutes, passing score approximately 720/1000. 15 of the 65 questions are unscored pilot questions that do not count toward your score but cannot be identified. Budget approximately 2 minutes per question. Flag and skip questions you are uncertain about — return to them after answering the questions you know.
-
-*   **Highest-Priority Topics by Domain Frequency:** Security (30%): IAM roles/policies, KMS SSE-KMS, WAF, Security Groups vs. NACLs, Shared Responsibility Model. Resilient (26%): Multi-AZ, ASG health checks, RDS Multi-AZ vs. Read Replicas, Route 53 Failover routing, SQS for decoupling. High-Performing (24%): ALB path routing, ElastiCache, CloudFront, DynamoDB On-Demand, Fargate right-sizing. Cost-Optimized (20%): Reserved vs. Spot vs. On-Demand, S3 Lifecycle policies, Lambda vs. EC2, right-sizing.
-
-*   **Common Exam Traps to Remember:** (1) Multi-AZ standby CANNOT serve read traffic — only Read Replicas can. (2) Security Groups are STATEFUL (allow-only); NACLs are STATELESS (allow + deny). (3) Lambda max timeout is 15 minutes — anything longer needs EC2, ECS, or Batch. (4) CloudFront does not cache POST/PUT requests by default — only GET/HEAD are cached. (5) S3 Transfer Acceleration speeds uploads, not downloads. (6) Enabling "detailed monitoring" on EC2 only increases metric frequency to 1-minute intervals — it does NOT add memory metrics (need CloudWatch Agent).
-
-*   **Exam Registration and Scheduling:** The SAA-C03 exam is administered through Pearson VUE. Register at [aws.amazon.com/certification](https://aws.amazon.com/certification/). The exam fee is $150 USD. AWS provides a free Official Practice Exam (not a full mock exam) after scheduling. AWS Skill Builder offers an Official Practice Question Set (20 questions) for free, and a full 65-question Official Practice Exam for $29. After passing, your certification is valid for 3 years.
-
-*   **Final Week Preparation Strategy:** Days 7–4 before exam: complete full practice exams (Tutorials Dojo, Whizlabs, or AWS Official) and review every incorrect answer. Days 3–2: focus only on your weakest domain (review pillar, re-read AWS FAQ pages for the services you miss). Day 1: light review of the decision trees and high-priority topics above. Day 0 (exam day): no cramming — trust your preparation.
-
-*   **Study Resources:** The most comprehensive free resource is the AWS documentation and FAQs for each service. The AWS Certified Solutions Architect – Associate Exam Guide is available at [https://aws.amazon.com/certification/certified-solutions-architect-associate/](https://aws.amazon.com/certification/certified-solutions-architect-associate/). Practice exams from Tutorials Dojo are highly recommended by the community as the closest to actual exam difficulty. AWS re:Invent session videos on YouTube provide deep technical context for difficult topics.
-
----
-
-### Required Readings & Videos
-To prepare for this module's exam readiness review, you must complete the following:
-
-*   **Required Reading:** Download and read the official SAA-C03 Exam Guide at [https://aws.amazon.com/certification/certified-solutions-architect-associate/](https://aws.amazon.com/certification/certified-solutions-architect-associate/). Review the sample questions provided in the Exam Guide. Re-read the [AWS Well-Architected Framework](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html) to connect services to pillars. Review the [AWS Whitepapers & Guides](https://aws.amazon.com/whitepapers/) for the "Disaster Recovery of Workloads on AWS" and "AWS Security Best Practices" whitepapers.
-
-*   **Required Video:** Watch the SAA-C03 final review / exam tips video in the official course playlist, focusing on the service comparison sections and the most common exam traps called out by the instructor: [AWS Certified Solutions Architect Associate Course](https://www.youtube.com/watch?v=Ia-UEYYR44s).
+AWS uses scaled scoring from 100–1000. Passing score is 720. The scaling means the difficulty of your specific question set affects the score. Always answer every question — there is no penalty for wrong answers. Unanswered questions count as wrong.
 
 ---
 
-### Lab & Command Integration
-In this week's final review activities, you will complete the following:
+## Section 2: Domain 1 Deep Review — Resilient Architectures
 
-*   **Complete a timed full-length practice exam:** Take a 65-question, 130-minute practice exam from Tutorials Dojo or the AWS Official Practice Exam. Grade yourself and identify your weakest domain by counting incorrect answers per domain.
+### 2.1 High Availability vs. Fault Tolerance
 
-*   **Architecture whiteboard review:** Without references, draw the complete architecture for a three-tier web application on AWS: ALB in public subnets → EC2 instances in private subnets (ASG across 2 AZs) → RDS Multi-AZ in isolated subnets. Add security controls (Security Groups, NACLs, IAM Role on EC2, KMS-encrypted RDS), monitoring (CloudWatch Alarms → SNS), and a CloudFront distribution with WAF. Verify your diagram against the course materials.
+- **High Availability (HA)** — the system remains operational despite component failures; brief interruptions are acceptable during failover. Example: RDS Multi-AZ (automatic failover in under 2 minutes).
+- **Fault Tolerance** — the system continues operating without any degradation even during failures. Higher standard. Example: S3 (11 nines durability, internal redundancy transparent to users).
 
-*   **Register for the certification exam:** If you have not already done so, register for the SAA-C03 exam through Pearson VUE at [https://home.pearsonvue.com/aws](https://home.pearsonvue.com/aws). Choose a test date 1–2 weeks after completing this module to allow time for final review.
+### 2.2 Disaster Recovery Patterns
+
+| DR Pattern | RTO | RPO | Key Services | Cost Tier |
+|---|---|---|---|---|
+| Backup and Restore | Hours | Hours | S3, AWS Backup, Snapshots | Lowest |
+| Pilot Light | 10–30 min | Minutes | RDS, minimal EC2, Route 53 failover | Low |
+| Warm Standby | Minutes | Seconds | Reduced-scale running environment | Medium |
+| Multi-Site Active-Active | Seconds | Near-zero | Route 53 latency routing, global databases | Highest |
+
+### 2.3 Auto Scaling Policy Comparison
+
+| Policy | Mechanism | Best For |
+|---|---|---|
+| Target Tracking | Maintains a metric (e.g., CPU at 60%) automatically | Most general workloads |
+| Step Scaling | Scales by defined amounts at defined thresholds | Aggressive, tiered scaling |
+| Scheduled Scaling | Scale at specific times | Predictable patterns (business hours) |
+| Predictive Scaling | ML-based forecast; pre-scales before demand | Cyclical daily/weekly patterns |
+
+### 2.4 Decoupling Patterns
+
+Decoupling prevents failure propagation across tiers. Key exam patterns:
+
+- Synchronous call → failed backend brings down frontend: add SQS between tiers
+- Lambda retry for async events: configure DLQ or Destination on failure
+- Step Functions with `Retry` and `Catch` blocks: declarative retry/compensating logic
+- ALB with health checks: routes traffic only to healthy instances
 
 ---
 
-### 3. Study Checklist
-- [ ] Review all five glossary entries and be able to recall the SAA-C03 domain percentages from memory.
-- [ ] Complete at least one full 65-question practice exam and score each domain separately.
-- [ ] Review the official SAA-C03 Exam Guide at [https://aws.amazon.com/certification/certified-solutions-architect-associate/](https://aws.amazon.com/certification/certified-solutions-architect-associate/).
-- [ ] Watch the final review video in [AWS Certified Solutions Architect Associate Course](https://www.youtube.com/watch?v=Ia-UEYYR44s).
-- [ ] Complete the architecture whiteboard exercise without references.
-- [ ] Register for and schedule the SAA-C03 exam.
-- [ ] Complete the final course exam.
+## Section 3: Domain 2 Deep Review — High-Performing Architectures
+
+### 3.1 Database Performance Toolbox
+
+| Problem | Solution |
+|---|---|
+| Too many reads on RDS | Add Read Replicas |
+| Expensive repeated RDS queries | Add ElastiCache (Redis or Memcached) in front |
+| DynamoDB read latency | Enable DAX cluster |
+| Variable database load | Use Aurora Serverless v2 |
+| Analytics on operational data | Replicate to Redshift via DMS or Kinesis Firehose |
+| Session storage at scale | ElastiCache Redis |
+
+### 3.2 Network Performance Patterns
+
+- **Cluster Placement Group** — instances in the same rack in the same AZ. Lowest inter-instance network latency (10 Gbps+). Use for HPC and tightly coupled distributed computing.
+- **Partition Placement Group** — instances spread across partitions (racks) in one or more AZs. Used for HDFS, Cassandra, Kafka — isolates rack-level failures.
+- **Spread Placement Group** — each instance on a separate rack. Maximum fault isolation for critical instances. Limit of 7 instances per AZ.
+
+### 3.3 CloudFront Performance Optimization
+
+- **Origin failover** — configure a primary and secondary origin; CloudFront automatically fails over on 5xx errors
+- **Lambda@Edge** — runs Node.js/Python at CloudFront edge locations; used for A/B testing, auth token validation, URL rewriting
+- **CloudFront Functions** — lightweight JavaScript executed at the edge for header manipulation and URL redirects; faster and cheaper than Lambda@Edge for simple logic
+- **OAC (Origin Access Control)** — restricts S3 bucket access to CloudFront only; prevents direct S3 URL access
+
+---
+
+## Section 4: Domain 3 Deep Review — Secure Architectures
+
+### 4.1 IAM Reference
+
+| IAM Feature | Purpose |
+|---|---|
+| IAM Role | Grant permissions to services (EC2, Lambda, ECS tasks) |
+| IAM Instance Profile | Container for an IAM Role attached to an EC2 instance |
+| Permission Boundary | Maximum permissions cap for a user or role |
+| Service Control Policy (SCP) | Maximum permissions cap for an AWS account in Organizations |
+| Resource-based Policy | Grants access from a specific principal to a specific resource |
+| Identity-based Policy | Grants permissions to a specific principal |
+
+### 4.2 Encryption Quick Reference
+
+| Resource | How to Encrypt |
+|---|---|
+| S3 objects | SSE-S3, SSE-KMS, SSE-C, or Client-side |
+| EBS volumes | Enable encryption at volume creation time (KMS) |
+| RDS databases | Enable encryption at DB instance creation time (KMS) |
+| Aurora | Enable encryption at cluster creation (KMS) |
+| EFS | Enable encryption at file system creation (KMS) |
+| DynamoDB | Enabled by default (AWS-owned key); optionally use CMK |
+| SQS | Server-side encryption with KMS; enable on queue creation |
+| SNS | Server-side encryption with KMS; enable on topic creation |
+| Lambda environment variables | Encrypt with KMS key |
+| Secrets Manager | Always encrypted with KMS |
+
+Cannot encrypt an existing unencrypted RDS instance or EBS volume directly — must create encrypted copy via snapshot.
+
+### 4.3 VPC Security Layering
+
+Defense in depth for VPC security:
+
+1. **Internet Gateway / NAT Gateway** — control what can reach the internet
+2. **Security Groups** — stateful, instance-level allow rules
+3. **Network ACLs** — stateless, subnet-level allow/deny rules
+4. **VPC Flow Logs** — record all traffic metadata for analysis
+5. **AWS Network Firewall** — deep packet inspection, IPS/IDS capabilities at VPC perimeter
+6. **GuardDuty** — ML threat detection using Flow Logs + CloudTrail + DNS
+
+### 4.4 Data Residency and Sovereignty
+
+For data residency requirements:
+
+- Use AWS Config rules to detect and alert on resources created in disallowed regions
+- Use SCPs to deny resource creation in all regions except approved regions
+- Use S3 Object Lock for regulatory compliance (WORM storage — Write Once Read Many)
+- Use AWS Artifact to access AWS compliance reports for your audit team
+
+---
+
+## Section 5: Domain 4 Deep Review — Cost-Optimized Architectures
+
+### 5.1 Idle Capacity Elimination
+
+| Pattern | How It Eliminates Idle Cost |
+|---|---|
+| Lambda (serverless) | No cost when no invocations; pay per execution |
+| Fargate | No EC2 instances to pay for when no tasks run |
+| Aurora Serverless v2 | Database scales to minimum ACUs when idle |
+| DynamoDB On-Demand | No provisioned capacity cost; pay per request |
+| Auto Scaling to zero | Scale EC2 ASG to 0 instances during off-hours |
+| S3 vs. EBS for infrequent data | S3 storage is cheaper than EBS for inactive data |
+
+### 5.2 Cost Monitoring and Governance
+
+| Service | Purpose |
+|---|---|
+| Cost Explorer | Visualize and analyze historical and forecast spend |
+| AWS Budgets | Set spend/usage limits with alerts and automated actions |
+| Cost Anomaly Detection | ML-based unusual spend detection |
+| Cost and Usage Report | Most granular billing data; delivered to S3 |
+| Compute Optimizer | ML-based rightsizing recommendations |
+| Trusted Advisor | Best practice recommendations including cost checks |
+
+### 5.3 Network Cost Reduction
+
+- S3 Gateway Endpoint: eliminates NAT Gateway charges for S3 traffic from private subnets
+- Interface VPC Endpoints: keep traffic private; per-endpoint hourly charge but no data transfer charge to internet
+- CloudFront: origin egress at CloudFront prices (lower than direct EC2 egress); caching reduces total origin fetches
+- Same-AZ placement: intra-AZ data transfer is free; cross-AZ is charged ($0.01/GB each direction)
+
+---
+
+## Section 6: Common Exam Distractor Patterns
+
+### 6.1 Multi-AZ vs. Read Replica
+
+Exam trap: "Add Read Replicas to improve availability." Read Replicas improve read scalability — they are NOT automatic failover targets. Multi-AZ is required for HA and automatic failover. However, RDS can promote a Read Replica to a standalone DB manually (not automatic).
+
+### 6.2 CloudFront vs. Global Accelerator
+
+- **CloudFront** — CDN optimized for HTTP/HTTPS content caching. Reduces latency via edge cache hits.
+- **Global Accelerator** — Layer 4 (TCP/UDP) traffic routing using AWS global network. Does not cache content. Reduces latency for dynamic content, gaming, IoT, VoIP.
+
+Exam: "Static website" → CloudFront. "UDP gaming application with global users" → Global Accelerator.
+
+### 6.3 S3 Transfer Acceleration vs. CloudFront
+
+- **S3 Transfer Acceleration** — speeds up S3 uploads from distant clients using CloudFront edge locations as upload proxies. For upload, not download caching.
+- **CloudFront** — speeds up download/read access to S3 content through caching.
+
+### 6.4 DynamoDB Global Tables vs. RDS Cross-Region Read Replicas
+
+- **DynamoDB Global Tables** — active-active, multi-region. Writes can occur in any region. Sub-second replication.
+- **RDS Cross-Region Read Replicas** — active-passive. Reads from replica, writes to primary only. Can be promoted on DR.
+
+Exam: "Multi-region active-active with single-digit millisecond writes" → DynamoDB Global Tables.
+
+---
+
+## Key Terms (Capstone Reference)
+
+- **RTO** — maximum acceptable downtime after a failure
+- **RPO** — maximum acceptable data loss in time
+- **Target Tracking** — Auto Scaling policy that maintains a specific metric value automatically
+- **Placement Group** — logical EC2 grouping for latency optimization or fault isolation
+- **Permission Boundary** — maximum permissions ceiling for an IAM entity
+- **SCP** — Service Control Policy; restricts maximum permissions for an AWS Organizations account
+- **CloudFront OAC** — Origin Access Control; restricts S3 bucket access to CloudFront only
+- **Lambda@Edge** — Lambda functions executed at CloudFront edge locations
+- **DAX** — DynamoDB Accelerator; in-memory cache providing microsecond DynamoDB read latency
+- **S3 Transfer Acceleration** — speeds S3 uploads from distant clients via CloudFront edge infrastructure
+- **Global Accelerator** — routes TCP/UDP traffic through AWS global network for consistent low latency
+- **S3 Object Lock** — WORM (Write Once Read Many) protection for regulatory compliance
+
+---
+
+## Final Exam Study Checklist
+
+Work through this list in the week before your exam:
+
+- Review all 16 module video scripts for key service definitions
+- Complete at least two full-length practice exams (65 questions, 130 minutes each)
+- Score each practice exam and categorize missed questions by domain
+- Re-read AWS documentation FAQs for the 5 services where you missed the most questions
+- Build and review flashcards for all service comparison tables in this guide
+- Confirm your exam appointment, testing center location, and ID requirements
+- Get 8 hours of sleep the night before the exam

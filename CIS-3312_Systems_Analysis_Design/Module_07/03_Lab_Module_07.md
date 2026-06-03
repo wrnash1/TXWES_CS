@@ -1,144 +1,171 @@
-# Lab Activity: Module 07 - Process Modeling with BPMN
+# Lab Activity: Module 07 — Requirements Elicitation Techniques
 
-**Course:** CIS-3312 Systems Analysis and Design
-**Certification Alignment:** IIBA ECBA (Entry Certificate in Business Analysis)
-**Prepared by:** Professor Nash | Texas Wesleyan University
+## Course: CIS-3312 Systems Analysis and Design
+
+## Texas Wesleyan University | Professor Nash
+
 **Total Points:** 100
+**Certification Alignment:** IIBA ECBA
 
 ---
 
-## Overview
+## Scenario: Rampart County Public Library System
 
-This lab gives you hands-on practice modeling a business process using BPMN. You will analyze a case study, draw an as-is process model, identify inefficiencies, and draw an improved to-be process model. You will also answer analysis questions about gateway selection and modeling rules. No software installation or terminal commands are required. You may use any diagramming tool (draw.io, Lucidchart, PowerPoint, or hand-drawn and photographed).
+Rampart County Public Library System (RCPLS) serves a county population of 187,000 through a central library and four branch locations. The library currently uses a legacy integrated library system (ILS) that was installed in 2009. The system manages catalog records, patron accounts, checkouts, holds, and fines. The system is no longer supported by the vendor, and the county has approved a budget for replacement.
 
----
+The library director has hired you as the BA responsible for eliciting requirements for the new ILS. You have been given access to the following stakeholders and resources:
 
-## Case Study: Brightwood Insurance — Claims Processing
+- **Director of Library Services** — executive sponsor; focused on community access and strategic outcomes
+- **Circulation Manager** — responsible for daily checkout and return operations; manages 12 circulation staff
+- **Cataloging Librarian** — responsible for catalog records, metadata standards, and acquisitions
+- **IT Manager** — responsible for infrastructure, integrations, and security; concerned about vendor support and cloud hosting
+- **Branch Managers** — four managers, each responsible for a branch location; varying levels of technical literacy
+- **Patron Advisory Committee** — six community members representing library users; varying backgrounds
+- **Current system documentation** — user manual (2009), data dictionary (2009), workflow procedures (last updated 2017)
 
-Brightwood Insurance processes auto insurance claims submitted by policyholders. A BA has observed the current process and documented the following steps:
-
-- A policyholder calls the claims hotline and a claims agent takes the initial report by phone, manually recording it on paper.
-- The agent creates a claim record in the system and mails a paper claim form to the policyholder.
-- The policyholder completes the paper form and mails it back. The agent waits for the form to arrive (average wait: 5 business days).
-- When the form arrives, the agent scans it and enters the data into the system.
-- The agent assigns an adjuster to the claim. The adjuster reviews the claim and decides whether to approve or deny it.
-- If approved, the agent calculates the payment amount and sends it to a supervisor for a second review and approval.
-- The supervisor approves the payment. The agent processes the payment and mails a check to the policyholder.
-- If denied, the agent mails a denial letter to the policyholder.
-- The policyholder can appeal a denial. If an appeal is received, a senior adjuster reviews it and either overturns (approve) or upholds (deny) the original decision.
-
-Brightwood is building a new digital claims portal to improve this process. The future-state process should allow policyholders to submit claims online, eliminate the paper form, allow photo uploads for damage documentation, run initial eligibility checks automatically, and reduce the supervisor approval threshold to claims over $5,000 only.
+You will complete four exercises covering elicitation strategy, interview design, document analysis, and requirements documentation.
 
 ---
 
-## Part 1: As-Is BPMN Process Model — 35 Points
+## Exercise 1: Elicitation Strategy (25 points)
 
-### Part 1 Instructions
+Before conducting any elicitation, a BA develops an elicitation plan — a structured approach to deciding which techniques to use, with whom, and in what sequence.
 
-Draw an as-is (current-state) BPMN process model for the Brightwood Insurance claims processing case study.
+### Task 1a: Stakeholder analysis
 
-Your diagram must include:
+Complete the stakeholder analysis table below for the six stakeholder groups listed. For each group, assess their interest level (High/Medium/Low), influence level (High/Medium/Low), and assign a primary elicitation technique from the following list: individual interview, workshop, observation, survey, document analysis.
 
-- At least two pools (Policyholder and Brightwood Insurance)
-- Lanes within the Brightwood Insurance pool for at least two roles (Claims Agent and Adjuster, at minimum)
-- All activities from the as-is process, labeled with descriptive task names
-- At least one Exclusive Gateway modeling a decision point (approved vs. denied)
-- Correct sequence flow within each pool (solid arrows)
-- Correct message flow between pools (dashed arrows with open arrowheads)
-- Start Event and End Event(s) in the appropriate pool(s)
+| Stakeholder Group | Interest Level | Influence Level | Primary Elicitation Technique | Justification (one sentence) |
+|---|---|---|---|---|
+| Director of Library Services | | | | |
+| Circulation Manager | | | | |
+| Cataloging Librarian | | | | |
+| IT Manager | | | | |
+| Branch Managers (4) | | | | |
+| Patron Advisory Committee (6) | | | | |
 
-### Grading Rubric — Part 1
+### Task 1b: Elicitation sequence
 
-| Criterion | Points |
-|---|---|
-| At least two pools correctly labeled | 4 |
-| At least two lanes within Brightwood pool with role names | 4 |
-| All major as-is activities present and labeled | 10 |
-| At least one Exclusive Gateway with correct notation and labeled branches | 6 |
-| Sequence flow stays within pools; message flow crosses pools correctly | 7 |
-| Start and End Events present and correctly typed | 4 |
+Write a 100–150 word justification for the order in which you would conduct your elicitation activities. Address:
 
-Part 1 Total: 35 points
+- Which activity should come first and why
+- Whether document analysis should precede or follow stakeholder interviews, and why
+- How you would use findings from one technique to inform the next
 
----
+### Task 1c: JAD session rationale
 
-## Part 2: As-Is Process Analysis — 20 Points
-
-### Part 2 Instructions
-
-After drawing your as-is BPMN model, answer the following questions in complete sentences. Each answer should be 3–5 sentences.
-
-Question 1: Identify at least three specific inefficiencies visible in the as-is process. For each inefficiency, name the activity or handoff where it occurs and explain why it is a problem.
-
-Question 2: The current process requires supervisor approval for every payment regardless of amount. Identify which BPMN gateway type you would use in the to-be model to route high-value claims (over $5,000) through supervisor approval and route low-value claims directly to payment. Explain why this gateway type is correct for this decision.
-
-Question 3: The appeal subprocess (reviewing a denied claim) is a compound activity with its own internal steps. Identify which BPMN symbol you would use to represent the appeal process in the top-level diagram without showing all its internal steps. Explain what that symbol communicates to a reader.
-
-### Grading Rubric — Part 2
-
-| Criterion | Points |
-|---|---|
-| Question 1: Three specific inefficiencies identified with activities named (7 pts) | 7 |
-| Question 2: Correct gateway type identified with justification (7 pts) | 7 |
-| Question 3: Correct BPMN symbol identified with explanation (6 pts) | 6 |
-
-Part 2 Total: 20 points
+The circulation manager and the IT manager have conflicting requirements: the circulation manager wants real-time fine calculation visible during patron checkout, while the IT manager wants fine calculations processed in batch at end of day to reduce system load. Write 75–100 words explaining whether you would recommend a JAD session to resolve this conflict and what you would hope to achieve from it.
 
 ---
 
-## Part 3: To-Be BPMN Process Model — 30 Points
+## Exercise 2: Interview Design (25 points)
 
-### Part 3 Instructions
+You are preparing to conduct a semi-structured interview with the Circulation Manager. The interview will last 45 minutes and focus on understanding how the current checkout, return, and hold processes work, what problems exist with the current system, and what the Circulation Manager needs from the new system.
 
-Draw a to-be (future-state) BPMN process model incorporating the improvements described in the case study.
+### Task 2a: Interview question set
 
-Your to-be diagram must include:
+Write 10 interview questions for the Circulation Manager. Your questions must include:
 
-- The same pool structure as Part 1 (Policyholder, Brightwood Insurance with lanes)
-- A digital submission path replacing the paper form process
-- An Exclusive Gateway routing claims over $5,000 to supervisor approval and claims $5,000 or under directly to payment processing
-- A Service Task (marked with a gear icon) representing the automated eligibility check
-- Correct message flow for the online claim submission from Policyholder to Brightwood Insurance
-- At least one Intermediate Event representing the claim acknowledgment sent to the policyholder after submission
-- Start Event and End Event(s) in the appropriate pool(s)
+- At least four open-ended questions that begin with "Describe," "Tell me," or "Walk me through"
+- At least three probing follow-up questions (questions that probe a specific expected topic from a prior answer, formatted as: "You mentioned X — can you describe a situation where...")
+- At least two questions specifically designed to surface unstated or tacit requirements (questions about exceptions, failures, workarounds, or informal practices)
+- At least one question about success criteria ("How will you know the new system is working well?")
 
-### Grading Rubric — Part 3
+Label each question with its type (open-ended, probing, tacit-surfacing, or success criteria).
 
-| Criterion | Points |
-|---|---|
-| Digital submission path replaces paper form process | 6 |
-| Exclusive Gateway correctly models the $5,000 threshold decision with labeled branches | 8 |
-| Service Task with gear icon represents automated eligibility check | 4 |
-| Intermediate Event represents claim acknowledgment | 4 |
-| Correct sequence flow and message flow placement | 5 |
-| Start and End Events present | 3 |
+### Task 2b: Interview logistics plan
 
-Part 3 Total: 30 points
+Write 75–100 words describing your preparation and logistics for this interview. Address:
+
+- Where and when the interview will be held
+- Whether you will record the session and how you will handle consent
+- How you will organize your notes during the interview
+- What you will send the Circulation Manager after the interview and why
 
 ---
 
-## Part 4: Reflection — 15 Points
+## Exercise 3: Document Analysis (25 points)
 
-### Part 4 Instructions
+You have reviewed the following documents from RCPLS. For each document, extract at least two requirements, constraints, or issues that a BA would identify and document.
 
-Write a reflection of 150–200 words comparing your as-is and to-be models. Your reflection must address all three of the following:
+### Document 1: Current System Data Dictionary (excerpt)
 
-1. Identify the most significant efficiency gain achieved in the to-be model and explain why it matters to the business.
-2. Identify one risk or challenge the to-be process introduces that the as-is process did not have, and describe how a BA might mitigate it.
-3. Explain how BPMN — specifically its use of pools, lanes, and gateways — made it easier to identify and communicate the process changes compared to a plain narrative description.
+The current ILS data dictionary shows the following patron record fields: PatronID (integer), FirstName (varchar 50), LastName (varchar 50), Address (varchar 200), Phone (varchar 15), Email (varchar 100), CardExpiry (date), BalanceDue (decimal 8,2), ActiveStatus (char 1: A=Active, S=Suspended, E=Expired).
 
-### Grading Rubric — Part 4
+**Extract from this document (at least two findings):**
 
-| Criterion | Points |
-|---|---|
-| Significant efficiency gain identified with business impact explained | 5 |
-| Risk or challenge identified with mitigation approach described | 5 |
-| BPMN's value as a communication tool explained with specific references to diagram elements | 5 |
+Finding 1: _______________
 
-Part 4 Total: 15 points
+Finding 2: _______________
+
+### Document 2: Workflow Procedures Manual (excerpt)
+
+The procedure for renewing an overdue item reads: "The circulation staff member must first verify the patron has no outstanding fines over $5.00. If fines are over $5.00, the renewal is denied. If fines are $5.00 or under, the item may be renewed for one standard loan period. Exception: Items with three or more holds may not be renewed regardless of fine balance. Staff must check the holds queue manually in a separate screen."
+
+**Extract from this document (at least two findings):**
+
+Finding 1: _______________
+
+Finding 2: _______________
+
+### Document 3: Director's Strategic Plan (excerpt)
+
+The five-year strategic plan states: "RCPLS will expand digital equity access by providing card-free service options for patrons who may not have a physical library card. All patron-facing services will be accessible via mobile devices. RCPLS will comply with all applicable accessibility standards including WCAG 2.1 Level AA."
+
+**Extract from this document (at least two findings):**
+
+Finding 1: _______________
+
+Finding 2: _______________
+
+### Task 3b: Document analysis limitations
+
+Write 75–100 words explaining one specific risk of relying solely on the 2009 data dictionary and 2017 workflow procedures for requirements. What validation technique would you use to address this risk, and what specifically would you look for?
 
 ---
 
-## Submission Instructions
+## Exercise 4: Requirements Documentation (25 points)
 
-Combine all four parts into one document with clearly labeled sections. For diagram parts, embed the diagram image or include a link to the shared diagram file. For written parts, type your responses directly in the document. Submit to the Canvas Module 07 Lab assignment by the due date shown in the course calendar.
+Based on the information gathered from Exercises 1–3 and your knowledge of the scenario, draft requirements for the new ILS in three categories.
+
+### Task 4a: Business requirements (two required)
+
+Business requirements describe why the organization needs the new system — the goals and outcomes it must achieve.
+
+Write two business requirements using this format: "The new integrated library system must [enable/support/ensure] [business outcome] in order to [strategic goal]."
+
+### Task 4b: Functional requirements (four required)
+
+Functional requirements describe what the system must do. Write four functional requirements using this format: "The system shall [action] [object/data] [condition/constraint]."
+
+At least one of your four functional requirements must address:
+
+- The fine balance renewal rule from Document 2
+- The card-free access requirement from Document 3
+
+### Task 4c: Non-functional requirements (two required)
+
+Non-functional requirements describe quality attributes — how the system must perform. Write two non-functional requirements addressing any two of the following quality attributes: performance, accessibility, security, availability, or usability.
+
+### Task 4d: Requirements quality check
+
+Review your six functional and non-functional requirements from Tasks 4b and 4c. For each requirement, evaluate it against these three quality criteria and mark Pass or Fail:
+
+| Requirement | Clear (unambiguous)? | Verifiable (testable)? | Traceable (linked to a source)? |
+|---|---|---|---|
+| FR-1 | | | |
+| FR-2 | | | |
+| FR-3 | | | |
+| FR-4 | | | |
+| NFR-1 | | | |
+| NFR-2 | | | |
+
+For any requirement that fails one or more criteria, revise it to address the failure and explain what you changed.
+
+---
+
+## Submission
+
+Submit your completed lab document to the Canvas assignment portal by the due date. All exercises must be substantively completed. Requirements must be written in full sentences using the specified formats — not described in abstract terms. Show your reasoning, not just your conclusions.
+
+**Grading:** Each exercise is worth 25 points, distributed across tasks based on completeness, accuracy, and application of elicitation and requirements concepts.

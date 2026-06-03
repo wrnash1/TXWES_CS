@@ -1,77 +1,285 @@
-# Quiz: Module 15 - Web Sockets
-## Course: CIS-3340_Full_Stack_Web_Dev (AWS Certified Developer - Associate)
+# Quiz: Module 15 — WebSockets and Real-Time Communication
+
+**Course:** CIS-3340 Full Stack Web Development
+**Texas Wesleyan University | Professor Nash**
 
 ---
 
-**Question 1**
-What is the primary benefit of WebSockets over standard HTTP polling for real-time applications?
-*   A) WebSockets automatically encrypt all data with TLS — HTTP polling sends data in plaintext.
-*   B) WebSockets establish a persistent, full-duplex TCP connection — allowing the server to push data to the client at any time without the client initiating each exchange, eliminating per-message HTTP header overhead.
-*   C) WebSockets bypass the browser's Same-Origin Policy — enabling cross-origin communication without CORS headers.
-*   D) WebSockets execute 10x faster than HTTP because they bypass the JavaScript engine's event loop.
-*   **Correct Answer:** B) WebSockets establish a persistent, full-duplex TCP connection — allowing the server to push data to clients without repeated HTTP request/response cycles, eliminating the latency and overhead of polling.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* WebSockets do not automatically encrypt data — WSS (WebSocket Secure) uses TLS, but plain WS does not. The same is true for HTTP vs. HTTPS.
-    *   *Why B is correct:* The key advantage of WebSockets is server-initiated push over a persistent connection — HTTP polling requires the client to make repeated requests to check for new data.
-    *   *Why C is incorrect:* WebSockets are still subject to the Same-Origin Policy — cross-origin WebSocket connections require the server to accept requests from non-matching origins.
-    *   *Why D is incorrect:* WebSockets do not bypass the JavaScript event loop — they use the same asynchronous event-driven model as HTTP requests.
+## Question 1
+
+A React component calls `io('http://localhost:3000')` inside the component function body (outside `useEffect`). What is the problem?
+
+- A) `io()` must be called inside a `useEffect` hook or React will throw an error about side effects during rendering.
+- B) Every time the component re-renders, `io()` creates a new WebSocket connection. The previous connections are never closed, resulting in duplicate connections accumulating over the lifetime of the component.
+- C) Calling `io()` outside `useEffect` causes the connection to use HTTP polling instead of WebSockets because the DOM is not ready.
+- D) Socket.io requires the connection to be created after the component mounts — calling it in the function body means the socket is created before the component's props are available.
+
+**Correct Answer:** B
+
+**Explanation:** `io()` immediately opens a WebSocket connection. When called in the component body rather than inside `useEffect`, it runs on every render — including re-renders triggered by state changes, parent re-renders, or React StrictMode's double-invocation. Each call creates a new connection that is never closed, because there is no cleanup function. The correct pattern is to create a singleton socket instance in a separate module (`src/socket.js`) and import it, so only one connection exists regardless of how many times the component renders.
+
+**Distractor Analysis:**
+
+- Why A is incorrect: React does not throw an error for calling `io()` in the component body. The problem is behavioral (duplicate connections), not a React error.
+- Why B is correct: Multiple `io()` calls produce multiple connections. Without `socket.disconnect()` in a cleanup function, they accumulate.
+- Why C is incorrect: `io()` uses WebSockets by default regardless of where it is called. The polling fallback is for environments where WebSockets are blocked, not for timing of the call.
+- Why D is incorrect: `io()` does not require props. The issue is connection multiplicity, not prop availability.
 
 ---
 
-**Question 2**
-Which of the following is the most accurate definition of **polling fallbacks** in the context of Socket.io?
-*   A) The Socket.io feature that automatically retries a failed WebSocket connection up to five times before throwing an error.
-*   B) Degraded transport mechanisms (HTTP long-polling or short-polling) that Socket.io uses when a WebSocket connection cannot be established — such as in corporate proxy environments that block WebSocket upgrades.
-*   C) The browser's native `EventSource` API that provides one-way server-sent events as a fallback when the WebSocket handshake fails.
-*   D) The AWS API Gateway feature that falls back to REST API routing when a WebSocket `$connect` route Lambda function times out.
-*   **Correct Answer:** B) Degraded transport mechanisms (HTTP long-polling or short-polling) that Socket.io uses when a WebSocket connection cannot be established — such as in corporate proxy environments that block WebSocket upgrades.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* This describes Socket.io's reconnection logic — not polling fallbacks. Polling fallbacks are an alternative transport, not a retry mechanism.
-    *   *Why B is correct:* Socket.io transparently negotiates the best available transport — starting with WebSockets and falling back to HTTP polling if the environment does not support WebSocket upgrades.
-    *   *Why C is incorrect:* Server-Sent Events (SSE) via `EventSource` is a browser API for one-way push from server to client — it is a different technology from Socket.io's polling fallback mechanism.
-    *   *Why D is incorrect:* AWS API Gateway WebSocket APIs do not fall back to REST routing on Lambda timeout — this is a made-up behavior.
+## Question 2
+
+A developer adds this `useEffect` to a chat component:
+
+```jsx
+useEffect(() => {
+  socket.connect();
+  socket.on('message', (msg) => {
+    setMessages((prev) => [...prev, msg]);
+  });
+}, []);
+```
+
+After using the app for a few minutes, every new message appears three times. What is the most likely cause?
+
+- A) `setMessages` with the functional updater form `prev => [...prev, msg]` appends the message three times when the component has three state variables.
+- B) The `useEffect` runs three times because React StrictMode invokes effects twice in development, and the component re-renders once on mount — creating three `message` listeners that are never removed.
+- C) Socket.io emits every event three times by default to ensure delivery — the developer must use `socket.once()` instead of `socket.on()`.
+- D) The missing `socket.off('message')` in the cleanup function means each time the component re-renders or the effect re-runs, another listener is added. With three registrations, each incoming message triggers three `setMessages` calls.
+
+**Correct Answer:** D
+
+**Explanation:** Without `socket.off('message')` in the `useEffect` cleanup return function, every execution of the effect adds another listener to the `'message'` event. In React StrictMode, effects run twice in development (mount → unmount → remount), leaving two listeners. Additional re-renders add more. Three registrations cause each message to call `setMessages` three times, appending it three times. The fix is `return () => { socket.off('message'); socket.disconnect(); }`.
+
+**Distractor Analysis:**
+
+- Why A is incorrect: The functional updater form is correct. `prev => [...prev, msg]` always appends exactly one item regardless of other state variables.
+- Why B is incorrect: React StrictMode does invoke effects twice in development, but the "three times" behavior persists in production too, indicating listener accumulation — not just a StrictMode artifact.
+- Why C is incorrect: Socket.io does not retry event delivery by default. `socket.once()` would remove the listener after the first message, which is also wrong behavior for a chat.
+- Why D is correct: Missing `socket.off()` in cleanup is the most common Socket.io bug in React. Each effect execution adds a new listener.
 
 ---
 
-**Question 3**
-In Socket.io, what is the difference between `socket.emit()` and `io.emit()`?
-*   A) `socket.emit()` sends events to all connected clients; `io.emit()` sends events only to the client represented by the `socket` object.
-*   B) `socket.emit()` sends an event to the single client represented by that socket connection; `io.emit()` broadcasts the event to all currently connected clients.
-*   C) `socket.emit()` emits events synchronously; `io.emit()` emits events asynchronously via a Promise.
-*   D) `socket.emit()` is used on the server side; `io.emit()` is used on the browser client side.
-*   **Correct Answer:** B) `socket.emit()` sends an event only to the specific client represented by that socket connection; `io.emit()` broadcasts the event to all currently connected clients.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* This reverses the correct behavior — `io.emit()` broadcasts to all, `socket.emit()` targets one.
-    *   *Why B is correct:* In Socket.io server-side code, `socket` refers to a single client connection — `socket.emit()` targets that client. `io` is the server instance — `io.emit()` broadcasts to every connected socket.
-    *   *Why C is incorrect:* Both methods are event-driven and non-blocking — neither is synchronous in the traditional sense.
-    *   *Why D is incorrect:* Both `socket.emit()` and `io.emit()` are server-side Socket.io methods. On the browser client side, the client socket also has its own `socket.emit()` for sending events to the server.
+## Question 3
+
+A Socket.io server has this code:
+
+```js
+io.on('connection', (socket) => {
+  socket.on('join_room', (roomId) => {
+    socket.join(roomId);
+  });
+
+  socket.on('send_to_room', ({ roomId, message }) => {
+    socket.to(roomId).emit('new_message', message);
+  });
+});
+```
+
+User A and User B are both in room `'project-42'`. User A sends a message. Which clients receive the `'new_message'` event?
+
+- A) All connected clients on the server, including User A.
+- B) All clients in room `'project-42'`, including User A.
+- C) All clients in room `'project-42'` except User A.
+- D) Only User B, because `socket.to()` sends to exactly one other client.
+
+**Correct Answer:** C
+
+**Explanation:** `socket.to(roomId).emit(...)` broadcasts to all clients in the specified room **except the sender**. This is the standard broadcast-to-room pattern. If User A should also receive the message (for example, to confirm their own message appeared), use `io.to(roomId).emit(...)` instead, which includes the sender.
+
+**Distractor Analysis:**
+
+- Why A is incorrect: `socket.to(roomId)` scopes the emission to the room, not the entire server. `io.emit()` would reach all clients.
+- Why B is incorrect: `socket.to(roomId)` excludes the sender. Only `io.to(roomId)` includes the sender.
+- Why C is correct: `socket.to(room)` = everyone in the room except the socket that called it.
+- Why D is incorrect: `socket.to(roomId)` sends to all clients in the room, not just one. `socket.to(socketId)` would send to exactly one client.
 
 ---
 
-**Question 4**
-On AWS, which service provides a managed WebSocket API that routes connections and messages to AWS Lambda functions without managing a WebSocket server?
-*   A) Amazon EC2 with a Node.js Socket.io server running on port 443.
-*   B) AWS API Gateway WebSocket API
-*   C) Amazon SQS with long-polling enabled
-*   D) AWS Elastic Load Balancer with sticky sessions
-*   **Correct Answer:** B) AWS API Gateway WebSocket API provides a managed WebSocket endpoint — it routes `$connect`, `$disconnect`, and custom message routes to individual Lambda functions without any server management.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Running Socket.io on EC2 is a valid option but requires server management — it is not a managed serverless WebSocket service.
-    *   *Why B is correct:* API Gateway WebSocket APIs are the AWS-native managed solution for WebSocket connections backed by Lambda — a key DVA-C02 exam topic.
-    *   *Why C is incorrect:* Amazon SQS with long-polling retrieves messages from a queue — it is a message queue service, not a real-time browser WebSocket service.
-    *   *Why D is incorrect:* Elastic Load Balancers with sticky sessions route HTTP requests to consistent backend instances — they do not provide WebSocket API management with Lambda integration.
+## Question 4
+
+Where must Socket.io's CORS configuration be set, and why?
+
+- A) In the React component's `fetch` options, using `mode: 'cors'`, because the WebSocket upgrade is a browser-initiated HTTP request.
+- B) In the `Server` constructor passed to Socket.io — `new Server(server, { cors: { origin: '...' } })` — because the WebSocket upgrade handshake is an HTTP request that must include `Access-Control-Allow-Origin` in the server's response, and Socket.io handles that header independently of Express's `cors()` middleware.
+- C) In Express's `app.use(cors(...))` middleware, because Socket.io routes all traffic through Express before upgrading the connection.
+- D) CORS does not apply to WebSocket connections — only HTTP requests are subject to the browser's same-origin policy.
+
+**Correct Answer:** B
+
+**Explanation:** The WebSocket upgrade begins as an HTTP request. The browser enforces CORS on this request — if the server's response does not include `Access-Control-Allow-Origin`, the upgrade is blocked. Socket.io handles this handshake internally and does not route it through Express middleware. Therefore, CORS must be configured in the Socket.io `Server` constructor's `cors` option. Express's `app.use(cors(...))` only covers standard HTTP routes, not the Socket.io upgrade path.
+
+**Distractor Analysis:**
+
+- Why A is incorrect: `fetch` options do not affect WebSocket connections. WebSockets use the `WebSocket` constructor or `io()`, not `fetch`.
+- Why B is correct: Socket.io intercepts the HTTP upgrade at the server level, bypassing Express middleware.
+- Why C is incorrect: Express middleware does not intercept the WebSocket upgrade path. Testing confirms this — many developers discover the hard way that adding `cors()` to Express is not sufficient for Socket.io.
+- Why D is incorrect: CORS does apply to WebSocket upgrades. The browser's same-origin policy checks the `Upgrade` request just like any cross-origin HTTP request.
 
 ---
 
-**Question 5**
-A real-time collaborative whiteboard app uses Socket.io. When one user draws a shape, all other users in the same "room" should see it, but users in different rooms should not. Which Socket.io feature enables this targeted broadcasting?
-*   A) `io.emit()` with a filter callback that checks each socket's session data before delivering the event.
-*   B) Socket.io rooms — the server places each user's socket into a named room with `socket.join(roomId)` and broadcasts to room members only with `io.to(roomId).emit('draw', shape)`.
-*   C) Socket.io namespaces — each whiteboard session connects to a separate namespace URL and broadcasts are scoped to the namespace.
-*   D) WebSocket subprotocols — the server negotiates a unique subprotocol string per room during the handshake, and messages are automatically delivered only to sockets sharing the same subprotocol.
-*   **Correct Answer:** B) Socket.io rooms — the server places each user's socket into a named room with `socket.join(roomId)` and broadcasts to that room with `io.to(roomId).emit('draw', shape)`.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* `io.emit()` broadcasts to all connected clients — there is no filter callback in the standard API. Implementing per-socket filtering manually is inefficient and error-prone.
-    *   *Why B is correct:* Socket.io rooms are a lightweight grouping mechanism specifically designed for this use case — placing sockets in rooms and targeting `io.to(roomId).emit()` is the canonical pattern.
-    *   *Why C is incorrect:* Namespaces are higher-level divisions of a Socket.io server (like separate endpoints) — they are appropriate for separating different application features, not individual whiteboard sessions with many room IDs.
-    *   *Why D is incorrect:* WebSocket subprotocols are negotiated during the HTTP upgrade handshake for protocol identification — they do not provide room-based message routing.
+## Question 5
+
+A developer implements Socket.io authentication like this:
+
+```js
+io.on('connection', (socket) => {
+  const token = socket.handshake.auth.token;
+  if (!token) {
+    socket.disconnect();
+    return;
+  }
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  socket.data.user = decoded;
+});
+```
+
+What is the problem with this approach compared to using `io.use()` middleware?
+
+- A) `socket.handshake.auth` is not available inside the `connection` handler — it is only accessible in `io.use()` middleware.
+- B) The `connection` event fires and the client is considered connected before the token is checked. A brief window exists where the client is connected but not yet authenticated. Additionally, if `jwt.verify` throws, the unhandled exception crashes the server process.
+- C) `socket.disconnect()` cannot be called from inside the `connection` handler — it must be called from `io.use()` middleware.
+- D) This pattern is functionally identical to using `io.use()` — there is no meaningful difference.
+
+**Correct Answer:** B
+
+**Explanation:** When using `io.on('connection', ...)`, the client is already connected before the token is validated. Any events emitted by the client between connection and the check could be processed. More critically, `jwt.verify` throws on invalid or expired tokens — without a try/catch, this exception propagates up and can crash the Node.js process. The correct approach is `io.use((socket, next) => { ... })`, which runs before `connection` fires. Calling `next(new Error('...'))` rejects the connection before it is established.
+
+**Distractor Analysis:**
+
+- Why A is incorrect: `socket.handshake.auth` is accessible in both `io.use()` middleware and the `connection` handler.
+- Why B is correct: Two problems — connected-before-authenticated window, and unhandled `jwt.verify` exception.
+- Why C is incorrect: `socket.disconnect()` can be called from inside the `connection` handler.
+- Why D is incorrect: The timing difference is meaningful for security. `io.use()` prevents the connection entirely; the `connection` handler validates after connection is established.
+
+---
+
+## Question 6
+
+A team deploys their real-time application to AWS. They use an API Gateway WebSocket API with Lambda functions. After running for a week, the DynamoDB `connections` table has thousands of records for connections that no longer exist. What is the correct mechanism to clean up stale connections?
+
+- A) Set a DynamoDB TTL attribute on each item when it is inserted — expired items are automatically deleted.
+- B) Handle the `$disconnect` route to delete the connectionId from DynamoDB when a client disconnects. Additionally, when `PostToConnectionCommand` returns status `410 Gone`, delete that connectionId — `410` means the client dropped without triggering `$disconnect`.
+- C) Run a scheduled Lambda that calls the API Gateway management API to list all connections and compare them against DynamoDB records.
+- D) Enable DynamoDB Streams on the connections table and trigger a Lambda to validate each record as it is inserted.
+
+**Correct Answer:** B
+
+**Explanation:** There are two sources of stale connectionIds: clean disconnects (where `$disconnect` fires) and network drops (where `$disconnect` does not fire). The `$disconnect` Lambda handles clean disconnects. For network drops, when you attempt to send a message via `PostToConnectionCommand`, API Gateway returns HTTP `410 Gone` if the connection no longer exists. The broadcast Lambda should catch this status code and delete the stale record from DynamoDB. Both mechanisms together keep the table clean.
+
+**Distractor Analysis:**
+
+- Why A is incorrect: DynamoDB TTL is a valid supplementary cleanup mechanism, but it does not handle real-time cleanup at disconnect. TTL deletion can lag by up to 48 hours.
+- Why B is correct: `$disconnect` + 410 handling is the complete solution designed into the API Gateway WebSocket architecture.
+- Why C is incorrect: API Gateway does not expose a "list all active connections" API. The only source of truth is your DynamoDB table.
+- Why D is incorrect: Validating on insert does not help with connections that become stale after insertion.
+
+---
+
+## Question 7
+
+A developer wants to send a real-time notification to a specific user (not broadcast to all clients) using Socket.io rooms. Which server-side pattern correctly sends only to user ID 42?
+
+- A) `socket.emit('notification', data)` — because `socket` always refers to the user with ID 42.
+- B) On connect, the server calls `socket.join(`user:42`)`. Later, any route handler calls `io.to('user:42').emit('notification', data)`.
+- C) `io.emit('notification', { targetUserId: 42, ...data })` — the client filters messages by `targetUserId`.
+- D) `socket.broadcast.emit('notification', data)` — this sends to everyone except the current user, which is the correct pattern for server-initiated notifications.
+
+**Correct Answer:** B
+
+**Explanation:** The standard pattern for user-specific notifications is: on `connection`, the server joins the socket to a room named after the user's ID (e.g., `user:42`). From anywhere in the application — including REST route handlers that emit after a database write — `io.to('user:42').emit(...)` delivers the event to every socket that user has open (multiple tabs, devices). This is how the lab in this module is structured.
+
+**Distractor Analysis:**
+
+- Why A is incorrect: Inside `io.on('connection', socket => {...})`, `socket` refers to the currently connecting client — it changes with every connection. It cannot be referenced later in a route handler.
+- Why B is correct: Room-per-user is the standard Socket.io pattern for user-scoped notifications.
+- Why C is incorrect: Broadcasting to all clients and filtering client-side exposes all users' notifications to all clients. It is also inefficient for large numbers of connected users.
+- Why D is incorrect: `socket.broadcast.emit()` sends to all clients except the current socket — it is used in event handlers triggered by that socket, not for targeted server-initiated notifications.
+
+---
+
+## Question 8
+
+In an AWS API Gateway WebSocket API, a Lambda function for the `$connect` route receives an event with this structure:
+
+```json
+{
+  "requestContext": {
+    "connectionId": "abc123==",
+    "routeKey": "$connect",
+    "eventType": "CONNECT"
+  },
+  "queryStringParameters": {
+    "token": "eyJhbGciOiJIUzI1NiJ9..."
+  }
+}
+```
+
+The Lambda must validate the JWT and reject unauthenticated connections. What HTTP status code should the Lambda return to reject the connection?
+
+- A) `200` — API Gateway always accepts the connection regardless of the Lambda response.
+- B) `401` — This signals to API Gateway that authentication failed and the connection should be refused.
+- C) Any non-`2xx` status code (for example `401` or `403`) — API Gateway rejects the connection if `$connect` does not return a `2xx` response.
+- D) `500` — The only way to reject a connection is to throw an unhandled exception in the Lambda.
+
+**Correct Answer:** C
+
+**Explanation:** API Gateway establishes the WebSocket connection only if the `$connect` Lambda returns a `2xx` status code. Returning any non-2xx response (401, 403, 400) causes API Gateway to reject the connection and the client receives a close event. The exact code in the `4xx` range is a matter of convention — `401` communicates "not authenticated" and `403` communicates "authenticated but not authorized." What matters is that the response is not `2xx`.
+
+**Distractor Analysis:**
+
+- Why A is incorrect: API Gateway does not ignore the Lambda return value. A non-2xx response from `$connect` rejects the connection.
+- Why B is incorrect: `401` works, but the answer is too narrow — any non-2xx code rejects the connection.
+- Why C is correct: The specification is non-2xx = rejected. `401` and `403` are both valid choices.
+- Why D is incorrect: Throwing an unhandled exception causes a `500` response and the connection is rejected — but this is not the recommended pattern. Explicit status codes are clearer.
+
+---
+
+## Question 9
+
+A developer is building a collaborative document editor. Multiple users can edit the same document simultaneously and see each other's cursor positions update in real time at 10 updates per second per user. The team is choosing between Socket.io on an Elastic Beanstalk server and an API Gateway WebSocket API with Lambda. Which architecture is more appropriate and why?
+
+- A) API Gateway WebSocket + Lambda, because Lambda scales infinitely and can handle any message rate without configuration.
+- B) Socket.io on Elastic Beanstalk, because high-frequency in-memory message routing (10 updates/second per user) is more efficient on a persistent server than routing every message through API Gateway → Lambda → DynamoDB → ApiGatewayManagementApi.
+- C) Both architectures are equivalent for this use case — the choice is purely a matter of developer preference.
+- D) API Gateway WebSocket + Lambda, because Socket.io does not support cursor position events.
+
+**Correct Answer:** B
+
+**Explanation:** At 10 cursor updates per second per user, a document with 10 simultaneous editors generates 100 messages per second. Every message in the API Gateway + Lambda architecture triggers a Lambda invocation, a DynamoDB scan to get all connectionIds, and N `PostToConnectionCommand` calls. This adds latency and cost at high message rates. Socket.io on a persistent server routes messages through in-memory data structures with microsecond latency. The API Gateway + Lambda pattern excels at scale-to-zero and massive concurrent connection counts — it is not optimized for high-frequency per-connection message routing.
+
+**Distractor Analysis:**
+
+- Why A is incorrect: Lambda concurrency scales, but each invocation involves external service calls (DynamoDB, ApiGatewayManagementApi) with non-trivial latency. High-frequency messages amplify this overhead.
+- Why B is correct: In-memory routing on a persistent server is the right choice for high message rates with low latency requirements.
+- Why C is incorrect: The architectures have meaningfully different performance and cost characteristics at high message rates.
+- Why D is incorrect: Socket.io supports any named event, including cursor position events.
+
+---
+
+## Question 10
+
+A developer deploys the real-time notification app from this module to production. The React app is on CloudFront (`https://d123.cloudfront.net`), the Express server is on Elastic Beanstalk (`https://api.myapp.com`). After deployment, the browser console shows:
+
+```text
+WebSocket connection to 'wss://api.myapp.com/socket.io/?...' failed:
+Error during WebSocket handshake: Unexpected response code: 400
+```
+
+What is the most likely cause?
+
+- A) CloudFront does not support WebSocket traffic — all WebSocket connections must go directly to the origin.
+- B) The Socket.io server's CORS `origin` option is set to `http://localhost:5173` (the development value) instead of `https://d123.cloudfront.net`. The upgrade handshake fails the CORS check.
+- C) Elastic Beanstalk blocks WebSocket connections by default — the developer must enable WebSocket support in the EB environment settings.
+- D) The `wss://` protocol is not supported by Socket.io — the URL must use `ws://` without TLS.
+
+**Correct Answer:** B
+
+**Explanation:** Status `400` on a WebSocket handshake indicates the server rejected the upgrade request. The most common cause in this context is a CORS mismatch: the Socket.io server's `cors.origin` is still set to the development value (`http://localhost:5173`), while the production client connects from `https://d123.cloudfront.net`. The server rejects the handshake because the `Origin` header does not match. The fix is to set `FRONTEND_URL` as an Elastic Beanstalk environment property and use `origin: process.env.FRONTEND_URL` in the Socket.io `cors` config.
+
+**Distractor Analysis:**
+
+- Why A is incorrect: CloudFront supports WebSocket connections. It passes WebSocket upgrade requests to the origin by default.
+- Why B is correct: CORS origin mismatch produces a 400 on the Socket.io handshake. This is the most common production deployment mistake for Socket.io apps.
+- Why C is incorrect: Elastic Beanstalk does not block WebSocket connections by default. The load balancer must be configured for WebSocket support (which requires idle timeout settings), but the default configuration passes WebSocket traffic.
+- Why D is incorrect: `wss://` is the TLS version of WebSocket (WebSocket Secure) and is fully supported by Socket.io. `wss://` is required in production — `ws://` over HTTP would be blocked by the browser's mixed content policy.

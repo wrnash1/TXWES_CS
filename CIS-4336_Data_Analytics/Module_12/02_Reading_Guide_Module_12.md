@@ -1,53 +1,417 @@
-# Reading Guide: Module 12 - Cloud Analytics – AWS Athena, Google BigQuery
-## Course: CIS-4336_Data_Analytics (CompTIA Data+)
+# Reading Guide: Module 12 — Python for Data Analysis
+
+## Course: CIS-4336 Data Analytics
+
+## Texas Wesleyan University | Professor Nash
+
+**Certification Alignment:** CompTIA Data+ (DA0-001)
 
 ---
 
 ### Introduction
-Welcome to **Module 12 - Cloud Analytics: AWS Athena and Google BigQuery**! Cloud analytics platforms have fundamentally changed how organizations analyze large datasets — eliminating the need to provision and maintain dedicated database servers and enabling analysts to query terabytes of data stored in object storage using standard SQL. This module covers the cloud analytics concepts tested on the **CompTIA Data+** exam: cloud storage and compute separation, serverless query execution, scalability on demand, and the shared responsibility model for data security in the cloud.
 
-Understanding cloud analytics is essential for any modern analyst role. Most enterprise data teams now run analytics on cloud-native platforms, and the Data+ exam specifically tests your knowledge of how cloud environments differ from on-premises systems and what responsibilities shift to the customer under cloud service models.
+Welcome to **Module 12 — Python for Data Analysis**. Python has displaced spreadsheet tools as the primary instrument for professional data work because it combines the expressiveness of a general-purpose programming language with a rich ecosystem of specialized libraries. This reading guide covers the four libraries you must know for the CompTIA Data+ exam and for daily analyst work: **pandas**, **NumPy**, **matplotlib**, and **seaborn**. You will also learn systematic approaches to data cleaning, null handling, and outlier detection — tasks that consume the majority of a real analyst's time.
 
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **Cloud service models (IaaS, PaaS, SaaS)**: Infrastructure as a Service (IaaS) provides raw compute, storage, and networking — the customer manages the OS, middleware, and applications (e.g., AWS EC2). Platform as a Service (PaaS) provides a managed platform where the customer deploys applications without managing the underlying infrastructure (e.g., Google Cloud Run). Software as a Service (SaaS) delivers fully managed software over the internet — the customer only manages data and user access (e.g., Salesforce, Google Sheets).
-*   **Serverless query execution (AWS Athena and Google BigQuery)**: Serverless analytics services allow analysts to run SQL queries directly against files stored in object storage (Amazon S3 or Google Cloud Storage) without provisioning, managing, or scaling a database server. The platform automatically allocates compute resources for each query and charges based on the amount of data scanned. This separates storage cost from compute cost.
-*   **Columnar storage and query performance**: Cloud analytical databases store data in columnar format — each column is stored contiguously on disk rather than each row. When a query accesses only two of twenty columns, the engine reads only those two columns, dramatically reducing I/O. Columnar storage is the reason BigQuery and Redshift are fast for analytical queries that aggregate a few columns across billions of rows.
-*   **Shared responsibility model**: In cloud environments, security responsibilities are divided between the cloud provider and the customer. The provider secures the physical infrastructure, hypervisor, and network (security of the cloud). The customer is responsible for configuring access controls, encrypting data, managing user permissions, and protecting their data (security in the cloud). Misconfigured S3 buckets with public access are a classic example of customer-side responsibility failure.
-*   **Scalability and elasticity**: Cloud platforms scale compute and storage independently on demand. Elasticity means resources are provisioned automatically when demand increases and released when it decreases — users are billed only for what they consume. This contrasts with on-premises infrastructure, where capacity must be provisioned in advance for peak load.
+No prior Python experience is assumed. If you are brand new to Python, work through the optional primer linked in the course LMS before this module. If you have written Python before but not for data analysis, this guide will feel like familiar ground with new vocabulary.
 
 ---
 
-### 2. Certification Exam Tips
-*   **Domain weight:** Cloud analytics concepts appear in Domain 2 (Data Collection and Management, ~25%) and Domain 4 (Analytics and Reporting, ~23%) of the Data+ DA0-001 exam. Questions about cloud service models, storage architecture, and the shared responsibility model are high-frequency.
-*   **Exam trap — IaaS vs. PaaS vs. SaaS responsibilities:** The exam will describe a scenario and ask who is responsible for a specific component. IaaS: customer manages OS upward. PaaS: customer manages only the application and data. SaaS: customer manages only data and user access. The provider always owns physical infrastructure.
-*   **Exam trap — serverless vs. server-based:** AWS Athena and Google BigQuery are serverless — no servers to provision or manage. The exam may contrast these with services like Amazon Redshift (a provisioned cluster) or traditional on-premises databases. If the question describes "no infrastructure to manage" and "pay per query," the answer is a serverless service.
-*   **Exam trap — shared responsibility:** A data breach caused by an S3 bucket configured with public access is the customer's responsibility, not the cloud provider's. The provider secures the physical infrastructure; the customer configures access controls. The exam frequently tests this boundary.
-*   **Study Resource:** The data engineering and cloud chapters of [Introduction to Data Science by Rafael A. Irizarry](https://rafalab.github.io/dsbook/) cover the conceptual foundations of cloud-scale data storage and querying. The [Data Analysis with Python Course by freeCodeCamp](https://www.youtube.com/watch?v=GPVsHOl2238) demonstrates loading and querying datasets in Python using patterns that parallel cloud SQL workflows in Athena and BigQuery.
+### Learning Objectives
+
+By the end of this module you will be able to:
+
+* Create, filter, and transform pandas DataFrames
+* Apply groupby, merge, and pivot_table to answer business questions
+* Perform vectorized array operations with NumPy
+* Produce line, bar, scatter, histogram, and heatmap charts
+* Identify and handle missing values using at least two strategies
+* Detect outliers using the IQR method and boxplot visualization
+* Map Python tools to their corresponding Data+ exam domains
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the cloud computing and large-scale data chapters in the OER Textbook: [Introduction to Data Science by Rafael A. Irizarry](https://rafalab.github.io/dsbook/). Focus on the sections covering cloud storage architectures, query execution at scale, and the separation of storage from compute.
-*   **Required Video:** Watch the data engineering and cloud analytics sections of the [Data Analysis with Python Course by freeCodeCamp](https://www.youtube.com/watch?v=GPVsHOl2238), which demonstrates querying large datasets using SQL-style operations in Python that mirror the experience of using BigQuery or Athena.
+### Section 1: The Python Data Analysis Stack
+
+#### Why Python Dominates Analytics
+
+Python succeeded in data analysis for three structural reasons: open-source licensing with no cost barrier, a package ecosystem that grew to cover every analytical task, and a syntax that is readable enough for non-programmers to maintain analysis scripts. The four libraries in this module form the foundation of that ecosystem.
+
+| Library | Primary Purpose | Built On |
+|---|---|---|
+| NumPy | Fast numerical arrays and math | C extensions |
+| pandas | Tabular data manipulation | NumPy |
+| matplotlib | Low-level 2D plotting | Rendering backends |
+| seaborn | Statistical visualization | matplotlib + pandas |
+
+You install all four with a single command in the Anaconda environment:
+
+```bash
+conda install pandas numpy matplotlib seaborn
+```
+
+Or with pip:
+
+```bash
+pip install pandas numpy matplotlib seaborn
+```
+
+#### The Jupyter Notebook Environment
+
+Jupyter notebooks (`.ipynb` files) are the standard environment for exploratory data analysis. A notebook combines code cells, markdown cells, and output — charts, tables, and text — in a single scrollable document. This makes analysis reproducible and shareable. When you export a notebook to PDF or HTML, stakeholders see both the code and the results without needing Python installed.
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Classify a set of cloud services by model (IaaS, PaaS, SaaS)**: Given a list of six services (including EC2, BigQuery, Salesforce, and Cloud Run), identify which model each belongs to and explain what the customer is responsible for in each case.
-*   **Write a SQL query for a serverless analytics scenario**: Given a description of a dataset stored as Parquet files in cloud object storage, write the SELECT statement that would retrieve total revenue by region, and estimate the cost impact of selecting only two columns vs. SELECT *.
-*   **Identify shared responsibility violations**: Review three cloud configuration scenarios and classify each as provider responsibility, customer responsibility, or both — including a public S3 bucket, an unpatched hypervisor, and an unrotated encryption key.
+### Section 2: pandas DataFrames
+
+#### Creating DataFrames
+
+A DataFrame is a two-dimensional, labeled data structure with columns of potentially different types. You can create one from a dictionary, a list of lists, or most commonly from an external file:
+
+```python
+import pandas as pd
+
+# From a CSV file
+df = pd.read_csv('sales.csv')
+
+# From an Excel file
+df = pd.read_excel('sales.xlsx', sheet_name='Q1')
+
+# From a dictionary
+df = pd.DataFrame({
+    'Region': ['North', 'South', 'East'],
+    'Revenue': [120000, 95000, 140000]
+})
+```
+
+#### Exploring a New DataFrame
+
+Before any analysis, run these commands on every new dataset:
+
+```python
+df.shape           # (rows, columns)
+df.dtypes          # data type of each column
+df.head(10)        # first 10 rows
+df.describe()      # count, mean, std, min, quartiles, max for numeric cols
+df.isnull().sum()  # null count per column
+```
+
+This five-step exploration takes under a minute and prevents downstream errors from wrong assumptions about the data.
+
+#### Filtering Rows
+
+Boolean indexing selects rows meeting a condition:
+
+```python
+high_revenue = df[df['Revenue'] > 100000]
+q1_north = df[(df['Quarter'] == 'Q1') & (df['Region'] == 'North')]
+```
+
+The `&` operator combines conditions. Use `|` for OR. Always wrap each condition in parentheses when combining.
+
+#### Adding and Transforming Columns
+
+```python
+df['Revenue_Thousands'] = df['Revenue'] / 1000
+df['Margin_Pct'] = (df['Profit'] / df['Revenue']) * 100
+df['Category'] = df['Revenue'].apply(lambda x: 'High' if x > 100000 else 'Low')
+```
+
+`apply()` runs a function on every row, which is useful for custom logic that cannot be expressed as a simple arithmetic operation.
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read the cloud computing chapters in [Introduction to Data Science by Rafael A. Irizarry](https://rafalab.github.io/dsbook/).
-- [ ] Watch the [Data Analysis with Python Course by freeCodeCamp](https://www.youtube.com/watch?v=GPVsHOl2238).
-- [ ] Review the lab instructions and understand what each task requires.
-- [ ] Proceed to the weekly hands-on lab activity.
+### Section 3: groupby, merge, and pivot_table
+
+#### groupby — Aggregate Within a Table
+
+groupby splits a DataFrame into groups based on one or more columns, applies an aggregation function, and combines the results:
+
+```python
+# Total revenue by region
+by_region = df.groupby('Region')['Revenue'].sum().reset_index()
+
+# Multiple aggregations at once
+summary = df.groupby('Region').agg(
+    Total_Revenue=('Revenue', 'sum'),
+    Avg_Units=('Units', 'mean'),
+    Count=('Revenue', 'count')
+).reset_index()
+```
+
+The `agg()` method with named aggregations is the professional pattern — it produces columns with clear names rather than ambiguous multi-level indexes.
+
+#### merge — Combine Two Tables
+
+merge is equivalent to a SQL JOIN. The most important parameter is `how`:
+
+| how value | SQL equivalent | Behavior |
+|---|---|---|
+| `'inner'` | INNER JOIN | Keep only rows matching in both tables |
+| `'left'` | LEFT OUTER JOIN | Keep all left rows; NaN where no right match |
+| `'right'` | RIGHT OUTER JOIN | Keep all right rows; NaN where no left match |
+| `'outer'` | FULL OUTER JOIN | Keep all rows from both tables |
+
+```python
+orders_with_customer = pd.merge(
+    orders,
+    customers,
+    on='CustomerID',
+    how='left'
+)
+```
+
+A left join is the most common in reporting because it preserves every transaction even when the customer record is incomplete.
+
+#### pivot_table — Reshape from Long to Wide
+
+Long format: one row per observation. Wide format: one row per entity, columns are categories. Reporting usually needs wide format.
+
+```python
+wide = df.pivot_table(
+    values='Revenue',
+    index='Region',
+    columns='Quarter',
+    aggfunc='sum',
+    fill_value=0
+)
+```
+
+`fill_value=0` is critical: without it, region-quarter combinations with no data become NaN, which breaks subsequent arithmetic.
+
+---
+
+### Section 4: NumPy Arrays
+
+#### ndarray Fundamentals
+
+A NumPy ndarray is a fixed-type, fixed-size array stored in contiguous memory. Because all elements share one type, NumPy can execute operations using compiled C code — orders of magnitude faster than Python loops.
+
+```python
+import numpy as np
+
+arr = np.array([1.5, 2.3, 4.1, 0.8, 3.7])
+print(arr.dtype)   # float64
+print(arr.shape)   # (5,)
+```
+
+#### Vectorized Operations
+
+Any arithmetic operator applied to an array applies element-wise with no loop:
+
+```python
+arr * 2         # multiply every element by 2
+arr + 10        # add 10 to every element
+np.sqrt(arr)    # square root of every element
+arr > 2.0       # boolean array: True where element > 2.0
+```
+
+#### Statistical Functions
+
+```python
+np.mean(arr)
+np.median(arr)
+np.std(arr)
+np.var(arr)
+np.percentile(arr, [25, 50, 75])
+np.min(arr)
+np.max(arr)
+```
+
+#### np.where — Conditional Replacement
+
+```python
+# Replace values above 3.0 with 3.0 (capping outliers)
+capped = np.where(arr > 3.0, 3.0, arr)
+```
+
+This pattern appears frequently in feature engineering and outlier treatment.
+
+---
+
+### Section 5: Visualization with matplotlib and seaborn
+
+#### matplotlib Basics
+
+matplotlib uses a figure-axes model. A figure is the overall canvas; axes are the individual chart panels inside it. Most code uses the `pyplot` interface, which manages figures implicitly:
+
+```python
+import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots(figsize=(10, 5))
+ax.plot(df['Month'], df['Revenue'], color='steelblue', linewidth=2)
+ax.set_title('Monthly Revenue')
+ax.set_xlabel('Month')
+ax.set_ylabel('Revenue ($)')
+plt.tight_layout()
+plt.savefig('revenue_trend.png', dpi=150)
+plt.show()
+```
+
+`tight_layout()` prevents axis labels from being clipped. `savefig()` exports the chart as a file.
+
+#### seaborn Chart Types and When to Use Them
+
+| Chart type | seaborn function | Best for |
+|---|---|---|
+| Bar chart | `sns.barplot()` | Comparing category means |
+| Count chart | `sns.countplot()` | Frequency of categories |
+| Box plot | `sns.boxplot()` | Distribution and outlier detection |
+| Histogram | `sns.histplot()` | Distribution of a numeric variable |
+| Scatter plot | `sns.scatterplot()` | Relationship between two numeric variables |
+| Heatmap | `sns.heatmap()` | Correlation matrix or pivot table |
+| Violin plot | `sns.violinplot()` | Distribution shape across categories |
+| Line chart | `sns.lineplot()` | Trends over time |
+
+#### Correlation Heatmap Pattern
+
+```python
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+corr = df.select_dtypes(include='number').corr()
+plt.figure(figsize=(10, 8))
+sns.heatmap(corr, annot=True, fmt='.2f', cmap='coolwarm', center=0)
+plt.title('Feature Correlation Matrix')
+plt.tight_layout()
+plt.show()
+```
+
+`annot=True` prints the coefficient in each cell. `center=0` ensures white represents zero correlation.
+
+---
+
+### Section 6: Data Cleaning
+
+#### The Data Quality Dimensions (Data+ Exam Concept)
+
+The Data+ exam frames data quality along six dimensions:
+
+* **Completeness** — are all required values present?
+* **Consistency** — does the data contradict itself?
+* **Accuracy** — does the data reflect reality?
+* **Validity** — do values conform to the expected format or range?
+* **Uniqueness** — are records duplicated?
+* **Timeliness** — is the data current enough for the use case?
+
+Null handling addresses completeness. Outlier treatment addresses accuracy and validity.
+
+#### Handling Missing Values
+
+Step 1 — measure the problem:
+
+```python
+missing = df.isnull().sum()
+missing_pct = (missing / len(df)) * 100
+pd.DataFrame({'count': missing, 'pct': missing_pct}).query('count > 0')
+```
+
+Step 2 — choose a strategy based on the column and the percentage missing:
+
+| Scenario | Strategy | pandas method |
+|---|---|---|
+| Less than 5% missing, numeric | Drop the rows | `df.dropna(subset=['col'])` |
+| Less than 5% missing, categorical | Fill with mode | `df['col'].fillna(df['col'].mode()[0])` |
+| 5–30% missing, numeric | Fill with median | `df['col'].fillna(df['col'].median())` |
+| More than 30% missing | Consider dropping the column | `df.drop(columns=['col'])` |
+| Structural zero (e.g., no sales) | Fill with 0 | `df['col'].fillna(0)` |
+
+#### Detecting and Handling Outliers
+
+The IQR method:
+
+```python
+def remove_outliers_iqr(df, column):
+    Q1 = df[column].quantile(0.25)
+    Q3 = df[column].quantile(0.75)
+    IQR = Q3 - Q1
+    lower = Q1 - 1.5 * IQR
+    upper = Q3 + 1.5 * IQR
+    return df[(df[column] >= lower) & (df[column] <= upper)]
+```
+
+The Z-score method (for normally distributed data):
+
+```python
+from scipy import stats
+z_scores = np.abs(stats.zscore(df['Revenue']))
+df_clean = df[z_scores < 3]
+```
+
+Z-scores flag observations more than 3 standard deviations from the mean. Use IQR for skewed distributions; Z-score for roughly normal distributions.
+
+#### Deduplication
+
+```python
+print(df.duplicated().sum())
+df = df.drop_duplicates()
+df = df.drop_duplicates(subset=['OrderID'])
+```
+
+---
+
+### Section 7: Data+ Exam Connections
+
+Python-related questions on the DA0-001 exam are conceptual, not syntactic. You will not be asked to read code and execute it mentally. You will be asked:
+
+* Which library is best suited for a described task
+* What a described operation does (e.g., "merging on a shared key")
+* Why imputation is preferred over dropping in some scenarios
+* What a correlation coefficient value indicates
+* How to interpret a boxplot
+
+The key mappings for exam preparation are:
+
+| Exam concept | Python tool |
+|---|---|
+| Data transformation | pandas (rename, apply, astype) |
+| Aggregation | pandas groupby and agg |
+| Joining datasets | pandas merge |
+| Statistical summary | NumPy statistical functions |
+| Trend visualization | matplotlib or seaborn line chart |
+| Distribution analysis | seaborn histplot or boxplot |
+| Correlation analysis | seaborn heatmap of df.corr() |
+| Missing value treatment | pandas fillna and dropna |
+| Outlier detection | IQR method or Z-score |
+
+---
+
+### Key Terms
+
+* **pandas** — Python library for tabular data manipulation built on NumPy.
+* **DataFrame** — pandas' two-dimensional labeled data structure analogous to a database table.
+* **groupby** — pandas method that splits a DataFrame by group, applies an aggregation, and returns a summary.
+* **merge** — pandas method for combining two DataFrames on a shared key column; equivalent to a SQL JOIN.
+* **pivot_table** — reshapes a DataFrame from long format to wide format by spreading category values across columns.
+* **NumPy** — Python library for fast numerical array computation using vectorized C operations.
+* **ndarray** — NumPy's N-dimensional array; every element shares a single data type.
+* **vectorization** — executing an operation on all elements of an array simultaneously without a Python loop.
+* **matplotlib** — Python's foundational 2D plotting library; provides low-level control over every chart element.
+* **seaborn** — statistical visualization library built on matplotlib; produces polished charts with fewer lines of code.
+* **imputation** — replacing missing values with a computed substitute such as mean, median, or mode.
+* **IQR (Interquartile Range)** — Q3 minus Q1; the range of the middle 50% of data; used to define outlier boundaries.
+* **outlier** — an observation that falls abnormally far from the center of a distribution; may represent an error or a genuine extreme.
+* **correlation coefficient** — a number between -1 and 1 measuring the linear relationship between two variables.
+
+---
+
+### Review Questions
+
+1. What is the difference between `df.dropna()` and `df.fillna()`? When would you choose each?
+
+2. Explain the difference between a pandas `merge` with `how='inner'` and `how='left'`. Give a business scenario for each.
+
+3. A colleague says "just remove all outliers before analysis." What is wrong with this blanket rule?
+
+4. You have a correlation coefficient of 0.92 between advertising spend and sales revenue. What does this tell you, and what does it not tell you?
+
+5. Why is NumPy faster than a Python for-loop for the same arithmetic operation?
+
+---
+
+### OER Resources
+
+* **pandas documentation** — [pandas.pydata.org/docs](https://pandas.pydata.org/docs/)
+* **NumPy documentation** — [numpy.org/doc](https://numpy.org/doc/)
+* **seaborn documentation** — [seaborn.pydata.org](https://seaborn.pydata.org/)
+* **Python for Data Analysis (free chapters)** — Wes McKinney, O'Reilly
+* **freeCodeCamp Data Analysis with Python** — [freecodecamp.org/learn](https://www.freecodecamp.org/learn/data-analysis-with-python/)

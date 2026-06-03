@@ -86,7 +86,7 @@ Cloud computing has transformed how organizations acquire and consume IT infrast
 
 **IaaS (Infrastructure as a Service)** — The cloud provider delivers virtualized compute (VMs), storage, and networking. The customer installs and manages the operating system, patches it, installs middleware, and runs applications. Examples: AWS EC2, Azure Virtual Machines, Google Compute Engine. Best for: organizations that need flexible compute resources but want control over the OS and software stack.
 
-**PaaS (Platform as a Service)** — The provider manages the infrastructure, OS, middleware, and runtime environment. The customer deploys and manages only the application code and data. Examples: AWS Elastic Beanstalk, Azure App Service, Google App Engine. Best for: development teams that want to focus on writing code without managing servers or OS patching. This is the model where a developer pushes code and the platform handles the rest.
+**PaaS (Platform as a Service)** — The provider manages the infrastructure, OS, middleware, and runtime environment. The customer deploys and manages only the application code and data. Examples: AWS Elastic Beanstalk, Azure App Service, Google App Engine. Best for: development teams that want to focus on writing code without managing servers or OS patching.
 
 **SaaS (Software as a Service)** — The provider manages and delivers a complete application. The customer only configures settings and uses the software through a browser or client. Examples: Microsoft 365, Salesforce, Google Workspace. Best for: business applications where the organization does not need to customize the underlying code.
 
@@ -100,15 +100,15 @@ Cloud computing has transformed how organizations acquire and consume IT infrast
 
 [SHOW DIAGRAM: Four deployment model icons side by side. Public Cloud: single cloud with a padlock showing shared multi-tenant infrastructure. Private Cloud: cloud icon with a building showing exclusive organizational ownership. Hybrid Cloud: two arrows connecting public and private cloud. Community Cloud: shared cloud showing multiple organization logos with common interests.]
 
-[Alt-text: Four labeled icons arranged horizontally. First icon labeled Public Cloud shows a shared cloud with multiple user icons representing multi-tenant infrastructure owned by the provider. Second icon labeled Private Cloud shows a cloud within a building perimeter representing dedicated organizational infrastructure. Third icon labeled Hybrid Cloud shows bidirectional arrows connecting a public cloud icon to a private cloud/building icon. Fourth icon labeled Community Cloud shows a cloud shared by multiple organization logos representing organizations with common compliance or mission requirements.]
+[Alt-text: Four labeled icons arranged horizontally. First icon labeled Public Cloud shows a shared cloud with multiple user icons representing multi-tenant infrastructure owned by the provider. Second icon labeled Private Cloud shows a cloud within a building perimeter representing dedicated organizational infrastructure. Third icon labeled Hybrid Cloud shows bidirectional arrows connecting a public cloud icon to a private cloud icon. Fourth icon labeled Community Cloud shows a cloud shared by multiple organization logos representing organizations with common compliance or mission requirements.]
 
-The deployment model describes who owns and operates the cloud infrastructure — separate from the service model (IaaS/PaaS/SaaS):
+The deployment model describes who owns and operates the cloud infrastructure:
 
-**Public Cloud** — Infrastructure owned and operated by a third-party provider, shared among multiple customers (tenants). Resources are allocated and billed on demand. Advantages: no capital expense, rapid elasticity, pay-per-use. Providers: AWS, Microsoft Azure, Google Cloud Platform. Security consideration: shared infrastructure requires trust in provider isolation mechanisms.
+**Public Cloud** — Infrastructure owned and operated by a third-party provider, shared among multiple customers (tenants). Resources are allocated and billed on demand. Advantages: no capital expense, rapid elasticity, pay-per-use. Providers: AWS, Microsoft Azure, Google Cloud Platform.
 
-**Private Cloud** — Infrastructure dedicated to a single organization. Can be on-premises (in the organization's own data center) or hosted by a provider exclusively for that organization. Provides greater control and security for regulated industries (healthcare, finance, government). Higher cost than public cloud.
+**Private Cloud** — Infrastructure dedicated to a single organization. Can be on-premises or hosted by a provider exclusively for that organization. Provides greater control and security for regulated industries (healthcare, finance, government). Higher cost than public cloud.
 
-**Hybrid Cloud** — A combination of public and private cloud environments connected by secure links. Organizations keep sensitive workloads in the private cloud while bursting to the public cloud for variable demand. Common pattern: private cloud for regulated data, public cloud for customer-facing web applications.
+**Hybrid Cloud** — A combination of public and private cloud environments connected by secure links. Organizations keep sensitive workloads in the private cloud while bursting to the public cloud for variable demand.
 
 **Community Cloud** — Shared infrastructure among organizations with common requirements — for example, federal agencies sharing a government-authorized cloud, or healthcare organizations sharing a HIPAA-compliant platform.
 
@@ -123,4 +123,4 @@ In Part 2, we move to VPN technologies — IPsec, SSL/TLS VPN, tunneling protoco
 
 ---
 
-*End of Part 1*
+End of Part 1

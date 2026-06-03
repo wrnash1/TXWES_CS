@@ -1,207 +1,425 @@
-# Reading Guide: Module 06 — Firestore and Datastore: Document Databases
+# Reading Guide: Module 06 — PostgreSQL Administration
 
 ## Course: CIS-4327 Database Administration
 
-## Texas Wesleyan University — Professor Nash
-
-## Google Cloud Professional Cloud Database Engineer Alignment
+**Certification Alignment:** Google Cloud Professional Database Engineer
 
 ---
 
-### Introduction
+## Overview
 
-Cloud Firestore is Google Cloud's serverless document database, designed for mobile and web application backends where flexible schema, real-time updates, and offline data access are required. The GCP Database Engineer exam tests Firestore in service selection scenarios, security configuration, and the Datastore vs. Firestore Native mode distinction. This reading guide provides the reference depth you need for both the lab and the exam.
+This reading guide accompanies the Module 06 video lectures and lab. PostgreSQL is the foundational engine for Cloud SQL for PostgreSQL on Google Cloud Platform. Mastery of its configuration, security model, maintenance routines, and connection management is essential for both production database administration and the Google Cloud Professional Database Engineer certification exam.
 
----
-
-### 1. High-Yield Glossary
-
-**Cloud Firestore**: Google Cloud's fully managed, serverless document database. Designed for mobile and web app backends. Scales automatically with no instance provisioning.
-
-**Serverless**: No instances, nodes, or clusters to configure. Firestore scales automatically based on traffic. Billing is based on document reads, writes, and deletes rather than provisioned capacity.
-
-**Document**: The primary data unit in Firestore. A JSON-like object with a unique ID within a collection. Can contain scalar values, arrays, maps, and references to other documents.
-
-**Collection**: A container for documents in Firestore. Schema-less — different documents in the same collection can have different fields. Analogous to a table in a relational database, but without a fixed schema.
-
-**Sub-Collection**: A collection nested within a document. Used to model one-to-many hierarchical relationships (e.g., a user document with a reviews sub-collection).
-
-**Document ID**: The unique identifier for a document within its parent collection. Can be auto-generated or set by the application.
-
-**Document Path**: The full hierarchical path to a document. Format: `collection/documentId/sub-collection/documentId`.
-
-**Field**: A key-value pair within a document. Fields can hold strings, numbers, booleans, timestamps, geopoints, arrays, maps, or null.
-
-**Map**: A nested object within a Firestore document. Allows structured nested data without creating a sub-collection.
-
-**Array**: An ordered list of values within a Firestore field. Supports array-contains queries.
-
-**Firestore Native Mode**: The current default mode. Supports real-time listeners, offline persistence, improved queries, and Firestore SDK. Recommended for all new applications.
-
-**Datastore Mode**: A backward-compatible mode for legacy Cloud Datastore applications. Uses the Datastore API. Does not support real-time listeners or offline persistence.
-
-**Real-Time Listener**: A Firestore Native mode feature that pushes document changes to subscribed clients automatically, without polling. Ideal for live dashboards, collaborative apps, and chat systems.
-
-**Offline Persistence**: A Firestore Native mode feature that caches data locally on mobile clients. The app remains functional when network connectivity is lost and synchronizes when connectivity is restored.
-
-**Security Rules**: Server-side declarative access control policies for Firestore. Control which authenticated clients can read or write which documents. Evaluated before data is returned to any client.
-
-**`request.auth`**: The Security Rules variable containing the authenticated user's identity. `request.auth.uid` is the user's unique ID from Firebase Authentication.
-
-**`resource.data`**: The Security Rules variable providing access to the current document's field values. Used for field-level validation rules.
-
-**Single-Field Index**: An index automatically created by Firestore for every field in every document. Supports simple equality and range queries on individual fields.
-
-**Composite Index**: An index on two or more fields required for queries that filter or order on multiple fields simultaneously. Must be created explicitly.
-
-**Transaction**: An atomic multi-document operation that reads and then writes. Firestore automatically retries if conflicting changes occur during execution.
-
-**Batch Write**: An atomic set of write operations (create, update, delete) on multiple documents without a prior read. Does not retry on conflict. Succeeds entirely or fails entirely.
-
-**Cloud Datastore**: The predecessor to Cloud Firestore. Still available as Datastore mode within Firestore. Legacy service; new projects should use Firestore.
-
-**Entity (Datastore)**: The Datastore term for a document. Stored in a Kind (equivalent to a collection).
-
-**Kind (Datastore)**: The Datastore term for a collection. A named group of entities.
+Work through all sections before attempting the lab and quiz.
 
 ---
 
-### 2. Firestore Data Types Reference
+## Section 1 — PostgreSQL Architecture Review
 
-| Firestore Type | Description | Example |
-|---|---|---|
-| String | UTF-8 encoded text | `"Fort Worth"` |
-| Number | 64-bit floating point | `49.99` |
-| Boolean | true or false | `true` |
-| Timestamp | Date and time with microsecond precision | `2024-01-15T09:00:00Z` |
-| Geopoint | Latitude/longitude coordinate | `(32.725, -97.321)` |
-| Null | Absent value | `null` |
-| Array | Ordered list of values | `["premium", "verified"]` |
-| Map | Nested key-value object | `{"street": "123 Main", "city": "Fort Worth"}` |
-| Reference | Pointer to another Firestore document | `/users/user-001` |
-| Bytes | Binary data (max 1 MB) | Raw binary payload |
+### 1.1 Process Model
 
----
+PostgreSQL uses a **process-per-connection** architecture. The `postmaster` is the supervisory process; it spawns one backend process per client connection. Contrast this with MySQL, which uses threads. The process model provides strong isolation but limits raw connection scalability — a key motivation for PgBouncer.
 
-### 3. Firestore Modes Comparison
+**Key background processes and their roles:**
 
-| Feature | Native Mode | Datastore Mode |
-|---|---|---|
-| Real-time listeners | Yes | No |
-| Offline persistence | Yes | No |
-| Multi-document transactions | Yes (up to 500 docs) | Single entity group only |
-| Composite query support | Yes | Limited |
-| API | Firestore SDK | Datastore API |
-| Recommended for | All new applications | Legacy Datastore migrations |
-| Can be changed after creation | No — permanent | No — permanent |
-
-Mode selection is permanent at database creation. You cannot switch from Datastore mode to Native mode after the database is created.
-
----
-
-### 4. Firestore vs. Cloud SQL vs. Cloud Bigtable
-
-| Dimension | Firestore | Cloud SQL | Cloud Bigtable |
-|---|---|---|---|
-| Data model | Document | Relational tables | Wide-column key-value |
-| Schema | Flexible | Fixed | Column families fixed, qualifiers dynamic |
-| SQL JOINs | None | Full SQL | None |
-| ACID transactions | Multi-document (limited) | Full ACID | None |
-| Real-time updates to clients | Yes (Native) | No | No |
-| Offline mobile sync | Yes (Native) | No | No |
-| Full-text search | No | Limited (PostgreSQL tsvector) | No |
-| Scaling | Serverless, automatic | Vertical (larger machine) | Horizontal (add nodes) |
-| Primary use case | Mobile/web app backends | Enterprise OLTP | Time-series, IoT |
-
----
-
-### 5. Security Rules Reference
-
-| Rule Component | Description |
+| Process | Role |
 |---|---|
-| `match /databases/{database}/documents` | Root match for all document paths |
-| `match /collection/{docId}` | Matches a specific collection path |
-| `allow read` | Grants read access (get and list) |
-| `allow write` | Grants write access (create, update, delete) |
-| `allow create` | Grants create-only access |
-| `allow update` | Grants update-only access |
-| `allow delete` | Grants delete-only access |
-| `request.auth != null` | Condition: user is authenticated |
-| `request.auth.uid == userId` | Condition: user is accessing their own document |
-| `resource.data.field == value` | Condition: current document field has specific value |
-| `request.resource.data.field` | Condition: incoming write data has specific field |
+| checkpointer | Flushes dirty shared_buffers pages to disk |
+| background writer | Proactively writes dirty pages ahead of checkpoints |
+| autovacuum launcher | Monitors tables and triggers autovacuum workers |
+| WAL writer | Flushes WAL buffers to disk |
+| stats collector | Gathers runtime statistics for pg_stat views |
+| archiver | Copies completed WAL segments for point-in-time recovery |
+
+### 1.2 Shared Memory Layout
+
+When PostgreSQL starts, it allocates a large shared memory region. The most important component is the **shared buffer pool** (controlled by `shared_buffers`). All backend processes read from and write to these shared buffers. When a backend needs a data page not already in the buffer pool, it reads it from disk into a free buffer slot.
+
+The **WAL buffer** (`wal_buffers`) is a smaller shared memory region used to stage WAL records before the WAL writer flushes them to disk.
+
+### 1.3 WAL — Write-Ahead Log
+
+Every data modification is first written to the WAL before it is applied to the data heap files. This guarantees **durability** — if a crash occurs, PostgreSQL replays the WAL during recovery.
+
+WAL also enables replication. Standbys receive and apply WAL records continuously.
+
+`wal_level` controls WAL verbosity:
+
+- `minimal` — bare minimum for crash recovery. Replication not possible.
+- `replica` — sufficient for streaming replication and base backups.
+- `logical` — adds information needed for logical decoding, CDC, and logical replication slots.
 
 ---
 
-### 6. Index Requirements Reference
+## Section 2 — postgresql.conf Reference
 
-| Query Type | Index Required |
-|---|---|
-| Single field equality | Automatic single-field index (no action needed) |
-| Single field range (< > <= >=) | Automatic single-field index (no action needed) |
-| Multiple field filter (AND) | Composite index required |
-| Filter + order on different fields | Composite index required |
-| Array-contains query | Automatic single-field index |
-| Array-contains-any query | Automatic single-field index |
-| Collection group query | Collection group index required |
+### 2.1 Connection and Authentication
+
+```ini
+listen_addresses = 'localhost'   # Bind only to localhost for security
+port = 5432
+max_connections = 100            # Each connection consumes ~5-10 MB overhead
+superuser_reserved_connections = 3  # Reserved for DBA emergency access
+```
+
+`superuser_reserved_connections` ensures that even when the connection pool is saturated, superusers can still connect to diagnose and resolve issues.
+
+### 2.2 Memory
+
+```ini
+shared_buffers = 2GB             # ~25% of RAM for dedicated DB server
+work_mem = 16MB                  # Per sort/hash node; multiply by concurrent operations
+maintenance_work_mem = 256MB     # For VACUUM, CREATE INDEX, REINDEX
+temp_buffers = 8MB               # Per-session buffer for temporary tables
+effective_cache_size = 6GB       # Planner hint: ~75% of total RAM
+```
+
+### 2.3 WAL and Replication
+
+```ini
+wal_level = replica
+wal_compression = on             # Compresses WAL records to reduce I/O
+max_wal_senders = 10
+wal_keep_size = 2GB              # Minimum WAL to retain for standbys
+archive_mode = on
+archive_command = 'gcloud storage cp %p gs://my-bucket/wal/%f'
+```
+
+### 2.4 Checkpoints
+
+```ini
+checkpoint_timeout = 10min
+checkpoint_completion_target = 0.9
+max_wal_size = 4GB
+min_wal_size = 1GB
+```
+
+`checkpoint_completion_target = 0.9` spreads checkpoint writes across 90% of the interval, smoothing I/O.
+
+### 2.5 Query Planner
+
+```ini
+random_page_cost = 1.1           # For SSD storage; default 4.0 is for spinning disk
+effective_io_concurrency = 200   # For SSD; drives parallel prefetch
+enable_partitionwise_join = on
+enable_partitionwise_aggregate = on
+```
+
+Lowering `random_page_cost` to 1.1 for SSD is one of the most impactful planner tuning changes. It tells the planner that random reads are almost as cheap as sequential reads, making index scans more attractive.
+
+### 2.6 Autovacuum
+
+```ini
+autovacuum = on
+autovacuum_max_workers = 3
+autovacuum_naptime = 1min
+autovacuum_vacuum_threshold = 50
+autovacuum_vacuum_scale_factor = 0.2
+autovacuum_analyze_threshold = 50
+autovacuum_analyze_scale_factor = 0.1
+autovacuum_vacuum_cost_delay = 2ms
+autovacuum_vacuum_cost_limit = 200
+```
+
+For tables with millions of rows, override autovacuum at the table level to trigger more aggressively than the defaults.
 
 ---
 
-### 7. Transaction vs. Batch Write Decision Guide
+## Section 3 — pg_hba.conf Authentication
 
-| Scenario | Use Transaction | Use Batch Write |
+### 3.1 File Format
+
+Each rule in pg_hba.conf follows this format:
+
+```text
+TYPE  DATABASE  USER  ADDRESS  METHOD  [OPTIONS]
+```
+
+Rules are evaluated top-to-bottom. The first match wins.
+
+### 3.2 Authentication Methods Compared
+
+| Method | Security Level | Use Case |
 |---|---|---|
-| Read document A, then update document B based on A's value | Yes | No |
-| Update 10 documents simultaneously without reading first | No | Yes |
-| Decrement a counter only if current value > 0 | Yes | No |
-| Create 5 new documents atomically | No | Yes |
-| Transfer a value from one document to another | Yes | No |
+| trust | None (dangerous) | Local dev only |
+| peer | OS-level | Local Unix socket connections |
+| password | Low (plaintext) | Never use in production |
+| md5 | Moderate | Legacy compatibility only |
+| scram-sha-256 | Strong | All network connections |
+| cert | Very strong | mTLS client certificate auth |
+| gss/sspi | Enterprise | Kerberos/Active Directory |
+| ldap | Enterprise | LDAP directory integration |
+| reject | N/A | Explicit deny rule |
+
+### 3.3 Recommended Production Configuration
+
+```text
+# TYPE  DATABASE        USER            ADDRESS                 METHOD
+
+# Superuser local access via OS identity
+local   all             postgres                                peer
+
+# Application user connections (network)
+host    appdb           appuser         10.0.1.0/24             scram-sha-256
+
+# Read-only reporting user
+host    appdb           reporter        10.0.2.0/24             scram-sha-256
+
+# Streaming replication
+host    replication     replicator      10.0.3.10/32            scram-sha-256
+
+# Deny all other connections
+host    all             all             0.0.0.0/0               reject
+```
+
+### 3.4 SSL Enforcement
+
+For network connections, require SSL by changing the connection type from `host` to `hostssl`:
+
+```text
+hostssl appdb  appuser  10.0.1.0/24  scram-sha-256
+```
+
+Or use the `ssl_cert_file` and `ssl_key_file` parameters in postgresql.conf and set `ssl = on`.
 
 ---
 
-### 8. Required Readings and Resources
+## Section 4 — Roles and Privilege Management
 
-**GCP Documentation — Cloud Firestore Overview**: Data model, Native vs. Datastore mode, and getting started guide. Available at cloud.google.com/learn.
+### 4.1 Role Hierarchy
 
-**GCP Documentation — Firestore Security Rules**: Full reference for security rules syntax, authentication checks, and field validation. Available at cloud.google.com/learn.
+PostgreSQL roles form a DAG (directed acyclic graph). A role can be a member of multiple other roles, inheriting their privileges by default.
 
-**GCP Documentation — Firestore Indexes**: Single-field and composite index explanation, how to create composite indexes, and index exemptions. Available at cloud.google.com/learn.
+```sql
+-- Create base group roles
+CREATE ROLE app_read;
+CREATE ROLE app_write;
+CREATE ROLE app_admin;
+
+-- Grant privileges to group roles
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO app_read;
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO app_write;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO app_admin;
+
+-- Create individual login users and assign groups
+CREATE ROLE alice WITH LOGIN PASSWORD 'AlicePass!' IN ROLE app_write;
+CREATE ROLE bob WITH LOGIN PASSWORD 'BobPass!' IN ROLE app_read;
+CREATE ROLE carol WITH LOGIN PASSWORD 'CarolPass!' IN ROLE app_admin;
+```
+
+### 4.2 Row-Level Security (RLS)
+
+PostgreSQL supports row-level security policies that filter rows based on the current role — essential for multi-tenant applications.
+
+```sql
+-- Enable RLS on the table
+ALTER TABLE customer_data ENABLE ROW LEVEL SECURITY;
+
+-- Policy: users see only their own tenant's rows
+CREATE POLICY tenant_isolation ON customer_data
+  USING (tenant_id = current_setting('app.tenant_id')::INTEGER);
+
+-- Set the tenant context at application session start
+SET app.tenant_id = '42';
+```
+
+### 4.3 Column-Level Privileges
+
+```sql
+-- Grant SELECT on specific columns only
+GRANT SELECT (customer_id, order_date, total_amount)
+  ON TABLE orders TO reporting_role;
+-- Restricts access to sensitive columns like credit_card_number
+```
+
+### 4.4 Revoking Privileges
+
+```sql
+-- Revoke all privileges on a table
+REVOKE ALL PRIVILEGES ON TABLE orders FROM contractor_role;
+
+-- Revoke schema usage
+REVOKE USAGE ON SCHEMA analytics FROM contractor_role;
+
+-- Remove role membership
+REVOKE app_write FROM alice;
+```
 
 ---
 
-### 9. Exam Tips
+## Section 5 — VACUUM, ANALYZE, and Bloat Management
 
-Tip 1: Firestore is the answer for mobile/web app backends, especially when real-time listeners or offline sync are mentioned. Cloud SQL is the answer when stable schema and ACID transactions are the priority.
+### 5.1 MVCC and Dead Tuples
 
-Tip 2: Native mode vs. Datastore mode. Native mode is for new applications. Datastore mode is for legacy migrations. The mode is permanent — it cannot be changed after database creation.
+PostgreSQL's MVCC model keeps old row versions visible to concurrent transactions that started before the UPDATE or DELETE. Once all transactions that could see the old version have committed, the old tuple becomes a **dead tuple** — invisible to new queries but still occupying physical space.
 
-Tip 3: Firestore queries always use an index. Multi-field queries require a composite index. If the exam scenario describes a Firestore query failing with an error about a missing index, the answer is creating a composite index.
+VACUUM marks dead tuples as reusable. VACUUM FULL rewrites the table, compacting storage but requiring an exclusive lock.
 
-Tip 4: Security Rules are required for any application where clients connect directly to Firestore (mobile/web). Without rules, Firestore defaults to deny-all in production.
+### 5.2 Monitoring Bloat
 
-Tip 5: Firestore does not support full-text search or SQL JOINs. Any scenario requiring these capabilities needs a different service (BigQuery for analytics, Cloud SQL for JOINs, a search service for full-text).
+```sql
+-- Dead tuple ratio per table
+SELECT schemaname, relname,
+       n_live_tup, n_dead_tup,
+       round(100.0 * n_dead_tup / NULLIF(n_live_tup + n_dead_tup, 0), 1) AS dead_pct,
+       pg_size_pretty(pg_total_relation_size(schemaname || '.' || relname)) AS total_size
+FROM pg_stat_user_tables
+WHERE n_dead_tup > 10000
+ORDER BY dead_pct DESC;
+```
 
-Tip 6: transactions read-then-write and retry on conflict; batch writes write-only and do not retry. Both are limited to 500 documents per operation.
+### 5.3 Transaction ID Wraparound
 
-Tip 7: Firestore is serverless — no instance provisioning. This is the primary cost model difference from Cloud SQL (instance-based) and Bigtable (node-based).
+PostgreSQL transaction IDs are 32-bit. After 2.1 billion transactions, they wrap. PostgreSQL will refuse to process new transactions rather than allow data corruption. This is called **transaction ID wraparound**.
 
-Tip 8: sub-collections are the Firestore pattern for one-to-many relationships. A user document can have an orders sub-collection. This is different from a relational foreign key but achieves the same hierarchical structure.
+**Monitoring:**
+
+```sql
+SELECT datname,
+       age(datfrozenxid) AS xid_age,
+       2100000000 - age(datfrozenxid) AS xids_remaining
+FROM pg_database
+ORDER BY xid_age DESC;
+```
+
+Alert when `xid_age` exceeds 1.5 billion. Run `VACUUM FREEZE` on the oldest tables if needed.
+
+### 5.4 Table-Level Autovacuum Override
+
+```sql
+-- Tune autovacuum for a high-churn table
+ALTER TABLE order_events SET (
+    autovacuum_vacuum_scale_factor = 0.01,
+    autovacuum_vacuum_threshold = 100,
+    autovacuum_analyze_scale_factor = 0.005
+);
+```
 
 ---
 
-### 10. Study Checklist
+## Section 6 — pg_stat Views Reference
 
-- Describe the five-level Firestore data hierarchy (project, database, collection, document, sub-collection)
-- State the two Firestore modes and identify when each is appropriate
-- Explain what a Security Rule does and write a simple rule that allows only authenticated users to read their own document
-- Explain why multi-field Firestore queries require composite indexes
-- Distinguish between a Firestore transaction and a batch write
-- List three features that Firestore Native mode provides that Datastore mode does not
-- Explain why Firestore is serverless and what that means for capacity planning
-- Identify three workload characteristics that point to Firestore over Cloud SQL
-- Complete the Module 06 lab activity
-- Pass the Module 06 quiz with at least 80 percent
+### 6.1 Frequently Used Views
+
+| View | Purpose |
+|---|---|
+| pg_stat_activity | Live session state, query text, wait events |
+| pg_stat_user_tables | Per-table DML counts, vacuum/analyze timestamps |
+| pg_stat_user_indexes | Index scan counts — identify unused indexes |
+| pg_stat_bgwriter | Checkpoint and buffer writer statistics |
+| pg_stat_replication | Standby lag and replication state |
+| pg_locks | Current lock holders and waiters |
+| pg_stat_statements | Aggregated query performance (requires extension) |
+
+### 6.2 Enabling pg_stat_statements
+
+```sql
+-- In postgresql.conf:
+-- shared_preload_libraries = 'pg_stat_statements'
+
+-- After restart, create the extension:
+CREATE EXTENSION pg_stat_statements;
+
+-- Query top 10 slowest queries by total execution time:
+SELECT query, calls, total_exec_time, mean_exec_time, rows
+FROM pg_stat_statements
+ORDER BY total_exec_time DESC
+LIMIT 10;
+```
 
 ---
 
-Reference: cloud.google.com/learn
+## Section 7 — PgBouncer Connection Pooling
+
+### 7.1 Architecture
+
+```text
+Application Servers (1000 connections)
+         |
+    [PgBouncer :6432]
+         |  (20 server connections)
+    [PostgreSQL :5432]
+```
+
+PgBouncer multiplexes many client connections onto a small pool of actual PostgreSQL server connections, eliminating the overhead of OS process creation per connection.
+
+### 7.2 Pooling Mode Selection
+
+| Mode | Server Connection | LISTEN/NOTIFY | Prepared Stmts | Typical Use |
+|---|---|---|---|---|
+| session | Per client session | Yes | Yes | Low concurrency apps |
+| transaction | Per transaction | No | Limited | OLTP (recommended) |
+| statement | Per SQL statement | No | No | Rarely appropriate |
+
+### 7.3 pgbouncer.ini Key Parameters
+
+```ini
+[databases]
+mydb = host=postgres-primary port=5432 dbname=mydb
+
+[pgbouncer]
+listen_port = 6432
+pool_mode = transaction
+max_client_conn = 2000
+default_pool_size = 25
+reserve_pool_size = 10
+reserve_pool_timeout = 5
+server_idle_timeout = 600
+server_lifetime = 3600
+client_idle_timeout = 0
+auth_type = scram-sha-256
+auth_file = /etc/pgbouncer/userlist.txt
+stats_users = monitoring_user
+```
+
+---
+
+## Section 8 — Key Terms
+
+| Term | Definition |
+|---|---|
+| MVCC | Multi-Version Concurrency Control — readers do not block writers |
+| WAL | Write-Ahead Log — durability and replication mechanism |
+| Dead tuple | A row version no longer visible to any transaction |
+| VACUUM | Reclaims dead tuple space; does not lock table |
+| VACUUM FULL | Rewrites table; requires exclusive lock |
+| Transaction ID wraparound | PostgreSQL's hard limit at 2.1 billion transactions |
+| pg_hba.conf | Host-based authentication rules file |
+| scram-sha-256 | Strongest standard PostgreSQL password auth method |
+| PgBouncer | Lightweight connection pooler for PostgreSQL |
+| Transaction pooling | PgBouncer mode: one server connection per transaction |
+
+---
+
+## Study Questions
+
+1. What is the difference between VACUUM and VACUUM FULL? When should each be used?
+
+2. Explain the transaction ID wraparound problem. How do you monitor for it?
+
+3. What authentication method is recommended for network connections in pg_hba.conf, and why?
+
+4. Describe the three PgBouncer pooling modes. Which features are incompatible with transaction pooling?
+
+5. What does `effective_cache_size` actually control? Why is it common to confuse it with `shared_buffers`?
+
+6. What is the purpose of `superuser_reserved_connections` in postgresql.conf?
+
+7. How would you identify unused indexes in a PostgreSQL database using a system catalog view?
+
+8. What `wal_level` is required to use logical replication or CDC tools like Debezium?
+
+---
+
+## Certification Exam Checklist
+
+Before the exam, confirm you can answer these:
+
+- [ ] Sizing recommendations for shared_buffers, work_mem, effective_cache_size
+- [ ] pg_hba.conf method hierarchy from least to most secure
+- [ ] What autovacuum_vacuum_scale_factor controls
+- [ ] How to check transaction ID age with pg_database
+- [ ] gcloud sql instances patch syntax for setting database flags
+- [ ] PgBouncer pooling mode tradeoffs for LISTEN/NOTIFY compatibility
+- [ ] Which background process is responsible for checkpoint writes
+- [ ] How to identify a blocking session using pg_blocking_pids()

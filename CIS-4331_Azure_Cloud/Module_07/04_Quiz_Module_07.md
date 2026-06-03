@@ -1,81 +1,243 @@
-# Quiz: Module 07 - Azure Database Services
+# Quiz: Module 07 — Azure Compute Services
 
-## Course: CIS-4331_Azure_Cloud (Microsoft Azure Fundamentals (AZ-900))
+## Course: CIS-4331 Azure Cloud Computing
 
----
+## Texas Wesleyan University | Professor Nash
 
-**Question 1**
-Which Azure database service is a globally distributed, multi-model database engine supporting SQL, MongoDB, and Cassandra APIs?
+## AZ-900 Domain: Describe Azure Architecture and Services (35–40% of exam)
 
-* A) Azure SQL Database
-* B) Azure Database for PostgreSQL
-* C) Azure Cosmos DB
-* D) Azure SQL Managed Instance
-* **Correct Answer:** C) Cosmos DB is Microsoft's NoSQL engine built for global distribution and multi-API access.
-* **Distractor Analysis:**
-  * *Why correct:* Cosmos DB is Microsoft's globally distributed NoSQL engine supporting multiple API compatibility layers including SQL Core, MongoDB, Cassandra, and others.
-  * *Why A is incorrect:* Azure SQL Database is strictly relational using the SQL Server engine — it does not support MongoDB or Cassandra APIs.
+**Instructions:** Select the single best answer for each question. Each question is worth 10 points. Total: 100 points.
 
 ---
 
-**Question 2**
-Which of the following most accurately describes **Azure Cosmos DB**?
+### Question 1
 
-* A) A globally distributed, multi-model NoSQL database service that replicates data across multiple Azure regions with millisecond latency and supports multiple API compatibility layers including SQL, MongoDB, and Cassandra.
-* B) A fully managed relational database service based on the Microsoft SQL Server engine, supporting T-SQL queries and ACID transactions.
-* C) A fully managed open-source PostgreSQL service where Microsoft handles OS patching, backups, and high availability automatically.
-* D) A key-value cache service built on Redis that provides sub-millisecond response times for frequently accessed application data.
-* **Correct Answer:** A) Cosmos DB is a globally distributed, multi-model NoSQL database that replicates across regions with millisecond latency and supports multiple API compatibility layers.
-* **Distractor Analysis:**
-  * *Why A is correct:* Cosmos DB's key AZ-900 characteristics are global distribution, multi-model API support, and millisecond read/write latency at any scale.
-  * *Why B is incorrect:* That describes Azure SQL Database, which is relational and SQL Server-based.
-  * *Why C is incorrect:* That describes Azure Database for PostgreSQL, which is an open-source managed service.
-  * *Why D is incorrect:* That describes Azure Cache for Redis, a caching service — not a database.
+A company is migrating a legacy Windows application to Azure. The application requires a specific version of the .NET Framework and has custom Windows registry configurations. Which Azure compute service is most appropriate?
 
----
+A. Azure App Service
 
-**Question 3**
-A company needs to migrate their existing on-premises MySQL application to Azure with minimal code changes and no OS management responsibility. Which Azure service is the best fit?
+B. Azure Virtual Machines
 
-* A) SQL Server on Azure Virtual Machine (IaaS)
-* B) Azure SQL Database
-* C) Azure Database for MySQL
-* D) Azure Cosmos DB with MongoDB API
-* **Correct Answer:** C) Azure Database for MySQL is a fully managed PaaS service that runs the MySQL engine — existing MySQL applications connect without code changes, and Microsoft manages the OS and engine.
-* **Distractor Analysis:**
-  * *Why C is correct:* Azure Database for MySQL provides a fully managed MySQL-compatible environment, enabling lift-and-shift of MySQL workloads with no OS management.
-  * *Why A is incorrect:* SQL Server on an Azure VM requires the customer to manage the OS — this does not meet the "no OS management" requirement.
-  * *Why B is incorrect:* Azure SQL Database uses the SQL Server engine, not MySQL — the application would require migration to T-SQL syntax.
-  * *Why D is incorrect:* Cosmos DB's MongoDB API is for document-style NoSQL workloads — MySQL applications use relational SQL and would require significant rewriting.
+C. Azure Functions
+
+D. Azure Container Instances
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- **A (App Service):** App Service is a PaaS service that manages the underlying OS. Custom OS-level configurations like registry edits are not possible. Incorrect.
+- **B (Virtual Machines) — CORRECT:** VMs provide full OS access, allowing the customer to install specific .NET versions and modify registry settings. This is an IaaS lift-and-shift scenario.
+- **C (Azure Functions):** Functions is serverless compute. There is no access to the OS or ability to install dependencies at the OS level. Incorrect.
+- **D (Container Instances):** ACI runs containers, which share the host OS kernel and do not provide Windows registry access. Incorrect.
 
 ---
 
-**Question 4**
-A global e-commerce application needs a database that can serve reads and writes from Azure regions in North America, Europe, and Asia simultaneously, with the ability to tune consistency based on business requirements. Which Azure database service meets this need?
+### Question 2
 
-* A) Azure SQL Database with active geo-replication
-* B) Azure Database for PostgreSQL with read replicas
-* C) Azure Cosmos DB with multi-region writes enabled
-* D) Azure SQL Managed Instance with Always On availability groups
-* **Correct Answer:** C) Azure Cosmos DB supports multi-region writes across any number of Azure regions with tunable consistency levels, making it purpose-built for globally distributed applications.
-* **Distractor Analysis:**
-  * *Why C is correct:* Cosmos DB's native multi-region write capability and tunable consistency levels are specifically designed for globally distributed, low-latency scenarios.
-  * *Why A is incorrect:* Azure SQL geo-replication provides read replicas in secondary regions but writes must go to the primary region — it does not support multi-region writes.
-  * *Why B is incorrect:* PostgreSQL read replicas allow reads from secondary regions but all writes still go to the primary instance.
-  * *Why D is incorrect:* SQL Managed Instance with Always On provides high availability within a region but does not support distributed global multi-region writes.
+Your team deploys two VMs to an Availability Set. The Availability Set has two fault domains and five update domains. During a planned Azure maintenance event, how many VMs will be restarted simultaneously?
+
+A. Both VMs, because they are in the same Availability Set
+
+B. Neither VM — Availability Sets prevent all restarts
+
+C. One VM — Azure updates one update domain at a time
+
+D. One VM — Azure updates one fault domain at a time
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- **A:** Incorrect. The purpose of an Availability Set is to distribute VMs across update domains so they are NOT all restarted at the same time.
+- **B:** Incorrect. Availability Sets do not prevent maintenance restarts — they stagger them across update domains.
+- **C — CORRECT:** Update domains control planned maintenance. Azure restarts VMs in one update domain at a time. With two VMs spread across five update domains, only one VM restarts during any maintenance window.
+- **D:** Incorrect. Fault domains protect against unplanned hardware failures (power/network), not planned maintenance. Update domains control maintenance scheduling.
 
 ---
 
-**Question 5**
-What distinguishes Azure SQL Database (PaaS) from SQL Server on an Azure Virtual Machine (IaaS) in terms of customer responsibility?
+### Question 3
 
-* A) Azure SQL Database requires the customer to manage OS patching, while SQL Server on VM is fully managed by Microsoft.
-* B) Azure SQL Database is fully managed by Microsoft including OS and engine patching; SQL Server on VM requires the customer to manage the OS, SQL Server version, and security patches.
-* C) Azure SQL Database supports only read workloads; SQL Server on VM supports both read and write workloads.
-* D) Azure SQL Database stores data only in memory; SQL Server on VM stores data on managed disks.
-* **Correct Answer:** B) Azure SQL Database is PaaS — Microsoft manages OS and engine patching. SQL Server on VM is IaaS — the customer manages OS and SQL Server patching.
-* **Distractor Analysis:**
-  * *Why B is correct:* This is the shared responsibility distinction tested on AZ-900: PaaS databases remove OS/engine management from the customer; IaaS VMs do not.
-  * *Why A is incorrect:* This reverses the responsibilities — it is Azure SQL Database (PaaS) that Microsoft manages, not the VM-based option.
-  * *Why C is incorrect:* Both services support full read and write operations.
-  * *Why D is incorrect:* Both services persist data to storage — neither is exclusively in-memory.
+A startup wants to host a Python web API on Azure. They want automatic scaling, no OS management, and the ability to deploy from GitHub. Which service is the best fit?
+
+A. Azure Virtual Machine Scale Sets
+
+B. Azure Kubernetes Service
+
+C. Azure App Service
+
+D. Azure Container Instances
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- **A (VM Scale Sets):** Scale Sets provide auto-scaling but still require OS management (IaaS). Not the best fit for a team that wants no OS management. Incorrect.
+- **B (AKS):** AKS is designed for container orchestration of microservices. It requires containerizing the app and managing cluster configuration — significantly more complexity than needed for a simple Python API. Incorrect.
+- **C (App Service) — CORRECT:** App Service natively supports Python, provides auto-scaling on Standard+ tiers, manages the OS, and supports GitHub continuous deployment. This is the ideal PaaS match for the scenario.
+- **D (ACI):** ACI runs containers but does not provide built-in GitHub integration or the managed PaaS experience of App Service. Incorrect.
+
+---
+
+### Question 4
+
+An e-commerce company needs to process order confirmation emails whenever a new order is written to an Azure Storage Queue. The processing takes 2–3 seconds per order. Processing only happens during business hours. Which Azure compute service minimizes cost?
+
+A. Azure Virtual Machine (always on)
+
+B. Azure App Service (Standard plan)
+
+C. Azure Functions (Consumption plan)
+
+D. Azure Kubernetes Service
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- **A (VM always on):** A VM running 24/7 incurs continuous cost even when idle outside business hours. Not cost-efficient for intermittent event-driven processing. Incorrect.
+- **B (App Service Standard):** App Service plans bill continuously based on plan size, regardless of workload. For infrequent, short-duration processing, this is more expensive than serverless. Incorrect.
+- **C (Functions Consumption) — CORRECT:** The Consumption plan scales to zero when idle and bills only when code executes. A queue trigger fires the function on each new message. For short tasks (2–3 seconds) that happen intermittently, this is the most cost-efficient option.
+- **D (AKS):** AKS is designed for multi-container orchestration. It requires worker nodes that incur VM costs continuously. Far too complex and expensive for this simple queue-processing scenario. Incorrect.
+
+---
+
+### Question 5
+
+Which Azure Virtual Machine size series is specifically designed for memory-intensive workloads such as large in-memory databases and SAP HANA?
+
+A. F-series
+
+B. B-series
+
+C. N-series
+
+D. E-series and M-series
+
+**Correct Answer: D**
+
+**Distractor Analysis:**
+
+- **A (F-series):** F-series is compute optimized — high CPU-to-memory ratio. Best for CPU-bound workloads, not memory-intensive. Incorrect.
+- **B (B-series):** B-series is burstable general purpose — low baseline CPU that can burst. Not designed for high memory workloads. Incorrect.
+- **C (N-series):** N-series includes GPU-enabled VMs for machine learning and graphics rendering. Not memory optimized. Incorrect.
+- **D (E-series and M-series) — CORRECT:** E-series and M-series are memory optimized. E-series suits mid-range in-memory databases; M-series provides the highest memory-to-CPU ratios in Azure (up to 4 TB RAM) for workloads like SAP HANA.
+
+---
+
+### Question 6
+
+A development team wants to use blue/green deployments for their Azure App Service application to enable zero-downtime releases. Which App Service feature supports this pattern?
+
+A. App Service Environments
+
+B. Deployment slots
+
+C. Scale-out rules
+
+D. Availability Zones
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- **A (App Service Environments):** ASE is the Isolated tier offering — it provides network isolation in a VNet. It is not specifically a zero-downtime deployment tool. Incorrect.
+- **B (Deployment slots) — CORRECT:** Deployment slots allow deploying a new version to a staging slot, validating it, then swapping staging and production with zero downtime. This is the blue/green deployment pattern for App Service.
+- **C (Scale-out rules):** Scale-out rules add more instances for traffic capacity — they do not address deployment strategy or downtime. Incorrect.
+- **D (Availability Zones):** Availability Zones provide datacenter-level fault tolerance for infrastructure. They do not address deployment patterns or application release strategy. Incorrect.
+
+---
+
+### Question 7
+
+You need to run a containerized batch job that processes uploaded images. The job takes 90 seconds to complete and is triggered a few times per day. There are no inter-container communication requirements. Which service best fits this workload?
+
+A. Azure Kubernetes Service
+
+B. Azure App Service
+
+C. Azure Container Instances
+
+D. Azure Virtual Machine Scale Sets
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- **A (AKS):** AKS is designed for long-running, multi-container applications. For a simple, occasional 90-second batch job, the cluster overhead is excessive and unnecessarily expensive. Incorrect.
+- **B (App Service):** App Service is optimized for web applications and APIs. While it can run containers, it is not designed for triggered batch container execution. Incorrect.
+- **C (ACI) — CORRECT:** ACI is purpose-built for short-lived, simple container workloads. It starts in seconds, bills per-second, supports "Never" restart policy for one-shot jobs, and requires no orchestration configuration. Perfect for this scenario.
+- **D (VM Scale Sets):** Scale Sets involve managing VMs, not containers directly, and are designed for long-running auto-scaling workloads — not short batch jobs. Incorrect.
+
+---
+
+### Question 8
+
+What is the maximum number of VM instances that a Virtual Machine Scale Set can support in Uniform orchestration mode?
+
+A. 100
+
+B. 500
+
+C. 1,000
+
+D. 10,000
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- **A (100):** Incorrect. This is far below the actual limit and would not support large-scale auto-scaling architectures.
+- **B (500):** Incorrect. While this may seem reasonable, it is not the documented Azure limit for VMSS uniform mode.
+- **C (1,000) — CORRECT:** Azure Virtual Machine Scale Sets in Uniform orchestration mode support up to 1,000 VM instances when using platform images. Custom images support up to 600 instances.
+- **D (10,000):** Incorrect. This exceeds the Azure limit for a single Scale Set. Larger deployments require multiple Scale Sets behind a common load balancer.
+
+---
+
+### Question 9
+
+Which of the following correctly describes the Azure Kubernetes Service (AKS) cost model?
+
+A. You pay for both the Kubernetes control plane and the worker nodes
+
+B. The Kubernetes control plane is free; you pay only for worker node VMs
+
+C. AKS charges are based on the number of containers deployed
+
+D. AKS uses a per-second billing model similar to Azure Container Instances
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- **A:** Incorrect. Microsoft manages the AKS control plane (API server, etcd, scheduler) at no charge. This is a key differentiator that makes AKS cost-competitive.
+- **B — CORRECT:** The AKS control plane is provided free of charge. Customers pay for the worker node VMs (standard Azure VM pricing), storage, and networking. An optional Uptime SLA add-on costs $0.10/cluster/hour for 99.95% control plane SLA.
+- **C:** Incorrect. AKS does not charge based on container count. Billing is based on the underlying VM sizes and counts of the node pools.
+- **D:** Incorrect. Per-second billing is the model for Azure Container Instances, not AKS. AKS node VMs bill by the hour like standard VMs.
+
+---
+
+### Question 10
+
+A company needs to ensure their Azure App Service web application is isolated in a dedicated Virtual Network for compliance with financial regulations. Which App Service tier provides this level of network isolation?
+
+A. Standard (S1)
+
+B. Premium (P1v3)
+
+C. Isolated (I1v2) — App Service Environment
+
+D. Basic (B1)
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- **A (Standard):** Standard tier supports auto-scaling and deployment slots but does not provide dedicated VNet isolation. It runs on shared infrastructure from Azure's perspective of network isolation. Incorrect.
+- **B (Premium):** Premium tier adds VNet integration (outbound traffic through a VNet) and enhanced performance but does not place the App Service Environment itself in a dedicated, isolated VNet. Incorrect.
+- **C (Isolated — ASE) — CORRECT:** The Isolated tier runs on an App Service Environment (ASE), which is deployed into a customer-controlled Azure Virtual Network. All inbound and outbound traffic flows through the customer's VNet. This provides the highest level of network isolation and is designed for regulated industries requiring private network compliance.
+- **D (Basic):** Basic tier provides dedicated compute but no VNet isolation whatsoever. Incorrect.
+
+---
+
+*Quiz 07 — Module 07: Azure Compute Services | CIS-4331 | Texas Wesleyan University*

@@ -1,336 +1,359 @@
-# CIS-4337 Infrastructure Automation
+# Reading Guide: Module 08 — Terraform State Management
 
-## Module 08: Provisioners and Null Resources
+## Course: CIS-4337 Infrastructure Automation
 
-### Reading Guide
+## Texas Wesleyan University | Professor Nash
 
-### Course Alignment: HashiCorp Terraform Associate 003
-
----
-
-## Overview
-
-This module covers Terraform provisioners — escape hatches that execute scripts during resource lifecycle operations — and the `null_resource` type, which decouples provisioner execution from specific infrastructure resources. Provisioner behavior, failure modes, and the `null_resource` triggers pattern are tested on the Terraform Associate 003 exam in Domain 8 (Read, generate, and modify configuration).
+## Certification Alignment: HashiCorp Terraform Associate (003)
 
 ---
 
-## 1. Core Vocabulary
+## Learning Objectives
 
-### Provisioner
+After completing this reading guide you will be able to:
 
-A block nested inside a resource block that executes a command or script at a specific point in the resource lifecycle: after creation or before destruction.
-
-### local-exec Provisioner
-
-A provisioner that runs a command on the machine where Terraform is executing. The command runs in a local shell and has no connection to the provisioned resource.
-
-### remote-exec Provisioner
-
-A provisioner that connects to a newly created resource over SSH or WinRM and runs commands on that machine. Requires a `connection` block.
-
-### file Provisioner
-
-A provisioner that copies a local file or directory to the remote resource over SSH or WinRM. Does not execute the copied file.
-
-#### connection Block
-
-A block nested inside a resource or provisioner that specifies how Terraform connects to a remote resource. Required by both `remote-exec` and `file` provisioners.
-
-#### on_failure
-
-A provisioner argument that controls behavior when the provisioner command exits with a non-zero status. Values: `fail` (default — taint and halt) or `continue` (log and proceed).
-
-#### Tainted Resource
-
-A resource marked in state as requiring replacement. On the next apply, Terraform plans to destroy and recreate it. Provisioner failures produce tainted resources by default.
-
-#### null_resource
-
-A resource from the `hashicorp/null` provider that creates no infrastructure. Used to attach provisioners and lifecycle rules to arbitrary trigger conditions.
-
-#### triggers
-
-An argument on `null_resource` that accepts a map of key-value pairs. When any value changes, Terraform destroys and recreates the `null_resource`, re-running its provisioners.
-
-#### self
-
-A reference available inside provisioner blocks that refers to the attributes of the containing resource. Example: `self.public_ip`.
+- Explain the purpose and structure of `terraform.tfstate`
+- Configure S3, Azure Blob, and GCS remote backends
+- Describe how state locking works and how to recover from a stuck lock
+- Execute all major `terraform state` subcommands correctly
+- Apply security best practices to protect state files in production
 
 ---
 
-## 2. When to Use Provisioners
+## 1. What Is Terraform State
 
-HashiCorp describes provisioners as a "last resort." Use cloud-native alternatives whenever they exist.
+Terraform state is a persistent record that maps the resources defined in your configuration to the real-world objects that were created. Without state, Terraform cannot determine whether a resource already exists, what its current attributes are, or whether a change to your configuration requires an update or a destroy-and-recreate.
 
-| Task | Preferred Approach | When Provisioner Is Needed |
-|---|---|---|
-| Bootstrap an EC2 instance | `user_data` argument on `aws_instance` | No native attribute exists for the task |
-| Bootstrap an Azure VM | `custom_data` argument on `azurerm_linux_virtual_machine` | No native attribute exists |
-| Initialize a Kubernetes pod | Init containers | No native attribute exists |
-| Register instance in external system | `local-exec` provisioner | External system has no Terraform provider |
+### 1.1 State File Format
 
-Two reasons provisioners are problematic:
+The state file is a JSON document stored by default as `terraform.tfstate` in the working directory. The format is versioned and managed by Terraform — you should never manually edit it except in carefully controlled recovery scenarios.
 
-- Provisioner execution is opaque to `terraform plan`. The plan shows the resource will be created but says nothing about what the provisioner will do or whether it will succeed.
-- Provisioner execution is not retryable. Failure taints the resource rather than retrying the command.
+Key fields in a state file:
 
----
-
-## 3. local-exec Provisioner
-
-The `local-exec` provisioner runs a command on the Terraform runner.
-
-```hcl
-resource "aws_instance" "web" {
-  ami           = data.aws_ami.amazon_linux.id
-  instance_type = "t3.micro"
-
-  provisioner "local-exec" {
-    command = "echo 'Instance ${self.id} created' >> deployment.log"
-  }
-
-  provisioner "local-exec" {
-    when    = destroy
-    command = "echo 'Instance ${self.id} destroyed' >> deployment.log"
-  }
+```json
+{
+  "version": 4,
+  "terraform_version": "1.5.7",
+  "serial": 12,
+  "lineage": "a1b2c3d4-...",
+  "outputs": {},
+  "resources": []
 }
 ```
 
-Key arguments:
-
-- `command` — the shell command to execute. Required.
-- `when = destroy` — runs before destruction instead of after creation.
-- `working_dir` — directory in which to run the command.
-- `interpreter` — shell interpreter. Default: `["/bin/sh", "-c"]` on Linux/macOS, `["cmd", "/C"]` on Windows.
-- `environment` — map of environment variables for the command.
-
-The `self` reference accesses the containing resource's computed attributes.
-
-Common use case — triggering Ansible after EC2 creation:
-
-```hcl
-resource "aws_instance" "app" {
-  ami           = data.aws_ami.amazon_linux.id
-  instance_type = "t3.micro"
-
-  provisioner "local-exec" {
-    command = "ansible-playbook -i '${self.public_ip},' ./playbooks/configure.yml"
-    environment = {
-      ANSIBLE_HOST_KEY_CHECKING = "False"
-    }
-  }
-}
-```
-
----
-
-## 4. remote-exec Provisioner
-
-The `remote-exec` provisioner connects to the resource and runs commands on it. A `connection` block is required.
-
-```hcl
-resource "aws_instance" "web" {
-  ami                    = data.aws_ami.amazon_linux.id
-  instance_type          = "t3.micro"
-  key_name               = aws_key_pair.deployer.key_name
-  vpc_security_group_ids = [aws_security_group.ssh.id]
-
-  connection {
-    type        = "ssh"
-    host        = self.public_ip
-    user        = "ec2-user"
-    private_key = file("~/.ssh/id_rsa")
-  }
-
-  provisioner "remote-exec" {
-    inline = [
-      "sudo yum update -y",
-      "sudo yum install -y httpd",
-      "sudo systemctl start httpd",
-      "sudo systemctl enable httpd"
-    ]
-  }
-}
-```
-
-Three argument forms for `remote-exec`:
-
-- `inline` — list of commands executed sequentially on the remote host.
-- `script` — path to a local script file that is uploaded and executed.
-- `scripts` — list of local script paths uploaded and executed in order.
-
-```hcl
-provisioner "remote-exec" {
-  script = "./bootstrap.sh"
-}
-```
-
-The `connection` block arguments:
-
-- `type` — `"ssh"` (default) or `"winrm"`.
-- `host` — IP address or hostname of the resource.
-- `user` — login user.
-- `private_key` — SSH private key content.
-- `password` — password for WinRM or SSH password authentication.
-- `port` — connection port. Default: 22 for SSH, 5985 for WinRM.
-
----
-
-## 5. file Provisioner
-
-The `file` provisioner copies a local file or directory to the remote resource. It does not execute the file.
-
-```hcl
-resource "aws_instance" "app" {
-  # ... instance config ...
-
-  connection {
-    type        = "ssh"
-    host        = self.public_ip
-    user        = "ec2-user"
-    private_key = file("~/.ssh/id_rsa")
-  }
-
-  provisioner "file" {
-    source      = "configs/app.conf"
-    destination = "/etc/app/app.conf"
-  }
-
-  provisioner "remote-exec" {
-    inline = ["sudo systemctl restart app"]
-  }
-}
-```
-
-Arguments:
-
-- `source` — local path to the file or directory to copy.
-- `destination` — path on the remote resource where the file is placed.
-- `content` — inline string content to write to the destination file (alternative to `source`).
-
----
-
-## 6. Provisioner Failure Behavior
-
-Default behavior when a provisioner exits non-zero:
-
-1. The resource is marked as **tainted** in state.
-2. The current apply halts.
-3. On the next `terraform apply`, Terraform plans to destroy and recreate the tainted resource, then re-run the provisioner.
-
-Override with `on_failure`:
-
-```hcl
-provisioner "local-exec" {
-  command    = "notify-external-system.sh ${self.id}"
-  on_failure = continue
-}
-```
-
-| Value | Behavior |
+| Field | Purpose |
 |---|---|
-| `fail` | Default. Taint resource, halt apply. |
-| `continue` | Log error, proceed with apply. Resource is not tainted. |
+| `version` | State format version (currently 4) |
+| `terraform_version` | Terraform version that wrote this state |
+| `serial` | Monotonically increasing counter; detects conflicts |
+| `lineage` | Unique ID for this state; prevents mixing unrelated states |
+| `outputs` | Persisted output values from the last apply |
+| `resources` | Array of all tracked resources and their attributes |
 
-Use `on_failure = continue` for non-critical side-effects where failure must not block the deployment.
+### 1.2 State and the Dependency Graph
+
+Terraform builds a dependency graph from both your configuration and your state. This graph determines the order of operations during plan and apply. State stores resource IDs that providers need to read current status — for example, an AWS instance ID is needed to call the `DescribeInstances` API.
+
+### 1.3 terraform.tfstate.backup
+
+Each time Terraform updates the state, it first writes a backup to `terraform.tfstate.backup`. This is your last resort recovery option when local state is corrupted.
 
 ---
 
-## 7. null_resource
+## 2. Remote Backends
 
-The `null_resource` is a resource from the `hashicorp/null` provider that manages no real infrastructure.
+A backend defines where Terraform stores state and how operations are performed. The built-in local backend stores state on the local filesystem. Remote backends store state in a shared, durable location.
+
+### 2.1 Configuring a Backend
+
+Backend configuration belongs inside the `terraform` block:
 
 ```hcl
 terraform {
-  required_providers {
-    null = {
-      source  = "hashicorp/null"
-      version = "~> 3.0"
-    }
-  }
-}
+  required_version = ">= 1.5"
 
-resource "null_resource" "ansible_provisioner" {
-  triggers = {
-    instance_id = aws_instance.web.id
-    script_hash = filemd5("./playbooks/configure.yml")
-  }
-
-  provisioner "local-exec" {
-    command = "ansible-playbook -i '${aws_instance.web.public_ip},' ./playbooks/configure.yml"
-    environment = {
-      ANSIBLE_HOST_KEY_CHECKING = "False"
-    }
+  backend "s3" {
+    bucket = "my-tf-state-bucket"
+    key    = "prod/api/terraform.tfstate"
+    region = "us-east-1"
   }
 }
 ```
 
-The `triggers` map controls when the `null_resource` is recreated:
+**Important**: Backend configuration cannot use variables or references. All values must be literals. If you need to vary the backend configuration per environment, use partial configuration with `-backend-config` flags on `terraform init`.
 
-- Any value in the map changes → Terraform destroys and recreates the `null_resource` → provisioners re-run.
-- `instance_id` trigger: re-runs when the EC2 instance is replaced.
-- `script_hash` trigger: re-runs when the Ansible playbook file content changes.
-
-Using `timestamp()` as a trigger forces the `null_resource` to re-run on every apply:
+### 2.2 Partial Backend Configuration
 
 ```hcl
-resource "null_resource" "always_run" {
-  triggers = {
-    always_run = timestamp()
-  }
+# backend.tf (committed to git — no secrets)
+terraform {
+  backend "s3" {}
+}
+```
 
-  provisioner "local-exec" {
-    command = "date >> run-log.txt"
+```bash
+# Run at init time (values come from CI secrets or a config file)
+terraform init \
+  -backend-config="bucket=my-tf-state-bucket" \
+  -backend-config="key=prod/api/terraform.tfstate" \
+  -backend-config="region=us-east-1"
+```
+
+This pattern keeps the configuration portable while keeping the actual bucket name and key outside of version control if needed.
+
+### 2.3 S3 Backend
+
+```hcl
+terraform {
+  backend "s3" {
+    bucket         = "acme-tfstate"
+    key            = "prod/vpc/terraform.tfstate"
+    region         = "us-east-1"
+    encrypt        = true
+    dynamodb_table = "terraform-locks"
+    kms_key_id     = "arn:aws:kms:us-east-1:123456789:key/abc123"
   }
 }
 ```
 
-This pattern is useful for side-effects that must always execute, such as cache invalidation or external notification.
+| Argument | Required | Purpose |
+|---|---|---|
+| `bucket` | Yes | Name of the S3 bucket |
+| `key` | Yes | Path within the bucket to store the state file |
+| `region` | Yes | AWS region of the bucket |
+| `encrypt` | No | Enable server-side encryption (strongly recommended) |
+| `dynamodb_table` | No | DynamoDB table name for state locking |
+| `kms_key_id` | No | KMS key ARN for additional encryption |
+
+### 2.4 Azure Blob Backend
+
+```hcl
+terraform {
+  backend "azurerm" {
+    resource_group_name  = "rg-terraform-state"
+    storage_account_name = "acmetfstate001"
+    container_name       = "tfstate"
+    key                  = "prod/app/terraform.tfstate"
+  }
+}
+```
+
+Azure Blob Storage provides native locking via blob leases. No additional locking resource is required.
+
+### 2.5 GCS Backend
+
+```hcl
+terraform {
+  backend "gcs" {
+    bucket = "acme-tfstate-bucket"
+    prefix = "prod/app"
+  }
+}
+```
+
+GCS provides native locking. When using the GCS backend, the state file path is `<prefix>/default.tfstate`.
+
+### 2.6 Backend Comparison
+
+| Feature | S3 | Azure Blob | GCS |
+|---|---|---|---|
+| Locking mechanism | DynamoDB (separate resource) | Native blob lease | Native object lock |
+| Encryption at rest | Optional (`encrypt = true`) | Default (Azure manages) | Default (Google manages) |
+| Versioning | Bucket-level setting | Blob versioning | Object versioning |
+| CLI auth | AWS credentials / IAM | `az login` / SP | `gcloud auth` / SA |
 
 ---
 
-## 8. Required Reading
+## 3. State Locking
 
-- Read the provisioners overview at developer.hashicorp.com/terraform/language/resources/provisioners/syntax
-- Read the local-exec provisioner reference at developer.hashicorp.com/terraform/language/resources/provisioners/local-exec
-- Read the remote-exec provisioner reference at developer.hashicorp.com/terraform/language/resources/provisioners/remote-exec
-- Read the null provider documentation at registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource
+State locking prevents two Terraform processes from reading and writing state simultaneously. Without locking, concurrent `terraform apply` operations can result in state corruption — a situation that may require manual recovery.
 
----
+### 3.1 How Locking Works
 
-## 9. Terraform Associate 003 Exam Tips
+When an operation begins, Terraform writes a lock record to the locking mechanism. The record includes:
 
-**Tip 1.** Provisioners are a last resort. The exam presents scenarios asking for the best way to bootstrap a VM. Always prefer `user_data` (AWS) or `custom_data` (Azure) over a provisioner.
+- A randomly generated Lock ID
+- The operation type (plan or apply)
+- The user or process identity
+- A timestamp
 
-**Tip 2.** `local-exec` runs on the Terraform runner. `remote-exec` runs on the provisioned resource. Know which is which.
+If Terraform cannot acquire the lock within a timeout period, it displays an error containing the Lock ID.
 
-**Tip 3.** Default `on_failure` behavior is `fail` — taints the resource and halts the apply. `on_failure = continue` logs the error and proceeds.
+### 3.2 Force Unlock
 
-**Tip 4.** A tainted resource is destroyed and recreated on the next apply. Know what "tainted" means and how it is produced.
+If a Terraform process is forcibly killed during an operation, the lock record may remain. Use `force-unlock` to release it:
 
-**Tip 5.** The `null_resource` creates no infrastructure. It exists to run provisioners when upstream values change.
+```bash
+terraform force-unlock <LOCK-ID>
+```
 
-**Tip 6.** The `triggers` map on `null_resource` causes destruction and recreation whenever any trigger value changes between applies.
+The Lock ID is displayed in the error message when Terraform fails to acquire the lock. Use `-force` to skip the confirmation prompt in automation:
 
-**Tip 7.** `filemd5()` in a trigger detects script content changes. This is the standard pattern for re-running Ansible when a playbook file is modified.
+```bash
+terraform force-unlock -force <LOCK-ID>
+```
 
-**Tip 8.** `self` inside a provisioner block references the containing resource's attributes. You cannot use `self` outside of a provisioner.
-
----
-
-## 10. Study Checklist
-
-- [ ] Explain the difference between `local-exec` and `remote-exec` from memory.
-- [ ] List the three provisioner types and one use case for each.
-- [ ] Write a `connection` block with `type`, `host`, `user`, and `private_key` arguments.
-- [ ] Explain what happens when a provisioner exits with a non-zero status code.
-- [ ] Describe what `on_failure = continue` does and when to use it.
-- [ ] Write a `null_resource` block with a `triggers` map referencing another resource's ID.
-- [ ] Explain why `filemd5()` is used in a `null_resource` trigger.
-- [ ] List two cloud-native alternatives to using provisioners for VM bootstrapping.
-- [ ] Read all four required documentation pages.
-- [ ] Complete the Module 08 lab, quiz, and discussion post.
+**Warning**: Only use `force-unlock` when you are certain no other process is actively running. Forcibly releasing a lock while an apply is in progress can corrupt state.
 
 ---
 
-Module 08 Reading Guide — CIS-4337 Infrastructure Automation — Texas Wesleyan University
+## 4. Terraform State Commands
+
+### 4.1 Command Reference
+
+| Command | Description |
+|---|---|
+| `terraform state list` | List all tracked resources |
+| `terraform state show <resource>` | Display attributes of a specific resource |
+| `terraform state mv <src> <dst>` | Move or rename a resource in state |
+| `terraform state rm <resource>` | Remove a resource from state (does not destroy) |
+| `terraform state pull` | Download state to stdout |
+| `terraform state push <file>` | Upload a state file to the backend |
+| `terraform force-unlock <id>` | Release a stuck state lock |
+
+### 4.2 terraform state list
+
+```bash
+# List all resources
+terraform state list
+
+# Filter by resource type prefix
+terraform state list aws_instance
+
+# List resources in a module
+terraform state list module.network
+```
+
+### 4.3 terraform state show
+
+```bash
+terraform state show aws_instance.web
+```
+
+Output includes all attributes known to Terraform — both those in your configuration and those that the provider populated after creation (such as IDs, ARNs, and dynamically assigned IPs).
+
+### 4.4 terraform state mv
+
+Used during configuration refactoring to tell Terraform that an existing resource is now tracked under a different address — without destroying and recreating it.
+
+```bash
+# Rename resource
+terraform state mv aws_instance.web aws_instance.app
+
+# Move resource into a module
+terraform state mv aws_instance.app module.compute.aws_instance.app
+
+# Move resource between state files
+terraform state mv \
+  -state=old.tfstate \
+  -state-out=new.tfstate \
+  aws_instance.web aws_instance.web
+```
+
+### 4.5 terraform state rm
+
+```bash
+# Remove a single resource from tracking
+terraform state rm aws_instance.web
+
+# Remove all resources in a module
+terraform state rm module.network
+```
+
+After `rm`, the resource is no longer managed by this Terraform configuration. The real infrastructure is unaffected. A subsequent `terraform plan` will propose to create the resource again.
+
+---
+
+## 5. State File Security
+
+### 5.1 What State Files Contain
+
+State files contain sensitive information including:
+
+- All resource attribute values (including passwords, tokens, private keys)
+- Output values, including sensitive outputs
+- Provider credentials that were cached during initialization
+- Database connection strings with credentials
+
+### 5.2 Security Best Practices
+
+**Version control exclusion**:
+
+```gitignore
+# Add to .gitignore
+terraform.tfstate
+terraform.tfstate.backup
+*.tfstate
+*.tfstate.*
+.terraform/
+crash.log
+```
+
+**Encryption at rest**: Use `encrypt = true` with the S3 backend, optionally specifying a KMS key. Azure and GCS encrypt by default.
+
+**Access control**: Use the principle of least privilege.
+
+- S3: IAM policies allowing `s3:GetObject`, `s3:PutObject`, `s3:DeleteObject` only to authorized principals
+- DynamoDB: `dynamodb:GetItem`, `dynamodb:PutItem`, `dynamodb:DeleteItem` on the lock table
+- Azure: RBAC `Storage Blob Data Contributor` role on the container
+- GCS: `storage.objects.create`, `storage.objects.get`, `storage.objects.delete` via IAM
+
+**Enable versioning**: S3 bucket versioning, GCS object versioning, or Azure blob versioning allows recovery of previous state.
+
+**Audit logging**: Enable S3 access logs, GCS audit logs, or Azure Monitor to detect unauthorized state access.
+
+---
+
+## 6. Remote State Data Source
+
+You can read outputs from another Terraform configuration's state using the `terraform_remote_state` data source:
+
+```hcl
+data "terraform_remote_state" "network" {
+  backend = "s3"
+  config = {
+    bucket = "acme-tfstate"
+    key    = "prod/network/terraform.tfstate"
+    region = "us-east-1"
+  }
+}
+
+resource "aws_instance" "app" {
+  subnet_id = data.terraform_remote_state.network.outputs.private_subnet_id
+}
+```
+
+This is one of the primary patterns for cross-stack communication in large Terraform codebases.
+
+---
+
+## 7. Exam Tips — Terraform Associate 003
+
+1. **S3 locking requires DynamoDB**: The S3 backend does not provide native locking; you must create and configure a DynamoDB table separately.
+
+2. **`state rm` does not destroy**: Removing from state leaves the real resource running; it just removes Terraform's tracking.
+
+3. **`state mv` prevents destroy/recreate**: This is the correct approach when renaming a resource in your `.tf` files.
+
+4. **Backend config cannot use variables**: All values in a `backend` block must be literals. Use `-backend-config` flags for dynamic values.
+
+5. **`terraform init` migrates state**: When you change backends, `terraform init` detects the change and prompts you to migrate the existing state.
+
+6. **Serial number conflicts**: If two processes write conflicting state, the lower serial is rejected. This is a safety mechanism, not an automatic resolution.
+
+7. **`terraform state pull`**: Downloads the current state to stdout; useful for inspection and backup before risky operations.
+
+8. **Sensitive outputs in state**: Even outputs marked `sensitive = true` are stored in plain text in state — encryption must be at the backend level.
+
+---
+
+## 8. Summary
+
+Terraform state is the bridge between your configuration and real infrastructure. Managing state correctly — using remote backends with locking, encryption, versioning, and access control — is one of the most important operational skills for any Terraform practitioner.
+
+The `terraform state` subcommands give you surgical control over state content, enabling refactoring without infrastructure disruption.
+
+---
+
+*Texas Wesleyan University — CIS-4337 Infrastructure Automation*
+*Proprietary and Confidential. Not for disclosure outside of authorized course participants.*

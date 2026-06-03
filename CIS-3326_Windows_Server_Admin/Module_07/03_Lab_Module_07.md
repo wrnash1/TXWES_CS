@@ -1,359 +1,414 @@
-# Lab Activity: Module 07 - File and Print Services
+# Lab Activity: Module 07 — Active Directory User and Group Management
 
 ## Course: CIS-3326 Windows Server Administration
 
 ## Texas Wesleyan University | Professor Nash
 
+**Certification Alignment:** Microsoft Windows Server Administration
+
 ---
 
-### Lab Overview
+## Lab Overview
 
-In this lab you will install the File Server and FSRM role services on DC1, create and configure a shared folder with NTFS permissions, set up a 5 GB hard quota, create an Active File Screen blocking executables, enable Shadow Copies on the C: volume, create a DFS namespace, and share a printer through the Print Management console.
+In this lab you will build a complete Active Directory user and group management
+environment on DC1. You will create an OU hierarchy, provision individual and
+bulk users from a CSV file, create Security groups with correct scopes, implement
+AGDLP nesting, and practice account lifecycle operations.
 
 **Estimated Time:** 75-90 minutes
 
 **Prerequisites:**
 
-- Module 06 lab complete: corp.local domain with DNS and DHCP configured
-- DC1 is running at `192.168.10.10`
-- PowerShell running as Domain Administrator
+- DC1 is running Windows Server 2022 and is a domain controller for txwes.edu
+
+- You are logged in as a Domain Administrator
+
+- PowerShell console is open with Administrator privileges
 
 **Learning Objectives:**
 
-- Install File Server role services and FSRM using PowerShell
-- Create an SMB share and configure Share and NTFS permissions
-- Create an FSRM quota and file screen
-- Enable Volume Shadow Copies on a volume
-- Create a domain-based DFS namespace with a folder target
-- Install the Print Services role and share a printer
+- Create a multi-level OU structure using `New-ADOrganizationalUnit`
+
+- Provision user accounts with `New-ADUser` including all required attributes
+
+- Create Security groups with correct scopes using `New-ADGroup`
+
+- Implement the AGDLP nesting pattern with `Add-ADGroupMember`
+
+- Bulk-provision users from a CSV file using `Import-Csv`
+
+- Perform account lifecycle operations: disable, unlock, reset password, move
 
 ---
 
-### Part 1 — Install Role Services
+## Part 1 — Build the OU Structure
 
-#### Step 1.1 — Install File Server, DFS, and FSRM
+### Step 1.1 — Create the Root and Department OUs
 
 ```powershell
-# Install File Server, DFS Namespaces, DFS Replication, and FSRM
-Install-WindowsFeature `
-    -Name FS-FileServer, FS-DFS-Namespace, FS-DFS-Replication, FS-Resource-Manager `
-    -IncludeManagementTools
+# Create root OU with accidental deletion protection
+New-ADOrganizationalUnit `
+    -Name "TXWES" `
+    -Path "DC=txwes,DC=edu" `
+    -ProtectedFromAccidentalDeletion $true
 
-# Verify installation
-Get-WindowsFeature -Name FS-FileServer, FS-DFS-Namespace, FS-DFS-Replication, FS-Resource-Manager |
-    Select-Object Name, InstallState
+# Create department OUs
+$root = "OU=TXWES,DC=txwes,DC=edu"
+
+foreach ($dept in @("IT","Faculty","Students","ServiceAccounts")) {
+    New-ADOrganizationalUnit `
+        -Name $dept `
+        -Path $root `
+        -ProtectedFromAccidentalDeletion $true
+}
+
+# Create sub-OUs under IT
+$itPath = "OU=IT,OU=TXWES,DC=txwes,DC=edu"
+
+foreach ($sub in @("Admins","Helpdesk")) {
+    New-ADOrganizationalUnit `
+        -Name $sub `
+        -Path $itPath `
+        -ProtectedFromAccidentalDeletion $true
+}
 ```
 
-All four features should show `InstallState: Installed`.
-
-#### Step 1.2 — Install Print Services
+### Step 1.2 — Verify the OU Structure
 
 ```powershell
-# Install Print and Document Services role
-Install-WindowsFeature -Name Print-Services -IncludeManagementTools
+Get-ADOrganizationalUnit -Filter * -SearchBase "OU=TXWES,DC=txwes,DC=edu" |
+    Select-Object Name, DistinguishedName |
+    Sort-Object DistinguishedName
+```
+
+The output should show all 7 OUs: TXWES root, IT, Admins, Helpdesk, Faculty,
+Students, and ServiceAccounts.
+
+Take **Screenshot 1** — `Get-ADOrganizationalUnit` output showing all 7 OUs.
+
+---
+
+## Part 2 — Create Individual User Accounts
+
+### Step 2.1 — Create Three Individual Users
+
+```powershell
+# User 1 — IT Admin
+New-ADUser `
+    -Name               "Jane Smith" `
+    -GivenName          "Jane" `
+    -Surname            "Smith" `
+    -SamAccountName     "jsmith" `
+    -UserPrincipalName  "jsmith@txwes.edu" `
+    -DisplayName        "Jane Smith" `
+    -Department         "IT" `
+    -Title              "Systems Administrator" `
+    -Path               "OU=Admins,OU=IT,OU=TXWES,DC=txwes,DC=edu" `
+    -AccountPassword    (ConvertTo-SecureString "P@ssw0rd123!" -AsPlainText -Force) `
+    -ChangePasswordAtLogon $true `
+    -Enabled            $true
+
+# User 2 — Helpdesk Technician
+New-ADUser `
+    -Name               "Tom Rivera" `
+    -GivenName          "Tom" `
+    -Surname            "Rivera" `
+    -SamAccountName     "trivera" `
+    -UserPrincipalName  "trivera@txwes.edu" `
+    -DisplayName        "Tom Rivera" `
+    -Department         "IT" `
+    -Title              "Help Desk Technician" `
+    -Path               "OU=Helpdesk,OU=IT,OU=TXWES,DC=txwes,DC=edu" `
+    -AccountPassword    (ConvertTo-SecureString "P@ssw0rd123!" -AsPlainText -Force) `
+    -ChangePasswordAtLogon $true `
+    -Enabled            $true
+
+# User 3 — Faculty Member
+New-ADUser `
+    -Name               "Dr. Patricia Lee" `
+    -GivenName          "Patricia" `
+    -Surname            "Lee" `
+    -SamAccountName     "plee" `
+    -UserPrincipalName  "plee@txwes.edu" `
+    -DisplayName        "Dr. Patricia Lee" `
+    -Department         "Faculty" `
+    -Title              "Associate Professor" `
+    -Path               "OU=Faculty,OU=TXWES,DC=txwes,DC=edu" `
+    -AccountPassword    (ConvertTo-SecureString "P@ssw0rd123!" -AsPlainText -Force) `
+    -ChangePasswordAtLogon $true `
+    -Enabled            $true
+```
+
+### Step 2.2 — Verify the Users
+
+```powershell
+Get-ADUser -Filter * -SearchBase "OU=TXWES,DC=txwes,DC=edu" `
+    -Properties Department, Title |
+    Select-Object Name, SamAccountName, Department, Title, Enabled |
+    Sort-Object Department
+```
+
+Take **Screenshot 2** — All three user accounts listed with correct Department
+and Enabled status.
+
+---
+
+## Part 3 — Create Security Groups and Implement AGDLP
+
+### Step 3.1 — Create the Groups
+
+```powershell
+$groupOU = "OU=IT,OU=TXWES,DC=txwes,DC=edu"
+
+# Global group — role-based
+New-ADGroup `
+    -Name          "G_IT_Admins" `
+    -GroupScope    Global `
+    -GroupCategory Security `
+    -Description   "IT Administrators — role-based global group" `
+    -Path          $groupOU
+
+# Global group — helpdesk role
+New-ADGroup `
+    -Name          "G_IT_Helpdesk" `
+    -GroupScope    Global `
+    -GroupCategory Security `
+    -Description   "IT Helpdesk staff — role-based global group" `
+    -Path          $groupOU
+
+# Domain Local group — holds the file share permission
+New-ADGroup `
+    -Name          "DL_ITShare_FullControl" `
+    -GroupScope    DomainLocal `
+    -GroupCategory Security `
+    -Description   "IT share — Full Control permission holder" `
+    -Path          $groupOU
+```
+
+### Step 3.2 — Implement AGDLP Nesting
+
+```powershell
+# Add users to their role-based Global groups
+Add-ADGroupMember -Identity "G_IT_Admins"   -Members "jsmith"
+Add-ADGroupMember -Identity "G_IT_Helpdesk" -Members "trivera"
+
+# Nest both Global groups into the Domain Local group
+Add-ADGroupMember -Identity "DL_ITShare_FullControl" -Members "G_IT_Admins","G_IT_Helpdesk"
+```
+
+### Step 3.3 — Verify the AGDLP Chain
+
+```powershell
+Write-Host "=== G_IT_Admins members ===" -ForegroundColor Cyan
+Get-ADGroupMember -Identity "G_IT_Admins" | Select-Object Name, objectClass
+
+Write-Host "=== DL_ITShare_FullControl members (including nested) ===" -ForegroundColor Cyan
+Get-ADGroupMember -Identity "DL_ITShare_FullControl" -Recursive |
+    Select-Object Name, objectClass
+```
+
+Take **Screenshot 3** — Output showing jsmith inside G_IT_Admins, and both
+jsmith and trivera appearing when DL_ITShare_FullControl is queried recursively.
+
+---
+
+## Part 4 — Bulk Provisioning from CSV
+
+### Step 4.1 — Create the CSV File
+
+```powershell
+# Create a sample CSV file for bulk provisioning
+$csvContent = @"
+FirstName,LastName,Department,Title,OU
+Alice,Johnson,Faculty,Professor,OU=Faculty,OU=TXWES,DC=txwes,DC=edu
+Bob,Williams,IT,Help Desk Tech,OU=Helpdesk,OU=IT,OU=TXWES,DC=txwes,DC=edu
+Carol,Brown,Students,Student,OU=Students,OU=TXWES,DC=txwes,DC=edu
+David,Garcia,Faculty,Lecturer,OU=Faculty,OU=TXWES,DC=txwes,DC=edu
+Emma,Davis,Students,Student,OU=Students,OU=TXWES,DC=txwes,DC=edu
+"@
+
+$csvContent | Out-File -FilePath "C:\Scripts\new_users.csv" -Encoding UTF8
+```
+
+### Step 4.2 — Run the Bulk Provisioning Script
+
+```powershell
+# Ensure the Scripts directory exists
+New-Item -Path "C:\Scripts" -ItemType Directory -Force | Out-Null
+
+# Import and provision
+$users = Import-Csv -Path "C:\Scripts\new_users.csv"
+
+foreach ($user in $users) {
+    $sam = ($user.FirstName.Substring(0,1) + $user.LastName).ToLower()
+    $upn = "$sam@txwes.edu"
+
+    New-ADUser `
+        -Name               "$($user.FirstName) $($user.LastName)" `
+        -GivenName          $user.FirstName `
+        -Surname            $user.LastName `
+        -SamAccountName     $sam `
+        -UserPrincipalName  $upn `
+        -DisplayName        "$($user.FirstName) $($user.LastName)" `
+        -Department         $user.Department `
+        -Title              $user.Title `
+        -Path               $user.OU `
+        -AccountPassword    (ConvertTo-SecureString "Welcome1!" -AsPlainText -Force) `
+        -ChangePasswordAtLogon $true `
+        -Enabled            $true
+
+    Write-Host "Created: $sam" -ForegroundColor Green
+}
+
+# Verify all users
+Get-ADUser -Filter * -SearchBase "OU=TXWES,DC=txwes,DC=edu" `
+    -Properties Department |
+    Select-Object Name, SamAccountName, Department | Sort-Object Department
+```
+
+Take **Screenshot 4** — All 8 user accounts (3 from Part 2 + 5 from CSV) listed
+with correct department assignments.
+
+---
+
+## Part 5 — Account Lifecycle Operations
+
+### Step 5.1 — Disable and Re-Enable an Account
+
+```powershell
+# Disable trivera (simulating a leave of absence)
+Disable-ADAccount -Identity "trivera"
 
 # Verify
-Get-WindowsFeature -Name Print-Services | Select-Object Name, InstallState
+Get-ADUser -Identity "trivera" | Select-Object Name, Enabled
+
+# Re-enable
+Enable-ADAccount -Identity "trivera"
+Get-ADUser -Identity "trivera" | Select-Object Name, Enabled
 ```
 
-Take **Screenshot 1** — PowerShell showing all five role services as Installed.
+### Step 5.2 — Simulate and Unlock a Locked Account
+
+```powershell
+# Check lockout status before
+Get-ADUser -Identity "jsmith" -Properties LockedOut, BadLogonCount |
+    Select-Object Name, LockedOut, BadLogonCount
+
+# Unlock the account (use this after a real lockout occurs in your lab)
+Unlock-ADAccount -Identity "jsmith"
+
+# Verify unlock
+Get-ADUser -Identity "jsmith" -Properties LockedOut |
+    Select-Object Name, LockedOut
+```
+
+### Step 5.3 — Reset a Password
+
+```powershell
+# Reset password and force change at next logon
+Set-ADAccountPassword -Identity "plee" `
+    -NewPassword (ConvertTo-SecureString "Faculty2024!" -AsPlainText -Force) `
+    -Reset
+
+Set-ADUser -Identity "plee" -ChangePasswordAtLogon $true
+
+# Verify the flag is set
+Get-ADUser -Identity "plee" -Properties PasswordExpired, PasswordLastSet |
+    Select-Object Name, PasswordExpired, PasswordLastSet
+```
+
+### Step 5.4 — Move an Account to a Different OU
+
+```powershell
+# Move trivera from Helpdesk to Admins (simulating a promotion)
+$triveraDN = (Get-ADUser -Identity "trivera").DistinguishedName
+
+Move-ADObject `
+    -Identity   $triveraDN `
+    -TargetPath "OU=Admins,OU=IT,OU=TXWES,DC=txwes,DC=edu"
+
+# Verify new location
+Get-ADUser -Identity "trivera" | Select-Object Name, DistinguishedName
+```
+
+Take **Screenshot 5** — trivera's DistinguishedName showing the Admins OU path.
 
 ---
 
-### Part 2 — Create a Shared Folder with NTFS and Share Permissions
-
-#### Step 2.1 — Create the Folder and Share
+## Part 6 — Audit and Search Operations
 
 ```powershell
-# Create the directory
-New-Item -Path "C:\Shares\HR_Docs" -ItemType Directory -Force
+# Find all disabled accounts in the domain
+Write-Host "=== Disabled Accounts ===" -ForegroundColor Cyan
+Search-ADAccount -AccountDisabled -SearchBase "OU=TXWES,DC=txwes,DC=edu" |
+    Select-Object Name, SamAccountName
 
-# Create the SMB share
-# Share permissions: Domain Admins = Full Control, HR_Group = Read
-New-SmbShare `
-    -Name "HR_Docs" `
-    -Path "C:\Shares\HR_Docs" `
-    -Description "HR Department Documents" `
-    -FullAccess "CORP\Domain Admins" `
-    -ReadAccess "CORP\HR_Group"
+# Find all locked accounts
+Write-Host "=== Locked Accounts ===" -ForegroundColor Cyan
+Search-ADAccount -LockedOut |
+    Select-Object Name, SamAccountName
 
-# Verify the share
-Get-SmbShare -Name "HR_Docs" | Select-Object Name, Path, Description
-Get-SmbShareAccess -Name "HR_Docs"
+# List all groups a user belongs to
+Write-Host "=== Groups for jsmith ===" -ForegroundColor Cyan
+Get-ADPrincipalGroupMembership -Identity "jsmith" |
+    Select-Object Name, GroupScope, GroupCategory
 ```
 
-#### Step 2.2 — Configure NTFS Permissions
-
-```powershell
-# View current NTFS ACL
-(Get-Acl -Path "C:\Shares\HR_Docs").Access |
-    Select-Object IdentityReference, FileSystemRights, AccessControlType
-
-# Remove inherited permissions and set explicit NTFS ACL
-$acl = Get-Acl -Path "C:\Shares\HR_Docs"
-
-# Add HR_Group with Modify rights (inherited through subfolders and files)
-$ruleHR = New-Object System.Security.AccessControl.FileSystemAccessRule(
-    "CORP\HR_Group",
-    "Modify",
-    "ContainerInherit,ObjectInherit",
-    "None",
-    "Allow"
-)
-$acl.AddAccessRule($ruleHR)
-
-# Add Domain Admins with Full Control
-$ruleAdmin = New-Object System.Security.AccessControl.FileSystemAccessRule(
-    "CORP\Domain Admins",
-    "FullControl",
-    "ContainerInherit,ObjectInherit",
-    "None",
-    "Allow"
-)
-$acl.AddAccessRule($ruleAdmin)
-Set-Acl -Path "C:\Shares\HR_Docs" -AclObject $acl
-
-# Verify NTFS permissions
-(Get-Acl -Path "C:\Shares\HR_Docs").Access |
-    Select-Object IdentityReference, FileSystemRights, AccessControlType
-```
-
-**Effective permission analysis:** Share = Read for HR_Group, NTFS = Modify for HR_Group. Most restrictive = Read. HR_Group members accessing `\\DC1\HR_Docs` over the network will have Read access.
-
-Take **Screenshot 2** — NTFS permissions output showing HR_Group with Modify rights.
+Take **Screenshot 6** — `Get-ADPrincipalGroupMembership` output for jsmith
+showing G_IT_Admins and DL_ITShare_FullControl memberships.
 
 ---
 
-### Part 3 — Configure FSRM Quota and File Screen
-
-#### Step 3.1 — Create a Hard Quota
-
-```powershell
-# Create a 5 GB hard quota on the HR_Docs share folder
-New-FsrmQuota `
-    -Path "C:\Shares\HR_Docs" `
-    -Size 5GB `
-    -SoftLimit $false `
-    -Description "5 GB hard quota — HR Documents"
-
-# Verify the quota
-Get-FsrmQuota -Path "C:\Shares\HR_Docs" |
-    Select-Object Path, Size, SoftLimit, Description
-```
-
-The `-SoftLimit $false` parameter creates a hard quota. Setting it to `$true` would create a soft quota.
-
-#### Step 3.2 — Create an Active File Screen
-
-```powershell
-# List available file groups to confirm the group name
-Get-FsrmFileGroup | Select-Object Name
-
-# Create an Active File Screen blocking executable files
-New-FsrmFileScreen `
-    -Path "C:\Shares\HR_Docs" `
-    -IncludeGroup "Executable Files" `
-    -Active $true
-
-# Verify the file screen
-Get-FsrmFileScreen -Path "C:\Shares\HR_Docs" |
-    Select-Object Path, Active, IncludeGroup
-```
-
-Test the file screen by attempting to copy an `.exe` file to `C:\Shares\HR_Docs`. The copy should fail with an access error.
-
-Take **Screenshot 3** — FSRM console or PowerShell output showing the quota and file screen on HR_Docs.
-
----
-
-### Part 4 — Enable Volume Shadow Copies
-
-#### Step 4.1 — Enable Shadow Copies via Computer Management
-
-Shadow Copies are typically configured through the GUI. On DC1:
-
-1. Open **Computer Management** (right-click Start > Computer Management)
-2. Expand **Storage** > right-click **Disk Management** then navigate to the C: volume
-3. Alternatively: right-click **Local Disk (C:)** in File Explorer > Properties > Shadow Copies tab
-4. Select volume **C:** and click **Enable**
-5. Click **Settings** — verify storage is set to at least 10% of the C: volume
-6. Click **Create Now** to take an immediate shadow copy
-
-#### Step 4.2 — Verify with PowerShell
-
-```powershell
-# View current shadow copies on C:
-vssadmin list shadows /for=C:
-
-# View shadow copy storage allocation
-vssadmin list shadowstorage /for=C:
-```
-
-#### Step 4.3 — Test Previous Versions Recovery
-
-1. Create a test file: `New-Item -Path "C:\Shares\HR_Docs\test_file.txt" -Value "Original content"`
-2. Create another shadow copy: From Computer Management > Shadow Copies > Create Now
-3. Delete the test file: `Remove-Item "C:\Shares\HR_Docs\test_file.txt"`
-4. Right-click `C:\Shares\HR_Docs` in File Explorer > Properties > Previous Versions tab
-5. Select a shadow copy and click Restore
-
-Take **Screenshot 4** — Shadow Copies configuration showing at least one shadow copy of C:.
-
----
-
-### Part 5 — Create a DFS Namespace
-
-#### Step 5.1 — Create the Namespace Root Folder on DC1
-
-```powershell
-# Create the physical folder for the namespace root
-New-Item -Path "C:\DFSRoots\Files" -ItemType Directory -Force
-
-# Create an SMB share for the namespace root
-New-SmbShare -Name "Files" -Path "C:\DFSRoots\Files" `
-    -FullAccess "CORP\Domain Admins" -ReadAccess "Everyone"
-```
-
-#### Step 5.2 — Create the Domain-Based Namespace
-
-```powershell
-# Create a domain-based DFS namespace
-New-DfsnRoot `
-    -Path "\\corp.local\Files" `
-    -TargetPath "\\DC1\Files" `
-    -Type DomainV2 `
-    -Description "Corporate file namespace"
-
-# Verify the namespace root
-Get-DfsnRoot -Path "\\corp.local\Files"
-```
-
-#### Step 5.3 — Add a Folder to the Namespace
-
-```powershell
-# Add the HR folder pointing to the HR_Docs share
-New-DfsnFolder `
-    -Path "\\corp.local\Files\HR" `
-    -TargetPath "\\DC1\HR_Docs" `
-    -Description "HR Department Documents"
-
-# Verify the folder
-Get-DfsnFolder -Path "\\corp.local\Files\*"
-```
-
-#### Step 5.4 — Test the Namespace
-
-```powershell
-# Test access via the namespace path
-Test-Path "\\corp.local\Files\HR"
-
-# List folder contents through the namespace
-Get-ChildItem "\\corp.local\Files\HR"
-```
-
-Take **Screenshot 5** — `Get-DfsnFolder` output showing the HR folder target in the corp.local\Files namespace.
-
----
-
-### Part 6 — Share a Printer
-
-#### Step 6.1 — Add a Printer Port and Printer
-
-In a lab environment without a physical printer, we will add a virtual or generic printer to practice the configuration.
-
-```powershell
-# Add a generic TCP/IP printer port (the IP may not resolve — this is expected in lab)
-Add-PrinterPort -Name "IP_192.168.10.50" -PrinterHostAddress "192.168.10.50"
-
-# Install a generic printer driver (if not already present, use Generic/Text Only)
-# First, list available drivers to find one that works in your lab
-Get-PrinterDriver | Select-Object Name
-
-# Add a shared, AD-published printer
-Add-Printer `
-    -Name "Lab_Network_Printer" `
-    -DriverName "Generic / Text Only" `
-    -PortName "IP_192.168.10.50" `
-    -Shared $true `
-    -ShareName "LabPrinter" `
-    -Published $true
-
-# Verify
-Get-Printer -Name "Lab_Network_Printer" | Select-Object Name, ShareName, Published, DriverName
-```
-
-Take **Screenshot 6** — `Get-Printer` output showing the shared, published printer.
-
----
-
-### Part 7 — PowerShell Summary Verification
-
-```powershell
-Write-Host "=== SMB Shares ===" -ForegroundColor Cyan
-Get-SmbShare | Where-Object { $_.Name -notlike "*$" } | Select-Object Name, Path
-
-Write-Host "=== FSRM Quotas ===" -ForegroundColor Cyan
-Get-FsrmQuota | Select-Object Path, Size, SoftLimit
-
-Write-Host "=== FSRM File Screens ===" -ForegroundColor Cyan
-Get-FsrmFileScreen | Select-Object Path, Active, IncludeGroup
-
-Write-Host "=== DFS Namespace Folders ===" -ForegroundColor Cyan
-Get-DfsnFolder -Path "\\corp.local\Files\*"
-
-Write-Host "=== Printers ===" -ForegroundColor Cyan
-Get-Printer | Select-Object Name, ShareName, Published
-```
-
-Take **Screenshot 7** — Full PowerShell summary output.
-
----
-
-### Deliverables
+## Deliverables
 
 Submit the following screenshots to Canvas before the due date.
 
-**Screenshot 1 — Role installation:** PowerShell showing all five role services as Installed.
+**Screenshot 1** — OU structure: `Get-ADOrganizationalUnit` showing all 7 OUs.
 
-**Screenshot 2 — NTFS permissions:** PowerShell output showing HR_Group with Modify rights on HR_Docs.
+**Screenshot 2** — Individual users: three accounts with correct Department and
+Enabled status.
 
-**Screenshot 3 — FSRM quota and file screen:** FSRM console or PowerShell output showing quota and file screen on C:\Shares\HR_Docs.
+**Screenshot 3** — AGDLP chain: G_IT_Admins and DL_ITShare_FullControl recursive
+membership output.
 
-**Screenshot 4 — Shadow Copies:** Shadow Copy configuration showing at least one shadow copy of C:.
+**Screenshot 4** — Bulk provisioning: all 8 accounts listed with correct
+departments.
 
-**Screenshot 5 — DFS namespace:** `Get-DfsnFolder` output showing the HR folder target in the namespace.
+**Screenshot 5** — Account move: trivera's DistinguishedName in the Admins OU.
 
-**Screenshot 6 — Shared printer:** `Get-Printer` output showing the shared, published printer.
-
-**Screenshot 7 — PowerShell summary:** Full summary output from Part 7.
+**Screenshot 6** — Group audit: jsmith's group membership output.
 
 ---
 
-### Lab Rubric (100 Points)
+## Lab Rubric (100 Points)
 
 | Item | Points | Criteria |
 |---|---|---|
-| Role services installed | 10 | Screenshot 1 shows all services as Installed |
-| Share created with correct permissions | 20 | Screenshot 2 shows HR_Group NTFS Modify rights |
-| FSRM quota and file screen configured | 25 | Screenshot 3 shows hard quota and Active file screen |
-| Shadow Copies enabled | 15 | Screenshot 4 shows shadow copy of C: |
-| DFS namespace with folder target | 20 | Screenshot 5 shows namespace folder mapped to HR_Docs share |
-| Printer shared and published | 10 | Screenshot 6 shows shared, published printer |
+| OU structure created | 15 | Screenshot 1 shows all 7 OUs |
+| Individual users created | 15 | Screenshot 2 shows 3 users with correct attributes |
+| AGDLP groups configured | 25 | Screenshot 3 shows correct nesting and recursive membership |
+| Bulk provisioning completed | 20 | Screenshot 4 shows all 8 users in correct OUs |
+| Account lifecycle operations | 15 | Screenshot 5 shows account move to correct OU |
+| Audit and search | 10 | Screenshot 6 shows jsmith group membership |
 
 ---
 
-### Troubleshooting Notes
+## Troubleshooting Notes
 
-If `New-FsrmFileScreen` fails with "File group not found," list available groups with `Get-FsrmFileGroup` and use an exact group name from that list.
+If `New-ADOrganizationalUnit` fails with "An object with this name already
+exists," the OU was created in a previous attempt. Use `Get-ADOrganizationalUnit
+-Filter *` to verify and skip creating existing OUs.
 
-If `New-DfsnRoot` fails with "The namespace already exists," verify whether a namespace was created previously:
+If `New-ADUser` fails with "The object name is too long," the `-Name` parameter
+is too long for the CN attribute. Use only First and Last name — do not include
+titles or prefixes in the `-Name` parameter.
+
+If `Move-ADObject` fails with "Access is denied," the target OU has
+`ProtectedFromAccidentalDeletion` enabled and your account lacks the correct
+delegation. Run the command as Domain Admin or check OU permissions in ADUC.
 
 ```powershell
-Get-DfsnRoot | Select-Object Path, State
-```
-
-If shadow copies are not visible in the Previous Versions tab, verify that the Volume Shadow Copy service is running:
-
-```powershell
-Get-Service -Name VSS | Select-Object Status, StartType
+# Check if an OU has deletion protection enabled
+Get-ADOrganizationalUnit -Identity "OU=IT,OU=TXWES,DC=txwes,DC=edu" |
+    Select-Object Name, ProtectedFromAccidentalDeletion
 ```

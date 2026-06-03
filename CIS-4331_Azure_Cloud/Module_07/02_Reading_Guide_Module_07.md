@@ -1,353 +1,374 @@
-# Reading Guide: Module 07 - Azure Database Services
+# Reading Guide: Module 07 — Azure Compute Services
 
-**Course:** CIS-4331 Azure Cloud | Texas Wesleyan University
-**Instructor:** Professor Nash
-**AZ-900 Domain:** Describe Azure Architecture and Services (35-40% of exam)
+## Course: CIS-4331 Azure Cloud Computing
+
+## Texas Wesleyan University | Professor Nash
+
+## AZ-900 Domain: Describe Azure Architecture and Services (35–40% of exam)
 
 ---
 
 ## Introduction
 
-Azure provides a comprehensive set of managed database services covering relational SQL engines, globally distributed NoSQL, and open-source databases. Understanding which service matches which workload type is one of the most consistently tested competencies on AZ-900. This guide provides the depth required for both the exam and practical database architecture decisions.
+Azure compute services form the execution engine of cloud architectures. From full virtual machines to serverless functions, Azure provides a spectrum of compute options mapped to different control, responsibility, and pricing models. Understanding when to use each service — and why — is one of the most heavily tested competency areas on the AZ-900 exam. This guide provides the conceptual depth and comparison tables needed for both the exam and real-world architectural decision-making.
 
 ---
 
-## Section 1: Relational vs. Non-Relational Data Models
+## Section 1: Azure Virtual Machines
 
-### 1.1 Relational Databases
+### 1.1 What Is a Virtual Machine?
 
-Relational databases organize data into tables (relations) with rows (records) and columns (attributes). Relationships between tables are defined using primary keys and foreign keys. Queries use SQL (Structured Query Language).
+An Azure Virtual Machine (VM) is an IaaS (Infrastructure-as-a-Service) offering. Microsoft manages the physical hardware, networking, and data center facilities. The customer manages the operating system, runtime, middleware, and applications.
 
-Characteristics:
+The shared responsibility model for VMs:
 
-- Fixed schema — table structure defined before data is inserted
-- ACID transactions (Atomicity, Consistency, Isolation, Durability)
-- Strong data integrity through constraints and foreign key enforcement
-- Vertical scaling (scale up) traditionally; horizontal sharding is complex
-- Best for: structured data with predictable schema, transactional workloads, reporting
+| Layer | Responsibility |
+|---|---|
+| Physical hosts, network, datacenter | Microsoft |
+| Hypervisor / virtualization | Microsoft |
+| Operating system | Customer |
+| Network configuration (NSGs, firewall) | Customer |
+| Runtime and middleware | Customer |
+| Application code and data | Customer |
 
-Examples of relational Azure services: Azure SQL Database, Azure Database for PostgreSQL, Azure Database for MySQL.
+### 1.2 VM Size Families
 
-### 1.2 Non-Relational (NoSQL) Databases
+Azure organizes VMs into size families based on workload profile. The family name appears in the VM SKU — for example, Standard_D4s_v3 is a D-series (General Purpose) VM with 4 vCPUs.
 
-Non-relational databases do not enforce a fixed schema and do not use the SQL relational model. Data is stored in flexible formats.
+| Family | Characteristic | Primary Use Cases | Example Series |
+|---|---|---|---|
+| General Purpose | Balanced CPU:memory | Dev/test, small databases, web servers | B, D, Dv4, Dav4 |
+| Compute Optimized | High CPU:memory | Batch workloads, web servers, analytics | F, Fx |
+| Memory Optimized | High memory:CPU | Large relational DBs, in-memory caches | E, Ev4, M |
+| Storage Optimized | High disk IOPS | Big Data, NoSQL databases, data warehouses | L, Lsv2 |
+| GPU | Dedicated GPU hardware | ML training, graphics rendering, HPC | N, NC, NV |
+| High Performance Compute | Fastest CPU + RDMA networking | Scientific simulations, financial modeling | H, HB |
 
-NoSQL data models:
+### 1.3 Availability Sets
 
-| Model | Description | Azure Example |
+An Availability Set is a logical grouping of VMs that protects against hardware failures and planned maintenance. VMs in an Availability Set are distributed across:
+
+**Fault Domains (FDs)** — Racks sharing common power and network switch. Azure supports up to 3 fault domains. If a rack loses power, only VMs in that fault domain are affected.
+
+**Update Domains (UDs)** — Groups of VMs Azure updates one at a time during planned maintenance. Azure supports up to 20 update domains.
+
+SLA for Availability Sets: 99.95% uptime.
+
+Rules for Availability Sets:
+
+- All VMs must be in the same Azure region
+- All VMs must be in the same datacenter
+- VMs must be added to the Availability Set at creation time (cannot add later)
+- Availability Sets do NOT protect against datacenter-level failures
+
+### 1.4 Availability Zones
+
+Availability Zones are physically separate datacenters within the same Azure region, each with independent power, cooling, and networking. Azure regions that support zones have a minimum of three zones.
+
+| Feature | Availability Set | Availability Zone |
 |---|---|---|
-| Document | JSON documents; flexible per-document schema | Cosmos DB Core SQL/MongoDB API |
-| Key-Value | Simple key-to-value pairs; fastest lookups | Cosmos DB Table API, Azure Table Storage |
-| Column-Family | Wide rows with variable columns per row | Cosmos DB Cassandra API |
-| Graph | Nodes and edges representing entities and relationships | Cosmos DB Gremlin API |
+| Protects against | Rack failure, planned maintenance | Datacenter failure |
+| VM placement | Same datacenter | Different datacenters (zones) |
+| SLA | 99.95% | 99.99% |
+| Supported regions | All regions | Regions with zone support |
 
-Characteristics:
+### 1.5 Virtual Machine Scale Sets
 
-- Schema-flexible — different records can have different fields
-- Designed for horizontal scaling (sharding across nodes)
-- Often sacrifice some ACID guarantees for performance and availability
-- Best for: variable schema, high-velocity data ingestion, global distribution, flexible querying
+Virtual Machine Scale Sets (VMSS) enable deploying and managing a group of identical, auto-scaling load-balanced VMs.
+
+Key VMSS capabilities:
+
+- **Auto-scaling** based on metrics: CPU percentage, memory, custom Azure Monitor metrics, or schedules
+- **Uniform mode**: All VMs are identical; scale to 1,000 instances
+- **Flexible orchestration mode**: Mix VM sizes; combine with regular VMs
+- **Integrated load balancing**: Works with Azure Load Balancer or Application Gateway
+- **Rolling upgrades**: Update a percentage of VMs at a time without full downtime
+- **Spot instances**: Use Azure Spot VMs in a scale set for significant cost savings on interruptible workloads
 
 ---
 
-## Section 2: Azure SQL Database
+## Section 2: Azure App Service
 
 ### 2.1 Overview
 
-Azure SQL Database is a fully managed PaaS relational database engine built on the latest stable version of Microsoft SQL Server. Microsoft handles patching, backups, high availability, and infrastructure management. The customer manages schemas, queries, application code, and data.
+Azure App Service is a PaaS (Platform-as-a-Service) compute service for hosting web applications, REST APIs, and mobile app backends. Developers deploy code or containers; Azure manages the operating system, runtime, patching, load balancing, and auto-scaling infrastructure.
 
-### 2.2 Deployment Options
+Supported code runtimes: .NET, Java, Node.js, Python, PHP, Ruby.
 
-| Option | Description | Use Case |
-|---|---|---|
-| Single Database | Isolated database with dedicated resources | New cloud applications, isolated workloads |
-| Elastic Pool | Multiple databases share a resource pool | Many databases with variable utilization |
-| Hyperscale | Massively scalable up to 100 TB | Very large databases, read-scale-out needed |
+### 2.2 App Service Plan Tiers
 
-### 2.3 Compute Models
+| Tier | Category | Auto-Scale | Deployment Slots | Custom Domain/SSL | VNet Integration | Use Case |
+|---|---|---|---|---|---|---|
+| Free (F1) | Dev/Test | No | No | No | No | Learning, prototyping |
+| Shared (D1) | Dev/Test | No | No | Yes | No | Low-traffic testing |
+| Basic (B1-B3) | Prod | No | No | Yes | No | Low-traffic production |
+| Standard (S1-S3) | Prod | Yes (10 instances) | Yes (5) | Yes | No | Most production apps |
+| Premium (P1v3-P3v3) | Prod | Yes (30 instances) | Yes (20) | Yes | Yes | High-scale, regulated |
+| Isolated (I1v2-I3v2) | Prod | Yes (100 instances) | Yes (20) | Yes | Dedicated VNet | Maximum isolation, compliance |
 
-| Model | Description | Best For |
-|---|---|---|
-| DTU (Database Transaction Unit) | Pre-configured bundles of CPU, memory, I/O | Simple pricing, predictable workloads |
-| vCore | Independently configure CPU and memory; Azure Hybrid Benefit eligible | Precise sizing, license portability |
+### 2.3 Deployment Slots
 
-Azure Hybrid Benefit: Organizations with existing SQL Server licenses with Software Assurance can apply those licenses to Azure SQL Database, significantly reducing cost.
+Deployment slots are live environments within an App Service app. Each slot has its own hostname and settings. The primary use pattern:
 
-### 2.4 High Availability and Backup
+1. Deploy new version to **staging** slot
+2. Warm up the staging slot (run integration tests)
+3. **Swap** staging with production — zero downtime
+4. Production now runs the new version; staging holds the previous version
+5. If issues are detected, swap back immediately
 
-Azure SQL Database provides:
+Slot settings can be "sticky" (slot-specific) or swapped with the slot. Connection strings, environment variables, and feature flags can be configured per-slot.
 
-- Automatic point-in-time backup (up to 35-day retention in premium tiers)
-- Automated patching — zero downtime for minor versions
-- Zone-redundant configuration available in Business Critical and Premium tiers
-- Active Geo-Replication: create readable secondary replicas in up to four secondary regions
-- Auto-Failover Groups: automatic regional failover with a single DNS endpoint
+### 2.4 AZ-900 Exam Signal for App Service
 
-### 2.5 Azure SQL Database vs. SQL Server on Azure VM
+Scenario signals that indicate App Service is the correct answer:
 
-| Factor | Azure SQL Database (PaaS) | SQL Server on Azure VM (IaaS) |
-|---|---|---|
-| OS access | No | Full |
-| SQL Server Agent | Limited | Full |
-| Linked servers | Limited | Full |
-| CLR (Common Language Runtime) | Limited | Full |
-| Cross-database queries | Within same server | Full |
-| Service Broker | No | Yes |
-| Patching | Automatic | Customer responsibility |
-| Backup | Automatic | Customer responsibility |
-| HA configuration | Automatic | Customer-configured |
-| Migration complexity | Varies (feature compatibility) | Low (lift-and-shift) |
-
-Decision rule for AZ-900: If a scenario mentions SQL Server Agent jobs, linked servers, or "full SQL Server compatibility," and PaaS is not acceptable, the answer is SQL Server on Azure VM. For new cloud-native SQL workloads, Azure SQL Database is preferred.
-
-### 2.6 Azure SQL Managed Instance
-
-SQL Managed Instance fills the gap between Azure SQL Database and SQL Server on VM:
-
-- Near 100% compatibility with on-premises SQL Server 2017+
-- Supports SQL Server Agent, linked servers, CLR, Service Broker, cross-database queries
-- Fully managed PaaS (no OS access)
-- Deployed into a Virtual Network for private network access
-- Ideal for: migrating existing SQL Server applications that need PaaS management without code changes
+- "Host a web application without managing servers"
+- "Deploy a REST API with auto-scaling"
+- "Zero-downtime deployment for a web app"
+- "PaaS hosting for .NET / Java / Node.js / Python web app"
 
 ---
 
-## Section 3: Azure Cosmos DB
+## Section 3: Azure Functions
 
-### 3.1 Overview
+### 3.1 Serverless Model
 
-Azure Cosmos DB is Microsoft's globally distributed, multi-model NoSQL database. It is designed for applications requiring global low-latency access and flexible data models. Cosmos DB is the most premium and most capable Azure database service, and it is the most AZ-900-tested database differentiation topic.
+Azure Functions is a serverless, event-driven compute service. The developer writes small units of code (functions). Azure provisions, scales, and manages all infrastructure. Billing is based on execution count and execution duration — when code is not running, you pay nothing (on the Consumption plan).
 
-### 3.2 Global Distribution
+### 3.2 Trigger Types
 
-Cosmos DB can be configured to replicate data to any combination of Azure regions with a few clicks. Adding a region adds a read replica. Write regions can also be distributed for multi-region write scenarios.
+Every Azure Function is triggered by a specific event type.
 
-Benefits:
-
-- Read latency under 10 milliseconds from any Azure region globally
-- Data served from the nearest replica to each user
-- Multi-master writes: write to the closest region, replicate globally
-
-### 3.3 APIs and Data Models
-
-Cosmos DB presents different APIs that expose different data models:
-
-| API | Data Model | Protocol Compatible With |
+| Trigger Type | Event | Example Use Case |
 |---|---|---|
-| Core (SQL) | Documents (JSON) | SQL-like query language |
-| MongoDB API | Documents (BSON) | MongoDB drivers and tools |
-| Cassandra API | Wide-column | Apache Cassandra clients |
-| Gremlin API | Graph (vertices + edges) | Apache TinkerPop Gremlin |
-| Table API | Key-value | Azure Table Storage |
+| HTTP | Incoming HTTP request | REST API endpoint, webhook |
+| Timer | Scheduled CRON expression | Nightly report generation |
+| Blob Storage | New blob added to container | Image resizing pipeline |
+| Queue Storage | New message in a queue | Order processing worker |
+| Service Bus | Message from Service Bus queue/topic | Enterprise messaging |
+| Event Hub | Stream event received | IoT telemetry processing |
+| Cosmos DB | Document change in Cosmos DB | Change feed processing |
 
-The MongoDB, Cassandra, Gremlin, and Table APIs allow existing applications built for those platforms to migrate to Cosmos DB with minimal code changes.
+### 3.3 Hosting Plans
 
-### 3.4 Consistency Models
+| Plan | Scale | Cold Start | VNet Support | Timeout | Best For |
+|---|---|---|---|---|---|
+| Consumption | Serverless, 0–N | Yes | No | 5 min (max 10) | Cost-sensitive, irregular traffic |
+| Premium | Pre-warmed, 1–N | No | Yes | Unlimited | Latency-sensitive, private networking |
+| Dedicated (App Service) | Fixed | No | Yes | Unlimited | Predictable cost, existing plan |
 
-Cosmos DB provides five configurable consistency levels — a unique feature not offered by other Azure database services.
+### 3.4 AZ-900 Exam Signal for Functions
 
-| Consistency Level | Description | Latency | Availability | Use Case |
-|---|---|---|---|---|
-| Strong | Every read reflects the most recent write | Highest | Lower | Financial transactions, inventory |
-| Bounded Staleness | Reads lag by configurable time or version count | High | Higher | Collaborative apps, leaderboards |
-| Session | Consistency within a client session | Medium | High | Shopping cart, user profile |
-| Consistent Prefix | Never see out-of-order writes | Low | Higher | Log aggregation |
-| Eventual | Lowest latency, weakest guarantee — replicas eventually converge | Lowest | Highest | IoT telemetry, social media likes |
+Scenario signals for Azure Functions:
 
-### 3.5 SLA Commitments
+- "Execute code in response to an event"
+- "Serverless" or "pay only when code runs"
+- "HTTP trigger / timer trigger / queue trigger"
+- "No infrastructure to manage"
+- "Short-lived code execution"
 
-| Metric | SLA |
+---
+
+## Section 4: Azure Container Instances
+
+### 4.1 Container Fundamentals
+
+Containers package an application with its dependencies (libraries, runtime, configurations) into a portable, isolated unit. Containers share the host OS kernel — they are faster to start and more resource-efficient than VMs. Docker is the dominant container runtime.
+
+### 4.2 ACI Characteristics
+
+| Feature | Detail |
 |---|---|
-| Single-region read availability | 99.99% |
-| Single-region write availability | 99.99% |
-| Multi-region read availability | 99.999% |
-| Multi-region write availability | 99.999% |
+| Startup time | Seconds |
+| OS support | Linux and Windows |
+| Billing | Per-second (CPU and memory allocated) |
+| Networking | Public IP with DNS label, or private VNet deployment |
+| Storage | Azure Files mount for persistent storage |
+| Orchestration | None (single container or container group) |
+| Restart policy | Always / On Failure / Never |
 
-Cosmos DB's 99.999% (five nines) multi-region SLA is the highest of any Azure database service.
+### 4.3 ACI vs. AKS
 
-### 3.6 Pricing Model
-
-Cosmos DB bills based on Request Units (RUs) and storage:
-
-- Request Unit (RU): normalized unit of CPU, memory, and I/O for a database operation
-- Provisioned throughput: you reserve RU/s (RUs per second) in advance
-- Autoscale: automatically scales between minimum and maximum RU/s based on demand
-- Serverless: pay per actual RU consumed with no minimum (best for irregular workloads)
-
----
-
-## Section 4: Open-Source Managed Database Services
-
-### 4.1 Azure Database for PostgreSQL
-
-Fully managed PostgreSQL database service. Microsoft manages the server infrastructure, OS, and database engine patches.
-
-Key features:
-
-- Flexible Server deployment model (current recommended option)
-- PostgreSQL versions 11-16 supported
-- Zone-redundant high availability
-- Built-in connection pooling (pgBouncer) in Flexible Server
-- Supports popular PostgreSQL extensions (PostGIS, pg_cron, etc.)
-
-Use case signals: "PostgreSQL," "advanced SQL compliance," "open-source relational," "GIS/geospatial data."
-
-### 4.2 Azure Database for MySQL
-
-Fully managed MySQL database service.
-
-Key features:
-
-- Flexible Server deployment model
-- MySQL 5.7 and 8.0 supported
-- Zone-redundant HA with automatic failover
-- Read replicas for scale-out of read workloads
-
-Use case signals: "MySQL," "LAMP stack," "WordPress," "PHP web application."
-
-### 4.3 Azure Database for MariaDB
-
-Fully managed MariaDB (MySQL-compatible open-source fork).
-
-Use case signals: "MariaDB," "open-source MySQL fork."
-
-Note: Azure Database for MariaDB is scheduled for retirement — Microsoft encourages migration to Azure Database for MySQL Flexible Server. Be aware this may appear on AZ-900 but understand it is being deprecated.
-
-### 4.4 Open-Source Database Comparison
-
-| Service | Engine | Version Support | AZ-900 Use Case Trigger |
-|---|---|---|---|
-| Azure Database for PostgreSQL | PostgreSQL | 11-16 | "PostgreSQL," advanced SQL, geospatial |
-| Azure Database for MySQL | MySQL | 5.7, 8.0 | "MySQL," LAMP, web apps |
-| Azure Database for MariaDB | MariaDB | 10.2, 10.3 | "MariaDB" (deprecated path) |
-| Azure SQL Database | SQL Server | Latest stable | "SQL Server," enterprise, T-SQL |
+| Factor | Azure Container Instances | Azure Kubernetes Service |
+|---|---|---|
+| Orchestration | None | Full (Kubernetes) |
+| Setup complexity | Minimal | High (cluster configuration) |
+| Use case | Single container, batch jobs, CI agents | Multi-container microservices |
+| Scaling | Manual or Azure Container Apps | Auto-scaling, HPA, KEDA |
+| Cost model | Per-second | Node VM cost (control plane free) |
+| Best for | Simple, short-lived workloads | Production microservices |
 
 ---
 
-## Section 5: Database Service Selection Framework
+## Section 5: Azure Kubernetes Service
 
-### 5.1 Decision Tree
+### 5.1 Kubernetes Concepts
 
-Use this framework for AZ-900 scenario questions:
+| Concept | Definition |
+|---|---|
+| Cluster | The entire AKS deployment (control plane + node pools) |
+| Control Plane | API server, scheduler, etcd, controller manager — managed by Microsoft |
+| Node Pool | A group of VMs (nodes) that run pods |
+| Node | A single VM in a node pool |
+| Pod | Smallest deployable unit; wraps one or more containers |
+| Deployment | Kubernetes object managing desired replica count of pods |
+| Service | Network abstraction that exposes pods; types: ClusterIP, NodePort, LoadBalancer |
+| Namespace | Logical partition within a cluster for multi-tenant workload isolation |
 
-**Step 1 — Is the data relational (structured, fixed schema) or non-relational (flexible, variable schema)?**
+### 5.2 AKS Cost Model
 
-- Relational → proceed to Step 2
-- Non-relational → Azure Cosmos DB
+The AKS control plane (Kubernetes master) is free — Microsoft manages and hosts it at no charge. You pay for:
 
-**Step 2 — What database engine is required?**
+- Worker node VMs (standard Azure VM pricing)
+- Persistent volumes (Azure Managed Disks or Azure Files)
+- Load Balancers, Public IPs, and egress traffic
+- Optional: Uptime SLA ($0.10/cluster/hour for 99.95% SLA on control plane)
 
-- SQL Server / T-SQL → proceed to Step 3
-- PostgreSQL → Azure Database for PostgreSQL
-- MySQL → Azure Database for MySQL
-- MariaDB → Azure Database for MariaDB
+### 5.3 AZ-900 Exam Signal for AKS
 
-**Step 3 — What level of SQL Server compatibility and management is needed?**
+Scenario signals for AKS:
 
-- Standard SQL operations, new application, PaaS preferred → Azure SQL Database
-- Full SQL Server compatibility (SQL Agent, linked servers, CLR), PaaS preferred → Azure SQL Managed Instance
-- Full OS access required, specific SQL Server version, or unsupported features → SQL Server on Azure VM
-
-### 5.2 Summary Comparison Table
-
-| Service | Model | Engine | Global Distribution | Best For |
-|---|---|---|---|---|
-| Azure SQL Database | PaaS | SQL Server | Limited (geo-replication) | New SQL applications |
-| Azure SQL Managed Instance | PaaS | Full SQL Server | Limited | SQL Server migration, full features |
-| SQL Server on Azure VM | IaaS | Full SQL Server | Manual setup | OS access needed, full compat |
-| Azure Cosmos DB | PaaS (NoSQL) | Multi-model | Native, any region | Global, variable schema, NoSQL |
-| Azure Database for PostgreSQL | PaaS | PostgreSQL | Read replicas | Open-source, PostgreSQL apps |
-| Azure Database for MySQL | PaaS | MySQL | Read replicas | Open-source, web apps |
+- "Container orchestration"
+- "Microservices with multiple containers"
+- "Auto-scale containers based on demand"
+- "Rolling deployment of containerized application"
+- "Managed Kubernetes"
 
 ---
 
-## Section 6: Azure CLI Commands for Databases
+## Section 6: Compute Service Comparison
+
+### 6.1 Full Service Comparison Table
+
+| Service | Category | OS Management | Scaling | Billing Model | AZ-900 Trigger Words |
+|---|---|---|---|---|---|
+| Virtual Machines | IaaS | Customer | Manual / Scale Sets | Per hour, VM size | "OS control," "lift-and-shift," "custom software" |
+| App Service | PaaS | Microsoft | Auto (plan-based) | Per App Service Plan tier | "Web app," "REST API," "PaaS hosting" |
+| Azure Functions | Serverless | Microsoft | Automatic (0 to N) | Per execution + duration | "Serverless," "event-driven," "trigger" |
+| Container Instances | PaaS (Container) | Microsoft | Manual | Per-second (CPU+mem) | "Run a container fast," "batch container job" |
+| Azure Kubernetes Service | PaaS (Orchestration) | Microsoft (control plane) | Auto (HPA) | Node VM cost | "Container orchestration," "microservices," "K8s" |
+
+### 6.2 Decision Framework
+
+**Step 1:** Does the workload require full OS control or non-standard system-level software?
+
+- Yes → Virtual Machines
+
+**Step 2:** Is it a web application, API, or mobile backend with standard runtimes?
+
+- Yes → App Service
+
+**Step 3:** Is the workload short-lived and event-driven (HTTP, timer, queue)?
+
+- Yes → Azure Functions (Consumption plan for minimal cost)
+
+**Step 4:** Is it a single container or small batch job requiring fast startup?
+
+- Yes → Azure Container Instances
+
+**Step 5:** Is it a multi-container microservices application needing orchestration?
+
+- Yes → Azure Kubernetes Service
+
+---
+
+## Section 7: Azure CLI Reference
 
 ```bash
-# Create an Azure SQL Server (logical server)
-az sql server create \
-  --name "lab07sqlserver[initials]" \
-  --resource-group "lab07-rg" \
-  --location "eastus" \
-  --admin-user "sqladmin" \
-  --admin-password "SecurePass123!"
+# Create a VM
+az vm create \
+  --resource-group lab07-rg \
+  --name lab07vm \
+  --image UbuntuLTS \
+  --admin-username azureuser \
+  --generate-ssh-keys \
+  --size Standard_B1s
 
-# Create an Azure SQL Database
-az sql db create \
-  --resource-group "lab07-rg" \
-  --server "lab07sqlserver[initials]" \
-  --name "lab07db" \
-  --service-objective "S0"
+# Create an App Service Plan
+az appservice plan create \
+  --name lab07plan \
+  --resource-group lab07-rg \
+  --sku S1 \
+  --is-linux
 
-# Show SQL Database details
-az sql db show \
-  --resource-group "lab07-rg" \
-  --server "lab07sqlserver[initials]" \
-  --name "lab07db"
+# Create a Web App on the plan
+az webapp create \
+  --name lab07webapp \
+  --resource-group lab07-rg \
+  --plan lab07plan \
+  --runtime "NODE|18-lts"
 
-# Configure SQL Server firewall to allow Azure services
-az sql server firewall-rule create \
-  --resource-group "lab07-rg" \
-  --server "lab07sqlserver[initials]" \
-  --name "AllowAzureServices" \
-  --start-ip-address 0.0.0.0 \
-  --end-ip-address 0.0.0.0
+# Create a Function App (Consumption plan)
+az functionapp create \
+  --name lab07func \
+  --resource-group lab07-rg \
+  --consumption-plan-location eastus \
+  --runtime node \
+  --runtime-version 18 \
+  --functions-version 4 \
+  --storage-account lab07storage
 
-# Create a Cosmos DB account
-az cosmosdb create \
-  --name "lab07cosmos[initials]" \
-  --resource-group "lab07-rg" \
-  --default-consistency-level Session
+# Create a Container Instance
+az container create \
+  --resource-group lab07-rg \
+  --name lab07aci \
+  --image mcr.microsoft.com/azuredocs/aci-helloworld \
+  --cpu 1 --memory 1.5 \
+  --dns-name-label lab07demo \
+  --ports 80
 
-# Create a Cosmos DB database
-az cosmosdb sql database create \
-  --account-name "lab07cosmos[initials]" \
-  --resource-group "lab07-rg" \
-  --name "lab07db"
+# Create an AKS cluster
+az aks create \
+  --resource-group lab07-rg \
+  --name lab07aks \
+  --node-count 1 \
+  --generate-ssh-keys
 ```
 
-Reference: learn.microsoft.com/en-us/cli/azure/sql
-
 ---
 
-## Section 7: AZ-900 Exam Tips
+## Section 8: AZ-900 Exam Tips
 
-1. **PaaS vs. IaaS for SQL:** Azure SQL Database and Azure Database for PostgreSQL/MySQL are PaaS — Microsoft manages the OS and engine. SQL Server on Azure VM is IaaS — you manage the OS. If a scenario mentions "manage the OS" or "full SQL Server features," IaaS is the answer.
+1. **IaaS vs. PaaS boundary for VMs:** If a scenario says the customer manages the OS — that is IaaS (VMs). If the scenario says Microsoft manages the OS and the customer only manages the application — that is PaaS (App Service, Functions).
 
-2. **Cosmos DB global distribution:** When a scenario uses words like "global," "low latency for users worldwide," "multiple regions simultaneously," or "millisecond response globally," Cosmos DB is likely the answer. No other Azure database service provides native global distribution.
+2. **Availability Set numbers:** Fault domains = up to 3 (rack-level). Update domains = up to 20 (maintenance batches). SLA = 99.95%.
 
-3. **Cosmos DB consistency levels:** Cosmos DB is the only Azure database service with configurable consistency levels (Strong, Bounded Staleness, Session, Consistent Prefix, Eventual). If the exam asks about consistency models for a database service, the answer involves Cosmos DB.
+3. **Availability Zone SLA:** Deploying VMs across Availability Zones achieves 99.99% SLA — higher than Availability Sets (99.95%). The difference is datacenter-level protection.
 
-4. **Cosmos DB SLA:** The 99.999% multi-region SLA is the highest of any Azure database service. If a scenario requires five-nines availability for a database, Cosmos DB is the answer.
+4. **Scale Sets are for auto-scaling identical VMs.** If a scenario mentions "automatically add or remove VMs based on demand," the answer is Virtual Machine Scale Sets, not a single VM.
 
-5. **SQL Managed Instance vs. SQL Database:** SQL Managed Instance supports SQL Server Agent, linked servers, CLR, and Service Broker. Azure SQL Database has limited support for these. If a scenario mentions migrating a complex on-premises SQL Server application that uses these features, SQL Managed Instance is the answer (not a basic SQL Database).
+5. **Functions cold start:** The Consumption plan may have a cold start delay after idle periods. The Premium plan uses pre-warmed instances to eliminate this. If a scenario mentions "eliminate cold starts," the answer is the Premium plan.
 
-6. **Open-source signals:** "LAMP stack," "WordPress," "PHP application" → MySQL. "Advanced SQL compliance," "geospatial data," "PostgreSQL extension" → PostgreSQL. "MariaDB" → Azure Database for MariaDB.
+6. **ACI vs. AKS decision:** ACI for simple, fast, single-container execution. AKS for orchestration of multiple containers with scaling and self-healing. If a scenario uses the word "orchestration," the answer is AKS.
 
-7. **Cosmos DB multi-model:** Cosmos DB supports multiple APIs (SQL, MongoDB, Cassandra, Gremlin, Table). An existing MongoDB application can migrate to Cosmos DB using the MongoDB API with minimal code changes. This is tested as a migration scenario.
+7. **App Service deployment slots:** Available on Standard tier and above. Used for zero-downtime deployments (swap staging to production). If a scenario mentions "zero-downtime deployment of a web app," deployment slots are the mechanism.
 
-8. **Elastic Pool use case:** Multiple databases with variable and unpredictable utilization patterns benefit from Elastic Pools — they share a resource pool, so an active database can use the compute of idle databases. This is a cost optimization tool.
-
----
-
-## Section 8: Required Resources
-
-- Azure SQL Database overview: learn.microsoft.com/en-us/azure/azure-sql/database/sql-database-paas-overview
-- Azure Cosmos DB introduction: learn.microsoft.com/en-us/azure/cosmos-db/introduction
-- Azure Database for PostgreSQL: learn.microsoft.com/en-us/azure/postgresql/flexible-server/overview
-- Azure Database for MySQL: learn.microsoft.com/en-us/azure/mysql/flexible-server/overview
-- Microsoft Learn AZ-900 database module: learn.microsoft.com/en-us/training/modules/azure-database-fundamentals/
+8. **Serverless = no infrastructure management + pay-per-use.** Azure Functions on the Consumption plan is the primary serverless compute offering in Azure.
 
 ---
 
 ## Section 9: Study Checklist
 
 - [ ] Read all sections of this guide
-- [ ] Memorize the database service summary comparison table (Section 5.2)
-- [ ] Work through the decision tree in Section 5.1 using your own scenarios
-- [ ] Memorize the Cosmos DB consistency models table (Section 3.4)
-- [ ] Complete the Microsoft Learn "Explore Azure database and analytics services" module
-- [ ] Complete Lab Activity Module 07
+- [ ] Memorize the VM size family table (Section 1.2)
+- [ ] Understand the difference between Availability Sets and Availability Zones (Section 1.3 and 1.4)
+- [ ] Memorize the App Service plan tiers table (Section 2.2)
+- [ ] Understand the three Functions hosting plans (Section 3.3)
+- [ ] Memorize the compute service comparison table (Section 6.1)
+- [ ] Work through the decision framework in Section 6.2 using your own scenarios
+- [ ] Complete the Microsoft Learn "Describe Azure compute and networking services" module
+- [ ] Complete Lab Module 07
 - [ ] Take Quiz Module 07
 - [ ] Post Discussion Module 07 initial post by Wednesday 11:59 PM
 - [ ] Respond to two classmates by Sunday 11:59 PM
+
+---
+
+## Required Reading Resources
+
+- Azure Virtual Machines overview: learn.microsoft.com/en-us/azure/virtual-machines/overview
+- App Service overview: learn.microsoft.com/en-us/azure/app-service/overview
+- Azure Functions overview: learn.microsoft.com/en-us/azure/azure-functions/functions-overview
+- Azure Container Instances: learn.microsoft.com/en-us/azure/container-instances/container-instances-overview
+- Azure Kubernetes Service: learn.microsoft.com/en-us/azure/aks/intro-kubernetes
+- Microsoft Learn AZ-900 compute module: learn.microsoft.com/en-us/training/modules/describe-azure-compute-networking-services/

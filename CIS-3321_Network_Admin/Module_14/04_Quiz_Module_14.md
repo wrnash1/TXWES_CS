@@ -1,83 +1,163 @@
-# Quiz: Module 14 - Physical Layer – Cabling Standards and Installation
-## Course: CIS-3321 – Network Administration (CompTIA Network+ N10-009)
+# Quiz: Module 14 — Network Troubleshooting Methodology
+
+## Course: CIS-3321 Network Administration
+
+**Certification Alignment:** CompTIA Network+ (N10-008)
 
 ---
 
-**Question 1**
-A network technician has just finished running a new Cat6 cable from a wall outlet to a patch panel in the telecommunications room. The cable measures 87 meters. After terminating both ends, the technician tests the cable and discovers that all 8 pins are connected but the link does not function at gigabit speed. The technician suspects the far-end pair mapping is incorrect. Which wiring standard should be used on BOTH ends of the cable to create a functional straight-through patch cable that connects the workstation to the switch?
+## Instructions
 
-A) T568A on the wall outlet end and T568B on the patch panel end — this crossover configuration is required for direct workstation-to-switch connections in commercial installations
-B) T568B on both ends — this is the most common commercial wiring standard in the US, and using the same standard on both ends creates a straight-through patch cable
-C) T568A on both ends — the A standard must be used for horizontal cabling runs because it provides superior crosstalk rejection compared to T568B in Cat6 installations
-D) Either T568A on both ends or T568B on both ends is acceptable for gigabit, but the wire pairs must be swapped at pin positions 1–2 and 7–8 to support full-duplex operation
-
-*   **Correct Answer:** B) T568B on both ends — this is the most common commercial wiring standard in the US, and using the same standard on both ends creates a straight-through patch cable
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Using T568A on one end and T568B on the other creates a crossover cable — this is used to connect two like devices (switch-to-switch, PC-to-PC) and would not provide a working straight-through connection from the workstation to the switch. A crossover on a modern switch with Auto-MDIX may happen to function, but this is not the correct standard termination practice.
-    *   *Why C is incorrect:* T568A is a valid wiring standard, and using it on both ends does create a valid straight-through cable. However, T568A is not required for Cat6, and it is less common in US commercial installations than T568B. The key principle is that both ends must match — not that T568A is required over T568B.
-    *   *Why D is incorrect:* There is no pin-swapping modification required for full-duplex or gigabit operation. The T568A and T568B standards define a complete 8-conductor wiring sequence; both standards natively support 1000BASE-T when used consistently on both ends of the cable without any modification.
+Select the best answer for each question. Each question is worth 10 points. This quiz covers Module 14 video lectures and reading guide material.
 
 ---
 
-**Question 2**
-A field technician is installing structured cabling in a new office building. The horizontal cable runs from the telecommunications room patch panel to each work area outlet must comply with TIA-568 standards. The IT manager asks the technician to confirm the maximum allowable distances. Which values correctly describe the TIA-568 horizontal cabling distance limits?
+## Questions
 
-A) The permanent link (wall outlet to patch panel, solid-core cable only) may not exceed 100 meters; patch cords at each end add up to an additional 10 meters for a total channel of 110 meters
-B) The permanent link may not exceed 90 meters; the total channel including all patch cords at both ends may not exceed 100 meters
-C) The permanent link may not exceed 100 meters; patch cords are not counted against the distance limit because they use stranded cable with lower insertion loss than solid-core cable
-D) There is no fixed distance limit for horizontal cabling — the limit depends on the cable category; Cat5e supports 50 meters, Cat6 supports 75 meters, and Cat6a supports 100 meters at 10GbE speeds
+### Question 1
 
-*   **Correct Answer:** B) The permanent link may not exceed 90 meters; the total channel including all patch cords at both ends may not exceed 100 meters
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* The permanent link limit is 90 meters, not 100 meters. The 100-meter figure is the total channel limit (permanent link plus all patch cords), not a separate permanent link limit. Extending patch cords beyond the 10-meter allocation (the difference between 90m permanent and 100m channel) would push the total channel over the 100-meter limit and cause signal degradation at gigabit speeds.
-    *   *Why C is incorrect:* Patch cords absolutely count against the total channel distance limit. The 100-meter total channel budget includes the permanent link (90m max) plus patch cords at both ends (10m total). Using stranded vs. solid-core cable affects flexibility and bend radius, not whether patch cords are included in the distance budget.
-    *   *Why D is incorrect:* The 100-meter total channel limit applies to all copper twisted-pair categories (Cat5e, Cat6, Cat6a) for 1000BASE-T and 10GBASE-T over the specified channel length. Cat6a supports 10GbE at the same 100-meter channel limit — the limit does not vary by category.
+A network technician is following the CompTIA troubleshooting methodology. After gathering information and talking to the user, the technician immediately changes several settings on the router to see if any of them fix the problem. Which step of the methodology did the technician skip?
 
----
+- A) Step 1 — Identify the Problem
+- B) Step 2 — Establish a Theory of Probable Cause
+- C) Step 6 — Verify Full System Functionality
+- D) Step 7 — Document Findings
 
-**Question 3**
-A network administrator needs to identify which physical cable in a bundle behind a drop ceiling connects to port 14 on a patch panel in the wiring closet. The cable bundle contains 24 Cat6 cables with no labels visible at the ceiling end. The administrator has access to the patch panel and both ends of the cable runs. Which tool is the most efficient for locating and tracing the specific cable?
+Correct Answer: B
 
-A) Cable certifier — connect the certifier's main unit to patch panel port 14 and use the remote unit at the ceiling end to measure attenuation and identify the correct cable pair by loss signature
-B) OTDR (Optical Time-Domain Reflectometer) — inject a light pulse into the cable at the patch panel and scan the ceiling end with the OTDR receiver to identify the cable by reflectance pattern
-C) Tone generator and probe (fox and hound) — connect the tone generator to patch panel port 14 and sweep the inductive probe along the cable bundle at the ceiling end to locate the cable emitting the tonal signal
-D) Cable tester — connect the main unit to patch panel port 14 and the remote unit to each cable at the ceiling end sequentially until the tester reports a complete 8-wire match, identifying the correct cable
-
-*   **Correct Answer:** C) Tone generator and probe (fox and hound) — connect the tone generator to patch panel port 14 and sweep the inductive probe along the cable bundle at the ceiling end to locate the cable emitting the tonal signal
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* A cable certifier measures performance parameters (attenuation, NEXT, return loss) and verifies whether a cable meets a category specification — it is not designed to identify or locate an unknown cable in a bundle. The certifier requires both the main and remote units to be connected to known cable ends, which defeats the purpose when the goal is to find the unknown end.
-    *   *Why B is incorrect:* An OTDR is a fiber optic testing instrument that sends light pulses into a fiber strand to locate breaks, splices, and connectors. It cannot be used on copper twisted-pair cable. Using an OTDR on a copper cable would not function and could damage the instrument.
-    *   *Why D is incorrect:* A cable tester verifies that a known cable is correctly wired — it requires both ends to be accessible and connected simultaneously. To use a tester, the technician would need to individually connect each of the 24 cables at the ceiling end to the remote unit, which is extremely time-consuming compared to the tone generator and probe approach.
+Explanation: The technician jumped from gathering information (Step 1) directly to making changes (essentially Step 5) without forming a theory of probable cause (Step 2) or testing that theory (Step 3). This is "shotgun troubleshooting" and is the most common deviation from the methodology.
 
 ---
 
-**Question 4**
-A network engineer is reviewing the results of a new Cat6a installation. The cable certifier reports that three of the cable runs have failed the NEXT (Near-End Crosstalk) test, even though their total length is only 45 meters. The physical cable runs are away from power cables and fluorescent lighting. Which is the most likely cause of the NEXT failures?
+### Question 2
 
-A) Attenuation — the cables are too long and the signal is losing strength before reaching the far end, causing the certifier to interpret the loss as crosstalk at the near end
-B) EMI (Electromagnetic Interference) — external electrical noise from nearby equipment is coupling into the cable pairs and increasing the measured crosstalk values
-C) Improper termination — the cable pairs were untwisted too much during termination at the keystone jacks or patch panel, reducing the crosstalk rejection designed into the twisted-pair geometry
-D) Impedance mismatch — the Cat6a cable is terminated into Cat5e keystone jacks rated for a lower frequency, and the impedance difference creates signal reflections that the certifier reports as crosstalk
+A user receives the IP address 169.254.82.44 on their Windows workstation. What is the most likely cause?
 
-*   **Correct Answer:** C) Improper termination — the cable pairs were untwisted too much during termination at the keystone jacks or patch panel, reducing the crosstalk rejection designed into the twisted-pair geometry
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Attenuation is signal loss over distance — a 45-meter run is well within the 90-meter permanent link limit and would not produce excessive attenuation. More importantly, attenuation and NEXT are distinct failure modes: attenuation is measured end-to-end, while NEXT is measured at the same end as the transmitter. A short cable will not produce NEXT failures due to length.
-    *   *Why B is incorrect:* EMI from external sources causes noise that affects the entire cable run, and the engineer already noted the cables are routed away from power cables and fluorescent lights. More importantly, EMI manifests as alien crosstalk (AXT) or interference from outside the cable — not as NEXT, which is unwanted coupling between pairs within the same cable at the termination point.
-    *   *Why D is incorrect:* Using Cat5e keystone jacks on Cat6a cable would indeed be a termination mismatch problem, but it would primarily cause impedance and return loss failures rather than NEXT. A Cat5e jack on Cat6a cable would also typically be identified by physical inspection. The more common cause of NEXT failures on short runs is excessive pair untwisting during termination, which is the primary source of near-end coupling in field installations.
+- A) The user manually configured a static IP in the 169.254.0.0/16 range
+- B) The DHCP server assigned this address as part of the voice VLAN
+- C) DHCP discovery failed and Windows assigned an APIPA address
+- D) DNS resolution failed and the workstation cannot resolve the DHCP server name
+
+Correct Answer: C
+
+Explanation: The 169.254.0.0/16 range is APIPA (Automatic Private IP Addressing). Windows assigns an APIPA address when DHCP discovery fails — the client broadcasts for a DHCP server, receives no response, and self-assigns within this range. DNS is not involved in DHCP address assignment.
 
 ---
 
-**Question 5**
-A network team is deploying structured cabling for a new three-story office building. The building has one main equipment room (MER) on the first floor and one telecommunications room (TR) per floor. Each floor has 60 workstations. The fiber backbone runs between the MER and each TR. Copper horizontal cabling runs from each TR to the work area outlets. The team must also ensure the installation can be tested and certified to TIA-568 Cat6 standards. Which combination of tools, standards, and components correctly satisfies all requirements?
+### Question 3
 
-A) Use Cat6 UTP for horizontal runs terminated with T568B on both ends; use multimode fiber for backbone runs between the MER and TRs; install patch panels in each TR for horizontal cable termination; verify with a cable certifier for Cat6 performance and an OTDR for fiber continuity
-B) Use Cat6 UTP for horizontal runs terminated with T568A on the MER end and T568B on the workstation end to create a crossover for each run; use single-mode fiber for all backbone runs; use a cable tester to certify Cat6 compliance at each workstation outlet
-C) Use Cat5e UTP for horizontal runs since Cat6 is only required for 10GbE runs over 55 meters; use coaxial cable for backbone runs between floors; terminate all horizontal runs with T568A on both ends; test with a tone generator and probe
-D) Use Cat6 UTP for horizontal runs terminated with T568B on both ends; use backbone cabling limited to 90 meters per TIA-568 horizontal distance rules; terminate all fiber at the MER only (no TR patch panels) to minimize connection points; certify with a cable tester
+A technician uses a cable certifier on a Cat6 horizontal run and the test reports a NEXT failure. What type of cable problem does NEXT measure?
 
-*   **Correct Answer:** A) Use Cat6 UTP for horizontal runs terminated with T568B on both ends; use multimode fiber for backbone runs between the MER and TRs; install patch panels in each TR for horizontal cable termination; verify with a cable certifier for Cat6 performance and an OTDR for fiber continuity
-*   **Distractor Analysis:**
-    *   *Why A is correct:* Cat6 UTP with T568B on both ends creates correctly wired straight-through horizontal cables. Multimode fiber (OM3/OM4) is the standard choice for intra-building backbone runs up to several hundred meters. Patch panels in each TR are required by TIA-568 structured cabling for the horizontal cross-connect point. A cable certifier verifies Cat6 performance parameters (attenuation, NEXT, return loss); an OTDR locates faults and verifies continuity on fiber backbone runs.
-    *   *Why B is incorrect:* Using T568A on one end and T568B on the other creates crossover cables — every workstation connection would be wired as a crossover, preventing proper operation (except on switches with Auto-MDIX). A cable tester verifies pin-to-pin continuity and wire order but does not measure attenuation, NEXT, or return loss — it cannot certify Cat6 compliance.
-    *   *Why C is incorrect:* Cat5e can support 1000BASE-T (gigabit) at 100 meters but does not meet Cat6 performance specifications — if the requirement is Cat6 certification, Cat5e cannot be substituted. Coaxial cable is not used for structured building backbone cabling in modern TIA-568 installations. A tone generator and probe is a cable-tracing tool, not a certification instrument.
-    *   *Why D is incorrect:* The 90-meter limit is the horizontal cabling permanent link limit — backbone cabling between the MER and TRs has its own distance specifications (up to 90 meters for copper backbone, up to 2,000 meters for multimode fiber backbone under TIA-568) and is governed by different distance rules than horizontal cabling. Omitting TR patch panels violates the TIA-568 structured cabling subsystem architecture, which requires a cross-connect at each TR. A cable tester does not certify Cat6 — a cable certifier is required.
+- A) Signal attenuation over distance
+- B) Near End Crosstalk — interference between adjacent wire pairs measured at the same end
+- C) Far End Crosstalk — interference measured at the opposite end from the signal source
+- D) Open circuit — a wire with no continuity
+
+Correct Answer: B
+
+Explanation: NEXT (Near End Crosstalk) measures electromagnetic interference between wire pairs at the same end as the signal source. It is caused by poor cable quality, incorrect termination (untwisting pairs too far), or split pairs. A basic cable tester cannot detect NEXT — a cable certifier is required.
+
+---
+
+### Question 4
+
+A user can ping a server by its IP address (192.168.5.50) but cannot connect to it by hostname (fileserver.corp.local). Which troubleshooting step should be performed next?
+
+- A) Replace the network cable
+- B) Check the default gateway configuration
+- C) Run nslookup fileserver.corp.local to test DNS resolution
+- D) Reboot the server
+
+Correct Answer: C
+
+Explanation: The ability to ping by IP confirms Layers 1–3 are functional. The inability to connect by name points to Layer 7 (DNS) as the problem layer. nslookup tests DNS resolution directly — it will reveal whether the name resolves and which DNS server is responding.
+
+---
+
+### Question 5
+
+A switch port shows the following statistics: Speed 100Mb/s, Duplex Half, Input errors 78,000, Late collisions 12,000. What is the most likely cause?
+
+- A) The cable connecting the device is broken
+- B) A duplex mismatch — one end is set to full-duplex, the other to half-duplex
+- C) The SFP transceiver has failed
+- D) STP has placed the port in a blocking state
+
+Correct Answer: B
+
+Explanation: Late collisions are a classic indicator of a duplex mismatch. When one side operates full-duplex and the other half-duplex, the full-duplex side transmits freely while the half-duplex side detects collisions after the normal collision window. The high input error count also supports this diagnosis.
+
+---
+
+### Question 6
+
+Which tool should be used to trace a specific cable through a conduit and patch panel when the cable is not labeled?
+
+- A) Cable certifier
+- B) Optical power meter
+- C) Tone generator and inductive probe
+- D) Time Domain Reflectometer (TDR)
+
+Correct Answer: C
+
+Explanation: A tone generator injects an audible signal onto the cable at one end. An inductive probe detects the tone through the cable's insulation without requiring physical access to the conductor — allowing the technician to trace the cable through conduit, walls, and across patch panels.
+
+---
+
+### Question 7
+
+A technician follows the bottom-up OSI troubleshooting approach. They confirm the physical link is active, the VLAN is correctly configured, and the IP address is correct. The next step in the bottom-up approach is to verify which layer?
+
+- A) Layer 1 — Physical (again)
+- B) Layer 3 — Network routing and gateway
+- C) Layer 7 — Application service availability
+- D) Layer 4 — Transport layer (firewall, port availability)
+
+Correct Answer: D
+
+Explanation: In the bottom-up approach, after confirming Layer 3 (correct IP, subnet, and gateway), the next layer to verify is Layer 4 — Transport. Check whether a firewall is blocking the required port or whether the application service is listening on the expected port.
+
+---
+
+### Question 8
+
+After resolving a complex network outage, a technician skips Step 7 (Documentation) because the fix was straightforward. Three months later, an identical issue occurs and takes the same 4 hours to resolve. What could documentation have prevented?
+
+- A) Nothing — the problem was hardware failure and would recur regardless
+- B) Faster resolution using the knowledge base record from the first incident
+- C) The initial outage from occurring
+- D) The need for escalation during the second incident
+
+Correct Answer: B
+
+Explanation: A knowledge base record from the first incident would allow the next technician (or the same technician) to immediately identify the cause and apply the known solution — reducing MTTR from 4 hours to minutes. Documentation converts individual experience into organizational knowledge.
+
+---
+
+### Question 9
+
+A technician runs tracert from a workstation to a remote server and observes that the first three hops respond normally, but hop 4 shows *** (three asterisks) and hop 5 responds normally. What does this most likely indicate?
+
+- A) The network path is broken at hop 4
+- B) Hop 4 is a router configured to not respond to traceroute probes (ICMP filtered)
+- C) Hop 4 is the destination server and the trace is complete
+- D) The workstation has a routing loop between hops 3 and 4
+
+Correct Answer: B
+
+Explanation: Three asterisks at a single hop followed by successful replies at subsequent hops is characteristic of a router configured to filter ICMP time-exceeded messages — it does not respond to traceroute probes but still forwards packets. This is not a network break. A true break would show *** at every hop from that point onward.
+
+---
+
+### Question 10
+
+A technician is troubleshooting a fiber optic link that shows no signal. They have checked that the fiber cables are connected at both ends. Which action should be performed FIRST?
+
+- A) Replace the SFP transceivers on both switches
+- B) Inspect and clean the fiber connectors using a fiber inspection microscope and cleaning tool
+- C) Replace the fiber cable with a new one
+- D) Check whether the switches have the correct firmware version
+
+Correct Answer: B
+
+Explanation: The most common cause of fiber link failure is dirty connectors. Microscopic contamination on an SC, LC, or ST connector can attenuate the signal to zero. Inspection and cleaning is fast, free, and should always be performed before replacing hardware. Replacing cables or SFPs before cleaning is expensive and frequently unnecessary.

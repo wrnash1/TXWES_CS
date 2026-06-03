@@ -431,4 +431,4 @@ aws s3 presign s3://my-bucket/myfile.pdf \
 
 ## References
 
-All certification study materials and exam registration: aws.amazon.com/certification
+All certification study materials and exam registration: <aws.amazon.com/certification>

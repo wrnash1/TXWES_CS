@@ -36,17 +36,17 @@ A VPN (Virtual Private Network) creates a secure, encrypted logical connection a
 
 Three properties define a VPN:
 
-**Encapsulation** — The original packet is wrapped inside a new packet for transit across the intermediate network. The original source and destination may be hidden inside the outer header.
+Encapsulation — The original packet is wrapped inside a new packet for transit across the intermediate network. The original source and destination may be hidden inside the outer header.
 
-**Encryption** — The payload (and in Tunnel mode, the entire original packet) is encrypted so that an eavesdropper on the public internet sees only ciphertext.
+Encryption — The payload (and in Tunnel mode, the entire original packet) is encrypted so that an eavesdropper on the public internet sees only ciphertext.
 
-**Authentication** — Both endpoints verify each other's identity before the tunnel is established. VPNs use pre-shared keys, digital certificates, or user credentials for authentication.
+Authentication — Both endpoints verify each other's identity before the tunnel is established. VPNs use pre-shared keys, digital certificates, or user credentials for authentication.
 
 VPNs come in two primary use cases:
 
-**Site-to-Site VPN** — Connects two entire networks. The VPN gateways (routers or firewalls at each site) establish the tunnel. Individual end-user devices need no special VPN software — they simply send traffic to their local gateway, which encrypts and forwards it through the tunnel to the remote site gateway. Used to connect branch offices.
+Site-to-Site VPN — Connects two entire networks. The VPN gateways (routers or firewalls at each site) establish the tunnel. Individual end-user devices need no special VPN software — they simply send traffic to their local gateway, which encrypts and forwards it through the tunnel to the remote site gateway. Used to connect branch offices.
 
-**Remote-Access VPN** — Connects an individual user's device to the corporate network. The user runs a VPN client that establishes an encrypted tunnel to the corporate VPN concentrator. All or some of the user's traffic is then routed through the corporate network.
+Remote-Access VPN — Connects an individual user's device to the corporate network. The user runs a VPN client that establishes an encrypted tunnel to the corporate VPN concentrator. All or some of the user's traffic is then routed through the corporate network.
 
 ---
 
@@ -60,19 +60,19 @@ VPNs come in two primary use cases:
 
 IPsec (Internet Protocol Security) is the dominant protocol suite for VPN encryption at Layer 3. IPsec operates in two modes:
 
-**Transport Mode** — Only the IP payload is encrypted. The original IP header (with source and destination addresses) remains in plaintext. Transport mode is used for host-to-host communications — for example, encrypting traffic between two servers on the same network. The original source and destination IP addresses are visible to the transit network.
+Transport Mode — Only the IP payload is encrypted. The original IP header (with source and destination addresses) remains in plaintext. Transport mode is used for host-to-host communications — for example, encrypting traffic between two servers on the same network. The original source and destination IP addresses are visible to the transit network.
 
-**Tunnel Mode** — The entire original IP packet — both the header and the payload — is encrypted and encapsulated inside a new outer IP packet. The new outer IP header uses the VPN gateway addresses. The original source and destination addresses are completely hidden from anyone observing the transit network. Tunnel mode is used for site-to-site VPNs.
+Tunnel Mode — The entire original IP packet — both the header and the payload — is encrypted and encapsulated inside a new outer IP packet. The new outer IP header uses the VPN gateway addresses. The original source and destination addresses are completely hidden from anyone observing the transit network. Tunnel mode is used for site-to-site VPNs.
 
 > Network+ Exam Tip: Site-to-site VPNs use IPsec Tunnel mode. When the exam says "hide the internal IP addresses from the transit network," the answer is Tunnel mode. Transport mode leaves the original IP header visible.
 
 IPsec uses two sub-protocols:
 
-**AH (Authentication Header)** — Provides authentication and integrity for the IP packet header and payload. Does not encrypt the payload — it only verifies that the packet has not been tampered with. AH alone does not provide confidentiality.
+AH (Authentication Header) — Provides authentication and integrity for the IP packet header and payload. Does not encrypt the payload — it only verifies the packet has not been tampered with. AH alone does not provide confidentiality.
 
-**ESP (Encapsulating Security Payload)** — Provides encryption, authentication, and integrity for the payload. ESP is the component that actually encrypts the data. In most deployments, ESP is used without AH because ESP provides authentication on its own.
+ESP (Encapsulating Security Payload) — Provides encryption, authentication, and integrity for the payload. ESP is the component that actually encrypts the data. In most deployments, ESP is used without AH because ESP provides authentication on its own.
 
-**IKE (Internet Key Exchange)** — The protocol used to negotiate and establish IPsec security associations (SAs). IKEv1 uses two phases; IKEv2 is simplified and more efficient. Key exchange happens over UDP port 500. NAT traversal (NAT-T) uses UDP port 4500.
+IKE (Internet Key Exchange) — The protocol used to negotiate and establish IPsec security associations (SAs). IKEv1 uses two phases; IKEv2 is simplified and more efficient. Key exchange happens over UDP port 500. NAT traversal (NAT-T) uses UDP port 4500.
 
 ---
 
@@ -84,11 +84,11 @@ IPsec uses two sub-protocols:
 
 [Alt-text: A five-row comparison table with columns labeled Protocol, OSI Layer, Encryption, Port or Protocol, and Primary Use Case. Row 1: IPsec — Layer 3, AES or 3DES encryption, UDP 500 for IKE and UDP 4500 for NAT-T, used for site-to-site and remote-access VPNs. Row 2: GRE — Layer 3, no encryption natively, IP Protocol 47, used to tunnel multiprotocol traffic over IP networks. Row 3: L2TP/IPsec — combines Layer 2 (L2TP) with Layer 3 (IPsec) encryption, requires UDP 1701 for L2TP and UDP 500/4500 for IPsec, used for remote access. Row 4: SSL/TLS VPN — operates at Layer 4 through 7, TLS encryption, TCP port 443, used for remote access and clientless browser-based VPN.]
 
-**GRE (Generic Routing Encapsulation)** — A tunneling protocol developed by Cisco that encapsulates any network layer protocol inside an IP packet. GRE itself provides no encryption — it is purely an encapsulation mechanism. GRE tunnels are often combined with IPsec to add encryption. GRE uses IP Protocol 47 (not a TCP or UDP port — it is its own IP protocol number). Common use case: routing non-IP protocols or multicast traffic across an IP-only WAN.
+GRE (Generic Routing Encapsulation) — A tunneling protocol developed by Cisco that encapsulates any network layer protocol inside an IP packet. GRE itself provides no encryption — it is purely an encapsulation mechanism. GRE tunnels are often combined with IPsec to add encryption. GRE uses IP Protocol 47 (not a TCP or UDP port — it is its own IP protocol number). Common use case: routing non-IP protocols or multicast traffic across an IP-only WAN.
 
-**L2TP/IPsec** — L2TP (Layer 2 Tunneling Protocol) by itself provides no encryption. L2TP is almost always combined with IPsec for encryption, creating L2TP/IPsec. L2TP creates a tunnel for Layer 2 frames; IPsec encrypts the content. Used primarily for remote-access VPNs on older operating systems (Windows built-in VPN client). Requires UDP 1701 for L2TP and UDP 500/4500 for IPsec — problematic in environments that block non-HTTPS ports.
+L2TP/IPsec — L2TP (Layer 2 Tunneling Protocol) by itself provides no encryption. L2TP is almost always combined with IPsec for encryption, creating L2TP/IPsec. L2TP creates a tunnel for Layer 2 frames; IPsec encrypts the content. Used primarily for remote-access VPNs on older operating systems. Requires UDP 1701 for L2TP and UDP 500/4500 for IPsec — problematic in environments that block non-HTTPS ports.
 
-**SSL/TLS VPN** — Uses TLS (Transport Layer Security) — the same protocol that secures HTTPS web traffic — to create the VPN tunnel over TCP port 443. Because port 443 is allowed through virtually every firewall, SSL VPN traverses restrictive networks that block IPsec ports. Two modes: full-tunnel (routes all traffic through VPN) and split-tunnel (only corporate traffic routes through VPN). Also supports clientless mode — users access resources through a web browser without installing a VPN client. Most modern remote-access VPN deployments use SSL/TLS.
+SSL/TLS VPN — Uses TLS (Transport Layer Security) — the same protocol that secures HTTPS web traffic — to create the VPN tunnel over TCP port 443. Because port 443 is allowed through virtually every firewall, SSL VPN traverses restrictive networks that block IPsec ports. Two modes: full-tunnel (routes all traffic through VPN) and split-tunnel (only corporate traffic routes through VPN). Also supports clientless mode — users access resources through a web browser without installing a VPN client.
 
 > Network+ Exam Tip: When the exam describes a hotel or coffee shop firewall that only allows port 80 and 443, and a remote user needs VPN access, the answer is always SSL/TLS VPN on TCP 443. IPsec and L2TP use ports that would be blocked.
 
@@ -102,11 +102,11 @@ IPsec uses two sub-protocols:
 
 [Alt-text: Two network flow diagrams. Left diagram labeled Full-Tunnel VPN shows a remote laptop with all traffic (labeled Corporate Traffic and Internet Traffic) flowing into a single VPN tunnel arrow pointing to the corporate network, then out through the corporate firewall to the internet. Right diagram labeled Split-Tunnel VPN shows a remote laptop with two traffic flow arrows: one labeled Corporate Traffic going through the VPN tunnel to the corporate network, and a second labeled Internet Traffic going directly to the public internet bypassing the corporate network entirely.]
 
-**Full-Tunnel VPN** — All traffic from the remote device is routed through the VPN tunnel to the corporate network. Internet browsing also goes through the corporate gateway. Advantage: all traffic is inspected by corporate security controls. Disadvantage: adds latency to general internet traffic, and increases load on the corporate internet link.
+Full-Tunnel VPN — All traffic from the remote device is routed through the VPN tunnel to the corporate network. Internet browsing also goes through the corporate gateway. Advantage: all traffic is inspected by corporate security controls. Disadvantage: adds latency to general internet traffic, and increases load on the corporate internet link.
 
-**Split-Tunnel VPN** — Only traffic destined for corporate network resources is routed through the VPN tunnel. All other internet traffic goes directly to the internet from the user's device. Advantage: reduces corporate bandwidth usage and latency for internet traffic. Disadvantage: traffic to the internet bypasses corporate security controls — a security risk if the user's device is compromised.
+Split-Tunnel VPN — Only traffic destined for corporate network resources is routed through the VPN tunnel. All other internet traffic goes directly to the internet from the user's device. Advantage: reduces corporate bandwidth usage and latency for internet traffic. Disadvantage: traffic to the internet bypasses corporate security controls — a security risk if the user's device is compromised.
 
-**VPN Concentrator** — A dedicated device (or software function on a firewall/router) that terminates multiple VPN client connections at the corporate network edge. A concentrator can handle thousands of simultaneous remote-access VPN sessions, performing encryption/decryption for all clients.
+VPN Concentrator — A dedicated device (or software function on a firewall/router) that terminates multiple VPN client connections at the corporate network edge. A concentrator can handle thousands of simultaneous remote-access VPN sessions, performing encryption/decryption for all clients.
 
 Module 07 key takeaways: MPLS provides guaranteed QoS for enterprise WAN. IaaS/PaaS/SaaS define customer responsibility boundaries. IPsec Tunnel mode hides internal IP headers. GRE provides encapsulation without encryption. SSL/TLS VPN uses TCP 443 for firewall traversal. Split-tunnel sends only corporate traffic through the VPN.
 
@@ -121,4 +121,4 @@ Module 08 covers network security — firewalls, IDS/IPS, and security architect
 
 ---
 
-*End of Part 2*
+End of Part 2

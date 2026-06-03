@@ -1,77 +1,273 @@
-# Quiz: Module 08 - Service Management Practices - Incident Management
-## Course: CIS-4335_IT_Service_Management (ITIL 4 Foundation)
+# Quiz: Module 08 — Service Desk, Incident Management, and Monitoring
+
+## Course: CIS-4335 IT Service Management
+
+## Texas Wesleyan University | Professor Nash
+
+## Total Questions: 10 | Points: 10 (1 pt each)
+
+## Certification Alignment: ITIL 4 Foundation
 
 ---
 
-**Question 1**
-What is the primary purpose of the Incident Management practice in ITIL 4?
-*   A) To identify the root cause of recurring service disruptions and implement permanent fixes.
-*   B) To minimize the negative impact of incidents by restoring normal service operation as quickly as possible.
-*   C) To manage all planned changes to IT services and ensure they are properly authorized before implementation.
-*   D) To record and fulfill user requests for standard services such as new accounts or software installations.
-*   **Correct Answer:** B) The purpose of Incident Management is to restore normal service operation as quickly as possible and minimize business impact.
-*   **Distractor Analysis:**
-    *   *Why B is correct:* ITIL 4 defines the purpose of Incident Management as minimizing the negative impact of incidents by restoring normal service operation as quickly as possible. Speed of recovery is the priority — not root cause analysis.
-    *   *Why A is incorrect:* Identifying root causes and implementing permanent fixes is the purpose of Problem Management, not Incident Management. Incident Management focuses on restoration, not root cause.
-    *   *Why C is incorrect:* Managing planned changes and ensuring authorization is the purpose of Change Enablement, not Incident Management.
-    *   *Why D is incorrect:* Recording and fulfilling user requests for standard services is the purpose of Service Request Management. Service requests are planned and expected, whereas incidents are unplanned disruptions.
+## Instructions
+
+Select the single best answer for each question. Questions are scenario-based and aligned
+to the ITIL 4 Foundation exam style. Each question is followed by the correct answer and
+a distractor analysis explaining why the other options are incorrect.
 
 ---
 
-**Question 2**
-Which of the following most accurately describes the difference between an incident and a problem in ITIL 4?
-*   A) An incident is a planned service activity, while a problem is an unplanned service disruption that requires emergency authorization.
-*   B) An incident is an unplanned interruption to a service or reduction in its quality, while a problem is the underlying cause of one or more incidents.
-*   C) An incident is raised by the service desk on behalf of a user, while a problem is raised by a developer when a software defect is discovered.
-*   D) An incident and a problem are the same thing — ITIL 4 uses both terms interchangeably to describe service disruptions.
-*   **Correct Answer:** B) An incident is an unplanned interruption or quality reduction, while a problem is the underlying cause of one or more incidents.
-*   **Distractor Analysis:**
-    *   *Why B is correct:* ITIL 4 makes a precise distinction: an incident is the immediate disruption experienced by users, while a problem is the underlying cause of that disruption. Incident Management restores service; Problem Management identifies and eliminates the root cause.
-    *   *Why A is incorrect:* Incidents are not planned — they are unplanned disruptions. Planned service activities are handled as service requests or changes, not incidents.
-    *   *Why C is incorrect:* While incidents are often reported to the service desk, they can originate from monitoring tools or any staff member. The distinction between incident and problem is not about who raises them — it is about what they represent.
-    *   *Why D is incorrect:* ITIL 4 explicitly distinguishes incidents from problems. Using them interchangeably would cause the organization to conflate restoring service (incident) with finding root cause (problem), undermining both practices.
+### Question 1
+
+A user contacts IT because they cannot log in to the payroll application. Their account
+credentials are correct but the application is returning an authentication error. This is
+the only reported case.
+
+Which ITIL 4 term BEST describes this situation?
+
+- A) Problem
+- B) Event
+- C) Incident
+- D) Change
+
+#### Q1 Correct Answer: C — Incident
+
+#### Q1 Distractor Analysis
+
+- A (Problem) is incorrect. A problem is the cause of one or more incidents. At this
+  stage there is only one reported case and no investigation into root cause has begun.
+- B (Event) is incorrect. An event is a change of state detected by monitoring tools.
+  The user's experience is an unplanned service interruption — an incident.
+- D (Change) is incorrect. A change involves adding, modifying, or removing something.
+  This is an unplanned interruption, not a planned modification.
 
 ---
 
-**Question 3**
-A user calls the service desk to report that they cannot access the company's email system. After investigation, the service desk discovers that a network switch failure is causing email outages for all 300 users in one building. The service desk restores service by rerouting traffic through a backup switch. What was applied to restore service, and what should happen next?
-*   A) A permanent fix was applied. The incident can be closed and no further action is needed.
-*   B) A workaround was applied to restore service. A problem record should be raised to investigate and permanently resolve the underlying switch failure.
-*   C) A service request was fulfilled. The user's email access request has been completed through the standard service request process.
-*   D) A change was implemented. The service desk should submit a change record to the Change Advisory Board for retrospective approval.
-*   **Correct Answer:** B) Rerouting traffic is a workaround that restores service — a problem record should be raised to address the underlying switch failure.
-*   **Distractor Analysis:**
-    *   *Why B is correct:* Rerouting traffic through a backup switch is a workaround — it restores service but does not fix the failed switch. ITIL 4 directs that a problem record be raised to investigate the root cause (the switch failure) and implement a permanent resolution, which may involve repair or replacement.
-    *   *Why A is incorrect:* Rerouting traffic is not a permanent fix — the underlying switch failure remains unresolved. Closing the incident without raising a problem record would leave the root cause unaddressed and risk recurrence.
-    *   *Why C is incorrect:* The user did not submit a planned request for email access. This was an unplanned disruption affecting 300 users — it is an incident, not a service request.
-    *   *Why D is incorrect:* While the rerouting may require a change record depending on organizational policy, the primary next action is to raise a problem record for the switch failure. The incident scenario does not describe a change requiring CAB approval.
+### Question 2
+
+A monitoring system detects that a web server's CPU utilization has reached 91%, exceeding
+the 85% configured threshold. No user-facing impact has been reported yet, but application
+response times are beginning to degrade slightly.
+
+Which event category BEST describes this alert?
+
+- A) Informational
+- B) Warning
+- C) Exception
+- D) Critical
+
+#### Q2 Correct Answer: C — Exception
+
+#### Q2 Distractor Analysis
+
+- A (Informational) is incorrect. Informational events represent normal operation with no
+  threshold breached. The 85% threshold has been exceeded here.
+- B (Warning) is incorrect. A warning event approaches a threshold but has not yet
+  breached it. The threshold has already been exceeded — this is an exception.
+- D (Critical) is incorrect. "Critical" is not an ITIL 4 event category. The three
+  categories are informational, warning, and exception.
 
 ---
 
-**Question 4**
-An IT organization uses a two-factor prioritization model for incidents based on impact and urgency. A database server failure is preventing all 800 employees from accessing the order management system during the busiest sales period of the year. How should this incident be classified, and why?
-*   A) Low priority — the incident affects a single server, which is a limited technical scope.
-*   B) Medium priority — the incident affects a defined group of users, not external customers, so urgency is moderate.
-*   C) High priority (major incident) — the high impact on all employees and the business-critical timing creates both high impact and high urgency.
-*   D) Standard priority — all incidents follow the same response process regardless of scale, and priority is only assigned after root cause is identified.
-*   **Correct Answer:** C) This incident has both high impact (800 employees, business-critical system) and high urgency (peak sales period), qualifying it as a major incident requiring a coordinated response.
-*   **Distractor Analysis:**
-    *   *Why C is correct:* Priority in ITIL 4 Incident Management is determined by combining impact (the breadth and severity of the effect on the business) with urgency (how quickly the situation will deteriorate). An outage affecting 800 employees during the peak sales period represents maximum impact and urgency — a major incident requiring an escalated, coordinated response.
-    *   *Why A is incorrect:* Prioritization is based on business impact and urgency, not on the technical scope of what failed. A single server failure can have massive business impact.
-    *   *Why B is incorrect:* Urgency is not limited to external customers. Internal employees relying on a business-critical system during peak sales represent high urgency. The impact-plus-urgency model applies regardless of whether the affected users are internal or external.
-    *   *Why D is incorrect:* ITIL 4 explicitly requires incidents to be prioritized based on impact and urgency — not a flat, uniform process. Delaying prioritization until root cause is identified contradicts the Incident Management purpose of rapid restoration.
+### Question 3
+
+The primary purpose of Incident Management is best described as which of the following?
+
+- A) To identify the root cause of service failures and prevent recurrence
+- B) To restore normal service operation as quickly as possible and minimize negative impact
+- C) To authorize and implement changes that fix service defects
+- D) To maintain a database of known errors and approved workarounds
+
+#### Q3 Correct Answer: B
+
+#### Q3 Distractor Analysis
+
+- A is incorrect. Identifying root cause and preventing recurrence is the purpose of
+  Problem Management, not Incident Management.
+- C is incorrect. Authorizing and implementing fixes is the purpose of Change Enablement.
+  Incident Management focuses on restoration, not controlled modification.
+- D is incorrect. Maintaining a known error database is an output of Problem Management.
+  Incident Management may reference it but does not maintain it.
 
 ---
 
-**Question 5**
-Which of the following statements correctly distinguishes an incident from a service request in ITIL 4?
-*   A) An incident requires technical staff to resolve it, while a service request can be handled by any user without IT involvement.
-*   B) An incident is an unplanned interruption or quality reduction in a service, while a service request is a formal request from a user for something to be provided that is a normal part of an agreed service.
-*   C) Incidents and service requests are both handled by Incident Management — service requests are simply lower-priority incidents.
-*   D) A service request becomes an incident if the fulfillment time exceeds the agreed SLA target.
-*   **Correct Answer:** B) An incident is an unplanned disruption; a service request is a planned, expected request for a normal service activity.
-*   **Distractor Analysis:**
-    *   *Why B is correct:* ITIL 4 defines these as distinct categories. Incidents are unplanned — they represent something going wrong. Service requests are planned and expected — they represent users accessing services as designed (such as requesting a new laptop, resetting a password, or requesting access to a system).
-    *   *Why A is incorrect:* Many service requests do require IT staff involvement. The distinction is not about who handles them — it is about whether the activity was planned (service request) or represents an unplanned disruption (incident).
-    *   *Why C is incorrect:* Service requests are handled by Service Request Management, not Incident Management. They are not lower-priority incidents — they are a fundamentally different category of activity.
-    *   *Why D is incorrect:* A service request does not become an incident because of a fulfillment delay. If a service request cannot be fulfilled due to a system outage, that outage may generate a separate incident — but the service request itself remains a service request regardless of its fulfillment time.
+### Question 4
+
+During a P1 major incident, a designated team member is responsible for drafting and
+sending stakeholder status updates every 30 minutes, managing the outage communication
+page, and coordinating messaging to executive leadership.
+
+Which war room role does this person hold?
+
+- A) Incident Commander
+- B) Technical Lead
+- C) Scribe / Recorder
+- D) Communications Lead
+
+#### Q4 Correct Answer: D — Communications Lead
+
+#### Q4 Distractor Analysis
+
+- A (Incident Commander) is incorrect. The Incident Commander holds overall ownership
+  and decision authority but delegates communications to the Communications Lead.
+- B (Technical Lead) is incorrect. The Technical Lead directs the technical investigation
+  and coordinates resolver teams, not external stakeholder communication.
+- C (Scribe / Recorder) is incorrect. The Scribe documents internal actions and decisions
+  in real time. External communication is the Communications Lead's responsibility.
+
+---
+
+### Question 5
+
+A service desk has implemented a self-service portal where users can reset their own
+passwords, check ticket status, and access a knowledge base. Password reset calls to the
+service desk have dropped by 45% since the portal launched.
+
+Which service desk concept does this BEST illustrate?
+
+- A) Hierarchical escalation
+- B) Functional escalation
+- C) Shift-left strategy
+- D) Post-incident review
+
+#### Q5 Correct Answer: C — Shift-Left Strategy
+
+#### Q5 Distractor Analysis
+
+- A (Hierarchical escalation) is incorrect. Hierarchical escalation routes issues to
+  management for authority or visibility — not related to self-service adoption.
+- B (Functional escalation) is incorrect. Functional escalation transfers tickets to
+  more capable teams. Moving resolution to the user is the opposite direction.
+- D (Post-incident review) is incorrect. A PIR is a structured lessons-learned session
+  after a major incident, unrelated to self-service portal implementation.
+
+---
+
+### Question 6
+
+A monitoring tool detects normal backup job completion at 2:00 AM. No threshold has been
+breached. No action is required. The event is logged automatically.
+
+Which event category does this represent?
+
+- A) Exception
+- B) Warning
+- C) Informational
+- D) Alert
+
+#### Q6 Correct Answer: C — Informational
+
+#### Q6 Distractor Analysis
+
+- A (Exception) is incorrect. Exception events indicate a threshold breach or failure
+  requiring action. Normal backup completion is successful, expected operation.
+- B (Warning) is incorrect. Warning events indicate approach toward a threshold. A
+  successful backup job is not approaching any threshold.
+- D (Alert) is incorrect. An alert is a notification triggered by an exception event,
+  not itself an event category. The three categories are informational, warning, exception.
+
+---
+
+### Question 7
+
+An IT organization has experienced the same P2 incident three times in six weeks, each
+time caused by a memory leak in a core middleware component. The team restores service
+each time but has not addressed the underlying cause.
+
+What should happen next according to ITIL 4 best practice?
+
+- A) The service desk should assign a higher priority to future occurrences
+- B) The team should raise a problem record to investigate and address the root cause
+- C) The Incident Commander should declare a major incident for the next occurrence
+- D) The Change Advisory Board should immediately approve an emergency change
+
+#### Q7 Correct Answer: B
+
+#### Q7 Distractor Analysis
+
+- A is incorrect. Changing priority does not address the underlying cause. Priority
+  governs response urgency, not root cause investigation.
+- C is incorrect. Declaring a major incident is triggered by severity and current business
+  impact, not recurrence history alone. Problem Management is the correct response.
+- D is incorrect. An emergency change might be needed once a fix is identified, but the
+  first step is Problem Management to identify and validate the root cause.
+
+---
+
+### Question 8
+
+Which of the following BEST describes the service desk's role as the single point of contact?
+
+- A) The service desk resolves all incidents without escalation to other teams
+- B) The service desk is the one consistent entry point for all user IT interactions,
+  regardless of issue type or resolution path
+- C) The service desk is the only team authorized to create incident tickets
+- D) The service desk manages all IT projects and change requests on behalf of users
+
+#### Q8 Correct Answer: B
+
+#### Q8 Distractor Analysis
+
+- A is incorrect. The service desk does not resolve all incidents — many require
+  escalation to L2 and L3 teams. The SPOC concept is about the entry point, not
+  resolution ownership.
+- C is incorrect. Monitoring tools, automated systems, and other teams can all create
+  incident tickets. The service desk is the human SPOC, not the exclusive ticket creator.
+- D is incorrect. The service desk handles incident and service request intake. Change
+  requests and project management are separate functions.
+
+---
+
+### Question 9
+
+An incident is classified with High Impact and Low Urgency. According to ITIL 4 priority
+principles, which statement is most accurate?
+
+- A) This incident must be treated as P1 because impact is high
+- B) This incident will receive a moderate priority because urgency moderates the impact
+- C) Impact and urgency cannot conflict — all high-impact incidents are automatically high urgency
+- D) Low urgency automatically makes this a P5 informational incident
+
+#### Q9 Correct Answer: B
+
+#### Q9 Distractor Analysis
+
+- A is incorrect. Priority is a function of both impact AND urgency. High impact alone
+  does not automatically produce P1 — low urgency moderates the final priority.
+- C is incorrect. Impact and urgency are independent dimensions. A service affecting
+  many users (high impact) may still have a workaround making resolution timing less
+  critical (low urgency).
+- D is incorrect. Low urgency does not default to P5. P5 is for informational situations
+  with no current impact. This incident has high impact and cannot be P5.
+
+---
+
+### Question 10
+
+A server monitoring tool detects that disk utilization has reached 79% against a defined
+threshold of 80%. No service impact has occurred. The operations team receives a
+notification to investigate proactively.
+
+Which event category and appropriate response BEST match this scenario?
+
+- A) Informational — log the event and take no action
+- B) Warning — investigate proactively before the threshold is breached
+- C) Exception — create a P1 incident immediately
+- D) Exception — activate the war room and notify all stakeholders
+
+#### Q10 Correct Answer: B — Warning
+
+#### Q10 Distractor Analysis
+
+- A (Informational) is incorrect. Informational events represent normal operations.
+  At 79% — one point below threshold — this requires proactive attention, not just logging.
+- C is incorrect. An exception event triggers incident creation when a threshold is
+  breached. At 79%, the threshold has not been breached; this is a warning. P1 would
+  be a grossly disproportionate response.
+- D is incorrect. War room activation is reserved for declared P1 major incidents. A
+  near-threshold disk warning does not meet that criterion.
+
+---
+
+Module 08 Quiz | CIS-4335 IT Service Management | Texas Wesleyan University

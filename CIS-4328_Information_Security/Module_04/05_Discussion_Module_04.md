@@ -1,28 +1,85 @@
-# Discussion Forum: Module 4 - Operations
-## Course: CIS-4328_Information_Security (CompTIA Security+ (SY0-701))
+# Discussion Forum — Module 04: Threats, Attacks, and Vulnerabilities
+
+## CIS-4328 Information Security | Texas Wesleyan University
+
+### CompTIA Security+ SY0-701 Alignment
 
 ---
 
-## Discussion Prompt
-Consider the following real-world scenario or technical concept:
-*   **Topic Focus:** **Operations**
+## Overview
 
-**Your Tasks:**
-1.  **Initial Post (Due Wednesday at 11:59 PM):** In 150-200 words, explain how you would apply Operations in an enterprise system. Address the following:
-    *   What is the primary benefit of utilizing this configuration or standard in a production environment?
-    *   Identify one common security concern or operational challenge related to this topic, and suggest a best-practice mitigation strategy.
-2.  **Peer Responses (Due Sunday at 11:59 PM):** Read through your classmates' posts and write constructive replies (at least 50 words each) to at least two peers. In your replies:
-    *   Provide feedback on their proposed mitigation strategy.
-    *   Share an alternative approach or add context from your own research or lab exercises.
+This discussion connects Module 04's threat taxonomy to real-world incidents and your own professional reasoning. Security+ knowledge is only valuable when you can apply it to novel situations — that application skill is what this forum develops.
+
+**Initial Post Due:** Wednesday at 11:59 PM
+
+**Peer Responses Due:** Sunday at 11:59 PM
+
+**Minimum Participation:** One original post (250–350 words) and two substantive replies (100+ words each).
 
 ---
 
-## Discussion Rubric (10 Points Total)
-*   **Initial Post (6 Points):**
-    *   *5-6 pts:* Thoroughly addresses all prompt questions with technical accuracy, clear explanations, and appropriate terminology. Meets the word count.
-    *   *3-4 pts:* Addresses some prompt questions, but lacks detail or technical accuracy.
-    *   *0-2 pts:* Incomplete or missing initial post.
-*   **Peer Responses (4 Points):**
-    *   *4 pts:* Responds constructively to at least two peers, contributing meaningful additions to the conversation.
-    *   *2 pts:* Responds to only one peer, or comments are superficial (e.g., "Good post!").
-    *   *0 pts:* No peer responses submitted.
+## Scenario A — The Human Firewall Problem
+
+In Module 04 we examined technical controls for malware, phishing, and social engineering. Email authentication protocols (SPF, DKIM, DMARC), endpoint detection, and offline backups are all effective when properly configured. Yet the majority of successful ransomware attacks still begin with a phishing email that a human clicked. Despite years of security awareness training and improved spam filters, people continue to be described as the weakest link in the security chain.
+
+In 250–350 words, respond to all three of the following:
+
+1. Is "the human is the weakest link" a fair characterization, or does it shift blame away from organizational failures in security design? Defend your position with specific reasoning tied to the controls covered in Module 04.
+
+2. Select one real-world attack from the past three years that began with a social engineering or phishing vector. Briefly describe what happened, how the attack was delivered, and what the organization could have done differently from a technical or process standpoint.
+
+3. If you were a security manager with a $50,000 budget to reduce phishing risk across a 200-person organization, how would you allocate that budget? Justify your choices in terms of the Module 04 attack chain (delivery, execution, persistence, impact).
+
+---
+
+## Scenario B — Supply Chain Trust
+
+The SolarWinds SUNBURST attack affected approximately 18,000 organizations. The malicious update was cryptographically signed with the vendor's legitimate certificate, meaning every standard integrity check passed. Many organizations had no control in place that would have detected the compromise before damage occurred.
+
+In 250–350 words, respond to all three of the following:
+
+1. Explain why code signing, while necessary, is not sufficient as a supply chain control. What assumption does code signing make that the SolarWinds attack violated?
+
+2. Describe two controls that could have detected or limited the impact of the SUNBURST attack — one technical and one process-based. Explain the mechanism by which each control would have helped.
+
+3. Some security professionals argue that supply chain attacks are fundamentally different from traditional attacks because the trusted distribution channel is the attack vector. Do you agree? What does this imply for how organizations should evaluate third-party software?
+
+---
+
+## Peer Reply Guidance
+
+When replying to classmates, engage with one of these angles:
+
+- If your classmate argued that humans are the primary problem, challenge them with a scenario where technical controls failed first and human vigilance would not have helped.
+
+- If your classmate proposed a specific budget allocation, evaluate whether their choices address the full attack chain or focus too narrowly on a single phase.
+
+- If your classmate chose a specific real-world attack, add context about the indicators of compromise that were present but missed, or the detection controls that could have shortened dwell time.
+
+---
+
+## Research Starting Points
+
+These resources provide real-world case studies. Other credible sources are acceptable.
+
+- CISA Known Exploited Vulnerabilities Catalog: [https://www.cisa.gov/known-exploited-vulnerabilities-catalog](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)
+
+- Verizon DBIR (current edition): [https://www.verizon.com/business/resources/reports/dbir/](https://www.verizon.com/business/resources/reports/dbir/)
+
+- CISA Ransomware Guide: [https://www.cisa.gov/stopransomware/ransomware-guide](https://www.cisa.gov/stopransomware/ransomware-guide)
+
+---
+
+## Grading Criteria
+
+| Criterion | Points |
+|---|---|
+| Original post addresses all prompt questions | 40 |
+| Demonstrates correct use of Module 04 terminology | 25 |
+| Real-world example is accurate and cited | 15 |
+| Two substantive replies that add new reasoning | 20 |
+| **Total** | **100** |
+
+---
+
+Module 04 Discussion — End

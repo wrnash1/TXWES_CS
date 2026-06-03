@@ -1,205 +1,227 @@
-# Quiz: Module 10 – Procurement Management
+# Quiz: Module 10 — Earned Value Management
 
-**Course:** CIS-3310 IT Project Management
-**Certification Alignment:** CompTIA Project+ (PK0-005)
-**Prepared by:** Professor Nash | Texas Wesleyan University
+## Course: CIS-3310 IT Project Management
+
+## Texas Wesleyan University | Professor Nash
+
+## Certification Alignment: CompTIA Project+ (PK0-005)
 
 ---
 
 ## Question 1
 
-A company is procuring a custom software development service. The project scope is not fully defined because requirements are still being gathered. The buyer wants to pay the vendor's actual development costs plus a fee for profit. Which contract type is most appropriate?
+A project has a Budget at Completion of $500,000. At the current status date, the project team has completed 40% of the total scope. The project was planned to be 50% complete by this date. What is the Earned Value (EV)?
 
-- A) Fixed-Price Lump Sum
-- B) Cost Plus Fixed Fee
-- C) Fixed-Price Incentive Fee
-- D) Time and Material
+- A) $250,000
+- B) $200,000
+- C) $150,000
+- D) $300,000
 
-Correct Answer: B) Cost Plus Fixed Fee (CPFF) reimburses the seller for actual costs plus a predetermined fixed fee. It is appropriate when scope is uncertain or evolving, because the buyer is not locked into a fixed price for undefined work.
+**Correct Answer: B**
+
+EV is calculated as `BAC × actual % complete = $500,000 × 0.40 = $200,000`. EV reflects the budgeted value of work actually accomplished, not the planned value or the amount spent.
 
 Distractor Analysis:
 
-- *Why B is correct:* When scope is undefined and actual costs must be reimbursed, a Cost-Reimbursable contract is the correct family. CPFF provides a fixed profit fee regardless of performance, which is appropriate for early-phase or research-oriented work where scope is unclear.
-- *Why A is incorrect:* Fixed-Price Lump Sum requires a clearly defined scope. Applying a fixed price to undefined scope creates severe risk for both parties — the buyer risks paying for incomplete work; the seller risks absorbing cost overruns on undefined requirements.
-- *Why C is incorrect:* Fixed-Price Incentive Fee still requires a defined baseline price and scope. It adds a performance incentive on top of a fixed price structure — it does not accommodate undefined scope.
-- *Why D is incorrect:* Time and Material may work for short-duration undefined work, but CPFF is more appropriate for a professional services engagement where a fee structure (not just labor hours) is expected.
+- **Why B is correct:** EV always uses the actual completion percentage multiplied by BAC. The project is 40% done, so it has earned 40% of the total budget in value: `$500,000 × 0.40 = $200,000`.
+- **Why A is incorrect:** $250,000 is the PV — `$500,000 × 0.50` using the planned 50% completion. PV and EV are different metrics that use different percentages.
+- **Why C is incorrect:** $150,000 would correspond to 30% completion. No data supports this value. Confusing planned and actual percentages is the most common EVM calculation error.
+- **Why D is incorrect:** $300,000 would correspond to 60% completion. There is no 60% figure in this problem. Students who arrive here have likely inverted a percentage or used the wrong base.
 
 ---
 
 ## Question 2
 
-A project manager issues a solicitation document to vendors asking them to propose both a technical solution and a price for a complex IT infrastructure upgrade. The scope includes objectives and performance requirements but does not specify the exact technical approach. Which solicitation document type is the PM using?
+A project reports the following EVM data: `EV = $120,000`, `PV = $150,000`, `AC = $130,000`. What are the Schedule Variance and Cost Variance, and what do they indicate?
 
-- A) Invitation for Bid (IFB)
-- B) Request for Quotation (RFQ)
-- C) Request for Proposal (RFP)
-- D) Statement of Work (SOW)
+- A) SV = +$30,000 (ahead of schedule); CV = -$10,000 (over budget)
+- B) SV = -$30,000 (behind schedule); CV = -$10,000 (over budget)
+- C) SV = -$30,000 (behind schedule); CV = +$10,000 (under budget)
+- D) SV = +$20,000 (ahead of schedule); CV = +$10,000 (under budget)
 
-Correct Answer: C) A Request for Proposal (RFP) is used when the buyer needs vendors to propose both a technical solution and pricing. It is appropriate for complex procurements where the approach is not predetermined.
+**Correct Answer: B**
+
+`SV = EV - PV = $120,000 - $150,000 = -$30,000` (behind schedule). `CV = EV - AC = $120,000 - $130,000 = -$10,000` (over budget). Both variances are negative, indicating the project is both behind schedule and over budget.
 
 Distractor Analysis:
 
-- *Why C is correct:* RFPs are used when scope is defined in terms of objectives and outcomes but the technical approach is left to the vendor. The evaluation considers both the proposed solution and the price, not price alone.
-- *Why A is incorrect:* An Invitation for Bid (IFB) is used in formal or public procurement contexts where scope is fully defined and the award goes to the lowest compliant price. It does not invite technical approach proposals.
-- *Why B is incorrect:* A Request for Quotation (RFQ) is used when scope is well-defined and the buyer primarily wants competitive price quotes. It does not request proposed technical approaches.
-- *Why D is incorrect:* A Statement of Work (SOW) is a deliverable definition document, not a solicitation document. The SOW defines work scope and is included in or attached to the contract after award.
+- **Why B is correct:** Applying `SV = EV - PV` gives a negative result because EV ($120K) is less than PV ($150K) — behind schedule. Applying `CV = EV - AC` gives a negative result because EV ($120K) is less than AC ($130K) — over budget. Both formulas place EV in the minuend position.
+- **Why A is incorrect:** This reverses the SV sign. SV = -$30,000 is behind schedule, not ahead. Getting the sign wrong on variance questions is the most common EVM exam error.
+- **Why C is incorrect:** The CV sign is wrong. EV ($120K) is less than AC ($130K), making CV negative (over budget), not positive. Under-budget would require EV to exceed AC.
+- **Why D is incorrect:** Both values are computed incorrectly. This answer likely results from subtracting in reverse order for both formulas. Always place EV first in the subtraction.
 
 ---
 
 ## Question 3
 
-A project manager signs a contract with a vendor for $450,000 to deliver a complete network security upgrade with defined deliverables and acceptance criteria. The vendor completes the project but incurs $510,000 in actual costs due to unforeseen technical complexity. How much does the buyer pay?
+A project has `SPI = 0.85` and `CPI = 1.10`. Which statement best describes the project's status?
 
-- A) $510,000, because the actual costs must be reimbursed
-- B) $450,000, because the contract is Fixed-Price and the seller bears cost overruns
-- C) $480,000, as a negotiated split of the overrun
-- D) $510,000 plus a penalty fee for the cost overrun
+- A) Behind schedule and over budget
+- B) Ahead of schedule and under budget
+- C) Behind schedule and under budget
+- D) Ahead of schedule and over budget
 
-Correct Answer: B) Under a Fixed-Price contract, the buyer pays the agreed-upon contract price regardless of the seller's actual costs. The seller absorbs cost overruns. The buyer pays $450,000.
+**Correct Answer: C**
+
+SPI of 0.85 is below 1.0, indicating behind-schedule performance. CPI of 1.10 is above 1.0, indicating under-budget (cost-efficient) performance. The project has a schedule problem but a cost advantage.
 
 Distractor Analysis:
 
-- *Why B is correct:* This is the defining characteristic of Fixed-Price contracts. The seller takes on the cost risk in exchange for the fixed price. If actual costs exceed the contract price, the overrun is the seller's problem, not the buyer's.
-- *Why A is incorrect:* Reimbursing actual costs is the mechanism of Cost-Reimbursable contracts, not Fixed-Price. The buyer agreed to $450,000 and that is the total obligation.
-- *Why C is incorrect:* There is no standard procurement provision for negotiating a shared split of cost overruns on a Fixed-Price contract after the fact. Changes to the contract price require a formal change order with mutual agreement.
-- *Why D is incorrect:* A penalty fee for the seller's cost overrun is not a standard provision in Fixed-Price contracts. The buyer's protection is the fixed price itself — they owe nothing above $450,000.
+- **Why C is correct:** SPI < 1.0 always means behind schedule. CPI > 1.0 always means under budget (more efficient than planned). The combination is not contradictory — a project can be slow but spending less than budgeted per unit of work.
+- **Why A is incorrect:** The cost characterization is wrong. CPI = 1.10 means the project is getting $1.10 of value per dollar spent — that is under budget, not over budget.
+- **Why B is incorrect:** The schedule characterization is wrong. SPI = 0.85 means only 85 cents of planned work is being accomplished per dollar of planned work — that is behind schedule, not ahead.
+- **Why D is incorrect:** Both characterizations are wrong. This answer applies the index rules in reverse for both metrics. Review the threshold rule: above 1.0 is good, below 1.0 is bad.
 
 ---
 
 ## Question 4
 
-During Plan Procurement Management, the project team analyzes whether to develop an application in-house or purchase a commercial off-the-shelf (COTS) solution. They compare internal development costs, time to market, existing team expertise, and long-term maintenance implications. What is this process called?
+A project's total budget (BAC) is $600,000. The current CPI is 0.75. Using the CPI-based forecast method, what is the Estimate at Completion (EAC)?
 
-- A) Source selection
-- B) Procurement audit
-- C) Make-or-buy analysis
-- D) Contract type selection
+- A) $450,000
+- B) $800,000
+- C) $150,000
+- D) $600,000
 
-Correct Answer: C) Make-or-buy analysis is the technique used during planning to determine whether to produce a deliverable internally (make) or acquire it from an external source (buy). It considers cost, expertise, capacity, schedule, and strategic factors.
+**Correct Answer: B**
+
+`EAC = BAC / CPI = $600,000 / 0.75 = $800,000`. When CPI is below 1.0, EAC will always exceed BAC, indicating a forecasted cost overrun.
 
 Distractor Analysis:
 
-- *Why C is correct:* The scenario describes the exact inputs to a make-or-buy analysis: comparing internal costs to external costs, evaluating team expertise, and assessing schedule and maintenance implications. This is a Planning activity within Plan Procurement Management.
-- *Why A is incorrect:* Source selection is the process of evaluating proposals from external vendors and selecting one. It occurs during Conduct Procurements and presupposes that a buy decision has already been made.
-- *Why B is incorrect:* A procurement audit is a structured review of procurement processes during Control Procurements — typically at project closeout. It evaluates how well the procurement was managed, not whether to procure.
-- *Why D is incorrect:* Contract type selection is a separate activity that follows the make-or-buy decision. If the team decides to buy, they then select the appropriate contract type. Contract type selection cannot occur before the buy decision is made.
+- **Why B is correct:** `EAC = BAC / CPI` is the CPI-trend formula. Dividing $600,000 by 0.75 gives $800,000. A CPI of 0.75 means the project is spending $1.33 for every $1.00 of value — the overrun compounds across the remaining work.
+- **Why A is incorrect:** $450,000 = `$600,000 × 0.75`. This multiplies instead of divides. When CPI is below 1.0, dividing produces a larger number (the overrun forecast), not a smaller one.
+- **Why C is incorrect:** $150,000 cannot be derived from any standard EVM formula using this data. This may result from subtracting rather than dividing.
+- **Why D is incorrect:** $600,000 is BAC — the original budget, not the revised forecast. EAC equals BAC only when CPI is exactly 1.0. A CPI of 0.75 guarantees EAC will be higher than BAC.
 
 ---
 
 ## Question 5
 
-A government agency uses a contract type where it pays the vendor a base labor rate per hour plus the actual cost of materials. The contract does not have a not-to-exceed clause. Which contract type is this, and who bears the greater cost risk?
+After calculating EAC, a project manager needs to determine how much additional funding is required to complete the remaining work. The project has spent $180,000 so far and the EAC is $320,000. Which metric answers this question, and what is its value?
 
-- A) Fixed-Price Lump Sum — seller bears cost risk
-- B) Cost Plus Fixed Fee — buyer bears cost risk
-- C) Time and Material — buyer bears cost risk
-- D) Fixed-Price Incentive Fee — risk is equally shared
+- A) VAC = $140,000
+- B) ETC = $140,000
+- C) VAC = -$140,000
+- D) ETC = $500,000
 
-Correct Answer: C) A Time and Material (T&M) contract pays a set rate per labor hour plus actual material costs. Without a not-to-exceed clause, the buyer's total cost is uncapped and the buyer bears greater cost risk.
+**Correct Answer: B**
+
+ETC (Estimate to Complete) is the cost needed to finish remaining work. `ETC = EAC - AC = $320,000 - $180,000 = $140,000`. ETC is the "how much more do we need" metric.
 
 Distractor Analysis:
 
-- *Why C is correct:* T&M contracts are hybrids that include elements of both Fixed-Price (fixed labor rate) and Cost-Reimbursable (actual materials). Without an NTE clause, there is no ceiling on total cost, which exposes the buyer to unlimited cost growth if the work takes longer than estimated.
-- *Why A is incorrect:* Fixed-Price Lump Sum contracts have a defined, fixed total price. The buyer pays one amount regardless of hours worked or materials used. This is not consistent with paying a per-hour rate.
-- *Why B is incorrect:* Cost Plus Fixed Fee reimburses all actual costs plus a fixed fee — it does not use a fixed labor rate per hour. The scenario specifically describes a per-hour billing structure, which is T&M.
-- *Why D is incorrect:* Fixed-Price Incentive Fee contracts have a defined base price with incentive adjustments. They do not bill by the hour. Risk is not equally shared — the seller bears the primary cost risk in FPIF.
+- **Why B is correct:** ETC measures remaining cost, not total cost or variance. `ETC = EAC - AC = $320,000 - $180,000 = $140,000`. This is the additional funding required to complete the project from its current state.
+- **Why A is incorrect:** $140,000 labeled as VAC applies the correct arithmetic but the wrong metric. VAC = `BAC - EAC`, which requires BAC. Without BAC, VAC cannot be calculated from the data given. The question asks for additional funding needed, which is ETC.
+- **Why C is incorrect:** This uses VAC with a negative sign, suggesting an overrun interpretation — but VAC requires BAC, which is not provided here. The negative sign also misapplies the formula.
+- **Why D is incorrect:** $500,000 = `$180,000 + $320,000` — this adds AC and EAC, which has no meaning in EVM. ETC subtracts AC from EAC to find the remaining portion.
 
 ---
 
 ## Question 6
 
-A vendor has delivered all contracted deliverables and the PM has signed off on the final acceptance report. The vendor submits the final invoice and it is paid. Which additional step is required to formally close the procurement?
+A project manager is preparing a status report and needs to communicate whether the project will come in over or under its original budget at completion. Which EVM metric specifically forecasts the final budget surplus or deficit?
 
-- A) Nothing further is required — final payment constitutes contract closure
-- B) The project sponsor must sign a verbal approval of the vendor's performance
-- C) A formal contract closure document must be signed confirming all work is accepted and obligations are settled
-- D) The PM must submit a lessons learned report before the contract can be closed
+- A) CV (Cost Variance)
+- B) ETC (Estimate to Complete)
+- C) CPI (Cost Performance Index)
+- D) VAC (Variance at Completion)
 
-Correct Answer: C) Formal procurement closure requires a written contract closure document confirming that all deliverables have been accepted, all payments have been made, and the contract is officially closed. Final payment alone does not constitute formal closure.
+**Correct Answer: D**
+
+VAC (Variance at Completion) is the metric that forecasts the projected budget surplus or deficit at project end. Formula: `VAC = BAC - EAC`. A negative VAC indicates a projected overrun; a positive VAC indicates projected savings.
 
 Distractor Analysis:
 
-- *Why C is correct:* PMI requires formal documentation for procurement closure. This protects both parties by creating a clear legal record that all contractual obligations have been fulfilled. Without formal closure documentation, disputes about deliverable acceptance or remaining obligations can arise later.
-- *Why A is incorrect:* Final payment is a necessary but not sufficient condition for contract closure. The formal closure document establishes the official end of the contractual relationship and protects both parties legally.
-- *Why B is incorrect:* Verbal approval has no legal standing in contract administration. Procurement closure must be in writing to be enforceable and defensible.
-- *Why D is incorrect:* A lessons learned report is a project management best practice for project closure but is not a contractual requirement for procurement closure. The two processes are related but separate.
+- **Why D is correct:** VAC is specifically designed to answer the "will we come in over or under budget at the end?" question. It compares the original budget (BAC) to the current forecast (EAC) and expresses the difference.
+- **Why A is incorrect:** CV measures current cost performance — how over or under budget the project is at this moment. CV does not project forward to project completion.
+- **Why B is incorrect:** ETC measures how much additional money is needed to finish. It is a remaining-cost estimate, not a variance from the original budget target.
+- **Why C is incorrect:** CPI is an efficiency ratio that measures past cost performance. While CPI feeds the EAC calculation, it does not directly express a dollar surplus or deficit at completion.
 
 ---
 
 ## Question 7
 
-Which of the following best describes the purpose of establishing source selection criteria before issuing a Request for Proposal?
+A project team is 60% complete on a project with a BAC of $900,000. The project has spent $600,000. What is the Cost Variance (CV), and what does it tell the project manager?
 
-- A) To limit the number of vendors who can submit proposals
-- B) To ensure an objective, consistent evaluation of all proposals before any bias can be introduced
-- C) To allow the buyer to adjust criteria after reviewing proposals to select a preferred vendor
-- D) To establish the contract type before vendors are aware of the project requirements
+- A) CV = +$60,000; the project is under budget
+- B) CV = -$60,000; the project is over budget
+- C) CV = -$60,000; the project is ahead of schedule
+- D) CV = +$540,000; the project is under budget
 
-Correct Answer: B) Source selection criteria are defined and documented before proposals are received to ensure that all vendors are evaluated on the same factors in the same way, preventing bias and post-hoc rationalization.
+**Correct Answer: B**
+
+EV = `$900,000 × 0.60 = $540,000`. `CV = EV - AC = $540,000 - $600,000 = -$60,000`. The negative result means the project is over budget — it spent $600,000 to accomplish work worth only $540,000.
 
 Distractor Analysis:
 
-- *Why B is correct:* Pre-defining evaluation criteria is a procurement integrity principle. If criteria are set after proposals are reviewed, the buyer risks unconsciously tailoring the criteria to favor a preferred vendor — invalidating the competitive process.
-- *Why A is incorrect:* Source selection criteria define how proposals will be evaluated, not which vendors are eligible to submit. Eligibility is determined by pre-qualification requirements, not evaluation criteria.
-- *Why C is incorrect:* Adjusting criteria after receiving proposals is a procurement integrity violation. It undermines the competitive process and may expose the organization to legal challenges from unsuccessful vendors.
-- *Why D is incorrect:* Contract type selection is a separate procurement planning activity. It is based on scope definition and risk allocation, not on vendor awareness of requirements.
+- **Why B is correct:** First calculate EV from BAC and actual completion: `$900,000 × 0.60 = $540,000`. Then `CV = $540,000 - $600,000 = -$60,000`. Negative CV always means over budget. The project paid $600K for work worth $540K.
+- **Why A is incorrect:** A positive $60,000 would require EV to exceed AC. Here EV ($540K) is less than AC ($600K), making CV negative. Additionally, CV measures cost status, not schedule status.
+- **Why C is incorrect:** The magnitude is correct but the interpretation is wrong. CV measures cost performance, not schedule performance. "Ahead of schedule" is indicated by SV or SPI, not CV.
+- **Why D is incorrect:** $540,000 is the EV, not the CV. CV is the difference between EV and AC, not EV itself.
 
 ---
 
 ## Question 8
 
-A project manager is overseeing a vendor who is six weeks behind on a major deliverable under a Fixed-Price contract. The vendor claims the delay is caused by ambiguous requirements in the Statement of Work. Which procurement process is the PM performing when she reviews the contract, documents the delay, and initiates a dispute resolution process?
+Which EAC formula should a project manager use when past cost overruns were caused by a one-time, non-recurring event and future work is expected to proceed at the originally planned efficiency rate?
 
-- A) Plan Procurement Management
-- B) Conduct Procurements
-- C) Control Procurements
-- D) Close Procurements
+- A) `EAC = BAC / CPI`
+- B) `EAC = AC + ETC`
+- C) `EAC = AC + (BAC - EV)`
+- D) `EAC = EV / SPI`
 
-Correct Answer: C) Control Procurements is the Monitoring and Controlling process that monitors vendor performance, manages contract changes, resolves disputes, and administers payments throughout the contract period.
+**Correct Answer: C**
+
+When past overruns are non-recurring and remaining work is expected to proceed at the planned rate, the correct formula is `EAC = AC + (BAC - EV)`. This formula takes actual spending to date and adds the remaining planned work (BAC minus EV) at the original budgeted rate.
 
 Distractor Analysis:
 
-- *Why C is correct:* The scenario describes performance monitoring (tracking the delay), contract administration (reviewing the contract), and dispute resolution initiation — all of which are activities within Control Procurements.
-- *Why A is incorrect:* Plan Procurement Management is the Planning process where procurement approach, contract type, and SOW are defined. The contract is already in place in this scenario.
-- *Why B is incorrect:* Conduct Procurements is the Executing process where proposals are evaluated and contracts are awarded. The vendor has already been selected and the contract is active.
-- *Why D is incorrect:* Close Procurements is the formal process of confirming completion and closing the contract. The deliverable has not been accepted — the contract is still active and in dispute.
+- **Why C is correct:** This formula treats sunk costs (AC) as given and assumes remaining work will proceed exactly as planned. `BAC - EV` represents the remaining planned work value, and adding it to AC projects a total cost that corrects past overruns without compounding them into the future.
+- **Why A is incorrect:** `BAC / CPI` assumes the current cost efficiency trend continues for all remaining work. This formula is appropriate when overruns are systemic and will persist — the opposite of the scenario described.
+- **Why B is incorrect:** `AC + ETC` is used when the project team provides a fresh bottom-up estimate for remaining work. The scenario does not mention a new estimate — it states future work will proceed at the planned rate.
+- **Why D is incorrect:** `EV / SPI` is not a standard EVM formula. It would produce a value numerically equivalent to PV but does not represent any recognized EAC calculation method.
 
 ---
 
 ## Question 9
 
-A project manager is developing the Statement of Work for a cybersecurity assessment engagement. Which of the following elements belongs in the SOW rather than in the contract?
+A project has `BAC = $1,000,000`, `EV = $400,000`, and `AC = $500,000`. What is the To-Complete Performance Index (TCPI) if the project manager must finish within the original budget?
 
-- A) Payment schedule and invoice timing
-- B) Dispute resolution mechanism and applicable jurisdiction
-- C) Deliverables, acceptance criteria, and location of work
-- D) Seller warranty provisions and liability limits
+- A) 0.80
+- B) 1.20
+- C) 2.00
+- D) 0.67
 
-Correct Answer: C) The Statement of Work defines the technical scope of work: the deliverables to be produced, the acceptance criteria for each, and the location where performance will occur. These are work-definition elements, not contractual legal terms.
+**Correct Answer: B**
+
+`TCPI = (BAC - EV) / (BAC - AC) = ($1,000,000 - $400,000) / ($1,000,000 - $500,000) = $600,000 / $500,000 = 1.20`. A TCPI of 1.20 means the team must work 20% more efficiently than they have been to finish within the original budget.
 
 Distractor Analysis:
 
-- *Why C is correct:* The SOW is a technical work definition document. Deliverables (what will be delivered), acceptance criteria (how completion is verified), and performance location (where the work occurs) are exactly the content types the SOW is designed to capture.
-- *Why A is incorrect:* Payment schedules and invoice timing are financial and administrative terms that belong in the contract, not in the SOW. The SOW defines what the seller will do, not how and when the buyer will pay.
-- *Why B is incorrect:* Dispute resolution mechanisms and jurisdictional clauses are legal provisions that belong in the contract body. They govern the legal relationship between buyer and seller, not the technical work to be performed.
-- *Why D is incorrect:* Warranty provisions and liability limits are legal risk allocation terms that belong in the contract. They govern consequences after delivery, not the definition of what will be delivered.
+- **Why B is correct:** TCPI (to BAC) = remaining work / remaining budget = `(BAC - EV) / (BAC - AC) = $600,000 / $500,000 = 1.20`. The team has $600,000 of work remaining but only $500,000 of budget left — they must improve efficiency by 20%.
+- **Why A is incorrect:** 0.80 is the current CPI (`EV / AC = $400K / $500K`). CPI measures past efficiency; TCPI measures the efficiency required going forward. These are different metrics with different purposes.
+- **Why C is incorrect:** 2.00 would require the remaining work to be double the remaining budget. Double-check whether the TCPI numerator and denominator are correctly placed. No data in this problem yields 2.00 using a standard formula.
+- **Why D is incorrect:** 0.67 = `$400,000 / $600,000`, which is neither CPI nor TCPI using the correct formulas. Verify that both TCPI components — remaining work and remaining budget — are calculated by subtracting from BAC, not from each other.
 
 ---
 
 ## Question 10
 
-A project team decides to purchase a commercial off-the-shelf CRM platform rather than building a custom system internally. The primary factors in the decision were faster time to market, lower total cost of ownership over five years, and the internal team's lack of CRM development expertise. Which technique did the team use to reach this decision?
+An IT project has the following status: `SPI = 0.92`, `CPI = 0.88`. The project sponsor asks whether the project will recover. Based on EVM research on CPI stability, what is the most accurate statement the project manager can make?
 
-- A) Risk response planning
-- B) Make-or-buy analysis
-- C) Source selection
-- D) Procurement audit
+- A) The project will likely recover because SPI is close to 1.0
+- B) Because CPI has stabilized below 1.0, a significant cost recovery is statistically unlikely without major corrective action
+- C) The project is in good shape because both indices are positive numbers
+- D) CPI is irrelevant once the project passes the 50% completion mark
 
-Correct Answer: B) Make-or-buy analysis is the technique for evaluating whether to produce something internally (make) or acquire it externally (buy). The team evaluated time to market, cost, and internal expertise — the classic inputs to a make-or-buy analysis.
+**Correct Answer: B**
+
+Research on completed projects shows that CPI stabilizes after approximately 20% completion and rarely improves significantly. A CPI of 0.88 that has stabilized is a reliable predictor of a final cost overrun. Without major corrective action (scope reduction, resource reallocation, or schedule extension), recovery is unlikely.
 
 Distractor Analysis:
 
-- *Why B is correct:* The three factors cited — schedule (faster time to market), cost (lower TCO), and capability (lack of internal expertise) — are all standard make-or-buy analysis inputs. The decision to buy a COTS solution rather than build custom is the make-or-buy output.
-- *Why A is incorrect:* Risk response planning develops strategies to address specific identified risks. While procurement decisions can be risk responses, the decision-making framework described in the scenario is make-or-buy analysis, not a risk register response.
-- *Why C is incorrect:* Source selection evaluates competing vendors after the decision to buy has already been made. The scenario describes the decision-making process that precedes any vendor evaluation.
-- *Why D is incorrect:* A procurement audit reviews procurement processes after contract execution, typically at project closeout. It is not a planning-phase decision-making technique.
+- **Why B is correct:** This reflects the empirical finding that CPI tends to stabilize after 20% project completion. A CPI of 0.88 means the project is getting only 88 cents of value per dollar spent. If this efficiency level persists, `EAC = BAC / 0.88`, which is approximately 14% over budget at completion.
+- **Why A is incorrect:** SPI proximity to 1.0 addresses schedule, not cost. The sponsor's question about recovery almost certainly concerns whether the project will come in within budget. SPI does not answer cost recovery questions.
+- **Why C is incorrect:** Being a positive number is not the same as performing well. Indices of 0.92 and 0.88 are both below 1.0, indicating below-target performance on both dimensions — this is not "good shape."
+- **Why D is incorrect:** CPI becomes more reliable and meaningful as the project progresses. It is most informative and most predictive after the 20% completion mark — the opposite of what this distractor claims.

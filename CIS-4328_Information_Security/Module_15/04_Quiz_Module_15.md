@@ -1,76 +1,167 @@
-# Quiz: Module 15 - Governance, Compliance, and Privacy
-## Course: CIS-4328_Information_Security (CompTIA Security+ SY0-701)
+# Quiz: Module 15 — Security Operations
+
+## Course: CIS-4328 Information Security
+
+## Texas Wesleyan University | Professor Nash
+
+## Certification Alignment: CompTIA Security+ (SY0-701)
 
 ---
 
-**Question 1**
-An organization's security team is drafting a document that states: "All endpoints connecting to the corporate network must have endpoint detection and response (EDR) software installed, updated to the latest signature version, and actively reporting to the central management console." Which type of security governance document is this?
-A) Security Policy
-B) Security Standard
-C) Security Guideline
-D) Security Procedure
-*   **Correct Answer:** B) Security Standard
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* A security policy is a high-level statement of management intent and organizational objectives — for example, "All endpoints must be protected against malware." Policies do not specify the particular technology, version requirements, or configuration details. The document described specifies mandatory technical requirements, which is the definition of a standard.
-    *   *Why C is incorrect:* A security guideline provides recommended best practices that are not mandatory — organizations may choose to follow them at their discretion. The document described uses mandatory language ("must") and specifies precise requirements, which disqualifies it as a guideline.
-    *   *Why D is incorrect:* A security procedure is a step-by-step instruction set for carrying out a specific task (e.g., "How to enroll a new endpoint in the EDR console"). The document described sets a mandatory requirement, not a sequence of operational steps.
+### Instructions
+
+Select the best answer for each question. Each question is worth 10 points. This quiz is aligned to SY0-701 Domain 4 — Security Operations (28%).
 
 ---
 
----
+### Question 1
 
-**Question 2**
-A U.S.-based e-commerce company discovers that approximately 12% of its customer base consists of residents of European Union member states. The company collects names, email addresses, purchase history, and behavioral tracking data from all customers. A legal advisor informs the company it must comply with a specific privacy regulation due to the EU customer data. Which regulation applies?
-A) HIPAA (Health Insurance Portability and Accountability Act)
-B) PCI-DSS (Payment Card Industry Data Security Standard)
-C) GDPR (General Data Protection Regulation)
-D) FERPA (Family Educational Rights and Privacy Act)
-*   **Correct Answer:** C) GDPR (General Data Protection Regulation)
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* HIPAA regulates the privacy and security of protected health information (PHI) held by covered entities (healthcare providers, insurers) and their business associates — it does not apply to general e-commerce customer data such as purchase history and email addresses.
-    *   *Why B is incorrect:* PCI-DSS applies to any organization that processes, stores, or transmits payment card data — it governs cardholder data security, not the broader category of personal data including behavioral tracking and purchase history collected from EU residents.
-    *   *Why D is incorrect:* FERPA (Family Educational Rights and Privacy Act) protects the educational records of students at institutions receiving federal funding in the U.S. — it does not apply to commercial e-commerce customer data.
+A SOC analyst notices that 92% of daily alerts are automatically closed without investigation because they match known false positive patterns. The remaining 8% are routed to analysts. Which term best describes the technology performing this automated triage and routing?
 
----
+- A) SIEM
+- B) SOAR
+- C) EDR
+- D) CASB
+
+Correct Answer: B
+
+Explanation: SOAR executes automated playbooks that triage, enrich, and route alerts without human intervention. The SIEM generates the alerts; the SOAR acts on them. EDR focuses on endpoint detection; CASB governs cloud application access.
 
 ---
 
-**Question 3**
-A healthcare organization classifies its data into four levels: Public, Internal, Confidential, and Restricted. Patient medical records including diagnoses, treatment plans, and medication lists are classified as Restricted. An employee requests access to Restricted patient records for a research project unrelated to the patient's care. The privacy officer denies the request, citing a specific privacy principle. Which principle is the privacy officer applying?
-A) Data minimization — the organization should not have collected the patient records in the first place.
-B) Purpose limitation — personal data may only be used for the specific purpose for which it was originally collected.
-C) Data sovereignty — the records are subject to the laws of the country where the servers are located.
-D) Right to erasure — the patient has requested that their records be deleted.
-*   **Correct Answer:** B) Purpose limitation — personal data may only be used for the specific purpose for which it was originally collected.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Data minimization addresses the amount of data collected — it requires collecting only the minimum data necessary for the stated purpose. The records were legitimately collected for patient care, so data minimization is not the applicable principle here.
-    *   *Why C is incorrect:* Data sovereignty relates to which country's laws govern data stored in a specific jurisdiction — it does not determine what purposes an employee within the same organization may use patient data for.
-    *   *Why D is incorrect:* The right to erasure (GDPR "right to be forgotten") is a data subject right allowing individuals to request deletion of their personal data under certain conditions — it is initiated by the patient, not the privacy officer responding to an internal access request.
+### Question 2
+
+A production database server has a critical CVSS 9.8 vulnerability. The vendor patch requires a four-hour maintenance window unavailable for 12 days. Which is the BEST immediate action?
+
+- A) Accept the risk and schedule the patch for the next available window
+- B) Take the server offline until the patch can be applied
+- C) Implement compensating controls such as network segmentation and enhanced monitoring
+- D) Escalate to the vendor and wait for an emergency patch
+
+Correct Answer: C
+
+Explanation: When patching cannot occur immediately, compensating controls reduce exposure. Network segmentation limits lateral movement; IPS signatures can detect exploitation attempts. Accepting risk without mitigation (A) is inappropriate for CVSS 9.8. Taking the server offline (B) may not be feasible for a production system.
 
 ---
 
-**Question 4**
-A financial services company that processes credit card payments for customers undergoes an annual assessment to validate its security controls. The assessment is conducted by a qualified security assessor (QSA) who is independent of the organization and evaluates compliance against a specific set of technical and operational requirements including network segmentation, access controls, encryption of cardholder data, and vulnerability scanning. Which compliance framework governs this assessment?
-A) NIST Cybersecurity Framework (CSF)
-B) ISO/IEC 27001
-C) PCI-DSS
-D) SOC 2 Type II
-*   **Correct Answer:** C) PCI-DSS
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* The NIST Cybersecurity Framework is a voluntary framework for managing cybersecurity risk, organized around five functions (Identify, Protect, Detect, Respond, Recover). It does not mandate specific assessments by qualified security assessors for payment card processing organizations.
-    *   *Why B is incorrect:* ISO/IEC 27001 is an international standard for information security management systems (ISMS) that can apply to any organization — it does not specifically address cardholder data protection requirements or require a qualified security assessor (QSA) for certification.
-    *   *Why D is incorrect:* SOC 2 Type II is an auditing framework developed by the AICPA that evaluates a service organization's controls related to security, availability, processing integrity, confidentiality, and privacy over a defined period — it is not the mandatory standard for credit card processing security and does not use the QSA designation.
+### Question 3
+
+Which of the following BEST describes the difference between a credentialed and an uncredentialed vulnerability scan?
+
+- A) Credentialed scans run from inside the network; uncredentialed scans run from outside
+- B) Credentialed scans authenticate to each target and inspect local configuration; uncredentialed scans test only network-accessible services
+- C) Credentialed scans use active probing; uncredentialed scans use passive traffic analysis
+- D) Credentialed scans are faster because they skip port discovery
+
+Correct Answer: B
+
+Explanation: The key distinction is authentication. A credentialed scan logs into the target and inspects installed software, patch levels, and local configuration. An uncredentialed scan can only probe network-accessible services, producing more false negatives.
 
 ---
 
-**Question 5**
-A company's security team discovers that a software vendor with access to their development environment was compromised. The attackers used the vendor's legitimate credentials to access the company's source code repository and insert malicious code into a software update, which was then distributed to thousands of end customers. Which type of attack does this scenario describe, and which third-party risk control would have most directly reduced the likelihood of this breach?
-A) This is a phishing attack; implementing email filtering would have prevented it.
-B) This is a supply chain attack; enforcing contractual security requirements and conducting vendor security assessments would have reduced the risk.
-C) This is an insider threat; implementing user behavior analytics on internal employees would have detected it.
-D) This is a watering hole attack; deploying a web application firewall would have blocked the initial compromise.
-*   **Correct Answer:** B) This is a supply chain attack; enforcing contractual security requirements and conducting vendor security assessments would have reduced the risk.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* A phishing attack uses deceptive messages to trick users into revealing credentials or clicking malicious links — the scenario describes a vendor's systems being compromised, not an email-based deception. The attacker reached the target through a trusted third-party channel, not through phishing the target directly.
-    *   *Why C is incorrect:* An insider threat involves a current or former employee intentionally misusing their access — the attacker here was an external actor who compromised an external vendor, not an insider. User behavior analytics monitoring internal employees would not have detected a compromise of an external vendor's infrastructure.
-    *   *Why D is incorrect:* A watering hole attack compromises a website frequently visited by the target's employees to deliver malware — the scenario describes an attacker using compromised vendor credentials to directly access a development environment and tamper with software, which is the definition of a supply chain attack.
+### Question 4
+
+Which metric measures the elapsed time between when an attack begins and when the SOC first identifies it as a real incident?
+
+- A) MTTR
+- B) False positive rate
+- C) MTTD
+- D) Patch compliance rate
+
+Correct Answer: C
+
+Explanation: Mean Time to Detect (MTTD) measures the time from incident occurrence to SOC detection. MTTR measures time from detection to containment — that clock starts after MTTD ends.
+
+---
+
+### Question 5
+
+An organization wants a free, publicly available standard to define minimum security configurations for every new Windows Server before production deployment. Which resource is MOST appropriate?
+
+- A) DISA STIG for Windows Server
+- B) CIS Benchmark for Windows Server
+- C) NIST SP 800-53 control catalog
+- D) ISO/IEC 27001 Annex A
+
+Correct Answer: B
+
+Explanation: CIS Benchmarks are free, publicly downloadable hardening guides for commercial organizations. DISA STIGs are valid but intended for DoD environments. NIST SP 800-53 and ISO 27001 Annex A are control frameworks, not system-specific hardening guides.
+
+---
+
+### Question 6
+
+An investigation reveals a production server was modified outside change control three weeks ago, disabling a key log source. Which control would have MOST effectively prevented this?
+
+- A) Mandatory CAB approval for all production changes
+- B) Automated patch deployment using WSUS
+- C) Weekly vulnerability scanning
+- D) SIEM alert correlation rules
+
+Correct Answer: A
+
+Explanation: The Change Advisory Board (CAB) review requires all production changes to be formally requested, reviewed, and approved before implementation. Vulnerability scanning detects weaknesses but would not block an unauthorized administrative change.
+
+---
+
+### Question 7
+
+A security manager reports a 97% critical patch compliance rate within 72 hours and a 94% security awareness training completion rate. What type of metrics are these?
+
+- A) Key Risk Indicators (KRIs)
+- B) Key Performance Indicators (KPIs)
+- C) Vulnerability metrics
+- D) Incident metrics
+
+Correct Answer: B
+
+Explanation: KPIs measure how well the security program performs its intended functions. KRIs measure current risk exposure — for example, number of unpatched critical CVEs open right now.
+
+---
+
+### Question 8
+
+A SIEM collects logs from 47 systems using different date formats, field names, and severity labels. Before correlation rules can be applied, the SIEM must perform which process?
+
+- A) Log compression
+- B) Log encryption
+- C) Log normalization
+- D) Log archiving
+
+Correct Answer: C
+
+Explanation: Log normalization converts heterogeneous log data into a consistent format so the SIEM can compare and correlate events across sources. Without normalization, a firewall deny event cannot be meaningfully correlated with a Windows failed login event.
+
+---
+
+### Question 9
+
+Critical patches must be deployed within 72 hours per policy. A critical Apache vulnerability published 96 hours ago is still unpatched because CAB approval took too long. What is the BEST resolution to prevent this conflict in the future?
+
+- A) Eliminate change control for security patches entirely
+- B) Define critical security patches as a pre-approved standard change type
+- C) Extend the critical patch SLA to 14 days
+- D) Deploy patches directly to production without testing
+
+Correct Answer: B
+
+Explanation: Standard changes are pre-approved for well-understood, low-risk procedures. Classifying critical patch deployment as a standard change eliminates individual CAB review bottlenecks while maintaining documentation. Eliminating change control entirely (A) removes the audit trail. Extending the SLA (C) increases exposure.
+
+---
+
+### Question 10
+
+A SOC team's MTTD has remained at 18 hours despite new SIEM hardware. Investigation reveals correlation rules are 14 months old and alerts from critical systems are suppressed by an outdated filter. Which action MOST directly reduces MTTD?
+
+- A) Purchase a SOAR platform to automate response
+- B) Hire additional Tier 1 analysts
+- C) Update SIEM correlation rules and remove outdated suppression filters
+- D) Increase vulnerability scanning frequency to daily
+
+Correct Answer: C
+
+Explanation: MTTD reflects detection speed. Outdated rules and suppressed alerts mean the SIEM cannot detect modern attack patterns promptly. Updating rules and removing filters directly improves detection coverage. SOAR reduces MTTR, not MTTD. More analysts cannot detect incidents the SIEM never alerts on.
+
+---
+
+End of Quiz — Module 15

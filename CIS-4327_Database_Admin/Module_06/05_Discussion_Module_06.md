@@ -1,77 +1,71 @@
-# Discussion Forum: Module 06 — Firestore and Datastore: Document Databases
+# Discussion Forum: Module 06 — PostgreSQL Administration
 
 ## Course: CIS-4327 Database Administration
 
-## Texas Wesleyan University — Professor Nash
+**Certification Alignment:** Google Cloud Professional Database Engineer
 
 ---
 
-### Overview
+## Discussion Prompt
 
-This discussion connects Firestore's document model, security configuration, and service selection criteria to real-world design decisions. Read all three scenarios and post your initial response to the one that best matches your background. Reply to at least two classmates.
+This week we covered PostgreSQL administration in depth — configuration, authentication, roles, VACUUM, monitoring, and connection pooling. These are the skills that separate a developer who can query a database from a DBA who can keep one running reliably under production load.
 
----
-
-### Scenario A — Ride-Share App Backend Design
-
-A new ride-share startup is designing their application backend. The engineering team has sketched a data model with three main entities: drivers (with profile, vehicle info, ratings), riders (with profile, payment methods, ride history), and trips (with route, fare, timestamps, driver and rider references). A junior engineer proposes Cloud SQL for PostgreSQL because the relationships between entities feel relational. The senior engineer argues that Firestore would be more appropriate given the client platforms (iOS, Android, web dashboard) and the requirement that riders see live trip status updates.
-
-For your initial post, address all of the following.
-
-Evaluate the junior engineer's relational argument: which aspects of the ride-share data model actually benefit from relational design, and which aspects are better served by a document model? Explain which Firestore Native mode feature directly addresses the live trip status requirement and how it works architecturally. Design the top-level Firestore collection structure for this application — list at least four collections and explain what documents each contains. Identify one operational challenge the team would face if they chose Firestore and later needed to run complex analytics across all trips. Your post should be 175–225 words using correct Firestore terminology.
+For this discussion, respond to **both parts** below.
 
 ---
 
-### Scenario B — Security Rules for a Healthcare Platform
+## Part A — Configuration Decision
 
-A healthcare startup stores patient health records in Firestore. Each patient document contains personal health information (PHI) protected by HIPAA regulations. The application has three user roles: patients (who can read only their own record), care providers (who can read and update records for patients in their assigned panel), and administrators (who can read all records but cannot modify clinical data fields).
+You are the database engineer for a SaaS company that is migrating a self-managed PostgreSQL 14 instance to Cloud SQL for PostgreSQL. The application currently uses 350 persistent connections from an application server pool. The Cloud SQL instance will be an `n2-standard-8` (8 vCPUs, 32 GB RAM).
 
-For your initial post, address all of the following.
+Address all four points in your post:
 
-Explain why Firestore Security Rules — rather than application-layer authorization — are the appropriate access control mechanism for a direct-client-to-Firestore architecture. Describe how the Security Rules would use `request.auth` fields to distinguish between the three user roles (assume the role is stored as a custom claim in the Firebase Authentication token). Identify one limitation of Firestore Security Rules that is particularly relevant for a healthcare compliance context (e.g., audit logging, complex role hierarchies) and describe how it would be addressed. Describe what `request.resource.data` is used for in Security Rules and give a concrete example of a clinical data field that administrators should not be able to modify. Your post should be 175–225 words using correct Firestore Security Rules terminology.
+1. **shared_buffers and work_mem:** What values would you recommend for `shared_buffers` and `work_mem` on a 32 GB instance? Justify your choices using the sizing rules from the lecture.
 
----
+2. **max_connections vs PgBouncer:** The engineering team proposes setting `max_connections = 400` to accommodate growth. Do you agree or disagree? If you recommend a different approach, explain it with specific PgBouncer configuration values (`max_client_conn`, `default_pool_size`, `pool_mode`).
 
-### Scenario C — Migrating from Cloud Datastore to Firestore
+3. **wal_level for replication:** The company wants a read replica for reporting queries. What `wal_level` is needed, and how would you set this flag on Cloud SQL?
 
-A government agency runs a case management system on Cloud Datastore that has been in production for seven years. The system has 40 million entities across 15 kinds. The IT director wants to migrate to Firestore Native mode to use real-time updates for a new field agent mobile app. A consultant warns that the migration is irreversible and requires careful planning.
-
-For your initial post, address all of the following.
-
-Explain why the migration from Datastore mode to Firestore Native mode is irreversible — what happens to the database after the migration that cannot be undone? Describe two specific risks the agency must evaluate before executing the migration, focusing on Datastore features or behaviors that may not have exact equivalents in Native mode. Identify which entity group consistency patterns in Datastore would need to be redesigned as Firestore Native mode transactions, and explain the structural difference. Recommend a testing strategy the agency should follow before migrating production data, describing at least one validation step. Your post should be 175–225 words using correct terminology from Module 06.
+4. **pg_hba.conf equivalent on Cloud SQL:** Cloud SQL does not expose pg_hba.conf directly. How do you control which clients can connect, and which authentication method does Cloud SQL enforce for SSL connections?
 
 ---
 
-### Peer Response Guidelines
+## Part B — Real-World Reflection
 
-Reply to at least two classmates across any scenario. Each reply must be at least 50 words and add technical value — a design alternative, a security consideration they missed, a specific Firestore behavior relevant to their scenario, or a substantive follow-up question.
+Think about a database or application you have worked with (a class project, personal project, internship, or job experience). If you have not worked with a database directly, use a publicly documented system (e.g., a well-known open-source project on GitHub).
 
----
+Answer these questions:
 
-### Discussion Rubric — 10 Points Total
+1. Did that system show any signs of the problems discussed in this module — connection exhaustion, bloated tables, slow queries from stale statistics, or lock contention? Describe what you observed or found in the documentation.
 
-Initial post — 6 points.
+2. Based on what you learned in Module 06, what one change would have the biggest positive impact on that system, and why?
 
-- 5 to 6 points: Addresses all required elements with technical accuracy, correct Firestore terminology, and clear reasoning. Meets the 175–225 word count.
-- 3 to 4 points: Addresses most elements but omits one required item or uses imprecise terminology.
-- 0 to 2 points: Initial post is missing, substantially incomplete, or contains significant factual errors.
-
-Peer responses — 4 points.
-
-- 4 points: Two substantive replies of at least 50 words each that contribute technical content.
-- 2 points: Only one qualifying reply, or both replies are superficial.
-- 0 points: No peer responses by the deadline.
+3. Would PgBouncer transaction pooling be safe to use with that application, or would session-level features require session pooling instead? Explain your reasoning.
 
 ---
 
-### Due Dates
+## Response Requirements
 
-Initial post: Wednesday at 11:59 PM
-
-Peer responses: Sunday at 11:59 PM
-
-Professor Nash reads every post. Posts that apply Security Rules concepts from the lab to the discussion scenarios will be recognized in class.
+- Initial post: 300–400 words covering both parts.
+- Reply to at least two classmates: 100–150 words each.
+- Your replies should either challenge an assumption in your classmate's recommendation with a specific counter-argument, or extend their idea with an additional configuration they did not mention.
 
 ---
 
-Reference: cloud.google.com/learn
+## Grading Criteria
+
+| Criterion | Points |
+|---|---|
+| Part A — all four configuration points addressed with justification | 40 |
+| Part B — reflection grounded in specific observable detail | 30 |
+| Two peer replies that are substantive and technically accurate | 20 |
+| Professional writing, correct PostgreSQL terminology | 10 |
+| **Total** | **100** |
+
+---
+
+## Instructor Notes
+
+Look for students who correctly identify that `work_mem` must be sized conservatively because a single query can allocate it multiple times across parallel sort nodes. A common error is assuming `work_mem = 500 MB` is safe on a 32 GB box when `max_connections = 400` — the math shows potential worst-case RAM usage of 200 GB. Strong posts will catch this.
+
+For Part B, the goal is to build metacognitive awareness — connecting textbook parameters to real performance problems. Encourage students who say "I haven't worked with a database" to explore a GitHub project's issue tracker for performance-related issues; almost every large open-source project has them.

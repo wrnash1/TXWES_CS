@@ -1,83 +1,230 @@
-# Quiz: Module 09 - Secrets Management – HashiCorp Vault and AWS Secrets Manager
+# Quiz: Module 09 - Secrets Management: HashiCorp Vault and AWS Secrets Manager
 
-## Course: CIS-4350_DevSecOps_CICD_Pipelines (Certified DevSecOps Professional (CDP))
+## Course: CIS-4350 DevSecOps and CI/CD Pipelines
 
----
-
-**Question 1**
-Why should API keys and database passwords never be hardcoded in Git source files?
-
-* A) Git's compression algorithm corrupts binary data such as keys during storage
-* B) Once pushed, secrets are saved in repository history and can be exposed to unauthorized parties even if the file is later deleted or overwritten
-* C) Hardcoded secrets increase code execution time because the interpreter must parse them on startup
-* D) Hardcoded secrets cause Git merge conflicts that cannot be automatically resolved
-* **Correct Answer:** B) Git histories are persistent; once a secret is committed, it remains in the repository history — in all clones, forks, and cached copies — and can be extracted even after the file is modified or deleted.
-* **Distractor Analysis:**
-  * *Why B is correct:* Git stores every version of every file in its object database. A secret committed in version 1 and deleted in version 2 is still fully recoverable by checking out version 1 or reading the object pack. Attackers routinely scan public GitHub repositories and their full histories for exposed credentials.
-  * *Why A is incorrect:* Git does not corrupt data during storage. Its SHA-1/SHA-256 content-addressable model ensures exact byte preservation of all committed content.
-  * *Why C is incorrect:* Hardcoded credentials have no measurable impact on code execution time. The risk is exposure and unauthorized access, not performance.
-  * *Why D is incorrect:* Hardcoded strings do not cause Git merge conflicts any more than other code. The risk is credential exposure through repository access, not version control mechanics.
+## Certification Alignment: DevSecOps Professional (DSOE)
 
 ---
 
-**Question 2**
-Which of the following most accurately describes HashiCorp Vault's dynamic secrets capability?
+### Question 1
 
-* A) Vault stores a fixed, pre-configured password for each service and returns the same value on every request
-* B) Vault generates short-lived, unique credentials on demand (such as a temporary database username and password) that automatically expire after a configured time-to-live, eliminating long-lived static credentials
-* C) Vault encrypts static environment variable files at rest on the CI/CD runner's filesystem
-* D) Vault scans Git repository history to identify and automatically rotate any exposed credentials it detects
-* **Correct Answer:** B) Vault's dynamic secrets engine generates credentials on demand with a short TTL — if the credential is leaked, it expires and becomes useless without any manual rotation step.
-* **Distractor Analysis:**
-  * *Why B is correct:* Vault's database secrets engine, for example, creates a unique PostgreSQL user with a randomly generated password for each requesting application or pipeline job. The credential expires at TTL, reducing the blast radius of any leak to the TTL window rather than indefinitely.
-  * *Why A is incorrect:* Returning the same static password on every request is the traditional secrets manager pattern (AWS Secrets Manager with manual rotation). Vault's dynamic secrets capability specifically avoids static, long-lived credentials.
-  * *Why C is incorrect:* Encrypting environment variable files on disk is a function of secrets injection at rest (e.g., encrypted Kubernetes Secrets). Vault's dynamic secrets is about generating fresh credentials on demand, not encrypting existing files.
-  * *Why D is incorrect:* Scanning repositories for exposed credentials is the function of secret scanning tools like Gitleaks or TruffleHog. Vault does not scan code repositories.
+A developer commits a database password to a public GitHub repository, realizes the mistake immediately, and removes it in the next commit. What is the correct security response?
 
----
+- A) No action is needed because the secret is no longer in the current version of the repository
+- B) Rotate the exposed credential immediately, then remove it from Git history using `git filter-repo` or BFG Repo-Cleaner, and audit for unauthorized use
+- C) Delete the repository and create a new one without the secret in its history
+- D) Make the repository private, which prevents anyone from reading the Git history
 
-**Question 3**
-A CI/CD pipeline needs to authenticate to AWS to deploy infrastructure. Which approach best follows DevSecOps secrets management principles?
+#### Q1 Correct Answer
 
-* A) Store AWS access key and secret key as plaintext in the repository's `.env` file and reference them in the workflow
-* B) Hardcode the AWS credentials directly in the workflow YAML file as string literals for simplicity
-* C) Configure the CI platform (GitHub Actions) to use OIDC federation with AWS IAM to exchange a short-lived OIDC token for temporary AWS credentials — no long-lived keys stored anywhere
-* D) Email the AWS credentials to all developers on the team so they can configure them locally if the pipeline fails
-* **Correct Answer:** C) OIDC federation allows the CI platform to authenticate to AWS using a signed JWT issued by GitHub, which AWS IAM exchanges for temporary STS credentials — eliminating the need to store any long-lived AWS keys.
-* **Distractor Analysis:**
-  * *Why C is correct:* GitHub Actions OIDC + AWS IAM role trust is the modern, keyless approach. The pipeline receives temporary credentials (valid for 15 minutes to 1 hour) scoped to exactly the permissions needed. No secret is ever stored, committed, or rotated manually.
-  * *Why A is incorrect:* Storing credentials in a `.env` file in the repository is a critical security failure — the file will be committed to Git and exposed in repository history, forks, and CI logs.
-  * *Why B is incorrect:* Hardcoding credentials in workflow YAML commits them to the repository in plaintext, making them accessible to anyone with repository read access and persisting them in Git history.
-  * *Why D is incorrect:* Distributing credentials via email creates uncontrolled copies, violates the principle of least privilege, and provides no audit trail or automatic expiration.
+B — The credential must be rotated immediately because anyone who observed the repository at any point during its exposure may have copied the secret. Removing a secret from a repository does not remove it from Git history — `git log` on any clone still shows it. `git filter-repo` or BFG Repo-Cleaner rewrites history to remove the secret. Audit logs should be checked for unauthorized use during the exposure window.
+
+#### Q1 Distractor Analysis
+
+- *Why A is incorrect:* The secret is permanently in Git history. Every clone of the repository, every cached view on GitHub, and any automated scraper that may have indexed the repository during the exposure window retains the secret.
+- *Why C is incorrect:* Deleting the repository does not revoke the credential. Anyone who cloned the repository before deletion retains the secret in their local Git history. Rotation is the essential first step.
+- *Why D is incorrect:* Making the repository private prevents future exposure but does not address any access that occurred during the period the repository was public. Rotation is still required.
 
 ---
 
-**Question 4**
-A secret scanning tool (Gitleaks) detects an AWS access key pattern in a pull request diff. The developer claims it is a test key that has already been deleted from AWS. What is the correct DevSecOps response?
+### Question 2
 
-* A) Approve the PR and merge it since the key is already deleted and no longer works
-* B) Block the merge, have the developer remove the key from the commit (using `git commit --amend` or interactive rebase), confirm the key is truly revoked in AWS, and run the secret scan again to verify the finding is gone before merging
-* C) Add the detected pattern to the scanner's suppression list so future scans don't flag this pattern
-* D) Accept the merge but immediately rotate all AWS keys in the account as a precaution
-* **Correct Answer:** B) Even if the key is revoked, it should not enter the repository history. The commit must be rewritten to remove the credential, the scan must re-pass, and revocation in AWS must be confirmed before the PR is merged.
-* **Distractor Analysis:**
-  * *Why B is correct:* A revoked key is less dangerous but still represents a policy violation and a precedent that credentials belong in source code. Rewriting the commit (via `git commit --amend` or interactive rebase) keeps the repository history clean and prevents the pattern from normalizing credential commits.
-  * *Why A is incorrect:* Merging a PR with a committed credential — even a revoked one — stores it permanently in the main branch history, normalizes the bad practice, and could cause confusion in future security audits.
-  * *Why C is incorrect:* Adding the AWS key pattern to the suppression list would prevent all future AWS key detections of the same format, creating a dangerous blindspot in the scanner's coverage.
-  * *Why D is incorrect:* Rotating all AWS keys is a disproportionate response and does not address the root issue: the credential pattern in the commit history. The specific key should be confirmed revoked and removed from the commit.
+Why must a GitHub Actions secrets scanning job use `fetch-depth: 0` in the `actions/checkout` step?
+
+- A) `fetch-depth: 0` enables scanning of files in subdirectories, which the default shallow clone excludes
+- B) The default shallow clone only retrieves the most recent commit; `fetch-depth: 0` retrieves the full Git history so secrets scanning can detect credentials committed in any prior commit
+- C) `fetch-depth: 0` is required for Gitleaks to authenticate to GitHub and access private repository contents
+- D) The default checkout downloads only staged changes; `fetch-depth: 0` ensures the working tree is fully populated
+
+#### Q2 Correct Answer
+
+B — By default, `actions/checkout` performs a shallow clone with `fetch-depth: 1`, retrieving only the most recent commit to minimize clone time. Gitleaks scans Git commit objects, not just the working tree. Without the full history, Gitleaks cannot detect secrets that were committed in earlier commits, even if those secrets remain in the repository history.
+
+#### Q2 Distractor Analysis
+
+- *Why A is incorrect:* `fetch-depth` controls the number of commits retrieved, not the directory depth of files included. Subdirectory files are included in any checkout regardless of fetch depth.
+- *Why C is incorrect:* Gitleaks authentication to GitHub uses the `GITHUB_TOKEN` environment variable, not the `fetch-depth` parameter. These are independent configuration concerns.
+- *Why D is incorrect:* The default `actions/checkout` populates the working tree completely. `fetch-depth` controls the depth of commit history fetched, not the completeness of the working tree.
 
 ---
 
-**Question 5**
-A DevSecOps team wants to prevent developers from accidentally committing secrets to the repository in the first place. Which combination of controls provides the most comprehensive prevention?
+### Question 3
 
-* A) Display a reminder in the team's Slack channel each Monday asking developers not to commit secrets
-* B) Combine a local pre-commit hook (running Gitleaks on staged files before commit) with a CI pipeline stage (running Gitleaks on the full diff of each pull request) so secrets are caught both locally and server-side
-* C) Configure the Git repository to store all files as binary blobs, making it impossible to inspect them for text patterns
-* D) Require all developers to use a password manager for their personal passwords, reducing the likelihood of confusing credentials with code
-* **Correct Answer:** B) Defense in depth using both a local pre-commit hook (earliest gate, catches before commit creation) and a CI pipeline scanner (authoritative server-side gate, catches anything that bypassed the local hook) provides comprehensive, automated coverage.
-* **Distractor Analysis:**
-  * *Why B is correct:* The pre-commit hook stops most accidental commits before they happen; the CI gate catches anything that slipped through (e.g., a developer who skipped hooks with `--no-verify`). Together they create a defense-in-depth approach where no single bypass point eliminates protection.
-  * *Why A is incorrect:* Slack reminders are an awareness mechanism, not a technical control. They do not prevent any commits and are easily ignored or missed.
-  * *Why C is incorrect:* Storing files as binary blobs would break all text editors, IDEs, code review tools, and diff functionality — it is operationally destructive and does not prevent secrets from being embedded in binary representations.
-  * *Why D is incorrect:* Personal password managers address how developers store their own credentials but do not prevent developers from accidentally embedding API keys, tokens, or other programmatic credentials in source code during development.
+Which HashiCorp Vault authentication method is designed for CI/CD pipeline authentication?
+
+- A) GitHub auth — the pipeline uses a GitHub personal access token to authenticate to Vault
+- B) AppRole — the pipeline authenticates using a role ID and secret ID to receive a Vault token
+- C) Kubernetes auth — the pipeline authenticates using a Kubernetes service account JWT
+- D) LDAP auth — the pipeline authenticates using a service account in the corporate directory
+
+#### Q3 Correct Answer
+
+B — AppRole is Vault's machine-to-machine authentication method designed for CI/CD pipelines and automated systems. The pipeline is provisioned with a role ID (a non-secret identifier) and a secret ID (a secret that can be rotated). Together, these authenticate the pipeline to Vault and return a Vault token scoped to a specific policy.
+
+#### Q3 Distractor Analysis
+
+- *Why A is incorrect:* GitHub auth is typically used for developer CLI access to Vault using personal access tokens, not for automated pipeline authentication. Personal access tokens are user-bound and rotate with user account changes.
+- *Why C is incorrect:* Kubernetes auth is designed for pods running inside a Kubernetes cluster, where the pod's service account JWT provides identity. It is the correct choice for Kubernetes-hosted workloads but not for GitHub Actions runners.
+- *Why D is incorrect:* LDAP auth is for human user authentication against a corporate directory. Service accounts may use LDAP auth in some configurations, but AppRole is the purpose-built choice for automated pipeline authentication.
+
+---
+
+### Question 4
+
+What are dynamic secrets in HashiCorp Vault, and what security advantage do they provide over static secrets?
+
+- A) Dynamic secrets are secrets that are automatically synchronized across multiple cloud regions, providing high availability
+- B) Dynamic secrets are credentials generated on demand by Vault, are unique per request, and expire automatically after a configurable lease period — bounding the exposure window if a credential is leaked
+- C) Dynamic secrets are secrets that are encrypted with a rotating key, making them unreadable without the current decryption key
+- D) Dynamic secrets are secrets stored in environment variables that are regenerated on each container restart
+
+#### Q4 Correct Answer
+
+B — Vault's database secret engine (and other dynamic secret engines) creates a unique, time-limited credential each time a client requests access. If the credential is leaked, it expires automatically at the end of its lease. There is no persistent credential to steal — each deployment gets a different credential with a bounded lifetime.
+
+#### Q4 Distractor Analysis
+
+- *Why A is incorrect:* Multi-region synchronization describes a high-availability configuration of Vault's storage backend, not dynamic secrets. Dynamic secrets refer to on-demand generation of unique credentials.
+- *Why C is incorrect:* Encryption with a rotating key describes key management, not dynamic secrets. Dynamic secrets are about generating unique credentials per request, not about the encryption of stored secrets.
+- *Why D is incorrect:* Secrets regenerated on container restart are still static — they persist until the container restarts. Dynamic secrets are generated on demand by Vault's secret engines and expire based on a Vault-controlled lease, independent of container lifecycle.
+
+---
+
+### Question 5
+
+A developer writes the following Dockerfile to authenticate to a private package registry during the build:
+
+```dockerfile
+FROM python:3.11-slim
+ARG REGISTRY_TOKEN
+RUN pip install --extra-index-url https://user:${REGISTRY_TOKEN}@registry.internal.example.com mypackage
+```
+
+What is the security problem with this approach, even if the final image does not contain any file with the token?
+
+- A) The `ARG` instruction writes the token to a temporary file that can be read by any user in the container
+- B) Each `RUN` instruction creates an image layer. The `REGISTRY_TOKEN` value is embedded in the layer metadata and recoverable via `docker history`, even though no file containing the token exists in the final filesystem
+- C) The `ARG` instruction transmits the token value to Docker Hub during the build push phase
+- D) The token is automatically printed to `docker build` standard output, which is captured in CI pipeline logs
+
+#### Q5 Correct Answer
+
+B — Docker images consist of layers, each corresponding to a `RUN` instruction. The full command string, including the `${REGISTRY_TOKEN}` value interpolated at build time, is stored in the layer metadata. `docker history --no-trunc` reveals the complete command. This data is present in the image manifest and recoverable by anyone with access to the image, including from a container registry.
+
+#### Q5 Distractor Analysis
+
+- *Why A is incorrect:* `ARG` values are not written to temporary files. They exist as environment variables in the build context. The exposure is in the image layer metadata, not a runtime file.
+- *Why C is incorrect:* Docker build args are not transmitted to Docker Hub during push. The exposure is in the local image layers that are pushed as part of the image, not in a separate transmission during build.
+- *Why D is incorrect:* Docker build output shows step progress but does not automatically expand and print `ARG` values. The exposure is in the image layer metadata, not in standard output.
+
+---
+
+### Question 6
+
+What is OIDC federation in the context of GitHub Actions deploying to AWS, and what specific risk does it eliminate?
+
+- A) OIDC federation allows GitHub Actions to share secrets with AWS Secrets Manager using an encrypted tunnel, eliminating man-in-the-middle risk
+- B) OIDC federation creates a trust relationship between GitHub and AWS IAM. The pipeline authenticates using a short-lived JWT from GitHub and receives temporary AWS credentials, eliminating the need to store long-lived AWS access keys in GitHub Secrets
+- C) OIDC federation synchronizes GitHub repository permissions with AWS IAM roles, eliminating manual IAM role management
+- D) OIDC federation enables AWS Lambda to directly invoke GitHub Actions workflows, eliminating polling-based CI triggers
+
+#### Q6 Correct Answer
+
+B — With OIDC federation, an IAM role is configured to trust GitHub's OIDC provider. When the pipeline runs, GitHub issues a short-lived JWT asserting the identity of the workflow (repository, branch, environment). AWS IAM verifies the JWT signature against GitHub's public key and returns temporary credentials (an assumed-role session). No long-lived AWS access key or secret key needs to be stored in GitHub Secrets.
+
+#### Q6 Distractor Analysis
+
+- *Why A is incorrect:* OIDC federation is an authentication mechanism, not an encryption tunnel for secret synchronization. The specific risk eliminated is the storage of long-lived credentials, not man-in-the-middle attacks.
+- *Why C is incorrect:* OIDC federation does not synchronize permission policies. IAM roles must still be manually configured with the appropriate permissions. The federation solves the authentication problem, not the authorization configuration problem.
+- *Why D is incorrect:* OIDC federation is a GitHub-to-AWS authentication mechanism. It has nothing to do with Lambda invoking GitHub Actions workflows.
+
+---
+
+### Question 7
+
+An organization stores their production database password in GitHub Secrets and injects it as an environment variable in their deployment pipeline. The security team requests a migration to HashiCorp Vault. What are two specific security capabilities Vault provides that GitHub Secrets cannot?
+
+- A) Vault supports more secret types than GitHub Secrets, and Vault can be used from any operating system
+- B) Vault provides per-access audit logging showing which pipeline run retrieved which secret, and Vault supports dynamic secrets with automatic expiry — capabilities GitHub Secrets does not provide
+- C) Vault secrets are longer than GitHub Secrets and therefore more secure, and Vault can be accessed without internet connectivity
+- D) Vault integrates with GitHub Actions using official GitHub-supported actions, and Vault encrypts secrets using AES-256
+
+#### Q7 Correct Answer
+
+B — GitHub Secrets stores static encrypted values with no per-read audit trail — you cannot see which pipeline run accessed the secret. Vault logs every secret read to its audit log (timestamp, accessor, path, operation), enabling security investigations. Vault's dynamic secrets capability generates unique credentials per request with automatic expiry, which GitHub Secrets cannot do.
+
+#### Q7 Distractor Analysis
+
+- *Why A is incorrect:* Both GitHub Secrets and Vault support arbitrary string secrets and are accessible from any OS. These are not meaningful security distinctions.
+- *Why C is incorrect:* Secret length is not a security differentiator here. Access to Vault without internet is about deployment architecture, not a security capability advantage.
+- *Why D is incorrect:* Both GitHub Secrets and Vault encrypt stored secrets. AES-256 usage alone is not a meaningful differentiation. The security advantages of Vault are audit logging and dynamic secrets.
+
+---
+
+### Question 8
+
+A GitHub Actions pipeline injects a database password from GitHub Secrets into a deployment step. The developer adds a debugging step to troubleshoot a connection failure:
+
+```yaml
+- name: Debug environment
+  run: env
+```
+
+What security risk does this step introduce, and how does GitHub attempt to mitigate it?
+
+- A) The `env` command outputs all environment variables to pipeline logs. GitHub attempts to mitigate this by masking the values of secrets injected from GitHub Secrets in log output
+- B) The `env` command creates a new environment variable file that persists on the runner and may be read by subsequent jobs
+- C) The `env` command sends environment variable names to GitHub's telemetry system for monitoring
+- D) The `env` command disables secret injection for the remainder of the job to prevent further exposure
+
+#### Q8 Correct Answer
+
+A — When GitHub Secrets are injected as environment variables, GitHub automatically masks their values in pipeline log output — any log line containing the secret value is replaced with `***`. This provides a layer of protection against accidental logging. However, the masking is pattern-based and can be bypassed if the secret is base64-encoded, split across log lines, or otherwise transformed before logging.
+
+#### Q8 Distractor Analysis
+
+- *Why B is incorrect:* The `env` command prints to standard output, not to a file. The output is captured in the pipeline log, not written to a persistent file on the runner.
+- *Why C is incorrect:* GitHub does not transmit environment variable names to a telemetry system via the `env` command. The risk is log exposure, not telemetry exposure.
+- *Why D is incorrect:* The `env` command is a standard shell utility. It does not interact with GitHub Actions' secret injection mechanism or disable it.
+
+---
+
+### Question 9
+
+Which of the following correctly describes the recommended pattern for using secrets during a Docker image build without exposing them in any image layer?
+
+- A) Store the secret in a `.env` file and add `.env` to `.dockerignore`, which prevents the file from being copied into the image
+- B) Pass the secret as a `--build-arg` and delete it in the same `RUN` instruction using `unset`
+- C) Use BuildKit's `--mount=type=secret` to provide the secret to a `RUN` instruction. The secret is available during the build step but is not stored in any layer
+- D) Use a multi-stage build and only copy the final compiled artifact to the production stage, relying on stage isolation to prevent credential exposure
+
+#### Q9 Correct Answer
+
+C — BuildKit's `--mount=type=secret` syntax mounts the secret as a tmpfs file available only during the execution of that specific `RUN` instruction. It is not recorded in any layer metadata. After the `RUN` instruction completes, the secret is no longer accessible in the image.
+
+#### Q9 Distractor Analysis
+
+- *Why A is incorrect:* A `.env` file in `.dockerignore` prevents the file from being `COPY`'d into the image, but it does not address the case where a secret needs to be used during a `RUN` step. The secret would need to be passed another way, and that passing mechanism may still expose it.
+- *Why B is incorrect:* `unset` in a `RUN` instruction affects the running shell's environment, but the full command string — including the `--build-arg` value interpolated into the command — is already stored in the layer metadata before `unset` executes. Layer metadata records the command as written, not the state after execution.
+- *Why D is incorrect:* Multi-stage builds prevent artifacts from one stage reaching the final image, but they do not prevent layer metadata from intermediate stages being stored in the local Docker daemon's layer cache. An intermediate stage that used a `--build-arg` secret would still expose it in that stage's layer metadata.
+
+---
+
+### Question 10
+
+A pipeline uses AWS Secrets Manager to retrieve database credentials at deployment time using OIDC federation. The IAM role trusted by the GitHub OIDC provider grants `secretsmanager:GetSecretValue` on `arn:aws:secretsmanager:us-east-1:123456789012:secret:myapp/production/*`. A developer proposes expanding the IAM role to also grant `secretsmanager:GetSecretValue` on `*` to simplify future onboarding. What DevSecOps principle does this violate, and what specific risk does it introduce?
+
+- A) It violates the principle of defense in depth; the risk is that Secrets Manager becomes unavailable if the policy is too broad
+- B) It violates the principle of least privilege; the risk is that a compromised pipeline can retrieve any secret in the AWS account, including secrets belonging to other applications or environments
+- C) It violates the principle of separation of duties; the risk is that developers and operations staff share the same secret access permissions
+- D) It violates the principle of immutable infrastructure; the risk is that the IAM policy cannot be rolled back if the broader permissions cause a compliance failure
+
+#### Q10 Correct Answer
+
+B — Least privilege requires granting only the permissions needed for the specific task. The `*` resource grant means a compromised pipeline job can retrieve every secret in the AWS account — production database passwords for other applications, third-party API keys, encryption keys. The blast radius of a pipeline compromise expands from "this application's secrets" to "every secret in the account."
+
+#### Q10 Distractor Analysis
+
+- *Why A is incorrect:* Broad IAM policies do not cause service unavailability. Defense in depth is about layering controls; the violated principle here is least privilege.
+- *Why C is incorrect:* Separation of duties concerns the separation of roles between individuals (developer, operator, auditor). The described change is about resource scope in an IAM policy, not role separation between people.
+- *Why D is incorrect:* Immutable infrastructure is about replacing infrastructure instead of modifying it in place. IAM policy rollback is operationally straightforward. The primary concern here is the security risk from overly broad permissions.

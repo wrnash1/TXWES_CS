@@ -1,220 +1,357 @@
-# Reading Guide: Module 06 - SAST: Static Application Security Testing
+# Reading Guide: Module 06 — Infrastructure as Code Security
 
 ## Course: CIS-4350 DevSecOps and CI/CD Pipelines
+
+## Texas Wesleyan University | Professor Nash
 
 ## Certification Alignment: DevSecOps Professional (DSOE)
 
 ---
 
-## Introduction
+## Learning Objectives
 
-Module 06 covers SAST — Static Application Security Testing — the most widely deployed automated security control at the code commit stage of the DevSecOps pipeline. SAST analyzes source code without executing the application, detecting vulnerability patterns and data flow issues before code reaches any environment. Understanding SAST mechanics, tools, finding analysis, and pipeline integration is essential for the DevSecOps Professional exam.
+After completing this reading guide, you will be able to:
 
----
-
-## Section 1: High-Yield Glossary
-
-**SAST (Static Application Security Testing)** — Analysis of source code, bytecode, or binaries without executing the application. Identifies vulnerability patterns, insecure API usage, and data flow issues. Runs at the commit or pull request pipeline stage.
-
-**Pattern matching** — A SAST analysis technique that uses regular expressions or abstract syntax tree (AST) matching to detect known dangerous code patterns: SQL string concatenation, `eval()` calls, `innerHTML` assignments, hardcoded credentials. Semgrep is primarily pattern-matching.
-
-**Taint analysis** — A SAST analysis technique that tracks the flow of untrusted data (taint sources: user input, API parameters) through code paths to dangerous operations (taint sinks: SQL execution, shell commands, HTML rendering) without sanitization. More accurate than pattern matching but computationally expensive.
-
-**Taint source** — A location in code where untrusted data enters the application: HTTP request parameters, form inputs, file reads, database query results, environment variables.
-
-**Taint sink** — A location in code where untrusted data could cause a vulnerability if it arrives unvalidated: SQL execution functions, OS command execution, HTML rendering, file write operations.
-
-**Abstract Syntax Tree (AST)** — A tree representation of the syntactic structure of source code. AST-based analysis enables more precise pattern matching than regex, understanding code structure rather than just text patterns.
-
-**CWE (Common Weakness Enumeration)** — A community-developed list of software and hardware weakness types. SAST findings are mapped to CWE identifiers. Key CWEs for SAST: CWE-89 (SQL Injection), CWE-79 (XSS), CWE-798 (Hardcoded Credentials), CWE-22 (Path Traversal), CWE-502 (Deserialization of Untrusted Data).
-
-**OWASP Top 10** — A regularly updated list of the ten most critical web application security risks, published by OWASP. SAST rule packs are commonly organized around OWASP Top 10 categories. Key categories: A01 (Broken Access Control), A03 (Injection), A07 (Authentication Failures).
-
-**Semgrep** — An open-source, pattern-matching SAST tool with a readable YAML rule syntax. Supports 30+ languages. Community rule registry at semgrep.dev. Integrates natively with GitHub Actions.
-
-**SonarQube** — An enterprise-grade code quality and security platform. Supports quality gates (configurable pass/fail thresholds). Community edition is free; Enterprise adds advanced taint analysis.
-
-**Checkmarx** — A commercial enterprise SAST platform known for deep interprocedural taint analysis used in regulated industries. Higher accuracy and higher false-positive rate than pattern-based tools.
-
-**Quality gate** — A SonarQube feature that defines configurable thresholds a code change must pass: no new critical vulnerabilities, test coverage above a percentage. Quality gate failure blocks PR merging.
-
-**False positive** — A SAST finding that reports a vulnerability that does not actually exist in the running application. High false-positive rates cause alert fatigue and reduce developer trust in SAST tooling.
-
-**Alert fatigue** — A condition where developers begin ignoring security alerts because the volume or false-positive rate is too high. Alert fatigue reduces the effectiveness of automated security tooling.
-
-**Suppression comment** — A code comment that instructs a SAST tool to ignore a specific finding at a specific line. Used for confirmed false positives. Must include a documented justification.
-
-**Breaking vs. non-breaking mode** — A pipeline configuration distinction. Breaking mode: SAST findings above a severity threshold fail the pipeline job and block merging. Non-breaking mode: findings are reported but do not block the pipeline.
-
-**Parameterized query** — The secure alternative to SQL string concatenation. Uses placeholders (`?`, `%s`, or named parameters) with a separate parameter list. The database driver treats parameters as data, not as SQL syntax, preventing injection.
+- Explain why IaC misconfigurations are a leading cause of cloud data breaches
+- Scan Terraform configurations with tfsec and checkov and interpret findings
+- Write OPA Rego policies for Terraform plan validation with Conftest
+- Describe HashiCorp Sentinel's three enforcement levels
+- Explain drift detection and the immutable infrastructure principle
+- Build a complete IaC security pipeline in GitHub Actions
 
 ---
 
-## Section 2: SAST Tool Comparison
+## Section 1 — IaC Misconfiguration Risk Landscape
 
-| Dimension | Semgrep | SonarQube | Checkmarx |
-|---|---|---|---|
-| License | Open-source (Community) | Open-source Community / Commercial Enterprise | Commercial |
-| Primary analysis technique | Pattern matching + lightweight taint | Semantic analysis + taint | Deep interprocedural taint |
-| Rule format | YAML (readable, writable by engineers) | Built-in + custom rules | Built-in + custom queries |
-| Pipeline integration | GitHub Actions, GitLab CI, Jenkins | SonarScanner CLI, CI plugins | CxFlow CI integration |
-| Quality gates | Via Semgrep App | Built-in quality gate feature | Project-level policies |
-| Language support | 30+ languages | 30+ languages | 30+ languages |
-| False positive rate | Lower (pattern-based) | Medium | Higher (deep analysis) |
-| Best suited for | Most DevSecOps pipelines | Code quality + security combined | Regulated enterprise (banking, health) |
+### 1.1 Common IaC Misconfigurations
 
----
+| Misconfiguration | Cloud Service | Risk |
+|---|---|---|
+| Public read ACL | AWS S3 | Data exposure |
+| `0.0.0.0/0` ingress on port 22 | Security Groups | SSH brute force |
+| Encryption at rest disabled | RDS, S3, EBS | Data exposure if storage accessed |
+| Logging disabled | S3, CloudTrail, LB | No audit trail for incident response |
+| MFA delete disabled | S3 versioning | Objects deleted without second factor |
+| Public IP on database | RDS | Direct internet access to DB |
+| Wildcard IAM permissions (`"Action": "*"`) | IAM Policy | Privilege escalation |
+| Root account API keys | IAM | Full AWS account compromise |
+| Security group with all egress allowed | Security Groups | Data exfiltration |
+| Secrets in Terraform variables (plaintext) | Any | Credential exposure in state file |
 
-## Section 3: SAST vs. DAST vs. SCA Comparison
+### 1.2 Why Automation is Required
 
-| Dimension | SAST | DAST | SCA |
-|---|---|---|---|
-| Full name | Static Application Security Testing | Dynamic Application Security Testing | Software Composition Analysis |
-| Requires running application | No | Yes | No |
-| Primary target | First-party source code | Running application endpoints | Third-party dependencies |
-| Pipeline stage | Commit / Pull request | Staging | Build |
-| Finds | Insecure code patterns, injection flaws, hardcoded creds | Runtime flaws, auth issues, config errors | Known CVEs in libraries |
-| False positive rate | Higher (no runtime context) | Lower (real execution) | Low (CVE database match) |
-| Representative tools | Semgrep, SonarQube, Checkmarx | OWASP ZAP, Burp Suite Enterprise | Snyk, OWASP Dependency-Check |
+Manual review of IaC files fails because:
 
----
-
-## Section 4: Common SAST-Detected Vulnerabilities Reference
-
-| CWE | OWASP Category | Vulnerability | Insecure Pattern | Secure Pattern |
-|---|---|---|---|---|
-| CWE-89 | A03 Injection | SQL Injection | `f"SELECT ... {user_input}"` | Parameterized query with `?` placeholder |
-| CWE-79 | A03 Injection | Cross-Site Scripting (XSS) | `response.write(request.param)` | `html.escape(param)` before output |
-| CWE-78 | A03 Injection | OS Command Injection | `os.system(user_input)` | `subprocess.run([cmd], shell=False)` |
-| CWE-798 | A07 Auth Failures | Hardcoded Credentials | `password = "secret123"` | `os.environ.get('PASSWORD')` |
-| CWE-22 | A01 Access Control | Path Traversal | `open(user_path)` | Validate against allowlist, use `os.path.realpath` |
-| CWE-502 | A08 Data Integrity | Insecure Deserialization | `pickle.loads(user_data)` | Use JSON; never deserialize untrusted data with pickle |
+- Infrastructure engineers rarely have cloud-specific security training
+- Reviews happen under time pressure
+- Cloud service APIs add new security parameters — legacy configs miss new best practices
+- Copy-paste from public examples propagates insecure defaults
+- State files (Terraform .tfstate) often contain plaintext secrets and are stored insecurely
 
 ---
 
-## Section 5: SAST Finding Analysis Framework
+## Section 2 — tfsec
 
-When analyzing a SAST finding (required in the lab and tested on the exam), use this structure:
+### 2.1 tfsec Rule Severity and Coverage
 
-1. **Finding description:** What did the tool flag? Quote the rule name and the flagged line.
-2. **Vulnerability type:** Name the vulnerability class (SQL injection, XSS, hardcoded credential, etc.).
-3. **CWE and OWASP classification:** Map to the correct CWE number and OWASP Top 10 category.
-4. **Attack scenario:** Describe how an attacker would exploit this finding in practice.
-5. **Why SAST caught it:** What analysis technique (pattern matching, taint analysis) detected it?
-6. **Remediation:** Write the corrected code. Explain why the fix eliminates the vulnerability.
+| Severity | Example Rule | Description |
+|---|---|---|
+| CRITICAL | `aws-s3-no-public-buckets` | S3 bucket is publicly accessible |
+| CRITICAL | `aws-iam-no-policy-wildcards` | IAM policy contains wildcard actions |
+| HIGH | `aws-rds-enable-iam-authentication` | RDS not using IAM auth |
+| HIGH | `aws-ec2-no-public-ip-subnet` | Subnet assigns public IPs automatically |
+| MEDIUM | `aws-s3-enable-bucket-logging` | S3 access logging not enabled |
+| LOW | `aws-s3-enable-versioning` | S3 versioning not enabled |
 
----
-
-## Section 6: Semgrep Rule Structure Reference
-
-Semgrep rules are written in YAML. Understanding the structure is tested on the exam.
+### 2.2 tfsec Configuration File
 
 ```yaml
-rules:
-  - id: sql-injection-string-concat
-    patterns:
-      - pattern: |
-          $CURSOR.execute("..." + $INPUT)
-      - pattern: |
-          $CURSOR.execute(f"...{$INPUT}...")
-    message: >
-      Potential SQL injection: untrusted input concatenated into SQL query.
-      Use parameterized queries instead.
-    languages: [python]
-    severity: ERROR
-    metadata:
-      cwe: CWE-89
-      owasp: A03:2021
+# .tfsec/config.yml
+minimum_severity: MEDIUM
+exclude:
+  - aws-s3-enable-versioning  # Not required for ephemeral build artifacts
+custom_checks:
+  - code: CUS001
+    description: S3 bucket must have a name starting with 'company-'
+    impact: Naming convention enforces ownership tracking
+    resolution: Prefix bucket name with 'company-'
+    requiredTypes:
+      - resource
+    requiredLabels:
+      - aws_s3_bucket
+    errorMessage: S3 bucket name must start with 'company-'
+    matchSpec:
+      name: bucket
+      action: startsWith
+      value: "company-"
 ```
 
-Key fields: `id` (unique rule identifier), `patterns` (code patterns to match), `message` (developer-facing description and remediation hint), `languages` (scoped to specific languages), `severity` (INFO/WARNING/ERROR).
-
----
-
-## Section 7: Pipeline Integration Patterns
-
-### Breaking Mode (Recommended for New Projects)
-
-Configure the SAST action to exit with a non-zero code on findings:
+### 2.3 tfsec in CI
 
 ```yaml
-- name: Run Semgrep SAST
-  uses: returntocorp/semgrep-action@v1
+# GitHub Actions tfsec job
+- name: Run tfsec
+  uses: aquasecurity/tfsec-action@v1.0.0
   with:
-    config: p/owasp-top-ten
-    # Semgrep action exits non-zero on findings by default in CI mode
+    working_directory: infra/
+    soft_fail: false
+    format: sarif
+    sarif_file: tfsec-results.sarif
+    additional_args: --minimum-severity MEDIUM
 ```
 
-### Non-Breaking Mode (Recommended When Introducing SAST to Legacy Code)
+---
 
-```yaml
-- name: Run Semgrep SAST (advisory)
-  uses: returntocorp/semgrep-action@v1
-  with:
-    config: p/owasp-top-ten
-  continue-on-error: true
-  # continue-on-error: true makes the job succeed regardless of Semgrep exit code
+## Section 3 — checkov
+
+### 3.1 Framework Coverage
+
+| Framework | checkov Flag | Example Resources Scanned |
+|---|---|---|
+| Terraform | `--framework terraform` | aws_s3_bucket, aws_security_group |
+| CloudFormation | `--framework cloudformation` | AWS::S3::Bucket, AWS::EC2::SecurityGroup |
+| Kubernetes | `--framework kubernetes` | Deployment, Pod, NetworkPolicy |
+| Dockerfile | `--framework dockerfile` | FROM, USER, RUN, COPY |
+| GitHub Actions | `--framework github_actions` | Workflow permissions, action pinning |
+| Helm | `--framework helm` | Chart values, templates |
+| ARM (Azure) | `--framework arm` | Azure Resource Manager templates |
+
+### 3.2 Inline Suppressions
+
+```hcl
+resource "aws_security_group_rule" "alb_http" {
+  type        = "ingress"
+  from_port   = 80
+  to_port     = 80
+  protocol    = "tcp"
+  cidr_blocks = ["0.0.0.0/0"]
+
+  # checkov:skip=CKV_AWS_25: Public HTTP required for ALB; protected by WAF
+  # Approved by: SecurityTeam, 2024-03-15, ticket INC-4521
+}
 ```
 
-### Progressive Tightening Strategy
+Suppression comments are tracked in Git history, providing an audit trail of accepted risk decisions.
 
-Week 1: Non-breaking, CRITICAL only — measure baseline finding count.
-Week 2-4: Triage and remediate CRITICAL findings.
-Week 5: Make CRITICAL breaking. Continue non-breaking for HIGH.
-Week 6-8: Remediate HIGH findings.
-Week 9: Make HIGH breaking. Continue pattern for MEDIUM.
+### 3.3 Custom Python Checks
 
----
+```python
+# checks/custom/s3_lifecycle_policy.py
+from checkov.common.models.enums import CheckCategories, CheckResult
+from checkov.terraform.checks.resource.base_resource_check import BaseResourceCheck
 
-## Section 8: Docker Security Best Practices Reference
+class S3LifecyclePolicy(BaseResourceCheck):
+    def __init__(self):
+        name = "S3 bucket should have a lifecycle policy"
+        id = "CKV_CUSTOM_S3_LIFECYCLE"
+        supported_resources = ["aws_s3_bucket_lifecycle_configuration"]
+        categories = [CheckCategories.ENCRYPTION]
+        super().__init__(name=name, id=id,
+                         categories=categories,
+                         supported_resources=supported_resources)
 
-These practices are cross-cutting exam topics.
+    def scan_resource_conf(self, conf):
+        rules = conf.get("rule", [])
+        if rules:
+            return CheckResult.PASSED
+        return CheckResult.FAILED
 
-- Use minimal base images (Alpine, distroless) — reduces attack surface.
-- Never run containers as root — use USER directive.
-- Multi-stage builds — excludes build tools from production image.
-- Pin dependency versions — reproducible and CVE-trackable.
-- Scan images with Trivy or Grype before push.
-- Store secrets in environment variables — never in image layers.
-
----
-
-## Section 9: DevSecOps Professional Exam Tips
-
-1. **SAST pipeline stage** — SAST runs at the commit/PR stage. The exam tests this as the correct placement for catching first-party code vulnerabilities before they merge.
-
-2. **Taint source to sink** — Know the taint flow pattern: source (user input) → code path → sink (SQL execution) without sanitization = vulnerability. The exam presents code snippets and asks you to identify the source, sink, and remediation.
-
-3. **Parameterized queries** — Know that parameterized queries (with `?` placeholders and separate parameter lists) are the correct SQL injection remediation. String concatenation and f-strings are the insecure pattern.
-
-4. **False positive management** — Know that high false-positive rates cause alert fatigue. Know that suppression comments with documented justification are the correct way to handle confirmed false positives.
-
-5. **Breaking vs. non-breaking** — Know when each mode is appropriate. For legacy codebases with existing findings, start non-breaking to avoid blocking all development work while the team triages the backlog.
-
-6. **SonarQube quality gates** — Know that SonarQube quality gates define pass/fail thresholds. A quality gate failure blocks PR merging in the same way a CI job failure does.
-
-7. **CWE vs. OWASP** — CWE identifies the vulnerability class (e.g., CWE-89 SQL Injection). OWASP Top 10 categorizes the risk (e.g., A03 Injection). A single OWASP category covers multiple CWEs.
-
-8. **Semgrep rule packs** — Know that `p/owasp-top-ten` covers OWASP Top 10 vulnerabilities, `p/secrets` covers hardcoded credentials, and rules are available per language (`p/python`, `p/javascript`).
+check = S3LifecyclePolicy()
+```
 
 ---
 
-## Section 10: Required Reading
+## Section 4 — Policy as Code
 
-- Read the OWASP DevSecOps Guideline SAST section at [https://owasp.org/www-project-devsecops-guideline/](https://owasp.org/www-project-devsecops-guideline/).
+### 4.1 OPA Conftest Workflow
+
+```bash
+# Step 1: Initialize Terraform and generate plan JSON
+terraform init -backend=false
+terraform plan -out=tfplan.binary
+terraform show -json tfplan.binary > tfplan.json
+
+# Step 2: Run Conftest with policy directory
+conftest test tfplan.json \
+  --policy policies/terraform/ \
+  --namespace main
+
+# Step 3: Combine with namespace
+conftest test tfplan.json \
+  --policy policies/ \
+  --all-namespaces
+```
+
+### 4.2 Rego Policy Patterns
+
+```rego
+# policies/terraform/no_public_security_groups.rego
+package main
+
+import future.keywords.in
+
+# Collect all security group ingress rules allowing 0.0.0.0/0
+public_sg_rules[name] {
+  resource := input.resource_changes[_]
+  resource.type == "aws_security_group_rule"
+  resource.change.actions[_] in {"create", "update"}
+  "0.0.0.0/0" in resource.change.after.cidr_blocks
+  resource.change.after.type == "ingress"
+  name := resource.address
+}
+
+deny[msg] {
+  some name in public_sg_rules
+  msg := sprintf(
+    "Security group rule '%s' allows unrestricted ingress from 0.0.0.0/0",
+    [name]
+  )
+}
+```
+
+### 4.3 HashiCorp Sentinel Enforcement Levels
+
+| Level | Behavior | Use Case |
+|---|---|---|
+| Advisory | Policy checked; violation logged but plan proceeds | New policy rollout; awareness phase |
+| Soft Mandatory | Plan blocked on violation; can be overridden with approver permission | Standard policy; security team can grant exceptions |
+| Hard Mandatory | Plan blocked on violation; cannot be overridden by anyone | Absolute requirements (encryption, no public databases) |
+
+```python
+# sentinel/no_public_rds.sentinel
+import "tfplan/v2" as tfplan
+
+rds_instances = filter tfplan.resource_changes as _, rc {
+  rc.type is "aws_db_instance"
+  rc.mode is "managed"
+  (rc.change.actions contains "create") or (rc.change.actions contains "update")
+}
+
+violations = filter rds_instances as _, rds {
+  rds.change.after.publicly_accessible is true
+}
+
+main = rule {
+  length(violations) is 0
+}
+```
 
 ---
 
-## Section 11: Study Checklist
+## Section 5 — Drift Detection and Immutable Infrastructure
 
-- [ ] Explain the difference between pattern matching and taint analysis in SAST.
-- [ ] Identify the taint source, code path, and sink in a given code snippet.
-- [ ] Write the parameterized query remediation for a SQL injection finding.
-- [ ] Compare Semgrep, SonarQube, and Checkmarx — when is each appropriate?
-- [ ] Explain what a quality gate is and how it blocks PR merging.
-- [ ] Explain the difference between breaking and non-breaking SAST pipeline integration.
-- [ ] Use the SAST finding analysis framework to analyze a sample finding.
-- [ ] Map common vulnerability types to their CWE numbers.
-- [ ] Read the OWASP DevSecOps Guideline SAST section at [https://owasp.org/www-project-devsecops-guideline/](https://owasp.org/www-project-devsecops-guideline/).
-- [ ] Complete the Module 06 lab (SAST finding analysis and remediation).
-- [ ] Attempt all 10 quiz questions and review distractor analysis for any incorrect answers.
+### 5.1 Drift Sources
+
+| Source | Example | Detection Method |
+|---|---|---|
+| Manual console change | Engineer opens port 22 in AWS console | Terraform plan shows difference |
+| Auto-scaling modification | ASG changes instance count | Continuous plan monitoring |
+| Cloud provider maintenance | AWS changes default parameter group | Drift notification |
+| Misconfigured automation | Deployment script modifies security group | Audit log analysis |
+
+### 5.2 Terraform Drift Detection Commands
+
+```bash
+# Plan against live state — shows what Terraform would change
+terraform plan -refresh-only
+
+# If drift detected, output will show:
+# ~ resource "aws_security_group_rule" "ssh" {
+#     ~ cidr_blocks = [
+#         - "10.0.0.0/8",
+#         + "0.0.0.0/0",   # <-- manually changed
+#       ]
+# }
+
+# Apply the refresh to sync state without changing resources
+terraform apply -refresh-only
+
+# Or remediate by re-applying the desired state
+terraform apply
+```
+
+### 5.3 Immutable Infrastructure Principles
+
+| Principle | Description |
+|---|---|
+| No SSH / no patch in place | Servers are never modified after provisioning |
+| Replace, don't repair | When a fix is needed, build a new image and redeploy |
+| Golden AMI / image pipeline | A base image is hardened, tested, and promoted |
+| Blue/green deployment | New infrastructure runs alongside old; traffic shifts after validation |
+| State in external store | Databases, caches are external to compute — compute is disposable |
+
+---
+
+## Section 6 — IaC Security Pipeline Design
+
+### 6.1 Complete IaC Pipeline Stages
+
+| Stage | Tool | Gate Condition |
+|---|---|---|
+| Validate | `terraform validate` | Syntax and configuration validity |
+| Format | `terraform fmt -check` | Consistent formatting enforced |
+| tfsec | tfsec | CRITICAL/HIGH findings block |
+| checkov | checkov | Configurable severity threshold |
+| Conftest | OPA/Conftest | Custom org policies pass |
+| Plan | `terraform plan` | Plan generated and inspected |
+| Sentinel | HashiCorp Sentinel | Enterprise policy enforcement |
+| Cost estimate | Infracost | Optional: cost within budget |
+
+### 6.2 Terraform State Security
+
+The Terraform state file (`.tfstate`) frequently contains secrets — database passwords, private keys, API tokens — in plaintext. Never:
+
+- Commit `.tfstate` to Git (add to `.gitignore`)
+- Store state in a local file in shared environments
+- Give all developers read access to the production state bucket
+
+Always use a remote backend with encryption and access control:
+
+```hcl
+terraform {
+  backend "s3" {
+    bucket         = "company-terraform-state"
+    key            = "production/terraform.tfstate"
+    region         = "us-east-1"
+    encrypt        = true
+    kms_key_id     = "arn:aws:kms:us-east-1:123456789:key/abc-123"
+    dynamodb_table = "terraform-state-lock"
+
+    # Access controlled via IAM role assumed by CI/CD only
+  }
+}
+```
+
+---
+
+## Exam Tips for DSOE Certification
+
+- tfsec is Terraform-specific; checkov supports multiple frameworks including Terraform, CloudFormation, and Kubernetes.
+- OPA Conftest validates configuration files against Rego policies — the same Rego used in Kubernetes OPA Gatekeeper.
+- Sentinel has three enforcement levels: advisory, soft mandatory, hard mandatory — know what each does.
+- Drift occurs when manually applied changes diverge from IaC state. `terraform plan -refresh-only` detects it.
+- Immutable infrastructure replaces servers rather than patching them — eliminates drift by design.
+- Terraform state files may contain plaintext secrets — encrypt and restrict access to the state backend.
+- checkov inline suppression comments require a documented reason — this creates an audit trail of accepted risk.
+- IaC security scanning in CI should block on CRITICAL/HIGH by default, same as application security scanning.
+
+---
+
+## Key Terms Glossary
+
+| Term | Definition |
+|---|---|
+| IaC | Infrastructure as Code — managing infrastructure via version-controlled configuration files |
+| tfsec | Open-source static analysis tool for Terraform |
+| checkov | Multi-framework IaC scanner by Bridgecrew/Palo Alto |
+| OPA | Open Policy Agent — general-purpose policy engine using Rego |
+| Conftest | CLI tool for testing configurations against OPA Rego policies |
+| Sentinel | HashiCorp enterprise policy-as-code framework for Terraform |
+| Drift | Divergence between deployed infrastructure state and IaC-defined desired state |
+| Immutable Infrastructure | Pattern where servers are replaced rather than modified after deployment |
+| Terraform State | JSON file tracking which real-world resources correspond to IaC definitions |
+| Remote Backend | Cloud-hosted Terraform state storage with encryption and locking |
+
+---
+
+Reading Guide — Module 06 | CIS-4350 | Texas Wesleyan University | Professor Nash

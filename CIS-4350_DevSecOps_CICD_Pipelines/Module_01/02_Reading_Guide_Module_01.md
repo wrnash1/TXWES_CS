@@ -1,187 +1,316 @@
-# Reading Guide: Module 01 - DevOps Fundamentals and the DevSecOps Mindset
+# Reading Guide: Module 01 — Introduction to DevSecOps
 
 ## Course: CIS-4350 DevSecOps and CI/CD Pipelines
+
+## Texas Wesleyan University | Professor Nash
 
 ## Certification Alignment: DevSecOps Professional (DSOE)
 
 ---
 
-## Introduction
+## Learning Objectives
 
-Welcome to Module 01. This module establishes the cultural and technical foundations of DevSecOps: what it means to embed security into every stage of the software delivery lifecycle rather than treating it as a final checkpoint. You will explore the evolution from traditional waterfall development through DevOps and into DevSecOps, understanding why integrating security earlier — "shifting left" — dramatically reduces the cost and risk of vulnerabilities. These foundational concepts underpin every subsequent module and are heavily tested on the DevSecOps Professional certification exam.
+After completing this reading guide, you will be able to:
 
----
-
-## Section 1: High-Yield Glossary
-
-Review these definitions carefully. The DevSecOps Professional exam expects you to recognize and apply these concepts in scenario-based questions.
-
-**DevSecOps** — A software engineering culture and practice that integrates security controls, testing, and responsibilities into every phase of the DevOps CI/CD pipeline. Rather than a separate security review at the end of development, DevSecOps makes security a shared responsibility among developers, operations engineers, and security professionals from the first commit onward.
-
-**Shift-left security** — The practice of moving security activities — such as code analysis, dependency scanning, and threat modeling — earlier in the software development lifecycle (SDLC). By catching vulnerabilities during development rather than post-deployment, teams reduce remediation cost and prevent security debt from accumulating.
-
-**CI/CD pipeline** — Continuous Integration and Continuous Delivery (or Deployment). A series of automated steps that take source code from a developer's commit through build, test, security scanning, and deployment to production. The pipeline is the enforcement point for DevSecOps controls.
-
-**Pipeline automation** — The use of CI/CD tooling (GitHub Actions, Jenkins, GitLab CI) to automatically trigger build, test, and security-gate steps upon each code commit. Automating security checks within the pipeline ensures consistent, repeatable enforcement without relying on manual human review for every change.
-
-**Feedback loop** — The time elapsed between when a developer introduces a vulnerability and when they receive notification of it. Shorter feedback loops are a core DevSecOps goal because they reduce context-switching cost and make remediation faster and cheaper.
-
-**Security gate** — An automated check within the CI/CD pipeline that must pass before the pipeline proceeds to the next stage. A failed security gate — such as a SAST scan finding a critical vulnerability — blocks the build or merge until the issue is resolved.
-
-**Shared responsibility model** — The DevSecOps principle that security is owned by all roles: developers own secure code, operations owns secure infrastructure, and security teams own tooling, policy, and training. No single team is the sole security owner.
-
-**Security champion** — A developer within a product team who receives additional security training and serves as a first point of contact for security questions, bridging the gap between the development team and the dedicated security team.
-
-**SAST (Static Application Security Testing)** — Analysis of source code, bytecode, or binaries without executing the application. SAST tools identify vulnerability patterns in code at the earliest possible pipeline stage — commit or pull request.
-
-**DAST (Dynamic Application Security Testing)** — Testing a running application by sending crafted HTTP requests and observing responses. DAST finds runtime vulnerabilities that cannot be detected without execution. Applied at the staging stage of the pipeline.
-
-**SCA (Software Composition Analysis)** — Scanning open-source dependencies and third-party libraries for known CVEs and license compliance issues. Applied at the build stage when dependencies are downloaded.
-
-**IaC (Infrastructure as Code)** — Managing infrastructure configuration (servers, networks, cloud resources) through machine-readable configuration files rather than manual setup. Terraform, Pulumi, and AWS CloudFormation are common IaC tools. IaC files can be scanned for security misconfigurations before provisioning.
-
-**CVE (Common Vulnerabilities and Exposures)** — A standardized identifier for publicly known security vulnerabilities maintained in the National Vulnerability Database (NVD). CVE identifiers (e.g., CVE-2021-44228) are used by SCA and container scanning tools to flag vulnerable components.
-
-**Security debt** — Accumulated security vulnerabilities and misconfigurations that have not been remediated. Like technical debt, security debt grows over time and becomes increasingly expensive to address.
+- Compare DevOps, DevSecOps, and traditional SDLC models
+- Explain the shift-left security principle and its cost implications
+- Map security activities to each phase of the DevSecOps lifecycle
+- Identify the primary tools in each DevSecOps toolchain category
+- Describe the CALMS framework for organizational adoption
+- Calculate a basic ROI argument for DevSecOps investment
 
 ---
 
-## Section 2: The Software Development Lifecycle and Security Placement
+## Section 1 — From Waterfall to DevSecOps: A Historical Overview
 
-Understanding where each security activity belongs in the SDLC is one of the most heavily tested topics on the DevSecOps Professional exam. The table below maps SDLC phases to the appropriate security activities and tools.
+### 1.1 The Waterfall Model
 
-| SDLC Phase | Security Activity | Representative Tools |
+The waterfall model organizes software development into sequential phases: Requirements, Design, Implementation, Verification, and Maintenance. Each phase must complete before the next begins. Security review, if it existed at all, occurred during Verification — at the very end.
+
+The core problem with waterfall security: defect cost grows exponentially the later it is found. Fixing a security flaw during Requirements costs roughly 1x. The same fix during Maintenance costs 30–100x.
+
+### 1.2 The Agile Revolution
+
+Agile methodologies, formalized in the 2001 Agile Manifesto, addressed the slow delivery problem through iterative sprints. However, Agile did not inherently address security or operational concerns. Security was still often bolt-on.
+
+### 1.3 DevOps Emergence
+
+DevOps, coined around 2008–2009, united development and operations through cultural change and automation. Key practices include:
+
+- Continuous Integration (CI): developers integrate code frequently, triggering automated builds and tests
+- Continuous Delivery (CD): every commit is potentially releasable
+- Infrastructure as Code (IaC): infrastructure is managed through version-controlled configuration files
+- Monitoring and observability: production systems emit metrics and logs for continuous feedback
+
+### 1.4 DevSecOps: Security as a First-Class Citizen
+
+DevSecOps adds Security to the Dev+Ops equation. The core premise: security is everyone's responsibility, and security controls should be automated and embedded in the pipeline, not added as a manual gate before release.
+
+The term was popularized around 2012 by Gartner and gained widespread adoption with the publication of the DoD Enterprise DevSecOps Reference Design in 2019.
+
+---
+
+## Section 2 — Shift-Left Security in Detail
+
+### 2.1 The Cost Curve
+
+The shift-left argument rests on the defect cost curve. Industry data from IBM, NIST, and the Systems Sciences Institute consistently shows:
+
+| SDLC Phase | Relative Cost to Fix |
+|---|---|
+| Requirements / Design | 1x |
+| Coding | 5x |
+| Unit Testing | 10x |
+| Integration Testing | 20x |
+| System Testing | 50x |
+| Production / Post-Release | 100x+ |
+
+Security defects follow the same curve. A SQL injection found by a developer in their IDE during coding takes 20 minutes to fix. The same vulnerability found by a penetration tester after deployment may require a hotfix release cycle, customer notification, and compliance reporting.
+
+### 2.2 Practical Shift-Left Techniques
+
+The following techniques implement shift-left security at each stage:
+
+| Stage | Technique | Example Tool |
 |---|---|---|
-| Requirements / Design | Threat modeling | STRIDE, OWASP Threat Dragon |
-| Coding | Pre-commit secrets scan | Gitleaks, truffleHog |
-| Code review / Pull request | SAST | Semgrep, SonarQube, Checkmarx |
-| Build | SCA (dependency scan) | Snyk, OWASP Dependency-Check, Grype |
-| Container build | Image scanning | Trivy, Grype, Clair |
-| Staging / Integration test | DAST | OWASP ZAP, Burp Suite Enterprise |
-| IaC provisioning | IaC misconfiguration scan | Checkov, tfsec, Terrascan |
-| Production | Runtime monitoring | Falco, AWS GuardDuty |
+| Planning | Threat modeling | STRIDE, Microsoft Threat Modeling Tool |
+| Coding | IDE security plugins | SonarLint, Snyk IDE extension |
+| Code Review | Security-focused PR checklists | GitHub PR templates |
+| Pre-commit | Git hooks to block secrets | pre-commit, git-secrets |
+| Build | SAST scanning | SonarQube, Semgrep |
+| Build | Dependency scanning | OWASP Dependency-Check, Snyk |
+| Test | DAST against staging | OWASP ZAP |
+| Deploy | IaC scanning | tfsec, checkov |
+| Runtime | Container security | Falco, Trivy |
+
+### 2.3 The Security Champion Model
+
+A security champion is a developer or engineer with additional security training who serves as a liaison between their team and the central security function. Security champions:
+
+- Review security findings from automated tools and prioritize remediation
+- Conduct lightweight threat modeling for new features
+- Mentor colleagues on secure coding practices
+- Participate in security community of practice meetings
 
 ---
 
-## Section 3: CI/CD Pipeline Stage Comparison
+## Section 3 — The DevSecOps Lifecycle
 
-The following table compares the three most commonly tested pipeline security categories on the DevSecOps Professional exam.
+### 3.1 Eight Phases with Security Activities
 
-| Dimension | SAST | DAST | SCA |
-|---|---|---|---|
-| Full name | Static Application Security Testing | Dynamic Application Security Testing | Software Composition Analysis |
-| Requires running app | No | Yes | No |
-| Primary target | First-party source code | Running application endpoints | Third-party dependencies |
-| Pipeline stage | Commit / Pull request | Staging | Build |
-| Finds | Insecure code patterns, injection flaws | Runtime flaws, auth bypasses, config errors | Known CVEs in libraries |
-| False positive rate | Higher (no runtime context) | Lower (real execution) | Low (CVE database matches) |
-| Representative tools | Semgrep, SonarQube, Checkmarx | OWASP ZAP, Burp Suite Enterprise | Snyk, OWASP Dependency-Check |
+```text
+PLAN → CODE → BUILD → TEST → RELEASE → DEPLOY → OPERATE → MONITOR
+```
+
+#### Plan
+
+Activities: Threat modeling, security requirements definition, attack surface analysis.
+
+Key artifact: Threat model document (STRIDE or PASTA methodology).
+
+#### Code
+
+Activities: Secure coding, IDE-based linting, pre-commit hooks, peer code review with security checklist.
+
+Key artifact: Reviewed pull request with security approval.
+
+#### Build
+
+Activities: SAST scan, dependency vulnerability scan, license compliance check, secret detection in codebase.
+
+Key artifact: CI pipeline security report.
+
+#### Test
+
+Activities: DAST scan against deployed staging environment, fuzzing, security regression tests.
+
+Key artifact: DAST report with CVSS scores.
+
+#### Release
+
+Activities: Security gate validation, SBOM generation, compliance policy check, sign-off audit trail.
+
+Key artifact: Signed release with associated SBOM.
+
+#### Deploy
+
+Activities: IaC security scan, container image scan, Kubernetes admission control, secret injection from vault.
+
+Key artifact: Deployment manifest with security annotations.
+
+#### Operate
+
+Activities: Runtime threat detection, anomaly alerting, vulnerability management tracking.
+
+Key artifact: Security incident timeline.
+
+#### Monitor
+
+Activities: Log aggregation to SIEM, compliance dashboard, vulnerability aging reports.
+
+Key artifact: Monthly security posture report.
 
 ---
 
-## Section 4: The Cost of Late Detection
+## Section 4 — Security as Code
 
-One of the most frequently tested DevSecOps Professional exam topics is the economic justification for shift-left security. Key points to know:
+### 4.1 Core Concepts
 
-- IBM Systems Sciences Institute research shows that the relative cost to fix a defect increases by a factor of 5-10x for each phase it progresses uncaught through the SDLC.
-- A vulnerability fixed at the coding phase may cost $80 in developer time.
-- The same vulnerability found in production testing may cost $1,500 in developer time plus operations time.
-- The same vulnerability found after a production breach may cost millions in incident response, regulatory fines, and reputation damage.
-- These multipliers justify the investment in automated pipeline security controls even when those controls occasionally produce false positives.
+Security as Code (SaC) means encoding security policies, controls, and configurations into version-controlled files that can be tested, reviewed, and deployed automatically. The benefits:
+
+- **Repeatability** — Automated policies run identically every time.
+- **Auditability** — Git history records who changed what policy and when.
+- **Velocity** — Automated checks run in seconds, not days.
+- **Collaboration** — Policy changes go through pull request review.
+
+### 4.2 OPA/Rego Example
+
+Open Policy Agent (OPA) uses the Rego language to define policies. The following policy denies Kubernetes pods running as root:
+
+```rego
+package kubernetes.admission
+
+deny[msg] {
+    input.request.kind.kind == "Pod"
+    container := input.request.object.spec.containers[_]
+    not container.securityContext.runAsNonRoot
+    msg := sprintf("Container %v must not run as root", [container.name])
+}
+```
+
+### 4.3 Conftest for Policy Testing
+
+Conftest uses OPA policies to test configuration files directly in CI:
+
+```yaml
+# .github/workflows/policy-check.yml
+jobs:
+  policy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Conftest
+        run: |
+          conftest test k8s/ --policy policies/
+```
 
 ---
 
-## Section 5: DevSecOps vs. Traditional Security Models
+## Section 5 — DevSecOps Toolchain Reference
 
-| Dimension | Traditional (Waterfall/Siloed) | DevSecOps |
+### 5.1 Tool Categories and Leading Options
+
+| Category | Open Source / Free | Commercial |
 |---|---|---|
-| Security timing | Post-development, pre-release gate | Continuous, at every pipeline stage |
-| Security ownership | Dedicated security team only | Shared: Dev + Ops + Security |
-| Feedback loop | Weeks to months | Minutes to hours |
-| Security testing method | Manual penetration test | Automated pipeline scans + manual where needed |
-| Vulnerability discovery point | Staging or production | Commit or pull request |
-| Release velocity impact | Security is bottleneck | Security is automated, minimal velocity impact |
-| Cost of remediation | High (late discovery) | Low (early discovery) |
+| SAST | SonarQube CE, Semgrep OSS | Checkmarx, Veracode |
+| DAST | OWASP ZAP | Burp Suite Enterprise |
+| Dependency Scan | OWASP Dependency-Check | Snyk, Black Duck |
+| Container Scan | Trivy, Grype | Snyk Container, Prisma Cloud |
+| IaC Scan | tfsec, checkov, Terrascan | Bridgecrew, Prisma Cloud |
+| Secrets Detection | gitleaks, truffleHog | GitGuardian, Nightfall |
+| Secrets Management | HashiCorp Vault OSS | HashiCorp Vault Enterprise, AWS SM |
+| SCA / SBOM | Syft, CycloneDX CLI | Snyk, FOSSA |
+| Runtime Security | Falco | Aqua Security, Sysdig |
+| Policy Engine | OPA, Conftest | HashiCorp Sentinel |
+
+### 5.2 Tool Selection Criteria
+
+When selecting DevSecOps tools, evaluate against these dimensions:
+
+- **Integration**: Does it integrate natively with your CI platform?
+- **False positive rate**: High FP rates cause alert fatigue.
+- **CVSS scoring**: Does it map findings to standard severity scores?
+- **SARIF output**: Static Analysis Results Interchange Format enables tool-agnostic result consumption.
+- **Remediation guidance**: Does the tool explain how to fix findings?
+- **License compliance**: Open source licenses have legal implications.
 
 ---
 
-## Section 6: Docker Security Best Practices Reference
+## Section 6 — Cultural and Organizational Change
 
-While Docker security is covered in depth in Module 04, these foundational practices appear in exam questions starting in Module 01 as context for DevSecOps pipeline design.
+### 6.1 The CALMS Framework
 
-- Use minimal base images (Alpine, distroless) to reduce the attack surface.
-- Never run containers as root; use `USER` directive in Dockerfile to specify a non-root user.
-- Use multi-stage builds to exclude build-time dependencies from the final image.
-- Pin dependency versions in the Dockerfile rather than using `latest` tags.
-- Scan images with Trivy or Grype before pushing to a registry.
-- Store secrets in environment variables injected at runtime, never in the image.
+| Pillar | DevSecOps Meaning |
+|---|---|
+| Culture | Shared ownership of security; blameless post-mortems |
+| Automation | Replace manual security gates with pipeline controls |
+| Lean | Eliminate handoff delays; streamline security review |
+| Measurement | Track MTTR, vulnerability density, gate pass rate |
+| Sharing | Publish security findings; run security brown-bags |
 
----
+### 6.2 Adoption Anti-Patterns to Avoid
 
-## Section 7: Kubernetes RBAC Model Reference
+#### Tool-First Adoption
 
-Kubernetes Role-Based Access Control (RBAC) is covered in depth in Module 12, but understanding the basic model is tested in foundational questions from Module 01 onward.
+Buying tools without changing processes. Tools amplify existing practices; bad processes become bad automated processes.
 
-- RBAC controls which users and service accounts can perform which actions on which Kubernetes resources.
-- Key objects: Role (namespace-scoped), ClusterRole (cluster-scoped), RoleBinding, ClusterRoleBinding.
-- Principle of least privilege: grant only the permissions required for a specific function.
-- Service accounts should not have cluster-admin privileges unless absolutely required.
+#### Security Team as Gatekeeper
 
----
+Security team manually approves every release. This creates a bottleneck and does not scale. Automate the gate; humans review exceptions.
 
-## Section 8: Secrets Rotation Reference
+#### Ignoring Developer Experience
 
-Secrets rotation — periodically replacing credentials to limit the damage window of a compromised secret — is a cross-cutting concern tested throughout the DevSecOps Professional exam.
+Security tools with poor developer UX get disabled or bypassed. Choose tools with clear, actionable output.
 
-- Static credentials (hardcoded in code or config files) should never be used in production.
-- Secrets should be stored in dedicated secrets management systems: HashiCorp Vault, AWS Secrets Manager, or Azure Key Vault.
-- Rotation intervals depend on secret sensitivity: database passwords every 30-90 days; API keys on compromise detection.
-- Automated rotation reduces the operational burden and eliminates the human error risk of manual rotation.
-- Audit logs of secret access provide forensic evidence in the event of a breach.
+#### Treating All Findings as Equal
+
+Prioritize by CVSS score, exploitability, and asset criticality. Trying to fix everything creates burnout.
 
 ---
 
-## Section 9: Required Reading
+## Section 7 — ROI and Business Case
 
-Complete the following before attempting the quiz.
+### 7.1 Cost Reduction Model
 
-- Read the OWASP DevSecOps Guideline introduction at [https://owasp.org/www-project-devsecops-guideline/](https://owasp.org/www-project-devsecops-guideline/). Focus on the sections covering pipeline integration and the placement of security controls at each CI/CD stage.
+| Cost Driver | Traditional Model | DevSecOps Model |
+|---|---|---|
+| Vulnerability discovery cost | High — late-stage pen test | Low — automated, early |
+| Vulnerability remediation time | Weeks (sprint rework) | Hours (IDE feedback) |
+| Compliance evidence generation | Manual — days before audit | Automated — always ready |
+| Mean Time to Remediate (MTTR) | 60–90 days | 7–14 days |
+| Average data breach cost | $4.45M (IBM 2023) | 28% lower with DevSecOps |
 
----
+### 7.2 Key Metrics to Track
 
-## Section 10: DevSecOps Professional Exam Tips
-
-The following tips are based on the DevSecOps Professional (DSOE) exam objectives and common question patterns.
-
-1. **Shift-left scenario questions** — When the exam presents a scenario where a vulnerability is discovered late (in staging or production) and asks what process change would have prevented it, the answer almost always involves adding the relevant automated scan (SAST, SCA, or secrets scanner) at an earlier pipeline stage.
-
-2. **Culture vs. tools** — Exam questions may ask which statement best describes the DevSecOps mindset. Prioritize answers about shared responsibility and continuous security over answers that focus solely on tool selection.
-
-3. **SDLC phase placement** — Know exactly which tool belongs at which SDLC phase. The exam frequently tests this with "which stage should X scan run at" questions.
-
-4. **Feedback loop optimization** — Questions about improving developer productivity in a DevSecOps context often have answers involving shortening the feedback loop — automated PR checks, inline scan results, or IDE plugins.
-
-5. **Business justification** — The exam tests whether you can articulate the ROI of DevSecOps in economic terms. Know the cost multiplier argument for early detection.
-
-6. **Shared responsibility boundaries** — Know which team owns which responsibility: developers own secure coding practices and dependency choices, operations owns infrastructure configuration, security teams own tooling selection and policy.
-
-7. **Security gate vs. security advisory** — Know the difference: a gate blocks the pipeline (mandatory), an advisory reports findings without blocking (informational). Exam questions test when each is appropriate.
-
-8. **Pre-commit vs. CI pipeline scans** — Pre-commit hooks run locally before the commit is created (earliest). CI pipeline scans run after a push to the remote (later but catches what pre-commit misses or is bypassed).
+- **Vulnerability Density** — Vulnerabilities per 1,000 lines of code over time (goal: trending down)
+- **Mean Time to Remediate (MTTR)** — Average days from finding to fix (goal: under 30 days for critical)
+- **Pipeline Gate Pass Rate** — Percentage of builds that pass all security gates (goal: above 90%)
+- **Escape Rate** — Percentage of vulnerabilities that reach production (goal: near zero for critical)
+- **Security Debt** — Total open vulnerabilities weighted by severity (goal: trending down)
 
 ---
 
-## Section 11: Study Checklist
+## Exam Tips for DSOE Certification
 
-Work through this checklist before attempting the quiz and lab.
+- Know the three ways of DevOps: Flow, Feedback, Continual Learning.
+- Know CALMS: Culture, Automation, Lean, Measurement, Sharing.
+- Know STRIDE: Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege.
+- Be able to map tools to lifecycle phases.
+- Understand the difference between SAST (static, no running app needed) and DAST (dynamic, requires running app).
+- The DoD Enterprise DevSecOps Reference Design (2019) is a frequently referenced policy document.
+- Security as Code enables repeatability, auditability, velocity, and collaboration.
+- Shift-left reduces fix cost by finding defects earlier in the SDLC.
 
-- [ ] Define DevSecOps in your own words, distinguishing it from DevOps.
-- [ ] Explain the shift-left principle with a specific cost-of-remediation example.
-- [ ] List the three pillars of DevSecOps (People, Process, Technology) with one example under each.
-- [ ] Map SAST, DAST, SCA, and secrets scanning to their correct pipeline stages.
-- [ ] Explain the shared responsibility model: who owns what in DevSecOps.
-- [ ] Read the OWASP DevSecOps Guideline introduction at [https://owasp.org/www-project-devsecops-guideline/](https://owasp.org/www-project-devsecops-guideline/).
-- [ ] Complete the SDLC security mapping table in your notes.
-- [ ] Review the SAST vs. DAST vs. SCA comparison table until you can reconstruct it from memory.
-- [ ] Complete the Module 01 lab activity.
-- [ ] Attempt all 10 quiz questions and review distractor analysis for any incorrect answers.
+---
+
+## Key Terms Glossary
+
+| Term | Definition |
+|---|---|
+| DevSecOps | Integration of security practices into DevOps processes |
+| Shift-Left | Moving security activities earlier in the SDLC |
+| SAST | Static Application Security Testing — analyzes source code |
+| DAST | Dynamic Application Security Testing — tests running application |
+| SBOM | Software Bill of Materials — inventory of software components |
+| SCA | Software Composition Analysis — analyzes open-source dependencies |
+| IaC | Infrastructure as Code — managing infrastructure via config files |
+| OPA | Open Policy Agent — general-purpose policy engine |
+| CALMS | DevOps maturity framework: Culture, Automation, Lean, Measurement, Sharing |
+| STRIDE | Threat modeling framework covering 6 threat categories |
+| Security Champion | Developer with security expertise embedded in a dev team |
+| CVSS | Common Vulnerability Scoring System — industry-standard severity scoring |
+| SARIF | Static Analysis Results Interchange Format — standard for tool output |
+
+---
+
+Reading Guide — Module 01 | CIS-4350 | Texas Wesleyan University

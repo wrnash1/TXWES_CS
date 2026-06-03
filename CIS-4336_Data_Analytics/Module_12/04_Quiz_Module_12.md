@@ -1,75 +1,226 @@
-# Quiz: Module 12 - Cloud Analytics – AWS Athena, Google BigQuery
-## Course: CIS-4336_Data_Analytics (CompTIA Data+)
+# Quiz: Module 12 — Python for Data Analysis
+
+## Course: CIS-4336 Data Analytics
+
+## Texas Wesleyan University | Professor Nash
+
+**Certification Alignment:** CompTIA Data+ (DA0-001)
+
+**Instructions:** Select the single best answer for each question. Each question is worth 10 points.
 
 ---
 
-**Question 1**
-A company stores 5 TB of web server log files as compressed CSV files in Amazon S3. An analytics team wants to query these files using standard SQL without provisioning, configuring, or managing any database servers. Which AWS service best meets this requirement?
-*   A) Amazon RDS — a managed relational database service that requires provisioning an instance size and storage volume before use.
-*   B) Amazon Redshift — a provisioned columnar data warehouse cluster that requires selecting node types and cluster configuration before queries can run.
-*   C) AWS Athena — a serverless interactive query service that runs SQL directly against files in S3 without any infrastructure to provision or manage.
-*   D) Amazon DynamoDB — a serverless NoSQL key-value and document database optimized for high-speed single-item lookups.
-*   **Correct Answer:** C) AWS Athena — a serverless interactive query service that runs SQL directly against files in S3 without any infrastructure to provision or manage.
-*   **Distractor Analysis:**
-    *   *Why correct:* Athena is serverless — it requires no cluster provisioning. Analysts define a schema on top of existing S3 files and immediately run SQL queries, paying only for the data scanned per query.
-    *   A) RDS requires provisioning an instance type and storage before use — it is not serverless. B) Redshift requires selecting cluster node types and is a provisioned service, not serverless. D) DynamoDB is a NoSQL key-value store optimized for single-item lookups, not for SQL analytics over multi-terabyte log files.
+### Question 1
+
+An analyst has a pandas DataFrame with 50,000 rows. The `revenue` column has 2,300 null values. The analyst wants to preserve all rows and replace missing values with a central value that is resistant to outliers. Which approach is most appropriate?
+
+A) `df['revenue'].fillna(df['revenue'].mean())` — fills nulls with the arithmetic mean, which is sensitive to outliers.
+
+B) `df['revenue'].fillna(df['revenue'].median())` — fills nulls with the median, which is resistant to outliers and represents the middle of the distribution.
+
+C) `df.dropna(subset=['revenue'])` — removes all rows with null revenue, discarding valid data in other columns.
+
+D) `df['revenue'].fillna(0)` — fills nulls with zero, implying no revenue occurred, which may distort totals and averages.
+
+#### Q1 Correct Answer: B
+
+#### Q1 Distractor Analysis
+
+A is incorrect because the mean is pulled by extreme values. C violates the requirement to preserve all rows. D is only appropriate when null genuinely means zero revenue, which is not stated here.
 
 ---
 
-**Question 2**
-In cloud analytics, which of the following most accurately defines the **shared responsibility model**?
-*   A) A billing arrangement in which cloud costs are divided proportionally between the provider and the customer based on the percentage of infrastructure each party manages.
-*   B) A security framework in which the cloud provider is responsible for security of the cloud infrastructure (physical hardware, hypervisors, and the global network), while the customer is responsible for security in the cloud (data, access controls, encryption, and application configuration).
-*   C) A high-availability design pattern in which workloads are distributed across multiple cloud regions so that one region's failure does not affect service availability.
-*   D) A compliance requirement mandating that all personally identifiable information processed in the cloud be encrypted with customer-managed encryption keys.
-*   **Correct Answer:** B) A security framework in which the cloud provider is responsible for security of the cloud infrastructure (physical hardware, hypervisors, and the global network), while the customer is responsible for security in the cloud (data, access controls, encryption, and application configuration).
-*   **Distractor Analysis:**
-    *   *Why B is correct:* The shared responsibility model defines the security boundary between provider and customer. The provider owns the physical layer; the customer owns everything they configure on top of it — including access policies, encryption settings, and data classification. Misconfigured permissions are always the customer's responsibility.
-    *   *Why A is incorrect:* The shared responsibility model is about security accountability, not billing division. Cloud billing is typically pay-per-use and is not shared 50/50.
-    *   *Why C is incorrect:* Distributing workloads across regions describes a multi-region high-availability architecture, not the shared responsibility model.
-    *   *Why D is incorrect:* Mandating customer-managed encryption keys describes a specific compliance control, not the broader shared responsibility model that covers all aspects of cloud security.
+### Question 2
+
+A data analyst wants to calculate the total units sold for each combination of region and product category from a single DataFrame. Which pandas operation accomplishes this most directly?
+
+A) `pd.merge()` — combines two separate DataFrames on a shared key; does not aggregate within one table.
+
+B) `df.pivot_table(values='units', index='region', columns='product', aggfunc='sum')` — reshapes and aggregates simultaneously, producing a totals matrix.
+
+C) `df.describe()` — returns descriptive statistics for all numeric columns; does not group by region or product.
+
+D) `df.sort_values(['region', 'product'])` — sorts rows but performs no aggregation.
+
+#### Q2 Correct Answer: B
+
+#### Q2 Distractor Analysis
+
+A joins two tables rather than aggregating within one. C gives summary statistics for entire columns, not by group. D only reorders rows without computing totals.
 
 ---
 
-**Question 3**
-An analyst runs a query in Google BigQuery against a 2 TB table: `SELECT customer_id, SUM(revenue) FROM transactions GROUP BY customer_id`. The table has 40 columns. BigQuery uses columnar storage. Which statement best explains why this query performs efficiently despite the large table size?
-*   A) BigQuery scans all 40 columns in parallel across multiple nodes, which is faster than a sequential single-node scan.
-*   B) BigQuery reads only the two columns referenced in the query (customer_id and revenue), avoiding I/O on the other 38 columns thanks to columnar storage.
-*   C) BigQuery caches the full 2 TB table in memory on the first query, so subsequent queries are fast.
-*   D) BigQuery compresses each row individually, reducing the effective table size from 2 TB to a smaller in-memory footprint.
-*   **Correct Answer:** B) BigQuery reads only the two columns referenced in the query (customer_id and revenue), avoiding I/O on the other 38 columns thanks to columnar storage.
-*   **Distractor Analysis:**
-    *   *Why B is correct:* Columnar storage organizes each column contiguously on disk. A query that references only 2 of 40 columns reads approximately 5% of the total data instead of the full table. This I/O reduction is the primary performance advantage of columnar formats for analytical queries.
-    *   *Why A is incorrect:* Parallel processing across nodes is a feature of BigQuery's distributed architecture, but it applies regardless of storage format. The specific efficiency gain described in the scenario comes from columnar I/O reduction, not parallelism alone.
-    *   *Why C is incorrect:* BigQuery does not cache full 2 TB tables in memory for all users. Its performance advantage for this query type comes from columnar storage reducing I/O, not from memory caching.
-    *   *Why D is incorrect:* BigQuery does compress data, but compression is row-agnostic. The key efficiency described — reading only referenced columns — is a property of columnar layout, not row-level compression.
+### Question 3
+
+Which of the following best describes the difference between `pd.merge()` with `how='inner'` versus `how='left'`?
+
+A) `inner` keeps all rows from both tables; `left` keeps only rows present in the left table.
+
+B) `inner` keeps only rows with matching keys in both tables; `left` keeps all rows from the left table and fills unmatched right columns with NaN.
+
+C) `inner` adds new columns from the right table; `left` adds new columns from the left table.
+
+D) `inner` and `left` produce identical results when the key column has no duplicates.
+
+#### Q3 Correct Answer: B
+
+#### Q3 Distractor Analysis
+
+A reverses the definitions — `outer` keeps all rows from both tables. C describes column concatenation, not join behavior. D is incorrect because a left join retains left-table rows with no right match (filling with NaN), whereas inner drops them regardless.
 
 ---
 
-**Question 4**
-A company's data engineering team uses AWS to run analytics. A developer accidentally configures an S3 bucket containing customer PII as publicly accessible on the internet. A third party downloads 50,000 customer records. Who bears primary responsibility for this breach under the AWS shared responsibility model?
-*   A) AWS, because they provide the S3 service and should prevent misconfiguration by default.
-*   B) The customer, because configuring access controls, bucket policies, and public access settings is the customer's responsibility under the shared responsibility model.
-*   C) Both equally, because AWS owns the physical infrastructure but the customer pays for the service.
-*   D) Neither party — publicly accessible cloud storage is a known risk and users accept this when agreeing to the terms of service.
-*   **Correct Answer:** B) The customer, because configuring access controls, bucket policies, and public access settings is the customer's responsibility under the shared responsibility model.
-*   **Distractor Analysis:**
-    *   *Why B is correct:* Under the AWS shared responsibility model, AWS secures the physical infrastructure and the S3 service itself. The customer is responsible for configuring who can access their data — bucket policies, IAM permissions, and public access block settings. A misconfigured public bucket is a customer configuration error, not an AWS infrastructure failure.
-    *   *Why A is incorrect:* AWS does provide tools to prevent public access (S3 Block Public Access settings), but the customer must enable them. AWS cannot unilaterally restrict customer bucket configurations without removing the customer's ability to use public hosting features they may legitimately need.
-    *   *Why C is incorrect:* Responsibility is not split 50/50. The physical infrastructure is AWS's domain; data access configuration is entirely the customer's domain. This breach falls entirely within the customer's responsibility boundary.
-    *   *Why D is incorrect:* Terms of service do not absolve the customer of regulatory liability (GDPR, HIPAA, CCPA) for exposing PII. The customer bears legal and operational responsibility for the breach.
+### Question 4
+
+An analyst calls `np.percentile(arr, [25, 75])` and gets `[18.5, 64.2]`. Using the standard 1.5×IQR rule, what are the outlier boundaries?
+
+A) IQR = 45.7; lower = −50.05; upper = 132.75
+
+B) IQR = 45.7; lower = 18.5; upper = 64.2
+
+C) IQR = 82.7; lower = 18.5; upper = 64.2
+
+D) IQR = 45.7; lower = −49.85; upper = 132.55
+
+#### Q4 Correct Answer: A
+
+#### Q4 Distractor Analysis
+
+IQR = 64.2 − 18.5 = 45.7. Lower = 18.5 − (1.5 × 45.7) = −50.05. Upper = 64.2 + (1.5 × 45.7) = 132.75. B confuses quartile values with boundary values. C adds rather than subtracts quartiles. D has an arithmetic error in the lower bound.
 
 ---
 
-**Question 5**
-An organization currently runs analytics on an on-premises data warehouse with 20 TB of storage and 64 CPU cores. Every quarter-end, queries take 12+ hours because the fixed hardware cannot handle the peak reporting load. A cloud architect proposes migrating to a cloud analytics platform. Which cloud characteristic most directly solves the quarter-end performance problem?
-*   A) Durability — cloud providers replicate data across multiple availability zones, preventing data loss during hardware failure.
-*   B) Elasticity — cloud platforms can automatically scale compute resources up during peak demand (quarter-end) and scale down afterward, so the fixed hardware bottleneck no longer applies.
-*   C) Serverless execution — cloud analytics services eliminate the need to write SQL and instead use graphical interfaces that run faster than SQL queries.
-*   D) Shared tenancy — multiple customers share the same physical hardware, which reduces cost per query by distributing fixed infrastructure expenses.
-*   **Correct Answer:** B) Elasticity — cloud platforms can automatically scale compute resources up during peak demand (quarter-end) and scale down afterward, so the fixed hardware bottleneck no longer applies.
-*   **Distractor Analysis:**
-    *   *Why B is correct:* The root cause of the problem is insufficient fixed compute capacity at peak load. Elasticity — the ability to provision additional compute on demand and release it when not needed — directly solves this. On-premises hardware must be sized for peak load and sits idle the rest of the time; cloud resources expand and contract with demand.
-    *   *Why A is incorrect:* Durability addresses data availability and resilience against hardware failure. The scenario describes a performance problem under peak load, not a data loss or availability problem.
-    *   *Why C is incorrect:* Serverless execution eliminates infrastructure management overhead, but it does not eliminate SQL. Athena and BigQuery both use standard SQL. Speed improvements come from distributed compute and columnar storage, not from removing SQL.
-    *   *Why D is incorrect:* Shared tenancy describes the physical model of cloud infrastructure but is not a customer-facing capability. Customers do not directly benefit from or control shared tenancy; elasticity is the feature they provision and pay for.
+### Question 5
+
+Which seaborn function is most appropriate for visualizing the distribution of a single numeric variable and identifying whether it is skewed?
+
+A) `sns.heatmap()` — displays a matrix of values; best for correlation matrices, not single-variable distributions.
+
+B) `sns.scatterplot()` — shows the relationship between two numeric variables; requires two axes.
+
+C) `sns.histplot()` — shows the frequency distribution of one numeric variable and reveals skewness, modality, and spread.
+
+D) `sns.barplot()` — compares means across categories; requires a categorical grouping variable.
+
+#### Q5 Correct Answer: C
+
+#### Q5 Distractor Analysis
+
+A requires a 2D matrix input. B requires two numeric variables. D requires a categorical grouping variable and shows means rather than distributions.
+
+---
+
+### Question 6
+
+A dataset has a correlation coefficient of −0.87 between `support_tickets` and `customer_satisfaction_score`. What is the most accurate interpretation?
+
+A) Increasing support tickets causes lower satisfaction scores — a strong negative causal relationship.
+
+B) There is a strong negative linear association; as support tickets increase, satisfaction scores tend to decrease, but causation cannot be confirmed from correlation alone.
+
+C) The two variables are unrelated because the coefficient is negative.
+
+D) Approximately 87% of customers are dissatisfied when they submit a support ticket.
+
+#### Q6 Correct Answer: B
+
+#### Q6 Distractor Analysis
+
+A incorrectly asserts causation; correlation never establishes cause. C is wrong — a coefficient of −0.87 indicates a strong inverse relationship. D misinterprets the coefficient as a percentage of customers.
+
+---
+
+### Question 7
+
+An analyst calls `df.groupby('department')['salary'].mean().reset_index()`. What does `reset_index()` do in this context?
+
+A) Removes all rows where the index is null.
+
+B) Resets the DataFrame index to the default integer sequence, converting the grouped column back into a regular column rather than an index label.
+
+C) Sorts the result by the department column in ascending order.
+
+D) Recalculates the mean to exclude null salary values.
+
+#### Q7 Correct Answer: B
+
+#### Q7 Distractor Analysis
+
+A is a null-handling operation unrelated to reset_index. C describes sort_values. D is incorrect because mean() already excludes nulls by default and reset_index does not affect calculations.
+
+---
+
+### Question 8
+
+Which statement about NumPy vectorized operations is true?
+
+A) Vectorized operations require a for-loop to iterate over each element of the array.
+
+B) Vectorized operations apply a computation to all array elements simultaneously using compiled C code, which is significantly faster than a Python for-loop.
+
+C) Vectorized operations only work on integer arrays; float arrays require explicit loops.
+
+D) Vectorized operations produce a Python list, not an array, as output.
+
+#### Q8 Correct Answer: B
+
+#### Q8 Distractor Analysis
+
+A contradicts the definition — eliminating explicit loops is the purpose of vectorization. C is false; NumPy supports float64, float32, and all numeric dtypes. D is false; operations on an ndarray return an ndarray.
+
+---
+
+### Question 9
+
+A data analyst needs to combine a `transactions` table and a `products` table on `product_id`, keeping every transaction even when the product record is missing. Which call is correct?
+
+A) `pd.merge(transactions, products, on='product_id', how='inner')` — drops transactions with no matching product.
+
+B) `pd.merge(products, transactions, on='product_id', how='left')` — reverses table order; product table drives the join and may drop transactions.
+
+C) `pd.merge(transactions, products, on='product_id', how='left')` — keeps every transaction; fills missing product columns with NaN.
+
+D) `pd.merge(transactions, products, on='product_id', how='outer')` — retains all rows from both tables and fills both sides with NaN where unmatched.
+
+#### Q9 Correct Answer: C
+
+#### Q9 Distractor Analysis
+
+A uses inner join and drops unmatched transactions. B reverses table positions so products drive the join. D is broader than necessary and produces extra rows from products that have no matching transaction.
+
+---
+
+### Question 10
+
+Which Data+ exam domain is most directly tested by the Python for Data Analysis skills in Module 12?
+
+A) Domain 1 — Data Concepts and Environments, covering data types and storage formats.
+
+B) Domain 2 — Data Mining, covering data collection, transformation, and preparation.
+
+C) Domain 3 — Data Analysis, covering statistical methods, Python tools, and analytical techniques.
+
+D) Domain 5 — Data Governance, covering compliance, policies, and data quality standards.
+
+#### Q10 Correct Answer: C
+
+#### Q10 Distractor Analysis
+
+A covers data fundamentals and infrastructure. B addresses some cleaning concepts but is broader than Python analysis techniques. D focuses on policy and compliance rather than programming and statistics.
+
+---
+
+### Answer Key
+
+| Question | Correct Answer |
+|---|---|
+| 1 | B |
+| 2 | B |
+| 3 | B |
+| 4 | A |
+| 5 | C |
+| 6 | B |
+| 7 | B |
+| 8 | B |
+| 9 | C |
+| 10 | C |

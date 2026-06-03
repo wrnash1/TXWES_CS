@@ -1,28 +1,80 @@
-# Discussion Forum: Module 06 - Risk Mitigation Strategies
-## Course: CIS-4315_Cyber_Governance_Risk_Compliance (ISACA Certified Information Security Manager (CISM))
+# Discussion Forum: Module 06 — Information Security Program Development
+
+## Course: CIS-4315 Cyber Governance, Risk, and Compliance
+
+**Certification Alignment:** ISACA CISM — Domain 3: Information Security Program
 
 ---
 
-## Discussion Prompt
-Consider the following real-world scenario or technical concept:
-*   **Topic Focus:** **Risk Mitigation Strategies** (specifically focusing on: `Risk treatment plans, risk acceptance limits, risk avoidance, risk mitigation, risk sharing/transfer.`)
+## Overview
 
-**Your Tasks:**
-1.  **Initial Post (Due Wednesday at 11:59 PM):** In 150-200 words, explain how you would apply Risk Mitigation Strategies in an enterprise system. Address the following:
-    *   What is the primary benefit of utilizing this configuration or standard in a production environment?
-    *   Identify one common security concern or operational challenge related to this topic, and suggest a best-practice mitigation strategy.
-2.  **Peer Responses (Due Sunday at 11:59 PM):** Read through your classmates' posts and write constructive replies (at least 50 words each) to at least two peers. In your replies:
-    *   Provide feedback on their proposed mitigation strategy.
-    *   Share an alternative approach or add context from your own research or lab exercises.
+This week's discussion applies the concepts from Module 06 to real-world scenarios involving program charters, policy hierarchy, and security strategy alignment. You will analyze a situation, take a defensible position, and engage substantively with your classmates' perspectives.
+
+**Initial Post:** Due Wednesday at 11:59 PM — 175–225 words in complete sentences
+
+**Peer Responses:** Due Sunday at 11:59 PM — minimum 60 words each, respond to at least 2 classmates
 
 ---
 
-## Discussion Rubric (10 Points Total)
-*   **Initial Post (6 Points):**
-    *   *5-6 pts:* Thoroughly addresses all prompt questions with technical accuracy, clear explanations, and appropriate terminology. Meets the word count.
-    *   *3-4 pts:* Addresses some prompt questions, but lacks detail or technical accuracy.
-    *   *0-2 pts:* Incomplete or missing initial post.
-*   **Peer Responses (4 Points):**
-    *   *4 pts:* Responds constructively to at least two peers, contributing meaningful additions to the conversation.
-    *   *2 pts:* Responds to only one peer, or comments are superficial (e.g., "Good post!").
-    *   *0 pts:* No peer responses submitted.
+## Scenario A — The Charter That Never Was
+
+A well-funded regional insurance company has operated an information security team for six years. The team of eight analysts manages firewalls, runs vulnerability scans, and responds to incidents. However, the team has no formal charter and no documented authority grant from executive leadership.
+
+When the security manager attempts to enforce a new password complexity requirement on the sales department, the Vice President of Sales pushes back, telling her team to ignore the requirement because "IT doesn't run this department." The security manager escalates to the CIO, who is sympathetic but says he cannot force compliance without a formal mandate.
+
+Respond to the following in 175–225 words: What specific governance failure does this scenario illustrate, and what should the security manager do next? Your response should address the purpose of a charter, who must be involved in resolving this situation, and what risk the organization faces until the governance gap is closed.
+
+---
+
+## Scenario B — Policy or Standard?
+
+A financial services firm is building out its security documentation. The security team has drafted the following statement and is debating which policy hierarchy tier it belongs in:
+
+"All customer-facing web applications must disable TLS 1.0 and TLS 1.1 and must support only TLS 1.2 or higher with forward secrecy cipher suites. Certificates must use RSA 2048-bit or ECDSA 256-bit keys with SHA-256 or higher signature algorithms."
+
+The team is split. One analyst says this belongs in a policy because it protects customer data. Another says it belongs in a standard because it names specific versions and algorithms. A third suggests it could be a guideline since developers should have flexibility.
+
+Respond to the following in 175–225 words: Which tier does this document belong in, and why? Explain what would need to change about the language for it to belong in a different tier. Your response should demonstrate understanding of all four tiers and the principle of technology-neutral policy writing.
+
+---
+
+## Scenario C — Security Strategy vs. Business Speed
+
+A healthcare technology startup is planning to launch a cloud-based patient portal within four months. The product team has set an aggressive go-live date to capture market share ahead of a competitor. The newly hired CISO identifies that the portal will process protected health information and requires HIPAA-compliant security controls, a Business Associate Agreement with the cloud provider, and a penetration test before launch.
+
+The CEO pushes back, saying: "Security cannot be the reason we lose to our competitor. We'll add controls after launch." The CISO must decide how to respond.
+
+Respond to the following in 175–225 words: What are the risks of launching without the identified security controls, and how should the CISO frame the response to the CEO? Your answer should reflect the principle that security strategy must enable business objectives rather than obstruct them, while still protecting the organization from material harm.
+
+---
+
+## Peer Response Requirements
+
+After posting your initial response to one scenario, read through your classmates' posts and write substantive replies to at least two peers. Each reply must be a minimum of 60 words and must do more than agree — add a perspective, challenge an assumption, introduce a related concept, or connect the scenario to a different module topic.
+
+Responses such as "Great post! I agree completely." do not earn peer response credit.
+
+---
+
+## Discussion Rubric — 10 Points Total
+
+| Criteria | Points | Description |
+|---|---|---|
+| Initial post addresses the scenario question directly | 2 | Response answers what was asked, not a generic security discussion |
+| Accurate use of module terminology | 2 | Charter, policy hierarchy tiers, strategy alignment concepts used correctly |
+| Demonstrates critical thinking beyond lecture content | 2 | Shows analysis, not just recall; takes a defensible position |
+| Word count met (175–225 words) in complete sentences | 1 | Full sentences, professional tone, no bullet-point-only responses |
+| Peer response 1 — substantive, 60+ words, adds value | 1.5 | Engages with peer's argument; does not merely agree |
+| Peer response 2 — substantive, 60+ words, adds value | 1.5 | Engages with peer's argument; does not merely agree |
+
+---
+
+## A Note from Professor Nash
+
+These three scenarios are drawn from patterns I have observed directly in professional security management practice. The charter scenario in particular is not hypothetical — the inability to enforce security requirements due to missing governance authority is one of the most common failure modes I have seen in organizations of every size.
+
+As you write your responses, resist the urge to give the "textbook answer" and instead engage with the organizational and human dimensions of the problem. A CISM candidate who can recite the definition of a charter is less valuable than one who can explain to a skeptical vice president why the charter matters. That is the skill this discussion is designed to build.
+
+I look forward to reading your posts. Engage with each other's ideas — the most interesting learning in this course happens in the discussion forums.
+
+— Professor Nash

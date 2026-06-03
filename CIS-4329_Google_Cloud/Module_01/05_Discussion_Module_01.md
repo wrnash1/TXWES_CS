@@ -1,93 +1,114 @@
-# Discussion — Module 01
+# Discussion: Module 01 — Cloud Computing Fundamentals and GCP Overview
 
-## CIS-4329: Google Cloud Platform | Texas Wesleyan University
+## Course: CIS-4329 Google Cloud Computing
 
-### Topic: GCP Resource Hierarchy and Infrastructure Design
-
----
-
-## Instructions
-
-Read all three scenarios below. Choose one scenario to address in your initial post. In your peer responses, you may respond to classmates who chose the same scenario or a different one.
-
-Initial Post due: Wednesday at 11:59 PM Central
-
-Peer Responses due: Sunday at 11:59 PM Central
+**Certification Alignment:** Google Cloud Associate Cloud Engineer (ACE)
 
 ---
 
-## Scenario A — The University Cloud Migration
+## Overview
 
-Texas Wesleyan University is planning to migrate its on-premises IT infrastructure to Google Cloud. The university has four departments — Computer Science, Business, Student Services, and Athletics — each with its own budget, team of IT staff, and set of applications. The CTO wants each department to have autonomy over its own GCP resources while still allowing the central IT office to enforce security policies across all departments. The CTO has heard about GCP Folders, Projects, and Organization Policies, but is unsure how to structure the hierarchy and where to apply controls.
+This discussion activity asks you to apply Module 01 concepts to real-world
+scenarios. You will post an original response and engage meaningfully with at
+least two classmates. The goal is to practice the kind of architectural and
+operational reasoning tested on the ACE exam.
 
-In 175–225 words, design a GCP resource hierarchy for this scenario. Address the following:
+**Due:** See course calendar for deadlines.
 
-- How would you use the Organization node, Folders, and Projects to reflect the university's structure?
-- Where in the hierarchy would you apply IAM policies to give departments autonomy while preserving central IT control?
-- Identify one Organization Policy constraint that would be critical to apply at the Organization level and explain why.
-
----
-
-## Scenario B — The Startup Budget Crisis
-
-A startup's engineering team is running all development and production workloads in a single GCP Project in `us-central1-a`. Last month their bill unexpectedly reached $4,200 — nearly double their budget. The CTO asks you to implement controls so that the team is always aware of spending before it spirals, and to architect the environment to prevent a single data center failure from taking down the production application. The team has a modest budget and cannot afford multi-region deployment.
-
-In 175–225 words, address the following:
-
-- What specific GCP billing controls would you implement, and what are their limitations?
-- How would you re-architect the deployment to improve availability within the single-region budget constraint?
-- If the team decides to build automation that actually stops resources when spending crosses a threshold, what GCP services would you use and what is the architectural flow?
+**Grading:** Initial post (60 points) + two peer responses (20 points each) = 100 points
 
 ---
 
-## Scenario C — The Cloud Governance Audit
+## Prompt A — Resource Hierarchy Design (Choose One)
 
-Your company's internal security audit reveals that several engineers have been creating GCP Projects using personal `@gmail.com` accounts rather than corporate accounts, and some projects have resources running in unauthorized regions outside of North America. Additionally, the audit finds that some projects have no Billing Account linked, meaning cloud usage in those projects is either unpaid or masked from financial reporting.
+You have been hired as a cloud architect at a mid-sized university. The
+university has four colleges (Business, Engineering, Science, Liberal Arts),
+a central IT department, and a research division. The university's Google
+Workspace domain is `university.edu`.
 
-In 175–225 words, address the following:
+They are setting up GCP for the first time and need a resource hierarchy that:
 
-- How does using personal Gmail accounts instead of a corporate Google Workspace domain affect the GCP resource hierarchy and governance capabilities?
-- What Organization Policy constraint would you apply to prevent resource creation outside approved regions, and at what hierarchy level?
-- What process or GCP feature would help ensure all new Projects are linked to an approved Billing Account before any resources can be created?
+- Keeps production and development workloads isolated from each other
+- Allows each college to manage its own cloud spending independently
+- Prevents any college from accidentally affecting another college's resources
+- Lets central IT apply security policies across the entire organization
 
----
+Design a GCP resource hierarchy (Organization, Folders, Projects) that meets
+these requirements. In your post:
 
-## Peer Response Guidelines
-
-Your peer responses must be at least 50 words each. A strong peer response does at least one of the following:
-
-- Points out an assumption in the classmate's design and offers an alternative
-- Adds a GCP feature or constraint the classmate did not mention that strengthens their solution
-- Raises a realistic operational challenge with the classmate's approach and suggests a mitigation
-- Connects the classmate's scenario to something from the lab or from the ACE exam guide
-
-Responses that only say "Good post" or "I agree with your approach" without elaboration receive no credit.
-
----
-
-## Grading Rubric — 10 Points Total
-
-Initial Post — 6 Points:
-
-- 5–6 pts: Addresses all sub-questions in the chosen scenario with accurate GCP terminology, a coherent design rationale, and 175–225 words. Demonstrates understanding of hierarchy, IAM inheritance, and Organization Policies.
-- 3–4 pts: Addresses most sub-questions but lacks technical depth, contains inaccuracies in GCP terminology, or falls outside the word count range.
-- 1–2 pts: Addresses only one sub-question or contains significant factual errors about GCP hierarchy or billing.
-- 0 pts: Initial post not submitted by the Wednesday deadline.
-
-Peer Responses — 4 Points:
-
-- 4 pts: Two responses submitted by Sunday, each at least 50 words, each adding substantive technical content to the conversation.
-- 2 pts: Only one qualifying peer response submitted, or both responses are superficial.
-- 0 pts: No peer responses submitted.
+1. Draw or describe your hierarchy structure (text diagram is fine).
+2. Explain which IAM roles you would grant at the Organization level vs. the
+   Folder level vs. the Project level.
+3. Identify at least two Organization Policy constraints you would apply at the
+   Organization level and explain why.
+4. Explain how billing accounts would be structured to allow per-college cost
+   tracking.
 
 ---
 
-Professor Nash note: There is no single correct answer to any of these scenarios. Cloud architecture involves real trade-offs between cost, complexity, security, and operational overhead. What matters in your initial post is that your design decisions are well-reasoned, technically grounded in GCP's actual capabilities, and directly responsive to the constraints stated in the scenario.
+## Prompt B — Cloud Migration Analysis (Choose One)
+
+A local healthcare company currently runs its application on physical servers
+in a company-owned data center. Their setup includes:
+
+- 12 application servers running 24/7
+- A large file storage system holding patient records
+- A batch reporting job that runs nightly for 4 hours
+- A web portal accessed by patients during business hours (9 AM–5 PM)
+
+They are considering migrating to GCP. In your post:
+
+1. For each workload above, recommend a GCP service and service model (IaaS,
+   PaaS, or SaaS). Justify your choices.
+2. Identify which workload would benefit most from preemptible VMs and explain
+   why.
+3. Discuss how sustained use discounts would or would not apply to the 24/7
+   application servers.
+4. Identify any compliance concerns (data residency, HIPAA) that would affect
+   region selection, and explain how GCP tools address them.
+
+---
+
+## Response Requirements
+
+Your initial post must be at least 300 words and include:
+
+- A direct answer to all numbered sub-questions in your chosen prompt
+- At least one specific GCP service or feature name with a brief explanation
+- Your reasoning, not just conclusions — explain why you made each choice
+
+Your two peer responses must each be at least 100 words and do one of the
+following:
+
+- Respectfully challenge an assumption or recommendation in the post
+- Build on the post by adding a consideration the original author did not address
+- Share a real-world example that supports or complicates the post's conclusions
+
+Responses like "Great post, I agree!" do not earn credit.
+
+---
+
+## Discussion Tips
+
+- Use GCP documentation at cloud.google.com/docs to verify service names and
+  capabilities before posting.
+- The ACE exam frequently presents scenario-based questions. Practicing your
+  reasoning here directly prepares you for the exam format.
+- There is often more than one correct architectural answer. What matters is
+  that your reasoning is sound and you address trade-offs.
+
+---
+
+## Reflection Question (Optional — Extra Credit)
+
+After reading your classmates' posts, did any response change your thinking
+about your own design? If so, describe what you would revise and why. If not,
+explain which alternative approaches you considered and rejected.
+
+Extra credit responses must be at least 150 words.
 
 ---
 
 End of Discussion — Module 01
 
-Course: CIS-4329 Google Cloud Platform | Texas Wesleyan University | Professor Nash
-
-Certification Target: Google Cloud Associate Cloud Engineer
+Course: CIS-4329 Google Cloud Computing | Texas Wesleyan University | Professor Nash

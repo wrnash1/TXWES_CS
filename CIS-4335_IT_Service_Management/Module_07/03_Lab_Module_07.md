@@ -1,162 +1,212 @@
-# Lab Activity: Module 07 — Service Management Practices: Change Enablement
+# Lab Activity: Module 07 — The Service Value Chain
 
-**Course:** CIS-4335 IT Service Management — Texas Wesleyan University
-**Instructor:** Professor Nash
-**Total Points:** 100
-**Certification Alignment:** ITIL 4 Foundation
+## Course: CIS-4335 IT Service Management
 
----
+## Texas Wesleyan University | Professor Nash
 
-## Overview
-
-This lab requires you to apply Change Enablement concepts to realistic IT service management scenarios. No software tools or terminal commands are required. All work is analytical and written.
-
-Submit all exercises as a single document to the Canvas assignment portal by the posted deadline.
+## Total Points: 100
 
 ---
 
-## Scenario: Ironclad Financial Services
+## Lab Overview
 
-Ironclad Financial Services is a regional bank with 1,400 employees, 22 branch locations, and a central IT department of 35 staff. Ironclad's core systems include a banking platform, an online customer portal, a loan origination system, and a network of 900 branch workstations running Windows.
+In this lab you will apply the Service Value Chain (SVC) model to realistic IT scenarios.
+You will map organizational activities to SVC activities, design a custom value stream, and
+analyze how demand and value flow through the chain.
 
-IT leadership has recently adopted ITIL 4 practices. The change management process that existed under ITIL v3 is being replaced by the Change Enablement practice. The IT director has identified several upcoming changes and situations that the team must work through as it stands up the new practice.
+**Estimated time:** 90–120 minutes
+
+**Submission format:** PDF or Word document uploaded to the course LMS
+
+**Learning objectives:**
+
+- Correctly assign real-world IT activities to the six SVC activities
+- Design a value stream for a specific IT service scenario
+- Explain how demand enters the SVC and how value exits
+- Articulate co-creation of value in a service context
 
 ---
 
-## Exercise 1: Change Classification (25 points)
+## Part A: SVC Activity Mapping (30 points)
 
-Read each of the ten proposed changes below. For each change:
+### Scenario
 
-* Classify it as standard, normal, or emergency.
-* State the authorization model — who authorizes it and what process applies.
-* Write one sentence explaining the key factor that determined your classification.
+Lakeside Regional Hospital has recently hired a new IT Service Manager. On her first day,
+she observes the following twelve activities happening across the IT department. Her task —
+and yours — is to map each activity to the correct SVC activity.
 
-Do not use bullet lists for your responses. Write each answer as a brief paragraph.
+### Instructions
 
-Change 1: A new hire joins the bank on Monday. The IT team needs to create a user account in Active Directory, assign standard role-based access permissions, and provision a workstation using the pre-configured image.
+For each activity listed below, identify:
 
-Change 2: A critical vulnerability in the online banking portal's authentication library is being actively exploited. Security has confirmed active attacks in the wild. A vendor-provided patch is available and must be applied to stop the ongoing breach.
+1. The primary SVC activity it belongs to (Plan / Improve / Engage / Design and Transition /
+   Obtain/Build / Deliver and Support)
+2. A one-sentence justification for your choice
 
-Change 3: The bank is migrating its core banking platform from an on-premises data center to a private cloud hosted by a third-party provider. The migration will affect all 22 branch locations, the customer portal, and the loan origination system. Estimated downtime is six hours during a weekend maintenance window.
+### Activities to Map
 
-Change 4: A teller at Branch 7 reports that their browser is outdated and blocking access to an internal HR portal. The IT team needs to update the browser to the current approved version, which is on the pre-approved software list.
+1. The IT director holds a quarterly strategy session to align IT goals with hospital
+   business objectives for the coming fiscal year.
 
-Change 5: The loan origination system vendor has released a major version upgrade that includes new regulatory compliance features required by the state banking commission. The upgrade requires a database schema change and has never been tested in this environment.
+2. A nurse calls the help desk to report that the patient record system is displaying an
+   error and she cannot access records.
 
-Change 6: A firewall rule at the main data center is blocking a new API integration with a partner institution. The network team needs to add a single inbound rule permitting traffic from the partner's IP range on a specified port. The change has not been performed before and the full impact on existing firewall policies is unknown.
+3. The infrastructure team orders sixteen new desktop computers from the hardware vendor
+   after receiving an approved purchase requisition.
 
-Change 7: The IT team needs to reset a forgotten password for a branch manager who is locked out of their workstation and cannot start their workday. This is handled through the standard IT service desk process.
+4. The IT manager conducts a post-incident review of last month's EHR outage and creates
+   a task in the improvement register.
 
-Change 8: A network switch at the main data center fails overnight, taking three branch locations offline. The network team needs to re-route traffic through a redundant switch that was not part of the original design, requiring an immediate configuration change to restore service.
+5. A business analyst meets with department heads to document requirements for a new
+   bed-management scheduling application.
 
-Change 9: The server team needs to increase the allocated RAM on a development server from 8 GB to 16 GB. The server hosts only development and testing workloads and has no production dependencies.
+6. The development team builds and unit-tests the new bed-management application in the
+   staging environment before release.
 
-Change 10: An audit finding requires the bank to implement multi-factor authentication for all administrative accounts within 30 days. The security team needs to deploy MFA across all privileged accounts in Active Directory, covering approximately 80 accounts across IT, compliance, and executive leadership.
+7. An IT architect creates the solution design document specifying network topology,
+   server requirements, and integration points for the new scheduling application.
 
-### Rubric — Exercise 1
+8. The change advisory board reviews a request to upgrade the firewall firmware this
+   weekend and approves it with conditions.
 
-| Score | Criteria |
+9. The service desk manager analyzes the past quarter's ticket volume and identifies that
+   password resets account for 34% of all contacts, then proposes a self-service portal.
+
+10. The operations team monitors server CPU and memory dashboards to detect anomalies
+    before users are impacted.
+
+11. A vendor contract for cloud backup services is reviewed, renewed, and the performance
+    terms are updated based on the previous year's SLA results.
+
+12. The release manager creates the deployment checklist, coordinates a maintenance window,
+    and oversees the go-live of the new scheduling application.
+
+### Deliverable A
+
+A table with three columns: Activity Number, SVC Activity, Justification (one sentence).
+
+### Scoring Rubric — Part A
+
+| Criterion | Points |
 |---|---|
-| 23–25 | All ten changes correctly classified with accurate authorization model and clear explanation |
-| 18–22 | Eight or nine correctly classified; authorization model mostly accurate; explanations present |
-| 13–17 | Six or seven correctly classified; some authorization models incorrect or missing |
-| 0–12 | Fewer than six correctly classified; criteria not applied |
+| Correct SVC activity assigned (2 pts each × 12) | 24 |
+| Justification is accurate and uses ITIL terminology | 6 |
+| **Total Part A** | **30** |
 
 ---
 
-## Exercise 2: Change Record — Normal Change (35 points)
+## Part B: Value Stream Design (40 points)
 
-Using the change record template below, document Change 10 from Exercise 1 as a full normal change record. Complete every field. Write substantive content in each field — do not leave fields blank or write placeholder text.
+### Part B Scenario
 
-### Change Record Template
+Lakeside Regional Hospital has approved a project to deploy a new **Employee Self-Service
+Password Reset Portal**. Currently, password resets are handled entirely by the service
+desk and take an average of 12 minutes per ticket. The portal will allow employees to reset
+their own passwords using identity verification, reducing service desk volume and improving
+speed of resolution.
 
-**Change ID:** CHG-2024-047
+### Part B Instructions
 
-**Change title:** (Write a concise descriptive title for this change.)
+Design a complete value stream for this project. Your value stream must:
 
-**Change type:** (Standard / Normal / Emergency — state which applies and why.)
+1. Begin with the demand trigger (who needs what and why)
+2. Include all relevant SVC activities in a logical sequence
+3. Identify at least one ITIL practice involved at each step
+4. Show how value is ultimately realized by the hospital and its staff
+5. Be presented as either a numbered workflow list or a simple flow diagram with labels
 
-**Requested by:** (Name the role that would initiate this change in the Ironclad scenario.)
+### Required Structure for Each Step
 
-**Date submitted:** (Use a realistic date in the context of a 30-day compliance deadline.)
+For each step in your value stream, provide:
 
-**Target implementation date:** (Choose a date that allows time for assessment, CAB review, and scheduling.)
+- **SVC Activity:** (e.g., Engage)
+- **What happens:** A 2–3 sentence description of the work performed
+- **Practice(s) involved:** Name at least one ITIL practice
+- **Output:** What is produced by this step
 
-**Change description:** (Write 3–5 sentences describing what the change will do, what systems it affects, and why it is being made.)
+### Minimum Steps Required
 
-**Business justification:** (Write 2–3 sentences explaining the business driver for this change — connect it to the audit finding and regulatory compliance requirement.)
+Your value stream must contain at least six steps covering at least four distinct SVC
+activities. You may repeat activities where the scenario warrants it.
 
-**Scope:** (List the systems, services, and user populations affected by this change.)
+### Deliverable B
 
-**Risk assessment:** (Identify at least three specific risks associated with this change. For each risk, note its likelihood and potential impact.)
+A documented value stream with a minimum of six steps, structured as described above, plus
+a 150–200 word summary explaining how this value stream demonstrates co-creation of value
+between the IT department and hospital staff.
 
-**Rollback plan:** (Describe what will be done if the change fails or causes unacceptable disruption. Be specific about the rollback steps and who is responsible.)
+### Scoring Rubric — Part B
 
-**Implementation steps:** (List the key steps required to implement this change in logical order.)
-
-**CAB review required:** (State yes or no, and explain your reasoning based on the risk level and impact of this change.)
-
-**Change authority:** (Identify the role that holds authorization power for this change.)
-
-**Post-implementation review:** (Describe what will be checked after implementation to confirm success, and within what timeframe.)
-
-### Rubric — Exercise 2
-
-| Score | Criteria |
+| Criterion | Points |
 |---|---|
-| 32–35 | All fields completed with substantive, realistic content; risk assessment identifies three or more specific risks; rollback plan is actionable; CAB reasoning is correct |
-| 25–31 | All fields completed; one or two fields thin; risk assessment identifies two risks; rollback plan present |
-| 18–24 | Most fields completed; risk assessment or rollback plan is superficial; CAB reasoning unclear |
-| 0–17 | Multiple fields blank or with placeholder content; change record structure not demonstrated |
+| At least 6 steps included | 10 |
+| Each step correctly labeled with an SVC activity | 10 |
+| At least one ITIL practice named per step | 8 |
+| Output is clearly identified at each step | 6 |
+| Co-creation summary is accurate and well-reasoned | 6 |
+| **Total Part B** | **40** |
 
 ---
 
-## Exercise 3: CAB Analysis (20 points)
+## Part C: Reflection Questions (30 points)
 
-Return to the ten changes from Exercise 1. For each of the following five changes (3, 5, 6, 8, and 10), answer the following questions in a brief paragraph for each change:
+Answer each of the following questions in 100–150 words each.
 
-1. Would this change require CAB advisory review? Why or why not?
-2. If CAB review applies, who should sit on the CAB for this specific change? Name at least three roles by title.
-3. What specific information should the CAB review before making its recommendation?
+### Question 1 (10 points)
 
-Write your analysis in paragraph form. Do not use bullet lists.
+The ITIL 4 Service Value Chain is described as a **flexible operating model**, in contrast
+to ITIL v3's linear lifecycle. Using a specific example from either the hospital scenario
+above or your own workplace or internship experience, explain how the non-linear nature of
+the SVC creates practical advantages for an IT organization.
 
-### Rubric — Exercise 3
+### Question 2 (10 points)
 
-| Score | Criteria |
+ITIL 4 states that **value is co-created** between the service provider and the consumer.
+A colleague argues: "If IT builds a perfect system that works exactly as designed, IT has
+delivered value regardless of whether users adopt it." Do you agree or disagree? Use the
+ITIL 4 definition of value and the SVC model to support your argument.
+
+### Question 3 (10 points)
+
+Consider the **Improve** activity's unique characteristic: it has a relationship with every
+other SVC activity. Why did the ITIL 4 authors design it this way? What organizational
+problem does this solve compared to a model where improvement is a separate, periodic
+process (such as an annual IT audit)?
+
+### Scoring Rubric — Part C
+
+| Criterion | Points |
 |---|---|
-| 18–20 | All five changes analyzed; CAB decision correctly reasoned for each; membership and review criteria are specific and realistic |
-| 14–17 | Four of five changes analyzed; CAB reasoning mostly correct; membership or review criteria thin on one or two |
-| 10–13 | Three or four analyzed; CAB/no-CAB decisions mostly correct but reasoning is general |
-| 0–9 | Fewer than three adequately analyzed; CAB role not clearly understood |
+| Each response is 100–150 words | 3 |
+| Correct application of ITIL 4 concepts | 4 |
+| Logical reasoning and use of examples | 3 |
+| **Per question total** | **10** |
+| **Total Part C (3 questions)** | **30** |
 
 ---
 
-## Exercise 4: Guiding Principles Applied to Change Enablement (20 points)
+## Submission Checklist
 
-Read each of the five situations below. For each one, identify the ITIL 4 Guiding Principle most directly applicable to the Change Enablement context, and write two sentences explaining how applying that principle would change the organization's behavior.
+Before submitting, verify:
 
-Situation 1: Ironclad's IT director wants to require full CAB review for every single change — including password resets, browser updates, and new user account creation — to ensure maximum governance oversight.
+- [ ] Part A table includes all 12 activities with SVC activity and justification
+- [ ] Part B value stream has at least 6 steps, each with activity, description, practice, and output
+- [ ] Part B co-creation summary is included (150–200 words)
+- [ ] Part C has three responses, each 100–150 words
+- [ ] Document includes your name, student ID, and submission date
+- [ ] File is saved as PDF or Word and uploaded to the LMS before the deadline
 
-Situation 2: The development team wants to deploy the new MFA system all at once across all 80 accounts in a single Saturday evening window, rather than rolling it out in phases.
+---
 
-Situation 3: The network team has been making configuration changes to branch firewalls without informing the service desk or the branch managers. The service desk is receiving calls about unexpected behavior that they cannot explain because they were not aware changes were being made.
+## Grading Summary
 
-Situation 4: Before designing a new change assessment process, the IT director reviews the current process to understand what is already working well and what specific steps are causing delays.
-
-Situation 5: The change record process currently requires 14 separate approval signatures on a paper form. Most signatures are from people who do not read the form — they simply sign because they were asked to. The IT director wants to redesign the process.
-
-### Rubric — Exercise 4
-
-| Score | Criteria |
+| Part | Points |
 |---|---|
-| 18–20 | All five situations correctly mapped to a principle; both sentences for each situation are specific and accurate |
-| 14–17 | Four correctly mapped; explanations present but one or two are vague |
-| 10–13 | Three correctly mapped; some explanations missing the principle application |
-| 0–9 | Fewer than three correctly mapped; Guiding Principles not clearly applied |
+| Part A: SVC Activity Mapping | 30 |
+| Part B: Value Stream Design | 40 |
+| Part C: Reflection Questions | 30 |
+| **Total** | **100** |
 
 ---
 
-## Submission Instructions
-
-Compile all four exercises into a single document with clear headings. Label each change number or situation number before your response. Submit to the Module 07 Lab assignment in Canvas by the posted deadline.
+Module 07 Lab | CIS-4335 IT Service Management | Texas Wesleyan University

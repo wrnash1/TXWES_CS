@@ -1,52 +1,261 @@
 # Reading Guide: Module 13 - Cron Jobs and Task Scheduling
-## Course: CIS-3325_OS_Admin (CompTIA Linux+ XK0-005)
+
+## CIS-3325 OS Administration | Texas Wesleyan University
+
+**Certification Alignment:** CompTIA Linux+ (XK0-005)
+**Exam Domain:** Domain 4.0 - Automation and Scripting
 
 ---
 
-### Introduction
-Welcome to **Module 13 – Cron Jobs and Task Scheduling**! This week covers Linux task automation — the traditional `cron` daemon, `crontab` syntax, system-wide cron directories, the `at` command for one-time jobs, and the modern `systemd` timer units. Task scheduling is tested on CompTIA Linux+ XK0-005 under Domain 1.0 (System Management) and Domain 4.0 (Scripting, Containers, and Automation).
+### Glossary
 
-As you work through this material you will learn how to create, edit, and troubleshoot cron jobs, interpret the five-field cron time expression, use `at` for one-time scheduling, and understand when systemd timers are the appropriate alternative to cron.
+**cron** - A daemon that wakes every minute and executes scheduled commands based on time specifications in crontab files and system cron directories.
 
----
+**crontab** - A file containing cron job entries for a user or the system. Edited with `crontab -e` for user crontabs; `/etc/crontab` is the system-wide crontab with an added username field.
 
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
+**run-parts** - A utility that executes all scripts in a directory that match naming rules. Used by cron to execute scripts in cron.hourly, cron.daily, cron.weekly, and cron.monthly.
 
-*   **`cron` and `crond`**: The cron daemon (`crond` or `cron`) runs continuously in the background and checks its schedule tables every minute, executing any jobs whose time expression matches the current time. Cron reads from user crontab files (`crontab -e`) and system-wide files in `/etc/cron.d/`, `/etc/cron.daily/`, `/etc/cron.weekly/`, and `/etc/cron.monthly/`. The main system crontab is at `/etc/crontab`.
-*   **Crontab syntax (five-field format)**: Each cron job line uses the format: `minute hour day-of-month month day-of-week command`. Fields use: a specific number (`30`), `*` (any value), a range (`1-5`), a list (`1,3,5`), or a step (`*/15` = every 15 minutes). Example: `30 2 * * 0 /usr/bin/backup.sh` runs at 2:30 AM every Sunday. The `crontab -e` command opens the current user's crontab for editing; `crontab -l` lists it; `crontab -r` removes it.
-*   **System cron directories**: `/etc/cron.daily/`, `/etc/cron.weekly/`, `/etc/cron.monthly/` contain scripts that `run-parts` executes on the corresponding schedule. Drop a script into the appropriate directory to schedule it without writing a crontab entry. Scripts must be executable and must not have a file extension (`.sh` suffix causes `run-parts` to skip them on some distributions). `/etc/cron.d/` holds crontab-format files with an extra username field before the command.
-*   **`at` command**: Schedules a one-time job to run at a specified future time. `at 14:30` opens an interactive prompt where commands are entered and submitted with Ctrl+D. `at now + 2 hours` schedules a job relative to the current time. `atq` lists pending jobs; `atrm <jobid>` removes a queued job. The `at` daemon (`atd`) must be running. Unlike cron, `at` jobs execute once and are then removed.
-*   **`/etc/cron.allow` and `/etc/cron.deny`**: Access control files that determine which users may use `crontab`. If `/etc/cron.allow` exists, only users listed in it may schedule cron jobs — all others are denied. If only `/etc/cron.deny` exists, all users except those listed may use cron. If neither file exists, the default behavior varies by distribution (often allows all users or only root).
-*   **systemd timers**: A modern alternative to cron using two unit files: a `.service` unit (defines what to run) and a `.timer` unit (defines when to run it). `OnCalendar=daily` triggers daily; `OnBootSec=5min` triggers 5 minutes after boot. `systemctl list-timers --all` shows all timers and their next trigger times. Timers can catch up missed jobs if the system was off (via `Persistent=true`), which cron cannot do.
+**at** - A command for scheduling a one-time job to run at a future time. The `atd` daemon executes at jobs. Use when a task should not recur.
 
----
+**atq** - Lists pending at jobs for the current user. Root sees all users' jobs.
 
-### 2. Certification Exam Tips
-*   **Domain alignment:** Task scheduling maps to Linux+ Domain 1.0 (System Management) and Domain 4.0 (Scripting, Containers, and Automation). Expect 4–6 questions on crontab syntax, field order, and the `at` command.
-*   **Crontab field order trap:** The five fields are always: minute, hour, day-of-month, month, day-of-week. The exam frequently tests this order. A common wrong answer swaps hour and minute or places day-of-week before month. Memorize: **M H DOM MON DOW**.
-*   **`*/5` vs `5` trap:** `*/5` in the minute field means "every 5 minutes" (0, 5, 10, 15...). `5` in the minute field means "at minute 5 of every hour" (one execution per hour). The exam presents scenarios asking for a job that runs every N minutes — the answer uses `*/N`.
-*   **`cron.allow` vs `cron.deny` priority:** If `/etc/cron.allow` exists, it takes complete precedence — even if a user is not in `/etc/cron.deny`, they are denied if not in `cron.allow`. The exam may ask which file controls access when both exist — `cron.allow` wins.
-*   **`at` vs cron use cases:** `at` is for one-time future execution; cron is for recurring scheduled jobs. The exam distinguishes between them with scenario questions like "run a maintenance script once at midnight tonight" (answer: `at`) vs "run a backup script every night at midnight" (answer: cron).
-*   **Study Resource:** [The Linux Command Line by William Shotts](https://linuxcommand.org/tlcl.php) covers job scheduling concepts in its scripting and automation chapters. [Linux Essentials Course by LearnLinuxTV](https://www.youtube.com/playlist?list=PLT98CRl2KxEG0QLjR-8t7k3S4I15Z1A78) includes video demonstrations of crontab editing, cron job troubleshooting, and the `at` command in a live environment.
+**anacron** - A cron supplement that runs jobs that were missed while the system was powered off. Reads /etc/anacrontab and tracks last-run times in /var/spool/anacron/.
+
+**systemd timer** - A systemd unit file with a .timer extension that activates a .service unit on a schedule. The modern alternative to cron, with full journald logging and dependency management.
+
+**OnCalendar** - The systemd timer directive that specifies a calendar-based schedule (e.g., `daily`, `weekly`, `*-*-* 02:00:00`).
+
+**Persistent=true** - A systemd timer option that triggers the timer immediately at boot if it was missed while the system was off. The systemd equivalent of anacron's catch-up behavior.
+
+**cron.allow / cron.deny** - Files that control user access to cron. If cron.allow exists, only listed users may use cron. If only cron.deny exists, all users except listed ones may use cron.
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Read the automation and scheduling chapters of the free OER textbook [The Linux Command Line by William Shotts](https://linuxcommand.org/tlcl.php), which cover cron job creation, crontab syntax, and scheduled task management on Linux.
-*   **Required Video:** Watch the task scheduling videos in the [Linux Essentials Course by LearnLinuxTV](https://www.youtube.com/playlist?list=PLT98CRl2KxEG0QLjR-8t7k3S4I15Z1A78), a free YouTube playlist that demonstrates crontab editing, cron directory usage, and the `at` command with live examples.
+### Crontab Field Reference
+
+```
+MIN   HOUR   DOM   MON   DOW   COMMAND
+0-59  0-23   1-31  1-12  0-7
+```
+
+Day-of-week: 0 and 7 both represent Sunday.
+
+| Field | Meaning | Example |
+|-------|---------|---------|
+| MIN | Minute (0-59) | `15` = at minute 15 |
+| HOUR | Hour (0-23) | `3` = 3 AM |
+| DOM | Day of month (1-31) | `1` = 1st of month |
+| MON | Month (1-12) | `6` = June |
+| DOW | Day of week (0-7) | `1-5` = Mon-Fri |
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab you will create a user crontab entry with `crontab -e` to run a script on a recurring schedule, verify the crontab with `crontab -l`, place a script in `/etc/cron.daily/`, and schedule a one-time job using `at`. You will also inspect `systemctl list-timers` to compare systemd timer behavior.
+### Crontab Special Value Syntax
+
+| Syntax | Meaning | Example |
+|--------|---------|---------|
+| `*` | Every value | `* * * * *` = every minute |
+| `*/N` | Every N steps | `*/15` in MIN = every 15 min |
+| `N,M` | List | `1,15` in HOUR = 1 AM and 3 PM |
+| `N-M` | Range | `1-5` in DOW = Mon through Fri |
+| `N-M/S` | Range with step | `0-59/10` in MIN = every 10 min |
 
 ---
 
-### 3. Study Checklist
-- [ ] Read the glossary terms and memorize their definitions.
-- [ ] Read the scheduling chapters in [The Linux Command Line by William Shotts](https://linuxcommand.org/tlcl.php).
-- [ ] Watch the task scheduling videos in [Linux Essentials Course by LearnLinuxTV](https://www.youtube.com/playlist?list=PLT98CRl2KxEG0QLjR-8t7k3S4I15Z1A78).
-- [ ] Review the commands outlined in the lab instructions.
-- [ ] Proceed to the weekly hands-on lab activity.
+### Common Crontab Examples
+
+| Schedule | Crontab Entry |
+|----------|---------------|
+| 3:15 AM every day | `15 3 * * *` |
+| Every 10 minutes | `*/10 * * * *` |
+| Midnight every day | `0 0 * * *` |
+| 6 AM Mon-Fri | `0 6 * * 1-5` |
+| 1st of every month at midnight | `0 0 1 * *` |
+| Every hour | `0 * * * *` |
+| Every 30 minutes | `*/30 * * * *` |
+
+---
+
+### crontab Command Reference
+
+| Command | Action |
+|---------|--------|
+| `crontab -e` | Edit current user's crontab |
+| `crontab -l` | List current user's crontab |
+| `crontab -r` | Remove current user's crontab (no confirmation) |
+| `sudo crontab -u USER -e` | Edit another user's crontab |
+| `sudo crontab -u USER -l` | List another user's crontab |
+
+---
+
+### Cron File Locations
+
+| Location | Purpose | Username field? |
+|----------|---------|-----------------|
+| `/var/spool/cron/crontabs/USER` | Per-user crontab (edit with crontab -e) | No |
+| `/etc/crontab` | System-wide crontab | Yes |
+| `/etc/cron.d/` | Application-installed cron fragments | Yes |
+| `/etc/cron.hourly/` | Scripts run every hour by run-parts | No |
+| `/etc/cron.daily/` | Scripts run every day by run-parts | No |
+| `/etc/cron.weekly/` | Scripts run every week by run-parts | No |
+| `/etc/cron.monthly/` | Scripts run every month by run-parts | No |
+
+---
+
+### run-parts Naming Rules (Debian/Ubuntu)
+
+Scripts in cron.hourly, cron.daily, cron.weekly, cron.monthly must:
+
+* Contain only letters, digits, hyphens, and underscores
+* Have NO file extension (no `.sh`, no `.py`, no `.rb`)
+* Be executable (`chmod +x`)
+
+A script named `backup.sh` is silently ignored. Rename it to `backup`.
+
+---
+
+### at Command Reference
+
+| Command | Action |
+|---------|--------|
+| `at 23:45` | Schedule job at 11:45 PM today |
+| `at 02:00 tomorrow` | Schedule job at 2 AM tomorrow |
+| `at now + 2 hours` | Schedule job 2 hours from now |
+| `echo "CMD" \| at 03:00` | Non-interactive at job |
+| `atq` | List pending at jobs |
+| `atrm N` | Remove at job number N |
+| `at -c N` | Show full command for job N |
+
+---
+
+### anacron Configuration (/etc/anacrontab)
+
+```
+PERIOD   DELAY   JOB-ID       COMMAND
+1        5       cron.daily   run-parts /etc/cron.daily
+7        10      cron.weekly  run-parts /etc/cron.weekly
+30       15      cron.monthly run-parts /etc/cron.monthly
+```
+
+* PERIOD: days between runs
+* DELAY: minutes to wait after system boot (prevents boot spike)
+* JOB-ID: unique name; last-run date stored in `/var/spool/anacron/JOB-ID`
+
+---
+
+### systemd Timer Unit Structure
+
+Two files are required.
+
+`/etc/systemd/system/example.service`:
+
+```ini
+[Unit]
+Description=Example Job
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/example.sh
+```
+
+`/etc/systemd/system/example.timer`:
+
+```ini
+[Unit]
+Description=Example Timer
+
+[Timer]
+OnCalendar=*-*-* 02:00:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+```
+
+---
+
+### systemd Timer OnCalendar Examples
+
+| Value | Schedule |
+|-------|---------|
+| `daily` | Every day at midnight |
+| `weekly` | Every Monday at midnight |
+| `monthly` | First day of every month |
+| `*-*-* 02:00:00` | Every day at 2 AM |
+| `Mon..Fri *-*-* 06:00:00` | Weekdays at 6 AM |
+| `*-*-* */4:00:00` | Every 4 hours |
+| `*:0/15` | Every 15 minutes |
+
+---
+
+### systemd Timer Commands
+
+| Command | Action |
+|---------|--------|
+| `systemctl list-timers` | Show all active timers |
+| `systemctl enable --now NAME.timer` | Enable and start a timer |
+| `systemctl status NAME.timer` | Check timer status and next trigger |
+| `journalctl -u NAME.service` | View output from the timer's service |
+| `systemd-analyze calendar "SPEC"` | Test/validate an OnCalendar expression |
+
+---
+
+### cron.allow / cron.deny Precedence
+
+| State | Who can use cron |
+|-------|-----------------|
+| cron.allow exists | Only users listed in cron.allow |
+| cron.deny exists, cron.allow does not | All users except those in cron.deny |
+| Neither file exists | All users (implementation-dependent) |
+
+The same rules apply to `at` via `/etc/at.allow` and `/etc/at.deny`.
+
+---
+
+### Cron Troubleshooting Checklist
+
+| Symptom | Likely Cause | Fix |
+|---------|-------------|-----|
+| Job never runs | Wrong field order | Verify: MIN HOUR DOM MON DOW |
+| Job never runs | Script not executable | `chmod +x /path/script.sh` |
+| Job in cron.daily never runs | Filename has extension | Rename: remove `.sh` |
+| Command not found in cron | PATH too short | Use full paths or set PATH= |
+| No output visible | Not redirected | Add `>> /log/file.log 2>&1` |
+| Cron daemon not running | Service stopped | `systemctl start cron` |
+
+---
+
+### Exam Tips
+
+1. Crontab field order is MIN HOUR DOM MON DOW. The most common exam mistake is reversing minute and hour. `15 3 * * *` = 3:15 AM. `3 15 * * *` = 3:03 PM.
+
+2. `*/N` in the minute field means "every N minutes." `*/15` = runs at :00, :15, :30, :45 every hour. This is step syntax, not a range.
+
+3. cron.allow precedence: if `/etc/cron.allow` exists, it is the only file that matters. cron.deny is completely ignored when cron.allow exists.
+
+4. run-parts on Debian/Ubuntu: scripts must have no extension. `backup.sh` is silently skipped. This is a directly testable exam scenario.
+
+5. `at` is for one-time jobs. Cron is for recurring jobs. If the exam says "run once tonight," the answer is `at`, not a crontab entry with `* * *`.
+
+6. anacron catches missed jobs on systems that are not always running. `Persistent=true` in a systemd timer does the same thing. Both are alternatives to standard cron for laptops or machines with unpredictable uptime.
+
+7. Cron runs with a minimal PATH. Always use absolute paths in crontab entries. This is the most common reason a cron job works interactively but fails when run by cron.
+
+8. systemd timers require both a `.timer` unit and a `.service` unit. The timer activates the service. Enable with `systemctl enable --now NAME.timer`, not the service unit directly.
+
+---
+
+### Study Checklist
+
+Before the quiz and lab, confirm you can do all of the following without looking them up:
+
+* Write a crontab entry for any given time specification without reversing minute and hour
+* Explain the meaning of `*/15`, `1,15`, and `1-5` in crontab fields
+* Use `crontab -e`, `crontab -l`, and `crontab -r` correctly
+* Explain why scripts in /etc/cron.daily/ must not have a .sh extension on Ubuntu
+* Schedule a one-time job with `at` and list or remove pending jobs with `atq`/`atrm`
+* Explain what anacron does that cron cannot
+* Create a systemd timer unit pair (.service + .timer) for a scheduled job
+* Use `systemctl list-timers` to view active timer schedules
+* Explain the difference between cron.allow and cron.deny and their precedence
+* Troubleshoot a cron job that silently fails (PATH, permissions, filename extension)

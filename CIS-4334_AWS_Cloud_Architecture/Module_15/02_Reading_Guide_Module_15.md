@@ -1,70 +1,269 @@
-# Reading Guide: Module 15 - Well-Architected Framework – 6 Pillars
-## Course: CIS-4334_AWS_Cloud_Architecture (AWS Certified Solutions Architect - Associate)
+# Reading Guide: Module 15 — AWS Migration and Hybrid Architectures
+
+## Course: CIS-4334 AWS Cloud Architecture
+
+## Texas Wesleyan University | Professor Nash
+
+**Certification Alignment:** AWS Solutions Architect — Associate (SAA-C03)
 
 ---
 
-### Introduction
-Welcome to **Module 15 - Well-Architected Framework – 6 Pillars**! The AWS Well-Architected Framework is the prescriptive guidance AWS provides for designing and evaluating cloud workloads against proven architectural best practices. It is organized into six pillars, each representing a distinct dimension of architecture quality. The SAA-C03 exam directly tests Well-Architected Framework knowledge and uses the six pillars as the organizing principle for many scenario-based "best practice" questions. Understanding each pillar's focus, key principles, and associated AWS services enables you to reason about architecture trade-offs the way AWS expects.
+## Learning Objectives
+
+By the end of this module, you will be able to:
+
+1. Select the appropriate migration strategy (7 Rs) for a given workload and business requirement
+2. Explain how AWS Application Migration Service performs continuous block-level replication
+3. Configure AWS DMS for homogeneous and heterogeneous database migrations using CDC
+4. Compare Direct Connect and Site-to-Site VPN and select the correct connectivity option
+5. Design a multi-VPC Transit Gateway topology for hub-and-spoke network architectures
+6. Explain when AWS Outposts is appropriate and how it differs from a standard cloud deployment
+7. Configure Route 53 Resolver endpoints to enable bidirectional hybrid DNS resolution
 
 ---
 
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
+## Section 1: Migration Strategies — The 7 Rs
 
-*   **Operational Excellence Pillar**: Focuses on running and monitoring systems to deliver business value and continually improve supporting processes and procedures. Key practices include performing operations as code (Infrastructure as Code with CloudFormation), making frequent, small, reversible changes, anticipating failure, and learning from operations events. The "operations as code" principle means runbooks and alarms are defined in code, not manual documentation.
+### 1.1 Strategy Selection Guide
 
-*   **Security Pillar**: Focuses on protecting data, systems, and assets while delivering business value through risk management. Key design principles include implementing a strong identity foundation (least privilege IAM), enabling traceability (CloudTrail, CloudWatch Logs), applying security at all layers (network, OS, application, data), automating security best practices, and protecting data in transit (TLS) and at rest (KMS). The Security Pillar aligns with the Shared Responsibility Model.
+| Strategy | Effort | Cloud Benefit | When to Use |
+|---|---|---|---|
+| Retire | None | Cost savings | No longer needed |
+| Retain | None | None yet | Compliance, dependency, not ready |
+| Rehost | Low | Moderate | Fast migration; optimize later |
+| Replatform | Medium | Medium | Minor optimizations without code changes |
+| Repurchase | Low | High | Better SaaS option exists |
+| Refactor | High | Very High | Strategic workloads needing cloud-native redesign |
+| Relocate | Low | Moderate | VMware-based environments |
 
-*   **Reliability Pillar**: Focuses on a workload's ability to perform its intended function correctly and consistently, and to recover quickly from failures. Key practices include distributed system design (multi-AZ, multi-Region), automatic recovery from failure, horizontal scaling (add more small resources vs. larger single resources), and testing recovery procedures. Reliability is measured by Recovery Time Objective (RTO) and Recovery Point Objective (RPO).
+### 1.2 Rehost in Practice
 
-*   **Performance Efficiency Pillar**: Focuses on using computing resources efficiently to meet system requirements and maintaining that efficiency as demand changes and technologies evolve. Key practices include selecting the right instance types and services for the workload, using managed services (reduce operational burden), going global in minutes (CloudFront, Global Accelerator), and experimenting more often (easy provisioning enables A/B testing of architectures).
+Rehost (lift-and-shift) is the dominant strategy for large-scale migrations where speed is the primary concern. Applications are moved to EC2 with the same OS, same runtime, same configuration. No code changes. The benefit is speed and risk reduction — once in AWS, teams can optimize later. AWS Application Migration Service automates the rehost process.
 
-*   **Cost Optimization Pillar**: Focuses on avoiding unnecessary costs and running systems at the lowest price point while meeting business requirements. Key practices include implementing cloud financial management (cost allocation tags, AWS Budgets), using consumption-based pricing models (On-Demand, Spot, Serverless), right-sizing resources, and matching capacity to demand. The Cost Optimization Pillar does not mean "cheapest" — it means "optimal value for the required capability."
+### 1.3 Replatform Examples
 
-*   **Sustainability Pillar** (sixth pillar, added in 2021): Focuses on minimizing the environmental impact of running cloud workloads. Key practices include understanding your impact, maximizing utilization (right-sizing), using managed services (more efficient than self-managed), selecting efficient hardware (Graviton processors), reducing unnecessary data transfer, and using Regions with renewable energy commitments.
+Replatform makes targeted improvements without full re-architecture:
 
----
+- Self-managed MySQL on-premises → Amazon RDS MySQL (eliminate OS patching, backup management)
+- Java application on Tomcat on EC2 → same application on Elastic Beanstalk (eliminate infrastructure management)
+- Self-managed Redis on-premises → Amazon ElastiCache Redis (eliminate cluster management)
 
-### 2. Certification Exam Tips
+### 1.4 Migration Assessment Tools
 
-*   **SAA-C03 Domain Relevance:** The Well-Architected Framework is the conceptual foundation for the entire exam. The four exam domains (Secure, Resilient, High-Performing, Cost-Optimized) map directly to four of the six pillars (Security, Reliability, Performance Efficiency, Cost Optimization). Operational Excellence and Sustainability appear in scenario questions but are not separate exam domains.
+**AWS Migration Evaluator** (formerly TSO Logic) analyzes on-premises server utilization data to project the cost of running the same workloads on AWS. Provides a business case with cost comparisons before migration begins.
 
-*   **Pillar-to-AWS-Service Mapping:** The exam presents a design requirement and expects you to identify both the pillar it belongs to and the AWS service that satisfies it. Reliability → Multi-AZ, ASG, Route 53 Failover, Multi-Region. Security → IAM, KMS, WAF, Shield, GuardDuty. Performance → CloudFront, ElastiCache, RDS Read Replicas, EC2 instance right-sizing. Cost → Reserved Instances, Spot, S3 Intelligent-Tiering, Lambda (pay-per-use).
-
-*   **"Most Reliable" vs. "Most Cost-Efficient" Trap:** The exam frequently asks for the "most reliable" or "most cost-efficient" solution. These often point to different answers. A multi-Region active-active deployment is most reliable but most expensive. A single-AZ deployment with On-Demand instances is cheapest but least reliable. Read the question carefully to identify which pillar the question is optimizing for.
-
-*   **Well-Architected Tool:** AWS provides the Well-Architected Tool (a free service in the console) that allows you to review your workloads against the six pillars through structured questionnaires, generating improvement plan recommendations. The SAA-C03 exam may reference this tool in governance-related questions.
-
-*   **Disaster Recovery Strategies:** The Reliability Pillar includes four disaster recovery strategies in order of increasing cost and decreasing RTO/RPO: Backup & Restore (highest RTO, lowest cost), Pilot Light (pre-provisioned minimal infrastructure), Warm Standby (scaled-down active copy), and Multi-Site Active/Active (lowest RTO, highest cost). The exam presents an RTO/RPO requirement and expects you to identify the appropriate DR strategy.
-
-*   **Study Resource:** The official AWS Well-Architected Framework documentation covers all six pillars with design principles, best practices, and AWS service recommendations: [AWS Well-Architected Framework](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html). This is required reading for the SAA-C03 exam.
-
----
-
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-
-*   **Required Reading:** Read the complete AWS Well-Architected Framework whitepaper available at [https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html). This is the primary reference document for this module and for the SAA-C03 exam. Also review each pillar's dedicated whitepaper through the [AWS Whitepapers & Guides](https://aws.amazon.com/whitepapers/) portal — each pillar has its own whitepaper with deeper guidance.
-
-*   **Required Video:** Watch the Well-Architected Framework module in the official course playlist, paying close attention to the design principles for each pillar and the trade-off analysis between Reliability and Cost Optimization: [AWS Certified Solutions Architect Associate Course](https://www.youtube.com/watch?v=Ia-UEYYR44s).
+**AWS Application Discovery Service** discovers on-premises servers, collects performance and configuration data, and maps application-to-server dependencies. Two modes: Discovery Agent (installed on servers, collects detailed data) and Agentless Collector (VMware vCenter integration, agentless).
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
+## Section 2: AWS Application Migration Service
 
-*   **Run a Well-Architected Review using the AWS Well-Architected Tool:** In the AWS Console, navigate to the Well-Architected Tool, create a new workload for the lab application you have built across previous modules, and answer the pillar questionnaires for Security and Reliability. Review the identified risks and improvement plan recommendations.
+### 2.1 Architecture
 
-*   **Implement a Cost Optimization improvement:** Review the EC2 instances launched in previous labs. Use AWS Cost Explorer to identify any instances that could be right-sized. Apply at least one optimization: switch eligible steady-state instances to Reserved Instance pricing, or convert appropriate instances to Graviton (t4g) for the same workload at lower cost.
+MGN operates in three phases:
 
-*   **Implement a Reliability improvement:** Identify the lab application component with the lowest availability. Implement one Reliability improvement: add Multi-AZ to an RDS instance, add a second AZ to an Auto Scaling Group's subnet configuration, or add Route 53 health checks with failover routing to a static failover page.
+**Replication phase** — the AWS Replication Agent is installed on source servers. The agent continuously replicates block-level changes to a staging area in AWS (low-cost EBS volumes). Replication is ongoing — the staging area always reflects the near-current state of the source.
+
+**Testing phase** — launch test instances from the staging area without disrupting the source server. Run application tests, validate behavior, and iterate.
+
+**Cutover phase** — trigger a final sync, launch the production instance, redirect traffic. Downtime is limited to the final sync and DNS/load balancer update — typically 10–30 minutes.
+
+### 2.2 Post-Launch Actions
+
+MGN supports post-launch action scripts — automation that runs after instance launch. Examples: domain join, software agent installation, configuration management tool execution. Integrate with AWS Systems Manager Run Command or CloudFormation for post-migration configuration.
+
+### 2.3 MGN vs. EC2 AMI-based Migration
+
+Creating an AMI from an on-premises VMware VM (using VM Import/Export) is an alternative but requires a full snapshot rather than continuous replication. VM Import/Export is appropriate for one-time migrations of small fleets. MGN is preferred for large fleets requiring minimal downtime.
 
 ---
 
-### 3. Study Checklist
-- [ ] Read and be able to define all six pillar glossary entries in your own words.
-- [ ] Read the AWS Well-Architected Framework overview at [https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html).
-- [ ] Review the four disaster recovery strategies and their RTO/RPO trade-offs at [https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/disaster-recovery-dr-objectives.html](https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/disaster-recovery-dr-objectives.html).
-- [ ] Watch the Well-Architected Framework video lecture in [AWS Certified Solutions Architect Associate Course](https://www.youtube.com/watch?v=Ia-UEYYR44s).
-- [ ] Complete the hands-on lab running a Well-Architected Review and implementing one improvement per pillar.
-- [ ] Proceed to the weekly quiz.
+## Section 3: AWS Database Migration Service
+
+### 3.1 Migration Task Types
+
+| Task Type | When to Use |
+|---|---|
+| Full load | Initial bulk migration; source can go down during migration |
+| Full load + CDC | Migrate data while source remains in production; enables near-zero downtime |
+| CDC only | Source data already exists in target; replicate ongoing changes only |
+
+### 3.2 AWS Schema Conversion Tool
+
+SCT is required for heterogeneous migrations (different database engines). It converts:
+
+- Database schemas (tables, views, indexes, sequences)
+- Stored procedures and functions — partial automation; complex PL/SQL may require manual conversion
+- Triggers and packages
+
+SCT provides an assessment report showing what can be automatically converted and what requires manual effort. Use the assessment report to estimate migration complexity before committing.
+
+### 3.3 DMS Replication Instance Sizing
+
+The replication instance runs the DMS replication software. Size based on:
+
+- Volume of data (larger datasets benefit from larger instances)
+- Number of concurrent migration tasks
+- LOB (Large Object) handling — LOBs are migrated in limited LOB mode or full LOB mode; full LOB mode requires more memory
+
+Start with `dms.r5.large` or `dms.r5.xlarge` for most production migrations.
+
+### 3.4 Validation
+
+DMS supports data validation — after migration, DMS compares row counts and key values between source and target. Validation results are published to CloudWatch Logs. Enable validation for all production migrations to confirm data fidelity.
+
+---
+
+## Section 4: AWS Direct Connect
+
+### 4.1 Connection Types
+
+**Dedicated connections** — physical 1 Gbps, 10 Gbps, or 100 Gbps port at a Direct Connect location. Requested from AWS; provisioned by an AWS Direct Connect Partner.
+
+**Hosted connections** — sub-1-Gbps to 10 Gbps connections provisioned by an AWS Direct Connect Partner. More flexible sizing, faster provisioning, no dedicated physical port management.
+
+### 4.2 Virtual Interface Types
+
+| VIF Type | Connects To | Use Case |
+|---|---|---|
+| Private VIF | VGW or Direct Connect Gateway | Access VPC private resources |
+| Public VIF | AWS public endpoints | Access S3, CloudFront, DynamoDB without internet |
+| Transit VIF | Transit Gateway | Access multiple VPCs via Transit Gateway |
+
+### 4.3 Direct Connect Resilience Models
+
+AWS defines four resilience models:
+
+- **Maximum Resiliency** — multiple dedicated connections from multiple Direct Connect locations with redundant on-premises routers. Survives a full Direct Connect location failure.
+- **High Resiliency** — two dedicated connections from the same Direct Connect location. Survives device failure but not location failure.
+- **Development and Test** — single connection, no redundancy. For non-production use only.
+- **Classic** — legacy single-connection model. Avoid for new deployments.
+
+### 4.4 MACsec Encryption
+
+MACsec provides Layer 2 encryption between your on-premises router and the AWS Direct Connect device. Only available on dedicated connections (10 Gbps and 100 Gbps). Encrypts all traffic at the Ethernet frame level before it enters the Direct Connect facility.
+
+---
+
+## Section 5: Site-to-Site VPN Architecture
+
+### 5.1 VPN Tunnel Redundancy
+
+Every AWS Site-to-Site VPN connection creates two IPsec tunnels, each terminating at a different AWS endpoint in different Availability Zones. Both tunnels should be configured on your on-premises VPN device. If one tunnel fails, the other maintains connectivity. Ensure your on-premises device is configured to use both tunnels.
+
+### 5.2 AWS VPN CloudHub
+
+VPN CloudHub enables multiple remote sites (each with a Customer Gateway) to communicate with each other through the AWS VGW — the VGW acts as a hub. Useful when remote branch offices need site-to-site connectivity and you can leverage AWS as the transit hub. Each site requires a VPN connection to the same VGW.
+
+### 5.3 Client VPN
+
+AWS Client VPN is a managed OpenVPN service for individual user-to-VPC connectivity (remote workers). Different from Site-to-Site VPN, which connects entire networks. Client VPN authenticates users via Active Directory, SAML-based IdP, or mutual certificate authentication.
+
+### 5.4 VPN + Direct Connect HA Pattern
+
+The recommended hybrid connectivity HA pattern:
+
+1. Primary path: Direct Connect Private VIF for dedicated, low-latency connectivity
+2. Backup path: Site-to-Site VPN over the internet, using the same VGW
+
+Configure BGP route preferences so Direct Connect routes are preferred. If Direct Connect fails, BGP automatically shifts traffic to the VPN backup. Recovery is automatic, typically within seconds to a few minutes depending on BGP timers.
+
+---
+
+## Section 6: AWS Transit Gateway
+
+### 6.1 Attachments
+
+Transit Gateway supports these attachment types:
+
+- VPC attachments — connect a VPC to the Transit Gateway
+- VPN attachments — connect a Site-to-Site VPN
+- Direct Connect Gateway attachment (Transit VIF) — connect a Direct Connect circuit
+- Transit Gateway peering — connect two Transit Gateways in the same or different regions
+- Connect attachments — connect third-party SD-WAN appliances using GRE tunnels
+
+### 6.2 Route Tables and Route Propagation
+
+Each attachment can associate with a route table and propagate its routes into a route table. Use multiple route tables to implement routing policies:
+
+- **Shared services VPC** — all VPCs can reach the shared services VPC, but VPCs cannot reach each other (spoke isolation)
+- **Full mesh** — all VPCs can reach each other (single route table, all attachments associated)
+- **Security segmentation** — route internet-bound traffic from all VPCs to a centralized inspection VPC containing a firewall before routing to the internet gateway
+
+### 6.3 ECMP for VPN Throughput
+
+A single VPN tunnel provides up to 1.25 Gbps. To exceed this, connect multiple VPN connections to Transit Gateway and enable ECMP. Traffic is distributed across all tunnels. AWS supports up to 50 VPN connections per Transit Gateway — up to 62.5 Gbps aggregate throughput with ECMP.
+
+---
+
+## Section 7: AWS Outposts
+
+### 7.1 Form Factors
+
+- **Outposts Rack** — full 42U rack of AWS infrastructure for large deployments
+- **Outposts Server** — 1U or 2U form factor for space-constrained deployments (branch offices, factory floors)
+
+### 7.2 Connectivity Requirements
+
+Outposts must connect to the parent AWS region via a reliable network (Direct Connect or internet). The Service Link connection carries control-plane traffic (management API calls, AMI downloads, metrics). If the Service Link is interrupted, Outposts continues to run existing workloads but cannot launch new instances or make API changes.
+
+### 7.3 Local Gateway
+
+Each Outpost has a Local Gateway (LGW) that routes traffic between the Outpost and your on-premises local network. Instances on the Outpost can communicate directly with on-premises systems through the LGW without hairpinning through the AWS region.
+
+### 7.4 S3 on Outposts
+
+S3 on Outposts stores objects locally on the Outpost hardware. Used for data residency requirements where data must not leave the physical location. Objects on S3 on Outposts cannot be directly accessed from the AWS region — they are locally accessible only.
+
+---
+
+## Section 8: Route 53 Resolver Hybrid DNS
+
+### 8.1 The Hybrid DNS Problem
+
+Private hosted zones in Route 53 are not natively resolvable from on-premises DNS servers. On-premises DNS servers are not natively resolvable from within a VPC. To enable hybrid name resolution, you need DNS forwarders at both ends.
+
+### 8.2 Inbound Endpoint
+
+A Route 53 Resolver Inbound Endpoint creates one or more IP addresses in your VPC subnets. On-premises DNS servers can be configured to forward specific AWS domains (e.g., `*.internal.aws`) to these IP addresses. Route 53 Resolver resolves the query using VPC DNS and private hosted zones.
+
+### 8.3 Outbound Endpoint
+
+A Route 53 Resolver Outbound Endpoint creates IP addresses in your VPC subnets from which DNS queries can be forwarded. Resolver Rules define which domain names trigger forwarding and which on-premises DNS server IP addresses receive the forwarded queries.
+
+### 8.4 Resolver Rule Types
+
+- **Forward rule** — forward queries for a specific domain to specified DNS servers
+- **System rule** — override AWS default resolution for specific domains (e.g., `amazonaws.com` stays on AWS)
+
+Rules can be shared with other accounts using AWS Resource Access Manager, enabling centralized DNS management across an AWS Organization.
+
+---
+
+## Key Terms
+
+- **7 Rs** — seven migration strategies: Retire, Retain, Rehost, Replatform, Repurchase, Refactor, Relocate
+- **MGN** — AWS Application Migration Service; continuous block-level replication for server migrations
+- **DMS** — AWS Database Migration Service; minimal-downtime database migration with CDC
+- **SCT** — AWS Schema Conversion Tool; converts schema for heterogeneous database migrations
+- **Direct Connect** — dedicated private network connection to AWS at 1/10/100 Gbps
+- **Virtual Private Gateway (VGW)** — AWS-side endpoint for VPN and Direct Connect Private VIF
+- **Transit Gateway** — network hub connecting VPCs and on-premises networks at scale
+- **Outposts** — AWS infrastructure deployed in your on-premises data center
+- **Inbound Endpoint** — Route 53 Resolver IP in a VPC; accepts DNS queries from on-premises
+- **Outbound Endpoint** — Route 53 Resolver IP in a VPC; forwards queries to on-premises DNS
+
+---
+
+## SAA-C03 Exam Tips
+
+- Rehost = fastest migration; Refactor = best cloud optimization; Replatform = middle ground
+- DMS + SCT is required for heterogeneous migrations (Oracle → PostgreSQL, SQL Server → Aurora)
+- Direct Connect does NOT encrypt traffic by default — add VPN over Direct Connect or MACsec for encryption
+- Site-to-Site VPN is quick to set up and encrypted by default; Direct Connect provides dedicated bandwidth
+- Transit Gateway is the answer when connecting more than a few VPCs — peering mesh does not scale
+- Route 53 Resolver Inbound Endpoint answers on-premises DNS queries about AWS private names
+- Route 53 Resolver Outbound Endpoint forwards VPC DNS queries to on-premises DNS servers
+- Outposts is the answer when workloads require ultra-low latency or data residency on-premises
+- VPN CloudHub uses a single VGW to connect multiple remote sites together through AWS
+- Direct Connect Gateway allows one Direct Connect connection to reach VPCs in multiple regions

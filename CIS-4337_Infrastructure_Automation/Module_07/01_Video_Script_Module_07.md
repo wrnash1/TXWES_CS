@@ -1,221 +1,483 @@
-# CIS-4337 Infrastructure Automation
+# Video Script: Module 07 — Terraform Variables, Outputs, and Locals
 
-## Module 07: Terraform Workspaces and Environments
+## Course: CIS-4337 Infrastructure Automation
 
-### Video Script — Estimated Runtime: 20–24 Minutes
+## Texas Wesleyan University | Professor Nash
 
----
+## Estimated Duration: 20–24 minutes
 
-## Section 1: Introduction — 0:00–1:30
-
-Welcome back to CIS-4337. I am Professor Nash. In this module we cover Terraform workspaces — a feature that allows you to maintain multiple independent state files from a single configuration directory.
-
-By the end of this video you will understand what a workspace is, when to use workspaces versus separate configuration directories, the four workspace CLI commands, how to reference the current workspace in HCL, and where workspace state is stored.
-
-Workspaces appear in the Terraform Associate 003 exam's Domain 4 (Use the Terraform CLI) and Domain 7 (Implement and maintain state).
+## Certification Alignment: HashiCorp Terraform Associate (003)
 
 ---
 
-## Section 2: What Is a Workspace — 1:30–5:30
+## Introduction (0:00 – 1:30)
 
-A Terraform workspace is a named instance of state within a backend. Every Terraform configuration starts in the `default` workspace. You can create additional named workspaces that each maintain their own state file while sharing the same configuration code.
+Welcome back to CIS-4337, Infrastructure Automation. I'm Professor Nash, and this is Module 07.
 
-The most common use case is lightweight environment management. You want to deploy the same infrastructure for development and production, but they should not share state — a `terraform destroy` in dev should never touch prod.
+So far you've learned how to write Terraform configurations and manage providers. Today we tackle one of the most practical and exam-heavy topics in Terraform: variables, outputs, and locals.
 
-Here is the mental model: the configuration code is the same, but the state is different. Workspace isolation is state-only.
+By the end of this module you will be able to:
 
-Let me walk through the workspace commands.
+- Declare and use input variables with type constraints and validation rules
+- Mark sensitive variables to protect secrets in output
+- Define output values to expose data from your configuration
+- Use local values to reduce repetition and improve readability
+- Understand exactly how Terraform resolves variable precedence
+- Load variables from `.tfvars` files and environment variables
 
-**[SHOW CODE]**
+Let's get started.
 
-```bash
-# List all workspaces; active workspace marked with *
-terraform workspace list
-
-# Show only the active workspace name
-terraform workspace show
-
-# Create a new workspace
-terraform workspace new dev
-
-# Switch to an existing workspace
-terraform workspace select prod
-
-# Delete a workspace (must not be active, must have empty state)
-terraform workspace delete dev
-```
-
-When you create or select a workspace, Terraform switches which state file it reads and writes. Everything else — providers, resources, variables — remains identical.
+[PAUSE]
 
 ---
 
-## Section 3: Using terraform.workspace in HCL — 5:30–9:00
+## Section 1: Input Variables (1:30 – 5:30)
 
-The built-in value `terraform.workspace` returns the name of the currently active workspace as a string. You can use it in resource names, tags, and conditional expressions to make deployments workspace-aware.
+Input variables are how you parameterize a Terraform configuration. Instead of hardcoding values, you declare a variable and pass in the value at apply time.
 
-**[SHOW CODE]**
+[SHOW TERMINAL]
+
+Here is the simplest possible variable declaration:
 
 ```hcl
-resource "aws_instance" "web" {
-  ami           = data.aws_ami.amazon_linux.id
-  instance_type = terraform.workspace == "prod" ? "t3.large" : "t3.micro"
+variable "region" {
+  type        = string
+  description = "The AWS region to deploy into"
+  default     = "us-east-1"
+}
+```
 
-  tags = {
-    Name        = "web-${terraform.workspace}"
-    Environment = terraform.workspace
+You reference it in your configuration like this:
+
+```hcl
+provider "aws" {
+  region = var.region
+}
+```
+
+Notice the `var.` prefix — that is how you always access a variable's value in Terraform.
+
+[PAUSE]
+
+### Type Constraints
+
+Terraform supports a rich type system. You can specify `string`, `number`, `bool`, or complex types like `list`, `map`, `set`, `object`, and `tuple`.
+
+```hcl
+variable "instance_count" {
+  type        = number
+  description = "Number of EC2 instances to create"
+  default     = 2
+}
+
+variable "allowed_ports" {
+  type        = list(number)
+  description = "List of ports to open in security group"
+  default     = [80, 443]
+}
+
+variable "tags" {
+  type        = map(string)
+  description = "Tags to apply to all resources"
+  default = {
+    Environment = "dev"
+    Project     = "demo"
   }
 }
 ```
 
-This single resource block creates differently-sized instances depending on the active workspace, and tags each with its environment name.
+When Terraform reads your configuration it enforces the type. If you pass a string where a number is expected, Terraform will attempt a conversion — and if that fails, it will error out with a clear message.
 
-You can also use `terraform.workspace` in `locals`:
+[PAUSE]
 
-**[SHOW CODE]**
+### Variable Validation
+
+You can add a `validation` block to enforce business rules on your input variables.
+
+```hcl
+variable "environment" {
+  type        = string
+  description = "Deployment environment"
+
+  validation {
+    condition     = contains(["dev", "staging", "prod"], var.environment)
+    error_message = "environment must be one of: dev, staging, prod."
+  }
+}
+```
+
+The `condition` must evaluate to `true` for the plan to proceed. If it evaluates to `false`, Terraform prints your `error_message` and stops.
+
+[SHOW TERMINAL]
+
+Let's test this. If I run:
+
+```bash
+terraform plan -var="environment=qa"
+```
+
+Terraform returns:
+
+```
+Error: Invalid value for variable
+
+  on variables.tf line 1:
+   1: variable "environment" {
+
+environment must be one of: dev, staging, prod.
+```
+
+Clean, informative, and it prevents misconfiguration before any infrastructure is touched.
+
+[PAUSE]
+
+---
+
+## Section 2: Sensitive Variables (5:30 – 8:00)
+
+Some variables hold secrets — database passwords, API keys, tokens. Terraform's `sensitive` argument tells Terraform to redact these values from terminal output and state display.
+
+```hcl
+variable "db_password" {
+  type        = string
+  description = "Database master password"
+  sensitive   = true
+}
+```
+
+When you reference a sensitive variable, Terraform marks any output that depends on it as sensitive too.
+
+```hcl
+output "connection_string" {
+  value     = "postgres://admin:${var.db_password}@${aws_db_instance.main.endpoint}/app"
+  sensitive = true
+}
+```
+
+[SHOW TERMINAL]
+
+During `terraform apply`, sensitive values appear as `(sensitive value)` in the plan output:
+
+```
+  + db_password = (sensitive value)
+```
+
+**Important exam note**: Sensitive values are still stored in `terraform.tfstate` in plain text. Marking a variable sensitive only affects console output, not state file storage. This is why state file security matters — which we cover in Module 08.
+
+[PAUSE]
+
+---
+
+## Section 3: Output Values (8:00 – 11:00)
+
+Outputs let you extract information from your Terraform configuration after apply. They are how you share data between modules, surface useful IDs, and expose values to automation pipelines.
+
+```hcl
+output "instance_public_ip" {
+  description = "The public IP address of the web server"
+  value       = aws_instance.web.public_ip
+}
+
+output "instance_id" {
+  description = "The EC2 instance ID"
+  value       = aws_instance.web.id
+}
+```
+
+[SHOW TERMINAL]
+
+After `terraform apply` completes, Terraform prints all outputs:
+
+```
+Outputs:
+
+instance_id        = "i-0abc123def456789"
+instance_public_ip = "54.234.12.45"
+```
+
+You can also query outputs at any time with:
+
+```bash
+terraform output
+terraform output instance_public_ip
+terraform output -json
+```
+
+The `-json` flag is especially useful in CI/CD pipelines where a script needs to consume the value programmatically.
+
+[PAUSE]
+
+### Output Dependencies
+
+Outputs also create implicit dependencies. If an output references a resource attribute, Terraform knows that resource must be created first. This is the same dependency graph mechanism that governs resource ordering.
+
+### Using Outputs Across Modules
+
+When you call a child module, you access its outputs using module syntax:
+
+```hcl
+module "network" {
+  source = "./modules/network"
+}
+
+resource "aws_instance" "web" {
+  subnet_id = module.network.public_subnet_id
+}
+```
+
+We will cover module composition in depth in Module 09, but this pattern is the foundation.
+
+[PAUSE]
+
+---
+
+## Section 4: Local Values (11:00 – 14:00)
+
+Local values — declared with the `locals` block — are named expressions you define once and reference throughout the configuration. They reduce repetition and make complex expressions readable.
 
 ```hcl
 locals {
-  environment = terraform.workspace
-  is_prod     = terraform.workspace == "prod"
-
-  instance_config = {
-    default = { type = "t3.micro",  count = 1 }
-    dev     = { type = "t3.micro",  count = 1 }
-    staging = { type = "t3.small",  count = 2 }
-    prod    = { type = "t3.large",  count = 4 }
+  common_tags = {
+    Project     = "web-app"
+    Environment = var.environment
+    ManagedBy   = "Terraform"
+    Owner       = "platform-team"
   }
 
-  current_config = local.instance_config[terraform.workspace]
+  name_prefix = "${var.project}-${var.environment}"
+  is_prod     = var.environment == "prod"
 }
+```
 
+You reference locals with the `local.` prefix:
+
+```hcl
 resource "aws_instance" "web" {
-  count         = local.current_config.count
-  ami           = data.aws_ami.amazon_linux.id
-  instance_type = local.current_config.type
+  ami           = data.aws_ami.ubuntu.id
+  instance_type = local.is_prod ? "t3.medium" : "t3.micro"
+  tags          = local.common_tags
+}
 
-  tags = {
-    Name = "web-${local.environment}-${count.index}"
+resource "aws_s3_bucket" "assets" {
+  bucket = "${local.name_prefix}-assets"
+  tags   = local.common_tags
+}
+```
+
+[PAUSE]
+
+### Locals vs Variables
+
+This is a common point of confusion. Here is the key distinction:
+
+- **Input variables** (`variable`) — values supplied by the caller (user, CI pipeline, `.tfvars` file)
+- **Local values** (`locals`) — computed inside the configuration from other values; the caller cannot override them directly
+
+Use locals when you have an expression that appears in multiple places, or when you want to name a derived value for clarity. Use variables when you need the caller to be able to supply or override the value.
+
+[PAUSE]
+
+---
+
+## Section 5: Variable Precedence (14:00 – 17:00)
+
+Terraform loads variable values from multiple sources. When the same variable is defined in more than one place, Terraform uses a strict precedence order — lowest to highest:
+
+1. Default value in the `variable` block
+2. `terraform.tfvars` file (auto-loaded)
+3. `terraform.tfvars.json` file (auto-loaded)
+4. `*.auto.tfvars` and `*.auto.tfvars.json` files (auto-loaded, alphabetical order)
+5. `-var-file` flag on the command line
+6. `-var` flag on the command line
+7. `TF_VAR_name` environment variables
+
+[SHOW TERMINAL]
+
+Let me walk through an example. Given this variable:
+
+```hcl
+variable "region" {
+  type    = string
+  default = "us-east-1"
+}
+```
+
+And a `terraform.tfvars` file containing:
+
+```hcl
+region = "us-west-2"
+```
+
+And an environment variable set:
+
+```bash
+export TF_VAR_region="eu-west-1"
+```
+
+If I then run:
+
+```bash
+terraform plan -var="region=ap-southeast-1"
+```
+
+The `-var` flag wins — Terraform uses `ap-southeast-1`.
+
+The environment variable `TF_VAR_region` would beat the `.tfvars` file but loses to the explicit `-var` flag.
+
+[PAUSE]
+
+### tfvars Files
+
+A `.tfvars` file is simply key-value pairs:
+
+```hcl
+region           = "us-west-2"
+instance_count   = 3
+environment      = "staging"
+allowed_ports    = [80, 443, 8080]
+```
+
+You can have environment-specific files and load them explicitly:
+
+```bash
+terraform plan -var-file="prod.tfvars"
+terraform plan -var-file="staging.tfvars"
+```
+
+This pattern — one `.tfvars` file per environment — is extremely common in real-world Terraform projects.
+
+[PAUSE]
+
+### Environment Variables
+
+For every input variable `foo`, Terraform reads the environment variable `TF_VAR_foo`. This is the standard way to pass secrets into Terraform in CI/CD pipelines without writing them to disk.
+
+```bash
+export TF_VAR_db_password="SuperSecretPassword123"
+terraform apply
+```
+
+The shell variable is consumed by Terraform and the value never appears in your version-controlled files.
+
+[PAUSE]
+
+---
+
+## Section 6: Putting It All Together (17:00 – 20:00)
+
+Let's look at a complete, realistic example that ties all these concepts together.
+
+```hcl
+# variables.tf
+variable "project" {
+  type        = string
+  description = "Project name used in resource naming"
+}
+
+variable "environment" {
+  type        = string
+  description = "Deployment environment"
+
+  validation {
+    condition     = contains(["dev", "staging", "prod"], var.environment)
+    error_message = "Must be dev, staging, or prod."
+  }
+}
+
+variable "instance_type" {
+  type        = string
+  description = "EC2 instance type"
+  default     = "t3.micro"
+}
+
+variable "db_password" {
+  type      = string
+  sensitive = true
+}
+```
+
+```hcl
+# locals.tf
+locals {
+  name_prefix = "${var.project}-${var.environment}"
+  common_tags = {
+    Project     = var.project
+    Environment = var.environment
+    ManagedBy   = "Terraform"
   }
 }
 ```
 
----
+```hcl
+# outputs.tf
+output "web_public_ip" {
+  description = "Public IP of the web server"
+  value       = aws_instance.web.public_ip
+}
 
-## Section 4: Where State Is Stored by Workspace — 9:00–11:30
-
-With the **local backend**, workspace state is stored at these paths:
-
-- Default workspace: `terraform.tfstate` (in the working directory)
-- Named workspaces: `terraform.tfstate.d/<workspace_name>/terraform.tfstate`
-
-**[SHOW CODE]**
-
-```text
-my-project/
-├── terraform.tfstate              # default workspace
-├── terraform.tfstate.d/
-│   ├── dev/
-│   │   └── terraform.tfstate     # dev workspace
-│   └── staging/
-│       └── terraform.tfstate     # staging workspace
-└── main.tf
+output "db_endpoint" {
+  description = "Database connection endpoint"
+  value       = aws_db_instance.main.endpoint
+  sensitive   = true
+}
 ```
 
-With **remote backends** (S3, Terraform Cloud), workspace state is stored at distinct paths within the backend. For the S3 backend:
-
-- Default workspace: the `key` value you specified.
-- Named workspaces: `env:/<workspace_name>/<key>`.
-
-For Terraform Cloud, each workspace has its own independently managed state.
-
----
-
-## Section 5: Workspace Limitations and When NOT to Use Them — 11:30–15:00
-
-Workspaces are a powerful but limited tool. The Terraform documentation explicitly states: **workspaces are not recommended for managing environments with significantly different infrastructure, different credentials, or different compliance requirements.**
-
-Here is why.
-
-**No per-workspace variables.** CLI workspaces do not have their own variable files. If production needs a different AWS account, a different S3 bucket name, or a different VPN configuration, you cannot specify that per-workspace without complex conditional logic in the HCL.
-
-**No credential isolation.** All workspaces in a directory share the same provider configuration, which means the same IAM role or access key. This is a serious security concern for prod vs. non-prod.
-
-**State corruption risk.** A mistake running `terraform destroy` in the wrong workspace can delete the wrong environment's resources. With separate directories, you must explicitly navigate to the right directory — an extra safeguard.
-
-**Complex conditional logic.** Using `terraform.workspace` for extensive conditional resource creation creates configurations that are hard to read, test, and maintain.
-
-HashiCorp recommends workspaces for:
-
-- Temporary experiments (spin up an isolated copy of your infra, test something, destroy it).
-- Teams using Terraform Cloud, where each Terraform Cloud workspace corresponds to one environment with its own variables, credentials, and access controls.
-
-For managing dev, staging, and prod as persistent environments, use **separate configuration directories** or **separate Terraform Cloud workspaces** with per-workspace variable sets.
-
----
-
-## Section 6: Workspace Pattern — Root Module Per Environment — 15:00–18:30
-
-The recommended pattern for managing multiple environments looks like this:
-
-**[SHOW CODE]**
-
-```text
-infrastructure/
-├── modules/
-│   └── vpc/
-│       ├── main.tf
-│       ├── variables.tf
-│       └── outputs.tf
-├── environments/
-│   ├── dev/
-│   │   ├── main.tf        # calls ../modules/vpc with dev-specific inputs
-│   │   ├── variables.tf
-│   │   └── terraform.tfvars
-│   ├── staging/
-│   │   ├── main.tf
-│   │   ├── variables.tf
-│   │   └── terraform.tfvars
-│   └── prod/
-│       ├── main.tf
-│       ├── variables.tf
-│       └── terraform.tfvars
+```hcl
+# prod.tfvars
+project       = "ecommerce"
+environment   = "prod"
+instance_type = "t3.medium"
 ```
 
-Each environment directory calls the shared modules with environment-specific variable values. They have separate state files (since they are separate working directories), separate backends, and separate credentials. This is the pattern used in production by large engineering organizations.
+[SHOW TERMINAL]
+
+To deploy to production:
+
+```bash
+terraform apply -var-file="prod.tfvars"
+```
+
+To pass the database password securely from the pipeline:
+
+```bash
+export TF_VAR_db_password="$SECRET_FROM_VAULT"
+terraform apply -var-file="prod.tfvars"
+```
+
+[PAUSE]
 
 ---
 
-## Section 7: Terraform Cloud Workspaces — 18:30–20:30
+## Summary and Exam Tips (20:00 – 22:00)
 
-It is important to distinguish between CLI workspaces and Terraform Cloud workspaces.
+Let's recap what we covered:
 
-**CLI workspaces** are named state instances within a local or remote backend. They share configuration code and provider configuration.
+- Input variables parameterize configurations; use `type`, `default`, `description`, `validation`, and `sensitive`
+- Output values expose resource attributes after apply; access with `terraform output`
+- Local values are named expressions for internal use; use `local.` prefix
+- Variable precedence order: default → tfvars → auto.tfvars → `-var-file` → `-var` → `TF_VAR_`
+- Sensitive variables are redacted from console output but stored in state in plain text
 
-**Terraform Cloud workspaces** are first-class organizational units. Each TFC workspace has its own:
+**For the Terraform Associate exam**, pay attention to:
 
-- Variable set (including sensitive variables).
-- Credentials and authentication.
-- Access control policies.
-- Run history and audit log.
-- State file.
-- Optional VCS repository connection.
+- The exact precedence order — it appears on the exam
+- The difference between `variable` and `locals` — locals cannot be overridden by the caller
+- `sensitive = true` does NOT encrypt the state file
+- `terraform output -json` for programmatic consumption
+- `TF_VAR_` prefix is case-sensitive and matches the variable name exactly
 
-When you use Terraform Cloud, creating a new TFC workspace is the recommended way to create a new environment — not CLI workspaces.
-
----
-
-## Section 8: Closing — 20:30–21:30
-
-Workspaces maintain independent state files within a single configuration directory. The active workspace is referenced as `terraform.workspace` in HCL. The four workspace commands are `list`, `show`, `new`, `select`, and `delete`.
-
-Local workspace state is at `terraform.tfstate.d/<name>/terraform.tfstate`. Remote workspace state paths depend on the backend.
-
-Use workspaces for lightweight, similar deployments. Use separate directories or Terraform Cloud workspaces for environments with different infrastructure, credentials, or compliance requirements.
-
-In Module 08 we cover provisioners and null resources. Complete the reading guide, lab, quiz, and discussion first.
-
-See you in Module 08.
+[PAUSE]
 
 ---
 
-End of Script — Module 07
+## Closing (22:00 – 23:00)
+
+Excellent work getting through Module 07. Variables, outputs, and locals are things you will use in every single Terraform project for the rest of your career. The patterns we covered today — especially `.tfvars` per environment and `TF_VAR_` in pipelines — are industry standard.
+
+In the lab you will build a parameterized configuration that uses all of these features together. Take your time, read the error messages carefully, and pay close attention to the precedence exercise.
+
+Module 08 moves us into Terraform State Management — one of the most critical topics for operating Terraform in a team environment.
+
+See you there.
+
+[END OF SCRIPT]

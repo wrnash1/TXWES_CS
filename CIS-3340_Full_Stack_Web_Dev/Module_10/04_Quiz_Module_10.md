@@ -1,77 +1,267 @@
-# Quiz: Module 10 - NoSQL Databases with MongoDB
-## Course: CIS-3340_Full_Stack_Web_Dev (AWS Certified Developer - Associate)
+# Quiz: Module 10 — State Management with React
+
+## Course: CIS-3340 Full Stack Web Development
+
+## Texas Wesleyan University | Professor Nash
 
 ---
 
-**Question 1**
-Which data format does MongoDB use natively to store documents in collections?
-*   A) XML
-*   B) CSV
-*   C) BSON (Binary JSON)
-*   D) SQL Table Structure
-*   **Correct Answer:** C) MongoDB stores documents internally as BSON (Binary JSON) — a binary-encoded extension of JSON that supports additional data types including `Date`, `ObjectId`, and 64-bit integers not available in plain JSON.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* XML is a markup language used for document exchange and configuration files — MongoDB does not use XML for document storage.
-    *   *Why B is incorrect:* CSV is a flat text format for tabular data — it has no concept of nested documents or arrays and is incompatible with MongoDB's document model.
-    *   *Why C is correct:* BSON (Binary JSON) is MongoDB's native storage format — it is optimized for efficient encoding, decoding, and traversal of documents.
-    *   *Why D is incorrect:* SQL table structures are rows and columns in a relational schema — MongoDB explicitly avoids this fixed-schema tabular model.
+## Instructions
+
+Select the single best answer for each question. Questions 5, 7, and 9 include code snippets — read them carefully before answering.
 
 ---
 
-**Question 2**
-Which of the following is the most accurate definition of **Mongoose model operations**?
-*   A) Low-level TCP socket operations used by the MongoDB driver to open, authenticate, and close connections to the database server.
-*   B) The CRUD API methods provided by a Mongoose model — such as `Model.create()`, `Model.find()`, `Model.findByIdAndUpdate()`, and `Model.findByIdAndDelete()` — that perform database operations asynchronously and return Promises.
-*   C) The configuration options passed to `mongoose.connect()` that control connection pool size, timeout duration, and SSL certificate validation.
-*   D) The Express route handlers that proxy HTTP requests from the API layer to the MongoDB database without any intermediate application logic.
-*   **Correct Answer:** B) The CRUD API methods provided by a Mongoose model — such as `Model.create()`, `Model.find()`, `Model.findByIdAndUpdate()`, and `Model.findByIdAndDelete()` — that perform database operations asynchronously and return Promises.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* This describes the MongoDB driver's connection layer — not Mongoose model operations.
-    *   *Why B is correct:* Mongoose model operations are the query and mutation methods on compiled Mongoose models — they provide a higher-level abstraction over the raw MongoDB driver.
-    *   *Why C is incorrect:* These are connection configuration options — separate from model operation methods.
-    *   *Why D is incorrect:* Mongoose models are application-layer abstractions — they are not Express middleware or HTTP proxy handlers.
+### Question 1
+
+What is prop drilling in React?
+
+A. A performance optimization technique that passes only changed props to children.
+
+B. Passing state through intermediate components that do not use it, only to reach a deeply nested child.
+
+C. A debugging technique that traces how props flow through the component tree.
+
+D. The process of destructuring props in a function parameter list.
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect — prop drilling is a problem, not an optimization.
+- C is incorrect — that describes React DevTools inspection, not prop drilling.
+- D is incorrect — destructuring props is a syntax convenience, unrelated to prop drilling.
 
 ---
 
-**Question 3**
-A Mongoose schema is defined as `{ title: { type: String, required: true }, published: Boolean }`. A developer tries to save a document with `{ published: true }` — omitting `title`. What happens?
-*   A) MongoDB silently inserts the document without `title` because collections have no schema enforcement by default.
-*   B) Mongoose throws a `ValidationError` before sending the insert to MongoDB, because the `required: true` constraint on `title` is violated.
-*   C) The document is saved with `title: null` automatically since MongoDB defaults missing required fields to null.
-*   D) The operation succeeds but returns a warning — Mongoose `required` constraints are advisory only and do not block saves.
-*   **Correct Answer:** B) Mongoose throws a `ValidationError` before sending the insert to MongoDB, because the `required: true` constraint on `title` is violated.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* This is true for raw MongoDB without Mongoose, but Mongoose adds schema-level validation that runs before the database operation.
-    *   *Why B is correct:* Mongoose validates documents against the schema before executing the database write. `required: true` causes validation to fail and throws a `ValidationError`.
-    *   *Why C is incorrect:* Mongoose does not default missing required fields to `null` — it throws a validation error.
-    *   *Why D is incorrect:* `required` in a Mongoose schema is a hard constraint that blocks saves, not an advisory warning.
+### Question 2
+
+Which of the following correctly describes the three steps to use the Context API in React?
+
+A. Install a package, configure a store, and import the store hook.
+
+B. Create a context with `createContext`, wrap the tree with a Provider, and consume with `useContext` or a custom hook.
+
+C. Define a global variable, export it from `App.jsx`, and import it in any component that needs it.
+
+D. Create a context, subscribe child components to it using `addEventListener`, and dispatch updates.
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect — the Context API is built into React; no installation is needed.
+- C is incorrect — global variables are not React state; they do not trigger re-renders.
+- D is incorrect — React contexts do not use `addEventListener` or an event-based subscribe model.
 
 ---
 
-**Question 4**
-When should a developer choose MongoDB over PostgreSQL for an AWS application?
-*   A) When the data has a fixed, well-defined schema with strong referential integrity requirements between multiple related entities.
-*   B) When the application needs complex multi-table JOIN queries with ACID transaction guarantees across multiple related records.
-*   C) When the data structure varies between records (e.g., product catalogs with different attributes per category) or when horizontal scalability at the document level is a primary requirement.
-*   D) When the application needs to store and query data using SQL syntax, because MongoDB supports standard SQL via the aggregation pipeline.
-*   **Correct Answer:** C) When the data structure varies between records (e.g., product catalogs with different attributes per category) or when horizontal scalability at the document level is a primary requirement.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Fixed schemas with strong referential integrity are a strength of relational databases like PostgreSQL — not a MongoDB use case.
-    *   *Why B is incorrect:* Complex multi-table JOINs and multi-record ACID transactions are where relational databases excel — MongoDB's aggregation pipeline is more complex for relational patterns.
-    *   *Why C is correct:* MongoDB's schema-flexible document model is best suited for heterogeneous data where documents in the same collection legitimately have different fields.
-    *   *Why D is incorrect:* MongoDB does not support SQL syntax — it uses its own query language and aggregation framework.
+### Question 3
+
+A React app has an `AuthContext` that provides `{ user, login, logout }`. A developer consumes it in a component that is not inside the `AuthProvider`. The custom `useAuth` hook throws `'useAuth must be used within an AuthProvider'`. What is the root cause?
+
+A. The component must be converted to a class component before using the Auth context.
+
+B. The component is outside the Provider's subtree, so there is no matching context value.
+
+C. The `user` object was not initialized in `useState` before being passed to the Provider.
+
+D. The custom hook must be called before any JSX is returned.
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect — context works with functional components.
+- C is incorrect — uninitialized state would cause a different error, not this specific throw.
+- D is incorrect — hooks must be called at the top level, but that is not what this error message indicates.
 
 ---
 
-**Question 5**
-On AWS, which service is the managed option for running MongoDB-compatible workloads without managing the underlying infrastructure?
-*   A) Amazon RDS for MySQL
-*   B) Amazon DynamoDB
-*   C) Amazon DocumentDB (with MongoDB compatibility)
-*   D) Amazon Redshift
-*   **Correct Answer:** C) Amazon DocumentDB (with MongoDB compatibility) is AWS's managed document database service that implements MongoDB's API, allowing applications written for MongoDB to run without code changes while AWS handles patching, backups, and storage scaling.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Amazon RDS for MySQL is a relational database service — it uses SQL and a table-based schema, not MongoDB's document model.
-    *   *Why B is incorrect:* Amazon DynamoDB is a key-value and document NoSQL database but is not MongoDB-compatible — it uses a different API and data model.
-    *   *Why C is correct:* DocumentDB was designed to be API-compatible with MongoDB, making it the AWS migration target for MongoDB workloads.
-    *   *Why D is incorrect:* Amazon Redshift is a cloud data warehouse optimized for analytical SQL queries against large datasets — not a document or operational database.
+### Question 4
+
+What is the signature of `useReducer`?
+
+A. `const dispatch = useReducer(reducer, initialState)`
+
+B. `const [state, dispatch] = useReducer(reducer, initialState)`
+
+C. `const [state, setState] = useReducer(initialState, reducer)`
+
+D. `const { state, dispatch } = useReducer(reducer, initialState)`
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect — `useReducer` returns an array of two values, not just `dispatch`.
+- C is incorrect — the reducer function comes first, then the initial state.
+- D is incorrect — the return value is an array, not an object.
+
+---
+
+### Question 5
+
+A reducer function contains the following case:
+
+```jsx
+case 'INCREMENT':
+  state.count++;
+  return state;
+```
+
+What is wrong with this code?
+
+A. The `count` property should be accessed with `this.state.count`.
+
+B. The reducer mutates state directly instead of returning a new state object, so React may skip the re-render.
+
+C. `case` blocks in reducers must always return `undefined` to signal no change.
+
+D. The `++` operator is not allowed in React reducers.
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect — `this` is not used in functional React patterns.
+- C is incorrect — returning `undefined` from a reducer is not a valid pattern; it causes errors.
+- D is incorrect — the `++` operator is valid JavaScript; the problem is mutation, not the operator itself.
+
+---
+
+### Question 6
+
+Which statement correctly describes `useQuery` from React Query (TanStack Query)?
+
+A. It replaces `useState` entirely for all state management in a React application.
+
+B. It manages server state with automatic caching, background refetching, loading states, and error handling.
+
+C. It is a React built-in hook available without installing any additional packages.
+
+D. It can only be used once per component; multiple data needs require separate components.
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect — React Query manages server state specifically; client state still uses `useState` or `useReducer`.
+- C is incorrect — React Query is a third-party library that must be installed.
+- D is incorrect — multiple `useQuery` calls are valid in a single component.
+
+---
+
+### Question 7
+
+Consider the following `useQuery` call:
+
+```jsx
+const { data } = useQuery({
+  queryKey: ['student', studentId],
+  queryFn: () => fetch(`/api/students/${studentId}`).then(r => r.json()),
+  enabled: !!studentId,
+});
+```
+
+What does the `enabled: !!studentId` option do?
+
+A. It limits the query to only run when studentId is a positive integer.
+
+B. It prevents the query from running when studentId is falsy (null, undefined, 0, or empty string).
+
+C. It enables optimistic updates so the UI updates before the server responds.
+
+D. It doubles the fetch interval by coercing studentId to a boolean.
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect — `!!` coerces to boolean; it does not validate that the value is a positive integer.
+- C is incorrect — optimistic updates are configured in `useMutation`, not `useQuery`.
+- D is incorrect — `!!` is the double-negation boolean coercion operator, not related to timing.
+
+---
+
+### Question 8
+
+After a `useMutation` call successfully creates a new student, the developer wants the student list to refresh. Which React Query method should be called?
+
+A. `queryClient.resetQueries`
+
+B. `queryClient.removeQueries`
+
+C. `queryClient.invalidateQueries`
+
+D. `queryClient.refetchQueries`
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- A is incorrect — `resetQueries` removes the data and resets to the initial state, which is more aggressive than needed.
+- B is incorrect — `removeQueries` deletes the cached data entirely without triggering a background refetch.
+- D is technically possible but is generally used less than `invalidateQueries`, which marks data as stale and lets React Query decide when to refetch. `invalidateQueries` is the standard pattern.
+
+---
+
+### Question 9
+
+A developer has this context setup:
+
+```jsx
+const AppContext = createContext(null);
+
+export function AppProvider({ children }) {
+  const [user, setUser] = useState(null);
+  const [cart, setCart] = useState([]);
+  const [theme, setTheme] = useState('light');
+
+  return (
+    <AppContext.Provider value={{ user, setUser, cart, setCart, theme, setTheme }}>
+      {children}
+    </AppContext.Provider>
+  );
+}
+```
+
+A performance profiler shows that the `Header` component (which only uses `theme`) re-renders every time a cart item is added. What is the most direct fix?
+
+A. Wrap `Header` in `React.Suspense` to defer its render.
+
+B. Split the single large context into separate `UserContext`, `CartContext`, and `ThemeContext` so each consumer only re-renders when its relevant data changes.
+
+C. Move `cart` state into `localStorage` so it does not trigger context updates.
+
+D. Add a `shouldComponentUpdate` lifecycle method to `Header`.
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect — `React.Suspense` is for lazy loading and async rendering, not performance optimization of context updates.
+- C is incorrect — reading from `localStorage` in every render is slower, not faster, and `localStorage` changes do not trigger React re-renders.
+- D is incorrect — `shouldComponentUpdate` is a class component lifecycle method; `Header` is a functional component and would use `React.memo` instead.
+
+---
+
+### Question 10
+
+Your team is building a large e-commerce platform with 40+ developers and hundreds of components. The state includes complex async flows (order processing, inventory syncing), time-travel debugging is required for QA, and strict action contracts are needed to coordinate across teams. Which state management approach is most appropriate?
+
+A. Multiple Context providers with `useReducer` in each.
+
+B. A single global `useState` at the root component.
+
+C. Redux Toolkit with RTK Query for async operations.
+
+D. React Query alone, since server state is the only state that matters.
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- A is incorrect — multiple contexts with `useReducer` work well for small-to-medium apps, but do not provide middleware support, time-travel debugging, or the strict action contracts a 40+ developer team requires.
+- B is incorrect — a single root `useState` is unmanageable at scale; every update causes the entire tree to re-render.
+- D is incorrect — React Query handles server state excellently but does not address complex client state, middleware chains, or time-travel debugging.

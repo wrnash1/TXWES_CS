@@ -387,4 +387,4 @@ aws iam simulate-principal-policy \
 
 ## References
 
-All certification study materials and exam registration: aws.amazon.com/certification
+All certification study materials and exam registration: <aws.amazon.com/certification>

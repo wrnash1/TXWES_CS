@@ -1,58 +1,437 @@
-# Reading Guide: Module 14 - Generative Models: GANs and VAEs
-## Course: CIS-4345_Machine_Learning_Deep_Learning (TensorFlow Developer Certificate)
+# Reading Guide: Module 14 — Model Deployment and Production ML Pipelines
+
+## Course: CIS-4345 Machine Learning and Deep Learning
+
+## Texas Wesleyan University | Professor Nash
 
 ---
 
-### Introduction
-Welcome to **Module 14 - Generative Models: GANs and VAEs**! Generative models learn to produce new data samples that resemble a training distribution — generating realistic images, synthesizing text, or creating new audio. This module covers two major generative architectures: Generative Adversarial Networks (GANs), which use an adversarial game between a generator and discriminator, and Variational Autoencoders (VAEs), which learn a compressed latent representation and use it to generate new samples.
+## Overview
 
-While generative models are not a primary TensorFlow Developer Certificate exam task category, understanding their architecture deepens your understanding of the TF ecosystem and prepares you for production ML work involving data synthesis and representation learning.
+Module 14 bridges the gap between model training and real-world use. Even a highly accurate model is worthless if it cannot be accessed reliably by the systems and users that need it. This guide covers the four major deployment patterns you will encounter in industry: SavedModel serialization, TensorFlow Serving, TFLite for edge devices, and production pipeline orchestration via TFX. A fifth section covers lightweight REST API deployment with Flask.
 
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **Generative Adversarial Network (GAN)**: An architecture composed of two networks trained simultaneously in opposition: a Generator that creates synthetic samples from random noise, and a Discriminator that tries to distinguish real training samples from the generator's fakes. The generator improves by learning to fool the discriminator; the discriminator improves by learning to spot fakes. At equilibrium, the generator produces samples indistinguishable from real data.
-
-*   **Generator**: The GAN component that maps random noise vectors (sampled from a simple distribution, e.g., Gaussian) to synthetic data samples. In a DCGAN (Deep Convolutional GAN) for image generation, the generator uses `Conv2DTranspose` (transposed convolution) layers to upsample the noise vector into a full-resolution image. The generator never sees real data directly — it only receives gradient signals from the discriminator.
-
-*   **Discriminator**: The GAN component that takes an input (either a real image from the training set or a fake image from the generator) and outputs a scalar probability of the input being real. Architecturally, the discriminator is a standard CNN classifier. It is trained on binary cross-entropy loss with real samples labeled 1 and fake samples labeled 0.
-
-*   **Variational Autoencoder (VAE)**: A generative model that encodes input data into a probability distribution in a compact latent space (rather than a single point), then samples from that distribution to decode new data. The encoder outputs a mean `μ` and log-variance `σ²`; the decoder reconstructs data from a sampled latent vector `z = μ + σ * ε` where `ε ~ N(0,1)`. VAEs produce smooth, interpolable latent spaces.
-
-*   **Latent space**: The compressed, lower-dimensional representation learned by the encoder in a VAE (or the input noise space for a GAN generator). In a VAE, nearby points in latent space decode to semantically similar outputs — making it possible to interpolate between two faces, for example, by linearly blending their latent vectors.
-
-*   **Mode collapse**: A common GAN training failure where the generator learns to produce only a few types of outputs (or even a single output) that successfully fool the discriminator, rather than covering the full diversity of the training distribution. The generator finds one "mode" of the data and exploits it, resulting in low diversity in generated samples.
+**Estimated study time:** 2–2.5 hours
 
 ---
 
-### 2. Certification Exam Tips
-*   **GAN Training Loop:** GANs require a custom training loop — they cannot be trained with a simple `model.fit()` call because two networks update alternately. In TensorFlow, use `tf.GradientTape()` to compute and apply gradients separately for the discriminator and generator on each batch.
-*   **VAE Loss Function:** VAE training uses a compound loss: reconstruction loss (how well the decoder recreates the input) plus KL divergence (how close the learned latent distribution is to a standard Gaussian). Neither term alone is sufficient — removing KL divergence produces a standard autoencoder that does not generate new samples.
-*   **`Conv2DTranspose`:** The key layer in generative image models. Unlike `Conv2D` which reduces spatial dimensions, `Conv2DTranspose` (transposed convolution) increases spatial dimensions — used in the generator to upsample from a noise vector to a full-resolution image.
-*   **Study Resource:** The [TensorFlow DCGAN tutorial](https://www.tensorflow.org/tutorials/generative/dcgan) at tensorflow.org implements a complete GAN for generating handwritten digit images with a custom training loop using `tf.GradientTape`. The [TensorFlow VAE tutorial](https://www.tensorflow.org/tutorials/generative/cvae) covers convolutional VAE architecture and the reparameterization trick.
+## Learning Objectives
+
+After completing this guide you will be able to:
+
+1. Save a Keras model in SavedModel format and explain its directory structure
+2. Distinguish SavedModel from `.h5` and when to use each
+3. Describe how TensorFlow Serving handles model versioning and REST inference
+4. Convert a SavedModel to TFLite and apply post-training quantization
+5. Explain the role of TFX components in a production ML pipeline
+6. Build a basic Flask REST endpoint that loads and serves a SavedModel
 
 ---
 
-### Required Readings & Videos
-To prepare for this module's topics, you must complete the following readings and videos:
-*   **Required Reading:** Work through the [TensorFlow DCGAN tutorial](https://www.tensorflow.org/tutorials/generative/dcgan) and the [TensorFlow VAE tutorial](https://www.tensorflow.org/tutorials/generative/cvae) at tensorflow.org. These free official tutorials implement complete generative models in TensorFlow and demonstrate the custom training loop patterns used in practice.
-*   **Required Video:** Watch the generative models lecture in the course playlist: [Machine Learning with Python & TensorFlow Course](https://www.youtube.com/watch?v=cKzgMFG5HpU). This covers the GAN adversarial training concept, the VAE encoder-decoder architecture, and the latent space visualization.
+## Section 1 — Model Serialization: SavedModel vs `.h5`
+
+### 1.1 The Two Formats
+
+TensorFlow/Keras supports two primary serialization formats:
+
+**SavedModel (recommended):**
+
+```python
+model.save('my_model')          # Directory format
+model.save('my_model.tf')       # Also SavedModel
+```
+
+**HDF5/Keras legacy:**
+
+```python
+model.save('my_model.h5')       # Single file, Keras-specific
+```
+
+| Property | SavedModel | HDF5 (.h5) |
+|----------|------------|------------|
+| Language support | Any language | Python only |
+| Custom layers | Full support | Requires config |
+| TF Serving compatible | Yes | No |
+| Contains serving signatures | Yes | No |
+
+### 1.2 SavedModel Directory Structure
+
+After calling `model.save('my_model')`, inspect the output:
+
+```text
+my_model/
+  saved_model.pb        <- frozen computation graph
+  variables/
+    variables.index
+    variables.data-00000-of-00001
+  assets/               <- optional (vocabularies, etc.)
+  fingerprint.pb        <- integrity check
+```
+
+The `.pb` file is a Protocol Buffer — a compact binary format designed for cross-language serialization. The variables directory contains the actual weight tensors.
+
+### 1.3 Loading and Inspecting a SavedModel
+
+```python
+import tensorflow as tf
+
+loaded = tf.saved_model.load('my_model')
+print(list(loaded.signatures.keys()))
+# ['serving_default']
+
+infer = loaded.signatures['serving_default']
+print(infer.structured_input_signature)
+print(infer.structured_outputs)
+```
+
+The `serving_default` signature is automatically created from the model's `call()` method. You can define custom signatures for multi-input or multi-output models.
+
+### 1.4 Saving and Loading with Keras API
+
+The recommended approach for Keras models:
+
+```python
+# Save
+model.save('my_model')
+
+# Load (returns a full Keras model)
+restored = tf.keras.models.load_model('my_model')
+restored.predict(x_test[:10])
+```
+
+`tf.keras.models.load_model` is preferred when you want to continue training or access the Keras API. `tf.saved_model.load` is preferred for pure inference use cases.
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will perform the following steps to apply these concepts:
-*   **Build a simple GAN**: Define a generator (`Dense → reshape → Conv2DTranspose`) and discriminator (`Conv2D → Flatten → Dense(1, sigmoid)`). Implement a custom training step using `tf.GradientTape()` that updates the discriminator and generator alternately on each batch.
-*   **Build a VAE encoder-decoder**: Define an encoder that outputs `mu` and `log_var`, implement the reparameterization trick `z = mu + exp(log_var/2) * epsilon`, and define a decoder that reconstructs images from `z`. Train with combined reconstruction + KL divergence loss.
-*   **Visualize the latent space**: After training the VAE, plot a 2D grid of decoded images by sampling from a regular grid of latent coordinates to see how the latent space organizes image content.
+## Section 2 — TensorFlow Serving
+
+### 2.1 What TF Serving Does
+
+TensorFlow Serving is a purpose-built inference server with the following capabilities:
+
+- Loads one or more SavedModels into memory
+- Manages multiple model versions simultaneously
+- Exposes a REST API on port 8501
+- Exposes a gRPC API on port 8500
+- Handles batching and hardware utilization automatically
+
+### 2.2 Model Versioning Convention
+
+TF Serving expects models organized by version number:
+
+```text
+/models/
+  my_model/
+    1/          <- version 1 (SavedModel directory)
+    2/          <- version 2
+```
+
+It automatically serves the highest-numbered version. You can configure policies to keep older versions loaded for graceful rollback.
+
+### 2.3 The REST API Protocol
+
+A prediction request to TF Serving follows this pattern:
+
+```text
+POST http://{host}:8501/v1/models/{model_name}:predict
+Content-Type: application/json
+
+{
+  "instances": [[0.1, 0.2, ..., 0.9], ...]
+}
+```
+
+The response:
+
+```json
+{
+  "predictions": [[0.01, 0.04, ..., 0.88], ...]
+}
+```
+
+For named inputs (multi-input models), use `"inputs"` instead of `"instances"`:
+
+```json
+{
+  "inputs": {
+    "input_layer": [[...]]
+  }
+}
+```
+
+### 2.4 gRPC vs REST
+
+| Factor | REST | gRPC |
+|--------|------|------|
+| Protocol | HTTP/JSON | HTTP/2 + Protocol Buffers |
+| Latency | Higher | Lower |
+| Ease of use | Easier | Requires protobuf setup |
+| Best for | Prototyping, web clients | High-throughput services |
+
+For most coursework and small production systems, REST is sufficient. Choose gRPC when latency matters at scale.
+
+### 2.5 Docker Deployment
+
+The standard TF Serving deployment uses the official Docker image:
+
+```bash
+docker run -p 8501:8501 \
+  --mount type=bind,source=/path/to/models,target=/models/my_model \
+  -e MODEL_NAME=my_model \
+  tensorflow/serving
+```
+
+The `--mount` binds your local model directory into the container. The `-e MODEL_NAME` environment variable tells the server which directory under `/models/` to load.
 
 ---
 
-### 3. Study Checklist
-*   [ ] Read the glossary terms and draw diagrams for both GAN and VAE architectures showing the data flow.
-*   [ ] Work through the [TensorFlow DCGAN tutorial](https://www.tensorflow.org/tutorials/generative/dcgan) and [VAE tutorial](https://www.tensorflow.org/tutorials/generative/cvae).
-*   [ ] Watch the generative models lecture in the [Machine Learning with Python & TensorFlow Course](https://www.youtube.com/watch?v=cKzgMFG5HpU).
-*   [ ] Complete the Module 14 lab: simple GAN and VAE with latent space visualization.
-*   [ ] Proceed to the Module 14 quiz.
+## Section 3 — TFLite for Mobile and Edge Inference
+
+### 3.1 Why TFLite Exists
+
+Full TensorFlow has a runtime footprint measured in megabytes and depends on BLAS libraries and GPU drivers. This is incompatible with microcontrollers (KB of RAM) and mobile apps (user expects small download). TFLite solves this with:
+
+- A compact flatbuffer model format (`.tflite`)
+- A minimal inference-only runtime (< 1 MB for microcontrollers)
+- Optimized kernels for ARM NEON, DSP, and GPU delegates
+
+### 3.2 Conversion Pipeline
+
+```python
+# Step 1: Start from SavedModel
+converter = tf.lite.TFLiteConverter.from_saved_model('my_model')
+tflite_model = converter.convert()
+
+# Step 2: Write to disk
+with open('model.tflite', 'wb') as f:
+    f.write(tflite_model)
+```
+
+Alternative: convert from a Keras model in memory:
+
+```python
+converter = tf.lite.TFLiteConverter.from_keras_model(model)
+tflite_model = converter.convert()
+```
+
+### 3.3 Post-Training Quantization
+
+Quantization reduces model size and speeds up inference by lowering weight precision:
+
+| Mode | Weight precision | Activation precision | Size reduction |
+|------|-----------------|---------------------|----------------|
+| Dynamic range | INT8 | FP32 (at runtime) | ~4x |
+| Full integer | INT8 | INT8 | ~4x + faster |
+| Float16 | FP16 | FP16 | ~2x |
+
+**Dynamic range quantization** (simplest):
+
+```python
+converter.optimizations = [tf.lite.Optimize.DEFAULT]
+```
+
+**Full integer quantization** (fastest on hardware with INT8 support):
+
+```python
+def representative_dataset():
+    for x in x_train[:100]:
+        yield [x.reshape(1, -1).astype('float32')]
+
+converter.optimizations = [tf.lite.Optimize.DEFAULT]
+converter.representative_dataset = representative_dataset
+converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS_INT8]
+converter.inference_input_type = tf.int8
+converter.inference_output_type = tf.int8
+```
+
+### 3.4 TFLite Interpreter API
+
+Running inference requires the interpreter API:
+
+```python
+interpreter = tf.lite.Interpreter(model_path='model.tflite')
+interpreter.allocate_tensors()
+
+input_details = interpreter.get_input_details()
+output_details = interpreter.get_output_details()
+
+interpreter.set_tensor(input_details[0]['index'], input_array)
+interpreter.invoke()
+result = interpreter.get_tensor(output_details[0]['index'])
+```
+
+Note: `allocate_tensors()` must be called before any inference, and you must call it again if the input shape changes.
+
+### 3.5 TFLite Model Benchmark Tool
+
+TensorFlow provides a benchmark binary to measure latency on target hardware. On Android:
+
+```bash
+adb push model.tflite /data/local/tmp/
+adb shell /data/local/tmp/benchmark_model \
+  --graph=/data/local/tmp/model.tflite \
+  --num_runs=50
+```
+
+This reports average latency, peak memory, and CPU/GPU utilization.
+
+---
+
+## Section 4 — TFX: Production ML Pipelines
+
+### 4.1 The Motivation for Pipelines
+
+A trained model is only one artifact in a production ML system. You also need:
+
+- Repeatable data ingestion and validation
+- Versioned preprocessing that exactly matches training
+- Automated model evaluation against a deployed baseline
+- Audit trails for compliance and debugging
+- Triggered retraining when data distribution shifts
+
+TFX provides all of these through a component-based pipeline architecture.
+
+### 4.2 Core TFX Components
+
+| Component | Role |
+|-----------|------|
+| ExampleGen | Ingest and split raw data |
+| StatisticsGen | Compute feature statistics |
+| SchemaGen | Infer expected data schema |
+| ExampleValidator | Flag anomalies vs schema |
+| Transform | Feature engineering (saved as a preprocessing graph) |
+| Trainer | Train model using Keras or Estimator |
+| Evaluator | Compare candidate model to baseline |
+| Pusher | Deploy blessed model to serving infrastructure |
+
+### 4.3 The ML Metadata Store
+
+Every component reads and writes **artifacts** to an ML Metadata (MLMD) store. This creates a complete lineage graph: you can trace any deployed model back to the exact data slice, preprocessing parameters, and hyperparameters used to produce it. This is critical in regulated industries (finance, healthcare) and for debugging production issues.
+
+### 4.4 When to Use TFX
+
+TFX is appropriate when:
+
+- Retraining must be automated and auditable
+- Multiple teams share the pipeline (data engineers, ML engineers, platform)
+- Compliance requires full data lineage
+
+TFX is **not** appropriate for:
+
+- Research and experimentation (too much overhead)
+- Single-developer projects (simpler solutions exist)
+- One-time batch predictions
+
+---
+
+## Section 5 — Lightweight Deployment with Flask
+
+### 5.1 Architecture
+
+Flask is appropriate for:
+
+- Internal tools and dashboards
+- Prototype APIs before migrating to TF Serving
+- Low-to-moderate traffic (< ~100 requests/second)
+
+A minimal serving pattern:
+
+```python
+from flask import Flask, request, jsonify
+import tensorflow as tf
+import numpy as np
+
+app = Flask(__name__)
+
+# Load model once at startup
+model = tf.keras.models.load_model('my_model')
+
+@app.route('/predict', methods=['POST'])
+def predict():
+    data = request.get_json(force=True)
+    instances = np.array(data['instances'], dtype='float32')
+    predictions = model.predict(instances)
+    return jsonify({'predictions': predictions.tolist()})
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=False)
+```
+
+### 5.2 Input Validation
+
+Always validate inputs before passing to the model:
+
+```python
+@app.route('/predict', methods=['POST'])
+def predict():
+    data = request.get_json(force=True)
+    if 'instances' not in data:
+        return jsonify({'error': 'Missing instances key'}), 400
+    try:
+        instances = np.array(data['instances'], dtype='float32')
+    except (ValueError, TypeError) as e:
+        return jsonify({'error': str(e)}), 400
+    predictions = model.predict(instances)
+    return jsonify({'predictions': predictions.tolist()})
+```
+
+### 5.3 Production Considerations
+
+Flask's built-in server is single-threaded. For moderate traffic use Gunicorn:
+
+```bash
+gunicorn -w 4 -b 0.0.0.0:5000 app:app
+```
+
+For high traffic or GPU inference, migrate to TF Serving. Flask should not handle GPU batching — TF Serving does this automatically.
+
+---
+
+## Section 6 — Deployment Decision Framework
+
+When choosing a deployment strategy, evaluate these axes:
+
+- **Who calls the model?** Web service → TF Serving. Mobile → TFLite. Internal tool → Flask.
+- **What latency is acceptable?** Milliseconds → gRPC + TF Serving. Seconds acceptable → REST.
+- **Does the model run on a device without internet?** Yes → TFLite. No → server-side serving.
+- **Do you need automated retraining and lineage?** Yes → TFX. No → SavedModel + Serving.
+- **Model size constraints?** Embedded → TFLite Micro. Mobile → TFLite. Server → full model.
+
+---
+
+## Key Terms
+
+- **SavedModel:** TensorFlow's portable model format; directory containing graph and weights
+- **Serving signature:** Named input/output tensor specification embedded in SavedModel
+- **TF Serving:** Production inference server; REST and gRPC endpoints; model versioning
+- **TFLite:** TensorFlow Lite; compact inference runtime for mobile and embedded
+- **Quantization:** Reducing weight precision (FP32 → INT8) to shrink model size and speed inference
+- **TFX:** TensorFlow Extended; end-to-end ML pipeline platform with lineage tracking
+- **Flask:** Python microframework; suitable for lightweight model serving
+- **Artifact:** Versioned data produced or consumed by a TFX pipeline component
+
+---
+
+## Self-Check Questions
+
+1. What is the difference between `model.save('model.h5')` and `model.save('model')`?
+2. What directory structure does TF Serving expect for model versioning?
+3. What does `converter.optimizations = [tf.lite.Optimize.DEFAULT]` do?
+4. Why must you call `interpreter.allocate_tensors()` before TFLite inference?
+5. What is the role of the TFX Evaluator component?
+6. When is gRPC preferable to REST for model serving?
+
+---
+
+## Recommended Resources
+
+- TensorFlow SavedModel documentation: [tensorflow.org/guide/saved_model](https://www.tensorflow.org/guide/saved_model)
+- TF Serving documentation: [tensorflow.org/tfx/guide/serving](https://www.tensorflow.org/tfx/guide/serving)
+- TFLite documentation: [tensorflow.org/lite/guide](https://www.tensorflow.org/lite/guide)
+- TFX documentation: [tensorflow.org/tfx](https://www.tensorflow.org/tfx)
+- Hands-On ML, Chapter 19 — Training and Deploying TensorFlow Models at Scale
+
+---
+
+## Next Module Preview
+
+Module 15 covers generative models and the Transformer architecture: autoencoders, variational autoencoders, GANs, attention mechanisms, and an introduction to BERT. These are among the most exciting and rapidly evolving areas of deep learning.

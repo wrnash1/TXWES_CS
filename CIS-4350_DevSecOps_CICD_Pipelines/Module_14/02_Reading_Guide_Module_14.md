@@ -1,61 +1,169 @@
-# Reading Guide: Module 14 - Threat Modeling in DevSecOps
+# Reading Guide: Module 14 — Threat Modeling in DevSecOps
 
-## Course: CIS-4350_DevSecOps_CICD_Pipelines (Certified DevSecOps Professional (CDP))
+## Course: CIS-4350 DevSecOps and CI/CD Pipelines
 
----
-
-### Introduction
-
-Welcome to **Module 14 - Threat Modeling in DevSecOps**! This module covers threat modeling as the design-phase security activity that identifies potential attack vectors, threat actors, and mitigations before a single line of code is written. In a DevSecOps context, threat modeling is the shift-left security activity that precedes SAST, SCA, and DAST — informing which security controls and pipeline gates are most important for a given system. You will learn structured threat modeling methods (STRIDE), how to map threats to mitigations, and how threat model outputs drive pipeline security requirements. These concepts are tested on the CDP exam and are essential for senior DevSecOps roles.
+## Certification Alignment: DevSecOps Professional (DSOE)
 
 ---
 
-### 1. High-Yield Glossary
+## Introduction
 
-Review these essential definitions carefully. The CDP certification exam expects you to recognize and apply these concepts in scenario-based questions:
-
-* **Chaos engineering definition**: A discipline of proactively experimenting on a system in production or staging by injecting controlled failures — network latency, service crashes, resource exhaustion — to discover weaknesses before they cause unplanned outages. In a DevSecOps pipeline, chaos engineering validates that security controls (circuit breakers, fallback authentication, secrets rotation on failure) behave correctly under adverse conditions.
-
-* **Failure injection (Chaos Monkey)**: The practice of deliberately terminating service instances (Netflix's Chaos Monkey) or injecting faults (Gremlin, LitmusChaos) into a running system to observe how it degrades. From a security perspective, failure injection tests whether systems fail safe — whether authentication falls back to secure defaults, whether secrets are rotated automatically on node failure, and whether fallback paths maintain security properties.
-
-* **Resilience testing**: Systematic validation that a system recovers correctly from failure scenarios — including security-relevant failures such as a secrets manager becoming unavailable, a certificate expiring, or an API gateway failing. Resilience testing in DevSecOps ensures that security controls do not introduce single points of failure and that graceful degradation maintains an acceptable security posture.
-
-* **Fallback paths**: Pre-defined alternative execution routes that a system follows when a primary path fails. In security-critical systems, fallback paths must be designed with the same security rigor as primary paths — an insecure fallback is as exploitable as an insecure primary path. Threat modeling identifies fallback paths as potential attack surfaces that require explicit security analysis.
+Module 14 covers threat modeling — the design-phase security activity that systematically identifies what can go wrong in a system before code is written. In a DevSecOps program, threat modeling is the upstream input that determines which pipeline controls to build, which security tests to write, and which parts of the system require the most attention during code review. This module covers the STRIDE framework, data flow diagrams, trust boundaries, OWASP Threat Dragon, and sprint-cadence threat modeling integration.
 
 ---
 
-### 2. Certification Exam Tips
+## Section 1: High-Yield Glossary
 
-* **STRIDE Threat Categories**: The CDP exam tests the STRIDE framework: Spoofing (false identity), Tampering (unauthorized modification), Repudiation (denying actions), Information Disclosure (data leakage), Denial of Service (availability attacks), Elevation of Privilege (unauthorized privilege gain). Know which mitigation category addresses each threat type.
-* **Threat Modeling in the SDLC**: Threat modeling belongs at the design phase — before code is written. It produces a prioritized list of threats that informs which security controls are built into the system and which pipeline gates are required. The CDP exam tests that you can place threat modeling correctly in the SDLC relative to SAST, SCA, and DAST.
-* **Attack Trees and Data Flow Diagrams**: Know that threat modeling uses DFDs (Data Flow Diagrams) to identify trust boundaries and data flows, and attack trees to decompose threats hierarchically. The exam may present a DFD and ask you to identify which elements represent trust boundary crossings that require security controls.
-* **Study Resource**: The [Microsoft Threat Modeling Tool documentation](https://learn.microsoft.com/en-us/azure/security/develop/threat-modeling-tool) and the [OWASP Threat Modeling Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html) provide comprehensive references for STRIDE, attack trees, and threat modeling in agile/DevOps workflows — both are relevant to CDP exam scenarios.
+**Threat modeling** — A structured process for identifying security threats to a system at the design phase, before code is written. The outputs are a prioritized threat list and a set of mitigations that inform security requirements, pipeline gates, and test cases.
+
+**STRIDE** — Microsoft's threat classification framework: Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege. Each category represents a class of attack with a corresponding mitigation strategy.
+
+**Spoofing** — Impersonating a legitimate user, service, or component. Mitigation: strong authentication, token signature verification, mutual TLS.
+
+**Tampering** — Unauthorized modification of data in transit or at rest. Mitigation: TLS for data in transit, HMAC message signing, input validation, database integrity checks.
+
+**Repudiation** — Denying that an action was performed. Mitigation: immutable audit logging, signed audit events, centralized log storage.
+
+**Information Disclosure** — Exposing data to unauthorized parties. Mitigation: structured error responses, secrets management, data classification, TLS.
+
+**Denial of Service** — Disrupting system availability. Mitigation: rate limiting, authentication at the edge, container resource limits, circuit breakers.
+
+**Elevation of Privilege** — Gaining capabilities beyond what was authorized. Mitigation: `runAsNonRoot: true`, `allowPrivilegeEscalation: false`, principle of least privilege, RBAC.
+
+**Data Flow Diagram (DFD)** — A structured diagram showing external entities, processes, data stores, data flows, and trust boundaries in a system. The primary artifact used in threat modeling.
+
+**External entity** — An actor or system outside the trust boundary (user, third-party API, partner service). Drawn as a rectangle in a DFD.
+
+**Process** — A component that transforms, stores, or transmits data (application, API gateway, worker service). Drawn as a circle in a DFD.
+
+**Data store** — Persistent storage (database, cache, message queue, object storage). Drawn as parallel lines in a DFD.
+
+**Data flow** — An arrow in a DFD showing how data moves between components, labeled with the data type and protocol.
+
+**Trust boundary** — A line in a DFD delineating where data crosses from a trusted context to a less trusted one. Most attacks happen at trust boundary crossings. STRIDE threats are evaluated at each crossing.
+
+**OWASP Threat Dragon** — A free, open-source threat modeling tool that provides a DFD diagramming interface and auto-suggests STRIDE threats based on component types and trust boundary crossings. Outputs a JSON threat model file that can be version-controlled.
+
+**Threat actor** — An entity with motivation and capability to attack a system. Common categories: external adversary, malicious insider, automated scanner.
+
+**Attack surface** — The set of all possible attack entry points into a system. Threat modeling systematically identifies and documents the attack surface.
+
+**Mitigation** — A control that reduces the likelihood or impact of a threat. Mitigations map to specific DevSecOps pipeline controls (SAST, SCA, container scanning, secrets management, Kubernetes security).
+
+**Sprint-cadence threat modeling** — A lightweight threat modeling process triggered by specific conditions (new trust boundary, new data type, new external integration) at feature design time, not on an annual schedule.
 
 ---
 
-### Required Readings & Videos
+## Section 2: STRIDE Framework Reference
 
-To prepare for this module's topics, you must complete the following readings and videos:
-
-* **Required Reading**: Read the [OWASP Threat Modeling Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html) — a concise, practical guide to threat modeling in agile environments covering STRIDE, PASTA, data flow diagrams, trust boundaries, and how to integrate threat modeling into sprint ceremonies. This is a direct reference for CDP exam threat modeling questions.
-* **Required Video**: Watch the threat modeling and chaos engineering segment of [CI/CD Pipeline & DevSecOps Course by freeCodeCamp](https://www.youtube.com/watch?v=scEDHsr3APg) — covers mapping server failure scenarios, documenting resilience paths, and how chaos engineering validates that security controls survive infrastructure failures.
-
----
-
-### Lab & Command Integration
-
-In this week's hands-on lab, you will apply threat modeling and resilience analysis by:
-
-* **Map server crash scenarios**: For a sample three-tier web application (frontend, API, database), enumerate at least five STRIDE threat categories — identify the threat, the asset at risk, the attack vector, and the corresponding mitigation or pipeline security gate.
-* **Outline system resilience paths handling cluster node drops**: Document what happens to authentication, secrets delivery, and authorization when the secrets manager pod (Vault) becomes unavailable — identifying whether the system fails open (insecure) or fails closed (secure).
-* **Document fallback workflows**: For each identified failure scenario, write a one-paragraph security analysis explaining whether the fallback path maintains the required security properties and what remediation is needed if it does not.
+| Category | Threat | Example | Mitigation |
+|---|---|---|---|
+| Spoofing | False identity | Forged JWT token for admin access | Authentication, JWT signature verification, short token expiry |
+| Tampering | Unauthorized data modification | MITM attack on microservice API call | TLS, HMAC signing, input validation |
+| Repudiation | Denying actions | User deletes audit logs | Immutable logging, signed events, write-only log access |
+| Information Disclosure | Data leakage | API returns stack traces with DB credentials | Structured errors, secrets management, data classification |
+| Denial of Service | Availability attack | Unauthenticated endpoint flooded with requests | Rate limiting, auth at edge, container resource limits |
+| Elevation of Privilege | Unauthorized capability gain | Container escape via root process | `runAsNonRoot`, `allowPrivilegeEscalation: false`, RBAC |
 
 ---
 
-### 3. Study Checklist
+## Section 3: Data Flow Diagram Symbol Reference
 
-* [ ] Read the glossary terms and understand how chaos engineering and threat modeling complement each other in a DevSecOps program.
-* [ ] Read the OWASP Threat Modeling Cheat Sheet at [https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html](https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html).
-* [ ] Watch the threat modeling and chaos engineering segment of [CI/CD Pipeline & DevSecOps Course by freeCodeCamp](https://www.youtube.com/watch?v=scEDHsr3APg).
-* [ ] Complete the STRIDE threat enumeration and resilience path analysis in the lab activity.
-* [ ] Proceed to the weekly hands-on lab activity.
+| Symbol | Shape | Represents |
+|---|---|---|
+| External entity | Rectangle | Actor outside trust boundary |
+| Process | Circle | Application component |
+| Data store | Parallel lines | Persistent storage |
+| Data flow | Arrow | Data movement (labeled with data type) |
+| Trust boundary | Dashed line | Where trust level changes |
+
+---
+
+## Section 4: STRIDE-to-Pipeline-Control Mapping
+
+| STRIDE Category | DevSecOps Pipeline Control | Module Reference |
+|---|---|---|
+| Spoofing | Secrets management (Vault/AWS Secrets Manager), OIDC federation | Module 9 |
+| Tampering | SAST (code review for validation logic), TLS enforcement tests | Module 7 |
+| Repudiation | Immutable audit logging, SIEM event retention | Module 12 |
+| Information Disclosure | Secrets scanning (Gitleaks), SCA (dependency CVEs) | Modules 8, 9 |
+| Denial of Service | Container resource limits (Checkov CKV_K8S_11-14), rate limit tests | Module 12 |
+| Elevation of Privilege | Security Context checks (Checkov CKV_K8S_15, 20), container scanning | Modules 11, 12 |
+
+---
+
+## Section 5: Threat Modeling Sprint Cadence Trigger Conditions
+
+| Trigger | Example |
+|---|---|
+| New external-facing endpoint | Adding a public REST API for a new partner |
+| New trust boundary | Microservice added that crosses namespace boundary |
+| New elevated-sensitivity data type | Feature stores credit card numbers or SSNs |
+| Authentication or authorization logic changed | Adding a new OAuth scope or RBAC role |
+| New infrastructure component | New message queue, cache, or object storage bucket added |
+| Integration with third-party API | Using a new payment processor or identity provider |
+
+---
+
+## Section 6: Threat Modeling Process Steps
+
+1. **Scope** — Define what is in scope (the feature or system being modeled) and the threat actors to consider.
+2. **Diagram** — Create a DFD showing all components, data flows, and trust boundaries.
+3. **Identify threats** — For each data flow that crosses a trust boundary, enumerate applicable STRIDE threats.
+4. **Prioritize** — Rank threats by likelihood and impact. Use the DREAD model or CVSS scores as a framework.
+5. **Mitigate** — For each high-priority threat, identify the control that mitigates it.
+6. **Verify** — Map each mitigation to a specific test case, pipeline gate, or acceptance criterion.
+7. **Document** — Record the threat model in a versioned artifact (Threat Dragon JSON, ADR, or structured doc).
+
+---
+
+## Section 7: OWASP Threat Dragon Workflow
+
+1. Create a new threat model project.
+2. Add DFD components (processes, data stores, external entities) using the library.
+3. Draw data flows between components.
+4. Draw trust boundaries around components with different trust levels.
+5. Threat Dragon auto-populates suggested threats for each component and data flow.
+6. Review each threat: mark as mitigated, accepted, or not applicable.
+7. For mitigated threats: record the mitigation control.
+8. Export the JSON threat model file and commit it to the repository.
+
+---
+
+## Section 8: DevSecOps Professional Exam Tips
+
+1. **STRIDE categories** — Know all six by memory. The exam tests both the threat type and the corresponding mitigation category. A common question pattern: given a scenario, identify which STRIDE category it represents.
+
+2. **Trust boundaries are the focal point** — STRIDE threats are evaluated at trust boundary crossings, not at every component. The key skill is identifying trust boundaries in a system description and applying STRIDE analysis at each.
+
+3. **Threat modeling placement in SDLC** — Threat modeling belongs at the design phase, before code is written. It is the first security activity in the pipeline. The order is: threat modeling, then SAST, then SCA, then container scanning, then IaC scanning, then runtime security.
+
+4. **STRIDE mitigations map to pipeline controls** — Know the mapping table in Section 4. The exam tests whether you can connect a STRIDE threat to the DevSecOps tool that mitigates it.
+
+5. **Repudiation mitigation** — The unique STRIDE category. Repudiation is mitigated by immutable audit logging, not by authentication or encryption. Know this distinction.
+
+6. **OWASP Threat Dragon** — Know that it is a free tool that produces DFDs with STRIDE threat annotations. It outputs a JSON file that can be version-controlled. It does not scan code or run in a CI pipeline.
+
+7. **Sprint cadence vs. annual review** — The DevSecOps approach is to threat model at feature design time (triggered by new trust boundaries), not on an annual compliance schedule. Annual threat model reviews supplement but do not replace sprint-cadence modeling.
+
+8. **Defense in depth relationship** — Threat modeling identifies which security controls are needed. The subsequent modules' tools (SAST, SCA, etc.) implement those controls. A threat model that identifies an elevation of privilege risk should result in Checkov CKV_K8S_20 being required in the pipeline.
+
+---
+
+## Section 9: Required Reading
+
+- Review the OWASP Threat Dragon documentation at [https://owasp.org/www-project-threat-dragon/](https://owasp.org/www-project-threat-dragon/).
+
+---
+
+## Section 10: Study Checklist
+
+- [ ] Name all six STRIDE threat categories and the primary mitigation for each.
+- [ ] Explain the four DFD symbol types (external entity, process, data store, data flow) and trust boundary.
+- [ ] Explain why trust boundaries are the focal point for STRIDE threat analysis.
+- [ ] Map each STRIDE category to at least one DevSecOps pipeline control.
+- [ ] Describe the sprint-cadence threat modeling process and five trigger conditions.
+- [ ] Describe the OWASP Threat Dragon workflow and what artifact it produces.
+- [ ] Explain where threat modeling belongs in the SDLC relative to SAST and SCA.
+- [ ] Complete the Module 14 lab activity.
+- [ ] Attempt all 10 quiz questions and review distractor analysis for any incorrect answers.

@@ -1,82 +1,201 @@
-# Quiz: Module 15 – Migration to GCP: Transfer Service and Migrate for Compute Engine
-## Course: CIS-4329 – Google Cloud Administration (Google Cloud Associate Cloud Engineer)
+# Quiz: Module 15 — GCP Cost Management and Billing
+
+## Course: CIS-4329 Google Cloud Computing
+
+## Texas Wesleyan University | Professor Nash
+
+## Certification Alignment: Google Cloud Associate Cloud Engineer (ACE)
 
 ---
 
-**Question 1**
-Your company needs to migrate 800 TB of archive data from an on-premises data center to Cloud Storage. Your internet uplink is 500 Mbps shared with production traffic. Transferring 800 TB over a 500 Mbps connection would take approximately 13 days of continuous transfer at full bandwidth — which is not feasible given production traffic constraints. Which migration tool is most appropriate?
-
-A) Storage Transfer Service with the on-premises agent installed on a local server to upload files directly over the internet.
-B) `gsutil -m cp -r /data gs://destination-bucket` run in parallel across multiple on-premises servers to maximize throughput.
-C) Transfer Appliance — request one or more physical appliances from Google, load the 800 TB of data onto the appliance locally, and ship it to Google for ingestion into Cloud Storage.
-D) Cloud VPN with a dedicated tunnel reserved exclusively for data transfer at full 500 Mbps throughput.
-
-*   **Correct Answer:** C) Transfer Appliance — request one or more physical appliances from Google, load the 800 TB of data onto the appliance locally, and ship it to Google for ingestion into Cloud Storage.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Storage Transfer Service with the on-premises agent uploads data over your internet connection — the same constrained 500 Mbps link. This does not solve the 13-day transfer time problem and competes with production traffic. Transfer Appliance bypasses the network entirely for the bulk data load.
-    *   *Why B is incorrect:* `gsutil -m cp` also uses your internet connection. Distributing the upload across multiple servers increases parallelism but is still bounded by the total available internet bandwidth. It does not reduce the fundamental transfer time limitation of 500 Mbps shared bandwidth.
-    *   *Why D is incorrect:* Cloud VPN tunnels operate over the internet and are bounded by the same internet uplink capacity — a VPN tunnel does not provision additional bandwidth. Even with a dedicated VPN tunnel at full 500 Mbps, the 13-day transfer time remains unchanged.
+Instructions: Select the single best answer for each question. Review the distractor analysis after completing the quiz.
 
 ---
 
-**Question 2**
-Your organization runs a fleet of VMware vSphere VMs in an on-premises data center. You need to migrate these VMs to Compute Engine with minimal downtime during cutover. The VMs run production workloads that must remain online until the final cutover window. Which GCP migration tool is designed for this use case?
+### Question 1
 
-A) Storage Transfer Service — use it to copy the VM disk images from on-premises to Cloud Storage, then import them as Compute Engine custom images.
-B) Migrate for Compute Engine — it continuously replicates VM disk data to GCP in the background, allowing you to test the migrated VM in GCP before cutting over with only minutes of downtime.
-C) Database Migration Service — migrate the VM's application data to Cloud SQL and then redeploy the application on a new Compute Engine instance.
-D) `gcloud compute images import` — run this command against each VM's exported OVA file to convert it to a Compute Engine image.
+A company wants to ensure that spending on a development GCP project never exceeds $500 in a single month. When the $500 limit is reached, all resource usage in the project must stop automatically. What is the correct implementation?
 
-*   **Correct Answer:** B) Migrate for Compute Engine — it continuously replicates VM disk data to GCP in the background, allowing you to test the migrated VM in GCP before cutting over with only minutes of downtime.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* Copying VM disk images to Cloud Storage and importing them as custom images is a valid approach for offline migration, but it requires the VM to be shut down during the image export to ensure consistency — causing significant downtime. Migrate for Compute Engine uses live replication so the source VM stays running until the cutover moment.
-    *   *Why C is incorrect:* Database Migration Service migrates relational database data — it does not migrate entire VM workloads. This approach also requires re-architecting the application to use Cloud SQL, which is a re-platform strategy, not the lift-and-shift approach described in the scenario.
-    *   *Why D is incorrect:* `gcloud compute images import` is a one-time import from a static disk image file. It requires the source VM to be shut down to export a consistent image, results in a long import process, and provides no mechanism for continuous replication or low-downtime cutover.
+- A) Set the project quota to $500 in the Cloud Console — quotas automatically stop resources when reached
+- B) Create a Cloud Billing Budget for $500 with a 100% threshold Pub/Sub notification; create a Cloud Function triggered by that Pub/Sub topic that calls the Cloud Billing API to disable billing on the project
+- C) Create a Cloud Billing Budget for $500 — when the budget threshold is crossed, GCP automatically stops all resources in the project
+- D) Create a Cloud Monitoring alert that terminates all VMs in the project when the billing metric exceeds $500
 
----
+Correct Answer: B — Budgets are informational by default; they do not stop resources automatically. The only GCP-native programmatic cost enforcement mechanism is Budget → Pub/Sub → Cloud Function → disable billing via the Cloud Billing API. Disabling billing removes the billing account link from the project, causing all paid resources to stop functioning.
 
-**Question 3**
-Your team needs to keep a Cloud Storage bucket continuously synchronized with data produced by a partner organization's Amazon S3 bucket. New objects are added to the S3 bucket daily. You want the synchronization to happen automatically every 24 hours without manual intervention. Which Storage Transfer Service configuration achieves this?
+Distractor Analysis:
 
-A) Create a one-time transfer job from the S3 bucket to the Cloud Storage bucket and run it manually each morning.
-B) Create a recurring transfer job in Storage Transfer Service with the S3 bucket as the source, the Cloud Storage bucket as the destination, and a daily schedule.
-C) Write a Cloud Function triggered by a Cloud Scheduler job that calls `gsutil rsync s3://partner-bucket gs://gcp-bucket` daily.
-D) Configure an S3 bucket event notification that publishes to Pub/Sub, which triggers a Cloud Function to copy each new object to Cloud Storage as it arrives.
-
-*   **Correct Answer:** B) Create a recurring transfer job in Storage Transfer Service with the S3 bucket as the source, the Cloud Storage bucket as the destination, and a daily schedule.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* A one-time transfer job requires manual execution each morning. This introduces human error risk (forgetting to run it) and does not meet the "automatic without manual intervention" requirement. Storage Transfer Service's scheduling feature is designed specifically to eliminate this manual step.
-    *   *Why C is incorrect:* `gsutil rsync` with S3 as the source requires AWS credentials to be available in the Cloud Function's environment, adds custom code to maintain, and runs from a Cloud Function instance that may have lower throughput than Storage Transfer Service's managed infrastructure. The native STS solution is simpler and more reliable.
-    *   *Why D is incorrect:* An event-driven architecture that copies each object individually as it is created is more complex to implement and maintain than a scheduled batch sync. It also requires the partner to configure S3 notifications to your Pub/Sub topic, which depends on partner cooperation and adds cross-account IAM configuration. STS's scheduled transfer is the simpler and recommended approach.
+- Why A is incorrect: GCP quotas limit resource usage counts (number of CPUs, number of API requests per minute) — they are not spending controls. There is no quota that stops resources when a dollar amount is reached.
+- Why C is incorrect: This is the most common misconception about GCP Budgets. Budgets send notifications only; they do not enforce spending by stopping resources. Engineers must explicitly implement the Cloud Function pattern to take automated action.
+- Why D is incorrect: Cloud Monitoring billing metrics can alert on spending, but Cloud Monitoring does not have native support for calling the billing disable API. Even if a Cloud Monitoring alert triggered a Cloud Function, this would be a custom pattern — not simpler than the standard Budget → Pub/Sub → Cloud Function approach.
 
 ---
 
-**Question 4**
-Your company is migrating a production MySQL database from an on-premises server to Cloud SQL for MySQL. The database is 2 TB and receives continuous write traffic. The migration must keep the source database online and serving traffic until the final cutover. Downtime must be less than 5 minutes. Which tool and approach is correct?
+### Question 2
 
-A) Use `mysqldump` to export the database, transfer the dump file to Cloud Storage, and import it into Cloud SQL — then update the application connection string during a maintenance window.
-B) Use Database Migration Service with a continuous migration type (change data capture), validate that the Cloud SQL replica is consistent, then cut over by updating the application connection string.
-C) Use Storage Transfer Service to copy the MySQL data files from on-premises storage to a Cloud Storage bucket, then attach the bucket as a Cloud SQL external data source.
-D) Create a Cloud SQL read replica pointing to the on-premises database and promote it when ready to cut over.
+An organization runs 30 Compute Engine n2-standard-8 VMs in us-central1 continuously for production workloads. They have been running for 8 months and plan to continue for at least 3 more years. Currently they receive only Sustained Use Discounts. What action provides the greatest additional cost reduction?
 
-*   **Correct Answer:** B) Use Database Migration Service with a continuous migration type (change data capture), validate that the Cloud SQL replica is consistent, then cut over by updating the application connection string.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* `mysqldump` requires stopping writes or accepting inconsistency during the export, which for a 2 TB continuously written database could take hours. During the import window, the source database must be frozen or the dump will be stale. Total downtime would far exceed 5 minutes, violating the requirement.
-    *   *Why C is incorrect:* Storage Transfer Service moves files between object storage systems — it does not understand MySQL data file formats and cannot create a consistent, importable Cloud SQL database from raw MySQL data directory files. MySQL data files require specific recovery procedures and cannot be directly attached as a Cloud SQL data source.
-    *   *Why D is incorrect:* Cloud SQL read replicas replicate from other Cloud SQL instances — they cannot replicate directly from an on-premises MySQL server. Database Migration Service is specifically designed to bridge on-premises MySQL to Cloud SQL using standard MySQL replication protocols.
+- A) Migrate all VMs to Spot VM instances to take advantage of the 91% discount
+- B) Purchase 3-year resource-based Committed Use Discounts for the sustained baseline vCPU and memory in us-central1
+- C) Enable preemptible mode on the VMs to receive the preemptible discount on top of the existing SUD
+- D) Migrate the VMs from n2-standard-8 to e2-standard-8 to receive the cheaper E2 pricing and SUD combined
+
+Correct Answer: B — For stable, long-running production workloads with a multi-year horizon, 3-year resource-based CUDs provide up to 57% discount — significantly more than the ~30% SUD maximum. The CUD applies in addition to any applicable credits, and the organization's usage pattern (continuous, predictable) is exactly the scenario CUDs are designed for. CUDs and SUDs do not stack on the same usage — the CUD replaces the SUD for committed resources — but the CUD discount is substantially larger.
+
+Distractor Analysis:
+
+- Why A is incorrect: Spot VMs can be preempted at any time with 30 seconds notice. Production workloads requiring continuous availability cannot tolerate preemption. The 91% discount is not applicable when availability is required.
+- Why C is incorrect: Preemptible mode cannot be enabled on running VMs — it is set at creation time. More importantly, enabling preemptible mode on production workloads would make them subject to interruption, which is operationally inappropriate. Also, preemptible and SUD discounts do not combine — preemptible VMs have their own pricing and do not receive SUDs.
+- Why D is incorrect: E2 machine types do not receive Sustained Use Discounts — this is explicitly excluded. While E2 pricing may be lower per vCPU than N2 for some configurations, the combination of N2 + 3-year CUD typically provides greater savings than E2 without a commitment. Additionally, migrating machine families requires VM recreation, which is disruptive.
 
 ---
 
-**Question 5**
-A startup has its entire application running on AWS EC2 instances. They want to migrate to GCP Compute Engine using a lift-and-shift approach that minimizes application changes. The application uses a custom Linux kernel module that is compiled into the running OS. Which migration approach preserves the existing OS and kernel configuration most completely?
+### Question 3
 
-A) Export the EC2 instances as AMI snapshots, convert them to VMDK format using an open-source tool, then import them using `gcloud compute images import`.
-B) Use Migrate for Compute Engine, which supports AWS EC2 as a source and performs continuous block-level disk replication — preserving the exact OS, kernel, and application configuration of each instance.
-C) Provision new Compute Engine VMs from the nearest equivalent GCP-provided OS image and reinstall all applications and kernel modules from scratch.
-D) Use the Cloud Build service to containerize the application and deploy it to Cloud Run, which abstracts away the underlying OS entirely.
+A GCP administrator wants to analyze which engineering teams are incurring the most GCP costs over the past quarter. All resources have been tagged with a `team` label. What is the most effective approach?
 
-*   **Correct Answer:** B) Use Migrate for Compute Engine, which supports AWS EC2 as a source and performs continuous block-level disk replication — preserving the exact OS, kernel, and application configuration of each instance.
-*   **Distractor Analysis:**
-    *   *Why A is incorrect:* While converting AMI snapshots to VMDK and importing them is technically feasible, it requires the source instance to be stopped during snapshot export (causing downtime), involves manual format conversion steps, and has no mechanism for ongoing replication or low-downtime cutover. Migrate for Compute Engine supports EC2 directly as a source with live replication.
-    *   *Why C is incorrect:* Provisioning new VMs from GCP OS images and reinstalling applications is a re-platform approach, not lift-and-shift. Reinstalling a custom kernel module requires rebuilding it for the new kernel version, which may involve code changes and significant testing effort — exactly what the startup wants to avoid.
-    *   *Why D is incorrect:* Containerizing the application with Cloud Build and deploying to Cloud Run is a re-architecture approach that requires significant code changes, cannot use a custom kernel module (containers share the host kernel), and fundamentally changes how the application is packaged and run. This is the opposite of lift-and-shift.
+- A) Use Cloud Monitoring to create a dashboard that groups billing metrics by `team` label
+- B) Export billing data to BigQuery using Cloud Billing export, then query the BigQuery billing dataset using SQL to aggregate cost by the `team` label value
+- C) Navigate to Cloud Billing → Reports in the Cloud Console and filter by the `team` label
+- D) Ask each team to submit their own GCP project billing reports and aggregate them manually
+
+Correct Answer: B — The Cloud Billing BigQuery export is the definitive tool for detailed cost analysis with label-based allocation. It provides line-item billing data that can be queried with SQL to aggregate costs by any label value, across any time period, with filtering by service, region, or SKU. Cloud Console Reports (Option C) also supports label filtering but has limited SQL flexibility and historical range.
+
+Distractor Analysis:
+
+- Why A is incorrect: Cloud Monitoring tracks operational metrics (CPU, memory, request rates) and can display some billing metrics via the Billing API. However, it does not provide the granular label-level cost breakdown available in the BigQuery billing export, and its SQL querying capability for billing analysis is limited.
+- Why C is incorrect: Cloud Billing → Reports does support label filtering and is useful for quick visual analysis. However, for detailed programmatic analysis across a full quarter with multi-team breakdowns, BigQuery SQL is substantially more powerful and flexible. The ACE exam typically favors BigQuery export for "analyze" and "allocate" scenarios.
+- Why D is incorrect: Manual aggregation from team-submitted reports is error-prone, non-scalable, and not a GCP-native solution. The label-based BigQuery export approach is the industry-standard pattern.
+
+---
+
+### Question 4
+
+A Cloud Storage bucket stores application logs. Logs are accessed frequently during the first 30 days (debugging and monitoring), rarely between 30 and 90 days, and never after 90 days — but logs must be retained for 2 years for compliance. What Object Lifecycle Management policy minimizes storage cost while meeting the retention requirement?
+
+- A) Delete all objects after 30 days and store a backup in a separate Archive bucket
+- B) Transition objects to Nearline storage at 30 days, transition to Archive storage at 90 days, and delete at 730 days (2 years)
+- C) Transition all objects to Archive storage immediately on creation to minimize cost from day one
+- D) Keep all objects in Standard storage for 2 years to avoid the per-read charges associated with lower-tier storage classes
+
+Correct Answer: B — This policy matches the access pattern to storage class. Standard (days 0–30) handles frequent access with no retrieval fee and no minimum duration. Nearline (days 30–90) handles rare monthly access — the 30-day minimum is satisfied. Archive (days 90–730) handles zero access with the lowest per-GB price — the 365-day minimum is satisfied. Deletion at 730 days fulfills the 2-year retention requirement. This is the standard ACE exam lifecycle policy design pattern.
+
+Distractor Analysis:
+
+- Why A is incorrect: Deleting logs at 30 days violates the 2-year retention requirement. Copying to a separate Archive bucket is operationally complex and unnecessary — lifecycle management handles class transitions within the same bucket.
+- Why C is incorrect: Archive storage has a 365-day minimum storage duration. Objects deleted, moved, or accessed before 365 days incur an early deletion fee. For logs accessed frequently in the first 30 days, Archive would be the wrong class (high per-read charges) and would violate the minimum duration requirement if any log was deleted before a year.
+- Why D is incorrect: Standard storage at $0.02/GB/month for 2 years of accumulating log data would be significantly more expensive than transitioning to Nearline ($0.01/GB) and Archive ($0.0012/GB). The per-read charges on Nearline and Archive are only relevant when data is actually accessed — since the logs are not accessed after 90 days, read charges are not a concern.
+
+---
+
+### Question 5
+
+A GCP administrator runs the following command and sees several recommendations returned: `gcloud recommender recommendations list --recommender=google.compute.instance.MachineTypeRecommender --location=us-central1 --project=my-project`. What do these recommendations indicate and what is the appropriate response?
+
+- A) These recommendations indicate that the listed VMs are at risk of running out of CPU capacity; the response is to upgrade to larger machine types before the VMs experience performance degradation
+- B) These recommendations indicate that the listed VMs are consistently over-provisioned — using significantly less CPU and memory than their current machine type provides; the response is to review each recommendation, validate the projected savings, and resize appropriate VMs to the smaller recommended machine type during a maintenance window
+- C) These recommendations indicate that the listed VMs have been idle for more than 14 days and should be deleted; resizing them will not help because they are not being used
+- D) These recommendations are generated automatically on all VMs and do not reflect actual usage patterns; they should be dismissed unless a VM has been manually flagged by the team as over-provisioned
+
+Correct Answer: B — The VM Rightsizing Recommender (MachineTypeRecommender) analyzes CPU and memory utilization metrics over 14 days and identifies VMs where actual usage is consistently much lower than the provisioned machine type. It recommends a smaller machine type and projects the monthly savings. The recommended response is to review each recommendation (validate the usage data is correct and the smaller machine type will handle peak loads), then downsize during a maintenance window.
+
+Distractor Analysis:
+
+- Why A is incorrect: The MachineTypeRecommender recommends downsizing (smaller machine types), not upsizing. If a VM needed more capacity, Cloud Monitoring CPU utilization alerts would flag the high utilization, not the rightsizing recommender.
+- Why C is incorrect: The Idle VM Recommender (IdleResourceRecommender) identifies idle VMs for stopping or deletion. The MachineTypeRecommender is specifically for over-provisioned VMs that are running but using less than their provisioned capacity. These are different recommenders.
+- Why D is incorrect: Recommender recommendations are based on actual Cloud Monitoring utilization metrics — they are data-driven, not arbitrary. A recommendation for a specific VM means that VM's actual utilization data supports the smaller machine type. They should not be dismissed without review.
+
+---
+
+### Question 6
+
+An organization has a sustained use discount applied to their n1-standard-16 Compute Engine VMs in us-east1. They are now planning a 3-year infrastructure contract. Their finance team asks: which discount type provides the highest savings for committed, long-running workloads? What is the correct answer?
+
+- A) Sustained Use Discounts provide up to 57% off, making them the best option for 3-year committed workloads
+- B) 3-year resource-based Committed Use Discounts provide up to 57% off for vCPU and memory in a specific region — higher than the maximum SUD discount of approximately 30% — making CUDs the better choice for committed 3-year workloads
+- C) Preemptible VMs provide 91% off and are the best choice for any long-term workload
+- D) Sustained Use Discounts and Committed Use Discounts stack — you receive both simultaneously for a combined discount exceeding 60%
+
+Correct Answer: B — 3-year resource-based CUDs provide up to 57% discount off on-demand pricing, compared to SUDs which max out at approximately 30%. For a 3-year committed workload, CUDs are definitively the higher-discount option. Note that for committed resources, the CUD replaces the SUD — they do not stack. Uncommitted usage above the CUD commitment would still receive SUDs.
+
+Distractor Analysis:
+
+- Why A is incorrect: SUDs provide approximately 30% maximum discount, not 57%. The 57% discount belongs to 3-year CUDs. Confusing these two values is a common exam distractor.
+- Why C is incorrect: Preemptible VMs and Spot VMs are not suitable for long-term committed production workloads that must remain continuously available. Preemption at any time makes them operationally inappropriate for workloads that cannot tolerate interruption.
+- Why D is incorrect: CUDs and SUDs do not stack on the same vCPU/memory resources. CUD covers committed resources at the CUD price; SUD applies to usage above the committed amount. For the committed portion, you receive the CUD discount only (which is higher than SUD).
+
+---
+
+### Question 7
+
+A team is setting up billing governance for a new GCP organization with 10 projects managed by 3 teams. A billing administrator needs to allow each team's project manager to link their team's projects to the appropriate billing account, but the project managers should not be able to see payment method information or modify billing account settings. Which IAM role should be granted to the project managers on the billing account?
+
+- A) `roles/billing.admin` — project managers need admin access to link projects
+- B) `roles/billing.viewer` — project managers can view the billing account and link projects with this role
+- C) `roles/billing.projectManager` — this role allows linking and unlinking projects to billing accounts without granting access to payment methods or billing account configuration
+- D) `roles/resourcemanager.projectOwner` — project owners can link projects to billing accounts using their project-level role
+
+Correct Answer: C — `roles/billing.projectManager` is specifically designed for this use case. It grants the ability to link and unlink projects to billing accounts without providing access to payment method information, billing account settings, or the ability to manage other billing account properties. This follows the principle of least privilege.
+
+Distractor Analysis:
+
+- Why A is incorrect: `roles/billing.admin` grants full control over the billing account — including payment method modification, invoice management, and all billing settings. This is far more access than project managers need to link projects.
+- Why B is incorrect: `roles/billing.viewer` grants read-only access to billing data (costs, invoices, reports). It does not grant the ability to link or unlink projects.
+- Why D is incorrect: `roles/resourcemanager.projectOwner` grants Owner-level access at the project level. It does not grant billing account-level permissions. Linking a project to a billing account requires a billing account-level role, not just a project-level role.
+
+---
+
+### Question 8
+
+A GCP administrator notices that the Cloud Billing export to BigQuery shows significant costs for reserved static IP addresses in several regions. No resources appear to be attached to these IP addresses. What is the most appropriate next step?
+
+- A) Delete all reserved static IP addresses immediately — unused IPs are always safe to delete
+- B) Use the Idle IP Address Recommender to identify unattached reserved IPs, verify that each IP is not needed (check with teams), and release IPs that are confirmed unneeded
+- C) The cost is expected — reserved static IPs always appear as significant charges; no action is required
+- D) Move the IP addresses to a different region where reserved IP pricing is lower
+
+Correct Answer: B — Reserved static IP addresses that are not attached to a resource incur a per-hour holding charge. The Idle IP Address Recommender identifies these unattached IPs. However, before releasing IPs, an administrator should confirm with the owning teams that the IPs are genuinely unused — some teams reserve IPs in advance for planned resources or maintain IPs for DNS entries that are actively in use but not currently attached to a live resource.
+
+Distractor Analysis:
+
+- Why A is incorrect: Deleting IPs without checking with teams could release IPs that are tied to DNS records or firewall rules that teams depend on. The correct process is to verify before releasing.
+- Why C is incorrect: Reserved but unattached IP addresses do incur charges — this is a known cost optimization opportunity. The billing export identifying this cost is evidence that action may be warranted, not that the charges are expected and acceptable.
+- Why D is incorrect: Reserved static IP pricing is consistent across GCP regions — there is no "cheaper region" for reserved IPs. Moving IPs to a different region also changes the IP address value, which would break any DNS records or firewall rules referencing the specific IP.
+
+---
+
+### Question 9
+
+An organization wants to estimate the monthly cost of a planned GCP architecture before provisioning any resources. The architecture includes 20 Compute Engine VMs, a Cloud SQL PostgreSQL instance, 50 TB of Cloud Storage, and a GKE cluster with 5 nodes. What tool should they use?
+
+- A) Cloud Monitoring — create a cost dashboard for the planned resources
+- B) gcloud cost estimate command — the gcloud CLI provides cost projections for resource configurations
+- C) GCP Pricing Calculator — input the planned resource specifications to generate a monthly cost estimate with options to compare on-demand vs. CUD pricing
+- D) Cloud Billing → Reports — navigate to the planned project and view projected costs
+
+Correct Answer: C — The GCP Pricing Calculator is the dedicated pre-provisioning cost estimation tool. It supports detailed configuration of all major GCP services and provides monthly cost estimates with and without committed use discounts. It can export estimates as PDFs and is the tool explicitly referenced in the ACE exam guide for cost forecasting.
+
+Distractor Analysis:
+
+- Why A is incorrect: Cloud Monitoring tracks actual utilization metrics of running resources. It cannot project costs for resources that do not yet exist.
+- Why B is incorrect: There is no `gcloud cost estimate` command. gcloud CLI manages GCP resources and configurations but does not provide a cost estimation capability.
+- Why D is incorrect: Cloud Billing → Reports shows historical actual costs for existing projects. A planned project with no resources has no billing data to report. Reports cannot project future costs.
+
+---
+
+### Question 10
+
+A startup running on GCP's Always Free tier has been using one f1-micro VM in us-west1, 4 GB of Cloud Storage, and 800 GB of BigQuery queries per month for the past three months. They are considering adding a second f1-micro VM in us-east1. Will this incur charges? What is the always-free limit for Compute Engine?
+
+- A) No — the Always Free tier provides one free f1-micro per region, so adding a VM in us-east1 is free in addition to the us-west1 VM
+- B) Yes — the Always Free tier provides only 1 f1-micro VM instance per month across all three eligible US regions combined (us-west1, us-central1, us-east1); a second VM in any region would be billed at on-demand rates
+- C) No — Always Free instances are unlimited in the three eligible US regions; only non-US regions incur charges for f1-micro instances
+- D) Yes — the Always Free tier only covers f1-micro VMs in us-central1; a VM in us-west1 or us-east1 would already be billed
+
+Correct Answer: B — The Compute Engine Always Free tier provides exactly 1 f1-micro VM instance per month total, shared across us-west1, us-central1, and us-east1. It is not 1 per region — it is 1 across all three regions combined. Adding a second f1-micro in any region (including us-east1) would exceed the free tier allocation and incur charges. This is a frequently tested exam detail.
+
+Distractor Analysis:
+
+- Why A is incorrect: The Always Free limit is 1 f1-micro per billing month across the three eligible regions combined, not 1 per region. Running one in us-west1 and one in us-east1 simultaneously uses 2 instance-months, which exceeds the single free-tier allocation.
+- Why C is incorrect: The free f1-micro is limited to the three specific US regions (us-west1, us-central1, us-east1). It is not unlimited in those regions — it is limited to 1 per month total. Instances in any region beyond the first free instance are billed.
+- Why D is incorrect: The Always Free tier explicitly includes us-west1 and us-east1 in addition to us-central1. The current startup is correctly using a free VM in us-west1. The question is whether a second VM is free — and the answer is no, because the limit is 1 combined across all three eligible regions.

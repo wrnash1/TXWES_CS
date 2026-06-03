@@ -1,147 +1,275 @@
-# Video Script: Module 08 - Azure Machine Learning Studio
+# Video Script: Module 08 — Natural Language Processing with Azure
 
-## Course: CIS-4330 Introduction to AI | Texas Wesleyan University
+## Course: CIS-4330 Introduction to Artificial Intelligence
 
-**Instructor:** Professor Nash
-**Estimated Duration:** 20-24 minutes
-**AI-900 Domain:** Describe fundamental principles of machine learning on Azure (20-25%)
+## Texas Wesleyan University | Professor Nash
 
----
+## Estimated Duration: 20–24 minutes
 
-## [00:00 - 01:30] Opening
-
-Welcome back. Professor Nash here, and this is Module 08. In the previous modules we covered machine learning concepts, deep learning, and the Azure Cognitive Services portfolio. Today we go deeper on Azure Machine Learning — the platform for data scientists and ML engineers who need to build, train, evaluate, and deploy custom models. Azure ML is a central AI-900 exam topic, and it represents the layer of Azure AI that requires the most configuration and expertise. Let us get into it.
+## Certification Alignment: Microsoft Azure AI Fundamentals (AI-900)
 
 ---
 
-## [01:30 - 05:00] What Is Azure Machine Learning?
+## INTRO SEGMENT (0:00 – 1:30)
 
-Azure Machine Learning is Microsoft's cloud platform for the full machine learning lifecycle. Unlike Azure Cognitive Services — which provide prebuilt capabilities with no training required — Azure Machine Learning is for situations where you need a custom model trained on your own data.
+Welcome back to CIS-4330. I'm Professor Nash. Last week we taught machines to see. This week we teach them to read.
 
-When do you need Azure ML instead of Cognitive Services? The key scenarios are:
+Natural language processing — NLP — is the branch of AI concerned with enabling computers to understand, interpret, and generate human language. It powers spell-checkers, search engines, translation tools, virtual assistants, and countless other systems you use daily.
 
-- Your data is proprietary and domain-specific, and prebuilt models do not recognize the patterns you need.
-- You need complete control over the model architecture, training process, and evaluation criteria.
-- You have a large-scale training job that requires significant compute resources.
-- You need to track experiments — systematically comparing many model configurations to find the best one.
-- You need to manage model versions, reproduce past experiments, and audit what changed between model versions.
+By the end of this module you will be able to describe the Azure Language Service and its core capabilities, explain sentiment analysis, key phrase extraction, named entity recognition, and language detection, describe the Azure Translator service, and understand Conversational Language Understanding for building intent-based applications.
 
-Azure Machine Learning provides a workspace — the central resource that brings together all ML assets: data, compute, experiments, models, and deployments. The workspace is the logical container for a team's entire ML work.
+Let's start with why language is hard for computers.
 
 ---
 
-## [05:00 - 09:00] Azure ML Workspace Components
+## SECTION 1: Why NLP Is Difficult (1:30 – 3:30)
 
-[SHOW DIAGRAM: Azure ML Workspace in the center. Six boxes surrounding it connected by arrows: "Data Assets," "Compute Targets," "Experiments," "Models," "Endpoints," "Pipelines."]
+Human language is ambiguous, context-dependent, and constantly evolving. Consider the sentence: "I saw the man with the telescope." Does that mean I used a telescope to see the man, or I saw a man who was holding a telescope? A human reader uses context to disambiguate. A computer has to learn to do the same thing.
 
-The Azure ML workspace contains several key components. Let me walk through each one.
+Language also involves:
 
-**Data Assets** are registered datasets. You register a dataset — a CSV file in Azure Blob Storage, a folder of images, a database connection — and give it a name and version. Once registered, the dataset can be referenced in experiments and pipelines without hardcoding file paths. Azure ML tracks which dataset was used to train which model.
+- **Morphology**: words change form — run, runs, ran, running. A model must connect these as related.
+- **Syntax**: word order matters, and rules vary across languages.
+- **Semantics**: the same word can mean different things. "Bank" can mean a financial institution or the edge of a river.
+- **Pragmatics**: meaning depends on context. "Can you pass the salt?" is a request, not a question about physical ability.
 
-**Compute Targets** are the processing resources used for training and inference. Types of compute in Azure ML:
+Modern NLP systems handle these challenges through transformer-based deep learning models — architectures that read entire sentences at once rather than word by word, capturing long-range relationships between words.
 
-- Compute Instance: a managed virtual machine for individual development and experimentation. Like a cloud-based Jupyter notebook server.
-- Compute Clusters: autoscaling clusters of VMs used for training jobs. Scale from zero to dozens of nodes based on demand, reducing cost when idle.
-- Inference Clusters (AKS): Azure Kubernetes Service clusters used for real-time inference endpoints at scale.
-- Serverless compute: Azure ML now supports serverless compute where you do not provision dedicated machines — the compute scales automatically and you pay per training run.
-
-**Experiments** are the records of training runs. Each time you train a model in Azure ML, it creates a run record that logs: the hyperparameters used, the metrics produced (accuracy, loss, F1, etc.), the dataset used, and the artifacts produced (the trained model file). Experiments organize runs into named groups. You can compare runs within an experiment to identify the best-performing configuration.
-
-**Models** are the trained artifacts registered in the model registry. Once a model is trained and evaluated, you register it with a name, version, and description. The registry tracks the full lineage: which experiment, which run, and which dataset produced this model.
-
-**Endpoints** are the deployed inference services. Once you register a model, you deploy it to an endpoint. Real-time endpoints respond to individual prediction requests within milliseconds. Batch endpoints process large datasets asynchronously. Azure ML generates a REST API endpoint that you can call from any application.
-
-**Pipelines** are automated sequences of ML steps — data preprocessing, feature engineering, model training, evaluation — connected into a reusable workflow. Pipelines can be scheduled, triggered by new data, or run on demand.
+Azure wraps these powerful models into managed services so developers can add language capabilities to applications without building or training the models themselves.
 
 ---
 
-## [09:00 - 12:30] Azure ML AutoML
+## SECTION 2: Azure AI Language Service Overview (3:30 – 6:00)
 
-[SHOW DIAGRAM: AutoML workflow. Input: "Labeled Dataset + Task Type." Arrow to "AutoML Engine" containing boxes: "Featurization," "Algorithm Selection," "Hyperparameter Tuning," "Cross-Validation." Arrow to "Model Leaderboard" showing ranked models. Arrow to "Deploy Best Model."]
+The Azure AI Language service is a cloud-based API that provides a broad set of pre-built NLP capabilities accessible via REST endpoints.
 
-Azure Machine Learning's Automated ML feature — AutoML — is one of the most AI-900-tested topics. AutoML automates the model selection and tuning process for supervised learning tasks.
+**[SHOW DEMO]** In the Azure portal, navigate to Create a Resource and search for "Language." Show the Language resource creation blade. Point out the Free F0 tier: 5,000 text records per month. Standard S tier charges per 1,000 text records.
 
-The AutoML workflow:
+The key capabilities of Azure AI Language are:
 
-Step one: register a labeled dataset in the Azure ML workspace.
+**Sentiment analysis and opinion mining** — determines the emotional tone of text, returning positive, negative, neutral, or mixed sentiment at the document and sentence level.
 
-Step two: create an AutoML experiment. Specify:
+**Key phrase extraction** — identifies the most important phrases in a piece of text, useful for summarization and indexing.
 
-- Task type: Classification, Regression, or Time Series Forecasting
-- Target column: the label column to predict
-- Compute: the cluster to run training on
-- Exit criteria: maximum training time, maximum number of models to try, or minimum metric threshold
+**Named entity recognition (NER)** — identifies and categorizes entities such as people, organizations, locations, dates, quantities, and more.
 
-Step three: AutoML runs. It automatically applies featurization — handling missing values, encoding categorical features, normalizing numerics. It then tries multiple algorithms (logistic regression, random forest, gradient boosting, XGBoost, LightGBM, etc.) with different hyperparameter settings. Each combination is a child run within the experiment.
+**Entity linking** — disambiguates recognized entities to a known knowledge base such as Wikipedia.
 
-Step four: review the leaderboard. AutoML ranks all attempted models by the primary metric. For classification, the default metric is AUC-weighted. For regression, it is normalized RMSE. You can review individual model performance, explanation reports, and data transformation steps.
+**Language detection** — identifies what language a piece of text is written in.
 
-Step five: deploy the best model. Select the top model and deploy it to a real-time endpoint with one click.
+**Text summarization** — produces extractive or abstractive summaries of long documents.
 
-For AI-900 scenario questions: AutoML is the answer whenever the scenario describes "training a model with minimal code," "automatically trying multiple algorithms," or "finding the best model for a dataset."
+**Personally Identifiable Information (PII) detection** — identifies and can redact sensitive personal data such as names, social security numbers, and phone numbers.
 
----
+**Custom text classification** — trains a model on your own labeled text data to classify documents into your own categories.
 
-## [12:30 - 15:30] Azure ML Designer
+**Custom named entity recognition** — trains a model to recognize domain-specific entity types not in the pre-built model.
 
-Azure ML Designer is a visual drag-and-drop interface for building ML pipelines without writing code. You assemble a pipeline by connecting data, transformation, algorithm, and evaluation modules on a canvas.
-
-The Designer workflow:
-
-Step one: drag a dataset asset onto the canvas. Step two: add data transformation modules — normalize data, select columns, clean missing values. Step three: add a split data module to create training and test sets. Step four: drag an algorithm module (e.g., Two-Class Logistic Regression or Multiclass Decision Forest). Step five: add a Train Model module and connect the algorithm and training data. Step six: add Score Model and Evaluate Model modules to generate predictions and metrics on the test set.
-
-Once the pipeline runs successfully, you can publish it as a real-time inference pipeline: swap the training dataset for a web service input, replace the evaluation module with a web service output, and the pipeline becomes a deployable model API.
-
-Designer is particularly useful for learners because it makes the ML workflow visible and inspectable at each step. For AI-900, Designer represents the low-code path to training and deploying models in Azure ML.
+All capabilities are available through a single multi-purpose endpoint or through specialized endpoints, depending on the feature.
 
 ---
 
-## [15:30 - 18:30] Model Deployment Options in Azure ML
+## SECTION 3: Sentiment Analysis (6:00 – 8:00)
 
-[SHOW DIAGRAM: Two-column table. Left column: "Real-Time Endpoint." Right column: "Batch Endpoint." Rows: Request type, Latency requirement, Use case example, Compute type, Scaling.]
+Sentiment analysis — also called opinion mining when applied to specific aspects of a document — determines whether text expresses a positive, negative, or neutral attitude.
 
-After training and registering a model, you deploy it to serve predictions. Azure ML offers two deployment types.
+The Azure Language service returns sentiment at two levels.
 
-**Real-Time Endpoints** respond to individual prediction requests with low latency — typically milliseconds. The endpoint exposes a REST API. Applications send a JSON payload (the input features) and receive a JSON response (the prediction). Real-time endpoints use Azure Container Instances (ACI) for development testing or Azure Kubernetes Service (AKS) for production deployments that need autoscaling.
+**Document sentiment** gives an overall assessment of the entire text with confidence scores for positive, negative, and neutral.
 
-**Batch Endpoints** process large datasets asynchronously. You submit a batch prediction job — a dataset stored in Azure Blob — and the endpoint returns a file of predictions when processing is complete. No REST API call for individual records; the entire dataset is processed in one job. Batch endpoints are cost-efficient for large periodic prediction workloads (e.g., scoring 10 million customer records overnight).
+**Sentence sentiment** breaks the document into sentences and gives each an independent sentiment assessment.
 
-For AI-900: real-time endpoints are for interactive, request-by-request prediction applications. Batch endpoints are for large-volume, scheduled prediction jobs.
+Opinion mining goes further. It identifies specific aspects — nouns or noun phrases — and associates a sentiment with each. For example, in a restaurant review: "The food was excellent but the service was slow" — opinion mining would identify food with positive sentiment and service with negative sentiment.
 
----
+**[SHOW DEMO]** Navigate to Language Studio at language.cognitive.azure.com. Select "Analyze sentiment and mine opinions." Enter the text: "The new software update made the dashboard much faster, but I am frustrated that it removed the dark mode feature." Show the output identifying mixed document sentiment, positive sentence for speed, and negative sentence for dark mode removal. Point out the aspect-level breakdown.
 
-## [18:30 - 20:30] MLflow and Experiment Tracking
+The REST call is a POST to:
 
-Azure ML integrates with MLflow, an open-source ML lifecycle management platform. MLflow tracking allows you to log metrics, parameters, and artifacts from any training script — whether running locally or in Azure ML compute.
+```http
+POST https://<endpoint>/language/:analyze-text?api-version=2023-04-01
+```
 
-When you use MLflow in an Azure ML experiment, every training run is logged with:
-
-- Parameters: hyperparameter values used (learning rate, tree depth, etc.)
-- Metrics: performance scores at each evaluation step (training loss, validation accuracy, etc.)
-- Artifacts: the trained model file, feature importance plots, and confusion matrices
-
-This logging makes experiments reproducible and comparable. A data science team running 200 AutoML trials can identify exactly which parameters produced the best result and compare any two runs side by side.
-
-For AI-900, the key concept is that Azure ML provides experiment tracking — the systematic recording and comparison of model training runs — as a core platform feature.
+The request body specifies the task type as `SentimentAnalysis` and includes the input documents array.
 
 ---
 
-## [20:30 - 22:30] Module Summary and Lab Preview
+## SECTION 4: Key Phrase Extraction (8:00 – 9:30)
 
-Let me summarize Module 08.
+Key phrase extraction identifies the main talking points in a piece of text. It surfaces the most important words and phrases without you having to read the entire document.
 
-Azure Machine Learning is the cloud platform for building, training, evaluating, and deploying custom ML models. The workspace organizes data assets, compute targets, experiments, models, endpoints, and pipelines.
+This is valuable for:
 
-AutoML automates algorithm selection and hyperparameter tuning for Classification, Regression, and Time Series Forecasting tasks. The Designer provides a low-code visual pipeline builder. Real-time endpoints serve individual predictions; batch endpoints process large datasets.
+- Building search indexes from large document collections
+- Generating tags for articles and blog posts automatically
+- Providing a quick summary of what a customer review is about
+- Routing support tickets to the right team based on content
 
-This week's lab asks you to trace through an AutoML configuration, match workspace components to their roles, and evaluate model deployment scenarios — all tested directly on AI-900.
+The service returns an array of key phrases ranked by importance.
 
-See you in Module 09, where we cover Azure Bot Service and conversational AI in depth.
+For the text: "Azure AI Language provides natural language processing capabilities including sentiment analysis, key phrase extraction, and named entity recognition." — the extracted key phrases might include "Azure AI Language," "natural language processing capabilities," "sentiment analysis," "key phrase extraction," and "named entity recognition."
+
+Notice that the service identifies meaningful multi-word phrases, not just individual keywords. This is important for preserving semantic context.
+
+**[SHOW DEMO]** In Language Studio, select "Extract key phrases." Paste in a paragraph of a news article. Show the extracted phrase list and discuss which phrases the service prioritized.
 
 ---
 
-## References
+## SECTION 5: Named Entity Recognition (9:30 – 11:30)
 
-- Microsoft Learn — Use Automated Machine Learning in Azure ML: learn.microsoft.com/en-us/training/modules/use-automated-machine-learning/
-- Microsoft Learn — Create a regression model with Azure ML Designer: learn.microsoft.com/en-us/training/modules/create-regression-model-azure-machine-learning-designer/
-- Microsoft Learn — Deploy machine learning models to managed online endpoints: learn.microsoft.com/en-us/training/modules/deploy-model-managed-online-endpoint/
+Named Entity Recognition — NER — identifies mentions of real-world entities in text and classifies them into predefined categories.
+
+Azure AI Language recognizes the following entity categories by default:
+
+- **Person** — names of people
+- **Organization** — companies, agencies, institutions
+- **Location** — geographic places, addresses
+- **DateTime** — dates, times, durations, sets
+- **Quantity** — numbers, percentages, currencies, measurements
+- **URL** — web addresses
+- **Email** — email addresses
+- **Phone number** — telephone numbers
+- **IP address** — network addresses
+
+NER is the backbone of many high-value applications. Legal contract analysis systems use NER to extract party names, dates, and clause references. Medical records systems extract diagnoses, medications, and patient identifiers. News aggregators use NER to build knowledge graphs of who, what, when, and where.
+
+**Entity linking** extends NER by connecting recognized entities to their Wikipedia entries. "Jordan" in a sports context links to the athlete Michael Jordan. "Jordan" in a geography context links to the country. The service uses surrounding context to disambiguate.
+
+**[SHOW DEMO]** In Language Studio, select "Extract named entities." Enter a short paragraph about a business news event. Show the color-coded entity annotations over the text and the JSON response with entity categories, text, offset, length, and confidence scores.
+
+---
+
+## SECTION 6: Language Detection and Translation (11:30 – 13:30)
+
+### Language Detection
+
+The language detection capability identifies which language a text is written in. It returns the detected language, its ISO 639-1 code, and a confidence score.
+
+This is useful as a preprocessing step for multilingual pipelines: detect the language first, then route to the appropriate analysis pipeline or translation service.
+
+The service can detect over 120 languages. For mixed-language documents it returns the predominant language.
+
+### Azure AI Translator
+
+While language detection is part of Azure AI Language, translation is handled by a separate service: **Azure AI Translator**.
+
+Translator is a REST API that provides:
+
+- **Text translation** — translate text from any supported language to any other supported language. Supports 135+ languages.
+- **Transliteration** — convert text between scripts, for example from Arabic script to Latin script.
+- **Language auto-detection** — detect the source language automatically as part of the translation call.
+- **Dictionary lookups** — return alternative translations with usage examples.
+- **Custom Translator** — fine-tune translations for domain-specific terminology by providing parallel sentence pairs.
+
+**[SHOW DEMO]** In the Azure portal, show the Translator resource. Then open a browser and send a quick REST call demonstrating translation of an English sentence to Spanish and French simultaneously in a single API call. Show the response JSON with the detected source language and both translations.
+
+---
+
+## SECTION 7: Conversational Language Understanding (13:30 – 17:00)
+
+So far we have discussed analyzing static text. But many applications need to understand what a user is trying to do — their intent — and extract the specific information — the entities — relevant to that intent.
+
+This is the domain of **Conversational Language Understanding**, or CLU, which replaced the older LUIS (Language Understanding Intelligent Service) as the primary Azure intent-recognition service.
+
+### Intents and Entities
+
+An **intent** represents the user's goal or purpose. For a pizza ordering app, intents might include:
+
+- OrderPizza
+- CancelOrder
+- CheckOrderStatus
+- GetMenu
+
+An **entity** represents a specific piece of information the model should extract from the utterance. For the pizza scenario, entities might include:
+
+- PizzaSize (small, medium, large)
+- PizzaTopping (pepperoni, mushrooms)
+- Quantity (one, two, three)
+
+When a user says "I want two medium pepperoni pizzas," CLU should identify the intent as OrderPizza and extract Quantity=2, PizzaSize=medium, PizzaTopping=pepperoni.
+
+### Building a CLU Project
+
+**[SHOW DEMO]** Navigate to Language Studio. Select "Conversational Language Understanding." Show an existing project. Walk through the schema: intents list, entities list, and example utterances. Click Train. Show the evaluation metrics — intent accuracy and entity F1 scores.
+
+A CLU project has three building blocks.
+
+First, you define intents — the categories of user goals.
+
+Second, you define entities — the types of information to extract.
+
+Third, you add training utterances — example sentences labeled with the correct intent and entity values. The more utterances per intent, the better the model generalizes to novel phrasings.
+
+After training, you publish the model to a prediction endpoint. Your application sends user input to this endpoint and receives the top predicted intent and extracted entities in JSON.
+
+### CLU vs. Pre-built Question Answering
+
+CLU is for applications where the user is issuing commands or making requests. It answers "what does the user want to do?"
+
+Question Answering (formerly QnA Maker) is for applications where the user asks a question and expects a direct answer from a knowledge base. It answers "what information does the user need?"
+
+Many conversational AI systems combine both — CLU handles task intents, Question Answering handles informational queries. We will go deeper on this in Module 9.
+
+---
+
+## SECTION 8: Text Summarization and PII Detection (17:00 – 19:00)
+
+### Text Summarization
+
+Azure AI Language offers two summarization approaches.
+
+**Extractive summarization** selects the most important existing sentences from the document and returns them as a summary. No new text is generated — the summary is literally a subset of the original.
+
+**Abstractive summarization** generates new sentences that capture the key points, potentially combining and rephrasing content from multiple parts of the document.
+
+Extractive summarization is more deterministic and interpretable. Abstractive summarization produces more natural-sounding summaries but can occasionally introduce inaccuracies.
+
+Use cases include summarizing legal documents, executive briefings, customer support transcripts, and news articles.
+
+### PII Detection and Redaction
+
+The PII detection capability scans text for personally identifiable information and returns the entities with their category and location in the text.
+
+Crucially, the service can also redact the detected PII — replacing it with placeholder text like `[PERSON]` or `[PHONE_NUMBER]` — before the text is stored or processed further.
+
+This is a critical capability for compliance with GDPR, HIPAA, and similar data protection regulations. Support center transcripts, patient records, and financial documents often contain sensitive information that must be protected.
+
+**[SHOW DEMO]** In Language Studio, demonstrate PII detection on a synthetic customer support transcript. Show how names, phone numbers, and email addresses are identified and how the redacted version replaces them.
+
+---
+
+## SECTION 9: AI-900 Exam Alignment and Recap (19:00 – 21:30)
+
+Azure AI Language covers a significant portion of the AI-900 NLP domain. Let's consolidate the key points.
+
+The exam tests your ability to identify appropriate NLP services for given scenarios, distinguish between the capabilities within Azure AI Language, explain the difference between CLU and Question Answering, and describe the purpose of entities and intents in CLU.
+
+Key terms for the exam:
+
+- **Azure AI Language** — unified service for NLP tasks including sentiment, NER, key phrases, summarization, PII, CLU
+- **Azure AI Translator** — dedicated service for text translation across 135+ languages
+- **Sentiment analysis** — determining positive, negative, neutral, or mixed emotional tone
+- **Opinion mining** — aspect-level sentiment identifying which specific features are discussed positively or negatively
+- **Named Entity Recognition (NER)** — identifying and categorizing real-world entities in text
+- **Entity linking** — connecting recognized entities to a knowledge base for disambiguation
+- **Intent** — the user's goal in a CLU model
+- **Entity (CLU)** — a specific piece of information extracted from an utterance
+- **Utterance** — an example of user input used to train a CLU model
+- **Extractive summarization** — summary built from existing sentences in the source document
+- **Abstractive summarization** — summary built from newly generated sentences
+- **PII detection** — identification and optional redaction of personally identifiable information
+
+For scenario questions: if a business needs to understand what a user wants to do with a chatbot, the answer is CLU. If a business needs to analyze customer review sentiment at scale, the answer is Azure AI Language sentiment analysis. If a business needs to translate content into 50 languages, the answer is Azure AI Translator.
+
+---
+
+## OUTRO (21:30 – 22:30)
+
+In this module we covered the full breadth of Azure's NLP offerings. In the lab you will call the Language Service API for sentiment analysis and NER, and build a simple CLU project.
+
+Module 9 takes us into conversational AI — chatbots, the Azure Bot Framework, and how CLU and Question Answering work together to build intelligent assistants.
+
+I will see you there.
+
+---
+
+End of Script — Module 08. Estimated delivery: 22 minutes with demos.

@@ -1,52 +1,351 @@
-# Reading Guide: Module 14 - Audit and Assurance
-## Course: CIS-4315_Cyber_Governance_Risk_Compliance (ISACA Certified Information Security Manager (CISM))
+# Reading Guide: Module 14 — Disaster Recovery Management
+
+## Course: CIS-4315 Cyber Governance, Risk, and Compliance
+
+## Texas Wesleyan University | Professor Nash
 
 ---
 
-### Introduction
-Welcome to **Module 14 - Audit and Assurance**! This module covers security awareness and training programs — a critical human-centered control that reduces the risk of social engineering, phishing, and insider threats. Security awareness is addressed across all four CISM domains as a foundational element of an effective security program.
+## Overview
 
-The CISM exam approaches security awareness from a program management perspective: designing effective programs, measuring their impact, and justifying their value to leadership. The goal is behavioral change, not merely delivering training content.
-
----
-
-### 1. High-Yield Glossary
-Review these essential definitions carefully. The certification exam expects you to know these concepts inside and out:
-
-*   **Social engineering mitigation**: The combination of security awareness training, simulated attack exercises, and procedural controls designed to reduce the likelihood that employees will be manipulated by social engineering tactics (phishing, pretexting, vishing, baiting). Effective mitigation addresses the human factor in the security model — the most frequently exploited attack vector.
-*   **Phishing simulations**: Controlled, authorized exercises in which an organization's security team (or a contracted service) sends simulated phishing emails to employees to test susceptibility, measure click rates, and identify individuals who need additional training. Simulation results provide data-driven insights for targeting security awareness efforts.
-*   **User training metrics**: Quantitative and qualitative measures used to evaluate the effectiveness of a security awareness program, including phishing simulation click rates (before and after training), training completion rates, policy acknowledgment rates, and security incident rates attributable to human error. These metrics enable the security manager to demonstrate program ROI to leadership.
-*   **Security culture**: The shared values, attitudes, beliefs, and behaviors within an organization that influence how employees think about and act on security responsibilities. A strong security culture integrates security awareness into daily work habits, making security everyone's responsibility rather than solely an IT function.
+This reading guide supports Module 14 and builds directly on the Business Continuity Planning foundations established in Module 13. Disaster Recovery Management is the technical discipline of restoring IT systems, data, and infrastructure following a disruptive event. Where BCP addresses the full organizational response, DR focuses on the technology recovery component — the site architectures, backup strategies, failover procedures, testing methods, and documentation practices that make recovery achievable within defined RTO and RPO targets.
 
 ---
 
-### 2. Certification Exam Tips
-*   **Training Alone Is Not Enough:** The CISM exam tests the principle that one-time annual training is insufficient. Effective awareness programs use ongoing reinforcement — simulations, newsletters, targeted micro-learning — to sustain behavioral change.
-*   **Role-Based Training:** The exam emphasizes that different roles require different training content. Executives need governance and risk awareness; developers need secure coding; help desk staff need social engineering recognition. Generic training does not address role-specific risks.
-*   **Measuring Effectiveness:** CISM candidates should know how to evaluate awareness program effectiveness. Decreasing phishing click rates over successive simulations, reduced security incident rates, and increased security report rates are meaningful metrics.
-*   **Study Resource:** [NIST SP 800-50: Building an Information Technology Security Awareness and Training Program](https://csrc.nist.gov/publications/detail/sp/800-50/final) — This free NIST publication provides guidance on designing, implementing, and measuring security awareness and training programs.
+## Learning Objectives
+
+By the end of this module, you will be able to:
+
+1. Compare and contrast hot, warm, and cold DR site types by cost, recovery speed, and appropriate use cases.
+
+2. Describe the seven-step failover procedure sequence and identify common points of failure.
+
+3. Distinguish among document review, walkthrough, parallel, and full cutover DR testing approaches.
+
+4. Evaluate cloud DR architectures on AWS and Azure and map them to traditional site type equivalents.
+
+5. Compare full, incremental, and differential backup strategies by recovery complexity and RPO capability.
+
+6. Explain the factors that determine whether an RTO target is achievable in practice.
+
+7. Describe the six sections of a complete DR plan document.
 
 ---
 
-### Required Readings & Videos
-*   **Required Reading:** [NIST SP 800-50: Building an IT Security Awareness and Training Program](https://csrc.nist.gov/publications/detail/sp/800-50/final) — This free publication covers program design, content development, delivery methods, and program evaluation for security awareness initiatives. Focus on Section 3 (Awareness) and Section 4 (Training).
-*   **Required Video:** Watch the video lecture on **Audit and Assurance** in the official course playlist: [ISACA CISM / Cyber GRC Course Playlist](https://www.youtube.com/playlist?list=PLbnu8t2G_vG0V7kC0V3n_nU9Y3S-4K178).
+## Section 1: DR Site Types
+
+### 1.1 The Site Type Decision
+
+The choice of DR site type is the most consequential architectural decision in a DR program. It establishes the baseline for achievable RTO and drives the majority of DR capital and operating expense. Site type selection must be driven by the RTO established in the BIA — not by budget preference or technical convenience.
+
+### 1.2 Hot Site
+
+A hot site is a fully operational duplicate of the primary production environment. Key characteristics include:
+
+- Active hardware running continuously.
+
+- Software installed, configured, and current.
+
+- Data replicated in near-real-time from the primary site (synchronous or near-synchronous replication).
+
+- Network connectivity pre-established and tested.
+
+- Staff either co-located or on immediate call.
+
+Recovery time at a hot site is measured in minutes to a few hours — primarily the time required to execute the failover procedure, redirect network traffic, and validate application functionality. Data loss is minimal or zero depending on replication method.
+
+Hot sites are justified for Tier 1 systems where RTOs are two hours or less and where downtime costs exceed the ongoing expense of maintaining parallel infrastructure.
+
+### 1.3 Warm Site
+
+A warm site is a partially equipped recovery environment. Key characteristics include:
+
+- Hardware installed and powered on.
+
+- Software typically pre-installed and configured.
+
+- Data not continuously replicated — restore from most recent backup required on activation.
+
+- Network connectivity pre-established but not carrying live traffic.
+
+Recovery time at a warm site is hours to one or two days, depending on the volume of data to be restored and the complexity of the application stack. Warm sites require the organization to transport or electronically deliver recent backup media upon activation.
+
+Warm sites are appropriate for Tier 1 and Tier 2 systems with RTOs of two to twenty-four hours. They offer a balance between the high cost of a hot site and the very slow recovery of a cold site.
+
+### 1.4 Cold Site
+
+A cold site provides only the physical and infrastructure shell: power, physical space, climate control, and network connectivity. No hardware is pre-staged. No software is pre-installed. No data is stored there.
+
+Recovery at a cold site requires acquiring hardware (either purchased, leased, or delivered from a vendor), installing and configuring operating systems and applications, and restoring data from backup. Recovery times are typically one to several weeks.
+
+Cold sites are appropriate only for lower-priority systems with long MTPs, or as a last-resort fallback when budget prohibits a warmer alternative. Organizations that designate critical systems to cold sites are accepting that recovery will take far longer than most business processes can tolerate.
+
+### 1.5 Mobile and Cloud Equivalents
+
+Beyond the three traditional site types, two additional options are relevant:
+
+**Mobile recovery units** are trailer-mounted or modular data center environments that can be deployed to any location with power and connectivity. They function as deployable warm or hot sites. They are used primarily by organizations with geographic flexibility requirements or in situations where a fixed alternate site may itself be affected by the disaster.
+
+**Cloud DR environments** are the modern equivalent of traditional site types. Backup-and-restore in cloud storage is equivalent to cold. Pilot light (minimal core running, scale-out on demand) is equivalent to warm. Warm standby (fully functional scaled-down replica) is equivalent to a traditional warm site. Multi-site active-active is equivalent to — and exceeds — a hot site.
 
 ---
 
-### Lab & Command Integration
-In this week's hands-on lab, you will apply security awareness program concepts through the following activities:
-*   **Design a phishing simulation training campaign**: Outline a three-phase phishing simulation program including baseline simulation (no prior training), targeted training for click responders, and follow-up simulation to measure improvement. Define success metrics for each phase.
-*   **Analyze training effectiveness metrics**: Given a dataset showing phishing simulation click rates across four quarterly campaigns, calculate the trend, identify departments with persistent high-click rates, and recommend targeted interventions.
-*   **Draft a role-based training curriculum outline**: Create a one-page training plan for three distinct roles (executive, software developer, and customer service representative), specifying different training topics for each role and justifying why each topic is relevant to that role's security risk profile.
+## Section 2: Failover Procedures
 
+### 2.1 Failover Defined
+
+Failover is the controlled transfer of processing responsibility from the primary environment to the recovery environment. It is a structured, sequenced procedure executed by trained personnel following a formal disaster declaration.
+
+### 2.2 Failover Sequence
+
+The standard failover sequence has seven steps:
+
+**Step 1 — Incident Declaration:** An authorized individual formally declares that a disaster event has occurred and activates DR procedures. Pre-defined criteria and authorization levels prevent both premature activation and delayed response.
+
+**Step 2 — Crisis Management Team Activation:** The DR team assembles. Roles are confirmed. Alternates are activated for any unavailable primary team members. Communication channels are established.
+
+**Step 3 — DR Site Notification:** The recovery facility operator (colocation provider, cloud platform, or internal DR team) is notified and begins pre-activation steps. Transportation of backup media may begin for warm or cold sites.
+
+**Step 4 — Data Verification and Cutover Decision:** The team verifies that data at the recovery site meets the RPO target. If the available restore point is outside the RPO window, the decision authority must be informed before proceeding. Proceeding with out-of-RPO data may be required in some scenarios, but it must be a conscious decision.
+
+**Step 5 — Network and DNS Redirection:** Production traffic is redirected to the recovery environment. DNS changes propagate based on pre-configured TTL values. Firewall rule sets and load balancer configurations at the DR site are activated and verified.
+
+**Step 6 — Application Validation:** The recovery team executes smoke tests — lightweight functional checks confirming that each application is operational. Validation criteria should be documented in advance so the team knows what success looks like.
+
+**Step 7 — Business Operations Resumption:** Users and business teams are notified that systems are available at the recovery site. The DR team shifts to monitoring and support mode. Planning for failback — return to the primary site — begins.
+
+### 2.3 Failback
+
+Failback is the process of returning operations from the DR site to the restored primary site. Failback carries its own risks: data generated during DR operations at the recovery site must be synchronized back to the primary environment without loss. A separate failback runbook, tested independently, is required.
+
+### 2.4 Common Points of Failure in Failover
+
+Research into DR incident postmortems consistently identifies several recurring failure categories:
+
+- **Stale documentation:** Procedures reference decommissioned systems or outdated IP addresses.
+
+- **Authorization delays:** Decision makers are unavailable, and pre-authorization criteria are undefined.
+
+- **DNS TTL misconfiguration:** Long TTL values prevent timely traffic redirection.
+
+- **Replication lag or failure:** Data at the DR site is older than expected or corrupted.
+
+- **Untested automation:** Runbook scripts fail in the recovery environment due to configuration differences.
+
+- **Communication failure:** Team members cannot be reached through primary communication channels that may be unavailable during the incident.
 
 ---
 
-### 3. Study Checklist
-- [ ] Understand the limitations of one-time annual security training.
-- [ ] Know what metrics demonstrate security awareness program effectiveness.
-- [ ] Read [NIST SP 800-50](https://csrc.nist.gov/publications/detail/sp/800-50/final), Sections 3 and 4.
-- [ ] Watch the video lecture on **Audit and Assurance** in [ISACA CISM / Cyber GRC Course Playlist](https://www.youtube.com/playlist?list=PLbnu8t2G_vG0V7kC0V3n_nU9Y3S-4K178).
-- [ ] Complete the lab activity on phishing simulation design and role-based training curriculum.
-- [ ] Proceed to the Module 14 quiz.
+## Section 3: DR Testing
+
+### 3.1 Testing Philosophy
+
+The purpose of DR testing is to discover failures under controlled conditions rather than during an actual disaster. Every test — regardless of the gaps it reveals — is a success, because identified gaps can be fixed. The only failed test is the test that was never conducted.
+
+### 3.2 Document Review
+
+Document review involves team members reading through DR procedures to identify errors, omissions, outdated information, and logical inconsistencies. Document review should be triggered by any significant infrastructure change and conducted as a continuous activity. It requires no system involvement and carries no risk to production.
+
+### 3.3 Walkthrough Testing
+
+A structured walkthrough has recovery team members step through DR procedures verbally and logically, confirming that each step makes sense and that required resources exist. Similar to a BCP tabletop, this is low-risk and low-cost. It is effective for onboarding new team members and for identifying logical gaps before a more expensive test.
+
+### 3.4 Parallel Testing
+
+A parallel test activates the DR environment completely while the primary environment remains live and fully operational. Both environments process workloads simultaneously. This validates that the DR environment can handle production workloads, that replication has been successful, and that application configurations are correct — all without any risk to production availability.
+
+Parallel testing is the most commonly recommended DR test for organizations with production continuity requirements. It provides high confidence at manageable risk and can be performed annually for Tier 1 systems.
+
+### 3.5 Full Cutover Testing
+
+A full cutover test — also called a live failover test — redirects actual production traffic to the DR environment and takes the primary environment offline. This is the only test that validates the complete failover procedure including DNS redirection, network failover, and production load handling at the DR site.
+
+Full cutover testing carries material risk: if DR fails during the test, the organization has a real outage. Pre-requisites include executive authorization, a tested fallback plan, a scheduled maintenance window, and advance notification to affected users.
+
+Full cutover tests should be performed at least annually for Tier 1 systems in mature DR programs.
+
+---
+
+## Section 4: Cloud Disaster Recovery
+
+### 4.1 Cloud DR Value Proposition
+
+Cloud platforms offer on-demand infrastructure provisioning, geographic redundancy, and consumption-based pricing. These characteristics make cloud DR architectures economically viable for organizations that could not justify the capital cost of traditional alternate sites.
+
+The fundamental tradeoff in cloud DR is identical to traditional DR: more recovery speed requires more pre-provisioned infrastructure, which costs more.
+
+### 4.2 AWS DR Patterns
+
+**Backup and Restore:** Data is backed up to Amazon S3. On activation, EC2 instances are launched and data is restored. This is the lowest-cost AWS DR option. RTO is typically two to four hours or more. This is a cold-equivalent approach.
+
+**Pilot Light:** Core infrastructure elements — typically databases and critical application servers — run continuously in a secondary AWS region at minimal scale. On failover, additional instances are launched and the environment scales to production capacity. RTO is thirty minutes to two hours. This is a warm-equivalent approach.
+
+**Warm Standby:** A fully functional replica of the production environment runs continuously in a secondary region at reduced scale. On failover, the replica scales to full production capacity. RTO is minutes to thirty minutes.
+
+**Multi-Site Active-Active:** Full production capacity runs simultaneously in multiple AWS regions. No failover is required — traffic routes to the nearest healthy region. RTO approaches zero. This is the highest-cost option.
+
+Key AWS services for DR include AWS Backup (centralized policy management), S3 Cross-Region Replication, RDS Multi-AZ and cross-region read replicas, and AWS Elastic Disaster Recovery for server-level replication.
+
+### 4.3 Azure DR Patterns
+
+**Azure Site Recovery (ASR):** ASR is Azure's primary DR service. It continuously replicates virtual machines from a primary Azure region to a secondary region. On failover, replicated VMs are brought online in the secondary region within the configured RTO window. ASR supports both Azure-to-Azure replication and on-premises-to-Azure replication.
+
+**Azure Backup:** Centralized backup management for VMs, databases, and file shares with geo-redundant storage options.
+
+**Azure SQL Geo-Replication and Failover Groups:** Maintains readable secondary database replicas in secondary Azure regions. Automatic failover groups allow database failover without application connection string changes.
+
+### 4.4 Cloud DR Contractual Considerations
+
+Cloud provider SLAs guarantee platform availability — they do not guarantee your application's recovery time. Organizations must validate that their cloud DR architecture can achieve the required RTO and RPO through testing, not through assumption. Cloud DR contracts should address data residency, compliance obligations in the recovery region, and the provider's notification obligations for platform-level incidents.
+
+---
+
+## Section 5: Backup Strategies
+
+### 5.1 Full Backup
+
+A full backup captures a complete copy of all designated data at a point in time. Full backups provide the simplest restore path — a single backup set contains everything needed for recovery. Disadvantages include long backup windows, high storage consumption, and network bandwidth impact during the backup process.
+
+Full backups are typically performed weekly and serve as the anchor point for incremental and differential backup chains.
+
+### 5.2 Incremental Backup
+
+An incremental backup captures only data changed since the last backup of any type. Day-one incremental captures changes since the full backup. Day-two incremental captures changes since day-one incremental. Each incremental is small and fast. However, restoring from an incremental chain requires the full backup plus every subsequent incremental in sequence. The more incremental backups in the chain, the longer the restore process.
+
+### 5.3 Differential Backup
+
+A differential backup captures all data changed since the last full backup — regardless of how many differentials have been taken since. Day-two differential captures everything changed since the full backup. Day-five differential captures all changes since the full backup (a superset of day-two). Differentials grow in size over the week but provide a faster restore path than incremental chains: restore requires only the full backup plus the single most recent differential.
+
+### 5.4 Continuous Data Protection
+
+Continuous Data Protection (CDP) captures every data write at the block level, maintaining a real-time replica and a journal of all changes. CDP enables recovery to any point in time, not just to the last scheduled backup interval. CDP is appropriate for Tier 1 systems where RPOs of minutes or less are required.
+
+### 5.5 The 3-2-1-1 Rule
+
+The classic 3-2-1 backup rule specifies: three copies of data, stored on two different media types, with one copy stored off-site. The modern extension adds a fourth criterion: one copy stored in immutable (write-once, read-many) or air-gapped storage. Immutable backups cannot be deleted or encrypted by ransomware, making them the essential defense against backup destruction attacks.
+
+---
+
+## Section 6: RTO Achievement Factors
+
+### 6.1 Why RTO Targets Are Missed
+
+Organizations frequently discover during testing — or during actual incidents — that their achieved recovery time significantly exceeds their RTO target. The gap typically results from one or more of the following factors.
+
+**Pre-staging gaps:** Infrastructure that must be provisioned, delivered, or configured during recovery adds time that is not accounted for in the RTO analysis.
+
+**Manual procedure complexity:** Step-by-step manual procedures executed under stress by unfamiliar personnel take far longer than documented estimates suggest.
+
+**Data volume:** Restoring large data sets over constrained bandwidth takes longer than expected. Data volume growth must be factored into RTO calculations at least annually.
+
+**Authorization and communication latency:** The time to reach decision makers, obtain authorization, and mobilize distributed teams is consistently underestimated.
+
+**DNS propagation delays:** Long DNS TTL values prevent timely redirection of user traffic to the recovery site.
+
+**Undocumented dependencies:** Applications often have undocumented dependencies on auxiliary services (authentication systems, certificate authorities, monitoring platforms) that are not in the DR plan.
+
+### 6.2 Strategies for Reliable RTO Achievement
+
+- Automate recovery runbooks using orchestration tools.
+
+- Pre-authorize declaration criteria so teams can act without waiting for an approval chain.
+
+- Configure DNS TTL values of sixty to three hundred seconds for critical production records.
+
+- Test at realistic data volumes, not reduced test datasets.
+
+- Include all dependencies — including auxiliary services — in DR scope.
+
+- Conduct full recovery time measurements during every test and compare against RTO targets.
+
+---
+
+## Section 7: DR Plan Documentation
+
+### 7.1 DR Plan versus BCP Document
+
+The DR plan is a technical document. Where the BCP addresses organizational-level response, the DR plan focuses on IT system recovery. The DR plan must be specific enough for a qualified technician who is unfamiliar with the system to execute recovery procedures correctly.
+
+### 7.2 Standard DR Plan Sections
+
+**Section 1 — Scope and Purpose:** Identifies the systems, services, and scenarios covered by the plan.
+
+**Section 2 — Activation Criteria:** Defines the specific thresholds that trigger DR plan execution and who holds activation authority.
+
+**Section 3 — Roles and Responsibilities:** Documents the DR team, each member's responsibilities, contact information, and named alternates for every role.
+
+**Section 4 — Recovery Procedures:** Step-by-step technical runbooks for each covered system. Procedures must include expected outputs and error-handling steps, not just commands.
+
+**Section 5 — Vendor and Support Contacts:** Contact information for hardware vendors, software vendors, colocation providers, cloud support tiers, and telecommunications carriers.
+
+**Section 6 — Test Schedule and Results:** Records of when the plan was tested, the test type, findings, corrective actions, and completion status.
+
+---
+
+## Key Terms
+
+- **Hot Site:** Fully operational DR environment with real-time data replication; fastest recovery, highest cost.
+
+- **Warm Site:** Partially equipped DR environment requiring data restore on activation; moderate cost and recovery time.
+
+- **Cold Site:** Facility infrastructure only; no pre-staged hardware or data; slowest recovery, lowest cost.
+
+- **Failover:** Controlled transfer of processing from the primary environment to the recovery environment.
+
+- **Failback:** Return of operations from the DR site to the restored primary environment.
+
+- **Parallel Test:** DR test in which the recovery environment is activated alongside the live primary environment.
+
+- **Full Cutover Test:** DR test in which production traffic is redirected to the DR environment and primary systems are taken offline.
+
+- **Pilot Light:** AWS DR pattern equivalent to a warm site; minimal core environment runs continuously and scales on failover.
+
+- **Azure Site Recovery (ASR):** Azure's primary VM replication and DR orchestration service.
+
+- **3-2-1-1 Backup Rule:** Three copies, two media types, one off-site, one immutable.
+
+- **Continuous Data Protection (CDP):** Real-time block-level capture enabling point-in-time recovery with near-zero RPO.
+
+---
+
+## Review Questions
+
+1. A company has an RTO of ninety minutes for its order management system. Which DR site type is most consistent with this requirement, and why is a cold site architecturally incompatible?
+
+2. In the failover sequence, what is the purpose of the data verification step before network redirection? What should the team do if the available data is outside the RPO window?
+
+3. What is the key distinction between parallel testing and full cutover testing in terms of production risk?
+
+4. Map each of the four AWS DR patterns (backup-and-restore, pilot light, warm standby, multi-site active-active) to the corresponding traditional site type equivalent.
+
+5. A company takes full backups on Sunday and incremental backups Monday through Saturday. A failure occurs Saturday afternoon. Describe the restore procedure and identify the risk inherent in this backup strategy compared to a differential approach.
+
+6. Why are DNS TTL values a critical factor in achieving RTO targets? What is the recommended TTL range for critical production DNS records?
+
+---
+
+## Study Checklist
+
+- [ ] Define hot, warm, and cold site types and describe the appropriate use case for each.
+
+- [ ] Describe the seven-step failover sequence from declaration through operations resumption.
+
+- [ ] Compare parallel testing and full cutover testing by risk, cost, and assurance value.
+
+- [ ] Map AWS and Azure cloud DR patterns to traditional site type equivalents.
+
+- [ ] Explain full, incremental, and differential backup strategies and compare restore complexity.
+
+- [ ] State the 3-2-1-1 backup rule and explain why immutable storage matters.
+
+- [ ] Watch the Module 14 video lecture.
+
+- [ ] Complete the Module 14 Lab.
+
+- [ ] Proceed to the Module 14 Quiz and Discussion.
+
+---
+
+## Alignment to CISM Exam Domains
+
+This module supports CISM Domain 4: Information Security Incident Management, which requires knowledge of recovery site alternatives, backup and recovery strategies, and disaster recovery testing. Students should review the ISACA CISM Review Manual sections covering DR strategy selection, testing approaches, and cloud-based recovery architectures.
