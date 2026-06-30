@@ -1,9 +1,12 @@
 # TEXAS WESLEYAN UNIVERSITY
 ## Department of Computer Science & Information Technology
-### Course Syllabus: CIS-3326_Windows_Server_Admin - Microsoft Windows Server Administration (Active Directory)
-**Semester & Year:** Fall 2026
+### Course Syllabus: CIS-3326-20 – Windows Server Administration
+**Semester & Year:** Spring 2026
+**Course Section:** CIS-3326-20
+**Course Dates:** January 12, 2026 – May 12, 2026
 **Course Format:** 100% Online Asynchronous
 **Course LMS Portal:** Canvas LMS
+**Target Certification:** Microsoft Windows Server Administration (Active Directory)
 
 ---
 
@@ -57,24 +60,46 @@ Your final grade is calculated based on the following breakdown:
 ---
 
 ## Course Calendars & Blueprint
-Below is the week-by-week layout of topics and assignments:
+Below is the week-by-week layout of topics and assignments for the **Spring 2026** semester (January 12 – May 12, 2026):
 
-*   **Module 01:** Server Core
-*   **Module 02:** AD DS
-*   **Module 03:** GPOs
-*   **Module 04:** File Services
-*   **Module 05:** DNS/DHCP
-*   **Module 06:** IIS
-*   **Module 07:** RDS
-*   **Module 08:** Backups
-*   **Module 09:** WSUS
-*   **Module 10:** AD Trusts
-*   **Module 11:** Print Services
-*   **Module 12:** NPS/RADIUS
-*   **Module 13:** Containers
-*   **Module 14:** Clustering
-*   **Module 15:** PowerShell
-*   **Module 16:** Final Exam Prep & Certification Exam (Microsoft Windows Server Administration (Active Directory))
+| Module | Approx. Week | Topic |
+|---|---|---|
+| 01 | Jan 12 – Jan 18 | Windows Server Core Installation & Configuration |
+| 02 | Jan 20 – Jan 25 | Active Directory Domain Services (AD DS) |
+| 03 | Jan 26 – Feb 1 | Group Policy Objects (GPOs) |
+| 04 | Feb 2 – Feb 8 | File Services & NTFS Permissions |
+| 05 | Feb 9 – Feb 15 | DNS & DHCP Server Roles |
+| 06 | Feb 16 – Feb 22 | IIS Web Server Administration |
+| 07 | Feb 23 – Mar 1 | Remote Desktop Services (RDS) |
+| 08 | Mar 2 – Mar 8 | Windows Server Backup & Recovery |
+| 09 | Mar 9 – Mar 15 | Windows Server Update Services (WSUS) |
+| 10 | Mar 23 – Mar 29 | Active Directory Trusts & Federation |
+| 11 | Mar 30 – Apr 5 | Print Services Administration |
+| 12 | Apr 6 – Apr 12 | Network Policy Server (NPS) & RADIUS |
+| 13 | Apr 13 – Apr 19 | Windows Containers & Hyper-V |
+| 14 | Apr 20 – Apr 26 | Failover Clustering & High Availability |
+| 15 | Apr 27 – May 3 | PowerShell Automation & Administration |
+| 16 | May 4 – May 12 | Final Exam Prep & Certification Exam |
+
+> **Notes:**
+> - Week of **January 19** (MLK Day) — Module 01 extended due date to **Sunday, January 25**.
+> - **Module 09 closes March 15** (last day before Spring Break). Module 10 opens **March 23**.
+> - Module 11 due date is extended to **Sunday, April 12** due to Good Friday/Easter (Apr 2–3).
+
+---
+
+## University Closings & No-Assignment Weeks
+
+The following dates are official Texas Wesleyan University closings for **Spring 2026**. No assignments are due during these periods:
+
+| Holiday / Break | Dates | Impact |
+|---|---|---|
+| **Martin Luther King Day** | Monday, January 19, 2026 | No classes; offices closed |
+| **Spring Break** | Monday – Sunday, March 16–22, 2026 | No classes; Module 09 due Sun Mar 15; Module 10 opens Mar 23 |
+| **Good Friday / Easter Break** | Thursday – Friday, April 2–3, 2026 | No classes Thu & Fri |
+| **Memorial Day** | Monday, May 25, 2026 | Offices closed (after semester ends) |
+
+> **Finals Week (Spring 2026):** May 6–12, 2026. Your certification exam must be scheduled and completed by May 12.
 
 ---
 

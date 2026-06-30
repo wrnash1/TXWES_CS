@@ -1,9 +1,12 @@
 # TEXAS WESLEYAN UNIVERSITY
 ## Department of Computer Science & Information Technology
-### Course Syllabus: CIS-3321_Network_Admin - CompTIA Network+ (N10-008)
+### Course Syllabus: CIS-3321-40 – Network Administration
 **Semester & Year:** Fall 2026
+**Course Section:** CIS-3321-40
+**Course Dates:** August 24, 2026 – December 15, 2026
 **Course Format:** 100% Online Asynchronous
 **Course LMS Portal:** Canvas LMS
+**Target Certification:** CompTIA Network+ (N10-009)
 
 ---
 
@@ -57,24 +60,42 @@ Your final grade is calculated based on the following breakdown:
 ---
 
 ## Course Calendars & Blueprint
-Below is the week-by-week layout of topics and assignments:
+Below is the week-by-week layout of topics and assignments for the **Fall 2026** semester (August 24 – December 15, 2026):
 
-*   **Module 01:** OSI Model
-*   **Module 02:** VLANs
-*   **Module 03:** Routing
-*   **Module 04:** Security
-*   **Module 05:** OSPF/BGP
-*   **Module 06:** Wireless
-*   **Module 07:** Monitoring
-*   **Module 08:** Troubleshooting
-*   **Module 09:** WANs
-*   **Module 10:** IPv6
-*   **Module 11:** VoIP
-*   **Module 12:** High Availability
-*   **Module 13:** Datacenter
-*   **Module 14:** Disaster Recovery
-*   **Module 15:** Acronyms
-*   **Module 16:** Final Exam Prep & Certification Exam (CompTIA Network+ (N10-008))
+| Module | Approx. Week | Topic |
+|---|---|---|
+| 01 | Aug 24 – Aug 30 | OSI Model & Networking Fundamentals |
+| 02 | Aug 31 – Sep 6 | VLANs & Switching |
+| 03 | Sep 8 – Sep 13 | IP Routing |
+| 04 | Sep 14 – Sep 20 | Network Security Fundamentals |
+| 05 | Sep 21 – Sep 27 | OSPF & BGP |
+| 06 | Sep 28 – Oct 4 | Wireless Technologies (Wi-Fi 6/6E) |
+| 07 | Oct 5 – Oct 11 | Network Monitoring & Management |
+| 08 | Oct 12 – Oct 18 | Troubleshooting Methodology |
+| 09 | Oct 19 – Oct 25 | WAN Technologies |
+| 10 | Oct 26 – Nov 1 | IPv6 |
+| 11 | Nov 2 – Nov 8 | VoIP & Unified Communications |
+| 12 | Nov 9 – Nov 15 | High Availability & Redundancy |
+| 13 | Nov 16 – Nov 22 | Data Center Networking |
+| 14 | Nov 30 – Dec 6 | Disaster Recovery & Business Continuity |
+| 15 | Dec 7 – Dec 9 | Exam Prep & Acronym Review |
+| 16 | Finals Week | Final Exam Prep & CompTIA Network+ (N10-009) Certification Exam |
+
+> **Note:** Module 14 begins after Thanksgiving Break (November 23–29 — no classes/no assignments due).
+
+---
+
+## University Closings & No-Assignment Weeks
+
+The following dates are official Texas Wesleyan University closings for **Fall 2026**. No assignments are due during these periods:
+
+| Holiday / Break | Dates | Impact |
+|---|---|---|
+| **Labor Day** | Monday, September 7, 2026 | No classes; offices closed |
+| **Thanksgiving Break** | Monday – Sunday, November 23–29, 2026 | No classes; Module 13 due Sun Nov 22; Module 14 opens Nov 30 |
+| **Winter Break** | December 15, 2026 – January 10, 2027 | Semester ends; offices close Dec 22 |
+
+> **Planning Note:** Because Module 13 is due Sunday, November 22, please do not leave it until the last minute. Thanksgiving week immediately follows, and Module 14 opens Monday, November 30 with an accelerated timeline through finals.
 
 ---
 

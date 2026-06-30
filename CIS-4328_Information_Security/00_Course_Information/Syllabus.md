@@ -1,9 +1,12 @@
 # TEXAS WESLEYAN UNIVERSITY
 ## Department of Computer Science & Information Technology
-### Course Syllabus: CIS-4328_Information_Security - CompTIA Security+ (SY0-701)
+### Course Syllabus: CIS-4328-20 – Fundamentals of Information Systems Security
 **Semester & Year:** Fall 2026
+**Course Section:** CIS-4328-20
+**Course Dates:** August 24, 2026 – December 15, 2026
 **Course Format:** 100% Online Asynchronous
 **Course LMS Portal:** Canvas LMS
+**Target Certification:** CompTIA Security+ (SY0-701)
 
 ---
 
@@ -57,24 +60,42 @@ Your final grade is calculated based on the following breakdown:
 ---
 
 ## Course Calendars & Blueprint
-Below is the week-by-week layout of topics and assignments:
+Below is the week-by-week layout of topics and assignments for the **Fall 2026** semester (August 24 – December 15, 2026):
 
-*   **Module 01:** Threats
-*   **Module 02:** Network Sec
-*   **Module 03:** Cryptography
-*   **Module 04:** Operations
-*   **Module 05:** IAM
-*   **Module 06:** PKI
-*   **Module 07:** Risk
-*   **Module 08:** Incident Response
-*   **Module 09:** AppSec (OWASP)
-*   **Module 10:** SDLC
-*   **Module 11:** Cloud/MDM
-*   **Module 12:** IoT Security
-*   **Module 13:** Compliance/GRC
-*   **Module 14:** Forensics
-*   **Module 15:** Review
-*   **Module 16:** Final Exam Prep & Certification Exam (CompTIA Security+ (SY0-701))
+| Module | Approx. Week | Topic |
+|---|---|---|
+| 01 | Aug 24 – Aug 30 | Threats, Attacks & Social Engineering |
+| 02 | Aug 31 – Sep 6 | Network Security Fundamentals |
+| 03 | Sep 8 – Sep 13 | Cryptography & PKI |
+| 04 | Sep 14 – Sep 20 | Security Operations & Administration |
+| 05 | Sep 21 – Sep 27 | Identity & Access Management (IAM) |
+| 06 | Sep 28 – Oct 4 | Public Key Infrastructure (PKI) & Certificates |
+| 07 | Oct 5 – Oct 11 | Risk Management & Vulnerability Scanning |
+| 08 | Oct 12 – Oct 18 | Incident Response & Digital Forensics |
+| 09 | Oct 19 – Oct 25 | Application Security (OWASP Top 10) |
+| 10 | Oct 26 – Nov 1 | Secure Software Development Lifecycle (SDLC) |
+| 11 | Nov 2 – Nov 8 | Cloud Security & Mobile Device Management |
+| 12 | Nov 9 – Nov 15 | IoT & Embedded Systems Security |
+| 13 | Nov 16 – Nov 22 | Governance, Risk & Compliance (GRC) |
+| 14 | Nov 30 – Dec 6 | Digital Forensics & Threat Intelligence |
+| 15 | Dec 7 – Dec 9 | Exam Review & Security+ Blueprint Deep Dive |
+| 16 | Finals Week | Final Exam Prep & CompTIA Security+ (SY0-701) Certification Exam |
+
+> **Note:** Module 14 begins after Thanksgiving Break (November 23–29 — no classes/no assignments due).
+
+---
+
+## University Closings & No-Assignment Weeks
+
+The following dates are official Texas Wesleyan University closings for **Fall 2026**. No assignments are due during these periods:
+
+| Holiday / Break | Dates | Impact |
+|---|---|---|
+| **Labor Day** | Monday, September 7, 2026 | No classes; offices closed |
+| **Thanksgiving Break** | Monday – Sunday, November 23–29, 2026 | No classes; Module 13 due Sun Nov 22; Module 14 opens Nov 30 |
+| **Winter Break** | December 15, 2026 – January 10, 2027 | Semester ends; offices close Dec 22 |
+
+> **Certification Exam Reminder:** The CompTIA Security+ (SY0-701) exam is your final exam for this course, taken proctored at ComputerMinds. Schedule your exam appointment no later than the start of Week 15 (December 7).
 
 ---
 
